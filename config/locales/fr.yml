@@ -779,6 +779,9 @@ fr:
         user_guide: Guide utilisateur
         map: Carte
     dfc_product_imports:
+      connection_invalid_html: |
+          La connexion avec votre compte OIDC a échoué.
+          Merci de rafraîchir votre connexion OIDC à : %{oidc_settings_link}
       index:
         title: "Catalogue produit DFC"
         catalog_url: "%{count} produits à importer de : %{catalog_url}"
@@ -971,6 +974,7 @@ fr:
         shipping_categories: Conditions de transport
       dfc_import_form:
         title: "Importer depuis le catalogue DFC"
+        enterprise: "Créer produits pour l'entreprise"
         catalog_url: "URL du catalogue DFC"
         preview: Prévisualisation
       import:
@@ -1220,6 +1224,9 @@ fr:
           own: Les miens
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
+          external_billing_id: identifiant de facturation externe
+          external_billing_id_placeholder: ex. INV-2024-123456
+          external_billing_id_tip: "Ceci est l'identifiant utilisé par le système de facturation externe pour identifier cette entreprise."
           visible_in_search: Apparaît sur la plateforme?
           visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Visible par tous
@@ -3062,6 +3069,7 @@ fr:
   report_header_hub_code: Code
   report_header_hub_id: Hub ID
   report_header_hub_business_number: "SIRET"
+  report_header_hub_external_billing_id: "Identifiant de facturation externe de la boutique multi producteur."
   report_header_hub_legal_name: "Raison sociale"
   report_header_hub_contact_name: "Nom du contact"
   report_header_hub_email: "Email public"
@@ -3183,6 +3191,7 @@ fr:
   report_header_item_fees_price: "Coût produits + Marge (%{currency})"
   report_header_admin_handling_fees: "Frais si par commande (%{currency})"
   report_header_ship_price: "Frais de livraison (%{currency})"
+  report_header_producer_charges_gst: Le producteur facture-t-il la TVA ?
   report_header_total_tax_on_product: "Total taxe sur produit (%{currency})"
   report_header_pay_fee_price: "Frais de Transaction (%{currency})"
   report_header_total_price: "Total (%{currency})"
@@ -3816,10 +3825,26 @@ fr:
       one: "sachet"
       many: "sachets"
       other: "sachets"
+    pail:
+      one: seaux
+      many: seaux
+      other: seaux
+    stem:
+      one: "tige "
+      many: "tiges"
+      other: "tiges"
+    plug:
+      one: "bouchon"
+      many: "bouchons"
+      other: "bouchons"
     bundle:
       one: "botte"
       many: "bottes"
       other: "bottes"
+    root:
+      one: "racine"
+      many: "racines"
+      other: "racines"
   producers:
     signup:
       start_free_profile: "Créez votre profil producteur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne."
@@ -3918,6 +3943,7 @@ fr:
       error: Le webhook n'a pas pu être supprimé.
   spree:
     order_updated: "La commande a été mise à jour"
+    cannot_perform_operation: "Cette opération ne peut pas être réalisée"
     add_country: "Ajouter un pays"
     add_state: "Ajouter un département"
     adjustment: "Ajustement"

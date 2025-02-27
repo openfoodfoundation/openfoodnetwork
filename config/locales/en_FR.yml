@@ -780,6 +780,9 @@ en_FR:
         user_guide: User Guide
         map: Map
     dfc_product_imports:
+      connection_invalid_html: |
+          Connecting with your OIDC account failed.
+          Please refresh your OIDC connection at: %{oidc_settings_link}
       index:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
@@ -970,6 +973,7 @@ en_FR:
         shipping_categories: Shipping Categories
       dfc_import_form:
         title: "Import from DFC catalog"
+        enterprise: "Create products for enterprise"
         catalog_url: "DFC catalog URL"
         preview: Preview
       import:
@@ -3895,6 +3899,7 @@ en_FR:
       error: Webhook endpoint failed to delete
   spree:
     order_updated: "Order Updated"
+    cannot_perform_operation: "Can not perform this operation"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"

@@ -35,11 +35,11 @@ el:
         shipment_state: Κατάσταση αποστολής
         completed_at: Ολοκληρώθηκε στις
         number: Αριθμός
-        state: Νομός
+        state: Κατάσταση
         email: E-mail πελάτη
       spree/payment:
         amount: Ποσό
-        state: Πόλη
+        state: Κατάσταση
         source: Προέλευση
       spree/product:
         name: "Όνομα Προϊόντος"
@@ -437,7 +437,7 @@ el:
   distributors: Διανομείς
   distribution: Κατανομή
   order_cycles: Κύκλοι παραγγελιών
-  bulk_order_management: Διαχείριση μαζικών παραγγελιών
+  bulk_order_management: Διαχείριση παραγγελιών χονδρικής
   enterprises: Επιχειρήσεις
   enterprise_groups: Ομάδες
   reports: Αναφορές
@@ -504,7 +504,7 @@ el:
     resume: "Συνέχεια"
     save: "Αποθήκευση"
     edit: "Επεξεργασία"
-    update: "Ανανέωση"
+    update: "Ενημέρωση"
     delete: "Διαγραφή"
     add: "Προσθήκη"
     cut: "Αποκοπή"
@@ -591,7 +591,7 @@ el:
     shipping_method: Τρόπος Αποστολής
     shop: Κατάστημα
     sku: SKU
-    status_state: Νομός
+    status_state: Κατάσταση
     tags: Ετικέτες
     variant: Διάφορα
     weight: Βάρος
@@ -719,7 +719,7 @@ el:
         map: Χάρτης
     dfc_product_imports:
       index:
-        update: Ανανέωση
+        update: Ενημέρωση
         new: Νέος
         import: Εισαγωγή
       import:
@@ -1009,7 +1009,7 @@ el:
         product_unit: "Προιόντα: Μονάδα"
         weight_volume: "Βάρος/Όγκος (γρ)"
         ask: "Παρακαλώ?"
-        page_title: "Διαχείριση Μαζικής Παραγγελίας"
+        page_title: "Διαχείριση παραγγελιών χονδρικής"
         actions_delete: "Διαγραφή Επιλεγών"
         loading: "Άνοιγμα Παραγγελιών"
         no_results: "Δεν Βρέθηκαν Παραγγελίες"
@@ -1359,8 +1359,10 @@ el:
         contact_name: Όνομα Επικοινωνίας
       edit:
         editing: 'Ρυθμίσεις:'
+        back_link: Επιστροφή στη λίστα επιχειρήσεων
       new:
         title: Νέα Επιχείρηση
+        back_link: Επιστροφή στη λίστα επιχειρήσεων
       welcome:
         welcome_title: Καλώς ήρθατε στο Open Food Network
         welcome_text: επιτυχής δημιουργία
@@ -1685,7 +1687,7 @@ el:
         note_expiry: |
             Τα τεκμήρια για την πρόσβαση στις συνδεδεμένες εφαρμογές έχουν λήξει. Παρακαλώ ανανεώστε τη
             σύνδεσή σας για να διατηρήσετε όλες τις ενσωματωμένες λειτουργίες ενεργές.
-        refresh: "Ανανέωση της εξουσιοδότησης"
+        refresh: "Ενημέρωση της εξουσιοδότησης"
         view_account: "Για να δείτε τον λογαριασμό σας, δείτε:"
     subscriptions:
       index:
@@ -2055,7 +2057,7 @@ el:
   longitude: Γεωγραφικό μήκος
   longitude_placeholder: π.χ. 144.7851531
   use_geocoder: Υπολογισμός γεωγραφικού πλάτους και γεωγραφικού μήκους αυτόματα από τη διεύθυνση;
-  state: Πόλη
+  state: Κατάσταση
   postcode: Ταχ. Κώδικας
   postcode_placeholder: π.χ. 3070
   suburb: Προάστιο
@@ -2208,7 +2210,7 @@ el:
   order_special_instructions: "Οι σημειώσεις σας:"
   order_pickup_time: Ετοιμο για παραλαβή
   order_pickup_instructions: Οδηγίες συλλογής
-  order_produce: Παράγω
+  order_produce: Παραγωγή
   order_amount_paid: Πληρωμένο ποσό
   order_total_price: Σύνολο
   order_balance_due: Οφειλόμενο υπόλοιπο
@@ -2321,7 +2323,7 @@ el:
   shopping_producers_of_hub: "Παραγωγοί %{hub}:"
   enterprises_next_closing: "Κλείσιμο επόμενης παραγγελίας"
   enterprises_currently_open: "Οι παραγγελίες είναι προς το παρόν ανοιχτές"
-  enterprises_ready_for: "Να είναι έτοιμη εώς"
+  enterprises_ready_for: "Για ολοκλήρωση εώς "
   enterprises_choose: "Επιλέξτε πότε θέλετε την παραγγελία σας:"
   maps_open: "Άνοιγμα"
   maps_closed: "Κλειστό"
@@ -2474,7 +2476,7 @@ el:
   orders_edit_continue: "Συνέχισε τις αγορές"
   orders_edit_checkout: "Ολοκλήρωση"
   orders_form_empty_cart: "Αδειο καλάθι"
-  orders_form_update_cart: "Ανανέωση"
+  orders_form_update_cart: "Ενημέρωση"
   orders_form_subtotal: "Παραγάγετε υποσύνολο"
   orders_form_total: "Σύνολο"
   orders_oc_expired_headline: "Οι παραγγελίες έχουν κλείσει για αυτόν τον κύκλο παραγγελιών"
@@ -2602,7 +2604,7 @@ el:
         postcode_field_placeholder: "πχ 3070"
         postcode_field_error: "Απαιτείται ταχυδρομικός κώδικας"
         state_field: "Γεωγραφικό διαμέρισμα"
-        state_field_error: "Απαιτείται κράτος"
+        state_field_error: "Ο νομός απαιτείται"
         country_field: "Χώρα:"
         country_field_error: "Επιλέξτε μια χώρα"
         map_location: "Τοποθεσία χάρτη"
@@ -2748,10 +2750,10 @@ el:
   admin_enterprise_groups: "Ομάδες Επιχειρήσεων"
   admin_enterprise_groups_name: "Όνομα"
   admin_enterprise_groups_owner: "Κάτοχος"
-  admin_enterprise_groups_on_front_page: "Στην πρώτη σελίδα;"
+  admin_enterprise_groups_on_front_page: "Εμφάνιση στην αρχική σελίδα"
   admin_enterprise_groups_enterprise: "Επιχείρησεις"
   admin_enterprise_groups_data_powertip: "Ο κύριος χρήστης που είναι υπεύθυνος για αυτήν την ομάδα."
-  admin_enterprise_groups_data_powertip_logo: "Αυτό είναι το λογότυπο για την ομάδα"
+  admin_enterprise_groups_data_powertip_logo: "Αυτό είναι το λογότυπο για την ομάδα. Ανεβάστε το αρχείο και πατήστε \"Ενημέρωση\" "
   admin_enterprise_groups_data_powertip_promo_image: "Αυτή η εικόνα εμφανίζεται στο επάνω μέρος του προφίλ ομάδας"
   admin_enterprise_groups_contact_phone_placeholder: "π.χ. 210 123 4567"
   admin_enterprise_groups_contact_address1_placeholder: "π.χ. 123 High Street"
@@ -2801,7 +2803,7 @@ el:
   notify_producers: 'Ειδοποιήστε τους παραγωγούς'
   edit_order_cycle: "Επεξεργασία κύκλου παραγγελίας"
   roles: "Ρόλοι"
-  update: "Ανανέωση"
+  update: "Ενημέρωση"
   delete: Διαγραφή
   add_producer_property: "Προσθήκη ιδιότητας παραγωγού"
   in_progress: "Σε εξέλιξη"
@@ -2933,6 +2935,7 @@ el:
   report_header_hub_address: Διεύθυνση κέντρου διανομής
   report_header_to_hub: Στο κέντρο διανομής
   report_header_hub_code: 'Κωδικός κέντρου διανομής. '
+  report_header_hub_address_state_name: "Κατάσταση Κέντρου Διανομής"
   report_header_code: Κώδικας
   report_header_paid: Επί πληρωμή?
   report_header_delivery: Διανομή?
@@ -2942,7 +2945,7 @@ el:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ταχυδρομικός κώδικας πλοίου
-  report_header_ship_state: Πολιτεία πλοίου
+  report_header_ship_state: Κατάσταση αποστολής
   report_header_billing_street: Οδός Χρέωσης
   report_header_billing_street_2: Οδός Χρέωσης 2
   report_header_billing_street_3: Οδός Χρέωσης 3
@@ -3374,7 +3377,7 @@ el:
           awaiting_return: "περιμένοντας την επιστροφή"
           canceled: "ακυρώθηκε"
           cart: "Καλάθι"
-          complete: "πλήρης"
+          complete: "Ολοκληρωμένη"
           confirm: "επιβεβαιώνω"
           delivery: "διανομή"
           paused: "παύση"
@@ -3400,7 +3403,7 @@ el:
           pending: "εκκρεμής"
           requires_authorization: "Απαιτείται Έγκριση"
           processing: "επεξεργασία"
-          void: "κενός"
+          void: "Ακυρώθηκε"
           invalid: "Μη έγκυρο"
         quantity_unavailable: "Μη επαρκές διαθέσιμο απόθεμα. Η γραμμή προϊόντος δεν αποθηκεύτηκε!"
         quantity_unchanged: "Ποσότητα αμετάβλητη από το προηγούμενο ποσό."
@@ -3527,7 +3530,7 @@ el:
       close_date_not_set: Η ημερομηνία κλεισίματος δεν έχει οριστεί
     spree:
       users:
-        order: "Σειρά"
+        order: "Παραγγελία"
     registration:
       welcome_to_ofn: "Καλώς ήρθατε στο Open Food Network"
       signup_or_login: "Ξεκινήστε με την εγγραφή (ή τη σύνδεση)"
@@ -3672,7 +3675,7 @@ el:
         invalid_filter_parameters: "Τα φίλτρα που επιλέξατε για αυτήν την αναφορά δεν είναι έγκυρα."
       report:
         none: "Κανένας"
-  order: "Σειρά"
+  order: "Παραγγελία"
   order_details: "Λεπτομέρειες Παραγγελίας"
   customer_details: "Πληροφορίες Πελάτη"
   adjustments: "Προσαρμογές"
@@ -3797,9 +3800,9 @@ el:
     city: "Πόλη"
     zip: "Φερμουάρ"
     country: "Χώρα"
-    state: "Πόλη"
+    state: "Κατάσταση"
     phone: "Τηλέφωνο"
-    update: "Ανανέωση"
+    update: "Ενημέρωση"
     use_billing_address: "Χρησιμοποιήστε τη διεύθυνση χρέωσης"
     adjustments: "Προσαρμογές"
     continue: "Συνέχεια"
@@ -3808,7 +3811,7 @@ el:
     new_payment: "Νέα Πληρωμή"
     capture: "Πιάνω"
     capture_and_complete_order: "Καταχώρηση και ολοκλήρωση παραγγελίας"
-    void: "Κενός"
+    void: "Ακυρώθηκε"
     login: "Σύνδεση"
     password: "Κωδικός"
     signature: "Υπογραφή"
@@ -3858,11 +3861,11 @@ el:
     default_tax: "Προκαθορισμένος Φόρος"
     default_tax_zone: "Προεπιλεγμένη φορολογική ζώνη"
     country_based: "Με βάση τη χώρα"
-    state_based: "Με βάση το κράτος"
+    state_based: "Βάσει κατάστασης"
     countries: "Χώρες"
     listing_countries: "Χώρες καταχώρησης"
     iso_name: "Όνομα ISO"
-    states_required: "Απαιτούνται κράτη"
+    states_required: "Απαιτούνται καταστάσεις"
     editing_country: "Χώρα επεξεργασίας"
     states: "Γεωγραφικά διαμερίσματα"
     abbreviation: "Συντομογραφία"
@@ -3933,7 +3936,7 @@ el:
     order_populator:
       out_of_stock: 'Το %{item} είναι εκτός αποθέματος.'
     actions:
-      update: "Ανανέωση"
+      update: "Ενημέρωση"
       cancel: "Ακύρωση"
     shared:
       error_messages:
@@ -3977,7 +3980,7 @@ el:
       tab:
         dashboard: "Πίνακας Διαχείρισης"
         orders: "Παραγγελίες"
-        bulk_order_management: "Διαχείριση Μαζικής Παραγγελίας"
+        bulk_order_management: "Διαχείριση παραγγελιών χονδρικής"
         subscriptions: "Συνδρομές"
         products: "Προίόντα"
         products_v3: "Προίόντα"
@@ -4088,7 +4091,7 @@ el:
           shipment_state: "Κατάσταση αποστολής"
           completed_at: "Ολοκληρώθηκε στις"
           number: "Αριθμός"
-          state: "Πόλη"
+          state: "Κατάσταση"
           email: "E-mail πελάτη"
         invoice:
           issued_on: "Που εκδόθηκε στις"
@@ -4347,7 +4350,7 @@ el:
           name: "Όνομα"
           number: "Αριθμός"
           completed_at: "Ολοκληρώθηκε στις"
-          state: "Πόλη"
+          state: "Κατάσταση"
           payment_state: "Κατάσταση πληρωμής"
           shipment_state: "Κατάσταση αποστολής"
           email: "Email"
@@ -4428,7 +4431,7 @@ el:
       pending: εκκρεμής
       processing: επεξεργασία
       requires_authorization: "Απαιτείται Έγκριση"
-      void: κενός
+      void: Ακυρώθηκε
       invalid: Μη έγκυρο
       authorise: εξουσιοδοτώ
     order_mailer:
@@ -4496,7 +4499,7 @@ el:
       canceled: ακυρώθηκε
       cart: Καλάθι
       confirmation: "επιβεβαίωση"
-      complete: πλήρης
+      complete: Ολοκληρωμένη
       confirm: επιβεβαιώνω
       delivery: διανομή
       paused: παύση
@@ -4560,7 +4563,7 @@ el:
         authorisation_required: Απαιτείται εξουσιοδότηση
         authorise: Εξουσιοδοτώ
       open_orders:
-        order: Σειρά
+        order: Παραγγελία
         shop: Κατάστημα
         changes_allowed_until: Επιτρέπονται οι αλλαγές μέχρι
         items: Αντικείμενα
@@ -4570,7 +4573,7 @@ el:
         closed: Κλειστό
         until: Μέχρι
       past_orders:
-        order: Σειρά
+        order: Παραγγελία
         shop: Κατάστημα
         completed_at: Ολοκληρώθηκε στις
         items: Αντικείμενα

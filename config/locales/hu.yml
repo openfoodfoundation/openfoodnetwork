@@ -448,7 +448,7 @@ hu:
   enterprises: Vállalkozások
   enterprise_groups: Csoportok
   reports: Jelentések
-  listing_reports: Listázási jelentések
+  listing_reports: Jelentések listája
   variant_overrides: Leltár
   import: Importálás
   spree_products: Spree termékek
@@ -1999,20 +1999,20 @@ hu:
         items_in_cart_singular: "%{num} tétel a kosarában"
         items_in_cart_plural: "%{num} termék a kosarában"
         close: "Bezárás"
-        cart_empty: "Az Ön kosara üres"
+        cart_empty: "Üres a kosarad"
         take_me_shopping: "Vigyél vásárolni!"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Kosár"
     register_call:
-      selling_on_ofn: "Érdekel az Open Food Network?"
-      register: "Itt regisztrálj"
+      selling_on_ofn: "Érdekel az Open Food Hálózat?"
+      register: "Itt regisztrálj fogyasztóként"
     footer:
       footer_secure: "Biztonságos és felelős adatkezelés."
       footer_secure_text: "Az Open Food Network mindenhol SSL-titkosítást (2048 bites RSA) használ, hogy vásárlási és fizetési adataidat bizalmasan kezelje. Szervereink nem tárolják hitelkártya adataidat, és a fizetéseket PCI-kompatibilis szolgáltatások dolgozzák fel."
       footer_contact_headline: "Kapcsolat"
-      footer_contact_email: "Küldj egy emailt nekünk"
+      footer_contact_email: "Küldj emailt nekünk"
       footer_nav_headline: "Navigáció"
       footer_join_headline: "Csatlakozz hozzánk"
       footer_join_body: "Hozz létre egy termelői profilt, élelmiszerközösséget, vagy fogyasztói csoportot az Open Food Network oldalán."
@@ -2023,7 +2023,7 @@ hu:
       footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataira. Tekintse meg %{privacy_policy} és %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{cookies_policy}-unkat"
       footer_data_privacy_policy: "Adatvédelmi irányelvek"
-      footer_data_cookies_policy: "cookie-kra vonatkozó szabályzat"
+      footer_data_cookies_policy: "sütikre vonatkozó szabályzatunkat"
   shop:
     messages:
       customer_required:
@@ -2176,16 +2176,16 @@ hu:
     cookies_policy:
       header: "Hogyan használjuk a sütiket"
       desc_part_1: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
-      desc_part_2: "Az OFN-nél teljes mértékben tiszteletben tartjuk az Ön magánéletét. Csak azokat a sütiket használjuk, amelyek az élelmiszerek online értékesítése/vásárlása szolgáltatásának biztosításához szükségesek. Az Ön adatait nem adjuk el. Előfordulhat, hogy a jövőben azt javasoljuk Önnek, hogy ossza meg adatait új közös szolgáltatások létrehozása érdekében, amelyek hasznosak lehetnek az ökoszisztéma számára (például logisztikai szolgáltatások a rövid élelmiszer-rendszerekhez), de még nem tartunk ott, és nem fogjuk megtenni az Önök felhatalmazása nélkül. "
-      desc_part_3: "A sütiket elsősorban azért használjuk, hogy megjegyezzük, ki vagy, ha „bejelentkezik” a szolgáltatásba, vagy hogy emlékezzünk a kosárba tett termékekre, még akkor is, ha nincs bejelentkezve. „Cookie-k elfogadása”, feltételezzük, hogy Ön hozzájárul ahhoz, hogy a weboldal működéséhez nélkülözhetetlen cookie-kat tároljunk. Íme az általunk használt sütik listája!"
+      desc_part_2: "Az OFN-nél teljes mértékben tiszteletben tartjuk a magánéletedet. Csak azokat a sütiket használjuk, amelyek az élelmiszerek online értékesítéséhez és vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. Előfordulhat, hogy a jövőben azt javasoljuk, hogy oszd meg adataid új közös szolgáltatások létrehozása érdekében, amelyek hasznosak lehetnek az ökoszisztéma számára (például logisztikai szolgáltatások a rövid élelmiszer-rendszerekhez), de még nem tartunk ott, és nem fogjuk megtenni a felhatalmazásod nélkül. "
+      desc_part_3: "A sütiket elsősorban arra használjuk, hogy emlékezzünk arra, hogy ki vagy, ha bejelentkezel a szolgáltatásba, vagy hogy emlékezzünk a kosaradba tett tételekre akkor is, ha nem vagy bejelentkezve. Ha továbbra is a weboldalon navigálsz anélkül, hogy a „Sütik elfogadása” gombra kattintanál, akkor feltételezzük, hogy beleegyezésedet adod a weboldal működéséhez elengedhetetlenül szükséges sütik tárolásához."
       essential_cookies: "Lényeges cookie-k"
       essential_cookies_desc: "Az alábbi cookie-k feltétlenül szükségesek weboldalunk működéséhez."
-      essential_cookies_note: "A legtöbb cookie csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az e-mail címed és jelszavad soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
+      essential_cookies_note: "A legtöbb süti csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az e-mail címed és jelszavad soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
       cookie_domain: "Által meghatározott:"
       cookie_session_desc: "Arra szolgál, hogy a webhely emlékezzen a felhasználókra az oldalváltások között, például emlékezzen a kosárban lévő tételekre."
-      cookie_consent_desc: "A cookie-k tárolására vonatkozó felhasználói hozzájárulás állapotának fenntartására szolgál"
-      cookie_remember_me_desc: "Akkor használatos, ha a felhasználóként arra kérted a webhelyet, hogy emlékezzen rád. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretnéd törölni a cookie-t, csak ki kell jelentkezned. Ha nem szeretnéd, hogy a cookie telepítve legyen a számítógépedre, ne jelöld be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
-      cookie_openstreemap_desc: "A cookie-t barátságos, nyílt forráskódú térképszolgáltatónk (OpenStreetMap) használja annak biztosítására, hogy egy adott időszakon belül ne kapjon túl sok kérést, és megakadályozza a szolgáltatásaikkal való visszaélést."
+      cookie_consent_desc: "A sütik tárolására vonatkozó felhasználói hozzájárulás állapotának fenntartására szolgál"
+      cookie_remember_me_desc: "Akkor használatos, ha a felhasználóként arra kérted a webhelyet, hogy emlékezzen rád. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretnéd törölni a sütit, csak ki kell jelentkezned. Ha nem szeretnéd, hogy a süti telepítve legyen a számítógépedre, ne jelöld be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
+      cookie_openstreemap_desc: "Ezt a sütit barátságos, nyílt forráskódú térképszolgáltatónk (OpenStreetMap) használja annak biztosítására, hogy egy adott időszakon belül ne kapjon túl sok kérést, és megakadályozza a szolgáltatásaikkal való visszaélést."
       cookie_stripe_desc: "A Stripe fizetési szolgáltató által a csalások felderítése céljából gyűjtött adatok https://stripe.com/cookies-policy/legal. Nem minden átvételi pont vagy termelő használja a Stripe-ot fizetési módszerként, de a csalás megelőzése érdekében jó gyakorlat, hogy minden oldalon alkalmazzuk. A Stripe valószínűleg képet alkot arról, hogy mely oldalaink lépnek általában kapcsolatba az API-jukkal, majd minden szokatlant megjelöl. A Stripe cookie beállításának tehát szélesebb funkciója van, mint egyszerűen a fizetési mód biztosítása a felhasználó számára. Eltávolítása befolyásolhatja magának a szolgáltatásnak a biztonságát. A Stripe-ról többet megtudhatsz, és elolvashatod adatvédelmi irányelveit a https://stripe.com/privacy oldalon."
       statistics_cookies: "Statisztikai cookie-k"
       statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használja a legtöbbet, vagy nem használja, megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
@@ -2195,19 +2195,19 @@ hu:
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
       cookie_matomo_ignore_desc: "A cookie-k segítségével kizárják a felhasználót a nyomon követésből."
       disabling_cookies_header: "Figyelmeztetés a cookie-k letiltására"
-      disabling_cookies_desc: "Felhasználóként bármikor engedélyezheted, blokkolhatod vagy törölheted az Open Food Network vagy bármely más webhely cookie-jait a böngésző beállításaiban. Minden böngészőnek más a működése. Itt vannak a linkek:"
+      disabling_cookies_desc: "Felhasználóként bármikor engedélyezheted, blokkolhatod vagy törölheted az Open Food Network vagy bármely más webhely sütijeit a böngésző beállításaiban. Minden böngészőnek más a működése. Itt vannak a linkek:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "Ügyelj arra, hogy ha törlöd vagy módosítod az Open Food Network által használt alapvető sütiket, a webhely nem fog működni, nem tudsz semmit sem a kosárba tenni, és fizetni sem fogsz tudni."
     cookies_banner:
-      cookies_usage: "Ez az oldal cookie-kat használ annak érdekében, hogy navigációját zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használja az oldalt, hogy javíthassuk az oldal funkcióit."
+      cookies_usage: "Ez az oldal úgynevezett sütiket (cookie-kat) használ annak érdekében, hogy az oldalon való navigációt zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használod az oldalt, hogy javíthassuk az oldal működését."
       cookies_definition: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
-      cookies_desc: "Csak azokat a sütiket használjuk, amelyek az élelmiszerek online értékesítése/vásárlása szolgáltatásának biztosításához szükségesek. Az Ön adatait nem adjuk el. A sütiket elsősorban azért használjuk, hogy megjegyezzük kicsoda Ön, ha „bejelentkezik” a szolgáltatásba, vagy hogy emlékezzünk a kosárba tett termékekre. Még akkor is, ha nem kattintott a „Cookie-k elfogadása” gombra feltételezzük, hogy Ön hozzájárul ahhoz, hogy a weboldal működéséhez nélkülözhetetlen cookie-kat tároljunk."
-      cookies_policy_link_desc: "Ha többet szeretne megtudni, nézze meg oldalunkat"
+      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy, ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintott a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
+      cookies_policy_link_desc: "Ha többet szeretnél megtudni, olvasd el a "
       cookies_policy_link: "cookie-kra vonatkozó szabályzat"
-      cookies_accept_button: "Cookie-k elfogadása"
+      cookies_accept_button: "Sütik elfogadása"
   home_shop: Tovább a termelőkhöz, átvételi pontokhoz
   brandstory_headline: "Együtt, az élelem önrendelkezésért!"
   brandstory_intro: "Közösség által irányított élelmiszerrendszert építünk."
@@ -2219,7 +2219,7 @@ hu:
   brandstory_part6: "Csatlakozz te is!"
   system_headline: "A vásárlás lépései"
   system_step1: "1. Keresés"
-  system_step1_text: "Böngészhetsz közvetlenül a gazdák, vagy a bevásárlóközösségek kínálatában. Kereshetsz a lakhelyed, a termelő, élelmiszertípus, és termesztési mód szerint."
+  system_step1_text: "Böngészhetsz közvetlenül a gazdák, vagy az átvételi Pontok kínálatában. Kereshetsz a lakhelyed, a termelő, élelmiszertípus, és termesztési mód szerint."
   system_step2: "2. Vásárlás"
   system_step2_text: "Alakítsd át a fogyasztási szokásaidat! Pakold meg a bevásárlókosarad helyi termelőktől származó termékekkel. Vásárolj olyan élelmiszert, amelynek ismered az eredetét, és tudod, hogyan állították elő."
   system_step3: "3. Átvétel / kiszállítás"
@@ -2296,7 +2296,7 @@ hu:
   email_confirmation_help_html: "Az e-mail-cím megerősítése után hozzáférhetsz a vállalkozás adminisztrációs fiókjához. Tekintsd meg a %{link} webhelyet, hogy többet megtudj %{sitename} szolgáltatásairól, és elkezdhesd használni profilod vagy online áruházad."
   email_confirmation_notice_unexpected: "Azért kaptad ezt az üzenetet, mert regisztráltál a(z) %{sitename} webhelyen, vagy egy olyan személy, akit valószínűleg ismersz, meghívott. Ha nem érted, miért kaptad ezt az e-mailt, kérjük, írj a %{contact} címre."
   email_social: "Lépj kapcsolatba velünk:"
-  email_contact: "Küldj egy emailt nekünk:"
+  email_contact: "Küldj emailt nekünk:"
   email_signoff: "Üdvözlettel,"
   email_signature: "%{sitename} csapata"
   email_confirm_customer_greeting: "Kedves %{name}!"
@@ -2397,7 +2397,7 @@ hu:
   hubs_filter_type: "típus"
   hubs_filter_delivery: "Szállítás"
   hubs_filter_property: "Tulajdonság"
-  hubs_matches: "Úgy értetted:"
+  hubs_matches: "Keresési feltétel:"
   hubs_intro: Nézz körül a környéken
   hubs_distance: Legközelebb
   hubs_distance_filter: "Mutass átvételi pontokat %{location} közelében"
@@ -2432,7 +2432,7 @@ hu:
   products_changes_saved: "Változtatások elmentve."
   products_no_results_html: "Sajnáljuk, nem található találat a következőre: %{query}"
   products_clear_search: "Keresés törlése"
-  search_no_results_html: "Sajnáljuk, nem találtunk Átvételi pontot/Termelőt a következő szűrésre: %{query} \nPróbálkozz másik kereséssel!"
+  search_no_results_html: "Sajnáljuk, nem találtunk eredményt a következő szűrésre: %{query} \nPróbálkozz másik kereséssel!"
   components_profiles_popover: "A Profiloknak nincs online felülete az Open Food Network-ben, de lehet, hogy van saját fizikai vagy online átvételi pontjuk máshol."
   components_profiles_show: "Profilok megjelenítése"
   components_filters_nofilters: "Nincsenek szűrők"
@@ -2448,26 +2448,26 @@ hu:
   groups_contact_web: Kapcsolat
   groups_contact_social: Kövesse
   groups_contact_address: Cím
-  groups_contact_email: Küldj egy emailt nekünk
+  groups_contact_email: Küldj emailt nekünk
   groups_contact_website: Látogasd meg weboldalunkat
   groups_contact_facebook: Kövess minket Facebookon
   groups_signup_title: Regisztrálj csoportként
-  groups_signup_headline: Csoportok regisztráció
-  groups_signup_intro: "Egyedülálló platform vagyunk az együttműködésen alapuló marketinghez, amely a legegyszerűbb módja annak, hogy tagjai és érdekelt felei új piacokat érjenek el. Mi non-profit, megfizethető és egyszerű szervezet vagyunk."
-  groups_signup_email: Küldj egy emailt nekünk
-  groups_signup_motivation1: Tisztességesen átalakítjuk az élelmiszerrendszereket.
-  groups_signup_motivation2: Ezért kelünk ki minden nap az ágyból. Globális non-profit szervezet vagyunk,nyílt forráskódon alapul. Tisztességesen játszunk. Mindig megbízhat bennünk.
-  groups_signup_motivation3: Tudjuk, hogy nagy ötleteid vannak", és segíteni akarunk. Megosztjuk tudásunkat," hálózatok és erőforrások. Tudjuk, hogy az elszigeteltség nem hoz változást", így partnerek leszünk veled.
-  groups_signup_motivation4: Ott találkozunk, ahol vagy.
-  groups_signup_motivation5: Lehetsz átvételi pontok szövetsége, termelő, vagy forgalmazó, egy ipari testület, vagy épp egy önkormányzat.
-  groups_signup_motivation6: Bármi legyen is a szereped a helyi élelmiszermozgalomban, készek vagyunk segíteni. Ha felmerül a kérdés, hogy az Open Food Network hogyan nézne ki vagy hogyan működik a te régiódban, terepeden, kezdjünk el beszélgetni.
-  groups_signup_motivation7: Értelmesebbé tesszük az ételmozgásokat.
-  groups_signup_motivation8: Aktiválnia és engedélyeznie kell a hálózatait, platformot kínálunk a beszélgetéshez és a cselekvéshez. Igazi elkötelezettségre van szüksége. Segítünk elérni minden játékost, az összes érdekelt fél, az összes szektort.
-  groups_signup_motivation9: Erőforrásra van szüksége. Minden tapasztalatunkat felhasználjuk. Együttműködésre van szüksége. Jobban összekapcsoljuk Önt a partnerek globális hálózatával.
+  groups_signup_headline: Csoportok, társulások létrehozása
+  groups_signup_intro: "Egyedülálló platform vagyunk az együttműködésen alapuló marketinghez, amely a legegyszerűbb módja annak, hogy a csoportod tagjai, termelői közösséged új piacokat érjen el. Non-profit, megfizethető és értékek mentén dolgozó szervezet vagyunk."
+  groups_signup_email: Küldj emailt nekünk
+  groups_signup_motivation1: Alakítsuk át közösen az élelem rendszerünket!
+  groups_signup_motivation2: Mi ezért dolgozunk minden egyes nap. Az Open Food Network globális non-profit szervezet, a szoftver nyílt forráskódon alapul. Tisztességesen játszunk. Megbízhatsz bennünk.
+  groups_signup_motivation3: 'Megosztjuk tudásunkat, hálózatainkat és erőforrásainkat. Tudjuk, hogy csak a közös cselekvés hozhat változást, partnerséget ajánlunk neked. '
+  groups_signup_motivation4: Kicsiben vagy nagyban gondolkodsz?
+  groups_signup_motivation5: Ott tudsz csatlakozni, ahol épp tartasz. Lehetsz termelő, lehetsz több termelős átvételi pont, átvételi pontok szövetsége, egy ipari testület, vagy épp egy önkormányzat.
+  groups_signup_motivation6: Bármi legyen is a szereped a helyi élelem-mozgalomban, készek vagyunk segíteni. Ha felmerül a kérdés, hogy az Open Food Network hogyan nézne ki vagy hogyan működhetne a te terepeden, kezdjünk el beszélgetni.
+  groups_signup_motivation7: Átláthatóvá tesszük az élelem útját.
+  groups_signup_motivation8: Aktiváld a körülötted lévőket, hozz létre magad köré egy hálózatot, mi pedig platformot kínálunk a beszélgetéshez és a cselekvéshez.
+  groups_signup_motivation9: Ha erőforrásra van szükséged, itt megtalálhatod. Együttműködhetsz termelőkkel, fogyasztókkal, közösségekkel, segítünk összekapcsolódni, rendszerbe szerveződni, elérni, megtalálni, értékesíteni.
   groups_signup_pricing: Csoportfiók
   groups_signup_studies: Esettanulmányok
-  groups_signup_contact: Készen áll a vitára?
-  groups_signup_contact_text: "Vegye fel a kapcsolatot, hogy megtudja, mit tehet az OFN az Ön számára:"
+  groups_signup_contact: Készen állsz a beszélgetésre?
+  groups_signup_contact_text: "Vedd fel velünk a kapcsolatot, hogy megtudd, mit tehet az Open Food a te esetedben:"
   groups_signup_detail: "Részletek"
   login_invalid: "Rossz email cím vagy jelszó"
   producers_about: Bemutatkozás
@@ -2485,7 +2485,7 @@ hu:
   producers_signup_headline: Élelmiszer termelők platformja
   producers_signup_motivation: 'Értékesítsd termékeid, és meséld el történeteid egy  sokszínű fogyasztói közösségnek. Spórolj időt és költségeket, kapcsolódj közösségi átvételi pontokhoz, mindezt kockázat nélkül. '
   producers_signup_send: Csatlakozz most
-  producers_signup_enterprise: Vállalkozások számára
+  producers_signup_enterprise: Termelők, átvételi pontok szolgáltatási díjai
   producers_signup_studies: Termelőink történetei.
   producers_signup_cta_headline: Csatlakozz bátran!
   producers_signup_cta_action: Csatlakozz most
@@ -2515,15 +2515,15 @@ hu:
   sell_ask_services: "Kérdezz bátran egyéb szolgáltatásainkról. "
   shops_title: Átvételi pontok
   shops_headline: Bevásárlás újragondolva.
-  shops_text: Rendelési ciklusokban dolgozunk. A növénytermesztés, az állattenyésztés, az élelem előállítása ciklikus folyamat. Így nálunk az áruátadás is ciklusokban történik, pont ahogy a növények is hétről hétre, és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
+  shops_text: Az élelem előállítása ciklikus folyamat, így nálunk az áruátadás is ciklusokban történik. Ha lezárt rendelési ciklust találsz, nézz vissza később.
   shops_signup_title: Regisztrálj Átvételi Pontként
   shops_signup_headline: Átvételi Pontok, szabad szerveződések.
-  shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Ha változol, veled vagyunk. Non-profit, független és nyílt forráskódú felület vagyunk, közösségi élelemrendszerben gondolkozunk. Ha együttműködnél, várunk!
+  shops_signup_motivation: Bármilyen modellben is dolgozol vagy gondolkodsz, támogatunk téged. Ha változol, veled vagyunk. Non-profit, független és nyílt forráskódú felület vagyunk, közösségi élelemrendszerben gondolkozunk. Ha együttműködnél, várunk!
   shops_signup_action: Csatlakozz most
   shops_signup_pricing: Vállalkozói fiókok
   shops_signup_stories: Történetek Átvételi Pontjainktól
   shops_signup_help: Gondolkodjunk együtt!
-  shops_signup_help_text: Nehezen éred el a fogyasztókat? Partnerekre van szükséged akik segítenek termékeid eljuttatásában a fogyasztókhoz? Elmesélnéd a saját és a termékeid történetét, hogy eljusson a vacsoraasztalokhoz, közösségekhez, kis- és nagykereskedőkhöz?
+  shops_signup_help_text: Nehezen éred el a fogyasztókat? Partnerekre van szükséged akik segítenek termékeid eljuttatásában a fogyasztókhoz? Elmesélnéd a saját és a termékeid történetét, hogy eljusson a vacsoraasztalokhoz, közösségekhez, más vállalkozásokhoz?
   shops_signup_detail: Részletek
   orders: "Megrendelések"
   orders_fees: "Díjak..."
@@ -3307,8 +3307,8 @@ hu:
               elrejtése) a megadott címkével rendelkező ügyfelek számára.
         terms_and_conditions_info:
           title: "Általános Szerződési Feltételek feltöltése"
-          message_1: "Az Általános Szerződési Feltételek az Ön, az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a nemzeti jogszabályokkal összhangban tölts fel Általános Szerződési Feltételeket."
-          message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatja az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk azokat, mielőtt fizetésre kerülne a rendelésük."
+          message_1: "Az Általános Szerződési Feltételek az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a hazai jogszabályokkal összhangban tölts fel Általános Szerződési Feltételeket."
+          message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatod az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk, mielőtt fizetésre kerülne a rendelésük."
         terms_and_conditions_warning:
           title: "Általános Szerződési Feltételek feltöltése"
           message_1: "Minden vásárlónak egyszer el kell fogadnia ezeket a fizetéskor. Ha frissíti a fájlt, minden vásárlónak újra el kell fogadnia azokat a fizetéskor."
