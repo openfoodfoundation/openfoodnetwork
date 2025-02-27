@@ -8,6 +8,14 @@ export default class extends Controller {
     this.toggleCheckbox();
   }
 
+  allTargetConnected(allTarget) {
+    allTarget.addEventListener("change", this.toggleAll.bind(this));
+  }
+
+  checkboxTargetConnected(checkboxTarget) {
+    checkboxTarget.addEventListener("change", this.toggleCheckbox.bind(this));
+  }
+
   toggleAll() {
     this.checkboxTargets.forEach((checkbox) => {
       checkbox.checked = this.allTarget.checked;
