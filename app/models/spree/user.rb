@@ -168,6 +168,7 @@ module Spree
     def self.friendly_token
       SecureRandom.base64(15).tr('+/=', '-_ ').strip.delete("\n")
     end
+    private_class_method :friendly_token
 
     def limit_owned_enterprises
       return unless owned_enterprises.size > enterprise_limit
