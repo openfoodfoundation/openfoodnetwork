@@ -353,23 +353,22 @@ module Spree
       end
     end
 
+    def can_edit_order(order, user)
+      return unless order.distributor&.enable_producers_to_edit_orders
+
+      order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
+    end
+
     def add_manage_line_items_abilities(user)
-      can_edit_order_lambda = lambda do |order|
-        return unless order.distributor&.enable_producers_to_edit_orders
-
-        order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
-      end
-
       can [:admin, :read, :index, :edit, :update, :bulk_management], Spree::Order do |order|
-        can_edit_order_lambda.call(order)
+        can_edit_order(order, user)
       end
       can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
-        can_edit_order_lambda.call(item.order)
+        can_edit_order(item.order, user)
       end
       can [:index, :create, :add, :read, :edit, :update], Spree::Shipment do |shipment|
-        can_edit_order_lambda.call(shipment.order)
+        can_edit_order(shipment.order, user)
       end
-
       can [:visible], Enterprise
     end
 
