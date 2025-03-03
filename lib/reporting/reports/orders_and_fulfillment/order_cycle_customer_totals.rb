@@ -67,6 +67,7 @@ module Reporting
             order_number: proc { |line_items| line_items.first.order.number },
             date: proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
             final_weight_volume: proc { |line_items| line_items.sum(&:final_weight_volume) },
+            shipment_state: proc { |line_items| line_items.first.order.shipment_state },
           }
         end
         # rubocop:enable Metrics/AbcSize
@@ -107,7 +108,7 @@ module Reporting
         def default_params
           super.merge(
             {
-              fields_to_hide: %i[final_weight_volume voucher_label voucher_amount]
+              fields_to_hide: %i[final_weight_volume voucher_label voucher_amount shipment_state]
             }
           )
         end

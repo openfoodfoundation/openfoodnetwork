@@ -68,6 +68,15 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
       expect(report.rows.second.quantity).to eq "TOTAL"
       expect(report.rows.second.date).to eq order.completed_at.strftime("%F %T")
     end
+
+    context "shipment state" do
+      # by default, shipment state is hidden, so make fields_to_hide empty for this test
+      let(:params) { { q: search_params, fields_to_hide: [] } }
+
+      it 'includes the shipment state' do
+        expect(report.rows.first.shipment_state).to eq order.shipment_state
+      end
+    end
   end
 
   context "loading shipping methods" do
@@ -155,6 +164,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
           final_weight_volume
           voucher_label
           voucher_amount
+          shipment_state
         ],
         q: {
           completed_at_gt: 1.month.ago.beginning_of_day,
