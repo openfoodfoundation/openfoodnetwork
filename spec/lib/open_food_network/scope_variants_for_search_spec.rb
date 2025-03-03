@@ -190,6 +190,22 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           to eq(["Product 1", "Product a", "Product b", "Product c"])
       end
     end
+
+    context "when search is done by the producer allowing to edit orders" do
+      let(:params) { { q: "product" } }
+      let(:producer) { create(:supplier_enterprise) }
+      let(:spree_current_user) { instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id), can_manage_line_items_in_orders_only?: true) }
+
+      it "returns all products distributed through distributors allowing producers to edit orders" do
+        v1.supplier_id = producer.id
+        v2.supplier_id = producer.id
+        v1.save!
+        v2.save!
+
+        expect(result).to include v1, v2
+        expect(result).not_to include v3, v4
+      end
+    end
   end
 
   private
