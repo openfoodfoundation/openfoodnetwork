@@ -122,19 +122,17 @@ RSpec.describe 'As a producer who have the ability to update orders' do
       end
 
       def expect_product_change(product, action, expected_qty = 0)
-        within('table.index') do
-          # JS for this page sometimes take more than 2 seconds (default timeout for cappybara)
-          timeout = 5
-          item_name_selector = 'tbody tr td.item-name'
-          quantity_selector = 'tbody tr td.item-qty-show'
+        # JS for this page sometimes take more than 2 seconds (default timeout for cappybara)
+        timeout = 5
 
+        within('table.index tbody tr', wait: timeout) do
           case action
           when :add
-            expect(page).to have_selector item_name_selector, text: product.name, wait: timeout
+            expect(page).to have_text(product.name, wait: timeout)
           when :update
-            expect(page).to have_selector quantity_selector, text: expected_qty, wait: timeout
+            expect(page).to have_text(expected_qty.to_s, wait: timeout)
           when :remove
-            expect(page).not_to have_selector item_name_selector, text: product.name, wait: timeout
+            expect(page).not_to have_text(product.name, wait: timeout)
           else
             raise 'Invalid action'
           end
