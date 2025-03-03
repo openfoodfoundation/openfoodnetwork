@@ -67,7 +67,9 @@ module Permissions
           end
 
           context "with search params" do
-            let(:search_params) { { completed_at_gt: Time.zone.now.yesterday.strftime('%Y-%m-%d') } }
+            let(:search_params) {
+              { completed_at_gt: Time.zone.now.yesterday.strftime('%Y-%m-%d') }
+            }
             let(:permissions) { Permissions::Order.new(user, search_params) }
 
             it "only returns completed, non-cancelled orders within search filter range" do

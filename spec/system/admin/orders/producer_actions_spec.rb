@@ -121,7 +121,6 @@ RSpec.describe 'As a producer who have the ability to update orders' do
         end
       end
 
-
       def expect_product_change(product, action, expected_qty = 0)
         within('table.index') do
           # JS for this page sometimes take more than 2 seconds (default timeout for cappybara)
@@ -157,8 +156,6 @@ RSpec.describe 'As a producer who have the ability to update orders' do
         find("a[data-variant-id='#{product.variants.last.id}'][data-action='remove']").click
         click_button 'OK'
       end
-
     end
   end
-
 end

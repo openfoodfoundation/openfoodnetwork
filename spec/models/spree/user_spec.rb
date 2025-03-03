@@ -301,7 +301,7 @@ RSpec.describe Spree::User do
 
   describe "#can_manage_line_items_in_orders_only?" do
     let(:producer) { create(:supplier_enterprise) }
-    let(:order) { create(:order, distributor: distributor) }
+    let(:order) { create(:order, distributor:) }
 
     subject { user.can_manage_line_items_in_orders_only? }
 
@@ -310,7 +310,8 @@ RSpec.describe Spree::User do
 
       context "order containing their product" do
         before do
-          order.line_items << create(:line_item, product: create(:product, supplier_id: producer.id))
+          order.line_items << create(:line_item,
+                                     product: create(:product, supplier_id: producer.id))
         end
         context "order distributor allow producer to edit orders" do
           let(:distributor) do
