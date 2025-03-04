@@ -144,7 +144,7 @@ module Spree
       joins(
         :distributor, line_items: :supplier
       ).where(
-        supplier: enterprises,
+        supplier: { id: enterprises },
         distributor: { enable_producers_to_edit_orders: true }
       )
     }
