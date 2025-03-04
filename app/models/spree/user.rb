@@ -155,11 +155,11 @@ module Spree
     # Users can manage line items in orders if they have producer enterprise and
     # any of order distributors allow them to edit their orders.
     def can_manage_line_items_in_orders?
-      @can_manage_line_items_in_orders ||= begin
-        return unless enterprises.any?(&:is_producer_only)
+      return @can_manage_line_items_in_orders if defined? @can_manage_line_items_in_orders
 
+      @can_manage_line_items_in_orders =
+        enterprises.any?(&:is_producer_only) &&
         Spree::Order.editable_by_producers(enterprises).exists?
-      end
     end
 
     def can_manage_line_items_in_orders_only?
