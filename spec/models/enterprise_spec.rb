@@ -1013,25 +1013,25 @@ RSpec.describe Enterprise do
     end
   end
 
-  describe "#is_producer" do
+  describe "#is_producer_only" do
     context "when enterprise is_primary_producer and sells none" do
       it "returns true" do
         enterprise = build(:supplier_enterprise)
-        expect(enterprise.is_producer).to be true
+        expect(enterprise.is_producer_only).to be true
       end
     end
 
     context "when enterprise is_primary_producer and sells any" do
       it "returns false" do
         enterprise = build(:enterprise, is_primary_producer: true, sells: "any")
-        expect(enterprise.is_producer).to be false
+        expect(enterprise.is_producer_only).to be false
       end
     end
 
     context "when enterprise is_primary_producer and sells own" do
       it "returns false" do
         enterprise = build(:enterprise, is_primary_producer: true, sells: "own")
-        expect(enterprise.is_producer).to be false
+        expect(enterprise.is_producer_only).to be false
       end
     end
   end
