@@ -33,7 +33,7 @@
     - else
       = render 'form', f: f
 
-    %div.warning-modal{ data: { controller: 'modal modal-link', 'modal-link-target-value': "linked-order-warning-modal" } }
+    .warning-modal{ data: { controller: 'modal modal-link', 'modal-link-target-value': "linked-order-warning-modal" } }
       %button.modal-target-trigger{ type: 'button', data: { 'action': 'modal-link#open' }, style: 'display: none;' } 
       = render ModalComponent.new(id: "linked-order-warning-modal", close_button: false) do
         .content.flex-column.gap-2

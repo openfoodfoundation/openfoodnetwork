@@ -5,9 +5,11 @@ module Spree
   module Admin
     class OverviewController < Spree::Admin::BaseController
       def index
-        @enterprises = Enterprise
-          .managed_by(spree_current_user)
+        my_enterprises = Enterprise.managed_by(spree_current_user)
+        @enterprises = my_enterprises
           .order('is_primary_producer ASC, name')
+          .limit(25)
+        @enterprises_count = my_enterprises.count if @enterprises.count >= 25
         @product_count = Spree::Product.active.managed_by(spree_current_user).count
         @order_cycle_count = OrderCycle.active.managed_by(spree_current_user).count
 
