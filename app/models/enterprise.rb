@@ -381,7 +381,7 @@ class Enterprise < ApplicationRecord
     sells == 'any'
   end
 
-  def is_producer
+  def is_producer_only
     is_primary_producer && sells == 'none'
   end
 

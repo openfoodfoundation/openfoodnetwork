@@ -156,9 +156,9 @@ module Spree
     # any of order distributors allow them to edit their orders.
     def can_manage_line_items_in_orders?
       @can_manage_line_items_in_orders ||= begin
-        has_any_producer = enterprises.any?(&:is_producer)
-        has_producer_editable_orders = Spree::Order.editable_by_producers(enterprises).exists?
-        has_any_producer && has_producer_editable_orders
+        return unless enterprises.any?(&:is_producer_only)
+
+        Spree::Order.editable_by_producers(enterprises).exists?
       end
     end
 
