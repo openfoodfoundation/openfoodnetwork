@@ -24,7 +24,8 @@ module Permissions
     # Any orders that the user can edit
     def editable_orders
       orders = if @user.can_manage_line_items_in_orders_only?
-                 produced_orders.joins(:distributor).where(
+                 Spree::Order.joins(:distributor).where(
+                   id: produced_orders.select(:id),
                    distributor: { enable_producers_to_edit_orders: true }
                  )
                else
