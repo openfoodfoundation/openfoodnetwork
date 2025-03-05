@@ -1,0 +1,8 @@
+%tr
+  %td
+    %label
+      ❌
+      = absent_variant.product_and_full_name
+  %td
+    = t(".reset")
+    = link_to(absent_variant.product_id, edit_admin_product_path(absent_variant.product_id))
