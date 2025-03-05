@@ -76,11 +76,13 @@ RSpec.describe "DFC Product Import" do
     click_button "Preview"
 
     expect(page).to have_content "4 products to be imported"
+    expect(page).to have_content "One product is no longer"
     expect(page).to have_content "Saucy preserves"
     expect(page).not_to have_content "Sauce - 1g" # Does not show other product
     expect(page).to have_content "Beans - Retail can, 400g (can) Update" # existing product
     expect(page).to have_content "Beans - Case, 12 x 400g (can) New"
     expect(page).to have_content "Chia Seed, Organic - Retail pack, 300g"
+    expect(page).to have_content "Best Sauce of 1995 - 1g Reset stock"
 
     # I can select all
     uncheck "Chia Seed, Organic - Case, 8 x 300g"
