@@ -58,6 +58,7 @@ module Admin
       end
 
       @count = imported.compact.count
+      @reset_count = reset_absent_variants(catalog).count
     rescue ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
@@ -78,6 +79,24 @@ module Admin
           subject,
           @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
         ]
+      end
+    end
+
+    def reset_absent_variants(catalog)
+      present_ids = catalog.products.map(&:semanticId)
+      absent_variants = @enterprise.supplied_variants
+        .includes(:semantic_links).references(:semantic_links)
+        .where.not(semantic_links: { semantic_id: present_ids })
+
+      catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
+      absent_variants.select do |variant|
+        # Variants that were in the same catalog before:
+        variant.semantic_links.map(&:semantic_id).any? do |semantic_id|
+          FdcUrlBuilder.new(semantic_id).catalog_url == catalog_url
+        end
+      end.map do |variant|
+        variant.on_demand = false
+        variant.on_hand = 0
       end
     end
   end

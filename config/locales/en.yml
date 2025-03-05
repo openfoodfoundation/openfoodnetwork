@@ -866,6 +866,7 @@ en:
       import:
         title: "DFC product catalog import"
         imported_products: "Imported products:"
+        reset_products: "Stock reset for absent products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
