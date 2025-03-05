@@ -120,7 +120,6 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
       context "producer enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: supplier.owner
-          get :index, as: :json
         end
 
         context "with no distributor allows to edit orders" do
