@@ -14,7 +14,6 @@ module Admin
 
     def index
       # Fetch DFC catalog JSON for preview
-      api = DfcRequest.new(spree_current_user)
       @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
       catalog = DfcCatalog.from_json(@catalog_json)
@@ -66,6 +65,10 @@ module Admin
     end
 
     private
+
+    def api
+      @api ||= DfcRequest.new(spree_current_user)
+    end
 
     def load_enterprise
       @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
