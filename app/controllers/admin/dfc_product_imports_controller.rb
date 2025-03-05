@@ -82,6 +82,12 @@ module Admin
       end
     end
 
+    # Reset stock for any variants that were removed from the catalog.
+    #
+    # When variants are removed from the remote catalog, there not for sale
+    # anymore. We prevent them from being sold by reseting stock to zero.
+    # We don't delete the variant because it may come back at a later time and
+    # we don't want to lose the connection to previous orders.
     def reset_absent_variants(catalog)
       present_ids = catalog.products.map(&:semanticId)
       absent_variants = @enterprise.supplied_variants
