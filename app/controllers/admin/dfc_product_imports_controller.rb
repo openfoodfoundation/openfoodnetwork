@@ -21,6 +21,7 @@ module Admin
 
       # Render table and let user decide which ones to import.
       @items = list_products(catalog)
+      @absent_items = absent_variants(catalog)
     rescue URI::InvalidURIError
       flash[:error] = t ".invalid_url"
       redirect_to admin_product_import_path
@@ -89,20 +90,24 @@ module Admin
     # We don't delete the variant because it may come back at a later time and
     # we don't want to lose the connection to previous orders.
     def reset_absent_variants(catalog)
+      absent_variants(catalog).map do |variant|
+        variant.on_demand = false
+        variant.on_hand = 0
+      end
+    end
+
+    def absent_variants(catalog)
       present_ids = catalog.products.map(&:semanticId)
-      absent_variants = @enterprise.supplied_variants
+      catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
+
+      @enterprise.supplied_variants
         .includes(:semantic_links).references(:semantic_links)
         .where.not(semantic_links: { semantic_id: present_ids })
-
-      catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
-      absent_variants.select do |variant|
+        .select do |variant|
         # Variants that were in the same catalog before:
         variant.semantic_links.map(&:semantic_id).any? do |semantic_id|
           FdcUrlBuilder.new(semantic_id).catalog_url == catalog_url
         end
-      end.map do |variant|
-        variant.on_demand = false
-        variant.on_hand = 0
       end
     end
   end

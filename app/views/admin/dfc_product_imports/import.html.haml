@@ -5,4 +5,4 @@
 
 %p= t(".imported_products", count: @count)
 
-%p= t(".reset_products", count: @reset_count)
+%p= t(".reset_products", count: @reset_count) if @reset_count.positive?

@@ -6,6 +6,7 @@
 
   %p= t('.catalog_url', count: @items.count, catalog_url: @catalog_url)
   %p= t('.enterprise', enterprise_name: @enterprise.name)
+  %p= t('.absent_products', count: @absent_items.count)
   %br
 
   = form_with url: main_app.import_admin_dfc_product_imports_path, html: { "data-controller": "checked" } do |form|
@@ -32,6 +33,7 @@
                 = link_to(existing_product.id, edit_admin_product_path(existing_product))
               - else
                 = t(".new")
+        = render partial: "absent_variant", collection: @absent_items
 
     %span{ "data-controller": "checked-feedback", "data-checked-feedback-translation-value": "admin.dfc_product_imports.index.selected" }
       = t(".selected", count: @items.count)
