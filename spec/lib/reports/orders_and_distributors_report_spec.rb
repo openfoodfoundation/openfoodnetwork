@@ -134,6 +134,17 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
             expect(row[2..5]).to eq [bill_address.full_name, "HIDDEN", "", ""]
           end
         end
+
+        context "where the distributor allows suppliers to see customer phone and email" do
+          before do
+            distributor.update_columns show_customer_contacts_to_suppliers: true
+          end
+
+          it "shows line items supplied by my producers, with only contact details shown" do
+            expect(row).not_to include("FirstName LastName", "City")
+            expect(row[2..5]).to eq ["HIDDEN", order.email, "123-456", ""]
+          end
+        end
       end
 
       it "minimises database queries" do

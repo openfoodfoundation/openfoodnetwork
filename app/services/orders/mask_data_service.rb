@@ -8,7 +8,7 @@ module Orders
 
     def call
       mask_customer_names unless customer_names_allowed?
-      mask_contact_data
+      mask_contact_data unless cutomer_contacts_allowed?
       mask_address
     end
 
@@ -25,6 +25,10 @@ module Orders
                                             lastname: "")
       order.ship_address&.assign_attributes(firstname: I18n.t('admin.reports.hidden'),
                                             lastname: "")
+    end
+
+    def cutomer_contacts_allowed?
+      order.distributor.show_customer_contacts_to_suppliers
     end
 
     def mask_contact_data

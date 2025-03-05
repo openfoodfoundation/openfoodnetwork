@@ -82,5 +82,29 @@ RSpec.describe Orders::MaskDataService do
       include_examples "mask customer contact data"
       include_examples "mask customer address"
     end
+
+    context 'when displaying customer contact data is allowed' do
+      before { distributor.show_customer_contacts_to_suppliers = true }
+
+      include_examples "mask customer name"
+      include_examples "mask customer address"
+
+      it 'does not mask the phone or email' do
+        described_class.new(order).call
+
+        expect(order.bill_address.attributes).not_to include('phone' => '')
+        expect(order.ship_address.attributes).not_to include('phone' => '')
+
+        expect(order.email).not_to eq('HIDDEN')
+      end
+    end
+
+    context 'when displaying customer contact data is not allowed' do
+      before { distributor.show_customer_contacts_to_suppliers = false }
+
+      include_examples "mask customer name"
+      include_examples "mask customer contact data"
+      include_examples "mask customer address"
+    end
   end
 end
