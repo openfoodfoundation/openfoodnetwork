@@ -9,6 +9,7 @@ module Orders
     def call
       mask_customer_names unless customer_names_allowed?
       mask_contact_data
+      mask_address
     end
 
     private
@@ -27,11 +28,16 @@ module Orders
     end
 
     def mask_contact_data
-      order.bill_address&.assign_attributes(phone: "", address1: "", address2: "",
-                                            city: "", zipcode: "", state: nil)
-      order.ship_address&.assign_attributes(phone: "", address1: "", address2: "",
-                                            city: "", zipcode: "", state: nil)
+      order.bill_address&.assign_attributes(phone: "")
+      order.ship_address&.assign_attributes(phone: "")
       order.assign_attributes(email: I18n.t('admin.reports.hidden'))
+    end
+
+    def mask_address
+      order.bill_address&.assign_attributes(address1: "", address2: "",
+                                            city: "", zipcode: "", state: nil)
+      order.ship_address&.assign_attributes(address1: "", address2: "",
+                                            city: "", zipcode: "", state: nil)
     end
   end
 end
