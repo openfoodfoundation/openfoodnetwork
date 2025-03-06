@@ -164,8 +164,6 @@ module Spree
       self.login ||= email if email
     end
 
-    # Generate a friendly string randomically to be used as token.
-
     def limit_owned_enterprises
       return unless owned_enterprises.size > enterprise_limit
 
