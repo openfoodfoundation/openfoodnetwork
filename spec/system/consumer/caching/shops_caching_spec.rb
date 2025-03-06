@@ -95,23 +95,33 @@ RSpec.describe "Shops caching", caching: true do
       Timecop.travel(10.minutes.ago) do
         visit enterprise_shop_path(distributor)
 
-        expect(page).to have_content taxon.name
-        expect(page).to have_content property.presentation
+        # The page HTML contains the cached text but we need to test for the
+        # visible filters which are loaded asynchronously.
+        # Otherwise we may update the database before the AJAX requests
+        # and cache the new data.
+        within(".sticky-shop-filters-container", text: "Filter by") do
+          expect(page).to have_content taxon.name
+          expect(page).to have_content property.presentation
+        end
 
         variant.update_attribute(:primary_taxon, taxon2)
         product.update_attribute(:properties, [property2])
 
         visit enterprise_shop_path(distributor)
 
-        expect(page).to have_content taxon.name # Taxon list is unchanged
-        expect(page).to have_content property.presentation # Property list is unchanged
+        within(".sticky-shop-filters-container", text: "Filter by") do
+          expect(page).to have_content taxon.name # Taxon list is unchanged
+          expect(page).to have_content property.presentation # Property list is unchanged
+        end
       end
 
       # A while later...
       visit enterprise_shop_path(distributor)
 
-      expect(page).to have_content taxon2.name
-      expect(page).to have_content property2.presentation
+      within(".sticky-shop-filters-container", text: "Filter by") do
+        expect(page).to have_content taxon2.name
+        expect(page).to have_content property2.presentation
+      end
     end
   end
 
