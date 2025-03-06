@@ -368,8 +368,6 @@ RSpec.describe CheckoutController, type: :controller do
             end
 
             it "deletes invalid (old) payments" do
-              pending "#12693 ActiveRecord::RecordNotFound: Couldn't find Spree::Payment"
-
               put(:update, params:)
               order.payments.reload
               expect(order.payments).not_to include other_payment
