@@ -68,11 +68,8 @@ module PaymentGateways
     end
 
     def valid_payment_intent?
-      @valid_payment_intent ||= begin
-        return false unless params["payment_intent"]&.starts_with?("pi_")
-
-        order_and_payment_valid?
-      end
+      @valid_payment_intent ||= params["payment_intent"]&.starts_with?("pi_") &&
+                                order_and_payment_valid?
     end
 
     def order_and_payment_valid?

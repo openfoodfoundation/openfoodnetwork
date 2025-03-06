@@ -2,7 +2,7 @@
 
 require_relative '../../../spec/spec_helper'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   config.include AuthorizationHelper, type: :request

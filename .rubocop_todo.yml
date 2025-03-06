@@ -39,24 +39,6 @@ Lint/FloatComparison:
   Exclude:
     - 'app/models/spree/gateway/pay_pal_express.rb'
 
-# Offense count: 1
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'app/models/spree/user.rb'
-
-# Offense count: 1
-Lint/NoReturnInBeginEndBlocks:
-  Exclude:
-    - 'app/controllers/payment_gateways/stripe_controller.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/RedundantDirGlobSort:
-  Exclude:
-    - 'engines/catalog/spec/spec_helper.rb'
-    - 'engines/dfc_provider/spec/spec_helper.rb'
-    - 'spec/system_helper.rb'
-
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
