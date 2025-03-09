@@ -84,7 +84,7 @@ module Spree
       end
 
       def refund(payment, amount)
-        refund_type = payment.amount == amount.to_f ? "Full" : "Partial"
+        refund_type = payment.amount == amount.to_d ? "Full" : "Partial"
         refund_transaction = provider.build_refund_transaction(
           TransactionID: payment.source.transaction_id,
           RefundType: refund_type,
