@@ -24,6 +24,7 @@ class EnterprisesController < BaseController
     set_noindex_meta_tag
 
     @enterprise = current_distributor
+    store_location_for :spree_user, request.original_fullpath
   end
 
   def relatives
