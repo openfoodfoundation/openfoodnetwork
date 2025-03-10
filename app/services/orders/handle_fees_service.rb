@@ -18,6 +18,9 @@ module Orders
       order.with_lock do
         EnterpriseFee.clear_order_adjustments order
 
+        # To prevent issue with fee being removed when a product is not linked to the order cycle
+        # anymore, we now create or update line item fees.
+        # Previously fees were deleted and recreated, like we still do for order fees.
         create_or_update_line_item_fees!
         create_order_fees!
       end
