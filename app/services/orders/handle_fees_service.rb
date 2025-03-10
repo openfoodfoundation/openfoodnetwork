@@ -29,7 +29,10 @@ module Orders
     def create_or_update_line_item_fees!
       order.line_items.includes(:variant).each do |line_item|
         # No fee associated with the line item so we just create them
-        next create_line_item_fees!(line_item) if line_item.enterprise_fee_adjustments.blank?
+        if line_item.enterprise_fee_adjustments.blank?
+          create_line_item_fees!(line_item)
+          next
+        end
 
         create_or_update_line_item_fee!(line_item)
 
