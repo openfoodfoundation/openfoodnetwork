@@ -2278,20 +2278,9 @@ nl_BE:
   spree_admin_enterprises_fees: "Ondernemingsvergoedingen"
   spree_admin_enterprises_none_create_a_new_enterprise: "MAAK EEN NIEUW BEDRIJF"
   spree_admin_enterprises_none_text: "Je hebt nog geen ondernemingen"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "BEHEER PRODUCTEN"
   spree_admin_enterprises_create_new_product: "MAAK EEN  NIEUW PRODUCT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Gelieve het e-mailadres te bevestigen voor"
-  spree_admin_single_enterprise_alert_mail_sent: "We hebben je een E-mail verzonden"
-  spree_admin_overview_action_required: "Actie Vereist"
-  spree_admin_overview_check_your_inbox: "Controleer alsjeblieft je inbox voor verdere instructies. Dankje!"
-  spree_admin_unit_value: Eenheid Waarde
-  spree_admin_unit_description: Eenheid Beschrijving
-  spree_admin_variant_unit: Variant eenheid
-  spree_admin_variant_unit_scale: ' Eénheidschaal  (g of L)'
   spree_admin_supplier: Leverancier
-  spree_admin_product_category: Product categorie
-  spree_admin_variant_unit_name: Naam van het stuk (indien per stuk verkocht)
   unit_name: "Unit naam"
   change_package: "Wijzig je Packet"
   spree_admin_single_enterprise_hint: "Hint: Om het voor mensen mogelijk te maken je te vinden, zet je zichtbaarheid aan"

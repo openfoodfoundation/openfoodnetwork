@@ -2903,20 +2903,9 @@ sr:
   spree_admin_enterprises_fees: "Ентерприсе Феес"
   spree_admin_enterprises_none_create_a_new_enterprise: "НАПРАВИТЕ НОВО ПРЕДУЗЕЋЕ"
   spree_admin_enterprises_none_text: "Још увек немате ниједно предузеће"
-  spree_admin_enterprises_tabs_hubs: "ХУБС"
   spree_admin_enterprises_producers_manage_products: "УПРАВЉАЈТЕ ПРОИЗВОДИМА"
   spree_admin_enterprises_create_new_product: "НАПРАВИТЕ НОВИ ПРОИЗВОД"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Молимо потврдите адресу е-поште за"
-  spree_admin_single_enterprise_alert_mail_sent: "Послали смо е-пошту на"
-  spree_admin_overview_action_required: "Мере потребне"
-  spree_admin_overview_check_your_inbox: "Проверите своје пријемно сандуче за даља упутства. Хвала!"
-  spree_admin_unit_value: Јединична вредност
-  spree_admin_unit_description: Опис јединице
-  spree_admin_variant_unit: Варијанта јединица
-  spree_admin_variant_unit_scale: Варијанта јединица скале
   spree_admin_supplier: Добављач
-  spree_admin_product_category: Производ Категорија
-  spree_admin_variant_unit_name: Назив јединице варијанте
   unit_name: "Назив јединице"
   change_package: "Промени пакет"
   spree_admin_single_enterprise_hint: "Савет: Да бисте омогућили људима да вас пронађу, укључите своју видљивост испод"

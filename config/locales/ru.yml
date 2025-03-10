@@ -707,6 +707,8 @@ ru:
       index:
         update: Обновить
         new: Новый
+        selected:
+          other: "выбрано %{count}"
         import: Импорт
       import:
         imported_products: "Внесенные товары:"
@@ -2824,20 +2826,9 @@ ru:
   spree_admin_enterprises_fees: "Сборы Предприятия"
   spree_admin_enterprises_none_create_a_new_enterprise: "СОЗДАТЬ НОВОЕ ПРЕДПРИЯТИЕ"
   spree_admin_enterprises_none_text: "У Вас еще нет Предприятий"
-  spree_admin_enterprises_tabs_hubs: "ЦЕНТРЫ"
   spree_admin_enterprises_producers_manage_products: "УПРАВЛЯТЬ ТОВАРАМИ"
   spree_admin_enterprises_create_new_product: "СОЗДАТЬ НОВЫЙ ТОВАР"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Пожалуйста, подтвердите адрес электронной почты для"
-  spree_admin_single_enterprise_alert_mail_sent: "Мы отправили письмо на"
-  spree_admin_overview_action_required: "Требуется действие"
-  spree_admin_overview_check_your_inbox: "Пожалуйста, проверьте свой почтовый ящик для дальнейших инструкций. Спасибо!"
-  spree_admin_unit_value: Значение Единицы
-  spree_admin_unit_description: Описание Единицы
-  spree_admin_variant_unit: Вариант единицы
-  spree_admin_variant_unit_scale: Вариант шкалы единиц
   spree_admin_supplier: Поставщик
-  spree_admin_product_category: Категория Продукта
-  spree_admin_variant_unit_name: Наименование варианта
   unit_name: "Название элемента"
   change_package: "Сменить Пакет"
   spree_admin_single_enterprise_hint: "Подсказка: чтобы люди могли вас найти, включите видимость в"

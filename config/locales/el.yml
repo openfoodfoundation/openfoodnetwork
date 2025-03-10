@@ -721,6 +721,8 @@ el:
       index:
         update: Ενημέρωση
         new: Νέος
+        selected:
+          other: "%{count}επιλέχθηκε"
         import: Εισαγωγή
       import:
         imported_products: "Εισαγόμενα προϊόντα:"
@@ -2830,20 +2832,9 @@ el:
   spree_admin_enterprises_fees: "Τέλη επιχείρησης"
   spree_admin_enterprises_none_create_a_new_enterprise: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΑ ΕΠΙΧΕΙΡΗΣΗ"
   spree_admin_enterprises_none_text: "Δεν έχετε ακόμη επιχειρήσεις"
-  spree_admin_enterprises_tabs_hubs: "ΚΕΝΤΡΑ ΔΙΑΝΟΜΗΣ"
   spree_admin_enterprises_producers_manage_products: "Διαχείριση προϊόντων"
   spree_admin_enterprises_create_new_product: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ ΠΡΟDΟΝ"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Παρακαλώ επιβεβαιώστε τη διεύθυνση email για"
-  spree_admin_single_enterprise_alert_mail_sent: "Έχουμε στείλει ένα email στο"
-  spree_admin_overview_action_required: "Απαιτείται Ενέργεια"
-  spree_admin_overview_check_your_inbox: "Ελέγξτε τα εισερχόμενά σας για περισσότερες οδηγίες. Ευχαριστώ!"
-  spree_admin_unit_value: Αξία μονάδας
-  spree_admin_unit_description: Περιγραφή μονάδας
-  spree_admin_variant_unit: Μονάδα παραλλαγής
-  spree_admin_variant_unit_scale: Κλίμακα μονάδας παραλλαγής
   spree_admin_supplier: Προμηθευτής
-  spree_admin_product_category: Κατηγορία προϊόντων
-  spree_admin_variant_unit_name: Όνομα παραλλαγής μονάδας
   unit_name: "Όνομα μονάδας"
   change_package: "Αλλαγή πακέτου"
   spree_admin_single_enterprise_hint: "Υπόδειξη: Για να επιτρέψεις στους άλλους να σε βρουν, ενεργοποίησε την ορατότητά σου πατώντας παρακάτω στό: "

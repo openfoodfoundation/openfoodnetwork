@@ -640,6 +640,8 @@ ar:
       index:
         update: تحديث
         new: جديد
+        selected:
+          other: "%{count} تم تحديد"
         import: استيراد
     enterprise_fees:
       index:
@@ -2628,20 +2630,9 @@ ar:
   spree_admin_enterprises_fees: "رسوم الشركة"
   spree_admin_enterprises_none_create_a_new_enterprise: "إنشاء مؤسسة جديدة"
   spree_admin_enterprises_none_text: "ليس لديك أي مؤسسات حتى الآن"
-  spree_admin_enterprises_tabs_hubs: "مراكز بيع"
   spree_admin_enterprises_producers_manage_products: "إدارة المنتجات"
   spree_admin_enterprises_create_new_product: "إنشاء منتج جديد"
-  spree_admin_single_enterprise_alert_mail_confirmation: "يرجى تأكيد عنوان البريد الإلكتروني ل"
-  spree_admin_single_enterprise_alert_mail_sent: "لقد أرسلنا رسالة إلكترونية إلى"
-  spree_admin_overview_action_required: "الإجراء مطلوب"
-  spree_admin_overview_check_your_inbox: "يرجى التحقق من صندوق الوارد الخاص بك لمزيد من التعليمات. شكر!"
-  spree_admin_unit_value: قيمة النوع 
-  spree_admin_unit_description: وصف الوحدة
-  spree_admin_variant_unit: 'وحدة النوع '
-  spree_admin_variant_unit_scale: 'النوع مقياس وحدة '
   spree_admin_supplier: المورد
-  spree_admin_product_category: 'نوع المنتج '
-  spree_admin_variant_unit_name: 'النوع اسم الوحدة '
   unit_name: "إسم الوحدة"
   change_package: "تغيير الحزمة"
   spree_admin_single_enterprise_hint: "لمحة: للسماح للأشخاص بالعثور عليك ، قم بتشغيل الرؤية الخاصة بك أسفل"

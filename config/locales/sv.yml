@@ -1585,19 +1585,9 @@ sv:
   spree_admin_enterprises_fees: "Företagsavgifter"
   spree_admin_enterprises_none_create_a_new_enterprise: "SKAPA ETT NYTT FÖRETAG"
   spree_admin_enterprises_none_text: "Du har inget företag ännu"
-  spree_admin_enterprises_tabs_hubs: "MATSTÄLLEN"
   spree_admin_enterprises_producers_manage_products: "HANTERA PRODUKTER"
   spree_admin_enterprises_create_new_product: "SKAPA EN NY PRODUKT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Var vänlig och fastställ e-postadressen för"
-  spree_admin_single_enterprise_alert_mail_sent: "Vi har sänt e-post till "
-  spree_admin_overview_action_required: "Ett ställningstagande behövs"
-  spree_admin_overview_check_your_inbox: "Var vänlig kontrollera din inkorg för ytterligare instruktioner. Tack!"
-  spree_admin_unit_value: Enhetspris
-  spree_admin_unit_description: Enhetsbeskrivning
-  spree_admin_variant_unit: Variant enhet
-  spree_admin_variant_unit_scale: Variant enhetsskala
   spree_admin_supplier: Leverantör
-  spree_admin_variant_unit_name: 'Variant enhetsnamn '
   change_package: "Ändra förpackning"
   spree_admin_single_enterprise_hint: "Tips: För att folk skall hitta dig lättare, slå på din reklam under"
   spree_admin_eg_pickup_from_school: "t.ex. \"Upphämtning från grundskolan\""

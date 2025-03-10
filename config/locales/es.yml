@@ -2812,20 +2812,9 @@ es:
   spree_admin_enterprises_fees: "Comisiones de la Organización"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREAR NUEVA ORGANIZACIÓN"
   spree_admin_enterprises_none_text: "No tienes ninguna organización"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "GESTIONAR PRODUCTOS"
   spree_admin_enterprises_create_new_product: "CREAR UN NUEVO PRODUCTO"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Confirma la dirección de email para"
-  spree_admin_single_enterprise_alert_mail_sent: "Te hemos enviado un mail a"
-  spree_admin_overview_action_required: "Acción Requerida"
-  spree_admin_overview_check_your_inbox: "Revisa tu bandeja de entrada para las siguientes instrucciones. Gracias!"
-  spree_admin_unit_value: Valor unidad
-  spree_admin_unit_description: Descripción de la unidad
-  spree_admin_variant_unit: Variante
-  spree_admin_variant_unit_scale: Escala de unidad
   spree_admin_supplier: Proveedora
-  spree_admin_product_category: categoría del producto
-  spree_admin_variant_unit_name: Nombre de la variante
   unit_name: "Nombre de la unidad"
   change_package: "Cambiar Perfil"
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"

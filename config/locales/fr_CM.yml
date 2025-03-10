@@ -2454,20 +2454,9 @@ fr_CM:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
-  spree_admin_enterprises_tabs_hubs: "BOUTIQUES"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
-  spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
-  spree_admin_overview_action_required: "Action requise"
-  spree_admin_overview_check_your_inbox: "Veuillez vérifier votre boîte mail pour les prochaines étapes. Merci !"
-  spree_admin_unit_value: Nb Unités
-  spree_admin_unit_description: 'Description complémentaire (ex: "(vrac)")'
-  spree_admin_variant_unit: Unité
-  spree_admin_variant_unit_scale: Echelle unitaire (en g ou L)
   spree_admin_supplier: Fournisseur
-  spree_admin_product_category: Catégorie Produit
-  spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   unit_name: "Unité"
   change_package: "Changer de type de profil"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "

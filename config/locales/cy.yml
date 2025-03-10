@@ -699,6 +699,8 @@ cy:
       index:
         update: Diweddaru
         new: Newydd
+        selected:
+          other: "Dewiswyd %{count}"
         import: Mewnforio
     enterprise_fees:
       index:
@@ -2781,20 +2783,9 @@ cy:
   spree_admin_enterprises_fees: "Ffioedd Menter"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREU MENTER NEWYDD"
   spree_admin_enterprises_none_text: "Nid oes gennych unrhyw fentrau eto"
-  spree_admin_enterprises_tabs_hubs: "HYBIAU"
   spree_admin_enterprises_producers_manage_products: "RHEOLI CYNNYRCH"
   spree_admin_enterprises_create_new_product: "CREU CYNNYRCH NEWYDD"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Dylid cadarnhau'r cyfeiriad e-bost ar gyfer"
-  spree_admin_single_enterprise_alert_mail_sent: "Anfonwyd e-bost at"
-  spree_admin_overview_action_required: "Camau Angenrheidiol"
-  spree_admin_overview_check_your_inbox: "Gwiriwch eich mewnflwch am gyfarwyddiadau pellach. Diolch!"
-  spree_admin_unit_value: Gwerth yr Uned
-  spree_admin_unit_description: Disgrifiad o'r Uned
-  spree_admin_variant_unit: Uned amrywiolyn
-  spree_admin_variant_unit_scale: Graddfa uned amrywiolyn
   spree_admin_supplier: Cyflenwr
-  spree_admin_product_category: Categori Cynnyrch
-  spree_admin_variant_unit_name: Enw uned amrywiolyn
   unit_name: "Enw'r uned"
   change_package: "Newid Pecyn"
   spree_admin_single_enterprise_hint: "Awgrym: Er mwyn caniatáu i bobl ddod o hyd i chi, gofalwch fod pobl yn gallu eich gweld"

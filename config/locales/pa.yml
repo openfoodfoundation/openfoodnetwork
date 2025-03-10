@@ -688,6 +688,8 @@ pa:
       index:
         update: ਅੱਪਡੇਟ
         new: ਨਵਾਂ
+        selected:
+          other: "%{count} ਚੁਣੇ ਗਏ"
         import: ਇਮਪੋਰਟ
     enterprise_fees:
       index:
@@ -2723,20 +2725,9 @@ pa:
   spree_admin_enterprises_fees: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਫ਼ੀਸ"
   spree_admin_enterprises_none_create_a_new_enterprise: "ਇੱਕ ਨਵਾਂ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਬਣਾਓ"
   spree_admin_enterprises_none_text: "ਤੁਹਾਡੇ ਕੋਲ ਅਜੇ ਕੋਈ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਨਹੀਂ ਹੈ"
-  spree_admin_enterprises_tabs_hubs: "ਹੱਬ"
   spree_admin_enterprises_producers_manage_products: "ਉਤਪਾਦਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ"
   spree_admin_enterprises_create_new_product: "ਇੱਕ ਨਵਾਂ ਉਤਪਾਦ ਬਣਾਓ"
-  spree_admin_single_enterprise_alert_mail_confirmation: "ਕਿਰਪਾ ਕਰਕੇ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
-  spree_admin_single_enterprise_alert_mail_sent: "ਅਸੀਂ ਇਸ ਨੂੰ ਇੱਕ ਈਮੇਲ ਭੇਜੀ ਹੈ"
-  spree_admin_overview_action_required: "ਕਾਰਵਾਈ ਲੋੜੀਂਦੀ ਹੈ"
-  spree_admin_overview_check_your_inbox: "ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਹਦਾਇਤਾਂ ਲਈ ਆਪਣੇ ਇਨਬਾਕਸ ਦੀ ਜਾਂਚ ਕਰੋ। ਧੰਨਵਾਦ!"
-  spree_admin_unit_value: ਯੂਨਿਟ ਵੈਲਯੂ
-  spree_admin_unit_description: ਯੂਨਿਟ ਵਰਣਨ
-  spree_admin_variant_unit: ਵੇਰੀਐਂਟ ਯੂਨਿਟ
-  spree_admin_variant_unit_scale: ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਸਕੇਲ
   spree_admin_supplier: ਸਪਲਾਇਰ
-  spree_admin_product_category: ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ
-  spree_admin_variant_unit_name: ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ
   unit_name: "ਯੂਨਿਟ ਦਾ ਨਾਮ"
   change_package: "ਪੈਕੇਜ ਬਦਲੋ"
   spree_admin_single_enterprise_hint: "ਸੰਕੇਤ: ਲੋਕਾਂ ਨੂੰ ਤੁਹਾਨੂੰ ਲੱਭਣ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ, ਇਸ ਦੇ ਹੇਠਾਂ ਆਪਣੀ ਦਿੱਖ ਨੂੰ ਚਾਲੂ ਕਰੋ"

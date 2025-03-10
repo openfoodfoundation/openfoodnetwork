@@ -2400,20 +2400,9 @@ tr:
   spree_admin_enterprises_fees: "İşletme Ücretleri"
   spree_admin_enterprises_none_create_a_new_enterprise: "YENİ BİR İŞLETME OLUŞTUR"
   spree_admin_enterprises_none_text: "Henüz hiç işletmeniz yok"
-  spree_admin_enterprises_tabs_hubs: "PAZARLAR"
   spree_admin_enterprises_producers_manage_products: "ÜRÜNLERİ YÖNET"
   spree_admin_enterprises_create_new_product: "YENİ BİR ÜRÜN OLUŞTUR"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Lütfen e-posta adresini onaylayın:"
-  spree_admin_single_enterprise_alert_mail_sent: "Bu adrese bir e-posta gönderdik:"
-  spree_admin_overview_action_required: "Eylem Gerekli"
-  spree_admin_overview_check_your_inbox: "Diğer talimatlar için lütfen gelen kutunuzu kontrol edin. Teşekkürler!"
-  spree_admin_unit_value: Birim değeri
-  spree_admin_unit_description: Birim Tanımı
-  spree_admin_variant_unit: Çeşit Birimi
-  spree_admin_variant_unit_scale: Çeşit Ölçü Birimi
   spree_admin_supplier: Tedarikçi
-  spree_admin_product_category: Ürün Kategorisi
-  spree_admin_variant_unit_name: Çeşit Birimi Adı
   unit_name: "Birim adı"
   change_package: "HESAP TÜRÜNÜ DEĞİŞTİR"
   spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için 'Görünür' olmayı ayarlamayı unutmayın:"

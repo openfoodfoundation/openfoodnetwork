@@ -2228,20 +2228,9 @@ fil_PH:
   spree_admin_enterprises_fees: "bayad para sa enterprise"
   spree_admin_enterprises_none_create_a_new_enterprise: "GUMAWA NG BAGONG ENTERPRISE"
   spree_admin_enterprises_none_text: "wala ka pang mga enterprise"
-  spree_admin_enterprises_tabs_hubs: "MGA HUB"
   spree_admin_enterprises_producers_manage_products: "PAMAHALAAN ANG MGA PRODUKTO"
   spree_admin_enterprises_create_new_product: "LUMIKHA NG BAGONG PRODUKTO"
-  spree_admin_single_enterprise_alert_mail_confirmation: "kumpirmahin ang email address para sa/kay"
-  spree_admin_single_enterprise_alert_mail_sent: "naipadala na ang email sa"
-  spree_admin_overview_action_required: "kailangan ng aksyon"
-  spree_admin_overview_check_your_inbox: "tignan ang iyong inbox para sa karagdagang panuto. maraming salamat!"
-  spree_admin_unit_value: halaga kada yunit
-  spree_admin_unit_description: paglalarawan sa bawat yunit
-  spree_admin_variant_unit: Variant unit
-  spree_admin_variant_unit_scale: sukat ng Variant unit
   spree_admin_supplier: Supplier
-  spree_admin_product_category: kategorya ng produkto
-  spree_admin_variant_unit_name: pangalan ng variant unit
   unit_name: "pangalan ng yunit"
   change_package: "palitan ang package"
   spree_admin_single_enterprise_hint: "payo: para mahanap ka ng ibang tao, i-turn on ang visibility sa ilalim ng"

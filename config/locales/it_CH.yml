@@ -2509,20 +2509,9 @@ it_CH:
   spree_admin_enterprises_fees: "Tariffe dell'azienda"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREA NUOVA AZIENDA"
   spree_admin_enterprises_none_text: "Non hai nessua azienda al momento"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "GESTISCI PRODOTTI"
   spree_admin_enterprises_create_new_product: "CREA UN NUOVO PRODOTTO"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Conferma l'indirizzo email per"
-  spree_admin_single_enterprise_alert_mail_sent: "Abbiamo spedito una mail a"
-  spree_admin_overview_action_required: "Azione richiesta"
-  spree_admin_overview_check_your_inbox: "Controlla le tua email per ulteriori istruzioni. Grazie!"
-  spree_admin_unit_value: Unità di valore
-  spree_admin_unit_description: Descrizione Unità
-  spree_admin_variant_unit: Variante
-  spree_admin_variant_unit_scale: Scala delle unità
   spree_admin_supplier: Fornitore
-  spree_admin_product_category: Categoria prodotto
-  spree_admin_variant_unit_name: Nome della variante
   unit_name: "Nome Unità"
   change_package: "Cambia pacchetto"
   spree_admin_single_enterprise_hint: "Suggerimento: Per permettere alle persone di trovarti, abilita la tua visibilità sotto"
