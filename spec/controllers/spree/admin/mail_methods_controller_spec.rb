@@ -22,7 +22,8 @@ RSpec.describe Spree::Admin::MailMethodsController do
                           owned_groups: nil)
     allow(user).to receive_messages(enterprises: [create(:enterprise)],
                                     admin?: true,
-                                    locale: nil)
+                                    locale: nil,
+                                    can_manage_orders?: true)
     allow(controller).to receive_messages(spree_current_user: user)
 
     expect {
