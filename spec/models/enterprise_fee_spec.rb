@@ -174,16 +174,18 @@ RSpec.describe EnterpriseFee do
       line_item2 = create(:line_item, order:, variant: order_cycle.variants.second)
 
       # Order adjustment
-      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, true)
-      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, true)
+      fee1 = order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, true)
+      fee2 = order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, true)
       # Line item adjustment
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2, true)
+      fee3 = order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1, true)
+      fee4 = order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2, true)
 
+      described_class.clear_order_adjustments order
+
+      adjustments = order.all_adjustments
       # does not clear line item adjustments
-      expect do
-        described_class.clear_order_adjustments order
-      end.to change { order.all_adjustments.count }.by(-2)
+      expect(adjustments).not_to include(fee1, fee2)
+      expect(adjustments).to include(fee3, fee4)
     end
   end
 
