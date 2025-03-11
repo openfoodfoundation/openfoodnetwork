@@ -61,6 +61,9 @@ module OpenFoodNetwork
       "open_in_same_tab" => <<~DESC,
         Open the admin dashboard in the same tab instead of a new tab.
       DESC
+      "variant_tag" => <<~DESC,
+        Variant Tag are available on the Bulk Edit Products page.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
