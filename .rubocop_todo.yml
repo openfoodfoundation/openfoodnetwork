@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLines:
-  Exclude:
-    - 'app/services/products_renderer.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -27,17 +21,6 @@ Lint/EmptyBlock:
     - 'spec/jobs/order_cycle_opened_job_spec.rb'
     - 'spec/jobs/subscription_placement_job_spec.rb'
     - 'spec/models/product_import/entry_validator_spec.rb'
-
-# Offense count: 4
-# Configuration parameters: AllowComments.
-Lint/EmptyClass:
-  Exclude:
-    - 'spec/lib/reports/report_loader_spec.rb'
-
-# Offense count: 1
-Lint/FloatComparison:
-  Exclude:
-    - 'app/models/spree/gateway/pay_pal_express.rb'
 
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.

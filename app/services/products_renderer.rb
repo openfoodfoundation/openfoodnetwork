@@ -2,7 +2,6 @@
 
 require 'open_food_network/scope_product_to_hub'
 
-
 class ProductsRenderer
   include Pagy::Backend
 
