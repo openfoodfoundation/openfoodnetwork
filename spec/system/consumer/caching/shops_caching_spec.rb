@@ -83,8 +83,11 @@ RSpec.describe "Shops caching", caching: true do
     it "caches rendered response for taxons and properties, with the provided options" do
       visit enterprise_shop_path(distributor)
 
-      expect(page).to have_content "Cached Taxon"
-      expect(page).to have_content "Cached Property"
+      # Ensure we test for the right text after AJAX loads filters:
+      within(".sticky-shop-filters-container", text: "Filter by") do
+        expect(page).to have_content "Cached Taxon"
+        expect(page).to have_content "Cached Property"
+      end
 
       expect_cached taxons_key, options
       expect_cached properties_key, options
