@@ -29,6 +29,7 @@ export default class ColumnPreferencesController extends Controller {
     const element = e.target || e;
     const name = element.dataset.columnName;
 
+    // Css defined in app/webpacker/css/admin/products_v3.scss
     this.table.classList.toggle(`hide-${name}`, !element.checked);
 
     // Reset cell colspans

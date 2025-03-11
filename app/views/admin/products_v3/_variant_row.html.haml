@@ -74,6 +74,9 @@
       aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
   = error_message_on variant, :tax_category
+- if feature?(:variant_tag, spree_current_user)
+  %td.col-tags.field.naked_inputs
+    = f.text_field :variant_tag_list, 'aria-label': t('admin.products_page.columns.tags'), value: variant.variant_tag_list.join(",")
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right

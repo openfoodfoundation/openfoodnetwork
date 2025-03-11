@@ -81,7 +81,7 @@ module OpenFoodNetwork
       producer_visibility = display_producer_column?(user)
 
       I18n.with_options scope: 'admin.products_page.columns' do
-        {
+        columns = {
           image: { name: t(:image), visible: true },
           name: { name: t(:name), visible: true },
           sku: { name: t(:sku), visible: true },
@@ -92,8 +92,14 @@ module OpenFoodNetwork
           producer: { name: t(:producer), visible: producer_visibility },
           category: { name: t(:category), visible: true },
           tax_category: { name: t(:tax_category), visible: true },
-          inherits_properties: { name: t(:inherits_properties), visible: true },
         }
+        if OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, user)
+          columns[:tags] = { name: t(:tags), visible: true }
+        end
+
+        columns[:inherits_properties] = { name: t(:inherits_properties), visible: true }
+
+        columns
       end
     end
 

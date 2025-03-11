@@ -186,7 +186,7 @@
     // Hide columns
     $columns:
       "image", "name", "sku", "unit_scale", "unit", "price", "on_hand", "producer", "category",
-      "tax_category", "inherits_properties";
+      "tax_category", "tags", "inherits_properties";
     @each $col in $columns {
       &.hide-#{$col} {
         .col-#{$col} {

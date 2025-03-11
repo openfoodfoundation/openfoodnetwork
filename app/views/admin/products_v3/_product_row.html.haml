@@ -18,6 +18,9 @@
 %td.col-category.align-left
   -# empty
 %td.col-tax_category.align-left
+- if feature?(:variant_tag, spree_current_user)
+  %td.col-tags.align-left
+    -# empty
 %td.col-inherits_properties.align-left
   .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
 %td.align-right
