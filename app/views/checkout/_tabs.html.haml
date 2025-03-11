@@ -1,5 +1,5 @@
 -# Prevent Turbo pre-fetch which changes cart state
-.flex{'data-turbo': "false"}
+.flex{'data-turbo-prefetch': "false"}
   .columns.three.text-center.checkout-tab{"class": [("selected" if checkout_step?(:details)), ("success" unless checkout_step?(:details))]}
     %div
       %span.checkout-tab-number
