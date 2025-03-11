@@ -24,7 +24,7 @@ jobs:
           level: error
           filter_mode: nofilter
           use_bundler: true
-          fail_on_error: true
+          fail_level: any
   prettier:
     name: runner / prettier
     runs-on: ubuntu-latest
