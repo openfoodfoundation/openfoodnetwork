@@ -636,6 +636,7 @@ en:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags 
       columns_selector:
         unit: Unit
         price: Price
