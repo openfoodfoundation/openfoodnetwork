@@ -58,6 +58,9 @@ module OpenFoodNetwork
         Activated for a user.
         The user (INRAE researcher) has access to anonymised sales.
       DESC
+      "open_in_same_tab" => <<~DESC,
+        Open the admin dashboard in the same tab instead of a new tab.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
