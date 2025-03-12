@@ -76,7 +76,17 @@
   = error_message_on variant, :tax_category
 - if feature?(:variant_tag, spree_current_user)
   %td.col-tags.field.naked_inputs
-    = f.text_field :variant_tag_list, 'aria-label': t('admin.products_page.columns.tags'), value: variant.variant_tag_list.join(",")
+    = f.hidden_field :variant_tag_list, value: variant.variant_tag_list.join(",")
+    .tags-input
+      .tags
+        %ul.tag-list
+          - variant.variant_tag_list.each do |tag|
+            %li.tag-item
+              .tag-template
+                %span=tag
+                %a.remove-button
+                  ✖
+        = text_field_tag :variant_add_tag, nil, class: "input", placeholder: t('.add_a_tag')
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
