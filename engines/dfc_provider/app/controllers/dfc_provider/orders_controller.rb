@@ -7,8 +7,11 @@ module DfcProvider
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders
     def create
-      if current_enterprise.distributed_orders.create user: current_user
-        head :created
+      order = current_enterprise.distributed_orders.build(created_by: current_user)
+
+      if order.save
+        subject = OrderBuilder.build(order)
+        render json: DfcIo.export(subject), status: :created
       end
     end
   end

@@ -548,6 +548,16 @@ paths:
       responses:
         '201':
           description: created
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/10001
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
         '401':
           description: unauthorized
         '404':
