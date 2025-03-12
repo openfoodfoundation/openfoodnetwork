@@ -68,3 +68,56 @@ RSpec.describe "Orders swagger", swagger_doc: "dfc.yaml" do
     end
   end
 end
+
+RSpec.describe "Orders integration" do
+  let(:user) { create(:oidc_user, id: 12_345) }
+  let(:supplier) {
+    create(
+      :distributor_enterprise, # supplier sells their products on an OFN instance
+      id: 10_000, owner: user, name: "Fred's Farm",
+      address: build(:address, id: 40_000),
+    )
+  }
+  let(:product) {
+    create(
+      :base_product,
+      id: 90_000, name: "Apple", description: "Red",
+      variants: [variant],
+      primary_taxon: non_local_vegetable
+    )
+  }
+  let(:non_local_vegetable) {
+    build(
+      :taxon,
+      name: "Non Local Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
+    )
+  }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", supplier:) }
+
+  let(:distributor) {
+    create(
+      :distributor_enterprise, # distributor has imported supplier's product to create a copy of it
+      id: 20_000, owner: user, name: "Shane's Shop",
+      address: build(:address, id: 41_000),
+    )
+  }
+
+  before {
+    login_as user
+    product
+
+    # TODO: create distributor product with semantic link to supplier product
+  }
+
+  describe BackorderJob do
+    it "creates a product" do
+      # post(enterprise_orders_path(supplier.id))
+      pending "finish spec"
+      # TODO: make a distributor order, and flush BackorderJob
+
+      # A backorder to the supplier has been created
+      expect(supplier.distributed_orders.count).to eq 1
+    end
+  end
+end
