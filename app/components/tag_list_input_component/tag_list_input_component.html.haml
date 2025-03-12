@@ -1,0 +1,11 @@
+= f.hidden_field method.to_sym, value: tags.join(",")
+.tags-input
+  .tags
+    %ul.tag-list
+      - tags.each do |tag|
+        %li.tag-item
+          .tag-template
+            %span=tag
+            %a.remove-button
+              ✖
+    = text_field_tag :variant_add_tag, nil, class: "input", placeholder: placeholder
