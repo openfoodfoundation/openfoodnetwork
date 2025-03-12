@@ -8,6 +8,10 @@ RSpec.describe BackorderJob do
   let(:chia_seed) { chia_item.variant }
   let(:chia_item) { order.line_items.second }
   let(:user) { order.distributor.owner }
+  let(:catalog_json) { file_fixture("fdc-catalog.json").read }
+  let(:catalog_url) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+  }
   let(:product_link) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
   }
@@ -103,6 +107,27 @@ RSpec.describe BackorderJob do
 
       # Clean up after ourselves:
       perform_enqueued_jobs(only: CompleteBackorderJob)
+    end
+
+    it "skips unavailable items" do
+      order.order_cycle = create(
+        :simple_order_cycle,
+        distributors: [order.distributor],
+        variants: [beans],
+      )
+      beans.on_demand = true
+      beans.on_hand = -3
+      beans.semantic_links << SemanticLink.new(
+        semantic_id: "#{product_link}-removed"
+      )
+
+      stub_request(:get, catalog_url).to_return(body: catalog_json)
+
+      expect {
+        subject.place_backorder(order)
+      }.not_to change { beans.on_hand }
+
+      # And no error was raised, no order was placed.
     end
 
     it "succeeds when no work to be done" do
