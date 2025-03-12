@@ -534,6 +534,24 @@ paths:
                 "@type": dfc-b:Offer
                 dfc-b:hasPrice: 9.99
                 dfc-b:stockLimitation: 7
+  "/api/dfc/enterprises/{enterprise_id}/orders":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create Order
+      tags:
+      - Orders
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
