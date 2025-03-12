@@ -55,7 +55,6 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxRe
 
     report = described_class.new(current_user)
 
-    pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/11529"
     expect(report.query_result.values).to eq [[order]]
   end
 end
