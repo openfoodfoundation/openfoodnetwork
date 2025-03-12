@@ -3,6 +3,8 @@
 require_relative "../spec_helper"
 
 RSpec.describe "Orders integration" do
+  host = Rails.application.default_url_options[:host]
+
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:supplier) {
     create(
@@ -18,7 +20,11 @@ RSpec.describe "Orders integration" do
       variants: [variant],
     )
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", supplier:) }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", supplier:, ) }
+  let(:semantic_id) {
+    "http://#{host}/api/dfc/enterprises/#{supplier.id}/catalog_items" #why is not acessible? normally request specs are on port 80
+  }
+  let(:urls) { FdcUrlBuilder.new(semantic_id) }
 
   let(:distributor) {
     create(
@@ -34,79 +40,77 @@ RSpec.describe "Orders integration" do
       variants: [variant],
     )
   }
-  let(:distributor_variant) { build(:base_variant, id: 11_001, unit_value: 1, sku: "AR", supplier:) }
+  let(:distributor_variant) { build(:variant, id: 11_001, unit_value: 1, sku: "AR", on_hand: 10, supplier: distributor) }
 
   before {
     login_as user
-    product
+    distributor_variant.semantic_links.build semantic_id:
+    distributor_variant.save
+    distributor_variant.on_hand = 10
+    distributor_variant.on_demand = true
 
-    # TODO: create distributor product with semantic link to supplier product
   }
 
-  describe BackorderJob do
+  describe "BackorderJob" do
     it "creates a product" do
-      # post(enterprise_orders_path(supplier.id))
-      pending "finish spec"
-      # TODO: make a distributor order, and flush BackorderJob
+      # Distributor or order cycle cannot supply the products in your cart (spree_order_availability_error)
+      # maybe need to create an order cycle
+      order = create(:order, distributor:, line_items: [create(:line_item, variant: distributor_variant)], order_cycle:nil )
+
+      BackorderJob.perform_now(order)
 
       # A backorder to the supplier has been created
       expect(supplier.distributed_orders.count).to eq 1
     end
   end
-end
 
 
-RSpec.describe "ORders FdcBackorderer", type: :request do
-  host = Rails.application.default_url_options[:host]
+  describe "ORders FdcBackorderer" do
+    host = Rails.application.default_url_options[:host]
 
-  let(:backorderer) { FdcBackorderer.new(order.distributor.owner, urls) }
-  let(:urls) { FdcUrlBuilder.new(product_link) }
-  let(:product_link) {
-    "http://#{host}/api/dfc/enterprises/#{supplier.id}/catalog_items" #why is not acessible? normally request specs are on port 80
-  }
-  let(:order) { create(:completed_order_with_totals) }
+    let(:backorderer) { FdcBackorderer.new(order.distributor.owner, urls) }
 
-  # todo: also set up supplier and product to be available on above url
+    let(:order) { create(:completed_order_with_totals) }
 
-  before do
-    order.distributor.owner.oidc_account = build(:oidc_account)
-  end
+    before do
+      order.distributor.owner.oidc_account = build(:oidc_account)
+    end
 
-  it "creates orders", vcr: :re_record do
-    # This test case contains a full order life cycle.
+    it "creates orders", vcr: :re_record do
+      # This test case contains a full order life cycle.
 
-    # Build a new order when no open one is found:
-    order.order_cycle = create(:order_cycle, distributors: [order.distributor])
-    backorder = backorderer.find_or_build_order(order)
-    # expect(backorder.semanticId).to eq urls.orders_url
-    # expect(backorder.lines).to eq []
+      # Build a new order when no open one is found:
+      order.order_cycle = create(:order_cycle, distributors: [order.distributor])
+      backorder = backorderer.find_or_build_order(order)
+      # expect(backorder.semanticId).to eq urls.orders_url
+      # expect(backorder.lines).to eq []
 
-    # Add items and place the new order:
-    catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
-    product = catalog.products.first
-    offer = FdcOfferBroker.new(nil).offer_of(product)
-    line = backorderer.find_or_build_order_line(backorder, offer)
-    line.quantity = 3
-    placed_order = backorderer.send_order(backorder)
+      # Add items and place the new order:
+      catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
+      product = catalog.products.first
+      offer = FdcOfferBroker.new(nil).offer_of(product)
+      line = backorderer.find_or_build_order_line(backorder, offer)
+      line.quantity = 3
+      placed_order = backorderer.send_order(backorder)
 
-    # Give the  app time to process and place the order.
-    # That process seems to be async.
-    sleep 10 if VCR.current_cassette.recording?
+      # Give the  app time to process and place the order.
+      # That process seems to be async.
+      sleep 10 if VCR.current_cassette.recording?
 
-    # But with a semantic link, it works:
-    order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
-    found_backorder = backorderer.lookup_open_order(order)
-    # expect(found_backorder.semanticId).to eq placed_order.semanticId
-    # expect(found_backorder.lines.count).to eq 1
-    # expect(found_backorder.lines[0].quantity.to_i).to eq 3
+      # But with a semantic link, it works:
+      order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
+      found_backorder = backorderer.lookup_open_order(order)
+      # expect(found_backorder.semanticId).to eq placed_order.semanticId
+      # expect(found_backorder.lines.count).to eq 1
+      # expect(found_backorder.lines[0].quantity.to_i).to eq 3
 
-    # And close the order again:
-    backorderer.complete_order(placed_order)
-    remaining_open_order = backorderer.find_or_build_order(order)
-    expect(remaining_open_order.semanticId).to eq urls.orders_url
+      # And close the order again:
+      backorderer.complete_order(placed_order)
+      remaining_open_order = backorderer.find_or_build_order(order)
+      expect(remaining_open_order.semanticId).to eq urls.orders_url
 
-    # Expect the supplier to have a matching order
-    binding.pry
+      # Expect the supplier to have a matching order
+      binding.pry
+    end
   end
 end
-
