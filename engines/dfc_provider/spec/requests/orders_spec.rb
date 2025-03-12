@@ -26,6 +26,8 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
     parameter name: :enterprise_id, in: :path, type: :string
 
     post "Create Order" do
+      produces "application/json"
+
       response "201", "created" do
         before { product }
 
@@ -34,6 +36,17 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
           run_test! {
             expect(enterprise.distributed_orders.count).to eq 1
+            order = enterprise.distributed_orders.first
+            expect(order.user).to eq user
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              "orders/#{order.id}",
+              "orders/10001"
+            )
+
+            expect(response.body).to include "dfc-b:Order"
+            expect(response.body).to include "/api/dfc/enterprises/10000/orders/10001"
           }
         end
       end
