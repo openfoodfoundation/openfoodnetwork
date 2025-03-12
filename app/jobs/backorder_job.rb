@@ -59,13 +59,7 @@ class BackorderJob < ApplicationJob
 
     place_order(user, order, orderer, backorder)
 
-    items.each do |item|
-      variant = item.variant
-      quantity = ordered_quantities[item]
-      next if quantity.zero?
-
-      variant.on_hand += quantity if variant.on_demand
-    end
+    adjust_stock(items, ordered_quantities)
   end
 
   # We look at linked variants which are either stock controlled or
@@ -142,5 +136,15 @@ class BackorderJob < ApplicationJob
       )
 
     order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
+  end
+
+  def adjust_stock(items, ordered_quantities)
+    items.each do |item|
+      variant = item.variant
+      quantity = ordered_quantities[item]
+      next if quantity.zero?
+
+      variant.on_hand += quantity if variant.on_demand
+    end
   end
 end
