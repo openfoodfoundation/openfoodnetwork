@@ -110,9 +110,9 @@ RSpec.describe ProductImport::EntryValidator do
   describe "inventory validation" do
     before do
       allow(entry_validator).to receive(:import_into_inventory?) { true }
-      allow(entry_validator).to receive(:enterprise_validation) {}
-      allow(entry_validator).to receive(:producer_validation) {}
-      allow(entry_validator).to receive(:variant_of_product_validation) {}
+      allow(entry_validator).to receive(:enterprise_validation)
+      allow(entry_validator).to receive(:producer_validation)
+      allow(entry_validator).to receive(:variant_of_product_validation)
     end
 
     context "products exist" do
