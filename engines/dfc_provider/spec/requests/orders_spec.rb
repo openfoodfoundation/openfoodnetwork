@@ -27,6 +27,19 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
     post "Create Order" do
       produces "application/json"
+      consumes "application/json"
+
+      parameter name: :order, in: :body, schema: {
+        example: {
+          '@context': "https://www.datafoodconsortium.org",
+          '@type': "dfc-b:Order",
+          'dfc-b:client': "http://test.host/api/dfc/enterprises/10000",
+        }
+      }
+
+      let(:order) { |example|
+        example.metadata[:operation][:parameters].first[:schema][:example]
+      }
 
       response "201", "created" do
         before { product }
@@ -36,17 +49,28 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
           run_test! {
             expect(enterprise.distributed_orders.count).to eq 1
-            order = enterprise.distributed_orders.first
-            expect(order.user).to eq user
+            ofn_order = enterprise.distributed_orders.first
+            expect(ofn_order.user).to eq user
 
             # Insert static value to keep documentation deterministic:
             response.body.gsub!(
-              "orders/#{order.id}",
+              "orders/#{ofn_order.id}",
               "orders/10001"
             )
 
             expect(response.body).to include "dfc-b:Order"
             expect(response.body).to include "/api/dfc/enterprises/10000/orders/10001"
+          }
+        end
+      end
+
+      response "400", "bad request" do
+        context "with empty request body" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order) { nil }
+
+          run_test! {
+            expect(enterprise.distributed_orders).to be_empty
           }
         end
       end

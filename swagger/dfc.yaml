@@ -543,6 +543,7 @@ paths:
         type: string
     post:
       summary: Create Order
+      parameters: []
       tags:
       - Orders
       responses:
@@ -558,10 +559,20 @@ paths:
                     "@type": dfc-b:Order
                     dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
                     dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
         '401':
           description: unauthorized
         '404':
           description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://www.datafoodconsortium.org
+                "@type": dfc-b:Order
+                dfc-b:client: http://test.host/api/dfc/enterprises/10000
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
