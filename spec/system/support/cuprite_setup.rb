@@ -36,6 +36,9 @@ RSpec.configure do |config|
     original_host = Rails.application.default_url_options[:host]
     Rails.application.default_url_options[:host] =
       "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+
+      #TODO: set this properly. probably add the config in a new file in the engine folder
+    DfcProvider::Engine.routes.default_url_options[:host] = "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
     example.run
     Rails.application.default_url_options[:host] = original_host
     remove_downloaded_files
