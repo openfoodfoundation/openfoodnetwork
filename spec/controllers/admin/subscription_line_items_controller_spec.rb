@@ -5,12 +5,10 @@ require 'spec_helper'
 RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
   include AuthenticationHelper
 
-  RSpec.configure do |c|
-    c.before(:each) do |test|
-      unless test.metadata[:no_outgoing_exchange]
-        order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant],
-                                     enterprise_fees: [enterprise_fee])
-      end
+  before(:each) do |test|
+    unless test.metadata[:no_outgoing_exchange]
+      order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant],
+                                   enterprise_fees: [enterprise_fee])
     end
   end
 
