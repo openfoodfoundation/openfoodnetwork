@@ -64,7 +64,10 @@ module Spree
       end
 
       def search
-        scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(variant_search_params)
+        scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(
+          variant_search_params,
+          spree_current_user
+        )
         @variants = scoper.search
         render json: @variants, each_serializer: ::Api::Admin::VariantSerializer
       end
