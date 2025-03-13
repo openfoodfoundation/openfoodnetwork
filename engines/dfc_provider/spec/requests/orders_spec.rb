@@ -27,6 +27,30 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
     post "Create Order" do
       produces "application/json"
+      consumes "application/json"
+
+      parameter name: :order, in: :body, schema: {
+        example: {
+          '@context': "https://www.datafoodconsortium.org",
+          '@type': "dfc-b:Order",
+          'dfc-b:client': "http://test.host/api/dfc/enterprises/10000",
+        }
+      }
+
+      let(:order) { |example|
+        example.metadata[:operation][:parameters].first[:schema][:example]
+      }
+
+      response "400", "bad request" do
+        context "with empty request body" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order) { nil }
+
+          run_test! {
+            expect(enterprise.distributed_orders).to be_empty
+          }
+        end
+      end
 
       response "404", "not found" do
         context "without enterprises" do
