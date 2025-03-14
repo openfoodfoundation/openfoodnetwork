@@ -328,6 +328,52 @@ RSpec.describe CheckoutController, type: :controller do
             expect_cable_ready_redirect(response)
           end
         end
+
+        context "with existing invalid payments" do
+          let(:invalid_payments) {
+            [
+              create(:payment, state: :failed),
+              create(:payment, state: :void),
+            ]
+          }
+
+          before do
+            order.payments = invalid_payments
+          end
+
+          it "deletes invalid payments" do
+            expect{
+              put(:update, params:)
+            }.to change { order.payments.to_a }.from(invalid_payments)
+          end
+        end
+
+        context "with different payment method previously chosen" do
+          let(:other_payment_method) { build(:payment_method, distributors: [distributor]) }
+          let(:other_payment) {
+            build(:payment, amount: order.total, payment_method: other_payment_method)
+          }
+
+          before do
+            order.payments = [other_payment]
+          end
+
+          context "and order is in an earlier state" do
+            # This revealed obscure bug #12693. If you progress to order summary, go back to payment
+            # method, then open delivery details in a new tab (or hover over the link with Turbo
+            # enabled), then submit new payment details, this happens.
+
+            before do
+              order.back_to_address
+            end
+
+            it "deletes invalid (old) payments" do
+              put(:update, params:)
+              order.payments.reload
+              expect(order.payments).not_to include other_payment
+            end
+          end
+        end
       end
 
       context "with no payment source" do
