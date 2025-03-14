@@ -67,13 +67,12 @@ module OpenFoodNetwork
 
       @order_cycle.exchanges_carrying(variant, @distributor).each do |exchange|
         exchange.enterprise_fees.per_item.each do |enterprise_fee|
-          fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant,
-                                                               exchange.role)
+          fees << EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
         end
       end
 
       @order_cycle.coordinator_fees.per_item.each do |enterprise_fee|
-        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
+        fees << EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
       end
 
       fees
@@ -86,12 +85,30 @@ module OpenFoodNetwork
 
       @order_cycle.exchanges_supplying(order).each do |exchange|
         exchange.enterprise_fees.per_order.each do |enterprise_fee|
-          fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
+          fees << EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
         end
       end
 
       @order_cycle.coordinator_fees.per_order.each do |enterprise_fee|
-        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+        fees << EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+      end
+
+      fees
+    end
+
+    def order_cycle_per_item_enterprise_fee_applicators_for(variant)
+      fees = []
+
+      return fees unless @order_cycle && @distributor
+
+      @order_cycle.exchanges.supplying_to(@distributor).each do |exchange|
+        exchange.enterprise_fees.per_item.each do |enterprise_fee|
+          fees << EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
+        end
+      end
+
+      @order_cycle.coordinator_fees.per_item.each do |enterprise_fee|
+        fees << EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
       end
 
       fees
