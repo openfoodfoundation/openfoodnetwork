@@ -15,18 +15,15 @@ module Admin
     def index
       # Fetch DFC catalog JSON for preview
       api = DfcRequest.new(spree_current_user)
-      @catalog_url = params.require(:catalog_url)
+      @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
-      graph = DfcIo.import(@catalog_json)
-      catalog = DfcCatalog.new(graph)
+      catalog = DfcCatalog.from_json(@catalog_json)
 
       # Render table and let user decide which ones to import.
-      @items = catalog.products.map do |subject|
-        [
-          subject,
-          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
-        ]
-      end
+      @items = list_products(catalog)
+    rescue URI::InvalidURIError
+      flash[:error] = t ".invalid_url"
+      redirect_to admin_product_import_path
     rescue Faraday::Error,
            Addressable::URI::InvalidURIError,
            ActionController::ParameterMissing => e
@@ -45,8 +42,7 @@ module Admin
       ids = params.require(:semanticIds)
 
       # Load DFC catalog JSON
-      graph = DfcIo.import(params.require(:catalog_json))
-      catalog = DfcCatalog.new(graph)
+      catalog = DfcCatalog.from_json(params.require(:catalog_json))
       catalog.apply_wholesale_values!
 
       # Import all selected products for given enterprise.
@@ -73,6 +69,16 @@ module Admin
       @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises.is_primary_producer
         .find(params.require(:enterprise_id))
+    end
+
+    # List internal and external products for the preview.
+    def list_products(catalog)
+      catalog.products.map do |subject|
+        [
+          subject,
+          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
+        ]
+      end
     end
   end
 end
