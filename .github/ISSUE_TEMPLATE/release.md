@@ -13,6 +13,7 @@ assignees: ''
 - [ ] Include translations: `script/release/update_locales`
     - You need the [Transifex Client] installed on your local dev environement to run the script.
 - [ ] Increment version number: `git push upstream HEAD:refs/tags/vX.Y.Z`
+    Check for [minor or major breaking changes](https://github.com/openfoodfoundation/openfoodnetwork/pulls?q=label%3Abreaking-change%2Cmajor-breaking-change)
     - Major: if server changes are required (eg. provision with ofn-install)
     - Minor: larger change that is irreversible (eg. migration deleting data)
     - Patch: all others. Shortcut: `script/release/tag`
