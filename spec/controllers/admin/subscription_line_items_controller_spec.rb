@@ -5,13 +5,6 @@ require 'spec_helper'
 RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
   include AuthenticationHelper
 
-  before(:each) do |test|
-    unless test.metadata[:no_outgoing_exchange]
-      order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant],
-                                   enterprise_fees: [enterprise_fee])
-    end
-  end
-
   describe "build" do
     let(:user) { create(:user) }
     let!(:shop) { create(:enterprise, owner: user) }
@@ -19,6 +12,10 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
     let!(:product) { create(:product) }
     let!(:variant) {
       create(:variant, product:, unit_value: '100', price: 15.00)
+    }
+    let!(:outgoing_exchange) {
+      order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant],
+                                   enterprise_fees: [enterprise_fee])
     }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 3.50) }
     let!(:order_cycle) {
@@ -58,7 +55,11 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
           before { params.merge!(shop_id: shop.id) }
 
           context "but the shop doesn't have permission to sell product in question" do
-            it "returns an error", :no_outgoing_exchange do
+            let!(:outgoing_exchange) {
+              # missing exchange should trigger an error
+            }
+
+            it "returns an error" do
               spree_post :build, params
               json_response = response.parsed_body
               expect(json_response['errors'])
