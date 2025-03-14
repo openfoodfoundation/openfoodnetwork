@@ -6,6 +6,7 @@ FactoryBot.define do
     uid { user&.email || generate(:random_email) }
 
     # This is a live test account authenticated via Les Communes.
+    # See .env.test for tips on connecting the account for recording VCR cassettes.
     factory :testdfc_account do
       uid { "testdfc@protonmail.com" }
       refresh_token { ENV.fetch("OPENID_REFRESH_TOKEN") }
