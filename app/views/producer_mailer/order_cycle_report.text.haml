@@ -24,7 +24,7 @@ Orders summary
   = t :producer_mail_order_customer_text
   \
   - @customer_line_items.each do |line_item|
-    #{line_item[:sku]} - #{raw(line_item[:supplier_name])} - #{raw(line_item[:product_and_full_name])} (#{t(:producer_mail_qty)}: #{line_item[:quantity]})  - #{raw(line_item[:first_name])} #{raw(line_item[:last_name])} #{raw(line_item[:business_name])}
+    #{line_item[:sku]} - #{raw(line_item[:supplier_name])} - #{raw(line_item[:product_and_full_name])} (#{t(:producer_mail_qty)}: #{line_item[:quantity]})  - #{raw(line_item[:first_name])} #{raw(line_item[:last_name])} #{raw(line_item[:business_name])} #{raw(line_item[:order_number])}
 \
 \
 = t :producer_mail_text_after
