@@ -55,7 +55,9 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
           before { params.merge!(shop_id: shop.id) }
 
           context "but the shop doesn't have permission to sell product in question" do
-            let!(:outgoing_exchange) {}
+            let!(:outgoing_exchange) {
+              # missing exchange should trigger an error
+            }
 
             it "returns an error" do
               spree_post :build, params

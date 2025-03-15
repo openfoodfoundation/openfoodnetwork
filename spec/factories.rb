@@ -61,9 +61,11 @@ FactoryBot.define do
   end
 
   factory :enterprise_relationship do
+    nil
   end
 
   factory :enterprise_role do
+    nil
   end
 
   factory :enterprise_group, class: EnterpriseGroup do

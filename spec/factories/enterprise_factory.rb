@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :enterprise, class: Enterprise do
     transient do
       users { [] }
-      logo {}
-      promo_image {}
+      logo { nil }
+      promo_image { nil }
     end
 
     owner factory: :user
