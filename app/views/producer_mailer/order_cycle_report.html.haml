@@ -84,6 +84,8 @@
         - if @display_business_name
           %th.text-right
             = t :business_name
+        %th.text-right
+          = t :order_number
     %tbody
       - @customer_line_items.each do |line_item|
         %tr
@@ -103,6 +105,8 @@
           - if @display_business_name
             %td
               = line_item[:business_name]
+          %td
+            = line_item[:order_number]
 %p
   = t :producer_mail_text_after
 %p

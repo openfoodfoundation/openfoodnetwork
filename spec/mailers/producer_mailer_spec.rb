@@ -208,6 +208,20 @@ RSpec.describe ProducerMailer, type: :mailer do
         end
       end
     end
+
+    context "validate order number" do
+      let(:table_header) do
+        body_as_html(mail).find("table.order-summary.customer-order thead")
+      end
+
+      it 'displays order number for the customer' do
+        expect(table_header).to have_selector("th", text: 'Order Number')
+        expect(
+          body_as_html(mail).find("table.order-summary.customer-order tbody tr")
+        ).to have_selector("td", text: order.number)
+        expect(customer_details_summary_text(mail)).to include(order.number)
+      end
+    end
   end
 
   context 'when flag show_customer_names_to_suppliers is false' do
