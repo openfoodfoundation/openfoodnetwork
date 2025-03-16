@@ -3388,7 +3388,7 @@ fr_CH:
               fee_placement: "Capture des frais"
               fee_calculated_on_transfer_through_name: "Calc. des frais sur les transferts via"
               tax_category_name: "TVA applicable"
-              total_amount: "€ total"
+              total_amount: "CHF total"
           html:
             header:
               fee_type: "Type de marge"
@@ -3398,7 +3398,7 @@ fr_CH:
               fee_placement: "Saisie de la marge"
               fee_calculated_on_transfer_through_name: "Calc. des frais sur les transferts via"
               tax_category_name: "TVA applicable"
-              total_amount: "€ total"
+              total_amount: "CHF total"
         invalid_filter_parameters: "Les filtres sélectionnés pour ce rapport sont invalides."
       report:
         none: "Aucun"

@@ -787,9 +787,12 @@ en_FR:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
         enterprise: "Import to enterprise: %{enterprise_name}"
+        select_all: "Select/deselect all"
         update: Update
         new: New
         selected:
+          zero: "0 selected"
+          one: "1 selected"
           other: "%{count} selected"
         import: Import
       import:
@@ -2956,6 +2959,7 @@ en_FR:
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
+  spree_admin_enterprises_showing: "Showing %{count} of %{total}"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_supplier: Supplier
@@ -4641,6 +4645,7 @@ en_FR:
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Dear customer,"
         request_sent_text: |
             A request to reset your password has been made.
             If you did not make this request, simply ignore this email.

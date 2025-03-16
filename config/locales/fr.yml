@@ -786,9 +786,12 @@ fr:
         title: "Catalogue produit DFC"
         catalog_url: "%{count} produits à importer de : %{catalog_url}"
         enterprise: "Import vers l'entreprise : %{enterprise_name}"
+        select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour
         new: Nouveau
         selected:
+          zero: "0 sélectionné"
+          one: "1 sélectionné"
           other: "%{count} sélectionné"
         import: Importer
       import:
@@ -2962,6 +2965,7 @@ fr:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
+  spree_admin_enterprises_showing: "Montrer %{count} de %{total}"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
   spree_admin_supplier: Fournisseur
@@ -4125,7 +4129,7 @@ fr:
     max_items: "Produits max."
     minimal_amount: "Montant minimal"
     normal_amount: "Montant classique"
-    discount_amount: "Réduction"
+    discount_amount: "Montant réduit"
     no_images_found: "Aucune image pour l'instant"
     new_image: "Nouvelle image"
     filename: "Nom du fichier"
@@ -4685,6 +4689,7 @@ fr:
         invoice_attached_text: 'Veuillez trouver ci-joint la facture pour votre récente commande auprès de '
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Cher acheteur, chère acheteuse,"
         request_sent_text: |
             Votre demande de nouveau mot de passe a bien été prise en compte.
             Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.

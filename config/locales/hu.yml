@@ -1101,7 +1101,7 @@ hu:
           acn_placeholder: pl. 123 456 789
           display_invoice_logo: Logó megjelenítése a vevői összesítőkön
           invoice_text: Adj testreszabott szöveget a vevői összesítők végéhez
-          terms_and_conditions: "Általános Szerződési Feltételek"
+          terms_and_conditions: "GDPR és ÁSZF"
           remove_terms_and_conditions: "Fájl eltávolítása"
           uploaded_on: "feltöltve"
           reset_form: "Űrlap visszaállítása"
@@ -1899,7 +1899,7 @@ hu:
     order_summary_without_number: Megrendelés-összesítő
     already_ordered:
       cart: "kosár"
-      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
+      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintsd meg a %{kosarat}, hogy ellenőrizd a korábban megrendelt tételeket. Amíg a rendelési ciklus nyitva van törölhetsz is termékeket. "
     step1:
       contact_information:
         title: Kapcsolat
@@ -1984,7 +1984,7 @@ hu:
       cancel: Vissza a Fizetési módhoz
     errors:
       saving_failed: "A mentés nem sikerült, kérjük, frissítsd a kiemelt mezőket."
-      terms_not_accepted: Kérjük, fogadja el az Általános Szerződési Feltételeket
+      terms_not_accepted: Kérjük, fogadd el az Általános Szerződési Feltételeket és az Adatvédelmi tájékoztatót
       required: A mező nem lehet üres
       invalid_number: "Adj meg egy érvényes telefonszámot"
       invalid_email: "Kérjük valós e-mail címet adj meg"
@@ -2020,7 +2020,7 @@ hu:
         cart: "Kosár"
     register_call:
       selling_on_ofn: "Érdekel az Open Food Hálózat?"
-      register: "Itt regisztrálj termelőként vagy átvételi pontként!"
+      register: "Itt regisztrálj!"
     footer:
       footer_secure: "Biztonságos és felelős adatkezelés."
       footer_secure_text: "Az Open Food Network mindenhol SSL-titkosítást (2048 bites RSA) használ, hogy vásárlási és fizetési adataidat bizalmasan kezelje. Szervereink nem tárolják hitelkártya adataidat, és a fizetéseket PCI-kompatibilis szolgáltatások dolgozzák fel."
@@ -2033,9 +2033,9 @@ hu:
       footer_legal_call: "Olvasd el a mi"
       footer_legal_visit: "Elérhetőségünk"
       footer_legal_text_html: "Az Open Food Network egy ingyenes és nyílt forráskódú szoftverplatform. Tartalmunk licence a %{content_license}, kódunk pedig %{code_license}."
-      footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataira. Tekintse meg %{privacy_policy} és %{cookies_policy}"
+      footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{privacy_policy} és %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{cookies_policy}-unkat"
-      footer_data_privacy_policy: "Adatvédelmi irányelvek"
+      footer_data_privacy_policy: "Adatvédelmi nyilatkozatunkat"
       footer_data_cookies_policy: "sütikre vonatkozó szabályzatunkat"
   shop:
     messages:
@@ -2191,7 +2191,7 @@ hu:
       desc_part_1: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
       desc_part_2: "Az OFN-nél teljes mértékben tiszteletben tartjuk a magánéletedet. Csak azokat a sütiket használjuk, amelyek az élelmiszerek online értékesítéséhez és vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. Előfordulhat, hogy a jövőben azt javasoljuk, hogy oszd meg adataid új közös szolgáltatások létrehozása érdekében, amelyek hasznosak lehetnek az ökoszisztéma számára (például logisztikai szolgáltatások a rövid élelmiszer-rendszerekhez), de még nem tartunk ott, és nem fogjuk megtenni a felhatalmazásod nélkül. "
       desc_part_3: "A sütiket elsősorban arra használjuk, hogy emlékezzünk arra, hogy ki vagy, ha bejelentkezel a szolgáltatásba, vagy hogy emlékezzünk a kosaradba tett tételekre akkor is, ha nem vagy bejelentkezve. Ha továbbra is a weboldalon navigálsz anélkül, hogy a „Sütik elfogadása” gombra kattintanál, akkor feltételezzük, hogy beleegyezésedet adod a weboldal működéséhez elengedhetetlenül szükséges sütik tárolásához."
-      essential_cookies: "Lényeges cookie-k"
+      essential_cookies: "Lényeges sütik"
       essential_cookies_desc: "Az alábbi cookie-k feltétlenül szükségesek weboldalunk működéséhez."
       essential_cookies_note: "A legtöbb süti csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az e-mail címed és jelszavad soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
       cookie_domain: "Által meghatározott:"
@@ -2200,13 +2200,13 @@ hu:
       cookie_remember_me_desc: "Akkor használatos, ha a felhasználóként arra kérted a webhelyet, hogy emlékezzen rád. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretnéd törölni a sütit, csak ki kell jelentkezned. Ha nem szeretnéd, hogy a süti telepítve legyen a számítógépedre, ne jelöld be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
       cookie_openstreemap_desc: "Ezt a sütit barátságos, nyílt forráskódú térképszolgáltatónk (OpenStreetMap) használja annak biztosítására, hogy egy adott időszakon belül ne kapjon túl sok kérést, és megakadályozza a szolgáltatásaikkal való visszaélést."
       cookie_stripe_desc: "A Stripe fizetési szolgáltató által a csalások felderítése céljából gyűjtött adatok https://stripe.com/cookies-policy/legal. Nem minden átvételi pont vagy termelő használja a Stripe-ot fizetési módszerként, de a csalás megelőzése érdekében jó gyakorlat, hogy minden oldalon alkalmazzuk. A Stripe valószínűleg képet alkot arról, hogy mely oldalaink lépnek általában kapcsolatba az API-jukkal, majd minden szokatlant megjelöl. A Stripe cookie beállításának tehát szélesebb funkciója van, mint egyszerűen a fizetési mód biztosítása a felhasználó számára. Eltávolítása befolyásolhatja magának a szolgáltatásnak a biztonságát. A Stripe-ról többet megtudhatsz, és elolvashatod adatvédelmi irányelveit a https://stripe.com/privacy oldalon."
-      statistics_cookies: "Statisztikai cookie-k"
-      statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használja a legtöbbet, vagy nem használja, megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
-      statistics_cookies_matomo_desc_html: "platformhasználati adatok gyűjtéséhez és elemzéséhez a <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik) egy nyílt forráskódú elemző eszközt használunk, amely megfelel a GDPR-nak és védi a magánéletét."
-      statistics_cookies_matomo_optout: "Leiratkozik a Matomo Analytics szolgáltatásról? Személyes adatot nem gyűjtünk, a Matomo segít a szolgáltatásunk fejlesztésében, de tiszteletben tartjuk az Ön választását :-)"
-      cookie_matomo_basics_desc: "Matomo első féltől származó cookie-k statisztikák gyűjtéséhez."
-      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
-      cookie_matomo_ignore_desc: "A cookie-k segítségével kizárják a felhasználót a nyomon követésből."
+      statistics_cookies: "Statisztikai sütik"
+      statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használod a legtöbbet, vagy épp egyáltalán nem használod, segíti hogy megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
+      statistics_cookies_matomo_desc_html: "Platformhasználati adatok gyűjtéséhez és elemzéséhez a <a href='https://matomo.org/' target='_blank'>Matomo</a> nyílt forráskódú elemző szoftvert használjuk, amely megfelel az európai adatvédelmi jogszabályoknak és védi a felhasználók magánéletét."
+      statistics_cookies_matomo_optout: "Leiratkoznál a Matomo Analytics szolgáltatásról? Személyes adatot nem gyűjtünk, a Matomo segít az oldal fejlesztésében, de tiszteletben tartjuk a választásodat."
+      cookie_matomo_basics_desc: "Matomo első féltől származó sütik statisztikák gyűjtéséhez."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording süti."
+      cookie_matomo_ignore_desc: "A sütik segítségével kizárják a felhasználót a nyomon követésből."
       disabling_cookies_header: "Figyelmeztetés a cookie-k letiltására"
       disabling_cookies_desc: "Felhasználóként bármikor engedélyezheted, blokkolhatod vagy törölheted az Open Food Network vagy bármely más webhely sütijeit a böngésző beállításaiban. Minden böngészőnek más a működése. Itt vannak a linkek:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
@@ -2217,7 +2217,7 @@ hu:
     cookies_banner:
       cookies_usage: "Ez az oldal úgynevezett sütiket (cookie-kat) használ annak érdekében, hogy az oldalon való navigációt zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használod az oldalt, hogy javíthassuk az oldal működését."
       cookies_definition: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
-      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy, ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintott a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
+      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintottál a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
       cookies_policy_link_desc: "Ha többet szeretnél megtudni, olvasd el a "
       cookies_policy_link: "cookie-kra vonatkozó szabályzat"
       cookies_accept_button: "Sütik elfogadása"
@@ -3309,12 +3309,12 @@ hu:
               elrejtése) a megadott címkével rendelkező ügyfelek számára.
         terms_and_conditions_info:
           title: "Általános Szerződési Feltételek feltöltése"
-          message_1: "Az Általános Szerződési Feltételek az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a hazai jogszabályokkal összhangban tölts fel Általános Szerződési Feltételeket."
-          message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatod az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk, mielőtt fizetésre kerülne a rendelésük."
+          message_1: "Az Általános Szerződési Feltételek az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk a rendelés leadásához. A vásárló számára ez egy jelölőnégyzetként jelenik meg a, amelyet be kell jelölnie a folytatáshoz. Mivel az oldal nemzetközi, ezért összesen 1 ilyen fájl feltöltésére van lehetőség, így az Adatvédelmi tájékoztatót (GDPR) és az ÁSZF-et 1 fájlban tudod feltölteni. Javasoljuk, hogy a hazai jogszabályokkal összhangban töltsd fel ezt a kettős dokumentumot."
+          message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatod az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk, mielőtt véglegesítenék rendelésük."
         terms_and_conditions_warning:
           title: "Általános Szerződési Feltételek feltöltése"
           message_1: "Minden vásárlónak egyszer el kell fogadnia ezeket a fizetéskor. Ha frissíted a fájlt, minden vásárlónak újra el kell fogadnia azokat a fizetéskor."
-          message_2: "Az előfizetéssel rendelkező vásárlóknak egyelőre e-mailben el kell küldeniük az Általános Szerződési Feltételeket (vagy azok módosításait), mivel más értesítést nem kapnak új Általános Szerződési Feltételekről."
+          message_2: "Az előfizetéssel rendelkező vásárlóknak egyelőre e-mailben el kell küldened az Általános Szerződési Feltételeket (vagy azok módosításait), mivel más értesítést nem kapnak új Általános Szerződési Feltételekről."
         business_address_info:
           message: "A cég hivatalos neve, címe és telefonszáma olyan vállalkozásoknál használatos, amelyek nyilvános kereskedési adataiktól eltérő hivatalos adatokkal bejegyzett jogi személytől számláznak. Ezeket az adatokat CSAK számlákon használjuk fel. Ha ezek az adatok üresek, az Ön nyilvános neve, címe és telefonszáma kerül felhasználásra a számlákon."
       panels:
@@ -4472,7 +4472,7 @@ hu:
         edit:
           legal_settings: "Jogi beállítások"
           cookies_consent_banner_toggle: "A cookie-k beleegyezését kérő szalaghirdetés megjelenítése"
-          privacy_policy_url: "Adatvédelmi irányelvek URL-címe"
+          privacy_policy_url: "Adatvédelmi nyilatkozat URL-címe"
           enterprises_require_tos: "A vállalkozásoknak el kell fogadniuk a Szolgáltatási feltételeket"
           shoppers_require_tos: "A vásárlóknak el kell fogadniuk a Szolgáltatási feltételeket"
           cookies_policy_matomo_section: "Jelenítse meg a Matomo részt a cookie-kra vonatkozó irányelvek oldalán"
