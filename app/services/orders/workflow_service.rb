@@ -92,7 +92,10 @@ module Orders
     # Verifies if the in-memory payment state is different from the one stored in the database
     #   This is be done without reloading the payment so that in-memory data is not changed
     def different_from_db_payment_state?(in_memory_payment_state, payment_id)
-      in_memory_payment_state != Spree::Payment.find(payment_id).state
+      # Re-load payment from the DB (unless it was cleared by clear_invalid_payments)
+      db_payment = Spree::Payment.find_by(id: payment_id)
+
+      db_payment.present? && in_memory_payment_state != db_payment.state
     end
   end
 end
