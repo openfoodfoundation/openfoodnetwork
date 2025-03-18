@@ -12,11 +12,6 @@ img {
   max-width: 100%;
 }
 
-.collapse {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
@@ -30,18 +25,6 @@ body {
 
 a {
   color: #0096ad;
-}
-
-.btn {
-  text-decoration: none;
-  color: #FFF;
-  background-color: #666;
-  padding: 10px 16px;
-  font-weight: bold;
-  margin-right: 10px;
-  text-align: center;
-  cursor: pointer;
-  display: inline-block;
 }
 
 p.callout {
@@ -187,6 +170,10 @@ table.head-wrap {
   background-color: #f2f2f2;
 }
 
+.collapse {
+  margin: 0;
+}
+
 /* -------------------------------------
  *		BODY
  *------------------------------------- */
@@ -261,10 +248,6 @@ h6 {
   font-size: 14px;
   text-transform: uppercase;
   color: #999;
-}
-
-.collapse {
-  margin: 0 !important;
 }
 
 p, ul {
@@ -376,12 +359,6 @@ ul {
   tr td {
     padding: 15px;
   }
-}
-
-.column-wrap {
-  padding: 0 !important;
-  margin: 0 auto;
-  max-width: 600px !important;
 }
 
 .column table {
