@@ -42,8 +42,8 @@ class EnterpriseFee < ApplicationRecord
     joins(:calculator).where(spree_calculators: { type: PER_ORDER_CALCULATORS })
   }
 
-  def self.clear_order_adjustments(order)
-    order.all_adjustments.enterprise_fee.where.not(adjustable_type: "Spree::LineItem").destroy_all
+  def self.clear_all_adjustments(order)
+    order.all_adjustments.enterprise_fee.destroy_all
   end
 
   private
