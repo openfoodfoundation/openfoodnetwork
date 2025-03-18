@@ -121,6 +121,12 @@ table.order-summary {
   text-align: right;
 }
 
+.logo {
+  vertical-align: middle;
+  max-height: 50px;
+  max-width: 300px;
+}
+
 .social .soc-btn {
   padding: 3px 7px;
   font-size: 12px;
@@ -178,17 +184,7 @@ del.quantity_was {
 
 table.head-wrap {
   width: 100%;
-}
-
-.header.container table td {
-  &.logo {
-    padding: 15px;
-  }
-
-  &.label {
-    padding: 15px;
-    padding-left: 0px;
-  }
+  background-color: #f2f2f2;
 }
 
 /* -------------------------------------
