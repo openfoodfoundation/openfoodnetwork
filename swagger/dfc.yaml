@@ -189,7 +189,7 @@ paths:
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
-                        dfc-b:hasUnit: dfc-m:AUD
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 0
         '401':
           description: unauthorized
@@ -230,7 +230,7 @@ paths:
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
-                        dfc-b:hasUnit: dfc-m:AUD
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 0
         '404':
           description: not found
@@ -514,7 +514,7 @@ paths:
                     dfc-b:hasPrice:
                       "@type": dfc-b:Price
                       dfc-b:value: 19.99
-                      dfc-b:hasUnit: dfc-m:AUD
+                      dfc-b:hasUnit: dfc-m:AustralianDollar
                     dfc-b:stockLimitation: 5
     put:
       summary: Update Offer
