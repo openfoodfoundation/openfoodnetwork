@@ -71,7 +71,8 @@ RSpec.describe "Orders backorder integration" do
       # For debugging you can check log/test.log, eg:
       # echo "" > log/test.log; tail -f log/test.log | egrep "(Started|Completed)"
 
-      BackorderJob.perform_now(order)
+      # BackorderJob.perform_now(order) # Cannot perform whole job as it gets stuck on record lock.
+      BackorderJob.new.place_backorder(order)
 
       # A backorder to the supplier has been created
       expect(supplier.distributed_orders.count).to eq 1
