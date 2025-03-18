@@ -4,9 +4,12 @@ class DfcCatalog
   def self.load(user, catalog_url)
     api = DfcRequest.new(user)
     catalog_json = api.call(catalog_url)
-    graph = DfcIo.import(catalog_json)
 
-    new(graph)
+    from_json(catalog_json)
+  end
+
+  def self.from_json(catalog_json)
+    new(DfcIo.import(catalog_json))
   end
 
   def initialize(graph)
