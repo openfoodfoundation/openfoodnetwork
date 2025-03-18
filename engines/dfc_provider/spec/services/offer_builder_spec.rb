@@ -27,13 +27,13 @@ RSpec.describe OfferBuilder do
       expect(offer.stockLimitation).to eq nil
     end
 
-    it "assigns a price with currency" do
+    it "assigns a price with mapped currency" do
       variant.id = 5
 
       offer = OfferBuilder.build(variant)
 
       expect(offer.price.value).to eq 19.99
-      expect(offer.price.unit).to eq "dfc-m:AUD"
+      expect(offer.price.unit).to eq "dfc-m:AustralianDollar" # Note that this will hopefully change to ISO 4217
     end
   end
 end
