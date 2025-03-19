@@ -85,7 +85,6 @@ module Reporting
             query = order
               .all_adjustments
               .enterprise_fee
-              .where(originator_id: enterprise_fees_related_to_incoming_exchanges_ids(order))
 
             if enterprise_fee_filters?
               query = query.where(originator_id: enterprise_fee_filtered_ids)
@@ -161,11 +160,9 @@ module Reporting
         # { variant: [enterprise_fee_ids] }
         def enterprise_fees_per_variant(order)
           hash = {}
-          order.order_cycle.exchanges.each do |exchange|
-            exchange.variants.each do |variant|
-              hash[variant] ||= order.order_cycle.coordinator_fee_ids
-              hash[variant] += exchange.enterprise_fee_ids
-            end
+          order.line_items.each do |li|
+            hash[li.variant] ||= order.order_cycle.coordinator_fee_ids
+            hash[li.variant] += li.adjustments.enterprise_fee.map(&:originator_id)
           end
           hash
         end
