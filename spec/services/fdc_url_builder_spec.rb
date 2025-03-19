@@ -20,7 +20,7 @@ RSpec.describe FdcUrlBuilder do
     }
 
     it "knows the right URLs" do
-      expect(subject.catalog_url).to eq "http://test.host/api/dfc/enterprises/10000/supplied_products" # but shouldn't it be catalog_items?
+      expect(subject.catalog_url).to eq "http://test.host/api/dfc/enterprises/10000/catalog_items"
       expect(subject.orders_url).to eq "http://test.host/api/dfc/enterprises/10000/orders"
       # expect(subject.sale_session_url).to eq "" # not yet implemented
     end
