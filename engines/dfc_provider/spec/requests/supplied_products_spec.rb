@@ -166,11 +166,13 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
             response.body.gsub!(
               "supplied_products/#{variant_id}",
               "supplied_products/10001"
+            ).gsub!(
+              "catalog_items/#{variant_id}",
+              "catalog_items/10001"
+            ).gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+              "active_storage/url/logo-white.png",
             )
-              .gsub!(
-                %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-                "active_storage/url/logo-white.png",
-              )
           end
         end
       end

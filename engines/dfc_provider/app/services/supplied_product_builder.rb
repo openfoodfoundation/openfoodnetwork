@@ -24,7 +24,8 @@ class SuppliedProductBuilder < DfcBuilder
       isVariantOf: [product_group],
       spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
-      image_url: variant.product&.image&.url(:product)
+      image_url: variant.product&.image&.url(:product),
+      catalogItems: [catalog_item(variant, include_product: false)],
     )
   end
 
