@@ -19,8 +19,9 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
   let!(:oc3) { create(:simple_order_cycle, distributors: [d2], variants: [v4]) }
   let!(:s1) { create(:schedule, order_cycles: [oc1]) }
   let!(:s2) { create(:schedule, order_cycles: [oc2]) }
+  let!(:spree_current_user) { create(:user) }
 
-  let(:scoper) { OpenFoodNetwork::ScopeVariantsForSearch.new(params) }
+  let(:scoper) { OpenFoodNetwork::ScopeVariantsForSearch.new(params, spree_current_user) }
 
   describe "search" do
     let(:result) { scoper.search }
@@ -68,8 +69,11 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
         expect{ result }.to query_database [
           "Enterprise Load",
           "VariantOverride Load",
-          "SQL"
+          "SQL",
+          "Enterprise Pluck",
+          "Enterprise Load"
         ]
+
         expect(result).to include v4
         expect(result).not_to include v1, v2, v3
       end
@@ -177,6 +181,25 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
         p4.save!
         expect(result.map(&:name)).
           to eq(["Product 1", "Product a", "Product b", "Product c"])
+      end
+    end
+
+    context "when search is done by the producer allowing to edit orders" do
+      let(:params) { { q: "product" } }
+      let(:producer) { create(:supplier_enterprise) }
+      let!(:spree_current_user) {
+        instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id),
+                                       can_manage_line_items_in_orders_only?: true)
+      }
+
+      it "returns products distributed by distributors allowing producers to edit orders" do
+        v1.supplier_id = producer.id
+        v2.supplier_id = producer.id
+        v1.save!
+        v2.save!
+
+        expect(result).to include v1, v2
+        expect(result).not_to include v3, v4
       end
     end
   end
