@@ -177,6 +177,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -467,6 +468,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -737,6 +739,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -797,6 +800,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 1.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
