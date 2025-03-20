@@ -14,6 +14,12 @@ changelog:
           - technical changes only
           - user facing changes
 
+    # These will require a minor or major version increment
+    - title: "Significant changes 🚀"
+      labels:
+        - breaking change
+        - major breaking change
+
     # Posted in advance for #instance-managers
     - title: "User-facing changes 👀"
       labels:
