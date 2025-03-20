@@ -51,6 +51,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             expect(enterprise.distributed_orders.count).to eq 1
             ofn_order = enterprise.distributed_orders.first
             expect(ofn_order.created_by).to eq user
+            expect(ofn_order.state).to eq "complete"
 
             # Insert static value to keep documentation deterministic:
             response.body.gsub!(
