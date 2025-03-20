@@ -106,7 +106,7 @@ RSpec.describe "DFC Product Import" do
       .and change { linked_variant.on_demand }.to(true)
       .and change { linked_variant.on_hand }.by(0)
       .and change { unlinked_variant.on_demand }.to(false)
-      .and change { unlinked_variant.on_hand }.to(0)
+      .and change { unlinked_variant.on_hand }.by(0)
 
     product = Spree::Product.last
     expect(product.variants[0].semantic_links).to be_present
