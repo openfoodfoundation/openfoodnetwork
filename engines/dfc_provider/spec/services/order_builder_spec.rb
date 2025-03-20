@@ -31,4 +31,20 @@ RSpec.describe OrderBuilder do
       expect(result.lines.count).to eq 0
     end
   end
+
+  describe ".apply" do
+    subject { described_class.apply(ofn_order, dfc_order) }
+    let!(:ofn_order) { create(:order, id: 1) }
+    let(:dfc_order) {
+      DataFoodConsortium::Connector::Order.new(
+        nil,
+        orderStatus: DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE.HELD,
+      )
+    }
+
+    it "applies attribute changes to order" do
+      subject
+      expect(ofn_order.state).to eq "complete"
+    end
+  end
 end
