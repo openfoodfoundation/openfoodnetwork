@@ -13,12 +13,15 @@ module DfcProvider
       return head :bad_request unless dfc_order
 
       order = current_enterprise.distributed_orders.build(created_by: current_user)
-      OrderBuilder.apply(order, dfc_order)
+
+      # Customer E-Mail can't be blank
 
       # rubocop:disable Style/GuardClause
-      if order.save
+      if order.save && OrderBuilder.apply(order, dfc_order, graph)
         subject = OrderBuilder.build(order)
         render json: DfcIo.export(subject), status: :created
+      else
+        render json: {error: order.errors.full_messages.to_sentence}, status: :unprocessable_entity
       end
       # rubocop:enable Style/GuardClause
     end

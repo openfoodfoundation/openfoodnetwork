@@ -45,7 +45,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       response "201", "created" do
         before { product }
 
-        context "with given enterprise id" do
+        context "with line items" do
           let(:enterprise_id) { enterprise.id }
 
           run_test! {
@@ -53,6 +53,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             ofn_order = enterprise.distributed_orders.first
             expect(ofn_order.created_by).to eq user
             expect(ofn_order.state).to eq "complete"
+            expect(ofn_order.line_items.count).to eq 1
 
             # Insert static value to keep documentation deterministic:
             response.body.gsub!(
