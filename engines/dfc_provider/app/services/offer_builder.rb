@@ -9,7 +9,7 @@ class OfferBuilder < DfcBuilder
 
     price = DataFoodConsortium::Connector::Price.new(
       value: variant.price.to_f,
-      unit: price_measure(variant).semanticId,
+      unit: price_measure(variant)&.semanticId,
     )
     DataFoodConsortium::Connector::Offer.new(
       id, price:, stockLimitation: stock_limitation(variant),

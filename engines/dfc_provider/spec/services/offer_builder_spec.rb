@@ -28,12 +28,18 @@ RSpec.describe OfferBuilder do
     end
 
     it "assigns a price with mapped currency" do
-      variant.id = 5
-
       offer = OfferBuilder.build(variant)
 
       expect(offer.price.value).to eq 19.99
-      expect(offer.price.unit).to eq "dfc-m:AustralianDollar" # Note that this will hopefully change to ISO 4217
+      expect(offer.price.unit).to eq "dfc-m:AustralianDollar" # Hopefully change to ISO 4217 soon
+    end
+
+    it "assigns a price without unknown currency" do
+      variant.default_price.currency = "XXX"
+      offer = OfferBuilder.build(variant)
+
+      expect(offer.price.value).to eq 19.99
+      expect(offer.price.unit).to be nil
     end
   end
 end
