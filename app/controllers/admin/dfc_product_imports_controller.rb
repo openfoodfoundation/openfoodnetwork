@@ -14,13 +14,13 @@ module Admin
 
     def index
       # Fetch DFC catalog JSON for preview
-      api = DfcRequest.new(spree_current_user)
       @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
       catalog = DfcCatalog.from_json(@catalog_json)
 
       # Render table and let user decide which ones to import.
       @items = list_products(catalog)
+      @absent_items = absent_variants(catalog)
     rescue URI::InvalidURIError
       flash[:error] = t ".invalid_url"
       redirect_to admin_product_import_path
@@ -58,12 +58,17 @@ module Admin
       end
 
       @count = imported.compact.count
+      @reset_count = reset_absent_variants(catalog).count
     rescue ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
     end
 
     private
+
+    def api
+      @api ||= DfcRequest.new(spree_current_user)
+    end
 
     def load_enterprise
       @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
@@ -78,6 +83,43 @@ module Admin
           subject,
           @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
         ]
+      end
+    end
+
+    # Reset stock for any variants that were removed from the catalog.
+    #
+    # When variants are removed from the remote catalog, we can't place
+    # backorders for them anymore. If our copy of the product has limited
+    # stock then we need to set the stock to zero to prevent any more sales.
+    #
+    # But if our product is on-demand/backorderable then our stock level is
+    # a representation of remaining local stock. We then need to limit sales
+    # to this local stock and set on-demand to false.
+    #
+    # We don't delete the variant because it may come back at a later time and
+    # we don't want to lose the connection to previous orders.
+    def reset_absent_variants(catalog)
+      absent_variants(catalog).map do |variant|
+        if variant.on_demand
+          variant.on_demand = false
+        else
+          variant.on_hand = 0
+        end
+      end
+    end
+
+    def absent_variants(catalog)
+      present_ids = catalog.products.map(&:semanticId)
+      catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
+
+      @enterprise.supplied_variants
+        .includes(:semantic_links).references(:semantic_links)
+        .where.not(semantic_links: { semantic_id: present_ids })
+        .select do |variant|
+        # Variants that were in the same catalog before:
+        variant.semantic_links.map(&:semantic_id).any? do |semantic_id|
+          FdcUrlBuilder.new(semantic_id).catalog_url == catalog_url
+        end
       end
     end
   end
