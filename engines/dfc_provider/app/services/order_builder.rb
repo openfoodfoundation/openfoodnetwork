@@ -21,4 +21,13 @@ class OrderBuilder < DfcBuilder
       orderStatus: "dfc-v:Held",
     )
   end
+
+  def self.apply(ofn_order, dfc_order)
+    # Set order state if recognised
+    ofn_order.state = "complete" if dfc_order.orderStatus == order_status.HELD
+  end
+
+  def self.order_status
+    DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE
+  end
 end
