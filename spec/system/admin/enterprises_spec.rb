@@ -100,6 +100,10 @@ RSpec.describe '
     expect(page).not_to have_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
+    choose('enterprise[show_customer_contacts_to_suppliers]', option: true)
+
+    # See also "setting ordering preferences" tested separately.
+
     scroll_to(:bottom)
     accept_alert do
       scroll_to(:bottom)
@@ -216,6 +220,7 @@ RSpec.describe '
       "enterprise_preferred_product_selection_from_inventory_only_false"
     )
 
+    # Save changes
     click_button 'Update'
 
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
@@ -246,6 +251,7 @@ RSpec.describe '
     )
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
+    expect(page).to have_checked_field 'enterprise[show_customer_contacts_to_suppliers]', with: true
 
     # Back navigation loads the tab content
     page.execute_script('window.history.back()')
