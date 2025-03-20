@@ -29,15 +29,15 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       produces "application/json"
       consumes "application/json"
 
-      parameter name: :order, in: :body, schema: {
-        example: {
-          '@context': "https://www.datafoodconsortium.org",
-          '@type': "dfc-b:Order",
-          'dfc-b:client': "http://test.host/api/dfc/enterprises/10000",
-        }
+      parameter name: :body, in: :body, schema: {
+        # To update fixture, add this to orders_controller.rb#create:
+        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'), JSON.pretty_generate(JSON.parse(request.body.read)))
+        # Then execute:
+        #   rspec engines/dfc_provider/spec/system/orders_backorder_spec.rb
+        example: File.read(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'))
       }
 
-      let(:order) { |example|
+      let(:body) { |example|
         example.metadata[:operation][:parameters].first[:schema][:example]
       }
 
@@ -67,7 +67,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       response "400", "bad request" do
         context "with empty request body" do
           let(:enterprise_id) { enterprise.id }
-          let(:order) { nil }
+          let(:body) { nil }
 
           run_test! {
             expect(enterprise.distributed_orders).to be_empty

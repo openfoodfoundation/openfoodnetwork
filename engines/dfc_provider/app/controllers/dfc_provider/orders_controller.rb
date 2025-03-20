@@ -7,13 +7,10 @@ module DfcProvider
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders
     def create
-      # The importer requires an ID, so here's a dummy:
-      object = JSON.parse(request.body.read)&.merge(
-        '@id' => 'http://dummy'
-      )
-      order_params = DfcIo.import(object)
+      graph = import
+      dfc_order = select_type(graph, "dfc-b:Order").first if graph
 
-      return head :bad_request unless order_params
+      return head :bad_request unless dfc_order
 
       order = current_enterprise.distributed_orders.build(user: current_user)
 
@@ -23,6 +20,11 @@ module DfcProvider
         render json: DfcIo.export(subject), status: :created
       end
       # rubocop:enable Style/GuardClause
+    end
+
+    # This is similar to DfcCatalog#select_type. Consider moving to a new DfcGraph class.
+    def select_type(graph, semantic_type)
+      graph.select { |i| i.semanticType == semantic_type }
     end
   end
 end
