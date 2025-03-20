@@ -53,6 +53,8 @@ RSpec.describe "Orders backorder integration" do
 
     # Pretend that user has authenticated with OIDC
     distributor_owner.oidc_account.update!(token: allow_token_for(email: distributor_owner.email))
+
+    variant.on_hand = 1
   }
 
   xit "debugging: accesses the webserver" do
@@ -85,6 +87,10 @@ RSpec.describe "Orders backorder integration" do
       expect(order.user).to eq distributor_owner
       expect(order.email).to eq distributor_owner.email
       expect(order.state).to eq "complete"
+
+      expect(order.line_items.count).to eq 1
+      expect(order.line_items.first.variant).to eq variant
+      expect(order.line_items.first.quantity).to eq 1
     end
   end
 end

@@ -43,8 +43,31 @@ RSpec.describe OrderBuilder do
     }
 
     it "applies attribute changes to order" do
-      subject
+      expect(subject).to be true
       expect(ofn_order.state).to eq "complete"
+    end
+
+    context "with OrderLines" do
+      let!(:variant) { create(:variant, id: 10_000) }
+
+      before do
+        offer = DataFoodConsortium::Connector::Offer.new(
+          nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/10000"
+        )
+        order_line = DataFoodConsortium::Connector::OrderLine.new(
+          nil, offer:, quantity: 3
+        )
+
+        dfc_order.lines = [order_line, order_line]
+      end
+
+      it "creates line items" do
+        expect(subject).to be true
+
+        expect(ofn_order.line_items.count).to eq 2
+        expect(ofn_order.line_items.first.variant).to eq variant
+        expect(ofn_order.line_items.first.quantity).to eq 3
+      end
     end
   end
 end

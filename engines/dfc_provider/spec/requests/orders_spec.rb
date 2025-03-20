@@ -31,10 +31,11 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
       parameter name: :body, in: :body, schema: {
         # To update fixture, add this to orders_controller.rb#create:
-        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'), JSON.pretty_generate(JSON.parse(request.body.read)))
+        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'),
+        #              JSON.pretty_generate(JSON.parse(request.body.read)))
         # Then execute:
         #   rspec engines/dfc_provider/spec/system/orders_backorder_spec.rb
-        example: File.read(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'))
+        example: Rails.root.join('spec/fixtures/files/fdc-send-backorder.json').read
       }
 
       let(:body) { |example|
@@ -42,13 +43,14 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       }
 
       response "201", "created" do
-        before {
+        before do
           # User may be an existing customer of the enterprise
           enterprise.customers.create!(user:, email: user.email)
           product
-        }
+          variant.on_hand = 1
+        end
 
-        context "with given enterprise id" do
+        context "with line items" do
           let(:enterprise_id) { enterprise.id }
 
           run_test! {
@@ -58,6 +60,10 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             expect(ofn_order.email).to eq "user@example.com"
             expect(ofn_order.customer.email).to eq user.email
             expect(ofn_order.state).to eq "complete"
+
+            expect(ofn_order.line_items.count).to eq 1
+            expect(ofn_order.line_items.first.variant).to eq variant
+            expect(ofn_order.line_items.first.quantity).to eq 1
 
             # Insert static value to keep documentation deterministic:
             response.body.gsub!(
@@ -111,12 +117,21 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       end
 
       response "422", "unprocessable entity" do
-        context "with invalid order value" do
-          let(:enterprise_id) { enterprise.id }
+        let(:enterprise_id) { enterprise.id }
 
+        context "with invalid order value" do
           run_test! {
             pending "haven't got a way to submit invalid values yet.."
             expect(enterprise.distributed_orders).to be_empty
+          }
+        end
+
+        context "variant not found" do
+          run_test! {
+            pending "todo:  Stock::AvailabilityValidator should skip over empty variant"
+            expect(enterprise.distributed_orders.first.line_items).to be_empty
+
+            expect(response.body).to include "Line items variant must exist"
           }
         end
       end

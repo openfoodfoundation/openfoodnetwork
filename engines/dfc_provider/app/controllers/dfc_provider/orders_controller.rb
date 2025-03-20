@@ -18,9 +18,8 @@ module DfcProvider
         email: current_user.email,
         customer: current_user.customers.find_by(enterprise: current_enterprise),
       )
-      OrderBuilder.apply(order, dfc_order)
 
-      if order.save
+      if order.save && OrderBuilder.apply(order, dfc_order)
         subject = OrderBuilder.build(order)
         render json: DfcIo.export(subject), status: :created
       else
