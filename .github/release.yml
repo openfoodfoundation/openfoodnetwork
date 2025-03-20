@@ -15,7 +15,7 @@ changelog:
           - user facing changes
 
     # These will require a minor or major version increment
-    - title: "Breaking changes"
+    - title: "Significant changes 🚀"
       labels:
         - breaking-change
         - major-breaking-change
