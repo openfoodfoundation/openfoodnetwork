@@ -31,10 +31,11 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
       parameter name: :body, in: :body, schema: {
         # To update fixture, add this to orders_controller.rb#create:
-        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'), JSON.pretty_generate(JSON.parse(request.body.read)))
+        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'),
+        #     JSON.pretty_generate(JSON.parse(request.body.read)))
         # Then execute:
         #   rspec engines/dfc_provider/spec/system/orders_backorder_spec.rb
-        example: File.read(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'))
+        example: Rails.root.join('spec/fixtures/files/fdc-send-backorder.json').read
       }
 
       let(:body) { |example|
@@ -50,7 +51,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           run_test! {
             expect(enterprise.distributed_orders.count).to eq 1
             ofn_order = enterprise.distributed_orders.first
-            expect(ofn_order.user).to eq user
+            expect(ofn_order.created_by).to eq user
 
             # Insert static value to keep documentation deterministic:
             response.body.gsub!(

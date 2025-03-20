@@ -12,7 +12,7 @@ module DfcProvider
 
       return head :bad_request unless dfc_order
 
-      order = current_enterprise.distributed_orders.build(user: current_user)
+      order = current_enterprise.distributed_orders.build(created_by: current_user)
 
       # rubocop:disable Style/GuardClause
       if order.save
