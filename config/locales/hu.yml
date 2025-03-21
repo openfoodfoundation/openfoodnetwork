@@ -1188,10 +1188,10 @@ hu:
           none: Egyik sem
           own: Saját
           sells: Értékesít
-          sells_tip: "Egyik sem - a vállalkozás nem értékesít közvetlenül a vevőknek.<br />Saját - Vállalkozás saját termékeket ad el az ügyfeleknek.<br />Mindegyik -  A vállalkozás saját vagy más vállalkozás termékeit is értékesítheti.<br />"
+          sells_tip: "Egyik sem - a vállalkozás nem értékesít közvetlenül<br />Saját - a vállalkozás saját termékeket ad el az ügyfeleknek.<br />Mindegyik -  A vállalkozás saját vagy más vállalkozás termékeit is értékesítheti.<br />"
           external_billing_id: Külső számlázási azonosító
           visible_in_search: Látható a keresésben?
-          visible_in_search_tip: "Az árusítóhelyek lehetnek 1. nyilvánosak, amik megjelennek az OFN térképen és listákban, vagy 2. rejtve a térképen és listákban, de más árusítóhelyek által elérhető módon, vagy 3. teljesen rejtve."
+          visible_in_search_tip: "Az termelői és átvételi pont profilok lehetnek 1. nyilvánosak, amik megjelennek az OFN térképen és listákban, vagy 2. rejtve a térképen és listákban, de más átvételi pontok által elérhető módon, vagy 3. teljesen rejtve."
           visible: Nyilvános
           not_visible: Rejtve
           hidden: Minden hivatkozás rejtve
@@ -1200,7 +1200,7 @@ hu:
           legend: "Tulajdonságok"
         permalink:
           permalink: Permalink (szóközök nélkül)
-          permalink_tip: "Ezt az állandó linket használják az átadási pont URL-jének létrehozására: %{link}árusítóhely-neve/shop"
+          permalink_tip: "Ez a permalink a webáruházad url-jének létrehozására szolgál: : %{link}árusítóhely-neve/shop"
           link_to_front: Az online kirakat kezdőlapjának URL-je
           link_to_front_tip: Közvetlen link az online kirakatodhoz az Open Food Hálózatában.
           ofn_uid: OFN Azonosító
@@ -2404,7 +2404,7 @@ hu:
   hubs_profile_only: "Csak profil"
   hubs_delivery_options: "Áruátadási lehetőségek"
   hubs_pickup: "Átvétel"
-  hubs_delivery: "Szállítás"
+  hubs_delivery: "Kiszállítás"
   hubs_producers: "Termelőink"
   hubs_filter_by: "Szűrés"
   hubs_filter_type: "típus"
@@ -2551,7 +2551,7 @@ hu:
   orders_form_total: "Összesen"
   orders_oc_expired_headline: "A rendelések erre a rendelési ciklusra lezárultak"
   orders_oc_expired_text: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket."
-  orders_oc_expired_text_others_html: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket. <strong>%{link}</strong>"
+  orders_oc_expired_text_others_html: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket. <strong>%{link}</strong>"
   orders_oc_expired_text_link: "vagy tekintse meg az ezen a átvételi ponton elérhető többi rendelési ciklust"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefon:"

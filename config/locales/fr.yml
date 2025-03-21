@@ -794,6 +794,7 @@ fr:
           one: "1 sélectionné"
           other: "%{count} sélectionné"
         import: Importer
+        invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
         imported_products: "Produits importés :"
