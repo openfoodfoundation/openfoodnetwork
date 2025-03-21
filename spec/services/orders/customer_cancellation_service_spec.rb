@@ -10,7 +10,7 @@ RSpec.describe Orders::CustomerCancellationService do
 
   context "when an order is cancelled successfully" do
     it "notifies the distributor by email" do
-      order = create(:order, completed_at: Time.now, state: 'complete')
+      order = create(:order, completed_at: Time.zone.now, state: 'complete')
 
       Orders::CustomerCancellationService.new(order).call
 

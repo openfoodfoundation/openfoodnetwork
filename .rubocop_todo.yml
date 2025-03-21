@@ -516,17 +516,6 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
 
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'app/models/spree/gateway/pay_pal_express.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/services/order_cycles/webhook_service_spec.rb'
-    - 'spec/services/orders/customer_cancellation_service_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: TransactionMethods.
 Rails/TransactionExitStatement:

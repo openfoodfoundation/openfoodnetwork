@@ -7,8 +7,8 @@ RSpec.describe OrderCycles::WebhookService do
     create(
       :simple_order_cycle,
       name: "Order cycle 1",
-      orders_open_at: "2022-09-19 09:00:00".to_time,
-      orders_close_at: "2022-09-19 17:00:00".to_time,
+      orders_open_at: Time.zone.parse("2022-09-19 09:00:00"),
+      orders_close_at: Time.zone.parse("2022-09-19 17:00:00"),
       coordinator:,
     )
   }
@@ -42,8 +42,8 @@ RSpec.describe OrderCycles::WebhookService do
         data = {
           id: order_cycle.id,
           name: "Order cycle 1",
-          orders_open_at: "2022-09-19 09:00:00".to_time,
-          orders_close_at: "2022-09-19 17:00:00".to_time,
+          orders_open_at: Time.zone.parse("2022-09-19 09:00:00"),
+          orders_close_at: Time.zone.parse("2022-09-19 17:00:00"),
           coordinator_id: coordinator.id,
           coordinator_name: "Starship Enterprise",
         }
