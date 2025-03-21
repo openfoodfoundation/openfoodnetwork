@@ -15,6 +15,7 @@ module Admin
     prepend_before_action :override_sells, only: :create
 
     before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :set_enterprise, only: [:edit, :update]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
     before_action :load_taxons, only: [:new, :edit, :update, :create]
@@ -214,6 +215,14 @@ module Admin
 
     def collection_actions
       [:index, :for_order_cycle, :visible, :bulk_update]
+    end
+
+    def set_enterprise
+      @enterprise = @object
+      return if @enterprise
+
+      flash[:error] = I18n.t(:enterprise_not_found_error)
+      redirect_to admin_enterprises_path
     end
 
     def load_methods_and_fees
