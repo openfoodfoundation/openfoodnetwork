@@ -3,7 +3,7 @@
     %td{ colspan: "5", data: { controller: "input-char-count" }, style: "position: relative;" }
       %label
         = t(".note_label")
-        = text_field_tag :note, @order.note, { maxLength: 280, data: { "input-char-count-target": "input" } }
+      = text_field_tag :note, @order.note, { maxLength: 280, data: { "input-char-count-target": "input" } }
       %span.edit-note-count{ data: { "input-char-count-target": "count" }, style: "position: absolute; right: 7px; top: 7px; font-size: 11px;" }
 
     %td.actions
