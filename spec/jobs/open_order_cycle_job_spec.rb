@@ -79,10 +79,14 @@ RSpec.describe OpenOrderCycleJob do
         .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', now).once
 
       # Start two jobs in parallel:
-      threads = [
-        Thread.new { OpenOrderCycleJob.perform_now(order_cycle.id) },
-        Thread.new { OpenOrderCycleJob.perform_now(order_cycle.id) },
-      ]
+      threads = [1, 2].map do
+        Thread.new do
+          # Disable printing expected error
+          Thread.current.report_on_exception = false
+
+          OpenOrderCycleJob.perform_now(order_cycle.id)
+        end
+      end
 
       # Wait for both to jobs to pause.
       # This can reveal a race condition.
