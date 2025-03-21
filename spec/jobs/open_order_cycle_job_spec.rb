@@ -70,7 +70,7 @@ RSpec.describe OpenOrderCycleJob do
       breakpoint.lock
       expect_any_instance_of(OpenOrderCycleJob).to(
         receive(:sync_remote_variants).and_wrap_original do |method, *args|
-          breakpoint.synchronize {} # rubocop:disable Lint/EmptyBlock
+          breakpoint.synchronize { nil }
           method.call(*args)
         end
       )
