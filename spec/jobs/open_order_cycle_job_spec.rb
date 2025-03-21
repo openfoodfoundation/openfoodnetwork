@@ -65,10 +65,11 @@ RSpec.describe OpenOrderCycleJob do
     let(:breakpoint) { Mutex.new }
 
     it "doesn't open order cycle twice" do
-      # Pause jobs when placing new job:
+      # Pause in the middle of the job to test if the second job is trying
+      # to do the same thing at the same time.
       breakpoint.lock
-      allow(OpenOrderCycleJob).to(
-        receive(:new).and_wrap_original do |method, *args|
+      expect_any_instance_of(OpenOrderCycleJob).to(
+        receive(:sync_remote_variants).and_wrap_original do |method, *args|
           breakpoint.synchronize {} # rubocop:disable Lint/EmptyBlock
           method.call(*args)
         end
