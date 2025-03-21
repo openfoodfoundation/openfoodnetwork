@@ -15,4 +15,12 @@ module LinkHelper
       prefix + url
     end
   end
+
+  def new_tab_option
+    if feature?(:open_in_same_tab, spree_current_user)
+      {}
+    else
+      { target: "_blank" }
+    end
+  end
 end
