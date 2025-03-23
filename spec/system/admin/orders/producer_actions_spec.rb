@@ -83,6 +83,12 @@ RSpec.describe 'As a producer who have the ability to update orders' do
               expect(page).to have_selector('tr', count: 1) # Only one order
               expect(page).to have_selector('td', text: name, count: 1)
               expect(page).to have_selector('td', text: email, count: 1)
+              within 'td.actions' do
+                # to have edit button
+                expect(page).to have_selector("a.icon-edit")
+                # not to have ship button
+                expect(page).not_to have_selector('button.icon-road')
+              end
             end
           end
         end
