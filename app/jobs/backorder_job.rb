@@ -55,12 +55,11 @@ class BackorderJob < ApplicationJob
       ordered_quantities[item] = retail_quantity
     end
 
+    return if backorder.lines.empty?
+
     place_order(user, order, orderer, backorder)
 
-    items.each do |item|
-      variant = item.variant
-      variant.on_hand += ordered_quantities[item] if variant.on_demand
-    end
+    adjust_stock(items, ordered_quantities)
   end
 
   # We look at linked variants which are either stock controlled or
@@ -79,6 +78,9 @@ class BackorderJob < ApplicationJob
     variant = line_item.variant
     needed_quantity = needed_quantity(line_item)
     solution = broker.best_offer(variant.semantic_links[0].semantic_id)
+
+    # If this product was removed from the catalog, we can't order it.
+    return 0 unless solution.offer
 
     # The number of wholesale packs we need to order to fulfill the
     # needed quantity.
@@ -134,5 +136,15 @@ class BackorderJob < ApplicationJob
       )
 
     order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
+  end
+
+  def adjust_stock(items, ordered_quantities)
+    items.each do |item|
+      variant = item.variant
+      quantity = ordered_quantities[item]
+      next if quantity.zero?
+
+      variant.on_hand += quantity if variant.on_demand
+    end
   end
 end
