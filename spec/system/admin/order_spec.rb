@@ -850,12 +850,11 @@ RSpec.describe '
 
           find('.edit-method').click
 
-          # TODO assertion not working due to overlapping elements on new BUU design
-          # expect(page).to have_select2('selected_shipping_rate_id',
-          #                             with_options: [
-          #                               shipping_method_for_distributor1.name,
-          #                               different_shipping_method_for_distributor1.name
-          #                             ], without_options: [shipping_method_for_distributor2.name])
+          expect(page).to have_select2('selected_shipping_rate_id',
+                                       with_options: [
+                                         shipping_method_for_distributor1.name,
+                                         different_shipping_method_for_distributor1.name
+                                       ], without_options: [shipping_method_for_distributor2.name])
 
           select2_select(different_shipping_method_for_distributor1.name,
                          from: 'selected_shipping_rate_id')
