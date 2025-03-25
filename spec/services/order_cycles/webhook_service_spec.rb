@@ -8,11 +8,14 @@ RSpec.describe OrderCycles::WebhookService do
       :simple_order_cycle,
       name: "Order cycle 1",
       orders_open_at: Time.zone.parse("2022-09-19 09:00:00"),
+      opened_at: Time.zone.parse("2022-09-19 09:00:01"),
       orders_close_at: Time.zone.parse("2022-09-19 17:00:00"),
       coordinator:,
     )
   }
   let(:coordinator) { create :distributor_enterprise, name: "Starship Enterprise" }
+  let(:at) { Time.zone.parse("2022-09-19 09:00:02") }
+  subject { OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened", at) }
 
   describe "creating payloads" do
     it "doesn't create webhook payload for enterprise users" do
@@ -21,7 +24,7 @@ RSpec.describe OrderCycles::WebhookService do
       coordinator_user = create(:user, enterprises: [coordinator])
       coordinator_user.webhook_endpoints.create!(url: "http://coordinator_user_url")
 
-      expect{ OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+      expect{ subject }
         .not_to enqueue_job(WebhookDeliveryJob).with("http://coordinator_user_url", any_args)
     end
 
@@ -31,7 +34,7 @@ RSpec.describe OrderCycles::WebhookService do
       end
 
       it "creates webhook payload for order cycle coordinator" do
-        expect{ OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+        expect{ subject }
           .to enqueue_job(WebhookDeliveryJob).with("http://coordinator_owner_url", any_args)
       end
 
@@ -43,20 +46,21 @@ RSpec.describe OrderCycles::WebhookService do
           id: order_cycle.id,
           name: "Order cycle 1",
           orders_open_at: Time.zone.parse("2022-09-19 09:00:00"),
+          opened_at: Time.zone.parse("2022-09-19 09:00:01"),
           orders_close_at: Time.zone.parse("2022-09-19 17:00:00"),
           coordinator_id: coordinator.id,
           coordinator_name: "Starship Enterprise",
         }
 
-        expect{ OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+        expect{ subject }
           .to enqueue_job(WebhookDeliveryJob).exactly(1).times
-          .with("http://coordinator_owner_url", "order_cycle.opened", hash_including(data))
+          .with("http://coordinator_owner_url", "order_cycle.opened", hash_including(data), at:)
       end
     end
 
     context "coordinator owner doesn't have endpoint configured" do
       it "doesn't create webhook payload" do
-        expect{ OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+        expect{ subject }
           .not_to enqueue_job(WebhookDeliveryJob)
       end
     end
@@ -84,13 +88,13 @@ RSpec.describe OrderCycles::WebhookService do
             coordinator_name: "Starship Enterprise",
           }
 
-          expect{
-            OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened")
-          }
+          expect{ subject }
             .to enqueue_job(WebhookDeliveryJob).with("http://distributor1_owner_url",
-                                                     "order_cycle.opened", hash_including(data))
+                                                     "order_cycle.opened", hash_including(data),
+                                                     at:)
             .and enqueue_job(WebhookDeliveryJob).with("http://distributor2_owner_url",
-                                                      "order_cycle.opened", hash_including(data))
+                                                      "order_cycle.opened", hash_including(data),
+                                                      at:)
         end
       end
 
@@ -107,9 +111,7 @@ RSpec.describe OrderCycles::WebhookService do
         it "creates only one webhook payload for the user's endpoint" do
           user.webhook_endpoints.create! url: "http://coordinator_owner_url"
 
-          expect{
-            OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened")
-          }
+          expect{ subject }
             .to enqueue_job(WebhookDeliveryJob).with("http://coordinator_owner_url", any_args)
         end
       end
@@ -131,9 +133,7 @@ RSpec.describe OrderCycles::WebhookService do
         }
 
         it "doesn't create a webhook payload for supplier owner" do
-          expect{
-            OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened")
-          }
+          expect{ subject }
             .not_to enqueue_job(WebhookDeliveryJob).with("http://supplier_owner_url", any_args)
         end
       end
@@ -142,7 +142,7 @@ RSpec.describe OrderCycles::WebhookService do
 
   context "without webhook subscribed to enterprise" do
     it "doesn't create webhook payload" do
-      expect{ OrderCycles::WebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+      expect{ subject }
         .not_to enqueue_job(WebhookDeliveryJob)
     end
   end
