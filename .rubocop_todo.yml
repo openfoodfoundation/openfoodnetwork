@@ -704,19 +704,6 @@ Style/PreferredHashMethods:
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'engines/dfc_provider/app/services/authorization_control.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantAssignment:
-  Exclude:
-    - 'spec/models/database_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AutoCorrect, AllowComments.
 Style/RedundantInitialize:
   Exclude:

@@ -47,7 +47,7 @@ class AuthorizationControl
   end
 
   def access_token
-    @request.headers['Authorization'].to_s.split(' ').last
+    @request.headers['Authorization'].to_s.split.last
   end
 
   def ofn_api_token
