@@ -31,19 +31,25 @@ class Enterprise < ApplicationRecord
 
   has_many :relationships_as_parent, class_name: 'EnterpriseRelationship',
                                      foreign_key: 'parent_id',
+                                     inverse_of: :parent,
                                      dependent: :destroy
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship',
                                     foreign_key: 'child_id',
+                                    inverse_of: :child,
                                     dependent: :destroy
   has_and_belongs_to_many :groups, join_table: 'enterprise_groups_enterprises',
                                    class_name: 'EnterpriseGroup'
-  has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
+  has_many :producer_properties, foreign_key: 'producer_id',
+                                 inverse_of: :producer,
+                                 dependent: :destroy
   has_many :properties, through: :producer_properties
   has_many :supplied_variants,
-           class_name: 'Spree::Variant', foreign_key: 'supplier_id', dependent: :destroy
+           class_name: 'Spree::Variant', foreign_key: 'supplier_id',
+           inverse_of: :supplier, dependent: :destroy
   has_many :supplied_products, through: :supplied_variants, source: :product
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
+                                inverse_of: :distributor,
                                 dependent: :restrict_with_exception
 
   belongs_to :address, class_name: 'Spree::Address'
