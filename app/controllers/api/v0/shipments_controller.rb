@@ -117,7 +117,7 @@ module Api
       end
 
       def shipment_params
-        return {} unless params.has_key? :shipment
+        return {} unless params.key? :shipment
 
         params.require(:shipment).permit(:tracking, :selected_shipping_rate_id)
       end

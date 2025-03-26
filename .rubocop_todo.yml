@@ -671,14 +671,6 @@ Style/OptionalBooleanParameter:
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'app/controllers/api/v0/shipments_controller.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AutoCorrect, AllowComments.
 Style/RedundantInitialize:
   Exclude:
