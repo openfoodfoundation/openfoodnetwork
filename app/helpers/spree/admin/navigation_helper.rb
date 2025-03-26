@@ -122,7 +122,7 @@ module Spree
           end
         else
           if html_options['data-update'].nil? && html_options[:remote]
-            object_name, action = url.split('/')[-2..-1]
+            object_name, action = url.split('/')[-2..]
             html_options['data-update'] = [action, object_name.singularize].join('_')
           end
 
