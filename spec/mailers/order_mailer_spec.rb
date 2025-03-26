@@ -160,6 +160,24 @@ RSpec.describe Spree::OrderMailer do
     end
   end
 
+  describe "#cancel_email (for_customer)" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, distributor:, state: "canceled") }
+    let(:mail) { Spree::OrderMailer.cancel_email(order) }
+
+    it "sends an email to the customer" do
+      expect(mail.to).to eq([order.email])
+    end
+
+    it "displays the order number" do
+      expect(mail.body).to include(order.number.to_s)
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.distributor.contact.email])
+    end
+  end
+
   describe "order confimation" do
     let(:bill_address) { create(:address) }
     let(:distributor_address) {
