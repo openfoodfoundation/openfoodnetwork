@@ -550,13 +550,6 @@ Style/ArrayIntersect:
     - 'lib/open_food_network/tag_rule_applicator.rb'
     - 'spec/support/matchers/select2_matchers.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowOnConstant, AllowOnSelfClass.
-Style/CaseEquality:
-  Exclude:
-    - 'spec/models/spree/payment_spec.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
