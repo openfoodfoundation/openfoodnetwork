@@ -3,7 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
-  let(:user) { create(:oidc_user, id: 12_345) }
+  let(:user) { create(:oidc_user, id: 12_345, email: "user@example.com") }
   let(:enterprise) {
     create(
       :distributor_enterprise,
@@ -42,7 +42,11 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       }
 
       response "201", "created" do
-        before { product }
+        before {
+          # User may be an existing customer of the enterprise
+          enterprise.customers.create!(user:, email: user.email)
+          product
+        }
 
         context "with given enterprise id" do
           let(:enterprise_id) { enterprise.id }
@@ -51,6 +55,8 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             expect(enterprise.distributed_orders.count).to eq 1
             ofn_order = enterprise.distributed_orders.first
             expect(ofn_order.created_by).to eq user
+            expect(ofn_order.email).to eq "user@example.com"
+            expect(ofn_order.customer.email).to eq user.email
             expect(ofn_order.state).to eq "complete"
 
             # Insert static value to keep documentation deterministic:
