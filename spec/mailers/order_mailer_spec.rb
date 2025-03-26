@@ -271,6 +271,7 @@ RSpec.describe Spree::OrderMailer do
         expect(deliveries.count).to eq(1)
         expect(deliveries.first.attachments.count).to eq(1)
         expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)
+        expect(email.reply_to).to eq([order.distributor.contact.email])
       end
     end
 
