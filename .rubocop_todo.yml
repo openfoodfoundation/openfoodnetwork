@@ -579,16 +579,6 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/missing_payments.rake'
-    - 'lib/tasks/sample_data/logging.rb'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'lib/tasks/subscriptions/test.rake'
-
 # Offense count: 10
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSplatArgument.
