@@ -23,6 +23,9 @@ module DfcProvider
       if order.save
         subject = OrderBuilder.build(order)
         render json: DfcIo.export(subject), status: :created
+      else
+        render json: { error: order.errors.full_messages.to_sentence },
+               status: :unprocessable_entity
       end
     end
 
