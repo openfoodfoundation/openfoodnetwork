@@ -82,6 +82,8 @@ RSpec.describe "Orders backorder integration" do
 
       order = supplier.distributed_orders.first
       expect(order.created_by).to eq distributor_owner
+      expect(order.user).to eq distributor_owner
+      expect(order.email).to eq distributor_owner.email
       expect(order.state).to eq "complete"
     end
   end

@@ -12,7 +12,12 @@ module DfcProvider
 
       return head :bad_request unless dfc_order
 
-      order = current_enterprise.distributed_orders.build(created_by: current_user)
+      order = current_enterprise.distributed_orders.build(
+        user: current_user,
+        created_by: current_user,
+        email: current_user.email,
+        customer: current_user.customers.find_by(enterprise: current_enterprise),
+      )
       OrderBuilder.apply(order, dfc_order)
 
       if order.save
