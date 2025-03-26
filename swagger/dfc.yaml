@@ -177,6 +177,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -189,7 +190,7 @@ paths:
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
-                        dfc-b:hasUnit: dfc-m:AUD
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 0
         '401':
           description: unauthorized
@@ -230,7 +231,7 @@ paths:
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
-                        dfc-b:hasUnit: dfc-m:AUD
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 0
         '404':
           description: not found
@@ -467,6 +468,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -514,7 +516,7 @@ paths:
                     dfc-b:hasPrice:
                       "@type": dfc-b:Price
                       dfc-b:value: 19.99
-                      dfc-b:hasUnit: dfc-m:AUD
+                      dfc-b:hasUnit: dfc-m:AustralianDollar
                     dfc-b:stockLimitation: 5
     put:
       summary: Update Offer
@@ -534,6 +536,45 @@ paths:
                 "@type": dfc-b:Offer
                 dfc-b:hasPrice: 9.99
                 dfc-b:stockLimitation: 7
+  "/api/dfc/enterprises/{enterprise_id}/orders":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create Order
+      parameters: []
+      tags:
+      - Orders
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/10001
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://www.datafoodconsortium.org
+                "@type": dfc-b:Order
+                dfc-b:client: http://test.host/api/dfc/enterprises/10000
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
@@ -650,6 +691,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/13132
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -710,6 +752,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 1.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
