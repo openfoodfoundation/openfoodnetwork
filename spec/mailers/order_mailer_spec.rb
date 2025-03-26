@@ -69,6 +69,10 @@ RSpec.describe Spree::OrderMailer do
       expect(email.body).to include('Payment summary')
     end
 
+    it "sets a reply-to of the customer email" do
+      expect(email.reply_to).to eq([order.email])
+    end
+
     context 'when the order has outstanding balance' do
       before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
