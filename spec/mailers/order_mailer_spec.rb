@@ -150,6 +150,10 @@ RSpec.describe Spree::OrderMailer do
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
     end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.email])
+    end
   end
 
   describe "order confimation" do
