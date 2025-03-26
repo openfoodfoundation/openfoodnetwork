@@ -579,14 +579,6 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - '.simplecov'
-
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/GlobalStdStream:
