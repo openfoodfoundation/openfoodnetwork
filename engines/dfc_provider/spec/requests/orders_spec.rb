@@ -109,6 +109,17 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           }
         end
       end
+
+      response "422", "unprocessable entity" do
+        context "with invalid order value" do
+          let(:enterprise_id) { enterprise.id }
+
+          run_test! {
+            pending "haven't got a way to submit invalid values yet.."
+            expect(enterprise.distributed_orders).to be_empty
+          }
+        end
+      end
     end
   end
 end
