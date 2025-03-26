@@ -51,10 +51,11 @@ module Api
         request.headers["X-Api-Token"] || params[:token]
       end
 
+      # :nocov:
       def error_during_processing(exception)
         Alert.raise(exception)
 
-        if Rails.env.development? || Rails.env.test?
+        if Rails.env.local?
           render status: :unprocessable_entity,
                  json: json_api_error(exception.message, meta: exception.backtrace)
         else
@@ -62,6 +63,7 @@ module Api
                  json: json_api_error(I18n.t(:unknown_error, scope: "api"))
         end
       end
+      # :nocov:
 
       def invalid_pagination(exception)
         render status: :unprocessable_entity,
