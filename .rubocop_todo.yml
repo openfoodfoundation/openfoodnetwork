@@ -669,13 +669,6 @@ Style/OptionalBooleanParameter:
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'spec/support/request/web_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect, AllowComments.
-Style/RedundantInitialize:
-  Exclude:
-    - 'spec/models/spree/gateway_spec.rb'
-
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
