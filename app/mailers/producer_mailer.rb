@@ -81,7 +81,8 @@ class ProducerMailer < ApplicationMailer
 
     @display_business_name = false
     line_items.map do |line_item|
-      customer_code = line_item.order.customer&.code
+      order = line_item.order
+      customer_code = order.customer&.code
       @display_business_name = true if customer_code.present?
 
       {
@@ -89,9 +90,10 @@ class ProducerMailer < ApplicationMailer
         supplier_name: line_item.variant.supplier.name,
         product_and_full_name: line_item.product_and_full_name,
         quantity: line_item.quantity,
-        first_name: line_item.order.billing_address.first_name,
-        last_name: line_item.order.billing_address.last_name,
+        first_name: order.billing_address.first_name,
+        last_name: order.billing_address.last_name,
         business_name: customer_code,
+        order_number: order.number
       }
     end.sort_by { |line_item| [line_item[:last_name].downcase, line_item[:first_name].downcase] }
   end
