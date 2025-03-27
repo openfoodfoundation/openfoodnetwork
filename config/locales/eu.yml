@@ -36,7 +36,7 @@ es:
       spree/order:
         payment_state: Ordainketaren egoera
         shipment_state: Bidalketa-probintzia
-        completed_at: Osatutakoa:
+        completed_at: "Osatutakoa:"
         number: Zenbakia
         state: Egoera
         email: Kontsumitzailearen e-maila
