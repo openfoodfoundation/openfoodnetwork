@@ -20,7 +20,7 @@ module Admin
 
       # Render table and let user decide which ones to import.
       @items = list_products(catalog)
-      @absent_items = absent_variants(catalog)
+      @absent_items = importer(catalog).absent_variants
     rescue URI::InvalidURIError
       flash[:error] = t ".invalid_url"
       redirect_to admin_product_import_path
@@ -58,7 +58,7 @@ module Admin
       end
 
       @count = imported.compact.count
-      @reset_count = reset_absent_variants(catalog).count
+      @reset_count = importer(catalog).reset_absent_variants.count
     rescue ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
@@ -86,12 +86,8 @@ module Admin
       end
     end
 
-    def reset_absent_variants(catalog)
-      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog).reset_absent_variants
-    end
-
-    def absent_variants(catalog)
-      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog).absent_variants
+    def importer(catalog)
+      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog)
     end
   end
 end
