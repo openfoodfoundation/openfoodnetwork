@@ -83,13 +83,13 @@ RSpec.describe ProducerMailer, type: :mailer do
       expect(line).to include 'QTY: 3'
       expect(line).to include '@ $10.00 = $30.00'
     end
-    expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
+    expect(html_body(mail).find("table.order-summary tr", text: p1.name))
       .to have_selector("td", text: "$30.00")
   end
 
   it "displays tax totals for each product" do
     # Tax for p1 line items
-    expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
+    expect(html_body(mail).find("table.order-summary tr", text: p1.name))
       .to have_selector("td.tax", text: "$2.73")
     expect(
       product_line_from_order_summary_text(mail, p1.name)
@@ -122,7 +122,7 @@ RSpec.describe ProducerMailer, type: :mailer do
 
   it "includes the total" do
     expect(mail.body.encoded).to include 'Total: $50.00'
-    expect(body_as_html(mail).find("tr.total-row"))
+    expect(html_body(mail).find("tr.total-row"))
       .to have_selector("td", text: "$50.00")
   end
 
@@ -151,15 +151,15 @@ RSpec.describe ProducerMailer, type: :mailer do
     end
 
     it "adds customer names table" do
-      expect(body_as_html(mail).find(".order-summary.customer-order")).not_to be_nil
+      expect(html_body(mail).find(".order-summary.customer-order")).not_to be_nil
       expect(customer_details_summary_text(mail)).to be_present
     end
 
     it "displays last name for each order" do
       product_name = order.line_items.first.product.name
       last_name = order.billing_address.lastname
-      expect(body_as_html(mail).find("table.order-summary.customer-order tr",
-                                     text: product_name)).to have_selector("td", text: last_name)
+      expect(html_body(mail).find("table.order-summary.customer-order tr",
+                                  text: product_name)).to have_selector("td", text: last_name)
       expect(
         product_line_from_details_summary_text(mail, product_name)
       ).to include(last_name)
@@ -168,8 +168,8 @@ RSpec.describe ProducerMailer, type: :mailer do
     it "displays first name for each order" do
       product_name = order.line_items.first.product.name
       first_name = order.billing_address.firstname
-      expect(body_as_html(mail).find("table.order-summary.customer-order tr",
-                                     text: product_name)).to have_selector("td", text: first_name)
+      expect(html_body(mail).find("table.order-summary.customer-order tr",
+                                  text: product_name)).to have_selector("td", text: first_name)
       expect(
         product_line_from_details_summary_text(mail, product_name)
       ).to include(first_name)
@@ -186,7 +186,7 @@ RSpec.describe ProducerMailer, type: :mailer do
 
     context "validate business name" do
       let(:table_header) do
-        body_as_html(mail).find("table.order-summary.customer-order thead")
+        html_body(mail).find("table.order-summary.customer-order thead")
       end
 
       context "when no customer has customer code" do
@@ -202,7 +202,7 @@ RSpec.describe ProducerMailer, type: :mailer do
         it 'displays business name for the customer' do
           expect(table_header).to have_selector("th", text: 'Business Name')
           expect(
-            body_as_html(mail).find("table.order-summary.customer-order tbody tr")
+            html_body(mail).find("table.order-summary.customer-order tbody tr")
           ).to have_selector("td", text: 'Test Business Name')
           expect(customer_details_summary_text(mail)).to include('Test Business Name')
         end
@@ -217,7 +217,7 @@ RSpec.describe ProducerMailer, type: :mailer do
 
     it "does not add customer names table" do
       expect {
-        body_as_html(mail).find(".order-summary.customer-order")
+        html_body(mail).find(".order-summary.customer-order")
       }.to raise_error(Capybara::ElementNotFound)
       expect(customer_details_summary_text(mail)).to be_nil
     end
@@ -236,7 +236,7 @@ RSpec.describe ProducerMailer, type: :mailer do
     end
 
     it "displays a supplier column" do
-      expect(body_as_html(mail).find(".order-summary"))
+      expect(html_body(mail).find(".order-summary"))
         .to have_selector("th", text: "Supplier")
     end
 
@@ -244,7 +244,7 @@ RSpec.describe ProducerMailer, type: :mailer do
       before { order_cycle.coordinator.update!(show_customer_names_to_suppliers: true) }
 
       it "displays a supplier column in the summary of orders grouped by customer" do
-        expect(body_as_html(mail).find(".customer-order"))
+        expect(html_body(mail).find(".customer-order"))
           .to have_selector("th", text: "Supplier")
       end
     end
@@ -252,7 +252,7 @@ RSpec.describe ProducerMailer, type: :mailer do
 
   context "products from only one supplier" do
     it "doesn't display a supplier column" do
-      expect(body_as_html(mail).find(".order-summary"))
+      expect(html_body(mail).find(".order-summary"))
         .not_to have_selector("th", text: "Supplier")
     end
 
@@ -260,7 +260,7 @@ RSpec.describe ProducerMailer, type: :mailer do
       before { order_cycle.coordinator.update!(show_customer_names_to_suppliers: true) }
 
       it "doesn't display a supplier column in the summary of orders grouped by customer" do
-        expect(body_as_html(mail).find(".customer-order"))
+        expect(html_body(mail).find(".customer-order"))
           .not_to have_selector("th", text: "Supplier")
       end
     end
@@ -270,10 +270,6 @@ RSpec.describe ProducerMailer, type: :mailer do
 
   def body_lines_including(mail, str)
     mail.body.to_s.lines.select { |line| line.include? str }
-  end
-
-  def body_as_html(mail)
-    Capybara.string(mail.html_part.body.encoded)
   end
 
   def body_as_text(mail)
