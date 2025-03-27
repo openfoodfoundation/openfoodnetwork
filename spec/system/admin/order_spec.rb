@@ -569,12 +569,12 @@ RSpec.describe '
     let(:product) { order_cycle1.products.first }
 
     before(:each) do
-      @enterprise_user = create(:user)
-      @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
-      @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
-      @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: supplier1).save
+      enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      login_as @enterprise_user
+      login_as enterprise_user
     end
 
     describe "viewing the edit page" do
@@ -583,13 +583,49 @@ RSpec.describe '
                                                   distributors: [distributor1])
       end
       let!(:order) do
-        create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
-                                  product_price: 110, tax_rate_amount: 0.1, included_in_price: true,
-                                  tax_rate_name: "Tax 1").tap do |order|
-                                    order.create_tax_charge!
-                                    order.update_shipping_fees!
-                                  end
+        create(
+          :order_with_taxes,
+          distributor: distributor1,
+          order_cycle: order_cycle1,
+          ship_address: create(:address),
+          product_price: 110,
+          tax_rate_amount: 0.1,
+          included_in_price: true,
+          tax_rate_name: "Tax 1"
+        ).tap do |order|
+          # Add a values to the fees
+          first_calculator = supplier_enterprise_fee1.calculator
+          first_calculator.preferred_amount = 2.5
+          first_calculator.save!
+
+          last_calculator = supplier_enterprise_fee2.calculator
+          last_calculator.preferred_amount = 7.5
+          last_calculator.save!
+
+          # Add all variant to the order cycle for a more realistic scenario
+          order.variants.each do |v|
+            first_exchange.variants << v
+            order_cycle1.cached_outgoing_exchanges.first.variants << v
+          end
+
+          variant1 = first_exchange.variants.first
+          variant2 = last_exchange.variants.first
+
+          order.contents.add(variant1)
+          order.contents.add(variant2)
+          # make sure all the fees are applied to the order
+          order.recreate_all_fees!
+
+          order.update_order!
+        end
       end
+
+      let(:first_exchange) { order_cycle1.cached_incoming_exchanges.first }
+      let(:last_exchange) { order_cycle1.cached_incoming_exchanges.last }
+      let(:coordinator_fee) { order_cycle1.coordinator_fees.first }
+      let(:distributor_fee) { order_cycle1.cached_outgoing_exchanges.first.enterprise_fees.first }
+      let(:supplier_enterprise_fee1) { first_exchange.enterprise_fees.first }
+      let(:supplier_enterprise_fee2) { last_exchange.enterprise_fees.first }
 
       before do
         distributor1.update_attribute(:abn, '12345678')
@@ -608,15 +644,42 @@ RSpec.describe '
           end
         end
 
-        # shows the order items total
-        within('fieldset#order-total') do
-          expect(page).to have_selector "span.order-total", text: order.display_item_total
-        end
-
         # shows the order non-tax adjustments
-        order.adjustments.eligible.each do |adjustment|
-          expect(page).to have_selector "td", match: :first, text: adjustment.label
-          expect(page).to have_selector "td.total", text: adjustment.display_amount
+        within "#order_adjustments" do
+          # supplier fees only apply to specific product
+          first_exchange.variants.each do |variant|
+            expect(page).to have_content(
+              "#{variant.name} - #{supplier_enterprise_fee1.name} fee \
+              by supplier #{supplier1.name}: $2.50".squish
+            )
+            expect(page).not_to have_content(
+              "#{variant.name} - #{supplier_enterprise_fee2.name} fee \
+              by supplier #{supplier2.name}: $7.50".squish
+            )
+          end
+
+          last_exchange.variants.each do |variant|
+            expect(page).to have_content(
+              "#{variant.name} - #{supplier_enterprise_fee2.name} fee \
+              by supplier #{supplier2.name}: $7.50".squish
+            )
+            expect(page).not_to have_content(
+              "#{variant.name} - #{supplier_enterprise_fee1.name} fee  \
+              by supplier #{supplier1.name}: $2.50".squish
+            )
+          end
+
+          ## Coordinator fee and Distributor fee apply to all product
+          order.variants.each do |variant|
+            expect(page).to have_content(
+              "#{variant.name} - #{coordinator_fee.name} fee \
+              by coordinator #{coordinator1.name}: $0.00".squish
+            )
+            expect(page).to have_content(
+              "#{variant.name} - #{distributor_fee.name} fee \
+              by distributor #{distributor1.name}: $0.00".squish
+            )
+          end
         end
 
         # shows the order total
@@ -787,12 +850,11 @@ RSpec.describe '
 
           find('.edit-method').click
 
-          # TODO assertion not working due to overlapping elements on new BUU design
-          # expect(page).to have_select2('selected_shipping_rate_id',
-          #                             with_options: [
-          #                               shipping_method_for_distributor1.name,
-          #                               different_shipping_method_for_distributor1.name
-          #                             ], without_options: [shipping_method_for_distributor2.name])
+          expect(page).to have_select2('selected_shipping_rate_id',
+                                       with_options: [
+                                         shipping_method_for_distributor1.name,
+                                         different_shipping_method_for_distributor1.name
+                                       ], without_options: [shipping_method_for_distributor2.name])
 
           select2_select(different_shipping_method_for_distributor1.name,
                          from: 'selected_shipping_rate_id')
@@ -803,7 +865,7 @@ RSpec.describe '
           )
 
           within "#order-total" do
-            expect(page).to have_content "$175.00"
+            expect(page).to have_content "$239.98"
           end
         end
 
@@ -818,6 +880,7 @@ RSpec.describe '
             order.shipment.adjustments.first.close
             distributor1.shipping_methods = [shipping_method_for_distributor1]
           end
+
           context "shipment is shipped" do
             before do
               order.shipments.first.update_attribute(:state, 'shipped')
@@ -830,7 +893,7 @@ RSpec.describe '
               )
 
               within "#order-total" do
-                expect(page).to have_content "$160.00"
+                expect(page).to have_content "$224.98"
               end
             end
 
@@ -846,7 +909,7 @@ RSpec.describe '
                 )
 
                 within "#order-total" do
-                  expect(page).to have_content "$160.00"
+                  expect(page).to have_content "$224.98"
                 end
               end
             end
@@ -864,7 +927,7 @@ RSpec.describe '
               )
 
               within "#order-total" do
-                expect(page).to have_content "$160.00"
+                expect(page).to have_content "$224.98"
               end
             end
 
@@ -881,7 +944,7 @@ RSpec.describe '
                 )
 
                 within "#order-total" do
-                  expect(page).to have_content "$160.00"
+                  expect(page).to have_content "$224.98"
                 end
               end
             end
