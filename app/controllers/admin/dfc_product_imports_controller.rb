@@ -109,18 +109,7 @@ module Admin
     end
 
     def absent_variants(catalog)
-      present_ids = catalog.products.map(&:semanticId)
-      catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
-
-      @enterprise.supplied_variants
-        .includes(:semantic_links).references(:semantic_links)
-        .where.not(semantic_links: { semantic_id: present_ids })
-        .select do |variant|
-        # Variants that were in the same catalog before:
-        variant.semantic_links.map(&:semantic_id).any? do |semantic_id|
-          FdcUrlBuilder.new(semantic_id).catalog_url == catalog_url
-        end
-      end
+      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog).absent_variants
     end
   end
 end
