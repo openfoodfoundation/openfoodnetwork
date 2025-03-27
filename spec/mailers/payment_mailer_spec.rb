@@ -23,6 +23,11 @@ RSpec.describe PaymentMailer do
       it "sets a reply-to of the customer email" do
         expect(email.reply_to).to eq([order.distributor.contact.email])
       end
+
+      it "includes a link to authorize the payment" do
+        expect(email.text_part.body).to match "/payments/#{payment.id}/authorize"
+        expect(email.html_part.body).to match "/payments/#{payment.id}/authorize"
+      end
     end
 
     context "authorization required email" do
