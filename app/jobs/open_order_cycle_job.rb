@@ -57,14 +57,14 @@ class OpenOrderCycleJob < ApplicationJob
       catalog = DfcCatalog.load(dfc_user, catalog_url)
       catalog.apply_wholesale_values!
 
-      variants = Spree::Variant.where(id: catalog_links.pluck(:subject_id))
-      importer = DfcCatalogImporter.new(variants, catalog)
-      importer.reset_absent_variants
-
       catalog_links.each do |link|
         catalog_item = catalog.item(link.semantic_id)
 
-        SuppliedProductImporter.update_product(catalog_item, link.subject) if catalog_item
+        if catalog_item
+          SuppliedProductImporter.update_product(catalog_item, link.subject)
+        else
+          DfcCatalogImporter.reset_variant(link.subject)
+        end
       end
     end
   end

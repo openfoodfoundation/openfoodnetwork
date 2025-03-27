@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class DfcCatalogImporter
+  def self.reset_variant(variant)
+    if variant.on_demand
+      variant.on_demand = false
+    else
+      variant.on_hand = 0
+    end
+  end
+
   attr_reader :catalog, :existing_variants
 
   def initialize(existing_variants, catalog)
@@ -22,11 +30,7 @@ class DfcCatalogImporter
   # we don't want to lose the connection to previous orders.
   def reset_absent_variants
     absent_variants.map do |variant|
-      if variant.on_demand
-        variant.on_demand = false
-      else
-        variant.on_hand = 0
-      end
+      self.class.reset_variant(variant)
     end
   end
 
