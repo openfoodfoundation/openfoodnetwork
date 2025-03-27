@@ -3,8 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe EnterpriseMailer do
-  let!(:enterprise) { create(:enterprise) }
-  let!(:user) { create(:user) }
+  let(:enterprise) { build(:enterprise) }
 
   describe "#welcome" do
     subject(:mail) { EnterpriseMailer.welcome(enterprise) }
@@ -21,6 +20,7 @@ RSpec.describe EnterpriseMailer do
 
   describe "#manager_invitation" do
     subject(:mail) { EnterpriseMailer.manager_invitation(enterprise, user) }
+    let(:user) { build(:user) }
 
     it "should send a manager invitation email when given an enterprise and user" do
       expect(mail.subject).to eq "#{enterprise.name} has invited you to be a manager"
