@@ -8,6 +8,28 @@ class DfcCatalogImporter
     @catalog = catalog
   end
 
+  # Reset stock for any variants that were removed from the catalog.
+  #
+  # When variants are removed from the remote catalog, we can't place
+  # backorders for them anymore. If our copy of the product has limited
+  # stock then we need to set the stock to zero to prevent any more sales.
+  #
+  # But if our product is on-demand/backorderable then our stock level is
+  # a representation of remaining local stock. We then need to limit sales
+  # to this local stock and set on-demand to false.
+  #
+  # We don't delete the variant because it may come back at a later time and
+  # we don't want to lose the connection to previous orders.
+  def reset_absent_variants
+    absent_variants.map do |variant|
+      if variant.on_demand
+        variant.on_demand = false
+      else
+        variant.on_hand = 0
+      end
+    end
+  end
+
   def absent_variants
     present_ids = catalog.products.map(&:semanticId)
     catalog_url = FdcUrlBuilder.new(present_ids.first).catalog_url
