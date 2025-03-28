@@ -157,8 +157,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 5
 
-      carrots = Spree::Product.find_by(name: 'Carrots')
-      carrots_variant = carrots.variants.first
+      carrots_variant = find_variant("Carrots")
 
       expect(carrots_variant.supplier).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
@@ -169,8 +168,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(carrots_variant.on_hand).to eq 5
       expect(carrots_variant.import_date).to be_within(1.minute).of Time.zone.now
 
-      potatoes = Spree::Product.find_by(name: 'Potatoes')
-      potatoes_variant = potatoes.variants.first
+      potatoes_variant = find_variant("Potatoes")
 
       expect(potatoes_variant.supplier).to eq enterprise
       expect(potatoes_variant.price).to eq 6.50
@@ -181,8 +179,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(potatoes_variant.on_hand).to eq 6
       expect(potatoes_variant.import_date).to be_within(1.minute).of Time.zone.now
 
-      pea_soup = Spree::Product.find_by(name: 'Pea Soup')
-      pea_soup_variant = pea_soup.variants.first
+      pea_soup_variant = find_variant("Pea Soup")
 
       expect(pea_soup_variant.supplier).to eq enterprise
       expect(pea_soup_variant.price).to eq 5.50
@@ -193,8 +190,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(pea_soup_variant.on_hand).to eq 8
       expect(pea_soup_variant.import_date).to be_within(1.minute).of Time.zone.now
 
-      salad = Spree::Product.find_by(name: 'Salad')
-      salad_variant = salad.variants.first
+      salad_variant = find_variant("Salad")
 
       expect(salad_variant.supplier).to eq enterprise
       expect(salad_variant.price).to eq 4.50
@@ -205,8 +201,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(salad_variant.on_hand).to eq 7
       expect(salad_variant.import_date).to be_within(1.minute).of Time.zone.now
 
-      buns = Spree::Product.find_by(name: 'Hot Cross Buns')
-      buns_variant = buns.variants.first
+      buns_variant = find_variant("Hot Cross Buns")
 
       expect(buns_variant.supplier).to eq enterprise
       expect(buns_variant.price).to eq 3.50
@@ -248,8 +243,7 @@ RSpec.describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 1
 
-      carrots = Spree::Product.find_by(name: 'Good Carrots')
-      carrots_variant = carrots.variants.first
+      carrots_variant = find_variant("Good Carrots")
       expect(carrots_variant.on_hand).to eq 5
       expect(carrots_variant.supplier).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
@@ -295,11 +289,9 @@ RSpec.describe ProductImport::ProductImporter do
 
       expect(importer.products_created_count).to eq 1
 
-      carrots = Spree::Product.find_by(name: 'Good Carrots')
-      carrots_variant = carrots.variants.first
+      carrots_variant = find_variant("Good Carrots")
 
       expect(carrots_variant.on_hand).to eq 5
-
       expect(carrots_variant.primary_taxon.name).to eq "Vegetables"
       expect(carrots_variant.supplier).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
@@ -565,11 +557,11 @@ RSpec.describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      beetroot = Spree::Product.find_by(name: 'Beetroot').variants.first
+      beetroot = find_variant("Beetroot")
       expect(beetroot.price).to eq 3.50
       expect(beetroot.on_demand).not_to eq true
 
-      tomato = Spree::Product.find_by(name: 'Tomato').variants.first
+      tomato = find_variant("Tomato")
       expect(tomato.price).to eq 5.50
       expect(tomato.on_demand).to eq true
     end
@@ -960,12 +952,11 @@ RSpec.describe ProductImport::ProductImporter do
 
       expect(importer.products_reset_count).to eq 7
 
-      expect(Spree::Product.find_by(name: 'Carrots').variants.first.on_hand).to eq 5    # Present in file, added
-      expect(Spree::Product.find_by(name: 'Beans').variants.first.on_hand).to eq 6      # Present in file, updated
-      expect(Spree::Product.find_by(name: 'Sprouts').variants.first.on_hand).to eq 0    # In enterprise, not file
-      expect(Spree::Product.find_by(name: 'Cabbage').variants.first.on_hand).to eq 0    # In enterprise, not file
-      expect(Spree::Product.find_by(name: 'Lettuce').variants.first.on_hand)
-        .to eq 100 # In different enterprise; unchanged
+      expect(find_variant("Carrots").on_hand).to eq 5    # Present in file, added
+      expect(find_variant("Beans").on_hand).to eq 6      # Present in file, updated
+      expect(find_variant("Sprouts").on_hand).to eq 0    # In enterprise, not file
+      expect(find_variant("Cabbage").on_hand).to eq 0    # In enterprise, not file
+      expect(find_variant("Lettuce").on_hand).to eq 100 # In different enterprise; unchanged
     end
 
     it "can reset all inventory items for an enterprise that are not present " \
@@ -1035,6 +1026,10 @@ RSpec.describe ProductImport::ProductImporter do
         }
       )
     end
+  end
+
+  def find_variant(name)
+    Spree::Product.find_by(name:).variants.first
   end
 end
 
