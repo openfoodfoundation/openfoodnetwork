@@ -91,8 +91,8 @@ module Reporting
             if enterprise_fee_filters?
               query = query.where(originator_id: enterprise_fee_filtered_ids)
             end
-            query.group('originator_id')
-              .pluck("originator_id", 'array_agg(id)')
+            query.group('spree_adjustments.id', 'originator_id')
+              .pluck("originator_id", 'array_agg(spree_adjustments.id)')
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
                 {
                   enterprise_fee_id:,
