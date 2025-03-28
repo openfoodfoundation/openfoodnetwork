@@ -62,7 +62,7 @@ namespace :ofn do
 
       def request_order_cycle_id
         puts "Please input Order Cycle ID to reset"
-        input = STDIN.gets.chomp
+        input = $stdin.gets.chomp
         exit if input.blank? || !Integer(input)
         Integer(input)
       end

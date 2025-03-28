@@ -44,7 +44,7 @@ namespace :ofn do
     details = Psych.load(entry.details)
     out << row(details, details.params)
   rescue StandardError
-    Logger.new(STDERR).warn(entry)
+    Logger.new($stderr).warn(entry)
   end
 
   def headers

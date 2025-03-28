@@ -128,7 +128,7 @@ module OrderManagement
       end
 
       def build_msg_from(key, msg)
-        return msg[1..-1] if msg.starts_with?("^")
+        return msg[1..] if msg.starts_with?("^")
 
         errors.full_message(key, msg)
       end

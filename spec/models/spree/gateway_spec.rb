@@ -7,7 +7,7 @@ RSpec.describe Spree::Gateway do
     Class.new(Spree::Gateway) do
       def provider_class
         Class.new do
-          def initialize(options = {}); end
+          def initialize(*); end
 
           def imaginary_method; end
         end
