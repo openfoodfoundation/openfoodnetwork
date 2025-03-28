@@ -2,7 +2,7 @@ eu:
   language_name: "Euskara"
   time:
     formats:
-      long: "%Yko %Bren %d, %-H:%M %p"  
+      long: "%Yko %Bren %d, %-H:%M %p"
   activerecord:
     models:
       spree/product: Produktua
@@ -36,7 +36,7 @@ eu:
       spree/order:
         payment_state: Ordainketaren egoera
         shipment_state: Bidalketa-probintzia
-        completed_at: "Osatutakoa:"
+        completed_at: 'Osatutakoa:'
         number: Zenbakia
         state: Egoera
         email: Kontsumitzailearen e-maila
@@ -63,7 +63,7 @@ eu:
         verification_value: "Egiaztapen-balioa"
         year: "Urtea"
       order_cycle:
-        orders_close_at: "Itxiera-data"
+        orders_close_at: Itxiera-data
       variant_override:
         count_on_hand: "Eskuragarri"
       spree/payment_method/calculator:
@@ -77,16 +77,12 @@ eu:
         preferred_discount_amount: "Kalkulagailua Deskontuaren zenbatekoa:"
         preferred_unit_from_list: "Zerrendako unitatearen kalkulagailua:"
         preferred_per_unit: "Unitateko kalkulagailua:"
-      enterprise: 
+      enterprise:
         white_label_logo_link: "Erakusleihoan erabiliko zen logoarentzako esteka"
     errors:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Kategoria fiskala heredatzeko, kalkulagailu bat behar da artikulu bakoitzeko."
-        spree/image:
-          attributes:
-            attachment:
-              integrity_error:"ezin izan da kargatu. Egiaztatu fitxategia ez dagoela kaltetuta, eta saiatu berriro. "
         spree/user:
           attributes:
             email:
@@ -144,12 +140,7 @@ eu:
     unprocessable_entity:
       title: "Nahi den aldaketa baztertu egin da (422)"
     general_error:
-      message: |
-        Sentitzen dugu, baina zerbait gaizki joan da.
-
-        Baliteke aldi baterako arazoa izatea, beraz, saia zaitez berriro edo kargatu orria.
-        Akats guztiak erregistratzen ditugu eta litekeena da konponbide bat lantzen aritzea.
-        Arazoak bere horretan jarraitzen badu edo premiazkoa bada, jar zaitez gurekin harremanetan.
+      message: "Sentitzen dugu, baina zerbait gaizki joan da.\n\nBaliteke aldi baterako arazoa izatea, beraz, saia zaitez berriro edo kargatu orria.\nAkats guztiak erregistratzen ditugu eta litekeena da konponbide bat lantzen aritzea.\nArazoak bere horretan jarraitzen badu edo premiazkoa bada, jar zaitez gurekin harremanetan.\n"
   stripe:
     error_code:
       incorrect_number: "Txartelaren zenbakia ez da zuzena."
@@ -321,7 +312,7 @@ eu:
       not_array_error: "matrize bat izan behar du"
       invalid_element_error: "osoko baliodunak bakarrik eduki behar ditu"
   report_job:
-    report_failed: | 
+    report_failed: |
         Txosten honek huts egin du. Agian handiegia da prozesatzeko.
         Ikertuko dugu, abisatu ea arazoak bere horretan dirauen.
   backorder_mailer:
@@ -348,11 +339,8 @@ eu:
           baina zerbait gaizki atera zen. Egiteke dauden eskarien kopuruak
           altuegiak izan daitezke ezeztapenak egon badira. Zure eskaera
           ez da beteko zirriborro-egoeran dagoen bitartean.
-      hints: 
-          Baliteke OIDCen konfiguraziora joan behar izatea eta zure kontua berriro konektatu behar izatea.
-          Egiaztatu, halaber, zure hornitzailearen katalogoa ez dela aldatu, eta jarraitu
-          behar dituen produktu guztiak eskura ditzake. Jar zaitez gurekin harremanetan
-          zalantzaren bat du.
+      hints: |-
+          Baliteke OIDCen konfiguraziora joan behar izatea eta zure kontua berriro konektatu behar izatea. Egiaztatu, halaber, zure hornitzailearen katalogoa ez dela aldatu, eta jarraitu behar dituen produktu guztiak eskura ditzake. Jar zaitez gurekin harremanetan zalantzaren bat du.
       affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
@@ -378,7 +366,7 @@ eu:
       subject: "Txostena prest"
       heading: "Txostena deskargatzeko prest"
       intro: |
-        Esteka hau astebetean iraungiko da
+          Esteka hau astebetean iraungiko da
       link_label: "%{name}"
   shipment_mailer:
     shipped_email:
@@ -403,7 +391,7 @@ eu:
       success_zero: Horietatik, inor ez zuten auzipetu.
       success_some: Horietatik, %{count} arrakastaz prozesatu ziren.
       success_all: Denak arrakastaz auzipetu zituzten.
-      issues: "Hona hemen aurkitutako arazoen xehetasunak:"
+      issues: 'Hona hemen aurkitutako arazoen xehetasunak:'
     summary_detail:
       no_message_provided: Ez dago errore-mezurik
       changes:
@@ -608,13 +596,13 @@ eu:
     adjustments:
       skipped_changing_canceled_order: "Ezin duzu bertan behera utzitako eskaera bat aldatu."
     begins_at: Hasi
-    begins_on: "Hemen hasten da:"
+    begins_on: 'Hemen hasten da:'
     bill_address: "Fakturaren helbidea"
     ship_address: "Bidalketa-helbidea"
     customer: Kontsumitzailea
     date: Data
     email: Emaila
-    ends_at: "Hemen amaitzen da:"
+    ends_at: 'Hemen amaitzen da:'
     ends_on: Amaitu
     name: Izena
     first_name: Izena
@@ -714,7 +702,7 @@ eu:
         auth_fail_error: Eman zenuen API gakoa ez da baliozkoa.
         empty_api_key_error_html: Ez da API Stripe koderik eman. Zure API gakoa konfiguratzeko, <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">bete jarraibide hauek</a>
     matomo_settings:
-      edit: 
+      edit:
         title: "Matomoaren konfigurazioa"
         matomo_url: "Matomoren URLa"
         matomo_site_id: "Matomoren gunearen ID"
@@ -875,10 +863,10 @@ eu:
       bulk_update:
         success: Gordetako aldaketak
       delete_product:
-        success: 'Produktua ezabatu egin da'
+        success: Produktua ezabatu egin da
         error: Ezin da produktua ezabatu
       delete_variant:
-        success: 'Aldaera ezabatu da'
+        success: Aldaera ezabatu da
         error: Ezin da aldaera ezabatu
       variant_row:
         none_tax_category: Bat ere ez
@@ -1019,7 +1007,7 @@ eu:
         import_date: Inportatua
         select_a_shop: Aukeratu denda bat
         review_now: Berrikusi orain
-        new_products_alert_message: "%{new_product_count} produktu berri batzuk daude zure inbentarioan gehitzeko."
+        new_products_alert_message: '%{new_product_count} produktu berri batzuk daude zure inbentarioan gehitzeko.'
         currently_empty: Zure inbentarioa hutsik dago
         no_matching_products: Ez da aurkitzen zure inbentarioarekin bat datorren produkturik
         no_hidden_products: Ez dago zure inbentarioan ezkutatutako produkturik
@@ -1102,7 +1090,7 @@ eu:
           disabled: Desgaitu
         business_address:
           company_legal_name: Enpresaren izen soziala
-          company_placeholder: 'S.A. adibidea'
+          company_placeholder: S.A. adibidea
           address1: Legezko helbidea
           address1_placeholder: 123 Goiko kalea
           address2: Helbidea (kont.)
@@ -1149,11 +1137,10 @@ eu:
           text1: Stock mailak eta prezioak zure
           inventory: inbentarioa
           text2: >
-              Inbentario-tresna erabiltzen ari bazara, aukera dezakezu hornitzaileek 
-              erantsitako produktu berriak biltegiratze-inbentarioari gehitu behar 
-              zaizkion ala ez. Zure produktuak administratzeko inbentarioa erabiltzen 
-              ari ez bazara, jarraian "gomendatutako" aukera hautatu 
-              behar duzu:
+              Inbentario-tresna erabiltzen ari bazara, aukera dezakezu hornitzaileek  erantsitako
+              produktu berriak biltegiratze-inbentarioari gehitu behar  zaizkion ala
+              ez. Zure produktuak administratzeko inbentarioa erabiltzen  ari ez bazara,
+              jarraian "gomendatutako" aukera hautatu  behar duzu:
           preferred_product_selection_from_inventory_only_yes: Produktu berriak dendan argitaratu daitezke (gomendatua)
           preferred_product_selection_from_inventory_only_no: Produktu berriak inbentarioan sartu behar dira dendan jarri aurretik
         payment_methods:
@@ -1225,16 +1212,15 @@ eu:
           customer_names_true: "Gaituta"
           shopfront_message: "Dendaren mezua"
           shopfront_message_placeholder: >
-              Erosleentzako aukerako ongietorri-mezua, gunean nola erosi 
-              behar den azaltzen du. Testua eremu horretan gehitzen bada, 
-              hasierako erlaitzean erakutsiko da bezeroak dendara lehen aldiz 
-              sartzen direnean.
+              Erosleentzako aukerako ongietorri-mezua, gunean nola erosi  behar den
+              azaltzen du. Testua eremu horretan gehitzen bada,  hasierako erlaitzean
+              erakutsiko da bezeroak dendara lehen aldiz  sartzen direnean.
           shopfront_closed_message: "Dendako mezua itxita"
           shopfront_closed_message_placeholder: >
               Mezu horrek azalpen zehatzagoa ematen du zure denda zergatik dagoen
-              itxita eta/edo noiz irekiko den berriro azaltzeko. Hori zure 
-              dendan erakusten da soilik eskaera-ziklo aktiborik ez duzunean 
-              (adibidez, denda itxita dagoenean).
+              itxita eta/edo noiz irekiko den berriro azaltzeko. Hori zure  dendan
+              erakusten da soilik eskaera-ziklo aktiborik ez duzunean  (adibidez,
+              denda itxita dagoenean).
           shopfront_category_ordering: "Dendako kategorien ordena"
           shopfront_category_ordering_note: "(goitik behera)"
           open_date: "Hasiera-data"
@@ -1468,7 +1454,7 @@ eu:
         select_all: "Hautatu dena"
         shipping_methods: "Bidaltzeko metodoak"
       wizard_progress:
-        edit: 1. Konfigurazio orokorra "
+        edit: "1. Konfigurazio orokorra \""
         incoming: "2. Sartzen diren produktuak "
         outgoing: "3. Produktu irtenak "
         checkout_options: "4. Balidatu aukerak "
@@ -1621,7 +1607,7 @@ eu:
       payment_methods: Ordainketa-metodoen txostena
       delivery: Entrega-txostena
       tax_types: Zerga motak
-      tax_rates: 'Zergen %'
+      tax_rates: Zergen %
       pack_by_customer: Kontsumitzailearen araberako pack
       pack_by_supplier: Pack hornitzaile bakoitzeko
       pack_by_product: Paketatu produktuaren arabera
@@ -1689,7 +1675,7 @@ eu:
         on_screen: "Pantailan"
         spreadsheet: "Kalkulu-orria (Excel, OpenOffice...)"
         display: Erakutsi
-        summary_row: 'Laburpen-lerroa'
+        summary_row: Laburpen-lerroa
         header_row: Goiburuko lerroa
         raw_data: Prozesatu gabeko datuak
         formatted_data: Formateatutako datuak
@@ -1718,7 +1704,7 @@ eu:
         query_placeholder: "Posta elektronikoz bilatu..."
       setup_explanation:
         title: "Harpidetzak"
-        just_a_few_more_steps: "Hasi baino lehen, urrats gutxi batzuk gehiago:"
+        just_a_few_more_steps: 'Hasi baino lehen, urrats gutxi batzuk gehiago:'
         enable_subscriptions: "Gaitu harpidetzak gutxienez zure dendetako baterako"
         enable_subscriptions_step_1_html: 1. Zoaz %{enterprises_link} orrira, aurkitu zure denda eta sakatu "Administratu"
         enable_subscriptions_step_2: 2. "Dendaren lehentasunak" atalean, gaitu Harpidetzak aukera
@@ -1809,20 +1795,20 @@ eu:
         stripe_connect_fail: Sentitzen dugu, Stripe kontuaren konexioak huts egin du
       stripe_connect_settings:
         resource: Stripe Connect konfiguratzea
-  api: 
+  api:
     invalid_api_key: "Zehaztutako API giltza ( %{key}) baliogabea da."
     unauthorized: "Ez duzu baimenik ekintza hau egiteko."
     invalid_resource: "Errekurtso baliogabea. Mesedez, zuzendu akatsak eta saiatu berriro. "
     resource_not_found: "Bilatzen ari nintzen baliabidea ezin da aurkitu."
-    enterprise_logo: 
+    enterprise_logo:
       destroy_attachment_does_not_exist: "Logotipoa ez da existitzen"
-    enterprise_promo_image: 
-      destroy_attachment_does_not_exist:  "Sustapen-irudia ez da existitzen"
-    enterprise_terms_and_conditions: 
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Sustapen-irudia ez da existitzen"
+    enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "Terminoen eta baldintzen artxiboa ez da existitzen"
-    orders: 
+    orders:
       failed_to_update: "Errorea eskaera eguneratzean"
-    query_param: 
+    query_param:
       error:
         title: Okerreko kontsulta-parametroa
         extra_fields: "Jasan gabeko eremuak: %{fields}"
@@ -2012,9 +1998,7 @@ eu:
   menu_5_title: "Honi buruz"
   menu_5_url: "http://katuma.org /"
   menu_6_title: "Konektatu"
-  menu_6_url: ""
   menu_7_title: "Ikasi"
-  menu_7_url: ""
   logo: "Logoa (640x130)"
   logo_mobile: "Mugikorrerako logoa (75x26)"
   logo_mobile_svg: "Mugikorrerako logoa (SVG)"
@@ -2194,7 +2178,7 @@ eu:
   order_total: Eskaera, guztira
   order_payment: "Honekin ordainduz:"
   order_billing_address: Kobratzeko helbidea
-  order_delivery_on: "Entregatu hemen:"
+  order_delivery_on: 'Entregatu hemen:'
   order_delivery_address: Entregatzeko helbidea
   order_delivery_time: Entregatzeko denbora
   order_special_instructions: "Bere oharrak:"
@@ -2344,7 +2328,7 @@ eu:
   products_or: "edo"
   products_and: "eta"
   products_filters_in: "en"
-  products_with: "honekin:"
+  products_with: 'honekin:'
   products_search: "Bilatu..."
   products_filter_by: "Fitratu"
   products_filter_selected: "hautatua"
@@ -2881,7 +2865,7 @@ eu:
   report_payment_by: 'Tipoko ordainketak'
   report_itemised_payment: 'Ordainketa xehatuak guztira'
   report_payment_totals: 'Ordainketak guztira'
-  report_all: Dena.
+  report_all: 'Dena.'
   report_order_cycle: "Eskaera-zikloa"
   report_hide_columns: Ezkutatzeko zutabeak
   report_columns: Zutabeak
@@ -3116,13 +3100,13 @@ eu:
   order_cycle_selecting_notice: Eskaera-zikloa hautatu du.
   adjustments_tax_rate_error: "^ Egiaztatu doikuntza honetarako zergak zuzenak direla."
   active_distributors_not_ready_for_checkout_message_singular: >-
-    %{distributor_names} taldea eskaera-ziklo aktibo batean agertzen da,
-    baina ez du baliozko bidalketa- eta ordainketa-metodorik. Konfiguratu arte,
-    bezeroek ezingo dute talde honetan erosi.
+      %{distributor_names} taldea eskaera-ziklo aktibo batean agertzen da, baina ez
+      du baliozko bidalketa- eta ordainketa-metodorik. Konfiguratu arte, bezeroek
+      ezingo dute talde honetan erosi.
   active_distributors_not_ready_for_checkout_message_plural: >-
-    %{distributor_names} taldeek eskaera-ziklo aktiboak zerrendatzen dituzte,
-    baina ez dute baliozko bidalketa- eta ordainketa-metodorik. Konfiguratu 
-    arte, bezeroek ezingo dute kontzentratzaile horietan erosi.
+      %{distributor_names} taldeek eskaera-ziklo aktiboak zerrendatzen dituzte, baina
+      ez dute baliozko bidalketa- eta ordainketa-metodorik. Konfiguratu  arte, bezeroek
+      ezingo dute kontzentratzaile horietan erosi.
   enterprise_fees_update_notice: Zure erakundeko batzordeak eguneratu egin dira.
   enterprise_register_package_error: "Aukeratu pakete bat"
   enterprise_register_error: "Ezin izan da erregistroa osatu %{enterprise} rako"
@@ -3164,14 +3148,14 @@ eu:
     hub: Taldea
     shop: Denda
     choose: Aukeratu
-    resolve_errors: "Errore hauek ebazten ditu:"
+    resolve_errors: 'Errore hauek ebazten ditu:'
     more_items: "+ %{count} Gehiago"
     default_card_updated: Txartel lehenetsi eguneratua
     default_card_voids_auth: Txartel lehenetsia aldatzeak dendetan txartel hori kargatzeko dauden baimenak ezabatuko ditu. Aurrez zehaztutako txartela eguneratu ondoren, dendak berriro baimendu ditzakezu. Aurretik zehaztutako txartela aldatu nahi duzu?
     cart:
       add_to_cart_failed: >
-        Arazo bat egon da orgatxoan produktu hori gehitzean. Baliteke 
-        libre egoteari utzi izana edo denda itxi izana.
+          Arazo bat egon da orgatxoan produktu hori gehitzean. Baliteke  libre egoteari
+          utzi izana edo denda itxi izana.
     admin:
       unit_price_tooltip: "Prezio unitarioak gardentasuna handitzen du, bezeroei produktuen eta bilgarriaren tamainen arteko prezioak erraz alderatzeko aukera ematen baitie. Kontuan izan erakusleihoan erakusten den azken prezio unitarioa diferentea izan daitekeela, zergak eta tarifak barne hartzen baititu. "
       enterprise_limit_reached: "Konturako erakundeen muga estandarra lortu duzu. Idatzi %{contact_email} helbidera, handitu behar baduzu. "
@@ -3187,20 +3171,20 @@ eu:
           title: Etiketen arauak
           overview: Ikuspegi orokorra
           overview_text: >
-              Etiketa-arauek kontsumitzaile jakin batzuek zer elementu ikus ditzaketen 
-              edo ez deskribatzeko modu bat ematen dute. Gauzak bidaltzeko 
-              metodoak, ordaintzeko metodoak, produktuak eta eskaera-zikloak izan daitezke.
+              Etiketa-arauek kontsumitzaile jakin batzuek zer elementu ikus ditzaketen  edo
+              ez deskribatzeko modu bat ematen dute. Gauzak bidaltzeko  metodoak,
+              ordaintzeko metodoak, produktuak eta eskaera-zikloak izan daitezke.
           by_default_rules: "'Besterik ezean...' Arauak "
           by_default_rules_text: >
-              Aurrez zehaztutako arauek elementuak ezkutatzea ahalbidetzen dute, 
-              aurrez zehaztutako moduan ikusgai egon ez daitezen. Jokabide hori 
-              baliogabetu egin daiteke etiketa partikularrak dituzten kontsumitzaileentzat 
-              aurrez zehaztu gabeko arauen bidez.
+              Aurrez zehaztutako arauek elementuak ezkutatzea ahalbidetzen dute,  aurrez
+              zehaztutako moduan ikusgai egon ez daitezen. Jokabide hori  baliogabetu
+              egin daiteke etiketa partikularrak dituzten kontsumitzaileentzat  aurrez
+              zehaztu gabeko arauen bidez.
           customer_tagged_rules: "\" etiketatutako bezeroen arauak...\""
           customer_tagged_rules_text: >
-              Kontsumitzaile espezifikoaren etiketa batekin lotutako arauak sortzean, 
-              kontsumitzaileentzat aurrez zehaztutako portaera (elementuak erakusteko 
-              edo ezkutatzeko) deusezta dezakezu etiketa zehatzarekin.
+              Kontsumitzaile espezifikoaren etiketa batekin lotutako arauak sortzean,  kontsumitzaileentzat
+              aurrez zehaztutako portaera (elementuak erakusteko  edo ezkutatzeko)
+              deusezta dezakezu etiketa zehatzarekin.
         terms_and_conditions_info:
           title: "Terminoak eta baldintzak igotzen"
           message_1: "Baldintzak eta baldintzak dira zure, saltzailearen eta eroslearen arteko kontratua. Fitxategi bat hemen kargatzen baduzu, erosleek beren baldintzak onartu behar dituzte erosketa osatzeko. Eroslearentzat, erosketarekin jarraitzeko markatu behar duzun eskaera egiteko unean egiaztapen-lauki gisa agertuko da. Biziki gomendatzen dizugu terminoak eta baldintzak legedi nazionalaren arabera kargatzea. "
@@ -3211,69 +3195,66 @@ eu:
           message_2: "Harpidetzak dituzten erosleei, Terminoak eta baldintzak (edo horietan egindako aldaketak) bidali behar dizkie posta elektronikoz oraingoz, ez die ezer jakinaraziko termino eta baldintza berri horiei buruz."
         business_address_info:
           message: "Enpresaren legezko izena, legezko helbidea eta legezko telefono-zenbakia erabiltzen dira erregistratutako legezko erakunde bat fakturatzen duten enpresentzat, merkataritza-informazio publikoaz bestelako xehetasunekin. Datu horiek fakturetan BAKARRIK erabiliko dira. Xehetasun horiek hutsik badaude, zure izen publikoa, helbidea eta telefono-zenbakia fakturetan erabiliko dira. "
-      panels: 
+      panels:
         save: GORDE
         saved: GORDETA
         saving: GORDETZEN
-        enterprise_package: 
+        enterprise_package:
           hub_profile: Taldearen profila
           hub_profile_cost: "KOSTUA: DOAKOA BETIKO"
           hub_profile_text1: >
               Jendeak aurki zaitzake eta zurekin harremanetan jarri Open Food Network-en.
-              Zure antolaketa mapan ikusiko da, eta hemen bilatu ahal izango da:
-              zerrendak.
+              Zure antolaketa mapan ikusiko da, eta hemen bilatu ahal izango da: zerrendak.
           hub_profile_text2: >
               Profil bat izatea eta Open Food Network-en bidez loturak egitea dohainik
               izango da betiko.
           hub_shop: Denda
           hub_shop_text1: >
-              Zure antolamendua tokiko kontsumo-sistema baten bizkarrezurra da. Gehitu 
-              beste erakunde batzuetako produktuak eta saldu Open Food Network-en duzun 
-              dendaren bidez.
+              Zure antolamendua tokiko kontsumo-sistema baten bizkarrezurra da. Gehitu  beste
+              erakunde batzuetako produktuak eta saldu Open Food Network-en duzun  dendaren
+              bidez.
           hub_shop_text2: >
-              Taldeek hainbat helburu izan ditzakete: elikagai-kooperatiba bat, kontsumo-talde 
-              bat, tokiko supermerkatu bat...
+              Taldeek hainbat helburu izan ditzakete: elikagai-kooperatiba bat, kontsumo-talde  bat,
+              tokiko supermerkatu bat...
           hub_shop_text3: >
-              Zure produktuak ere saldu nahi badituzu, erakunde hori aldatu beharko 
-              duzu ekoiztetxea izateko.
+              Zure produktuak ere saldu nahi badituzu, erakunde hori aldatu beharko  duzu
+              ekoiztetxea izateko.
           choose_package: Hautatu profil bat
           choose_package_text1: >
-              Zure antolaketa ez da erabat aktibatuko ezkerreko aukeren profil 
-              bat aukeratu arte.
+              Zure antolaketa ez da erabat aktibatuko ezkerreko aukeren profil  bat
+              aukeratu arte.
           choose_package_text2: >
-              Egin klik aukera batean profil bakoitzari buruzko informazio zehatzagoa 
-              ikusteko, eta sakatu GORDE botoi gorria amaitzen duzunean.
+              Egin klik aukera batean profil bakoitzari buruzko informazio zehatzagoa  ikusteko,
+              eta sakatu GORDE botoi gorria amaitzen duzunean.
           profile_only: Profila bakarrik
           profile_only_cost: "KOSTUA: DOAKOA BETIKO"
-          profile_only_text1: >+
-              Profilak ikusgarri egiten zaitu eta pertsonek zurekin harremanetan 
-              jartzeko aukera ematen du. Gardentasun handiena emateko eta zure historia 
-              azaltzeko modu bat da.
+          profile_only_text1: >
+              Profilak ikusgarri egiten zaitu eta pertsonek zurekin harremanetan  jartzeko
+              aukera ematen du. Gardentasun handiena emateko eta zure historia  azaltzeko
+              modu bat da.
           profile_only_text2: >
-              Elikagaiak ekoizten kontzentratu nahi baduzu eta beste pertsona batzuei 
-              saltzeko lana utzi nahi baduzu, ez duzu Open Food Network dendarik behar.
+              Elikagaiak ekoizten kontzentratu nahi baduzu eta beste pertsona batzuei  saltzeko
+              lana utzi nahi baduzu, ez duzu Open Food Network dendarik behar.
           profile_only_text3: >
-              Gehitu zure produktuak Open Food Network-era, kontsumo-taldeei zure produktuak 
-              saltzeko aukera emanez.
+              Gehitu zure produktuak Open Food Network-era, kontsumo-taldeei zure
+              produktuak  saltzeko aukera emanez.
           producer_shop: Denda ekoizlea
           producer_shop_text1: >
               Saldu zure produktuak kontsumitzaileei zuzenean Open Food Network dendarekin.
           producer_shop_text2: >
-              Ekoizle-denda bat zure produktuarentzat da, eta beste ekoizle batzuen produktuak 
-              saldu nahi badituzu, hautatu 'Ekoizle Taldea.
+              Ekoizle-denda bat zure produktuarentzat da, eta beste ekoizle batzuen
+              produktuak  saldu nahi badituzu, hautatu 'Ekoizle Taldea.
           producer_hub: Ekoizle-taldea
           producer_hub_text1: >
-              Zure antolamendua tokiko kontsumo-sistema baten bizkarrezurra da. Gehitu zure
-              produktuak edo beste erakunde batzuetakoak eta saldu Open Food Networkeko zure
-              dendaren bidez.
+              Zure antolamendua tokiko kontsumo-sistema baten bizkarrezurra da. Gehitu
+              zure produktuak edo beste erakunde batzuetakoak eta saldu Open Food
+              Networkeko zure dendaren bidez.
           producer_hub_text2: >
-              Ekoizle-taldeek hainbat helburu izan ditzakete: elikagai-kooperatiba bat,
-              kontsumo-talde bat, tokiko supermerkatu bat...
-
+              Ekoizle-taldeek hainbat helburu izan ditzakete: elikagai-kooperatiba
+              bat, kontsumo-talde bat, tokiko supermerkatu bat...
           producer_hub_text3: >
-              Open Food Network-en helburua da ahalik eta erakunde-eredu gehien babestea; 
-              zure erakundea martxan jartzeko behar dituzun tresnak eman 
-              nahi dizkizugu.
+              Open Food Network-en helburua da ahalik eta erakunde-eredu gehien babestea;  zure
+              erakundea martxan jartzeko behar dituzun tresnak eman  nahi dizkizugu.
           get_listing: Zerrenda bat lortu
           always_free: BETI DOAN
           sell_produce_others: Beste batzuen ekoizpena saltzea
@@ -3282,21 +3263,20 @@ eu:
         enterprise_producer:
           producer: Ekoizlea
           producer_text1: >
-              Ekoizleek jateko edo edateko gauza goxoak sor ditzakete. Ekoizlea zara landatzen,
-              hobetzen, hartzitzen, jezten edo moldatzen baduzu.
+              Ekoizleek jateko edo edateko gauza goxoak sor ditzakete. Ekoizlea zara
+              landatzen, hobetzen, hartzitzen, jezten edo moldatzen baduzu.
           producer_text2: >
-              Ekoizleek beste ekintza batzuk ere egin ditzakete, hala nola beste erakunde batzuetako 
-              produktuak gehitzea eta Open Food Network dendan saltzea.
-
+              Ekoizleek beste ekintza batzuk ere egin ditzakete, hala nola beste erakunde
+              batzuetako  produktuak gehitzea eta Open Food Network dendan saltzea.
           non_producer: Ez-ekoizlea
           non_producer_text1: >
-              Ez-ekoizleek ez dute beren kabuz elikagairik ekoizten, eta horrek esan nahi du ezin 
-              dituztela beren produktuak sortu Open Food Network-en bidez eskaintzeko.
-
+              Ez-ekoizleek ez dute beren kabuz elikagairik ekoizten, eta horrek esan
+              nahi du ezin  dituztela beren produktuak sortu Open Food Network-en
+              bidez eskaintzeko.
           non_producer_text2: >
-              Ekoizleak ez direnak, aldiz, ekoizpen-etxeak azken kontsumitzaileekin lotzen
-              espezializatzen dira, dela elikagaiak entregatuz, paketatuz, salduz.
-
+              Ekoizleak ez direnak, aldiz, ekoizpen-etxeak azken kontsumitzaileekin
+              lotzen espezializatzen dira, dela elikagaiak entregatuz, paketatuz,
+              salduz.
           producer_desc: Ekoizleak
           producer_example: adib. NEKAZARIAK, EKOIZLEAK
           non_producer_desc: Gainerako erakunde guztiak
@@ -3413,8 +3393,8 @@ eu:
     out_of_stock:
       reduced_stock_available: Stock murriztu erabilgarria
       out_of_stock_text: >
-          Erosten ari zinen bitartean, zure orgatxoko produktu baten edo gehiagoren 
-          stock-mailak murriztu egin dira. Hona zer aldatu den:
+          Erosten ari zinen bitartean, zure orgatxoko produktu baten edo gehiagoren  stock-mailak
+          murriztu egin dira. Hona zer aldatu den:
       now_out_of_stock: stocketik kanpo dago orain.
       only_n_remaining: " %{num} baino ez dira geratzen."
     shopfront:
@@ -3428,7 +3408,7 @@ eu:
       price_breakdown: "Prezioaren banakapena"
       unit_price_tooltip: "Hau da produktu honen aleko prezioa. Produktuen prezioa alderatzeko aukera ematen dizu, ontzien tamaina eta pisua edozein izanda ere. "
     variants:
-      on_demand: 
+      on_demand:
         'yes': "Eskariaren arabera"
     variant_overrides:
       on_demand:
@@ -3509,103 +3489,6 @@ eu:
       unlink: "Askatu"
       url: "URL"
       urlPlaceholder: "Mesedez, sartu URL bat txertatzeko"
-  inflections:
-    each:
-      one: "each"
-      many: "bakoitza"
-      other: "bakoitza"
-    bunch:
-      one: "sorta"
-      many: "sortak"
-      other: "sortak"
-    pack:
-      one: "paketea"
-      many: "paketeak"
-      other: "paketeak"
-    box:
-      one: "kutxa"
-      many: "kutxak"
-      other: "kutxak"
-    bottle:
-      one: "botila"
-      many: "botilak"
-      other: "botilak"
-    jar:
-      one: "flaskoa"
-      many: "flaskoak"
-      other: "flaskoak"
-    head:
-      one: "burua"
-      many: "buruak"
-      other: "buruak"
-    bag:
-      one: "poltsa"
-      many: "poltsak"
-      other: "poltsak"
-    loaf:
-      one: "hogaza"
-      many: "hogazak"
-      other: "hogazak"
-    single:
-      one: "singlea"
-      many: "indibidualak"
-      other: "indibidualak"
-    tub:
-      one: "tub"
-      many: "ontziak"
-      other: "ontziak"
-    punnet:
-      one: "saskitxoa"
-      many: "saskitxoak"
-      other: "saskitxoak"
-    packet:
-      one: "paketea"
-      many: "paketeak"
-      other: "paketeak"
-    item:
-      one: "elementua"
-      many: "elementuak"
-      other: "elementuak"
-    dozen:
-      one: "dozena"
-      many: "dozenaka"
-      other: "dozenaka"
-    unit:
-      one: "batasuna"
-      many: "unitateak"
-      other: "unitateak"
-    serve:
-      one: "serve"
-      many: "zatia"
-      other: "zatia"
-    tray:
-      one: "erretilua"
-      many: "erretiluak"
-      other: "erretiluak"
-    piece:
-      one: "pieza"
-      many: "piezak"
-      other: "piezak"
-    pot:
-      one: "loreontzia"
-      many: "edukiontziak"
-      other: "edukiontziak"
-    flask:
-      one: "flask"
-      many: "flaskoak"
-      other: "flaskoak"
-    basket:
-      one: "saskipea"
-      many: "saskiak"
-      other: "saskiak"
-    sack:
-      one: "zakuak"
-      many: "zakuak"
-      other: "zakuak"
-    bundle:
-      one: "egin"
-      many: "paketeak"
-      other: "paketeak"
   producers:
     signup:
       start_free_profile: "Hasi doako profil batekin, eta zabaldu prest zaudenean!"
@@ -3812,7 +3695,7 @@ eu:
     default_meta_keywords: "Aurrez zehaztutako gako-hitzak"
     currency_decimal_mark: "Monetaren marka hamartarra"
     currency_settings: "Moneta-doikuntzak"
-    currency_symbol_position: "Diruaren sinboloa jarri kantitatearen aurretik edo ondoren?"
+    currency_symbol_position: Diruaren sinboloa jarri kantitatearen aurretik edo ondoren?
     currency_thousands_separator: "Monetaren milako-bereizlea"
     hide_cents: "Xentimoak ezkutatu"
     display_currency: "Erakutsi txanpona"
@@ -4409,7 +4292,7 @@ eu:
         subject: "Eskaera berrestea"
       invoice_email:
         hi: "Kaixo %{name}"
-        invoice_attached_text: "Duela gutxi egindako eskaerarako faktura bat erantsi du:"
+        invoice_attached_text: 'Duela gutxi egindako eskaerarako faktura bat erantsi du:'
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -4523,8 +4406,6 @@ eu:
       past_orders:
         order: Eskaera
         shop: Denda
-        completed_at:
-          items: Artikuluak
         total: Guztira
         paid?: Ordainduta?
         status: Egoera
@@ -4557,65 +4438,11 @@ eu:
       key_cleared: "ezabatutako balioa"
       shipment:
         cannot_ready: "Ezin da bidalketa osatu"
-    activerecord:
-      models:
-        spree/payment:
-          one: Ordainketa
-          many: Ordainketak
-          other: Ordainketak
     unit: unitatea
     per_unit: Unitateko
   datetime:
     distance_in_words:
-      about_x_hours:
-        one: ordubete inguru
-        many: gutxi gorabehera %{count} ordu
-        other: gutxi gorabehera %{count} ordu
-      about_x_months:
-        one: hilabete inguru
-        many: gutxi gorabehera %{count} hilabete
-        other: gutxi gorabehera %{count} hilabete
-      about_x_years:
-        one: urtebete inguru
-        many: gutxi gorabehera %{count} urte
-        other: gutxi gorabehera %{count} urte
-      almost_x_years:
-        one: ia urtebete
-        many: ia %{count} urte
-        other: ia %{count} urte
       half_a_minute: minutu erdi
-      less_than_x_seconds:
-        one: segundo 1 baino gutxiago
-        many: "%{count} segundo baino gutxiago"
-        other: "%{count} segundo baino gutxiago"
-      less_than_x_minutes:
-        one: minutu bat baino gutxiago
-        many: "%{count} minutu baino gutxiago"
-        other: "%{count} minutu baino gutxiago"
-      over_x_years:
-        one: urtebete baino gehiago
-        many: "%{count} urte baino gehiago"
-        other: "%{count} urte baino gehiago"
-      x_seconds:
-        one: "1 segundo"
-        many: " %{count} segundo"
-        other: " %{count} segundo"
-      x_minutes:
-        one: "minutu 1"
-        many: " %{count} minutu"
-        other: " %{count} minutu"
-      x_days:
-        one: "egun 1"
-        many: " %{count} egun"
-        other: " %{count} egun"
-      x_months:
-        one: "hilabete"
-        many: " %{count} hilabete"
-        other: " %{count} hilabete"
-      x_years:
-        one: "urte 1"
-        many: "{count} urte %"
-        other: "{count} urte %"
   components:
     multiple_checked_select:
       filter_placeholder: "Iragazteko aukerak"
