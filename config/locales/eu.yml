@@ -63,7 +63,7 @@ eu:
         verification_value: "Egiaztapen-balioa"
         year: "Urtea"
       order_cycle:
-        orders_close_at: Itxiera-data
+        orders_close_at: "Itxiera-data"
       variant_override:
         count_on_hand: "Eskuragarri"
       spree/payment_method/calculator:
@@ -106,7 +106,7 @@ eu:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "hutsik egon behar du, ekoizlearen estokaren konfigurazioa erabiltzen ari zarelako"
-            limited_stock_but_no_count_on_hand:"zehaztu egin behar da zergatik definitu den aldi mugatua"
+            limited_stock_but_no_count_on_hand: "zehaztu egin behar da zergatik definitu den aldi mugatua"
         connected_apps:
           vine:
             api_request_error: "Errorea gertatu da Vine APIra konektatzean"
@@ -138,13 +138,18 @@ eu:
       image_not_processable: "ez da irudi balioduna"
     not_found:
       title: "Bilatzen ari zaren orrialdea ez da existitzen (404)"
-      message_html: "<b>Mesedez, saiatu berriro</b> Hau denbora arazo bat izan daiteke.<p> Egin klik Atzera botoian aurreko pantailara itzultzeko edo itzuli <a href='/'>Hasiera</a> botoira eta saiatu berriro. <b>Jarri harremanetan laguntza-zerbitzuarekin</b> Arazoak jarraitzen badu edo premiazkoa bada, jakinaraz iezaguzu.</p><p> Aurkitu gure harremanetarako datuak <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network-en tokiko orrian</a>.<p>Oso lagungarria izango zaigu falta den orriaren arrazoiari buruzko xehetasun posible guztiak ematea.</p>" </p>
+      message_html: "<b>Mesedez, saiatu berriro</b> Hau denbora arazo bat izan daiteke.<p> Egin klik Atzera botoian aurreko pantailara itzultzeko edo itzuli <a href='/'>Hasiera</a> botoira eta saiatu berriro. <b>Jarri harremanetan laguntza-zerbitzuarekin</b> Arazoak jarraitzen badu edo premiazkoa bada, jakinaraz iezaguzu.</p><p> Aurkitu gure harremanetarako datuak <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network-en tokiko orrian</a>.<p>Oso lagungarria izango zaigu falta den orriaren arrazoiari buruzko xehetasun posible guztiak ematea.</p>"
     internal_server_error:
       title: "Sentitzen dugu, baina zerbait gaizki joan da (500)"
     unprocessable_entity:
       title: "Nahi den aldaketa baztertu egin da (422)"
     general_error:
-      message: "Sentitzen dugu, baina zerbait gaizki joan da.\n\nBaliteke aldi baterako arazoa izatea, beraz, saia zaitez berriro edo kargatu orria.\nAkats guztiak erregistratzen ditugu eta litekeena da konponbide bat lantzen aritzea.\nArazoak bere horretan jarraitzen badu edo premiazkoa bada, jar zaitez gurekin harremanetan."
+      message: |
+        Sentitzen dugu, baina zerbait gaizki joan da.
+
+        Baliteke aldi baterako arazoa izatea, beraz, saia zaitez berriro edo kargatu orria.
+        Akats guztiak erregistratzen ditugu eta litekeena da konponbide bat lantzen aritzea.
+        Arazoak bere horretan jarraitzen badu edo premiazkoa bada, jar zaitez gurekin harremanetan.
   stripe:
     error_code:
       incorrect_number: "Txartelaren zenbakia ez da zuzena."
@@ -158,44 +163,44 @@ eu:
       card_declined: "Txartela ukatu egin da."
       missing: "Kobratzen ari zaion kontsumitzaileak ez du txartelik."
       processing_error: "Errorea gertatu da txartela prozesatzean."
-      rate_limit: "Errore bat gertatu da eskaerak azkarregi iritsi zirelako APIra. Jakinaraz iezaguzu ea etengabe aurkitzen den errore honekin ".
+      rate_limit: "Errore bat gertatu da eskaerak azkarregi iritsi zirelako APIra. Jakinaraz iezaguzu ea etengabe aurkitzen den errore honekin."
       authentication_required: "Txartela ukatu egin da, transakzioak autentifikazioa eskatzen duelako."
       approve_with_id: "Ordainketa ezin da baimendu."
-      call_issuer: "Arrazoi ezezagun batengatik ukatu da txartela".
+      call_issuer: "Arrazoi ezezagun batengatik ukatu da txartela."
       card_not_supported: "Txartelak ez du horrelako erosketarik onartzen."
       card_velocity_exceeded: "Bezeroak txartelean eskuragarri duen kreditu-saldoa edo -muga gainditu du."
       currency_not_supported: "Txartelak ez du zehaztutako moneta onartzen."
-      do_not_honor: "Arrazoi ezezagun batengatik ukatu da txartela".
-      do_not_try_again: "Arrazoi ezezagun batengatik ukatu da txartela".
+      do_not_honor: "Arrazoi ezezagun batengatik ukatu da txartela."
+      do_not_try_again: "Arrazoi ezezagun batengatik ukatu da txartela."
       duplicate_transaction: "Duela gutxi transakzio bat bidali zen kreditu-txartelaren kopuru eta informazio berarekin."
       fraudulent: "Ordainketa atzera bota da Stripek iruzurrezkoa dela susmatzen duelako."
-      generic_decline: "Arrazoi ezezagun batengatik ukatu da txartela".
-      incorrect_pin: "Sartutako PINa ez da zuzena. Errefus-kode hau txartel-irakurgailu batekin egindako ordainketei bakarrik aplikatzen zaie. "
+      generic_decline: "Arrazoi ezezagun batengatik ukatu da txartela."
+      incorrect_pin: "Sartutako PINa ez da zuzena. Errefus-kode hau txartel-irakurgailu batekin egindako ordainketei bakarrik aplikatzen zaie."
       insufficient_funds: "Txartelak ez du nahikoa funts erosketa osatzeko."
       invalid_account: "Txartela, edo hari lotutako kontua, baliogabea da."
       invalid_amount: "Ordainketaren zenbatekoa baliogabea da edo baimendutako zenbatekoa gainditzen du."
-      invalid_pin: "Sartutako PINa ez da zuzena. Errefus-kode hau txartel-irakurgailu batekin egindako ordainketei bakarrik aplikatzen zaie. "
+      invalid_pin: "Sartutako PINa ez da zuzena. Errefus-kode hau txartel-irakurgailu batekin egindako ordainketei bakarrik aplikatzen zaie."
       issuer_not_available: "Ezin izan zen txartelaren igorlearekin harremanetan jarri, eta, beraz, ezin izan zen ordainketa baimendu."
       lost_card: "Ordainketa atzera bota da txartela galdutzat eman delako."
       merchant_blacklist: "Ordainketa atzera bota da, Stripeko erabiltzailearen blokeo-zerrendako balio batekin bat datorrelako."
       new_account_information_available: "Txartela, edo hari lotutako kontua, baliogabea da."
-      no_action_taken: "Arrazoi ezezagun batengatik ukatu da txartela".
-      not_permitted: "Ezin da ordaindu".
+      no_action_taken: "Arrazoi ezezagun batengatik ukatu da txartela."
+      not_permitted: "Ezin da ordaindu."
       offline_pin_required: "Txartela atzera bota da PIN bat behar duelako."
       online_or_offline_pin_required: "Txartela atzera bota da PIN bat behar duelako."
-      pickup_card: "Txartela ezin da erabili ordainketa hori egiteko (baliteke galdu edo lapurtu gisa jakinarazi izana)".
+      pickup_card: "Txartela ezin da erabili ordainketa hori egiteko (baliteke galdu edo lapurtu gisa jakinarazi izana)."
       pin_try_exceeded: "Baimendutako PIN saiakeren kopurua gainditu da."
       reenter_transaction: "Jaulkitzaileak ezin izan zuen ordainketa prozesatu arrazoi ezezagun batengatik."
-      restricted_card: "Txartela ezin da erabili ordainketa hori egiteko (baliteke galdu edo lapurtu gisa jakinarazi izana)".
-      revocation_of_all_authorizations: "Arrazoi ezezagun batengatik ukatu da txartela".
-      revocation_of_authorization: "Arrazoi ezezagun batengatik ukatu da txartela".
-      security_violation: "Arrazoi ezezagun batengatik ukatu da txartela".
-      service_not_allowed: "Arrazoi ezezagun batengatik ukatu da txartela".
+      restricted_card: "Txartela ezin da erabili ordainketa hori egiteko (baliteke galdu edo lapurtu gisa jakinarazi izana)."
+      revocation_of_all_authorizations: "Arrazoi ezezagun batengatik ukatu da txartela."
+      revocation_of_authorization: "Arrazoi ezezagun batengatik ukatu da txartela."
+      security_violation: "Arrazoi ezezagun batengatik ukatu da txartela."
+      service_not_allowed: "Arrazoi ezezagun batengatik ukatu da txartela."
       stolen_card: "Ordainketa atzera bota da, txartela lapurtutzat eman delako."
-      stop_payment_order: "Arrazoi ezezagun batengatik ukatu da txartela".
+      stop_payment_order: "Arrazoi ezezagun batengatik ukatu da txartela."
       testmode_decline: "Stripe proba-txartelaren zenbaki bat erabili zen."
-      transaction_not_allowed: "Arrazoi ezezagun batengatik ukatu da txartela".
-      try_again_later: "Arrazoi ezezagun batengatik ukatu da txartela".
+      transaction_not_allowed: "Arrazoi ezezagun batengatik ukatu da txartela."
+      try_again_later: "Arrazoi ezezagun batengatik ukatu da txartela."
       withdrawal_count_limit_exceeded: "Bezeroak txartelean eskuragarri duen kreditu-saldoa edo -muga gainditu du."
       disconnect_failure: "Stripe ezin izan dugu deskonektatu."
     success_code:
@@ -269,7 +274,7 @@ eu:
     user_passwords:
       spree_user:
         updated_not_active: "Zure pasahitza berrezarri da, baina zure posta elektronikoa oraindik ez da baieztatu."
-        updated: "Zure pasahitza arrakastaz aldatu da. Saioa hasita daukazu ".
+        updated: "Zure pasahitza arrakastaz aldatu da. Saioa hasita daukazu."
         send_instructions: "Mezu elektroniko bat jasoko duzu zure kontua minutu gutxi barru berresteko jarraibideekin."
     oidc:
       failure: "Ezin izan da saioa hasi: %{errorea}"
@@ -360,7 +365,7 @@ eu:
       userguide: "Open Food Network-en erabiltzaile-gida"
       email_admin_html: "Zure kontua administratu dezakezu %{link} an saioa hasiz edo hasierako orriaren eskuinaldean dagoen engranean klik eginez, eta Administrazioa hautatuz."
       admin_panel: "Administrazio-panela"
-      email_community_html: "OFN programarekin eta elikadura-erakunde baten funtzionamenduaren erronka bakarrekin lotutako eztabaida komunalerako foro bat ere badugu. Bat egitera gonbidatzen zaitugu. Etengabe ari gara eboluzionatzen, eta haren ekarpenak forma emango dio gero gertatzen denari. %{link} "
+      email_community_html: "OFN programarekin eta elikadura-erakunde baten funtzionamenduaren erronka bakarrekin lotutako eztabaida komunalerako foro bat ere badugu. Bat egitera gonbidatzen zaitugu. Etengabe ari gara eboluzionatzen, eta haren ekarpenak forma emango dio gero gertatzen denari. %{link}"
       join_community: "Komunitatearekin bat egin"
     invite_manager:
       subject: " %{enterprise} administratzaile izatera gonbidatu zaitu"
@@ -398,7 +403,7 @@ eu:
       success_zero: Horietatik, inor ez zuten auzipetu.
       success_some: Horietatik, %{count} arrakastaz prozesatu ziren.
       success_all: Denak arrakastaz auzipetu zituzten.
-      issues: Hona hemen aurkitutako arazoen xehetasunak:
+      issues: "Hona hemen aurkitutako arazoen xehetasunak:"
     summary_detail:
       no_message_provided: Ez dago errore-mezurik
       changes:
@@ -530,7 +535,7 @@ eu:
   payment_could_not_complete: "Ezin izan da ordainketa osatu"
   vine_voucher_validator_service:
     errors:
-      vine_api: "Errorea gertatu da HJArekiko komunikazioan, saia zaitez geroago".
+      vine_api: "Errorea gertatu da HJArekiko komunikazioan, saia zaitez geroago."
       invalid_voucher: "Bonuak ez du balio"
       not_found_voucher: "Sentitzen dugu, ezin izan dugu txartel hori aurkitu, mesedez, egiaztatu kodea."
   vine_voucher_redeemer_service:
@@ -552,15 +557,14 @@ eu:
     destroy: "Ezabatu"
     rename: "Berrizendatu"
   admin:
-    products_page: Produktuak
-      title: 
+    products_page:
+      title: Produktuak
       filters:
-        categories: Kategoriak
-          title: "Hautatutako kategorien %{count}"
-          selected_categories: 
-        producers: Ekoizleak
+        categories:
+          title: Kategoriak
+          selected_categories: "Hautatutako kategorien %{count}"
+        producers:
           title: Zutabeak
-        colums: 
       columns:
         image: Irudia
         name: Izena
@@ -604,13 +608,13 @@ eu:
     adjustments:
       skipped_changing_canceled_order: "Ezin duzu bertan behera utzitako eskaera bat aldatu."
     begins_at: Hasi
-    begins_on: Hemen hasten da:
+    begins_on: "Hemen hasten da:"
     bill_address: "Fakturaren helbidea"
     ship_address: "Bidalketa-helbidea"
     customer: Kontsumitzailea
     date: Data
     email: Emaila
-    ends_at: Hemen amaitzen da:
+    ends_at: "Hemen amaitzen da:"
     ends_on: Amaitu
     name: Izena
     first_name: Izena
@@ -1015,7 +1019,7 @@ eu:
         import_date: Inportatua
         select_a_shop: Aukeratu denda bat
         review_now: Berrikusi orain
-        new_products_alert_message: %{new_product_count} produktu berri batzuk daude zure inbentarioan gehitzeko.
+        new_products_alert_message: "%{new_product_count} produktu berri batzuk daude zure inbentarioan gehitzeko."
         currently_empty: Zure inbentarioa hutsik dago
         no_matching_products: Ez da aurkitzen zure inbentarioarekin bat datorren produkturik
         no_hidden_products: Ez dago zure inbentarioan ezkutatutako produkturik
@@ -1174,7 +1178,7 @@ eu:
           none: Bat ere ez
           own: Propioa
           sells: Saldu
-          sells_tip: "Bat ere ez - Erakundeak ez die zuzenean kontsumitzaileei saltzen. Popios - Erakundeak bere produktuak saltzen dizkie kontsumitzaileei. Edozein - Erakundeak bere produktuak edo beste batzuenak saltzen ditu."<br /><br /><br />
+          sells_tip: "Bat ere ez - Erakundeak ez die zuzenean kontsumitzaileei saltzen. Popios - Erakundeak bere produktuak saltzen dizkie kontsumitzaileei. Edozein - Erakundeak bere produktuak edo beste batzuenak saltzen ditu."
           visible_in_search: Ikusgai bilaketan?
           visible: Publikoa
           not_visible: Ezkutuan
@@ -1411,7 +1415,7 @@ eu:
       create:
         success: 'Eskaera-zikloa sortu da.'
       update:
-        success: 'Eskaera-zikloa eguneratu da'.
+        success: 'Eskaera-zikloa eguneratu da.'
       clone:
         success: "Zure eskaera-zikloa %{name} klonatu da."
       notify_producers:
@@ -1714,7 +1718,7 @@ eu:
         query_placeholder: "Posta elektronikoz bilatu..."
       setup_explanation:
         title: "Harpidetzak"
-        just_a_few_more_steps: Hasi baino lehen, urrats gutxi batzuk gehiago:
+        just_a_few_more_steps: "Hasi baino lehen, urrats gutxi batzuk gehiago:"
         enable_subscriptions: "Gaitu harpidetzak gutxienez zure dendetako baterako"
         enable_subscriptions_step_1_html: 1. Zoaz %{enterprises_link} orrira, aurkitu zure denda eta sakatu "Administratu"
         enable_subscriptions_step_2: 2. "Dendaren lehentasunak" atalean, gaitu Harpidetzak aukera
@@ -1809,7 +1813,7 @@ eu:
     invalid_api_key: "Zehaztutako API giltza ( %{key}) baliogabea da."
     unauthorized: "Ez duzu baimenik ekintza hau egiteko."
     invalid_resource: "Errekurtso baliogabea. Mesedez, zuzendu akatsak eta saiatu berriro. "
-    resource_not_found: "Bilatzen ari nintzen baliabidea ezin da aurkitu".
+    resource_not_found: "Bilatzen ari nintzen baliabidea ezin da aurkitu."
     enterprise_logo: 
       destroy_attachment_does_not_exist: "Logotipoa ez da existitzen"
     enterprise_promo_image: 
@@ -1944,7 +1948,7 @@ eu:
       selling_on_ofn: "Interesa duzu Open Food Network-en sartzeko?"
       register: "Erregistratu hemen"
     footer:
-      footer_secure: "Segurua eta konfiantzazkoa".
+      footer_secure: "Segurua eta konfiantzazkoa."
       footer_secure_text: "Open Food Network-ek SSL (2048 biteko RSA) zifratua erabiltzen du bere plataforma osoan, erosketei eta ordainketei buruzko informazioa pribatu mantentzeko. Gure zerbitzariek ez dituzte kreditu-txartelen xehetasunak gordetzen, eta ordainketak PCI betetzen duten zerbitzuengatik prozesatzen dira. "
       footer_contact_headline: "Harremanetan egon"
       footer_contact_email: "Bidal iezaguzu mezu elektroniko bat"
@@ -2143,8 +2147,8 @@ eu:
   brandstory_intro: "Batzuetan sistema konpontzeko modurik onena berria hastea da..."
   brandstory_part1: "Gu behetik hasi ginen. Nekazariak eta ekoizleak prest beren istorioak harrotasunez eta benetakotasunez kontatzeko. Banatzaileak prest daude produktuak dituen jendea modu zuzen eta zintzoan konektatzeko. Erosleek uste asteroko erosketen erabaki hobeak serioski mundua alda dezakete. "
   brandstory_part2: "Gero, egia bihurtzeko modu bat behar dugu. Janaria ekoizten, saltzen eta erosten duten guztiak ahalduntzeko modu bat. Istorio guztiak kontatzeko modu bat, logistika guztiak maneiatzeko modu bat. Transakzioa egunero transformazio bihurtzeko modu bat. "
-  brandstory_part3: "Orduan, joko-zelaia berdintzen duen merkatu bat eraiki genuen. Gardena da, eta benetako erlazioak sortzen ditu. Kode irekikoa da, beraz, denak dira jabeak ".
-  brandstory_part4: "Edonon dabil. Dena aldatzen du ".
+  brandstory_part3: "Orduan, joko-zelaia berdintzen duen merkatu bat eraiki genuen. Gardena da, eta benetako erlazioak sortzen ditu. Kode irekikoa da, beraz, denak dira jabeak."
+  brandstory_part4: "Edonon dabil. Dena aldatzen du."
   brandstory_part5_strong: "Open Food Network deitzen diogu."
   brandstory_part6: "Denok maite dugu janaria. Orain gure janari-sistema ere maita dezakegu. "
   system_headline: "Erosketak - nola funtzionatzen duten."
@@ -2190,7 +2194,7 @@ eu:
   order_total: Eskaera, guztira
   order_payment: "Honekin ordainduz:"
   order_billing_address: Kobratzeko helbidea
-  order_delivery_on: Entregatu hemen:
+  order_delivery_on: "Entregatu hemen:"
   order_delivery_address: Entregatzeko helbidea
   order_delivery_time: Entregatzeko denbora
   order_special_instructions: "Bere oharrak:"
@@ -2340,7 +2344,7 @@ eu:
   products_or: "edo"
   products_and: "eta"
   products_filters_in: "en"
-  products_with: honekin:
+  products_with: "honekin:"
   products_search: "Bilatu..."
   products_filter_by: "Fitratu"
   products_filter_selected: "hautatua"
@@ -2429,7 +2433,7 @@ eu:
   register_title: Erregistroa
   sell_title: "Erregistroa"
   sell_headline: "Eskuratu ezazu Open Food Network-en!"
-  sell_motivation: "Erakutsi zure janari ederrak".
+  sell_motivation: "Erakutsi zure janari ederrak."
   sell_producers: "Ekoizleak"
   sell_hubs: "Taldeak"
   sell_groups: "Sareak"
@@ -2575,7 +2579,7 @@ eu:
         producer: "Lehenik, zure ekoizleari buruz jakin behar dugu:"
         enterprise_name_field: "Erakundearen izena:"
         producer_name_field: "Produkzio-etxearen izena:"
-        producer_name_field_placeholder: "adibidez, Charlieren etxalde ikusgarria".
+        producer_name_field_placeholder: "adibidez, Charlieren etxalde ikusgarria."
         producer_name_field_error: "Aukeratu izen bakar bat zure erakundearentzat."
         address1_field: "1. linearen helbidea:"
         address1_field_placeholder: "adib. Passeig Sant Joan"
@@ -2621,7 +2625,7 @@ eu:
         headline: "Jarraitzen dugu!"
         message: "Orain, xehetasunetan sakonduko dugu"
         success: "Arrakasta! %{enterprise} Open Food Network-i erantsita"
-        registration_exit_message: "Laguntzaile honetatik edozein etapatan ateratzen bazara, zure profila sortzen jarrai dezakezu, administrazio-interfazera joanda".
+        registration_exit_message: "Laguntzaile honetatik edozein etapatan ateratzen bazara, zure profila sortzen jarrai dezakezu, administrazio-interfazera joanda."
         enterprise_description: "Deskribapen laburra"
         enterprise_description_placeholder: "Zure erakundea deskribatzen duen esaldi labur bat"
         enterprise_long_desc: "Deskribapen luzea"
@@ -2861,7 +2865,7 @@ eu:
   hub_sidebar_at_least: "Gutxienez talde bat hautatu behar da"
   hub_sidebar_blue: "urdina"
   hub_sidebar_red: "gorria"
-  order_cycles_closed_for_hub: "Hautatu duzun taldea aldi baterako itxita dago eskaeretarako. Mesedez, saia zaitez geroago ".
+  order_cycles_closed_for_hub: "Hautatu duzun taldea aldi baterako itxita dago eskaeretarako. Mesedez, saia zaitez geroago."
   report_customers_distributor: "Banatzailea"
   report_customers_hub: "Taldea"
   report_customers_supplier: "Hornitzailea"
@@ -3125,7 +3129,7 @@ eu:
   enterprise_register_success_notice: "Zorionak! %{enterprise} erregistroa osatu da! "
   enterprise_bulk_update_success_notice: "Arrakastaz eguneratutako erakundeak"
   enterprise_bulk_update_error: 'Errorea eguneratzean'
-  enterprise_shop_show_error: "Bilatzen duzun denda ez da existitzen edo OFNn ez dago aktibo, mesedez, bisitatu beste denda batzuk".
+  enterprise_shop_show_error: "Bilatzen duzun denda ez da existitzen edo OFNn ez dago aktibo, mesedez, bisitatu beste denda batzuk."
   order_cycles_bulk_update_notice: 'Eskaera-zikloak eguneratu egin dira.'
   order_cycles_no_permission_to_coordinate_error: "Zure erakundeek ez dute eskaera-ziklo bat koordinatzeko baimenik"
   order_cycles_no_permission_to_create_error: "Ez duzu baimenik enpresa honek koordinatutako eskaera-ziklo bat sortzeko."
@@ -3152,7 +3156,7 @@ eu:
     all_changes_saved: Gordetako aldaketa guztiak
     unsaved_changes: Aldaketak gorde gabe dituzu
     all_changes_saved_successfully: Aldaketa guztiak behar bezala gorde dira
-    oh_no: - Hara! Ezin izan dira aldaketak gorde. "
+    oh_no: "- Hara! Ezin izan dira aldaketak gorde."
     unauthorized: "Ez duzu orrialde honetara sartzeko baimenik."
     error: Errorea
     unavailable: Ez dago eskuragarri
@@ -3160,7 +3164,7 @@ eu:
     hub: Taldea
     shop: Denda
     choose: Aukeratu
-    resolve_errors: Errore hauek ebazten ditu:
+    resolve_errors: "Errore hauek ebazten ditu:"
     more_items: "+ %{count} Gehiago"
     default_card_updated: Txartel lehenetsi eguneratua
     default_card_voids_auth: Txartel lehenetsia aldatzeak dendetan txartel hori kargatzeko dauden baimenak ezabatuko ditu. Aurrez zehaztutako txartela eguneratu ondoren, dendak berriro baimendu ditzakezu. Aurretik zehaztutako txartela aldatu nahi duzu?
@@ -3256,7 +3260,7 @@ eu:
               Saldu zure produktuak kontsumitzaileei zuzenean Open Food Network dendarekin.
           producer_shop_text2: >
               Ekoizle-denda bat zure produktuarentzat da, eta beste ekoizle batzuen produktuak 
-              saldu nahi badituzu, hautatu 'Ekoizle Taldea'.
+              saldu nahi badituzu, hautatu 'Ekoizle Taldea.
           producer_hub: Ekoizle-taldea
           producer_hub_text1: >
               Zure antolamendua tokiko kontsumo-sistema baten bizkarrezurra da. Gehitu zure
@@ -3440,7 +3444,7 @@ eu:
       overrides: gainidatzi
       remain_unsaved: Gorde gabe daude.
       no_changes_to_save: 'Ez dago aldaketarik gordetzeko. '
-      no_authorisation: "Ezin izan da baimenik lortu aldaketa horiek gordetzeko, eta, beraz, ez dira gordeko".
+      no_authorisation: "Ezin izan da baimenik lortu aldaketa horiek gordetzeko, eta, beraz, ez dira gordeko."
       some_trouble: "Arazo batzuk izan dira gordetzean: %{errors}"
       changing_on_hand_stock: Stock-mailak aldatuz...
       stock_reset: Reset Stock lehenetsitako balioetara
@@ -3469,7 +3473,7 @@ eu:
       unsaved_changes: "Gorde gabeko aldaketak dituzu"
       bulk_save_error: "Hara! Ezin izan dira aldaketak gorde. "
       create_failure: "Errorea eskaera-zikloa sortzean"
-      update_success: 'Eskaera-zikloa eguneratu da'.
+      update_success: 'Eskaera-zikloa eguneratu da.'
       update_failure: "Errorea eskaera-zikloa eguneratzean"
       no_distributors: Ez dago banatzailerik eskaera-ziklo honetan. Eskaera-ziklo hori ez da kontsumitzaileentzat ikusgai egongo bat gehitu arte. Eskaera-ziklo hau gordetzen jarraitu nahi duzu? '
     enterprises:
@@ -3483,8 +3487,8 @@ eu:
       closed: itxita
       close_date_not_set: Ezarri gabeko itxiera-data
     spree:
-      users: "Eskaera"
-        order: 
+      users:
+        order: "Eskaera"
     registration:
       welcome_to_ofn: "Ongi etorri Open Food Network-era!"
       signup_or_login: "Erregistratuz hasten da (edo saioa hasiz)"
@@ -3894,7 +3898,7 @@ eu:
     my_account: "Nire kontua"
     date: "Data"
     time: "Ordua"
-    inventory_error_flash_for_insufficient_quantity: "Zure orgatxoko artikulu bat ez dago eskuragarri".
+    inventory_error_flash_for_insufficient_quantity: "Zure orgatxoko artikulu bat ez dago eskuragarri."
     inventory: Inbentarioa
     zipcode: Posta-kodea
     weight: Pisua (kilogramoko edo lb-ko)
@@ -4390,9 +4394,9 @@ eu:
         customer_greeting: "Kaixo %{name}"
         instructions_html: " <strong>%{distributor}</strong> duen zure eskaera BERTAN BEHERA UTZI DA. Mesedez gorde baliogabetzeari buruzko informazio hau, etorkizunean beharrezkoa bada ere. "
         dont_cancel: "Iritziz aldatu baduzu edo eskaera hau bertan behera utzi nahi ez baduzu, mesedez, jarri harremanetan %{email} rekin"
-        order_summary_canceled_html: "Eskaeraren laburpena [BERTAN BEHERA] %{number}"<strong>
+        order_summary_canceled_html: "Eskaeraren laburpena [BERTAN BEHERA] %{number}"
         details: "Hona hemen zure eskaeraren xehetasunak:"
-        unpaid_order: "Zure eskaera ordaindu gabe zegoenez, ez da inolako itzulketarik egin".
+        unpaid_order: "Zure eskaera ordaindu gabe zegoenez, ez da inolako itzulketarik egin."
         paid_order: "Zure eskaera ordainduta zegoen, eta %{distributor} k zenbateko osoa itzuli du."
         credit_order: "Zure eskaera ordaindua zegoen zure kontuan ordaindu zenuenagatik."
         subject: "Eskaera bertan behera uztea"
@@ -4405,7 +4409,7 @@ eu:
         subject: "Eskaera berrestea"
       invoice_email:
         hi: "Kaixo %{name}"
-        invoice_attached_text: Duela gutxi egindako eskaerarako faktura bat erantsi du:
+        invoice_attached_text: "Duela gutxi egindako eskaerarako faktura bat erantsi du:"
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -4463,7 +4467,7 @@ eu:
       paused: pausatua
       canceled: bertan behera
     paypal:
-      already_refunded: "Ordainketa hori itzuli egin da, eta ezin da horri buruzko ekintza gehiagorik egin".
+      already_refunded: "Ordainketa hori itzuli egin da, eta ezin da horri buruzko ekintza gehiagorik egin."
       no_payment_via_admin_backend: "Ezin duzu PayPal kontuak kargatu administrazio panel bidez une honetan."
       transaction: "PayPal transakzioa"
       payer_id: "Ordaintzailearen Id."
@@ -4478,7 +4482,7 @@ eu:
         refund: "Dirua itzultzea"
       flash:
         cancel: "Ez duzu PayPal erabili nahi? Ez dago arazorik. "
-        connection_failed: "Ezin izan da PayPalekin konektatu".
+        connection_failed: "Ezin izan da PayPalekin konektatu."
         generic_error: "PayPalek huts egin du. %{reasons}"
     users:
       api_keys:
@@ -4519,7 +4523,7 @@ eu:
       past_orders:
         order: Eskaera
         shop: Denda
-        completed_at: Osatutakoa:
+        completed_at:
           items: Artikuluak
         total: Guztira
         paid?: Ordainduta?
@@ -4542,7 +4546,7 @@ eu:
       invalid_api_key: "Zehaztutako API giltza ( %{key}) baliogabea da."
       unauthorized: "Ez duzu baimenik ekintza hau egiteko."
       invalid_resource: "Errekurtso baliogabea. Mesedez, zuzendu akatsak eta saiatu berriro. "
-      resource_not_found: "Bilatzen ari nintzen baliabidea ezin da aurkitu".
+      resource_not_found: "Bilatzen ari nintzen baliabidea ezin da aurkitu."
       access: "APIrako sarbidea"
       key: "Giltza"
       clear_key: "balio hutsa"
@@ -4582,16 +4586,16 @@ eu:
       half_a_minute: minutu erdi
       less_than_x_seconds:
         one: segundo 1 baino gutxiago
-        many: %{count} segundo baino gutxiago
-        other: %{count} segundo baino gutxiago
+        many: "%{count} segundo baino gutxiago"
+        other: "%{count} segundo baino gutxiago"
       less_than_x_minutes:
         one: minutu bat baino gutxiago
-        many: %{count} minutu baino gutxiago
-        other: %{count} minutu baino gutxiago
+        many: "%{count} minutu baino gutxiago"
+        other: "%{count} minutu baino gutxiago"
       over_x_years:
         one: urtebete baino gehiago
-        many: %{count} urte baino gehiago
-        other: %{count} urte baino gehiago
+        many: "%{count} urte baino gehiago"
+        other: "%{count} urte baino gehiago"
       x_seconds:
         one: "1 segundo"
         many: " %{count} segundo"
