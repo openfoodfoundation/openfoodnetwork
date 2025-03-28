@@ -189,7 +189,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       # stock info - clone is set to zero
       it '(does not) clone the stock info of the product' do
         spree_post :clone, product_id: product.id, format: :json
-        expect(json_response['on_hand']).to eq(0)
+        expect(json_response.dig("variants", 0, "on_hand")).to eq(0)
       end
 
       # variants: only the master variant of the product is cloned

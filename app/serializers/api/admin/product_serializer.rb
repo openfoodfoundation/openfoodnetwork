@@ -3,7 +3,7 @@
 module Api
   module Admin
     class ProductSerializer < ActiveModel::Serializer
-      attributes :id, :name, :sku, :inherits_properties, :on_hand, :price, :import_date, :image_url,
+      attributes :id, :name, :sku, :inherits_properties, :price, :import_date, :image_url,
                  :thumb_url, :variants
 
       def variants
