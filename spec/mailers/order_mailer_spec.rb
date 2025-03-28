@@ -69,6 +69,10 @@ RSpec.describe Spree::OrderMailer do
       expect(email.body).to include('Payment summary')
     end
 
+    it "sets a reply-to of the customer email" do
+      expect(email.reply_to).to eq([order.email])
+    end
+
     context 'when the order has outstanding balance' do
       before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
@@ -149,6 +153,28 @@ RSpec.describe Spree::OrderMailer do
 
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.email])
+    end
+  end
+
+  describe "#cancel_email (for_customer)" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, distributor:, state: "canceled") }
+    let(:mail) { Spree::OrderMailer.cancel_email(order) }
+
+    it "sends an email to the customer" do
+      expect(mail.to).to eq([order.email])
+    end
+
+    it "displays the order number" do
+      expect(mail.body).to include(order.number.to_s)
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.distributor.contact.email])
     end
   end
 
@@ -245,6 +271,7 @@ RSpec.describe Spree::OrderMailer do
         expect(deliveries.count).to eq(1)
         expect(deliveries.first.attachments.count).to eq(1)
         expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)
+        expect(email.reply_to).to eq([order.distributor.contact.email])
       end
     end
 

@@ -55,4 +55,14 @@ RSpec.describe Spree::ShipmentMailer do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
     expect(shipment_email.subject).to include("#{distributor.name} Pick up Notification")
   end
+
+  it "picked_up email has as the reply to email as the distributor" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
+    expect(shipment_email.reply_to).to eq([distributor.contact.email])
+  end
+
+  it "shipment_email email has as the reply to email as the distributor" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: true)
+    expect(shipment_email.reply_to).to eq([distributor.contact.email])
+  end
 end
