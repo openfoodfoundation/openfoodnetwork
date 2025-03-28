@@ -85,6 +85,8 @@ module Reporting
             query = order
               .all_adjustments
               .enterprise_fee
+              .joins(:metadata)
+              .where(adjustment_metadata: { enterprise_role: 'supplier' })
 
             if enterprise_fee_filters?
               query = query.where(originator_id: enterprise_fee_filtered_ids)
