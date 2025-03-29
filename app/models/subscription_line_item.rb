@@ -2,7 +2,7 @@
 
 class SubscriptionLineItem < ApplicationRecord
   belongs_to :subscription, inverse_of: :subscription_line_items
-  belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
+  belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: false
 
   validates :quantity, presence: true, numericality: { only_integer: true }
 

@@ -19,10 +19,12 @@ class OrderCycle < ApplicationRecord
   # :incoming_exchanges and :outgoing_exchanges.
   has_many :cached_incoming_exchanges, -> {
                                          where incoming: true
-                                       }, class_name: "Exchange", dependent: :destroy
+                                       }, class_name: "Exchange", inverse_of: :order_cycle,
+                                          dependent: :destroy
   has_many :cached_outgoing_exchanges, -> {
                                          where incoming: false
-                                       }, class_name: "Exchange", dependent: :destroy
+                                       }, class_name: "Exchange", inverse_of: :order_cycle,
+                                          dependent: :destroy
 
   has_many :orders, class_name: 'Spree::Order', dependent: :restrict_with_exception
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges

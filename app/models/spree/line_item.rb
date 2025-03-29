@@ -13,7 +13,7 @@ module Spree
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
     has_one :order_cycle, through: :order
 
-    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     has_one :product, through: :variant
     has_one :supplier, through: :variant
     belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true

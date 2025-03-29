@@ -6,7 +6,7 @@ module Spree
 
     acts_as_paranoid
 
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :stock_items
     has_many :stock_movements, dependent: :destroy
 
     validates :variant_id, uniqueness: { scope: [:deleted_at] }

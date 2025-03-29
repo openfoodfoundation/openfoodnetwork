@@ -47,6 +47,7 @@ module Spree
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
+             inverse_of: :adjustable,
              as: :adjustable,
              dependent: :destroy
 
@@ -65,6 +66,7 @@ module Spree
                  .order("#{Spree::Adjustment.table_name}.created_at ASC")
              },
              class_name: 'Spree::Adjustment',
+             inverse_of: :order,
              dependent: :destroy
     has_many :invoices, dependent: :restrict_with_exception
     belongs_to :order_cycle, optional: true

@@ -2,7 +2,7 @@
 
 module Spree
   class Country < ApplicationRecord
-    has_many :states, -> { order('name ASC') }, dependent: :destroy
+    has_many :states, -> { order('name ASC') }, inverse_of: :country, dependent: :destroy
 
     validates :name, :iso_name, presence: true
 
