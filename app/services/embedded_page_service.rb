@@ -81,7 +81,7 @@ class EmbeddedPageService
   def current_referer_without_www
     return unless current_referer
 
-    current_referer.start_with?('www.') ? current_referer[4..-1] : current_referer
+    current_referer.start_with?('www.') ? current_referer[4..] : current_referer
   end
 
   def set_embedded_layout

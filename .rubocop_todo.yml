@@ -540,13 +540,6 @@ Style/ArrayIntersect:
     - 'lib/open_food_network/tag_rule_applicator.rb'
     - 'spec/support/matchers/select2_matchers.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowOnConstant, AllowOnSelfClass.
-Style/CaseEquality:
-  Exclude:
-    - 'spec/models/spree/payment_spec.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
@@ -575,24 +568,6 @@ Style/ClassAndModuleChildren:
     - 'app/serializers/api/variant_serializer.rb'
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - '.simplecov'
-
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/missing_payments.rake'
-    - 'lib/tasks/sample_data/logging.rb'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'lib/tasks/subscriptions/test.rake'
 
 # Offense count: 10
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -684,21 +659,6 @@ Style/OptionalBooleanParameter:
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'spec/support/request/web_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'app/controllers/api/v0/shipments_controller.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect, AllowComments.
-Style/RedundantInitialize:
-  Exclude:
-    - 'spec/models/spree/gateway_spec.rb'
-
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
@@ -706,12 +666,4 @@ Style/ReturnNilInPredicateMethodDefinition:
   Exclude:
     - 'app/models/order_cycle.rb'
     - 'app/serializers/api/admin/customer_serializer.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/SlicingWithRange:
-  Exclude:
-    - 'app/helpers/spree/admin/navigation_helper.rb'
-    - 'app/services/embedded_page_service.rb'
     - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'

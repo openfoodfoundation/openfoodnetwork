@@ -78,11 +78,11 @@ namespace :ofn do
       # Ask how many months back we want to search for
       puts "This task will search order cycle edited within (n) months of today's date.\n" \
            "Please enter a value for (n), or hit ENTER to use the default of three (3) months."
-      input = check_default(STDIN.gets.chomp)
+      input = check_default($stdin.gets.chomp)
 
       while !is_integer?(input)
         puts "'#{input}' is not an integer. Please enter an integer."
-        input = check_default(STDIN.gets.chomp)
+        input = check_default($stdin.gets.chomp)
       end
 
       Integer(input)
