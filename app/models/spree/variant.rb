@@ -32,7 +32,8 @@ module Spree
 
     belongs_to :product, -> {
                            with_deleted
-                         }, touch: true, class_name: 'Spree::Product', optional: false
+                         }, touch: true, class_name: 'Spree::Product', optional: false,
+                            inverse_of: :variants
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
@@ -46,12 +47,14 @@ module Spree
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :images, -> { order(:position) }, as: :viewable,
                                                dependent: :destroy,
-                                               class_name: "Spree::Image"
+                                               class_name: "Spree::Image",
+                                               inverse_of: :viewable
     accepts_nested_attributes_for :images
 
     has_one :default_price,
             -> { with_deleted.where(currency: CurrentConfig.get(:currency)) },
             class_name: 'Spree::Price',
+            inverse_of: :variant,
             dependent: :destroy
     has_many :prices,
              class_name: 'Spree::Price',
