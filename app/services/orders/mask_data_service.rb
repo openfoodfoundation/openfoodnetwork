@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Mask user data from suppliers, unless explicitly allowed
+# See also: lib/reporting/queries/mask_data.rb
+#
 module Orders
   class MaskDataService
     def initialize(order)

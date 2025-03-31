@@ -5,6 +5,7 @@ module Reporting
     class QueryBuilder < QueryInterface
       include Joins
       include Tables
+      include MaskData
 
       attr_reader :grouping_fields
 
@@ -49,21 +50,6 @@ module Reporting
         reflect query.order(*instance_exec(&ordering_fields))
       end
 
-      def mask_customer_name(field)
-        masked(field, managed_order_mask_rule(:show_customer_names_to_suppliers))
-      end
-
-      def mask_contact_data(field)
-        masked(field, managed_order_mask_rule(:show_customer_contacts_to_suppliers))
-      end
-
-      def masked(field, mask_rule = nil)
-        Case.new.
-          when(mask_rule).
-          then(field).
-          else(quoted(I18n.t("hidden_field", scope: i18n_scope)))
-      end
-
       def distinct_results(fields = nil)
         return reflect query.distinct if fields.blank?
 
@@ -87,13 +73,6 @@ module Reporting
       end
 
       private
-
-      # Show unmasked data if order is managed by user, or if distributor allows suppliers
-      def managed_order_mask_rule(condition_name)
-        id = raw("#{managed_orders_alias.name}.id") # rubocop:disable Rails/OutputSafety
-        line_item_table[:order_id].in(id).
-          or(distributor_alias[condition_name].eq(true))
-      end
 
       def summary_row_title
         I18n.t("total", scope: i18n_scope)
