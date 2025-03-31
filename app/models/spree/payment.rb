@@ -22,6 +22,7 @@ module Spree
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
              class_name: "Spree::Payment", foreign_key: :source_id,
+             inverse_of: :source,
              dependent: :restrict_with_exception
     has_many :log_entries, as: :source, dependent: :destroy
 
@@ -113,10 +114,6 @@ module Spree
 
     def credit_allowed
       amount - offsets_total
-    end
-
-    def can_credit?
-      credit_allowed.positive?
     end
 
     def build_source

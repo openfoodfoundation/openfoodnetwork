@@ -474,13 +474,12 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 2
+# Offense count: 1
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
   Exclude:
     - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment.rb'
 
 # Offense count: 35
 # Configuration parameters: Include.
