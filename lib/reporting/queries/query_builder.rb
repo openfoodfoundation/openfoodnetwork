@@ -50,14 +50,14 @@ module Reporting
       end
 
       def mask_customer_name(field)
-        masked(field, nil, managed_order_mask_rule(:show_customer_names_to_suppliers))
+        masked(field, managed_order_mask_rule(:show_customer_names_to_suppliers))
       end
 
-      def masked(field, message = nil, mask_rule = nil)
+      def masked(field, mask_rule = nil)
         Case.new.
           when(mask_rule).
           then(field).
-          else(quoted(message || I18n.t("hidden_field", scope: i18n_scope)))
+          else(quoted(I18n.t("hidden_field", scope: i18n_scope)))
       end
 
       def distinct_results(fields = nil)
