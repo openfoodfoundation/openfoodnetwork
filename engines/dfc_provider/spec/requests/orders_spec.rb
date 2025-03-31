@@ -128,7 +128,6 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
         context "variant not found" do
           run_test! {
-            pending "todo:  Stock::AvailabilityValidator should skip over empty variant"
             expect(enterprise.distributed_orders.first.line_items).to be_empty
 
             expect(response.body).to include "Line items variant must exist"
