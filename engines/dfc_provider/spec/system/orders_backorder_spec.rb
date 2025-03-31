@@ -91,6 +91,9 @@ RSpec.describe "Orders backorder integration" do
       expect(order.line_items.count).to eq 1
       expect(order.line_items.first.variant).to eq variant
       expect(order.line_items.first.quantity).to eq 1
+    rescue Faraday::UnprocessableEntityError => e
+      # Output error message for convenient debugging
+      expect(e.response[:body]).to be_blank
     end
   end
 end
