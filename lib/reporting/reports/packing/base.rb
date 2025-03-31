@@ -42,10 +42,10 @@ module Reporting
           lambda do
             {
               hub: distributor_alias[:name],
-              customer_code: masked(customer_table[:code]),
-              last_name: masked(bill_address_alias[:lastname]),
-              first_name: masked(bill_address_alias[:firstname]),
-              phone: masked(bill_address_alias[:phone]),
+              customer_code: mask_customer_name(customer_table[:code]),
+              last_name: mask_customer_name(bill_address_alias[:lastname]),
+              first_name: mask_customer_name(bill_address_alias[:firstname]),
+              phone: mask_customer_name(bill_address_alias[:phone]),
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,

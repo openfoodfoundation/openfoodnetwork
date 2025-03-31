@@ -49,9 +49,13 @@ module Reporting
         reflect query.order(*instance_exec(&ordering_fields))
       end
 
+      def mask_customer_name(field)
+        masked(field, nil, managed_order_mask_rule(:show_customer_names_to_suppliers))
+      end
+
       def masked(field, message = nil, mask_rule = nil)
         Case.new.
-          when(mask_rule || default_mask_rule).
+          when(mask_rule).
           then(field).
           else(quoted(message || I18n.t("hidden_field", scope: i18n_scope)))
       end
@@ -80,10 +84,11 @@ module Reporting
 
       private
 
-      def default_mask_rule
+      # Show unmasked data if order is managed by user, or if distributor allows suppliers
+      def managed_order_mask_rule(condition_name)
         id = raw("#{managed_orders_alias.name}.id") # rubocop:disable Rails/OutputSafety
         line_item_table[:order_id].in(id).
-          or(distributor_alias[:show_customer_names_to_suppliers].eq(true))
+          or(distributor_alias[condition_name].eq(true))
       end
 
       def summary_row_title
