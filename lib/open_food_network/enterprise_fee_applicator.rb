@@ -20,6 +20,7 @@ module OpenFoodNetwork
       AdjustmentMetadata.create! adjustment:, enterprise: enterprise_fee.enterprise,
                                  fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type,
                                  enterprise_role: role
+      adjustment
     end
 
     def line_item_adjustment_label

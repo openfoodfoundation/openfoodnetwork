@@ -19,9 +19,8 @@ module OpenFoodNetwork
     describe "#create_line_item_adjustment" do
       it "creates an adjustment for a line item" do
         allow(applicator).to receive(:line_item_adjustment_label) { 'label' }
-        applicator.create_line_item_adjustment line_item
+        adjustment = applicator.create_line_item_adjustment line_item
 
-        adjustment = Spree::Adjustment.last
         expect(adjustment.label).to eq('label')
         expect(adjustment.adjustable).to eq(line_item)
         expect(adjustment.originator).to eq(enterprise_fee)
@@ -43,9 +42,8 @@ module OpenFoodNetwork
 
       it "creates an adjustment for an order" do
         allow(applicator).to receive(:order_adjustment_label) { 'label' }
-        applicator.create_order_adjustment order
+        adjustment = applicator.create_order_adjustment order
 
-        adjustment = Spree::Adjustment.last
         expect(adjustment.label).to eq('label')
         expect(adjustment.adjustable).to eq(order)
         expect(adjustment.originator).to eq(enterprise_fee)
