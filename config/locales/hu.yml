@@ -38,11 +38,11 @@ hu:
         shipment_state: Szállítási státusz
         completed_at: 'Elkészült:'
         number: Szám
-        state: Ország
+        state: Megye
         email: Ügyfél e-mail
       spree/payment:
         amount: Összeg
-        state: Ország
+        state: Megye
         source: Forrás
       spree/product:
         name: "Termék Név"
@@ -71,7 +71,7 @@ hu:
         preferred_amount: "Mennyiség:"
         preferred_first_item: "Első tétel:"
         preferred_additional_item: "További tételek kalkulált költsége:"
-        preferred_max_items: "Maximális tételek:"
+        preferred_max_items: "Számítás a max tételekre:"
         preferred_minimal_amount: "Minimális összeg:"
         preferred_normal_amount: "Normál összeg:"
         preferred_discount_amount: "Kedvezmény összege:"
@@ -145,6 +145,8 @@ hu:
       message_html: "<p>A művelet nem végrehajtható. Lehet, hogy olyan műveletet szeretnél végrehajtani, amihez nincs jogosultságod. <br><h3><a href='/' > Vissza a Kezdőlapra</a></h3></p>"
     general_error:
       message: "Sajnáljuk! Hiba történt.\n\nEz lehet egy átmeneti probléma. Kérjük, próbáld újra, vagy frissítsd az oldalt.\nMinden felmerülő hibát rögzítünk és valószínűleg már dolgozunk rajta.\nHa a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. "
+    unauthorized:
+      message: "Nincs jogosultságod a művelet végrehajtására."
     network_error:
       message: "Hálózati hiba: Kérjük próbáld meg később."
   stripe:
@@ -275,6 +277,7 @@ hu:
         send_instructions: "Néhány percen belül emailt fogsz kapni a fiók megerősítéséhez szükséges utasításokkal."
     oidc:
       failure: "Nem tudtál bejelentkezni: %{error}"
+      record_not_unique: "%{uid}már egy másik fiókhoz csatlakoztatva"
   home_page_alert_html: "Kezdőlap figyelmeztető HTML"
   hub_signup_case_studies_html: "Átvételi Pont regisztrációs esettanulmányok HTML"
   hub_signup_detail_html: "Átvételi Pont regisztrációs részletek HTML"
@@ -308,6 +311,7 @@ hu:
   sku: "SKU"
   subtotal: "Részösszeg"
   tax_rate: "Adókulcs"
+  with_tax_incl: "%{amount}adóval együtt"
   validators:
     date_time_string_validator:
       not_string_error: "karakterláncnak kell lennie"
@@ -444,7 +448,7 @@ hu:
   distributors: Elosztók
   distribution: Forgalmazás
   order_cycles: Rendelési ciklusok
-  bulk_order_management: Tömeges megrendelés kezelése
+  bulk_order_management: Rugalmas mennyiségű termékek kezelése
   enterprises: Vállalkozások
   enterprise_groups: Csoportok
   reports: Jelentések
@@ -609,7 +613,7 @@ hu:
     shipping_method: Szállítási Mód
     shop: Átvételi pont
     sku: SKU
-    status_state: Ország
+    status_state: Ország.
     tags: Címkék
     variant: Változat
     weight: Súly
@@ -642,9 +646,9 @@ hu:
     has_n_rules: "%{num} szabálya van"
     unsaved_confirm_leave: "Ezen az oldalon nem mentett módosítások vannak. Folytatod mentés nélkül?"
     available_units: "Rendelkezésre álló egységek"
-    terms_of_service_have_been_updated_html: "Az Open Food Network Általános Szerződési Feltételek frissítésre kerültek: %{tos_link}"
-    terms_of_service: Olvasd el az Általános Szerződési Feltételeket
-    accept_terms_of_service: Az Általános Szerződési Feltételek elfogadása
+    terms_of_service_have_been_updated_html: "Az Open Food Network Adatkezelési tájékoztatója és az Általános Szerződési Feltételek frissítésre kerültek%{tos_link}"
+    terms_of_service: Olvasd el a GDPR-t és az ÁSZF-et
+    accept_terms_of_service: Az Adatvédelmi Tájékoztató és Általános Szerződési Feltételek elfogadása
     shopfront_settings:
       embedded_shopfront_settings: "Beágyazott kirakatbeállítások"
       enable_embedded_shopfronts: "Beágyazott kirakatok engedélyezése"
@@ -653,14 +657,14 @@ hu:
       create:
         select_file: "Kérjük, először válassz egy fájlt."
       show:
-        title: "Általános Szerződési Feltételek fájlok"
-        no_files: "Még nem töltöttek fel Általános Szerződési Feltételeket."
+        title: "GDPR-ÁSZF fájlok"
+        no_files: "Még nem töltöttek fel GDPR-ÁSZF fájlt."
         current_terms_html: "Az aktuális %{tos_link} megtekintése. Feltöltés ideje: %{datetime}."
-        terms_of_service: "Általános Szerződési Feltételek"
+        terms_of_service: "Adatvédelmi Tájékoztató és Általános Szerződési feltételek"
         delete: "Fájl törlése"
-        confirm_delete: "Biztosan törli a jelenlegi Általános Szerződési Feltételek fájlt?"
+        confirm_delete: "Biztosan törli a jelenlegi GDPR-ÁSZF fájlt?"
         attachment: "Csatolmány"
-        create_terms_of_service: "Általános Szerződési Feltételek fájl létrehozása"
+        create_terms_of_service: "GDPR-ÁSZF fájl létrehozása"
     number_localization:
       number_localization_settings: "Számhonosítási beállítások"
       enable_localized_number: "Használd a nemzetközi ezer/tizedes elválasztó logikát"
@@ -676,7 +680,7 @@ hu:
         settings: "Beállítások"
         stripe_connect_enabled: Engedélyezi az átvételi pontok számára a fizetés elfogadását a Stripe Connect használatával?
         no_api_key_msg: Ehhez a vállalkozáshoz nem tartozik Stripe-fiók.
-        configuration_explanation_html: A Stripe Connect integráció konfigurálására vonatkozó részletes utasításokért, kérjük, <a href='https://gitátvételi pont.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>olvasd el ezt az útmutatót</a>.
+        configuration_explanation_html: A Stripe Connect integráció konfigurálására vonatkozó részletes utasításokért, kérjük <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>olvasd el ezt az útmutatót</a>.
         status: Státusz
         ok: Rendben
         instance_secret_key: Példány titkos kulcsa
@@ -686,7 +690,7 @@ hu:
         charges_enabled: Díjak engedélyezve
         charges_enabled_warning: "Figyelmeztetés: A terhelések nem engedélyezettek az Ön fiókjában"
         auth_fail_error: A megadott API-kulcs érvénytelen
-        empty_api_key_error_html: Nincs megadva Stripe API kulcs. Az API-kulcs beállításához, kérjük, kövesse <a href='https://gitátvételi pont.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>ezeket az utasításokat</a>
+        empty_api_key_error_html: Nincs megadva Stripe API kulcs. Az API-kulcs beállításához, kérjük, kövesd <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">ezeket az utasításokat</a>
     matomo_settings:
       edit:
         title: "Matomo beállítások"
@@ -724,7 +728,7 @@ hu:
         search_by_email: "Keresés email/kód alapján..."
         guest_label: "Vendég kijelentkezés"
         credit_owed: "Hiteltartozás"
-        balance_due: "Fizetendő összeg"
+        balance_due: "Fennálló tartozás"
       destroy:
         has_associated_subscriptions: "A törlés sikertelen. A felhasználónak aktív előjegyzései vannak. Törölje őket előbb."
     column_preferences:
@@ -745,8 +749,15 @@ hu:
         map: Térkép
     dfc_product_imports:
       index:
+        catalog_url: "%{count}számú termék importálásra került innen: %{catalog_url}"
+        enterprise: "Importáld ide: %{enterprise_name}"
+        select_all: "Kijelölés/Kijelölés törlése mindnél"
         update: Frissítés
         new: Új
+        selected:
+          zero: "0 kiválasztva"
+          one: "1 kiválasztva"
+          other: "%{count}kiválasztva"
         import: Importálás
       import:
         imported_products: "Importált termékek:"
@@ -807,7 +818,7 @@ hu:
       editing_product: "Termék szerkesztése"
       tabs:
         product_details: "Termék leírás"
-        group_buy_options: "Csoportos vásárlási lehetőségek"
+        group_buy_options: "Rugalmas vásárlási mennyiség"
         images: "Képek"
         variants: "Változatok"
         product_properties: "Termék tulajdonságai"
@@ -868,7 +879,7 @@ hu:
         reset: Változások elvetése
         save: Változások mentése
       product_variant_row:
-        new_variant: Új variáns
+        new_variant: Új változat
       bulk_update:
         success: Változtatások mentve
       delete_product:
@@ -956,7 +967,7 @@ hu:
         overwrite_empty: Ha üres, írja felül
         default_stock: Állítsd be a készletet
         default_tax_cat: Adókategória beállítása
-        default_shipping_cat: Szállítási mód beállítása
+        default_shipping_cat: Szállítási kategória beállítása
         default_available_date: Állítsd be az elérhetőségi dátumot
         validation_overview: Az importálás ellenőrzésének áttekintése
         entries_found: Bejegyzések találhatók az importált fájlban
@@ -1002,7 +1013,7 @@ hu:
         price: Ár
         on_hand: Készlet
         on_demand: Igény szerint
-        shipping_category: Szállítási mód
+        shipping_category: Szállítási Kategória
         tax_category: Adókategória
     variant_overrides:
       loading_flash:
@@ -1046,7 +1057,7 @@ hu:
         product_unit: "Termék: Egység"
         weight_volume: "Pontos súly (gr)"
         ask: "Kérdés?"
-        page_title: "Tömeges megrendelés kezelése"
+        page_title: "Rugalmas mennyiségű termékek kezelése"
         actions_delete: "Kiválasztottak törlése"
         loading: "Megrendelések betöltése"
         no_results: "Nem található megrendelés."
@@ -1090,7 +1101,7 @@ hu:
           acn_placeholder: pl. 123 456 789
           display_invoice_logo: Logó megjelenítése a vevői összesítőkön
           invoice_text: Adj testreszabott szöveget a vevői összesítők végéhez
-          terms_and_conditions: "Általános Szerződési Feltételek"
+          terms_and_conditions: "GDPR és ÁSZF"
           remove_terms_and_conditions: "Fájl eltávolítása"
           uploaded_on: "feltöltve"
           reset_form: "Űrlap visszaállítása"
@@ -1177,9 +1188,10 @@ hu:
           none: Egyik sem
           own: Saját
           sells: Értékesít
-          sells_tip: "Egyik sem - a vállalkozás nem értékesít közvetlenül a vevőknek.<br />Saját - Vállalkozás saját termékeket ad el az ügyfeleknek.<br />Mindegyik -  A vállalkozás saját vagy más vállalkozás termékeit is értékesítheti.<br />"
+          sells_tip: "Egyik sem - a vállalkozás nem értékesít közvetlenül<br />Saját - a vállalkozás saját termékeket ad el az ügyfeleknek.<br />Mindegyik -  A vállalkozás saját vagy más vállalkozás termékeit is értékesítheti.<br />"
+          external_billing_id: Külső számlázási azonosító
           visible_in_search: Látható a keresésben?
-          visible_in_search_tip: "Az árusítóhelyek lehetnek 1. nyilvánosak, amik megjelennek az OFN térképen és listákban, vagy 2. rejtve a térképen és listákban, de más árusítóhelyek által elérhető módon, vagy 3. teljesen rejtve."
+          visible_in_search_tip: "Az termelői és átvételi pont profilok lehetnek 1. nyilvánosak, amik megjelennek az OFN térképen és listákban, vagy 2. rejtve a térképen és listákban, de más átvételi pontok által elérhető módon, vagy 3. teljesen rejtve."
           visible: Nyilvános
           not_visible: Rejtve
           hidden: Minden hivatkozás rejtve
@@ -1188,19 +1200,19 @@ hu:
           legend: "Tulajdonságok"
         permalink:
           permalink: Permalink (szóközök nélkül)
-          permalink_tip: "Ezt az állandó linket használják az átadási pont URL-jének létrehozására: %{link}árusítóhely-neve/shop"
+          permalink_tip: "Ez a permalink a webáruházad url-jének létrehozására szolgál: : %{link}árusítóhely-neve/shop"
           link_to_front: Az online kirakat kezdőlapjának URL-je
           link_to_front_tip: Közvetlen link az online kirakatodhoz az Open Food Hálózatában.
           ofn_uid: OFN Azonosító
           ofn_uid_tip: A vállalkozás azonosítására használt egyedi azonosító az Open Food Hálózatában.
         shipping_methods:
-          legend: "Szállítási Módok"
+          legend: "Áruátadási Módok"
           name: "Név"
           applies: "Aktív?"
-          manage: "Szállítási módok kezelése"
-          create_button: "Új szállítási mód létrehozása"
+          manage: "Áruátadási módok kezelése"
+          create_button: "Új Szállítási Mód létrehozása"
           create_one_button: "Hozz létre egyet most"
-          no_method_yet: "Még nincs szállítási módod beállítva."
+          no_method_yet: "Még nincs áruátadási mód beállítva."
         shop_preferences:
           legend: "Átvételi ponti beállítások"
           shopfront_requires_login: "Nyilvánosan látható kirakat?"
@@ -1329,6 +1341,7 @@ hu:
             disable: "Megosztás leállítása"
             loading: "Betöltés"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+            link_label_html: "Tudj meg többet erről a kutatási projektről<i class=\"icon-external-link\"></i>"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Engedélyezd a Discover Regenerative számára a vállalkozási adatok közzétételét."
@@ -1352,7 +1365,7 @@ hu:
         properties: Tulajdonságok
         payment_methods: Fizetési módok
         payment_methods_tip: Ennek a vállalkozásnak nincs fizetési módja
-        shipping_methods: Szállítási módok
+        shipping_methods: Áruátadási módok
         shipping_methods_tip: Ennek a vállalkozásnak vannak szállítási módjai
         enterprise_fees: Vállalkozási díjak
         enterprise_fees_tip: Ennek a vállalkozásnak nincsenek díjai
@@ -1399,10 +1412,10 @@ hu:
         contact_name: Kapcsolattartó neve
       edit:
         editing: 'Beállítások:'
-        back_link: Vissza a válllalkozások listájához
+        back_link: Vissza a vállalkozások listájához
       new:
         title: Új Vállalkozás
-        back_link: Vissza a válllalkozások listájához
+        back_link: Vissza a vállalkozások listájához
       welcome:
         welcome_title: Üdvözlünk az Open Food hálózatban!
         welcome_text: Sikeresen létrehoztad a
@@ -1460,7 +1473,7 @@ hu:
         distributor: "Elosztó"
         products: "Termékek"
         tags: "Címkék"
-        delivery_details: "Szállítás részletei"
+        delivery_details: "Átvétel részletei"
         fees: "Díjak"
         next: "Következő"
         previous: "Előző"
@@ -1474,19 +1487,19 @@ hu:
         checkout_options: "Fizetési lehetőségek"
         distributor: "Elosztó"
         no_payment_methods: Ebben a rendelési ciklusban minden elosztónak szüksége van legalább egy fizetési módra.
-        no_shipping_methods: Ebben a rendelési ciklusban minden elosztónak legalább egy szállítási módra van szüksége.
+        no_shipping_methods: Ebben a rendelési ciklusban minden elosztónak legalább egy szállítási mód beállítása szükséges.
         payment_methods: "fizetési módok"
         save: "Mentés"
         save_and_back_to_list: "Mentés és Vissza a listához"
         select_all: "Mindet kiválaszt"
-        shipping_methods: "Szállítási módok"
+        shipping_methods: "Áruátadási módok"
       wizard_progress:
         edit: "1. Általános beállítások"
         incoming: "2. Bejövő termékek"
         outgoing: "3. Kimenő termékek"
         checkout_options: "4. Fizetési lehetőségek"
       exchange_form:
-        pickup_time_tip: Megrendelésnél ettől kezdve készen állnak a vásárló számára
+        pickup_time_tip: Amikortól a megrendelés készen áll a vásárló számára
         pickup_instructions_placeholder: "Felvételi utasítások"
         pickup_instructions_tip: Ezek az utasítások a rendelés befejezése után jelennek meg az ügyfelek számára
         pickup_time_placeholder: "Készen áll (pl. dátum/idő)"
@@ -1549,7 +1562,7 @@ hu:
         fees: Díjak
         tags: Címkék
       destroy_errors:
-        orders_present: Ezt a rendelési ciklust egy vásárló választotta ki, és nem törölhető. Hogy az ügyfelek ne férhessenek hozzá", inkább zárd be.
+        orders_present: Ezt a rendelési ciklust egy vásárló választotta ki, és nem törölhető. Hogy az ügyfelek ne férhessenek hozzá, inkább zárd be.
         schedule_present: Ez a rendelési ciklus ütemezéshez van kötve, és nem törölhető. Először szüntesse meg vagy törölje az ütemezést.
       bulk_update:
         no_data: Hm, valami elromlott. Nem található rendelési ciklus adat.
@@ -1593,7 +1606,7 @@ hu:
           business_details: "Vállalkozás adatai"
           images: "Képek"
           properties: "Tulajdonságok"
-          shipping_methods: "Szállítási módok"
+          shipping_methods: "áruátadási módok"
           payment_methods: "fizetési módok"
           enterprise_fees: "Vállalkozási díjak"
           enterprise_permissions: "Vállalkozási engedélyek"
@@ -1760,14 +1773,14 @@ hu:
         just_a_few_more_steps: 'Még néhány lépés, mielőtt elkezdhetné:'''
         enable_subscriptions: "Engedélyezd a feliratkozásokat legalább egy oldalon"
         enable_subscriptions_step_1_html: 1. Nyisd meg a %{enterprises_link} oldalt, keresd meg az oldalad, és kattints a "Kezelés" gombra
-        enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt", engedélyezd az Előfizetések opciót
+        enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt, engedélyezd az Előfizetések opciót
         set_up_shipping_and_payment_methods_html: Állíts be %{shipping_link} és %{payment_link} metódust
         set_up_shipping_and_payment_methods_note_html: Ne feledd, hogy előfizetésekhez csak készpénzes és Stripe fizetési módok<br />használhatók
         ensure_at_least_one_customer_html: Győződj meg arról, hogy legalább egy %{customer_link} létezik
         create_at_least_one_schedule: Hozz létre legalább egy ütemezést
         create_at_least_one_schedule_step_1_html: '1. Nyisd meg a következőt: %{order_cycles_link}'
         create_at_least_one_schedule_step_2: 2. Hozz létre egy rendelési ciklust, ha még nem tetted meg
-        create_at_least_one_schedule_step_3: 3. Kattints a "+ Új ütemterv" gombra.", és töltsd ki az űrlapot
+        create_at_least_one_schedule_step_3: 3. Kattints a "+ Új ütemterv" gombra, és töltsd ki az űrlapot
         once_you_are_done_you_can_html: Ha végeztél, %{reload_this_page_link}
         reload_this_page: töltsd be újra ezt az oldalt
       form:
@@ -1826,7 +1839,7 @@ hu:
       no_keep_them: Tartsd meg
       yes_i_am_sure: Igen, biztos vagyok benne
       number: "Szám"
-      order_update_issues_msg: Egyes rendeléseket nem sikerült automatikusan frissíteni,"ez valószínűleg azért van, mert manuálisan szerkesztették. Kérjük, tekintse át az alább felsorolt problémákat, és szükség esetén végezzen módosításokat az egyes rendeléseken.
+      order_update_issues_msg: Egyes rendeléseket nem sikerült automatikusan frissíteni, ez valószínűleg azért van, mert manuálisan szerkesztették. Kérjük, tekintse át az alább felsorolt problémákat, és szükség esetén végezzen módosításokat az egyes rendeléseken.
       no_results:
         no_subscriptions: Még nincs előfizetés...
         why_dont_you_add_one: Miért nem adsz hozzá egyet? :)
@@ -1870,7 +1883,7 @@ hu:
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "A promóciós kép nem létezik"
     enterprise_terms_and_conditions:
-      destroy_attachment_does_not_exist: "Az Általános Szerződési Feltételek fájl nem létezik"
+      destroy_attachment_does_not_exist: "Az ÁSZF-GDPR fájl nem létezik"
     orders:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
     query_param:
@@ -1886,7 +1899,7 @@ hu:
     order_summary_without_number: Megrendelés-összesítő
     already_ordered:
       cart: "kosár"
-      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
+      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintsd meg a %{kosarat}, hogy ellenőrizd a korábban megrendelt tételeket. Amíg a rendelési ciklus nyitva van törölhetsz is termékeket. "
     step1:
       contact_information:
         title: Kapcsolat
@@ -1908,13 +1921,13 @@ hu:
         city:
           label: Város
         state_id:
-          label: Ország
+          label: Megye
         zipcode:
           label: Irányítószám
         country_id:
           label: Ország
       shipping_info:
-        title: Szállítási információ
+        title: Átvételi lehetőségek
       submit: Következő - Fizetési mód
       cancel: Vissza a kosár szerkesztéséhez
     step2:
@@ -1935,7 +1948,7 @@ hu:
           use_new_card: Adja meg kártyaazonosítóit
           save_card: Mentse el a kártyát későbbi használatra
           create_new_card: vagy adja meg alább az új kártyaadatokat
-      explaination: A következő lépésben megtekintheted és megerősítheted megrendelésedet, amely tartalmazza a várható költségeket. Amennyiben "valtozoar" jelölésű terméket rendeltél, a végösszeg a pontos súly függvényében változhat.
+      explaination: A következő lépésben megtekintheted és megerősítheted megrendelésedet, amely tartalmazza a várható költségeket. Amennyiben "Változósúly" jelölésű terméket rendeltél, a végösszeg a pontos súly függvényében változhat.
       submit: Következő - Megrendelés összegzése
       cancel: Vissza az adataidhoz
       voucher:
@@ -1948,7 +1961,7 @@ hu:
         warning_forfeit_remaining_amount: "Megjegyzés: ha a rendelés végösszege kevesebb, mint a kupon értéke, előfordulhat, hogy a fennmaradó összeget nem tudod elkölteni."
     step3:
       delivery_details:
-        title: Szállítás részletei
+        title: Készen áll
         edit: Szerkesztés
         address: Szállítási cím
         instructions: Megjegyzések
@@ -1960,22 +1973,22 @@ hu:
         title: A megrendelés részletei
         edit: Szerkesztés
       terms_and_conditions:
-        message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
+        message_html: "Elfogadom az Átvételi Pont %{terms_and_conditions_link}-t."
         link_text: "Felhasználási feltételek"
       platform_terms_of_service:
-        message_html: "Elfogadom a %{tos_link} platformot."
+        message_html: "Elfogadom az Open Food platform %{tos_link}-t."
       all_terms_and_conditions:
-        message_html: "Elfogadom az eladó %{terms_and_conditions_link} és a platform %{tos_link} feltételeit."
+        message_html: "Elfogadom az Átvételi Pont %{terms_and_conditions_link} és a platform %{tos_link}-t."
         terms_and_conditions: "Felhasználási feltételek"
       submit: Rendelés elküldése
       cancel: Vissza a Fizetési módhoz
     errors:
       saving_failed: "A mentés nem sikerült, kérjük, frissítsd a kiemelt mezőket."
-      terms_not_accepted: Kérjük, fogadja el az Általános Szerződési Feltételeket
+      terms_not_accepted: 'Kérjük, fogadd el az Adatvédelmi Tájékoztatót és az Általános Szerződési Feltételeket '
       required: A mező nem lehet üres
       invalid_number: "Adj meg egy érvényes telefonszámot"
       invalid_email: "Kérjük valós e-mail címet adj meg"
-      select_a_shipping_method: Válassz szállítási módot!
+      select_a_shipping_method: Válassz áruátvételi módot!
       select_a_payment_method: Válassz fizetési módot
       no_shipping_methods_available: Átvételi és szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
       voucher_not_found: Nem található
@@ -2007,7 +2020,7 @@ hu:
         cart: "Kosár"
     register_call:
       selling_on_ofn: "Érdekel az Open Food Hálózat?"
-      register: "Itt regisztrálj fogyasztóként"
+      register: "Itt regisztrálj!"
     footer:
       footer_secure: "Biztonságos és felelős adatkezelés."
       footer_secure_text: "Az Open Food Network mindenhol SSL-titkosítást (2048 bites RSA) használ, hogy vásárlási és fizetési adataidat bizalmasan kezelje. Szervereink nem tárolják hitelkártya adataidat, és a fizetéseket PCI-kompatibilis szolgáltatások dolgozzák fel."
@@ -2020,19 +2033,19 @@ hu:
       footer_legal_call: "Olvasd el a mi"
       footer_legal_visit: "Elérhetőségünk"
       footer_legal_text_html: "Az Open Food Network egy ingyenes és nyílt forráskódú szoftverplatform. Tartalmunk licence a %{content_license}, kódunk pedig %{code_license}."
-      footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataira. Tekintse meg %{privacy_policy} és %{cookies_policy}"
+      footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{privacy_policy} és %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{cookies_policy}-unkat"
-      footer_data_privacy_policy: "Adatvédelmi irányelvek"
+      footer_data_privacy_policy: "Adatvédelmi nyilatkozatunkat"
       footer_data_cookies_policy: "sütikre vonatkozó szabályzatunkat"
   shop:
     messages:
       customer_required:
-        login: "Belépés"
-        contact: "kapcsolatba lépni"
+        login: "belépés"
+        contact: "Kapcsolat"
         require_customer_login: "Csak regisztrált és jóváhagyott vásárlók férhetnek hozzá az Átvételi Pont kínálatához."
         require_login_link_html: "Ha már regisztrált felhasználó vagy,  a folytatáshoz be kell lépned: %{login}"
         require_login_2_html: "Ezen az átvételi ponton szeretnél vásárolni?  %{enterprise}-el  itt tudsz %{contact}, és érdeklődni a csatlakozásról."
-        require_customer_html: "Ha itt szeretne vásárolni, kérjük, %{contact} %{enterprise} érdeklődjön a csatlakozásról."
+        require_customer_html: "Ha szeretnél a(z) %{enterprise} átvételi ponton vásárolni,  kérjük, írj a  %{contact} fülön található email címre. Írd meg a levélben a regisztrált email-címed, és hogy melyik telephelyen szeretnél vásárolni."
       select_oc:
         select_oc_html: "Kérjük, <span class='highlighted'>válaszd ki, hogy mikorra szeretnéd megrendelni</span>, hogy megtudd, milyen termékek állnak rendelkezésre."
     products:
@@ -2114,7 +2127,7 @@ hu:
   longitude: Hosszúság
   longitude_placeholder: például 144.7851531
   use_geocoder: Automatikusan kiszámítja a szélességi és hosszúsági fokokat a címből?
-  state: Ország
+  state: Ország-
   postcode: Irányítószám
   postcode_placeholder: például 3070
   suburb: Település
@@ -2140,7 +2153,7 @@ hu:
   label_blog: "Blog"
   label_support: "Támogatás"
   label_shopping: "Bevásárlás"
-  label_login: "Belépés"
+  label_login: "Belépés*"
   label_logout: "Kijelentkezés"
   label_signup: "Regisztráció"
   label_administration: "Adminisztráció"
@@ -2178,7 +2191,7 @@ hu:
       desc_part_1: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
       desc_part_2: "Az OFN-nél teljes mértékben tiszteletben tartjuk a magánéletedet. Csak azokat a sütiket használjuk, amelyek az élelmiszerek online értékesítéséhez és vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. Előfordulhat, hogy a jövőben azt javasoljuk, hogy oszd meg adataid új közös szolgáltatások létrehozása érdekében, amelyek hasznosak lehetnek az ökoszisztéma számára (például logisztikai szolgáltatások a rövid élelmiszer-rendszerekhez), de még nem tartunk ott, és nem fogjuk megtenni a felhatalmazásod nélkül. "
       desc_part_3: "A sütiket elsősorban arra használjuk, hogy emlékezzünk arra, hogy ki vagy, ha bejelentkezel a szolgáltatásba, vagy hogy emlékezzünk a kosaradba tett tételekre akkor is, ha nem vagy bejelentkezve. Ha továbbra is a weboldalon navigálsz anélkül, hogy a „Sütik elfogadása” gombra kattintanál, akkor feltételezzük, hogy beleegyezésedet adod a weboldal működéséhez elengedhetetlenül szükséges sütik tárolásához."
-      essential_cookies: "Lényeges cookie-k"
+      essential_cookies: "Lényeges sütik"
       essential_cookies_desc: "Az alábbi cookie-k feltétlenül szükségesek weboldalunk működéséhez."
       essential_cookies_note: "A legtöbb süti csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az e-mail címed és jelszavad soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
       cookie_domain: "Által meghatározott:"
@@ -2187,13 +2200,13 @@ hu:
       cookie_remember_me_desc: "Akkor használatos, ha a felhasználóként arra kérted a webhelyet, hogy emlékezzen rád. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretnéd törölni a sütit, csak ki kell jelentkezned. Ha nem szeretnéd, hogy a süti telepítve legyen a számítógépedre, ne jelöld be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
       cookie_openstreemap_desc: "Ezt a sütit barátságos, nyílt forráskódú térképszolgáltatónk (OpenStreetMap) használja annak biztosítására, hogy egy adott időszakon belül ne kapjon túl sok kérést, és megakadályozza a szolgáltatásaikkal való visszaélést."
       cookie_stripe_desc: "A Stripe fizetési szolgáltató által a csalások felderítése céljából gyűjtött adatok https://stripe.com/cookies-policy/legal. Nem minden átvételi pont vagy termelő használja a Stripe-ot fizetési módszerként, de a csalás megelőzése érdekében jó gyakorlat, hogy minden oldalon alkalmazzuk. A Stripe valószínűleg képet alkot arról, hogy mely oldalaink lépnek általában kapcsolatba az API-jukkal, majd minden szokatlant megjelöl. A Stripe cookie beállításának tehát szélesebb funkciója van, mint egyszerűen a fizetési mód biztosítása a felhasználó számára. Eltávolítása befolyásolhatja magának a szolgáltatásnak a biztonságát. A Stripe-ról többet megtudhatsz, és elolvashatod adatvédelmi irányelveit a https://stripe.com/privacy oldalon."
-      statistics_cookies: "Statisztikai cookie-k"
-      statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használja a legtöbbet, vagy nem használja, megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
-      statistics_cookies_matomo_desc_html: "platformhasználati adatok gyűjtéséhez és elemzéséhez a <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik) egy nyílt forráskódú elemző eszközt használunk, amely megfelel a GDPR-nak és védi a magánéletét."
-      statistics_cookies_matomo_optout: "Leiratkozik a Matomo Analytics szolgáltatásról? Személyes adatot nem gyűjtünk, a Matomo segít a szolgáltatásunk fejlesztésében, de tiszteletben tartjuk az Ön választását :-)"
-      cookie_matomo_basics_desc: "Matomo első féltől származó cookie-k statisztikák gyűjtéséhez."
-      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
-      cookie_matomo_ignore_desc: "A cookie-k segítségével kizárják a felhasználót a nyomon követésből."
+      statistics_cookies: "Statisztikai sütik"
+      statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használod a legtöbbet, vagy épp egyáltalán nem használod, segíti hogy megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
+      statistics_cookies_matomo_desc_html: "Platformhasználati adatok gyűjtéséhez és elemzéséhez a <a href='https://matomo.org/' target='_blank'>Matomo</a> nyílt forráskódú elemző szoftvert használjuk, amely megfelel az európai adatvédelmi jogszabályoknak és védi a felhasználók magánéletét."
+      statistics_cookies_matomo_optout: "Leiratkoznál a Matomo Analytics szolgáltatásról? Személyes adatot nem gyűjtünk, a Matomo segít az oldal fejlesztésében, de tiszteletben tartjuk a választásodat."
+      cookie_matomo_basics_desc: "Matomo első féltől származó sütik statisztikák gyűjtéséhez."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording süti."
+      cookie_matomo_ignore_desc: "A sütik segítségével kizárják a felhasználót a nyomon követésből."
       disabling_cookies_header: "Figyelmeztetés a cookie-k letiltására"
       disabling_cookies_desc: "Felhasználóként bármikor engedélyezheted, blokkolhatod vagy törölheted az Open Food Network vagy bármely más webhely sütijeit a böngésző beállításaiban. Minden böngészőnek más a működése. Itt vannak a linkek:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
@@ -2204,7 +2217,7 @@ hu:
     cookies_banner:
       cookies_usage: "Ez az oldal úgynevezett sütiket (cookie-kat) használ annak érdekében, hogy az oldalon való navigációt zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használod az oldalt, hogy javíthassuk az oldal működését."
       cookies_definition: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
-      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy, ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintott a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
+      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintottál a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
       cookies_policy_link_desc: "Ha többet szeretnél megtudni, olvasd el a "
       cookies_policy_link: "cookie-kra vonatkozó szabályzat"
       cookies_accept_button: "Sütik elfogadása"
@@ -2251,7 +2264,7 @@ hu:
   checkout_send: Rendelés leadása most
   checkout_your_order: Összesítés
   checkout_cart_total: Termékek összege
-  checkout_shipping_price: Szállítás
+  checkout_shipping_price: Átvételi díj
   checkout_total_price: Összesen
   checkout_back_to_cart: "Vissza a kosárba"
   cost_currency: "Költség Pénznem"
@@ -2261,13 +2274,13 @@ hu:
   order_payment: "Fizetés:"
   no_payment_required: "Nem igényel fizetést"
   order_billing_address: Számlázási cím
-  order_delivery_on: Kiszállítás
+  order_delivery_on: Készenállás
   order_delivery_address: Szállítási cím
-  order_delivery_time: Szállítási idő
+  order_delivery_time: Megrendelés készen áll
   order_special_instructions: "Megjegyzés:"
   order_pickup_time: Átvétel időpontja
   order_pickup_instructions: Átvételi információk
-  order_produce: Összesen
+  order_produce: Termékek
   order_amount_paid: Kifizetett összeg
   order_total_price: Összesen
   order_balance_due: Fizetendő összeg
@@ -2314,6 +2327,7 @@ hu:
   email_order_summary_subtotal: "Részösszeg:"
   email_order_summary_total: "Összesen:"
   email_order_summary_includes_tax: "(adót tartalmaz):"
+  email_order_summary_voucher_label: "Kupon (%{code}):"
   email_payment_paid: FIZETETT
   email_payment_not_paid: NEM FIZETETT
   email_payment_description: Fizetési információk
@@ -2321,7 +2335,7 @@ hu:
   email_payment_method: "Fizetés:"
   email_so_placement_intro_html: "Új rendelése van a <strong>%{distributor}</strong>-nál"
   email_so_placement_details_html: "A megrendelésed részletei <strong>%{distributor}</strong>:"
-  email_so_placement_changes: "Sajnos nem minden kért termék volt elérhető. Az Ön által kért eredeti mennyiségek alább áthúzva jelennek meg."
+  email_so_placement_changes: "Sajnos nem minden kért termék volt elérhető. Az általad kért eredeti mennyiségek alább áthúzva jelennek meg."
   email_so_payment_success_intro_html: "A megrendelés automatikus fizetése megtörtént <strong>%{distributor}</strong>  felé."
   email_so_placement_explainer_html: "Ez a rendelés automatikusan létrejött az Ön számára."
   email_so_edit_true_html: "Addig <a href='%{order_url}'>módosításokat hajthat végre</a>, amíg a rendelések le nem zárulnak a következő napon: %{orders_close_at}."
@@ -2337,8 +2351,8 @@ hu:
   email_so_failed_payment_intro_html: "Megpróbáltuk feldolgozni a befizetést, de volt néhány probléma..."
   email_so_failed_payment_explainer_html: "A(z) <strong>%{distributor}</strong> előfizetésed kifizetése hitelkártyájával kapcsolatos probléma miatt meghiúsult. <strong>%{distributor}</strong> értesítést kapott erről a sikertelen fizetésről."
   email_so_failed_payment_details_html: "Íme a fizetési átjáró által biztosított hiba részletei:"
-  email_shipping_delivery_details: Szállítás részletei
-  email_shipping_delivery_time: "Szállítás időpontja:"
+  email_shipping_delivery_details: Átadás részletei
+  email_shipping_delivery_time: "Átadásra kész:"
   email_shipping_delivery_address: "Szállítási cím:"
   email_shipping_collection_details: Gyűjtemény részletei
   email_shipping_collection_time: "Átvétel időpontja:"
@@ -2359,7 +2373,7 @@ hu:
   producer_mail_greeting: "Kedves"
   producer_mail_text_before: "Alább megtalálja a rendelési ciklusra vonatkozó frissítést:"
   producer_mail_order_text: "Íme a termékei megrendelésének összefoglalása:"
-  producer_mail_delivery_instructions: "Raktári átvételi/szállítási útmutató:"
+  producer_mail_delivery_instructions: "Raktári átvételi/szállítási instrukciók:"
   producer_mail_signoff: "Köszönet és jókívánságok"
   producer_mail_order_customer_text: "Itt található a rendelések összegzése ügyfelek szerint csoportosítva"
   shopping_oc_closed: A rendelések lezárva
@@ -2368,14 +2382,14 @@ hu:
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "Nyitólap"
-  shopping_tabs_shop: "Átvételi Pont"
-  shopping_tabs_about: "Rólunk"
+  shopping_tabs_shop: "Átvételi Pont."
+  shopping_tabs_about: "Bemutatkozás"
   shopping_tabs_producers: "Termelők"
   shopping_tabs_contact: "Kapcsolat"
   shopping_tabs_groups: "Csoportok"
   shopping_contact_address: "Cím"
   shopping_contact_web: "Kapcsolat"
-  shopping_contact_social: "Kövesse"
+  shopping_contact_social: "Követés"
   shopping_groups_part_of: "része:"
   shopping_producers_of_hub: "%{hub} termelői:"
   enterprises_next_closing: "Rendelés zárása"
@@ -2389,13 +2403,13 @@ hu:
   hubs_shopping_here: "Vásárlás itt"
   hubs_orders_closed: "A rendelések lezárva"
   hubs_profile_only: "Csak profil"
-  hubs_delivery_options: "Szállítási lehetőségek"
+  hubs_delivery_options: "Áruátadási lehetőségek"
   hubs_pickup: "Átvétel"
-  hubs_delivery: "Szállítás"
+  hubs_delivery: "Kiszállítás"
   hubs_producers: "Termelőink"
   hubs_filter_by: "Szűrés"
   hubs_filter_type: "típus"
-  hubs_filter_delivery: "Szállítás"
+  hubs_filter_delivery: "Áruátvételi mód"
   hubs_filter_property: "Tulajdonság"
   hubs_matches: "Keresési feltétel:"
   hubs_intro: Nézz körül a környéken
@@ -2440,13 +2454,13 @@ hu:
   groups_title: Csoportok
   groups_headline: Csoportok és régiók
   groups_text: "Minden termelő egyedi. Minden gazdaság valami mást tud nyújtani. Csoportjaink olyan termelők, átvételi pontok és forgalmazók kollektívái, akikben van valami közös, mint például a helyszín, a termelői piac vagy a filozófia. Ez könnyebbé teszi számodra az eligazodást. Fedezd fel csoportjainkat, és hagyd, hogy a válogatást elvégezzék helyetted."
-  groups_search: "Keresés név vagy kulcsszó"
+  groups_search: "Keresés név vagy kulcsszó szerint"
   groups_no_groups: "Nem található csoport"
   groups_about: "Bemutatkozás"
   groups_producers: "Termelőink"
   groups_hubs: "A mi Átvételi Pontjaink"
   groups_contact_web: Kapcsolat
-  groups_contact_social: Kövesse
+  groups_contact_social: Követés
   groups_contact_address: Cím
   groups_contact_email: Küldj emailt nekünk
   groups_contact_website: Látogasd meg weboldalunkat
@@ -2474,7 +2488,7 @@ hu:
   producers_buy: 'Kínálat:'
   producers_contact: Kapcsolat
   producers_contact_phone: Hívás
-  producers_contact_social: Kövesse
+  producers_contact_social: Követés
   producers_buy_at_html: "%{enterprise} termékei itt érhetők el:"
   producers_filter: Szűrés
   producers_filter_type: típus
@@ -2538,7 +2552,7 @@ hu:
   orders_form_total: "Összesen"
   orders_oc_expired_headline: "A rendelések erre a rendelési ciklusra lezárultak"
   orders_oc_expired_text: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket."
-  orders_oc_expired_text_others_html: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket. <strong>%{link}</strong>"
+  orders_oc_expired_text_others_html: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} előtt lezárultak! Kérjük, fordulj közvetlenül az Átvételi Ponthoz, hogy megtudd, tudnak-e fogadni késői rendeléseket. <strong>%{link}</strong>"
   orders_oc_expired_text_link: "vagy tekintse meg az ezen a átvételi ponton elérhető többi rendelési ciklust"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefon:"
@@ -2637,7 +2651,7 @@ hu:
         registration_promo_image: "Fejléckép a profilodhoz"
         registration_about_us: "Bemutatkozó szöveg"
         registration_outcome_headline: "Milyen előnnyel jár ez?"
-        registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni</strong> és <strong>kapcsolatba lépni</strong> Veled az Open Food Network hálózaton."
+        registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni téged</strong> és <strong>kapcsolatba lépni veled</strong> az Open Food Network hálózatban."
         registration_outcome2: "Használd ezt a lehetőséget vállalkozásod bemutatására, és segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
         registration_outcome3: "Ez egyben az első lépés az Open Food Network-ben történő értékesítés megnyitása felé."
         registration_action: "Lássunk neki!"
@@ -2660,7 +2674,7 @@ hu:
         postcode_field: "Irányítószám:"
         postcode_field_placeholder: "pl 3070"
         postcode_field_error: "Irányítószám szükséges"
-        state_field: "Ország:"
+        state_field: "Megye:"
         state_field_error: "Ország szükséges"
         country_field: "Ország:"
         country_field_error: "Kérjük, válasszon országot"
@@ -2797,7 +2811,7 @@ hu:
   successfully_removed: '%{resource} sikeresen eltávolítva!'
   successfully_updated: '%{resource} sikeresen frissítve!'
   running_balance: "Futó egyenleg"
-  outstanding_balance: "Kintlévőség"
+  outstanding_balance: "Fizetendő"
   admin_enterprise_relationships: "Vállalkozási Engedélyek"
   admin_enterprise_relationships_everything: "Minden"
   admin_enterprise_relationships_permits: "engedélyezi"
@@ -2818,7 +2832,7 @@ hu:
   admin_enterprise_groups_contact_city_placeholder: "például Kukutyin"
   admin_enterprise_groups_contact_zipcode: "Irányítószám"
   admin_enterprise_groups_contact_zipcode_placeholder: "például 3070"
-  admin_enterprise_groups_contact_state_id: "Ország"
+  admin_enterprise_groups_contact_state_id: "Megye"
   admin_enterprise_groups_contact_country_id: "Ország"
   admin_enterprise_groups_web_twitter: "például @the_prof"
   admin_enterprise_groups_web_website_placeholder: "például www.truffles.com"
@@ -2838,7 +2852,7 @@ hu:
   enterprise_fees: "Vállalkozási Díjak"
   process_my_order: "Rendelésem Feldolgozása"
   delivery_instructions: Szállítási Utasítások
-  delivery_method: Szállítási Mód
+  delivery_method: Áruátvételi Mód
   fee_type: "Díjtípus"
   tax_category: "Adókategória"
   display: "Kijelző"
@@ -2852,7 +2866,7 @@ hu:
   flat_rate_per_item: "Átalánydíj (tételenként)"
   flat_rate_per_order: "Átalánydíj (rendelésenként)"
   flexible_rate: "Rugalmas díj"
-  price_sack: "Price Sack"
+  price_sack: "Rendelési összeg függő"
   new_order_cycles: "Új Rendelési Ciklusok"
   new_order_cycle: "Új Rendelési Ciklus"
   new_order_cycle_tooltip: "Nyisd meg az üzletet egy bizonyos intervallumra"
@@ -2883,24 +2897,14 @@ hu:
   spree_admin_overview_enterprises_footer: "VÁLLALKOZÁSAIM KEZELÉSE"
   spree_admin_enterprises_hubs_name: "Név"
   spree_admin_enterprises_create_new: "ÚJ KÉSZÍTÉSE"
-  spree_admin_enterprises_shipping_methods: "Szállítási módok"
+  spree_admin_enterprises_shipping_methods: "Áruátadási módok"
   spree_admin_enterprises_fees: "Vállalkozási díjak"
   spree_admin_enterprises_none_create_a_new_enterprise: "ÚJ VÁLLALKOZÁS LÉTREHOZÁSA"
   spree_admin_enterprises_none_text: "Még nincsenek vállalkozásaid"
-  spree_admin_enterprises_tabs_hubs: "ÁTVÉTELI PONTOK"
+  spree_admin_enterprises_showing: "Látható: %{count} Ennyiből:%{total}"
   spree_admin_enterprises_producers_manage_products: "TERMÉKEK KEZELÉSE"
   spree_admin_enterprises_create_new_product: "ÚJ TERMÉK KÉSZÍTÉSE"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Kérjük, erősítsd meg az email címet"
-  spree_admin_single_enterprise_alert_mail_sent: "E-mailt küldtünk a címre"
-  spree_admin_overview_action_required: "Intézkedés szükséges"
-  spree_admin_overview_check_your_inbox: "Kérjük, nézd meg beérkezett üzeneteid a további utasításokért. Köszönjük!"
-  spree_admin_unit_value: Egységérték
-  spree_admin_unit_description: Egység leírása
-  spree_admin_variant_unit: Változat egysége
-  spree_admin_variant_unit_scale: Változat egység skála
   spree_admin_supplier: Beszállító
-  spree_admin_product_category: Termékkategória
-  spree_admin_variant_unit_name: Változat egység neve
   unit_name: "Egység neve"
   change_package: "Felhasználótípus módosítása"
   spree_admin_single_enterprise_hint: "Tipp: Ha szeretnéd, hogy mások megtaláljanak, állítsd a profilod láthatóságát nyilvánosra alább: "
@@ -2932,7 +2936,7 @@ hu:
   new_order: "Új Rendelés"
   enterprise_tos_link: "Szolgáltatási Feltételek termelőknek, vállalkozásoknak link"
   enterprise_tos_message: "Olyan emberekkel szeretnénk dolgozni, akik osztoznak a céljainkban és az értékeinkben. Ezért arra kérjük az új vállalkozásokat, hogy egyeztessenek velünk."
-  enterprise_tos_agree: "Elfogadom a fenti szolgáltatási feltételeket"
+  enterprise_tos_agree: "Elfogadom a fenti feltételeket"
   tax_settings: "Adózási Beállítások"
   products_require_tax_category: "a termékek adókategóriát igényelnek"
   admin_shared_address_1: "Cím"
@@ -2940,7 +2944,7 @@ hu:
   admin_share_city: "Város"
   admin_share_zipcode: "Irányítószám"
   admin_share_country: "Ország"
-  admin_share_state: "Ország"
+  admin_share_state: "Ország'"
   hub_sidebar_hubs: "Átvételi Pontok"
   hub_sidebar_none_available: "Nincs Elérhető"
   hub_sidebar_manage: "Szerkesztés"
@@ -3006,10 +3010,10 @@ hu:
   report_header_hub_address_line2: "Átvételi Pont cím 2"
   report_header_hub_address_city: "Átvételi Pont kerület"
   report_header_hub_address_zipcode: "Átvételi Pont irányítószám"
-  report_header_hub_address_state_name: "Átvételi Pont ország"
+  report_header_hub_address_state_name: "Átvételi Pont megye"
   report_header_code: Kód
   report_header_paid: Fizetett?
-  report_header_delivery: Szállítás?
+  report_header_delivery: Áruátadás?
   report_header_shipping: Szállítás
   report_header_shipping_instructions: Szállítási utasítások
   report_header_ship_street: Szállítási utca
@@ -3023,7 +3027,7 @@ hu:
   report_header_billing_street_4: Számlázási utca 4
   report_header_billing_city: Számlázási város
   report_header_billing_postcode: Számlázási irányítószám
-  report_header_billing_state: Számlázási ország
+  report_header_billing_state: Számlázási állapot
   report_header_incoming_transport: Bejövő szállítás
   report_header_special_instructions: Különleges utasítások
   report_header_order_number: Rendelésszám
@@ -3034,7 +3038,7 @@ hu:
   report_header_items_total: "Tételek összesen %{currency_symbol}"
   report_header_taxable_items_total: "Adóköteles tételek összesen (%{currency_symbol})"
   report_header_sales_tax: "Értékesítési adó (%{currency_symbol})"
-  report_header_delivery_charge: "Szállítási díj (%{currency_symbol})"
+  report_header_delivery_charge: "Kiszállítási díj (%{currency_symbol})"
   report_header_tax: "Adó"
   report_header_tax_on_delivery: "Kiszállítás adója (%{currency_symbol})"
   report_header_tax_on_fees: "Díjak adója (%{currency_symbol})"
@@ -3091,7 +3095,7 @@ hu:
   report_header_distributor_tax_status: A Forgalmazó Adózási státusza
   report_header_delivery_address: Szállítási cím
   report_header_delivery_postcode: Szállítási irányítószám
-  report_header_bulk_unit_size: Tömeges egység mérete
+  report_header_bulk_unit_size: Rugalmas mennyiség mérete
   report_header_weight: Súly
   report_header_final_weight_volume: Végleges (súly/mennyiség)
   report_header_height: Magasság
@@ -3186,7 +3190,7 @@ hu:
   primary_details: "Főbb adatok"
   social: "Közösségi"
   shipping: "Szállítás"
-  shipping_methods: "Szállítási módok"
+  shipping_methods: "Áruátadási módok"
   payment_methods: "Fizetési módok"
   payment_method_fee: "Tranzakciós díj"
   payment_processing_failed: "A fizetést nem sikerült feldolgozni, kérjük ellenőrizd a megadott adatokat"
@@ -3292,7 +3296,7 @@ hu:
           overview: Áttekintés
           overview_text: >
               A címkeszabályok lehetőséget adnak annak leírására, hogy mely elemek
-              láthatók, illetve elrejtettek. A tételek lehetnek szállítási módok,
+              láthatók, illetve elrejtettek. A tételek lehetnek áruátadási módok,
               fizetési módok, termékek és rendelési ciklusok.
           by_default_rules: "'Alapértelmezés szerint...' Szabályok"
           by_default_rules_text: >
@@ -3306,13 +3310,13 @@ hu:
               az alapértelmezett viselkedést (legyen az elemek megjelenítése vagy
               elrejtése) a megadott címkével rendelkező ügyfelek számára.
         terms_and_conditions_info:
-          title: "Általános Szerződési Feltételek feltöltése"
-          message_1: "Az Általános Szerződési Feltételek az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a hazai jogszabályokkal összhangban tölts fel Általános Szerződési Feltételeket."
-          message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatod az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk, mielőtt fizetésre kerülne a rendelésük."
+          title: "ÁSZF-GDPR dokumentum feltöltése"
+          message_1: "Az Általános Szerződési Feltételek az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk a rendelés leadásához. A vásárló számára ez egy jelölőnégyzetként jelenik meg a, amelyet be kell jelölnie a folytatáshoz. Mivel az oldal nemzetközi, ezért összesen 1 ilyen fájl feltöltésére van lehetőség, így az Adatvédelmi tájékoztatót (GDPR) és az ÁSZF-et 1 fájlban tudod feltölteni. Javasoljuk, hogy a hazai jogszabályokkal összhangban töltsd fel ezt a kettős dokumentumot."
+          message_2: "A vásárlóknak csak egyszer kell elfogadniuk a GDPR-ÁSZF kettős dokumentumot. Ha azonban megváltoztatod, a vásárlóknak ismét el kell fogadniuk, mielőtt véglegesítenék rendelésük."
         terms_and_conditions_warning:
-          title: "Általános Szerződési Feltételek feltöltése"
-          message_1: "Minden vásárlónak egyszer el kell fogadnia ezeket a fizetéskor. Ha frissíti a fájlt, minden vásárlónak újra el kell fogadnia azokat a fizetéskor."
-          message_2: "Az előfizetéssel rendelkező vásárlóknak egyelőre e-mailben el kell küldeniük az Általános Szerződési Feltételeket (vagy azok módosításait), mivel más értesítést nem kapnak új Általános Szerződési Feltételekről."
+          title: "GDPR-ÁSZF feltöltése"
+          message_1: "Minden vásárlónak egyszer el kell fogadnia ezeket a fizetéskor. Ha frissíted a fájlt, minden vásárlónak újra el kell fogadnia azokat a fizetéskor."
+          message_2: "Az előfizetéssel rendelkező vásárlóknak egyelőre e-mailben el kell küldened az Adatkezelési Tájékoztatót és az Általános Szerződési Feltételeket (vagy azok módosításait), mivel más értesítést nem kapnak a dokumentum frissítéséről."
         business_address_info:
           message: "A cég hivatalos neve, címe és telefonszáma olyan vállalkozásoknál használatos, amelyek nyilvános kereskedési adataiktól eltérő hivatalos adatokkal bejegyzett jogi személytől számláznak. Ezeket az adatokat CSAK számlákon használjuk fel. Ha ezek az adatok üresek, az Ön nyilvános neve, címe és telefonszáma kerül felhasználásra a számlákon."
       panels:
@@ -3327,8 +3331,8 @@ hu:
               Network oldalán. Vállalkozásod látható lesz a térképen és kereshető
               lesz a listákban.
           hub_profile_text2: >
-              A helyi élelmiszer-rendszeren belüli kapcsolatok kialakítása révén az
-              Open Food Network mindig ingyenes lesz.
+              A helyi élelmiszer-rendszeren belüli kapcsolatok kialakítása érdekében
+              az Open Food Network profil létrehozása mindig ingyenes lesz.
           hub_shop: Átvételi pont
           hub_shop_text1: >
               Szervezeted a helyi élelmezési rendszer csomópontja. Más termelőktől
@@ -3420,7 +3424,7 @@ hu:
           no_variants: "Nincs elérhető termékváltozat ehhez a termékhez (a készletbeállításokban rejtett státuszúak)."
           some_variants_hidden: "(Egyes termékváltozatok a leltárbeállítások miatt rejtve maradhatnak)"
       tag_rules:
-        shipping_method_tagged_top: "Szállítási módok felcímkézve"
+        shipping_method_tagged_top: "Áruátadási módok felcímkézve"
         shipping_method_tagged_bottom: "vannak:"
         payment_method_tagged_top: "Fizetési módok felcímkézve"
         payment_method_tagged_bottom: "vannak:"
@@ -3521,8 +3525,8 @@ hu:
             immediate_logo_removal_warning: "A logót a megerősítés után azonnal eltávolítjuk."
             removed_promo_image_successfully: "A Promó kép sikeresen eltávolítva"
             immediate_promo_image_removal_warning: "A promó képet a megerősítés után azonnal eltávolítjuk."
-            immediate_terms_and_conditions_removal_warning: "Az Általános Szerződési Feltételek fájlt a megerősítés után azonnal eltávolítjuk."
-            removed_terms_and_conditions_successfully: "Az Általános Szerződési Feltételek fájl sikeresen eltávolítva"
+            immediate_terms_and_conditions_removal_warning: "A GDPR-ÁSZF fájlt a megerősítés után azonnal eltávolítjuk."
+            removed_terms_and_conditions_successfully: "A GDPR és ÁSZF fájl sikeresen eltávolítva"
     insufficient_stock: "Nem áll rendelkezésre elegendő készlet, csak %{on_hand} maradt"
     out_of_stock:
       reduced_stock_available: Csökkentett készlet áll rendelkezésre
@@ -3565,7 +3569,7 @@ hu:
       stock_reset: A készletek visszaállnak az alapértelmezett értékekre.
     tag_rules:
       show_hide_variants: 'Változatok megjelenítése vagy elrejtése a kirakatomban'
-      show_hide_shipping: 'Szállítási módok megjelenítése vagy elrejtése fizetéskor'
+      show_hide_shipping: 'Áruátadási módok megjelenítése vagy elrejtése fizetéskor'
       show_hide_payment: 'Fizetési módok megjelenítése vagy elrejtése a pénztárnál'
       show_hide_order_cycles: 'Rendelési ciklusok megjelenítése vagy elrejtése az online kirakatban'
       visible: LÁTHATÓ
@@ -3849,7 +3853,7 @@ hu:
     resend: "Újraküldés"
     back_to_orders_list: "Vissza a rendelési listához"
     back_to_payments_list: "Vissza a fizetési listához"
-    back_to_states_list: "Vissza a státusz listához"
+    back_to_states_list: "Vissza a megyék listájához"
     return_authorizations: "Visszaküldési engedélyek"
     cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
     select_stock: "Válassz a készletről"
@@ -3865,7 +3869,7 @@ hu:
     edit: "Szerkesztés"
     split: "Hasított"
     delete: "Töröl"
-    cannot_set_shipping_method_without_address: "A szállítási módot nem lehet beállítani, amíg meg nem adják az ügyfél adatait."
+    cannot_set_shipping_method_without_address: "A áruátvételi módot nem lehet beállítani, amíg meg nem adják az ügyfél adatait."
     no_tracking_present: "Nincsenek megadva nyomkövetési adatok."
     tracking: "Követés"
     tracking_number: "Nyomkövetési szám"
@@ -3946,19 +3950,19 @@ hu:
     default_tax: "Alapértelmezett adó"
     default_tax_zone: "Alapértelmezett adózóna"
     country_based: "Ország alapú"
-    state_based: "Állam alapú"
+    state_based: "Státusz alapú"
     countries: "Országok"
     listing_countries: "Országok listázása"
     iso_name: "ISO név"
     states_required: "Állam kötelező"
     editing_country: "Ország szerkesztése"
     back_to_countries_list: "Vissza az országok listájához"
-    states: "Államok"
+    states: "Megyék"
     abbreviation: "Rövidítés"
-    new_state: "Új állam"
+    new_state: "Új megye"
     payment_methods: "Fizetési módok"
     taxons: "Termékkategóriák"
-    shipping_methods: "Szállítási módok"
+    shipping_methods: "Áruátadási módok"
     shipping_method: "Szállítási Mód"
     shipment: "Szállítás"
     payment: "Fizetés"
@@ -3971,7 +3975,7 @@ hu:
     description: "Leírás"
     type: "Típus"
     default: "alapértelmezett"
-    calculator: "Kiszámítási mód"
+    calculator: "Díjszámítási mód"
     zone: "Zóna"
     display: "Kijelző"
     environment: "Környezet"
@@ -3984,8 +3988,8 @@ hu:
     per_kg: "Kg-onként"
     amount: "Összeg"
     currency: "Valuta"
-    first_item: "Első Cikk költsége"
-    additional_item: "További cikkköltség"
+    first_item: "Első termék költsége"
+    additional_item: "További termék költsége"
     max_items: "Max tételek"
     minimal_amount: "Minimális mennyiség"
     normal_amount: "Normál mennyiség"
@@ -4006,7 +4010,7 @@ hu:
     inventory_error_flash_for_insufficient_quantity: "A kosaradban lévő tétel már nem elérhető."
     inventory: Leltár
     zipcode: Irányítószám
-    weight: Súly (kg vagy font)
+    weight: Súly (kg alapú)
     error_user_destroy_with_orders: "A teljesített rendelésekkel rendelkező felhasználók nem törölhetők"
     cannot_create_payment_without_payment_methods: "Fizetési módok megadása nélkül nem hozhatsz létre fizetést egy rendelésre."
     please_define_payment_methods: "Kérjük, először határozz meg néhány fizetési módot."
@@ -4066,7 +4070,7 @@ hu:
       tab:
         dashboard: "Irányítópult"
         orders: "Megrendelések"
-        bulk_order_management: "Tömeges megrendelés kezelése"
+        bulk_order_management: "Rugalmas mennyiségű termékek kezelése"
         subscriptions: "Előfizetések"
         products: "Termékek"
         products_v3: "Termékek"
@@ -4177,7 +4181,7 @@ hu:
           shipment_state: "Szállítási Státusz"
           completed_at: "Elkészült:"
           number: "Szám"
-          state: "Ország"
+          state: "Státusz?"
           email: "Ügyfél e-mail"
         invoice:
           issued_on: "Kiadott"
@@ -4236,30 +4240,30 @@ hu:
           view_all_releases: Az összes verzió megtekintése
       shipping_methods:
         index:
-          shipping_methods: "Szállítási módok"
+          shipping_methods: "Áruátadási módok"
           new_shipping_method: "Új szállítási mód"
           name: "Név"
           products_distributor: "Elosztó"
           zone: "Zóna"
-          calculator: "Kiszámítási mód"
-          display: "Kijelző"
-          both: "Mind a Checkout, mind a Back office"
-          back_end: "Csak back office"
+          calculator: "Díjszámítási mód"
+          display: "Láthatóság"
+          both: "Mind a vásárlók, mind az adminisztráció számára"
+          back_end: "Csak adminisztráció"
           no_shipping_methods_found: "Nem található szállítási mód"
         new:
           new_shipping_method: "Új szállítási mód"
-          back_to_shipping_methods_list: "Vissza a Szállítási módok listájához"
+          back_to_shipping_methods_list: "Vissza az Áruátadási módok listájához"
         edit:
           editing_shipping_method: "Szállítási mód szerkesztése"
           new: "Új"
-          back_to_shipping_methods_list: "Vissza a Szállítási módok listájához"
+          back_to_shipping_methods_list: "Vissza az Áruátadási módok listájához"
         form:
           categories: "Kategóriák"
           tax_category: "Adókategória"
           zones: "Zónák"
-          both: "Mind a Checkout, mind a Back office"
-          back_end: "Csak back office"
-          deactivation_warning: "Egy szállítási mód deaktiválásával a szállítási mód eltűnhet a listáról. Alternatív megoldásként elrejtheti a szállítási módot a fizetési oldalon, ha a „Megjelenítés” lehetőséget „csak háttérirodában” értékre állítja."
+          both: "Mind a vásárlók, mind az adminisztráció számára"
+          back_end: "Csak adminisztráció"
+          deactivation_warning: "Egy áruátvételi mód deaktiválásával az áruátvételi mód eltűnhet a listáról. Alternatív megoldásként elrejtheted az adott áruátvételi módot a vásárlói oldalon, ha a „Láthatóság” lehetőséget „csak adminisztráció” értékre állítja."
       payment_methods:
         index:
           payment_methods: "Fizetési módok"
@@ -4268,7 +4272,7 @@ hu:
           products_distributor: "Elosztó"
           provider: "Szolgáltató"
           environment: "Környezet"
-          display: "Kijelző"
+          display: "Láthatóság"
           active: "Aktív"
           both: "Mindkettő"
           back_end: "Csak back office"
@@ -4299,11 +4303,11 @@ hu:
           name: "Név"
           description: "Leírás"
           environment: "Környezet"
-          display: "Kijelző"
+          display: "Láthatóság"
           active: "Aktív"
           active_yes: "Igen"
           active_no: "Nem"
-          both: "Mind a Checkout, mind a Back office"
+          both: "Mind a vásárlók, mind az adminisztráció számára"
           back_end: "Csak back office"
           tags: "Címkék"
           deactivation_warning: "Egy fizetési mód deaktiválásával a fizetési mód eltűnhet a listáról. Alternatív megoldásként elrejthet egy fizetési módot a fizetési oldalon, ha a „Megjelenítés” lehetőséget „csak háttérirodában” értékre állítja."
@@ -4329,7 +4333,7 @@ hu:
           new_product: "Új termék"
           supplier: "Beszállító"
           supplier_select_placeholder: "Válassz ki egy beszállítót"
-          search_for_suppliers: "Keresés beszállítóra"
+          search_for_suppliers: "Keresés beszállítókra"
           search_for_units: "Keresés kiszerelésre"
           product_name: "Termék név"
           units: "Mértékegység"
@@ -4361,14 +4365,14 @@ hu:
             import_date: "Importálás dátuma"
           products_variant:
             variant_has_n_overrides: "Ennek a változatnak %{n} felülírása van"
-            new_variant: "Új variáns"
+            new_variant: "Új változat"
           product_name: Termék név
         primary_taxon_form:
           product_category: Termékkategória
           search_for_categories: "Keresés termékkategóriára"
         group_buy_form:
-          group_buy: "Csoportos vásárlás?"
-          bulk_unit_size: Tömeges mértékegység
+          group_buy: "Engedélyezed a rugalmas mennyiség vásárlását?"
+          bulk_unit_size: Rugalmas mennyiség mérete
         display_as:
           display_as: Megjelenítés mint
         clone:
@@ -4396,6 +4400,7 @@ hu:
         form:
           disabled: "Tiltva?"
           email: "Email"
+          admin: "Szuperadmin?"
           enterprise_limit: "Vállalkozási korlát"
           confirm_password: "Jelszó megerősítése"
           password: "Jelszó"
@@ -4439,7 +4444,7 @@ hu:
           name: "Név"
           number: "Szám"
           completed_at: "Elkészült:"
-          state: "Státusz"
+          state: "Státusz!"
           payment_state: "Fizetési Státusz"
           shipment_state: "Szállítási Státusz"
           email: "Email"
@@ -4469,7 +4474,7 @@ hu:
         edit:
           legal_settings: "Jogi beállítások"
           cookies_consent_banner_toggle: "A cookie-k beleegyezését kérő szalaghirdetés megjelenítése"
-          privacy_policy_url: "Adatvédelmi irányelvek URL-címe"
+          privacy_policy_url: "Adatvédelmi nyilatkozat URL-címe"
           enterprises_require_tos: "A vállalkozásoknak el kell fogadniuk a Szolgáltatási feltételeket"
           shoppers_require_tos: "A vásárlóknak el kell fogadniuk a Szolgáltatási feltételeket"
           cookies_policy_matomo_section: "Jelenítse meg a Matomo részt a cookie-kra vonatkozó irányelvek oldalán"
@@ -4512,7 +4517,7 @@ hu:
       shipped: kiszállítva
       canceled: törölve
     payment_states:
-      balance_due: fizetendő összeg
+      balance_due: fennálló tartozás
       completed: elkészült
       checkout: tovább
       credit_owed: hiteltartozás
@@ -4547,6 +4552,7 @@ hu:
         invoice_attached_text: Mellékelten talál egy összesítőt a legutóbbi rendeléséről
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Kedves Fogyasztó,"
         request_sent_text: |
             Jelszó visszaállítására irányuló kérés érkezett.
             Ha nem te nyújtottad be ezt a kérést, egyszerűen hagyd figyelmen kívül ezt az e-mailt.
@@ -4647,8 +4653,8 @@ hu:
           settings: Fiók beállítások
         unconfirmed_email: "E-mail megerősítésre vár: %{unconfirmed_email}. E-mail címed frissítésre kerül, amint az új e-mailt megerősítjük."
       orders:
-        open_orders: Rendelések megnyitása
-        past_orders: Korábbi megrendelések
+        open_orders: Nyitott megrendeléseim
+        past_orders: Korábbi megrendeléseim
       transactions:
         transaction_history: Tranzakciós előzmények
         authorisation_required: Engedély szükséges
@@ -4671,7 +4677,7 @@ hu:
         total: Összesen
         paid?: Fizetett?
         status: Státusz
-        completed: Elkészült
+        completed: Befejezett
         cancelled: Törölve
       saved_cards:
         default?: Alapértelmezett?

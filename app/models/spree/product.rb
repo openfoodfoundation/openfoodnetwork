@@ -18,7 +18,6 @@ require 'open_food_network/property_merge'
 #
 module Spree
   class Product < ApplicationRecord
-    include ProductStock
     include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
@@ -41,6 +40,7 @@ module Spree
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
     has_many :variants, -> { order("spree_variants.id ASC") }, class_name: 'Spree::Variant',
+                                                               inverse_of: :product,
                                                                dependent: :destroy
 
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants

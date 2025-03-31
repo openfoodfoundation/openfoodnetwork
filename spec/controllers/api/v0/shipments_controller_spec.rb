@@ -369,7 +369,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
 
           before do
             allow(Spree::Order).to receive(:find_by!) { fee_order }
-            allow(controller).to receive(:refuse_changing_cancelled_orders) {}
+            allow(controller).to receive(:refuse_changing_cancelled_orders)
             allow(fee_order).to receive(:contents) { contents }
             allow(contents).to receive_messages(add: {}, remove: {})
             allow(fee_order).to receive_message_chain(:shipments, :find_by!) { fee_order_shipment }

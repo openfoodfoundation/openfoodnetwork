@@ -2562,20 +2562,9 @@ uk:
   spree_admin_enterprises_fees: "Комісія підприємства"
   spree_admin_enterprises_none_create_a_new_enterprise: "СТВОРИТИ НОВЕ ПІДПРИЄМСТВО"
   spree_admin_enterprises_none_text: "У вас ще немає підприємств"
-  spree_admin_enterprises_tabs_hubs: "ХАБИ"
   spree_admin_enterprises_producers_manage_products: "КЕРУВАННЯ ПРОДУКТАМИ"
   spree_admin_enterprises_create_new_product: "СТВОРИТИ НОВИЙ ПРОДУКТ"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Будь ласка, підтвердіть електронну адресу для"
-  spree_admin_single_enterprise_alert_mail_sent: "Ми надіслали електронний лист на адресу"
-  spree_admin_overview_action_required: "Потрібна дія"
-  spree_admin_overview_check_your_inbox: "Щоб отримати подальші інструкції, перевірте свою поштову скриньку. Спасибі!"
-  spree_admin_unit_value: Вартість одиниці
-  spree_admin_unit_description: Опис одиниці
-  spree_admin_variant_unit: Варіант одиниці
-  spree_admin_variant_unit_scale: Варіант виміру одиниці
   spree_admin_supplier: Постачальник
-  spree_admin_product_category: Категорія товару
-  spree_admin_variant_unit_name: Назва варіанту одиниці
   unit_name: "Назва одиниці"
   change_package: "Змінити Пакування"
   spree_admin_single_enterprise_hint: "Підказка: щоб люди могли вас знайти, увімкніть свою видимість під"

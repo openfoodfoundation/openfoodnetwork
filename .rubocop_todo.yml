@@ -6,39 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLines:
-  Exclude:
-    - 'app/services/products_renderer.rb'
-
-# Offense count: 16
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'engines/catalog/config/routes.rb'
-    - 'spec/components/distributor_title_component_spec.rb'
-    - 'spec/components/example_component_spec.rb'
-    - 'spec/controllers/admin/subscription_line_items_controller_spec.rb'
-    - 'spec/controllers/api/v0/shipments_controller_spec.rb'
-    - 'spec/controllers/concerns/extra_fields_spec.rb'
-    - 'spec/factories.rb'
-    - 'spec/factories/enterprise_factory.rb'
-    - 'spec/jobs/order_cycle_opened_job_spec.rb'
-    - 'spec/jobs/subscription_placement_job_spec.rb'
-    - 'spec/models/product_import/entry_validator_spec.rb'
-
-# Offense count: 4
-# Configuration parameters: AllowComments.
-Lint/EmptyClass:
-  Exclude:
-    - 'spec/lib/reports/report_loader_spec.rb'
-
-# Offense count: 1
-Lint/FloatComparison:
-  Exclude:
-    - 'app/models/spree/gateway/pay_pal_express.rb'
-
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
@@ -507,23 +474,12 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 21
+# Offense count: 1
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
   Exclude:
-    - 'app/models/enterprise.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/spree/country.rb'
-    - 'app/models/spree/inventory_unit.rb'
-    - 'app/models/spree/line_item.rb'
     - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment.rb'
-    - 'app/models/spree/price.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/variant.rb'
-    - 'app/models/subscription_line_item.rb'
 
 # Offense count: 35
 # Configuration parameters: Include.
@@ -548,17 +504,6 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/shipping_methods_controller.rb'
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
-
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'app/models/spree/gateway/pay_pal_express.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/services/order_cycles/webhook_service_spec.rb'
-    - 'spec/services/orders/customer_cancellation_service_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: TransactionMethods.
@@ -594,13 +539,6 @@ Style/ArrayIntersect:
     - 'lib/open_food_network/tag_rule_applicator.rb'
     - 'spec/support/matchers/select2_matchers.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowOnConstant, AllowOnSelfClass.
-Style/CaseEquality:
-  Exclude:
-    - 'spec/models/spree/payment_spec.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
@@ -629,24 +567,6 @@ Style/ClassAndModuleChildren:
     - 'app/serializers/api/variant_serializer.rb'
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - '.simplecov'
-
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/missing_payments.rake'
-    - 'lib/tasks/sample_data/logging.rb'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'lib/tasks/subscriptions/test.rake'
 
 # Offense count: 10
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -738,34 +658,6 @@ Style/OptionalBooleanParameter:
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'spec/support/request/web_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'app/controllers/api/v0/shipments_controller.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'engines/dfc_provider/app/services/authorization_control.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantAssignment:
-  Exclude:
-    - 'spec/models/database_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect, AllowComments.
-Style/RedundantInitialize:
-  Exclude:
-    - 'spec/models/spree/gateway_spec.rb'
-
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
@@ -773,12 +665,4 @@ Style/ReturnNilInPredicateMethodDefinition:
   Exclude:
     - 'app/models/order_cycle.rb'
     - 'app/serializers/api/admin/customer_serializer.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/SlicingWithRange:
-  Exclude:
-    - 'app/helpers/spree/admin/navigation_helper.rb'
-    - 'app/services/embedded_page_service.rb'
     - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'

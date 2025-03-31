@@ -2157,20 +2157,9 @@ pl:
   spree_admin_enterprises_fees: "Opłaty dla podmiotów"
   spree_admin_enterprises_none_create_a_new_enterprise: "UTWÓRZ NOWY PODMIOT"
   spree_admin_enterprises_none_text: "Nie masz jeszcze żadnych podmiotów"
-  spree_admin_enterprises_tabs_hubs: "Huby"
   spree_admin_enterprises_producers_manage_products: "ZARZĄDZAJ PRODUKTAMI"
   spree_admin_enterprises_create_new_product: "UTWÓRZ NOWY PRODUKT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Potwierdź adres e-mail dla"
-  spree_admin_single_enterprise_alert_mail_sent: "Wysłaliśmy e-mail do"
-  spree_admin_overview_action_required: "Konieczne działania"
-  spree_admin_overview_check_your_inbox: "Dalsze instrukcje znajdziesz w swojej skrzynce odbiorczej. Dzięki!"
-  spree_admin_unit_value: Wartość jednostki
-  spree_admin_unit_description: Opis jednostki
-  spree_admin_variant_unit: Jednostka wariantowa
-  spree_admin_variant_unit_scale: Wariantowa skala jednostkowa
   spree_admin_supplier: Dostawca
-  spree_admin_product_category: Kategoria produktu
-  spree_admin_variant_unit_name: Nazwa jednostki wariantu
   unit_name: "Nazwa jednostki"
   change_package: "Zmień pakiet"
   spree_admin_single_enterprise_hint: "Wskazówka: aby inni mogli Cię znaleźć, włącz widoczność poniżej"

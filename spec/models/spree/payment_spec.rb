@@ -607,19 +607,6 @@ RSpec.describe Spree::Payment do
       end
     end
 
-    context "#can_credit?" do
-      it "is true if credit_allowed > 0" do
-        payment = build_stubbed(:payment)
-        allow(payment).to receive(:credit_allowed) { 100 }
-        expect(payment.can_credit?).to be true
-      end
-      it "is false if credit_allowed is 0" do
-        payment = build_stubbed(:payment)
-        allow(payment).to receive(:credit_allowed) { 0 }
-        expect(payment.can_credit?).to be false
-      end
-    end
-
     context "#save" do
       context "completed payments" do
         it "updates order payment total" do
@@ -868,7 +855,7 @@ RSpec.describe Spree::Payment do
         let(:payment) { build_stubbed(:payment) }
 
         it "returns the parameter amount when given" do
-          expect(payment.__send__(:calculate_refund_amount, 123)).to be === 123.0
+          expect(payment.__send__(:calculate_refund_amount, 123)).to eq(123)
         end
 
         it "refunds up to the value of the payment when the outstanding balance is larger" do

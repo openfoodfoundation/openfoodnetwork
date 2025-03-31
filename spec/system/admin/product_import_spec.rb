@@ -93,7 +93,7 @@ RSpec.describe "Product Import" do
       carrots = Spree::Product.find_by(name: 'Carrots')
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.variants.first.supplier).to eq enterprise
-      expect(potatoes.on_hand).to eq 6
+      expect(potatoes.variants.first.on_hand).to eq 6
       expect(potatoes.variants.first.price).to eq 6.50
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
@@ -261,9 +261,9 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.created-count', text: '1'
       expect(page).to have_selector '.reset-count', text: '3'
 
-      expect(Spree::Product.find_by(name: 'Carrots').on_hand).to eq 500
-      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0
-      expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 0
+      expect(Spree::Product.find_by(name: 'Carrots').variants.first.on_hand).to eq 500
+      expect(Spree::Product.find_by(name: 'Cabbage').variants.first.on_hand).to eq 0
+      expect(Spree::Product.find_by(name: 'Beans').variants.first.on_hand).to eq 0
     end
 
     it "can save a new product and variant of that product at the same time, " \

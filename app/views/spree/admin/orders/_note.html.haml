@@ -1,9 +1,9 @@
 %table.index.edit-note-table
   %tr.edit-note.hidden.total
     %td{ colspan: "5", data: { controller: "input-char-count" }, style: "position: relative;" }
-      %label
+      %label{ for: "note" }
         = t(".note_label")
-        = text_field_tag :note, @order.note, { maxLength: 280, data: { "input-char-count-target": "input" } }
+      = text_area_tag :note, @order.note, { id: "note", rows: 3, maxLength: 280, data: { "input-char-count-target": "input" }, style: "width: 100%;" }
       %span.edit-note-count{ data: { "input-char-count-target": "count" }, style: "position: absolute; right: 7px; top: 7px; font-size: 11px;" }
 
     %td.actions
@@ -15,7 +15,8 @@
       - if order.note.present?
         %strong
           = t(".note_label")
-        = order.note
+        %pre{ style: "font-family: inherit;" }
+          = order.note
       - else
         = t(".no_note_present")
 

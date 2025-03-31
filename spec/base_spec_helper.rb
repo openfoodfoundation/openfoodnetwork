@@ -150,7 +150,8 @@ RSpec.configure do |config|
 
   # Reset locale for all specs.
   config.around(:each) do |example|
-    I18n.with_locale(:en_AU) { example.run }
+    locale = ENV.fetch('LOCALE', 'en_TST')
+    I18n.with_locale(locale) { example.run }
   end
 
   # Reset all feature toggles to prevent leaking.
@@ -264,6 +265,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+  config.include MailersHelper, type: :mailer
   config.include TomSelectHelper, type: :system
 
   config.include ViewComponent::TestHelpers, type: :component

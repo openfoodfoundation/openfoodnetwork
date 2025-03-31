@@ -2388,20 +2388,9 @@ pt_BR:
   spree_admin_enterprises_fees: "Taxas da iniciativa"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR NOVA INICIATIVA"
   spree_admin_enterprises_none_text: "Você ainda não possui nenhuma iniciativa"
-  spree_admin_enterprises_tabs_hubs: "CENTRAIS"
   spree_admin_enterprises_producers_manage_products: "GERENCIAR PRODUTOS"
   spree_admin_enterprises_create_new_product: "CRIAR UM NOVO PRODUTO"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Por favor confirme o endereço de e-mail para"
-  spree_admin_single_enterprise_alert_mail_sent: "Enviamos um e-mail para"
-  spree_admin_overview_action_required: "Ação requerida"
-  spree_admin_overview_check_your_inbox: "Por favor verifique sua caixa de entrada para maiores informações. Obrigado!"
-  spree_admin_unit_value: Valor unitário
-  spree_admin_unit_description: Descrição da unidade
-  spree_admin_variant_unit: Unidade variante
-  spree_admin_variant_unit_scale: Escala da unidade variante
   spree_admin_supplier: Fornecedor
-  spree_admin_product_category: Categoria de Produto
-  spree_admin_variant_unit_name: Nome da unidade variante
   unit_name: "Nome da unidade"
   change_package: "Alterar tipo de perfil"
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"

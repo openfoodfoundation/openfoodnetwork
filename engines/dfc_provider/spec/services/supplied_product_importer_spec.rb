@@ -227,6 +227,39 @@ RSpec.describe SuppliedProductImporter do
         expect(imported_product.description).to eq "Choose a variety."
       end
 
+      it "updates images when their URL changes" do
+        stub_request(:get, "https://cd.net/tomato.png?v=1").to_return(
+          status: 200, body: black_logo_path.read,
+        )
+        stub_request(:get, "https://cd.net/tomato.png?v=2").to_return(
+          status: 200, body: white_logo_path.read,
+        )
+
+        tomatoes = DfcProvider::SuppliedProduct.new(
+          "some-id", name: "Tomatoes",
+                     image: "https://cd.net/tomato.png?v=1",
+        )
+        supplied_product.isVariantOf << tomatoes
+
+        imported_product = importer.import_variant(supplied_product, supplier).product
+        expect(imported_product.image.attachment.filename).to eq "tomato.png?v=1"
+
+        expect {
+          importer.import_variant(supplied_product, supplier).product
+          imported_product.reload
+        }
+          .not_to change { imported_product.image }
+
+        expect {
+          tomatoes.image = "https://cd.net/tomato.png?v=2"
+          importer.import_variant(supplied_product, supplier).product
+          imported_product.reload
+        }
+          .to change { imported_product.image }
+
+        expect(imported_product.image.attachment.filename).to eq "tomato.png?v=2"
+      end
+
       context "when spree_product_uri doesn't match the server host" do
         let(:supplied_product) do
           DfcProvider::SuppliedProduct.new(

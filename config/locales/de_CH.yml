@@ -2187,7 +2187,7 @@ de_CH:
   sell_hubs_detail: "Richten Sie im Open Food Network ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit erweitern und Produkte von anderen Produzenten und Läden direkt an Kunden verkaufen."
   sell_groups_detail: "Richten Sie eine Gruppe von Unternehmen ein, um Ihren Kunden den Zugang zu den Läden Ihrer Gruppe zu erleichtern. Fassen Sie in der Gruppe z. B. Produzenten und andere Lebensmittelunternehmen Ihrer Region, Ihres Bauernmarktes oder Ihrer Organisation zusammen."
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
-  sell_listing_price: "Die Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Online-Shops ist für Unternehmen mit einem monatlichen Umsatz unter 500 € kostenlos. Bei höherem Umsatz erlauben wir uns nach einer 3-monatigen kostenlosen Testphase die Berechnung von 3 % Gebühr, um unsere Kosten zu decken."
+  sell_listing_price: "Die Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Online-Shops ist für Unternehmen mit einem monatlichen Umsatz unter 500 CHF kostenlos. Bei höherem Umsatz erlauben wir uns nach einer 3-monatigen kostenlosen Testphase die Berechnung von 3 % Gebühr, um unsere Kosten zu decken."
   sell_embed: "Wir bieten noch weitere Dienste rund um Ihr Unternehmen an."
   sell_ask_services: "Fragen Sie uns nach Dienstleistungen rund um das Open Food Network."
   shops_title: Regional Einkaufen
@@ -2559,20 +2559,9 @@ de_CH:
   spree_admin_enterprises_fees: "Gebühren"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen."
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "PRODUKTE VERWALTEN"
   spree_admin_enterprises_create_new_product: "NEUES PRODUKT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Bitte bestätigen Sie die E-Mail-Adresse für"
-  spree_admin_single_enterprise_alert_mail_sent: "Wir haben eine E-Mail gesendet an "
-  spree_admin_overview_action_required: "Handlung erforderlich"
-  spree_admin_overview_check_your_inbox: "Bitte überprüfen Sie Ihren Posteingang für weitere Anweisungen. Vielen Dank!"
-  spree_admin_unit_value: Einheitswert
-  spree_admin_unit_description: Einheit Beschreibung
-  spree_admin_variant_unit: Varianteneinheit
-  spree_admin_variant_unit_scale: Einheit der Produktvariante
   spree_admin_supplier: Lieferant
-  spree_admin_product_category: Produktkategorie
-  spree_admin_variant_unit_name: Einheit der Produktvariante
   unit_name: "Einheitenname"
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
@@ -3586,12 +3575,12 @@ de_CH:
     per_kg: "Pro kg"
     amount: "Betrag"
     currency: "Währung"
-    first_item: "Gebühr erster Artikel (€)"
-    additional_item: "Gebühr weitere Artikel (€)"
+    first_item: "Gebühr erster Artikel (CHF)"
+    additional_item: "Gebühr weitere Artikel (CHF)"
     max_items: "Gebührenfrei bei mehr als x Artikeln"
-    minimal_amount: "Mengenrabatt ab (€)"
-    normal_amount: "Gebühr unterhalb (€)"
-    discount_amount: "Gebühr oberhalb (€)"
+    minimal_amount: "Mengenrabatt ab (CHF)"
+    normal_amount: "Gebühr unterhalb (CHF)"
+    discount_amount: "Gebühr oberhalb (CHF)"
     no_images_found: "Keine Bilder gefunden."
     new_image: "Neues Bild"
     filename: "Dateiname"

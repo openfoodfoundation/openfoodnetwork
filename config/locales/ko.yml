@@ -2539,20 +2539,9 @@ ko:
   spree_admin_enterprises_fees: "기업 수수료"
   spree_admin_enterprises_none_create_a_new_enterprise: "내 회사 생성하기"
   spree_admin_enterprises_none_text: "아직 어떤 회사도 가지고 있지 않습니다"
-  spree_admin_enterprises_tabs_hubs: "허브"
   spree_admin_enterprises_producers_manage_products: "생산품 관리"
   spree_admin_enterprises_create_new_product: "새 생산품 생성하기"
-  spree_admin_single_enterprise_alert_mail_confirmation: "이메일 주소를 확인해 주십시요."
-  spree_admin_single_enterprise_alert_mail_sent: "이메일을 전송했습니다"
-  spree_admin_overview_action_required: "필요한 작업"
-  spree_admin_overview_check_your_inbox: "자세한 내용은 받은 편지함을 확인하시면 됩니다. 감사합니다!"
-  spree_admin_unit_value: 단위 값
-  spree_admin_unit_description: 단위 설명
-  spree_admin_variant_unit: 구성 단위 변경
-  spree_admin_variant_unit_scale: 변경할 구성 단위 크기
   spree_admin_supplier: 공급업체
-  spree_admin_product_category: 물품 목록
-  spree_admin_variant_unit_name: 변경된 구성 단위 이름
   unit_name: "단위 이름"
   change_package: "패키지 변경"
   spree_admin_single_enterprise_hint: "힌트 : 다른 사용자가 사용자를 찾을 수 있도록 하려면 다음에서 사용자 가시성을 켜십시오."

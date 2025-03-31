@@ -2640,20 +2640,9 @@ ca:
   spree_admin_enterprises_fees: "Comissions de l'organització"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREA UNA NOVA ORGANITZACIÓ"
   spree_admin_enterprises_none_text: "Encara no tens cap organització"
-  spree_admin_enterprises_tabs_hubs: "GRUPS"
   spree_admin_enterprises_producers_manage_products: "GESTIONA ELS PRODUCTES"
   spree_admin_enterprises_create_new_product: "CREA UN NOU PRODUCTE"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Si us plau confirma l'adreça de correu electrònic de"
-  spree_admin_single_enterprise_alert_mail_sent: "Hem enviat un correu electrònic a"
-  spree_admin_overview_action_required: "Acció requerida"
-  spree_admin_overview_check_your_inbox: "Si us plat comproveu la vostra safata d'entrada per obtenir més instruccions. Gràcies!"
-  spree_admin_unit_value: Valor de la unitat
-  spree_admin_unit_description: Descripció de la unitat
-  spree_admin_variant_unit: Unitat de variants
-  spree_admin_variant_unit_scale: Escala de unitat de variants
   spree_admin_supplier: Proveïdora
-  spree_admin_product_category: Categoria del producte
-  spree_admin_variant_unit_name: Nom de unitat de variants
   unit_name: "Nom de la unitat"
   change_package: "Canvia el perfil"
   spree_admin_single_enterprise_hint: "Suggeriment: per permetre que la gent us trobi, activeu la vostra visibilitat"

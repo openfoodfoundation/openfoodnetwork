@@ -16,13 +16,14 @@ class PaymentMailer < ApplicationMailer
   end
 
   def authorization_required(payment)
-    @payment = payment
-    shop_owner = @payment.order.distributor.owner
+    @order = payment.order
+    shop_owner = @order.distributor.owner
     subject = I18n.t('spree.payment_mailer.authorization_required.subject',
-                     order: @payment.order)
+                     order: @order)
     I18n.with_locale valid_locale(shop_owner) do
       mail(to: shop_owner.email,
-           subject:)
+           subject:,
+           reply_to: @order.email)
     end
   end
 end

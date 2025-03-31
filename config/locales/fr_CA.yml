@@ -787,9 +787,15 @@ fr_CA:
         title: "Catalogue produit DFC"
         catalog_url: "%{count}produits à importer de :  %{catalog_url}"
         enterprise: "Import vers l'entreprise : %{enterprise_name}"
+        select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour
         new: Nouveau
+        selected:
+          zero: "0 sélectionné"
+          one: "1 sélectionné"
+          other: "%{count} sélectionné"
         import: Importer
+        invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
         imported_products: "Produits importés :"
@@ -2961,20 +2967,10 @@ fr_CA:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_showing: "Montrer %{count} de %{total}"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
-  spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
-  spree_admin_overview_action_required: "Action requise"
-  spree_admin_overview_check_your_inbox: "Veuillez vérifier votre boîte mail pour les prochaines étapes. Merci!"
-  spree_admin_unit_value: Nb Unités
-  spree_admin_unit_description: 'Description complémentaire (ex: "(vrac)")'
-  spree_admin_variant_unit: Unité
-  spree_admin_variant_unit_scale: Echelle unitaire (en g ou L)
   spree_admin_supplier: Fournisseur
-  spree_admin_product_category: Catégorie Produit
-  spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   unit_name: "Unité"
   change_package: "Changer de type de compte"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
@@ -4703,6 +4699,7 @@ fr_CA:
         invoice_attached_text: 'Veuillez trouver ci-joint la facture pour votre récente commande auprès de '
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Cher Acheteur,"
         request_sent_text: |
             Votre demande de nouveau mot de passe a bien été prise en compte.
             Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.

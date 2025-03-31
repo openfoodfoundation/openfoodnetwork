@@ -696,6 +696,8 @@ hi:
       index:
         update: अपडेट करें
         new: नया
+        selected:
+          other: "%{count} चुना गया"
         import: इम्पोर्ट करें
     enterprise_fees:
       index:
@@ -2753,20 +2755,9 @@ hi:
   spree_admin_enterprises_fees: "एंटरप्राइज फीस"
   spree_admin_enterprises_none_create_a_new_enterprise: "एक नया एंटरप्राइज़ बनाएं"
   spree_admin_enterprises_none_text: "आपके पास अभी तक कोई एंटरप्राइजिस़ नहीं है"
-  spree_admin_enterprises_tabs_hubs: "हब्स"
   spree_admin_enterprises_producers_manage_products: "उत्पादों का प्रबंधन"
   spree_admin_enterprises_create_new_product: "एक नया उत्पाद बनाएं"
-  spree_admin_single_enterprise_alert_mail_confirmation: "कृपया ईमेल पते की पुष्टि करें"
-  spree_admin_single_enterprise_alert_mail_sent: "हमने को एक ईमेल भेजा है"
-  spree_admin_overview_action_required: "कार्रवाई आवश्यक है"
-  spree_admin_overview_check_your_inbox: "कृपया आगे के निर्देशों के लिए अपना इनबॉक्स देखें। धन्यवाद!"
-  spree_admin_unit_value: यूनिट वैल्यू
-  spree_admin_unit_description: यूनिट विवरण
-  spree_admin_variant_unit: वैरिएंट यूनिट
-  spree_admin_variant_unit_scale: वैरिएंट यूनिट स्केल
   spree_admin_supplier: आपूर्तिकर्ता
-  spree_admin_product_category: उत्पाद की श्रेणी
-  spree_admin_variant_unit_name: वैरिएंट यूनिट का नाम
   unit_name: "यूनिट का नाम"
   change_package: "पैकेज बदलें"
   spree_admin_single_enterprise_hint: "संकेत: लोगों को आपको ढूंढने की अनुमति देने के लिए, नीचे से अपनी दृश्यता चालू करें"

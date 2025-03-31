@@ -2675,20 +2675,9 @@ mr:
   spree_admin_enterprises_fees: "एंटरप्राइझ फी"
   spree_admin_enterprises_none_create_a_new_enterprise: "नवीन एंटरप्राइझ तयार करा"
   spree_admin_enterprises_none_text: "तुमच्याकडे अजून कोणतेही एंटरप्राइझेस नाहीत"
-  spree_admin_enterprises_tabs_hubs: "हब्स"
   spree_admin_enterprises_producers_manage_products: "उत्पादने मॅनेज करा"
   spree_admin_enterprises_create_new_product: "नवीन उत्पादन तयार करा"
-  spree_admin_single_enterprise_alert_mail_confirmation: "कृपया ईमेल पत्त्याची पुष्टी करा"
-  spree_admin_single_enterprise_alert_mail_sent: "आम्ही यांना ईमेल पाठवला आहे"
-  spree_admin_overview_action_required: "कृती आवश्यक"
-  spree_admin_overview_check_your_inbox: "पुढील सूचनांसाठी कृपया तुमचा इनबॉक्स पहा. धन्यवाद!"
-  spree_admin_unit_value: युनिट मूल्य
-  spree_admin_unit_description: युनिटचे वर्णन
-  spree_admin_variant_unit: व्हेरिएंट युनिट
-  spree_admin_variant_unit_scale: व्हेरिएंट युनिट स्केल
   spree_admin_supplier: पुरवठादार
-  spree_admin_product_category: उत्पादन वर्ग
-  spree_admin_variant_unit_name: व्हेरिएंट युनिट नाव
   unit_name: "युनिट नाव"
   change_package: "पॅकेज बदला"
   spree_admin_single_enterprise_hint: "सूचना: लोकांना तुम्हाला शोधण्याची अनुमती देण्यासाठी, या अंतर्गत तुमची दृश्यमानता चालू करा"

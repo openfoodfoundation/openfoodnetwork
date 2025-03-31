@@ -787,9 +787,15 @@ en_CA:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
         enterprise: "Import to enterprise: %{enterprise_name}"
+        select_all: "Select/deselect all"
         update: Update
         new: New
+        selected:
+          zero: "0 selected"
+          one: "1 selected"
+          other: "%{count} selected"
         import: Import
+        invalid_url: This catalog URL is not valid.
       import:
         title: "DFC product catalog import"
         imported_products: "Imported products:"
@@ -2954,20 +2960,10 @@ en_CA:
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_showing: "Showing %{count} of %{total}"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
-  spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
-  spree_admin_overview_action_required: "Action Required"
-  spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
-  spree_admin_unit_value: Unit Value
-  spree_admin_unit_description: Unit Description
-  spree_admin_variant_unit: Variant unit
-  spree_admin_variant_unit_scale: Variant unit scale
   spree_admin_supplier: Supplier
-  spree_admin_product_category: Product Category
-  spree_admin_variant_unit_name: Variant unit name
   unit_name: "Unit Name"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
@@ -4649,6 +4645,7 @@ en_CA:
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Dear customer,"
         request_sent_text: |
             A request to reset your password has been made.
             If you did not make this request, simply ignore this email.

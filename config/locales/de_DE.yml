@@ -699,6 +699,8 @@ de_DE:
       index:
         update: Speichern
         new: Neu
+        selected:
+          other: "%{count} ausgewählt"
         import: Importieren
     enterprise_fees:
       index:
@@ -2761,20 +2763,9 @@ de_DE:
   spree_admin_enterprises_fees: "Gebühren"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen."
-  spree_admin_enterprises_tabs_hubs: "LÄDEN"
   spree_admin_enterprises_producers_manage_products: "PRODUKTE VERWALTEN"
   spree_admin_enterprises_create_new_product: "NEUES PRODUKT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Bitte bestätigen Sie die E-Mail-Adresse für"
-  spree_admin_single_enterprise_alert_mail_sent: "Wir haben eine E-Mail gesendet an "
-  spree_admin_overview_action_required: "Handlung erforderlich"
-  spree_admin_overview_check_your_inbox: "Bitte überprüfen Sie Ihren Posteingang für weitere Anweisungen. Vielen Dank!"
-  spree_admin_unit_value: Menge
-  spree_admin_unit_description: Einheit Beschreibung
-  spree_admin_variant_unit: Varianteneinheit
-  spree_admin_variant_unit_scale: Einheit der Produktvariante
   spree_admin_supplier: Lieferant
-  spree_admin_product_category: Produktkategorie
-  spree_admin_variant_unit_name: Einheit der Produktvariante
   unit_name: "Einheitenname"
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"

@@ -102,7 +102,7 @@ RSpec.describe "Database" do
     orphaned_records_query = generate_orphaned_records_query(model_class, foreign_key_table_name,
                                                              foreign_key_column)
 
-    migration = <<~MIGRATION
+    <<~MIGRATION
       # Orphaned records can be found before running this migration with the following SQL:
 
       #{orphaned_records_query}
@@ -113,8 +113,6 @@ RSpec.describe "Database" do
         end
       end
     MIGRATION
-
-    migration
   end
 
   def generate_orphaned_records_query(model_class, foreign_key_table_name, foreign_key_column)

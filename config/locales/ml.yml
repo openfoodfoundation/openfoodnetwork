@@ -699,6 +699,8 @@ ml:
       index:
         update: അപ്ഡേറ്റ് ചെയ്യുക
         new: പുതിയത്
+        selected:
+          other: "%{count} തിരഞ്ഞെടുത്തു"
         import: ഇറക്കുമതി ചെയ്യുക
     enterprise_fees:
       index:
@@ -2769,20 +2771,9 @@ ml:
   spree_admin_enterprises_fees: "എന്റർപ്രൈസ് ഫീസ്"
   spree_admin_enterprises_none_create_a_new_enterprise: "ഒരു പുതിയ എന്റർപ്രൈസ് സൃഷ്ടിക്കുക"
   spree_admin_enterprises_none_text: "നിങ്ങൾക്ക് ഇതുവരെ സംരംഭങ്ങളൊന്നുമില്ല"
-  spree_admin_enterprises_tabs_hubs: "ഹബ്ബുകൾ"
   spree_admin_enterprises_producers_manage_products: "ഉൽപ്പന്നങ്ങൾ കൈകാര്യം ചെയ്യുക"
   spree_admin_enterprises_create_new_product: "ഒരു പുതിയ ഉൽപ്പന്നം സൃഷ്‌ടിക്കുക"
-  spree_admin_single_enterprise_alert_mail_confirmation: "ഇതിനായുള്ള ഇമെയിൽ വിലാസം ദയവായി സ്ഥിരീകരിക്കുക"
-  spree_admin_single_enterprise_alert_mail_sent: "ഞങ്ങൾ ഇതിലേക്ക് ഒരു ഇമെയിൽ അയച്ചു-"
-  spree_admin_overview_action_required: "നടപടി ആവശ്യമാണ്"
-  spree_admin_overview_check_your_inbox: "കൂടുതൽ നിർദ്ദേശങ്ങൾക്കായി നിങ്ങളുടെ ഇൻബോക്സ് പരിശോധിക്കുക. നന്ദി!"
-  spree_admin_unit_value: യൂണിറ്റ് മൂല്യം
-  spree_admin_unit_description: യൂണിറ്റ് വിവരണം
-  spree_admin_variant_unit: വേരിയന്റ് യൂണിറ്റ്
-  spree_admin_variant_unit_scale: വേരിയന്റ് യൂണിറ്റ് സ്കെയിൽ
   spree_admin_supplier: വിതരണക്കാരൻ
-  spree_admin_product_category: ഉൽപ്പന്ന വിഭാഗം
-  spree_admin_variant_unit_name: വേരിയന്റ് യൂണിറ്റിന്റെ പേര്
   unit_name: "യൂണിറ്റിന്റെ പേര്"
   change_package: "പാക്കേജ് മാറ്റുക"
   spree_admin_single_enterprise_hint: "സൂചന: നിങ്ങളെ കണ്ടെത്താൻ ആളുകളെ അനുവദിക്കുന്നതിന്, ചുവടെ നിങ്ങളുടെ ദൃശ്യപരത ഓണാക്കുക"

@@ -202,7 +202,7 @@ RSpec.describe SubscriptionPlacementJob do
       breakpoint.lock
       allow(PlaceProxyOrder).to(
         receive(:new).and_wrap_original do |method, *args|
-          breakpoint.synchronize {}
+          breakpoint.synchronize { nil }
           method.call(*args)
         end
       )

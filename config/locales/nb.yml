@@ -767,6 +767,8 @@ nb:
       index:
         update: Oppdater
         new: Ny
+        selected:
+          other: "%{count} valgt"
         import: Import
       import:
         imported_products: "Importerte produkter:"
@@ -2908,20 +2910,9 @@ nb:
   spree_admin_enterprises_fees: "Bedriftsavgift"
   spree_admin_enterprises_none_create_a_new_enterprise: "OPPRETT NY BEDRIFT"
   spree_admin_enterprises_none_text: "Du har ingen bedrifter ennå"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "ADMINISTRER PRODUKTER"
   spree_admin_enterprises_create_new_product: "OPPRETT NYTT PRODUKT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Vennligst bekreft epostadressen for"
-  spree_admin_single_enterprise_alert_mail_sent: "Vi har sendt epost til"
-  spree_admin_overview_action_required: "Handling Nødvendig"
-  spree_admin_overview_check_your_inbox: "Vennligst sjekk din innboks for nærmere instruksjoner. Takk!"
-  spree_admin_unit_value: Enhetsverdi
-  spree_admin_unit_description: Enhetsbeskrivelse
-  spree_admin_variant_unit: Variant enhet
-  spree_admin_variant_unit_scale: Variant enhetsskala
   spree_admin_supplier: Leverandør
-  spree_admin_product_category: Produktkategori
-  spree_admin_variant_unit_name: Variant enhetsnavn
   unit_name: "Enhetsnavn"
   change_package: "Endre Pakke"
   spree_admin_single_enterprise_hint: "Hint: For å hjelpe folk til å finne deg, skru på din synlighet under"
