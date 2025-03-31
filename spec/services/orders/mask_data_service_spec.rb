@@ -12,11 +12,11 @@ RSpec.describe Orders::MaskDataService do
         described_class.new(order).call
 
         expect(order.bill_address.attributes).to include(
-          'firstname' => 'HIDDEN',
+          'firstname' => "< Hidden >",
           'lastname' => ''
         )
         expect(order.ship_address.attributes).to include(
-          'firstname' => 'HIDDEN',
+          'firstname' => "< Hidden >",
           'lastname' => ''
         )
       end
@@ -29,7 +29,7 @@ RSpec.describe Orders::MaskDataService do
         expect(order.bill_address.attributes).to include('phone' => '')
         expect(order.ship_address.attributes).to include('phone' => '')
 
-        expect(order.email).to eq('HIDDEN')
+        expect(order.email).to eq("< Hidden >")
       end
     end
 
@@ -65,11 +65,11 @@ RSpec.describe Orders::MaskDataService do
         described_class.new(order).call
 
         expect(order.bill_address.attributes).not_to include(
-          firstname: 'HIDDEN',
+          firstname: "< Hidden >",
           lastname: ''
         )
         expect(order.ship_address.attributes).not_to include(
-          firstname: 'HIDDEN',
+          firstname: "< Hidden >",
           lastname: ''
         )
       end
@@ -95,7 +95,7 @@ RSpec.describe Orders::MaskDataService do
         expect(order.bill_address.attributes).not_to include('phone' => '')
         expect(order.ship_address.attributes).not_to include('phone' => '')
 
-        expect(order.email).not_to eq('HIDDEN')
+        expect(order.email).not_to eq("< Hidden >")
       end
     end
 

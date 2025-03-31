@@ -24,9 +24,9 @@ module Orders
     end
 
     def mask_customer_names
-      order.bill_address&.assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+      order.bill_address&.assign_attributes(firstname: I18n.t('admin.reports.hidden_field'),
                                             lastname: "")
-      order.ship_address&.assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+      order.ship_address&.assign_attributes(firstname: I18n.t('admin.reports.hidden_field'),
                                             lastname: "")
     end
 
@@ -37,7 +37,7 @@ module Orders
     def mask_contact_data
       order.bill_address&.assign_attributes(phone: "")
       order.ship_address&.assign_attributes(phone: "")
-      order.assign_attributes(email: I18n.t('admin.reports.hidden'))
+      order.assign_attributes(email: I18n.t('admin.reports.hidden_field'))
     end
 
     def mask_address

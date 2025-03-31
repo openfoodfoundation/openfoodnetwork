@@ -1765,7 +1765,7 @@ en:
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
       deprecated: "This report is deprecated and will be removed in a future release."
-      hidden: HIDDEN
+      hidden_field: "< Hidden >"
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
@@ -1843,7 +1843,6 @@ en:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
         missing_ransack_params: "Please supply Ransack search params in the request"
-      hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
       table:

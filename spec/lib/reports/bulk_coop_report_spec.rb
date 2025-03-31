@@ -133,7 +133,7 @@ module Reporting
 
               it "shows line items supplied by my producers, with names hidden" do
                 expect(subject.table_items).to eq([li2])
-                expect(subject.table_items.first.order.bill_address.firstname).to eq("HIDDEN")
+                expect(subject.table_items.first.order.bill_address.firstname).to eq("< Hidden >")
               end
             end
 
