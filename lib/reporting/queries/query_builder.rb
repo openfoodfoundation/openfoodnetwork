@@ -53,6 +53,10 @@ module Reporting
         masked(field, managed_order_mask_rule(:show_customer_names_to_suppliers))
       end
 
+      def mask_contact_data(field)
+        masked(field, managed_order_mask_rule(:show_customer_contacts_to_suppliers))
+      end
+
       def masked(field, mask_rule = nil)
         Case.new.
           when(mask_rule).

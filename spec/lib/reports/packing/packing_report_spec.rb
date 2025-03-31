@@ -108,6 +108,19 @@ RSpec.describe "Packing Reports" do
             expect(row["customer_code"]).to eq order2.customer.code
             expect(row["first_name"]).to eq order2.bill_address.firstname
             expect(row["last_name"]).to eq order2.bill_address.lastname
+            expect(row["phone"]).to eq '< Hidden >'
+          end
+        end
+
+        context "where the distributor allows suppliers to see customer contact details" do
+          let(:distributor) {
+            create(:distributor_enterprise, show_customer_contacts_to_suppliers: true)
+          }
+
+          it "shows line items supplied by my producers, with names and contacts shown" do
+            row = report_data.first
+            expect(row["first_name"]).to eq '< Hidden >'
+            expect(row["last_name"]).to eq '< Hidden >'
             expect(row["phone"]).to eq order2.bill_address.phone
           end
         end

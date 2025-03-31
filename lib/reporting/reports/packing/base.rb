@@ -45,7 +45,7 @@ module Reporting
               customer_code: mask_customer_name(customer_table[:code]),
               last_name: mask_customer_name(bill_address_alias[:lastname]),
               first_name: mask_customer_name(bill_address_alias[:firstname]),
-              phone: mask_customer_name(bill_address_alias[:phone]),
+              phone: mask_contact_data(bill_address_alias[:phone]),
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,
