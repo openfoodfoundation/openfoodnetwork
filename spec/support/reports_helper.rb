@@ -13,6 +13,19 @@ module ReportsHelper
     expect(page).to have_button "Go", disabled: false
   end
 
+  def run_failed_report(report)
+    click_on "Go"
+
+    allow(report).to receive(:new).and_raise(StandardError, 'Provoked error for testing')
+    perform_enqueued_jobs(only: ReportJob)
+
+    expect(page).not_to have_selector ".loading"
+    expect(page).to have_button "Go", disabled: false
+    expect(page).to have_content 'This report failed. It may be too big to process. ' \
+                                 'We will look into it but please let us know ' \
+                                 'if the problem persists.'
+  end
+
   def generate_report
     run_report
     click_on "Download Report"

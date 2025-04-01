@@ -347,6 +347,14 @@ RSpec.describe '
       variant3.update!(sku: "")
     end
 
+    it "shows report error at the bottom of page" do
+      login_as_admin
+      visit admin_reports_path
+
+      click_link 'All products'
+      run_failed_report(Reporting::Reports::ProductsAndInventory::AllProducts)
+    end
+
     it "shows products and inventory report" do
       login_as_admin
       visit admin_reports_path
