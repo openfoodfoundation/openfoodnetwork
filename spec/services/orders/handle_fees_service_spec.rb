@@ -89,7 +89,7 @@ RSpec.describe Orders::HandleFeesService do
         allow(calculator).to receive(
           :per_item_enterprise_fee_applicators_for
         ).and_return([fee_applicator])
-        adjustment = fee.create_adjustment('foo', line_item, true)
+        adjustment = fee_applicator.create_line_item_adjustment(line_item)
 
         expect do
           service.create_or_update_line_item_fees!
@@ -101,7 +101,7 @@ RSpec.describe Orders::HandleFeesService do
           allow(calculator).to receive(
             :per_item_enterprise_fee_applicators_for
           ).and_return([])
-          adjustment = fee.create_adjustment('foo', line_item, true)
+          adjustment = fee_applicator.create_line_item_adjustment(line_item)
 
           expect do
             service.create_or_update_line_item_fees!
@@ -111,7 +111,7 @@ RSpec.describe Orders::HandleFeesService do
 
       context "when enterprise fee is removed from the order cycle" do
         it "removes the line item fee" do
-          adjustment = fee.create_adjustment('foo', line_item, true)
+          adjustment = fee_applicator.create_line_item_adjustment(line_item)
           order_cycle.exchanges.first.enterprise_fees.destroy(fee)
           allow(calculator).to receive(
             :per_item_enterprise_fee_applicators_for
@@ -134,6 +134,54 @@ RSpec.describe Orders::HandleFeesService do
             expect do
               service.create_or_update_line_item_fees!
             end.to change { line_item.adjustments.reload.enterprise_fee.count }.by(-1)
+          end
+        end
+
+        context "with the same fee used for both supplier an distributor" do
+          let!(:supplier_adjustment) {
+            fee_applicator.create_line_item_adjustment(line_item)
+          }
+          let!(:distributor_adjustment) {
+            distributor_applicator.create_line_item_adjustment(line_item)
+          }
+          let(:distributor_applicator) {
+            OpenFoodNetwork::EnterpriseFeeApplicator.new(fee, line_item.variant,
+                                                         distributor_exchange.role)
+          }
+          let(:supplier_exchange) { order_cycle.cached_incoming_exchanges.first }
+          let(:distributor_exchange) { order_cycle.cached_outgoing_exchanges.first }
+
+          before do
+            # Use the supplier fee for the distributor
+            distributor_exchange.enterprise_fees = [fee]
+          end
+
+          it "removes the supplier fee when removed from the order cycle" do
+            # Delete supplier fee
+            supplier_exchange.enterprise_fees.destroy(fee)
+            allow(calculator).to receive(
+              :per_item_enterprise_fee_applicators_for
+            ).and_return([distributor_applicator])
+
+            enterprise_fees = line_item.adjustments.reload.enterprise_fee
+            expect do
+              service.create_or_update_line_item_fees!
+            end.to change { enterprise_fees.count }.by(-1)
+            expect(enterprise_fees).not_to include(supplier_adjustment)
+          end
+
+          it "removes the distributor fee when removed from the order cycle" do
+            # Delete distributor fee
+            distributor_exchange.enterprise_fees.destroy(fee)
+            allow(calculator).to receive(
+              :per_item_enterprise_fee_applicators_for
+            ).and_return([fee_applicator])
+
+            enterprise_fees = line_item.adjustments.reload.enterprise_fee
+            expect do
+              service.create_or_update_line_item_fees!
+            end.to change { enterprise_fees.count }.by(-1)
+            expect(enterprise_fees).not_to include(distributor_adjustment)
           end
         end
       end
@@ -172,7 +220,7 @@ RSpec.describe Orders::HandleFeesService do
         let(:fee_applicator2) {
           OpenFoodNetwork::EnterpriseFeeApplicator.new(new_fee, line_item.variant, role)
         }
-        let!(:adjustment) { fee.create_adjustment('foo', line_item, true) }
+        let!(:adjustment) { fee_applicator.create_line_item_adjustment(line_item) }
 
         before do
           allow(service).to receive(:provided_by_order_cycle?) { true }
