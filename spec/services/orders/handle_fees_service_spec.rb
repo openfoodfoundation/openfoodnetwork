@@ -63,14 +63,14 @@ RSpec.describe Orders::HandleFeesService do
 
   describe "#create_or_update_line_item_fees!" do
     context "with no existing fee" do
-      it "creates per line item fee adjustments for line items in the order cylce" do
+      it "creates per line item fee adjustments for line items in the order cycle" do
         allow(service).to receive(:provided_by_order_cycle?) { true }
         expect(calculator).to receive(:create_line_item_adjustments_for).with(line_item)
 
         service.create_or_update_line_item_fees!
       end
 
-      it "does not create fee if variant not in Order Cyle" do
+      it "does not create fee if variant not in Order Cycle" do
         allow(service).to receive(:provided_by_order_cycle?) { false }
         expect(calculator).not_to receive(:create_line_item_adjustments_for).with(line_item)
 
@@ -215,7 +215,7 @@ RSpec.describe Orders::HandleFeesService do
         end
       end
 
-      context "with a new enterprise fee added to the order cylce" do
+      context "with a new enterprise fee added to the order cycle" do
         let(:new_fee) { create(:enterprise_fee, enterprise: fee.enterprise) }
         let(:fee_applicator2) {
           OpenFoodNetwork::EnterpriseFeeApplicator.new(new_fee, line_item.variant, role)
