@@ -51,7 +51,7 @@ RSpec.describe Reporting::LineItems do
 
     it 'returns masked data' do
       line_items = reports_line_items.list
-      expect(line_items.first.order.email).to eq('HIDDEN')
+      expect(line_items.first.order.email).to eq("< Hidden >")
     end
 
     context "when filtering by product" do

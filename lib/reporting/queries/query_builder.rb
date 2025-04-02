@@ -5,6 +5,7 @@ module Reporting
     class QueryBuilder < QueryInterface
       include Joins
       include Tables
+      include MaskData
 
       attr_reader :grouping_fields
 
@@ -49,13 +50,6 @@ module Reporting
         reflect query.order(*instance_exec(&ordering_fields))
       end
 
-      def masked(field, message = nil, mask_rule = nil)
-        Case.new.
-          when(mask_rule || default_mask_rule).
-          then(field).
-          else(quoted(message || I18n.t("hidden_field", scope: i18n_scope)))
-      end
-
       def distinct_results(fields = nil)
         return reflect query.distinct if fields.blank?
 
@@ -79,12 +73,6 @@ module Reporting
       end
 
       private
-
-      def default_mask_rule
-        id = raw("#{managed_orders_alias.name}.id") # rubocop:disable Rails/OutputSafety
-        line_item_table[:order_id].in(id).
-          or(distributor_alias[:show_customer_names_to_suppliers].eq(true))
-      end
 
       def summary_row_title
         I18n.t("total", scope: i18n_scope)

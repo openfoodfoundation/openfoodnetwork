@@ -89,20 +89,39 @@ RSpec.describe "Packing Reports" do
                                            permissions_list: [:add_to_order_cycle])
         end
 
-        it "shows line items supplied by my producers, with names hidden" do
+        it "shows line items supplied by my producers, with names and contacts hidden" do
           expect(report_contents).to include line_item2.product.name
-          expect(report_data.first["first_name"]).to eq(
-            '< Hidden >'
-          )
+          row = report_data.first
+          expect(row["customer_code"]).to eq '< Hidden >'
+          expect(row["first_name"]).to eq '< Hidden >'
+          expect(row["last_name"]).to eq '< Hidden >'
+          expect(row["phone"]).to eq '< Hidden >'
         end
 
         context "where the distributor allows suppliers to see customer names" do
-          before do
-            distributor.update_columns show_customer_names_to_suppliers: true
-          end
+          let(:distributor) {
+            create(:distributor_enterprise, show_customer_names_to_suppliers: true)
+          }
 
-          it "shows line items supplied by my producers, with names shown" do
-            expect(report_data.first["first_name"]).to eq(order2.bill_address.firstname)
+          it "shows line items supplied by my producers, with names and contacts shown" do
+            row = report_data.first
+            expect(row["customer_code"]).to eq order2.customer.code
+            expect(row["first_name"]).to eq order2.bill_address.firstname
+            expect(row["last_name"]).to eq order2.bill_address.lastname
+            expect(row["phone"]).to eq '< Hidden >'
+          end
+        end
+
+        context "where the distributor allows suppliers to see customer contact details" do
+          let(:distributor) {
+            create(:distributor_enterprise, show_customer_contacts_to_suppliers: true)
+          }
+
+          it "shows line items supplied by my producers, with names and contacts shown" do
+            row = report_data.first
+            expect(row["first_name"]).to eq '< Hidden >'
+            expect(row["last_name"]).to eq '< Hidden >'
+            expect(row["phone"]).to eq order2.bill_address.phone
           end
         end
 
