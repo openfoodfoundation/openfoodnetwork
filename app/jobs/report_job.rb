@@ -47,10 +47,14 @@ class ReportJob < ApplicationJob
   end
 
   def broadcast_error(channel)
-    cable_ready[channel].inner_html(
-      selector: "#report-table",
-      html: I18n.t("report_job.report_failed")
-    ).broadcast
+    cable_ready[channel]
+      .inner_html(
+        selector: "#report-go",
+        html: Spree::Admin::BaseController.helpers.button(I18n.t(:go), "report__submit-btn")
+      ).inner_html(
+        selector: "#report-table",
+        html: I18n.t("report_job.report_failed")
+      ).broadcast
   end
 
   def actioncable_content(format, blob)
