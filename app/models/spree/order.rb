@@ -43,7 +43,7 @@ module Spree
     has_many :state_changes, as: :stateful, dependent: :destroy
     has_many :line_items, -> {
                             order('created_at ASC')
-                          }, class_name: "Spree::LineItem", dependent: :destroy
+                          }, class_name: "Spree::LineItem", inverse_of: :order, dependent: :destroy
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
