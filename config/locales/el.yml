@@ -2491,7 +2491,7 @@ el:
   orders_show_time: "Η παραγγελία είναι έτοιμη"
   orders_show_order_number: "Παραγγελία #%{number}"
   orders_show_cancelled: "Ακυρώθηκε"
-  orders_show_confirmed: "Επιβεβαιωμένος"
+  orders_show_confirmed: "Επιβεβαιωμένη"
   orders_your_order_has_been_cancelled: "Η παραγγελία σας ακυρώθηκε"
   orders_could_not_cancel: "Λυπούμαστε, δεν ήταν δυνατή η ακύρωση της παραγγελίας"
   orders_cannot_remove_the_final_item: "Δεν είναι δυνατή η κατάργηση του τελικού στοιχείου από μια παραγγελία. Αντ &#39;αυτού, ακυρώστε την παραγγελία."

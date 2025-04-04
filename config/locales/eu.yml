@@ -553,6 +553,7 @@ eu:
           selected_categories: "Hautatutako kategorien %{count}"
         producers:
           title: Zutabeak
+        colums: Zutabeak
       columns:
         image: Irudia
         name: Izena
@@ -851,6 +852,7 @@ eu:
         pagination:
           per_page:
             show: Erakutsi
+            per_page: " %{num} orriko"
           clear_search: Bilaketa garbitzea
       no_products:
         no_products_found: Ez da produkturik aurkitu
@@ -3025,6 +3027,7 @@ eu:
   report_header_total_units: Unitateak guztira
   report_header_sum_max_total: "Gehienezko batura. Guztira "
   report_header_total_excl_vat: "Zergak, guztira, gaindi. ( %{currency_symbol})"
+  report_header_total: "Guztira ( %{currency_symbol})"
   report_header_total_incl_vat: "Zergak guztira ( %{currency_symbol})"
   report_header_temp_controlled: Tenperatura-kontrola?
   report_header_shipment_state: "Bidalketa-probintzia"
@@ -4406,6 +4409,8 @@ eu:
       past_orders:
         order: Eskaera
         shop: Denda
+        completed_at: 'Hemen osatua:'
+        items: Artikuluak
         total: Guztira
         paid?: Ordainduta?
         status: Egoera
