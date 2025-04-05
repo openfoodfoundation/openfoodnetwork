@@ -1366,6 +1366,7 @@ fr_CH:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      none: "Aucun"
       hidden: Masqué
       unitsize: Unité de mesure
       total: Total

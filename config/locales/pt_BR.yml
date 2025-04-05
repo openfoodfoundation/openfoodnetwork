@@ -1262,6 +1262,7 @@ pt_BR:
       email_confirmation: "A confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
       not_visible: "%{enterprise} não está visível e, portanto, não pode ser encontrado no mapa ou em pesquisas"
     reports:
+      none: Nenhum
       hidden: ESCONDIDO
       unitsize: Unidade de Medida
       total: TOTAL

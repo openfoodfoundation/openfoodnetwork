@@ -1533,6 +1533,7 @@ cy:
       email_confirmation: "Mae cadarnhad e-bost yn yr arfaeth. Rydym wedi anfon e-bost cadarnhad at %{email}."
       not_visible: "nid yw %{enterprise} yn weladwy ac felly ni ellir ei ddarganfod ar y map nac mewn chwiliadau"
     reports:
+      none: "Dim"
       deprecated: "Anghymeradwywyd yr adroddiad hwn a chaiff ei ddileu mewn datganiad yn y dyfodol"
       hidden: CUDD
       unitsize: MAINT UNEDAU

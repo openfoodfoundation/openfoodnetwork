@@ -1645,6 +1645,7 @@ nb:
       email_confirmation: "E-postbekreftelse venter. Vi har sendt en bekreftelses-epost til %{email}."
       not_visible: "%{enterprise} er ikke synlig og kan derfor ikke finnes på kartet eller i søk"
     reports:
+      none: Ingen
       deprecated: "Denne rapporten er avviklet og vil bli fjernet i en fremtidig utgivelse."
       hidden: SKJULTE
       unitsize: ENHETSSTØRRELSE

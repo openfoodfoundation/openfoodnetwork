@@ -365,17 +365,17 @@ RSpec.describe '
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "1g", "100.0",
-                                      "none", "", "sku1", "No", "10"]
+                                      I18n.t("admin.reports.none"), "", "sku1", "No", "10"]
       expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "1g", "80.0",
-                                      "none", "", "sku2", "No", "20"]
+                                      I18n.t("admin.reports.none"), "", "sku2", "No", "20"]
       expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product 2",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "100g", "99.0",
-                                      "none", "", "product_sku", "No", "9"]
+                                      I18n.t("admin.reports.none"), "", "product_sku", "No", "9"]
     end
 
     it "shows the LettuceShare report" do

@@ -312,7 +312,7 @@ module Reporting
           first_row = table_rows.first # row for default variant, as result of product creation
           last_row = table_rows.last # row for the variant created/updated above
 
-          expect(first_row.last).to eq('none')
+          expect(first_row.last).to eq(I18n.t("admin.reports.none"))
           expect(last_row.last).to eq('Test Category')
         end
       end

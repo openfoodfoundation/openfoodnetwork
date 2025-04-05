@@ -35,28 +35,38 @@ RSpec.describe "Orders And Distributors" do
       }
       let(:line_item1) {
         [completed_at, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
-         "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1",
+         I18n.t("admin.reports.none"), "10.0", I18n.t("admin.reports.none"),
+         "Check", "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground",
+         I18n.t("admin.reports.none")].join(" ")
       }
       let(:line_item2) {
         [completed_at, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
-         "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1",
+         I18n.t("admin.reports.none"), "10.0", I18n.t("admin.reports.none"),
+         "Check", "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground",
+         I18n.t("admin.reports.none")].join(" ")
       }
       let(:line_item3) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
-         "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1",
+         I18n.t("admin.reports.none"), "10.0", I18n.t("admin.reports.none"),
+         "Check", "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground",
+         I18n.t("admin.reports.none")].join(" ")
       }
       let(:line_item4) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
-         "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1",
+         I18n.t("admin.reports.none"), "10.0", I18n.t("admin.reports.none"),
+         "Check", "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground",
+         I18n.t("admin.reports.none")].join(" ")
       }
       let(:line_item5) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
-         "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1",
+         I18n.t("admin.reports.none"), "10.0", I18n.t("admin.reports.none"),
+         "Check", "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground",
+         I18n.t("admin.reports.none")].join(" ")
       }
 
       before do

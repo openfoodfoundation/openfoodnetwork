@@ -1354,6 +1354,7 @@ ko:
       email_confirmation: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
       not_visible: "%{enterprise}가 표시되지 않으므로 지도 또는 검색에서 찾을 수 없습니다."
     reports:
+      none: 아니다
       hidden: 숨김
       unitsize: 단위 크기
       total: 총량
