@@ -189,8 +189,8 @@ RSpec.describe Spree::OrderContents do
 
         subject.update_item(line_item, { quantity: 3 })
       end
-
       it "updates the order's enterprise fees if completed" do
+        order.shipments << create(:shipment)
         allow(order).to receive(:completed?) { true }
         expect(order).to receive(:update_order_fees!)
 
