@@ -40,7 +40,7 @@ RSpec.describe "Orders backorder integration" do
   }
 
   # Customer orders the distributed product
-  let(:order) {
+  let(:distributor_order) {
     create(:order_with_totals_and_distribution,
            :with_line_item,
            variant: distributor_variant,
@@ -79,18 +79,18 @@ RSpec.describe "Orders backorder integration" do
 
       expect {
         # BackorderJob.perform_now(order) # Cannot perform whole job as it gets stuck on record lock
-        BackorderJob.new.place_backorder(order)
+        BackorderJob.new.place_backorder(distributor_order)
       }.to change { supplier.distributed_orders.count }.by(1)
 
-      order = supplier.distributed_orders.first
-      expect(order.created_by).to eq distributor_owner
-      expect(order.user).to eq distributor_owner
-      expect(order.email).to eq distributor_owner.email
-      expect(order.state).to eq "complete"
+      supplier_order = supplier.distributed_orders.first
+      expect(supplier_order.created_by).to eq distributor_owner
+      expect(supplier_order.user).to eq distributor_owner
+      expect(supplier_order.email).to eq distributor_owner.email
+      expect(supplier_order.state).to eq "complete"
 
-      expect(order.line_items.count).to eq 1
-      expect(order.line_items.first.variant).to eq variant
-      expect(order.line_items.first.quantity).to eq 1
+      expect(supplier_order.line_items.count).to eq 1
+      expect(supplier_order.line_items.first.variant).to eq variant
+      expect(supplier_order.line_items.first.quantity).to eq 1
     rescue Faraday::UnprocessableEntityError => e
       # Output error message for convenient debugging
       expect(e.response[:body]).to be_blank
