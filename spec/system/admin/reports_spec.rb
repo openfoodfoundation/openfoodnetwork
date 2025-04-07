@@ -366,10 +366,10 @@ RSpec.describe '
                                    'if the problem persists.'
 
       # Admin shoulb be able to make some changes and retry
-      sleep(1)
       allow(report).to receive(:new).and_call_original
 
       run_report
+      expect(page).to have_content "Supplier"
     end
 
     it "shows products and inventory report" do
