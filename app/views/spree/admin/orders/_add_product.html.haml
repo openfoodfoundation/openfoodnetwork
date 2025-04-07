@@ -6,6 +6,8 @@
 
     - if @order.canceled?
       = t(".cannot_add_item_to_canceled_order")
+    - elsif @order.shipped?
+      = t(".cannot_add_item_to_shipped_order")
     - else
       .field.nine.columns.alpha
         = label_tag :add_variant_id, Spree.t(:name_or_sku)
