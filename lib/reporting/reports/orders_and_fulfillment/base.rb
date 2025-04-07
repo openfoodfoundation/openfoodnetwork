@@ -5,7 +5,7 @@ module Reporting
     module OrdersAndFulfillment
       class Base < ReportTemplate
         def message
-          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+          I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
 
         def default_params

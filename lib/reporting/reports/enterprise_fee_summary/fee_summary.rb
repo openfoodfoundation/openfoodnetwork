@@ -23,7 +23,7 @@ module Reporting
         end
 
         def message
-          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+          I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
 
         def query_result

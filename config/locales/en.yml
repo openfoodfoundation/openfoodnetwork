@@ -4655,8 +4655,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
-        customer_names_message:
-          customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
+        hidden_customer_details_tip: "If customer names and/or contact details are hidden, you can ask the distributor to update their shop preferences to allow their suppliers to view customer details in reports."
         products_and_inventory:
           all_products:
             message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
