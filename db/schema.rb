@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_15_091227) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -105,7 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
     t.boolean "created_manually", default: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["created_manually"], name: "index_customers_on_created_manually"
-    t.index ["email"], name: "index_customers_on_email"
+    t.index ["email", "enterprise_id"], name: "index_customers_on_email_and_enterprise_id", unique: true
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true
     t.index ["ship_address_id"], name: "index_customers_on_ship_address_id"
     t.index ["user_id"], name: "index_customers_on_user_id"
@@ -268,7 +268,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
     t.text "receival_instructions"
     t.index ["order_cycle_id"], name: "index_exchanges_on_order_cycle_id"
     t.index ["receiver_id"], name: "index_exchanges_on_receiver_id"
-    t.index ["sender_id"], name: "index_exchanges_on_sender_id"
+    t.index ["sender_id", "order_cycle_id", "receiver_id", "incoming"], name: "index_exchanges_on_sender_id", unique: true
   end
 
   create_table "flipper_features", id: :serial, force: :cascade do |t|
@@ -832,7 +832,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
     t.integer "lock_version", default: 0
     t.index ["stock_location_id", "variant_id"], name: "stock_item_by_loc_and_var_id"
     t.index ["stock_location_id"], name: "index_spree_stock_items_on_stock_location_id"
-    t.index ["variant_id"], name: "index_spree_stock_items_on_variant_id", unique: true
+    t.index ["variant_id", "deleted_at"], name: "index_spree_stock_items_on_variant_id_and_deleted_at", unique: true
   end
 
   create_table "spree_stock_locations", id: :serial, force: :cascade do |t|
@@ -870,6 +870,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_default", default: false
     t.datetime "deleted_at", precision: nil
+    t.index ["name", "deleted_at"], name: "index_spree_tax_categories_on_name_and_deleted_at", unique: true
   end
 
   create_table "spree_tax_rates", id: :serial, force: :cascade do |t|
@@ -999,6 +1000,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "default_tax", default: false
     t.integer "zone_members_count", default: 0
+    t.index ["name"], name: "index_spree_zones_on_name", unique: true
   end
 
   create_table "stripe_accounts", id: :serial, force: :cascade do |t|
