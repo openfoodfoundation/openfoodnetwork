@@ -643,6 +643,10 @@ module Spree
       voucher.rate(self)
     end
 
+    def can_modify?
+      !shipped? && !canceled?
+    end
+
     private
 
     def reapply_tax_on_changed_address
