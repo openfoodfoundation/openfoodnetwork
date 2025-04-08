@@ -14,7 +14,7 @@ module Admin
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
 
-    before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :load_countries, except: [:index, :register]
     before_action :require_enterprise, only: [:edit, :update]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
