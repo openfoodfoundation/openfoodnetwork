@@ -60,7 +60,11 @@ class OpenOrderCycleJob < ApplicationJob
       catalog_links.each do |link|
         catalog_item = catalog.item(link.semantic_id)
 
-        SuppliedProductImporter.update_product(catalog_item, link.subject) if catalog_item
+        if catalog_item
+          SuppliedProductImporter.update_product(catalog_item, link.subject)
+        else
+          DfcCatalogImporter.reset_variant(link.subject)
+        end
       end
     end
   end
