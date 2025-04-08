@@ -9,8 +9,9 @@ require 'open_food_network/scope_variant_to_hub'
 
 module OpenFoodNetwork
   class ScopeVariantsForSearch
-    def initialize(params)
+    def initialize(params, spree_current_user)
       @params = params
+      @spree_current_user = spree_current_user
     end
 
     def search
@@ -20,13 +21,14 @@ module OpenFoodNetwork
       scope_to_schedule if params[:schedule_id]
       scope_to_order_cycle if params[:order_cycle_id]
       scope_to_distributor if params[:distributor_id]
+      scope_to_supplier if spree_current_user.can_manage_line_items_in_orders_only?
 
       @variants
     end
 
     private
 
-    attr_reader :params
+    attr_reader :params, :spree_current_user
 
     def search_params
       { product_name_cont: params[:q], sku_cont: params[:q], product_sku_cont: params[:q] }
@@ -95,6 +97,10 @@ module OpenFoodNetwork
       # Perform scoping after all filtering is done.
       # Filtering could be a problem on scoped variants.
       variants.each { |v| scoper.scope(v) }
+    end
+
+    def scope_to_supplier
+      @variants = @variants.where(supplier_id: spree_current_user.enterprises.ids)
     end
   end
 end
