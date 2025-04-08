@@ -120,7 +120,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
         it "shows line items supplied by my producers, with contact details hidden" do
           expect(row).not_to include("FirstName LastName")
           expect(row).not_to include("123-456", "City", order.email)
-          expect(row[2..5]).to eq ["HIDDEN", "HIDDEN", "", ""]
+          expect(row[2..5]).to eq ["< Hidden >", "< Hidden >", "", ""]
         end
 
         context "where the distributor allows suppliers to see customer names" do
@@ -131,7 +131,18 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
           it "shows line items supplied by my producers, with only contact names shown" do
             expect(row).to include("FirstName LastName")
             expect(row).not_to include("123-456", "City", order.email)
-            expect(row[2..5]).to eq [bill_address.full_name, "HIDDEN", "", ""]
+            expect(row[2..5]).to eq [bill_address.full_name, "< Hidden >", "", ""]
+          end
+        end
+
+        context "where the distributor allows suppliers to see customer phone and email" do
+          before do
+            distributor.update_columns show_customer_contacts_to_suppliers: true
+          end
+
+          it "shows line items supplied by my producers, with only contact details shown" do
+            expect(row).not_to include("FirstName LastName", "City")
+            expect(row[2..5]).to eq ["< Hidden >", order.email, "123-456", ""]
           end
         end
       end

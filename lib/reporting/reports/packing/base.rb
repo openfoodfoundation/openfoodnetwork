@@ -5,7 +5,7 @@ module Reporting
     module Packing
       class Base < ReportQueryTemplate
         def message
-          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+          I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
 
         def report_query
@@ -42,10 +42,10 @@ module Reporting
           lambda do
             {
               hub: distributor_alias[:name],
-              customer_code: masked(customer_table[:code]),
-              last_name: masked(bill_address_alias[:lastname]),
-              first_name: masked(bill_address_alias[:firstname]),
-              phone: masked(bill_address_alias[:phone]),
+              customer_code: mask_customer_name(customer_table[:code]),
+              last_name: mask_customer_name(bill_address_alias[:lastname]),
+              first_name: mask_customer_name(bill_address_alias[:firstname]),
+              phone: mask_contact_data(bill_address_alias[:phone]),
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,
