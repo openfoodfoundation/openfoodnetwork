@@ -134,7 +134,7 @@ class Enterprise < ApplicationRecord
             }, allow_blank: true
   validate :validate_white_label_logo_link
   validates :external_billing_id,
-            format: { with: /^\S+$/ },
+            format: { with: /\A\S+\Z/ },
             allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
