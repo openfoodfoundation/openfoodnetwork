@@ -12,6 +12,11 @@
     height: 100%;
     box-shadow: none;
 
+    &.changed {
+      border: 1px solid $color-txt-changed-brd;
+      border-radius: 4px;
+    }
+
     .tag-list {
       margin: 0;
       padding: 0;
