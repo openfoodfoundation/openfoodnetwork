@@ -9,6 +9,14 @@ describe("BulkFormController", () => {
   beforeAll(() => {
     const application = Application.start();
     application.register("bulk-form", bulk_form_controller);
+
+    // Mock hotkeys.js
+    const mockedHotkeys = jest.fn();
+    global.hotkeys = mockedHotkeys;
+  });
+
+  afterAll(() => {
+    delete global.hotkeys;
   });
 
   describe("Modifying input values", () => {
