@@ -1,7 +1,8 @@
 - #%div{ "data-controller": "tag-list-input-component--tag-list-input" }
-%div{ "data-controller": "tag-list-input-component--tag-list-input" }
-  = f.hidden_field method.to_sym, value: tags.join(","), "data-tag-list-input-component--tag-list-input-target": "tagList"
-  .tags-input{  }
+%div{ "data-controller": "tag-list-input-component--tag-list-input", "data-tag-list-input-component--tag-list-input-highlight-class-value": "changed" }
+  - # We use display:none instead of hidden field, so changes to the value can be picked up by the bulkFormController 
+  = f.text_field method.to_sym, value: tags.join(","), "data-tag-list-input-component--tag-list-input-target": "tagList", "style": "display: none" 
+  .tags-input
     .tags
       %ul.tag-list{"data-tag-list-input-component--tag-list-input-target": "list"}
         %template{"data-tag-list-input-component--tag-list-input-target": "template"}

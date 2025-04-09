@@ -13,7 +13,10 @@ describe("TagListInputController", () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="tag-list-input-component--tag-list-input">
+      <div 
+        data-controller="tag-list-input-component--tag-list-input" 
+        data-tag-list-input-component--tag-list-input-highlight-class-value="changed"
+      >
         <input 
           value="tag 1,tag 2,tag 3" 
           data-tag-list-input-component--tag-list-input-target="tagList" 
@@ -77,7 +80,6 @@ describe("TagListInputController", () => {
   describe("addTag", () => {
     beforeEach(() => {
       variant_add_tag.value = "new_tag";
-      // { key: "Enter" }
       variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
     });
 
@@ -94,6 +96,12 @@ describe("TagListInputController", () => {
 
     it("clears the tag input", () => {
       expect(variant_add_tag.value).toBe("");
+    });
+
+    it("higlights the tag list", () => {
+      const tagList = document.getElementsByClassName("tags")[0];
+
+      expect(tagList.classList).toContain("changed");
     });
   });
 
@@ -113,11 +121,17 @@ describe("TagListInputController", () => {
       // 1 template + 2 tags
       expect(tagList.childElementCount).toBe(3);
     });
+
+    it("higlights the tag list", () => {
+      const tagList = document.getElementsByClassName("tags")[0];
+
+      expect(tagList.classList).toContain("changed");
+    });
   });
 
   describe("filterInput", () => {
     it("removes comma from the tag input", () => {
-      variant_add_tag.value = "text"
+      variant_add_tag.value = "text";
       variant_add_tag.dispatchEvent(new KeyboardEvent("keyup", { key: "," }));
 
       expect(variant_add_tag.value).toBe("text");

@@ -24,7 +24,7 @@ export default class BulkFormController extends Controller {
 
   connect() {
     // disable form submit via enter key, so we can use enter key to create new product tags
-    hotkeys('enter', function (event, handler) {
+    hotkeys("enter", function (event, handler) {
       event.preventDefault();
     });
 
@@ -32,7 +32,6 @@ export default class BulkFormController extends Controller {
     this.form = this.element;
 
     // Start listening for any changes within the form
-    // TODO make sure tag inpug appreas here when deleted
     this.#registerElements(this.form.elements);
 
     this.toggleFormChanged();
@@ -174,6 +173,8 @@ export default class BulkFormController extends Controller {
 
       return !areBothBlank && selectedOption !== defaultSelected;
     } else {
+      // This doesn't work with hidden field
+      //   Workaround: use a text field with "display:none;"
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
   }
