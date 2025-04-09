@@ -347,6 +347,31 @@ RSpec.describe '
       variant3.update!(sku: "")
     end
 
+    it "shows report error at the bottom of page" do
+      login_as_admin
+      visit admin_reports_path
+
+      click_link 'All products'
+      report = Reporting::Reports::ProductsAndInventory::AllProducts
+
+      click_on "Go"
+
+      allow(report).to receive(:new).and_raise(StandardError, 'Provoked error for testing')
+      perform_enqueued_jobs(only: ReportJob)
+
+      expect(page).not_to have_selector ".loading"
+      expect(page).to have_button "Go", disabled: false
+      expect(page).to have_content 'This report failed. It may be too big to process. ' \
+                                   'We will look into it but please let us know ' \
+                                   'if the problem persists.'
+
+      # Admin shoulb be able to make some changes and retry
+      allow(report).to receive(:new).and_call_original
+
+      run_report
+      expect(page).to have_content "Supplier"
+    end
+
     it "shows products and inventory report" do
       login_as_admin
       visit admin_reports_path
