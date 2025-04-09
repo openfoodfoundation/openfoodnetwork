@@ -33,19 +33,21 @@ describe("BulkFormController", () => {
         <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
           <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
           <div id="changed_summary" data-bulk-form-target="changedSummary" data-translation-key="changed_summary"></div>
-          <div data-record-id="1">
-            <input id="input1a" type="text" value="initial1a">
-            <input id="input1b" type="text" value="initial1b">
-            <select id="select1">
-              <option>one</option>
-              <option selected>two</option>
-            </select>
-            <button>a button is counted as a form element, but value is undefined</button>
-          </div>
-          <div data-record-id="2">
-            <input id="input2" type="text" value="initial2">
-          </div>
-          <input type="submit">
+          <table class="products">
+            <div data-record-id="1">
+              <input id="input1a" type="text" value="initial1a">
+              <input id="input1b" type="text" value="initial1b">
+              <select id="select1">
+                <option>one</option>
+                <option selected>two</option>
+              </select>
+              <button>a button is counted as a form element, but value is undefined</button>
+            </div>
+            <div data-record-id="2">
+              <input id="input2" type="text" value="initial2">
+            </div>
+            <input type="submit">
+          </table>
         </form>
       `;
     });
@@ -104,13 +106,15 @@ describe("BulkFormController", () => {
         beforeEach(() => {
           document.body.innerHTML = `
             <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
-              <div data-record-id="1">
-                <select id="select1">
-                  <option value="1">one</option>
-                  <option value="2">two</option>
-                </select>
-              </div>
-              <input type="submit">
+              <table class="products">
+                <div data-record-id="1">
+                  <select id="select1">
+                    <option value="1">one</option>
+                    <option value="2">two</option>
+                  </select>
+                </div>
+                <input type="submit">
+              </table>
             </form>
           `;
         });
@@ -131,13 +135,15 @@ describe("BulkFormController", () => {
         beforeEach(() => {
           document.body.innerHTML = `
             <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
-              <div data-record-id="1">
-                <select id="select1">
-                  <option value="">blank</option>
-                  <option value="1">one</option>
-                </select>
-              </div>
-              <input type="submit">
+              <table class="products">
+                <div data-record-id="1">
+                  <select id="select1">
+                    <option value="">blank</option>
+                    <option value="1">one</option>
+                  </select>
+                </div>
+                <input type="submit">
+              </table>
             </form>
           `;
         });
@@ -221,13 +227,15 @@ describe("BulkFormController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
         <form data-controller="bulk-form" data-bulk-form-error-value="true">
-          <div id="actions" data-bulk-form-target="actions">
-            An error occurred.
-            <input type="submit">
-          </div>
-          <div data-record-id="1">
-            <input id="input1a" type="text" value="initial1a">
-          </div>
+          <table class="products">
+            <div id="actions" data-bulk-form-target="actions">
+              An error occurred.
+              <input type="submit">
+            </div>
+            <div data-record-id="1">
+              <input id="input1a" type="text" value="initial1a">
+            </div>
+          </table>
         </form>
       `;
 
@@ -258,16 +266,18 @@ describe("BulkFormController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
         <form id="form" data-controller="bulk-form" data-action="custom-event->bulk-form#registerElements",
-          <div data-record-id="1">
-            <input id="input1a" type="text" value="initial1a">
-            <template id="template">
-              <input id="input1b" type="text" value="initial1b">
-            </template>
-          </div>
-          <div data-record-id="2">
-            <input id="input2" type="text" value="initial2">
-          </div>
-          <input type="submit">
+          <table class="products">
+            <div data-record-id="1">
+              <input id="input1a" type="text" value="initial1a">
+              <template id="template">
+                <input id="input1b" type="text" value="initial1b">
+              </template>
+            </div>
+            <div data-record-id="2">
+              <input id="input2" type="text" value="initial2">
+            </div>
+            <input type="submit">
+          </table>
         </form>
       `;
     });
