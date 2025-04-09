@@ -44,6 +44,8 @@ module Admin
       end
     end
 
+    def new = super
+
     def edit
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
@@ -55,6 +57,8 @@ module Admin
       render cable_ready: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
         .morph("#permalink", partial("admin/enterprises/form/permalink"))
     end
+
+    def create = super
 
     def welcome
       render layout: "spree/layouts/bare_admin"

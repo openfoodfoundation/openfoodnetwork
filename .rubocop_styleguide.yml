@@ -51,6 +51,10 @@ Lint/UselessAssignment:
   Exclude:
     - spec/**/*
 
+Lint/UselessMethodDefinition:
+  Exclude:
+    - app/controllers/**/*
+
 Metrics:
   Enabled: true
 
