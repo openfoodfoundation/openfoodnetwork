@@ -135,7 +135,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
 
       expect(supplier_name_field).to eq supplier.name
       expect(supplier_vat_status_field).to eq "No"
-      expect(product_tax_category_field).to eq "none"
+      expect(product_tax_category_field).to eq I18n.t("admin.reports.none")
     end
   end
 
@@ -168,7 +168,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
 
       expect(supplier_name_field).to eq supplier.name
       expect(supplier_vat_status_field).to eq "Yes"
-      expect(product_tax_category_field).to eq "none"
+      expect(product_tax_category_field).to eq I18n.t("admin.reports.none")
     end
   end
 

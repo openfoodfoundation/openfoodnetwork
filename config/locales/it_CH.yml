@@ -1334,6 +1334,7 @@ it_CH:
       email_confirmation: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
       not_visible: "%{enterprise} non sono visibili e quindi non possono essere trovati nella mappa o nelle ricerche"
     reports:
+      none: Nessuno
       hidden: NASCOSTO
       unitsize: Dimensione unità
       total: TOTALE

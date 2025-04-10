@@ -32,7 +32,8 @@ module Reporting
                                                  o.email, a.phone, d.name,
                                                  [d.address.address1, d.address.address2,
                                                   d.address.city].join(" "),
-                                                 o.shipping_method.name, 1, o.total, "none"
+                                                 o.shipping_method.name, 1, o.total,
+                                                 I18n.t("admin.reports.none")
                                                ]])
             end
 

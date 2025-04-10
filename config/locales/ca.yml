@@ -1463,6 +1463,7 @@ ca:
       email_confirmation: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{email}."
       not_visible: "%{enterprise} no és visible i, per tant, no es pot trobar al mapa ni a les cerques"
     reports:
+      none: "Cap"
       deprecated: "Aquest informe és obsolet i serà eliminat en properes actualitzacions."
       hidden: OCULT
       unitsize: UNITAT DE MESURA

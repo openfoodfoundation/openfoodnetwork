@@ -1182,6 +1182,7 @@ nl_BE:
       email_confirmation: "E-mailbevestiging is lopende. We hebben een bevestigings-e-mail gestuurd naar %{email}."
       not_visible: "%{enterprise} niet zichtbaar is en dus niet kan worden gevonden op de kaart of in zoekopdrachten"
     reports:
+      none: Geen enkele
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: Totaal

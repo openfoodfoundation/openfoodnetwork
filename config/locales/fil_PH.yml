@@ -1157,6 +1157,7 @@ fil_PH:
       email_confirmation: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
       not_visible: "%{enterprise}ay hindi nakikita kaya hindi matagpuan sa mapa o sa kahit saang paghahanap"
     reports:
+      none: wala
       hidden: NAKATAGO
       unitsize: LAKI KADA YUNIT
       total: KABUUAN

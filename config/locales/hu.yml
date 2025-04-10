@@ -1632,6 +1632,7 @@ hu:
       email_confirmation: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{email}."
       not_visible: "%{enterprise} nem látható, ezért nem található a térképen vagy a keresésekben"
     reports:
+      none: Egyik sem
       deprecated: "Ez a jelentés elavult, és egy későbbi kiadásban eltávolításra kerül."
       hidden: REJTETT
       unitsize: EGYSÉGMÉRET

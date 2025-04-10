@@ -1105,6 +1105,7 @@ pl:
       email_confirmation: "Oczekuje na potwierdzenie e-mailem. Wysłaliśmy wiadomość e-mail z potwierdzeniem na adres %{email}."
       not_visible: "%{enterprise} nie jest widoczny, więc nie można go znaleźć na mapie ani w wynikach wyszukiwania"
     reports:
+      none: Brak
       hidden: UKRYTY
       unitsize: ROZMIAR JEDNOSTKI
       total: RAZEM

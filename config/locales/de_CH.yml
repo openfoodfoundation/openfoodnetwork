@@ -1367,6 +1367,7 @@ de_CH:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
+      reports:none: "Keine"
       hidden: AUSGEBLENDET
       unitsize: EINHEIT
       total: SUMME

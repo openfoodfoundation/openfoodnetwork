@@ -1511,6 +1511,7 @@ de_DE:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
+      none: Keine
       deprecated: "Dieser Bericht ist veraltet und wird in einer zukünftigen Version entfernt."
       hidden: AUSGEBLENDET
       unitsize: EINHEIT
