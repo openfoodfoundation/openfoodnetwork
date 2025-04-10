@@ -845,6 +845,8 @@ en_IN:
           enable_subscriptions_true: "Enabled"
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
+          customer_contacts_false: "Disabled"
+          customer_contacts_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with
@@ -1168,7 +1170,6 @@ en_IN:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
-      hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS

@@ -1098,6 +1098,8 @@ fr_BE:
           customer_names_tip: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport "
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
+          customer_contacts_false: "Désactivé"
+          customer_contacts_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
           shopfront_message_placeholder: >
               Un message facultatif pour souhaiter la bienvenue aux clients et leur
@@ -1464,7 +1466,6 @@ fr_BE:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise}n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
-      hidden: Masqué
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
@@ -3985,8 +3986,6 @@ fr_BE:
       reports:
         table:
           select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
-        customer_names_message:
-          customer_names_tip: "Si le nom des clients est caché pour des commandes qui vous concernent, vous pouvez contacter le distributeur et lui demander de modifier ses préférences afin d'autoriser ses fournisseurs à voir le nom des clients."
         products_and_inventory:
           all_products:
             message: "Notez que les niveaux de stock indiqués proviennent uniquement des listes de produits des fournisseurs. Si vous utilisez le \"catalogue magasin\" pour gérer vos stocks, ces valeurs seront ignorées dans ce rapport."

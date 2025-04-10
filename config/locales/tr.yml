@@ -924,6 +924,8 @@ tr:
           customer_names_tip: "Tedarikçilerinizin raporlardaki müşteri isimlerini görmesine izin verin"
           customer_names_false: "Kapalı"
           customer_names_true: "Etkin"
+          customer_contacts_false: "Kapalı"
+          customer_contacts_true: "Etkin"
           shopfront_message: "DÜKKAN MESAJINIZ"
           shopfront_message_placeholder: >
               Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
@@ -1252,7 +1254,6 @@ tr:
       email_confirmation: "E-posta onayı bekleniyor. %{email} adresine bir onay e-postası gönderdik."
       not_visible: "%{enterprise} görünür değil ve bu nedenle haritada veya aramalarda bulunamıyor"
     reports:
-      hidden: GİZLİ
       unitsize: ÖLÇÜ  BİRİMİ
       total: TOPLAM
       total_items: TÜM KALEMLER
@@ -3743,8 +3744,6 @@ tr:
       reports:
         table:
           select_and_search: "Filtreleri seçin ve verilerinize erişmek için %{option} üzerine tıklayın."
-        customer_names_message:
-          customer_names_tip: "Tedarik ettiğiniz siparişlerde müşteri isimleri gizli ise dağıtımcıya ulaşıp alışveriş tercihlerini tedarikçilerinin müşteri isimlerini görebilmelerini sağlayacak şekilde güncellemelerini isteyebilirsiniz. "
       users:
         index:
           listing_users: "Kullanıcılar Listeleniyor"

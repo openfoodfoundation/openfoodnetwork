@@ -1219,6 +1219,8 @@ es:
           customer_names_tip: "Permita que sus proveedores vean los nombres de sus consumidoras en los informes"
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
+          customer_contacts_false: "Deshabilitado"
+          customer_contacts_true: "Habilitado"
           shopfront_message: "Mensaje de la Tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
@@ -1601,7 +1603,7 @@ es:
       email_confirmation: "La confirmación de correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{email}."
       not_visible: "%{enterprise} no es visible y no se puede encontrar en el mapa o en búsquedas"
     reports:
-      hidden: OCULTO
+      hidden_field: "< Escondido >"
       unitsize: UNIDAD DE MEDIDA
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
@@ -1663,7 +1665,6 @@ es:
         no_report_type: "Por favor especifique un tipo de reporte"
         report_not_found: "El reporte no fue encontrado"
         missing_ransack_params: "Por favor proporcione los parámetros de búsqueda de Ransack en la solicitud"
-      hidden_field: "< Escondido >"
       summary_row:
         total: "TOTAL"
       table:
@@ -4249,8 +4250,6 @@ es:
       reports:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
-        customer_names_message:
-          customer_names_tip: "Si los nombres de las consumidoras están ocultos para los pedidos que ha suministrado, puede comunicarse con la distribuidora y preguntar si pueden actualizar sus preferencias de tienda para permitir que sus proveedores vean los nombres de las consumidoras."
       users:
         index:
           listing_users: "Listado de Usuarias"

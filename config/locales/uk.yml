@@ -1037,6 +1037,8 @@ uk:
           customer_names_tip: "Дозволити вашим постачальникам бачити імена клієнтів у звітах"
           customer_names_false: "Вимкнено"
           customer_names_true: "Увімкнено"
+          customer_contacts_false: "Вимкнено"
+          customer_contacts_true: "Увімкнено"
           shopfront_message: "Повідомлення вітрини магазину"
           shopfront_message_placeholder: >
               Додаткове повідомлення для привітання клієнтів і пояснення, як робити
@@ -1374,7 +1376,7 @@ uk:
       email_confirmation: "Очікується підтвердження електронною поштою. Ми надіслали електронний лист із підтвердженням на адресу %{email}."
       not_visible: "%{enterprise} не видно, тому його не можна знайти на карті чи в результатах пошуку"
     reports:
-      hidden: ПРИХОВАНО
+      hidden_field: "< Приховано >"
       unitsize: РОЗМІР
       total: РАЗОМ
       total_items: ВСЬОГО ПОЗИЦІЙ
@@ -1426,7 +1428,6 @@ uk:
         no_report_type: "Будь ласка, вкажіть тип звіту"
         report_not_found: "Звіт не знайдено"
         missing_ransack_params: "У запиті вкажіть параметри пошуку Ransack"
-      hidden_field: "< Приховано >"
       summary_row:
         total: "РАЗОМ"
       table:
@@ -3980,8 +3981,6 @@ uk:
       reports:
         table:
           select_and_search: "Виберіть фільтри та натисніть %{option}, щоб отримати доступ до своїх даних."
-        customer_names_message:
-          customer_names_tip: "Якщо імена клієнтів приховано для ваших замовлень, ви можете зв’язатися з дистриб’ютором і запитати, чи можуть вони оновити свої налаштування магазину, щоб їхні постачальники могли переглядати імена клієнтів."
       users:
         index:
           listing_users: "Список користувачів"

@@ -903,6 +903,8 @@ pt:
           enable_subscriptions_true: "Activo"
           customer_names_false: "Desactivado"
           customer_names_true: "Activo"
+          customer_contacts_false: "Desactivado"
+          customer_contacts_true: "Activo"
           shopfront_message: "Mensagem da Loja"
           shopfront_closed_message: "Mensagem de Loja Fechada"
           shopfront_closed_message_placeholder: >
@@ -1215,7 +1217,6 @@ pt:
       email_confirmation: "A confirmação do email está pendente. Enviámos um email de confirmação para %{email}."
       not_visible: "%{enterprise} não está visível portanto não pode ser encontrada nem no mapa nem nas pesquisas."
     reports:
-      hidden: ESCONDIDA
       unitsize: TAMANHO
       total: TOTAL
       total_items: ITENS TOTAIS

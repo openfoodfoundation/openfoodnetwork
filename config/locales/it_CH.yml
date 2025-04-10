@@ -1000,6 +1000,8 @@ it_CH:
           customer_names_tip: "Permetti ai tuoi fornitori di visualizzare i nomi dei tuoi clienti nei report."
           customer_names_false: "Disabilitata"
           customer_names_true: "Abilitata"
+          customer_contacts_false: "Disabilitata"
+          customer_contacts_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
           shopfront_message_placeholder: >
               Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come
@@ -1334,7 +1336,7 @@ it_CH:
       email_confirmation: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
       not_visible: "%{enterprise} non sono visibili e quindi non possono essere trovati nella mappa o nelle ricerche"
     reports:
-      hidden: NASCOSTO
+      hidden_field: "< Nascosto >"
       unitsize: Dimensione unità
       total: TOTALE
       total_items: TOTALE ARTICOLI
@@ -1383,7 +1385,6 @@ it_CH:
         no_report_type: "Per favore specifica un tipo di resoconto"
         report_not_found: "Resoconto non trovato"
         missing_ransack_params: "Per favore fornisci i parametri di ricerca Ransack nella richiesta."
-      hidden_field: "< Nascosto >"
       summary_row:
         total: "TOTALE"
       table:
@@ -3889,8 +3890,6 @@ it_CH:
       reports:
         table:
           select_and_search: "Seleziona filtri e clicca su %{option} per accedere al tuo dato"
-        customer_names_message:
-          customer_names_tip: "Se i nomi dei clienti sono nascosti nelle gentili richieste che hai evaso, puoi contattare il distributore e chiedergli di aggiornare le sue impostazioni per permettere ai suoi fornitori di visualizzare i nomi dei clienti."
       users:
         index:
           listing_users: "Elenco Utenti"

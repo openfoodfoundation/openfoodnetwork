@@ -1113,6 +1113,8 @@ ca:
           customer_names_tip: "Habiliteu als proveïdors veure els noms dels vostres clients als informes"
           customer_names_false: "Deshabilitat"
           customer_names_true: "Habilitat"
+          customer_contacts_false: "Deshabilitat"
+          customer_contacts_true: "Habilitat"
           shopfront_message: "Missatge de la botiga"
           shopfront_message_placeholder: >
               Un missatge opcional per donar la benvinguda als clients i explicar
@@ -1464,7 +1466,6 @@ ca:
       not_visible: "%{enterprise} no és visible i, per tant, no es pot trobar al mapa ni a les cerques"
     reports:
       deprecated: "Aquest informe és obsolet i serà eliminat en properes actualitzacions."
-      hidden: OCULT
       unitsize: UNITAT DE MESURA
       total: TOTAL
       total_items: ARTICLES TOTALS
@@ -4021,8 +4022,6 @@ ca:
       reports:
         table:
           select_and_search: "Seleccioneu els filtres i feu clic a %{option} per accedir a les vostres dades."
-        customer_names_message:
-          customer_names_tip: "Si els noms de les consumidores per a les comandes que heu subministrat apareixen amagats, podeu contactar amb la distribuïdora i preguntar-los si poden actualitzar les seves preferències de la botiga per permetre als seus proveïdors visualitzar els noms de les consumidores."
         products_and_inventory:
           all_products:
             message: "Pareu atenció al fet que els nivells d'estoc informats són només els de la llista de productes del proveïdor. Si feu servir l'inventari per a gestionar les vostres quantitats, aquests valors seran ignorats. "

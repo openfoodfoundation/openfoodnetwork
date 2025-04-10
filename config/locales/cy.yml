@@ -1156,6 +1156,8 @@ cy:
           customer_names_tip: "Galluogi eich cyflenwyr i weld enwau eich cwsmeriaid mewn adroddiadau"
           customer_names_false: "Analluogwyd"
           customer_names_true: "Galluogwyd"
+          customer_contacts_false: "Analluogwyd"
+          customer_contacts_true: "Galluogwyd"
           shopfront_message: "Neges Ffrynt y Siop"
           shopfront_message_placeholder: >
               Neges ddewisol i groesawu cwsmeriaid ac eluro sut i siopa gyda chi.
@@ -1534,7 +1536,7 @@ cy:
       not_visible: "nid yw %{enterprise} yn weladwy ac felly ni ellir ei ddarganfod ar y map nac mewn chwiliadau"
     reports:
       deprecated: "Anghymeradwywyd yr adroddiad hwn a chaiff ei ddileu mewn datganiad yn y dyfodol"
-      hidden: CUDD
+      hidden_field: "< Cudd >"
       unitsize: MAINT UNEDAU
       total: CYFANSWM
       total_items: CYFANSWM EITEMAU
@@ -1606,7 +1608,6 @@ cy:
         no_report_type: "Noder math o adroddiad"
         report_not_found: "Ni chafwyd hyd i'r adroddiad"
         missing_ransack_params: "Gofynnir ichi nodi paramedrau chwilio Ransack yn y cais"
-      hidden_field: "< Cudd >"
       summary_row:
         total: "CYFANSWM"
       table:
@@ -4275,8 +4276,6 @@ cy:
       reports:
         table:
           select_and_search: "Dewis hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
-        customer_names_message:
-          customer_names_tip: "Os cuddiwyd enwau cwsmeriaid ar gyfer archebion a gyflenwyd gennych, gallwch gysylltu â'r dosbarthwr a gofyn a yw'n bosib iddyn nhw ddiweddaru eu dewisiadau siop i ganiatáu i'w cyflenwyr weld enwau cwsmeriaid."
         products_and_inventory:
           all_products:
             message: "Noder y caiff lefelau stoc eu hadrodd o restrau cynnyrch cyflenwyr yn unig. Os ydych yn defnyddio’r rhestr stoc i reoli maint eich stoc, caiff y gwerthoedd hyn eu hanwybyddu yn yr adroddiad hwn."

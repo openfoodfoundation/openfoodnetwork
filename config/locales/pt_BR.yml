@@ -940,6 +940,8 @@ pt_BR:
           customer_names_tip: "Permitir que seus fornecedores vejam os nomes dos clientes nos relatórios"
           customer_names_false: "Desativado"
           customer_names_true: "Ativado"
+          customer_contacts_false: "Desativado"
+          customer_contacts_true: "Ativado"
           shopfront_message: "Mensagem da loja virtual"
           shopfront_message_placeholder: >
               Uma mensagem opcional para dar as boas-vindas aos clientes e explicar
@@ -1262,7 +1264,6 @@ pt_BR:
       email_confirmation: "A confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
       not_visible: "%{enterprise} não está visível e, portanto, não pode ser encontrado no mapa ou em pesquisas"
     reports:
-      hidden: ESCONDIDO
       unitsize: Unidade de Medida
       total: TOTAL
       total_items: TOTAL DE ITEMS
@@ -3738,8 +3739,6 @@ pt_BR:
       reports:
         table:
           select_and_search: "Selecione os filtros e clique em %{option} para acessar seus dados."
-        customer_names_message:
-          customer_names_tip: "Se os nomes dos clientes estiverem ocultos na lista, você pode entrar em contato com o seu distribuidor e perguntar se ele pode atualizar as preferências de modo que os fornecedores possam ver os nomes dos clientes."
       users:
         index:
           listing_users: "Listando Usuários"

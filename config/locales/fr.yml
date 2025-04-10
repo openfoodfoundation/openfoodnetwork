@@ -1279,6 +1279,10 @@ fr:
           customer_names_tip: "Permettre aux producteurs de voir les noms de vos acheteurs"
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
+          customer_contacts_in_reports: "Affichage des contacts clients"
+          customer_contacts_tip: "Permettre aux producteurs fournissant la boutique de voir l'adresse mail et le téléphone des clients"
+          customer_contacts_false: "Désactivé"
+          customer_contacts_true: "Activé"
           shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
@@ -1691,7 +1695,7 @@ fr:
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
-      hidden: Masqué
+      hidden_field: "< Masqué >"
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
@@ -1770,7 +1774,6 @@ fr:
         no_report_type: "Merci de sélectionner un type de rapport"
         report_not_found: "Le rapport n'a pas été trouvé"
         missing_ransack_params: "Veuillez renseigner un filtre ou une sélection de dates"
-      hidden_field: "< Masqué >"
       summary_row:
         total: "Total"
       table:
@@ -4518,8 +4521,7 @@ fr:
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
-        customer_names_message:
-          customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
+        hidden_customer_details_tip: "Si les noms et/ou contacts des clients sont masqués, vous pouvez demander au gestionnaire de la boutique de modifier les paramètres de sa boutique pour vous donner accès à cette information en tant que fournisseur."
         products_and_inventory:
           all_products:
             message: "Attention les stocks correspondent aux stocks producteurs et non au stock du catalogue boutique."

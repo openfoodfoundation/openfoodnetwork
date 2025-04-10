@@ -1212,6 +1212,8 @@ eu:
           customer_names_tip: "Utzi hornitzaileei txostenetan kontsumitzaileen izenak ikusten"
           customer_names_false: "Desgaitua"
           customer_names_true: "Gaituta"
+          customer_contacts_false: "Desgaitua"
+          customer_contacts_true: "Gaituta"
           shopfront_message: "Dendaren mezua"
           shopfront_message_placeholder: >
               Erosleentzako aukerako ongietorri-mezua, gunean nola erosi  behar den
@@ -1593,7 +1595,7 @@ eu:
       email_confirmation: "Posta elektronikoaren baieztapena egiteke dago. Baieztapen-mezu elektroniko bat bidali dugu %{email} helbidera. "
       not_visible: " %{enterprise} ez da ikusten eta ezin da mapan edo bilaketetan aurkitu"
     reports:
-      hidden: EZKUTUAN
+      hidden_field: "< Ezkutatuta >"
       unitsize: NEURRI-UNITATEA
       total: GUZTIRA
       total_items: ARTIKULUAK GUZTIRA
@@ -1655,7 +1657,6 @@ eu:
         no_report_type: "Mesedez, zehaztu txosten mota bat"
         report_not_found: "Txostena ez da aurkitu"
         missing_ransack_params: "Mesedez, eman Ransacken bilaketa-parametroak eskaeran"
-      hidden_field: "< Ezkutatuta >"
       summary_row:
         total: "GUZTIRA"
       table:
@@ -4138,8 +4139,6 @@ eu:
       reports:
         table:
           select_and_search: "Aukeratu iragazkiak eta egin klik %{option} zure datuetara sartzeko."
-        customer_names_message:
-          customer_names_tip: "Kontsumitzaileen izenak ezkutuan badaude hornitu dituen eskaeretarako, banatzailearekin harremanetan jar zaitezke eta galdetu ea dendako lehentasunak eguneratu ditzaketen hornitzaileek kontsumitzaileen izenak ikus ditzaten."
       users:
         index:
           listing_users: "Erabiltzaileen zerrenda"

@@ -1038,6 +1038,8 @@ es_CR:
           customer_names_tip: "Permita que sus proveedores vean los nombres de sus clientes en los informes"
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
+          customer_contacts_false: "Deshabilitado"
+          customer_contacts_true: "Habilitado"
           shopfront_message: "Mensaje de la tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
@@ -1375,7 +1377,7 @@ es_CR:
       email_confirmation: "La confirmación de correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{email}."
       not_visible: "%{enterprise} no es visible y no se puede encontrar en el mapa o en búsquedas"
     reports:
-      hidden: OCULTO
+      hidden_field: "< Oculto >"
       unitsize: TAMAÑO DE LA UNIDAD
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
@@ -1427,7 +1429,6 @@ es_CR:
         no_report_type: "Especifique un tipo de informe"
         report_not_found: "Informe no encontrado"
         missing_ransack_params: "Proporcione los parámetros de búsqueda de Ransack en la solicitud"
-      hidden_field: "< Oculto >"
       summary_row:
         total: "TOTAL"
       table:

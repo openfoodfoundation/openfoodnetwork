@@ -1023,6 +1023,8 @@ ko:
           customer_names_tip: "공급업체가 보고서에서 고객 이름을 볼 수 있도록 지원"
           customer_names_false: "비활성화"
           customer_names_true: "활성화"
+          customer_contacts_false: "비활성화"
+          customer_contacts_true: "활성화"
           shopfront_message: "상점 메세지"
           shopfront_message_placeholder: >
               고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
@@ -1354,7 +1356,7 @@ ko:
       email_confirmation: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
       not_visible: "%{enterprise}가 표시되지 않으므로 지도 또는 검색에서 찾을 수 없습니다."
     reports:
-      hidden: 숨김
+      hidden_field: "< 숨기기 >"
       unitsize: 단위 크기
       total: 총량
       total_items: 총 항목 수
@@ -1406,7 +1408,6 @@ ko:
         no_report_type: "보고서 유형을 지정하십시오."
         report_not_found: "보고서를 찾을 수 없음"
         missing_ransack_params: "요구 사항에 Ransack 검색 매개 변수를 제공하십시오."
-      hidden_field: "< 숨기기 >"
       summary_row:
         total: "총량"
       table:
@@ -3855,8 +3856,6 @@ ko:
       reports:
         table:
           select_and_search: "필터를 선택하고 %{option}를 클릭하여 데이터에 액세스합니다."
-        customer_names_message:
-          customer_names_tip: "제공한 주문에 대해 고객 이름이 숨겨져 있는 경우 대리점에 연락하여 공급업체가 고객 이름을 볼 수 있도록 상점 기본 설정을 업데이트할 수 있는지 물어볼 수 있습니다."
       users:
         index:
           listing_users: "사용자 정렬"

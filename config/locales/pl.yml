@@ -1105,7 +1105,6 @@ pl:
       email_confirmation: "Oczekuje na potwierdzenie e-mailem. Wysłaliśmy wiadomość e-mail z potwierdzeniem na adres %{email}."
       not_visible: "%{enterprise} nie jest widoczny, więc nie można go znaleźć na mapie ani w wynikach wyszukiwania"
     reports:
-      hidden: UKRYTY
       unitsize: ROZMIAR JEDNOSTKI
       total: RAZEM
       total_items: RAZEM POZYCJE
@@ -3412,8 +3411,6 @@ pl:
       reports:
         table:
           select_and_search: "Wybierz filtry i kliknij %{option}, aby uzyskać dostęp do swoich danych."
-        customer_names_message:
-          customer_names_tip: "Jeśli nazwy klientów są ukryte w zamówieniach, które dostarczyłeś, możesz skontaktować się z dystrybutorem i zapytać, czy może zaktualizować preferencje sklepu, aby umożliwić dostawcom przeglądanie nazw klientów."
       users:
         index:
           listing_users: "Lista użytkowników"

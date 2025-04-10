@@ -868,6 +868,8 @@ es_CO:
           customer_names_tip: "Permita que sus proveedores vean los nombres de sus clientes en los informes"
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
+          customer_contacts_false: "Deshabilitado"
+          customer_contacts_true: "Habilitado"
           shopfront_message: "Mensaje de la tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
@@ -1190,7 +1192,6 @@ es_CO:
       email_confirmation: "La confirmación de correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{email}."
       not_visible: "%{enterprise} no es visible y no se puede encontrar en el mapa o en búsquedas"
     reports:
-      hidden: OCULTO
       unitsize: TAMAÑO DE LA UNIDAD
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
@@ -3549,8 +3550,6 @@ es_CO:
       reports:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
-        customer_names_message:
-          customer_names_tip: "Si los nombres de los clientes están ocultos para los pedidos que ha suministrado, puede comunicarse con el distribuidor y preguntar si pueden actualizar sus preferencias de tienda para permitir que sus proveedores vean los nombres de los clientes."
       users:
         index:
           listing_users: "Listando usuarios"

@@ -755,7 +755,6 @@ sv:
       email_confirmation: "E-postbekräftelse är pågående. Vi har skickat ett bekräftelsemail till %{email}."
       not_visible: "%{enterprise} är inte synlig och kan därför inte hittas på kartan eller i sökningar"
     reports:
-      hidden: DOLD
       unitsize: ENHETSTORLEK
       total: SUMMA
       total_items: ANTAL ARTIKLAR

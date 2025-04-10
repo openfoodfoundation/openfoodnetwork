@@ -859,6 +859,8 @@ nl_BE:
           customer_names_tip: "Schakel in dat je leveranciers de namen van de klanten kunnen zien in rapporten"
           customer_names_false: "Deactiveer"
           customer_names_true: "Activeer"
+          customer_contacts_false: "Deactiveer"
+          customer_contacts_true: "Activeer"
           shopfront_message: "Etalage Boodschap"
           shopfront_message_placeholder: >
               Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met
@@ -1182,7 +1184,6 @@ nl_BE:
       email_confirmation: "E-mailbevestiging is lopende. We hebben een bevestigings-e-mail gestuurd naar %{email}."
       not_visible: "%{enterprise} niet zichtbaar is en dus niet kan worden gevonden op de kaart of in zoekopdrachten"
     reports:
-      hidden: HIDDEN
       unitsize: UNITSIZE
       total: Totaal
       total_items: TOTAAL ITEMEN
@@ -3449,8 +3450,6 @@ nl_BE:
       reports:
         table:
           select_and_search: "Selecteer de filters en klik op 1%{option} om uw gegevens tebereiken"
-        customer_names_message:
-          customer_names_tip: "Als klanten namen verstopt zijn voor bestelingen dat u heb geleverd, dan kunt u de distibuteur contacteren en vragen of ze hun shop voorkeur kunnen bijwerken zodat de leveranciers de namen van de klanten kan zien."
       users:
         index:
           listing_users: "Advertentiegebruikers"

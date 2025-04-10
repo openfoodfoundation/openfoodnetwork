@@ -1244,6 +1244,8 @@ nb:
           customer_names_tip: "La leverandørene dine se kundenes navn i rapporter"
           customer_names_false: "Deaktivert"
           customer_names_true: "Aktivert"
+          customer_contacts_false: "Deaktivert"
+          customer_contacts_true: "Aktivert"
           shopfront_message: "Melding Butikk"
           shopfront_message_placeholder: >
               En valgfri melding for å ønske kunder velkommen og forklare hvordan
@@ -1646,7 +1648,7 @@ nb:
       not_visible: "%{enterprise} er ikke synlig og kan derfor ikke finnes på kartet eller i søk"
     reports:
       deprecated: "Denne rapporten er avviklet og vil bli fjernet i en fremtidig utgivelse."
-      hidden: SKJULTE
+      hidden_field: "&lt; Skjult &gt;"
       unitsize: ENHETSSTØRRELSE
       total: SUM
       total_items: TOTALT ANTALL
@@ -1720,7 +1722,6 @@ nb:
         no_report_type: "Vennligst spesifiser en rapporttype"
         report_not_found: "Rapporten ble ikke funnet"
         missing_ransack_params: "Vennligst oppgi Ransack søkeparametere i forespørselen"
-      hidden_field: "&lt; Skjult &gt;"
       summary_row:
         total: "SUM"
       table:
@@ -4377,8 +4378,6 @@ nb:
       reports:
         table:
           select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
-        customer_names_message:
-          customer_names_tip: "Hvis kundenavnene er skjult for bestillinger du har levert, kan du kontakte distributøren og spørre om de kan oppdatere sine butikkinnstillinger slik at leverandørene kan se kundenavn."
         products_and_inventory:
           all_products:
             message: "Vær oppmerksom på at rapporterte lagernivåer kun er fra leverandørens produktlister. Hvis du bruker Inventar til å administrere lagerbeholdningen, vil disse verdiene bli ignorert i denne rapporten."

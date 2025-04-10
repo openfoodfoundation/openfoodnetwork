@@ -1052,6 +1052,8 @@ ar:
           customer_names_tip: "قم بتمكين مورديك من رؤية أسماء عملائك في التقارير"
           customer_names_false: "تعليق"
           customer_names_true: "تمكين"
+          customer_contacts_false: "تعليق"
+          customer_contacts_true: "تمكين"
           shopfront_message: "رسالة واجهة المتجر"
           shopfront_message_placeholder: >
               رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال
@@ -1403,7 +1405,7 @@ ar:
       email_confirmation: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا لك رسالة تأكيد على البريد الإلكتروني إلى %{email}."
       not_visible: "%{enterprise} غير مرئي وبالتالي لا يمكن العثور عليه على الخريطة أو في عمليات البحث"
     reports:
-      hidden: خفية
+      hidden_field: "< Hidden >"
       unitsize: حجم الوحدة
       total: مجموع
       total_items: البنود الكلية
@@ -1461,7 +1463,6 @@ ar:
         no_report_type: "الرجاء تحديد نوع التقرير"
         report_not_found: "التقرير غير موجود"
         missing_ransack_params: "يرجى تقديم معلمات بحث Ransack في الطلب"
-      hidden_field: "< Hidden >"
       summary_row:
         total: "مجموع"
       table:
@@ -4138,8 +4139,6 @@ ar:
       reports:
         table:
           select_and_search: "حدد المرشحات وانقر على %{option} للوصول إلى البيانات الخاصة بك."
-        customer_names_message:
-          customer_names_tip: "إذا كانت أسماء العملاء مخفية للطلبات التي قدمتها ، فيمكنك الاتصال بالموزع والسؤال عما إذا كان بإمكانهم تحديث تفضيلات متجرهم للسماح لمورديهم بمشاهدة أسماء العملاء."
         products_and_inventory:
           all_products:
             message: "لاحظ أن مستويات المخزون المبلغ عنها هي من قوائم منتجات الموردين فقط. إذا كنت تستخدم المخزون لإدارة كميات مخزونك ، فسيتم تجاهل هذه القيم في هذا التقرير."

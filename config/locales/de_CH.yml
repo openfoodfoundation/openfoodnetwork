@@ -1031,6 +1031,8 @@ de_CH:
           customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
           customer_names_false: "deaktiviert"
           customer_names_true: "aktiviert"
+          customer_contacts_false: "deaktiviert"
+          customer_contacts_true: "aktiviert"
           shopfront_message: "'Willkommen'-Nachricht im Laden"
           shopfront_message_placeholder: >
               Eine optionale Nachricht, um Kunden willkommen zu heissen und zu erklären,
@@ -1367,7 +1369,7 @@ de_CH:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
-      hidden: AUSGEBLENDET
+      hidden_field: "< verborgen >"
       unitsize: EINHEIT
       total: SUMME
       total_items: GESAMTANZAHL
@@ -1419,7 +1421,6 @@ de_CH:
         no_report_type: "Bitte wählen Sie eine Berichtsart aus."
         report_not_found: "Bericht wurde nicht gefunden."
         missing_ransack_params: "Bitte geben Sie die Suchparameter von Ransack in der Anfrage an."
-      hidden_field: "< verborgen >"
       summary_row:
         total: "SUMME"
       table:
@@ -3932,8 +3933,6 @@ de_CH:
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
-        customer_names_message:
-          customer_names_tip: "Wenn Kundennamen für von Ihnen gelieferte Bestellungen ausgeblendet sind, können Sie sich an den Händler wenden und ihn bitten, seine Ladeneinstellungen anzupassen, damit seine Lieferanten Kundennamen anzeigen können."
       users:
         index:
           listing_users: "Benutzer verwalten"

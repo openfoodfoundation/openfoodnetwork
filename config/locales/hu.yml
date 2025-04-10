@@ -1236,6 +1236,8 @@ hu:
           customer_names_tip: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
           customer_names_false: "Tiltva"
           customer_names_true: "Engedélyezve"
+          customer_contacts_false: "Tiltva"
+          customer_contacts_true: "Engedélyezve"
           shopfront_message: "Online Kirakat üzenete"
           shopfront_message_placeholder: >
               Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
@@ -1633,7 +1635,7 @@ hu:
       not_visible: "%{enterprise} nem látható, ezért nem található a térképen vagy a keresésekben"
     reports:
       deprecated: "Ez a jelentés elavult, és egy későbbi kiadásban eltávolításra kerül."
-      hidden: REJTETT
+      hidden_field: "< Rejtett >"
       unitsize: EGYSÉGMÉRET
       total: ÖSSZESEN
       total_items: TÉTEL ÖSSZESEN
@@ -1710,7 +1712,6 @@ hu:
         no_report_type: "Adja meg a jelentés típusát"
         report_not_found: "A jelentés nem található"
         missing_ransack_params: "Kérjük, adja meg a Ransack keresési paramétereit a kérelemben"
-      hidden_field: "< Rejtett >"
       summary_row:
         total: "ÖSSZESEN"
       table:
@@ -2030,7 +2031,7 @@ hu:
       footer_join_headline: "Csatlakozz hozzánk"
       footer_join_body: "Hozz létre egy termelői profilt, élelmiszerközösséget, vagy fogyasztói csoportot az Open Food Network oldalán."
       footer_join_cta: "Tovább olvasok!"
-      footer_legal_call: "Olvasd el a mi"
+      footer_legal_call: "Olvasd el az"
       footer_legal_visit: "Elérhetőségünk"
       footer_legal_text_html: "Az Open Food Network egy ingyenes és nyílt forráskódú szoftverplatform. Tartalmunk licence a %{content_license}, kódunk pedig %{code_license}."
       footer_data_text_with_privacy_policy_html: "Gondosan vigyázunk adataidra. Tekintsd meg %{privacy_policy} és %{cookies_policy}"
@@ -2382,7 +2383,7 @@ hu:
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "Nyitólap"
-  shopping_tabs_shop: "Átvételi Pont."
+  shopping_tabs_shop: "Kínálat"
   shopping_tabs_about: "Bemutatkozás"
   shopping_tabs_producers: "Termelők"
   shopping_tabs_contact: "Kapcsolat"
@@ -4380,8 +4381,6 @@ hu:
       reports:
         table:
           select_and_search: "Válaszd ki a szűrőket, és kattints a %{option} elemre az adatok eléréséhez."
-        customer_names_message:
-          customer_names_tip: "Ha az általad szállított rendeléseknél a vásárlók nevei el vannak rejtve, felveheted a kapcsolatot az elosztóval, és megkérdezheted, hogy frissítik-e az átvételi pont beállításait, hogy beszállítóként megtekinthesd a vásárlók nevét."
         products_and_inventory:
           all_products:
             message: "Felhívjuk a figyelmed arra, hogy a megadott készletszintek csak a beszállítói terméklistákból származnak. Ha a készletmennyiségek kezelésére a Készletnyilvántartást használod, akkor ezeket az értékeket a jelentés nem veszi figyelembe."

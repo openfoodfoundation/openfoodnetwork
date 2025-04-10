@@ -836,6 +836,8 @@ fil_PH:
           enable_subscriptions_true: "pinagana"
           customer_names_false: "huwag paganahin"
           customer_names_true: "pinagana"
+          customer_contacts_false: "huwag paganahin"
+          customer_contacts_true: "pinagana"
           shopfront_message: "mensahe sa Shopfront"
           shopfront_message_placeholder: >
               opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag
@@ -1157,7 +1159,6 @@ fil_PH:
       email_confirmation: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
       not_visible: "%{enterprise}ay hindi nakikita kaya hindi matagpuan sa mapa o sa kahit saang paghahanap"
     reports:
-      hidden: NAKATAGO
       unitsize: LAKI KADA YUNIT
       total: KABUUAN
       total_items: KABUUAN NG MGA ITEM
