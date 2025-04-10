@@ -5,13 +5,23 @@ export default class extends Controller {
   static values = { highlightClass: String };
 
   addTag() {
+    // Check if tag already exist
+    const newTagName = this.newTagTarget.value
+    const tags = this.tagListTarget.value.split(",");
+    const index = tags.indexOf(newTagName);
+    if (index != -1) {
+      // highlight the value in red
+      this.newTagTarget.classList.add("tag-error") 
+      return
+    } 
+    
     // add to tagList
-    this.tagListTarget.value = this.tagListTarget.value.concat(`,${this.newTagTarget.value}`);
+    this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
 
     // Create new li component with value
     const newTagElement = this.templateTarget.content.cloneNode(true);
     const spanElement = newTagElement.querySelector("span");
-    spanElement.innerText = this.newTagTarget.value;
+    spanElement.innerText = newTagName;
     this.listTarget.appendChild(newTagElement);
 
     this.#highlightList();
@@ -38,8 +48,13 @@ export default class extends Controller {
     event.srcElement.parentElement.parentElement.remove();
   }
 
-  // Strip comma from tag name
   filterInput(event) {
+    // clear error class if key is not enter
+    if (event.key !== "Enter") {
+      this.newTagTarget.classList.remove("tag-error") 
+    }
+    
+    // Strip comma from tag name
     if (event.key === ",") {
       event.srcElement.value = event.srcElement.value.replace(",", "");
     }

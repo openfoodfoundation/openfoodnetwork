@@ -103,6 +103,26 @@ describe("TagListInputController", () => {
 
       expect(tagList.classList).toContain("changed");
     });
+
+    describe("when tag already exist", () => {
+      beforeEach(() => {
+        // Trying to add an existing tag
+        variant_add_tag.value = "tag 2";
+        variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+      });
+
+      it("doesn't add the tag", () => {
+        const tagList = document.getElementsByClassName("tag-list")[0];
+
+        // 1 template + 4 tags
+        expect(tagList.childElementCount).toBe(5);
+        expect(variant_add_tag.value).toBe("tag 2");
+      });
+
+      it("highlights the new tag name in red", () => {
+        expect(variant_add_tag.classList).toContain("tag-error")
+      });
+    })
   });
 
   describe("removeTag", () => {
@@ -135,6 +155,15 @@ describe("TagListInputController", () => {
       variant_add_tag.dispatchEvent(new KeyboardEvent("keyup", { key: "," }));
 
       expect(variant_add_tag.value).toBe("text");
+    });
+
+    it("removes error highlight", () => {
+      variant_add_tag.value = "text";
+      variant_add_tag.classList.add("tag-error")
+
+      variant_add_tag.dispatchEvent(new KeyboardEvent("keyup", { key: "a" }));
+
+      expect(variant_add_tag.classList).not.toContain("tag-error")
     });
   });
 });
