@@ -636,6 +636,7 @@ en:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags 
       columns_selector:
         unit: Unit
         price: Price
@@ -1005,6 +1006,7 @@ en:
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
         select_unit_scale: Select unit scale
+        add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product

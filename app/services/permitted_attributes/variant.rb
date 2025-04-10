@@ -8,7 +8,7 @@ module PermittedAttributes
         :shipping_category_id, :price, :unit_value,
         :unit_description, :variant_unit, :variant_unit_name, :variant_unit_scale, :display_name,
         :display_as, :tax_category_id, :weight, :height, :width, :depth, :taxon_ids,
-        :primary_taxon_id, :supplier_id
+        :primary_taxon_id, :supplier_id, :variant_tag_list
       ]
     end
   end
