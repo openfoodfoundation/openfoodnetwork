@@ -1,5 +1,5 @@
 #login-content
-  = form_with url: spree_user_session_path, scope: :spree_user, data: { remote: "true" } do |form|
+  = form_with url: spree_user_session_path, scope: :spree_user, data: { turbo: true } do |form|
     .row
       .large-12.columns#login-feedback
         - confirmation_result = request.query_parameters[:validation]
@@ -10,7 +10,7 @@
     .row
       .large-12.columns
         = form.label :email, t(:email)
-        = form.email_field :email, { tabindex: 1, inputmode: "email", autocomplete: "off", "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+        = form.email_field :email, { tabindex: 1, inputmode: "email", autocomplete: "off" }
     .row
       .large-12.columns
         = form.label :password, t(:password)
