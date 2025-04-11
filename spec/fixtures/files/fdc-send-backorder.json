@@ -1,0 +1,51 @@
+{
+  "@context": "https://www.datafoodconsortium.org",
+  "@graph": [
+    {
+      "@id": "http://127.0.0.1:52057/api/dfc/enterprises/10000/orders",
+      "@type": "dfc-b:Order",
+      "dfc-b:belongsTo": "http://127.0.0.1:52057/api/dfc/enterprises/10000/supplied_products",
+      "dfc-b:hasPart": "http://127.0.0.1:52057/api/dfc/enterprises/10000/orders/OrderLines/1",
+      "dfc-b:orderedBy": "http://127.0.0.1:52057/api/dfc/enterprises/11000",
+      "dfc-b:hasOrderStatus": "dfc-v:Held"
+    },
+    {
+      "@id": "http://127.0.0.1:52057/api/dfc/enterprises/10000/orders/OrderLines/1",
+      "@type": "dfc-b:OrderLine",
+      "dfc-b:quantity": 1,
+      "dfc-b:concerns": "http://127.0.0.1:52057/api/dfc/enterprises/10000/offers/10001"
+    },
+    {
+      "@id": "http://127.0.0.1:52057/api/dfc/enterprises/10000/offers/10001",
+      "@type": "dfc-b:Offer",
+      "dfc-b:hasPrice": {
+        "@type": "dfc-b:Price",
+        "dfc-b:value": 19.99,
+        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+      },
+      "dfc-b:stockLimitation": 0,
+      "dfc-b:offeredItem": "http://127.0.0.1:52057/api/dfc/enterprises/10000/supplied_products/10001"
+    },
+    {
+      "@id": "http://127.0.0.1:52057/api/dfc/enterprises/10000/supplied_products/10001",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:name": "Product #1 - 6206 - 1g",
+      "dfc-b:description": "Reiciendis quia veniam officiis facere magni quibusdam recusandae. Nesciunt ipsa ab libero vel distinctio asperiores architecto. Mollitia laboriosam voluptates sunt dolores pariatur iusto cupiditate quis.\nAliquid itaque a nobis quia in fugiat. Magnam libero dolores in quo nemo sed. Nisi quasi consequuntur pariatur eius odio. Incidunt quos voluptas quam quod asperiores itaque aliquid. Quasi laboriosam ullam ipsam cum aliquid corporis dolorem.\nProvident officiis atque dolorem veniam et est repudiandae nostrum. Est ullam delectus qui at esse consectetur sit. Veniam eius quam commodi rerum cum dignissimos porro. Voluptate consectetur expedita soluta cum. Amet ab architecto beatae fugit qui facilis.",
+      "dfc-b:hasQuantity": {
+        "@type": "dfc-b:QuantitativeValue",
+        "dfc-b:hasUnit": "dfc-m:Gram",
+        "dfc-b:value": 1
+      },
+      "dfc-b:referencedBy": "http://127.0.0.1:52057/api/dfc/enterprises/10000/catalog_items/10001",
+      "dfc-b:isVariantOf": "http://127.0.0.1:52057/api/dfc/product_groups/8002",
+      "ofn:spree_product_id": 8002,
+      "ofn:spree_product_uri": "http://127.0.0.1:52057/api/dfc/enterprises/10000?spree_product_id=8002"
+    },
+    {
+      "@id": "http://127.0.0.1:52057/api/dfc/enterprises/10000/supplied_products",
+      "@type": "dfc-b:SaleSession",
+      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+    }
+  ]
+}
