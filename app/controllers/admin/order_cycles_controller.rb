@@ -26,6 +26,10 @@ module Admin
       end
     end
 
+    def incoming; end
+    def outgoing; end
+    def checkout_options; end
+
     def show
       respond_to do |format|
         format.html do
@@ -59,10 +63,6 @@ module Admin
       end
     end
 
-    def set_order_cycle_id
-      params[:id] = params[:order_cycle_id]
-    end
-
     def update
       @order_cycle_form = set_order_cycle_form
       if @order_cycle_form.save
@@ -80,6 +80,14 @@ module Admin
     rescue DateTimeChangeError
       render json: { trigger_action: params[:trigger_action] },
              status: :unprocessable_entity
+    end
+
+    def destroy
+      super
+    end
+
+    def set_order_cycle_id
+      params[:id] = params[:order_cycle_id]
     end
 
     def bulk_update

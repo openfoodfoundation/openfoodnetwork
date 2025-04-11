@@ -6,6 +6,8 @@ module Admin
     before_action :load_properties
     before_action :setup_property, only: [:index]
 
+    def index; end
+
     private
 
     def collection_url

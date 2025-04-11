@@ -474,15 +474,15 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 35
+# Offense count: 25
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb, app/mailers/**/*.rb
 Rails/LexicallyScopedActionFilter:
   Exclude:
-    - 'app/controllers/admin/enterprise_groups_controller.rb'
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/admin/producer_properties_controller.rb'
+    # - 'app/controllers/admin/enterprise_groups_controller.rb'
+    # - 'app/controllers/admin/enterprises_controller.rb'
+    # - 'app/controllers/admin/order_cycles_controller.rb'
+    # - 'app/controllers/admin/producer_properties_controller.rb'
     - 'app/controllers/admin/product_import_controller.rb'
     - 'app/controllers/admin/schedules_controller.rb'
     - 'app/controllers/admin/subscriptions_controller.rb'

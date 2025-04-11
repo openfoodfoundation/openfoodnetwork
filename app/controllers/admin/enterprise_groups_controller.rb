@@ -9,6 +9,14 @@ module Admin
       @enterprise_groups = @enterprise_groups.managed_by(spree_current_user)
     end
 
+    def new = super
+
+    def edit = super
+
+    def create = super
+
+    def update = super
+
     def move_up
       EnterpriseGroup.with_isolation_level_serializable do
         @enterprise_group = find_resource
