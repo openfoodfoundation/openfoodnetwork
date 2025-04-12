@@ -2045,7 +2045,7 @@ hu:
         contact: "Kapcsolat"
         require_customer_login: "Csak regisztrált és jóváhagyott vásárlók férhetnek hozzá az Átvételi Pont kínálatához."
         require_login_link_html: "Ha már regisztrált felhasználó vagy,  a folytatáshoz be kell lépned: %{login}"
-        require_login_2_html: "Ezen az átvételi ponton szeretnél vásárolni?  %{enterprise}-el  itt tudsz %{contact}, és érdeklődni a csatlakozásról."
+        require_login_2_html: "%{enterprise} Átvételi Ponton szeretnél vásárolni? Itt érdeklődj a csatlakozás lehetőségéről: %{contact}"
         require_customer_html: "Ha szeretnél a(z) %{enterprise} átvételi ponton vásárolni,  kérjük, írj a  %{contact} fülön található email címre. Írd meg a levélben a regisztrált email-címed, és hogy melyik telephelyen szeretnél vásárolni."
       select_oc:
         select_oc_html: "Kérjük, <span class='highlighted'>válaszd ki, hogy mikorra szeretnéd megrendelni</span>, hogy megtudd, milyen termékek állnak rendelkezésre."

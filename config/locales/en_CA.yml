@@ -1277,6 +1277,8 @@ en_CA:
           customer_names_tip: "Enable your suppliers/vendors to see your customers' names in reports."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
+          customer_contacts_in_reports: "Customer contact details in reports"
+          customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
           shopfront_message: "Shopfront Message"
@@ -4474,6 +4476,7 @@ en_CA:
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
+        hidden_customer_details_tip: "If customer names and/or contact details are hidden, you can ask the distributor to update their shop preferences to allow their suppliers to view customer details in reports."
         products_and_inventory:
           all_products:
             message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities, these values will be ignored in this report. "

@@ -1280,6 +1280,8 @@ fr_CA:
           customer_names_tip: "Permettre aux producteurs de voir les noms de vos acheteurs"
           customer_names_false: "Désactivée"
           customer_names_true: "Activée"
+          customer_contacts_in_reports: "Affichage des contacts clients"
+          customer_contacts_tip: "Permettre aux producteurs fournissant la boutique de voir l'adresse mail et le téléphone des clients"
           customer_contacts_false: "Désactivée"
           customer_contacts_true: "Activée"
           shopfront_message: "Message d'accueil de la boutique ouverte"
@@ -4528,6 +4530,7 @@ fr_CA:
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
+        hidden_customer_details_tip: "Si les noms et/ou contacts des clients sont masqués, vous pouvez demander au gestionnaire de la boutique de modifier les paramètres de sa boutique pour vous donner accès à cette information en tant que fournisseur."
         products_and_inventory:
           all_products:
             message: "Attention les stocks correspondent aux stocks producteurs et non au stock du catalogue boutique."
