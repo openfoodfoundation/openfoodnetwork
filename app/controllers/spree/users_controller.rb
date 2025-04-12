@@ -31,7 +31,10 @@ module Spree
         flash[:success] = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
         redirect_to main_app.root_path
       else
-        render :create, status: :unprocessable_entity
+        render turbo_stream: turbo_stream.update(
+          'signup-tab',
+          partial: 'layouts/signup_tab', locals: { signup_form_user: @user }
+        ), status: :unprocessable_entity
       end
     end
 
@@ -76,7 +79,11 @@ module Spree
     end
 
     def render_alert_timestamp_error_message
-      render :render_alert_timestamp_error_message
+      render turbo_stream: turbo_stream.update(
+        'signup-feedback',
+        partial: 'layouts/alert',
+        locals: { type: "alert", message: InvisibleCaptcha.timestamp_error_message }
+      )
     end
   end
 end

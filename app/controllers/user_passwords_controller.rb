@@ -7,22 +7,34 @@ class UserPasswordsController < Spree::UserPasswordsController
     return render_unconfirmed_response if user_unconfirmed?
 
     self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
+    status = :ok
 
     if resource.errors.empty?
-      @message, @type = [t(:password_reset_sent), :success]
-      render :create
+      message, type = [t(:password_reset_sent), :success]
     else
-      @message, @type = [t(:email_not_found), :alert]
-      render :create, status: :not_found
+      message, type = [t(:email_not_found), :alert]
+      status = :not_found
     end
+
+    render turbo_stream: turbo_stream.update(
+      'forgot-feedback',
+      partial: 'layouts/alert',
+      locals: { type:, message:, tab: 'forgot',
+                unconfirmed: false, email: params.dig(:spree_user, :email) }
+    ), status:
   end
 
   private
 
   def render_unconfirmed_response
-    @message, @type, @unconfirmed, @tab = [t(:email_unconfirmed), :alert, true, 'forgot']
+    message, type, unconfirmed, tab = [t(:email_unconfirmed), :alert, true, 'forgot']
 
-    render :create, status: :unprocessable_entity
+    render turbo_stream: turbo_stream.update(
+      'forgot-feedback',
+      partial: 'layouts/alert',
+      locals: { type:, message:, tab:,
+                unconfirmed:, email: params.dig(:spree_user, :email) }
+    ), status: :unprocessable_entity
   end
 
   def user_unconfirmed?
