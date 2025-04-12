@@ -29,8 +29,11 @@ class UserConfirmationsController < DeviseController
       end
     else
       flash.now[:sucess] = t("devise.confirmations.send_instructions")
-      render "spree/user_confirmations/create"
-      return
+
+      return render turbo_stream: turbo_stream.update(
+        "#{params[:tab] || 'forgot'}-feedback",
+        partial: 'shared/flashes', locals: { flashes: flash }
+      )
     end
 
     respond_with_navigational(resource){ redirect_to login_path }

@@ -25,8 +25,10 @@ module Spree
 
         redirect_to return_url_or_default(after_sign_in_path_for(spree_current_user))
       else
-        @message = t('devise.failure.invalid')
-        render :create, status: :unauthorized
+        message = t('devise.failure.invalid')
+        render turbo_stream: turbo_stream.update(
+          'login-feedback', partial: 'layouts/alert', locals: { message:, type: 'alert' }
+        ), status: :unauthorized
       end
     end
 
@@ -56,10 +58,12 @@ module Spree
 
     def render_unconfirmed_response
       message = t(:email_unconfirmed)
-      @local_values = { type: "alert", message:, unconfirmed: true,
-                        tab: "login", email: params.dig(:spree_user, :email) }
 
-      render :unconfirmed_user, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update(
+        'login-feedback',
+        partial: 'layouts/alert', locals: { type: "alert", message:, unconfirmed: true,
+                                            tab: "login", email: params.dig(:spree_user, :email) }
+      ), status: :unprocessable_entity
     end
 
     def ensure_valid_locale_persisted
