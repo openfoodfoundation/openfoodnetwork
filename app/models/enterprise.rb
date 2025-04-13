@@ -381,6 +381,10 @@ class Enterprise < ApplicationRecord
     sells == 'any'
   end
 
+  def is_producer_only
+    is_primary_producer && sells == 'none'
+  end
+
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.

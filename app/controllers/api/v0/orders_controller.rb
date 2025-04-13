@@ -67,7 +67,8 @@ module Api
       def serialized_orders(orders)
         ActiveModel::ArraySerializer.new(
           orders,
-          each_serializer: Api::Admin::OrderSerializer
+          each_serializer: Api::Admin::OrderSerializer,
+          current_user: current_api_user
         )
       end
 

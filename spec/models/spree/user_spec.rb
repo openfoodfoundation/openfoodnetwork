@@ -298,4 +298,40 @@ RSpec.describe Spree::User do
       end
     end
   end
+
+  describe "#can_manage_line_items_in_orders_only?" do
+    let(:producer) { create(:supplier_enterprise) }
+    let(:order) { create(:order, distributor:) }
+
+    subject { user.can_manage_line_items_in_orders_only? }
+
+    context "when user has producer" do
+      let(:user) { create(:user, enterprises: [producer]) }
+
+      context "order containing their product" do
+        before do
+          order.line_items << create(:line_item,
+                                     product: create(:product, supplier_id: producer.id))
+        end
+        context "order distributor allow producer to edit orders" do
+          let(:distributor) do
+            create(:distributor_enterprise, enable_producers_to_edit_orders: true)
+          end
+
+          it { is_expected.to be_truthy }
+        end
+
+        context "order distributor doesn't allow producer to edit orders" do
+          let(:distributor) { create(:distributor_enterprise) }
+          it { is_expected.to be_falsey }
+        end
+      end
+    end
+
+    context "no order containing their product" do
+      let(:user) { create(:user, enterprises: [create(:distributor_enterprise)]) }
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end

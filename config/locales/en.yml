@@ -1348,12 +1348,16 @@ en:
           enable_subscriptions_true: "Enabled"
           customer_names_in_reports: "Customer Names in Reports"
           customer_names_tip: "Enable your suppliers to see your customers names in reports"
+          producers_to_edit_orders: "Ability for producers to edit orders"
+          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
           customer_contacts_in_reports: "Customer contact details in reports"
           customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
             An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront.
