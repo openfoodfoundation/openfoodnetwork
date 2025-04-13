@@ -102,13 +102,16 @@ module Api
       end
 
       def display_value_for_producer(order, value)
-        filter_by_supplier = (
+        filter_by_supplier =
           order.distributor&.enable_producers_to_edit_orders &&
           options[:current_user]&.can_manage_line_items_in_orders_only?
-        )
         return value unless filter_by_supplier
 
-        order.distributor&.show_customer_names_to_suppliers ? value : I18n.t("admin.reports.hidden_field")
+        if order.distributor&.show_customer_names_to_suppliers
+          value
+        else
+          I18n.t("admin.reports.hidden_field")
+        end
       end
     end
   end

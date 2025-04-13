@@ -66,7 +66,8 @@ RSpec.describe 'As a producer who have the ability to update orders' do
           it "should allow producer to view bulk orders page with customer details" do
             within('tbody') do
               expect(page).to have_selector('tr', count: 1)
-              expect(page).to have_selector('td', text: order.bill_address.full_name_for_sorting, count: 1)
+              expect(page).to have_selector('td', text: order.bill_address.full_name_for_sorting,
+                                                  count: 1)
             end
           end
         end
