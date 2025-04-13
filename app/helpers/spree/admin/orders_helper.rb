@@ -162,7 +162,7 @@ module Spree
       def display_value_for_producer(order, value)
         return value unless filter_by_supplier?(order)
 
-        order.distributor&.show_customer_names_to_suppliers ? value : t("admin.reports.hidden")
+        order.distributor&.show_customer_names_to_suppliers ? value : t("admin.reports.hidden_field")
       end
     end
   end

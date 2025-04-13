@@ -369,6 +369,9 @@ module Spree
       can [:index, :create, :add, :read, :edit, :update], Spree::Shipment do |shipment|
         can_edit_order(shipment.order, user)
       end
+      can [:admin, :index], OrderCycle do |order_cycle|
+        can_edit_order(order_cycle.order, user)
+      end
       can [:visible], Enterprise
     end
 

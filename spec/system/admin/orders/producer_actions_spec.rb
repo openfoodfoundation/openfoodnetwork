@@ -63,7 +63,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
             within('#listing_orders tbody') do
               expect(page).to have_selector('tr', count: 1) # Only one order
               # One for Email, one for Name
-              expect(page).to have_selector('td', text: 'HIDDEN', count: 2)
+              expect(page).to have_selector('td', text: '< Hidden >', count: 2)
             end
           end
         end
