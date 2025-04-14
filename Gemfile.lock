@@ -495,8 +495,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
-    pagy (5.10.1)
-      activesupport
+    pagy (8.6.3)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -870,6 +869,7 @@ DEPENDENCIES
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store
+  activesupport
   acts-as-taggable-on
   acts_as_list (= 1.0.4)
   angular-rails-templates (>= 0.3.0)
@@ -940,7 +940,7 @@ DEPENDENCIES
   omniauth_openid_connect
   openid_connect
   order_management!
-  pagy (~> 5.1)
+  pagy (~> 8)
   paper_trail
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)

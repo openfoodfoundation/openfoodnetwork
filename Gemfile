@@ -63,9 +63,10 @@ gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
+gem 'activesupport'
 gem 'datafoodconsortium-connector'
 gem 'jsonapi-serializer'
-gem 'pagy', '~> 5.1'
+gem 'pagy', '~> 8'
 
 gem 'rswag-api'
 gem 'rswag-ui'
