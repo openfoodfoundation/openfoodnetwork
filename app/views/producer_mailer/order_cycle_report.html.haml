@@ -77,13 +77,16 @@
           = t :product
         %th.text-right
           = t :quantity
-        %th.text-right
-          = t :first_name
-        %th.text-right
-          = t :last_name
+        - if @display_customer_names
+          %th.text-right
+            = t :first_name
+          %th.text-right
+            = t :last_name
         - if @display_business_name
           %th.text-right
             = t :business_name
+        %th.text-right
+          = t :oc_report_order_number
     %tbody
       - @customer_line_items.each do |line_item|
         %tr
@@ -96,13 +99,16 @@
             = line_item[:product_and_full_name]
           %td.text-right
             = line_item[:quantity]
-          %td
-            = line_item[:first_name]
-          %td
-            = line_item[:last_name]
+          - if @display_customer_names
+            %td
+              = line_item[:first_name]
+            %td
+              = line_item[:last_name]
           - if @display_business_name
             %td
               = line_item[:business_name]
+          %td
+            = line_item[:order_number]
 %p
   = t :producer_mail_text_after
 %p
