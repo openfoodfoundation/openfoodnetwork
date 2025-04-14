@@ -725,7 +725,7 @@ el:
           other: "%{count}επιλέχθηκε"
         import: Εισαγωγή
       import:
-        imported_products: "Εισαγόμενα προϊόντα:"
+        imported_products: "Εισαγόμενα προϊόντα: %{count}"
     enterprise_fees:
       index:
         title: "Τέλη επιχείρησης"

@@ -771,7 +771,7 @@ en_IE:
           other: "%{count} selected"
         import: Import
       import:
-        imported_products: "Imported products:"
+        imported_products: "Imported products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
