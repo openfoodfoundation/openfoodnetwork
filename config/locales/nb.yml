@@ -771,7 +771,7 @@ nb:
           other: "%{count} valgt"
         import: Import
       import:
-        imported_products: "Importerte produkter:"
+        imported_products: "Importerte produkter: %{count}"
     enterprise_fees:
       index:
         title: "Bedriftsavgifter"

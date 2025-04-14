@@ -711,7 +711,7 @@ ru:
           other: "выбрано %{count}"
         import: Импорт
       import:
-        imported_products: "Внесенные товары:"
+        imported_products: "Внесенные товары: %{count}"
     enterprise_fees:
       index:
         title: "Сборы Предприятия"

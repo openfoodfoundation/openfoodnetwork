@@ -9,6 +9,7 @@ RSpec.describe "DFC Product Import" do
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
   let(:enterprise) { create(:supplier_enterprise, name: "Saucy preserves") }
   let(:source_product) { create(:product, name: "Sauce", supplier_id: enterprise.id) }
+  let(:old_product) { create(:product, name: "Best Sauce of 1995", supplier_id: enterprise.id) }
 
   before do
     login_as user
@@ -52,11 +53,20 @@ RSpec.describe "DFC Product Import" do
 
   it "imports from a FDC catalog", vcr: true do
     user.update!(oidc_account: build(:testdfc_account))
-    # One product is existing in OFN
+
+    # One current product is existing in OFN
     product_id =
       "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
     linked_variant = source_product.variants.first
     linked_variant.semantic_links << SemanticLink.new(semantic_id: product_id)
+
+    # One outdated product still exists in OFN
+    old_product_id =
+      "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/445194664-1995"
+    unlinked_variant = old_product.variants.first
+    unlinked_variant.semantic_links << SemanticLink.new(semantic_id: old_product_id)
+    unlinked_variant.on_demand = true
+    unlinked_variant.on_hand = 3
 
     visit admin_product_import_path
 
@@ -66,11 +76,13 @@ RSpec.describe "DFC Product Import" do
     click_button "Preview"
 
     expect(page).to have_content "4 products to be imported"
+    expect(page).to have_content "One product is no longer"
     expect(page).to have_content "Saucy preserves"
     expect(page).not_to have_content "Sauce - 1g" # Does not show other product
     expect(page).to have_content "Beans - Retail can, 400g (can) Update" # existing product
     expect(page).to have_content "Beans - Case, 12 x 400g (can) New"
     expect(page).to have_content "Chia Seed, Organic - Retail pack, 300g"
+    expect(page).to have_content "Best Sauce of 1995 - 1g Reset stock"
 
     # I can select all
     uncheck "Chia Seed, Organic - Case, 8 x 300g"
@@ -83,14 +95,18 @@ RSpec.describe "DFC Product Import" do
     expect {
       click_button "Import"
       expect(page).to have_content "Imported products: 3"
+      expect(page).to have_content "Stock reset for absent products: 1"
       linked_variant.reload
-    }.to change { enterprise.supplied_products.count }.by(2) # 1 updated, 2 new
+      unlinked_variant.reload
+    }.to change { enterprise.supplied_products.count }.by(2) # 1 updated, 2 new, 1 reset
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
       # 18.85 wholesale variant price divided by 12 cans in the slab.
       .and change { linked_variant.price }.to(1.57)
       .and change { linked_variant.on_demand }.to(true)
       .and change { linked_variant.on_hand }.by(0)
+      .and change { unlinked_variant.on_demand }.to(false)
+      .and change { unlinked_variant.on_hand }.by(0)
 
     product = Spree::Product.last
     expect(product.variants[0].semantic_links).to be_present

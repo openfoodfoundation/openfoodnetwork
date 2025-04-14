@@ -765,7 +765,7 @@ es:
         new: Nuevo
         import: Importar
       import:
-        imported_products: "Productos importados:"
+        imported_products: "Productos importados: %{count}"
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
