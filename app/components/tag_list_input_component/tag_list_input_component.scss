@@ -28,20 +28,12 @@
     }
 
     li.tag-item {
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      -ms-border-radius: 3px;
-      -o-border-radius: 3px;
       border-radius: 3px;
       margin: 2px 0 2px 3px;
       padding: 0 5px;
       display: inline-block;
       float: left;
-      font:
-        14px "Helvetica Neue",
-        Helvetica,
-        Arial,
-        sans-serif;
+      font-size: 14px;
       line-height: 25px;
       border: none;
       box-shadow: none;
@@ -70,11 +62,7 @@
       padding: 0 0 0 5px;
       float: left;
       height: 26px;
-      font:
-        14px "Helvetica Neue",
-        Helvetica,
-        Arial,
-        sans-serif;
+      font-size: 14px;
     }
   }
 }
