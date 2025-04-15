@@ -12,7 +12,7 @@
     height: 100%;
     box-shadow: none;
 
-    &.changed {
+    &:has(.changed) {
       border: 1px solid $color-txt-changed-brd;
       border-radius: 4px;
     }

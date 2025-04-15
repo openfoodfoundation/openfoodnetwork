@@ -13,10 +13,7 @@ describe("TagListInputController", () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div 
-        data-controller="tag-list-input-component--tag-list-input" 
-        data-tag-list-input-component--tag-list-input-highlight-class-value="changed"
-      >
+      <div data-controller="tag-list-input-component--tag-list-input">
         <input 
           value="tag 1,tag 2,tag 3" 
           data-tag-list-input-component--tag-list-input-target="tagList" 
@@ -98,12 +95,6 @@ describe("TagListInputController", () => {
       expect(variant_add_tag.value).toBe("");
     });
 
-    it("higlights the tag list", () => {
-      const tagList = document.getElementsByClassName("tags")[0];
-
-      expect(tagList.classList).toContain("changed");
-    });
-
     describe("when tag already exist", () => {
       beforeEach(() => {
         // Trying to add an existing tag
@@ -140,12 +131,6 @@ describe("TagListInputController", () => {
       const tagList = document.getElementsByClassName("tag-list")[0];
       // 1 template + 2 tags
       expect(tagList.childElementCount).toBe(3);
-    });
-
-    it("higlights the tag list", () => {
-      const tagList = document.getElementsByClassName("tags")[0];
-
-      expect(tagList.classList).toContain("changed");
     });
   });
 
