@@ -115,6 +115,10 @@ Rails/ApplicationRecord:
 Rails/HasAndBelongsToMany:
   Enabled: false
 
+# Cf. conversation https://github.com/openfoodfoundation/openfoodnetwork/pull/13251
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
 Rails/OutputSafety:
   Exclude:
     - spec/**/*
