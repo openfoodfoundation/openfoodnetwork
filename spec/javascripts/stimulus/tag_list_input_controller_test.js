@@ -111,9 +111,9 @@ describe("TagListInputController", () => {
       });
 
       it("highlights the new tag name in red", () => {
-        expect(variant_add_tag.classList).toContain("tag-error")
+        expect(variant_add_tag.classList).toContain("tag-error");
       });
-    })
+    });
   });
 
   describe("removeTag", () => {
@@ -144,11 +144,11 @@ describe("TagListInputController", () => {
 
     it("removes error highlight", () => {
       variant_add_tag.value = "text";
-      variant_add_tag.classList.add("tag-error")
+      variant_add_tag.classList.add("tag-error");
 
       variant_add_tag.dispatchEvent(new KeyboardEvent("keyup", { key: "a" }));
 
-      expect(variant_add_tag.classList).not.toContain("tag-error")
+      expect(variant_add_tag.classList).not.toContain("tag-error");
     });
   });
 });
