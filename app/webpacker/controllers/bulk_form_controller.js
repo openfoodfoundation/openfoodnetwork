@@ -23,11 +23,6 @@ export default class BulkFormController extends Controller {
   recordElements = {};
 
   connect() {
-    // disable form submit via enter key, so we can use enter key to create new product tags
-    hotkeys("enter", function (event, handler) {
-      event.preventDefault();
-    });
-
     this.submitting = false;
     this.form = this.element;
 
