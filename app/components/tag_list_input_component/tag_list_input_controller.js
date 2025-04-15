@@ -13,7 +13,11 @@ export default class extends Controller {
 
   addTag() {
     // Check if tag already exist
-    const newTagName = this.newTagTarget.value;
+    const newTagName = this.newTagTarget.value.trim();
+    if (newTagName.length == 0) {
+      return;
+    }
+
     const tags = this.tagListTarget.value.split(",");
     const index = tags.indexOf(newTagName);
     if (index != -1) {

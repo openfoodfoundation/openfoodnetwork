@@ -103,6 +103,18 @@ describe("TagListInputController", () => {
       expect(variant_add_tag.value).toBe("");
     });
 
+    describe("with an empty new tag", () => {
+      it("doesn't add the tag", () => {
+        variant_add_tag.value = " ";
+        variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+        const tagList = document.getElementsByClassName("tag-list")[0];
+
+        // 1 template + 3 tags + new tag (added in the beforeEach)
+        expect(tagList.childElementCount).toBe(5);
+      });
+    });
+
     describe("when tag already exist", () => {
       beforeEach(() => {
         // Trying to add an existing tag
