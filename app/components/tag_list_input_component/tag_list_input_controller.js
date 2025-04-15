@@ -3,6 +3,14 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["tagList", "newTag", "template", "list"];
 
+  connect() {
+    // form hotkeys are enabled for "input" scope, we disable the form submit via enter
+    // on the tag input, so we can use the enter key to create new product tag
+    hotkeys("enter", { scope: "input", element: this.newTagTarget }, function () {
+      event.preventDefault();
+    });
+  }
+
   addTag() {
     // Check if tag already exist
     const newTagName = this.newTagTarget.value;
