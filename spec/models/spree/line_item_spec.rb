@@ -62,6 +62,17 @@ RSpec.describe Spree::LineItem do
     end
   end
 
+  context '#full_variant_name' do
+    it "returns variant's full name" do
+      expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
+    end
+
+    it "uses variant.full_name when variant_name is nil" do
+      line_item.variant_name = nil
+      expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
+    end
+  end
+
   describe '.currency' do
     it 'returns the globally configured currency' do
       line_item.currency == 'USD'
