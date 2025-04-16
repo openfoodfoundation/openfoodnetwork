@@ -60,7 +60,7 @@ module Spree
             limit(params[:limit] || 100)
         else
           @search = Spree::User.ransack(params[:q])
-          @pagy, @collection = pagy(@search.result, items: Spree::Config[:admin_products_per_page])
+          @pagy, @collection = pagy(@search.result, limit: Spree::Config[:admin_products_per_page])
           @collection
         end
       end

@@ -10,7 +10,7 @@
   %form.with-dropdown
     = t(".pagination.per_page.show")
     = select_tag :per_page,
-        options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy&.items),
+        options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy&.limit),
         class: "no-input per-page",
         data: { controller: "tom-select search", action: "change->search#changePerPage", "tom-select-options-value": '{ "plugins": [] }'}
 

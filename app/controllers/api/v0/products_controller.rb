@@ -78,7 +78,7 @@ module Api
       end
 
       def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
-        @pagy, products = pagy(products, items: params[:per_page] || DEFAULT_PER_PAGE)
+        @pagy, products = pagy(products, limit: params[:per_page] || DEFAULT_PER_PAGE)
 
         serialized_products = ActiveModel::ArraySerializer.new(
           products,

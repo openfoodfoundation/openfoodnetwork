@@ -15,7 +15,7 @@ module Spree
         params[:q] ||= {}
         params[:q][:s] ||= "name asc"
         @search = super.ransack(params[:q])
-        @pagy, @zones = pagy(@search.result, items: Spree::Config[:orders_per_page])
+        @pagy, @zones = pagy(@search.result, limit: Spree::Config[:orders_per_page])
         @zones
       end
 

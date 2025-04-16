@@ -133,7 +133,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       it "informs about invalid pages" do
         get "/api/v1/customers", params: { page: "0" }
         expect(json_response_ids).to eq nil
-        expect(json_error_detail).to eq 'expected :page >= 1; got "0"'
+        expect(json_error_detail).to eq "expected :page >= 1; got 0"
       end
     end
 

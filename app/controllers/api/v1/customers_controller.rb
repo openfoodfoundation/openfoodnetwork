@@ -18,7 +18,7 @@ module Api
       end
 
       def index
-        @pagy, customers = pagy(search_customers, pagy_options)
+        @pagy, customers = pagy(search_customers, **pagy_options)
 
         render json: Api::V1::CustomerSerializer.new(customers, pagination_options)
       end

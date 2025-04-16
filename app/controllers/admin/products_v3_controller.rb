@@ -138,7 +138,7 @@ module Admin
     def fetch_products
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope).ransack(ransack_query).result
-      @pagy, @products = pagy(product_query.order(:name), items: @per_page, page: @page,
+      @pagy, @products = pagy(product_query.order(:name), limit: @per_page, page: @page,
                                                           size: [1, 2, 2, 1])
     end
 

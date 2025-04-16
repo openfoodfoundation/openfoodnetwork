@@ -39,7 +39,6 @@ class ProductsRenderer
                 else
                   distributed_products.products_relation
                 end
-
       results = filter(results)
       # Scope results with variant_overrides
       paginate(results).each { |product| product_scoper.scope(product) }
@@ -100,7 +99,7 @@ class ProductsRenderer
     _pagy, paginated_results = pagy_array(
       results,
       page: args[:page] || 1,
-      items: args[:per_page] || DEFAULT_PER_PAGE
+      limit: args[:per_page] || DEFAULT_PER_PAGE
     )
 
     paginated_results

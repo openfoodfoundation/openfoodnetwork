@@ -17,7 +17,7 @@ module Spree
 
       def index
         orders = SearchOrders.new(search_params, spree_current_user).orders
-        @pagy, @orders = pagy(orders, items: params[:per_page] || 15)
+        @pagy, @orders = pagy(orders, limit: params[:per_page] || 15)
 
         update_search_results if searching?
       end
