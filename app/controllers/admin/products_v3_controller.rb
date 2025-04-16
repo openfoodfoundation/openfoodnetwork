@@ -112,6 +112,7 @@ module Admin
       @search_term = params[:search_term] || params[:_search_term]
       @producer_id = params[:producer_id] || params[:_producer_id]
       @category_id = params[:category_id] || params[:_category_id]
+      @tags = params[:tags_name_in] || params[:_tags_name_in]
     end
 
     def init_pagination_params
@@ -160,6 +161,7 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
+      query.merge!(variants_tags_name_in: @tags) if @tags.present?
       query.merge!(@q) if @q
 
       query
@@ -176,6 +178,7 @@ module Admin
           :stock_items,
           :tax_category,
           :supplier,
+          :taggings,
         ] },
       ]
     end

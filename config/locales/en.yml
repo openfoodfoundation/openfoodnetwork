@@ -973,6 +973,8 @@ en:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
