@@ -44,6 +44,7 @@ module Spree
 
     after_destroy :update_order
     after_save :update_order
+    before_save :update_product_name
 
     delegate :product, :variant_unit, :unit_description, :display_name, :display_as,
              :variant_unit_scale, :variant_unit_name, to: :variant
@@ -263,6 +264,10 @@ module Spree
 
       # update the order totals, etc.
       order.create_tax_charge!
+    end
+
+    def update_product_name
+      self.product_name = variant.product.name
     end
 
     def update_inventory_before_destroy
