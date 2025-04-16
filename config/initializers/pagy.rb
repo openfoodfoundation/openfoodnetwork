@@ -4,6 +4,7 @@ require 'pagy/extras/arel'
 require 'pagy/extras/array'
 require 'pagy/extras/limit'
 require 'pagy/extras/overflow'
+require 'pagy/extras/size'
 
 # Pagy Variables
 # See https://ddnexus.github.io/pagy/api/pagy#variables
