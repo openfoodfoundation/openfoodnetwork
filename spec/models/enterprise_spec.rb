@@ -415,6 +415,18 @@ RSpec.describe Enterprise do
         expect(e).not_to be_valid
       end
     end
+
+    describe "external_billing_id" do
+      it "validates the external_billing_id attribute" do
+        e = build(:enterprise, external_billing_id: '123456')
+        expect(e).to be_valid
+      end
+
+      it "does not validate the external_billing_id attribute with spaces" do
+        e = build(:enterprise, external_billing_id: '123 456')
+        expect(e).not_to be_valid
+      end
+    end
   end
 
   describe "serialisation" do
