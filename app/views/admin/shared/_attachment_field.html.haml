@@ -1,0 +1,20 @@
+.row{ class: "page-admin-enterprises-form__#{attachment_name.to_s.dasherize}-field-group" }
+  .three.columns.alpha
+    = f.label attachment_name, t(".#{attachment_name}_label")
+    %br
+    - if block_given?
+      = yield
+    - else
+      = t(".#{attachment_name}_hint")
+  .thirteen.columns
+    = image_tag attachment_url, class: "image-field-group__preview-image" if object.send(attachment_name).present?
+    %br
+    = f.file_field attachment_name, accept: "image/*"
+    - if object.send(attachment_name).present?
+      %button.button.small.red{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_#{attachment_name}" }
+        = t(".#{attachment_name}_remove")
+
+- if object.send(attachment_name).present?
+  = render ConfirmModalComponent.new(id: "remove_#{attachment_name}", confirm_actions: "click->attachment-field#remove", controller: "attachment-field") do
+    .margin-bottom-30
+      = t(".#{attachment_name}_remove_confirm")
