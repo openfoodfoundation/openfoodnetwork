@@ -63,12 +63,15 @@ RSpec.describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__logo-field-group" do
-          accept_alert(alert_text_logo) do
-            click_on "Remove Image"
-          end
+          click_button "Remove Image"
         end
 
-        expect(page).to have_content("Logo removed successfully")
+        within ".reveal-modal" do
+          expect(page).to have_content(alert_text_logo)
+          click_button "Confirm"
+        end
+
+        expect(flash_message).to match(/Logo removed/)
 
         within ".page-admin-enterprises-form__logo-field-group" do
           expect_no_preview_image
@@ -104,12 +107,15 @@ RSpec.describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          accept_alert(alert_text_promo) do
-            click_on "Remove Image"
-          end
+          click_on "Remove Image"
         end
 
-        expect(page).to have_content("Promo image removed successfully")
+        within ".reveal-modal" do
+          expect(page).to have_content(alert_text_promo)
+          click_button "Confirm"
+        end
+
+        expect(page).to have_content("Promo image removed")
 
         within ".page-admin-enterprises-form__promo-image-field-group" do
           expect_no_preview_image

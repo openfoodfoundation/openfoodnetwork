@@ -38,7 +38,8 @@ module PermittedAttributes
         :preferred_invoice_order_by_supplier,
         :preferred_product_low_stock_display,
         :hide_ofn_navigation, :white_label_logo, :white_label_logo_link,
-        :hide_groups_tab, :external_billing_id,
+        :hide_groups_tab, :external_billing_id, :remove_logo, :remove_promo_image,
+        :remove_white_label_logo
       ]
     end
   end

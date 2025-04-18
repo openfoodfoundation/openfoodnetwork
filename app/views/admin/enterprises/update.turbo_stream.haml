@@ -1,0 +1,4 @@
+= turbo_stream.update "flashes" do
+  = render partial: "admin/shared/flashes", locals: { flashes: flash } if defined? flash
+= turbo_stream.update "#{@panel}_panel" do
+  = render partial: "admin/enterprises/form/#{@panel}", locals: { f: ActionView::Helpers::FormBuilder.new(:enterprise, @enterprise, self, {}), enterprise: @enterprise }
