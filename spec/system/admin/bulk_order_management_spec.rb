@@ -681,6 +681,14 @@ RSpec.describe '
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc3) { create(:simple_order_cycle, distributors: [distributor]) }
+        let!(:oc4) do
+          create(
+            :simple_order_cycle,
+            orders_close_at: 90.days.ago,
+            orders_open_at: 100.days.ago,
+            distributors: [distributor]
+          )
+        end
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now,
@@ -701,10 +709,16 @@ RSpec.describe '
                                           completed_at: 2.weeks.from_now,
                                           order_cycle: oc3 )
         }
+        let!(:o5) {
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: 95.days.ago,
+                                          order_cycle: oc4 )
+        }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
         let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
         let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
+        let!(:li5) { create(:line_item_with_shipment, order: o5 ) }
 
         before do
           oc3.update!(orders_close_at: 2.weeks.from_now)
