@@ -14,13 +14,13 @@ module Admin
 
     def index
       # Fetch DFC catalog JSON for preview
-      api = DfcRequest.new(spree_current_user)
       @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
       catalog = DfcCatalog.from_json(@catalog_json)
 
       # Render table and let user decide which ones to import.
       @items = list_products(catalog)
+      @absent_items = importer(catalog).absent_variants
     rescue URI::InvalidURIError
       flash[:error] = t ".invalid_url"
       redirect_to admin_product_import_path
@@ -58,12 +58,17 @@ module Admin
       end
 
       @count = imported.compact.count
+      @reset_count = importer(catalog).reset_absent_variants.count
     rescue ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
     end
 
     private
+
+    def api
+      @api ||= DfcRequest.new(spree_current_user)
+    end
 
     def load_enterprise
       @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
@@ -79,6 +84,10 @@ module Admin
           @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
         ]
       end
+    end
+
+    def importer(catalog)
+      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog)
     end
   end
 end

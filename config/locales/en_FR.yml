@@ -798,7 +798,7 @@ en_FR:
         invalid_url: This catalog URL is not valid.
       import:
         title: "DFC product catalog import"
-        imported_products: "Imported products:"
+        imported_products: "Imported products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"

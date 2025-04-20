@@ -797,7 +797,7 @@ fr:
         invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
-        imported_products: "Produits importés :"
+        imported_products: "Produits importés : %{count}"
     enterprise_fees:
       index:
         title: "Marges et Commissions"

@@ -760,7 +760,7 @@ hu:
           other: "%{count}kiválasztva"
         import: Importálás
       import:
-        imported_products: "Importált termékek:"
+        imported_products: "Importált termékek: %{count}"
     enterprise_fees:
       index:
         title: "Vállalkozási díjak"
