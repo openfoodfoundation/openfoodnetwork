@@ -240,6 +240,24 @@ RSpec.describe Spree::Ability do
         it { expect(subject.can_manage_enterprises?(user)).to be true }
         it { expect(subject.can_manage_orders?(user)).to be false }
         it { expect(subject.can_manage_order_cycles?(user)).to be false }
+
+        context "with no distributor allows me to edit orders" do
+          it { expect(subject.can_manage_orders?(user)).to be false }
+          it { expect(subject.can_manage_line_items_in_orders?(user)).to be false }
+        end
+
+        context "with any distributor allows me to edit orders containing my product" do
+          before do
+            order = create(
+              :order_with_line_items,
+              line_items_count: 1,
+              distributor: create(:distributor_enterprise, enable_producers_to_edit_orders: true)
+            )
+            order.line_items.first.variant.update!(supplier_id: enterprise_none_producer.id)
+          end
+
+          it { expect(subject.can_manage_line_items_in_orders?(user)).to be true }
+        end
       end
 
       context "as a profile" do
@@ -260,6 +278,7 @@ RSpec.describe Spree::Ability do
       it { expect(subject.can_manage_products?(user)).to be false }
       it { expect(subject.can_manage_enterprises?(user)).to be false }
       it { expect(subject.can_manage_orders?(user)).to be false }
+      it { expect(subject.can_manage_line_items_in_orders?(user)).to be false }
       it { expect(subject.can_manage_order_cycles?(user)).to be false }
 
       it "can create enterprises straight off the bat" do

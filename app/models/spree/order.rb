@@ -140,6 +140,15 @@ module Spree
       end
     }
 
+    scope :editable_by_producers, ->(enterprises) {
+      joins(
+        :distributor, line_items: :supplier
+      ).where(
+        supplier: { id: enterprises },
+        distributor: { enable_producers_to_edit_orders: true }
+      )
+    }
+
     scope :distributed_by_user, lambda { |user|
       if user.admin?
         where(nil)

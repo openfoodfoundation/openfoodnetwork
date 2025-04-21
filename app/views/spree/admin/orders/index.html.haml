@@ -3,9 +3,10 @@
 
 - content_for :minimal_js, true
 
-- content_for :page_actions do
-  %li
-    = button_link_to t('.new_order'), spree.new_admin_order_url, icon: 'icon-plus', id: 'admin_new_order'
+- if can?(:create, Spree::Order) && spree_current_user.can_manage_orders?
+  - content_for :page_actions do
+    %li
+      = button_link_to t('.new_order'), spree.new_admin_order_url, icon: 'icon-plus', id: 'admin_new_order'
 
 = render partial: 'spree/admin/shared/order_sub_menu'
 
