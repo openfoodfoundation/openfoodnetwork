@@ -783,9 +783,18 @@ en_CA:
       connection_invalid_html: |
           Connecting with your OIDC account failed.
           Please refresh your OIDC connection at: %{oidc_settings_link}
+      absent_variant:
+        reset: "Reset stock"
       index:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
+        absent_products:
+          one: |
+              One product is no longer in the catalog.
+              It will be marked as unavailable by resetting stock to zero.
+          other: |
+              %{count} products are no longer in the catalog.
+              They will be marked as unavailable by resetting stock to zero.
         enterprise: "Import to enterprise: %{enterprise_name}"
         select_all: "Select/deselect all"
         update: Update
@@ -799,6 +808,7 @@ en_CA:
       import:
         title: "DFC product catalog import"
         imported_products: "Imported products: %{count}"
+        reset_products: "Stock reset for absent products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -1281,6 +1291,8 @@ en_CA:
           customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with

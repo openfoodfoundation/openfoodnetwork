@@ -797,7 +797,6 @@ fr:
         invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
-        imported_products: "Produits importés : %{count}"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -1283,6 +1282,8 @@ fr:
           customer_contacts_tip: "Permettre aux producteurs fournissant la boutique de voir l'adresse mail et le téléphone des clients"
           customer_contacts_false: "Désactivé"
           customer_contacts_true: "Activé"
+          producers_edit_orders_false: "Désactivé"
+          producers_edit_orders_true: "Activé"
           shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant

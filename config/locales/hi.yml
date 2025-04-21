@@ -1137,6 +1137,8 @@ hi:
           customer_names_true: "सक्षम किया गया"
           customer_contacts_false: "अक्षम किया गया"
           customer_contacts_true: "सक्षम किया गया"
+          producers_edit_orders_false: "अक्षम किया गया"
+          producers_edit_orders_true: "सक्षम किया गया"
           shopfront_message: "शॉपफ्रन्ट संदेश"
           shopfront_message_placeholder: >
               ग्राहकों का स्वागत करने और कैसे आपके साथ खरीदारी करें यह समझाने लिए

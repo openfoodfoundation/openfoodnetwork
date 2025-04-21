@@ -757,8 +757,6 @@ eu:
         update: Eguneratu
         new: Berria
         import: Inportatu
-      import:
-        imported_products: "Inportatutako produktuak:"
     enterprise_fees:
       index:
         title: "Erakundearen batzordeak"
@@ -1214,6 +1212,8 @@ eu:
           customer_names_true: "Gaituta"
           customer_contacts_false: "Desgaitua"
           customer_contacts_true: "Gaituta"
+          producers_edit_orders_false: "Desgaitua"
+          producers_edit_orders_true: "Gaituta"
           shopfront_message: "Dendaren mezua"
           shopfront_message_placeholder: >
               Erosleentzako aukerako ongietorri-mezua, gunean nola erosi  behar den

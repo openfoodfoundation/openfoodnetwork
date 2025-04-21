@@ -871,6 +871,8 @@ en_AU:
           customer_names_true: "Enabled"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "\"Home\" message"
           shopfront_message_placeholder: >
               Create your home page content to welcome customers and explain how people

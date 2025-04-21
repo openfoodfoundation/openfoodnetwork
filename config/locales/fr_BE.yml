@@ -1100,6 +1100,8 @@ fr_BE:
           customer_names_true: "Activé"
           customer_contacts_false: "Désactivé"
           customer_contacts_true: "Activé"
+          producers_edit_orders_false: "Désactivé"
+          producers_edit_orders_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
           shopfront_message_placeholder: >
               Un message facultatif pour souhaiter la bienvenue aux clients et leur

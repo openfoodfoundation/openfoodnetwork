@@ -838,6 +838,8 @@ fil_PH:
           customer_names_true: "pinagana"
           customer_contacts_false: "huwag paganahin"
           customer_contacts_true: "pinagana"
+          producers_edit_orders_false: "huwag paganahin"
+          producers_edit_orders_true: "pinagana"
           shopfront_message: "mensahe sa Shopfront"
           shopfront_message_placeholder: >
               opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag

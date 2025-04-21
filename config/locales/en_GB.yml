@@ -770,8 +770,6 @@ en_GB:
         selected:
           other: "%{count} selected"
         import: Import
-      import:
-        imported_products: "Imported products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -1246,6 +1244,8 @@ en_GB:
           customer_names_true: "Enabled"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with

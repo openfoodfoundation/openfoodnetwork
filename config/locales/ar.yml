@@ -1054,6 +1054,8 @@ ar:
           customer_names_true: "تمكين"
           customer_contacts_false: "تعليق"
           customer_contacts_true: "تمكين"
+          producers_edit_orders_false: "تعليق"
+          producers_edit_orders_true: "تمكين"
           shopfront_message: "رسالة واجهة المتجر"
           shopfront_message_placeholder: >
               رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال
