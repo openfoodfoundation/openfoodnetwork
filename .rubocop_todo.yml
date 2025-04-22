@@ -221,10 +221,9 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 7
+# Offense count: 6
 Naming/AccessorMethodName:
   Exclude:
-    - 'app/mailers/producer_mailer.rb'
     - 'app/models/spree/order.rb'
     - 'app/services/checkout/post_checkout_actions.rb'
     - 'lib/spree/core/controller_helpers/common.rb'

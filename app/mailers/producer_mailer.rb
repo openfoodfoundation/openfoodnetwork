@@ -37,7 +37,7 @@ class ProducerMailer < ApplicationMailer
     @receival_instructions = @order_cycle.receival_instructions_for(@producer)
     @total = total_from_line_items(line_items)
     @tax_total = tax_total_from_line_items(line_items)
-    @customer_line_items = set_customer_data(line_items)
+    @customer_line_items = customer_data(line_items)
   end
 
   def subject
@@ -76,7 +76,7 @@ class ProducerMailer < ApplicationMailer
     Spree::Money.new line_items.to_a.sum(&:included_tax)
   end
 
-  def set_customer_data(line_items)
+  def customer_data(line_items)
     return unless @coordinator.show_customer_names_to_suppliers?
 
     @display_business_name = false
