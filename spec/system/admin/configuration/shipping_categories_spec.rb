@@ -54,8 +54,10 @@ RSpec.describe "Shipping Categories" do
       within row do
         expect(page).to have_content "Yes"
       end
+      category.reload
 
       expect(page).not_to have_content("Regular")
+      expect(category.name).to eq("Express")
     end
   end
 
@@ -73,6 +75,7 @@ RSpec.describe "Shipping Categories" do
       end
 
       expect(page).not_to have_content("To Be Deleted")
+      expect(Spree::ShippingCategory.count).to eq(0)
     end
   end
 end
