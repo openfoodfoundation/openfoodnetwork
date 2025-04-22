@@ -1142,6 +1142,8 @@ de_DE:
           customer_names_true: "aktiviert"
           customer_contacts_false: "deaktiviert"
           customer_contacts_true: "aktiviert"
+          producers_edit_orders_false: "deaktiviert"
+          producers_edit_orders_true: "aktiviert"
           shopfront_message: "'Willkommen'-Nachricht im Laden"
           shopfront_message_placeholder: >
               Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,

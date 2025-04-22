@@ -33,21 +33,34 @@ RSpec.describe OpenOrderCycleJob do
 
     let(:enterprise) { create(:supplier_enterprise) }
     let!(:variant) { create(:variant, name: "Sauce", supplier_id: enterprise.id) }
+    let!(:variant_discontinued) {
+      create(:variant, name: "Shiraz 1971", supplier_id: enterprise.id)
+    }
     let!(:order_cycle) {
-      create(:simple_order_cycle, orders_open_at: now,
-                                  suppliers: [enterprise], variants: [variant])
+      create(
+        :simple_order_cycle,
+        orders_open_at: now,
+        suppliers: [enterprise],
+        variants: [variant, variant_discontinued]
+      )
     }
 
     it "synchronises products from a FDC catalog", vcr: true do
       user.update!(oidc_account: build(:testdfc_account))
-      # One product is existing in OFN
+      # One current product is existing in OFN
       product_id =
         "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
       variant.semantic_links << SemanticLink.new(semantic_id: product_id)
 
+      # One discontinued product is existing in OFN
+      old_product_id =
+        "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635-disc"
+      variant_discontinued.semantic_links << SemanticLink.new(semantic_id: old_product_id)
+
       expect {
         subject
         variant.reload
+        variant_discontinued.reload
         order_cycle.reload
       }.to change { order_cycle.opened_at }
         .and change { enterprise.supplied_products.count }.by(0) # It shouldn't add, only update
@@ -57,7 +70,8 @@ RSpec.describe OpenOrderCycleJob do
         .and change { variant.price }.to(1.57)
         .and change { variant.on_demand }.to(true)
         .and change { variant.on_hand }.by(0)
-        .and query_database 46
+        .and change { variant_discontinued.on_hand }.to(0)
+        .and query_database 58
     end
   end
 

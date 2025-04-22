@@ -850,9 +850,19 @@ en:
       connection_invalid_html: |
         Connecting with your OIDC account failed.
         Please refresh your OIDC connection at: %{oidc_settings_link}
+      absent_variant:
+        reset: "Reset stock"
       index:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
+        absent_products:
+          zero: ""
+          one: |
+            One product is no longer in the catalog.
+            It will be marked as unavailable by resetting stock to zero.
+          other: |
+            %{count} products are no longer in the catalog.
+            They will be marked as unavailable by resetting stock to zero.
         enterprise: "Import to enterprise: %{enterprise_name}"
         select_all: "Select/deselect all"
         update: Update
@@ -865,7 +875,8 @@ en:
         invalid_url: This catalog URL is not valid.
       import:
         title: "DFC product catalog import"
-        imported_products: "Imported products:"
+        imported_products: "Imported products: %{count}"
+        reset_products: "Stock reset for absent products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -1348,12 +1359,16 @@ en:
           enable_subscriptions_true: "Enabled"
           customer_names_in_reports: "Customer Names in Reports"
           customer_names_tip: "Enable your suppliers to see your customers names in reports"
+          producers_to_edit_orders: "Ability for producers to edit orders"
+          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
           customer_contacts_in_reports: "Customer contact details in reports"
           customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
             An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront.

@@ -15,8 +15,14 @@ module Api
       has_one :distributor, serializer: Api::Admin::IdSerializer
       has_one :order_cycle, serializer: Api::Admin::IdSerializer
 
+      def full_name_for_sorting
+        value = [last_name, first_name].compact_blank.join(", ")
+        display_value_for_producer(object, value)
+      end
+
       def full_name
-        object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
+        value = object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
+        display_value_for_producer(object, value)
       end
 
       def first_name
@@ -65,11 +71,12 @@ module Api
       end
 
       def email
-        object.email || ""
+        display_value_for_producer(object, object.email || "")
       end
 
       def phone
-        object.billing_address.nil? ? "a" : ( object.billing_address.phone || "" )
+        value = object.billing_address.nil? ? "a" : ( object.billing_address.phone || "" )
+        display_value_for_producer(object, value)
       end
 
       def created_at
@@ -92,6 +99,19 @@ module Api
 
       def spree_routes_helper
         Spree::Core::Engine.routes.url_helpers
+      end
+
+      def display_value_for_producer(order, value)
+        filter_by_supplier =
+          order.distributor&.enable_producers_to_edit_orders &&
+          options[:current_user]&.can_manage_line_items_in_orders_only?
+        return value unless filter_by_supplier
+
+        if order.distributor&.show_customer_names_to_suppliers
+          value
+        else
+          I18n.t("admin.reports.hidden_field")
+        end
       end
     end
   end

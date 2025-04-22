@@ -953,6 +953,8 @@ fr_CM:
           customer_names_true: "Activé"
           customer_contacts_false: "Désactivé"
           customer_contacts_true: "Activé"
+          producers_edit_orders_false: "Désactivé"
+          producers_edit_orders_true: "Activé"
           shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant

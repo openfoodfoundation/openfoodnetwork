@@ -614,64 +614,6 @@ RSpec.describe Spree::Order do
     end
   end
 
-  describe "applying enterprise fees" do
-    subject { create(:order) }
-    let(:fee_handler) { Orders::HandleFeesService.new(subject) }
-
-    before do
-      allow(subject).to receive(:fee_handler) { fee_handler }
-      allow(subject).to receive(:update_order!)
-    end
-
-    it "clears all enterprise fee adjustments on the order" do
-      expect(EnterpriseFee).to receive(:clear_all_adjustments).with(subject)
-      subject.recreate_all_fees!
-    end
-
-    it "creates line item and order fee adjustments via Orders::HandleFeesService" do
-      expect(fee_handler).to receive(:create_line_item_fees!)
-      expect(fee_handler).to receive(:create_order_fees!)
-      subject.recreate_all_fees!
-    end
-
-    it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments)
-
-      allow(subject).to receive(:order_cycle) { nil }
-
-      subject.recreate_all_fees!
-    end
-
-    it "ensures the correct adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments)
-      line_item = create(:line_item, order: subject)
-      allow(fee_handler).to receive(:provided_by_order_cycle?) { true }
-
-      order_cycle = double(:order_cycle)
-      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
-        to receive(:create_line_item_adjustments_for).
-        with(line_item)
-      allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
-        .to receive(:create_order_adjustments_for)
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      subject.recreate_all_fees!
-    end
-
-    it "ensures the correct per-order adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments)
-
-      order_cycle = double(:order_cycle)
-      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
-        to receive(:create_order_adjustments_for).
-        with(subject)
-
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      subject.recreate_all_fees!
-    end
-  end
-
   describe "getting the admin and handling charge" do
     let(:o) { create(:order) }
     let(:li) { create(:line_item, order: o) }

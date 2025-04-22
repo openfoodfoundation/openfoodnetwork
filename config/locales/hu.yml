@@ -759,8 +759,6 @@ hu:
           one: "1 kiválasztva"
           other: "%{count}kiválasztva"
         import: Importálás
-      import:
-        imported_products: "Importált termékek:"
     enterprise_fees:
       index:
         title: "Vállalkozási díjak"
@@ -1238,6 +1236,8 @@ hu:
           customer_names_true: "Engedélyezve"
           customer_contacts_false: "Tiltva"
           customer_contacts_true: "Engedélyezve"
+          producers_edit_orders_false: "Tiltva"
+          producers_edit_orders_true: "Engedélyezve"
           shopfront_message: "Online Kirakat üzenete"
           shopfront_message_placeholder: >
               Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan

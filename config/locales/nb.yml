@@ -770,8 +770,6 @@ nb:
         selected:
           other: "%{count} valgt"
         import: Import
-      import:
-        imported_products: "Importerte produkter:"
     enterprise_fees:
       index:
         title: "Bedriftsavgifter"
@@ -1246,6 +1244,8 @@ nb:
           customer_names_true: "Aktivert"
           customer_contacts_false: "Deaktivert"
           customer_contacts_true: "Aktivert"
+          producers_edit_orders_false: "Deaktivert"
+          producers_edit_orders_true: "Aktivert"
           shopfront_message: "Melding Butikk"
           shopfront_message_placeholder: >
               En valgfri melding for å ønske kunder velkommen og forklare hvordan

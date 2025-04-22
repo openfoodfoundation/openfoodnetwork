@@ -1158,6 +1158,8 @@ cy:
           customer_names_true: "Galluogwyd"
           customer_contacts_false: "Analluogwyd"
           customer_contacts_true: "Galluogwyd"
+          producers_edit_orders_false: "Analluogwyd"
+          producers_edit_orders_true: "Galluogwyd"
           shopfront_message: "Neges Ffrynt y Siop"
           shopfront_message_placeholder: >
               Neges ddewisol i groesawu cwsmeriaid ac eluro sut i siopa gyda chi.

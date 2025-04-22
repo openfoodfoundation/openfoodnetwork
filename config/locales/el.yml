@@ -724,8 +724,6 @@ el:
         selected:
           other: "%{count}επιλέχθηκε"
         import: Εισαγωγή
-      import:
-        imported_products: "Εισαγόμενα προϊόντα:"
     enterprise_fees:
       index:
         title: "Τέλη επιχείρησης"
@@ -1191,6 +1189,8 @@ el:
           customer_names_true: "Ενεργό"
           customer_contacts_false: "Απενεργοποιημένο"
           customer_contacts_true: "Ενεργό"
+          producers_edit_orders_false: "Απενεργοποιημένο"
+          producers_edit_orders_true: "Ενεργό"
           shopfront_message: "Μήνυμα καταστήματος"
           shopfront_message_placeholder: >
               Ένα προαιρετικό μήνυμα για να καλωσορίσετε τους πελάτες και να εξηγήσετε

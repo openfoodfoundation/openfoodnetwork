@@ -1039,6 +1039,8 @@ uk:
           customer_names_true: "Увімкнено"
           customer_contacts_false: "Вимкнено"
           customer_contacts_true: "Увімкнено"
+          producers_edit_orders_false: "Вимкнено"
+          producers_edit_orders_true: "Увімкнено"
           shopfront_message: "Повідомлення вітрини магазину"
           shopfront_message_placeholder: >
               Додаткове повідомлення для привітання клієнтів і пояснення, як робити

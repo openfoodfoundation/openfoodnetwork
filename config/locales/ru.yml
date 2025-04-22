@@ -710,8 +710,6 @@ ru:
         selected:
           other: "выбрано %{count}"
         import: Импорт
-      import:
-        imported_products: "Внесенные товары:"
     enterprise_fees:
       index:
         title: "Сборы Предприятия"
@@ -1177,6 +1175,8 @@ ru:
           customer_names_true: "Включено"
           customer_contacts_false: "Выключено"
           customer_contacts_true: "Включено"
+          producers_edit_orders_false: "Выключено"
+          producers_edit_orders_true: "Включено"
           shopfront_message: "Сообщение Витрины"
           shopfront_message_placeholder: >
               Дополнительное сообщение, чтобы приветствовать клиентов и объяснить,

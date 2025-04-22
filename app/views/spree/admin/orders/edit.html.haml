@@ -6,14 +6,16 @@
 - content_for :page_actions do
   - if can?(:fire, @order)
     %li= event_links(@order)
-  = render partial: 'spree/admin/shared/order_links'
+  - if spree_current_user.can_manage_orders?
+    = render partial: 'spree/admin/shared/order_links'
   - if can?(:admin, Spree::Order)
     %li
       %a.button.icon-arrow-left{icon: 'icon-arrow-left', href: admin_orders_path }
         = t(:back_to_orders_list)
 
 = render partial: "spree/admin/shared/order_page_title"
-= render partial: "spree/admin/shared/order_tabs", locals: { current: 'Order Details' }
+- if spree_current_user.can_manage_orders?
+  = render partial: "spree/admin/shared/order_tabs", locals: { current: 'Order Details' }
 
 %div
   = render partial: "spree/shared/error_messages", locals: { target: @order }
