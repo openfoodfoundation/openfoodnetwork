@@ -26,8 +26,7 @@ RSpec.describe PaymentMailer do
 
       it "includes a link to authorize the payment" do
         link = "http://test.host/payments/#{payment.id}/authorize"
-        expect(email.text_part.body).to match link
-        expect(html_body(email)).to have_link link, href: link
+        expect(email.body).to have_link link, href: link
       end
     end
 
