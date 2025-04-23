@@ -25,19 +25,19 @@ RSpec.describe 'Multilingual' do
   context 'can switch language by params' do
     it 'in root path' do
       visit root_path
-      expect(get_i18n_locale).to eq 'en'
+      expect(pick_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
       expect(cookies_name).not_to include('locale')
       expect(page).to have_content 'SHOPS'
 
       visit root_path(locale: 'es')
-      expect(get_i18n_locale).to eq 'es'
+      expect(pick_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
 
       # it is not in the list of available of available_locales
       visit root_path(locale: 'it')
-      expect(get_i18n_locale).to eq 'es'
+      expect(pick_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
     end

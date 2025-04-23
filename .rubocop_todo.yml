@@ -222,11 +222,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/order/checkout.rb'
 
 # Offense count: 1
-Naming/AccessorMethodName:
-  Exclude:
-    - 'spec/support/request/web_helper.rb'
-
-# Offense count: 1
 # Configuration parameters: ForbiddenDelimiters.
 # ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))
 Naming/HeredocDelimiterNaming:
