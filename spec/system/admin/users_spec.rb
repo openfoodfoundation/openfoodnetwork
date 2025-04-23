@@ -128,6 +128,33 @@ RSpec.describe "Managing users" do
           }.to change { user.reload.show_api_key_view }.to(false)
         end
       end
+
+      context "pagination" do
+        before do
+          # creates 8 users
+          8.times { create(:user) }
+          visit spree.admin_users_path
+        end
+        it "displays pagination" do
+          # table displays 10 entries
+          within('tbody') do
+            expect(page).to have_css('tr', count: 10)
+          end
+          within ".pagination" do
+            expect(page).not_to have_content "Previous"
+            expect(page).to have_content "Next"
+            click_on "2"
+          end
+          # table displays 1 entry
+          within('tbody') do
+            expect(page).to have_css('tr', count: 1)
+          end
+          within ".pagination" do
+            expect(page).to have_content "Previous"
+            expect(page).not_to have_content "Next"
+          end
+        end
+      end
     end
 
     describe "creating a user" do
