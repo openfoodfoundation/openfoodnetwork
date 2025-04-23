@@ -560,7 +560,7 @@ module Spree
       end
     end
 
-    def set_order_cycle!(order_cycle)
+    def assign_order_cycle!(order_cycle)
       return if self.order_cycle == order_cycle
 
       self.order_cycle = order_cycle
@@ -573,7 +573,7 @@ module Spree
       line_items.includes(variant: :stock_items).find_each(&:cap_quantity_at_stock!)
     end
 
-    def set_distributor!(distributor)
+    def assign_distributor!(distributor)
       self.distributor = distributor
       self.order_cycle = nil unless order_cycle&.has_distributor? distributor
       save!

@@ -64,7 +64,7 @@ RSpec.describe PaymentGateways::StripeController, type: :controller do
           expect(controller).to receive(:current_order).and_return(order).at_least(:once)
           expect(order_cycle).to receive(:closed?).and_return(true)
           expect(order).to receive(:empty!)
-          expect(order).to receive(:set_order_cycle!).with(nil)
+          expect(order).to receive(:assign_order_cycle!).with(nil)
 
           get :confirm, params: { payment_intent: "pi_123" }
 
