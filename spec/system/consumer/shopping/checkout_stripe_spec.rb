@@ -36,7 +36,7 @@ RSpec.describe "Check out with Stripe" do
 
   before do
     stripe_enable
-    set_order order
+    pick_order order
     add_product_to_cart order, product
     distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
@@ -205,7 +205,7 @@ RSpec.describe "Check out with Stripe" do
           new_order = create(:order, user:, order_cycle:,
                                      distributor:, bill_address_id: nil,
                                      ship_address_id: nil)
-          set_order(new_order)
+          pick_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)
           stub_payment_intents_post_request order: new_order
           stub_successful_capture_request order: new_order

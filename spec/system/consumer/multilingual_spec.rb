@@ -51,7 +51,7 @@ RSpec.describe 'Multilingual' do
       let(:order) { create(:order, order_cycle:, distributor:) }
 
       before do
-        set_order order
+        pick_order order
         add_product_to_cart order, product, quantity: 1
       end
 
@@ -124,7 +124,7 @@ RSpec.describe 'Multilingual' do
         create(:order_ready_for_confirmation, distributor:)
       }
       before do
-        set_order order
+        pick_order order
         login_as user
       end
 

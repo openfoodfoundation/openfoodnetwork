@@ -25,7 +25,7 @@ RSpec.describe "As a consumer I want to check out my cart" do
     after { Warden.test_reset! }
 
     before do
-      set_order order
+      pick_order order
       add_product_to_cart order, product
     end
 

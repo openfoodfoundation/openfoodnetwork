@@ -92,7 +92,7 @@ RSpec.describe "As a consumer, I want to see adjustment breakdown" do
 
     describe "for a customer with shipping address within the tax zone" do
       before do
-        set_order order_within_zone
+        pick_order order_within_zone
         login_as(user_within_zone)
       end
 
@@ -211,7 +211,7 @@ RSpec.describe "As a consumer, I want to see adjustment breakdown" do
 
     describe "for a customer with shipping address outside the tax zone" do
       before do
-        set_order order_outside_zone
+        pick_order order_outside_zone
         login_as(user_outside_zone)
       end
 
