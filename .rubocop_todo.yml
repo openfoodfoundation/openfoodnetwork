@@ -221,10 +221,9 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 3
+# Offense count: 2
 Naming/AccessorMethodName:
   Exclude:
-    - 'lib/spree/core/controller_helpers/common.rb'
     - 'spec/support/request/shop_workflow.rb'
     - 'spec/support/request/web_helper.rb'
 
