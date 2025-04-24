@@ -9,14 +9,6 @@ describe("TagListInputController", () => {
   beforeAll(() => {
     const application = Application.start();
     application.register("tag-list-input-component--tag-list-input", tag_list_input_controller);
-
-    // Mock hotkeys.js
-    const mockedHotkeys = jest.fn();
-    global.hotkeys = mockedHotkeys;
-  });
-
-  afterAll(() => {
-    delete global.hotkeys;
   });
 
   beforeEach(() => {
