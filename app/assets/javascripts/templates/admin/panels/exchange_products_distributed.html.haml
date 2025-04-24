@@ -16,8 +16,8 @@
         .exchange-product-details
           %label
             %img{'ng-src' => '{{ product.image_url }}'} 
-            .name {{ 'ng-bind' => product.name }}
-          .supplier {{ 'ng-bind' => product.supplier_name }}
+            .name {{ product.name }}
+          .supplier {{ product.supplier_name }}
 
         .exchange-product-variant{'ng-repeat' => 'variant in product.variants | visibleVariants:exchange:order_cycle.visible_variants_for_outgoing_exchanges | filter:variantSuppliedToOrderCycle as filteredVariants'}
           %label
