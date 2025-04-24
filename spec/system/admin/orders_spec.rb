@@ -503,21 +503,40 @@ RSpec.describe '
 
     context "pagination" do
       before do
+        # creates 15 orders additional to the 4 orders
+        15.times { create(:order_ready_to_ship) }
         login_as_admin
         visit spree.admin_orders_path
       end
 
       it "displays pagination options" do
-        # displaying 4 orders (one order per table row)
+        # displaying 15 orders (one order per table row)
         within('tbody') do
-          expect(page).to have_css('tr', count: 4)
+          expect(page).to have_css('tr', count: 15)
         end
-        # pagination options also refer 4 order
-        expect(page).to have_content "4 Results found. Viewing 1 to 4."
+        # pagination options refers 19 orders
+        expect(page).to have_content "19 Results found. Viewing 1 to 15."
         page.find(".per-page-dropdown .ts-control .item").click # toggling the pagination dropdown
         expect(page).to have_content "15 per page"
         expect(page).to have_content "50 per page"
         expect(page).to have_content "100 per page"
+      end
+
+      it "changes pagination and displays entries" do
+        within ".pagination" do
+          expect(page).not_to have_css('button.page.prev')
+          expect(page).to have_css('button.page.next')
+          click_on "2"
+        end
+        # table displays 4 entries
+        within('tbody') do
+          expect(page).to have_css('tr', count: 4)
+        end
+        expect(page).to have_content "19 Results found. Viewing 16 to 19."
+        within ".pagination" do
+          expect(page).to have_css('button.page.prev')
+          expect(page).not_to have_css('button.page.next')
+        end
       end
     end
 
