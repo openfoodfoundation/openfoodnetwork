@@ -145,6 +145,10 @@ es:
       title: "El cambio deseado ha sido rechazado (422)"
     general_error:
       message: "Lo sentimos, pero algo ha ido mal.\n\nPuede que se trate de un problema temporal, así que inténtalo de nuevo o recarga la página.\nRegistramos todos los errores y es posible que estemos trabajando en una solución.\nSi el problema persiste o es urgente, póngase en contacto con nosotras."
+    unauthorized:
+      message: "No tiene autorización para realizar esta acción."
+    network_error:
+      message: "Error en la red: intentalo más tarde"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -760,9 +764,15 @@ es:
         user_guide: Manual de Usuario
         map: Mapa
     dfc_product_imports:
+      absent_variant:
+        reset: "Restablecer stock"
       index:
         update: Actualizar
         new: Nuevo
+        selected:
+          zero: "0 seleccionados"
+          one: "1 seleccionados"
+          other: "%{count} seleccionados"
         import: Importar
     enterprise_fees:
       index:
@@ -879,6 +889,7 @@ es:
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría de impuestos"
         producer_field_name: "Productora"
+        select_unit_scale: Seleccionar escala de la unidad
       clone:
         success: Se ha clonado el producto
         error: No se ha podido clonar el producto
@@ -1177,6 +1188,7 @@ es:
           visible: Pública
           not_visible: Oculto
           hidden: Ocultar todas las referencias
+          admin_only_legend: Solo administradores
         properties:
           legend: "Propiedades"
         permalink:
@@ -3695,6 +3707,7 @@ es:
   last: "Último"
   spree:
     order_updated: "Pedido actualizado"
+    cannot_perform_operation: "No se puede realizar esta operación."
     add_country: "Agregar pais"
     add_state: "Agregar estado"
     adjustment: "Ajuste"
@@ -4207,6 +4220,9 @@ es:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
           supplier: "Proveedora"
+          supplier_select_placeholder: "Seleccionar proveedora"
+          search_for_suppliers: "Buscar proveedoras"
+          search_for_units: "Buscar unidades"
           product_name: "nombre del producto"
           units: "Unidad de medida"
           value: "Valor"
@@ -4247,9 +4263,12 @@ es:
           bulk_unit_size: Tamaño de la unidad a granel
         display_as:
           display_as: Mostrar como
+        clone:
+          success: Producto clonado
       reports:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
+        hidden_customer_details_tip: "Si los nombres y/o los datos de contacto de las consumidoras están ocultos, puede solicitar a la distribuidora que actualice las preferencias de su tienda para permitir que sus proveedores vean los datos de las consumidoras en los informes."
       users:
         index:
           listing_users: "Listado de Usuarias"
@@ -4408,6 +4427,7 @@ es:
         invoice_attached_text: Adjunta una factura para su pedido reciente de
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Estimada consumidora,"
         request_sent_text: |
             Se ha solicitado el cambio de tu contraseña.
             Si tu no lo has solicitado simplemente ignora este email.
@@ -4483,6 +4503,7 @@ es:
     users:
       api_keys:
         regenerate_key: "Regenerar llave"
+        title: API key
       webhook_endpoints:
         description: Los eventos del sistema pueden desencadenar webhooks a sistemas externos.
         event_types:
@@ -4618,6 +4639,7 @@ es:
     search_input:
       placeholder: Buscar
     selector_with_filter:
+      selected_items: "%{count} seleccionados"
       search_placeholder: Buscar
     pagination:
       next: Siguiente

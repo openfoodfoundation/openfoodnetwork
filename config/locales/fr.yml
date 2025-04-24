@@ -782,9 +782,18 @@ fr:
       connection_invalid_html: |
           La connexion avec votre compte OIDC a échoué.
           Merci de rafraîchir votre connexion OIDC à : %{oidc_settings_link}
+      absent_variant:
+        reset: "Réinitialiser le stock"
       index:
         title: "Catalogue produit DFC"
         catalog_url: "%{count} produits à importer de : %{catalog_url}"
+        absent_products:
+          one: |
+              Un produit n'est plus dans le catalogue produits.
+              Il sera marqué indisponible quand vous remettrez votre stock à zéro.
+          other: |
+              %{count} produits ne sont plus dans votre catalogue produits.
+              Ils seront marqués indisponibles quand vous remettrez votre stock à zéro.
         enterprise: "Import vers l'entreprise : %{enterprise_name}"
         select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour
@@ -797,6 +806,8 @@ fr:
         invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
+        imported_products: "Produits importés : %{count}"
+        reset_products: "Réinitialiser le stock pour les produits absents : %{count}"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -1276,6 +1287,8 @@ fr:
           enable_subscriptions_true: "Activé"
           customer_names_in_reports: "Affichage du nom des acheteurs"
           customer_names_tip: "Permettre aux producteurs de voir les noms de vos acheteurs"
+          producers_to_edit_orders: "Possibilité pour les producteurs de modifier les commandes"
+          producers_to_edit_orders_tip: "Permettre à vos fournisseurs de visualiser les commandes comprenant leurs produits et de modifier la quantité et le poids de leurs produits seulement."
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
           customer_contacts_in_reports: "Affichage des contacts clients"
@@ -1695,6 +1708,7 @@ fr:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      none: aucun
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden_field: "< Masqué >"
       unitsize: Unité de mesure
