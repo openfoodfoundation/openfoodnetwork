@@ -418,6 +418,8 @@ en:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+    order_cycle_report:
+      order_number: "Order Number"
   provider_settings: "Provider settings"
   report_mailer:
     report_ready:
@@ -3482,7 +3484,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pending: Pending
     shipped: Shipped
   business_name: Business Name
-  oc_report_order_number: Order Number
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
