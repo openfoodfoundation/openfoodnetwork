@@ -1023,7 +1023,7 @@ RSpec.describe '
         it "ships the order and shipment email is sent" do
           expect(page).to have_content "ready"
           expect(page).not_to have_content "shipped"
-          expect(page).to have_css("#s2id_add_variant_id")
+          expect(page).to have_select2 "add_variant_id"
 
           click_button 'Ship'
 
