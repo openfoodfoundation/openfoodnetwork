@@ -861,6 +861,8 @@ nl_BE:
           customer_names_true: "Activeer"
           customer_contacts_false: "Deactiveer"
           customer_contacts_true: "Activeer"
+          producers_edit_orders_false: "Deactiveer"
+          producers_edit_orders_true: "Activeer"
           shopfront_message: "Etalage Boodschap"
           shopfront_message_placeholder: >
               Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met

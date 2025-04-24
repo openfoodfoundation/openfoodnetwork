@@ -996,6 +996,8 @@ es_US:
           customer_names_true: "Habilitado"
           customer_contacts_false: "Deshabilitado"
           customer_contacts_true: "Habilitado"
+          producers_edit_orders_false: "Deshabilitado"
+          producers_edit_orders_true: "Habilitado"
           shopfront_message: "Mensaje de la Tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar

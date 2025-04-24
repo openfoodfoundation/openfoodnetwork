@@ -1142,6 +1142,8 @@ ml:
           customer_names_true: "പ്രവർത്തനക്ഷമമാക്കി"
           customer_contacts_false: "പ്രവർത്തനരഹിതമാക്കി"
           customer_contacts_true: "പ്രവർത്തനക്ഷമമാക്കി"
+          producers_edit_orders_false: "പ്രവർത്തനരഹിതമാക്കി"
+          producers_edit_orders_true: "പ്രവർത്തനക്ഷമമാക്കി"
           shopfront_message: "ഷോപ്പ്ഫ്രണ്ട് സന്ദേശം"
           shopfront_message_placeholder: >
               ഉപഭോക്താക്കളെ സ്വാഗതം ചെയ്യുന്നതിനും നിങ്ങളുമായി എങ്ങനെ ഷോപ്പിംഗ് നടത്താമെന്ന്

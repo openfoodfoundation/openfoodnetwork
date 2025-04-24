@@ -88,7 +88,7 @@ module Spree
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
     delegate :update_totals, :update_totals_and_states, to: :updater
-    delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
+    delegate :create_order_fees!, :update_order_fees!,
              :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
     validates :customer, presence: true, if: :require_customer?
@@ -138,6 +138,15 @@ module Spree
                 user.enterprises.select(&:id)).
           select('DISTINCT spree_orders.*')
       end
+    }
+
+    scope :editable_by_producers, ->(enterprises) {
+      joins(
+        :distributor, line_items: :supplier
+      ).where(
+        supplier: { id: enterprises },
+        distributor: { enable_producers_to_edit_orders: true }
+      )
     }
 
     scope :distributed_by_user, lambda { |user|

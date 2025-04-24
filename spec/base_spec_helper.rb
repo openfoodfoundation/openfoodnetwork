@@ -265,7 +265,6 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
-  config.include MailersHelper, type: :mailer
   config.include TomSelectHelper, type: :system
 
   config.include ViewComponent::TestHelpers, type: :component

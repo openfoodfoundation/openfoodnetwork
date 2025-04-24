@@ -1075,6 +1075,8 @@ it:
           customer_names_true: "Abilitata"
           customer_contacts_false: "Disabilitata"
           customer_contacts_true: "Abilitata"
+          producers_edit_orders_false: "Disabilitata"
+          producers_edit_orders_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
           shopfront_message_placeholder: >
               Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come

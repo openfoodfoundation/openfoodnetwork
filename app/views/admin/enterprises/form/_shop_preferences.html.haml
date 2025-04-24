@@ -123,3 +123,15 @@
   .five.columns.omega
     = f.radio_button :show_customer_contacts_to_suppliers, false
     = f.label :show_customer_contacts_to_suppliers, t('.customer_contacts_false'), value: :false
+
+.row
+  .three.columns.alpha
+    %label= t('.producers_to_edit_orders')
+    %div{'ofn-with-tip' => t('.producers_to_edit_orders_tip')}
+      %a= t 'admin.whats_this'
+  .three.columns
+    = radio_button :enterprise, :enable_producers_to_edit_orders, true
+    = label :enterprise_enable_producers_to_edit_orders, t('.producers_edit_orders_true'), value: :true
+  .five.columns.omega
+    = radio_button :enterprise, :enable_producers_to_edit_orders, false
+    = label :enterprise_enable_producers_to_edit_orders, t('.producers_edit_orders_false'), value: :false

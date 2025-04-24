@@ -133,6 +133,9 @@ class Enterprise < ApplicationRecord
               message: Spree.t('errors.messages.invalid_instagram_url')
             }, allow_blank: true
   validate :validate_white_label_logo_link
+  validates :external_billing_id,
+            format: { with: /\A\S+\z/ },
+            allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -379,6 +382,10 @@ class Enterprise < ApplicationRecord
 
   def is_hub
     sells == 'any'
+  end
+
+  def is_producer_only
+    is_primary_producer && sells == 'none'
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.

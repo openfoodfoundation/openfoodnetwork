@@ -1025,6 +1025,8 @@ ko:
           customer_names_true: "활성화"
           customer_contacts_false: "비활성화"
           customer_contacts_true: "활성화"
+          producers_edit_orders_false: "비활성화"
+          producers_edit_orders_true: "활성화"
           shopfront_message: "상점 메세지"
           shopfront_message_placeholder: >
               고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을

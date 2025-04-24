@@ -21,7 +21,7 @@ RSpec.describe "spree/admin/orders/edit.html.haml" do
       end
     end
 
-    allow(view).to receive_messages spree_current_user: create(:user)
+    allow(view).to receive_messages spree_current_user: create(:admin_user)
   end
 
   context "when order is complete" do

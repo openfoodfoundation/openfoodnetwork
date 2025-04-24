@@ -1121,6 +1121,8 @@ pa:
           customer_names_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           customer_contacts_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           customer_contacts_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
+          producers_edit_orders_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
+          producers_edit_orders_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           shopfront_message: "ਸ਼ਾਪਫਰੰਟ ਸੰਦੇਸ਼"
           shopfront_message_placeholder: >
               ਗਾਹਕਾਂ ਦਾ ਸੁਆਗਤ ਕਰਨ ਅਤੇ ਤੁਹਾਡੇ ਨਾਲ ਖਰੀਦਦਾਰੀ ਕਰਨ ਦਾ ਢੰਗ ਦੱਸਣ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ

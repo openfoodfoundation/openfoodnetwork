@@ -1115,6 +1115,8 @@ ca:
           customer_names_true: "Habilitat"
           customer_contacts_false: "Deshabilitat"
           customer_contacts_true: "Habilitat"
+          producers_edit_orders_false: "Deshabilitat"
+          producers_edit_orders_true: "Habilitat"
           shopfront_message: "Missatge de la botiga"
           shopfront_message_placeholder: >
               Un missatge opcional per donar la benvinguda als clients i explicar

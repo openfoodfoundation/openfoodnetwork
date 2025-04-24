@@ -942,6 +942,8 @@ pt_BR:
           customer_names_true: "Ativado"
           customer_contacts_false: "Desativado"
           customer_contacts_true: "Ativado"
+          producers_edit_orders_false: "Desativado"
+          producers_edit_orders_true: "Ativado"
           shopfront_message: "Mensagem da loja virtual"
           shopfront_message_placeholder: >
               Uma mensagem opcional para dar as boas-vindas aos clientes e explicar

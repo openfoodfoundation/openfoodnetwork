@@ -108,6 +108,13 @@ module Spree
         where(spree_adjustments: { id: nil })
     }
 
+    scope :editable_by_producers, ->(enterprises_ids) {
+      joins(:variant, order: :distributor).where(
+        distributor: { enable_producers_to_edit_orders: true },
+        spree_variants: { supplier_id: enterprises_ids }
+      )
+    }
+
     def copy_price
       return unless variant
 

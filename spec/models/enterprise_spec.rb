@@ -415,6 +415,18 @@ RSpec.describe Enterprise do
         expect(e).not_to be_valid
       end
     end
+
+    describe "external_billing_id" do
+      it "validates the external_billing_id attribute" do
+        e = build(:enterprise, external_billing_id: '123456')
+        expect(e).to be_valid
+      end
+
+      it "does not validate the external_billing_id attribute with spaces" do
+        e = build(:enterprise, external_billing_id: '123 456')
+        expect(e).not_to be_valid
+      end
+    end
   end
 
   describe "serialisation" do
@@ -1010,6 +1022,29 @@ RSpec.describe Enterprise do
       )
       expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
       expect(expected).to include(sender)
+    end
+  end
+
+  describe "#is_producer_only" do
+    context "when enterprise is_primary_producer and sells none" do
+      it "returns true" do
+        enterprise = build(:supplier_enterprise)
+        expect(enterprise.is_producer_only).to be true
+      end
+    end
+
+    context "when enterprise is_primary_producer and sells any" do
+      it "returns false" do
+        enterprise = build(:enterprise, is_primary_producer: true, sells: "any")
+        expect(enterprise.is_producer_only).to be false
+      end
+    end
+
+    context "when enterprise is_primary_producer and sells own" do
+      it "returns false" do
+        enterprise = build(:enterprise, is_primary_producer: true, sells: "own")
+        expect(enterprise.is_producer_only).to be false
+      end
     end
   end
 end

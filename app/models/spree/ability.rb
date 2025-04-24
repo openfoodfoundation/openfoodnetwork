@@ -47,7 +47,11 @@ module Spree
       add_group_management_abilities user if can_manage_groups? user
       add_product_management_abilities user if can_manage_products? user
       add_order_cycle_management_abilities user if can_manage_order_cycles? user
-      add_order_management_abilities user if can_manage_orders? user
+      if can_manage_orders? user
+        add_order_management_abilities user
+      elsif can_manage_line_items_in_orders? user
+        add_manage_line_items_abilities user
+      end
       add_relationship_management_abilities user if can_manage_relationships? user
     end
 
@@ -81,7 +85,13 @@ module Spree
 
     # Users can manage orders if they have a sells own/any enterprise.
     def can_manage_orders?(user)
-      ( user.enterprises.map(&:sells) & %w(own any) ).any?
+      user.can_manage_orders?
+    end
+
+    # Users can manage line items in orders if they have producer enterprise and
+    # any of order distributors allow them to edit their orders.
+    def can_manage_line_items_in_orders?(user)
+      user.can_manage_line_items_in_orders?
     end
 
     def can_manage_relationships?(user)
@@ -341,6 +351,28 @@ module Spree
       can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
         user.enterprises.include?(proxy_order.subscription.shop)
       end
+    end
+
+    def can_edit_order(order, user)
+      return unless order.distributor&.enable_producers_to_edit_orders
+
+      order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
+    end
+
+    def add_manage_line_items_abilities(user)
+      can [:admin, :read, :index, :edit, :update, :bulk_management], Spree::Order do |order|
+        can_edit_order(order, user)
+      end
+      can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
+        can_edit_order(item.order, user)
+      end
+      can [:index, :create, :add, :read, :edit, :update], Spree::Shipment do |shipment|
+        can_edit_order(shipment.order, user)
+      end
+      can [:admin, :index], OrderCycle do |order_cycle|
+        can_edit_order(order_cycle.order, user)
+      end
+      can [:visible], Enterprise
     end
 
     def add_relationship_management_abilities(user)
