@@ -163,10 +163,10 @@ module Spree
       end
 
       def refuse_changing_shipped_orders
-        if @order.shipped?
-          flash[:error] = I18n.t("spree.admin.orders.add_product.cannot_add_item_to_shipped_order")
-          return redirect_to spree.edit_admin_order_path(@order)
-        end
+        return unless @order.shipped?
+
+        flash[:error] = I18n.t("admin.orders.cannot_add_item_to_shipped_order")
+        redirect_to spree.edit_admin_order_path(@order)
       end
 
       def order_params
