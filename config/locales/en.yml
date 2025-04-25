@@ -2021,9 +2021,9 @@ en:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
         stripe_connect_success: "Stripe account connected successfully"
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
-        remove_logo_success: "Logo removed"
-        remove_promo_image_success: "Promo image removed"
-        remove_white_label_logo_success: "Logo removed"
+        remove_logo_success: "Logo removed successfully"
+        remove_promo_image_success: "Promo image removed successfully"
+        remove_white_label_logo_success: "Logo removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
 
