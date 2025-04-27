@@ -240,16 +240,21 @@ RSpec.describe "Product Import" do
     end
 
     it "can reset product stock to zero for products not present in the CSV" do
+      pending("#12933")
+
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, shipping_category_id
         Carrots, User Enterprise, Vegetables, 500, 3.20, 500, g, #{shipping_category_id_str}
       CSV
       File.write('/tmp/test.csv', csv_data)
 
+      # setting a variant to have negative stock, with the on demand option set to true
+      Spree::Product.find_by(name: 'Cabbage').variants.first.on_demand = true
+      Spree::Product.find_by(name: 'Cabbage').variants.first.on_hand = -30
+
       visit main_app.admin_product_import_path
 
       attach_file 'file', '/tmp/test.csv'
-
       check "settings_reset_all_absent"
 
       click_button 'Upload'
