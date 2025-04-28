@@ -13,7 +13,7 @@
     %col{ style: "width: 15%" }
   %thead
     %tr
-      %th= sort_link [:spree, @search], :email, t(".user"), {}, {title: "users_email_title"}
+      %th= sort_link [:spree, @search], :email, t(".user"), title: "users_email_title"
       %th= sort_link [:spree, @search], :enterprise_limit, t(".enterprise_limit")
       %th.actions
   %tbody
