@@ -27,7 +27,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
     let(:order) { create(:order, distributor:) }
 
     before do
-      set_order order
+      pick_order order
     end
 
     it "shows a distributor with images" do
@@ -461,7 +461,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         before do
           add_variant_to_order_cycle(exchange, variant)
           set_order_cycle(order, oc1)
-          set_order(order)
+          pick_order(order)
           visit shop_path
         end
 

@@ -142,7 +142,7 @@ RSpec.describe 'White label setting' do
         before do
           order.update_attribute(:state, 'cart')
           order.line_items << create(:line_item, variant: product.variants.first)
-          set_order(order)
+          pick_order(order)
         end
 
         it_behaves_like "hides the OFN navigation when needed only"
@@ -176,7 +176,7 @@ RSpec.describe 'White label setting' do
 
       context "when the user has a complete order" do
         before do
-          set_order(complete_order)
+          pick_order(complete_order)
         end
 
         shared_examples "hides the OFN navigation when needed only for the order confirmation" do
@@ -225,7 +225,7 @@ RSpec.describe 'White label setting' do
     context "when the preference is set to false" do
       before do
         distributor.update_attribute(:hide_ofn_navigation, false)
-        set_order(order)
+        pick_order(order)
         allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
           and_return(distributor)
       end
@@ -288,7 +288,7 @@ RSpec.describe 'White label setting' do
         before do
           order.update_attribute(:state, 'cart')
           order.line_items << create(:line_item, variant: product.variants.first)
-          set_order(order)
+          pick_order(order)
           visit main_app.cart_path
         end
 
@@ -299,7 +299,7 @@ RSpec.describe 'White label setting' do
         before do
           order.update_attribute(:state, 'cart')
           order.line_items << create(:line_item, variant: product.variants.first)
-          set_order(order)
+          pick_order(order)
           visit checkout_path
         end
 
@@ -347,7 +347,7 @@ RSpec.describe 'White label setting' do
         before do
           order.update_attribute(:state, 'cart')
           order.line_items << create(:line_item, variant: product.variants.first)
-          set_order(order)
+          pick_order(order)
           visit main_app.cart_path
         end
 
@@ -358,7 +358,7 @@ RSpec.describe 'White label setting' do
         before do
           order.update_attribute(:state, 'cart')
           order.line_items << create(:line_item, variant: product.variants.first)
-          set_order(order)
+          pick_order(order)
           visit checkout_path
         end
 
@@ -399,7 +399,7 @@ RSpec.describe 'White label setting' do
           before do
             order.update_attribute(:state, 'cart')
             order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
+            pick_order(order)
             visit main_app.cart_path
           end
 
@@ -410,7 +410,7 @@ RSpec.describe 'White label setting' do
           before do
             order.update_attribute(:state, 'cart')
             order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
+            pick_order(order)
             visit checkout_path
           end
 

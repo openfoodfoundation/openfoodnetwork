@@ -31,7 +31,7 @@ RSpec.describe 'checkout endpoints', type: :request do
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?)
       .and_return(true)
 
-    set_order order
+    pick_order order
   end
 
   context "when getting the cart `/checkout/cart`" do

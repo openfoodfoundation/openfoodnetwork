@@ -21,7 +21,7 @@ RSpec.describe "As a consumer, I want to check unit price information for a prod
   let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
   before do
-    set_order order
+    pick_order order
     exchange1.update_attribute :pickup_time, "monday"
     add_variant_to_order_cycle(exchange1, variant)
   end

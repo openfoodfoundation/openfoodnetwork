@@ -34,7 +34,7 @@ RSpec.describe "checking out an order with a paypal express payment method", typ
     expect(order.next).to be true # => address
     expect(order.next).to be true # => delivery
     expect(order.next).to be true # => payment
-    set_order order
+    pick_order order
 
     stub_paypal_confirm
   end

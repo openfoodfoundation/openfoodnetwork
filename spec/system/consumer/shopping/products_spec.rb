@@ -38,7 +38,7 @@ RSpec.describe "As a consumer I want to view products" do
     let(:order) { create(:order, distributor:) }
 
     before do
-      set_order order
+      pick_order order
     end
 
     describe "supplier's name is displayed" do

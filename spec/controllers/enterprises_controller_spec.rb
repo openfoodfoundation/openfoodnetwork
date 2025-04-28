@@ -19,7 +19,7 @@ RSpec.describe EnterprisesController, type: :controller do
     }
 
     before do
-      order.set_distributor! current_distributor
+      order.assign_distributor! current_distributor
       order.line_items << line_item
     end
 

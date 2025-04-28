@@ -33,7 +33,7 @@ module WebHelper
     page.execute_script("I18n.locale = '#{locale}'")
   end
 
-  def get_i18n_locale
+  def pick_i18n_locale
     page.evaluate_script("I18n.locale;")
   end
 

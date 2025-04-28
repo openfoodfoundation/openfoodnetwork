@@ -39,7 +39,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
   before do
     add_enterprise_fee enterprise_fee
-    set_order order
+    pick_order order
 
     distributor.shipping_methods.push(free_shipping_with_required_address)
   end

@@ -11,7 +11,7 @@ class ShopController < BaseController
   def order_cycle
     if request.post?
       if oc = OrderCycle.with_distributor(@distributor).active.find_by(id: params[:order_cycle_id])
-        current_order(true).set_order_cycle! oc
+        current_order(true).assign_order_cycle! oc
         @current_order_cycle = oc
         render json: @current_order_cycle, serializer: Api::OrderCycleSerializer
       else

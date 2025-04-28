@@ -8,7 +8,7 @@ module Checkout
     end
 
     def success(params, current_user)
-      set_customer_terms_and_conditions_accepted_at(params)
+      assign_customer_terms_and_conditions_accepted_at(params)
       save_order_addresses_as_user_default(params, current_user)
     end
 
@@ -27,7 +27,7 @@ module Checkout
       user_default_address_setter.set_default_ship_address if params[:order][:default_ship_address]
     end
 
-    def set_customer_terms_and_conditions_accepted_at(params)
+    def assign_customer_terms_and_conditions_accepted_at(params)
       return unless params[:order]
 
       return unless params[:order][:terms_and_conditions_accepted]

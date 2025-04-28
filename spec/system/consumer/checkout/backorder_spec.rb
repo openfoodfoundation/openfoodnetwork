@@ -11,7 +11,7 @@ RSpec.describe "Checkout" do
 
   before do
     variant.semantic_links << SemanticLink.new(semantic_id: "https://product")
-    set_order order
+    pick_order order
     login_as create(:user)
   end
 

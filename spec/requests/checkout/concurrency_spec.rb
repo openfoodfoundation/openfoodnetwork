@@ -49,7 +49,7 @@ RSpec.describe "Concurrent checkouts", concurrency: true do
     order.next # => payment
     order.next # => confirmation
 
-    set_order(order)
+    pick_order(order)
     login_as(order.user)
   end
 

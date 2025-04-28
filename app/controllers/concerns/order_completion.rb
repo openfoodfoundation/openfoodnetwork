@@ -26,7 +26,7 @@ module OrderCompletion
   # Builds an order setting the token and distributor of the one specified
   def build_new_order(distributor, token)
     new_order = current_order(true)
-    new_order.set_distributor!(distributor)
+    new_order.assign_distributor!(distributor)
     new_order.tokenized_permission.token = token
     new_order.tokenized_permission.save!
   end
