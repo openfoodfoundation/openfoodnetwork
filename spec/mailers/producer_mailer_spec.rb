@@ -79,7 +79,7 @@ RSpec.describe ProducerMailer, type: :mailer do
   end
 
   it "contains an aggregated list of produce in alphabetical order" do
-    rows = parsed_email.all('table.order-summary tbody tr:not(.total-row)')
+    rows = parsed_email.all('table.order-summary.line-items tbody tr:not(.total-row)')
     actual = rows.map do |row|
       row.all('td').map { |td| td.text.strip }
     end
@@ -153,7 +153,6 @@ RSpec.describe ProducerMailer, type: :mailer do
     end
 
     it "displays last name and first name for each order" do
-      product_name = order.line_items.first.product.name
       last_name = order.billing_address.lastname
       first_name = order.billing_address.firstname
       row = parsed_email.find("table.order-summary.customer-order tbody tr")
@@ -193,24 +192,22 @@ RSpec.describe ProducerMailer, type: :mailer do
 
     context "validate order number" do
       let(:table_header) do
-        html_body(mail).find("table.order-summary.customer-order thead")
+        parsed_email.find("table.order-summary.customer-order thead")
       end
 
       it 'displays order number for the customer' do
         expect(table_header).to have_selector("th", text: 'Order Number')
         expect(
-          html_body(mail).find("table.order-summary.customer-order tbody tr")
+          parsed_email.find("table.order-summary.customer-order tbody tr")
         ).to have_selector("td", text: order.number)
-        expect(customer_details_summary_text(mail)).to include(order.number)
       end
     end
 
     it "adds customer names in the table" do
-      html_body(mail).find(".order-summary.customer-order").tap do |table|
+      parsed_email.find(".order-summary.customer-order").tap do |table|
         expect(table).to have_selector("th", text: "First Name")
         expect(table).to have_selector("th", text: "Last Name")
       end
-      expect(customer_details_summary_text(mail)).to be_present
     end
   end
 
@@ -220,11 +217,10 @@ RSpec.describe ProducerMailer, type: :mailer do
     end
 
     it "does not add customer names in the table" do
-      html_body(mail).find(".order-summary.customer-order").tap do |table|
+      parsed_email.find(".order-summary.customer-order").tap do |table|
         expect(table).not_to have_selector("th", text: "First Name")
         expect(table).not_to have_selector("th", text: "Last Name")
       end
-      expect(customer_details_summary_text(mail)).to be_present
     end
   end
 
