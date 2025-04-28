@@ -131,8 +131,9 @@ RSpec.describe "Managing users" do
 
       context "pagination" do
         before do
-          # creates 8 users
+          # creates 8 more users
           8.times { create(:user) }
+          expect(Spree::User.count).to eq 11
           visit spree.admin_users_path
         end
         it "displays pagination" do
