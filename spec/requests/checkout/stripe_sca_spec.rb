@@ -93,7 +93,7 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
     Stripe.api_key = "sk_test_12345"
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
-    set_order order
+    pick_order order
 
     # Authorizes the payment
     stub_request(:post, "https://api.stripe.com/v1/payment_intents")

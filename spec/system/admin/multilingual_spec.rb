@@ -19,13 +19,13 @@ RSpec.describe 'Multilingual' do
   end
 
   it 'can switch language by params' do
-    expect(get_i18n_locale).to eq 'en'
+    expect(pick_i18n_locale).to eq 'en'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
     expect(admin_user.locale).to be_nil
 
     visit spree.admin_dashboard_path(locale: 'es')
-    expect(get_i18n_locale).to eq 'es'
+    expect(pick_i18n_locale).to eq 'es'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header'))
       .to eq 'Mis Organizaciones'
     expect(page).to have_content 'Mis Organizaciones'
@@ -35,7 +35,7 @@ RSpec.describe 'Multilingual' do
 
   it 'fallbacks to default_locale' do
     visit spree.admin_dashboard_path(locale: 'it')
-    expect(get_i18n_locale).to eq 'en'
+    expect(pick_i18n_locale).to eq 'en'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
     expect(admin_user.locale).to be_nil

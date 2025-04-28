@@ -796,7 +796,7 @@ RSpec.describe Spree::Order do
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
-      subject.set_distributor! d
+      subject.assign_distributor! d
       expect(subject.distributor).to eq(d)
     end
 
@@ -806,7 +806,7 @@ RSpec.describe Spree::Order do
       create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.order_cycle = oc
-      subject.set_distributor! d
+      subject.assign_distributor! d
 
       expect(subject.distributor).to eq(d)
       expect(subject.order_cycle).to eq(oc)
@@ -817,7 +817,7 @@ RSpec.describe Spree::Order do
       oc = create(:simple_order_cycle)
 
       subject.order_cycle = oc
-      subject.set_distributor! d
+      subject.assign_distributor! d
 
       expect(subject.distributor).to eq(d)
       expect(subject.order_cycle).to be_nil
@@ -825,8 +825,8 @@ RSpec.describe Spree::Order do
 
     it "clears the distributor when setting to nil" do
       d = create(:distributor_enterprise)
-      subject.set_distributor! d
-      subject.set_distributor! nil
+      subject.assign_distributor! d
+      subject.assign_distributor! nil
 
       expect(subject.distributor).to be_nil
     end
@@ -853,16 +853,16 @@ RSpec.describe Spree::Order do
 
     it "empties the cart when changing the order cycle" do
       expect(subject).to receive(:empty!)
-      subject.set_order_cycle! oc
+      subject.assign_order_cycle! oc
     end
 
     it "doesn't empty the cart if the order cycle is not different" do
       expect(subject).not_to receive(:empty!)
-      subject.set_order_cycle! subject.order_cycle
+      subject.assign_order_cycle! subject.order_cycle
     end
 
     it "sets the order cycle when no distributor is set" do
-      subject.set_order_cycle! oc
+      subject.assign_order_cycle! oc
       expect(subject.order_cycle).to eq(oc)
     end
 
@@ -871,7 +871,7 @@ RSpec.describe Spree::Order do
       create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.distributor = d
-      subject.set_order_cycle! oc
+      subject.assign_order_cycle! oc
 
       expect(subject.order_cycle).to eq(oc)
       expect(subject.distributor).to eq(d)
@@ -881,7 +881,7 @@ RSpec.describe Spree::Order do
       d = create(:distributor_enterprise)
 
       subject.distributor = d
-      subject.set_order_cycle! oc
+      subject.assign_order_cycle! oc
 
       expect(subject.order_cycle).to eq(oc)
       expect(subject.distributor).to be_nil
@@ -889,10 +889,10 @@ RSpec.describe Spree::Order do
 
     it "clears the order cycle when setting to nil" do
       d = create(:distributor_enterprise)
-      subject.set_order_cycle! oc
+      subject.assign_order_cycle! oc
       subject.distributor = d
 
-      subject.set_order_cycle! nil
+      subject.assign_order_cycle! nil
 
       expect(subject.order_cycle).to be_nil
       expect(subject.distributor).to eq(d)

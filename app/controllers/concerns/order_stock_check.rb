@@ -25,7 +25,7 @@ module OrderStockCheck
 
     Alert.raise_with_record("Notice: order cycle closed during checkout completion", current_order)
     current_order.empty!
-    current_order.set_order_cycle! nil
+    current_order.assign_order_cycle! nil
 
     flash[:info] = I18n.t('order_cycle_closed')
     respond_to do |format|

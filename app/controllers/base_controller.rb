@@ -25,6 +25,6 @@ class BaseController < ApplicationController
   def set_order_cycle
     return if @order_cycles.count != 1
 
-    current_order(true).set_order_cycle! @order_cycles.first
+    current_order(true).assign_order_cycle! @order_cycles.first
   end
 end

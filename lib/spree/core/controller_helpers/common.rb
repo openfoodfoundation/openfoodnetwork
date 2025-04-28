@@ -10,7 +10,7 @@ module Spree
           helper_method :title=
           helper_method :accurate_title
 
-          layout :get_layout
+          layout :pick_layout
 
           before_action :set_user_language
 
@@ -65,7 +65,7 @@ module Spree
           # Returns which layout to render.
           #   The layout to render can be set inside Spree configuration with the +:layout+ option.
           # Default layout is: +app/views/spree/layouts/spree_application+
-          def get_layout
+          def pick_layout
             Spree::Config[:layout]
           end
         end

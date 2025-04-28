@@ -42,7 +42,7 @@ RSpec.describe "Check out with Paypal" do
 
   before do
     distributor.shipping_methods << free_shipping
-    set_order order
+    pick_order order
     add_product_to_cart order, product
   end
 

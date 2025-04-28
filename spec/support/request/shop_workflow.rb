@@ -33,7 +33,7 @@ module ShopWorkflow
     order_cycle.exchanges.outgoing.first.enterprise_fees << enterprise_fee
   end
 
-  def set_order(order)
+  def pick_order(order)
     allow_any_instance_of(ApplicationController).to receive(:session).and_return(
       order_id: order.id, access_token: order.token
     )

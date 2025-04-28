@@ -33,7 +33,7 @@ RSpec.describe "full-page cart" do
     let(:order) { create(:order, order_cycle:, distributor:) }
 
     before do
-      set_order order
+      pick_order order
     end
 
     describe "continue shopping" do

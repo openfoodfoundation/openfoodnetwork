@@ -221,16 +221,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 7
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/mailers/producer_mailer.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/services/checkout/post_checkout_actions.rb'
-    - 'lib/spree/core/controller_helpers/common.rb'
-    - 'spec/support/request/shop_workflow.rb'
-    - 'spec/support/request/web_helper.rb'
-
 # Offense count: 1
 # Configuration parameters: ForbiddenDelimiters.
 # ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))
