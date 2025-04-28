@@ -221,13 +221,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 1
-# Configuration parameters: ForbiddenDelimiters.
-# ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))
-Naming/HeredocDelimiterNaming:
-  Exclude:
-    - 'app/models/content_configuration.rb'
-
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
