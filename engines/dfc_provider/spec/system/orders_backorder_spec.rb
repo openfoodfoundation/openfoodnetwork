@@ -92,11 +92,16 @@ RSpec.describe "Orders backorder integration" do
       expect(supplier_order.line_items.first.variant).to eq variant
       expect(supplier_order.line_items.first.quantity).to eq 1
 
-      # At end of order cycle, the CompleteBackorderJob should succeed.
-      # backorder_url = "http://#{host}/api/dfc/enterprises/#{supplier.id}/orders/#{supplier.distributed_orders.first.id}" # aint no route for this
-      # CompleteBackorderJob.perform_now(distributor_owner, distributor, distributor_order_cycle, backorder_url)
-      perform_enqueued_jobs(only: CompleteBackorderJob)
-      expect(supplier.distributed_orders.first.state).to eq "complete"
+      # At end of order cycle, the backorder should be synchronised.
+      distributor_order.line_items.first.update! quantity: 2
+      supplier_line_item = supplier_order.line_items.first
+
+      expect {
+        # backorder_url = "http://#{host}/api/dfc/enterprises/#{supplier.id}/orders/#{supplier.distributed_orders.first.id}" # aint no route for this
+        # CompleteBackorderJob.perform_now(distributor_owner, distributor, distributor_order_cycle, backorder_url)
+        perform_enqueued_jobs(only: CompleteBackorderJob)
+        supplier_line_item.reload
+      }.to change { supplier_line_item.quantity }.to(2)
 
     rescue Faraday::UnprocessableEntityError => e
       # Output error message for convenient debugging
