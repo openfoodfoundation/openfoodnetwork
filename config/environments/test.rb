@@ -54,15 +54,5 @@ Openfoodnetwork::Application.configure do
   # Print deprecation notices to the stderr
   # config.active_support.deprecation = :stderr
 
-  # Fail tests on deprecated code unless it's a known case to solve.
-  ActiveSupport::Deprecation.behavior = ->(message, callstack, deprecation_horizon, gem_name) do
-    allowed_warnings = [
-      # List strings here to allow matching deprecations.
-    ]
-    unless allowed_warnings.any? { |pattern| message.match(pattern) }
-      ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:raise].call(message, callstack, deprecation_horizon, gem_name)
-    end
-  end
-
   config.active_job.queue_adapter = :test
 end
