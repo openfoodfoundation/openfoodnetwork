@@ -92,13 +92,11 @@ RSpec.describe "Orders backorder integration" do
       expect(supplier_order.line_items.first.variant).to eq variant
       expect(supplier_order.line_items.first.quantity).to eq 1
 
-      # At end of order cycle, the backorder should be finalised.
-      pending "The action 'show' could not be found for DfcProvider::OrdersController"
-      expect {
-        # backorder_url = "http://#{host}/api/dfc/enterprises/#{supplier.id}/orders/#{supplier.distributed_orders.first.id}" # aint no route for this
-        # CompleteBackorderJob.perform_now(distributor_owner, distributor, distributor_order_cycle, backorder_url)
-        perform_enqueued_jobs(only: CompleteBackorderJob)
-      }.to change { supplier.distributed_orders.first.state }.to(:complete)
+      # At end of order cycle, the CompleteBackorderJob should succeed.
+      # backorder_url = "http://#{host}/api/dfc/enterprises/#{supplier.id}/orders/#{supplier.distributed_orders.first.id}" # aint no route for this
+      # CompleteBackorderJob.perform_now(distributor_owner, distributor, distributor_order_cycle, backorder_url)
+      perform_enqueued_jobs(only: CompleteBackorderJob)
+      expect(supplier.distributed_orders.first.state).to eq "complete"
 
     rescue Faraday::UnprocessableEntityError => e
       # Output error message for convenient debugging
