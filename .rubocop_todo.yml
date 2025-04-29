@@ -508,20 +508,6 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 10
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSplatArgument.
-Style/HashConversion:
-  Exclude:
-    - 'app/controllers/admin/column_preferences_controller.rb'
-    - 'app/controllers/admin/variant_overrides_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/product_import/product_importer.rb'
-    - 'app/serializers/api/admin/exchange_serializer.rb'
-    - 'app/services/variants_stock_levels.rb'
-    - 'spec/controllers/admin/inventory_items_controller_spec.rb'
-    - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
-
 # Offense count: 13
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedReceivers.

@@ -25,17 +25,15 @@ class VariantsStockLevels
   private
 
   def variant_stock_levels(line_items)
-    Hash[
-      line_items.map do |line_item|
-        variant = scoped_variant(line_item.order.distributor, line_item.variant)
+    line_items.to_h do |line_item|
+      variant = scoped_variant(line_item.order.distributor, line_item.variant)
 
-        [variant.id,
-         { quantity: line_item.quantity,
-           max_quantity: line_item.max_quantity,
-           on_hand: variant.on_hand,
-           on_demand: variant.on_demand }]
-      end
-    ]
+      [variant.id,
+       { quantity: line_item.quantity,
+         max_quantity: line_item.max_quantity,
+         on_hand: variant.on_hand,
+         on_demand: variant.on_demand }]
+    end
   end
 
   def scoped_variant(distributor, variant)
