@@ -42,4 +42,11 @@ class OrderBuilder < DfcBuilder
   def self.order_states
     DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE
   end
+
+  def self.build_order_lines(dfc_order, ofn_line_items)
+    dfc_order.lines = ofn_line_items.map do |line_item|
+      semantic_id = "#{dfc_order.semanticId}/OrderLines/#{line_item.id}"
+      OrderLineBuilder.build(line_item, semantic_id)
+    end
+  end
 end

@@ -42,6 +42,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
         run_test! {
           expect(response.body).to include "dfc-b:Order",       "orders/11000"
+          expect(response.body).to include "dfc-b:OrderLine",   "OrderLines/"
         }
       end
 
