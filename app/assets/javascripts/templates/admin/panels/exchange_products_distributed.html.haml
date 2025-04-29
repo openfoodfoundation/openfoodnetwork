@@ -15,7 +15,7 @@
       .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products | filter:visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
         .exchange-product-details
           %label
-            %img{'ng-src' => '{{ product.image_url }}'}
+            %img{'ng-src' => '{{ product.image_url }}'} 
             .name {{ product.name }}
           .supplier {{ product.supplier_name }}
 
