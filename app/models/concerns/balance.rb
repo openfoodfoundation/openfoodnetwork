@@ -9,7 +9,7 @@ module Balance
 
   # Branches by the OrderBalance abstraction
   def outstanding_balance
-    @order_balance ||= OrderBalance.new(self)
+    @outstanding_balance ||= OrderBalance.new(self)
   end
 
   # Returns the order balance by considering the total as money owed to the order distributor aka.

@@ -221,16 +221,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'app/mailers/producer_mailer.rb'
-    - 'app/models/concerns/balance.rb'
-    - 'lib/open_food_network/address_finder.rb'
-
 # Offense count: 1
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
