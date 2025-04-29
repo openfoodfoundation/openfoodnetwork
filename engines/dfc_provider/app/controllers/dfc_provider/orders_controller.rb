@@ -10,8 +10,9 @@ module DfcProvider
       dfc_order = OrderBuilder.build(order)
       lines = OrderBuilder.build_order_lines(dfc_order, order.line_items)
       offers = lines.map(&:offer)
-      products = offers.map(&:offeredItem)
-      render json: DfcIo.export(dfc_order, *lines, *offers, *products)
+      # products = offers.map(&:offeredItem) #todo: need offered item
+      sessions = [build_sale_session(order)]
+      render json: DfcIo.export(dfc_order, *lines, *offers, *sessions)
     end
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders
@@ -46,6 +47,12 @@ module DfcProvider
     # This is similar to DfcCatalog#select_type. Consider moving to a new DfcGraph class.
     def select_type(graph, semantic_type)
       graph.select { |i| i.semanticType == semantic_type }
+    end
+
+    def build_sale_session(order)
+      SaleSessionBuilder.build(order.order_cycle).tap do |session|
+        session.semanticId = "/api/dfc/SalesSession/#" #todo use a route or UrlBuilder
+      end
     end
   end
 end
