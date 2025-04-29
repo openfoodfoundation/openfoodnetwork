@@ -1,8 +1,8 @@
-- link = pagy_link_proc(pagy)
+- link = pagy_anchor(pagy)
 
 %nav.pagy_nav.pagination{"aria-label" => "pager", :role => "navigation"}
   - if pagy.prev
-    %span.page.prev!= link.call(pagy.prev, t(:previous), 'aria-label="previous"')
+    %span.page.prev!= link.call(pagy.prev, t(:previous))
   - else
     %span.page.prev.disabled!= t(:previous)
   - pagy.series.each do |item|       # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
@@ -14,6 +14,6 @@
     - elsif item == :gap             # page gap
       %span.page.gap &hellip;
   - if pagy.next
-    %span.page.next!= link.call(pagy.next, t(:next), 'aria-label="next"')
+    %span.page.next!= link.call(pagy.next, t(:next))
   - else
     %span.page.next.disabled!= t(:next)

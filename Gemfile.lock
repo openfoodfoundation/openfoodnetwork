@@ -495,8 +495,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
-    pagy (5.10.1)
-      activesupport
+    pagy (9.3.4)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -940,7 +939,7 @@ DEPENDENCIES
   omniauth_openid_connect
   openid_connect
   order_management!
-  pagy (~> 5.1)
+  pagy (~> 9)
   paper_trail
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)

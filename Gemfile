@@ -65,7 +65,7 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'datafoodconsortium-connector'
 gem 'jsonapi-serializer'
-gem 'pagy', '~> 5.1'
+gem 'pagy', '~> 9'
 
 gem 'rswag-api'
 gem 'rswag-ui'
