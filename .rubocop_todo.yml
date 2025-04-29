@@ -508,22 +508,6 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 13
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: Thread.current
-Style/HashEachMethods:
-  Exclude:
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/admin/shipping_methods_controller.rb'
-    - 'app/forms/enterprise_fees_bulk_update.rb'
-    - 'app/models/product_import/entry_processor.rb'
-    - 'app/models/spree/preferences/configuration.rb'
-    - 'app/services/sets/model_set.rb'
-    - 'lib/reporting/reports/sales_tax/sales_tax_totals_by_producer.rb'
-    - 'spec/models/product_importer_spec.rb'
-    - 'spec/support/cancan_helper.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/MapToHash:

@@ -1059,7 +1059,7 @@ end
 
 def filter(type, entries)
   valid_count = 0
-  entries.each do |_line_number, entry|
+  entries.each_value do |entry|
     validates_as = entry['validates_as']
 
     valid_count += 1 if type == 'valid' && (validates_as != '')

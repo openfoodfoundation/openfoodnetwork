@@ -37,7 +37,7 @@ module Reporting
               hash[:line_item].order.distributor_id,
               hash[:line_item].order.order_cycle_id
             ]
-          end.each do |_, v|
+          end.each_value do |v|
             v.map!{ |item| item[:line_item] }
           end
         end
