@@ -22,6 +22,71 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
   before { login_as user }
 
+  path "/api/dfc/enterprises/{enterprise_id}/orders/{order_id}" do
+    parameter name: :enterprise_id, in: :path, type: :string
+
+    get "Show Order" do
+      produces "application/json"
+      parameter name: :order_id, in: :path
+
+      let(:order) {
+        variant.save
+        variant.update! on_hand: 1
+        create(:completed_order_with_totals, :with_line_item, id: 11_000,
+                                                              distributor: enterprise, variant:)
+      }
+
+      response "200", "success" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        run_test! {
+          expect(response.body).to include "dfc-b:Order",       "orders/11000"
+        }
+      end
+
+      response "401", "unauthorized" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        before { login_as nil }
+
+        run_test! {
+          expect(response.body).to be_empty
+        }
+      end
+
+      response "404", "not found" do
+        context "without order" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order_id) { "blah" }
+
+          run_test! {
+            expect(response.body).to be_empty
+          }
+        end
+
+        context "without enterprise" do
+          let(:enterprise_id) { "blah" }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response.body).to be_empty
+          }
+        end
+
+        context "with unrelated enterprise" do
+          let(:enterprise_id) { create(:enterprise).id }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response.body).to be_empty
+          }
+        end
+      end
+    end
+  end
+
   path "/api/dfc/enterprises/{enterprise_id}/orders" do
     parameter name: :enterprise_id, in: :path, type: :string
 

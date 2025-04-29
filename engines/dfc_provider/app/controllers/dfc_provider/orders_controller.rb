@@ -5,6 +5,12 @@ module DfcProvider
   class OrdersController < DfcProvider::ApplicationController
     before_action :check_enterprise
 
+    # POST /api/dfc/enterprises/{enterprise_id}/orders/{order_id}
+    def show
+      dfc_order = OrderBuilder.build(order)
+      render json: DfcIo.export(dfc_order)
+    end
+
     # POST /api/dfc/enterprises/{enterprise_id}/orders
     def create
       graph = import
@@ -12,20 +18,26 @@ module DfcProvider
 
       return head :bad_request unless dfc_order
 
-      order = current_enterprise.distributed_orders.build(
+      @order = current_enterprise.distributed_orders.build(
         user: current_user,
         created_by: current_user,
         email: current_user.email,
         customer: current_user.customers.find_by(enterprise: current_enterprise),
       )
 
-      if order.save && OrderBuilder.apply(order, dfc_order)
-        subject = OrderBuilder.build(order)
+      if @order.save && OrderBuilder.apply(@order, dfc_order)
+        subject = OrderBuilder.build(@order)
         render json: DfcIo.export(subject), status: :created
       else
-        render json: { error: order.errors.full_messages.to_sentence },
+        render json: { error: @order.errors.full_messages.to_sentence },
                status: :unprocessable_entity
       end
+    end
+
+    private
+
+    def order
+      @order ||= current_enterprise.distributed_orders.find(params[:id])
     end
 
     # This is similar to DfcCatalog#select_type. Consider moving to a new DfcGraph class.
