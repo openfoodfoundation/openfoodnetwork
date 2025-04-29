@@ -479,18 +479,6 @@ Security/Open:
   Exclude:
     - 'app/services/image_importer.rb'
 
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ArrayIntersect:
-  Exclude:
-    - 'app/models/spree/ability.rb'
-    - 'app/models/tag_rule/filter_order_cycles.rb'
-    - 'app/models/tag_rule/filter_payment_methods.rb'
-    - 'app/models/tag_rule/filter_products.rb'
-    - 'app/models/tag_rule/filter_shipping_methods.rb'
-    - 'lib/open_food_network/tag_rule_applicator.rb'
-    - 'spec/support/matchers/select2_matchers.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

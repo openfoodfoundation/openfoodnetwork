@@ -12,7 +12,7 @@ class TagRule
     def tags_match?(variant)
       variant_tags = variant&.[]("tag_list") || []
       preferred_tags = preferred_variant_tags.split(",")
-      (variant_tags & preferred_tags).any?
+      variant_tags.intersect?(preferred_tags)
     end
 
     def reject_matched?
