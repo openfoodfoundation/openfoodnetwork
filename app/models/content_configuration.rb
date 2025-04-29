@@ -74,13 +74,13 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :footer_pinterest_url, :string, default: ""
   preference :footer_email, :string, default: "hello@openfoodnetwork.org"
   preference :community_forum_url, :string, default: "http://community.openfoodnetwork.org"
-  preference :footer_links_md, :text, default: <<~EOS
+  preference :footer_links_md, :text, default: <<~FOOTERSTR
     [Newsletter sign-up](/)
 
     [News](/)
 
     [Calendar](/)
-  EOS
+  FOOTERSTR
 
   preference :footer_about_url, :string, default: "http://www.openfoodnetwork.org/ofn-local/open-food-network-australia/"
 
