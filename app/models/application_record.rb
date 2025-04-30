@@ -20,6 +20,7 @@ class ApplicationRecord < ActiveRecord::Base
     if ENV["S3_BUCKET"].present? && variant.service.public?
       variant.processed.url
     else
+      variant.blob.save! unless variant.blob.persisted?
       url_for(variant)
     end
   end
