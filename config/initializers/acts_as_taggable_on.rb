@@ -4,6 +4,10 @@ ActsAsTaggableOn.force_lowercase = true
 
 # Monkey patch suggested as workaround to the allowlisted issue
 # This may be removed when an official fix is included in Ransack
+# As suggested in :
+# - https://github.com/activerecord-hackery/ransack/discussions/1416
+# - https://github.com/activerecord-hackery/ransack/issues/1393
+#
 module ActsAsTaggableOn
   class Tag
     class << self
