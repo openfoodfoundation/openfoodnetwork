@@ -234,10 +234,13 @@ module Spree
       final_weight_volume / quantity
     end
 
-    def unit_price_price_and_unit
+    def unit_price_amount
       unit_price = UnitPrice.new(variant)
-      Spree::Money.new(price_with_adjustments / unit_price.denominator).to_html +
-        "&nbsp;/&nbsp;".html_safe + unit_price.unit
+      price_with_adjustments / unit_price.denominator
+    end
+
+    def unit_price_presentation
+      UnitPrice.new(variant).unit
     end
 
     def scoper
