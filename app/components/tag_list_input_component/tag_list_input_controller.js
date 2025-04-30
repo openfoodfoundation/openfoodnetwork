@@ -40,9 +40,7 @@ export default class extends Controller {
 
     // Remove tag from list
     const tags = this.tagListTarget.value.split(",");
-    const index = tags.indexOf(tagName);
-    tags.splice(index, 1);
-    this.tagListTarget.value = tags.join(",");
+    this.tagListTarget.value = tags.filter(tag => tag != tagName).join(",");
 
     // manualy dispatch an Input event so the change gets picked up by the bulk form controller
     this.tagListTarget.dispatchEvent(new InputEvent("input"));
