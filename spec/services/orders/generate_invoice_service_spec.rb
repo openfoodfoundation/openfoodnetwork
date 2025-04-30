@@ -8,6 +8,7 @@ RSpec.describe Orders::GenerateInvoiceService do
   let!(:latest_invoice){
     create(:invoice,
            order:,
+           date: Time.zone.today - 2.days,
            data: invoice_data_generator.serialize_for_invoice)
   }
 
@@ -46,6 +47,7 @@ RSpec.describe Orders::GenerateInvoiceService do
 
       context "when there are more than one invoice" do
         before do
+          puts "BEFORE: latest_invoice.date=#{latest_invoice.date.inspect}"
           latest_invoice.update!(number: 2, created_at: 1.day.ago)
           create(:invoice, order:, number: 1, created_at: 2.days.ago)
         end
@@ -54,6 +56,8 @@ RSpec.describe Orders::GenerateInvoiceService do
             .and change{ latest_invoice.date }.to(Time.zone.today)
             .and change{ latest_invoice.number }.by(0)
             .and change{ order.invoices.count }.by(0)
+        ensure
+          puts "AFTER: latest_invoice.date=#{latest_invoice.reload.date.inspect}"
         end
       end
     end
