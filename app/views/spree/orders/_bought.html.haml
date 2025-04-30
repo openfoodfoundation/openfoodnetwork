@@ -24,7 +24,7 @@
         = line_item.single_display_amount_with_adjustments.to_html
         %br
         %span.unit-price
-          = line_item.unit_price_price_and_unit
+          = format_unit_price(line_item.unit_price)
       %td.text-center.cart-item-quantity
         = line_item.quantity
       %td.cart-item-total.text-right
