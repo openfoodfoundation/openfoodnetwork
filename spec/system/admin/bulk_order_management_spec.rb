@@ -730,7 +730,9 @@ RSpec.describe '
            "by the selected order cycle", retry: 3 do
           displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
-                                       with_options: OrderCycle.pluck(:name).unshift("All")
+                                       with_options:
+                                        OrderCycle.active_or_complete.pluck(:name).unshift("All")
+
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).not_to have_selector "#loading i"
