@@ -21,7 +21,7 @@
                 'aria-label': t('items'),
                 'data-toggle-control-target': 'control',
                 style: (variant.variant_unit == "items" ? "" : "display: none;"),
-                maxlength: 10
+                maxlength: 20
     = error_message_on variant, :variant_unit_name, 'data-toggle-control-target': 'control'
 %td.col-unit.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
   = f.button :unit_to_display, class: "popout__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
