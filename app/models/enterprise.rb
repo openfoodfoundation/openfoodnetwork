@@ -270,15 +270,15 @@ class Enterprise < ApplicationRecord
   end
 
   def remove_logo=(value)
-    self.logo = nil if truthy?(value)
+    self.logo = nil if value == "1"
   end
 
   def remove_promo_image=(value)
-    self.promo_image = nil if truthy?(value)
+    self.promo_image = nil if value == "1"
   end
 
   def remove_white_label_logo=(value)
-    return if !truthy?(value)
+    return unless value == "1"
 
     self.white_label_logo = nil
     self.white_label_logo_link = nil # Link not needed if there's no logo
@@ -491,10 +491,6 @@ class Enterprise < ApplicationRecord
   end
 
   private
-
-  def truthy?(value)
-    ActiveModel::Type::Boolean.new.cast(value)
-  end
 
   def validate_white_label_logo_link
     return if white_label_logo.blank?
