@@ -10,7 +10,8 @@ module Admin
 
     def index
       fetch_products
-      render "index", locals: { producers:, categories:, tax_category_options:, flash: }
+      render "index",
+             locals: { producers:, categories:, tax_category_options:, available_tags:, flash: }
 
       session[:products_return_to_url] = request.url
     end
@@ -30,7 +31,9 @@ module Admin
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
         render "index", status: :unprocessable_entity,
-                        locals: { producers:, categories:, tax_category_options:, flash: }
+                        locals: {
+                          producers:, categories:, tax_category_options:, available_tags:, flash:
+                        }
       end
     end
 
@@ -136,9 +139,22 @@ module Admin
       Spree::TaxCategory.order(:name).pluck(:name, :id)
     end
 
+    def available_tags
+      variants = Spree::Variant.where(
+        product: OpenFoodNetwork::Permissions.new(spree_current_user)
+          .editable_products
+          .merge(product_scope)
+      )
+
+      ActsAsTaggableOn::Tag.joins(:taggings).where(
+        taggings: { taggable_type: "Spree::Variant", taggable_id: variants }
+      ).distinct.order(:name).pluck(:name)
+    end
+
     def fetch_products
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .editable_products.merge(product_scope).ransack(ransack_query).result
+        .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
+
       @pagy, @products = pagy(product_query.order(:name), limit: @per_page, page: @page,
                                                           size: [1, 2, 2, 1])
     end
@@ -151,7 +167,11 @@ module Admin
                 Spree::Product.active
               end
 
-      scope.includes(product_query_includes).distinct
+      scope.distinct
+    end
+
+    def product_scope_with_includes
+      product_scope.includes(product_query_includes)
     end
 
     def ransack_query
