@@ -70,7 +70,6 @@ module Admin
 
       if @object.update(enterprise_params)
         flash[:success] = flash_success_message
-        set_panel_if_attachment_removal
 
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
@@ -175,16 +174,6 @@ module Admin
       end
     end
 
-    def set_panel_if_attachment_removal
-      return if !attachment_removal?
-
-      @panel = if attachment_removal_parameter == "remove_white_label_logo"
-                 "white_label"
-               elsif ["remove_logo", "remove_promo_image"].include?(attachment_removal_parameter)
-                 "images"
-               end
-    end
-
     def attachment_removal?
       attachment_removal_parameter.present?
     end
@@ -194,6 +183,7 @@ module Admin
         enterprise_params.keys.first
       end
     end
+    helper_method :attachment_removal_parameter
 
     def load_enterprise_set_on_index
       return unless spree_current_user.admin?

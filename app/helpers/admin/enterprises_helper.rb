@@ -44,6 +44,22 @@ module Admin
       ConnectedApp::TYPES & connected_apps_enabled
     end
 
+    def enterprise_attachment_removal_modal_id
+      attachment_removal_parameter # remove_logo|remove_promo_image|remove_white_label_logo
+    end
+
+    def enterprise_attachment_removal_panel
+      if attachment_removal_parameter == "remove_white_label_logo"
+        "white_label"
+      elsif ["remove_logo", "remove_promo_image"].include?(attachment_removal_parameter)
+        "images"
+      end
+    end
+
+    def enterprise_attachment_removal_panel_id
+      "#{enterprise_attachment_removal_panel}_panel"
+    end
+
     private
 
     def build_enterprise_side_menu_items(
