@@ -374,6 +374,8 @@ fr_CA:
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+    order_cycle_report:
+      order_number: "Numéro de commande"
   provider_settings: "Paramètres fournisseur"
   report_mailer:
     report_ready:

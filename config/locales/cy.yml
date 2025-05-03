@@ -321,6 +321,8 @@ cy:
   producer_mailer:
     order_cycle:
       subject: "Adroddiad cylch archebu ar gyfer %{producer}"
+    order_cycle_report:
+      order_number: "Rhif archeb"
   provider_settings: "Gosodiadau darparwr"
   report_mailer:
     report_ready:

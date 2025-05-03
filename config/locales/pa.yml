@@ -314,6 +314,8 @@ pa:
   producer_mailer:
     order_cycle:
       subject: "%{producer} ਲਈ ਆਰਡਰ ਸਾਈਕਲ ਰਿਪੋਰਟ"
+    order_cycle_report:
+      order_number: "ਆਰਡਰ ਨੰਬਰ"
   provider_settings: "ਪ੍ਰਦਾਤਾ ਸੈਟਿੰਗਾਂ"
   report_mailer:
     report_ready:

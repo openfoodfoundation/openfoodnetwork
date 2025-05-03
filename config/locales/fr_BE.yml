@@ -278,6 +278,8 @@ fr_BE:
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+    order_cycle_report:
+      order_number: "Numéro de commande "
   report_mailer:
     report_ready:
       subject: "Rapport prêt"

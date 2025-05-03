@@ -272,6 +272,8 @@ de_CH:
   producer_mailer:
     order_cycle:
       subject: "Bestellzyklusbericht für %{producer}"
+    order_cycle_report:
+      order_number: "Bestellnummer"
   provider_settings: "Anbietereinstellungen"
   shipment_mailer:
     shipped_email:

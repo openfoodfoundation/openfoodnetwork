@@ -321,6 +321,8 @@ hi:
   producer_mailer:
     order_cycle:
       subject: "%{producer} के लिए साइकल रिपोर्ट ऑर्डर करें"
+    order_cycle_report:
+      order_number: "ऑर्डर नंबर"
   provider_settings: "प्रदाता सेटिंग"
   report_mailer:
     report_ready:

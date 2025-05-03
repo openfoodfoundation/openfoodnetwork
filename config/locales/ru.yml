@@ -326,6 +326,8 @@ ru:
   producer_mailer:
     order_cycle:
       subject: "Отчет по Циклу Заказа для %{producer}"
+    order_cycle_report:
+      order_number: "Номер Заказа"
   provider_settings: "Настройки провайдера"
   report_mailer:
     report_ready:

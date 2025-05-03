@@ -321,6 +321,8 @@ de_DE:
   producer_mailer:
     order_cycle:
       subject: "Bestellzyklusbericht für %{producer}"
+    order_cycle_report:
+      order_number: "Bestellnummer"
   provider_settings: "Anbietereinstellungen"
   report_mailer:
     report_ready:

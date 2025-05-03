@@ -268,7 +268,7 @@ eu:
         updated: "Zure pasahitza arrakastaz aldatu da. Saioa hasita daukazu."
         send_instructions: "Mezu elektroniko bat jasoko duzu zure kontua minutu gutxi barru berresteko jarraibideekin."
     oidc:
-      failure: "Ezin izan da saioa hasi: %{errorea}"
+      failure: "Ezin izan da saioa hasi: %{error}"
   home_page_alert_html: "Hasierako orrialdearen alertaren HTMLa"
   hub_signup_case_studies_html: "HTML hub erregistroa aztertzeko kasuak"
   hub_signup_detail_html: "HTML hub erregistroaren xehetasuna"
@@ -360,6 +360,8 @@ eu:
   producer_mailer:
     order_cycle:
       subject: "Eskaera-zikloaren txostena %-rako {producer}"
+    order_cycle_report:
+      order_number: "Eskaera-zenbakia"
   provider_settings: "Hornitzailearen konfigurazioa"
   report_mailer:
     report_ready:
@@ -1925,7 +1927,7 @@ eu:
         checkout: "Balidatu"
         edit_cart: "Editatu orgatxoa"
         items_in_cart_singular: " %{num} artikulu bere orgatxoan"
-        items_in_cart_plural: " %{zenbaki} artikulu bere orgatxoan"
+        items_in_cart_plural: " %{num} artikulu bere orgatxoan"
         close: "Itxi"
         cart_empty: "Zure gurditxoa hutsik dago"
         take_me_shopping: "Eraman nazazu erosketak egitera!"
@@ -1967,7 +1969,7 @@ eu:
         bulk: "Taldekatu"
   card_could_not_be_updated: Txartela ezin izan da eguneratu
   card_could_not_be_saved: txartela ezin izan da gorde
-  spree_gateway_error_flash_for_checkout: "Arazo bat izan zen zure ordainketa-informazioarekin: %{errorea}"
+  spree_gateway_error_flash_for_checkout: "Arazo bat izan zen zure ordainketa-informazioarekin: %{error}"
   invoice_billing_address: "Fakturazio-helbidea:"
   invoice_column_tax: "Ondasun eta zerbitzuen gaineko zerga"
   invoice_column_price: "Prezioa"

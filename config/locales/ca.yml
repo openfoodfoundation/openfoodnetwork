@@ -294,6 +294,8 @@ ca:
   producer_mailer:
     order_cycle:
       subject: "Informe del cicle de comanda per %{producer}"
+    order_cycle_report:
+      order_number: "Número de comanda"
   provider_settings: "Configuració del proveïdor"
   report_mailer:
     report_ready:

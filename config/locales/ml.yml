@@ -321,6 +321,8 @@ ml:
   producer_mailer:
     order_cycle:
       subject: "%{producer}-നുള്ള ഓർഡർ സൈക്കിൾ റിപ്പോർട്ട് "
+    order_cycle_report:
+      order_number: "ഓർഡർ നമ്പർ"
   provider_settings: "ദാതാവിന്റെ ക്രമീകരണങ്ങൾ"
   report_mailer:
     report_ready:

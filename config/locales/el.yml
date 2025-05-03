@@ -331,6 +331,8 @@ el:
   producer_mailer:
     order_cycle:
       subject: "Καταγραφή κύκλων παραγγελιών για %{producer}"
+    order_cycle_report:
+      order_number: "Αριθμός παραγγελίας. "
   provider_settings: "Ρυθμίσεις παρόχου"
   report_mailer:
     report_ready:

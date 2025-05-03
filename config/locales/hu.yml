@@ -337,9 +337,9 @@ hu:
       subject: "%{enterprise} mostantól az %{sitename}-on van!"
       email_welcome: "Üdvözlünk"
       email_registered: "örömmel köszönt az"
-      email_userguide_html: "A Termelő vagy Átvételi Pont beállításához szükséges részletes támogatást tartalmazó felhasználói útmutató itt található: %{link}"
+      email_userguide_html: "A Termelő vagy Átvételi Pont beállításához szükséges részletes támogatást tartalmazó angol nyelvű felhasználói útmutató itt található: %{link} Ha magyar nyelvű támogatást szeretnél, keress fel minket az info@openfood.hu email címen."
       userguide: "Itt nyithatod meg az Open Food Network felhasználói kézikönyvét"
-      email_admin_html: "Fiókod úgy kezelheted, hogy bejelentkezel a %{link} oldalra, vagy a kezdőlap jobb felső sarkában lévő fogaskerékre kattintasz, majd az Adminisztráció lehetőséget választod."
+      email_admin_html: "JELENLEG A PLATFORM TESZTELÉS ALATT ÁLL, EZÉRT AZ ÉRTÉKESÍTÉSI LEHETŐSÉG KORLÁTOZOTT SZÁMÚ TERMELŐRE ÉRVÉNYES. KERESS MINKET E-MAILBEN! \nFiókod úgy kezelheted, hogy bejelentkezel a %{link} oldalra, vagy a kezdőlap jobb felső sarkában lévő fogaskerékre kattintasz, majd az Adminisztráció lehetőséget választod."
       admin_panel: "Adminisztrációs Panel"
       email_community_html: "Van egy online fórumunk is az OFN szoftverrel és az élelemmel foglalkozó vállalkozások vezetésének egyedi kihívásaival kapcsolatos közösségi vitákhoz. Arra bíztatunk, hogy csatlakozz! Folyamatosan fejlődünk, és a Te hozzájárulásod ehhez a fórumhoz meghatározza, hogy mi történik ezután. %{link}"
       join_community: "Csatlakozz a közösséghez"
@@ -348,6 +348,8 @@ hu:
   producer_mailer:
     order_cycle:
       subject: "Rendelési ciklus jelentés a következőhöz: %{producer}"
+    order_cycle_report:
+      order_number: "Rendelési sorszám"
   provider_settings: "Szolgáltató beállításai"
   report_mailer:
     report_ready:
@@ -1232,8 +1234,12 @@ hu:
           enable_subscriptions_true: "Engedélyezve"
           customer_names_in_reports: "Ügyfélnevek a jelentésekben"
           customer_names_tip: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
+          producers_to_edit_orders: "Lehetőség a termelők számára a megrendelések szerkesztésére"
+          producers_to_edit_orders_tip: "Engedélyezd a beszállítók számára, hogy láthassák a termékeiket tartalmazó megrendeléseket, és csak a saját termékeik mennyiségét és súlyát szerkeszthessék."
           customer_names_false: "Tiltva"
           customer_names_true: "Engedélyezve"
+          customer_contacts_in_reports: "Ügyfelek elérhetőségei a jelentésekben"
+          customer_contacts_tip: "Engedélyezd a beszállítók számára, hogy láthassák az ügyfelek e-mail címét és telefonszámát a jelentésekben."
           customer_contacts_false: "Tiltva"
           customer_contacts_true: "Engedélyezve"
           producers_edit_orders_false: "Tiltva"
@@ -1339,6 +1345,7 @@ hu:
           legend: "Csatlakoztatott alkalmazások"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Kutatás"
+            tagline: "Engedélyezd, hogy ez a kutatási projekt anonim módon hozzáférjen a megrendeléseid adataihoz."
             enable: "Adatmegosztás engedélyezése"
             disable: "Megosztás leállítása"
             loading: "Betöltés"
@@ -1634,6 +1641,7 @@ hu:
       email_confirmation: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{email}."
       not_visible: "%{enterprise} nem látható, ezért nem található a térképen vagy a keresésekben"
     reports:
+      none: egyik sem
       deprecated: "Ez a jelentés elavult, és egy későbbi kiadásban eltávolításra kerül."
       hidden_field: "< Rejtett >"
       unitsize: EGYSÉGMÉRET
@@ -2608,6 +2616,7 @@ hu:
   confirm_hub_change: "Biztos vagy ebben? Ez megváltoztatja a kiválasztott rendelési ciklust, és eltávolítja a kosaradból a tételeket."
   confirm_oc_change: "Biztos vagy ebben? Ez megváltoztatja a kiválasztott rendelési ciklust, és eltávolítja a kosaradból a tételeket."
   location_placeholder: "Írj be egy helyet..."
+  gmap_load_failure: "Nem lehet betölteni a térképet. Kérjük ellenőrizd a böngésződ beállítását és engedélyezd a harmadik fél sütiket ennek az oldalnak."
   error_required: "nem lehet üres"
   error_number: "számnak kell lennie"
   error_email: "email címnek kell lennie"
@@ -2643,14 +2652,14 @@ hu:
     steps:
       introduction:
         registration_greeting: "Üdv nálunk!"
-        registration_intro: "Most már létrehozhatsz egy profilt Termelő vagy egy  Átvételi Pont számára"
+        registration_intro: "Létrehozhatsz egy profilt Termelő vagy egy  Átvételi Pont számára"
         registration_checklist: "Mire van szükséged?"
-        registration_time: "5-10 perc"
-        registration_enterprise_address: "Vállalkozási cím"
-        registration_contact_details: "Elsődleges elérhetőségek"
-        registration_logo: "A logó képe"
-        registration_promo_image: "Fejléckép a profilodhoz"
-        registration_about_us: "Bemutatkozó szöveg"
+        registration_time: "A regisztráció 5-10 percet igényel, de jelenleg a hazai hálózat teszt üzemmódja zajlik."
+        registration_enterprise_address: "Ezen időszak alatt az értékesítési funkciók használata korlátozott."
+        registration_contact_details: "Csak azon termelők értékesíthetnek, akik előzetes egyeztetési folyamatban vettek részt, és megtörtént náluk a telephelylátogatás."
+        registration_logo: "Regisztrációdat ettől függetlenül szívesen fogadjuk, de profilodat inaktív státuszba állítjuk, amíg lezárul a teszt időszak."
+        registration_promo_image: "Ha regisztrálsz, kapcsolattartási adatokat kell megadnod, fejlécképet, logot, vagy profilképet kell feltöltened, és egy bemutatkozó szöveget."
+        registration_about_us: "Köszönjük ha regisztrálsz, érdeklődsz nálunk!"
         registration_outcome_headline: "Milyen előnnyel jár ez?"
         registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni téged</strong> és <strong>kapcsolatba lépni veled</strong> az Open Food Network hálózatban."
         registration_outcome2: "Használd ezt a lehetőséget vállalkozásod bemutatására, és segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
@@ -2676,9 +2685,9 @@ hu:
         postcode_field_placeholder: "pl 3070"
         postcode_field_error: "Irányítószám szükséges"
         state_field: "Megye:"
-        state_field_error: "Ország szükséges"
+        state_field_error: "Megye szükséges"
         country_field: "Ország:"
-        country_field_error: "Kérjük, válasszon országot"
+        country_field_error: "Kérjük, válassz országot"
         map_location: "Térképes Azonosítás"
         locate_address: "Cím beazonosítása a térképen"
         drag_pin: "Ha nem pontos, húzd a tűt a megfelelő helyre."
@@ -3636,76 +3645,76 @@ hu:
   inflections:
     each:
       one: "mindegyik"
-      other: "minden egyes"
+      other: "darab"
     bunch:
       one: "csokor"
-      other: "fürtök"
+      other: "fürt"
     pack:
       one: "csomag"
-      other: "csomagokat"
+      other: "csomag"
     box:
       one: "doboz"
-      other: "dobozok"
+      other: "doboz"
     bottle:
       one: "üveg"
-      other: "palackok"
+      other: "palack"
     jar:
       one: "befőttes üveg"
-      other: "befőttesüvegek"
+      other: "üveg"
     head:
       one: "fej"
-      other: "fejek"
+      other: "fej"
     bag:
       one: "táska"
-      other: "táskák"
+      other: "zsák"
     loaf:
       one: "cipó"
-      other: "cipók"
+      other: "vekni"
     single:
       one: "egyetlen"
-      other: "egyedülállók"
+      other: "egyenként"
     tub:
       one: "kád"
-      other: "kádak"
+      other: "tubus"
     punnet:
       one: "lapos háncs gyümölcskosár"
-      other: "kosárkák"
+      other: "kosárka"
     packet:
       one: "csomag"
-      other: "csomagok"
+      other: "tasak"
     item:
       one: "tétel"
-      other: "tételek"
+      other: "tétel"
     dozen:
       one: "tucat"
-      other: "több tucat"
+      other: "tucat"
     unit:
       one: "Mértékegység"
-      other: "egységek"
+      other: "egység"
     serve:
       one: "szolgál"
-      other: "szolgálja"
+      other: "adag"
     tray:
       one: "tálca"
-      other: "tálcák"
+      other: "tálca"
     piece:
       one: "darab"
-      other: "darabok"
+      other: "darab"
     pot:
       one: "edény"
-      other: "edények"
+      other: "tégelyek"
     flask:
       one: "lombik"
-      other: "flaskák"
+      other: "flaska"
     basket:
       one: "kosár"
-      other: "kosarak"
+      other: "kosár"
     sack:
       one: "zsák"
-      other: "zsákokat"
+      other: "zsák"
     bundle:
       one: "csomag"
-      other: "kötegek"
+      other: "csomag"
   producers:
     signup:
       start_free_profile: "Kezd egy ingyenes profillal, és bővítsd ki, ha készen állsz!"
@@ -4381,6 +4390,7 @@ hu:
       reports:
         table:
           select_and_search: "Válaszd ki a szűrőket, és kattints a %{option} elemre az adatok eléréséhez."
+        hidden_customer_details_tip: "Ha az ügyfelek neve és/vagy elérhetőségei el vannak rejtve, megkérheted az átvételi pontot, hogy frissítse a beállításait, hogy a beszállítók számára lehetővé tegye az ügyfelek adatainak megtekintését a jelentésekben. Ez csak az átvételi pont adatvédelmi szabályzatának megfelelően történhet meg."
         products_and_inventory:
           all_products:
             message: "Felhívjuk a figyelmed arra, hogy a megadott készletszintek csak a beszállítói terméklistákból származnak. Ha a készletmennyiségek kezelésére a Készletnyilvántartást használod, akkor ezeket az értékeket a jelentés nem veszi figyelembe."

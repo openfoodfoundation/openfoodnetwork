@@ -374,6 +374,8 @@ en_CA:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+    order_cycle_report:
+      order_number: "Order Number"
   provider_settings: "Provider settings"
   report_mailer:
     report_ready:
