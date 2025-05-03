@@ -18,6 +18,8 @@ module Spree
 
     acts_as_paranoid
 
+    acts_as_taggable
+
     searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
     searchable_associations :product, :default_price, :primary_taxon, :supplier
     searchable_scopes :active, :deleted

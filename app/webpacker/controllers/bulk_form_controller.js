@@ -168,6 +168,8 @@ export default class BulkFormController extends Controller {
 
       return !areBothBlank && selectedOption !== defaultSelected;
     } else {
+      // This doesn't work with hidden field
+      //   Workaround: use a text field with "display:none;"
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
   }

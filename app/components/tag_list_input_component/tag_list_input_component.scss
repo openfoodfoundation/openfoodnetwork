@@ -1,0 +1,68 @@
+// Tags input
+.tags-input {
+  display: block;
+
+  .tags {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    background-color: #fff;
+    height: 100%;
+    box-shadow: none;
+
+    &:has(.changed) {
+      border: 1px solid $color-txt-changed-brd;
+      border-radius: 4px;
+    }
+
+    .tag-error {
+      color: $color-error;
+    }
+
+    .tag-list {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    li.tag-item {
+      border-radius: 3px;
+      margin: 2px 0 2px 3px;
+      padding: 0 5px;
+      display: inline-block;
+      float: left;
+      font-size: 14px;
+      line-height: 25px;
+      border: none;
+      box-shadow: none;
+      color: white !important;
+      background-image: none;
+      background-color: $teal;
+
+      .remove-button {
+        margin: 0 0 0 5px;
+        padding: 0;
+        border: none;
+        background: 0 0;
+        cursor: pointer;
+        vertical-align: middle;
+        font:
+          700 16px Arial,
+          sans-serif;
+        color: white;
+      }
+    }
+
+    .input {
+      border: 0;
+      outline: 0;
+      margin: 2px;
+      padding: 0 0 0 5px;
+      float: left;
+      height: 26px;
+      font-size: 14px;
+    }
+  }
+}

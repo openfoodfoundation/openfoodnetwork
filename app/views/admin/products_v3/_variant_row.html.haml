@@ -74,6 +74,9 @@
       aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
   = error_message_on variant, :tax_category
+- if feature?(:variant_tag, spree_current_user)
+  %td.col-tags.field.naked_inputs
+    = render TagListInputComponent.new(form: f, method: "tag_list", tags: variant.tag_list, placeholder: t('.add_a_tag'))
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right

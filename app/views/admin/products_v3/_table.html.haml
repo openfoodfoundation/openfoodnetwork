@@ -26,11 +26,14 @@
       %col.col-producer{ style:"min-width: 6em" }= # (grow to fill)
       %col.col-category{ width:"8%" }
       %col.col-tax_category{ width:"8%" }
+      - if feature?(:variant_tag, spree_current_user)
+        %col.col-tags{ width:"8%" }
       %col.col-inherits_properties{ width:"5%" }
       %col{ width:"5%", style:"min-width: 3em"}= # Actions
     %thead
       %tr
-        %td.form-actions-wrapper{ colspan: 12 }
+        - colspan = feature?(:variant_tag, spree_current_user) ? 13 : 12
+        %td.form-actions-wrapper{ colspan: "#{colspan}" }
           .form-actions-wrapper2
             %fieldset.form-actions{ class: ("hidden" unless defined?(@error_counts)), 'data-bulk-form-target': "actions" }
               .container
@@ -60,6 +63,8 @@
         %th.align-left.col-producer= t('admin.products_page.columns.producer')
         %th.align-left.col-category= t('admin.products_page.columns.category')
         %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
+        - if feature?(:variant_tag, spree_current_user)
+          %th.align-left.col-tags= t('admin.products_page.columns.tags')
         %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
