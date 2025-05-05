@@ -39,7 +39,7 @@ RSpec.describe ProcessPaymentIntent do
         it "returns false" do
           result = service.call!
 
-          expect(result.ok?).to eq(false)
+          expect(result.success?).to eq(false)
           expect(result.error).to eq("")
         end
 
@@ -58,7 +58,7 @@ RSpec.describe ProcessPaymentIntent do
         it "returns returns the error message" do
           result = service.call!
 
-          expect(result.ok?).to eq(false)
+          expect(result.success?).to eq(false)
           expect(result.error).to eq("error message")
         end
 
@@ -150,7 +150,7 @@ RSpec.describe ProcessPaymentIntent do
       it "does not return any error message" do
         result = service.call!
 
-        expect(result.ok?).to eq(false)
+        expect(result.success?).to eq(false)
         expect(result.error).to eq("")
       end
 
@@ -173,7 +173,7 @@ RSpec.describe ProcessPaymentIntent do
       it "returns a failed result" do
         result = service.call!
 
-        expect(result.ok?).to eq(false)
+        expect(result.success?).to eq(false)
         expect(result.error).to eq('The payment could not be completed')
       end
 

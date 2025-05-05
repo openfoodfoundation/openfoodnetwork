@@ -24,7 +24,7 @@ module PaymentGateways
 
       result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
 
-      unless result.ok?
+      unless result.success?
         flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
       end
 
