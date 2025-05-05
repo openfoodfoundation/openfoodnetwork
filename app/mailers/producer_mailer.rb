@@ -59,7 +59,7 @@ class ProducerMailer < ApplicationMailer
   end
 
   def line_items_from(order_cycle, producer)
-    @line_items ||= Spree::LineItem.
+    @line_items_from ||= Spree::LineItem.
       includes(variant: :product).
       joins(variant: :product).
       from_order_cycle(order_cycle).
