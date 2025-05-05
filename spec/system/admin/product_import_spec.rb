@@ -249,8 +249,9 @@ RSpec.describe "Product Import" do
       File.write('/tmp/test.csv', csv_data)
 
       # setting a variant to have negative stock, with the on demand option set to true
-      Spree::Product.find_by(name: 'Cabbage').variants.first.on_demand = true
-      Spree::Product.find_by(name: 'Cabbage').variants.first.on_hand = -30
+      cabbage_variant = Spree::Product.find_by(name: 'Cabbage').variants.first
+      cabbage_variant.on_demand = true
+      cabbage_variant.on_hand = -30
 
       visit main_app.admin_product_import_path
 
