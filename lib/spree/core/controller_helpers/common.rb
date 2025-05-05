@@ -38,7 +38,7 @@ module Spree
             Spree::Config[:default_seo_title]
           end
 
-          def render_404(_exception = nil)
+          def render404(_exception = nil)
             respond_to do |type|
               type.html {
                 render status: :not_found,
