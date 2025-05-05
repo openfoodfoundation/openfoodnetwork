@@ -10,9 +10,10 @@ module DfcProvider
       dfc_order = OrderBuilder.build(order)
       lines = OrderBuilder.build_order_lines(dfc_order, order.line_items)
       offers = lines.map(&:offer)
-      # products = offers.map(&:offeredItem) #todo: need offered item
+      catalog_items = offers.map(&:offeredItem) #todo: update so that the product semanticId can be found by complete_backorder_job
+
       sessions = [build_sale_session(order)]
-      render json: DfcIo.export(dfc_order, *lines, *offers, *sessions)
+      render json: DfcIo.export(dfc_order, *lines, *offers, *catalog_items, *sessions)
     end
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders

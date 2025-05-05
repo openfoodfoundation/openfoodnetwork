@@ -43,10 +43,12 @@ class OrderBuilder < DfcBuilder
     DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE
   end
 
+  # Build and attach orderLines with offeredItems
   def self.build_order_lines(dfc_order, ofn_line_items)
     dfc_order.lines = ofn_line_items.map do |line_item|
-      semantic_id = "#{dfc_order.semanticId}/OrderLines/#{line_item.id}"
-      OrderLineBuilder.build(line_item, semantic_id)
+      OrderLineBuilder.build(dfc_order, line_item).tap do |order_line|
+        OfferBuilder.add_offered_item(order_line.offer, line_item.variant)
+      end
     end
   end
 end

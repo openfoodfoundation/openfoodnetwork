@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class OrderLineBuilder < DfcBuilder
-  def self.build(ofn_line_item, semantic_id)
+  def self.build(dfc_order, ofn_line_item)
     DataFoodConsortium::Connector::OrderLine.new(
-      semantic_id,
+      "#{dfc_order.semanticId}/OrderLines/#{ofn_line_item.id}",
       offer: OfferBuilder.build(ofn_line_item.variant),
       quantity: ofn_line_item.quantity,
     )
