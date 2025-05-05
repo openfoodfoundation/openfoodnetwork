@@ -8,20 +8,20 @@ module PreferenceSections
 
     def preferences
       [
-        :menu_1,
-        :menu_1_icon_name,
-        :menu_2,
-        :menu_2_icon_name,
-        :menu_3,
-        :menu_3_icon_name,
-        :menu_4,
-        :menu_4_icon_name,
-        :menu_5,
-        :menu_5_icon_name,
-        :menu_6,
-        :menu_6_icon_name,
-        :menu_7,
-        :menu_7_icon_name
+        :menu1,
+        :menu1_icon_name,
+        :menu2,
+        :menu2_icon_name,
+        :menu3,
+        :menu3_icon_name,
+        :menu4,
+        :menu4_icon_name,
+        :menu5,
+        :menu5_icon_name,
+        :menu6,
+        :menu6_icon_name,
+        :menu7,
+        :menu7_icon_name
       ]
     end
   end

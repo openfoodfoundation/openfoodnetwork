@@ -41,7 +41,7 @@ RSpec.describe 'White label setting' do
           expect(page).not_to have_selector "a[href='#{main_app.map_path}']"
           expect(page).not_to have_selector "a[href='#{main_app.producers_path}']"
           expect(page).not_to have_selector "a[href='#{main_app.groups_path}']"
-          expect(page).not_to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+          expect(page).not_to have_selector "a[href='#{I18n.t('.menu5_url')}']"
         end
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe 'White label setting' do
           expect(page).to have_selector "a[href='#{main_app.map_path}']"
           expect(page).to have_selector "a[href='#{main_app.producers_path}']"
           expect(page).to have_selector "a[href='#{main_app.groups_path}']"
-          expect(page).to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+          expect(page).to have_selector "a[href='#{I18n.t('.menu5_url')}']"
         end
       end
     end

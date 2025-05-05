@@ -221,15 +221,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 18
-# Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
-# SupportedStyles: snake_case, normalcase, non_integer
-# AllowedIdentifiers: capture3, iso8601, rfc1123_date, rfc822, rfc2822, rfc3339, x86_64
-Naming/VariableNumber:
-  Exclude:
-    - 'app/models/content_configuration.rb'
-    - 'app/models/preference_sections/main_links_section.rb'
-
 # Offense count: 144
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ResponseMethods.

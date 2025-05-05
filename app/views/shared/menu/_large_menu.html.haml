@@ -19,7 +19,7 @@
       = cache_with_locale ContentConfig.cache_key do
         %ul.nav-main-menu
           - [*1..7].each do |menu_number|
-            - menu_name = "menu_#{menu_number}"
+            - menu_name = "menu#{menu_number}"
             - if ContentConfig[menu_name].present?
               %li
                 %a{href: t("#{menu_name}_url") }
