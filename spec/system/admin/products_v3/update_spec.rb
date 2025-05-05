@@ -20,7 +20,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
   let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
-  describe "updating" do
+  describe "updating", feature: :variant_tag do
     let!(:taxon) { create(:taxon) }
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
@@ -65,6 +65,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         fill_in "Unit value", with: "500.1"
         fill_in "Price", with: "10.25"
 
+        fill_in "Tags", with: "tag one"
+        find_field("Tags").send_keys(:enter) # add the tag
+
         # Stock popout
         click_on "On Hand" # activate popout
         fill_in "On Hand", with: "-1"
@@ -89,6 +92,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         .and change{ variant_a1.on_hand }.to(6)
         .and change{ variant_a1.variant_unit }.to("volume")
         .and change{ variant_a1.variant_unit_scale }.to(0.001)
+        .and change{ variant_a1.tag_list }.to(["tag one"])
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
