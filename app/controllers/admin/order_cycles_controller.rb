@@ -166,8 +166,7 @@ module Admin
     def order_cycles_as_distributor
       OrderCycle.
         preload(:schedules).
-        ransack(raw_params[:q]).
-        result.
+        active_or_complete.
         involving_managed_distributors_of(spree_current_user).
         order('updated_at DESC')
     end

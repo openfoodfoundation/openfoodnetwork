@@ -681,6 +681,14 @@ RSpec.describe '
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc3) { create(:simple_order_cycle, distributors: [distributor]) }
+        let!(:oc4) do
+          create(
+            :simple_order_cycle,
+            orders_close_at: 90.days.ago,
+            orders_open_at: 100.days.ago,
+            distributors: [distributor]
+          )
+        end
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now,
@@ -701,10 +709,16 @@ RSpec.describe '
                                           completed_at: 2.weeks.from_now,
                                           order_cycle: oc3 )
         }
+        let!(:o5) {
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: 95.days.ago,
+                                          order_cycle: oc4 )
+        }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
         let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
         let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
+        let!(:li5) { create(:line_item_with_shipment, order: o5 ) }
 
         before do
           oc3.update!(orders_close_at: 2.weeks.from_now)
@@ -716,7 +730,9 @@ RSpec.describe '
            "by the selected order cycle", retry: 3 do
           displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
-                                       with_options: OrderCycle.pluck(:name).unshift("All")
+                                       with_options:
+                                        OrderCycle.active_or_complete.pluck(:name).unshift("All")
+
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).not_to have_selector "#loading i"

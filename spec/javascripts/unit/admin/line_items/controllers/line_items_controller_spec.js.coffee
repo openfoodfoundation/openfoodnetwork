@@ -50,7 +50,7 @@ describe "LineItemsCtrl", ->
       allSaved: jasmine.createSpy('allSaved').and.returnValue(true)
 
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
-    httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
+    httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor").respond [orderCycle]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
     httpBackend.expectGET("/api/v0/orders.json?q%5Bid_in%5D%5B%5D=#{order.id}").respond { orders: [order] }
 
