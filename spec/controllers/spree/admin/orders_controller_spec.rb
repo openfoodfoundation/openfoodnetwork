@@ -226,6 +226,17 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
         end
       end
 
+      context "when order is shipped" do
+        it "redirects to order details page with flash error" do
+          order.update(shipment_state: :ready)
+          order.update(shipment_state: :shipped)
+          spree_put :update, { id: order }
+
+          expect(flash[:error]).to eq "Cannot add item to shipped order"
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
+      end
+
       context "with line items" do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:shipment){ create(:shipment) }
