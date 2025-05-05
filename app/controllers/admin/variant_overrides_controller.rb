@@ -70,7 +70,7 @@ module Admin
     end
 
     def load_collection
-      collection_hash = Hash[variant_overrides_params.each_with_index.map { |vo, i| [i, vo] }]
+      collection_hash = variant_overrides_params.each_with_index.to_h { |vo, i| [i, vo] }
 
       # Reset count_on_hand when switching to producer settings:
       collection_hash.each_value do |vo|

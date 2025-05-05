@@ -59,7 +59,7 @@ module OpenFoodNetwork
 
     def customer_tags_match?(rule)
       preferred_tags = rule.preferred_customer_tags.split(",")
-      (customer_tags & preferred_tags).any?
+      customer_tags.intersect?(preferred_tags)
     end
   end
 end

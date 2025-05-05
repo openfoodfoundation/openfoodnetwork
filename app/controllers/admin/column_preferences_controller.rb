@@ -40,8 +40,8 @@ module Admin
 
       respond_to do |format|
         format.json do
-          collection_attributes = Hash[permitted_params[:column_preferences].
-            each_with_index.map { |cp, i| [i, cp] }]
+          collection_attributes = permitted_params[:column_preferences].
+            each_with_index.to_h { |cp, i| [i, cp] }
           collection_attributes.select!{ |_i, cp|
             cp[:action_name] == permitted_params[:action_name]
           }

@@ -60,7 +60,7 @@ RSpec.describe Admin::VariantOverridesController, type: :controller do
             put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [variant.supplier]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [variant.supplier.id]]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.supplier.id] })
             expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 
@@ -163,7 +163,7 @@ RSpec.describe Admin::VariantOverridesController, type: :controller do
             put(:bulk_reset, params:)
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [producer]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [producer.id]]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [producer.id] })
             expect(assigns[:inventory_items]).to eq []
           end
 

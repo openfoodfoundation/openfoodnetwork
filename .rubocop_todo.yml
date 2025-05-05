@@ -469,18 +469,6 @@ Security/Open:
   Exclude:
     - 'app/services/image_importer.rb'
 
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ArrayIntersect:
-  Exclude:
-    - 'app/models/spree/ability.rb'
-    - 'app/models/tag_rule/filter_order_cycles.rb'
-    - 'app/models/tag_rule/filter_payment_methods.rb'
-    - 'app/models/tag_rule/filter_products.rb'
-    - 'app/models/tag_rule/filter_shipping_methods.rb'
-    - 'lib/open_food_network/tag_rule_applicator.rb'
-    - 'spec/support/matchers/select2_matchers.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
@@ -509,36 +497,6 @@ Style/ClassAndModuleChildren:
     - 'app/serializers/api/variant_serializer.rb'
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
-
-# Offense count: 10
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSplatArgument.
-Style/HashConversion:
-  Exclude:
-    - 'app/controllers/admin/column_preferences_controller.rb'
-    - 'app/controllers/admin/variant_overrides_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/product_import/product_importer.rb'
-    - 'app/serializers/api/admin/exchange_serializer.rb'
-    - 'app/services/variants_stock_levels.rb'
-    - 'spec/controllers/admin/inventory_items_controller_spec.rb'
-    - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
-
-# Offense count: 13
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: Thread.current
-Style/HashEachMethods:
-  Exclude:
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/admin/shipping_methods_controller.rb'
-    - 'app/forms/enterprise_fees_bulk_update.rb'
-    - 'app/models/product_import/entry_processor.rb'
-    - 'app/models/spree/preferences/configuration.rb'
-    - 'app/services/sets/model_set.rb'
-    - 'lib/reporting/reports/sales_tax/sales_tax_totals_by_producer.rb'
-    - 'spec/models/product_importer_spec.rb'
-    - 'spec/support/cancan_helper.rb'
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
