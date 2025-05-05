@@ -48,7 +48,8 @@ module CheckoutCallbacks
   end
 
   def load_saved_addresses
-    finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
+    finder = OpenFoodNetwork::AddressFinder.new(email: @order.email, customer: @order.customer,
+                                                user: spree_current_user)
 
     @order.bill_address ||= finder.bill_address
     @order.ship_address ||= finder.ship_address
