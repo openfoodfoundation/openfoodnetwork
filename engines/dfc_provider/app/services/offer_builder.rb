@@ -11,8 +11,19 @@ class OfferBuilder < DfcBuilder
       value: variant.price.to_f,
       unit: price_measure(variant)&.semanticId,
     )
+
+
+    # challenge: include some parts of the graph, without diving into a stack overflow.
+    catalog_item_id = urls.enterprise_catalog_item_url(
+      enterprise_id: variant.supplier_id, id: variant.id
+    )
+    offered_item = DataFoodConsortium::Connector::CatalogItem.new(
+        catalog_item_id, product: SuppliedProductBuilder.supplied_product(variant, include_catalog_items: false),
+            sku: variant.sku,
+      )
+
     DataFoodConsortium::Connector::Offer.new(
-      id, price:, stockLimitation: stock_limitation(variant),
+      id, offeredItem: offered_item, price:, stockLimitation: stock_limitation(variant)
     )
   end
 
