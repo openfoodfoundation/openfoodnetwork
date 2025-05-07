@@ -386,7 +386,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
       it "can search by tag" do
         visit admin_products_url
-        pause
         search_by_tag "organic"
 
         expect(page).to have_select "tags_name_in", selected: "organic"
