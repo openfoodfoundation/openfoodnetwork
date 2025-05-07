@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_16_074033) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_04_234657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -230,8 +230,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_16_074033) do
     t.text "white_label_logo_link"
     t.boolean "hide_groups_tab", default: false
     t.string "external_billing_id", limit: 128
-    t.boolean "show_customer_contacts_to_suppliers", default: false, null: false
     t.boolean "enable_producers_to_edit_orders", default: false, null: false
+    t.boolean "show_customer_contacts_to_suppliers", default: false, null: false
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
