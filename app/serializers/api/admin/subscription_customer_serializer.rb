@@ -10,7 +10,7 @@ module Api
       delegate :ship_address, to: :finder
 
       def finder
-        @finder ||= OpenFoodNetwork::AddressFinder.new(object, object.email)
+        @finder ||= OpenFoodNetwork::AddressFinder.new(customer: object, email: object.email)
       end
     end
   end
