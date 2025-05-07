@@ -76,7 +76,7 @@
   = error_message_on variant, :tax_category
 - if feature?(:variant_tag, spree_current_user)
   %td.col-tags.field.naked_inputs
-    = render TagListInputComponent.new(form: f, method: "tag_list", tags: variant.tag_list, placeholder: t('.add_a_tag'))
+    = render TagListInputComponent.new(form: f, method: "tag_list", tags: variant.tag_list, placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags'))
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
