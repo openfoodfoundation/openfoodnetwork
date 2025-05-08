@@ -13,13 +13,13 @@ class ProcessPaymentIntent
   class Result
     attr_reader :error
 
-    def initialize(ok:, error: "")
-      @ok = ok
+    def initialize(success:, error: "")
+      @success = success
       @error = error
     end
 
-    def ok?
-      @ok
+    def success?
+      @success
     end
   end
 
@@ -30,8 +30,8 @@ class ProcessPaymentIntent
   end
 
   def call!
-    return Result.new(ok: false) unless payment.present? && ready_for_capture?
-    return Result.new(ok: true) if already_processed?
+    return Result.new(success: false) unless payment.present? && ready_for_capture?
+    return Result.new(success: true) if already_processed?
 
     process_payment
 
@@ -39,16 +39,16 @@ class ProcessPaymentIntent
       payment.complete_authorization
       payment.clear_authorization_url
 
-      Result.new(ok: true)
+      Result.new(success: true)
     else
       payment.fail_authorization
       payment.clear_authorization_url
-      Result.new(ok: false, error: I18n.t("payment_could_not_complete"))
+      Result.new(success: false, error: I18n.t("payment_could_not_complete"))
     end
   rescue Stripe::StripeError => e
     payment.fail_authorization
     payment.clear_authorization_url
-    Result.new(ok: false, error: e.message)
+    Result.new(success: false, error: e.message)
   end
 
   private
