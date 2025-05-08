@@ -32,9 +32,9 @@ en_CH:
       footer_secure_text: "Open Food Switzerland uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
       footer_join_body: "Create a listing, shop or group directory on the Open Food Switzerland."
       footer_legal_text_html: "Open Food Switzerland is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
-  menu_5_url: "https://www.openfoodswitzerland.ch/"
-  menu_6_url: "https://www.openfoodswitzerland.ch"
-  menu_7_url: "https://www.openfoodswitzerland.ch/"
+  menu5_url: "https://www.openfoodswitzerland.ch/"
+  menu6_url: "https://www.openfoodswitzerland.ch"
+  menu7_url: "https://www.openfoodswitzerland.ch/"
   legal:
     cookies_policy:
       disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Switzerland’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
