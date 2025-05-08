@@ -10,7 +10,6 @@ export default class extends Controller {
       maxOptions: null,
       plugins: ["dropdown_input"],
       allowEmptyOption: true, // Show blank option (option with empty value)
-      closeAfterSelect: true,
       placeholder: this.placeholderValue || this.#emptyOption(),
       onItemAdd: function () {
         this.setTextboxValue("");

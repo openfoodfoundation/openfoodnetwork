@@ -70,6 +70,31 @@
   }
 }
 
+// Style the select tags filter
+.ts-wrapper {
+  &.multi {
+    &.has-items {
+      .ts-control {
+        [data-value] {
+          background-image: none;
+          background-color: $teal;
+          box-shadow: none;
+          border: none;
+        }
+      }
+    }
+  }
+
+  &.plugin-remove_button:not(.rtl) {
+    .item {
+      .remove {
+        border-left: 1px solid darken($teal, 5);
+        margin-left: 6px;
+      }
+    }
+  }
+}
+
 .plugin-dropdown_input {
   .ts-dropdown {
     // Cover up the control with the input

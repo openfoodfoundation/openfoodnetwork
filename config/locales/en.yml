@@ -969,10 +969,13 @@ en:
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag 
         producers:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:

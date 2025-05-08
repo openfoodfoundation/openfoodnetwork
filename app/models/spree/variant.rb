@@ -21,7 +21,7 @@ module Spree
     acts_as_taggable
 
     searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
-    searchable_associations :product, :default_price, :primary_taxon, :supplier
+    searchable_associations :product, :default_price, :primary_taxon, :supplier, :tags
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze

@@ -7,6 +7,7 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
 
   let(:locals) do
     {
+      spree_current_user:,
       search_term: "",
       producer_options: [],
       producer_id: nil,
@@ -14,6 +15,7 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
       category_id: nil,
     }
   end
+  let(:spree_current_user) { build(:enterprise_user) }
 
   it "shows the producer filter when there are options" do
     allow(view).to receive_messages locals.merge(

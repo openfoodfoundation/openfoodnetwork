@@ -377,5 +377,21 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).to have_field "Name", with: product_by_category.name
       end
     end
+
+    context "with variant tag", feature: :variant_tag do
+      before do
+        create(:variant, tag_list: "organic")
+        create_products 1
+      end
+
+      it "can search by tag" do
+        visit admin_products_url
+        search_by_tag "organic"
+
+        expect(page).to have_select "tags_name_in", selected: "organic"
+        expect(page).to have_content "1 product found for your search criteria. Showing 1 to 1."
+        expect_products_count_to_be 1
+      end
+    end
   end
 end

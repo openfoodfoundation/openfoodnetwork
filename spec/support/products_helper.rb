@@ -34,6 +34,11 @@ module ProductsHelper
     click_button "Search"
   end
 
+  def search_by_tag(tag)
+    tomselect_multiselect tag, from: "tags_name_in"
+    click_button "Search"
+  end
+
   # Selector for table row that has an input with this value.
   # Because there are no visible labels, the user has to assume which product it is, based on the
   # visible name.

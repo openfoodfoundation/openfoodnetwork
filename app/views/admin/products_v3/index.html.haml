@@ -15,7 +15,8 @@
   = render partial: "content", locals: { products: @products, pagy: @pagy, search_term: @search_term,
                                producer_options: producers, producer_id: @producer_id,
                                category_options: categories, category_id: @category_id,
-                               tax_category_options:, flashes: flash,
+                               tax_category_options:, available_tags:, tags: @tags,
+                               flashes: flash,
                                display_search_filter: (@products.any? || @search_term.present? || @category_id.present?) }
   - %w[product variant].each do |object_type|
     = render partial: 'delete_modal', locals: { object_type: }
