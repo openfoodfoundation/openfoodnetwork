@@ -10,7 +10,7 @@
     "pretty-quick": "pretty-quick"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.13",
+    "@floating-ui/dom": "^1.7.0",
     "@hotwired/stimulus": "^3.2",
     "@hotwired/turbo": "^8.0.13",
     "@rails/webpacker": "5.4.4",
@@ -37,7 +37,7 @@
     "webpack": "~4"
   },
   "devDependencies": {
-    "jasmine-core": "~5.7.0",
+    "jasmine-core": "~5.7.1",
     "jest": "^27.4.7",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",

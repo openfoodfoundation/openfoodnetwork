@@ -10,13 +10,10 @@ module OpenFoodNetwork
   class AddressFinder
     attr_reader :email, :user, :customer
 
-    def initialize(*args)
-      args.each do |arg|
-        type = types[arg.class]
-        next unless type
-
-        public_send("#{type}=", arg)
-      end
+    def initialize(email: nil, user: nil, customer: nil)
+      @email = email
+      @user = user
+      @customer = customer
     end
 
     def bill_address
@@ -27,27 +24,7 @@ module OpenFoodNetwork
       customer_preferred_ship_address || user_preferred_ship_address || fallback_ship_address
     end
 
-    def email=(arg)
-      @email ||= arg
-    end
-
-    def customer=(arg)
-      @customer ||= arg
-    end
-
-    def user=(arg)
-      @user ||= arg
-    end
-
     private
-
-    def types
-      {
-        String => "email",
-        Customer => "customer",
-        Spree::User => "user"
-      }
-    end
 
     def customer_preferred_bill_address
       customer&.bill_address

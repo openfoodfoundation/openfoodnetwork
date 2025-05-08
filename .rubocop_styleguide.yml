@@ -86,10 +86,6 @@ Metrics/MethodLength:
   Enabled: true
   Max: 25 # default 10
 
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'lib/open_food_network/address_finder.rb'
-
 Metrics/ParameterLists:
   CountKeywordArgs: false
 

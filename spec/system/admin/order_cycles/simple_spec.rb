@@ -555,6 +555,14 @@ RSpec.describe '
         expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
         expect(page).to have_selector 'tr.distributor', count: 2
 
+        # Toggling all products displays the css section of the distributed products
+        click_link "Expand all"
+        expect(page).to have_css ".exchange-distributed-products", count: 2
+
+        # Colapsing all products hides the css section of the distributed products
+        click_link "Collapse all"
+        expect(page).not_to have_css ".exchange-distributed-products"
+
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
           page.find("td.products").click

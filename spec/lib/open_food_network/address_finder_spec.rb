@@ -12,39 +12,18 @@ module OpenFoodNetwork
       let(:customer) { create(:customer) }
 
       context "when passed any combination of instances of String, Customer or Spree::User" do
-        let(:finder1) { AddressFinder.new(email, customer, user) }
-        let(:finder2) { AddressFinder.new(customer, user, email) }
+        let(:finder1) { AddressFinder.new(email:, customer:, user:) }
 
-        it "stores arguments based on their class" do
+        it "stores arguments" do
           expect(finder1.email).to eq email
-          expect(finder2.email).to eq email
           expect(finder1.customer).to be customer
-          expect(finder2.customer).to be customer
           expect(finder1.user).to be user
-          expect(finder2.user).to be user
-        end
-      end
-
-      context "when passed multiples instances of a class" do
-        let(:email2) { 'test2@example.com' }
-        let(:user2) { create(:user) }
-        let(:customer2) { create(:customer) }
-        let(:finder1) { AddressFinder.new(user2, email, email2, customer2, user, customer) }
-        let(:finder2) { AddressFinder.new(email2, customer, user, email, user2, customer2) }
-
-        it "only stores the first encountered instance of a given class" do
-          expect(finder1.email).to eq email
-          expect(finder2.email).to eq email2
-          expect(finder1.customer).to be customer2
-          expect(finder2.customer).to be customer
-          expect(finder1.user).to be user2
-          expect(finder2.user).to be user
         end
       end
     end
 
     describe "fallback_bill_address" do
-      let(:finder) { AddressFinder.new(email) }
+      let(:finder) { AddressFinder.new(email:) }
       let(:address) { double(:address, clone: 'address_clone') }
 
       context "when a last_used_bill_address is found" do
@@ -65,7 +44,7 @@ module OpenFoodNetwork
     end
 
     describe "fallback_ship_address" do
-      let(:finder) { AddressFinder.new(email) }
+      let(:finder) { AddressFinder.new(email:) }
       let(:address) { double(:address, clone: 'address_clone') }
 
       context "when a last_used_ship_address is found" do
@@ -92,7 +71,7 @@ module OpenFoodNetwork
         create(:completed_order_with_totals, user: nil, email:, distributor:,
                                              bill_address: nil)
       }
-      let(:finder) { AddressFinder.new(email) }
+      let(:finder) { AddressFinder.new(email:) }
 
       context "when searching by email is not allowed" do
         before do
@@ -142,7 +121,7 @@ module OpenFoodNetwork
     describe "last_used_ship_address" do
       let(:address) { create(:address) }
       let(:distributor) { create(:distributor_enterprise) }
-      let(:finder) { AddressFinder.new(email) }
+      let(:finder) { AddressFinder.new(email:) }
 
       context "when searching by email is not allowed" do
         before do
