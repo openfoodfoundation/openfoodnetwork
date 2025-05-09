@@ -47,20 +47,20 @@ class ContentConfiguration < Spree::Preferences::Configuration
              default: I18n.t(:content_configuration_detail)
 
   # Main URLs
-  preference :menu_1, :boolean, default: true
-  preference :menu_1_icon_name, :string, default: "ofn-i_019-map-pin"
-  preference :menu_2, :boolean, default: true
-  preference :menu_2_icon_name, :string, default: "ofn-i_037-map"
-  preference :menu_3, :boolean, default: true
-  preference :menu_3_icon_name, :string, default: "ofn-i_036-producers"
-  preference :menu_4, :boolean, default: true
-  preference :menu_4_icon_name, :string, default: "ofn-i_035-groups"
-  preference :menu_5, :boolean, default: true
-  preference :menu_5_icon_name, :string, default: "ofn-i_013-help"
-  preference :menu_6, :boolean, default: false
-  preference :menu_6_icon_name, :string, default: "ofn-i_035-groups"
-  preference :menu_7, :boolean, default: false
-  preference :menu_7_icon_name, :string, default: "ofn-i_013-help"
+  preference :menu1, :boolean, default: true
+  preference :menu1_icon_name, :string, default: "ofn-i_019-map-pin"
+  preference :menu2, :boolean, default: true
+  preference :menu2_icon_name, :string, default: "ofn-i_037-map"
+  preference :menu3, :boolean, default: true
+  preference :menu3_icon_name, :string, default: "ofn-i_036-producers"
+  preference :menu4, :boolean, default: true
+  preference :menu4_icon_name, :string, default: "ofn-i_035-groups"
+  preference :menu5, :boolean, default: true
+  preference :menu5_icon_name, :string, default: "ofn-i_013-help"
+  preference :menu6, :boolean, default: false
+  preference :menu6_icon_name, :string, default: "ofn-i_035-groups"
+  preference :menu7, :boolean, default: false
+  preference :menu7_icon_name, :string, default: "ofn-i_013-help"
 
   # Footer
   file_preference :footer_logo, default_url: "/default_images/ofn-logo-footer.png"

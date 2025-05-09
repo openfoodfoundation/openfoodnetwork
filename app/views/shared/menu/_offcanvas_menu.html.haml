@@ -9,7 +9,7 @@
             %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
       - unless @hide_ofn_navigation
         - [*1..7].each do |menu_number|
-          - menu_name = "menu_#{menu_number}"
+          - menu_name = "menu#{menu_number}"
           - if ContentConfig[menu_name].present?
             %li.li-menu
               %a{href: t("#{menu_name}_url") }

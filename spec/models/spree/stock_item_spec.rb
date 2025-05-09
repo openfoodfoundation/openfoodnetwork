@@ -74,7 +74,7 @@ RSpec.describe Spree::StockItem do
 
     context "item out of stock (by two items)" do
       let(:inventory_unit) { double('InventoryUnit') }
-      let(:inventory_unit_2) { double('InventoryUnit2') }
+      let(:inventory_unit2) { double('InventoryUnit2') }
 
       before do
         allow(subject).to receive(:backorderable?).and_return(true)
@@ -89,12 +89,12 @@ RSpec.describe Spree::StockItem do
       context "adds new items" do
         before {
           allow(subject).to receive_messages(backordered_inventory_units: [inventory_unit,
-                                                                           inventory_unit_2])
+                                                                           inventory_unit2])
         }
 
         it "fills existing backorders" do
           expect(inventory_unit).to receive(:fill_backorder)
-          expect(inventory_unit_2).to receive(:fill_backorder)
+          expect(inventory_unit2).to receive(:fill_backorder)
 
           subject.adjust_count_on_hand(3)
           expect(subject.count_on_hand).to eq(1)
