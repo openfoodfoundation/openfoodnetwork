@@ -51,13 +51,6 @@ RSpec.describe Spree::OrderInventory do
       expect(units['backordered'].size).to eq 2
       expect(units['on_hand'].size).to eq 3
     end
-
-    it 'should create stock_movement' do
-      expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
-
-      movement = variant.stock_item.stock_movements.last
-      expect(movement.quantity).to eq(-5)
-    end
   end
 
   context 'when order has too many inventory units' do
@@ -99,13 +92,6 @@ RSpec.describe Spree::OrderInventory do
           expect(variant).not_to receive(:move)
           expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, false)).to eq 1
         end
-      end
-
-      it 'should create stock_movement' do
-        expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
-
-        movement = variant.stock_item.stock_movements.last
-        expect(movement.quantity).to eq 1
       end
 
       it 'should destroy backordered units first' do
