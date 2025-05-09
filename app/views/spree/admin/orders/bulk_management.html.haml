@@ -177,7 +177,7 @@
           %td.email{ 'ng-show' => 'columns.email.visible' } {{ line_item.order.email }}
           %td.phone{ 'ng-show' => 'columns.phone.visible' } {{ line_item.order.phone }}
           %td.date{ 'ng-show' => 'columns.order_date.visible' } {{ line_item.order.completed_at }}
-          %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
+          %td.producer{ 'ng-show' => 'columns.producer.visible', "ng-bind-html": 'line_item.supplier.name' }
           %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
           %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
           %td.variant{ 'ng-show' => 'columns.variant.visible' }

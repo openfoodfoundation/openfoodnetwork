@@ -305,6 +305,8 @@ RSpec.describe '
       let!(:li2) {
         create(:line_item_with_shipment, order: o2, product: create(:product) )
       }
+      # sets supplier name to contain unusual characters
+      let!(:supplier) { li1.supplier.update_attribute(:name, "Sûppliẽr Näme") }
 
       before :each do
         visit_bulk_order_management
@@ -327,8 +329,7 @@ RSpec.describe '
 
       it "displays a column for producer" do
         expect(page).to have_selector "th.producer", text: "Producer"
-        expect(page).to have_selector "td.producer", text: li1.supplier.name
-        expect(page).to have_selector "td.producer", text: li2.supplier.name
+        expect(page).to have_selector "td.producer", text: "Sûppliẽr Näme", count: 2
       end
 
       it "displays a column for variant description, which shows only product name " \
