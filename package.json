@@ -32,7 +32,7 @@
     "stimulus-flatpickr": "^1.4.0",
     "stimulus_reflex": "3.5.3",
     "tom-select": "^2.4.3",
-    "trix": "^2.1.14",
+    "trix": "^2.1.15",
     "turbo_power": "^0.7.0",
     "webpack": "~4"
   },
