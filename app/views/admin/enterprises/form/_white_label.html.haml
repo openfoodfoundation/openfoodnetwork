@@ -7,7 +7,7 @@
     = f.check_box :hide_ofn_navigation, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "white_label_logo" }
 
 %div{id: "white_label_logo"}
-  = render "admin/shared/attachment_field", object: @object, attachment_url: @object.white_label_logo_url, attachment_name: :white_label_logo, f: f
+  = render "admin/shared/attachment_field", attachment_url: @object.white_label_logo_url, attachment_name: :white_label_logo, f: f
 
   - if @object.white_label_logo.present?
     .row

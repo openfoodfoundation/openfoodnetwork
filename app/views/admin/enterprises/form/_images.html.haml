@@ -1,6 +1,6 @@
-= render "admin/shared/attachment_field", object: @enterprise, attachment_url: @enterprise.logo_url(:thumb), attachment_name: :logo, f: f
+= render "admin/shared/attachment_field", attachment_url: @enterprise.logo_url(:thumb), attachment_name: :logo, f: f
 
-= render "admin/shared/attachment_field", object: @enterprise, attachment_url: @enterprise.promo_image_url(:large), attachment_name: :promo_image, f: f do
+= render "admin/shared/attachment_field", attachment_url: @enterprise.promo_image_url(:large), attachment_name: :promo_image, f: f do
   %br/
   = t('.promo_image_placeholder')
   %br
