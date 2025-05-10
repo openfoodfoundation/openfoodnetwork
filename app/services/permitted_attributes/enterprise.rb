@@ -39,7 +39,8 @@ module PermittedAttributes
         :preferred_product_low_stock_display,
         :hide_ofn_navigation, :white_label_logo, :white_label_logo_link,
         :hide_groups_tab, :external_billing_id,
-        :enable_producers_to_edit_orders
+        :enable_producers_to_edit_orders,
+        :remove_logo, :remove_promo_image, :remove_white_label_logo
       ]
     end
   end

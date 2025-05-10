@@ -269,6 +269,21 @@ class Enterprise < ApplicationRecord
       HtmlSanitizer.sanitize_and_enforce_link_target_blank(html)
   end
 
+  def remove_logo=(value)
+    self.logo = nil if value == "1"
+  end
+
+  def remove_promo_image=(value)
+    self.promo_image = nil if value == "1"
+  end
+
+  def remove_white_label_logo=(value)
+    return unless value == "1"
+
+    self.white_label_logo = nil
+    self.white_label_logo_link = nil # Link not needed if there's no logo
+  end
+
   def contact
     contact = users.where(enterprise_roles: { receives_notifications: true }).first
     contact || owner
