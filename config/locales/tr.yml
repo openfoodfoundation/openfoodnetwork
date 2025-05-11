@@ -373,6 +373,7 @@ tr:
         inherits_properties: "Özellikler devralınsın mı?"
         import_date: "İçe Aktarım Tarihi"
         actions: İşlemler
+        tags: ETİKETLER
       columns_selector:
         unit: Birim
         price: Fiyat
@@ -623,6 +624,7 @@ tr:
         category_field_name: "Kategori"
         tax_category_field_name: "Vergi Kategorisi"
         producer_field_name: "ÜRETİCİ"
+        add_a_tag: Etiket ekle
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -4083,3 +4085,5 @@ tr:
     pagination:
       next: Sonrakİ
       previous: Önceki
+    tag_list_input:
+      default_placeholder: Etiket ekle

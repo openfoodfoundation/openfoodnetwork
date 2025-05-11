@@ -589,6 +589,7 @@ en_CA:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -945,6 +946,7 @@ en_CA:
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
         select_unit_scale: Select unit scale
+        add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -1287,6 +1289,8 @@ en_CA:
           enable_subscriptions_true: "Enabled"
           customer_names_in_reports: "Customer Names in Reports"
           customer_names_tip: "Enable your suppliers/vendors to see your customers' names in reports."
+          producers_to_edit_orders: "Ability for producers to edit orders"
+          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
           customer_contacts_in_reports: "Customer contact details in reports"
@@ -1706,6 +1710,7 @@ en_CA:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      none: none
       deprecated: "This report is deprecated and will be removed in a future release."
       hidden_field: "< Hidden >"
       unitsize: UNITSIZE
@@ -4874,6 +4879,8 @@ en_CA:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

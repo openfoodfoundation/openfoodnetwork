@@ -460,6 +460,7 @@ de_CH:
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
         import_date: "Importdatum"
         actions: Aktionen
+        tags: Stichwörter
       columns_selector:
         unit: Einheit
         price: Preis
@@ -712,6 +713,7 @@ de_CH:
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        add_a_tag: Stichwort hinzufügen
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -4274,3 +4276,5 @@ de_CH:
     pagination:
       next: Nächste
       previous: Vorherige
+    tag_list_input:
+      default_placeholder: Stichwort hinzufügen

@@ -584,6 +584,7 @@ es:
         inherits_properties: "¿Hereda propiedades?"
         import_date: "Fecha de importación"
         actions: Acciones
+        tags: Tags
       columns_selector:
         unit: Unidad
         price: Precio
@@ -892,6 +893,7 @@ es:
         tax_category_field_name: "Categoría de impuestos"
         producer_field_name: "Productora"
         select_unit_scale: Seleccionar escala de la unidad
+        add_a_tag: Add a tag
       clone:
         success: Se ha clonado el producto
         error: No se ha podido clonar el producto
@@ -4646,6 +4648,8 @@ es:
     pagination:
       next: Siguiente
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

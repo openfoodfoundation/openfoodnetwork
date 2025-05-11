@@ -524,6 +524,7 @@ ml:
         inherits_properties: "അനന്തരാവകാശമായി ലഭിച്ച സ്വത്തുക്കൾ?"
         import_date: "ഇറക്കുമതി തീയതി"
         actions: പ്രവർത്തനങ്ങൾ
+        tags: ടാഗുകൾ
       columns_selector:
         unit: യൂണിറ്റ്
         price: വില
@@ -811,6 +812,7 @@ ml:
         category_field_name: "വിഭാഗം"
         tax_category_field_name: "നികുതി വിഭാഗം"
         producer_field_name: "പ്രൊഡ്യൂസർ"
+        add_a_tag: ഒരു ടാഗ് ചേർക്കുക
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി
       file_not_found: ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല
@@ -4588,3 +4590,5 @@ ml:
     pagination:
       next: അടുത്തത്
       previous: മുന്നിലത്തേത്
+    tag_list_input:
+      default_placeholder: ഒരു ടാഗ് ചേർക്കുക

@@ -573,6 +573,7 @@ nb:
         inherits_properties: "Arver egenskaper?"
         import_date: "Importdato"
         actions: Handlinger
+        tags: Merkelapper
       columns_selector:
         unit: Enhet
         price: Pris
@@ -905,6 +906,7 @@ nb:
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
         producer_field_name: "Produsent"
+        add_a_tag: Legg til en merkelapp
       clone:
         success: Kloning av produktet var vellykket
         error: Kan ikke klone produktet
@@ -4761,6 +4763,8 @@ nb:
     pagination:
       next: Neste
       previous: Tidligere
+    tag_list_input:
+      default_placeholder: Legg til en merkelapp
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

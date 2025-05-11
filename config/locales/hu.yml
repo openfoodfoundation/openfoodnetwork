@@ -561,6 +561,7 @@ hu:
         inherits_properties: "Örökölje a tulajdonságokat?"
         import_date: "Importálás dátuma"
         actions: Műveletek
+        tags: Címkék
       columns_selector:
         unit: Kiszerelés
         price: Ár
@@ -895,6 +896,7 @@ hu:
         tax_category_field_name: "Adókategória"
         producer_field_name: "Termelő"
         select_unit_scale: Válassz mértékegységet
+        add_a_tag: Adj hozzá egy címkét
       clone:
         success: Sikeresen klónozta a terméket
         error: A terméket nem sikerült klónozni
@@ -4774,6 +4776,8 @@ hu:
     pagination:
       next: Következő
       previous: Előző
+    tag_list_input:
+      default_placeholder: Adj hozzá egy címkét
   invisible_captcha:
     sentence_for_humans: "Kérjük hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."

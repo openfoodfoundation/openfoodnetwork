@@ -364,6 +364,7 @@ pt:
         inherits_properties: "Herda Propriedades?"
         import_date: "Data de Importação"
         actions: Acções
+        tags: Etiquetas
       columns_selector:
         unit: Unidade
         price: Preço
@@ -597,6 +598,7 @@ pt:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de Imposto"
         producer_field_name: "Produtor/a"
+        add_a_tag: Acrescentar uma etiqueta
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
@@ -3658,3 +3660,5 @@ pt:
     pagination:
       next: Seguinte
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Acrescentar uma etiqueta

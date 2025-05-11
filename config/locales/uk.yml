@@ -457,6 +457,7 @@ uk:
         inherits_properties: "Успадковує властивості?"
         import_date: "Дата імпорту"
         actions: Дії
+        tags: Мітки
       columns_selector:
         unit: Одиниця
         price: Ціна
@@ -710,6 +711,7 @@ uk:
         category_field_name: "Категорія"
         tax_category_field_name: "Категорія податку"
         producer_field_name: "Виробник"
+        add_a_tag: Додати тег
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити
@@ -4348,3 +4350,5 @@ uk:
     pagination:
       next: Далі
       previous: Попередній
+    tag_list_input:
+      default_placeholder: Додати тег

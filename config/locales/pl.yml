@@ -324,6 +324,7 @@ pl:
         tax_category: "Kategoria podatku"
         inherits_properties: "Dziedziczy właściwości?"
         actions: Akcje
+        tags: Tagi
       columns_selector:
         unit: Jednostka
         price: Cena

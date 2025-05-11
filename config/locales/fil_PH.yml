@@ -318,6 +318,7 @@ fil_PH:
         inherits_properties: "gayahin ang mga katangian?"
         import_date: "petsa ng pag-import"
         actions: mga  kilos
+        tags: tags
       columns_selector:
         unit: yunit
         price: Presyo
@@ -545,6 +546,7 @@ fil_PH:
         category_field_name: "kategorya"
         tax_category_field_name: "kategorya ng tax"
         producer_field_name: "Producer"
+        add_a_tag: magdagdag ng tag
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
@@ -3677,3 +3679,5 @@ fil_PH:
     pagination:
       next: sunod
       previous: nauna
+    tag_list_input:
+      default_placeholder: magdagdag ng tag

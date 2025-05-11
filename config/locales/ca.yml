@@ -496,6 +496,7 @@ ca:
         inherits_properties: "Hereda propietats?"
         import_date: "Data d'importació"
         actions: Accions
+        tags: Etiquetes
       columns_selector:
         unit: Unitat
         price: Preu
@@ -789,6 +790,7 @@ ca:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'impostos"
         producer_field_name: "Productora"
+        add_a_tag: Afegeix una etiqueta
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -4380,3 +4382,5 @@ ca:
     pagination:
       next: Següent
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Afegeix una etiqueta

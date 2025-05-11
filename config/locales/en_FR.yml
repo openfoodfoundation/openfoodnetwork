@@ -589,6 +589,7 @@ en_FR:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -945,6 +946,7 @@ en_FR:
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
         select_unit_scale: Select unit scale
+        add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -4878,6 +4880,8 @@ en_FR:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

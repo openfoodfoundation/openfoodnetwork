@@ -542,6 +542,7 @@ el:
         inherits_properties: "Διατήρηση Ιδιοτήτων"
         import_date: "Ημερομηνία καταχώρησης"
         actions: Ενέργειες
+        tags: Ετικέτες
       columns_selector:
         unit: Μονάδα
         price: Τιμή
@@ -850,6 +851,7 @@ el:
         category_field_name: "Κατηγορία"
         tax_category_field_name: "Φορολογική Κατηγορία"
         producer_field_name: "Παραγωγός"
+        add_a_tag: Προσθήκη ετικέτας
       clone:
         success: Το προϊόν κλωνοποιήθηκε επιτυχώς.
         error: Δεν ήταν δυνατή η κλωνοποίηση του προϊόντος
@@ -4660,6 +4662,8 @@ el:
     pagination:
       next: Επόμενο
       previous: Προηγούμενο
+    tag_list_input:
+      default_placeholder: Προσθήκη ετικέτας
   invisible_captcha:
     sentence_for_humans: "Παρακαλώ αφήστε κενό"
     timestamp_error_message: "Παρακαλώ δοκιμάστε ξανά σε 5 δευτερόλεπτα."

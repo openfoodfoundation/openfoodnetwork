@@ -53,6 +53,7 @@ cy:
         primary_taxon: "Categori Cynnyrch"
         shipping_category_id: "Categori Anfon"
         supplier: "Cyflenwr"
+        variant_unit: "Graddfa’r uned"
         variant_unit_name: "Enw Uned Amrywiolyn"
         unit_value: "Gwerth yr uned"
       spree/credit_card:
@@ -80,6 +81,12 @@ cy:
         white_label_logo_link: "Defnyddiwyd dolen i’r logo yn ffrynt y siop"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Mae etifeddu’r categori treth yn golygu bod angen cyfrifiannell fesul eitem."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "wedi methu ei lwytho. Gwiriwch i sicrhau na lygrwyd y ffeil, a rhowch gynnig eto."
         spree/user:
           attributes:
             email:
@@ -189,6 +196,9 @@ cy:
       transaction_not_allowed: "Gwrthodwyd y cerdyn am reswm anhysbys."
       try_again_later: "Gwrthodwyd y cerdyn am reswm anhysbys."
       withdrawal_count_limit_exceeded: "Mae'r cwsmer wedi mynd dros y balans neu'r cyfyngiad credyd sydd ar gael er ei gerdyn."
+      disconnect_failure: "Methwyd â datgysylltu Stripe."
+    success_code:
+      disconnected: "Datgysylltwyd y cyfrif Stripe."
   activemodel:
     errors:
       messages:
@@ -214,10 +224,16 @@ cy:
               not_available_to_shop: "ddim ar gael i %{shop}"
   card_details: "Manylion y cerdyn."
   card_type: "Math o gerdyn."
+  card_type_is: "Math y cerdyn yw"
+  unrecognized_card_type: "Heb adnabod y math o gerdyn"
+  use_new_cc: "Defnyddiwch gerdyn credyd newydd"
+  what_is_this: "Beth yw hwn?"
   cardholder_name: "Enw deiliad y cerdyn."
   community_forum_url: "URL Fforwm Cymunedol."
   customer_instructions: "Cyfarwyddiadau cwsmeriaid"
   additional_information: "Gwybodaeth ychwanegol"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -289,6 +305,8 @@ cy:
   sku: "Cod y Cynnyrch"
   subtotal: "Is-gyfanswm"
   tax_rate: "Cyfradd dreth"
+  with_tax_incl: "%{amount} tax incl."
+  producer_mail_qty: QTY
   validators:
     date_time_string_validator:
       not_string_error: "rhaid iddo fod yn llinyn"
@@ -303,6 +321,8 @@ cy:
   backorder_mailer:
     backorder_failed:
       product: "Cynnyrch"
+    backorder_incomplete:
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Cadarnhewch y cyfeiriad e-bost ar gyfer %{enterprise}"
@@ -394,6 +414,7 @@ cy:
   cancel_order: "Canslo Archeb"
   confirm_send_invoice: "Anfonir anfoneb ar gyfer yr archeb hon at y cwsmer. Ydych chi'n siŵr eich bod chi eisiau parhau?"
   confirm_resend_order_confirmation: "Ydych chi'n siŵr eich bod chi eisiau ail-anfon e-bost cadarnhau archeb?"
+  must_have_valid_business_number: "Rhaid i %{enterprise_name} gael rhif cwmni dilys neu rif elusennol cyn y gellir defnyddio anfonebau."
   invoice: "Anfoneb"
   invoices: "Anfonebau"
   file: "Ffeil"
@@ -512,8 +533,10 @@ cy:
       columns:
         image: Delwedd
         name: Enw
+        unit_scale: Graddfa’r uned
         unit: Uned
         unit_value: Gwerth yr uned
+        display_as: Dangos uned fel
         price: Pris
         producer: Cynhyrchydd
         category: Categori
@@ -524,6 +547,7 @@ cy:
         inherits_properties: "Yn etifeddu manylion cynnyrch?"
         import_date: "Dyddiad Mewnforio"
         actions: Camau gweithredu
+        tags: Tagiau
       columns_selector:
         unit: Uned
         price: Pris
@@ -597,6 +621,7 @@ cy:
     show_n_more: Dangos %{num} mwy
     choose: "Dewiswch ..."
     please_select: Dewiswch ...
+    column_save_as_default: Cadw fel rhagosodiad
     columns: Colofnau
     actions: Camau gweithredu
     viewing: "Gweld: %{current_view_name}"
@@ -645,6 +670,7 @@ cy:
         status: Statws
         ok: Iawn
         instance_secret_key: Allwedd Ddirgel Instance
+        instance_publishable_key: Allwedd Cyhoeddadwy ‘Instance’
         account_id: ID y Cyfrif
         business_name: Enw Busnes
         charges_enabled: Taliadau a Alluogwyd
@@ -660,6 +686,17 @@ cy:
         info_html: "Mae Matomo yn gymhwysiad Gwe a Dadansoddeg Symudol. Gallwch naill ai ddefnyddio Matomo yn yr adeilad neu ddefnyddio gwasanaeth a gynhelir gan gwmwl. Gweler <a href='http://matomo.org' target='_blank'>matomo.org</a> i gael mwy o wybodaeth."
         config_instructions_html: "Yma gallwch chi ffurfweddu y integreiddiad Open Food Network Matomo. Dylai'r URL Matomo isod dynnu sylw at enghraifft Matomo lle anfonir gwybodaeth olrhain y defnyddiwr; os caiff ei adael yn wag, ni  alluogir dull olrhain defnyddiwr Matomo. Nid yw'r Safle ID Safle yn orfodol ond mae'n ddefnyddiol os ydych chi'n olrhain mwy nag un gwefan ar Matomo; mae i'w weld ar gonsol enghraifft Matomo."
         config_instructions_tag_manager_html: "Mae gosod URL Rheolwr Tag Matomo yn galluogi Rheolwr Tag Matomo. Mae'r arf hwn yn caniatáu ichi sefydlu digwyddiadau dadansoddeg. Mae URL Rheolwr Tag Matomo yn cael ei gopïo o adran Gosod Cod Rheolwr Tag Matomo. Gofalwch eich bod yn dewis y cynhwysydd a'r amgylchedd cywir oherwydd mae'r opsiynau hyn newid yr URL."
+    connected_app_settings:
+      edit:
+        title: "Gosodiadau ap cysylltiedig"
+        info_html: "Bydd apiau a alluogwyd yn ymddangos o dan Osodiadau’r Fenter > Apiau Cysylltiedig"
+        enabled_legend: "Apiau cysylltiedig a alluogwyd"
+        connected_apps_enabled:
+          discover_regen: Darganfod Porth Argynhyrchiol
+          affiliate_sales_data: Archebion DFC dienw API at ddibenion ymchwil
+          vine: Voucher Integration Engine (VINE)
+      update:
+        resource: Gosodiadau ap cysylltiedig
     customers:
       index:
         new_customer: "Cwsmer Newydd"
@@ -684,6 +721,9 @@ cy:
         balance_due: "Balans sy'n ddyledus"
       destroy:
         has_associated_subscriptions: "Wedi methu dileu: Mae gan y cwsmer hwn danysgrifiadau gweithredol. Mae angen eu canslo'n gyntaf."
+    column_preferences:
+      bulk_update:
+        success: "Cadwyd dewisiadau’r colofnau"
     contents:
       edit:
         title: Cynnwys
@@ -704,6 +744,8 @@ cy:
         selected:
           other: "Dewiswyd %{count}"
         import: Mewnforio
+      import:
+        imported_products: "Cynnyrch a fewnforiwyd: %{count}"
     enterprise_fees:
       index:
         title: "Ffioedd Menter"
@@ -784,8 +826,10 @@ cy:
       filters:
         search_products: Chwilio am gynnyrch
         search_for_producers: Chwilio am gynhyrchwyr
+        select_producer: Dewis cynhyrchydd
         all_producers: Pob cynhyrchydd
         search_for_categories: Chwilio am gategorïau
+        select_category: Dewis categori
         all_categories: Pob categori
         producers:
           label: Prynu bwyd
@@ -794,6 +838,11 @@ cy:
         search: Chwilio
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count}product</strong>found for your search criteria. Showing%{from}to%{to}."
+            two: "<strong>%{count}products</strong>found for your search criteria. Showing%{from}to%{to}."
+            many: "<strong>%{count}products</strong>found for your search criteria. Showing%{from}to%{to}."
+            other: "<strong>%{count}products</strong>found for your search criteria. Showing%{from}to%{to}."
           per_page:
             show: Dangos
             per_page: "%{num} fesul tudalen"
@@ -810,6 +859,11 @@ cy:
           saved:
             one: "Cadwyd %{count} cynnyrch yn iawn, ond"
             other: "Cadwyd %{count} cynnyrch yn iawn, ond"
+          invalid:
+            one: "%{count}nid oedd yn bosibl cadw’r cynhyrchion. Dylech adolygu’r gwallau a rhoi cynnig arall. "
+            two: "%{count}nid oedd yn bosibl cadw’r cynnyrch. Dylech adolygu’r gwallau a rhoi cynnig arall."
+            many: "%{count}nid oedd yn bosibl cadw’r cynnyrch. Dylech adolygu’r gwallau a rhoi cynnig arall."
+            other: "%{count} nid oedd yn bosibl cadw’r cynnyrch. Dylech adolygu’r gwallau a rhoi cynnig arall."
         reset: Hepgor y newidiadau
         save: Cadw’r newidiadau
       product_variant_row:
@@ -824,9 +878,14 @@ cy:
         error: Yn methu dileu’r amrywiolyn
       variant_row:
         none_tax_category: Dim
+        search_for_tax_categories: "Chwilio am gategorïau treth"
         category_field_name: "Categori"
         tax_category_field_name: "Categori Treth"
         producer_field_name: "Cynhyrchydd"
+        add_a_tag: Ychwanegu tag
+      clone:
+        success: Llwyddwyd i glonio’r cynnyrch
+        error: Methwyd â chlonio’r cynnyrch
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -868,6 +927,9 @@ cy:
         product_categories: Categorïau Cynnyrch
         tax_categories: Categorïau Treth
         shipping_categories: Categorïau Cludo
+      dfc_import_form:
+        title: "Mewnforio o gatalog DFC"
+        catalog_url: "URL catalog DFC"
       import:
         review: Adolygu
         import: Mewnforio
@@ -970,6 +1032,7 @@ cy:
       edit:
         order_sure_want_to: Ydych chi'n siŵr eich bod chi am %{event} yr archeb hwn?
         voucher_tax_included_in_price: "%{label} (treth wedi ei chynnwys yn y daleb)"
+        tax_on_fees: "Treth ar ffioedd"
       invoice_email_sent: 'Anfonwyd e-bost anfonebu'
       order_email_resent: 'Ail-anfonwyd e-bost archebu'
       bulk_management:
@@ -1113,6 +1176,7 @@ cy:
           own: Yn berchen
           sells: Gwerthu
           sells_tip: "Dim - nid yw'r fenter yn gwerthu i gwsmeriaid yn uniongyrchol.<br /> Fy Menter - Mae'r Fenter yn gwerthu ei chynnyrch ei hun i gwsmeriaid.<br /> Unrhyw un - Gall y Fenter werthu ei chynnyrch ei hun neu gynnyrch mentrau eraill.<br />"
+          external_billing_id_placeholder: eg. INV-2024-123456
           visible_in_search: Yn amlwg wrth chwilio?
           visible_in_search_tip: "Gall siopau fod yn: <br />1. yn weladwy'n gyhoeddus, yn ymddangos ar fap a rhestrau'r OFN; <br />2. Yn gudd ar fapiau a rhestrau ond gyda chyfeirnod trwy siopau eraill a gyda chysylltiad yn eu proffil; <br />3. Yn gwbl gudd."
           visible: Cyhoeddus
@@ -1178,6 +1242,7 @@ cy:
           open_date: "Dyddiad Agor"
           close_date: "Dyddiad Cau"
           display_ordering_in_shopfront: "Arddangos archebu yn ffrynt y siop:"
+          shopfront_sort_by_product: "Isgynnyrch"
           shopfront_sort_by_category: "Yn ôl categori"
           shopfront_sort_by_producer: "Yn ôl cynhyrchydd"
           shopfront_sort_by_category_placeholder: "Categori"
@@ -1262,16 +1327,43 @@ cy:
         connected_apps:
           legend: "Apiau cysylltiedig"
           affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously."
             enable: "Caniatáu rhannu data"
             disable: "Rhoi’r gorau i rannu"
             loading: "Yn llwytho"
+            need_to_be_manager: "Only managers can connect apps."
+            description: "INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project."
+            link_label_html: "Learn more about this research project <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Allow Discover Regenerative to publish your enterprise information."
             enable: "Caniatáu rhannu data"
             disable: "Rhoi’r gorau i rannu"
             loading: "Yn llwytho"
+            need_to_be_manager: "Only managers can connect apps."
+            note: |
+                Your Open Food Network account is connected to Discover Regenerative.
+                Add or update information on your Discover Regenerative listing here.
             link_label: "Rheoli’r rhestru"
+            description: "Eligible producers can showcase their regenerative credentials, farming practices and more through a profile listing. Simplifying how buyers can find regenerative produce and connect with producers of interest."
+            link_label_html: "Learn more about Discover Regenerative<i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
             enable: "Adnoddau"
+            disable: "Datgysylltu"
+            need_to_be_manager: "Only managers can connect apps."
+            vine_secret: "VINE secret"
+            description: "To enable VINE for your enterprise, enter your API key and secret."
+            link_label_html: "VINE<i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -1363,6 +1455,9 @@ cy:
         re_notify_producers: Ail-hysbysu cynhyrchwyr.
         notify_producers_tip: Trwy hyn anfonir ebost at bob cynhyrchydd gyda rhestr o'r archebion.
       date_time_warning_modal_content:
+        title: 'Mae archebion yn gysylltiedig â’r cylch archebu hwn'
+        content: 'Os hoffech greu cylch archebu newydd, argymhellir dyblygu’r cylch archebu’n gyntaf, ac wedyn newid y dyddiadau.'
+        proceed: 'Parhau p’run bynnag'
         cancel: 'Canslo'
       incoming:
         incoming: "Yn dod i mewn"
@@ -1563,6 +1658,9 @@ cy:
       pack_by_customer: Pecyn fesul Cwsmer
       pack_by_supplier: Pecyn fesul Cyflenwr
       pack_by_product: Pecynnu yn ôl Cynnyrch
+      display:
+        report_is_big: "Mae’r adroddiad hwn yn fawr, a gall arafu eich dyfais"
+        display_anyway: "Arddangos p’run bynnag"
       download:
         button: "Lawrlwytho adroddiad"
       show:
@@ -1643,9 +1741,15 @@ cy:
       index:
         title: "OIDC Settings"
         connect: "Cysylltu eich Cyfrif"
+        disconnect: "Datgysylltu"
+        connected: "Mae eich cyfrif yn gysylltiedig ag %{uid}."
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+            Mae’r talebau i gael mynediad at apiau cysylltiedig wedi rhedeg allan.
+            Dylech adnewyddu eich cyswllt cyfrif i sicrhau fod yr holl agweddau integredig yn gweithio.
+        refresh: "Adnewyddu’r awdurdod"
         view_account: "I weld eich cyfrif, gweler"
     subscriptions:
       index:
@@ -2216,6 +2320,7 @@ cy:
   email_order_summary_subtotal: "Is-gyfanswm:"
   email_order_summary_total: "Cyfanswm:"
   email_order_summary_includes_tax: "(yn cynnwys treth):"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: TALWYD
   email_payment_not_paid: HEB EI DALU
   email_payment_description: Disgrifiad o'r tâl wrth y Ddesg Talu
@@ -2461,6 +2566,7 @@ cy:
   orders_bought_already_confirmed: "* cadarnhawyd eisoes"
   orders_confirm_cancel: "Ydych chi'n siŵr eich bod chi am ganslo'r archeb hon?"
   order_processed_successfully: "Llwyddwyd i brosesu eich archeb "
+  thank_you_for_your_order: "Diolch am eich archeb"
   products_cart_distributor_choice: "Y dosbarthwr ar gyfer eich archeb:"
   products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer yr archeb hon yn cael ei newid i %{name} os ychwanegwch y cynnyrch yma at eich basged."
   products_cart_distributor_is: "Eich dosbarthwr ar gyfer yr archeb hon yw %{name}."
@@ -2788,6 +2894,7 @@ cy:
   spree_admin_enterprises_fees: "Ffioedd Menter"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREU MENTER NEWYDD"
   spree_admin_enterprises_none_text: "Nid oes gennych unrhyw fentrau eto"
+  spree_admin_enterprises_showing: "Showing %{count} of %{total}"
   spree_admin_enterprises_producers_manage_products: "RHEOLI CYNNYRCH"
   spree_admin_enterprises_create_new_product: "CREU CYNNYRCH NEWYDD"
   spree_admin_supplier: Cyflenwr
@@ -2867,6 +2974,8 @@ cy:
   report_render_options: Opsiynau Creu
   report_header_ofn_uid: Open Food Network UID
   report_header_order_cycle: Cylch archebu
+  report_header_order_cycle_start_date: OC Start Date
+  report_header_order_cycle_end_date: OC End Date
   report_header_user: Defnyddiwr
   report_header_email: E-bost
   report_header_status: Statws
@@ -3360,6 +3469,11 @@ cy:
         cancel_the_order_send_cancelation_email: "Anfon ebost canslo at y cwsmer"
         restock_item: "Ailstocio eitemau: dychwelyd yr eitem hon i stoc"
         restock_items: "Ailstocio eitemau: dychwelyd pob eitem i stoc"
+        delete_line_items_html:
+          one: "Bydd hyn yn dileu un eitem llinell o’r archeb. <br />Ydych chi’n siŵr eich bod am barhau?"
+          two: "Bydd hyn yn dileu %{count} eitem llinell o’r archeb. <br />Ydych chi’n siŵr eich bod am barhau?"
+          many: "Bydd hyn yn dileu %{count} eitem llinell o’r archeb. <br />Ydych chi’n siŵr eich bod am barhau?"
+          other: "Bydd hyn yn dileu %{count} eitem llinell o’r archeb. <br />Ydych chi’n siŵr eich bod am barhau?"
       resend_user_email_confirmation:
         resend: "Ailanfon"
         sending: "Ailanfon ..."
@@ -3491,7 +3605,22 @@ cy:
           Gofynnir ichi ddiweddaru'r dudalen a rhoi cynnig arall, os bydd yn methu'r ail dro,
           cysylltwch â ni am gymorth.
     trix:
+      bold: "Bold"
+      bullets: "Bullets"
       code: "Cod"
+      heading1: "Heading"
+      hr: "Horizontal rule"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
       urlPlaceholder: "Noder URL i'w fewnosod"
   inflections:
     each:
@@ -3728,6 +3857,7 @@ cy:
     editing_tax_category: "Yn golygu'r categori treth"
     editing_tax_rate: "Yn golygu'r gyfradd dreth"
     editing_zone: "Yn golygu'r parth"
+    editing_state: "Yn golygu’r Sir"
     expiration: "Daw i ben"
     invalid_payment_provider: "Darparwr talu annilys"
     items_cannot_be_shipped: "Nid yw'n bosib anfon eitemau"
@@ -3761,6 +3891,7 @@ cy:
     resend: "Ailanfon"
     back_to_orders_list: "Yn ôl i'r Rhestr Archebion"
     back_to_payments_list: "Yn ôl at y Rhestr Taliadau"
+    back_to_states_list: "Yn ôl i’r rhestr Siroedd"
     return_authorizations: "Awdurdodi dychwelyd nwyddau"
     cannot_create_returns: "Nid yw'n bosib creu nwyddau i'w dychwelyd oherwydd nid oes gan y gorchymyn hwn unrhyw unedau a anfonwyd."
     select_stock: "Dewis stoc"
@@ -4052,6 +4183,9 @@ cy:
         add_product:
           cannot_add_item_to_canceled_order: "Nid yw'n bosib ychwanegu'r eitem i archeb a ganslwyd."
           include_out_of_stock_variants: "Cynnwys amrywolion lle does dim stoc ar gael."
+        shipment:
+          mark_as_shipped_message_html: "Bydd hyn yn dangos y Dosbarthwyd yr archeb. <br />Ydych chi’n siŵr eich bod chi am barhau?"
+          mark_as_shipped_label_message: "Anfon ebost hysbysiad dosbarthu/casglu at y cwsmer."
         index:
           listing_orders: "Yn rhestru archebion"
           new_order: "Archeb newydd"
@@ -4325,6 +4459,7 @@ cy:
           display_name: "Enw Arddangos"
           display_as_placeholder: 'e.e. 2 kg'
           display_name_placeholder: 'e.e. Tomatos'
+          unit_scale: "Graddfa’r uned"
           unit: Uned
           price: Pris
           unit_value: Gwerth yr uned
@@ -4349,6 +4484,14 @@ cy:
       taxons:
         index:
           title: "Categorïau Cynnyrch"
+          new_taxon: 'Categori cynnyrch newydd'
+        new:
+          title: "Categori cynnyrch newydd"
+        edit:
+          title: "Golygu Categori’r Cynnyrch"
+        destroy:
+          delete_taxon:
+            success: "Llwyddwyd i ddileu’r categori cynnyrch"
         form:
           name: Enw
           meta_title: Meta Title
@@ -4676,3 +4819,8 @@ cy:
     pagination:
       next: Nesaf
       previous: Blaenorol
+    tag_list_input:
+      default_placeholder: Ychwanegu tag
+  invisible_captcha:
+    sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
+    timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."

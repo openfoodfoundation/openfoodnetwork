@@ -532,6 +532,7 @@ ru:
         inherits_properties: "Наследовать Свойства?"
         import_date: "Дата Импорта"
         actions: Действия
+        tags: Метки
       columns_selector:
         unit: Единица измерения
         price: Цена
@@ -840,6 +841,7 @@ ru:
         category_field_name: "Категория"
         tax_category_field_name: "Налоговая Категория"
         producer_field_name: "Производитель"
+        add_a_tag: Добавить Метку
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -4726,3 +4728,5 @@ ru:
     pagination:
       next: Следующий
       previous: Предыдущий
+    tag_list_input:
+      default_placeholder: Добавить Метку

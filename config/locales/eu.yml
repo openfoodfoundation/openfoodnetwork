@@ -573,6 +573,7 @@ eu:
         inherits_properties: "Jabetzak heredatzen ditu?"
         import_date: "Inportazio-data"
         actions: Ekintzak
+        tags: Tags
       columns_selector:
         unit: Unitatea
         price: Prezioa
@@ -875,6 +876,7 @@ eu:
         category_field_name: "Kategoria"
         tax_category_field_name: "Zergen kategoria"
         producer_field_name: "Ekoizlea"
+        add_a_tag: Add a tag
       clone:
         success: Produktua klonatu du
         error: Ezin izan da produktua klonatu
@@ -1825,7 +1827,7 @@ eu:
     payment_method_without_number: Ordaintzeko modua
     order_summary_without_number: Eskaeraren laburpena
     already_ordered:
-      cart: "gurditxoa"
+      cart: "Saskia"
       message_html: "Eskaera bat egin duzu eskaera-ziklo honetarako. Egiaztatu %{cart}, eskatu zenituen artikuluak ikusteko. Halaber, artikuluak ezeztatu ahal izango duzu eskaera zikloa irekita dagoen bitartean. "
     step1:
       contact_information:
@@ -1922,19 +1924,19 @@ eu:
         powered_html: "Zure erosketa-esperientziaren bultzatzailea %{open_food_network} da."
     menu:
       cart:
-        cart: "Gurditxoa"
+        cart: "Saskia"
       cart_sidebar:
         checkout: "Balidatu"
         edit_cart: "Editatu orgatxoa"
         items_in_cart_singular: " %{num} artikulu bere orgatxoan"
         items_in_cart_plural: " %{num} artikulu bere orgatxoan"
         close: "Itxi"
-        cart_empty: "Zure gurditxoa hutsik dago"
+        cart_empty: "Zure saskia hutsik dago"
         take_me_shopping: "Eraman nazazu erosketak egitera!"
       signed_in:
         profile: "Profila"
       mobile_menu:
-        cart: "Gurditxoa"
+        cart: "Saskia"
     register_call:
       selling_on_ofn: "Interesa duzu Open Food Network-en sartzeko?"
       register: "Erregistratu hemen"
@@ -1993,13 +1995,13 @@ eu:
   order_number: "Eskaera-zenbakia:"
   date_of_transaction: "Transakzio-data:"
   menu_1_title: "Dendak"
-  menu_1_url: "/ shops"
+  menu_1_url: "/shops"
   menu_2_title: "Mapa"
-  menu_2_url: "/ map"
+  menu_2_url: "/map"
   menu_3_title: "Ekoizleak"
-  menu_3_url: "/ ekoizleak"
+  menu_3_url: "/producers"
   menu_4_title: "Sareak"
-  menu_4_url: "/ groups"
+  menu_4_url: "/groups"
   menu_5_title: "Honi buruz"
   menu_5_url: "http://katuma.org /"
   menu_6_title: "Konektatu"
@@ -2074,7 +2076,7 @@ eu:
   cart_items: "elementuak"
   cart_headline: "Zure erosketa-orgatxoa"
   total: "Guztira"
-  cart_updating: "Gurditxoa eguneratzen..."
+  cart_updating: "Saskia eguneratzen..."
   cart_empty: "Gurditxo hutsa"
   cart_edit: "Editatu orgatxoa"
   item: "Artikulua"
@@ -2341,7 +2343,7 @@ eu:
   products_filter_clear: "Garbitu"
   products_filter_done: "Egina"
   products_loading: "Produktuak kargatzen..."
-  products_updating_cart: "Zure gurditxoa eguneratzen..."
+  products_updating_cart: "Zure saskia eguneratzen..."
   products_cart_empty: "Gurditxo hutsa"
   products_edit_cart: "Zure orgatxoa editatu"
   products_from: Noiztik
@@ -2452,7 +2454,7 @@ eu:
   orders_edit_time: "Eskaera prest dago"
   orders_edit_continue: "Erosten jarraitu"
   orders_edit_checkout: "Balidatu"
-  orders_form_empty_cart: "Hustu gurditxoa"
+  orders_form_empty_cart: "Hustu saskia"
   orders_form_update_cart: "Eguneratu"
   orders_form_subtotal: "Produktuen guztizko partziala"
   orders_form_total: "Guztira"
@@ -3325,7 +3327,7 @@ eu:
           adjustments: "doikuntzak"
           awaiting_return: "Itzuleraren zain"
           canceled: "ezeztatuta"
-          cart: "gurditxoa"
+          cart: "saskia"
           complete: "osatu"
           confirm: "Baieztatu"
           delivery: "Entrega"
@@ -4459,6 +4461,8 @@ eu:
     pagination:
       next: Hurrengoa
       previous: Aurrekoa
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

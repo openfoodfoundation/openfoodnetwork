@@ -432,6 +432,7 @@ es_US:
         inherits_properties: "¿Hereda propiedades?"
         import_date: "Fecha de importación"
         actions: Acciones
+        tags: Etiquetas
       columns_selector:
         unit: Unidad
         price: Precio
@@ -682,6 +683,7 @@ es_US:
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría del impuesto"
         producer_field_name: "Productora"
+        add_a_tag: Add a tag
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -4106,3 +4108,5 @@ es_US:
     pagination:
       next: Siguiente
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Add a tag

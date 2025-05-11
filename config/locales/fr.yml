@@ -588,6 +588,7 @@ fr:
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unité
         price: Prix
@@ -946,6 +947,7 @@ fr:
         tax_category_field_name: "TVA applicable"
         producer_field_name: "Producteur"
         select_unit_scale: Sélectionner l'échelle d'unité
+        add_a_tag: Ajouter un tag
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
@@ -4960,6 +4962,8 @@ fr:
     pagination:
       next: Suivant
       previous: Précédent
+    tag_list_input:
+      default_placeholder: Ajouter un tag
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

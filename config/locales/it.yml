@@ -487,6 +487,7 @@ it:
         inherits_properties: "Eredita proprietà?"
         import_date: "Data di importazione"
         actions: Azioni
+        tags: Etichette
       columns_selector:
         unit: Unità
         price: Prezzo
@@ -744,6 +745,7 @@ it:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'imposta"
         producer_field_name: "Produttore"
+        add_a_tag: Aggiungi un'etichetta
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -4418,3 +4420,5 @@ it:
     pagination:
       next: Prossimo
       previous: Precedente
+    tag_list_input:
+      default_placeholder: Aggiungi un'etichetta

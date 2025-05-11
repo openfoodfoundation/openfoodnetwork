@@ -167,6 +167,7 @@ sv:
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
         actions: Handlingar
+        tags: Taggar
       columns_selector:
         unit: Enhet
         price: Pris

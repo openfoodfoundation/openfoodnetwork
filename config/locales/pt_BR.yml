@@ -393,6 +393,7 @@ pt_BR:
         inherits_properties: "Herdar Propriedades?"
         import_date: "Data de importação"
         actions: Ações
+        tags: Tags
       columns_selector:
         unit: Unidade
         price: Preço
@@ -639,6 +640,7 @@ pt_BR:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de taxa"
         producer_field_name: "Produtor"
+        add_a_tag: Adicionar tag
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
@@ -4086,3 +4088,5 @@ pt_BR:
     pagination:
       next: Próximo
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Adicionar tag

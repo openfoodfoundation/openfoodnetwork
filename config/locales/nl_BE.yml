@@ -327,6 +327,7 @@ nl_BE:
         inherits_properties: "Erft Eigenschappen?"
         import_date: "Importdatum"
         actions: Acties
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Prijs
@@ -561,6 +562,7 @@ nl_BE:
         category_field_name: "Categorie"
         tax_category_field_name: "Belastingcategorie"
         producer_field_name: "Producent"
+        add_a_tag: Voeg een tag toe
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -3703,3 +3705,5 @@ nl_BE:
     pagination:
       next: Volgende
       previous: Voorgaande
+    tag_list_input:
+      default_placeholder: Voeg een tag toe

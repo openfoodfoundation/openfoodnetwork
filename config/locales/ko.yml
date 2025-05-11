@@ -455,6 +455,7 @@ ko:
         inherits_properties: "속성을 상속하시겠습니까?"
         import_date: "수입 날짜"
         actions: 사용자 응용
+        tags: 태그
       columns_selector:
         unit: 단위
         price: 가격
@@ -705,6 +706,7 @@ ko:
         category_field_name: "목록"
         tax_category_field_name: "세금 목록"
         producer_field_name: "제공자"
+        add_a_tag: 태그 추가
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
@@ -4184,3 +4186,5 @@ ko:
     pagination:
       next: 다음
       previous: 이전으로
+    tag_list_input:
+      default_placeholder: 태그 추가

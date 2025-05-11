@@ -466,6 +466,7 @@ ar:
         inherits_properties: "الخصائص الموروثة؟"
         import_date: "تاريخ الاستيراد"
         actions: أجراءات
+        tags: الاوسمة
       columns_selector:
         unit: وحدة
         price: السعر
@@ -723,6 +724,7 @@ ar:
         category_field_name: "الفئة"
         tax_category_field_name: "الفئة الضريبية"
         producer_field_name: "المنتج"
+        add_a_tag: أضف وسم
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -4558,3 +4560,5 @@ ar:
     pagination:
       next: التالى
       previous: السابق
+    tag_list_input:
+      default_placeholder: أضف وسم

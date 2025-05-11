@@ -524,6 +524,7 @@ hi:
         inherits_properties: "प्रॉपर्टीज़ है?"
         import_date: "इम्पोर्ट की तिथि"
         actions: एक्शन्स
+        tags: टैग्स
       columns_selector:
         unit: यूनिट
         price: कीमत
@@ -806,6 +807,7 @@ hi:
         category_field_name: "श्रेणी"
         tax_category_field_name: "टैक्स श्रेणी"
         producer_field_name: "उत्पादक"
+        add_a_tag: एक टैग जोड़ें
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी
@@ -4561,3 +4563,5 @@ hi:
     pagination:
       next: अगला
       previous: पिछला
+    tag_list_input:
+      default_placeholder: एक टैग जोड़ें

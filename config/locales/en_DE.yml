@@ -311,6 +311,7 @@ en_DE:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -535,6 +536,7 @@ en_DE:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        add_a_tag: Add a tag
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -3481,3 +3483,5 @@ en_DE:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
