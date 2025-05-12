@@ -41,8 +41,8 @@ RSpec.describe '
                                            distributors: [distributor, distributor2, distributor3])
   }
   let!(:shipping_method2) {
-    create(:shipping_method_with, :pickup, name: "delivery",
-                                           distributors: [distributor4, distributor5])
+    create(:shipping_method_with, :delivery, name: "delivery",
+                                             distributors: [distributor4, distributor5])
   }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
