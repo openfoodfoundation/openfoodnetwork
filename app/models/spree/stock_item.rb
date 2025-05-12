@@ -37,10 +37,6 @@ module Spree
       in_stock? || backorderable?
     end
 
-    def count_on_hand=(value)
-      self[:count_on_hand] = value
-    end
-
     private
 
     def process_backorders
