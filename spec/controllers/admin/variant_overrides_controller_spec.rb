@@ -3,6 +3,29 @@
 require 'spec_helper'
 
 RSpec.describe Admin::VariantOverridesController, type: :controller do
+  describe "index" do
+    context "not logged in" do
+      it "redirects to login" do
+        pending
+        get :index
+        expect(response).to have_http_status :found
+      end
+    end
+
+    context "where I manage the variant override hub" do
+      let(:hub) { create(:distributor_enterprise) }
+
+      before do
+        allow(controller).to receive(:spree_current_user) { hub.owner }
+      end
+
+      it "succeeds" do
+        get :index
+        expect(response).to have_http_status :ok
+      end
+    end
+  end
+
   describe "bulk_update" do
     context "json" do
       let(:format) { :json }
