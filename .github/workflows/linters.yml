@@ -3,17 +3,31 @@ on: [push, pull_request]
 permissions:
   contents: read # to fetch code (actions/checkout)
 jobs:
-  rubocop:
-    name: runner / rubocop
+  lint:
+    name: prettier and rubocop
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
 
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
+
+      - name: prettier
+        uses: EPMatt/reviewdog-action-prettier@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          level: error
+          fail_on_error: true
 
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
@@ -25,26 +39,3 @@ jobs:
           filter_mode: nofilter
           use_bundler: true
           fail_level: any
-  prettier:
-    name: runner / prettier
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-
-      - name: prettier
-        uses: EPMatt/reviewdog-action-prettier@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
-          level: error
-          fail_on_error: true
