@@ -3362,8 +3362,6 @@ ko:
     rma_credit: "RMA 거래"
     refund: "환불"
     server_error: "서버 오류"
-    shipping_method_names:
-      UPS Ground: "UPS 배경"
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
     updating: "업데이트 중"

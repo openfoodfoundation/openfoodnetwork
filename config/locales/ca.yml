@@ -3510,10 +3510,6 @@ ca:
     rma_credit: "credit RMA"
     refund: "Reembossament"
     server_error: "Error del servidor"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Recollida a la granja"
-      delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     updating: "Actualitzant"

@@ -3672,10 +3672,6 @@ hi:
     rma_credit: "RMA क्रेडिट"
     refund: "रिफंड"
     server_error: "सर्वर त्रुटि"
-    shipping_method_names:
-      UPS Ground: "UPS ग्राउंड"
-      pick_up: "फार्म/खेत में पिक-अप करें"
-      delivery: "हस्ताक्षरित, सीलबंद, डिलीवर किया गया"
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
     updating: "अपडेट किया जा रहा है"

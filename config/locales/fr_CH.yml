@@ -3473,8 +3473,6 @@ fr_CH:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"

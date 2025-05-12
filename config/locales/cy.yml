@@ -3748,10 +3748,6 @@ cy:
     rma_credit: "Credyd RMA"
     refund: "Ad-daliad"
     server_error: "Nam gyda'r gweinydd"
-    shipping_method_names:
-      UPS Ground: "UPS dros y tir"
-      pick_up: "Casglu ar y fferm"
-      delivery: "Llofnodwyd, cadarnhawyd a chyflenwyd"
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
     updating: "Yn diweddaru"

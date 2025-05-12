@@ -3396,8 +3396,6 @@ it_CH:
     rma_credit: "Credito RMA"
     refund: "Rimborsa"
     server_error: "Errore Server"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     updating: "In aggiornamento"

@@ -3626,10 +3626,6 @@ ar:
     rma_credit: "رصيد RMA"
     refund: "إعادة المال"
     server_error: "خطأ في الخادم"
-    shipping_method_names:
-      UPS Ground: "UPS الأرضي"
-      pick_up: "التسليم من المزرعة مباشرة"
-      delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     updating: "تحديث"

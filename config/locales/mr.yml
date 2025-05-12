@@ -3585,10 +3585,6 @@ mr:
     rma_credit: "RMA क्रेडिट"
     refund: "परतावा"
     server_error: "सर्व्हर त्रुटी"
-    shipping_method_names:
-      UPS Ground: "UPS  ग्राउंड"
-      pick_up: "शेतात पिक-अप"
-      delivery: "स्वाक्षरी, सीलबंद, वितरित"
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
     updating: "अपडेट करत आहे"

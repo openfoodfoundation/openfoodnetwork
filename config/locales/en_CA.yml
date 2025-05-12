@@ -3949,10 +3949,6 @@ en_CA:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Pick-up at the farm"
-      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"

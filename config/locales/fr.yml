@@ -4021,10 +4021,6 @@ fr:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Retrait"
-      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"

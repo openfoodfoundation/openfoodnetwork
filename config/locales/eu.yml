@@ -3623,9 +3623,6 @@ eu:
     rma_credit: "RMA kreditua"
     refund: "Dirua itzultzea"
     server_error: "Zerbitzariaren errorea"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Baserrian jaso"
     start_date: "Hasiera-data"
     successfully_removed: "Arrakastaz ezabatua"
     updating: "Eguneratzen"

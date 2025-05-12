@@ -3566,10 +3566,6 @@ pa:
     rma_credit: "RMA ਕ੍ਰੈਡਿਟ"
     refund: "ਰਿਫੰਡ"
     server_error: "ਸਰਵਰ ਤਰੁੱਟੀ"
-    shipping_method_names:
-      UPS Ground: "ਯੂਪੀਐਸ ਗਰਾਊਂਡ"
-      pick_up: "ਖੇਤ ਤੋਂ ਪਿਕ-ਅੱਪ"
-      delivery: "ਦਸਤਖਤ ਕੀਤੇ, ਸੀਲ ਕੀਤੇ, ਡਿਲੀਵਰ ਕੀਤੇ ਗਏ"
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
     successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"

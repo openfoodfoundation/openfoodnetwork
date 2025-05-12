@@ -3839,10 +3839,6 @@ nb:
     rma_credit: "RMA-kreditt"
     refund: "Refusjon"
     server_error: "Serverfeil"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Henting på gården"
-      delivery: "Signert, forseglet, levert"
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
     updating: "Oppdaterer"
