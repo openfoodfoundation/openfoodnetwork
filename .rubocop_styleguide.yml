@@ -102,6 +102,8 @@ Naming/VariableNumber:
     - street_address_2
   AllowedPatterns:
     - _v[\d]+
+    # Cf. conversation https://github.com/openfoodfoundation/openfoodnetwork/pull/13306#pullrequestreview-2831644286 
+    - menu_[\d]
 
 Rails/ApplicationRecord:
   Exclude:
