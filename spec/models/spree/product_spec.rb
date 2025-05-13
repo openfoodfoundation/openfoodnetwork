@@ -84,17 +84,6 @@ module Spree
       end
     end
 
-    context "has stock movements" do
-      let(:product) { create(:product) }
-      let(:variant) { product.variants.first }
-      let(:stock_item) { variant.stock_items.first }
-
-      it "doesnt raise ReadOnlyRecord error" do
-        Spree::StockMovement.create!(stock_item:, quantity: 1)
-        expect { product.destroy }.not_to raise_error
-      end
-    end
-
     describe "associations" do
       it { is_expected.to have_one(:image) }
 

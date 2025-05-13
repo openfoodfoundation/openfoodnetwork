@@ -25,7 +25,7 @@ RSpec.describe Spree::InventoryUnit do
       ]
     }
 
-    it "should create a stock movement" do
+    it "finalizes pending units" do
       Spree::InventoryUnit.finalize_units!(inventory_units)
       expect(inventory_units.any?(&:pending)).to be_falsy
     end

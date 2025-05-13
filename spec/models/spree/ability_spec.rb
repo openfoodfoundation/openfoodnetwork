@@ -119,13 +119,6 @@ RSpec.describe Spree::Ability do
       end
     end
 
-    context 'for StockMovement' do
-      let(:resource) { Spree::StockMovement.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
     context 'for Taxons' do
       let(:resource) { Spree::Taxon.new }
       context 'requested by any user' do
