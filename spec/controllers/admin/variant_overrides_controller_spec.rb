@@ -6,9 +6,10 @@ RSpec.describe Admin::VariantOverridesController, type: :controller do
   describe "index" do
     context "not logged in" do
       it "redirects to login" do
-        pending
         get :index
-        expect(response).to have_http_status :found
+        expect(response).to redirect_to(
+          root_path(anchor: "/login", after_login: admin_inventory_path)
+        )
       end
     end
 
