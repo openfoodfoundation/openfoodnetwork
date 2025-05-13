@@ -191,42 +191,42 @@ RSpec.describe '
         fill_in "quick_filter", with: li1.product.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by supplier name" do
         fill_in "quick_filter", with: li1.variant.supplier.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by email" do
         fill_in "quick_filter", with: o1.email
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by order number" do
         fill_in "quick_filter", with: o1.number
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by phone number" do
         fill_in "quick_filter", with: o1.bill_address.phone
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by distributor name" do
         fill_in "quick_filter", with: o1.distributor.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by customer name" do
@@ -234,59 +234,59 @@ RSpec.describe '
         fill_in "quick_filter", with: o1.bill_address.firstname
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         # by lastname
         fill_in "quick_filter", with: o1.bill_address.lastname
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         # by fullname
         fill_in "quick_filter", with: "#{o1.bill_address.firstname} #{o1.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.firstname} #{o2.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname reversed
         fill_in "quick_filter", with: "#{o1.bill_address.lastname} #{o1.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.lastname} #{o2.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname with comma
         fill_in "quick_filter", with: "#{o1.bill_address.firstname}, #{o1.bill_address.lastname}"
 
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.firstname}, #{o2.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname with comma reversed
         fill_in "quick_filter", with: "#{o1.bill_address.lastname}, #{o1.bill_address.firstname}"
 
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.lastname}, #{o2.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
       end
     end
 
@@ -1313,15 +1313,6 @@ RSpec.describe '
     end
     excluding.each do |line_item|
       expect(page).not_to have_selector "tr#li_#{line_item.id}"
-    end
-  end
-
-  def expect_line_items_results(line_items, excluded_line_items)
-    line_items.each do |li|
-      expect(page).to have_selector "tr#li_#{li.id}"
-    end
-    excluded_line_items.each do |li|
-      expect(page).not_to have_selector "tr#li_#{li.id}"
     end
   end
 end
