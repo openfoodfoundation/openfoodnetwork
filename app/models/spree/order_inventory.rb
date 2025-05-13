@@ -77,7 +77,7 @@ module Spree
       back_order.times { shipment.set_up_inventory('backordered', variant, order) }
 
       if order.completed?
-        variant.move(-quantity, shipment)
+        variant.move(-quantity)
       end
 
       quantity
@@ -101,7 +101,7 @@ module Spree
       shipment.destroy if shipment.inventory_units.reload.count == 0
 
       if order.completed? && restock_item
-        variant.move(removed_quantity, shipment)
+        variant.move(removed_quantity)
       end
 
       removed_quantity

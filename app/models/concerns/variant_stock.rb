@@ -108,7 +108,7 @@ module VariantStock
   #   only one stock item per variant
   #
   # This enables us to override this behaviour for variant overrides
-  def move(quantity, _originator = nil)
+  def move(quantity)
     return if deleted_at
 
     raise_error_if_no_stock_item_available
