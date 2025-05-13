@@ -676,7 +676,7 @@ RSpec.describe '
         end
       end
 
-      context "order_cycle filter" do
+      context "order_cycle filter selected" do
         let!(:distributor) { create(:distributor_enterprise) }
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
@@ -723,26 +723,22 @@ RSpec.describe '
           oc3.update!(orders_close_at: 2.weeks.from_now)
           oc3.update!(orders_open_at: 1.week.from_now)
           visit_bulk_order_management
+
+          displays_default_orders
+          select2_select oc1.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
         end
 
         it "displays a select box for order cycles, which filters line items " \
            "by the selected order cycle", retry: 3 do
-          displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
-          select2_select oc1.name, from: "order_cycle_filter"
-          page.find('.filter-actions .button.icon-search').click
           expect(page).not_to have_selector "#loading i"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).not_to have_selector "tr#li_#{li2.id}"
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
-          displays_default_orders
-          select2_select oc1.name, from: "order_cycle_filter"
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).not_to have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           displays_default_orders
