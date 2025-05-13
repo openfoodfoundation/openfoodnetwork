@@ -718,13 +718,14 @@ RSpec.describe '
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
         let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
         let!(:li3a) { create(:line_item_with_shipment, order: o3a ) }
+        let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
 
         before do
           oc3.update!(orders_close_at: 2.weeks.from_now)
           oc3.update!(orders_open_at: 1.week.from_now)
           visit_bulk_order_management
 
-          expect_line_items(li1, li2)
+          expect_line_items(li1, li2, li3, li3a, li4)
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
         end
@@ -736,12 +737,14 @@ RSpec.describe '
           expect(page).not_to have_selector "#loading i"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).not_to have_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li3.id}"
+          expect(page).not_to have_selector "tr#li_#{li4.id}"
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
-          expect_line_items(li1, li2)
+          expect_line_items(li1, li2, li3, li3a, li4)
         end
       end
 
