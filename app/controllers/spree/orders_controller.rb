@@ -9,7 +9,7 @@ module Spree
 
     layout 'darkswarm'
 
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from ActiveRecord::RecordNotFound, with: :render404
     helper 'spree/orders'
 
     respond_to :html, :json
