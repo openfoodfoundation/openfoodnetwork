@@ -724,7 +724,7 @@ RSpec.describe '
           oc3.update!(orders_open_at: 1.week.from_now)
           visit_bulk_order_management
 
-          displays_default_orders
+          expect_line_items(li1, li2)
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
         end
@@ -741,7 +741,7 @@ RSpec.describe '
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
-          displays_default_orders
+          expect_line_items(li1, li2)
         end
       end
 
@@ -1306,9 +1306,10 @@ RSpec.describe '
     expect(page).not_to have_text 'Loading orders'
   end
 
-  def displays_default_orders
-    expect(page).to have_selector "tr#li_#{li1.id}"
-    expect(page).to have_selector "tr#li_#{li2.id}"
+  def expect_line_items(*line_items)
+    line_items.each do |line_item|
+      expect(page).to have_selector "tr#li_#{line_item.id}"
+    end
   end
 
   def expect_line_items_results(line_items, excluded_line_items)
