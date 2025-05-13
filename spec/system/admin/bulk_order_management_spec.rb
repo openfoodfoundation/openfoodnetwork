@@ -735,10 +735,8 @@ RSpec.describe '
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
           expect(page).not_to have_selector "#loading i"
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).not_to have_selector "tr#li_#{li2.id}"
-          expect(page).not_to have_selector "tr#li_#{li3.id}"
-          expect(page).not_to have_selector "tr#li_#{li4.id}"
+
+          expect_line_items(li1, excluding: [li2, li3, li3a, li4])
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
@@ -1309,9 +1307,12 @@ RSpec.describe '
     expect(page).not_to have_text 'Loading orders'
   end
 
-  def expect_line_items(*line_items)
+  def expect_line_items(*line_items, excluding: [])
     line_items.each do |line_item|
       expect(page).to have_selector "tr#li_#{line_item.id}"
+    end
+    excluding.each do |line_item|
+      expect(page).not_to have_selector "tr#li_#{line_item.id}"
     end
   end
 
