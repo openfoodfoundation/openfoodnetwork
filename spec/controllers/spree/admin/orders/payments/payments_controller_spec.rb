@@ -133,7 +133,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       def expect_redirect_to(path)
-        expect(response.status).to eq 302
+        expect(response).to have_http_status :found
         expect(response.location).to eq path
       end
     end
@@ -280,7 +280,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :controller do
 
       it "renders the payments tab" do
         spree_get :index, order_id: order.number
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
 
       context "order is then resumed" do
@@ -290,7 +290,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :controller do
 
         it "still renders the payments tab" do
           spree_get :index, order_id: order.number
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
         end
       end
     end
@@ -304,7 +304,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :controller do
 
       it "redirects to the order details page" do
         spree_get :index, order_id: order.number
-        expect(response.status).to eq 302
+        expect(response).to have_http_status :found
         expect(response.location).to eq spree.edit_admin_order_url(order)
       end
     end

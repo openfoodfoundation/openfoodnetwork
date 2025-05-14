@@ -38,7 +38,7 @@ RSpec.describe ShopController, type: :controller do
         oc2 = create(:simple_order_cycle, distributors: [distributor])
 
         spree_post :order_cycle, order_cycle_id: oc2.id
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
         expect(controller.current_order_cycle).to eq(oc2)
       end
 
@@ -50,7 +50,7 @@ RSpec.describe ShopController, type: :controller do
           oc2 = create(:simple_order_cycle, distributors: [distributor])
 
           spree_post :order_cycle, order_cycle_id: oc2.id
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
           expect(response.body).to have_content oc2.id
         end
 
@@ -70,7 +70,7 @@ RSpec.describe ShopController, type: :controller do
 
           it "returns the new order cycle details" do
             spree_post :order_cycle, order_cycle_id: oc2.id
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(response.body).to have_content oc2.id
           end
         end
@@ -82,7 +82,7 @@ RSpec.describe ShopController, type: :controller do
         oc3 = create(:simple_order_cycle, distributors: [create(:distributor_enterprise)])
 
         spree_post :order_cycle, order_cycle_id: oc3.id
-        expect(response.status).to eq(404)
+        expect(response).to have_http_status(:not_found)
         expect(controller.current_order_cycle).to be_nil
       end
     end

@@ -169,7 +169,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
 
         spree_put :create, product: product_attrs_with_image
 
-        expect(response.status).to eq 200
+        expect(response).to have_http_status 200
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
           { supplier_id: nil, primary_taxon_id: nil }
         ),
                             button: 'create'
-        expect(response.status).to eq 200
+        expect(response).to have_http_status 200
         expect(response).to render_template('spree/admin/products/new')
       end
     end
