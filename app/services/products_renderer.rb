@@ -8,11 +8,12 @@ class ProductsRenderer
   class NoProducts < RuntimeError; end
   DEFAULT_PER_PAGE = 10
 
-  def initialize(distributor, order_cycle, customer, args = {})
+  def initialize(distributor, order_cycle, customer, args = {}, **options)
     @distributor = distributor
     @order_cycle = order_cycle
     @customer = customer
     @args = args
+    @options = options
   end
 
   def products_json
@@ -28,7 +29,7 @@ class ProductsRenderer
 
   private
 
-  attr_reader :order_cycle, :distributor, :customer, :args
+  attr_reader :order_cycle, :distributor, :customer, :args, :options
 
   def products
     return unless order_cycle
@@ -106,19 +107,21 @@ class ProductsRenderer
   end
 
   def distributed_products
-    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer)
+    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer, **options)
   end
 
   def variants_for_shop
     @variants_for_shop ||= begin
-      scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-
-      # rubocop:disable Rails/FindEach # .each returns an array, .find_each returns nil
-      distributed_products.variants_relation.
+      variants = distributed_products.variants_relation.
         includes(:default_price, :product).
-        where(product_id: products).
-        each { |v| scoper.scope(v) } # Scope results with variant_overrides
-      # rubocop:enable Rails/FindEach
+        where(product_id: products)
+
+      if options[:inventory_enabled]
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+        variants = variants.each { |v| scoper.scope(v) } # Scope results with variant_overrides
+      end
+
+      variants
     end
   end
 

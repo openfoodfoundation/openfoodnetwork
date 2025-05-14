@@ -213,18 +213,20 @@ module Spree
           managed_product_enterprises.include? variant.supplier
       end
 
-      can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
-        next false unless vo.hub.present? && vo.variant&.supplier.present?
+      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, user.enterprises)
+        can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
+          next false unless vo.hub.present? && vo.variant&.supplier.present?
 
-        hub_auth = OpenFoodNetwork::Permissions.new(user).
-          variant_override_hubs.
-          include? vo.hub
+          hub_auth = OpenFoodNetwork::Permissions.new(user).
+            variant_override_hubs.
+            include? vo.hub
 
-        producer_auth = OpenFoodNetwork::Permissions.new(user).
-          variant_override_producers.
-          include? vo.variant.supplier
+          producer_auth = OpenFoodNetwork::Permissions.new(user).
+            variant_override_producers.
+            include? vo.variant.supplier
 
-        hub_auth && producer_auth
+          hub_auth && producer_auth
+        end
       end
 
       can [:admin, :create, :update], InventoryItem do |ii|
