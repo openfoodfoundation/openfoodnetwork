@@ -12,7 +12,7 @@ module DfcProvider
       offers = lines.map(&:offer)
       # products = offers.map(&:offeredItem) #todo: need offered item
       sessions = [build_sale_session(order)]
-      render json: DfcIo.export(dfc_order, *lines, *offers, *sessions), status: :created
+      render json: DfcIo.export(dfc_order, *lines, *offers, *sessions)
     end
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders
