@@ -79,6 +79,10 @@ label {
   display: block;
 }
 
+.label-inline label {
+  display: inline;
+}
+
 span.info {
   font-style: italic;
   font-size: 85%;
