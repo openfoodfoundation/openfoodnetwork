@@ -3,7 +3,6 @@
 module Spree
   class UsersController < ::BaseController
     include I18nHelper
-    include CablecarResponses
 
     layout 'darkswarm'
 
@@ -25,34 +24,17 @@ module Spree
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
-    # Endpoint for queries to check if a user is already registered
-    def registered_email
-      registered = Spree::User.find_by(email: params[:email]).present?
-
-      if registered
-        render status: :ok, cable_ready: cable_car.
-          inner_html(
-            "#login-feedback",
-            partial("layouts/alert",
-                    locals: { type: "alert", message: t('devise.failure.already_registered') })
-          ).
-          dispatch_event(name: "login:modal:open")
-      else
-        head :not_found
-      end
-    end
-
     def create
       @user = Spree::User.new(user_params)
 
       if @user.save
         flash[:success] = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-        render cable_ready: cable_car.redirect_to(url: main_app.root_path)
+        redirect_to main_app.root_path
       else
-        render status: :unprocessable_entity, cable_ready: cable_car.morph(
-          "#signup-tab",
-          partial("layouts/signup_tab", locals: { signup_form_user: @user })
-        )
+        render turbo_stream: turbo_stream.update(
+          'signup-tab',
+          partial: 'layouts/signup_tab', locals: { signup_form_user: @user }
+        ), status: :unprocessable_entity
       end
     end
 
@@ -97,13 +79,10 @@ module Spree
     end
 
     def render_alert_timestamp_error_message
-      render cable_ready: cable_car.inner_html(
-        "#signup-feedback",
-        partial("layouts/alert",
-                locals: {
-                  type: "alert",
-                  message: InvisibleCaptcha.timestamp_error_message
-                })
+      render turbo_stream: turbo_stream.update(
+        'signup-feedback',
+        partial: 'layouts/alert',
+        locals: { type: "alert", message: InvisibleCaptcha.timestamp_error_message }
       )
     end
   end
