@@ -463,7 +463,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
                 spree_put :cancel, params
-                expect(response.status).to be 409
+                expect(response).to have_http_status :conflict
                 json_response = response.parsed_body
                 expect(json_response['errors']['open_orders'])
                   .to eq 'Some orders for this subscription are currently open. ' \
@@ -567,7 +567,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
                 spree_put :pause, params
-                expect(response.status).to be 409
+                expect(response).to have_http_status :conflict
                 json_response = response.parsed_body
                 expect(json_response['errors']['open_orders'])
                   .to eq 'Some orders for this subscription are currently open. ' \
@@ -690,7 +690,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
               context "when no 'canceled_orders' directive has been provided" do
                 it "renders a message, informing the user that canceled order can be resumed" do
                   spree_put :unpause, params
-                  expect(response.status).to be 409
+                  expect(response).to have_http_status :conflict
                   json_response = response.parsed_body
                   expect(json_response['errors']['canceled_orders'])
                     .to eq 'Some orders for this subscription can be resumed right now. ' \

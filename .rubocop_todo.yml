@@ -221,15 +221,12 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 144
+# Offense count: 137
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ResponseMethods.
 # ResponseMethods: response, last_response
 RSpecRails/HaveHttpStatus:
   Exclude:
-    - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
     - 'spec/controllers/api/v0/base_controller_spec.rb'
     - 'spec/controllers/api/v0/customers_controller_spec.rb'
     - 'spec/controllers/api/v0/enterprises_controller_spec.rb'
