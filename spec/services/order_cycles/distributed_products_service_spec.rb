@@ -71,6 +71,12 @@ RSpec.describe OrderCycles::DistributedProductsService do
       end
 
       context "with variant overrides" do
+        subject(:products_relation) {
+          described_class.new(
+            distributor, order_cycle, customer, inventory_enabled: true
+          ).products_relation
+        }
+
         let!(:override) {
           create(:variant_override, hub: distributor, variant:, count_on_hand: 0)
         }
@@ -161,7 +167,9 @@ RSpec.describe OrderCycles::DistributedProductsService do
     let!(:v2) { create(:variant, product:) }
     let!(:v3) { create(:variant, product:) }
     let!(:vo) { create(:variant_override, hub: distributor, variant_id: v3.id, count_on_hand: 0) }
-    let(:variants) { described_class.new(distributor, oc, customer).variants_relation }
+    let(:variants) {
+      described_class.new(distributor, oc, customer, inventory_enabled: true).variants_relation
+    }
 
     it "returns variants in the oc" do
       expect(variants).to include v1

@@ -206,6 +206,8 @@ RSpec.describe ProductsRenderer do
     end
 
     it "loads tag_list for variants" do
+      products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
+                                               inventory_enabled: true)
       VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
       expect(products_renderer.products_json).to include "[\"lalala\"]"
     end
