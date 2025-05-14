@@ -59,13 +59,13 @@ RSpec.describe Api::V0::TaxonsController do
       api_post :create, taxon: { name: "Colors" }
 
       expect(attributes.all? { |a| json_response.include? a }).to be true
-      expect(response.status).to eq(201)
+      expect(response).to have_http_status(:created)
     end
 
     it "cannot create a new taxon with invalid attributes" do
       api_post :create, taxon: {}
 
-      expect(response.status).to eq(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
 
@@ -76,7 +76,7 @@ RSpec.describe Api::V0::TaxonsController do
     it "can destroy" do
       api_delete :destroy, id: taxon2.id
 
-      expect(response.status).to eq(204)
+      expect(response).to have_http_status(:no_content)
     end
   end
 end

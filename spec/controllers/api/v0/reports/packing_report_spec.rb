@@ -27,7 +27,7 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
       it "renders results" do
         api_get :show, params
 
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
         expect(json_response[:data]).to match_array report_output(order, "distributor")
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
       it "renders results" do
         api_get :show, params
 
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
         expect(json_response[:data]).to match_array report_output(order, "supplier")
       end
     end

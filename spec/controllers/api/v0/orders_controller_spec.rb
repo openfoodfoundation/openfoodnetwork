@@ -378,7 +378,7 @@ module Api
     private
 
     def expect_order
-      expect(response.status).to eq 200
+      expect(response).to have_http_status :ok
       expect(json_response[:number]).to eq order.number
     end
 
