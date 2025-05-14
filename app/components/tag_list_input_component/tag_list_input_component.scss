@@ -30,7 +30,7 @@
     li.tag-item {
       border-radius: 3px;
       margin: 2px 0 2px 3px;
-      padding: 0 5px;
+      padding: 0 0 0 5px;
       display: inline-block;
       float: left;
       font-size: 14px;
@@ -42,16 +42,18 @@
       background-color: $teal;
 
       .remove-button {
-        margin: 0 0 0 5px;
-        padding: 0;
-        border: none;
+        border-left: 1px solid darken($teal, 5);
+        margin-left: 2px;
+        padding: 0 6px;
         background: 0 0;
         cursor: pointer;
         vertical-align: middle;
-        font:
-          700 16px Arial,
-          sans-serif;
+        font-size: 14px;
         color: white;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
       }
     }
 

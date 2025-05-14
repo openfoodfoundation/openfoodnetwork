@@ -17,6 +17,13 @@
     = select_tag :category_id, options_for_select(category_options, category_id),
       include_blank: t('.all_categories'), class: "fullwidth",
       data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_categories')}
+  -if feature?(:variant_tag, spree_current_user)
+    .tags
+      = label_tag :tags_name_in, t('.tags.label')
+      - select_tag_options = { class: "fullwidth",
+                               multiple: true ,
+                               data: { controller: "tom-select", "tom-select-placeholder-value": t(".select_tag"), "tom-select-options-value": '{ "maxItems": 5 , "plugins": { "remove_button": {} , "no_active_items": {},  "checkbox_options": { "checkedClassNames": ["ts-checked"], "uncheckedClassNames": ["ts-unchecked"] } } }' } }
+      = select_tag :tags_name_in, options_for_select(available_tags, tags), select_tag_options
   .submit
     .search-button
       = button_tag t(".search"), class: "secondary icon-search relaxed", name: nil

@@ -9,11 +9,11 @@
             .tag-template
               %span
               %a.remove-button{ "data-action": "click->tag-list-input-component--tag-list-input#removeTag" }
-                ✖ 
+                ×
         - tags.each do |tag|
           %li.tag-item
             .tag-template
               %span=tag
               %a.remove-button{ "data-action": "click->tag-list-input-component--tag-list-input#removeTag" }
-                ✖
-      = text_field_tag "variant_add_tag_#{f.object.id}".to_sym, nil, class: "input", placeholder: placeholder, "data-action": "keydown.enter->tag-list-input-component--tag-list-input#addTag keyup->tag-list-input-component--tag-list-input#filterInput", "data-tag-list-input-component--tag-list-input-target": "newTag"
+                ×
+      = text_field_tag "variant_add_tag_#{f.object.id}".to_sym, nil, class: "input", placeholder: placeholder, "data-action": "keydown.enter->tag-list-input-component--tag-list-input#addTag keyup->tag-list-input-component--tag-list-input#filterInput", "data-tag-list-input-component--tag-list-input-target": "newTag", **aria_label_option
