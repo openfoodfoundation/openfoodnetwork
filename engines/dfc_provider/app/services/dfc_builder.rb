@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class DfcBuilder
-  attr_reader :graph
-
-  def initialize
-    @graph = []
-  end
-
   def self.catalog_item(variant, include_product: true)
     id = urls.enterprise_catalog_item_url(
       enterprise_id: variant.supplier_id,
@@ -30,9 +24,5 @@ class DfcBuilder
 
   def self.urls
     DfcProvider::Engine.routes.url_helpers
-  end
-
-  def urls
-    self.class.urls
   end
 end

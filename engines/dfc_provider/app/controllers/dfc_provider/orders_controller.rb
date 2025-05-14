@@ -7,8 +7,7 @@ module DfcProvider
 
     # POST /api/dfc/enterprises/{enterprise_id}/orders/{order_id}
     def show
-      builder = OrderBuilder.new
-      dfc_order = builder.build(order)
+      dfc_order = OrderBuilder.build(order)
       lines = OrderBuilder.build_order_lines(dfc_order, order.line_items)
       offers = lines.map(&:offer)
       # products = offers.map(&:offeredItem) #todo: need offered item
@@ -31,7 +30,7 @@ module DfcProvider
       )
 
       if @order.save && OrderBuilder.apply(@order, dfc_order)
-        subject = OrderBuilder.new.build(@order)
+        subject = OrderBuilder.build(@order)
         render json: DfcIo.export(subject), status: :created
       else
         render json: { error: @order.errors.full_messages.to_sentence },
