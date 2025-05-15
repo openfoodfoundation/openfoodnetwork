@@ -8,6 +8,9 @@ RSpec.describe Spree::OrderMailer do
 
     let(:order) { build(:order_with_totals_and_distribution) }
 
+    include_examples 'email header without white labelling', :mail
+    include_examples 'is affected by white labelling', :mail
+
     it 'renders the shared/_payment.html.haml partial' do
       expect(email.body).to include('Payment summary')
     end
@@ -64,6 +67,9 @@ RSpec.describe Spree::OrderMailer do
     subject(:email) { described_class.confirm_email_for_shop(order) }
 
     let(:order) { build(:order_with_totals_and_distribution) }
+
+    include_examples 'email header without white labelling', :mail
+    include_examples 'remains unaffected by white labelling', :mail
 
     it 'renders the shared/_payment.html.haml partial' do
       expect(email.body).to include('Payment summary')
@@ -151,6 +157,9 @@ RSpec.describe Spree::OrderMailer do
       expect(mail.to).to eq([distributor.contact.email])
     end
 
+    include_examples 'email header without white labelling', :mail
+    include_examples 'remains unaffected by white labelling', :mail
+
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
     end
@@ -168,6 +177,9 @@ RSpec.describe Spree::OrderMailer do
     it "sends an email to the customer" do
       expect(mail.to).to eq([order.email])
     end
+
+    include_examples 'email header without white labelling', :mail
+    include_examples 'is affected by white labelling', :mail
 
     it "displays the order number" do
       expect(mail.body).to include(order.number.to_s)
