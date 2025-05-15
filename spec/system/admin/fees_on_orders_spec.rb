@@ -507,6 +507,7 @@ RSpec.describe '
         it "ships the order and shipment email is sent" do
           expect(page).to have_content "ready"
           expect(page).not_to have_content "shipped"
+          expect(page).to have_select2 "add_variant_id"
 
           click_button 'Ship'
 
@@ -518,6 +519,7 @@ RSpec.describe '
               click_button "Confirm"
             end
             expect(page).to have_content "shipped"
+            expect(page).to have_content "Cannot add item to shipped order"
           }.to enqueue_mail
             .and change { order.reload.shipped? }.to true
         end
