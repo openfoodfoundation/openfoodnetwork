@@ -8,20 +8,6 @@ RSpec.describe Spree::UserMailer do
 
   before { ActionMailer::Base.deliveries.clear }
 
-  shared_examples 'includes OFN header' do
-    it "displays the OFN header by default" do
-      expect(mail.body).to include(ContentConfig.url_for(:logo))
-    end
-
-    context 'when distributor hides OFN navigation' do
-      before { allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true) }
-
-      it 'still displays the OFN header' do
-        expect(mail.body).to include(ContentConfig.url_for(:logo))
-      end
-    end
-  end
-
   describe '#signup_confirmation' do
     subject(:mail) { Spree::UserMailer.signup_confirmation(user) }
 
@@ -51,7 +37,8 @@ RSpec.describe Spree::UserMailer do
       end
     end
 
-    include_examples 'includes OFN header'
+    include_examples 'email header without white labelling', :mail
+    include_examples 'remains unaffected by white labelling', :mail
   end
 
   describe "#confirmation_instructions" do
@@ -82,12 +69,16 @@ RSpec.describe Spree::UserMailer do
       end
     end
 
-    include_examples 'includes OFN header'
+    include_examples 'email header without white labelling', :mail
+    include_examples 'remains unaffected by white labelling', :mail
   end
 
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     subject(:mail) { described_class.reset_password_instructions(user, nil).deliver_now }
+
+    include_examples 'email header without white labelling', :mail
+    include_examples 'remains unaffected by white labelling', :mail
 
     describe 'message contents' do
       context 'subject includes' do
@@ -120,8 +111,6 @@ RSpec.describe Spree::UserMailer do
         end
       end
     end
-
-    include_examples 'includes OFN header'
 
     describe 'legacy support for User object' do
       it 'sends an email' do
