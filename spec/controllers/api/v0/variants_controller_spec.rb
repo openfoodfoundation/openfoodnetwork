@@ -107,7 +107,7 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
       it "deletes a variant" do
         api_delete :destroy, id: variant_to_delete.id
 
-        expect(response.status).to eq(204)
+        expect(response).to have_http_status(:no_content)
         expect { variant_to_delete.reload }.not_to raise_error
         expect(variant_to_delete.deleted_at).to be_present
       end
@@ -150,7 +150,7 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
                         product_id: variant.product.id
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
-      expect(response.status).to eq(201)
+      expect(response).to have_http_status(:created)
       expect(json_response["sku"]).to eq("12345")
       expect(variant.product.variants.count).to eq(original_number_of_variants + 1)
     end
@@ -158,13 +158,13 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
     it "can update a variant" do
       api_put :update, id: variant.to_param, variant: { sku: "12345" }
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "can delete a variant" do
       api_delete :destroy, id: variant.to_param
 
-      expect(response.status).to eq(204)
+      expect(response).to have_http_status(:no_content)
       expect { variant.reload }.not_to raise_error
       expect(variant.deleted_at).not_to be_nil
     end

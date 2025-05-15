@@ -17,7 +17,7 @@ RSpec.describe CartController, type: :controller do
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:valid?) { true }
       post :populate, xhr: true, params: { use_route: :spree }, as: :json
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "returns failure when unsuccessful" do
@@ -26,7 +26,7 @@ RSpec.describe CartController, type: :controller do
       allow(cart_service).to receive(:errors) { errors }
       allow(errors).to receive(:full_messages).and_return(["Error: foo"])
       post :populate, xhr: true, params: { use_route: :spree }, as: :json
-      expect(response.status).to eq(412)
+      expect(response).to have_http_status(:precondition_failed)
     end
 
     it "returns stock levels as JSON on success" do

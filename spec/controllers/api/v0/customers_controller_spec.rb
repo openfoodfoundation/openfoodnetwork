@@ -20,7 +20,7 @@ module Api
 
       it "lists customers associated with the current user" do
         get :index
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
         expect(json_response.length).to eq 1
         expect(json_response.first[:id]).to eq customer1.id
       end
@@ -49,7 +49,7 @@ module Api
         context "when the update request is successful" do
           it "returns the id of the updated customer" do
             spree_post :update, params
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(json_response[:id]).to eq customer.id
           end
         end
@@ -59,7 +59,7 @@ module Api
 
           it "returns a 422, with an error message" do
             spree_post :update, params
-            expect(response.status).to be 422
+            expect(response).to have_http_status :unprocessable_entity
             expect(json_response[:error]).to be
           end
         end

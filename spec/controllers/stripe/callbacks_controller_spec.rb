@@ -21,7 +21,7 @@ RSpec.describe Stripe::CallbacksController, type: :controller do
 
       it "returns a 500 error" do
         spree_get :index, params
-        expect(response.status).to be 500
+        expect(response).to have_http_status :internal_server_error
       end
     end
 

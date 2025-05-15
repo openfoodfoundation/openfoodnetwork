@@ -32,7 +32,7 @@ module Api
         it "removes promo image" do
           spree_delete :destroy, enterprise_id: enterprise
 
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
           expect(enterprise.promo_image).not_to be_attached
@@ -44,7 +44,7 @@ module Api
           it "responds with error" do
             spree_delete :destroy, enterprise_id: enterprise
 
-            expect(response.status).to eq(409)
+            expect(response).to have_http_status(:conflict)
             expect(json_response['error']).to eq 'Promo image does not exist'
           end
         end
@@ -55,7 +55,7 @@ module Api
 
         it "allows removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
         end
       end
 
@@ -64,7 +64,7 @@ module Api
 
         it "allows removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
         end
       end
 
@@ -73,7 +73,7 @@ module Api
 
         it "does not allow removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response.status).to eq(401)
+          expect(response).to have_http_status(:unauthorized)
           enterprise.reload
           expect(enterprise.promo_image).to be_attached
         end
@@ -84,7 +84,7 @@ module Api
 
         it "does not allow removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response.status).to eq(401)
+          expect(response).to have_http_status(:unauthorized)
           enterprise.reload
           expect(enterprise.promo_image).to be_attached
         end

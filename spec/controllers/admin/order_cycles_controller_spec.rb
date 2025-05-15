@@ -241,7 +241,7 @@ module Admin
 
           it "can update order cycle even if the variant has been deleted" do
             spree_put :update, { format: :json, id: order_cycle.id, order_cycle: {} }
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
           end
         end
 

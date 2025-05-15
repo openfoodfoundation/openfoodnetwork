@@ -26,7 +26,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number, order_token: order.token }
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
 
       it "stores order token in session as 'access_token'" do
@@ -45,7 +45,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number }
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number }
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
     end
 
@@ -162,7 +162,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
         it "displays a flash message when we view the cart" do
           get :edit
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
           expect(flash[:error]).to eq 'An item in your cart has become unavailable. ' \
                                       'Please update the selected quantities.'
         end
@@ -175,7 +175,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
         it "displays a flash message when we view the cart" do
           get :edit
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
           expect(flash[:error]).to eq 'An item in your cart has become unavailable. ' \
                                       'Please update the selected quantities.'
         end
@@ -192,7 +192,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
           "0" => { quantity: "0", id: "9999" },
           "1" => { quantity: "99", id: li.id }
         } } }
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
         expect(li.reload.quantity).to eq(99)
       end
     end

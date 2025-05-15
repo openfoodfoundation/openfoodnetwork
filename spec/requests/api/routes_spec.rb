@@ -23,7 +23,7 @@ RSpec.describe 'Orders Cycles endpoint', type: :request do
 
     it "does not redirect" do
       get path
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

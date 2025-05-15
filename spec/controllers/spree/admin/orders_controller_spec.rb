@@ -47,7 +47,7 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
 
         spree_put :update, params
 
-        expect(response.status).to eq 302
+        expect(response).to have_http_status :found
       end
 
       context "recalculating fees and taxes" do
@@ -290,7 +290,7 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
 
       it "should allow access" do
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
     end
   end

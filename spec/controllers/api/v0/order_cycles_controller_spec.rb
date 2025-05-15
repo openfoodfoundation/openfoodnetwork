@@ -97,7 +97,7 @@ module Api
           api_get :products, id: order_cycle.id, distributor: distributor.id,
                              q: { with_properties: [property1.id, property2.id] }
 
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
           expect(product_ids).to eq [product1.id, product2.id]
           expect(product_ids).not_to include product3.id
         end
@@ -117,7 +117,7 @@ module Api
             api_get :products, id: order_cycle.id, distributor: distributor.id,
                                q: { with_variants_supplier_properties: [supplier_property.id] }
 
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(product_ids).to match_array [product1.id, product2.id]
             expect(product_ids).not_to include product3.id
           end

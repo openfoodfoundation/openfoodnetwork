@@ -23,7 +23,7 @@ RSpec.describe LineItemsController, type: :controller do
 
     it "lists items bought by the user from the same shop in the same order_cycle" do
       get :bought, format: :json
-      expect(response.status).to eq 200
+      expect(response).to have_http_status :ok
       json_response = response.parsed_body
       expect(json_response.length).to eq completed_order.line_items.reload.count
       expect(json_response[0]['id']).to eq completed_order.line_items.first.id
@@ -53,7 +53,7 @@ RSpec.describe LineItemsController, type: :controller do
         context "where the item's order is not associated with the user" do
           it "denies deletion" do
             delete(:destroy, params:)
-            expect(response.status).to eq 403
+            expect(response).to have_http_status :forbidden
           end
         end
 
@@ -66,7 +66,7 @@ RSpec.describe LineItemsController, type: :controller do
           context "without an order cycle or distributor" do
             it "denies deletion" do
               delete(:destroy, params:)
-              expect(response.status).to eq 403
+              expect(response).to have_http_status :forbidden
             end
           end
 
@@ -76,7 +76,7 @@ RSpec.describe LineItemsController, type: :controller do
             context "where changes are not allowed" do
               it "denies deletion" do
                 delete(:destroy, params:)
-                expect(response.status).to eq 403
+                expect(response).to have_http_status :forbidden
               end
             end
 
@@ -85,7 +85,7 @@ RSpec.describe LineItemsController, type: :controller do
 
               it "deletes the line item" do
                 delete(:destroy, params:)
-                expect(response.status).to eq 204
+                expect(response).to have_http_status :no_content
                 expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
               end
 
@@ -144,7 +144,7 @@ RSpec.describe LineItemsController, type: :controller do
         item = order.line_items.first
         allow(controller).to receive_messages spree_current_user: order.user
         delete :destroy, format: :json, params: { id: item }
-        expect(response.status).to eq 204
+        expect(response).to have_http_status :no_content
 
         # Check the fees again
         order.reload
@@ -188,7 +188,7 @@ RSpec.describe LineItemsController, type: :controller do
 
         allow(controller).to receive_messages spree_current_user: user
         delete(:destroy, params:)
-        expect(response.status).to eq 204
+        expect(response).to have_http_status :no_content
 
         expect(order.reload.adjustment_total).to eq calculator.preferred_normal_amount
       end
