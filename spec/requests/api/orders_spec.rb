@@ -64,7 +64,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
 
           context "and there are no query parameters" do
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -78,7 +78,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
             before { order_dist2.distributor.update owner: user }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -92,7 +92,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
             let(:'q[completed_at_lt]') { Time.zone.today - 6.days }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -104,7 +104,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           context "and queried by complete state" do
             let(:'q[state_eq]') { "complete" }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -116,7 +116,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           context "and queried by credit_owed payment_state" do
             let(:'q[payment_state_eq]') { "credit_owed" }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -128,7 +128,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           context "and queried by buyer email contains a specific string" do
             let(:'q[email_cont]') { order_dist1.email.split("@").first }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -145,7 +145,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
             before { order_dist2.distributor.update owner: user }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]

@@ -221,15 +221,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic, be_status
-RSpecRails/HttpStatus:
-  Exclude:
-    - 'spec/controllers/spree/admin/products_controller_spec.rb'
-    - 'spec/requests/api/orders_spec.rb'
-
 # Offense count: 144
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
