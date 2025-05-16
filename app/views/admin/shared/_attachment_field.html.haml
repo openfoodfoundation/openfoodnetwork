@@ -1,0 +1,26 @@
+.row{ class: "page-admin-enterprises-form__#{attachment_name.to_s.dasherize}-field-group" }
+  .three.columns.alpha
+    = f.label attachment_name, t(".#{attachment_name}_label")
+    %br
+    - if block_given?
+      = yield
+    - else
+      = t(".#{attachment_name}_hint")
+  .thirteen.columns
+    - if f.object.send(attachment_name).present? && attachment_url.present?
+      = image_tag attachment_url, class: "image-field-group__preview-image"
+    %br
+    = f.file_field attachment_name, accept: "image/*"
+    - if f.object.send(attachment_name).present?
+      %button.button.small.red{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_#{attachment_name}" }
+        = t(".#{attachment_name}_remove")
+
+- if f.object.send(attachment_name).present?
+  - # add to admin footer to avoid nesting forms
+  - content_for :admin_footer do
+    = render ModalComponent.new(id: "remove_#{attachment_name}", close_button: false, modal_class: "tiny") do
+      .margin-bottom-30
+        = t(".#{attachment_name}_remove_confirm")
+      %div{ class: "modal-actions justify-space-around" }
+        %input{ class: "button icon-plus secondary", type: 'button', value: I18n.t('js.admin.modals.cancel'), "data-action": "click->modal#close" }
+        = button_to I18n.t('js.admin.modals.confirm'), admin_enterprise_path(f.object), method: :patch, params: { enterprise: { "remove_#{attachment_name}": 1 } }, form: { "data-turbo": true }

@@ -55,12 +55,6 @@ angular.module("admin.enterprises")
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
 
-    $scope.removeLogo = ->
-      $scope.performEnterpriseAction("removeLogo", "immediate_logo_removal_warning", "removed_logo_successfully")
-
-    $scope.removePromoImage = ->
-      $scope.performEnterpriseAction("removePromoImage", "immediate_promo_image_removal_warning", "removed_promo_image_successfully")
-
     $scope.performEnterpriseAction = (enterpriseActionName, warning_message_key, success_message_key) ->
       return unless confirm($scope.translation(warning_message_key))
 

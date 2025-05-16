@@ -69,13 +69,15 @@ module Admin
       delete_custom_tab if params[:custom_tab] == 'false'
 
       if @object.update(enterprise_params)
-        flash[:success] = flash_message_for(@object, :successfully_updated)
+        flash[:success] = flash_success_message
+
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
           format.json {
             render_as_json @object, ams_prefix: 'index', spree_current_user:
           }
+          format.turbo_stream
         end
       else
         respond_with(@object) do |format|
@@ -163,6 +165,25 @@ module Admin
     end
 
     private
+
+    def flash_success_message
+      if attachment_removal?
+        I18n.t("admin.controllers.enterprises.#{attachment_removal_parameter}_success")
+      else
+        flash_message_for(@object, :successfully_updated)
+      end
+    end
+
+    def attachment_removal?
+      attachment_removal_parameter.present?
+    end
+
+    def attachment_removal_parameter
+      if enterprise_params.keys.one? && enterprise_params.keys.first.to_s.start_with?("remove_")
+        enterprise_params.keys.first
+      end
+    end
+    helper_method :attachment_removal_parameter
 
     def load_enterprise_set_on_index
       return unless spree_current_user.admin?

@@ -39,17 +39,6 @@ angular.module("admin.resources").factory 'Enterprises', ($q, $filter, Enterpris
     resetAttribute: (enterprise, attribute) ->
       enterprise[attribute] = @pristineByID[enterprise.id][attribute]
 
-    performActionOnEnterpriseResource = (resourceAction) ->
-      (enterprise) ->
-        deferred = $q.defer()
-        resourceAction({id: enterprise.permalink}, ((data) =>
-          @pristineByID[enterprise.id] = angular.copy(data)
-          deferred.resolve(data)
-        ), ((response) ->
-          deferred.reject(response)
-        ))
-        deferred.promise
-
     findByID: (id) ->
       @byID[id]
 
@@ -61,5 +50,3 @@ angular.module("admin.resources").factory 'Enterprises', ($q, $filter, Enterpris
       $filter('filter')(enterprises, term)
 
 
-    removeLogo: performActionOnEnterpriseResource(EnterpriseResource.removeLogo)
-    removePromoImage: performActionOnEnterpriseResource(EnterpriseResource.removePromoImage)
