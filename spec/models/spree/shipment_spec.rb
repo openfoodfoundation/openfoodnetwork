@@ -324,7 +324,7 @@ RSpec.describe Spree::Shipment do
       allow(shipment).to receive_message_chain(:inventory_units,
                                                :group_by,
                                                map: [unit])
-      expect(variant).to receive(:move).with(1, shipment)
+      expect(variant).to receive(:move).with(1)
       shipment.after_cancel
     end
   end
@@ -347,7 +347,7 @@ RSpec.describe Spree::Shipment do
       allow(shipment).to receive_message_chain(:inventory_units,
                                                :group_by,
                                                map: [unit])
-      expect(variant).to receive(:move).with(-1, shipment)
+      expect(variant).to receive(:move).with(-1)
       shipment.after_resume
     end
 
