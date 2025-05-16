@@ -631,6 +631,8 @@ pt_BR:
       filters:
         producers:
           label: Produtores
+        tags:
+          label: Tags
         search: Buscar
       sort:
         pagination:
@@ -699,7 +701,6 @@ pt_BR:
         no_name: Sem nome
         blank_enterprise: alguns produtos não têm uma iniciativa definida
         reset_absent?: Redefinir produtos ausentes
-        reset_absent_tip: Defina o estoque como zero para todos os produtos existentes não presentes no arquivo
         overwrite_all: Sobrescreva tudo
         overwrite_empty: Substituir se estiver vazio
         default_stock: Definir nível de estoque

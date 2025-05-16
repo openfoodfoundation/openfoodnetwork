@@ -835,6 +835,8 @@ cy:
           label: Prynu bwyd
         categories:
           label: Categorïau
+        tags:
+          label: Tagiau
         search: Chwilio
       sort:
         pagination:
@@ -949,7 +951,6 @@ cy:
         no_name: Dim enw
         blank_enterprise: 'ni ddiffiniwyd menter ar gyfer rhai eitemau cynnyrch '
         reset_absent?: Ailosod cynnyrch absennol
-        reset_absent_tip: Gosod stoc i sero ar gyfer yr holl gynhyrchion ymadael nad ydynt yn bresennol yn y ffeil
         overwrite_all: Trosysgrifio popeth
         overwrite_empty: Trosysgrifiwch os yw'n wag
         default_stock: Gosod lefel stoc
@@ -3878,6 +3879,10 @@ cy:
     rma_credit: "Credyd RMA"
     refund: "Ad-daliad"
     server_error: "Nam gyda'r gweinydd"
+    shipping_method_names:
+      UPS Ground: "UPS dros y tir"
+      pick_up: "Casglu ar y fferm"
+      delivery: "Llofnodwyd, cadarnhawyd a chyflenwyd"
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
     updating: "Yn diweddaru"

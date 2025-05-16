@@ -565,6 +565,8 @@ es_CO:
           label: Productoras
         categories:
           label: Categorías
+        tags:
+          label: Etiquetas
         search: Buscar
       product_variant_row:
         new_variant: Nueva variante
@@ -632,7 +634,6 @@ es_CO:
         no_name: Sin nombre
         blank_enterprise: algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
-        reset_absent_tip: Establezca el inventario en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de inventario

@@ -814,6 +814,8 @@ el:
           label: Παραγωγοί
         categories:
           label: Κατηγορίες
+        tags:
+          label: Ετικέτες
         search: Αναζήτηση
       sort:
         pagination:
@@ -918,7 +920,6 @@ el:
         no_name: Δεν υπάρχει όνομα
         blank_enterprise: ορισμένα προϊόντα δεν έχουν συσχετιστεί με κάποια επιχείρηση
         reset_absent?: Σχετικά με τα υπόλοιπα προϊόντα
-        reset_absent_tip: Ορίστε μηδενικό απόθεμα για όλα τα προϊόντα που δεν υπάρχουν στο αρχείο
         overwrite_all: Αντικατάσταση Όλων
         overwrite_empty: Αντικατάσταση αν είναι κενό
         default_stock: Ορισμός επιπέδου αποθέματος
@@ -3748,6 +3749,10 @@ el:
     rma_credit: "Πίστωση RMA"
     refund: "Επιστροφή χρημάτων"
     server_error: "Σφάλμα Διακομιστή"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Παραλαβή από το αγρόκτημα"
+      delivery: "Υπογράφηκε, σφραγίστηκε, παραδόθηκε"
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     updating: "Ενημέρωση"

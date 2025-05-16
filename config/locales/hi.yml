@@ -776,6 +776,8 @@ hi:
           label: उत्पादक
         categories:
           label: श्रेणियां
+        tags:
+          label: टैग्स
         search: सर्च
       sort:
         pagination:
@@ -868,7 +870,6 @@ hi:
         no_name: कोई नाम नहीं
         blank_enterprise: कुछ उत्पादों में कोई एक एंटरप्राइज़ परिभाषित नहीं किया गया है
         reset_absent?: अनुपस्थित उत्पादों को रिसेट करें
-        reset_absent_tip: फ़ाइल में मौजूद नहीं होने वाले सभी बाहर निकलने वाले उत्पादों के लिए स्टॉक को शून्य पर सेट करें
         overwrite_all: सभी को मिटाकर लिखें
         overwrite_empty: खाली होने पर इसे मिटाकर लिखें
         default_stock: स्टॉक स्तर सेट करें
@@ -3674,6 +3675,10 @@ hi:
     rma_credit: "RMA क्रेडिट"
     refund: "रिफंड"
     server_error: "सर्वर त्रुटि"
+    shipping_method_names:
+      UPS Ground: "UPS ग्राउंड"
+      pick_up: "फार्म/खेत में पिक-अप करें"
+      delivery: "हस्ताक्षरित, सीलबंद, डिलीवर किया गया"
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
     updating: "अपडेट किया जा रहा है"

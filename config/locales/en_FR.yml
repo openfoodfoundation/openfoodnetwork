@@ -898,10 +898,13 @@ en_FR:
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag
         producers:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
@@ -1015,7 +1018,6 @@ en_FR:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -3955,6 +3957,10 @@ en_FR:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"

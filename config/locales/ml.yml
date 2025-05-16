@@ -779,6 +779,8 @@ ml:
           label: പ്രൊഡ്യൂസഴ്സ്
         categories:
           label: വിഭാഗങ്ങൾ
+        tags:
+          label: ടാഗുകൾ
         search: തിരയുക
       sort:
         pagination:
@@ -873,7 +875,6 @@ ml:
         no_name: പേരില്ല
         blank_enterprise: ചില ഉൽപ്പന്നങ്ങൾക്ക് ഒരു എന്റർപ്രൈസ് വ്യതിരിക്തത ഇല്ല
         reset_absent?: ഇല്ലാത്ത ഉൽപ്പന്നങ്ങൾ പുനഃസജ്ജമാക്കുക
-        reset_absent_tip: ഫയലിൽ ഇല്ലാത്ത എല്ലാ ഉൽപ്പന്നങ്ങൾക്കും സ്റ്റോക്ക് പൂജ്യമായി സജ്ജമാക്കുക
         overwrite_all: എല്ലാം തിരുത്തിയെഴുതുക
         overwrite_empty: ശൂന്യമാണെങ്കിൽ തിരുത്തിയെഴുതുക
         default_stock: സ്റ്റോക്ക് ലെവൽ സജ്ജമാക്കുക
@@ -3698,6 +3699,10 @@ ml:
     rma_credit: "ആർഎംഎ ക്രെഡിറ്റ്"
     refund: "റീഫണ്ട്"
     server_error: "സെർവർ തകരാർ"
+    shipping_method_names:
+      UPS Ground: "യുപിഎസ് ഗ്രൗണ്ട്"
+      pick_up: "ഫാമിൽ നിന്നും പിക്കപ്പ് ചെയ്യുക"
+      delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"

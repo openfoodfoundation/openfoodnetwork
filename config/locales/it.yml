@@ -734,6 +734,8 @@ it:
           label: Produttori
         categories:
           label: categorie
+        tags:
+          label: Etichette
         search: Cerca
       sort:
         pagination:
@@ -806,7 +808,6 @@ it:
         no_name: Nessun nome
         blank_enterprise: alcuni prodotti non hanno un'azienda definita
         reset_absent?: Elimina i prodotti assenti
-        reset_absent_tip: Imposta la scorta a zero per tutti i prodotti esistenti non presenti in questo file
         overwrite_all: Sovrascrivi tutto
         overwrite_empty: Sovrascrivi se vuoto
         default_stock: Imposta il livello di scorta
@@ -3540,6 +3541,10 @@ it:
     rma_credit: "Credito RMA"
     refund: "Rimborsa"
     server_error: "Errore Server"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Ritiro in azienda"
+      delivery: "Firmato, sigillato, consegnato"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     updating: "In aggiornamento"

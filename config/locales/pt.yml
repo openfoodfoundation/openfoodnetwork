@@ -590,6 +590,8 @@ pt:
           label: Produtores
         categories:
           label: Categorias
+        tags:
+          label: Etiquetas
         search: Procurar
       product_variant_row:
         new_variant: Nova variante
@@ -657,7 +659,6 @@ pt:
         no_name: Sem nome
         blank_enterprise: alguns produtos não têm uma organização definida
         reset_absent?: Restabelecer productos ausentes
-        reset_absent_tip: Restabelecer stock a zero para todos os produtos não presentes no ficheiro
         overwrite_all: Substituir todos
         overwrite_empty: Substituir se vazio
         default_stock: Definir nível de stock

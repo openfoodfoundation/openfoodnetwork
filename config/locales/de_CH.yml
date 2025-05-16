@@ -700,6 +700,8 @@ de_CH:
           label: Unsere Produzenten
         categories:
           label: Lieferkategorien
+        tags:
+          label: Stichwörter
         search: Suche
       sort:
         pagination:
@@ -772,7 +774,6 @@ de_CH:
         no_name: Für einige Produkte ist kein Name definiert.
         blank_enterprise: Für einige Produkte ist kein Unternehmen definiert.
         reset_absent?: Fehlende Produkte zurücksetzen?
-        reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alle überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -3442,6 +3443,8 @@ de_CH:
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"

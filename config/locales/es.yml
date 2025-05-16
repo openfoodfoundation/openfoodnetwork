@@ -693,7 +693,7 @@ es:
         create_terms_of_service: "Crear archivo de condiciones de servicio"
     number_localization:
       number_localization_settings: "Number Localization Settings"
-      enable_localized_number: "Usar la logica internacional separador miles/decimales"
+      enable_localized_number: "Usar la lógica internacional separador miles/decimales"
     invoice_settings:
       edit:
         title: "Configuración de Factura"
@@ -729,6 +729,8 @@ es:
       edit:
         title: "Ajustes de la aplicación conectada"
         enabled_legend: "Aplicaciones conectadas habilitadas"
+        connected_apps_enabled:
+          discover_regen: Descubrir el Portal Regenerativo
       update:
         resource: Ajustes de la aplicación conectada
     customers:
@@ -753,6 +755,9 @@ es:
         guest_label: "Hacer pedido como invitado"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
+    column_preferences:
+      bulk_update:
+        success: "Preferencias de columna guardadas"
     contents:
       edit:
         title: Contenido
@@ -770,6 +775,7 @@ es:
       absent_variant:
         reset: "Restablecer stock"
       index:
+        select_all: "Seleccionar/deseleccionar todo"
         update: Actualizar
         new: Nuevo
         selected:
@@ -777,6 +783,7 @@ es:
           one: "1 seleccionados"
           other: "%{count} seleccionados"
         import: Importar
+        invalid_url: Esta URL de catálogo no es correcta
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -861,10 +868,13 @@ es:
         search_for_categories: Buscar por categorías
         select_category: Seleccionar categoría
         all_categories: Todas las categorías
+        select_tag: Seleccionar etiqueta
         producers:
           label: Productoras
         categories:
           label: Categorías
+        tags:
+          label: Etiquetas
         search: Buscar
       sort:
         pagination:
@@ -893,7 +903,7 @@ es:
         tax_category_field_name: "Categoría de impuestos"
         producer_field_name: "Productora"
         select_unit_scale: Seleccionar escala de la unidad
-        add_a_tag: Add a tag
+        add_a_tag: Añadir una etiqueta
       clone:
         success: Se ha clonado el producto
         error: No se ha podido clonar el producto
@@ -961,7 +971,6 @@ es:
         no_name: Sin nombre
         blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
-        reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias
@@ -1462,7 +1471,7 @@ es:
         outgoing: "Saliente"
         distributor: "Distribuidora"
         products: "Productos"
-        tags: "Tags"
+        tags: "Etiquetas"
         delivery_details: "Detalles de entrega"
         fees: "Comisiones"
         next: "Siguiente"
@@ -1525,7 +1534,7 @@ es:
         outgoing: Saliente
         distributor: Distribuidor
         tags: Etiquetas
-        add_a_tag: Add a tag
+        add_a_tag: Añadir una etiqueta
         delivery_details: Detalles de Recogida / Entrega
       index:
         schedule: Programación
@@ -1548,7 +1557,7 @@ es:
         customer_instructions_placeholder: Notas de la recogida o entrega
         products: Productos
         fees: Comisiones
-        tags: Tags
+        tags: Etiquetas
       destroy_errors:
         orders_present: Ese ciclo de pedido ha sido seleccionado por un cliente y no puede ser eliminado. Para evitar que los clientes accedan a él, ciérrelo.
         schedule_present: Ese ciclo de pedido está vinculado a una programación y no puede ser eliminado. Desvincula o elimina la programación primero.
@@ -1815,6 +1824,7 @@ es:
         save: Guardar
         voucher_code: Código promocional
         voucher_amount: Cantidad
+        percentage_rate: Porcentaje (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Se ha cancelado la conexión a Stripe"
@@ -2448,13 +2458,13 @@ es:
   sell_headline: "¡Consíguelo en Open Food Network!"
   sell_motivation: "Muestra tus preciosos alimentos."
   sell_producers: "Productoras"
-  sell_hubs: "Hubs"
+  sell_hubs: "Grupo de Consumo"
   sell_groups: "Redes"
   sell_producers_detail: "Crea tu perfil en OFN en cuestión de minutos. En cualquier momento puedes actualizar tu perfil a una tienda en línea y vender tus productos directamente a los consumidores."
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
   sell_user_guide: "Descubre mucho más en la guía de usuario."
-  sell_listing_price: "Listado en la OFN es gratis. Abrir y administrar una tienda en OFN es gratis hasta $ 500 en ventas mensuales. Si vende más, puede elegir la contribución de su comunidad entre el 1% y el 3% de las ventas. Para obtener más detalles sobre los precios, visite la sección Plataforma de software a través del enlace Acerca de en el menú superior."
+  sell_listing_price: "Listado en la OFN es gratis. Abrir y administrar una tienda en OFN es gratis hasta 500€ en ventas mensuales. Si vende más, puede elegir la contribución de su comunidad entre el 1% y el 3% de las ventas. Para obtener más detalles sobre los precios, visite la sección Plataforma de software a través del enlace Acerca de en el menú superior."
   sell_embed: "También podemos incrustar una tienda OFN en tu propia web personalizada o crear un sitio web de la red local a medida para tu región."
   sell_ask_services: "Pregúntanos sobre los servicios de OFN"
   shops_title: Tiendas
@@ -2784,7 +2794,7 @@ es:
   fee_type: "Tipo de Comisión"
   tax_category: "Categoría del impuesto"
   display: "Mostrar"
-  tags: "Tags"
+  tags: "Etiquetas"
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
   calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
@@ -2955,7 +2965,7 @@ es:
   report_header_order_number: Número de pedido
   report_header_date: Fecha
   report_header_confirmation_date: Fecha de confirmación
-  report_header_tags: Tags
+  report_header_tags: Etiquetas
   report_header_items: Artículos
   report_header_items_total: "Artículos en total %{currency_symbol}"
   report_header_taxable_items_total: "Artículos con Impuestos en Total (%{currency_symbol})"
@@ -3072,6 +3082,9 @@ es:
   report_header_total_taxable_admin: Total de ajustes tributarios de administración (impuestos incluidos)
   report_header_voucher_label: Etiqueta del bono
   report_header_voucher_amount: "Cantidad del bono (%{currency_symbol})"
+  report_line_cost_of_produce: Coste de los productos agrícolas
+  report_header_last_completed_order_date: Fecha del último pedido completado
+  initial_invoice_number: "Número de factura inicial"
   invoice_date: "Fecha de factura"
   due_date: "Fecha de vencimiento"
   account_code: "Código de cuenta"
@@ -3384,6 +3397,7 @@ es:
           invalid: "inválido"
         quantity_unavailable: "Existencias insuficientes. ¡Artículo no guardado!"
         quantity_unchanged: "Cantidad sin cambios respecto a la cantidad anterior."
+        cancel_the_order_send_cancelation_email: "Enviar un correo electrónico de cancelación al cliente."
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -3616,10 +3630,34 @@ es:
       one: "sacos"
       many: "sacos"
       other: "sacos"
+    plant:
+      one: "planta"
+      many: "plantas"
+      other: "plantas"
     bundle:
       one: "haz"
       many: "paquetes"
       other: "paquetes"
+    bulb:
+      one: "bulbo"
+      many: "bulbos"
+      other: "bulbos"
+    root:
+      one: "raíz"
+      many: "raíces"
+      other: "raíces"
+    tuber:
+      one: "tubérculo"
+      many: "tubérculos"
+      other: "Tubérculos"
+    corm:
+      one: "cormo"
+      many: "cormos"
+      other: "cormos"
+    crate:
+      one: "caja"
+      many: "cajas"
+      other: "cajas"
   producers:
     signup:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
@@ -3749,6 +3787,10 @@ es:
     rma_credit: "Crédito RMA"
     refund: "Reembolso"
     server_error: "Error del Servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Recoger en la granja"
+      delivery: "Firmado, sellado y entregado."
     start_date: "Fecha de inicio"
     successfully_removed: "Eliminado con éxito"
     updating: "Actualizando"
@@ -4048,6 +4090,8 @@ es:
         add_product:
           cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"
           include_out_of_stock_variants: "Incluir variantes sin inventario disponible."
+        shipment:
+          mark_as_shipped_label_message: "Enviar un correo electrónico de notificación de envío/recogida al cliente."
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
@@ -4103,6 +4147,9 @@ es:
           line_item_adjustments: "Ajustes de artículo"
           order_adjustments: "Ajustes de pedido"
           order_total: "Total del pedido"
+      invoices:
+        index:
+          order_has_changed: "El pedido ha cambiado desde la última actualización de la factura. Es posible que la factura que se muestra aquí ya no esté actualizada."
       overview:
         enterprises_header:
           ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
@@ -4111,6 +4158,7 @@ es:
           has_no_payment_methods: "no tiene métodos de pago"
           has_no_shipping_methods: "no tiene métodos de envío"
         products:
+          products_tip: "Los productos que vendes a través de Open Food Network."
           active_products:
             zero: "No tienes ningún producto activo"
             one: "Tiene un producto activo."
@@ -4200,7 +4248,7 @@ es:
           active_no: "No"
           both: "Tanto en Hacer pedido como en Administración"
           back_end: "Solo en Administración"
-          tags: "Tags"
+          tags: "Etiquetas"
           deactivation_warning: "La desactivación de un método de pago puede hacer que el método de pago desaparezca de su lista. Alternativamente, puede ocultar un método de pago desde la página de pago configurando la opción 'Mostrar' como 'Solo visible para el administrador'."
         providers:
           provider: "Proveedor"
@@ -4217,6 +4265,8 @@ es:
           paypal:
             no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
       products:
+        image_upload_error: "Por favor, sube la imagen en formato JPG, PNG, GIF, SVG o WEBP."
+        image_not_processable: "La imagen adjunta no es una imagen válida."
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -4343,6 +4393,10 @@ es:
           title: "Nueva categoría de producto"
         edit:
           title: "Editar la categoría del producto"
+        destroy:
+          delete_taxon:
+            success: " La categoría de producto ha sido eliminada"
+            error: "No se puede eliminar la categoría de producto debido a los productos asignados."
         form:
           name: Nombre
           description: Descripción
@@ -4646,7 +4700,7 @@ es:
       next: Siguiente
       previous: Anterior
     tag_list_input:
-      default_placeholder: Add a tag
+      default_placeholder: Añadir una etiqueta
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

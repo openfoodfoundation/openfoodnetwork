@@ -700,6 +700,8 @@ fr_CH:
           label: Producteurs
         categories:
           label: Conditions de transport
+        tags:
+          label: Tags
         search: Rechercher
       sort:
         pagination:
@@ -770,7 +772,6 @@ fr_CH:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le stock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -3475,6 +3476,8 @@ fr_CH:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"

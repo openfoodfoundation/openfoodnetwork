@@ -851,7 +851,6 @@ mr:
         no_name: नाव नाही
         blank_enterprise: काही उत्पादनांमध्ये एंटरप्राइझ परिभाषित नाही
         reset_absent?: अनुपलब्ध उत्पादने रीसेट करा
-        reset_absent_tip: फाइलमध्ये उपस्थित नसलेल्या सर्व बाहेर जाणाऱ्या उत्पादनांसाठी स्टॉक शून्यावर सेट करा
         overwrite_all: सर्व ओव्हरराइट करा
         overwrite_empty: रिक्त असल्यास ओव्हरराइट करा
         default_stock: स्टॉक पातळी सेट करा
@@ -3585,6 +3584,10 @@ mr:
     rma_credit: "RMA क्रेडिट"
     refund: "परतावा"
     server_error: "सर्व्हर त्रुटी"
+    shipping_method_names:
+      UPS Ground: "UPS  ग्राउंड"
+      pick_up: "शेतात पिक-अप"
+      delivery: "स्वाक्षरी, सीलबंद, वितरित"
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
     updating: "अपडेट करत आहे"

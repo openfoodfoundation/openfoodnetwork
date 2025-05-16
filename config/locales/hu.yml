@@ -852,6 +852,8 @@ hu:
           label: Termelők
         categories:
           label: Kategóriák
+        tags:
+          label: Címkék
         search: Keresés
       sort:
         pagination:
@@ -964,7 +966,6 @@ hu:
         no_name: Névtelen
         blank_enterprise: egyes termékekhez nincs definiálva a vállalkozás
         reset_absent?: Hiányzó termékek visszaállítása
-        reset_absent_tip: Állítsd a készletet nullára minden olyan olyan terméknél, amely nem szerepel a fájlban
         overwrite_all: Az összes felülírása
         overwrite_empty: Ha üres, írja felül
         default_stock: Állítsd be a készletet
@@ -3852,6 +3853,10 @@ hu:
     rma_credit: "RMA hitel"
     refund: "Visszatérítés"
     server_error: "Szerver hiba"
+    shipping_method_names:
+      UPS Ground: "UPS föld"
+      pick_up: "Átvétel a gazdaságban"
+      delivery: "Aláírva, lepecsételve, kézbesítve"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     updating: "Frissítés"

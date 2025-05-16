@@ -551,6 +551,8 @@ nl_BE:
           label: Producenten
         categories:
           label: Categorieën
+        tags:
+          label: Tags
         search: Zoeken
       sort:
         pagination:
@@ -621,7 +623,6 @@ nl_BE:
         no_name: Geen naam
         blank_enterprise: sommige producten hebben geen onderneming gedefinieerd
         reset_absent?: Reset afwezige producten
-        reset_absent_tip: Zet de voorraad op nul voor alle producten die niet in het bestand aanwezig zijn
         overwrite_all: Alles overschrijven
         overwrite_empty: Overschrijven indien leeg
         default_stock: Voorraadniveau instellen

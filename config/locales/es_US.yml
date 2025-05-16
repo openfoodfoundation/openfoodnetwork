@@ -672,6 +672,8 @@ es_US:
           label: Productoras
         categories:
           label: Categorías
+        tags:
+          label: Etiquetas
         search: Buscar
       sort:
         pagination:
@@ -742,7 +744,6 @@ es_US:
         no_name: Sin nombre
         blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
-        reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias

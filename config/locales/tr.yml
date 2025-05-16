@@ -613,6 +613,8 @@ tr:
           label: ÜRETİCİLER
         categories:
           label: Kategoriler
+        tags:
+          label: ETİKETLER
         search: Ara
       sort:
         pagination:
@@ -683,7 +685,6 @@ tr:
         no_name: İSİMSİZ
         blank_enterprise: bazı ürünler için tanımlanmış bir işletme yok
         reset_absent?: Mevcut olmayan ürünleri sıfırla
-        reset_absent_tip: Dosyada bulunmayan tüm mevcut ürünler için stoğu sıfıra ayarlayın
         overwrite_all: Hepsinin üzerine yaz
         overwrite_empty: Boşsa üzerine yaz
         default_stock: Stok seviyesini ayarla

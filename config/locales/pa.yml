@@ -768,6 +768,8 @@ pa:
           label: ਉਤਪਾਦਕ
         categories:
           label: ਸ਼੍ਰੇਣੀਆਂ
+        tags:
+          label: ਟੈਗ
         search: ਖੋਜੋ
       sort:
         pagination:
@@ -852,7 +854,6 @@ pa:
         no_name: ਕੋਈ ਨਾਂ ਨਹੀਂ
         blank_enterprise: ਕੁਝ ਉਤਪਾਦਾਂ ਲਈ ਕੋਈ ਵੀ ਪਰਿਭਾਸ਼ਿਤ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਨਹੀਂ ਹੈ
         reset_absent?: ਗੈਰਹਾਜ਼ਰ ਉਤਪਾਦਾਂ ਨੂੰ ਰੀਸੈਟ ਕਰੋ
-        reset_absent_tip: ਫਾਈਲ ਵਿੱਚ ਮੌਜੂਦ ਨਾ ਹੋਣ ਵਾਲੇ ਸਾਰੇ ਉਤਪਾਦਾਂ ਲਈ ਸਟਾਕ ਨੂੰ ਜ਼ੀਰੋ ਤੇ ਸੇਟ ਕਰੋ
         overwrite_all: ਸਭ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰੋ
         overwrite_empty: ਜੇਕਰ ਖਾਲੀ ਹੈ ਤਾਂ ਓਵਰਰਾਈਟ ਕਰੋ
         default_stock: ਸਟਾਕ ਦਾ ਪੱਧਰ ਸੇਟ ਕਰੋ
@@ -3568,6 +3569,10 @@ pa:
     rma_credit: "RMA ਕ੍ਰੈਡਿਟ"
     refund: "ਰਿਫੰਡ"
     server_error: "ਸਰਵਰ ਤਰੁੱਟੀ"
+    shipping_method_names:
+      UPS Ground: "ਯੂਪੀਐਸ ਗਰਾਊਂਡ"
+      pick_up: "ਖੇਤ ਤੋਂ ਪਿਕ-ਅੱਪ"
+      delivery: "ਦਸਤਖਤ ਕੀਤੇ, ਸੀਲ ਕੀਤੇ, ਡਿਲੀਵਰ ਕੀਤੇ ਗਏ"
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
     successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"

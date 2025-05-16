@@ -700,6 +700,8 @@ uk:
           label: Виробники
         categories:
           label: Категорії
+        tags:
+          label: Мітки
         search: Пошук
       sort:
         pagination:
@@ -770,7 +772,6 @@ uk:
         no_name: Без назви
         blank_enterprise: для деяких продуктів не визначено підприємство
         reset_absent?: Скинути відсутні продукти
-        reset_absent_tip: Встановити запас на нуль для всіх вихідних продуктів, яких немає у файлі
         overwrite_all: Перезаписати все
         overwrite_empty: Перезаписати, якщо пусто
         default_stock: Встановити рівень запасів
@@ -3481,6 +3482,8 @@ uk:
     rma_credit: "Кредит RMA"
     refund: "Повернення коштів"
     server_error: "Помилка серверу"
+    shipping_method_names:
+      UPS Ground: "UPS наземна"
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     updating: "Оновлення"

@@ -902,6 +902,8 @@ en_CA:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
@@ -1015,7 +1017,6 @@ en_CA:
         no_name: No name
         blank_enterprise: some products do not have an enterprise associated
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -3954,6 +3955,10 @@ en_CA:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"

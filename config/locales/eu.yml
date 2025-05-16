@@ -848,6 +848,8 @@ eu:
           label: Ekoizleak
         categories:
           label: Kategoriak
+        tags:
+          label: Tags
         search: Bilatu
       sort:
         pagination:
@@ -944,7 +946,6 @@ eu:
         no_name: Izenik gabe
         blank_enterprise: Produktu batzuek ez dute antolamendu zehatzik.
         reset_absent?: Falta diren produktuak berrezartzea
-        reset_absent_tip: Ezarri zero stocka artxiboan ez dauden produktu guztietarako.
         overwrite_all: Gainidatzi dena
         overwrite_empty: Gainidatzi hutsik badago
         default_stock: Izakinen maila ezartzea
@@ -3625,6 +3626,9 @@ eu:
     rma_credit: "RMA kreditua"
     refund: "Dirua itzultzea"
     server_error: "Zerbitzariaren errorea"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Baserrian jaso"
     start_date: "Hasiera-data"
     successfully_removed: "Arrakastaz ezabatua"
     updating: "Eguneratzen"

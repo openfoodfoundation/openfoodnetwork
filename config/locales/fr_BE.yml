@@ -737,6 +737,8 @@ fr_BE:
           label: Producteur·trice·s
         categories:
           label: Les catégories
+        tags:
+          label: Tags
         search: Rechercher
       sort:
         pagination:
@@ -839,7 +841,6 @@ fr_BE:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise définie
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock

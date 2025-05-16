@@ -538,6 +538,8 @@ fil_PH:
           label: Mga Producer
         categories:
           label: mga kategorya
+        tags:
+          label: tags
         search: hanapin
       product_variant_row:
         new_variant: bagong uri
@@ -604,7 +606,6 @@ fil_PH:
         no_name: walang pangalan
         blank_enterprise: ang ibang mga produkto ay walang tinutukoy na enterprise
         reset_absent?: i-reset ang mga nawawalang produkto
-        reset_absent_tip: i-set ang stock sa zero ng lahat ng mga produkto na hindi makikita sa file
         overwrite_all: sulatan lahat
         overwrite_empty: sulatan kung walang nakalagay
         default_stock: i-set ang lebel ng stock

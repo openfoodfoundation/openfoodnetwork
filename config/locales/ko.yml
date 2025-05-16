@@ -695,6 +695,8 @@ ko:
           label: 생산자들
         categories:
           label: 카테고리
+        tags:
+          label: 태그
         search: 탐색
       sort:
         pagination:
@@ -765,7 +767,6 @@ ko:
         no_name: 이름 없음
         blank_enterprise: 일부 제품이 회사가 정의되지 않았습니다.
         reset_absent?: 없는 제품 재설정하기
-        reset_absent_tip: 파일에 없는 모든 기존 제품에 대해 재고를 0으로 설정하기
         overwrite_all: 모두 덮어쓰기
         overwrite_empty: 비어 있는 경우 덮어쓰기
         default_stock: 재고 수준 설정
@@ -3364,6 +3365,8 @@ ko:
     rma_credit: "RMA 거래"
     refund: "환불"
     server_error: "서버 오류"
+    shipping_method_names:
+      UPS Ground: "UPS 배경"
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
     updating: "업데이트 중"

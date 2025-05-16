@@ -762,6 +762,8 @@ ca:
           label: Productors
         categories:
           label: Categories
+        tags:
+          label: Etiquetes
         search: Cerca
       sort:
         pagination:
@@ -851,7 +853,6 @@ ca:
         no_name: Sense nom
         blank_enterprise: alguns productes no tenen una organització definida
         reset_absent?: Restabliu els productes absents
-        reset_absent_tip: Establiu valors a zero per a tots els productes existents que no figurin al fitxer
         overwrite_all: Sobreescriu-ho tot
         overwrite_empty: Sobreescriu si està buit
         default_stock: Estableix el nivell d'existències
@@ -3512,6 +3513,10 @@ ca:
     rma_credit: "credit RMA"
     refund: "Reembossament"
     server_error: "Error del servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Recollida a la granja"
+      delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     updating: "Actualitzant"

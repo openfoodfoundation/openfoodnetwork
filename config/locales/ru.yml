@@ -800,6 +800,8 @@ ru:
           label: Производители
         categories:
           label: Категории
+        tags:
+          label: Метки
         search: Поиск
       sort:
         pagination:
@@ -905,7 +907,6 @@ ru:
         no_name: Без имени
         blank_enterprise: некоторые товары не имеют определенного предприятия
         reset_absent?: Сбросить отсутствующие товары
-        reset_absent_tip: Установить запас в ноль всех существующих товаров, отсутствующих в файле
         overwrite_all: Всё перезаписать
         overwrite_empty: Перезаписать если пусто
         default_stock: Установить уровень запасов
@@ -3799,6 +3800,10 @@ ru:
     rma_credit: "Кредит RMA"
     refund: "Возврат"
     server_error: "Ошибка сервера"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+      pick_up: "Самовывоз на ферме"
+      delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     updating: "Обновление"

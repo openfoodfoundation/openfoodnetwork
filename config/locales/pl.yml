@@ -529,6 +529,8 @@ pl:
       filters:
         producers:
           label: Producenci
+        tags:
+          label: Tagi
         search: Szukaj
       variant_row:
         none_tax_category: Nic
@@ -593,7 +595,6 @@ pl:
         no_name: Bez nazwy
         blank_enterprise: niektóre produkty nie mają zdefiniowanego podmiotu
         reset_absent?: Zresetuj nieobecne produkty
-        reset_absent_tip: Ustaw zapasy na zero dla wszystkich produktów, których nie ma w pliku
         overwrite_all: Zastąp wszystko
         overwrite_empty: Zastąp, jeśli jest pusty
         default_stock: Ustaw stan magazynu
