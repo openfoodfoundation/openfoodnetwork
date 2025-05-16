@@ -3442,8 +3442,6 @@ de_CH:
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"

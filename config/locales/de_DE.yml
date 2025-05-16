@@ -3689,10 +3689,6 @@ de_DE:
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Abholung"
-      delivery: "Lieferung"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"

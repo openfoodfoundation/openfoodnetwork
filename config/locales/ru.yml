@@ -3799,10 +3799,6 @@ ru:
     rma_credit: "Кредит RMA"
     refund: "Возврат"
     server_error: "Ошибка сервера"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Самовывоз на ферме"
-      delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     updating: "Обновление"

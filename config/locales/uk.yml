@@ -3481,8 +3481,6 @@ uk:
     rma_credit: "Кредит RMA"
     refund: "Повернення коштів"
     server_error: "Помилка серверу"
-    shipping_method_names:
-      UPS Ground: "UPS наземна"
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     updating: "Оновлення"

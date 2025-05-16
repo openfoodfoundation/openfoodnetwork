@@ -3748,10 +3748,6 @@ el:
     rma_credit: "Πίστωση RMA"
     refund: "Επιστροφή χρημάτων"
     server_error: "Σφάλμα Διακομιστή"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Παραλαβή από το αγρόκτημα"
-      delivery: "Υπογράφηκε, σφραγίστηκε, παραδόθηκε"
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     updating: "Ενημέρωση"

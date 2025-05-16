@@ -3749,9 +3749,6 @@ es:
     rma_credit: "Crédito RMA"
     refund: "Reembolso"
     server_error: "Error del Servidor"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Recoger en la granja"
     start_date: "Fecha de inicio"
     successfully_removed: "Eliminado con éxito"
     updating: "Actualizando"

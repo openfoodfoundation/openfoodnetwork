@@ -3698,10 +3698,6 @@ ml:
     rma_credit: "ആർഎംഎ ക്രെഡിറ്റ്"
     refund: "റീഫണ്ട്"
     server_error: "സെർവർ തകരാർ"
-    shipping_method_names:
-      UPS Ground: "യുപിഎസ് ഗ്രൗണ്ട്"
-      pick_up: "ഫാമിൽ നിന്നും പിക്കപ്പ് ചെയ്യുക"
-      delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"

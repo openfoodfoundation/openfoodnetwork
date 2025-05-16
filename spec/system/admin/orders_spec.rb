@@ -37,12 +37,12 @@ RSpec.describe '
   }
   let(:distributor5) { create(:distributor_enterprise, owner: owner2, charges_sales_tax: true) }
   let!(:shipping_method) {
-    create(:shipping_method_with, :pickup, name: "pick_up",
+    create(:shipping_method_with, :pickup, name: "Pick up at the farm",
                                            distributors: [distributor, distributor2, distributor3])
   }
   let!(:shipping_method2) {
-    create(:shipping_method_with, :pickup, name: "delivery",
-                                           distributors: [distributor4, distributor5])
+    create(:shipping_method_with, :delivery, name: "Home delivery to your convenience",
+                                             distributors: [distributor4, distributor5])
   }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
@@ -190,7 +190,7 @@ RSpec.describe '
         order2.select_shipping_method(shipping_method.id)
         order4.select_shipping_method(shipping_method2.id)
 
-        tomselect_search_and_select "Pick-up at the farm", from: 'shipping_method_id'
+        tomselect_search_and_select "Pick up at the farm", from: 'shipping_method_id'
         page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 5
         expect(page).to have_content order2.number
@@ -199,7 +199,7 @@ RSpec.describe '
 
         find("#clear_filters_button").click
 
-        tomselect_search_and_select "Signed, sealed, delivered", from: 'shipping_method_id'
+        tomselect_search_and_select "Home delivery to your convenience", from: 'shipping_method_id'
         page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
         expect(page).not_to have_content order2.number

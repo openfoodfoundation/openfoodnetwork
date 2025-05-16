@@ -3367,8 +3367,6 @@ en_US:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"

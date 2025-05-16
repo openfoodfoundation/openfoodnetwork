@@ -3540,10 +3540,6 @@ it:
     rma_credit: "Credito RMA"
     refund: "Rimborsa"
     server_error: "Errore Server"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Ritiro in azienda"
-      delivery: "Firmato, sigillato, consegnato"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     updating: "In aggiornamento"

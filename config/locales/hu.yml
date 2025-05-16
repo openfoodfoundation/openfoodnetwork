@@ -3852,10 +3852,6 @@ hu:
     rma_credit: "RMA hitel"
     refund: "Visszatérítés"
     server_error: "Szerver hiba"
-    shipping_method_names:
-      UPS Ground: "UPS föld"
-      pick_up: "Átvétel a gazdaságban"
-      delivery: "Aláírva, lepecsételve, kézbesítve"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     updating: "Frissítés"
