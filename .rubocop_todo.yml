@@ -221,30 +221,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 134
+# Offense count: 115
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
 RSpecRails/InferredSpecType:
   Exclude:
-    - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/column_preferences_controller_spec.rb'
-    - 'spec/controllers/admin/customers_controller_spec.rb'
-    - 'spec/controllers/admin/enterprises_controller_spec.rb'
-    - 'spec/controllers/admin/inventory_items_controller_spec.rb'
-    - 'spec/controllers/admin/invoice_settings_controller_spec.rb'
-    - 'spec/controllers/admin/matomo_settings_controller_spec.rb'
-    - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/admin/product_import_controller_spec.rb'
-    - 'spec/controllers/admin/proxy_orders_controller_spec.rb'
-    - 'spec/controllers/admin/reports_controller_spec.rb'
-    - 'spec/controllers/admin/schedules_controller_spec.rb'
-    - 'spec/controllers/admin/stripe_accounts_controller_spec.rb'
-    - 'spec/controllers/admin/stripe_connect_settings_controller_spec.rb'
-    - 'spec/controllers/admin/subscription_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/admin/tag_rules_controller_spec.rb'
-    - 'spec/controllers/admin/terms_of_service_files_controller_spec.rb'
-    - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
     - 'spec/controllers/api/v0/customers_controller_spec.rb'
     - 'spec/controllers/api/v0/enterprise_fees_controller_spec.rb'
     - 'spec/controllers/api/v0/enterprises_controller_spec.rb'
