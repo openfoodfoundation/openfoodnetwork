@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ShopController, type: :controller do
+RSpec.describe ShopController do
   let!(:pm) { create(:payment_method) }
   let!(:sm) { create(:shipping_method) }
   let(:distributor) {
