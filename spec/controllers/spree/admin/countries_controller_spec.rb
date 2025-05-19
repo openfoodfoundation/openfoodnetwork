@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    RSpec.describe CountriesController, type: :controller do
+    RSpec.describe CountriesController do
       include AuthenticationHelper
 
       describe "#update" do

@@ -221,30 +221,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 85
+# Offense count: 65
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
 RSpecRails/InferredSpecType:
   Exclude:
-    - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
-    - 'spec/controllers/spree/admin/base_controller_spec.rb'
-    - 'spec/controllers/spree/admin/countries_controller_spec.rb'
-    - 'spec/controllers/spree/admin/general_settings_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/customer_details_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/invoices_spec.rb'
-    - 'spec/controllers/spree/admin/orders/payments/payments_controller_refunds_spec.rb'
-    - 'spec/controllers/spree/admin/orders/payments/payments_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders_controller_spec.rb'
-    - 'spec/controllers/spree/admin/overview_controller_spec.rb'
-    - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/products_controller_spec.rb'
-    - 'spec/controllers/spree/admin/return_authorizations_controller_spec.rb'
-    - 'spec/controllers/spree/admin/search_controller_spec.rb'
-    - 'spec/controllers/spree/admin/shipping_categories_controller_spec.rb'
-    - 'spec/controllers/spree/admin/shipping_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/tax_rates_controller_spec.rb'
-    - 'spec/controllers/spree/admin/tax_settings_controller_spec.rb'
-    - 'spec/controllers/spree/admin/variants_controller_spec.rb'
     - 'spec/controllers/spree/api_keys_controller_spec.rb'
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/controllers/spree/orders_controller_spec.rb'

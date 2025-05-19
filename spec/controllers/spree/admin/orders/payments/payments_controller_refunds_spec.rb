@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::PaymentsController, type: :controller do
+RSpec.describe Spree::Admin::PaymentsController do
   include StripeHelper
   include StripeStubs
 

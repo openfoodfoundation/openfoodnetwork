@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::BaseController, type: :controller do
+RSpec.describe Spree::Admin::BaseController do
   controller(Spree::Admin::BaseController) do
     def index
       before_action :unauthorized
