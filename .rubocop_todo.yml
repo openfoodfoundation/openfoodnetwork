@@ -221,28 +221,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 115
+# Offense count: 98
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
 RSpecRails/InferredSpecType:
   Exclude:
-    - 'spec/controllers/api/v0/customers_controller_spec.rb'
-    - 'spec/controllers/api/v0/enterprise_fees_controller_spec.rb'
-    - 'spec/controllers/api/v0/enterprises_controller_spec.rb'
-    - 'spec/controllers/api/v0/exchange_products_controller_spec.rb'
-    - 'spec/controllers/api/v0/logos_controller_spec.rb'
-    - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
-    - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/controllers/api/v0/product_images_controller_spec.rb'
-    - 'spec/controllers/api/v0/products_controller_spec.rb'
-    - 'spec/controllers/api/v0/promo_images_controller_spec.rb'
-    - 'spec/controllers/api/v0/reports/packing_report_spec.rb'
-    - 'spec/controllers/api/v0/reports_controller_spec.rb'
-    - 'spec/controllers/api/v0/shipments_controller_spec.rb'
-    - 'spec/controllers/api/v0/shops_controller_spec.rb'
-    - 'spec/controllers/api/v0/statuses_controller_spec.rb'
-    - 'spec/controllers/api/v0/terms_and_conditions_controller_spec.rb'
-    - 'spec/controllers/api/v0/variants_controller_spec.rb'
     - 'spec/controllers/base_controller_spec.rb'
     - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/controllers/checkout_controller_spec.rb'

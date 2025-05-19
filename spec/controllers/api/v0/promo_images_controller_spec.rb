@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Api
-  RSpec.describe V0::PromoImagesController, type: :controller do
+  RSpec.describe V0::PromoImagesController do
     include AuthenticationHelper
     include FileHelper
 

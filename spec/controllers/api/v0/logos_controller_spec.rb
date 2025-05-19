@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Api
-  RSpec.describe V0::LogosController, type: :controller do
+  RSpec.describe V0::LogosController do
     include AuthenticationHelper
     include FileHelper
 
