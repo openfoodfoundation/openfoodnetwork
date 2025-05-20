@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ConnectAppJob, type: :job do
+RSpec.describe ConnectAppJob do
   subject { ConnectAppJob.new(app, user.spree_api_key) }
 
   let(:app) { ConnectedApp.new(enterprise: ) }

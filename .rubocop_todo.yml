@@ -221,14 +221,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 37
+# Offense count: 34
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
 RSpecRails/InferredSpecType:
   Exclude:
-    - 'spec/jobs/connect_app_job_spec.rb'
-    - 'spec/mailers/producer_mailer_spec.rb'
-    - 'spec/mailers/subscription_mailer_spec.rb'
     - 'spec/models/column_preference_spec.rb'
     - 'spec/models/connected_app_spec.rb'
     - 'spec/models/customer_spec.rb'
