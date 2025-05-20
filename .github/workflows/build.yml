@@ -408,3 +408,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
           include-hidden-files: true
+      - name: Compare SimpleCov results with Undercover
+        env:
+          RAILS_ENV: test
+        run: bundle exec undercover --compare origin/master

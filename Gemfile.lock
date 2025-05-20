@@ -364,6 +364,8 @@ GEM
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
+    imagen (0.2.0)
+      parser (>= 2.5, != 2.5.1.1)
     immigrant (0.3.6)
       activerecord (>= 3.0)
     invisible_captcha (2.3.0)
@@ -714,6 +716,7 @@ GEM
     rubyzip (2.3.2)
     rufus-scheduler (3.8.2)
       fugit (~> 1.1, >= 1.1.6)
+    rugged (1.7.2)
     sanitize (6.1.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -742,6 +745,7 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
+    simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
     spreadsheet_architect (5.0.0)
       caxlsx (>= 3.3.0, < 4)
@@ -802,6 +806,11 @@ GEM
       turbo-rails (>= 1.3.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    undercover (0.6.3)
+      bigdecimal
+      imagen (>= 0.2.0)
+      rainbow (>= 2.1, < 4.0)
+      rugged (>= 0.27, < 1.8)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
     uri (0.13.0)
@@ -978,6 +987,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov
+  simplecov-lcov
   spreadsheet_architect
   spring
   spring-commands-rspec
@@ -990,6 +1000,7 @@ DEPENDENCIES
   timecop
   turbo-rails
   turbo_power
+  undercover
   valid_email2
   validates_lengths_from_database
   vcr
