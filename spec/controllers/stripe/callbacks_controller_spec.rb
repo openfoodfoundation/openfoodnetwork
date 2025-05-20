@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Stripe::CallbacksController, type: :controller do
+RSpec.describe Stripe::CallbacksController do
   let(:enterprise) { create(:distributor_enterprise) }
 
   context "#index" do
