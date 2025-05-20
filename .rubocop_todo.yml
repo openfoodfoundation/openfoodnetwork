@@ -221,30 +221,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 56
+# Offense count: 37
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Inferences.
 RSpecRails/InferredSpecType:
   Exclude:
-    - 'spec/helpers/admin/enterprises_helper_spec.rb'
-    - 'spec/helpers/admin/orders_helper_spec.rb'
-    - 'spec/helpers/admin/reports_helper_spec.rb'
-    - 'spec/helpers/admin/subscriptions_helper_spec.rb'
-    - 'spec/helpers/application_helper_spec.rb'
-    - 'spec/helpers/checkout_helper_spec.rb'
-    - 'spec/helpers/i18n_helper_spec.rb'
-    - 'spec/helpers/injection_helper_spec.rb'
-    - 'spec/helpers/link_helper_spec.rb'
-    - 'spec/helpers/navigation_helper_spec.rb'
-    - 'spec/helpers/order_cycles_helper_spec.rb'
-    - 'spec/helpers/serializer_helper_spec.rb'
-    - 'spec/helpers/shop_helper_spec.rb'
-    - 'spec/helpers/spree/admin/base_helper_spec.rb'
-    - 'spec/helpers/spree/admin/general_settings_helper_spec.rb'
-    - 'spec/helpers/spree/admin/orders_helper_spec.rb'
-    - 'spec/helpers/spree/orders_helper_spec.rb'
-    - 'spec/helpers/tax_helper_spec.rb'
-    - 'spec/helpers/terms_and_conditions_helper_spec.rb'
     - 'spec/jobs/connect_app_job_spec.rb'
     - 'spec/mailers/producer_mailer_spec.rb'
     - 'spec/mailers/subscription_mailer_spec.rb'

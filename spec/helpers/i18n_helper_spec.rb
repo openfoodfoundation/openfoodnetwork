@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe I18nHelper, type: :helper do
+RSpec.describe I18nHelper do
   let(:user) { create(:user) }
   let(:cookies) { {} }
 
