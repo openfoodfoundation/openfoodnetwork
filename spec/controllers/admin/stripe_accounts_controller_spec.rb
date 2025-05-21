@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::StripeAccountsController, type: :controller do
+RSpec.describe Admin::StripeAccountsController do
   let(:enterprise) { create(:distributor_enterprise) }
 
   describe "#connect" do

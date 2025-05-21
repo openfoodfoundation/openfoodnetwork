@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    RSpec.describe TaxRatesController, type: :controller do
+    RSpec.describe TaxRatesController do
       include AuthenticationHelper
 
       let!(:default_tax_zone) { create(:zone, default_tax: true) }

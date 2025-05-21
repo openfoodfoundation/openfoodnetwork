@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Api
-  RSpec.describe V0::TermsAndConditionsController, type: :controller do
+  RSpec.describe V0::TermsAndConditionsController do
     include AuthenticationHelper
     include FileHelper
 

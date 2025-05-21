@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Api::V0::VariantsController, type: :controller do
+RSpec.describe Api::V0::VariantsController do
   render_views
 
   let(:supplier) { create(:supplier_enterprise) }

@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-RSpec.describe "SocialMedias", type: :request, swagger_doc: "dfc.yaml" do
+RSpec.describe "SocialMedias", swagger_doc: "dfc.yaml" do
   let(:user) { create(:oidc_user) }
   let(:enterprise) do
     create(

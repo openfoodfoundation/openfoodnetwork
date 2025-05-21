@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Api::V0::ReportsController, type: :controller do
+RSpec.describe Api::V0::ReportsController do
   let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
   let(:params) {
     {

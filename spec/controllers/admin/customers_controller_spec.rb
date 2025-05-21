@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Admin
-  RSpec.describe CustomersController, type: :controller do
+  RSpec.describe CustomersController do
     include AuthenticationHelper
 
     describe "index" do

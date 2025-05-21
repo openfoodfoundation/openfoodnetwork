@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::ColumnPreferencesController, type: :controller do
+RSpec.describe Admin::ColumnPreferencesController do
   include AuthenticationHelper
 
   describe "bulk_update" do

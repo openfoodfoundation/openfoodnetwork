@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Admin
-  RSpec.describe OrderCyclesController, type: :controller do
+  RSpec.describe OrderCyclesController do
     let!(:distributor_owner) { create(:user) }
     let(:datetime_confirmation_attrs) {
       { confirm_datetime_change: nil,

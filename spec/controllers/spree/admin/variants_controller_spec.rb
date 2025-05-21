@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    RSpec.describe VariantsController, type: :controller do
+    RSpec.describe VariantsController do
       context "log in as admin user" do
         before { controller_login_as_admin }
 

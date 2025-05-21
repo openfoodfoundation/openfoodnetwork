@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'yaml'
 
-RSpec.describe ProducerMailer, type: :mailer do
+RSpec.describe ProducerMailer do
   let!(:zone) { create(:zone_with_member) }
   let!(:tax_rate) {
     create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone:,

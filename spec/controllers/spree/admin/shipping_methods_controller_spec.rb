@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::ShippingMethodsController, type: :controller do
+RSpec.describe Spree::Admin::ShippingMethodsController do
   include AuthenticationHelper
 
   describe "#update" do

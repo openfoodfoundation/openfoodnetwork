@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::BaseHelper, type: :helper do
+RSpec.describe Spree::Admin::BaseHelper do
   helper 'spree/admin/navigation'
 
   describe "#link_to_remove_fields" do

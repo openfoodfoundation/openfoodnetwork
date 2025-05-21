@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::GeneralSettingsController, type: :controller do
+RSpec.describe Spree::Admin::GeneralSettingsController do
   include AuthenticationHelper
 
   describe 'updating general settings' do

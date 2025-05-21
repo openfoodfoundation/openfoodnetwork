@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe TagRule::FilterOrderCycles, type: :model do
+RSpec.describe TagRule::FilterOrderCycles do
   let!(:tag_rule) { build_stubbed(:filter_order_cycles_tag_rule) }
 
   describe "determining whether tags match for a given exchange" do

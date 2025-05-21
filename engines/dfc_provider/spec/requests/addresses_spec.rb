@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-RSpec.describe "Addresses", type: :request, swagger_doc: "dfc.yaml" do
+RSpec.describe "Addresses", swagger_doc: "dfc.yaml" do
   let(:user) { create(:oidc_user) }
   let(:address) { create(:address, id: 40_000) }
   let(:result) { json_response }

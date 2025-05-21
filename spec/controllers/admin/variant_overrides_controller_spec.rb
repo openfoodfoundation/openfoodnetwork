@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::VariantOverridesController, type: :controller do
+RSpec.describe Admin::VariantOverridesController do
   describe "index" do
     context "not logged in" do
       it "redirects to login" do

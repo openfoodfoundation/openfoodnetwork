@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::MatomoSettingsController, type: :controller do
+RSpec.describe Admin::MatomoSettingsController do
   describe "#update" do
     let(:params) {
       {

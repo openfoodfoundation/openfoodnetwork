@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RegistrationController, type: :controller do
+RSpec.describe RegistrationController do
   describe "redirecting when user not logged in" do
     it "index" do
       get :index

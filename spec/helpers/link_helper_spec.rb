@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe LinkHelper, type: :helper do
+RSpec.describe LinkHelper do
   describe "ext_url" do
     it "adds prefix if missing" do
       expect(helper.ext_url("http://example.com/", "http://example.com/bla")).to eq("http://example.com/bla")

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::BulkLineItemsController, type: :controller do
+RSpec.describe Admin::BulkLineItemsController do
   describe '#index' do
     render_views
 

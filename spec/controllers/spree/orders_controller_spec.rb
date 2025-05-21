@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::OrdersController, type: :controller do
+RSpec.describe Spree::OrdersController do
   include CheckoutHelper
   include StripeStubs
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe "routing for Stripe return URLS", type: :routing do
+RSpec.describe "routing for Stripe return URLS" do
   context "checkout return URLs" do
     it "routes /checkout to checkout#edit" do
       expect(get: "checkout").

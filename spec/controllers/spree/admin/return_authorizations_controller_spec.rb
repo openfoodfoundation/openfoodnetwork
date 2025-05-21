@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    RSpec.describe ReturnAuthorizationsController, type: :controller do
+    RSpec.describe ReturnAuthorizationsController do
       include AuthenticationHelper
 
       let(:order) { create(:shipped_order, distributor: create(:distributor_enterprise)) }

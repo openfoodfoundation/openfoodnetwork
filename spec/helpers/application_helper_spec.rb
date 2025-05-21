@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper do
   describe "#feature?" do
     it "takes several actors" do
       user = Spree::User.new(id: 4)

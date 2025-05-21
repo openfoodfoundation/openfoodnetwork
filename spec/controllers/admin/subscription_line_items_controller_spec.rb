@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
+RSpec.describe Admin::SubscriptionLineItemsController do
   include AuthenticationHelper
 
   describe "build" do

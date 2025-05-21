@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe TermsAndConditionsHelper, type: :helper do
+RSpec.describe TermsAndConditionsHelper do
   describe "#platform_terms_required?" do
     context 'when ToS file is present' do
       before do
