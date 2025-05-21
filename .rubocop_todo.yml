@@ -222,13 +222,6 @@ Metrics/PerceivedComplexity:
     - 'app/models/spree/order/checkout.rb'
 
 # Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Inferences.
-RSpecRails/InferredSpecType:
-  Exclude:
-    - 'spec/routing/stripe_spec.rb'
-
-# Offense count: 1
 # Configuration parameters: TransactionMethods.
 Rails/TransactionExitStatement:
   Exclude:
