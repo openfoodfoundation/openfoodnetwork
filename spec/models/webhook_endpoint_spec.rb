@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe WebhookEndpoint, type: :model do
+RSpec.describe WebhookEndpoint do
   describe "validations" do
     it { is_expected.to validate_presence_of(:url) }
   end
