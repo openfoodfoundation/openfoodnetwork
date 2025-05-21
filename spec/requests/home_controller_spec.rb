@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe HomeController, type: :request do
+RSpec.describe HomeController do
   context "#unauthorized" do
     it "renders the unauthorized template" do
       get "/unauthorized"
