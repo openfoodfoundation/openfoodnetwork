@@ -954,12 +954,6 @@ uk:
         images:
           legend: "Зображення"
           logo: Логотип
-          promo_image_placeholder: 'Це зображення відображається в розділі "Про нас"'
-          promo_image_note1: 'БУДЬ ЛАСКА, ЗАПИШІТЬ:'
-          promo_image_note2: Будь-яке рекламне зображення, завантажене тут, буде обрізано до 1200 x 260.
-          promo_image_note3: Рекламне зображення відображається у верхній частині сторінки профілю підприємства та у спливаючих вікнах.
-          remove_logo: "Видалити зображення"
-          remove_promo_image: "Видалити зображення"
         inventory_settings:
           legend: "Налаштування інвентарю"
           text1: Ви можете керувати залишками і цінами через свій
@@ -1342,6 +1336,17 @@ uk:
       resume:
         could_not_resume_the_order: Не вдалося відновити замовлення
     shared:
+      attachment_field:
+        logo_label: "Логотип"
+        logo_remove: "Видалити зображення"
+        logo_remove_confirm: "Логотип буде видалено відразу після вашого підтвердження."
+        promo_image_note1: 'БУДЬ ЛАСКА, ЗАПИШІТЬ:'
+        promo_image_note2: Будь-яке рекламне зображення, завантажене тут, буде обрізано до 1200 x 260.
+        promo_image_note3: Рекламне зображення відображається у верхній частині сторінки профілю підприємства та у спливаючих вікнах.
+        promo_image_placeholder: 'Це зображення відображається в розділі "Про нас"'
+        promo_image_remove: "Видалити зображення"
+        promo_image_remove_confirm: "Рекламне зображення буде видалено одразу після вашого підтвердження."
+        white_label_logo_remove: "Видалити зображення"
       user_guide_link:
         user_guide: Керівництво користувача
       enterprises_hubs_tabs:
@@ -1565,6 +1570,9 @@ uk:
         stripe_connect_cancelled: "Підключення до Stripe скасовано"
         stripe_connect_success: "Обліковий запис Stripe успішно підключено"
         stripe_connect_fail: На жаль, не вдалося підключитися до вашого облікового запису Stripe
+        remove_logo_success: "Логотип видалено"
+        remove_promo_image_success: "Рекламне зображення видалено"
+        remove_white_label_logo_success: "Логотип видалено"
       stripe_connect_settings:
         resource: Конфігурація Stripe Connect
   api:
@@ -3138,10 +3146,6 @@ uk:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Логотип видалено"
-            immediate_logo_removal_warning: "Логотип буде видалено відразу після вашого підтвердження."
-            removed_promo_image_successfully: "Рекламне зображення видалено"
-            immediate_promo_image_removal_warning: "Рекламне зображення буде видалено одразу після вашого підтвердження."
             immediate_terms_and_conditions_removal_warning: "Файл Загальних положень та умов буде видалено одразу після підтвердження."
             removed_terms_and_conditions_successfully: "Файл із положеннями та умовами успішно видалено"
     insufficient_stock: "Недостатній запас, залишився лише %{on_hand}"
@@ -3482,8 +3486,6 @@ uk:
     rma_credit: "Кредит RMA"
     refund: "Повернення коштів"
     server_error: "Помилка серверу"
-    shipping_method_names:
-      UPS Ground: "UPS наземна"
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     updating: "Оновлення"

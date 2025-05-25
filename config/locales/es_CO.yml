@@ -788,12 +788,6 @@ es_CO:
         images:
           legend: "Imágenes"
           logo: Logo
-          promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
-          promo_image_note1: 'ATENCIÓN:'
-          promo_image_note2: La imagen será recortada a  1200 x 260.
-          promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
-          remove_logo: "Eliminar la imágen"
-          remove_promo_image: "Eliminar la imágen"
         inventory_settings:
           legend: "Configuración del Inventario"
           text1: Puedes optar por administrar los niveles de stock y los precios a través de tu
@@ -1158,6 +1152,17 @@ es_CO:
       resume:
         could_not_resume_the_order: No se pudo reanudar el pedido
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Eliminar la imágen"
+        logo_remove_confirm: "El logotipo se eliminará inmediatamente después de confirmar."
+        promo_image_note1: 'ATENCIÓN:'
+        promo_image_note2: La imagen será recortada a  1200 x 260.
+        promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
+        promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
+        promo_image_remove: "Eliminar la imágen"
+        promo_image_remove_confirm: "La imágen promocional se eliminará inmediatamente después de confirmar."
+        white_label_logo_remove: "Eliminar la imágen"
       user_guide_link:
         user_guide: Manual de usuario
       enterprises_hubs_tabs:
@@ -1365,6 +1370,9 @@ es_CO:
         stripe_connect_cancelled: "Se ha cancelado la conexión a Stripe"
         stripe_connect_success: "La cuenta Stripe se ha conectado correctamente"
         stripe_connect_fail: Lo sentimos, la conexión de su cuenta Stripe ha fallado
+        remove_logo_success: "Logotipo eliminado con éxito"
+        remove_promo_image_success: "Imágen promocional eliminada con éxito"
+        remove_white_label_logo_success: "Logotipo eliminado con éxito"
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
@@ -2822,13 +2830,6 @@ es_CO:
         error_saving: "Error al guardar suscripción "
         new:
           please_select_a_shop: "Por favor seleccione una tienda"
-      enterprises:
-        form:
-          images:
-            removed_logo_successfully: "Logotipo eliminado con éxito"
-            immediate_logo_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
-            removed_promo_image_successfully: "Imágen promocional eliminada con éxito"
-            immediate_promo_image_removal_warning: "La imágen promocional se eliminará inmediatamente después de confirmar."
     insufficient_stock: "Inventario insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Inventario reducido disponible

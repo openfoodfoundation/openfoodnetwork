@@ -456,10 +456,6 @@ sv:
         images:
           legend: "Bilder"
           logo: Logotyp
-          promo_image_placeholder: 'Denna bild visas under "Om oss"'
-          promo_image_note1: 'VAR VÄNLIG OBSERVERA:'
-          promo_image_note2: Varje reklambild som laddas här kommer att beskäras till 1200 x 260.
-          promo_image_note3: Logotypen visas högst upp på företagets profilsida och i rullgardinsmenyer.
         inventory_settings:
           legend: "Lagerstatus"
           text1: Du kan välja att hantera ditt varulager och dina priser via din
@@ -720,6 +716,12 @@ sv:
       index:
         title: Producentegenskaper
     shared:
+      attachment_field:
+        logo_label: "Logotyp"
+        promo_image_note1: 'VAR VÄNLIG OBSERVERA:'
+        promo_image_note2: Varje reklambild som laddas här kommer att beskäras till 1200 x 260.
+        promo_image_note3: Logotypen visas högst upp på företagets profilsida och i rullgardinsmenyer.
+        promo_image_placeholder: 'Denna bild visas under "Om oss"'
       user_guide_link:
         user_guide: Användarinstruktion
       enterprises_hubs_tabs:

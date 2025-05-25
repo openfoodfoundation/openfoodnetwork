@@ -1152,12 +1152,6 @@ hu:
           legend: "Képek"
           logo: Logó
           logo_size: "300 x 300 pixel"
-          promo_image_placeholder: 'Ez a kép a "Bemutatkozás" részben látható.'
-          promo_image_note1: 'FIGYELEM:'
-          promo_image_note2: Minden ide feltöltött promóciós kép 1200 x 260-ra lesz levágva.
-          promo_image_note3: A promóciós kép a vállalkozás profiloldalának és előugró ablakainak tetején jelenik meg.
-          remove_logo: "Kép eltávolítása"
-          remove_promo_image: "Kép eltávolítása"
         inventory_settings:
           legend: "Készletbeállítások"
           text1: Dönthetsz úgy, hogy a készletszinteket és az árakat a sajátodon keresztül kezeled
@@ -1335,10 +1329,6 @@ hu:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "OFN navigáció elrejtése"
-          upload_logo: "A Profil által használt Logo"
-          remove_logo: "Logo eltávolítása"
-          remove_logo_confirm: "Biztos vagy benne, hogy eltávolítod ezt a logo-t?"
-          remove_logo_success: "Logo eltávolítva"
           white_label_logo_link_label: "A főoldalon használt logo linkje"
           hide_groups_tab: "Csoportok lap elrejtése a kirakatban"
           create_custom_tab: "Hozz létre egyéni lapot a kirakatban"
@@ -1600,6 +1590,20 @@ hu:
       searching: Keresés...
       no_matches: Nincs találat
     shared:
+      attachment_field:
+        logo_label: "Logó"
+        logo_hint: 300 x 300 pixel
+        logo_remove: "Kép eltávolítása"
+        logo_remove_confirm: "A logót a megerősítés után azonnal eltávolítjuk."
+        promo_image_note1: 'FIGYELEM:'
+        promo_image_note2: Minden ide feltöltött promóciós kép 1200 x 260-ra lesz levágva.
+        promo_image_note3: A promóciós kép a vállalkozás profiloldalának és előugró ablakainak tetején jelenik meg.
+        promo_image_placeholder: 'Ez a kép a "Bemutatkozás" részben látható.'
+        promo_image_remove: "Kép eltávolítása"
+        promo_image_remove_confirm: "A promó képet a megerősítés után azonnal eltávolítjuk."
+        white_label_logo_label: "A Profil által használt Logo"
+        white_label_logo_remove: "Kép eltávolítása"
+        white_label_logo_remove_confirm: "Biztos vagy benne, hogy eltávolítod ezt a logo-t?"
       user_guide_link:
         user_guide: Használati útmutató
       enterprises_hubs_tabs:
@@ -1874,6 +1878,9 @@ hu:
         stripe_connect_cancelled: "A Stripe-hoz való csatlakozás megszakadt"
         stripe_connect_success: "Stripe fiók sikeresen csatlakoztatva"
         stripe_connect_fail: Sajnálom, a Stripe-fiókod csatlakoztatása meghiúsult
+        remove_logo_success: "A logo sikeresen eltávolítva"
+        remove_promo_image_success: "A Promó kép sikeresen eltávolítva"
+        remove_white_label_logo_success: "A logo sikeresen eltávolítva"
       stripe_connect_settings:
         resource: Stripe Connect konfiguráció
     resend_confirmation_emails_feedback:
@@ -3534,10 +3541,6 @@ hu:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "A logo sikeresen eltávolítva"
-            immediate_logo_removal_warning: "A logót a megerősítés után azonnal eltávolítjuk."
-            removed_promo_image_successfully: "A Promó kép sikeresen eltávolítva"
-            immediate_promo_image_removal_warning: "A promó képet a megerősítés után azonnal eltávolítjuk."
             immediate_terms_and_conditions_removal_warning: "A GDPR-ÁSZF fájlt a megerősítés után azonnal eltávolítjuk."
             removed_terms_and_conditions_successfully: "A GDPR és ÁSZF fájl sikeresen eltávolítva"
     insufficient_stock: "Nem áll rendelkezésre elegendő készlet, csak %{on_hand} maradt"
@@ -3853,10 +3856,6 @@ hu:
     rma_credit: "RMA hitel"
     refund: "Visszatérítés"
     server_error: "Szerver hiba"
-    shipping_method_names:
-      UPS Ground: "UPS föld"
-      pick_up: "Átvétel a gazdaságban"
-      delivery: "Aláírva, lepecsételve, kézbesítve"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     updating: "Frissítés"
