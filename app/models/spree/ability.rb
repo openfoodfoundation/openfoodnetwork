@@ -274,8 +274,37 @@ module Spree
     end
 
     def add_order_management_abilities(user)
-      can [:index, :create], Spree::Order
-      can [:read, :update, :fire, :resend, :invoice, :print], Spree::Order do |order|
+      can [:manage_order_sections], Spree::Order do |order|
+        user.admin? ||
+          order.distributor.nil? ||
+          user.enterprises.include?(order.distributor) ||
+          order.order_cycle&.coordinated_by?(user)
+      end
+
+      can [:edit_as_producer_only], Spree::Order do |order|
+        cannot?(:manage_order_sections, order) && can_edit_as_producer(order, user)
+      end
+
+      can [:index], Spree::Order do |order|
+        user.admin? ||
+          user.enterprises.any?(&:is_distributor) ||
+          can_edit_as_producer(order, user)
+      end
+
+      can [:create], Spree::Order
+
+      can [:read, :update], Spree::Order do |order|
+        # We allow editing orders with a nil distributor as this state occurs
+        # during the order creation process from the admin backend
+        order.distributor.nil? ||
+          # Enterprise User can access orders that they are a distributor for
+          user.enterprises.include?(order.distributor) ||
+          # Enterprise User can access orders that are placed inside a OC they coordinate
+          order.order_cycle&.coordinated_by?(user) ||
+          can_edit_as_producer(order, user)
+      end
+
+      can [:fire, :resend, :invoice, :print], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
@@ -284,22 +313,39 @@ module Spree
           # Enterprise User can access orders that are placed inside a OC they coordinate
           order.order_cycle&.coordinated_by?(user)
       end
-      can [:admin, :bulk_management, :managed, :distribution], Spree::Order do
+
+      can [:admin, :bulk_management], Spree::Order do |order|
+        user.admin? ||
+          user.enterprises.any?(&:is_distributor) ||
+          can_edit_as_producer(order, user)
+      end
+
+      can [:managed, :distribution], Spree::Order do
         user.admin? || user.enterprises.any?(&:is_distributor)
       end
       can [:admin, :index, :create, :show, :poll, :generate], :invoice
       can [:admin, :visible], Enterprise
       can [:admin, :index, :create, :update, :destroy], :line_item
-      can [:admin, :index, :create], Spree::LineItem
+      can [:admin, :index, :create], Spree::LineItem do |item|
+        user.admin? ||
+          user.enterprises.any?(&:is_distributor) ||
+          can_edit_as_producer(item.order, user)
+      end
       can [:destroy, :update], Spree::LineItem do |item|
         order = item.order
         user.admin? ||
           user.enterprises.include?(order.distributor) ||
-          order.order_cycle&.coordinated_by?(user)
+          order.order_cycle&.coordinated_by?(user) ||
+          can_edit_as_producer(order, user)
+      end
+
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment do |shipment|
+        user.admin? ||
+          user.enterprises.any?(&:is_distributor) ||
+          can_edit_as_producer(shipment.order, user)
       end
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
-      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
       can [:destroy], Spree::Adjustment do |adjustment|
@@ -313,6 +359,9 @@ module Spree
       end
 
       can [:create], OrderCycle
+      can [:admin, :index], OrderCycle do |order_cycle|
+        can_edit_as_producer(order_cycle.order, user)
+      end
 
       can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
       can [:admin, :index, :read, :create, :edit, :update], Exchange
@@ -350,26 +399,31 @@ module Spree
       can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
         user.enterprises.include?(proxy_order.subscription.shop)
       end
+      can [:visible], Enterprise
     end
 
-    def can_edit_order(order, user)
+    def can_edit_as_producer(order, user)
       return unless order.distributor&.enable_producers_to_edit_orders
 
       order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
     end
 
     def add_manage_line_items_abilities(user)
+      can [:edit_as_producer_only], Spree::Order do |order|
+        can_edit_as_producer(order, user)
+      end
+
       can [:admin, :read, :index, :edit, :update, :bulk_management], Spree::Order do |order|
-        can_edit_order(order, user)
+        can_edit_as_producer(order, user)
       end
       can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
-        can_edit_order(item.order, user)
+        can_edit_as_producer(item.order, user)
       end
       can [:index, :create, :add, :read, :edit, :update], Spree::Shipment do |shipment|
-        can_edit_order(shipment.order, user)
+        can_edit_as_producer(shipment.order, user)
       end
       can [:admin, :index], OrderCycle do |order_cycle|
-        can_edit_order(order_cycle.order, user)
+        can_edit_as_producer(order_cycle.order, user)
       end
       can [:visible], Enterprise
     end
