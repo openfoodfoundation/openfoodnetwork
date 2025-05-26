@@ -238,11 +238,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/spree/tax_category.rb'
     - 'app/models/spree/zone.rb'
 
-# Offense count: 1
-Security/Open:
-  Exclude:
-    - 'app/services/image_importer.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

@@ -3,7 +3,7 @@
 class ImageImporter
   def import(url, product)
     valid_url = URI.parse(url)
-    file = open(valid_url.to_s)
+    file = File.open(valid_url.to_s)
     filename = File.basename(valid_url.path)
 
     Spree::Image.create(
