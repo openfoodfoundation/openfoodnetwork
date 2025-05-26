@@ -8509,10 +8509,10 @@ stimulus@^3.2.2:
     "@hotwired/stimulus" "^3.2.2"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
-stimulus_reflex@3.5.4:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.4.tgz#0e88fff5d66d5e04567b644e8d2fcc3d9d3b1f2b"
-  integrity sha512-Iz9nlmxfUGYu3o/GJfjGQ8xu5G6wutH0NMthMWmTynTAbXumM8qouExrTHuV22hq5lvT15j4ZxOyV/uq0SJxug==
+stimulus_reflex@3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.5.tgz#f2475fa7eb1f36dcf510cfffdfbd0eaa4c49463a"
+  integrity sha512-8jMyNnbepY4oZAbGZNowmhdg0mNe6p9qMNV8UGW64oSiEMNkV0paGL7VHwm6k/oUGIgVB6ZT+SvzrP20bYBzfw==
   dependencies:
     "@hotwired/stimulus" "^3"
     "@rails/actioncable" "^6 || ^7 || ^8"
