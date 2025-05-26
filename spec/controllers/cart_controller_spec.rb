@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe CartController, type: :controller do
+RSpec.describe CartController do
   let(:order) { create(:order) }
 
   describe "basic behaviour" do

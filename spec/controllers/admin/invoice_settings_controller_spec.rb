@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::InvoiceSettingsController, type: :controller do
+RSpec.describe Admin::InvoiceSettingsController do
   describe "#update" do
     let(:params) {
       {

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe "/admin", type: :request do
+RSpec.describe "/admin" do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 

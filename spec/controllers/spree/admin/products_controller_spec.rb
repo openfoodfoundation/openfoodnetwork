@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::ProductsController, type: :controller do
+RSpec.describe Spree::Admin::ProductsController do
   describe 'bulk_update' do
     context "updating a product we do not have access to" do
       let(:s_managed) { create(:enterprise) }

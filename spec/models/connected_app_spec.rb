@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ConnectedApp, type: :model do
+RSpec.describe ConnectedApp do
   it { is_expected.to belong_to :enterprise }
 
   it "stores data as json hash" do

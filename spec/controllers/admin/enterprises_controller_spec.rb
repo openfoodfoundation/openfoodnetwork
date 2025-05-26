@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
-RSpec.describe Admin::EnterprisesController, type: :controller do
+RSpec.describe Admin::EnterprisesController do
   let(:user) { create(:user) }
   let(:admin_user) { create(:admin_user) }
   let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe UserPasswordsController, type: :controller do
+RSpec.describe UserPasswordsController do
   render_views
 
   let(:user) { create(:user) }
