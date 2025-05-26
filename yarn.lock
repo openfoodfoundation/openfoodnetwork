@@ -1424,10 +1424,10 @@
   resolved "https://registry.yarnpkg.com/@orchidjs/unicode-variants/-/unicode-variants-1.1.2.tgz#1fd71791a67fdd1591ebe0dcaadd3964537a824e"
   integrity sha512-5DobW1CHgnBROOEpFlEXytED5OosEWESFvg/VYmH0143oXcijYTprRYJTs+55HzGM4IqxiLFSuqEzu9mPNwVsA==
 
-"@rails/actioncable@^6 || ^7":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.0.4.tgz#70a3ca56809f7aaabb80af2f9c01ae51e1a8ed41"
-  integrity sha512-tz4oM+Zn9CYsvtyicsa/AwzKZKL+ITHWkhiu7x+xF77clh2b4Rm+s6xnOgY/sGDWoFWZmtKsE95hxBPkgQQNnQ==
+"@rails/actioncable@^6 || ^7 || ^8":
+  version "8.0.200"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-8.0.200.tgz#1d27d9d55e45266e061190db045925e0b4d53d6b"
+  integrity sha512-EDqWyxck22BHmv1e+mD8Kl6GmtNkhEPdRfGFT7kvsv1yoXd9iYrqHDVAaR8bKmU/syC5eEZ2I5aWWxtB73ukMw==
 
 "@rails/webpacker@5.4.4":
   version "5.4.4"
@@ -8509,13 +8509,13 @@ stimulus@^3.2.2:
     "@hotwired/stimulus" "^3.2.2"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
-stimulus_reflex@3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.3.tgz#4c73bae6fa9622ca1b835b856782de9aa289a90a"
-  integrity sha512-ejNesmnqAQ0qHMT2oomkC50W/ZY3I4Bi9NmfKOiN9a1esHo7yFOouKhADouIWT59Qyu8ddWr8SDpKTX/Eit67g==
+stimulus_reflex@3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.4.tgz#0e88fff5d66d5e04567b644e8d2fcc3d9d3b1f2b"
+  integrity sha512-Iz9nlmxfUGYu3o/GJfjGQ8xu5G6wutH0NMthMWmTynTAbXumM8qouExrTHuV22hq5lvT15j4ZxOyV/uq0SJxug==
   dependencies:
     "@hotwired/stimulus" "^3"
-    "@rails/actioncable" "^6 || ^7"
+    "@rails/actioncable" "^6 || ^7 || ^8"
     cable_ready "^5.0.6"
 
 stream-browserify@^2.0.1:
