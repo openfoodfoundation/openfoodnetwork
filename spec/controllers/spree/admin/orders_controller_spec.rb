@@ -85,7 +85,9 @@ RSpec.describe Spree::Admin::OrdersController do
                                                        order_cycle:)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
-          break unless order.next! while !order.completed?
+          while !order.completed?
+            break unless order.next!
+          end
           order.recreate_all_fees!
           order
         end
