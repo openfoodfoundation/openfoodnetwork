@@ -11,6 +11,9 @@ require "dfc_provider/supplied_product"
 require "dfc_provider/address"
 require "dfc_provider/coordination"
 
+# 🙈
+require "inspect"
+
 module DfcProvider
   DataFoodConsortium::Connector::Importer.register_type(SuppliedProduct)
 end
