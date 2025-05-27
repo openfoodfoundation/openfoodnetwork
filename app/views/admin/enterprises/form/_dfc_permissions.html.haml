@@ -1,0 +1,27 @@
+%script{type: "module", src: "https://cdn.jsdelivr.net/npm/@startinblox/core@latest/dist/index.js"}
+%script{type: "module"}
+  :plain
+    window.orbit = {
+    client: {
+        name: "Orbit",
+        logo: "https://cdn.startinblox.com/logos/ACME.svg",
+    },
+    components: [],
+    getRoute: (route) => route,
+    getDefaultRoute: () => "",
+    getComponent: () => undefined,
+    getComponentFromRoute: () => undefined,
+    Swal: () => {},
+    defaultRoute: "",
+    federations: {},
+    componentSet: new Set(["routing", "menu", "menu-top", "autoLogin", "solid-permissioning"]),
+    };
+
+:plain
+  <solid-permissioning
+    data-src="https://data-server.cqcm.startinblox.com/enterprises/1/platforms"
+    scopes-uri="https://cdn.startinblox.com/owl/dfc/taxonomies/scopes.jsonld"
+    noRouter>
+  </solid-permissioning>
+
+%script{type: "module", src: "https://cdn.jsdelivr.net/npm/@startinblox/solid-data-permissioning@latest/dist/index.js"}
