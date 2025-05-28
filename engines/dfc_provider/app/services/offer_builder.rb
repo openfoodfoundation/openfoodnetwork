@@ -28,15 +28,7 @@ class OfferBuilder < DfcBuilder
   end
 
   def self.add_offered_item(offer, variant)
-    # challenge: include some parts of the graph, without diving into a stack overflow.
-    catalog_item_id = urls.enterprise_catalog_item_url(
-      enterprise_id: variant.supplier_id, id: variant.id
-    )
-    offer.offeredItem = DataFoodConsortium::Connector::CatalogItem.new(
-        catalog_item_id, product: SuppliedProductBuilder.supplied_product(variant, include_catalog_items: false),
-            sku: variant.sku,
-      )
-
+    offer.offeredItem = SuppliedProductBuilder.supplied_product(variant)
   end
 
   def self.price(offer)
