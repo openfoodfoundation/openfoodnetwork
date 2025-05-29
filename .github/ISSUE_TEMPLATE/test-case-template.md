@@ -39,10 +39,6 @@ assignees: ''
 * Automated: <!-- yes/no -->
 * Test Type: <!-- Unit, System, Integration -->
 
-
-## Environment
-<!-- Include relevant details about the environment you experienced the bug in -->
-
 * Browser name and version:
 * Operating System and version (desktop or mobile):
 * Environment: <!-- dev, test, staging -->
