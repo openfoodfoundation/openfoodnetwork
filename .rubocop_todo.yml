@@ -63,7 +63,6 @@ Metrics/ClassLength:
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
     - 'app/controllers/spree/admin/payments_controller.rb'
     - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/controllers/spree/admin/users_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/invoice/data_presenter.rb'
@@ -149,7 +148,7 @@ Metrics/MethodLength:
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
-# Offense count: 49
+# Offense count: 47
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
@@ -176,12 +175,10 @@ Metrics/ModuleLength:
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
     - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/controllers/payment_gateways/stripe_controller_spec.rb'
     - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
     - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
     - 'spec/controllers/spree/admin/variants_controller_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_permissions_spec.rb'
     - 'spec/lib/open_food_network/permissions_spec.rb'
