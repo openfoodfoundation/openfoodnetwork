@@ -47,7 +47,7 @@ RSpec.describe VoucherAdjustmentsController do
         post("/voucher_adjustments", params:)
 
         expect(response).to be_unprocessable
-        expect(flash[:error]).to match "Voucher code Not found"
+        expect(flash[:error]).to match "Voucher code invalid."
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe VoucherAdjustmentsController do
             post("/voucher_adjustments", params:)
 
             expect(response).to be_unprocessable
-            expect(flash[:error]).to match "Voucher code Not found"
+            expect(flash[:error]).to match "Voucher code invalid."
           end
         end
 
@@ -149,7 +149,7 @@ RSpec.describe VoucherAdjustmentsController do
             post("/voucher_adjustments", params:)
 
             expect(response).to be_unprocessable
-            expect(flash[:error]).to match "Voucher code Not found"
+            expect(flash[:error]).to match "Voucher code invalid"
           end
         end
 
