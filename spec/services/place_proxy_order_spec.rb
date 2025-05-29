@@ -52,7 +52,9 @@ RSpec.describe PlaceProxyOrder do
 
       before do
         proxy_order.initialise_order!
-        break unless order.next! while !order.completed?
+        while !order.completed?
+          break unless order.next!
+        end
       end
 
       it "records an issue and ignores it" do

@@ -41,53 +41,53 @@ module OrderManagement
       private
 
       def shipping_method_allowed?
-        return unless shipping_method
-        return if shipping_method.distributors.include?(shop)
+        return false unless shipping_method
+        return false if shipping_method.distributors.include?(shop)
 
         errors.add(:shipping_method, :not_available_to_shop, shop: shop.name)
       end
 
       def payment_method_allowed?
-        return unless payment_method
-        return if payment_method.distributors.include?(shop)
+        return false unless payment_method
+        return false if payment_method.distributors.include?(shop)
 
         errors.add(:payment_method, :not_available_to_shop, shop: shop.name)
       end
 
       def payment_method_type_allowed?
-        return unless payment_method
-        return if Subscription::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
+        return false unless payment_method
+        return false if Subscription::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
 
         errors.add(:payment_method, :invalid_type)
       end
 
       def ends_at_after_begins_at?
         # Only validates ends_at if it is present
-        return if begins_at.blank? || ends_at.blank?
-        return if ends_at > begins_at
+        return false if begins_at.blank? || ends_at.blank?
+        return false if ends_at > begins_at
 
         errors.add(:ends_at, :after_begins_at)
       end
 
       def customer_allowed?
-        return unless customer
-        return if customer.enterprise == shop
+        return false unless customer
+        return false if customer.enterprise == shop
 
         errors.add(:customer, :does_not_belong_to_shop, shop: shop.name)
       end
 
       def schedule_allowed?
-        return unless schedule
-        return if schedule.coordinators.include?(shop)
+        return false unless schedule
+        return false if schedule.coordinators.include?(shop)
 
         errors.add(:schedule, :not_coordinated_by_shop, shop: shop.name)
       end
 
       def credit_card_ok?
-        return unless customer && payment_method
-        return unless stripe_payment_method?(payment_method)
+        return false unless customer && payment_method
+        return false unless stripe_payment_method?(payment_method)
         return errors.add(:payment_method, :charges_not_allowed) unless customer.allow_charges
-        return if customer.user&.default_card.present?
+        return false if customer.user&.default_card.present?
 
         errors.add(:payment_method, :no_default_card)
       end
@@ -97,7 +97,7 @@ module OrderManagement
       end
 
       def subscription_line_items_present?
-        return if subscription_line_items.any? { |sli|
+        return false if subscription_line_items.any? { |sli|
           sli.quantity > 0 && !sli.marked_for_destruction?
         }
 

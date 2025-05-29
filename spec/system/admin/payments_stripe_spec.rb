@@ -101,7 +101,9 @@ RSpec.describe '
         stub_payment_intents_post_request order:, stripe_account_header: true
         stub_successful_capture_request(order:)
 
-        break unless order.next! while !order.payment?
+        while !order.payment?
+          break unless order.next!
+        end
       end
 
       it "adds a payment with state complete" do

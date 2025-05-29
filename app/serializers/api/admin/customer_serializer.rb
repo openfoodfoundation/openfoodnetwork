@@ -25,7 +25,7 @@ module Api
       end
 
       def default_card_present?
-        return unless object.user
+        return false unless object.user
 
         object.user.default_card.present?
       end

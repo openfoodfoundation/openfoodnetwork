@@ -116,7 +116,9 @@ RSpec.describe ProxyOrder do
           allow(Spree::OrderMailer).to receive(:cancel_email) {
                                          double(:email, deliver_later: true)
                                        }
-          break unless order.next! while !order.completed?
+          while !order.completed?
+            break unless order.next!
+          end
           order.cancel
           order.reload
         end
@@ -130,7 +132,11 @@ RSpec.describe ProxyOrder do
       end
 
       context "and the order has not been cancelled" do
-        before { break unless order.next! while !order.completed? }
+        before {
+          while !order.completed?
+            break unless order.next!
+          end
+        }
 
         it "returns true and clears canceled_at" do
           expect(proxy_order.resume).to be true
@@ -159,7 +165,10 @@ RSpec.describe ProxyOrder do
           allow(Spree::OrderMailer).to receive(:cancel_email) {
                                          double(:email, deliver_later: true)
                                        }
-          break unless order.next! while !order.completed?
+          while !order.completed?
+            break unless order.next!
+          end
+
           order.cancel
         end
 
@@ -172,7 +181,11 @@ RSpec.describe ProxyOrder do
       end
 
       context "and the order has not been cancelled" do
-        before { break unless order.next! while !order.completed? }
+        before {
+          while !order.completed?
+            break unless order.next!
+          end
+        }
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false

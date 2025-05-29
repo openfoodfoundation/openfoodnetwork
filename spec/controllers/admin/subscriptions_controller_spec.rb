@@ -458,7 +458,11 @@ RSpec.describe Admin::SubscriptionsController do
             }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { break unless order.next! while !order.completed? }
+            before do
+              while !order.completed?
+                break unless order.next!
+              end
+            end
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
@@ -562,7 +566,11 @@ RSpec.describe Admin::SubscriptionsController do
             }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { break unless order.next! while !order.completed? }
+            before do
+              while !order.completed?
+                break unless order.next!
+              end
+            end
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
@@ -668,7 +676,11 @@ RSpec.describe Admin::SubscriptionsController do
             }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { break unless order.next! while !order.completed? }
+            before do
+              while !order.completed?
+                break unless order.next!
+              end
+            end
 
             context "when no associated orders are 'canceled'" do
               it 'renders the unpaused subscription as json, leaves the order untouched' do
