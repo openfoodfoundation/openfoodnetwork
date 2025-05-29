@@ -5,7 +5,7 @@ class VoucherAdjustmentsController < BaseController
 
   def create
     if voucher_params[:voucher_code].blank?
-      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_not_found'))
+      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_code_blank'))
       return render_error
     end
 
@@ -43,7 +43,7 @@ class VoucherAdjustmentsController < BaseController
     return false if @order.errors.present?
 
     if voucher.nil?
-      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_not_found'))
+      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_code_not_found'))
       return false
     end
 
