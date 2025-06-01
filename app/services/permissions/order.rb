@@ -49,7 +49,7 @@ module Permissions
         @permissions.managed_enterprises.select("enterprises.id")
       ).or(
         Spree::LineItem.where(
-          order_id: managed_or_coordinated_orders_where_clause.select(:id)
+          order_id: filtered_orders(managed_or_coordinated_orders_where_clause).select(:id)
         )
       )
     end
