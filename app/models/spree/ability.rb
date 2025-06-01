@@ -20,6 +20,10 @@ module Spree
 
       if user.try(:admin?)
         can :manage, :all
+
+        # this action was needed for restrictions for distributors and suppliers
+        # however, admins don't need to be restricted, so, bypassing it for admins
+        cannot :edit_as_producer_only, Spree::Order
       else
         can [:index, :read], Country
         can :create, Order
@@ -257,8 +261,13 @@ module Spree
     end
 
     def add_order_cycle_management_abilities(user)
+      can [:admin, :index], OrderCycle do |order_cycle|
+        OrderCycle.visible_by(user).include?(order_cycle) ||
+          order_cycle.orders.any? { |order| can_edit_as_producer(order, user) }
+      end
+
       can [
-        :admin, :index, :read, :edit, :update, :incoming, :outgoing, :checkout_options
+        :read, :edit, :update, :incoming, :outgoing, :checkout_options
       ], OrderCycle do |order_cycle|
         OrderCycle.visible_by(user).include? order_cycle
       end
@@ -359,9 +368,6 @@ module Spree
       end
 
       can [:create], OrderCycle
-      can [:admin, :index], OrderCycle do |order_cycle|
-        can_edit_as_producer(order_cycle.order, user)
-      end
 
       can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
       can [:admin, :index, :read, :create, :edit, :update], Exchange
