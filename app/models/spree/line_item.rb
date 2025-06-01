@@ -235,11 +235,10 @@ module Spree
     end
 
     def unit_price
-      unit = UnitPrice.new(variant).unit
-      amount = price_with_adjustments / UnitPrice.new(variant).denominator
+      unit_price = UnitPrice.new(variant)
       {
-        amount:,
-        unit:,
+        amount: price_with_adjustments / unit_price.denominator,
+        unit: unit_price.unit,
       }
     end
 
