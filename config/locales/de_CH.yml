@@ -5,6 +5,8 @@ de_CH:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/image:
+        attachment: Anhang
       spree/order/ship_address:
         address1: "Lieferadresse Straße + Hausnummer"
         address2: "Lieferadresse Adresszusatz"
@@ -13,6 +15,14 @@ de_CH:
         phone: "Telefonnummer"
         firstname: "Vorname"
         lastname: "Nachname"
+        zipcode: "Postleitzahl der Lieferadresse"
+      spree/order/bill_address:
+        address1: "Rechnungsadresse (Strasse + Hausnummer)"
+        zipcode: "Postleitzahl der Rechnungsadresse"
+        city: "Ort der Rechnungsadresse"
+        country: "Land der Rechnungsadresse"
+        firstname: "Rechnungsadresse Vorname"
+        lastname: "Rechnungsadresse Nachname"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -39,7 +49,9 @@ de_CH:
         primary_taxon: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
         supplier: "Lieferant"
+        variant_unit: "Einheit"
         variant_unit_name: "Name der Varianteneinheit"
+        unit_value: "Einheitswert"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -50,6 +62,8 @@ de_CH:
         orders_close_at: Schliesszeitpunkt
       variant_override:
         count_on_hand: "Verfügbar"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Rechner Pauschalprozentsatz:"
     errors:
       models:
         spree/user:
@@ -96,6 +110,8 @@ de_CH:
       aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
       aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
       image_not_processable: "ist kein gültiges Bild"
+    not_found:
+      title: "Die gesuchte Seite existiert nicht (404)"
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -445,11 +461,15 @@ de_CH:
           title: Lieferkategorien
         producers:
           title: Unsere Produzenten
+        per_page: "%{count} Artikel pro Seite"
         colums: Spalten
       columns:
         image: Bild
         name: Name
+        unit_scale: Einheit
         unit: Einheit
+        unit_value: Einheitswert
+        display_as: Einheit anzeigen als
         price: Preis
         producer: Produzent
         category: Kategorie
@@ -477,9 +497,11 @@ de_CH:
         clone: Duplizieren
         delete: Löschen
         remove: Löschen
+        preview: Vorschau
       image:
         edit: Bearbeiten
       product_preview:
+        product_preview: Produktvorschau
         shop_tab: Laden
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
@@ -558,6 +580,7 @@ de_CH:
         terms_of_service: "Nutzungsbedingungen"
         delete: "Löschen"
         confirm_delete: "Sind Sie sicher, dass Sie die derzeitigen Nutzungsbedingungen löschen möchten?"
+        attachment: "Anhang"
     number_localization:
       number_localization_settings: "Zahlenformateinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
@@ -695,7 +718,12 @@ de_CH:
       index:
         header:
           title: Produkte verwalten
+      content:
+        loading: Laden Ihrer Produkte
       filters:
+        search_products: Nach Produkten suchen
+        all_producers: Alle Produzenten
+        all_categories: Alle Kategorien
         producers:
           label: Unsere Produzenten
         categories:
@@ -705,10 +733,24 @@ de_CH:
         search: Suche
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count} Produkt</strong> für Ihre Suchkriterien gefunden. Es werden %{from} bis %{to} angezeigt."
+            other: "<strong>%{count} Produkte</strong> zu Ihren Suchkriterien gefunden. Es werden %{from} bis %{to} angezeigt."
+          per_page:
+            show: Anzeigen
+            per_page: "%{num} pro Seite"
           clear_search: Suche zurücksetzen
       no_products:
         no_products_found: Keine Produkte gefunden.
       table:
+        changed_summary:
+          one: "%{count} Produkt geändert."
+          other: "%{count} Produkte geändert."
+        error_summary:
+          invalid:
+            one: "%{count} Produkt konnte nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
+            other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie den Fehler und versuchen Sie es erneut."
+        reset: Änderungen verwerfen
         save: Änderungen speichern
       product_variant_row:
         new_variant: Neue Produktvariante
@@ -719,6 +761,7 @@ de_CH:
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        select_unit_scale: Einheit auswählen
         add_a_tag: Stichwort hinzufügen
     product_import:
       title: Produkte importieren
@@ -759,6 +802,8 @@ de_CH:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        preview: Vorschau
       import:
         review: Überprüfung
         import: Importieren
@@ -778,6 +823,7 @@ de_CH:
         no_name: Für einige Produkte ist kein Name definiert.
         blank_enterprise: Für einige Produkte ist kein Unternehmen definiert.
         reset_absent?: Fehlende Produkte zurücksetzen?
+        reset_absent_tip: Setzen Sie den Bestand für alle vorhandenen Produkte, die nicht in der Datei vorhanden sind, auf Null
         overwrite_all: Alle überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -1116,6 +1162,10 @@ de_CH:
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
+        white_label:
+          hide_ofn_navigation: "OFN-Navigation ausblenden"
+          hide_groups_tab: "Gruppenregisterkarte im Schaufenster ausblenden"
+          create_custom_tab: "Benutzerdefinierte Registerkarte im Schaufenster erstellen"
         connected_apps:
           affiliate_sales_data:
             loading: "Wird geladen ..."
@@ -1175,8 +1225,10 @@ de_CH:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
+        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
+        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Schweiz!
         welcome_text: 'Erfolgreich erstellt:'
@@ -1242,6 +1294,7 @@ de_CH:
       checkout_options:
         back_end: "Nur im Backoffice"
         cancel: "Stornieren"
+        checkout_options: "Checkout Optionen"
         distributor: "Verteilstelle"
         payment_methods: "Zahlungsarten"
         save: "Speichern"
@@ -1252,6 +1305,7 @@ de_CH:
         edit: "1. Allgemeine Einstellungen"
         incoming: "2. Eingehende Produkte"
         outgoing: "3. Ausgehende Produkte"
+        checkout_options: "4. Checkout Optionen"
       exchange_form:
         pickup_time_tip: Datum und Uhrzeit, ab wann Bestellungen dieses Bestellzylus für den Kunden bereit sind.
         pickup_instructions_placeholder: "Informationen zur Abholung"
@@ -1339,6 +1393,7 @@ de_CH:
         logo_label: "Logo"
         logo_remove: "Bild löschen"
         logo_remove_confirm: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
+        promo_image_label: "Promo-Bild"
         promo_image_note1: 'BITTE BEACHTEN SIE:'
         promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
         promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
@@ -1400,11 +1455,14 @@ de_CH:
       lettuce_share: LettuceShare
       payment_methods: Zahlungsarten
       delivery: Lieferungen
+      sales_tax_totals_by_producer: Umsatzsteuersumme nach Produzent
+      sales_tax_totals_by_order: Umsatzsteuersumme nach Bestellung
       tax_types: Steuerarten
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
       pack_by_product: Packliste nach Produkten
+      pay_your_suppliers: Bezahlen Sie Ihre Lieferanten
       orders_and_distributors:
         name: Bestellungen und Verteilstellen
         description: Bestellungen mit Verteilstellendetails
@@ -1433,6 +1491,10 @@ de_CH:
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
+      suppliers:
+        name: Lieferanten
+      enterprise_fees_with_tax_report_by_order: "Unternehmensgebühren mit Steuerbericht nach Auftrag"
+      enterprise_fees_with_tax_report_by_producer: "Unternehmensgebühren mit Steuerbericht nach Produzent"
       errors:
         no_report_type: "Bitte wählen Sie eine Berichtsart aus."
         report_not_found: "Bericht wurde nicht gefunden."
@@ -1684,6 +1746,7 @@ de_CH:
       invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
+      no_shipping_methods_available: Eine Kaufabwicklung ist aufgrund fehlender Versandoptionen nicht möglich. Bitte kontaktieren Sie den Shop-Betreiber.
       voucher_not_found: Nicht gefunden
   shops:
     hubs:
@@ -1751,10 +1814,11 @@ de_CH:
   invoice_column_price: "Preis"
   invoice_column_item: "Artikel"
   invoice_column_qty: "Menge"
-  invoice_column_unit_price_with_taxes: "Stückpreis (inkl. Steuern)"
-  invoice_column_unit_price_without_taxes: "Stückpreis (zzgl. Steuern)"
+  invoice_column_unit_price_with_taxes: "Stückpreis (inkl. MwSt.)"
+  invoice_column_unit_price_without_taxes: "Stückpreis (ohne MwSt.)"
   invoice_column_price_with_taxes: "Gesamtpreis (inkl. Steuern)"
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
+  invoice_column_price_per_unit_without_taxes: "Preis pro Einheit (ohne MwSt.)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
@@ -2377,7 +2441,7 @@ de_CH:
         title: "Art des Profils"
         headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
         question: "Ist das Unternehmen ein Produzent?"
-        yes_producer: "Ja, es ist ein Produzent."
+        yes_producer: "Ja, ich bin ein Produzent."
         no_producer: "Nein, es ist kein Produzent."
         producer_field_error: "Bitte wählen Sie: Ist das Unternehmen ein Produzent?"
         yes_producer_help: "Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
@@ -3761,6 +3825,8 @@ de_CH:
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
           resend_confirmation: "Bestätigung erneut senden"
+          selected:
+            zero: "Keine Bestellung ausgewählt"
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
@@ -3986,8 +4052,10 @@ de_CH:
           display_name: "Variantenname"
           display_as_placeholder: 'z. B. 2 kg'
           display_name_placeholder: 'z. B. Tomaten'
+          unit_scale: "Einheit"
           unit: Einheit
           price: Preis
+          unit_value: Einheitswert
           variant_category: Kategorie
         autocomplete:
           out_of_stock: "nicht vorrätig"

@@ -281,10 +281,10 @@ fi:
       failure: "Kirjautuminen epäonnistui: %{error}"
       record_not_unique: "%{uid} on jo liitetty toiseen tiliin"
   home_page_alert_html: "Kotisivun hälytys HTML"
-  hub_signup_case_studies_html: "Keskuksen rekisteröitymisen tapaustutkimukset HTML"
+  hub_signup_case_studies_html: "Hubin liittymisen tapaustutkimukset (HTML-sisältö)"
   hub_signup_detail_html: "Keskuksen rekisteröitymisen yksityiskohdat HTML"
   hub_signup_pricing_table_html: "Keskuksen rekisteröitymisen hinnoittelutaulukko HTML"
-  group_signup_case_studies_html: "Ryhmän rekisteröitymisen tapaustutkimukset HTML"
+  group_signup_case_studies_html: "Ryhmän rekisteröitymisen esimerkit HTML"
   group_signup_detail_html: "Ryhmän rekisteröitymisen yksityiskohdat HTML"
   group_signup_pricing_table_html: "Ryhmän rekisteröitymisen hinnoittelutaulukko HTML"
   item_description: "Tuotteen kuvaus"
@@ -305,7 +305,7 @@ fi:
   open_street_map_default_longitude: "Open Street Map oletuspituusaste"
   open_street_map_provider_name: "Open Street Map palveluntarjoajan nimi"
   open_street_map_provider_options: "Open Street Map palveluntarjoajan asetukset"
-  producer_signup_case_studies_html: "Tuottajan rekisteröitymisen tapaustutkimukset HTML"
+  producer_signup_case_studies_html: "Tuottajan rekisteröitymisen esimerkit HTML"
   producer_signup_detail_html: "Tuottajan rekisteröitymisen yksityiskohdat HTML"
   producer_signup_pricing_table_html: "Tuottajan rekisteröitymisen hinnoittelutaulukko HTML"
   producers_social: "Tuottajien some"
@@ -429,10 +429,10 @@ fi:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Tervetuloa"
-  site_meta_description: "Aloitamme maasta. Viljelijöiden ja kasvattajien kanssa, jotka ovat valmiita kertomaan tarinansa ylpeästi ja rehellisesti. Jakelijoiden kanssa, jotka ovat valmiita yhdistämään ihmisiä ja tuotteita reilusti ja rehellisesti. Ostajien kanssa, jotka uskovat, että paremmat viikoittaiset ostopäätökset voivat..."
+  site_meta_description: "Löydä lähituottajat ja tue suomalaista ruoantuotantoa\nOsta suoraan paikallisilta tuottajilta ja pienyrityksiltä. Valitse laadukkaita tuotteita ilman välikäsiä - lyhyet toimitusketjut tukevat sekä tuottajaa että ympäristöä.\nOpen Food Network tarjoaa vaihtoehdon sinulle, joka haluat ostaa ruokasi suoraan sen tuottajalta – aivan kuten REKO-ryhmissä, mutta helpommin hallittuna ja verkossa."
   search_by_name: Etsi nimellä tai kaupunginosalla...
   producers_join: Suomalaiset tuottajat ovat nyt tervetulleita liittymään Open Food Networkiin.
-  charges_sales_tax: Veroja peritään?
+  charges_sales_tax: Arvonlisäverovelvollinen?
   business_address: "Yrityksen osoite"
   print_invoice: "Tulosta lasku"
   print_ticket: "Tulosta lippu"
@@ -474,18 +474,18 @@ fi:
   distributors: Jakelijat
   distribution: Jakelu
   order_cycles: Tilausjaksot
-  bulk_order_management: Tilauksien joukkohallinta
+  bulk_order_management: Muokkaa useita tilauksia
   enterprises: Yritykset
   enterprise_groups: Ryhmät
   reports: Raportit
-  listing_reports: Listausraportit
+  listing_reports: Raporttinäkymä
   variant_overrides: Varasto
   import: Tuonti
   spree_products: Spree-tuotteet
   all: Kaikki
   current: Nykyinen
   available: Saatavilla
-  dashboard: Koontinäyttö
+  dashboard: Hallintapaneeli
   undefined: määrittelemätön
   unused: käyttämätön
   admin_and_handling: Hallinta & käsittely
@@ -716,8 +716,8 @@ fi:
         instance_publishable_key: Instanssin julkaistava avain
         account_id: Tilin ID
         business_name: Yrityksen nimi
-        charges_enabled: Velotukset käytössä
-        charges_enabled_warning: "Varoitus: Velotukset eivät ole käytössä tililläsi"
+        charges_enabled: Veloitukset käytössä
+        charges_enabled_warning: "Varoitus: Veloitukset eivät ole käytössä tililläsi"
         auth_fail_error: Antamasi API-avain on virheellinen
         empty_api_key_error_html: Stripe API -avainta ei ole annettu. Asettaaksesi API-avaimen, noudata <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">näitä ohjeita</a>
     matomo_settings:
@@ -874,7 +874,7 @@ fi:
     products_v3:
       index:
         header:
-          title: Tuotteiden joukkomuokkaus
+          title: Muokkaa useita tuotteita
       content:
         loading: Ladataan tuotteitasi
       delete_modal:
@@ -1111,7 +1111,7 @@ fi:
         product_unit: "Tuote: Yksikkö"
         weight_volume: "Paino/Tilavuus (g)"
         ask: "Kysy?"
-        page_title: "Tilausten joukkomuokkaus"
+        page_title: "Muokkaa useita tilauksia"
         actions_delete: "Poista valitut"
         loading: "Ladataan tilauksia"
         no_results: "Tilauksia ei löytynyt."
@@ -1160,9 +1160,9 @@ fi:
           uploaded_on: "ladattu"
           reset_form: "Nollaa lomake"
           business_address_legend: "Yrityksen osoite"
-          invoice_item_sorting_legend: "lasku kohde lajittelu"
-          sort_items_by_supplier?: Lajittele kohteet toimittaja mukaan?
-          sort_items_by_supplier_tip: "Kun tämä on käytössä, kohteet lajittelee toimittaja nimi ."
+          invoice_item_sorting_legend: "Laskujen lajittelu"
+          sort_items_by_supplier?: Lajittele tuotteet toimittajan mukaan?
+          sort_items_by_supplier_tip: "Kun tämä on käytössä, tuotteet lajitellaan toimittajan nimen mukaan."
           enabled: Ota käyttöön
           disabled: Poista käytöstä
         business_address:
@@ -1178,14 +1178,14 @@ fi:
         contact:
           legend: "Yhteystieto"
           name: Nimi
-          name_placeholder: eg. Gustav Plum
+          name_placeholder: esim. Gustav Plum
           email_address: Julkinen sähköpostiosoite
-          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_placeholder: esim. inquiries@fresh-food.com
           email_address_tip: "Tämä osoite näytetään julkisessa profiilissasi"
           phone: Puhelin
-          phone_placeholder: eg. 98 7654 3210
+          phone_placeholder: esim. 98 7654 3210
           whatsapp_phone: WhatsApp puhelinnumero
-          whatsapp_phone_placeholder: esim. +61 8 9876 5432
+          whatsapp_phone_placeholder: esim. +358 8 9876 5432
           whatsapp_phone_tip: "Tämä numero näkyy julkisessa profiilissasi, joka avataan WhatsApp-linkkinä."
           website: Verkkosivu
           website_placeholder: esim. www.truffles.com
@@ -1217,7 +1217,7 @@ fi:
         payment_methods:
           legend: "Maksutavat"
           name: Nimi
-          applies: Pätee?
+          applies: Käytössä?
           manage: Hallitse maksutapoja
           no_method_yet: Sinulla ei ole vielä maksutapoja.
           create_button: Luo uusi maksutapa
@@ -1235,7 +1235,7 @@ fi:
           any: Mikä tahansa
           none: Ei yhtään
           own: Omistaa
-          sells: Myydä
+          sells: Myy
           sells_tip: "Ei mitään - yritys ei myy suoraan asiakkaille.<br />Oma - Yritys myy omia tuotteita asiakkaille.<br />Mikä tahansa - Yritys voi myydä omia tai muiden yritysten tuotteita.<br />"
           external_billing_id: Ulkoinen laskutustunnus
           external_billing_id_placeholder: esim. INV-2024-123456
@@ -1323,8 +1323,8 @@ fi:
           legend: "Sosiaalinen"
           twitter_placeholder: "esim. @the_prof"
           instagram_placeholder: "esim. the_prof"
-          facebook_placeholder: "esim. www.facebook.com/PageNameHere"
-          linkedin_placeholder: "esim. www.linkedin.com/in/YourNameHere"
+          facebook_placeholder: "esim. www.facebook.com/SivunNimiTähän"
+          linkedin_placeholder: "esim. www.linkedin.com/in/OmaNimi"
         stripe_connect:
           connect_with_stripe: "Yhdistä Stripen kanssa"
           stripe_connect_intro: "Jotta voit hyväksyä maksuja luottokortilla, sinun on yhdistettävä stripe-tilisi Open Food Networkiin. Käytä oikealla olevaa painiketta aloittaaksesi."
@@ -1453,10 +1453,10 @@ fi:
         producer_shop: Tuottajan kauppa
         sell_your_produce: Myy omia tuotteitasi
         producer_shop_description_text: Myy tuotteitasi suoraan asiakkaille oman Open Food Network -myymäläsi kautta.
-        producer_shop_description_text2: Tuottajamyymälä on tarkoitettu vain tuotteillesi. Jos haluat myydä ulkomailla kasvatettua/tuotettua tuotetta, valitse Tuottajakeskus.
+        producer_shop_description_text2: Tuottajamyymälä on tarkoitettu vain tuotteillesi. Jos haluat myydä muualla kasvatettua/tuotettua tuotetta, valitse Tuottajakeskus.
         producer_hub: Tuottajakeskus
         producer_hub_text: Myy tuotteita itseltäsi ja muilta
-        producer_hub_description_text: Yrityksesi on paikallisen ruokajärjestelmäsi selkäranka. Avoin ruokaverkostossa voit myydä omia tuotteitasi sekä muiden yritysten koottuja tuotteita myymäläsi kautta.
+        producer_hub_description_text: Yrityksesi on paikallisen ruokajärjestelmäsi selkäranka. Open Food Networkissa voit myydä omia tuotteitasi sekä muiden yritysten koottuja tuotteita myymäläsi kautta.
         profile: Vain profiili
         get_listing: Hanki listaus
         profile_description_text: Ihmiset voivat löytää sinut ja ottaa sinuun yhteyttä Open Food Networkissa. Yrityksesi näkyy kartalla, ja se on haettavissa listauksista.
@@ -1614,7 +1614,7 @@ fi:
         new_schedule: Uusi aikataulu
         new_schedule_tooltip: Toistuvuus jolloin tilaus on tehty
       name_and_timing_form:
-        name: nimi
+        name: Nimi
         orders_open: Tilaukset avataan klo
         coordinator: koordinaattori
         orders_close: Tilaukset sulkeutuvat
@@ -1634,7 +1634,7 @@ fi:
         orders_present: Asiakas on valinnut kyseisen tilausjakson, eikä sitä voida poistaa. Jos haluat estää asiakkaita käyttämästä sitä, sulje se sen sijaan.
         schedule_present: Tuo tilausjakso on linkitetty aikatauluun, eikä sitä voida poistaa. Irrota linkitys tai poista aikataulu ensin.
       bulk_update:
-        no_data: Hmm, jokin meni pieleen. Tilaussyklitietoja ei löytynyt.
+        no_data: Hmm, jokin meni pieleen. Tilausjakson tietoja ei löytynyt.
       date_warning:
         msg: Tämä tilausjakso on linkitetty %{n} avoimeen tilaukseen. Päivämäärän muuttaminen nyt ei vaikuta jo tehtyihin tilauksiin, mutta sitä tulisi välttää mahdollisuuksien mukaan. Oletko varma, että haluat jatkaa?
         cancel: Peruuttaa
@@ -1687,7 +1687,7 @@ fi:
           address: "Osoite"
           contact: "Yhteystiedot"
           social: "Sosiaalinen"
-          about: "about"
+          about: "Tietoa meistä"
           business_details: "Yrityksen tiedot"
           images: "Kuvat"
           properties: "Ominaisuudet"
@@ -1705,7 +1705,7 @@ fi:
         enterprise_group:
           primary_details: "Ensisijaiset tiedot"
           users: "Käyttäjät"
-          about: "about"
+          about: "Tietoa meistä"
           images: "Kuvat"
           contact: "Yhteystiedot"
           web: "Resurssit"
@@ -1882,7 +1882,7 @@ fi:
             Jos muutat hintoja tai maksuja, tilaukset päivittyvät, mutta tilauksessa näkyvät edelleen vanhat arvot.
         not_in_open_and_upcoming_order_cycles_warning: "Tälle tuotteelle ei ole avoimia tai tulevia tilausjaksoja."
       autocomplete:
-        name_or_sku: "nimi TAI SKU"
+        name_or_sku: "Nimi TAI SKU"
         quantity: "Määrä"
         add: "lisää"
       details:
@@ -2096,19 +2096,19 @@ fi:
         powered_html: "Ostokokemuksesi perustuu %{open_food_network} palveluun."
     menu:
       cart:
-        cart: "ostoskori"
+        cart: "Ostoskori"
       cart_sidebar:
         checkout: "mene kassalle"
         edit_cart: "Muokkaa ostoskoria"
         items_in_cart_singular: "%{num} tuotetta ostoskorissasi"
         items_in_cart_plural: "%{num} tuotetta ostoskorissasi"
-        close: "Lähellä"
+        close: "Sulje"
         cart_empty: "Ostoskorisi on tyhjä"
         take_me_shopping: "Vie minut ostoksille!"
       signed_in:
         profile: "Profiili"
       mobile_menu:
-        cart: "ostoskori"
+        cart: "Ostoskori"
     register_call:
       selling_on_ofn: "Kiinnostaako liittyä Open Food Networkiin?"
       register: "Rekisteröidy tästä"
@@ -2166,21 +2166,21 @@ fi:
   total_excl_tax: "Yhteensä (ilman alv.):"
   total_incl_tax: "Yhteensä (sis. alv):"
   total_all_tax: "Verot yhteensä:"
-  abn: "ABN:"
+  abn: "Y-tunnus:"
   acn: "ACN:"
   invoice_issued_on: "Lasku lähetetty:"
   order_number: "Tilausnumero:"
   date_of_transaction: "Tapahtuman päivämäärä:"
   menu_1_title: "kaupat"
-  menu_1_url: "/kaupat"
+  menu_1_url: "/shops"
   menu_2_title: "Kartta"
-  menu_2_url: "/kartta"
+  menu_2_url: "/map"
   menu_3_title: "Tuottajat"
-  menu_3_url: "/tuottajat"
+  menu_3_url: "/producers"
   menu_4_title: "Ryhmät"
-  menu_4_url: "/ryhmät"
-  menu_5_title: "about"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_4_url: "/groups"
+  menu_5_title: "Tietoa meistä"
+  menu_5_url: "https://about.openfoodnetwork.fi/"
   menu_6_title: "Yhdistä"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Oppia"
@@ -2201,17 +2201,17 @@ fi:
   footer_links_md: "Linkit"
   footer_about_url: "Tietoja URL-osoitteesta"
   user_guide_link: "Käyttöoppaan linkki"
-  name: nimi
+  name: Nimi
   first_name: Ensimmäinen nimi
   last_name: Viimeinen nimi
   email: Sähköposti
   phone: Puhelin
   next: Seuraava
   address: Osoite
-  address_placeholder: eg. 123 High Street
+  address_placeholder: esim. 123 High Street
   address2: Osoite (jatkuu)
   city: Kaupunki
-  city_placeholder: eg. Northcote
+  city_placeholder: esim. Pohjanmaa
   latitude: Leveysaste
   latitude_placeholder: esim. -37.4713077
   latitude_longitude_tip: Leveys- ja pituusasteet tarvitaan yrityksesi näyttämiseksi kartalla.
@@ -2220,7 +2220,7 @@ fi:
   use_geocoder: Lasketaanko leveys- ja pituusaste automaattisesti osoitteesta?
   state: Lääni
   postcode: Postinumero
-  postcode_placeholder: eg. 3070
+  postcode_placeholder: esim. 90100
   suburb: lähiö
   country: Maa
   unauthorized: Luvaton
@@ -2240,7 +2240,7 @@ fi:
   label_producer: "Tuottaja"
   label_producers: "Tuottajat"
   label_groups: "Ryhmät"
-  label_about: "about"
+  label_about: "Tietoa meistä"
   label_blog: "Blogi"
   label_support: "Tukea"
   label_shopping: "Ostokset"
@@ -2253,11 +2253,11 @@ fi:
   label_more: "Näytä lisää"
   label_less: "Näytä vähemmän"
   cart_items: "kohteet"
-  cart_headline: "ostoskori"
+  cart_headline: "Ostoskorisi"
   total: "yhteensä"
-  cart_updating: "Päivitetään ostoskori ..."
-  cart_empty: "ostoskori tyhjä"
-  cart_edit: "muokata ostoskori"
+  cart_updating: "Päivitetään ostoskoria ..."
+  cart_empty: "Ostoskori on tyhjä"
+  cart_edit: "Muokkaa ostoskoria"
   item: "kohde"
   qty: "Määrä"
   card_number: Kortin numero
@@ -2313,22 +2313,22 @@ fi:
       cookies_policy_link: "evästekäytäntö"
       cookies_accept_button: "Hyväksy evästeet"
   home_shop: Osta nyt
-  brandstory_headline: "Ruoka, rekisteröimätön."
-  brandstory_intro: "Joskus paras tapa korjata järjestelmä on aloittaa uusi…"
-  brandstory_part1: "Aloitamme aivan alusta. Viljelijöistä ja tuottajista, jotka ovat valmiita kertomaan tarinansa ylpeänä ja aidosti. Jakelijoista, jotka ovat valmiita yhdistämään ihmiset tuotteisiin oikeudenmukaisesti ja rehellisesti. Ostajista, jotka uskovat, että paremmat viikoittaiset ostospäätökset voivat muuttaa maailmaa vakavasti."
-  brandstory_part2: "Sitten tarvitsemme tavan tehdä siitä totta. Tavan voimaannuttaa kaikkia, jotka viljelevät, myyvät ja ostavat ruokaa. Tavan kertoa kaikki tarinat, hoitaa kaikki logistiikka. Tavan muuttaa transaktiot muutokseksi joka päivä."
+  brandstory_headline: "Osta suoraan tuottajilta, läheltä sinua."
+  brandstory_intro: "Paikalliseen myyntiin ja yhteistyöhön."
+  brandstory_part1: "Löydä lähituottajat ja tue suomalaista ruoantuotantoa\nOsta suoraan paikallisilta tuottajilta ja pienyrityksiltä. Valitse laadukkaita tuotteita ilman välikäsiä - lyhyet toimitusketjut tukevat sekä tuottajaa että ympäristöä.\nOpen Food Network tarjoaa vaihtoehdon sinulle, joka haluat ostaa ruokasi suoraan sen tuottajalta – aivan kuten REKO-ryhmissä, mutta helpommin hallittuna ja verkossa."
+  brandstory_part2: "Jos olet tuottaja tai pienyritys, voit aloittaa myymään tuotteitasi ilman provisioita ja  kuukausimaksuja. Alusta on kehitetty lähiruoan ja paikallisen elinvoiman tukemiseksi.\nOFN Suomi on paras paikka sinulle, joka tuotat tai myyt ruokaa - olitpa maatila, REKO-järjestäjä, ruokaosuuskunta tai muu paikallinen toimija."
   brandstory_part3: "Joten rakennamme verkkomarkkinapaikan, joka tasoittaa toimintaedellytyksiä. Se on läpinäkyvä, joten se luo aitoja suhteita. Se on avoimen lähdekoodin, joten se on kaikkien omistuksessa. Se skaalautuu alueille ja maille, joten ihmiset voivat perustaa versioita ympäri maailmaa."
   brandstory_part4: "Se toimii kaikkialla. Se muuttaa kaiken."
   brandstory_part5_strong: "Kutsumme sitä avoimeksi ruokaverkostoksi."
   brandstory_part6: "Me kaikki rakastamme ruokaa. Nyt voimme rakastaa myös ruokajärjestelmäämme."
-  system_headline: "Ostokset – näin se toimii."
-  system_step1: "1. Haku"
-  system_step1_text: "Hae monipuolisista ja itsenäisistä myymälöistämme sesonginmukaisia lähiruokia. Hae naapuruston ja ruokakategorian mukaan tai sen mukaan, haluatko mieluummin kotiinkuljetuksen vai noudon."
-  system_step2: "2. Kauppa"
-  system_step2_text: "Muuta asiointisi edullisten paikallisten ruokien avulla eri tuottajilta ja keskuksilta. Tunne ruokasi taustalla olevat tarinat ja ihmiset, jotka sitä valmistavat!"
-  system_step3: "3. Nouto / Toimitus"
-  system_step3_text: "Odota toimitusta tai käy tuottajallasi tai ostoskeskuksessa saadaksesi henkilökohtaisemman yhteyden ruokaan. Ruokaostokset ovat yhtä monipuolisia kuin luonto on tarkoittanut."
-  cta_headline: "Ostoksia, jotka tekevät maailmasta paremman paikan."
+  system_headline: "Myy OFN:n kautta - 3 helppoa vaihetta"
+  system_step1: "1. Luo oma tuottajaprofiili"
+  system_step1_text: "Luo yrityksellesi nimi, kuvaus, yhteystiedot, kuvia ja linkit somekanaviisi."
+  system_step2: "2. Lisää tuotteesi"
+  system_step2_text: "Lisää tuotetiedot, kuvat, hinnat ja varasto."
+  system_step3: "3. Suunnittele toimitukset"
+  system_step3_text: "Valitse maksutavat, määritä noutopisteet tai kotiinkuljetukset. Voit luoda tilausjaksoja, toistuvia tilauksia ja säännöllisiä jakeluja."
+  cta_headline: "Tulevaisuuden kestävä ruokaverkosto."
   cta_label: "Olen valmis"
   stats_headline: "Olemme luomassa uutta ruokajärjestelmää."
   stats_producers: "elintarviketuottajat"
@@ -2462,7 +2462,7 @@ fi:
     set_a_password: "Sinua pyydetään sitten asettamaan salasana, ennen kuin voit hallita yritystä."
     mistakenly_sent: "Etkö ole varma, miksi sait tämän sähköpostin? Ota yhteyttä numeroon %{owner_email} saadaksesi lisätietoja."
   producer_mail_greeting: "Hyvä"
-  producer_mail_text_before: "Alla on päivitys tilaussyklistä, joka on valmis:"
+  producer_mail_text_before: "Alla on päivitys tilausjaksosta, joka on valmis:"
   producer_mail_order_text: "Tässä on yhteenveto tuotteidesi tilauksista:"
   producer_mail_delivery_instructions: "Varaston nouto-/toimitusohjeet:"
   producer_mail_signoff: "Kiitos ja parhaat toivotukset"
@@ -2474,7 +2474,7 @@ fi:
   shopping_oc_select: "Valitse..."
   shopping_tabs_home: "Kotiin"
   shopping_tabs_shop: "kauppa"
-  shopping_tabs_about: "about"
+  shopping_tabs_about: "Tietoa meistä"
   shopping_tabs_producers: "Tuottajat"
   shopping_tabs_contact: "Yhteystiedot"
   shopping_tabs_groups: "Ryhmät"
@@ -2501,16 +2501,16 @@ fi:
   hubs_filter_by: "Suodata"
   hubs_filter_type: "Tyyppi"
   hubs_filter_delivery: "Toimitus"
-  hubs_filter_property: "Omaisuus"
+  hubs_filter_property: "Ominaisuus"
   hubs_matches: "Tarkoititko?"
   hubs_intro: Osta lähialueeltasi
   hubs_distance: Lähimpänä
   hubs_distance_filter: "Näytä minulle lähellä %{location} kauppoja"
   shop_changeable_orders_alert_html:
-    one: Tilauksesi, jonka <a href='%{path} &#39; target=&#39;_blank&#39;&gt; <span class='notranslate'>%{shop} / %{order} ,</a> on avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
-    few: Sinulla on <a href='%{path} &#39;target=&#39;_blank&#39;&gt; <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
-    many: Sinulla on <a href='%{path} &#39;target=&#39;_blank&#39;&gt; <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
-    other: Sinulla on <a href='%{path} &#39;target=&#39;_blank&#39;&gt; <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
+    one: Tilauksesi, jonka <a href='%{path} ' target='_blank'> <span class='notranslate'>%{shop} / %{order} ,</a> on avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
+    few: Sinulla on <a href='%{path} 'target='_blank'> <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
+    many: Sinulla on <a href='%{path} 'target='_blank'&gt; <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
+    other: Sinulla on <a href='%{path} 'target='_blank'&gt; <span class='notranslate'>%{count} tilaukset ja %{shop}</a> tällä hetkellä avoinna tarkistettavaksi. Voit tehdä muutoksia %{oc_close} asti.
   orders_changeable_orders_alert_html: Tämä tilaus on vahvistettu, mutta voit tehdä muutoksia päivämäärään <strong>%{oc_close}</strong> asti.
   products_clear: Tyhjennä
   products_showing: "Näytetään:"
@@ -2526,9 +2526,9 @@ fi:
   products_filter_clear: "Tyhjennä"
   products_filter_done: "Tehty"
   products_loading: "Tuotteita ladataan..."
-  products_updating_cart: "Päivitetään ostoskori ..."
-  products_cart_empty: "ostoskori tyhjä"
-  products_edit_cart: "muokkaa ostoskoria"
+  products_updating_cart: "Päivitetään ostoskoria ..."
+  products_cart_empty: "Ostoskori on tyhjä"
+  products_edit_cart: "Muokkaa ostoskoria"
   products_from: alkaen
   products_change: "Ei tallennettavia muutoksia."
   products_update_error: "Tallennus epäonnistui virheen (tai virheiden) vuoksi:"
@@ -2537,17 +2537,17 @@ fi:
   products_changes_saved: "Muutokset tallennettu."
   products_no_results_html: "Valitettavasti haulle %{query} ei löytynyt tuloksia."
   products_clear_search: "Tyhjennä haku"
-  search_no_results_html: "Ei tuloksia haulle %{query} . Kokeile toista hakua?"
+  search_no_results_html: "Ei tuloksia haulle %{query}. Kokeile toista hakua?"
   components_profiles_popover: "Profiileilla ei ole myymälää Open Food Networkissa, mutta niillä voi olla oma fyysinen kauppa tai verkkokauppa muualla."
   components_profiles_show: "Näytä profiilit"
   components_filters_nofilters: "Ei suodattimia"
   components_filters_clearfilters: "Tyhjennä kaikki suodattimet"
   groups_title: Ryhmät
   groups_headline: Ryhmät / alueet
-  groups_text: "Jokainen tuottaja on ainutlaatuinen. Jokaisella yrityksellä on tarjottavanaan jotain erilaista. Ryhmämme ovat tuottajien, keskuksien ja jakelijoiden kollektiiveja, joilla on jokin yhteinen tekijä, kuten sijainti, maanviljelijöiden markkinat tai filosofia. Tämä helpottaa ostokokemustasi. Joten tutustu ryhmiimme ja anna kuratoinnin tehdä puolestasi."
+  groups_text: "Jokainen tuottaja on ainutlaatuinen – jokaisella yrityksellä on oma tarinansa ja erikoisuutensa. Open Food Networkissa ryhmämme koostuvat tuottajien, jakelijoiden ja ruokakeskusten kollektiiveista, joita yhdistää jokin yhteinen tekijä: sijainti, arvomaailma tai esimerkiksi osallistuminen samoihin lähiruokatapahtumiin.\n\nRyhmiin tutustumalla ostaminen on helpompaa ja selkeämpää. Ne kokoavat yhteen samanlaista ajattelua edustavia toimijoita ja auttavat sinua löytämään itsellesi sopivat tuotteet ja palvelut. Katso, mitä eri ryhmillä on tarjottavana – ja anna yhteisten teemojen ohjata valintaasi."
   groups_search: "Hae nimeä tai avainsanaa"
-  groups_no_groups: "Ei ryhmiä löytynyt"
-  groups_about: "about meistä"
+  groups_no_groups: "Ryhmiä ei löytynyt"
+  groups_about: "Tietoa meistä"
   groups_producers: "Tuottajamme"
   groups_hubs: "Keskuksemme"
   groups_contact_web: Yhteystiedot
@@ -2558,19 +2558,21 @@ fi:
   groups_contact_facebook: Seuraa meitä Facebookissa
   groups_signup_title: Ilmoittaudu ryhmänä
   groups_signup_headline: Ryhmien ilmoittautuminen
-  groups_signup_intro: "Olemme upea alusta yhteistyöhön perustuvalle markkinoinnille, helpoin tapa jäsenillesi ja sidosryhmillesi tavoittaa uusia markkinoita. Olemme voittoa tavoittelemattomia, edullisia ja yksinkertaisia."
+  groups_signup_intro: "Olemme upea alusta yhteistyöhön perustuvalle markkinoinnille, helpoin tapa jäsenillesi ja sidosryhmillesi tavoittaa uusia markkinoita. Olemme moderneja, edullisia ja yksinkertaisia."
   groups_signup_email: Lähetä meille sähköpostia
-  groups_signup_motivation1: Muutamme ruokajärjestelmiä oikeudenmukaisesti.
-  groups_signup_motivation2: Siksi nousemme sängystä joka päivä. Olemme maailmanlaajuinen voittoa tavoittelematon järjestö, joka perustuu avoimeen lähdekoodiin. Pelaamme reilusti. Voit aina luottaa meihin.
-  groups_signup_motivation3: Tiedämme, että sinulla on suuria ideoita, ja haluamme auttaa. Jaamme tietomme, verkostomme ja resurssimme. Tiedämme, että eristäytyminen ei luo muutosta, joten teemme yhteistyötä kanssasi.
+  groups_signup_motivation1: Kehitämme ruokajärjestelmiä oikeudenmukaisesti.
+  groups_signup_motivation2: Tämän takia nousemme aamuisin - haluamme rakentaa reilumpaa ruokajärjestelmää. Toimimme avoimen lähdekoodin pohjalta ja pelaamme reilusti. Meihin voit aina luottaa.
+  groups_signup_motivation3: Tiedämme, että sinulla on suuria ideoita – ja haluamme auttaa. Jaamme kanssasi osaamisemme, verkostomme ja resurssimme. Muutosta ei synny yksin, siksi kuljemme rinnallasi kumppanina.
   groups_signup_motivation4: Tapaamme sinut siellä missä olet.
   groups_signup_motivation5: Saatat olla elintarvikekeskusten, tuottajien tai jakelijoiden sekä alan elimen tai paikallishallinnon yhteenliittymä.
-  groups_signup_motivation6: Olipa roolisi paikallisessa ruokaliikkeessä mikä tahansa, olemme valmiita auttamaan. Olipa pohditpa sitten, miltä Open Food Network näyttäisi tai tekee omalla alueellasi, aloitetaan keskustelu.
+  groups_signup_motivation6: Olipa roolisi mikä tahansa paikallisessa ruokayhteisössä, olemme valmiita auttamaan. Jos mietit, miltä Open Food Network näyttäisi tai mitä se voisi tarjota omassa yhteisössäsi, aloitetaan keskustelu.
   groups_signup_motivation7: Teemme ruokaliikkeistä järkevämpiä.
   groups_signup_motivation8: Sinun on aktivoitava ja mahdollistettava verkostosi. Me tarjoamme alustan keskustelulle ja toiminnalle. Tarvitset aitoa sitoutumista. Autamme tavoittamaan kaikki toimijat, kaikki sidosryhmät ja kaikki sektorit.
-  groups_signup_motivation9: Tarvitset resursseja. Me käytämme kaiken kokemuksemme. Tarvitset yhteistyötä. Me yhdistämme sinut paremmin globaaliin vertaisverkostoon.
+  groups_signup_motivation9: 'Kun tarvitset lisää resursseja, hyödynnämme kaiken asiantuntemuksemme.
+
+    Kun kaipaat yhteistyötä, autamme sinua rakentamaan yhteyksiä kansainväliseen verkostoon.'
   groups_signup_pricing: Ryhmätili
-  groups_signup_studies: Case-tutkimukset
+  groups_signup_studies: Esimerkit
   groups_signup_contact: Valmiina keskustelemaan?
   groups_signup_contact_text: "Ota yhteyttä ja ota selvää, mitä OFN voi tehdä hyväksesi:"
   groups_signup_detail: "Tässä yksityiskohta."
@@ -2583,14 +2585,14 @@ fi:
   producers_buy_at_html: "Osta %{enterprise} -tuotteita osoitteesta:"
   producers_filter: Suodata
   producers_filter_type: Tyyppi
-  producers_filter_property: Omaisuus
+  producers_filter_property: Ominaisuus
   producers_title: Tuottajat
   producers_headline: Etsi paikallisia tuottajia
   producers_signup_title: Rekisteröidy tuottajaksi
-  producers_signup_headline: Elintarviketuottajat, vaikutusvaltaisempia.
-  producers_signup_motivation: Myy ruokaasi ja kerro tarinasi monimuotoisille uusille markkinoille. Säästä aikaa ja rahaa jokaisessa yleiskulussa. Tuemme innovaatioita ilman riskiä. Olemme luoneet tasapuoliset toimintaedellytykset.
+  producers_signup_headline: Tukea ja näkyvyyttä lähituottajille.
+  producers_signup_motivation: Myy ruokaasi ja kerro tarinasi uusille, monipuolisille markkinoille. Säästä aikaa ja kustannuksia jokaisessa vaiheessa. Tuemme kokeiluja ilman riskiä - tarjoamme reilut ja tasavertaiset toimintaedellytykset kaikille tuottajille.
   producers_signup_send: Liity nyt
-  producers_signup_enterprise: yritys
+  producers_signup_enterprise: Open Food Networkin hinnoittelu
   producers_signup_studies: Tarinoita tuottajiltamme.
   producers_signup_cta_headline: Liity nyt!
   producers_signup_cta_action: Liity nyt
@@ -2603,7 +2605,7 @@ fi:
   products_available: Saatavilla?
   products_producer: "tuottaja"
   products_price: "Hinta"
-  name_or_sku: "nimi TAI SKU"
+  name_or_sku: "Nimi TAI SKU"
   register_title: Rekisteröidy
   sell_title: "Rekisteröidy"
   sell_headline: "Liity Open Food Networkiin!"
@@ -2615,30 +2617,30 @@ fi:
   sell_hubs_detail: "Luo elintarvikeyrityksellesi tai -organisaatiollesi profiili OFN:ään. Voit milloin tahansa päivittää profiilisi usean tuottajan kauppaan."
   sell_groups_detail: "Laadi räätälöity hakemisto yrityksistä (tuottajista ja muista elintarvikeyrityksistä) alueellesi tai organisaatiollesi."
   sell_user_guide: "Lisätietoja on käyttöoppaassamme."
-  sell_listing_price: "Listautuminen OFN:ään on ilmaista. Kaupan avaaminen ja pyörittäminen OFN:ssä on ilmaista 500 dollariin asti kuukausittaisesta myynnistä. Jos myyt enemmän, voit valita yhteisölahjoituksesi 1–3 prosentin väliltä myynnistä. Lisätietoja hinnoittelusta on Ohjelmistoalusta-osiossa ylävalikon Tietoja-linkin kautta."
-  sell_embed: "Voimme myös upottaa OFN-kaupan omalle räätälöidylle verkkosivustollesi tai rakentaa räätälöidyn paikallisen ruokaverkoston verkkosivuston alueellesi."
+  sell_listing_price: "Oman kauppasi perustaminen OFN:ään on maksutonta. Voit aloittaa tuotteidesi myynnin oman kauppasi kautta ilman kuluja. Kun kuukausittainen myyntisi kasvaa, OFN perii pienen provision. Katso tarkemmat tiedot hinnastosta."
+  sell_embed: "Jos sinulla on kysyttävää palveluistamme, ota yhteyttä ja autamme sinua eteenpäin. "
   sell_ask_services: "Kysy meiltä OFN-palveluista."
   shops_title: kaupat
-  shops_headline: Ostokset, muuttuneet.
-  shops_text: Ruoka kasvaa sykleissä, maanviljelijät korjaavat sadon sykleissä ja me tilaamme ruokaa sykleissä. Jos huomaat tilaussyklin sulkeutuneen, tarkista tilanne pian uudelleen.
+  shops_headline: Uusi tapa ostaa vastuullisesti.
+  shops_text: Ruoka kasvaa jaksoissa, maanviljelijät korjaavat sadon jaksoissa ja me tilaamme ruokaa jaksoissa. Jos huomaat tilausjakson sulkeutuneen, tarkista tilanne pian uudelleen.
   shops_signup_title: Rekisteröidy keskuskumppaniksi
-  shops_signup_headline: Ruokakeskuksia, rajattomasti.
-  shops_signup_motivation: Olipa mallisi mikä tahansa, tuemme sinua. Olivatpa muutokset mitkä tahansa, olemme rinnallasi. Olemme voittoa tavoittelemattomia, itsenäisiä ja avoimen lähdekoodin ohjelmistoja. Olemme ohjelmistokumppanit, joista olet unelmoinut.
+  shops_signup_headline: Ruokakeskuksia kaikkialle.
+  shops_signup_motivation: Olipa toimintamallisi millainen tahansa, tuemme sinua. Kehityitpä miten vain, olemme tukenasi. Olemme itsenäinen ja avoimen lähdekoodin kumppani - juuri sellainen ohjelmistokumppani, josta olet aina haaveillut.
   shops_signup_action: Liity nyt
-  shops_signup_pricing: yritys
+  shops_signup_pricing: Open Food Networkin hinnoittelu
   shops_signup_stories: Tarinoita keskuksistamme.
   shops_signup_help: Olemme valmiita auttamaan.
-  shops_signup_help_text: Tarvitset paremman tuoton. Tarvitset uusia ostajia ja logistiikkakumppaneita. Tarinasi täytyy kertoa tukku- ja vähittäiskaupassa sekä keittiön pöydällä.
+  shops_signup_help_text: Tarvitset paremman tuoton. Tarvitset uusia ostajia ja logistiikkakumppaneita. Tarinasi täytyy kertoa tukku- ja vähittäiskaupassa sekä ruokapöydässä.
   shops_signup_detail: Tässä yksityiskohta.
   orders: "tilaukset"
   orders_fees: "Maksut..."
   orders_edit_title: "Ostoskori"
-  orders_edit_headline: "ostoskori"
+  orders_edit_headline: "Ostoskorisi"
   orders_edit_time: "tilaa valmis"
   orders_edit_continue: "Jatka ostoksia"
   orders_edit_checkout: "mene kassalle"
   orders_form_empty_cart: "Tyhjä ostoskori"
-  orders_form_update_cart: "päivitä"
+  orders_form_update_cart: "Päivitä"
   orders_form_subtotal: "Tuota välisumma"
   orders_form_total: "yhteensä"
   orders_oc_expired_headline: "Tilaukset ovat päättyneet tälle tilausjaksolle"
@@ -2669,15 +2671,15 @@ fi:
   products_cart_distributor_change: "Tämän tilauksen jakelijaksi vaihtuu %{name} , jos lisäät tämän tuotteen ostoskoriisi."
   products_cart_distributor_is: "Tämän tilauksen jakelija on %{name} ."
   products_distributor_error: "Viimeistele tilauksesi osoitteessa %{link} ennen kuin ostat toiselta jälleenmyyjältä."
-  products_oc: "Tilauksesi tilaussykli:"
+  products_oc: "Tilauksesi tilausjakso:"
   products_oc_change: "Tämän tilauksen tilausjakso muuttuu muotoon %{name} jos lisäät tämän tuotteen ostoskoriisi."
-  products_oc_is: "Tämän tilauksen tilaussykli on %{name} ."
+  products_oc_is: "Tämän tilauksen tilausjakso on %{name} ."
   products_oc_error: "Viimeistele tilauksesi osoitteesta %{link} ennen kuin ostat toisella tilausjaksolla."
   products_oc_current: "nykyinen tilausjaksosi"
   products_max_quantity: Maksimimäärä
   products_distributor: Jakelija
   products_distributor_info: Kun valitset tilauksellesi jakelijan, heidän osoitteensa ja noutoaikansa näkyvät tässä.
-  password: salasana
+  password: Salasana
   remember_me: Muista minut
   are_you_sure: "Oletko varma?"
   orders_open: "Tilaukset avoinna"
@@ -2734,14 +2736,14 @@ fi:
     steps:
       introduction:
         registration_greeting: "Hei vaan!"
-        registration_intro: "Voit nyt luoda profiilin tuottajallesi tai keskusryhmällesi."
+        registration_intro: "Nyt voit luoda tuottaja- tai ryhmäprofiilin."
         registration_checklist: "Mitä tarvitsen?"
-        registration_time: "5-10 minuuttia"
+        registration_time: "5-10 minuuttia aikaa"
         registration_enterprise_address: "Yrityksen osoite"
         registration_contact_details: "Ensisijaiset yhteystiedot"
         registration_logo: "Logokuvasi"
         registration_promo_image: "Vaakasuuntainen kuva profiiliisi"
-        registration_about_us: "&#39;Tietoja meistä&#39; -teksti"
+        registration_about_us: "\"Tietoja meistä\" -tekstin"
         registration_outcome_headline: "Mitä saan?"
         registration_outcome1_html: "Profiilisi avulla ihmiset <strong>löytävät</strong> sinut ja ottavat sinuun <strong>yhteyttä</strong> Open Food Networkissa."
         registration_outcome2: "Käytä tätä tilaa kertoaksesi yrityksesi tarinan ja luodaksesi yhteyksiä sosiaaliseen mediaan ja verkkoon."
@@ -2754,17 +2756,17 @@ fi:
         producer: "Jes! Ensin meidän täytyy tietää hieman tilastasi:"
         enterprise_name_field: "Yrityksen nimi:"
         producer_name_field: "Tilan nimi:"
-        producer_name_field_placeholder: "esim. Charlien mahtava maatila"
+        producer_name_field_placeholder: "esim. Jaakon mahtava maatila"
         producer_name_field_error: "Valitse yrityksellesi yksilöivä nimi"
         address1_field: "Osoiterivi 1:"
-        address1_field_placeholder: "esim. Cranberry Drive 123"
+        address1_field_placeholder: "esim. Ruiskukkatie 123"
         address1_field_error: "Anna osoite"
         address2_field: "Osoiterivi 2:"
         suburb_field: "Lähiö:"
-        suburb_field_placeholder: "esim. Northcote"
+        suburb_field_placeholder: "esim. Pohjanmaa"
         suburb_field_error: "Anna lähiö"
         postcode_field: "Postinumero:"
-        postcode_field_placeholder: "esim. 3070"
+        postcode_field_placeholder: "esim. 90100"
         postcode_field_error: "Postinumero vaaditaan"
         state_field: "Lääni:"
         state_field_error: "Lääni vaaditaan"
@@ -2785,7 +2787,7 @@ fi:
         whatsapp_phone_field: "WhatsApp-puhelinnumero"
         whatsapp_phone_tooltip: "Tämä numero näkyy julkinen -profiilissasi, jonka voit avata WhatsApp-linkkinä."
         phone_field_placeholder: "esim. (03) 1234 5678"
-        whatsapp_phone_field_placeholder: "esim. +61 4 1234 5678"
+        whatsapp_phone_field_placeholder: "esim. +358 4 1234 5678"
       type:
         title: "Tyyppi"
         headline: "Viimeinen vaihe %{enterprise} lisäämiseksi!"
@@ -2794,10 +2796,10 @@ fi:
         no_producer: "Ei, en ole tuottaja"
         producer_field_error: "Valitse yksi. Oletko tuottaja?"
         yes_producer_help: "Tuottajat valmistavat herkullisia ruokia ja/tai juomia. Olet tuottaja, jos kasvatat, kannat, haudutat, leivot, käyt, lypsät tai muovaat sitä."
-        no_producer_help: "Jos et ole tuottaja, olet todennäköisesti joku, joka myy ja jakelee ruokaa. Saatat olla keskus, osuuskunta, ostoryhmä, vähittäismyyjä, tukkumyyjä tai jokin muu."
+        no_producer_help: "Ellet ole tuottaja, toimit todennäköisesti ruoan myynnin tai jakelun parissa.\nVoit olla jakelukeskus, osuuskunta, ostoryhmä, vähittäiskauppias, tukkuri tai muu toimija."
         create_profile: "Luo profiili"
       about:
-        title: "about"
+        title: "Tietoa meistä"
         headline: "Hieno juttu!"
         message: "Tarkastellaanpa nyt yksityiskohtia aiheesta"
         success: "Onnistui! %{enterprise} lisätty Open Food Networkiin"
@@ -2807,17 +2809,17 @@ fi:
         enterprise_long_desc: "Pitkä kuvaus"
         enterprise_long_desc_placeholder: "Tämä on tilaisuutesi kertoa yrityksesi tarina – mikä tekee sinusta erilaisen ja upean? Suosittelemme, että pidät kuvauksesi alle 600 merkissä tai 150 sanassa."
         enterprise_long_desc_length: "%{num} merkkiä / enintään 600 suositus"
-        enterprise_abn: "ABN"
-        enterprise_abn_placeholder: "eg. 99 123 456 789"
+        enterprise_abn: "Y-tunnus"
+        enterprise_abn_placeholder: "esim. 08 123 456 789"
         enterprise_acn: "ACN"
-        enterprise_acn_placeholder: "eg. 123 456 789"
+        enterprise_acn_placeholder: "esim. 123 456 789"
         enterprise_tax_required: "Sinun täytyy tehdä valinta."
       images:
         title: "Kuvat"
         headline: "Kiitos!"
-        description: "Lataapa tänne pari nättiä kuvaa, jotta profiilisi näyttää hyvältä! :)"
+        description: "Lataa tänne pari edustavaa kuvaa, jotta profiilisi näyttää hyvältä! :)"
         uploading: "Ladataan..."
-        continue: "Jatkaa"
+        continue: "Jatka"
         back: "Takaisin"
       logo:
         select_logo: "Vaihe 1. Valitse logokuva"
@@ -2840,15 +2842,15 @@ fi:
         enterprise_final_step: "Viimeinen vaihe!"
         enterprise_social_text: "Miten ihmiset löytävät %{enterprise} n verkosta?"
         website: "Verkkosivusto"
-        website_placeholder: "esim. openfoodnetwork.org.au"
+        website_placeholder: "esim. openfoodnetwork.fi"
         facebook: "Facebook"
-        facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+        facebook_placeholder: "esim. www.facebook.com/SivunNimiTähän"
         linkedin: "LinkedIn"
-        linkedin_placeholder: "esim. www.linkedin.com/YourNameHere"
+        linkedin_placeholder: "esim. www.linkedin.com/in/OmaNimi"
         twitter: "Twitter"
-        twitter_placeholder: "esim. @twitter_handle"
+        twitter_placeholder: "esim. @twitter_tunnus"
         instagram: "Instagramissa"
-        instagram_placeholder: "esim. @instagram_handle"
+        instagram_placeholder: "esim. @instagram_tunnus"
       limit_reached:
         headline: "Voi ei!"
         message: "Olet saavuttanut rajan!"
@@ -2860,7 +2862,7 @@ fi:
         login: "Voit muuttaa tai päivittää yritystäsi milloin tahansa kirjautumalla Open Food Networkiin ja siirtymällä hallintaan."
         action: "Siirry yrityksen hallintapaneeliin"
   back: "Takaisin"
-  continue: "Jatkaa"
+  continue: "Jatka"
   action_or: "TAI"
   enterprise_limit: yritys
   shipping_method_destroy_error: "Kyseistä toimitustapaa ei voida poistaa, koska siihen viittaa tilaus: %{number} ."
@@ -2911,23 +2913,23 @@ fi:
   admin_enterprise_relationships_button_create: "Luoda"
   admin_enterprise_relationships_to: "että"
   admin_enterprise_groups: "Yritysryhmät"
-  admin_enterprise_groups_name: "nimi"
+  admin_enterprise_groups_name: "Nimi"
   admin_enterprise_groups_owner: "Omistaja"
   admin_enterprise_groups_on_front_page: "Etusivulla?"
   admin_enterprise_groups_enterprise: "yritykset"
   admin_enterprise_groups_data_powertip: "Tästä ryhmästä ensisijainen vastuussa oleva käyttäjä."
   admin_enterprise_groups_data_powertip_logo: "Tämä on ryhmän logo"
   admin_enterprise_groups_data_powertip_promo_image: "Tämä kuva näkyy ryhmäprofiilin yläosassa."
-  admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_phone_placeholder: "esim. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "esim. 123 Korkeakatu"
   admin_enterprise_groups_contact_city: "lähiö"
-  admin_enterprise_groups_contact_city_placeholder: "eg. Northcote"
+  admin_enterprise_groups_contact_city_placeholder: "esim. Pohjanmaa"
   admin_enterprise_groups_contact_zipcode: "Postinumero"
-  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
+  admin_enterprise_groups_contact_zipcode_placeholder: "esim. 90100"
   admin_enterprise_groups_contact_state_id: "Lääni"
   admin_enterprise_groups_contact_country_id: "Maa"
-  admin_enterprise_groups_web_twitter: "eg. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
+  admin_enterprise_groups_web_twitter: "esim. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "esim. www.truffles.com"
   admin_order_cycles: "Ylläpitäjän tilausjaksot"
   open: "Avata"
   close: "Lähellä"
@@ -2935,7 +2937,7 @@ fi:
   search: "Haku"
   supplier: "toimittaja"
   product_name: "tuote nimi"
-  product_description: "tuote kuvaus"
+  product_description: "Tuotekuvaus"
   permalink: "Pysyvä linkki"
   shipping_categories: "Toimituskategoriat"
   units: "yksikkökoko"
@@ -2959,14 +2961,14 @@ fi:
   flat_rate_per_order: "Kiinteä hinta (tilausta kohden)"
   flexible_rate: "Joustava hinta"
   price_sack: "Hintasäkki"
-  new_order_cycles: "Uudet tilaussyklit"
-  new_order_cycle: "Uusi tilaussykli"
+  new_order_cycles: "Uudet tilausjaksot"
+  new_order_cycle: "Uusi tilausjakso"
   new_order_cycle_tooltip: "Avoinna myymälä tietyn ajan"
-  select_a_coordinator_for_your_order_cycle: "Valitse tilaussyklillesi koordinaattori"
+  select_a_coordinator_for_your_order_cycle: "Valitse tilausjaksollesi koordinaattori"
   notify_producers: 'Ilmoita tuottajille'
-  edit_order_cycle: "Muokkaa tilaussykliä"
+  edit_order_cycle: "Muokkaa tilausjaksoa"
   roles: "Roolit"
-  update: "päivitä"
+  update: "Päivitä"
   delete: Poistaa
   add_producer_property: "Lisää tuottajan ominaisuus"
   in_progress: "Käynnissä"
@@ -2987,7 +2989,7 @@ fi:
   no_products: Ei tuotteita
   spree_admin_overview_enterprises_header: "Yritykseni"
   spree_admin_overview_enterprises_footer: "HALLINNOI YRITYKSIÄNI"
-  spree_admin_enterprises_hubs_name: "nimi"
+  spree_admin_enterprises_hubs_name: "Nimi"
   spree_admin_enterprises_create_new: "LUO UUSI"
   spree_admin_enterprises_shipping_methods: "Toimitustavat"
   spree_admin_enterprises_fees: "yritys Maksut"
@@ -3000,10 +3002,10 @@ fi:
   unit_name: "yksikkö nimi"
   change_package: "Vaihda pakettia"
   spree_admin_single_enterprise_hint: "Vihje: Jotta ihmiset löytävät sinut, ota näkyvyys käyttöön kohdassa"
-  spree_admin_eg_pickup_from_school: "esim. &#39;Nouto alakoulusta&#39;"
-  spree_admin_eg_collect_your_order: "esim. &quot;Nouda tilauksesi osoitteesta 123 Imaginary St, Northcote, 3070&quot;"
-  spree_order_availability_error: "Jälleenmyyjä tai tilaussykli ei voi toimittaa ostoskorissasi olevia tuotteita"
-  spree_order_populator_error: "Tuo jakelija tai tilaussykli ei pysty toimittamaan kaikkia ostoskorissasi olevia tuotteita. Valitse toinen."
+  spree_admin_eg_pickup_from_school: "esim. 'Nouto alakoulusta'"
+  spree_admin_eg_collect_your_order: "esim. 'Nouda tilauksesi osoitteesta Satukatu 123, Pohjois-Pohjanmaa, 90100'"
+  spree_order_availability_error: "Jälleenmyyjä tai tilausjakso ei voi toimittaa ostoskorissasi olevia tuotteita"
+  spree_order_populator_error: "Tuo jakelija tai tilausjakso ei pysty toimittamaan kaikkia ostoskorissasi olevia tuotteita. Valitse toinen."
   spree_order_cycle_error: "Valitse tilausjakso tälle tilaukselle."
   spree_order_populator_availability_error: "Tuotetta ei ole saatavilla valitulta jakelijalta tai tilausjaksolta."
   spree_distributors_error: "Vähintään yksi keskus on valittava"
@@ -3015,12 +3017,12 @@ fi:
   manage: "hallinnoi"
   resend: "Lähetä uudelleen"
   add_and_manage_products: "Lisää ja hallinnoi tuotteita"
-  add_and_manage_order_cycles: "Lisää ja hallinnoi tilaussyklejä"
-  manage_order_cycles: "Hallitse tilaussyklejä"
+  add_and_manage_order_cycles: "Lisää ja hallinnoi tilausjaksoja"
+  manage_order_cycles: "Hallitse tilausjaksoja"
   manage_products: "Hallinnoi tuotteita"
   edit_profile_details: "Muokkaa profiilitietoja"
   edit_profile_details_etc: "Muuta profiilikuvaustasi, kuviasi jne."
-  order_cycle: "tilausjakso"
+  order_cycle: "Tilausjakso"
   enterprise_relationships: "Yritysoikeudet"
   first_name_begins_with: "Etunimi alkaa"
   last_name_begins_with: "Sukunimi alkaa"
@@ -3039,20 +3041,20 @@ fi:
   admin_share_state: "Lääni"
   hub_sidebar_hubs: "Keskukset"
   hub_sidebar_none_available: "Ei saatavilla"
-  hub_sidebar_manage: "hallinnoi"
+  hub_sidebar_manage: "Hallinnoi"
   hub_sidebar_at_least: "Vähintään yksi keskus on valittava"
   hub_sidebar_blue: "sininen"
   hub_sidebar_red: "punainen"
   order_cycles_closed_for_hub: "Valitsemasi keskus on tilapäisesti suljettu tilauksilta. Yritä myöhemmin uudelleen."
   report_customers_distributor: "Jakelija"
-  report_customers_hub: "keskus"
-  report_customers_supplier: "toimittaja"
-  report_customers_cycle: "tilausjakso"
-  report_customers_type: "raportoi raportti tyyppi"
+  report_customers_hub: "Keskus"
+  report_customers_supplier: "Toimittaja"
+  report_customers_cycle: "Tilausjakso"
+  report_customers_type: "Raportin tyyppi"
   report_customers_csv: "Lataa csv-tiedostona"
-  report_customers: asiakas
+  report_customers: Asiakas
   report_producers: "Tuottajat"
-  report_type: "raportoi raportti tyyppi"
+  report_type: "Raportin tyyppi"
   report_hubs: "Keskukset"
   report_payment: "maksu -menetelmät"
   report_distributor: "Jakelija"
@@ -3060,10 +3062,10 @@ fi:
   report_itemised_payment: 'Eritellyt maksusummat'
   report_payment_totals: 'Maksujen kokonaissummat'
   report_all: 'kaikki'
-  report_order_cycle: "tilausjakso"
+  report_order_cycle: "Tilausjakso"
   report_hide_columns: Piilotettavat sarakkeet
   report_columns: Sarakkeet
-  report_enterprises: "yritykset"
+  report_enterprises: "Yritykset"
   report_enterprise_fee: "Maksujen nimet"
   report_users: "Käyttäjät"
   report_tax_rates: Verokannat
@@ -3072,21 +3074,21 @@ fi:
   report_print: Tulosta raportti
   report_render_options: Renderöintiasetukset
   report_header_ofn_uid: OFN UID
-  report_header_order_cycle: tilausjakso
+  report_header_order_cycle: Tilausjakso
   report_header_order_cycle_start_date: OC-aloituspäivämäärä
   report_header_order_cycle_end_date: OC-päättymispäivä
   report_header_user: Käyttäjä
   report_header_email: Sähköposti
-  report_header_status: tila
+  report_header_status: Tila
   report_header_comments: Kommentit
   report_header_first_name: Ensimmäinen nimi
   report_header_last_name: Viimeinen nimi
-  report_header_suburb: lähiö
+  report_header_suburb: Lähiö
   report_header_phone: Puhelin
   report_header_address: Osoite
   report_header_billing_address: Laskutusosoite
   report_header_relationship: Suhde
-  report_header_hub: keskus
+  report_header_hub: Keskus
   report_header_hub_address: Keskuksen osoite
   report_header_to_hub: Keskukseen
   report_header_hub_code: Keskus-koodi
@@ -3127,7 +3129,7 @@ fi:
   report_header_date: Päivämäärä
   report_header_confirmation_date: Vahvistuspäivämäärä
   report_header_tags: Tägit
-  report_header_items: kohteet
+  report_header_items: Tuotteet
   report_header_items_total: "Tuotteiden kokonaismäärä %{currency_symbol}"
   report_header_taxable_items_total: "Verotettavat erät yhteensä ( %{currency_symbol} )"
   report_header_sales_tax: "Myyntivero ( %{currency_symbol} )"
@@ -3139,38 +3141,38 @@ fi:
   report_header_tax_rate_name: "Veroprosentin nimi"
   report_header_tax_rate: "Verokanta"
   report_header_total_tax: "Vero yhteensä ( %{currency_symbol} )"
-  report_header_total_excl_tax: "yhteensä ilman vero ( %{currency_symbol} )"
-  report_header_total_incl_tax: "yhteensä sis. vero ( %{currency_symbol} )"
+  report_header_total_excl_tax: "Yhteensä ilman vero ( %{currency_symbol} )"
+  report_header_total_incl_tax: "Yhteensä sis. vero ( %{currency_symbol} )"
   report_header_total_orders: "Tilausten kokonaismäärä"
-  report_header_enterprise: yritys
-  report_header_enterprise_fee_name: nimi
+  report_header_enterprise: Yritys
+  report_header_enterprise_fee_name: Nimi
   report_header_enterprise_fee_type: Tyyppi
   report_header_enterprise_fee_owner: Omistaja
-  report_header_customer: asiakas
+  report_header_customer: Asiakas
   report_header_customer_first_name: Ensimmäinen nimi
   report_header_customer_last_name: Viimeinen nimi
   report_header_customer_code: Asiakaskoodi
-  report_header_product: tuote
-  report_header_product_properties: tuote ominaisuudet
+  report_header_product: Tuote
+  report_header_product_properties: Tuotteen ominaisuudet
   report_header_product_tax_category: Tuotteen veroluokka
   report_header_quantity: Määrä
   report_header_max_quantity: Maksimimäärä
   report_header_variant: Variantti
-  report_header_variant_unit_name: varianttiyksikkö nimi
+  report_header_variant_unit_name: Varianttiyksikön nimi
   report_header_variant_value: Variantin arvo
   report_header_variant_unit: Varianttiyksikkö
   report_header_total_available: Yhteensä käytettävissä
   report_header_unallocated: Kohdistamaton
   report_header_max_quantity_excess: Maksimimäärän ylitys
   report_header_taxons: Taksonit
-  report_header_supplier: toimittaja
-  report_header_producer: tuottaja
+  report_header_supplier: Toimittaja
+  report_header_producer: Tuottaja
   report_header_producer_suburb: Tuottajan lähiö
   report_header_producer_tax_status: Tuottajan verotusasema
   report_header_producer_charges_sales_tax?: ALV-rekisteröity
-  report_header_producer_abn_acn: Tuottaja ABN/ACN
+  report_header_producer_abn_acn: Tuottaja Y-tunnus
   report_header_producer_address: Tuottajan osoite
-  report_header_unit: yksikkö
+  report_header_unit: Yksikkö
   report_header_group_buy_unit_quantity: Ryhmäosto Yksikkömäärä
   report_header_cost: Maksaa
   report_header_shipping_cost: Toimituskulut
@@ -3180,7 +3182,7 @@ fi:
   report_header_sells: Myy
   report_header_visible: Näkyvä
   report_header_price: Hinta
-  report_header_unit_size: yksikkökoko
+  report_header_unit_size: Yksikkökoko
   report_header_distributor: Jakelija
   report_header_distributor_address: Jälleenmyyjän osoite
   report_header_distributor_city: Jälleenmyyjäkaupunki
@@ -3208,13 +3210,13 @@ fi:
   report_header_customer_email: Asiakkaan sähköposti
   report_header_customer_phone: Asiakkaan puhelinnumero
   report_header_customer_city: Asiakkaan kaupunki
-  report_header_payment_state: maksu Lääni
+  report_header_payment_state: Maksu Lääni
   report_header_payment_type: Maksutyyppi
   report_header_item_price: "Kohde ( %{currency} )"
   report_header_item_fees_price: "Tuote + maksut ( %{currency} )"
   report_header_admin_handling_fees: "Hallinta ja käsittely ( %{currency} )"
   report_header_ship_price: "Laiva ( %{currency} )"
-  report_header_producer_charges_gst: Veloittaako tuottaja GST:tä?
+  report_header_producer_charges_gst: Veloittaako tuottaja ALV:ia?
   report_header_total_tax_on_product: "Tuotteen kokonaisvero ( %{currency} )"
   report_header_pay_fee_price: "Maksu ( %{currency} )"
   report_header_total_price: "Yhteensä ( %{currency} )"
@@ -3235,14 +3237,14 @@ fi:
   report_header_total_fees_excl_tax: "Kokonaismaksut ilman veroja ( %{currency_symbol} )"
   report_header_total_tax_on_fees: "Maksujen kokonaisvero ( %{currency_symbol} )"
   report_header_total: "Yhteensä ( %{currency_symbol} )"
-  report_header_total_incl_vat: "yhteensä sis. vero ( %{currency_symbol} )"
+  report_header_total_incl_vat: "Yhteensä sis. vero ( %{currency_symbol} )"
   report_header_total_excl_fees_and_tax: "Yhteensä ilman maksuja ja veroja ( %{currency_symbol} )"
   report_header_temp_controlled: Lämpötilaohjattu?
   report_header_shipment_state: "Toimituksen tila"
   report_header_shipping_method: "Toimitustapa"
-  report_header_is_producer: tuottaja ?
+  report_header_is_producer: Tuottaja ?
   report_header_not_confirmed: Ei vahvistettu
-  report_header_gst_on_income: GST tuloista
+  report_header_gst_on_income: ALVin osuus tuloista
   report_header_gst_free_income: ALV-vapaat tulot
   report_header_total_untaxable_produce: Verottoman tuotannon kokonaismäärä (ei veroa)
   report_header_total_taxable_produce: Verotettavan tuotannon kokonaismäärä (sisältää verot)
@@ -3255,7 +3257,7 @@ fi:
   report_header_voucher_label: Kupongin otsikko
   report_header_voucher_amount: "Kupongin määrä ( %{currency_symbol} )"
   report_line_cost_of_produce: Tuotantokustannukset
-  report_line_line_items: rivikohdat
+  report_line_line_items: Rivikohdat
   report_header_last_completed_order_date: Viimeisin tilauksen valmistumispäivämäärä
   report_xero_configuration: Xero-konfiguraatio
   initial_invoice_number: "Alkuperäinen laskun numero"
@@ -3279,7 +3281,7 @@ fi:
   user_invited: "%{email} on kutsuttu hallinnoimaan tätä yritystä"
   add_manager: "Lisää olemassa oleva käyttäjä"
   users: "Käyttäjät"
-  about: "about"
+  about: "Tietoa meistä"
   images: "Kuvat"
   web: "Verkko"
   primary_details: "Ensisijaiset tiedot"
@@ -3301,7 +3303,7 @@ fi:
   validation_msg_tax_category_cant_be_blank: "^Verokategoria ei voi olla tyhjä"
   validation_msg_is_associated_with_an_exising_customer: "on liitetty olemassa olevaan asiakkaaseen"
   content_configuration_pricing_table: "(TODO: Hinnasto)"
-  content_configuration_case_studies: "(TODO: Tapaustutkimukset)"
+  content_configuration_case_studies: "(TODO: Esimerkit)"
   content_configuration_detail: "(TODO: Yksityiskohtainen)"
   enterprise_name_error: "on jo varattu. Jos tämä on yrityksesi ja haluat vaatia omistajuutta tai jos haluat käydä kauppaa tämän yrityksen kanssa, ota yhteyttä profiilin nykyiseen ylläpitäjään osoitteessa %{email} ."
   enterprise_owner_error: "^ %{email} ei saa omistaa enempää yritykset (raja on %{enterprise_limit} )."
@@ -3317,11 +3319,11 @@ fi:
   order_cycle_selecting_notice: Tilausjaksosi on valittu.
   adjustments_tax_rate_error: "^Tarkista, että tämän oikaisun veroprosentti on oikea."
   active_distributors_not_ready_for_checkout_message_singular: >-
-      Hub %{distributor_names} on aktiivisessa tilaussyklissä, mutta sillä ei ole
+      Hub %{distributor_names} on aktiivisessa tilausjaksossa, mutta sillä ei ole
       voimassa olevia toimitus- ja maksutapoja. Asiakkaat eivät voi tehdä ostoksia
       tässä hubissa, ennen kuin määrität nämä.
   active_distributors_not_ready_for_checkout_message_plural: >-
-      Hubit %{distributor_names} on listattu aktiivisessa tilaussyklissä, mutta niillä
+      Hubit %{distributor_names} on listattu aktiivisessa tilausjaksossa, mutta niillä
       ei ole voimassa olevia toimitus- ja maksutapoja. Asiakkaat eivät voi tehdä ostoksia
       näissä hubeissa, ennen kuin määrität nämä.
   enterprise_fees_update_notice: Yritysmaksusi on päivitetty.
@@ -3331,9 +3333,9 @@ fi:
   enterprise_bulk_update_success_notice: "Yritykset päivitetty onnistuneesti"
   enterprise_bulk_update_error: 'Päivitys epäonnistui'
   enterprise_shop_show_error: "Etsimääsi kauppaa ei ole olemassa tai se ei ole aktiivinen OFN:ssä. Tarkista muut kaupat."
-  order_cycles_bulk_update_notice: 'Tilaussyklit on päivitetty.'
+  order_cycles_bulk_update_notice: 'Tilausjaksot on päivitetty.'
   order_cycles_no_permission_to_coordinate_error: "Yhdelläkään yritykselläsi ei ole lupaa koordinoida tilauskiertoa."
-  order_cycles_no_permission_to_create_error: "Sinulla ei ole oikeutta luoda kyseisen yrityksen koordinoimaa tilaussykliä."
+  order_cycles_no_permission_to_create_error: "Sinulla ei ole oikeutta luoda kyseisen yrityksen koordinoimaa tilausjaksoa."
   order_cycle_closed: "Valitsemasi tilausjakso on juuri päättynyt. Yritä uudelleen!"
   back_to_orders_list: "Takaisin tilauslistaan"
   no_orders_found: "Ei tilaukset löytynyt"
@@ -3344,7 +3346,7 @@ fi:
   amount: "Määrä"
   invoice_number: "lasku -numero"
   invoice_file: "Tiedosto"
-  invalid_url: "&#39; %{url} &#39; on virheellinen URL-osoite"
+  invalid_url: "' %{url}' on virheellinen URL-osoite"
   state_names:
     ready: Valmis
     pending: Odottaa
@@ -3360,11 +3362,11 @@ fi:
     all_changes_saved_successfully: Kaikki muutokset tallennettu onnistuneesti
     oh_no: "Voi ei! En pystynyt tallenna muutoksiasi."
     unauthorized: "Sinulla ei ole oikeutta käyttää tätä sivua."
-    error: virhe
+    error: Virhe
     unavailable: Ei saatavilla
     profile: Profiili
-    hub: keskus
-    shop: kauppa
+    hub: Keskus
+    shop: Kauppa
     choose: Valita
     resolve_errors: Korjaa seuraavat virheet
     more_items: "+ %{count} Lisää"
@@ -3381,8 +3383,8 @@ fi:
       modals:
         got_it: "Selvä"
         confirm: "Vahvistaa"
-        close: "Lähellä"
-        continue: "Jatkaa"
+        close: "Sulje"
+        continue: "Jatka"
         cancel: "Peruuttaa"
         invite: "Kutsu"
         invite_title: "Kutsu rekisteröitymätön käyttäjä"
@@ -3393,12 +3395,12 @@ fi:
               Tagisäännöt tarjoavat tavan kuvata, mitkä tuotteet ovat näkyvissä ja
               mitkä eivät ole näkyvissä millekin asiakkaille. Tuotteet voivat olla
               toimitustapoja, maksutapoja, tuotteita ja tilaussyklejä.
-          by_default_rules: "&#39;Oletusarvoisesti...&#39; -säännöt"
+          by_default_rules: "'Oletusarvoisesti...' -säännöt"
           by_default_rules_text: >
               Oletussääntöjen avulla voit piilottaa kohteita, jotta ne eivät ole oletusarvoisesti
               näkyvissä. Tämän toiminnan voi sitten ohittaa muilla kuin oletusarvoisilla
               säännöillä asiakkaille, joilla on tietyt tunnisteet.
-          customer_tagged_rules: "&#39;Asiakkaat merkitty tägillä...&#39; -säännöt"
+          customer_tagged_rules: "'Asiakkaat merkitty tägillä...' -säännöt"
           customer_tagged_rules_text: >
               Luomalla tiettyyn asiakastunnisteeseen liittyviä sääntöjä voit ohittaa
               oletustoiminnon (olipa kyseessä sitten tuotteiden näyttäminen tai piilottaminen)
@@ -3414,7 +3416,7 @@ fi:
         business_address_info:
           message: "Yrityksen laillista nimeä, laillista osoitetta ja laillista puhelinnumeroa käytetään yrityksille, jotka laskuttavat oikeushenkilöltä, jonka tiedot poikkeavat niiden julkisista kauppatiedoista. Näitä tietoja käytetään VAIN laskuissa. Jos nämä tiedot ovat tyhjiä, laskuissa käytetään julkista nimeäsi, osoitettasi ja puhelinnumeroasi."
       panels:
-        save: tallenna
+        save: Tallenna
         saved: TALLENNETTU
         saving: SÄÄSTÖ
         enterprise_package:
@@ -3426,7 +3428,7 @@ fi:
           hub_profile_text2: >
               Profiilin luominen ja yhteyksien luominen paikalliseen ruokajärjestelmään
               Open Food Networkin kautta on aina ilmaista.
-          hub_shop: keskus kauppa
+          hub_shop: Keskuskauppa
           hub_shop_text1: >
               Yrityksesi on paikallisen ruokajärjestelmäsi selkäranka. Kokoat tuotteita
               muilta yrityksiltä ja voit myydä niitä Open Food Network -kauppasi kautta.
@@ -3454,14 +3456,14 @@ fi:
           profile_only_text3: >
               Lisää tuotteesi Open Food Networkiin, jolloin keskukset voivat varastoida
               tuotteitasi myymälöissään.
-          producer_shop: tuottaja kauppa
+          producer_shop: Tuottajan kauppa
           producer_shop_text1: >
               Myy tuotteitasi suoraan asiakkaille oman Open Food Network -myymäläsi
               kautta.
           producer_shop_text2: >
               Tuottajakauppa on tarkoitettu vain omille tuotteillesi. Jos haluat myydä
-              muualla kasvatettuja/tuotettuja tuotteita, valitse &#39;Tuottajakeskus&#39;.
-          producer_hub: tuottaja keskus
+              muualla kasvatettuja/tuotettuja tuotteita, valitse 'Tuottajakeskus'.
+          producer_hub: Tuottajakeskus
           producer_hub_text1: >
               Yrityksesi on paikallisen ruokajärjestelmäsi selkäranka. Voit myydä
               omia tuotteitasi sekä muiden yritysten tuotteita Open Food Network -myymäläsi
@@ -3479,7 +3481,7 @@ fi:
           sell_own_produce: Myy omia tuotteitasi
           sell_both: Myy itse ja muiden tuottamia tuotteita
         enterprise_producer:
-          producer: tuottaja
+          producer: Tuottaja
           producer_text1: >
               Tuottajat tekevät herkullisia syötäviä tai juotavia asioita. Olet tuottaja,
               jos kasvatat, kannattelet, haudutat, leivot, käyt, lypsät tai muovaat
@@ -3518,7 +3520,7 @@ fi:
         shipping_method_tagged_bottom: "ovat:"
         payment_method_tagged_top: "Maksutavat merkitty tägillä"
         payment_method_tagged_bottom: "ovat:"
-        order_cycle_tagged_top: "Tilaussyklit merkitty tägillä"
+        order_cycle_tagged_top: "Tilausjaksot merkitty tägillä"
         order_cycle_tagged_bottom: "ovat:"
         inventory_tagged_top: "Tägätyt varastomuunnelmat"
         inventory_tagged_bottom: "ovat:"
@@ -3532,8 +3534,8 @@ fi:
           per_page: "%{results} sivua kohden"
           view_file: "Näytä tiedosto"
           compiling_invoices: "Laskujen laatiminen"
-          bulk_invoice_created: "Joukkolasku luotu"
-          bulk_invoice_failed: "Joukkolaskun luominen epäonnistui"
+          bulk_invoice_created: "Erälasku luotu"
+          bulk_invoice_failed: "Erälaskun luominen epäonnistui"
           please_wait: "Odota, kunnes PDF-tiedosto on valmis, ennen kuin suljet tämän ikkunan."
         order_state:
           address: "osoite"
@@ -3623,7 +3625,7 @@ fi:
       only_n_remaining: "jäljellä on enää %{num} ."
     shopfront:
       variant:
-        add_to_cart: "lisää"
+        add_to_cart: "Lisää"
         in_cart: "ostoskorissa"
         quantity_in_cart: "%{quantity} ostoskorissa"
         remaining_in_stock: "Vain %{quantity} jäljellä"
@@ -3657,12 +3659,12 @@ fi:
       show_hide_variants: 'Näytä tai piilota versiot verkkokaupassani'
       show_hide_shipping: 'Näytä tai piilota toimitustavat kassalla'
       show_hide_payment: 'Näytä tai piilota maksutavat kassalla'
-      show_hide_order_cycles: 'Näytä tai piilota tilaussyklit verkkokaupassani'
+      show_hide_order_cycles: 'Näytä tai piilota tilausjaksot verkkokaupassani'
       visible: NÄKYVÄ
       not_visible: EI NÄKYVÄ
     services:
       unsaved_changes_message: Tallentamattomia muutoksia on tällä hetkellä olemassa. Tallenna nyt vai jätä se huomiotta?
-      save: tallenna
+      save: Tallenna
       ignore: SIVUUTTAA
       add_to_order_cycle: "lisää tilausjaksoon"
       manage_products: "hallita tuotteita"
@@ -3677,12 +3679,12 @@ fi:
     order_cycles:
       unsaved_changes: "Sinulla on tallentamattomia muutoksia"
       bulk_save_error: "Voi ei! En voinut tallentaa muutoksiasi."
-      create_failure: "Tilaussyklin luominen epäonnistui"
-      update_success: 'tilausjakso on päivitetty.'
+      create_failure: "Tilausjakson luominen epäonnistui"
+      update_success: 'Tilausjakso on päivitetty.'
       update_failure: "Tilausjakson päivittäminen epäonnistui"
       no_distributors: Tässä tilausjaksossa ei ole jakelijoita. Tämä tilausjakso ei ole näkyvissä asiakkaille, ennen kuin lisäät sellaisen. Haluatko jatkaa tämän tilausjakson tallentamista?
     enterprises:
-      producer: "tuottaja"
+      producer: "Tuottaja"
       non_producer: "Ei-tuottaja"
     customers:
       select_shop: 'Valitse ensin myymälä'
@@ -3693,7 +3695,7 @@ fi:
       close_date_not_set: Sulkemispäivämäärää ei ole asetettu
     spree:
       users:
-        order: "tilaa"
+        order: "Tilaa"
     registration:
       welcome_to_ofn: "Tervetuloa Open Food Networkiin!"
       signup_or_login: "Aloita rekisteröitymällä (tai kirjautumalla sisään)"
@@ -3856,42 +3858,42 @@ fi:
         fee_placements:
           supplier: "Saapuvat"
           distributor: "Lähtevä"
-          coordinator: "koordinaattori"
+          coordinator: "Koordinaattori"
         tax_category_name:
           shipping_instance_rate: "Alustan hinta"
         formats:
           csv:
             header:
               fee_type: "maksu -tyyppi"
-              enterprise_name: "yritys"
-              fee_name: "maksu nimi"
-              customer_name: "asiakas"
-              fee_placement: "maksu sijoittelu"
-              fee_calculated_on_transfer_through_name: "maksu Calc siirrosta"
+              enterprise_name: "Yrityksen omistaja"
+              fee_name: "Maksun nimi"
+              customer_name: "Asiakas"
+              fee_placement: "Maksun sijoittelu"
+              fee_calculated_on_transfer_through_name: "Maksu Calc siirrosta"
               tax_category_name: "Verokategoria"
               total_amount: "$$ SUMMA"
           html:
             header:
-              fee_type: "maksu -tyyppi"
-              enterprise_name: "yritys"
-              fee_name: "maksu nimi"
-              customer_name: "asiakas"
-              fee_placement: "maksu sijoittelu"
-              fee_calculated_on_transfer_through_name: "maksu Calc siirrosta"
+              fee_type: "Maksun tyyppi"
+              enterprise_name: "Yrityksen omistaja"
+              fee_name: "Maksun nimi"
+              customer_name: "Asiakas"
+              fee_placement: "Maksun sijoittelu"
+              fee_calculated_on_transfer_through_name: "Maksu Calc siirrosta"
               tax_category_name: "Verokategoria"
               total_amount: "$$ SUMMA"
         invalid_filter_parameters: "Tälle raportille valitsemasi suodattimet ovat virheellisiä."
       report:
         none: "Ei mitään"
-  order: "tilaa"
+  order: "Tilaa"
   order_details: "Tilauksen tiedot"
-  customer_details: "asiakas -tiedot"
+  customer_details: "Asiakastiedot"
   adjustments: "Säädöt"
-  payments: "maksut"
+  payments: "Maksut"
   return_authorizations: "Palautusluvat"
   credit_owed: "Luottovelka"
   new_adjustment: "Uusi säätö"
-  payment: "maksu"
+  payment: "Maksu"
   payment_method: "Maksutapa"
   shipment: "Toimitus"
   shipment_inc_vat: "Toimitus sis. ALV"
@@ -3906,7 +3908,7 @@ fi:
   account: "Tili"
   logout: "Kirjaudu ulos"
   date_range: "Ajanjakso"
-  status: "tila"
+  status: "Tila"
   new: "Uusi"
   start: "Aloita"
   end: "Loppu"
@@ -3978,20 +3980,20 @@ fi:
     count_on_hand: "Lasketaan käsillä"
     quantity: "Määrä"
     on_demand: "Pyynnöstä"
-    on_hand: "Kätevällä"
+    on_hand: "Varastossa"
     package_from: "paketti"
     item_description: "Kohteen kuvaus"
     price: "Hinta"
-    total: "yhteensä"
-    edit: "muokata"
+    total: "Yhteensä"
+    edit: "Muokkaa"
     split: "Jakaa"
     delete: "Poistaa"
     cannot_set_shipping_method_without_address: "Toimitustapaa ei voi asettaa ennen kuin asiakastiedot on annettu."
     no_tracking_present: "Seurantatietoja ei annettu."
     tracking: "Seuranta"
     tracking_number: "Seurantanumero"
-    order_total: "tilaa yhteensä"
-    customer_details: "asiakas -tiedot"
+    order_total: "Tilaus yhteensä"
+    customer_details: "Asiakastiedot"
     customer_details_updated: "Asiakkaan tiedot päivitetty"
     customer_search: "Asiakashaku"
     choose_a_customer: "Valitse asiakas"
@@ -4007,10 +4009,10 @@ fi:
     country: "Maa"
     state: "Lääni"
     phone: "Puhelin"
-    update: "päivitä"
+    update: "Päivitä"
     use_billing_address: "Käytä laskutusosoitetta"
     adjustments: "Säädöt"
-    continue: "Jatkaa"
+    continue: "Jatka"
     fill_in_customer_info: "Täytä asiakastiedot"
     credit_card: "Luottokortti"
     new_payment: "Uusi maksu"
@@ -4018,7 +4020,7 @@ fi:
     capture_and_complete_order: "Kaappaa ja suorita tilaus loppuun"
     void: "Mitätön"
     login: "Kirjaudu sisään"
-    password: "salasana"
+    password: "Salasana"
     signature: "Allekirjoitus"
     solution: "Ratkaisu"
     landing_page: "Aloitussivu"
@@ -4027,7 +4029,7 @@ fi:
     logourl: "Logourl"
     are_you_sure_delete: "Haluatko varmasti poistaa tämän tietueen?"
     confirm_delete: "Vahvista poisto"
-    configurations: "Kokoonpanot"
+    configurations: "Asetukset"
     general_settings: "Yleiset asetukset"
     site_name: "Sivuston nimi"
     site_url: "Sivuston URL-osoite"
@@ -4036,12 +4038,12 @@ fi:
     default_meta_keywords: "Oletusmeta-avainsanat"
     currency_decimal_mark: "Valuutan desimaalierotin"
     currency_settings: "Valuutta-asetukset"
-    currency_symbol_position: Laita &quot;valuuttasymboli ennen dollarimäärää vai sen jälkeen?&quot;
+    currency_symbol_position: Laita "valuuttasymboli ennen dollarimäärää vai sen jälkeen?"
     currency_thousands_separator: "Valuutan tuhaterotin"
     hide_cents: "Piilota sentit"
     display_currency: "Näyttövaluutta"
     choose_currency: "Valitse valuutta"
-    mail_method_settings: "Postitusmenetelmän asetukset"
+    mail_method_settings: "Sähköpostin asetukset"
     mail_settings_notice_html: "<b>Tässä tehdyt muutokset ovat väliaikaisia ja tarkoitettu</b> vain virheenkorjaukseen, ja ne voidaan peruuttaa tulevaisuudessa.<br> Pysyviä muutoksia voidaan tehdä päivittämällä instanssin salaisuudet ja ottamalla ne käyttöön <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install-komennolla</a> . Lisätietoja saat ottamalla yhteyttä OFN:n globaaliin tiimiin."
     general: "Yleistä"
     enable_mail_delivery: "Ota postin toimitus käyttöön"
@@ -4056,7 +4058,7 @@ fi:
     new_tax_rate: "Uusi verokanta"
     tax_category: "Verokategoria"
     tax_rates: "Verokannat"
-    rate: "korko"
+    rate: "Korko"
     tax_rate_amount_explanation: "Veroprosentit ovat desimaalilukuja laskelmien helpottamiseksi (esim. jos veroprosentti on 5 %, syötä 0,05)"
     included_in_price: "Hintaan sisältyy"
     show_rate_in_label: "Näytä hinta otsikossa"
@@ -4077,18 +4079,18 @@ fi:
     states: "Läänit"
     abbreviation: "Lyhenne"
     new_state: "Uusi lääni"
-    payment_methods: "maksu -menetelmät"
+    payment_methods: "Maksutavat"
     taxons: "Tuotekategoriat"
     shipping_methods: "Toimitustavat"
     shipping_method: "Toimitustapa"
     shipment: "Toimitus"
-    payment: "maksu"
-    status: "tila"
+    payment: "Maksu"
+    status: "Tila"
     shipping_categories: "Toimituskategoriat"
     new_shipping_category: "Uusi toimituskategoria"
     back_to_shipping_categories: "Takaisin toimitusluokkiin"
     editing_shipping_category: "Toimituskategorian muokkaaminen"
-    name: "nimi"
+    name: "Nimi"
     description: "Kuvaus"
     type: "Tyyppi"
     default: "oletusarvo"
@@ -4125,7 +4127,7 @@ fi:
     date: "Päivämäärä"
     time: "Aika"
     inventory_error_flash_for_insufficient_quantity: "Ostoskorissasi oleva tuote on poistunut valikoimasta."
-    inventory: varasto
+    inventory: Varasto
     zipcode: Postinumero
     weight: Paino (kg tai lb)
     error_user_destroy_with_orders: "Käyttäjiä, joilla on suoritettuja tilauksia, ei voida poistaa"
@@ -4136,15 +4138,15 @@ fi:
     successfully_created: '%{resource} on luotu onnistuneesti!'
     successfully_updated: '%{resource} on päivitetty onnistuneesti!'
     payment_method: "Maksutapa"
-    payment_processing_failed: "maksu ei voitu käsitellä, tarkista antamasi tiedot"
+    payment_processing_failed: "Maksua ei voitu käsitellä, tarkista antamasi tiedot"
     not_available: "Ei saatavilla"
     sku: "SKU"
     there_are_no_items_for_this_order: "Tässä tilauksessa ei ole tuotteita."
     order_populator:
       out_of_stock: '%{item} on loppu varastosta.'
     actions:
-      update: "päivitä"
-      cancel: "Peruuttaa"
+      update: "Päivitä"
+      cancel: "Peruuta"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4157,7 +4159,7 @@ fi:
         date_time: "Päivämäärä/aika"
         amount: "Määrä"
         payment_method: "Maksutapa"
-        payment_state: "maksu Lääni"
+        payment_state: "Maksu Lääni"
     errors:
       messages:
         included_price_validation: "ei voida valita, ellet ole asettanut oletusveroaluetta"
@@ -4185,21 +4187,21 @@ fi:
       subscriptions:
         number: "Määrä"
       tab:
-        dashboard: "Kojelauta"
-        orders: "tilaukset"
-        bulk_order_management: "Irtotavarana tilaa hallinta"
+        dashboard: "Hallintapaneeli"
+        orders: "Tilaukset"
+        bulk_order_management: "Muokkaa useita tilauksia"
         subscriptions: "Tilaukset"
         products: "Tuotteet"
         products_v3: "Tuotteet"
         option_types: "Vaihtoehtotyypit"
         properties: "Ominaisuudet"
-        variant_overrides: "varasto"
-        reports: "raportoi raportti"
-        configuration: "Kokoonpano"
+        variant_overrides: "Varasto"
+        reports: "Raportit"
+        configuration: "Asetukset"
         users: "Käyttäjät"
         roles: "Roolit"
-        order_cycles: "tilaa Cycles"
-        enterprises: "yritykset"
+        order_cycles: "Tilausjaksot"
+        enterprises: "Yritykset"
         enterprise_relationships: "Käyttöoikeudet"
         customers: "Asiakkaat"
         groups: "Ryhmät"
@@ -4215,16 +4217,16 @@ fi:
       properties:
         index:
           properties: "Ominaisuudet"
-          new_property: "Uusi Omaisuus"
-          name: "nimi"
+          new_property: "Uusi Ominaisuus"
+          name: "Nimi"
           presentation: "Esitys"
         new:
-          new_property: "Uusi Omaisuus"
+          new_property: "Uusi Ominaisuus"
         edit:
           editing_property: "Ominaisuuden muokkaaminen"
           back_to_properties_list: "Takaisin kiinteistöluetteloon"
         form:
-          name: "nimi"
+          name: "Nimi"
           presentation: "Esitys"
       return_authorizations:
         index:
@@ -4232,20 +4234,20 @@ fi:
           return_authorizations: "Palautusluvat"
           back_to_orders_list: "Takaisin tilaukset listaan"
           rma_number: "RMA-numero"
-          status: "tila"
+          status: "Tila"
           amount: "Määrä"
           cannot_create_returns: "Palautuksia ei voida luoda, koska tällä tilaa ei ole lähetettyjä yksiköitä."
-          continue: "Jatkaa"
+          continue: "Jatka"
         new:
           new_return_authorization: "Uusi palautuslupa"
           back_to_return_authorizations_list: "Takaisin palautusvaltuutusluetteloon"
-          continue: "Jatkaa"
+          continue: "Jatka"
         edit:
           receive: "vastaanottaa"
           are_you_sure: "Oletko varma?"
           return_authorization: "Palautuslupa"
         form:
-          product: "tuote"
+          product: "Tuote"
           quantity_shipped: "Toimitettu määrä"
           quantity_returned: "Palautettu määrä"
           return_quantity: "Palautusmäärä"
@@ -4270,11 +4272,11 @@ fi:
           mark_as_shipped_message_html: "Tämä merkitsee tilauksen lähetetyksi.<br /> Oletko varma, että haluat jatkaa?"
           mark_as_shipped_label_message: "Lähetä asiakkaalle sähköposti-ilmoitus lähetys-/noutoilmoituksesta."
         index:
-          listing_orders: "Listaustilaukset"
+          listing_orders: "Tilausten listaus"
           new_order: "Uusi tilaa"
           capture: "Kaapata"
           ship: "Toimittaa"
-          edit: "muokata"
+          edit: "Muokkaa"
           order_not_updated: "Tilausta ei voitu päivittää"
           note: "Huomautus"
           first: "Ensimmäinen"
@@ -4296,12 +4298,12 @@ fi:
             one: "1 tilaus valittu"
             other: "%{count} tilauksia valittu"
         sortable_header:
-          payment_state: "maksu Lääni"
+          payment_state: "Maksu Lääni"
           shipment_state: "Toimitus Lääni"
           completed_at: "Valmistui klo"
           number: "Määrä"
           state: "Lääni"
-          email: "asiakas"
+          email: "Asiakkaan sähköposti"
         invoice:
           issued_on: "Myönnetty"
           tax_invoice: "VERO lasku"
@@ -4309,8 +4311,8 @@ fi:
           from: "Alkaen"
           to: "Laskutusosoite"
           shipping: "Toimitus"
-          order_number: "tilaa numero"
-          invoice_number: "lasku -numero"
+          order_number: "Tilausnumero"
+          invoice_number: "Laskunumero"
           payments_list:
             date_time: "Päivämäärä/aika"
             payment_method: "Maksutapa"
@@ -4323,10 +4325,10 @@ fi:
           distribution_fields:
             title: "Jakelu"
             distributor: "Jakelija:"
-            order_cycle: "Tilaussykli:"
+            order_cycle: "Tilausjakso:"
           line_item_adjustments: "Rivikohdan oikaisut"
           order_adjustments: "Tilauksen muutokset"
-          order_total: "tilaa yhteensä"
+          order_total: "Tilaus yhteensä"
       invoices:
         index:
           order_has_changed: "Tilaus on muuttunut viimeisimmän laskun päivityksen jälkeen. Tässä näkyvä lasku ei ehkä ole enää ajan tasalla."
@@ -4346,8 +4348,8 @@ fi:
             many: "Sinulla on %{count} aktiivisia tuotteita"
             other: "Sinulla on %{count} aktiivisia tuotteita"
         order_cycles:
-          order_cycles: "tilaa Cycles"
-          order_cycles_tip: "Tilaussyklit määrittävät, milloin ja missä tuotteesi ovat asiakkaiden saatavilla."
+          order_cycles: "Tilausjaksot"
+          order_cycles_tip: "Tilausjaksot määrittävät, milloin ja missä tuotteesi ovat asiakkaiden saatavilla."
           you_have_active:
             zero: "Sinulla ei ole aktiivisia tilausjaksoja."
             one: "Sinulla on yksi aktiivinen tilausjakso."
@@ -4361,7 +4363,7 @@ fi:
         index:
           shipping_methods: "Toimitustavat"
           new_shipping_method: "Uusi toimitustapa"
-          name: "nimi"
+          name: "Nimi"
           products_distributor: "Jakelija"
           zone: "Vyöhyke"
           calculator: "Laskin"
@@ -4382,12 +4384,12 @@ fi:
           zones: "Vyöhykkeet"
           both: "Sekä mene kassalle että Back officessa"
           back_end: "Vain taustatoimisto"
-          deactivation_warning: "Toimitustavan deaktivointi voi poistaa toimitustavan listaltasi. Vaihtoehtoisesti voit piilottaa toimitustavan kassasivulta asettamalla &quot;Näytä&quot;-asetukseksi &quot;vain taustatoimisto&quot;."
+          deactivation_warning: "Toimitustavan deaktivointi voi poistaa toimitustavan listaltasi. Vaihtoehtoisesti voit piilottaa toimitustavan kassasivulta asettamalla 'Näytä'-asetukseksi 'vain taustatoimisto'."
       payment_methods:
         index:
-          payment_methods: "maksu -menetelmät"
+          payment_methods: "Maksutavat"
           new_payment_method: "Uusi Maksutapa"
-          name: "nimi"
+          name: "Nimi"
           products_distributor: "Jakelija"
           provider: "Palveluntarjoaja"
           environment: "Ympäristö"
@@ -4406,20 +4408,20 @@ fi:
           editing_payment_method: "Maksutavan muokkaaminen"
           back_to_payment_methods_list: "Takaisin maksu metodiluetteloon"
         stripe_connect:
-          enterprise_select_placeholder: Valita...
+          enterprise_select_placeholder: Valitse...
           loading_account_information_msg: Ladataan tilitietoja Stripestä, odota...
           stripe_disabled_msg: Järjestelmänvalvoja on poistanut Stripe-maksut käytöstä.
           request_failed_msg: Pahoittelut. Jotain meni pieleen yritettäessä vahvistaa tilitietoja Stripen avulla...
           account_missing_msg: Tälle yritys ei ole olemassa Stripe-tiliä.
           connect_one: Yhdistä yksi
           access_revoked_msg: Tämän Stripe-tilin käyttöoikeus on peruutettu. Yhdistä tilisi uudelleen.
-          status: tila
+          status: Tila
           connected: Yhdistetty
-          account_id: tunniste
+          account_id: Tilin ID
           business_name: Yrityksen nimi
           charges_enabled: Veloitukset käytössä
         form:
-          name: "nimi"
+          name: "Nimi"
           description: "Kuvaus"
           environment: "Ympäristö"
           display: "Näyttö"
@@ -4429,7 +4431,7 @@ fi:
           both: "Sekä mene kassalle että Back officessa"
           back_end: "Vain taustatoimisto"
           tags: "Tägit"
-          deactivation_warning: "Maksutavan deaktivointi voi poistaa maksutavan listaltasi. Vaihtoehtoisesti voit piilottaa maksutavan kassasivulta asettamalla &quot;Näytä&quot;-asetukseksi &quot;vain taustatoimisto&quot;."
+          deactivation_warning: "Maksutavan deaktivointi voi poistaa maksutavan listaltasi. Vaihtoehtoisesti voit piilottaa maksutavan kassasivulta asettamalla 'Näytä'-asetukseksi 'vain taustatoimisto'."
         providers:
           provider: "Palveluntarjoaja"
           check: "Käteinen/sähköinen maksu/jne. (maksut, joille ei vaadita automaattista vahvistusta)"
@@ -4450,32 +4452,32 @@ fi:
         new:
           title: "Uusi tuote"
           new_product: "Uusi tuote"
-          supplier: "toimittaja"
+          supplier: "Toimittaja"
           supplier_select_placeholder: "Valitse toimittaja"
           search_for_suppliers: "Hae toimittajia"
           search_for_units: "Hae yksiköitä"
-          product_name: "tuote nimi"
-          units: "yksikkökoko"
+          product_name: "Tuotteen nimi"
+          units: "Yksikkökoko"
           value: "Arvo"
-          unit_name: "yksikkö nimi"
+          unit_name: "Yksikön nimi"
           price: "Hinta"
-          unit_price: "yksikköhinta"
+          unit_price: "Yksikköhinta"
           unit_price_legend: "Laskettu tuotteen hinnan perusteella"
-          on_hand: "Kätevällä"
+          on_hand: "Varastossa"
           on_demand: "Pyynnöstä"
-          product_description: "tuote kuvaus"
-          image: "kuva"
+          product_description: "Tuotekuvaus"
+          image: "Kuva"
         unit_name_placeholder: 'esim. rypäleet'
         index:
           header:
-            title: Irtotavarana muokata -tuotteet
+            title: Muokkaa useita tuotteita
           indicators:
             title: TUOTTEIDEN LATAAMINEN
             no_products: "Ei vielä tuotteita. Mikset lisäisi niitä?"
             no_results: "Valitettavasti ei tuloksia"
           products_head:
-            name: nimi
-            unit: yksikkö
+            name: Nimi
+            unit: Yksikkö
             display_as: Näytä muodossa
             category: Kategoria
             tax_category: Verokategoria
@@ -4485,9 +4487,9 @@ fi:
           products_variant:
             variant_has_n_overrides: "Tässä variantissa on %{n} -ohitus (tai ohituksia)"
             new_variant: "Uusi variantti"
-          product_name: tuote nimi
+          product_name: Tuotteen nimi
         primary_taxon_form:
-          product_category: tuote kategoria
+          product_category: Tuoteryhmä
           search_for_categories: "Etsi kategorioita"
         group_buy_form:
           group_buy: "Ryhmäostos?"
@@ -4519,9 +4521,9 @@ fi:
           disabled: "Pois käytöstä?"
           email: "Sähköposti"
           admin: "Superylläpitäjä?"
-          enterprise_limit: "yritys"
+          enterprise_limit: "Yritysraja"
           confirm_password: "Vahvista salasana"
-          password: "salasana"
+          password: "Salasana"
           locale: "Kieli"
         email_confirmation:
           confirmation_pending: "Sähköpostivahvistus odottaa. Olemme lähettäneet vahvistussähköpostin osoitteeseen %{address} ."
@@ -4541,7 +4543,7 @@ fi:
           new_variant: "Uusi variantti"
         form:
           sku: "SKU"
-          unit_price: "yksikköhinta"
+          unit_price: "Yksikköhinta"
           display_as: "Näytä muodossa"
           display_name: "Näytä nimi"
           display_as_placeholder: 'esim. 2 kg'
@@ -4553,21 +4555,21 @@ fi:
           variant_category: Luokka
         autocomplete:
           out_of_stock: "Loppu varastosta"
-          producer_name: "tuottaja"
-          unit: "yksikkö"
+          producer_name: "Tuottaja"
+          unit: "Yksikkö"
       shared:
         configuration_menu:
           terms_of_service: "Palveluehdot"
         sortable_header:
-          name: "nimi"
+          name: "Nimi"
           number: "Määrä"
           completed_at: "Valmistui klo"
           state: "Lääni"
           payment_state: "maksu Lääni"
           shipment_state: "Toimitus Lääni"
           email: "Sähköposti"
-          total: "yhteensä"
-          billing_address_name: "nimi"
+          total: "Yhteensä"
+          billing_address_name: "Nimi"
       taxons:
         back_to_list: "Takaisin tuotekategorioiden luetteloon"
         index:
@@ -4582,7 +4584,7 @@ fi:
             success: "Tuotekategoria poistettu onnistuneesti"
             error: "Tuotekategoriaa ei voitu poistaa määritettyjen tuotteiden vuoksi."
         form:
-          name: nimi
+          name: Nimi
           meta_title: Meta-otsikko
           meta_description: Metakuvaus
           meta_keywords: Meta-avainsanat
@@ -4616,7 +4618,7 @@ fi:
       flatpickr_datetime_format: "Vuosi H:i"
       today: "Tänään"
       now: "Nyt"
-      close: "Lähellä"
+      close: "Sulje"
     orders:
       error_flash_for_unavailable_items: "Ostoskorissasi oleva tuote on poistunut valikoimasta. Päivitä valitut määrät."
       edit:
@@ -4657,14 +4659,14 @@ fi:
         unpaid_order: "Tilauksesi oli maksamatta, joten hyvitystä ei ole tehty"
         paid_order: "Tilauksesi on maksettu, joten %{distributor} on hyvittänyt koko summan."
         credit_order: "Tilauksesi on maksettu, joten tilillesi on hyvitetty rahaa"
-        subject: "tilaa peruuttaminen"
+        subject: "Tilauksen peruuttaminen"
       cancel_email_for_shop:
         greeting: "Hyvä %{name} ,"
-        subject: "tilaa peruuttaminen"
+        subject: "Tilauksen peruuttaminen"
         intro: "Asiakas on peruuttanut tilauksensa # %{number} ."
         view_cancelled_order: "Näytä peruutettu tilaus"
       confirm_email:
-        subject: "tilaa -vahvistus"
+        subject: "Tilausvahvistus"
       invoice_email:
         hi: "Hei %{name}"
         invoice_attached_text: Liitteenä on lasku viimeisimmästä tilauksestasi, jonka teit
@@ -4778,28 +4780,28 @@ fi:
         authorisation_required: Valtuutus vaaditaan
         authorise: Valtuuta
       open_orders:
-        order: tilaa
-        shop: kauppa
+        order: Tilaus
+        shop: Kauppa
         changes_allowed_until: Muutokset sallittu asti
-        items: kohteet
-        total: yhteensä
-        edit: muokata
-        cancel: Peruuttaa
+        items: Tuotteet
+        total: Yhteensä
+        edit: Muokkaa
+        cancel: Peruuta
         closed: Suljettu
         until: Kunnes
       past_orders:
-        order: tilaa
-        shop: kauppa
+        order: Tilaus
+        shop: Kauppa
         completed_at: Valmistui klo
-        items: kohteet
-        total: yhteensä
+        items: Tuotteet
+        total: Yhteensä
         paid?: Maksettu?
-        status: tila
+        status: Tila
         completed: Valmis
         cancelled: Peruutettu
       saved_cards:
         default?: Oletusarvo?
-        delete?: Poistaa?
+        delete?: Poista?
       cards:
         authorised_shops: Valtuutetut myymälät
         authorised_shops_agreement: Tämä on luettelo kaupoista, jotka saavat veloittaa oletusluottokortiltasi mahdollisista tilauksistasi (eli toistuvista tilauksista). Korttitietosi säilytetään turvallisesti, eikä niitä jaeta kauppojen omistajille. Saat aina ilmoituksen, kun sinulta veloitetaan. Rastitamalla kaupan ruudun hyväksyt, että kyseinen kauppa lähettää ohjeet korttisi myöntäneelle rahoituslaitokselle maksujen vastaanottamiseksi kyseisen kaupan kanssa tekemäsi tilauksen ehtojen mukaisesti.
@@ -4830,7 +4832,7 @@ fi:
       models:
         spree/payment:
           one: maksu
-          other: maksu t
+          other: Maksut
     unit: yksikkö
     per_unit: yksikköä kohden
   datetime:

@@ -898,6 +898,7 @@ fr_CA:
         search_for_categories: Rechercher des catégories
         select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
+        select_tag: Choisir le tag
         producers:
           label: Producteurs
         categories:
@@ -1019,6 +1020,7 @@ fr_CA:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
+        reset_absent_tip: Mettre le stock à zéro pour tous les produits existants non présents dans le fichier
         overwrite_all: Modifier tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -1666,6 +1668,7 @@ fr_CA:
         logo_hint: 300 x 300 pixels
         logo_remove: "Supprimer l'image"
         logo_remove_confirm: "Le logo sera supprimé juste après votre confirmation."
+        promo_image_label: "image promotionnelle"
         promo_image_note1: 'ATTENTION:'
         promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
         promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
@@ -1673,6 +1676,7 @@ fr_CA:
         promo_image_remove: "Supprimer l'image"
         promo_image_remove_confirm: "La bannière sera supprimée juste après votre confirmation."
         white_label_logo_label: "logo utilisé pour la boutique"
+        white_label_logo_hint: 217 x 44 pixels
         white_label_logo_remove: "Supprimer l'image"
         white_label_logo_remove_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
       user_guide_link:
@@ -4315,6 +4319,7 @@ fr_CA:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée."
+          cannot_add_item_to_shipped_order: "Il n'est pas possible d'ajouter des produits sur une commande livrée."
           include_out_of_stock_variants: "Inclure les variantes sans stock"
         shipment:
           mark_as_shipped_message_html: "Cette action marque la commande comme livrée. <br /> Etes-vous certain de vouloir faire ceci? "
