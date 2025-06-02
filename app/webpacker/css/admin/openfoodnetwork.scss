@@ -209,6 +209,10 @@ table#listing_enterprise_groups {
   border-color: $color-error;
 }
 
+.field_with_errors > select {
+  border-color: $color-error;
+}
+
 span.required {
   color: $color-5;
   font-size: 110%;
