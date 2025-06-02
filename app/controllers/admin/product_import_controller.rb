@@ -17,7 +17,10 @@ module Admin
     end
 
     def import
+      return unless can_import_into_inventories?
+
       @filepath = save_uploaded_file(params[:file])
+
       @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user,
                                                      params[:settings])
       @original_filename = params[:file].try(:original_filename)
@@ -36,7 +39,22 @@ module Admin
     def save_data
       return unless process_data('save')
 
-      render json: @importer.save_results
+      json = {
+        results: {
+          products_created: @importer.products_created_count,
+          products_updated: @importer.products_updated_count,
+          products_reset: @importer.products_reset_count,
+        },
+        updated_ids: @importer.updated_ids,
+        errors: @importer.errors.full_messages
+      }
+
+      if helpers.feature?(:inventory, spree_current_user.enterprises)
+        json[:results][:inventory_created] = @importer.inventory_created_count
+        json[:results][:inventory_updated] = @importer.inventory_updated_count
+      end
+
+      render json:
     end
 
     def reset_absent_products
@@ -153,6 +171,16 @@ module Admin
       redirect_to '/admin/product_import',
                   notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
       raise 'Invalid File Path'
+    end
+
+    # Return an error if trying to import into inventories when inventory is disable
+    def can_import_into_inventories?
+      return true if helpers.feature?(:inventory, spree_current_user.enterprises) ||
+                     params.dig(:settings, "import_into") != 'inventories'
+
+      redirect_to admin_product_import_url, notice: I18n.t(:product_import_inventory_disable)
+
+      false
     end
   end
 end
