@@ -283,21 +283,6 @@ Style/MissingRespondToMissing:
     - 'app/models/spree/gateway.rb'
     - 'app/models/spree/preferences/configuration.rb'
 
-# Offense count: 22
-# This cop supports safe autocorrection (--autocorrect).
-Style/NestedModifier:
-  Exclude:
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/line_items_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders_controller_spec.rb'
-    - 'spec/controllers/spree/orders_controller_spec.rb'
-    - 'spec/factories/order_factory.rb'
-    - 'spec/models/proxy_order_spec.rb'
-    - 'spec/models/spree/line_item_spec.rb'
-    - 'spec/services/place_proxy_order_spec.rb'
-    - 'spec/system/admin/payments_stripe_spec.rb'
-    - 'spec/system/admin/reports_spec.rb'
-
 # Offense count: 38
 Style/OpenStructUse:
   Exclude:
