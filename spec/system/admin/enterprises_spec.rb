@@ -213,13 +213,6 @@ RSpec.describe '
       .trigger("click")
     find(:xpath, '//*[@id="enterprise_enable_subscriptions_true"]').trigger("click")
 
-    accept_alert do
-      click_link "Inventory Settings"
-    end
-    expect(page).to have_checked_field(
-      "enterprise_preferred_product_selection_from_inventory_only_false"
-    )
-
     # Save changes
     click_button 'Update'
 
@@ -266,6 +259,32 @@ RSpec.describe '
     expect(page).to have_selector(
       "input[aria-label=URL][placeholder='Please enter a URL to insert']"
     )
+  end
+
+  context "with inventory enabled", feature: :inventory do
+    it "allows editing inventory settings" do
+      enterprise = create(:enterprise)
+
+      admin = login_as_admin
+
+      visit '/admin/enterprises'
+      within "tr.enterprise-#{enterprise.id}" do
+        first("a", text: 'Settings').click
+      end
+
+      click_link "Inventory Settings"
+      expect(page).to have_checked_field(
+        "enterprise_preferred_product_selection_from_inventory_only_false"
+      )
+
+      page.find("#enterprise_preferred_product_selection_from_inventory_only_true").click
+      click_button 'Update'
+
+      click_link "Inventory Settings"
+      expect(page).to have_checked_field(
+        "enterprise_preferred_product_selection_from_inventory_only_true"
+      )
+    end
   end
 
   describe "producer properties" do
