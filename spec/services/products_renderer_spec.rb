@@ -205,11 +205,23 @@ RSpec.describe ProductsRenderer do
       expect(products_renderer.products_json).to include "998.0"
     end
 
-    it "loads tag_list for variants" do
-      products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
-                                               inventory_enabled: true)
-      VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
-      expect(products_renderer.products_json).to include "[\"lalala\"]"
+    context "when inventory is enabled" do
+      it "loads tag_list for variants" do
+        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
+                                                 inventory_enabled: true)
+        VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
+        expect(products_renderer.products_json).to include "[\"lalala\"]"
+      end
+
+      it "loads variant override" do
+        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
+                                                 inventory_enabled: true)
+        VariantOverride.create(variant:, hub: distributor, price: 25.00)
+
+        json = products_renderer.products_json
+        first_variant = JSON.parse(json).first["variants"].first
+        expect(first_variant["price_with_fees"]).to eq("25.0")
+      end
     end
   end
 
