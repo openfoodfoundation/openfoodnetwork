@@ -22,8 +22,7 @@ RSpec.describe Admin::EnterprisesHelper do
     it "lists default items" do
       expect(visible_items.pluck(:name)).to eq %w[
         primary_details address contact social about business_details images
-        vouchers enterprise_permissions inventory_settings tag_rules
-        shop_preferences white_label users
+        vouchers enterprise_permissions tag_rules shop_preferences white_label users
       ]
     end
 
@@ -32,6 +31,12 @@ RSpec.describe Admin::EnterprisesHelper do
 
       user.enterprises << enterprise
       expect(visible_items.pluck(:name)).to include "connected_apps"
+    end
+
+    context "with inventory enabled", feature: :inventory do
+      it "lists inventory_settings" do
+        expect(visible_items.pluck(:name)).to include "inventory_settings"
+      end
     end
   end
 end
