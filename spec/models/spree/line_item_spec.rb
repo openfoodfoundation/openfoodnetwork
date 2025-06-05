@@ -300,7 +300,7 @@ module Spree
           order.reload
           order.update_totals
           order.payments << create(:payment, amount: order.total)
-          break unless order.next! until order.completed?
+          Orders::WorkflowService.new(order).complete!
           order.payment_state = 'paid'
           order.select_shipping_method(shipping_method.id)
           order.shipment.update!(order)

@@ -345,8 +345,8 @@ class OrderCycle < ApplicationRecord
   end
 
   def orders_close_at_after_orders_open_at?
-    return if orders_open_at.blank? || orders_close_at.blank?
-    return if orders_close_at > orders_open_at
+    return false if orders_open_at.blank? || orders_close_at.blank?
+    return false if orders_close_at > orders_open_at
 
     errors.add(:orders_close_at, :after_orders_open_at)
   end
