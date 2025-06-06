@@ -4162,6 +4162,7 @@ de_CH:
         invoice_attached_text: Im Anhang finden Sie die Rechnung Ihrer letzten Bestellung vom
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Liebe Kundin, lieber Kunde,"
         request_sent_text: |
             Wir haben eine Anfrage zum Zurücksetzen Ihres Passworts erhalten.
             Sollten Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese E-Mail.
@@ -4269,6 +4270,7 @@ de_CH:
         total: Gesamt
         paid?: Bezahlt?
         status: Status
+        completed: Abgeschlossen
         cancelled: Storniert
       saved_cards:
         default?: Standard?
