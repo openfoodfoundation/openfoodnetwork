@@ -71,7 +71,7 @@ RSpec.describe OpenOrderCycleJob do
         .and change { variant.on_demand }.to(true)
         .and change { variant.on_hand }.by(0)
         .and change { variant_discontinued.on_hand }.to(0)
-        .and query_database 59
+        .and query_database 58
     end
   end
 
