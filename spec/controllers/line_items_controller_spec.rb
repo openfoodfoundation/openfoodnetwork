@@ -11,7 +11,7 @@ RSpec.describe LineItemsController do
     let!(:completed_order) do
       order = create(:completed_order_with_totals, user:, distributor:,
                                                    order_cycle:, line_items_count: 1)
-      break unless order.next! while !order.completed?
+      Orders::WorkflowService.new(order).complete!
       order
     end
 
@@ -35,7 +35,7 @@ RSpec.describe LineItemsController do
       let(:item) do
         order = create(:completed_order_with_totals)
         item = create(:line_item, order:)
-        break unless order.next! while !order.completed?
+        Orders::WorkflowService.new(order).complete!
         item
       end
 
@@ -177,7 +177,7 @@ RSpec.describe LineItemsController do
                                                      order_cycle:, line_items_count: 2)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.line_items.last.update(variant_id: variant2.id)
-        break unless order.next! while !order.completed?
+        Orders::WorkflowService.new(order).complete!
         order.recreate_all_fees!
         order
       end

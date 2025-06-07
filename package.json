@@ -10,7 +10,7 @@
     "pretty-quick": "pretty-quick"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.0",
+    "@floating-ui/dom": "^1.7.1",
     "@hotwired/stimulus": "^3.2",
     "@hotwired/turbo": "^8.0.13",
     "@rails/webpacker": "5.4.4",
@@ -44,7 +44,7 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
-    "pretty-quick": "4.1.1",
+    "pretty-quick": "4.2.2",
     "webpack-dev-server": "~3"
   }
 }
