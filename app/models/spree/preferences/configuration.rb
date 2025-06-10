@@ -57,6 +57,11 @@ module Spree
         set_preference args[0], args[1]
       end
 
+      def respond_to_missing?(method_name, include_private = false)
+        name = method_name.to_s.chomp('=')
+        has_preference?(name) || super
+      end
+
       def method_missing(method, *args)
         name = method.to_s.gsub('=', '')
         if has_preference? name
