@@ -27,6 +27,20 @@ module Spree
     class Configuration
       include Spree::Preferences::Preferable
 
+      class << self
+        def preference(name, type, *args)
+          super
+
+          define_method(name) do
+            get_preference(name)
+          end
+
+          define_method("#{name}=") do |value|
+            set_preference(name, value)
+          end
+        end
+      end
+
       def configure
         yield(self) if block_given?
       end
@@ -55,24 +69,6 @@ module Spree
         return unless args.size == 2
 
         set_preference args[0], args[1]
-      end
-
-      def respond_to_missing?(method_name, include_private = false)
-        name = method_name.to_s.chomp('=')
-        has_preference?(name) || super
-      end
-
-      def method_missing(method, *args)
-        name = method.to_s.gsub('=', '')
-        if has_preference? name
-          if method.to_s =~ /=$/
-            set_preference(name, args.first)
-          else
-            get_preference name
-          end
-        else
-          super
-        end
       end
     end
   end
