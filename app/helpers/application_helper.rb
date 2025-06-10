@@ -45,6 +45,11 @@ module ApplicationHelper
     form_for(name, *(args << options.merge(builder: AngularFormBuilder)), &)
   end
 
+  def respond_to_missing?(method_name, include_private = false)
+    (method_name.to_s.end_with?('_path',
+                                '_url') && spree.respond_to?(method_name, include_private)) || super
+  end
+
   # Pass URL helper calls on to spree where applicable so that we don't need to use
   # spree.foo_path in any view rendered from non-spree-namespaced controllers.
   def method_missing(method, *args, &)
