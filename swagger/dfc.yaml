@@ -578,48 +578,16 @@ paths:
                 test_example:
                   value:
                     "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
-                    "@id": https://mydataserver.com/enterprises/1/platforms
+                    "@id": http://test.host/api/dfc/enterprises/10000/platforms
                     dfc-t:platforms:
-                      "@list":
-                      - "@id": https://waterlooregionfood.ca/portal/profile
-                        "@type": dfc-t:Platform
-                        _id:
-                          "$oid": 682afcc4966dbb3aa7464d56
-                        description: A super duper portal for the waterloo region
-                        dfc-t:hasAssignedScopes:
-                          "@list":
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadEnterprise
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: ReadEnterprise
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteEnterprise
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: WriteEnterprise
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadProducts
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: ReadProducts
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteProducts
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: WriteProducts
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadOrders
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: ReadOrders
-                          - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteOrders
-                            "@type": dfc-t:Scope
-                            dfc-t:scope: WriteOrders
-                          "@type": rdf:List
-                        termsandconditions: https://waterlooregionfood.ca/terms-and-conditions
-                        title: Waterloo Region Food Portal
-                      - "@id": https://anotherplatform.ca/portal/profile
-                        "@type": dfc-t:Platform
-                        _id:
-                          "$oid": 682b2e2b031c28f69cda1645
-                        description: A super duper portal for the waterloo region
-                        dfc-t:hasAssignedScopes:
-                          "@list": []
-                          "@type": rdf:List
-                        termsandconditions: https://anotherplatform.ca/terms-and-conditions
-                        title: anotherplatform Portal
                       "@type": rdf:List
+                      "@list":
+                      - "@type": dfc-t:Platform
+                        "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                        localId: cqcm-dev
+                        dfc-t:hasAssignedScopes:
+                          "@type": rdf:List
+                          "@list": []
   "/api/dfc/enterprises/{enterprise_id}/platforms/{platform_id}":
     parameters:
     - name: enterprise_id
@@ -632,8 +600,8 @@ paths:
       required: true
       schema:
         type: string
-    put:
-      summary: Update authorized scopes of a platform
+    get:
+      summary: Show platform scopes
       tags:
       - Platforms
       responses:
@@ -644,32 +612,71 @@ paths:
               examples:
                 test_example:
                   value:
-                    "@id": https://anotherplatform.ca/portal/profile
                     "@type": dfc-t:Platform
-                    description: A super duper portal for the waterloo region
+                    "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                    localId: cqcm-dev
                     dfc-t:hasAssignedScopes:
+                      "@type": rdf:List
+                      "@list": []
+    put:
+      summary: Update authorized scopes of a platform
+      parameters: []
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@type": dfc-t:Platform
+                    "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                    localId: cqcm-dev
+                    dfc-t:hasAssignedScopes:
+                      "@type": rdf:List
                       "@list":
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadEnterprise
+                      - "@id": https://example.com/scopes/ReadEnterprise
                         "@type": dfc-t:Scope
                         dfc-t:scope: ReadEnterprise
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteEnterprise
+                      - "@id": https://example.com/scopes/WriteEnterprise
                         "@type": dfc-t:Scope
                         dfc-t:scope: WriteEnterprise
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadProducts
+                      - "@id": https://example.com/scopes/ReadProducts
                         "@type": dfc-t:Scope
                         dfc-t:scope: ReadProducts
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteProducts
+                      - "@id": https://example.com/scopes/WriteProducts
                         "@type": dfc-t:Scope
                         dfc-t:scope: WriteProducts
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadOrders
+                      - "@id": https://example.com/scopes/ReadOrders
                         "@type": dfc-t:Scope
                         dfc-t:scope: ReadOrders
-                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteOrders
+                      - "@id": https://example.com/scopes/WriteOrders
                         "@type": dfc-t:Scope
                         dfc-t:scope: WriteOrders
-                      "@type": rdf:List
-                    termsandconditions: https://anotherplatform.ca/terms-and-conditions
-                    title: anotherplatform Portal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
+                "@id": http://localhost:3000/api/dfc/enterprises/3/platforms/cqcm-dev
+                dfc-t:hasAssignedScopes:
+                  "@list":
+                  - "@id": https://example.com/scopes/ReadEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/ReadProducts
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteProducts
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/ReadOrders
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteOrders
+                    "@type": dfc-t:Scope
+                  "@type": rdf:List
   "/api/dfc/product_groups/{id}":
     parameters:
     - name: enterprise_id
