@@ -29,6 +29,10 @@ module DfcProvider
       render json: portals
     end
 
+    def show
+      render json: portal(params[:id])
+    end
+
     def update
       key = params[:id]
       requested_portal = JSON.parse(request.body.read)
