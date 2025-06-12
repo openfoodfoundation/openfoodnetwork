@@ -620,6 +620,56 @@ paths:
                         termsandconditions: https://anotherplatform.ca/terms-and-conditions
                         title: anotherplatform Portal
                       "@type": rdf:List
+  "/api/dfc/enterprises/{enterprise_id}/platforms/{platform_id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: platform_id
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      summary: Update authorized scopes of a platform
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@id": https://anotherplatform.ca/portal/profile
+                    "@type": dfc-t:Platform
+                    description: A super duper portal for the waterloo region
+                    dfc-t:hasAssignedScopes:
+                      "@list":
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadEnterprise
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadEnterprise
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteEnterprise
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteEnterprise
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadProducts
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadProducts
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteProducts
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteProducts
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/ReadOrders
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadOrders
+                      - "@id": https://data-server.cqcm.startinblox.com/enterprises/1/platforms/scopes/WriteOrders
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteOrders
+                      "@type": rdf:List
+                    termsandconditions: https://anotherplatform.ca/terms-and-conditions
+                    title: anotherplatform Portal
   "/api/dfc/product_groups/{id}":
     parameters:
     - name: enterprise_id
