@@ -80,10 +80,16 @@ module Reporting
 
         def variant_scoper_for(distributor_id)
           @variant_scopers_by_distributor_id ||= {}
+          variant_overrides = {}
+          if OpenFoodNetwork::FeatureToggle.enabled?(:inventory,
+                                                     Enterprise.find_by(id: distributor_id))
+            variant_overrides = report_variant_overrides[distributor_id]
+          end
+
           @variant_scopers_by_distributor_id[distributor_id] ||=
             OpenFoodNetwork::ScopeVariantToHub.new(
               distributor_id,
-              report_variant_overrides[distributor_id] || {},
+              variant_overrides,
             )
         end
 
