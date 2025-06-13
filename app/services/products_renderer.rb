@@ -44,7 +44,6 @@ class ProductsRenderer
 
       paginated_products = paginate(results)
 
-      # TODO test this ?
       if options[:inventory_enabled]
         # Scope results with variant_overrides
         paginated_products.each { |product| product_scoper.scope(product) }
