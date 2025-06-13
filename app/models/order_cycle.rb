@@ -286,9 +286,15 @@ class OrderCycle < ApplicationRecord
                                          user_id: user,
                                          distributor_id: distributor,
                                          order_cycle_id: self)
-    scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-    items = Spree::LineItem.includes(:variant).joins(:order).merge(orders).to_a
-    items.each { |li| scoper.scope(li.variant) }
+
+    items = Spree::LineItem.includes(:variant).joins(:order).merge(orders)
+
+    if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
+      scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+      items.each { |li| scoper.scope(li.variant) }
+    end
+
+    items
   end
 
   def distributor_payment_methods

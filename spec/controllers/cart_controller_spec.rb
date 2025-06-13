@@ -42,7 +42,7 @@ RSpec.describe CartController do
     end
   end
 
-  context "handling variant overrides correctly" do
+  context "handling variant overrides correctly", feature: :inventory do
     let(:product) { create(:simple_product, supplier: producer) }
     let(:producer) { create(:supplier_enterprise) }
     let!(:variant_in_the_order) { create(:variant) }
