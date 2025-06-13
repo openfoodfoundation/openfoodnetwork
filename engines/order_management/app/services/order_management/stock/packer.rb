@@ -15,7 +15,9 @@ module OrderManagement
           variant = line_item.variant
           next unless variant.stock_item
 
-          OpenFoodNetwork::ScopeVariantToHub.new(order.distributor).scope(variant)
+          if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
+            OpenFoodNetwork::ScopeVariantToHub.new(order.distributor).scope(variant)
+          end
 
           on_hand, backordered = variant.fill_status(line_item.quantity)
           package.add variant, on_hand, :on_hand if on_hand.positive?
