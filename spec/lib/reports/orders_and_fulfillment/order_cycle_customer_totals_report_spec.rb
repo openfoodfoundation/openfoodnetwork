@@ -132,7 +132,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
     end
   end
 
-  context 'when a variant override applies' do
+  context 'when a variant override applies', feature: :inventory do
     let!(:order) do
       create(
         :completed_order_with_totals,

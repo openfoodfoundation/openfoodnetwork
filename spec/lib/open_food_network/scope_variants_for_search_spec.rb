@@ -126,20 +126,42 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
         context "when :include_out_of_stock is not specified" do
           let(:params) { { distributor_id: d1.id } }
 
-          it "returns variants for the given distributor if they have a variant override which is
-              in stock, or if they have a variant override with no stock level set but the producer
-              has stock, or if they don't have a variant override and the producer has stock" do
+          context "with inventory enabled", feature: :inventory do
+            it "returns variants for the given distributor if they have a variant override
+                which is in stock, or if they have a variant override with no stock level set
+                but the producer has stock, or if they don't have a variant override
+                and the producer has stock" do
+              expect(result).to include(
+                distributor1_variant_on_hand_but_not_backorderable,
+                distributor1_variant_backorderable_but_not_on_hand,
+                distributor1_variant_with_override_on_demand_but_not_on_hand,
+                distributor1_variant_with_override_on_hand_but_not_on_demand,
+                distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock
+              )
+              expect(result).not_to include(
+                distributor1_variant_not_backorderable_and_not_on_hand,
+                distributor1_variant_with_override_not_on_demand_and_not_on_hand,
+                distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
+                distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
+                distributor2_variant_with_override_in_stock
+              )
+            end
+          end
+
+          it "returns variants for the given distributor if the producer has stock" do
+            # variant with override are returned here because the associated variant has stock
             expect(result).to include(
               distributor1_variant_on_hand_but_not_backorderable,
               distributor1_variant_backorderable_but_not_on_hand,
-              distributor1_variant_with_override_on_demand_but_not_on_hand,
-              distributor1_variant_with_override_on_hand_but_not_on_demand,
-              distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock
+              distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock,
+              distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
             )
+
             expect(result).not_to include(
               distributor1_variant_not_backorderable_and_not_on_hand,
+              distributor1_variant_with_override_on_demand_but_not_on_hand,
+              distributor1_variant_with_override_on_hand_but_not_on_demand,
               distributor1_variant_with_override_not_on_demand_and_not_on_hand,
-              distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
               distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
               distributor2_variant_with_override_in_stock
             )
