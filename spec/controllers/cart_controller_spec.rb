@@ -6,8 +6,8 @@ RSpec.describe CartController do
   let(:order) { create(:order) }
 
   describe "basic behaviour" do
-    let(:cart_service) { double }
-    let(:errors) { double }
+    let(:cart_service) { instance_double(CartService) }
+    let(:errors) { instance_double(ActiveModel::Errors) }
 
     before do
       allow(CartService).to receive(:new).and_return(cart_service)
