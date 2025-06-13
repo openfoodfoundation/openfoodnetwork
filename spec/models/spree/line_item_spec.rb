@@ -259,7 +259,7 @@ RSpec.describe Spree::LineItem do
       expect(li.reload.quantity).to eq 0
     end
 
-    context "when a variant override is in place" do
+    context "when a variant override is in place", feature: :inventory do
       let!(:hub) { create(:distributor_enterprise) }
       let!(:vo) { create(:variant_override, hub:, variant: v, count_on_hand: 2) }
 
@@ -371,7 +371,7 @@ RSpec.describe Spree::LineItem do
       let!(:line_item) { order.reload.line_items.first }
       let!(:variant) { line_item.variant }
 
-      context "when a variant override applies" do
+      context "when a variant override applies", feature: :inventory do
         let!(:vo) { create(:variant_override, hub: shop, variant:, count_on_hand: 3 ) }
 
         it "restores stock to the variant override" do
@@ -414,7 +414,7 @@ RSpec.describe Spree::LineItem do
         it { expect(li.sufficient_stock?).to be false }
       end
 
-      context "when a variant override is in place" do
+      context "when a variant override is in place", feature: :inventory do
         let!(:vo) { create(:variant_override, hub:, variant: v, count_on_hand: 5) }
 
         context "and stock on the variant override is sufficient" do
