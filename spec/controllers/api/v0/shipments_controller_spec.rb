@@ -67,7 +67,7 @@ RSpec.describe Api::V0::ShipmentsController do
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
       end
 
-      it 'updates existing shipment with variant override if an VO is sent' do
+      it 'updates existing shipment with variant override if an VO is sent', feature: :inventory do
         hub = create(:distributor_enterprise)
         order.update_attribute(:distributor, hub)
         shipment.shipping_method.distributors << hub
@@ -346,7 +346,7 @@ RSpec.describe Api::V0::ShipmentsController do
           expect_error_response
         end
 
-        it 'adds a variant override to the shipment' do
+        it 'adds a variant override to the shipment', feature: :inventory do
           hub = create(:distributor_enterprise)
           order.update_attribute(:distributor, hub)
           variant_override = create(:variant_override, hub:, variant:)

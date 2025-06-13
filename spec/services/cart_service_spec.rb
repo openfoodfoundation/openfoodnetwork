@@ -169,10 +169,12 @@ RSpec.describe CartService do
   describe "attempt_cart_add" do
     let!(:variant) { create(:variant, on_hand: 250) }
     let(:quantity) { 123 }
+    let(:distributor) { create(:distributor_enterprise) }
 
     before do
       allow(Spree::Variant).to receive(:find).and_return(variant)
       allow(VariantOverride).to receive(:for).and_return(nil)
+      allow(order).to receive(:distributor).and_return(distributor)
     end
 
     it "performs additional validations" do

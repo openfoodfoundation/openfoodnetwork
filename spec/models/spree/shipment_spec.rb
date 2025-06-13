@@ -86,6 +86,16 @@ RSpec.describe Spree::Shipment do
         end
       end
     end
+
+    context "with variant override", feature: :inventory do
+      let(:order) { create(:order, distributor: variant.supplier) }
+
+      it "returns the scoped variant" do
+        create(:variant_override, hub: variant.supplier, variant:, price: 25.00)
+
+        expect(shipment.manifest.first.variant.price).to eq 25.00
+      end
+    end
   end
 
   context 'shipping_rates' do
@@ -276,7 +286,7 @@ RSpec.describe Spree::Shipment do
         .to change { variant.on_hand }.from(5).to(4)
     end
 
-    it "reduces stock of a variant override" do
+    it "reduces stock of a variant override", feature: :inventory do
       variant.on_hand = 5
       variant_override = VariantOverride.create!(
         variant:,
