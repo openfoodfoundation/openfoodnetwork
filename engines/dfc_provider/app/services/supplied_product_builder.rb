@@ -8,12 +8,14 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
-  def self.supplied_product(variant)
+  def self.supplied_product(variant, include_catalog_items: true)
     product_uri = urls.enterprise_url(
       variant.supplier_id,
       spree_product_id: variant.product_id
     )
     product_group = ProductGroupBuilder.product_group(variant.product)
+
+    catalogItems = [catalog_item(variant, include_product: false)] if include_catalog_items
 
     DfcProvider::SuppliedProduct.new(
       semantic_id(variant),
@@ -24,7 +26,8 @@ class SuppliedProductBuilder < DfcBuilder
       isVariantOf: [product_group],
       spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
-      image_url: variant.product&.image&.url(:product)
+      image_url: variant.product&.image&.url(:product),
+      catalogItems:,
     )
   end
 
