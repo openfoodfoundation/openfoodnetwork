@@ -8,6 +8,15 @@ RSpec.describe AuthorizationControl do
   let(:user) { create(:oidc_user) }
 
   describe "with OIDC token" do
+    it "accepts a token from Les Communs" do
+      user.oidc_account.update!(uid: "testdfc@protonmail.com")
+      lc_token = file_fixture("les_communs_access_token.jwt").read
+
+      Timecop.travel(Date.parse("2025-06-13")) do
+        expect(auth(oidc_token: lc_token).user).to eq user
+      end
+    end
+
     it "finds the right user" do
       create(:oidc_user) # another user
       token = allow_token_for(email: user.email)
