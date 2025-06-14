@@ -170,7 +170,9 @@ RSpec.describe "Order Management" do
         expect(page).to have_button 'Save Changes'
 
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
+        expect(find("tr.variant-#{item2.variant.id}")).to have_content("$10,000.00 / kg")
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
+        expect(find("tr.variant-#{item3.variant.id}")).to have_content("$10,000.00 / kg")
         expect(find("tr.order-adjustment")).to have_content "Shipping"
         expect(find("tr.order-adjustment")).to have_content "5.00"
 
