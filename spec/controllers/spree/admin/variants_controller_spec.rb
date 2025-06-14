@@ -181,7 +181,7 @@ module Spree
 
         describe "#search" do
           it "filters by distributor and supplier1 products" do
-            spree_get :search, q: 'Prod', distributor_id: d.id.to_s
+            spree_get :search, q: 'Prod', distributor_id: d.id.to_s, search_variants_as: 'supplier'
             expect(assigns(:variants)).to eq([v1])
           end
         end

@@ -21,7 +21,7 @@ module OpenFoodNetwork
       scope_to_schedule if params[:schedule_id]
       scope_to_order_cycle if params[:order_cycle_id]
       scope_to_distributor if params[:distributor_id]
-      scope_to_supplier if spree_current_user.can_manage_line_items_in_orders_only?
+      scope_to_supplier if params[:search_variants_as] == 'supplier'
 
       @variants
     end
