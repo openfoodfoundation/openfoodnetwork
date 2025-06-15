@@ -40,9 +40,9 @@ module Spree
       line_item.new_record? || line_item.final_weight_volume_changed?
     }
 
+    before_create :update_product_name
     before_destroy :update_inventory_before_destroy
 
-    before_create :update_product_name
     after_destroy :update_order
     after_save :update_order
 
