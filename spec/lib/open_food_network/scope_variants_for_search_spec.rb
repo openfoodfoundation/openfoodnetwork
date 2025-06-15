@@ -185,7 +185,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
     end
 
     context "when search is done by the producer allowing to edit orders" do
-      let(:params) { { q: "product" } }
+      let(:params) { { q: "product", search_variants_as: 'supplier' } }
       let(:producer) { create(:supplier_enterprise) }
       let!(:spree_current_user) {
         instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id),
