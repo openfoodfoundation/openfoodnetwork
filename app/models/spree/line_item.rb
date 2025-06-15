@@ -42,9 +42,9 @@ module Spree
 
     before_destroy :update_inventory_before_destroy
 
+    before_create :update_product_name
     after_destroy :update_order
     after_save :update_order
-    before_create :update_product_name
 
     delegate :product, :variant_unit, :unit_description, :display_name, :display_as,
              :variant_unit_scale, :variant_unit_name, to: :variant
