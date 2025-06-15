@@ -40,6 +40,7 @@ module Spree
       line_item.new_record? || line_item.final_weight_volume_changed?
     }
 
+    before_create :update_product_name
     before_destroy :update_inventory_before_destroy
 
     after_destroy :update_order
@@ -270,6 +271,10 @@ module Spree
 
       # update the order totals, etc.
       order.create_tax_charge!
+    end
+
+    def update_product_name
+      self.product_name = variant.product.name
     end
 
     def update_inventory_before_destroy
