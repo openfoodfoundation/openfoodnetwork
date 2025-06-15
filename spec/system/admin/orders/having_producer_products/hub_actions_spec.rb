@@ -2,7 +2,10 @@
 
 require 'system_helper'
 
-RSpec.describe 'As a hub (producer seller) who have the ability to update orders having their products' do
+RSpec.describe '
+  As a hub (producer seller) who have the ability to update
+  orders having their products
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
@@ -11,7 +14,12 @@ RSpec.describe 'As a hub (producer seller) who have the ability to update orders
   let!(:hub1_v1) { create(:variant, supplier_id: hub1.id) }
   let!(:hub1_v2) { create(:variant, supplier_id: hub1.id) }
   let(:order_cycle) do
-    create(:simple_order_cycle, distributors: [distributor], variants: [hub1_v1, hub1_v2], coordinator: distributor)
+    create(
+      :simple_order_cycle,
+      distributors: [distributor],
+      variants: [hub1_v1, hub1_v2],
+      coordinator: distributor
+    )
   end
   let!(:order_containing_hub1_products) do
     o = create(
