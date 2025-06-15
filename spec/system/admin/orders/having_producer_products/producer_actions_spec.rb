@@ -19,7 +19,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
     o = create(
       :completed_order_with_totals,
       distributor:, order_cycle:,
-      user: supplier1_ent_user, line_items_count: 1
+      line_items_count: 1
     )
     o.line_items.first.update_columns(variant_id: supplier1_v1.id)
     o
@@ -28,7 +28,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
     o = create(
       :completed_order_with_totals,
       distributor:, order_cycle:,
-      user: supplier2_ent_user, line_items_count: 1
+      line_items_count: 1
     )
     o.line_items.first.update_columns(variant_id: supplier2_v1.id)
     o

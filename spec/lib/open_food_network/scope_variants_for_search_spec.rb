@@ -70,8 +70,6 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           "Enterprise Load",
           "VariantOverride Load",
           "SQL",
-          "Enterprise Pluck",
-          "Enterprise Load"
         ]
 
         expect(result).to include v4
