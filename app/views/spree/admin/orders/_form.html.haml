@@ -8,7 +8,7 @@
   - if @order.shipments.any?
     = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => @order }
 
-  - if spree_current_user.can_manage_orders?
+  - if can?(:manage_order_sections, @order)
     - if @order.line_items.exists?
       = render partial: "spree/admin/orders/note", locals: { order: @order }
 
