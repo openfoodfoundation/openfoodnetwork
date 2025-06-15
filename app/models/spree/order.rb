@@ -9,7 +9,7 @@ module Spree
     include SetUnusedAddressFields
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
-                          :order_cycle_id, :email, :total, :customer_id
+                          :order_cycle_id, :email, :total, :customer_id, :distributor_name_alias
     searchable_associations :shipping_method, :bill_address, :distributor
     searchable_scopes :complete, :incomplete, :sort_by_billing_address_name_asc,
                       :sort_by_billing_address_name_desc
@@ -180,6 +180,11 @@ module Spree
     scope :invoiceable, -> { where(state: [:complete, :resumed]) }
     scope :by_state, lambda { |state| where(state:) }
     scope :not_state, lambda { |state| where.not(state:) }
+
+    # This is used to filter line items by the distributor name on BOM page
+    ransacker :distributor_name_alias do
+      Arel.sql("distributor.name")
+    end
 
     def initialize(*_args)
       @checkout_processing = nil
