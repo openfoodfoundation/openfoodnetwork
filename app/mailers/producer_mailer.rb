@@ -92,6 +92,8 @@ class ProducerMailer < ApplicationMailer
         quantity: line_item.quantity,
         first_name: order.billing_address.first_name,
         last_name: order.billing_address.last_name,
+        phone: order.billing_address.phone,
+        email: order.customer&.email,
         business_name: customer_code,
         order_number: order.number
       }
