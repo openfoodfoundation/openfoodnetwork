@@ -47,7 +47,7 @@ module Spree
     end
 
     def format_unit_price(unit_price)
-      "#{Spree::Money.new(unit_price[:amount]).to_html}&nbsp;/&nbsp;#{unit_price[:unit]}"
+      "#{Spree::Money.new(unit_price[:amount]).to_html}&nbsp;/&nbsp;#{unit_price[:unit]}".html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 end
