@@ -1630,7 +1630,6 @@ it_CH:
       invalid_email: "Per favore inserisci un indirizzo email valido"
       select_a_shipping_method: Seleziona un metodo di consegna
       select_a_payment_method: Seleziona un metodo di pagamento
-      voucher_not_found: Non trovato
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"

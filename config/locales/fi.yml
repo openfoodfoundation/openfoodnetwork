@@ -1232,9 +1232,9 @@ fi:
           primary_producer: Ensijainen tuottaja?
           primary_producer_tip: Valitse "Tuottaja", jos olet elintarvikkeiden päätuottaja.
           producer: Tuottaja
-          any: Mikä tahansa
-          none: Ei yhtään
-          own: Omistaa
+          any: Mitä tahansa
+          none: Ei mitään
+          own: Omia
           sells: Myy
           sells_tip: "Ei mitään - yritys ei myy suoraan asiakkaille.<br />Oma - Yritys myy omia tuotteita asiakkaille.<br />Mikä tahansa - Yritys voi myydä omia tai muiden yritysten tuotteita.<br />"
           external_billing_id: Ulkoinen laskutustunnus
@@ -1500,8 +1500,8 @@ fi:
         loading_order_cycles: LADATAAN TILAUSJAKSOJA
         loading: LADATAAN...
       new:
-        create: "Luoda"
-        cancel: "Peruuttaa"
+        create: "Luo"
+        cancel: "Peruuta"
         back_to_list: "Takaisin listaan"
       create:
         success: 'Tilausjaksosi on luotu.'
@@ -1515,7 +1515,7 @@ fi:
         save: "tallenna"
         save_and_next: "tallenna ja Next"
         next: "Seuraava"
-        cancel: "Peruuttaa"
+        cancel: "Peruuta"
         back_to_list: "Takaisin listaan"
         save_and_back_to_list: "tallenna ja Takaisin listaan"
         choose_products_from: "Valitse tuotteita joukosta:"
@@ -1535,7 +1535,7 @@ fi:
         save: "tallenna"
         save_and_next: "tallenna ja Next"
         next: "Seuraava"
-        cancel: "Peruuttaa"
+        cancel: "Peruuta"
         back_to_list: "Takaisin listaan"
       outgoing:
         outgoing: "Lähtevä"
@@ -1548,11 +1548,11 @@ fi:
         previous: "Edellinen"
         save: "tallenna"
         save_and_next: "tallenna ja Next"
-        cancel: "Peruuttaa"
+        cancel: "Peruuta"
         back_to_list: "Takaisin listaan"
       checkout_options:
         back_end: "Vain taustatoimisto"
-        cancel: "Peruuttaa"
+        cancel: "Peruuta"
         checkout_options: "Kassavaihtoehdot"
         distributor: "Jakelija"
         no_payment_methods: Jokainen tällä tilausjaksolla oleva jakelija vaatii vähintään yhden maksutavan.
@@ -1637,7 +1637,7 @@ fi:
         no_data: Hmm, jokin meni pieleen. Tilausjakson tietoja ei löytynyt.
       date_warning:
         msg: Tämä tilausjakso on linkitetty %{n} avoimeen tilaukseen. Päivämäärän muuttaminen nyt ei vaikuta jo tehtyihin tilauksiin, mutta sitä tulisi välttää mahdollisuuksien mukaan. Oletko varma, että haluat jatkaa?
-        cancel: Peruuttaa
+        cancel: Peruuta
         proceed: Jatka
       status:
         undated: päiväämätön
@@ -2080,7 +2080,8 @@ fi:
       select_a_shipping_method: Valitse toimitustapa
       select_a_payment_method: Valitse maksutapa
       no_shipping_methods_available: Maksu ei ole mahdollista toimitusvaihtoehtojen puuttumisen vuoksi. Ota yhteyttä kaupan omistajaan.
-      voucher_not_found: Ei löytynyt
+      voucher_code_blank: Syötä kelvollinen alennuskoodi.
+      voucher_code_not_found: ei kelpaa. Sitä ei joko ole olemassa tai se on jo käytetty.
       add_voucher_error: Kupongin lisäämisessä tapahtui virhe
       create_voucher_error: "Tositetta luotaessa tapahtui virhe: %{error}"
       voucher_redeeming_error: Kuponkisi lunastamisessa tapahtui virhe
@@ -3385,7 +3386,7 @@ fi:
         confirm: "Vahvistaa"
         close: "Sulje"
         continue: "Jatka"
-        cancel: "Peruuttaa"
+        cancel: "Peruuta"
         invite: "Kutsu"
         invite_title: "Kutsu rekisteröitymätön käyttäjä"
         tag_rule_help:
@@ -4159,7 +4160,7 @@ fi:
         date_time: "Päivämäärä/aika"
         amount: "Määrä"
         payment_method: "Maksutapa"
-        payment_state: "Maksu Lääni"
+        payment_state: "Maksun tila"
     errors:
       messages:
         included_price_validation: "ei voida valita, ellet ole asettanut oletusveroaluetta"
@@ -4298,11 +4299,11 @@ fi:
             one: "1 tilaus valittu"
             other: "%{count} tilauksia valittu"
         sortable_header:
-          payment_state: "Maksu Lääni"
-          shipment_state: "Toimitus Lääni"
+          payment_state: "Maksun tila"
+          shipment_state: "Toimituksen tila"
           completed_at: "Valmistui klo"
           number: "Määrä"
-          state: "Lääni"
+          state: "Tila"
           email: "Asiakkaan sähköposti"
         invoice:
           issued_on: "Myönnetty"
@@ -4564,9 +4565,9 @@ fi:
           name: "Nimi"
           number: "Määrä"
           completed_at: "Valmistui klo"
-          state: "Lääni"
-          payment_state: "maksu Lääni"
-          shipment_state: "Toimitus Lääni"
+          state: "Tila"
+          payment_state: "Maksun tila"
+          shipment_state: "Toimituksen tila"
           email: "Sähköposti"
           total: "Yhteensä"
           billing_address_name: "Nimi"
@@ -4659,10 +4660,10 @@ fi:
         unpaid_order: "Tilauksesi oli maksamatta, joten hyvitystä ei ole tehty"
         paid_order: "Tilauksesi on maksettu, joten %{distributor} on hyvittänyt koko summan."
         credit_order: "Tilauksesi on maksettu, joten tilillesi on hyvitetty rahaa"
-        subject: "Tilauksen peruuttaminen"
+        subject: "Tilauksen peruminen"
       cancel_email_for_shop:
         greeting: "Hyvä %{name} ,"
-        subject: "Tilauksen peruuttaminen"
+        subject: "Tilauksen peruminen"
         intro: "Asiakas on peruuttanut tilauksensa # %{number} ."
         view_cancelled_order: "Näytä peruutettu tilaus"
       confirm_email:

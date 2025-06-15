@@ -1515,7 +1515,6 @@ pt_BR:
         terms_and_conditions: "Termos e Condições"
     errors:
       invalid_email: "Por favor use um endereço de e-mail válido"
-      voucher_not_found: Não encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar lojas fechadas"

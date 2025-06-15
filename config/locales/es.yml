@@ -1948,7 +1948,6 @@ es:
       invalid_email: "Introduce un email válido"
       select_a_shipping_method: Seleccionar método de envío
       select_a_payment_method: Seleccionar método de pago
-      voucher_not_found: No encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"

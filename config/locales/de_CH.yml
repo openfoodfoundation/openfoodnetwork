@@ -267,6 +267,10 @@ de_CH:
     integer_array_validator:
       not_array_error: "muss ein Array sein"
       invalid_element_error: "darf nur ganze Zahlen enthalten"
+  report_job:
+    report_failed: |
+        Dieser Bericht ist fehlgeschlagen. Er ist möglicherweise zu gross für die Verarbeitung.
+        Wir werden uns darum kümmern, aber lassen Sie uns bitte wissen, wenn das Problem weiterhin besteht.
   backorder_mailer:
     backorder_failed:
       product: "Produkt"
@@ -636,6 +640,9 @@ de_CH:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
+    column_preferences:
+      bulk_update:
+        success: "Spalteneinstellungen gespeichert"
     contents:
       edit:
         title: Inhalt
@@ -707,6 +714,7 @@ de_CH:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
+      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -1747,7 +1755,6 @@ de_CH:
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
       no_shipping_methods_available: Eine Kaufabwicklung ist aufgrund fehlender Versandoptionen nicht möglich. Bitte kontaktieren Sie den Shop-Betreiber.
-      voucher_not_found: Nicht gefunden
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
@@ -4075,6 +4082,7 @@ de_CH:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Zurück zur Produktkategorienliste"
         index:
           title: "Produktkategorien"
         form:

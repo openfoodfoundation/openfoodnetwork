@@ -1842,7 +1842,6 @@ pa:
       select_a_shipping_method: ਇੱਕ ਸ਼ਿਪਿੰਗ ਦਾ ਢੰਗ ਚੁਣੋ
       select_a_payment_method: ਇੱਕ ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ ਚੁਣੋ
       no_shipping_methods_available: ਸ਼ਿਪਿੰਗ ਵਿਕਲਪਾਂ ਦੀ ਅਣਹੋਂਦ ਕਾਰਨ ਚੈਕਆਉਟ ਸੰਭਵ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਾਪ ਦੇ ਮਾਲਕ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।
-      voucher_not_found: ਨਹੀਂ ਲਭਿਆ
       add_voucher_error: ਵਾਊਚਰ ਜੋੜਦੇ ਸਮੇਂ ਇੱਕ ਤਰੁੱਟੀ ਉਤਪੰਨ ਹੋਈ
   shops:
     hubs:

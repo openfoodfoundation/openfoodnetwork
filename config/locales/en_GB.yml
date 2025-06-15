@@ -1268,7 +1268,7 @@ en_GB:
         shop_preferences:
           legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
-          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
+          shopfront_requires_login_tip: "Choose whether customers must be added to your Customers list before they can place an order"
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Visible to registered customers only"
           recommend_require_login: "We recommend to require users to login when orders can be changed."
@@ -2081,7 +2081,6 @@ en_GB:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
       create_voucher_error: "There was an error while creating the voucher: %{error}"
       voucher_redeeming_error: There was an error while trying to redeem your voucher

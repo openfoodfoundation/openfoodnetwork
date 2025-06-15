@@ -2088,7 +2088,6 @@ fr_CA:
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
-      voucher_not_found: Non trouvé
       add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
       create_voucher_error: "Il y a eu une erreur lors de la création du bon de réduction : %{error}"
       voucher_redeeming_error: Il y a eu une erreur lors de la tentative d'utilisation de votre bon de réduction.

@@ -1671,7 +1671,6 @@ fr_CH:
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
-      voucher_not_found: Non trouvé
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"

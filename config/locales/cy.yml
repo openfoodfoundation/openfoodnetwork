@@ -2084,7 +2084,6 @@ cy:
       select_a_shipping_method: Dewiswch ddull cludo
       select_a_payment_method: Dewiswch ddull talu
       no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
-      voucher_not_found: Heb ei ganfod
       add_voucher_error: Roedd gwall wrth ychwanegu’r daleb
       create_voucher_error: "Roedd nam wrth greu'r daleb: %{error}"
       voucher_redeeming_error: Roedd nam wrth geisio defnyddio eich taleb

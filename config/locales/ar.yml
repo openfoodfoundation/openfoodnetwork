@@ -1747,7 +1747,6 @@ ar:
       select_a_shipping_method: حدد طريقة الشحن
       select_a_payment_method: اختر طريقة الدفع
       no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
-      voucher_not_found: غير موجود
   shops:
     hubs:
       show_closed_shops: "عرض المتاجر المغلقة"

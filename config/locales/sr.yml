@@ -1983,7 +1983,6 @@ sr:
       select_a_shipping_method: Изаберите начин испоруке
       select_a_payment_method: Изаберите начин плаћања
       no_shipping_methods_available: Плаћање није могуће због непостојања опција испоруке. Молимо контактирајте власника продавнице.
-      voucher_not_found: Није пронађено
       add_voucher_error: Дошло је до грешке при додавању ваучера
   shops:
     hubs:

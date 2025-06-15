@@ -1865,7 +1865,6 @@ hi:
       select_a_shipping_method: शिपिंग विधि चुनें
       select_a_payment_method: भुगतान विधि चुनें
       no_shipping_methods_available: शिपिंग विकल्पों की अनुपस्थिति के कारण चेकआउट संभव नहीं है। कृपया शॉप के मालिक से संपर्क करें।
-      voucher_not_found: नहीं मिला
       add_voucher_error: वाउचर जोड़ते समय एक त्रुटि हुई
   shops:
     hubs:

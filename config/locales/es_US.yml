@@ -1585,7 +1585,6 @@ es_US:
         terms_and_conditions: "Términos y Condiciones"
     errors:
       invalid_email: "Introduce un email válido"
-      voucher_not_found: no encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"

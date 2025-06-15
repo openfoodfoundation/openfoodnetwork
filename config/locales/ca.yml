@@ -1762,7 +1762,6 @@ ca:
       cancel: Tornar a mètodes de pagament
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
-      voucher_not_found: No trobat
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"

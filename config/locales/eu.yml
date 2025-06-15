@@ -1919,7 +1919,6 @@ eu:
       invalid_email: "Sartu baliozko mezu elektroniko bat"
       select_a_shipping_method: Hautatu bidalketa-metodoa
       select_a_payment_method: Hautatu ordainketa-metodoa
-      voucher_not_found: Ez da aurkitu
   shops:
     hubs:
       show_closed_shops: "Denda itxiak erakutsi"
