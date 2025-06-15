@@ -45,5 +45,9 @@ module Spree
         shop: current_distributor.name,
         oc_close: l(current_order_cycle.orders_close_at, format: "%A, %b %d, %Y @ %H:%M"))
     end
+
+    def format_unit_price(unit_price)
+      "#{Spree::Money.new(unit_price[:amount]).to_html}&nbsp;/&nbsp;#{unit_price[:unit]}".html_safe # rubocop:disable Rails/OutputSafety
+    end
   end
 end
