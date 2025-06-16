@@ -1,0 +1,5 @@
+inherit_from: ../.rubocop.yml
+
+# Allow longer modules in specs
+Metrics/ModuleLength:
+  Max: 200

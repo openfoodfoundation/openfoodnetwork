@@ -86,6 +86,9 @@ Metrics/MethodLength:
   Enabled: true
   Max: 25 # default 10
 
+Metrics/ModuleLength:
+  # Max is overridden in specs/.rubocop.yml
+
 Metrics/ParameterLists:
   CountKeywordArgs: false
 

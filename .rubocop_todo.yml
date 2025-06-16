@@ -6,6 +6,21 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+# Offense count: 4
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
+# SupportedStyles: space, no_space, compact
+# SupportedStylesForEmptyBraces: space, no_space
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - 'tmp/stimulus_reflex_installer/working/development.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+Lint/RedundantCopDisableDirective:
+  Exclude:
+    - 'spec/lib/reports/bulk_coop_report_spec.rb'
+
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
@@ -148,7 +163,7 @@ Metrics/MethodLength:
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
-# Offense count: 47
+# Offense count: 37
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
@@ -177,28 +192,18 @@ Metrics/ModuleLength:
     - 'spec/controllers/api/v0/orders_controller_spec.rb'
     - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
     - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/variants_controller_spec.rb'
-    - 'spec/lib/open_food_network/address_finder_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_permissions_spec.rb'
     - 'spec/lib/open_food_network/permissions_spec.rb'
-    - 'spec/lib/open_food_network/scope_variant_to_hub_spec.rb'
     - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
     - 'spec/lib/reports/customers_report_spec.rb'
-    - 'spec/lib/reports/enterprise_fee_summary/authorizer_spec.rb'
-    - 'spec/lib/reports/order_cycle_management_report_spec.rb'
     - 'spec/lib/reports/products_and_inventory_report_spec.rb'
-    - 'spec/lib/reports/users_and_enterprises_report_spec.rb'
     - 'spec/models/spree/adjustment_spec.rb'
     - 'spec/models/spree/credit_card_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
-    - 'spec/models/spree/order/tax_spec.rb'
     - 'spec/models/spree/product_spec.rb'
-    - 'spec/models/spree/shipping_method_spec.rb'
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/services/permissions/order_spec.rb'
-    - 'spec/services/variant_units/option_value_namer_spec.rb'
-    - 'spec/support/request/stripe_stubs.rb'
 
 # Offense count: 7
 # Configuration parameters: Max, CountKeywordArgs, MaxOptionalParameters.
@@ -223,17 +228,6 @@ Metrics/PerceivedComplexity:
 Rails/TransactionExitStatement:
   Exclude:
     - 'app/services/place_proxy_order.rb'
-
-# Offense count: 5
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/UniqueValidationWithoutIndex:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_category.rb'
-    - 'app/models/spree/zone.rb'
 
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -263,6 +257,14 @@ Style/ClassAndModuleChildren:
     - 'app/serializers/api/variant_serializer.rb'
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
+
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: always, always_true, never
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'tmp/stimulus_reflex_installer/working/development.rb'
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
