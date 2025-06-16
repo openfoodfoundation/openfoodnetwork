@@ -171,7 +171,6 @@ Metrics/ModuleLength:
     - 'engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
-    - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
     - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
     - 'spec/controllers/spree/admin/variants_controller_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
