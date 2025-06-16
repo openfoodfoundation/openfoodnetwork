@@ -224,17 +224,6 @@ Rails/TransactionExitStatement:
   Exclude:
     - 'app/services/place_proxy_order.rb'
 
-# Offense count: 5
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/UniqueValidationWithoutIndex:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_category.rb'
-    - 'app/models/spree/zone.rb'
-
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
