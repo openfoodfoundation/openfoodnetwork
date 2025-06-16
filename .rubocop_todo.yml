@@ -171,7 +171,6 @@ Metrics/ModuleLength:
     - 'engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
-    - 'spec/controllers/admin/customers_controller_spec.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
     - 'spec/controllers/api/v0/orders_controller_spec.rb'
