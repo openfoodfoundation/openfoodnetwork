@@ -191,7 +191,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
 
     expect(report_table.first[1]).to eq(variant.product.name)
     product_name = variant.product.name
-    variant.product.update(name: product_name + ' Updated')
+    variant.product.update(name: "#{product_name} Updated")
 
     new_report = described_class.new(current_user, params)
 
