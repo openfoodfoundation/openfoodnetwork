@@ -24,6 +24,7 @@ module Spree
     before_validation :copy_price
     before_validation :copy_tax_category
     before_validation :copy_dimensions
+    before_validation :update_product_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -41,7 +42,6 @@ module Spree
       line_item.new_record? || line_item.final_weight_volume_changed?
     }
 
-    before_create :update_product_name
     before_destroy :update_inventory_before_destroy
 
     after_destroy :update_order
