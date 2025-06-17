@@ -558,6 +558,131 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
+  "/api/dfc/enterprises/{enterprise_id}/platforms":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: List platforms with scopes
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
+                    "@id": http://test.host/api/dfc/enterprises/10000/platforms
+                    dfc-t:platforms:
+                      "@type": rdf:List
+                      "@list":
+                      - "@type": dfc-t:Platform
+                        _id:
+                          "$oid": 682afcc4966dbb3aa7464d56
+                        dfc-t:hasAssignedScopes:
+                          "@type": rdf:List
+                          "@list": []
+                        "@id": https://waterlooregionfood.ca/portal/profile
+                        description: A super duper portal for the waterloo region
+                        termsandconditions: https://waterlooregionfood.ca/terms-and-conditions
+                        title: Waterloo Region Food Portal
+                      - "@type": dfc-t:Platform
+                        _id:
+                          "$oid": 682b2e2b031c28f69cda1645
+                        dfc-t:hasAssignedScopes:
+                          "@type": rdf:List
+                          "@list": []
+                        "@id": https://anotherplatform.ca/portal/profile
+                        description: A super duper portal for the waterloo region
+                        termsandconditions: https://anotherplatform.ca/terms-and-conditions
+                        title: anotherplatform Portal
+  "/api/dfc/enterprises/{enterprise_id}/platforms/{platform_id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: platform_id
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      summary: Update authorized scopes of a platform
+      parameters: []
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@type": dfc-t:Platform
+                    _id:
+                      "$oid": 682b2e2b031c28f69cda1645
+                    dfc-t:hasAssignedScopes:
+                      "@type": rdf:List
+                      "@list":
+                      - "@id": "#ReadEnterprise"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadEnterprise
+                      - "@id": "#WriteEnterprise"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteEnterprise
+                      - "@id": "#ReadProducts"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadProducts
+                      - "@id": "#WriteProducts"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteProducts
+                      - "@id": "#ReadOrders"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadOrders
+                      - "@id": "#WriteOrders"
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteOrders
+                    "@id": https://anotherplatform.ca/portal/profile
+                    description: A super duper portal for the waterloo region
+                    termsandconditions: https://anotherplatform.ca/terms-and-conditions
+                    title: anotherplatform Portal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
+                "@id": "/api/dfc/enterprises/3/platforms/682b2e2b031c28f69cda1645"
+                dfc-t:hasAssignedScopes:
+                  "@list":
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/ReadEnterprise"
+                    dfc-t:scope: ReadEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/WriteEnterprise"
+                    dfc-t:scope: WriteEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/ReadProducts"
+                    dfc-t:scope: ReadProducts
+                    "@type": dfc-t:Scope
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/WriteProducts"
+                    dfc-t:scope: WriteProducts
+                    "@type": dfc-t:Scope
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/ReadOrders"
+                    dfc-t:scope: ReadOrders
+                    "@type": dfc-t:Scope
+                  - "@id": "/api/dfc/enterprises/3/platforms/scopes/WriteOrders"
+                    dfc-t:scope: WriteOrders
+                    "@type": dfc-t:Scope
+                  "@type": rdf:List
   "/api/dfc/product_groups/{id}":
     parameters:
     - name: enterprise_id
