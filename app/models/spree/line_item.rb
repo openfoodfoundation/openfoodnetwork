@@ -275,6 +275,8 @@ module Spree
     end
 
     def update_product_name
+      return if variant.nil? || variant.product.nil?
+
       self.product_name = variant.product.name
     end
 
