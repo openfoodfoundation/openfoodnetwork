@@ -8,8 +8,8 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
       self.table_name = "spree_line_items"
 
       belongs_to :variant, -> { with_deleted },
-                  class_name: "Spree::Variant",
-                  inverse_of: :line_items
+                 class_name: "Spree::Variant",
+                 inverse_of: :line_items
 
       def update_product_name
         self.product_name = variant.product.name
@@ -23,10 +23,10 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
       self.table_name = "spree_variants"
 
       belongs_to :product, -> { with_deleted },
-                            touch: true,
-                            class_name: 'Spree::Product',
-                            optional: false,
-                            inverse_of: :variants
+                 touch: true,
+                 class_name: 'Spree::Product',
+                 optional: false,
+                 inverse_of: :variants
       has_many :line_items, inverse_of: :variant, dependent: nil
     end
   end
@@ -37,9 +37,9 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
       self.table_name = "spree_products"
 
       has_many :variants, -> { order("spree_variants.id ASC") },
-                          class_name: 'Spree::Variant',
-                          inverse_of: :product,
-                          dependent: :destroy
+               class_name: 'Spree::Variant',
+               inverse_of: :product,
+               dependent: :destroy
     end
   end
 
