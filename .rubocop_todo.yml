@@ -160,7 +160,6 @@ Metrics/ModuleLength:
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
-    - 'engines/order_management/spec/services/order_management/stock/package_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/form_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb'
