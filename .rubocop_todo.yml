@@ -160,7 +160,6 @@ Metrics/ModuleLength:
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
-    - 'engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
