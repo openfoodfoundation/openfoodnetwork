@@ -32,25 +32,15 @@ RSpec.describe 'Tag Rules' do
                              "shipping_methods_visibility"
       end
 
-      # New FilterProducts Rule
-      click_button '+ Add A New Rule'
-      select2_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
-      click_button "Add Rule"
-      within(".customer_tag #tr_1") do
-        fill_in_tag "volunteers-only1"
-        select2_select "VISIBLE",
-                       from: "enterprise_tag_rules_attributes_1_preferred_matched_" \
-                             "variants_visibility"
-      end
-
       # New FilterPaymentMethods Rule
       click_button '+ Add A New Rule'
       select2_select 'Show or Hide payment methods at checkout', from: 'rule_type_selector'
       click_button "Add Rule"
-      within(".customer_tag #tr_2") do
+
+      within(".customer_tag #tr_1") do
         fill_in_tag "volunteers-only2"
         select2_select "VISIBLE",
-                       from: "enterprise_tag_rules_attributes_2_preferred_matched_" \
+                       from: "enterprise_tag_rules_attributes_1_preferred_matched_" \
                              "payment_methods_visibility"
       end
 
@@ -58,10 +48,10 @@ RSpec.describe 'Tag Rules' do
       click_button '+ Add A New Rule'
       select2_select 'Show or Hide order cycles in my shopfront', from: 'rule_type_selector'
       click_button "Add Rule"
-      within(".customer_tag #tr_3") do
+      within(".customer_tag #tr_2") do
         fill_in_tag "volunteers-only3"
         select2_select "NOT VISIBLE",
-                       from: "enterprise_tag_rules_attributes_3_preferred_matched_" \
+                       from: "enterprise_tag_rules_attributes_2_preferred_matched_" \
                              "order_cycles_visibility"
       end
 
@@ -81,11 +71,6 @@ RSpec.describe 'Tag Rules' do
       expect(tag_rule.preferred_shipping_method_tags).to eq "volunteers-only"
       expect(tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
 
-      tag_rule = TagRule::FilterProducts.last
-      expect(tag_rule.preferred_customer_tags).to eq "volunteer"
-      expect(tag_rule.preferred_variant_tags).to eq "volunteers-only1"
-      expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
-
       tag_rule = TagRule::FilterPaymentMethods.last
       expect(tag_rule.preferred_customer_tags).to eq "volunteer"
       expect(tag_rule.preferred_payment_method_tags).to eq "volunteers-only2"
@@ -100,6 +85,34 @@ RSpec.describe 'Tag Rules' do
       expect(tag_rule.preferred_customer_tags).to eq ""
       expect(tag_rule.preferred_exchange_tags).to eq "wholesale"
       expect(tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
+    end
+
+    context "when inventory enabled", feature: :inventory do
+      it "allows creation of filter variant type" do
+        # Creating a new tag
+        expect(page).to have_content 'No tags apply to this enterprise yet'
+        expect(page).not_to have_selector '.customer_tag'
+        click_button '+ Add A New Tag'
+        fill_in_tag "volunteer"
+
+        # New FilterProducts Rule
+        click_button '+ Add A New Rule'
+        select2_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
+        click_button "Add Rule"
+        within(".customer_tag #tr_0") do
+          fill_in_tag "volunteers-only1"
+          select2_select "VISIBLE",
+                         from: "enterprise_tag_rules_attributes_0_preferred_matched_" \
+                               "variants_visibility"
+        end
+
+        click_button 'Update'
+
+        tag_rule = TagRule::FilterProducts.last
+        expect(tag_rule.preferred_customer_tags).to eq "volunteer"
+        expect(tag_rule.preferred_variant_tags).to eq "volunteers-only1"
+        expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
+      end
     end
   end
 
