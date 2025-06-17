@@ -161,7 +161,6 @@ Metrics/ModuleLength:
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
-    - 'spec/services/variant_units/option_value_namer_spec.rb'
     - 'spec/support/request/stripe_stubs.rb'
 
 # Offense count: 7
