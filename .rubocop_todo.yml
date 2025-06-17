@@ -171,13 +171,6 @@ Metrics/ModuleLength:
     - 'engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb'
     - 'engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
-    - 'spec/controllers/admin/customers_controller_spec.rb'
-    - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
-    - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
-    - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/variants_controller_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_permissions_spec.rb'
@@ -223,17 +216,6 @@ Metrics/PerceivedComplexity:
 Rails/TransactionExitStatement:
   Exclude:
     - 'app/services/place_proxy_order.rb'
-
-# Offense count: 5
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/UniqueValidationWithoutIndex:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_category.rb'
-    - 'app/models/spree/zone.rb'
 
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
