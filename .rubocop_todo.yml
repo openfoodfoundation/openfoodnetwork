@@ -161,7 +161,6 @@ Metrics/ModuleLength:
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
-    - 'spec/lib/reports/users_and_enterprises_report_spec.rb'
     - 'spec/models/spree/adjustment_spec.rb'
     - 'spec/models/spree/credit_card_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
