@@ -14,28 +14,31 @@ RSpec.describe RemoveTransientData do
 
     it 'deletes state changes older than retention period' do
       remover = RemoveTransientData.new
-      Spree::StateChange.create(created_at: remover.expiration_date - 17.day)
-      remover.call
+      Spree::StateChange.create(created_at: remover.expiration_date - 20.day)
+      Spree::StateChange.create(created_at: remover.expiration_date - 1.day)
 
-      expect(Spree::StateChange.all).to be_empty
+      expect { remover.call }
+        .to change { Spree::StateChange.count }.by(-2)
     end
 
     it 'deletes log entries older than retention period' do
       remover = RemoveTransientData.new
+      Spree::LogEntry.create(created_at: remover.expiration_date - 20.day)
       Spree::LogEntry.create(created_at: remover.expiration_date - 1.day)
 
       expect { remover.call }
-        .to change { Spree::LogEntry.count }.by(-1)
+        .to change { Spree::LogEntry.count }.by(-2)
     end
 
     it 'deletes sessions older than retention period' do
       remover = RemoveTransientData.new
       RemoveTransientData::Session.create(session_id: 1,
                                           updated_at: remover.expiration_date - 1.day)
+      RemoveTransientData::Session.create(session_id: 2,
+                                          updated_at: remover.expiration_date - 20.day)
 
-      remover.call
-
-      expect(RemoveTransientData::Session.all).to be_empty
+      expect { remover.call }
+        .to change { RemoveTransientData::Session.count }.by(-2)
     end
 
     describe "deleting old carts" do
