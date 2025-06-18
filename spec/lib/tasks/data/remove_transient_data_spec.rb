@@ -14,7 +14,7 @@ RSpec.describe RemoveTransientData do
 
     it 'deletes state changes older than retention period' do
       remover = RemoveTransientData.new
-      Spree::StateChange.create(created_at: remover.expiration_date - 1.day)
+      Spree::StateChange.create(created_at: remover.expiration_date - 17.day)
       remover.call
 
       expect(Spree::StateChange.all).to be_empty
