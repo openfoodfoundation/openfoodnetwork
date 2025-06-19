@@ -225,13 +225,6 @@ Style/MapToHash:
     - 'lib/reporting/reports/enterprise_fee_summary/fee_summary.rb'
     - 'lib/tasks/sample_data/user_factory.rb'
 
-# Offense count: 3
-Style/MissingRespondToMissing:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/spree/gateway.rb'
-    - 'app/models/spree/preferences/configuration.rb'
-
 # Offense count: 38
 Style/OpenStructUse:
   Exclude:
