@@ -24,7 +24,7 @@ module Spree
     before_validation :copy_price
     before_validation :copy_tax_category
     before_validation :copy_dimensions
-    before_validation :update_product_name, on: :create
+    before_validation :copy_product_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -274,7 +274,7 @@ module Spree
       order.create_tax_charge!
     end
 
-    def update_product_name
+    def copy_product_name
       return if variant.nil? || variant.product.nil?
 
       self.product_name = variant.product.name

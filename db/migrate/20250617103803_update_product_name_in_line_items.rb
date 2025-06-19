@@ -11,7 +11,7 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
                  class_name: "Spree::Variant",
                  inverse_of: :line_items
 
-      def update_product_name
+      def copy_product_name
         self.product_name = variant.product.name
       end
     end
@@ -49,7 +49,7 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
 
     line_items_query.in_batches do |batch|
       batch.each do |line_item|
-        line_item.update_product_name
+        line_item.copy_product_name
         line_item.save!
       end
     end
