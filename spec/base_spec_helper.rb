@@ -158,6 +158,9 @@ RSpec.configure do |config|
   config.before(:each) do
     Flipper.features.each(&:remove)
     OpenFoodNetwork::FeatureToggle.setup!
+    # Inventory is currently enabled by default, but we enventually when to disable it by default.
+    # Disabling it here allows us to test inventory specific code path
+    Flipper.disable(:inventory)
   end
 
   config.before(:each, :feature) do |example|
