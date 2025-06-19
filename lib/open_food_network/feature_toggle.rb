@@ -76,6 +76,9 @@ module OpenFoodNetwork
       "admin_style_v3" => <<~DESC,
         Test the work-in-progress design updates.
       DESC
+      "inventory" => <<~DESC,
+        Enable the inventory.
+      DESC
     }.freeze
 
     def self.setup!
