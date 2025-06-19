@@ -13,7 +13,7 @@ RSpec.describe Admin::VariantOverridesController do
       end
     end
 
-    context "where I manage the variant override hub" do
+    context "where I manage the variant override hub", feature: :inventory do
       let(:hub) { create(:distributor_enterprise) }
 
       before do
