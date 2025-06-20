@@ -6,6 +6,15 @@ ENV["RAILS_ENV"] ||= 'test'
 
 # for full configuration, see .simplecov
 require 'simplecov' if ENV["COVERAGE"]
+require 'simplecov-lcov' if ENV["COVERAGE"]
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+SimpleCov.start do
+  add_filter(%r{^/spec/}) # For RSpec
+  enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
+end
+
+require 'undercover' if ENV["COVERAGE"]
 
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'

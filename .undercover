@@ -1,0 +1,5 @@
+#!/bin/env ruby
+# frozen_string_literal: true
+
+-l /home/runner/work/openfoodnetwork/openfoodnetwork/coverage/.resultset.json
+-c origin/master
