@@ -24,6 +24,7 @@ module Spree
     before_validation :copy_price
     before_validation :copy_tax_category
     before_validation :copy_dimensions
+    before_validation :copy_product_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -32,6 +33,7 @@ module Spree
     }
     validates :price, numericality: true
     validates_with Stock::AvailabilityValidator
+    validates :product_name, presence: true
 
     before_save :update_inventory
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
@@ -272,6 +274,12 @@ module Spree
 
       # update the order totals, etc.
       order.create_tax_charge!
+    end
+
+    def copy_product_name
+      return if variant.nil? || variant.product.nil?
+
+      self.product_name = variant.product.name
     end
 
     def update_inventory_before_destroy
