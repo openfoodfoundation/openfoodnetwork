@@ -164,7 +164,7 @@ module Spree
       return true if skip_stock_check
       return true if quantity <= 0
 
-      scoper.scope(variant)
+      scope_variant
       variant.can_supply?(quantity)
     end
 
@@ -177,7 +177,7 @@ module Spree
     end
 
     def cap_quantity_at_stock!
-      scoper.scope(variant)
+      scope_variant
       return if variant.on_demand
 
       update!(quantity: variant.on_hand) if quantity > variant.on_hand
@@ -263,7 +263,7 @@ module Spree
     def update_inventory
       return unless changed?
 
-      scoper.scope(variant)
+      scope_variant
       Spree::OrderInventory.new(order).verify(self, target_shipment)
     end
 
@@ -293,6 +293,14 @@ module Spree
       elsif variant&.unit_value.present?
         self.final_weight_volume = variant&.unit_value&.* quantity
       end
+    end
+
+    def scope_variant
+      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
+        scoper.scope(variant)
+      end
+
+      variant
     end
   end
 end

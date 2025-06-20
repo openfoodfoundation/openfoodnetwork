@@ -549,7 +549,7 @@ RSpec.describe Spree::Ability do
         end
       end
 
-      describe "variant overrides" do
+      describe "variant overrides", feature: :inventory do
         let(:vo1) { create(:variant_override, hub: d1, variant: p1.variants.first) }
         let(:vo2) { create(:variant_override, hub: d1, variant: p2.variants.first) }
         let(:vo3) { create(:variant_override, hub: d2, variant: p1.variants.first) }
@@ -788,7 +788,7 @@ RSpec.describe Spree::Ability do
     end
   end
 
-  describe "permissions for variant overrides" do
+  describe "permissions for variant overrides", feature: :inventory do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
     let!(:variant) { create(:variant, supplier: producer) }
