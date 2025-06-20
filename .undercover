@@ -1,5 +1,5 @@
 #!/bin/env ruby
 # frozen_string_literal: true
 
--p tmp/simplecov/combined-simplecov-report/.resultset.json
+-l tmp/simplecov/combined-simplecov-report/.resultset.json
 -c origin/master
