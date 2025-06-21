@@ -4,8 +4,8 @@
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 
-domain = if Rails.env.staging? || Rails.env.production?
-           ".#{ENV['SITE_URL'].gsub(/^(www\.)|^(app\.)|^(staging\.)|^(stg\.)/, '')}"
+domain = if Rails.env.production? || Rails.env.staging? || Rails.env.testing?
+           '.grownhere.uk'   # covers main + all subdomains incl testing
          else
            :all
          end
