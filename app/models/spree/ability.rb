@@ -415,11 +415,15 @@ module Spree
     end
 
     def add_manage_line_items_abilities(user)
-      can [:edit_as_producer_only], Spree::Order do |order|
-        can_edit_as_producer(order, user)
-      end
-
-      can [:admin, :read, :index, :edit, :update, :bulk_management], Spree::Order do |order|
+      can [
+        :admin,
+        :read,
+        :index,
+        :edit,
+        :update,
+        :bulk_management,
+        :edit_as_producer_only
+      ], Spree::Order do |order|
         can_edit_as_producer(order, user)
       end
       can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
