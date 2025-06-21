@@ -1679,7 +1679,6 @@ uk:
       invalid_email: "Будь ласка, введіть дійсну адресу електронної пошти"
       select_a_shipping_method: Виберіть спосіб доставки
       select_a_payment_method: Виберіть спосіб оплати
-      voucher_not_found: Не знайдено
   shops:
     hubs:
       show_closed_shops: "Показати закриті магазини"

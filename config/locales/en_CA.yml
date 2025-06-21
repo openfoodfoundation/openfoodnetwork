@@ -2081,7 +2081,8 @@ en_CA:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible because no shipping/pick-up options are available. Please contact the shop owner.
-      voucher_not_found: Not found
+      voucher_code_blank: Please enter a valid voucher code
+      voucher_code_not_found: invalid. It either doesn't exist or has been redeemed fully
       add_voucher_error: There was an error while adding the voucher
       create_voucher_error: "There was an error while creating the voucher: %{error}"
       voucher_redeeming_error: There was an error while trying to redeem your voucher

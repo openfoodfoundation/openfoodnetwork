@@ -898,6 +898,7 @@ en_GB:
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag
         producers:
           label: Producer
         categories:
@@ -1017,6 +1018,7 @@ en_GB:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -1266,7 +1268,7 @@ en_GB:
         shop_preferences:
           legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
-          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
+          shopfront_requires_login_tip: "Choose whether customers must be added to your Customers list before they can place an order"
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Visible to registered customers only"
           recommend_require_login: "We recommend to require users to login when orders can be changed."
@@ -1662,6 +1664,7 @@ en_GB:
         logo_hint: 300 x 300 pixels
         logo_remove: "Remove Image"
         logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_label: "Promo image"
         promo_image_note1: 'PLEASE NOTE:'
         promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
         promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
@@ -1669,6 +1672,7 @@ en_GB:
         promo_image_remove: "Remove Image"
         promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
         white_label_logo_label: "Logo used in shopfront"
+        white_label_logo_hint: 217 x 44 pixels
         white_label_logo_remove: "Remove Image"
         white_label_logo_remove_confirm: "Are you sure you want to remove this logo?"
       user_guide_link:
@@ -2077,7 +2081,6 @@ en_GB:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
       create_voucher_error: "There was an error while creating the voucher: %{error}"
       voucher_redeeming_error: There was an error while trying to redeem your voucher
@@ -4268,6 +4271,7 @@ en_GB:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          cannot_add_item_to_shipped_order: "Cannot add item to shipped order"
           include_out_of_stock_variants: "Include variants with no available stock"
         shipment:
           mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"

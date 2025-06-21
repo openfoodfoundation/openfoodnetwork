@@ -752,7 +752,7 @@ es:
         update_address: "Actualizar Dirección"
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por email/código"
-        guest_label: "Hacer pedido como invitado"
+        guest_label: "Pedido hecho como invitada"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
     column_preferences:
@@ -1948,7 +1948,6 @@ es:
       invalid_email: "Introduce un email válido"
       select_a_shipping_method: Seleccionar método de envío
       select_a_payment_method: Seleccionar método de pago
-      voucher_not_found: No encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"

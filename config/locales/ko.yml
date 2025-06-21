@@ -1659,7 +1659,6 @@ ko:
       invalid_email: "올바른 이메일 주소를 입력하십시오."
       select_a_shipping_method: 전송 방법을 선택하세요.
       select_a_payment_method: 결제 방법을 선택하세요.
-      voucher_not_found: 찾을 수 없습니다
   shops:
     hubs:
       show_closed_shops: "휴무점 표시"

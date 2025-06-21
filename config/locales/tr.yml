@@ -1525,7 +1525,6 @@ tr:
       required: Alan boş olamaz
       invalid_number: "Geçerli bir telefon numarası giriniz"
       invalid_email: "Lütfen geçerli bir e-posta adresi girin"
-      voucher_not_found: Bulunamadı
   shops:
     hubs:
       show_closed_shops: "Kapalı dükkanları göster"

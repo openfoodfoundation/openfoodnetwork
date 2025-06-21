@@ -1873,7 +1873,6 @@ de_DE:
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
       no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
-      voucher_not_found: Nicht gefunden
       add_voucher_error: Beim Anwenden des Gutscheins ist ein Fehler aufgetreten.
   shops:
     hubs:

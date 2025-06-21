@@ -1877,7 +1877,6 @@ ml:
       select_a_shipping_method: ഒരു ഷിപ്പിംഗ് രീതി തിരഞ്ഞെടുക്കുക
       select_a_payment_method: ഒരു പേയ്‌മെന്റ് രീതി തിരഞ്ഞെടുക്കുക
       no_shipping_methods_available: ഷിപ്പിംഗ് ഓപ്ഷനുകൾ ഇല്ലാത്തതിനാൽ ചെക്ക്ഔട്ട് സാധ്യമല്ല. കട ഉടമയുമായി ബന്ധപ്പെടുക.
-      voucher_not_found: കണ്ടെത്തിയില്ല
       add_voucher_error: വൗച്ചർ ചേർക്കുമ്പോൾ ഒരു തകരാറ് ഉണ്ടായി
   shops:
     hubs:

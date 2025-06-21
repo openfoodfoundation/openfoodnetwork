@@ -267,6 +267,10 @@ de_CH:
     integer_array_validator:
       not_array_error: "muss ein Array sein"
       invalid_element_error: "darf nur ganze Zahlen enthalten"
+  report_job:
+    report_failed: |
+        Dieser Bericht ist fehlgeschlagen. Er ist möglicherweise zu gross für die Verarbeitung.
+        Wir werden uns darum kümmern, aber lassen Sie uns bitte wissen, wenn das Problem weiterhin besteht.
   backorder_mailer:
     backorder_failed:
       product: "Produkt"
@@ -413,6 +417,7 @@ de_CH:
   none: Keine
   notes: Anmerkungen
   error: Fehler
+  voucher: Gutschein
   processing_payment: "Bezahlung wird verarbeitet ..."
   no_pending_payments: "Keine ausstehenden Zahlungen."
   invalid_payment_state: "Ungültiger Zahlungsstatus: %{state}"
@@ -439,6 +444,13 @@ de_CH:
   depth: "Tiefe"
   payment_could_not_process: "Die Zahlung konnte nicht verarbeitet werden"
   payment_could_not_complete: "Die Zahlung konnte nicht abgeschlossen werden"
+  vine_voucher_validator_service:
+    errors:
+      invalid_voucher: "Der Gutschein ist ungültig"
+      not_found_voucher: "Leider konnten wir diesen Gutschein nicht finden. Bitte überprüfen Sie den Code."
+  vine_voucher_redeemer_service:
+    errors:
+      redeeming_failed: "Das Einlösen des Gutscheins ist fehlgeschlagen"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
@@ -636,6 +648,9 @@ de_CH:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
+    column_preferences:
+      bulk_update:
+        success: "Spalteneinstellungen gespeichert"
     contents:
       edit:
         title: Inhalt
@@ -707,6 +722,7 @@ de_CH:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
+      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -905,6 +921,7 @@ de_CH:
     orders:
       edit:
         order_sure_want_to: Sind Sie sicher, dass Sie diese Bestellung %{event} möchten?
+        voucher_tax_included_in_price: "%{label} (Steuer im Gutschein enthalten)"
       invoice_email_sent: 'Rechnung wurde gesendet per E-Mail gesendet.'
       order_email_resent: 'Bestellbestätigung wurde erneut per E-Mail gesendet.'
       bulk_management:
@@ -1078,8 +1095,12 @@ de_CH:
           enable_subscriptions_true: "aktiviert"
           customer_names_in_reports: "Kundennamen in Berichten anzeigen"
           customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
+          producers_to_edit_orders: "Möglichkeit für Produzenten, Bestellungen zu bearbeiten"
+          producers_to_edit_orders_tip: "Ermöglichen Sie Ihren Lieferanten, Bestellungen mit ihren Produkten anzuzeigen und Menge und Gewicht nur für ihre eigenen Produkte zu bearbeiten."
           customer_names_false: "deaktiviert"
           customer_names_true: "aktiviert"
+          customer_contacts_in_reports: "Kundenkontaktdetails in Berichten"
+          customer_contacts_tip: "Ermöglichen Sie Ihren Lieferanten, die E-Mail-Adressen und Telefonnummern Ihrer Kunden in Berichten anzuzeigen"
           customer_contacts_false: "deaktiviert"
           customer_contacts_true: "aktiviert"
           producers_edit_orders_false: "deaktiviert"
@@ -1158,10 +1179,13 @@ de_CH:
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
+          legend: Gutscheine
           voucher_code: Gutschein-Code
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
+          add_new: Neu hinzufügen
+          no_voucher_yet: Noch keine Gutscheine
         white_label:
           hide_ofn_navigation: "OFN-Navigation ausblenden"
           hide_groups_tab: "Gruppenregisterkarte im Schaufenster ausblenden"
@@ -1425,6 +1449,7 @@ de_CH:
           tag_rules: "Stichwortregeln"
           shop_preferences: "Laden"
           users: "Benutzer"
+          vouchers: Gutscheine
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
@@ -1623,10 +1648,12 @@ de_CH:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
     vouchers:
       new:
+        legend: Neuer Gutschein
         back: Zurück
         save: Speichern
         voucher_code: Gutschein-Code
         voucher_amount: Betrag
+        voucher_type: Gutscheintyp
     controllers:
       enterprises:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen."
@@ -1718,6 +1745,8 @@ de_CH:
         apply_voucher: Gutschein einlösen
         apply: Einlösen
         placeholder: Gutschein-Code eingeben
+        confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
+        warning_forfeit_remaining_amount: "Hinweis: Wenn der Gesamtbetrag Ihrer Bestellung geringer ist als der Wert Ihres Gutscheins, können Sie den Restwert möglicherweise nicht einlösen."
     step3:
       delivery_details:
         title: Lieferdetails
@@ -1747,7 +1776,8 @@ de_CH:
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
       no_shipping_methods_available: Eine Kaufabwicklung ist aufgrund fehlender Versandoptionen nicht möglich. Bitte kontaktieren Sie den Shop-Betreiber.
-      voucher_not_found: Nicht gefunden
+      voucher_code_blank: Bitte geben Sie einen gültigen Gutscheincode ein
+      add_voucher_error: Beim Hinzufügen des Gutscheins ist ein Fehler aufgetreten
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
@@ -2870,6 +2900,8 @@ de_CH:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_header_voucher_label: Gutscheinetikett
+  report_header_voucher_amount: "Gutscheinbetrag ( %{currency_symbol} )"
   report_xero_configuration: Xero-Konfiguration
   initial_invoice_number: "Ursprüngliche Rechnungsnummer"
   invoice_date: "Rechnungsdatum"
@@ -4012,6 +4044,7 @@ de_CH:
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
+        hidden_customer_details_tip: "Wenn Kundennamen und/oder Kontaktdaten ausgeblendet sind, können Sie den Händler bitten, seine Shop-Einstellungen zu aktualisieren, damit seine Lieferanten Kundendetails in Berichten anzeigen können."
       users:
         index:
           listing_users: "Benutzer verwalten"
@@ -4075,6 +4108,7 @@ de_CH:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Zurück zur Produktkategorienliste"
         index:
           title: "Produktkategorien"
         form:
@@ -4162,6 +4196,7 @@ de_CH:
         invoice_attached_text: Im Anhang finden Sie die Rechnung Ihrer letzten Bestellung vom
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Liebe Kundin, lieber Kunde,"
         request_sent_text: |
             Wir haben eine Anfrage zum Zurücksetzen Ihres Passworts erhalten.
             Sollten Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese E-Mail.
@@ -4269,6 +4304,7 @@ de_CH:
         total: Gesamt
         paid?: Bezahlt?
         status: Status
+        completed: Abgeschlossen
         cancelled: Storniert
       saved_cards:
         default?: Standard?

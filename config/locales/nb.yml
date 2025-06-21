@@ -2065,7 +2065,6 @@ nb:
       select_a_shipping_method: Velg en leveringsmetode
       select_a_payment_method: Velg en betalingsmetode
       no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
-      voucher_not_found: Ikke funnet
       add_voucher_error: Det oppsto en feil under innlegging av kupongen
   shops:
     hubs:
