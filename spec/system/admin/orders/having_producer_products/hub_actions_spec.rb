@@ -43,7 +43,7 @@ RSpec.describe '
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }
 
-        it "should not allow producer to view orders page" do
+        it "does not allow producer to view orders page" do
           expect(page).to have_content 'NO ORDERS FOUND'
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe '
         let(:distributor) { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }
 
         context "when distributor doesn't allow to view customer details" do
-          it "should allow producer to view orders page with HIDDEN customer details" do
+          it "allows producer to view orders page with HIDDEN customer details" do
             within('#listing_orders tbody') do
               expect(page).to have_selector('tr', count: 1) # Only one order
               # One for Email, one for Name
@@ -69,7 +69,7 @@ RSpec.describe '
               show_customer_names_to_suppliers: true
             )
           end
-          it "should allow producer to view orders page with customer details" do
+          it "allows producer to view orders page with customer details" do
             within('#listing_orders tbody') do
               name = order.bill_address&.full_name_for_sorting
               email = order.email
@@ -94,7 +94,7 @@ RSpec.describe '
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }
 
-        it "should not allow producer to view orders page" do
+        it "does not allow producer to view orders page" do
           expect(page).to have_content 'Unauthorized'
         end
       end
@@ -103,7 +103,7 @@ RSpec.describe '
         let(:distributor) { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }
         let(:product) { hub1_v2.product }
 
-        it "should allow me to manage my products in the order" do
+        it "allows me to manage my products in the order" do
           expect(page).to have_content 'Add Product'
 
           # Add my product
