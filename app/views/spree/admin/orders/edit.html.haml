@@ -27,6 +27,7 @@
     "ofn-distributor-id" => @order.distributor_id,
     "ofn-order-cycle-id" => @order.order_cycle_id,
     "ofn-search-variants-as" => (can?(:manage_order_sections, @order) ? 'hub' : 'supplier'),
+    "ofn-order-id" => @order.id,
   }
 
     = render :partial => 'add_product' if can?(:update, @order)

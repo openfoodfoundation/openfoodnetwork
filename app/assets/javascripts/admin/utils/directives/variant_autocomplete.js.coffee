@@ -27,6 +27,7 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
               eligible_for_subscriptions: scope.eligible_for_subscriptions
               include_out_of_stock: scope.include_out_of_stock
               search_variants_as: scope.search_variants_as
+              order_id: scope.order_id
             results: (data, page) ->
               window.variants = data # this is how spree auto complete JS code picks up variants
               results: data
