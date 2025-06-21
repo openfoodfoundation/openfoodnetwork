@@ -19,7 +19,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.page = 1
   $scope.per_page = $scope.per_page_options[0].id
   $scope.filterByVariantId = null
-  searchThrough = ["order_distributor_name",
+  searchThrough = ["order_distributor_name_alias",
     "order_bill_address_phone",
     "order_bill_address_firstname",
     "order_bill_address_lastname",

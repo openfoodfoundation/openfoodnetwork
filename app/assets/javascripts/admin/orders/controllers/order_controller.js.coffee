@@ -5,6 +5,8 @@ angular.module("admin.orders").controller "orderCtrl", ($scope, shops, orderCycl
 
   $scope.distributor_id = parseInt($attrs.ofnDistributorId)
   $scope.order_cycle_id = parseInt($attrs.ofnOrderCycleId)
+  $scope.search_variants_as = $attrs.ofnSearchVariantsAs
+  $scope.order_id = $attrs.ofnOrderId
 
   $scope.validOrderCycle = (oc) ->
     $scope.orderCycleHasDistributor oc, parseInt($scope.distributor_id)

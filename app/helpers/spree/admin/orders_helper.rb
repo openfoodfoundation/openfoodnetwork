@@ -155,8 +155,7 @@ module Spree
       end
 
       def filter_by_supplier?(order)
-        order.distributor&.enable_producers_to_edit_orders &&
-          spree_current_user.can_manage_line_items_in_orders_only?
+        can? :edit_as_producer_only, order
       end
 
       def display_value_for_producer(order, value)

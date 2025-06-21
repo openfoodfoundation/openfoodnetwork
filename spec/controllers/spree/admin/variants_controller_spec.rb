@@ -179,7 +179,12 @@ RSpec.describe Spree::Admin::VariantsController do
 
     describe "#search" do
       it "filters by distributor and supplier1 products" do
-        spree_get :search, q: 'Prod', distributor_id: d.id.to_s
+        order = d.distributed_orders.first
+        spree_get :search,
+                  q: 'Prod',
+                  distributor_id: d.id.to_s,
+                  search_variants_as: 'supplier',
+                  order_id: order.id.to_s
         expect(assigns(:variants)).to eq([v1])
       end
     end
