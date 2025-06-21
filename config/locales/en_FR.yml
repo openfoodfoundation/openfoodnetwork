@@ -589,6 +589,7 @@ en_FR:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -897,10 +898,13 @@ en_FR:
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag
         producers:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
@@ -945,6 +949,7 @@ en_FR:
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
         select_unit_scale: Select unit scale
+        add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -1013,7 +1018,7 @@ en_FR:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all exiting products not present in the file
+        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -1200,12 +1205,6 @@ en_FR:
           legend: "Images"
           logo: Logo
           logo_size: "300 x 300 pixels"
-          promo_image_placeholder: 'This image is displayed in "About Us"'
-          promo_image_note1: 'PLEASE NOTE:'
-          promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
-          promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
-          remove_logo: "Remove Image"
-          remove_promo_image: "Remove Image"
         inventory_settings:
           legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
@@ -1386,10 +1385,6 @@ en_FR:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "Hide website navigation"
-          upload_logo: "Logo used in shopfront"
-          remove_logo: "Remove logo"
-          remove_logo_confirm: "Are you sure you want to remove this logo?"
-          remove_logo_success: "Logo removed"
           white_label_logo_link_label: "Link for the logo used in shopfront"
           hide_groups_tab: "Hide groups tab in shopfront"
           create_custom_tab: "Create custom tab in shopfront"
@@ -1664,6 +1659,22 @@ en_FR:
       searching: Searching...
       no_matches: No matches found
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_hint: 300 x 300 pixels
+        logo_remove: "Remove Image"
+        logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_label: "Promo image"
+        promo_image_note1: 'PLEASE NOTE:'
+        promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
+        promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+        promo_image_placeholder: 'This image is displayed in "About Us"'
+        promo_image_remove: "Remove Image"
+        promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
+        white_label_logo_label: "Logo used in shopfront"
+        white_label_logo_hint: 217 x 44 pixels
+        white_label_logo_remove: "Remove Image"
+        white_label_logo_remove_confirm: "Are you sure you want to remove this logo?"
       user_guide_link:
         user_guide: User Guide
       enterprises_hubs_tabs:
@@ -1938,6 +1949,9 @@ en_FR:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
         stripe_connect_success: "Stripe account connected successfully"
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
+        remove_logo_success: "Logo removed successfully"
+        remove_promo_image_success: "Promo image removed successfully"
+        remove_white_label_logo_success: "Logo removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
     resend_confirmation_emails_feedback:
@@ -2067,7 +2081,8 @@ en_FR:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
+      voucher_code_blank: Please enter a valid voucher code
+      voucher_code_not_found: invalid. It either doesn't exist or has been redeemed fully
       add_voucher_error: There was an error while adding the voucher
       create_voucher_error: "There was an error while creating the voucher: %{error}"
       voucher_redeeming_error: There was an error while trying to redeem your voucher
@@ -3599,10 +3614,6 @@ en_FR:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo removed successfully"
-            immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
-            removed_promo_image_successfully: "Promo image removed successfully"
-            immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
@@ -3953,10 +3964,6 @@ en_FR:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Pick-up at the farm"
-      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"
@@ -4260,6 +4267,7 @@ en_FR:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          cannot_add_item_to_shipped_order: "Cannot add item to shipped order"
           include_out_of_stock_variants: "Include variants with no available stock"
         shipment:
           mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
@@ -4878,6 +4886,8 @@ en_FR:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

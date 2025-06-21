@@ -191,42 +191,42 @@ RSpec.describe '
         fill_in "quick_filter", with: li1.product.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by supplier name" do
         fill_in "quick_filter", with: li1.variant.supplier.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by email" do
         fill_in "quick_filter", with: o1.email
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by order number" do
         fill_in "quick_filter", with: o1.number
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by phone number" do
         fill_in "quick_filter", with: o1.bill_address.phone
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by distributor name" do
         fill_in "quick_filter", with: o1.distributor.name
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
       end
 
       it "by customer name" do
@@ -234,59 +234,59 @@ RSpec.describe '
         fill_in "quick_filter", with: o1.bill_address.firstname
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         # by lastname
         fill_in "quick_filter", with: o1.bill_address.lastname
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         # by fullname
         fill_in "quick_filter", with: "#{o1.bill_address.firstname} #{o1.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.firstname} #{o2.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname reversed
         fill_in "quick_filter", with: "#{o1.bill_address.lastname} #{o1.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.lastname} #{o2.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname with comma
         fill_in "quick_filter", with: "#{o1.bill_address.firstname}, #{o1.bill_address.lastname}"
 
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.firstname}, #{o2.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
 
         # by fullname with comma reversed
         fill_in "quick_filter", with: "#{o1.bill_address.lastname}, #{o1.bill_address.firstname}"
 
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li1], [li2, li3]
+        expect_line_items li1, excluding: [li2, li3]
 
         fill_in "quick_filter", with: "#{o2.bill_address.lastname}, #{o2.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
-        expect_line_items_results [li2, li3], [li1]
+        expect_line_items li2, li3, excluding: [li1]
       end
     end
 
@@ -305,6 +305,8 @@ RSpec.describe '
       let!(:li2) {
         create(:line_item_with_shipment, order: o2, product: create(:product) )
       }
+      # sets supplier name to contain unusual characters
+      let!(:supplier) { li1.supplier.update_attribute(:name, "Sûppliẽr Näme") }
 
       before :each do
         visit_bulk_order_management
@@ -327,8 +329,7 @@ RSpec.describe '
 
       it "displays a column for producer" do
         expect(page).to have_selector "th.producer", text: "Producer"
-        expect(page).to have_selector "td.producer", text: li1.supplier.name
-        expect(page).to have_selector "td.producer", text: li2.supplier.name
+        expect(page).to have_selector "td.producer", text: "Sûppliẽr Näme", count: 2
       end
 
       it "displays a column for variant description, which shows only product name " \
@@ -676,11 +677,19 @@ RSpec.describe '
         end
       end
 
-      context "order_cycle filter" do
+      context "order_cycle filter selected" do
         let!(:distributor) { create(:distributor_enterprise) }
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc3) { create(:simple_order_cycle, distributors: [distributor]) }
+        let!(:oc4) do
+          create(
+            :simple_order_cycle,
+            orders_close_at: 364.days.ago,
+            orders_open_at: 400.days.ago,
+            distributors: [distributor]
+          )
+        end
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now,
@@ -696,43 +705,45 @@ RSpec.describe '
                                           completed_at: 1.week.from_now,
                                           order_cycle: oc3 )
         }
-        let!(:o4) {
+        let!(:o3a) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                           completed_at: 2.weeks.from_now,
                                           order_cycle: oc3 )
         }
+        let!(:o4) {
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: 100.days.ago,
+                                          order_cycle: oc4 )
+        }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
         let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
+        let!(:li3a) { create(:line_item_with_shipment, order: o3a ) }
         let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
 
         before do
           oc3.update!(orders_close_at: 2.weeks.from_now)
           oc3.update!(orders_open_at: 1.week.from_now)
           visit_bulk_order_management
+
+          expect_line_items(li1, li2, li3, li3a, li4)
+          select2_select oc1.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
         end
 
         it "displays a select box for order cycles, which filters line items " \
            "by the selected order cycle", retry: 3 do
-          displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
-          select2_select oc1.name, from: "order_cycle_filter"
-          page.find('.filter-actions .button.icon-search').click
           expect(page).not_to have_selector "#loading i"
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).not_to have_selector "tr#li_#{li2.id}"
+
+          expect_line_items(li1, excluding: [li2, li3, li3a, li4])
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
-          displays_default_orders
-          select2_select oc1.name, from: "order_cycle_filter"
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).not_to have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
-          displays_default_orders
+          expect_line_items(li1, li2, li3, li3a, li4)
         end
       end
 
@@ -1297,17 +1308,12 @@ RSpec.describe '
     expect(page).not_to have_text 'Loading orders'
   end
 
-  def displays_default_orders
-    expect(page).to have_selector "tr#li_#{li1.id}"
-    expect(page).to have_selector "tr#li_#{li2.id}"
-  end
-
-  def expect_line_items_results(line_items, excluded_line_items)
-    line_items.each do |li|
-      expect(page).to have_selector "tr#li_#{li.id}"
+  def expect_line_items(*line_items, excluding: [])
+    line_items.each do |line_item|
+      expect(page).to have_selector "tr#li_#{line_item.id}"
     end
-    excluded_line_items.each do |li|
-      expect(page).not_to have_selector "tr#li_#{li.id}"
+    excluding.each do |line_item|
+      expect(page).not_to have_selector "tr#li_#{line_item.id}"
     end
   end
 end

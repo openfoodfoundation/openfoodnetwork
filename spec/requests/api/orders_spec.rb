@@ -2,7 +2,7 @@
 
 require 'swagger_helper'
 
-RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
+RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml' do
   path '/api/v0/orders' do
     get('list orders') do
       tags 'Orders'
@@ -37,25 +37,25 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           }
         }
         context "when there are four orders with different properties set" do
-          let!(:order_dist_1) {
+          let!(:order_dist1) {
             create(:order_with_distributor, email: "specific_name@example.com")
           }
-          let!(:li1) { create(:line_item, order: order_dist_1) }
-          let!(:order_dist_2) { create(:order_with_totals_and_distribution) }
-          let!(:li2) { create(:line_item, order: order_dist_2) }
+          let!(:li1) { create(:line_item, order: order_dist1) }
+          let!(:order_dist2) { create(:order_with_totals_and_distribution) }
+          let!(:li2) { create(:line_item, order: order_dist2) }
           let!(:order_dist_1_complete) {
-            create(:completed_order_with_totals,  distributor: order_dist_1.distributor,
+            create(:completed_order_with_totals,  distributor: order_dist1.distributor,
                                                   state: 'complete',
                                                   completed_at: Time.zone.today - 7.days,
                                                   line_items_count: 1)
           }
           let!(:order_dist_1_credit_owed) {
-            create(:order, distributor: order_dist_1.distributor, payment_state: 'credit_owed',
+            create(:order, distributor: order_dist1.distributor, payment_state: 'credit_owed',
                            completed_at: Time.zone.today)
           }
           let!(:li4) { create(:line_item_with_shipment, order: order_dist_1_credit_owed) }
 
-          let(:user) { order_dist_1.distributor.owner }
+          let(:user) { order_dist1.distributor.owner }
           let(:'X-Spree-Token') do
             user.generate_api_key
             user.save
@@ -64,7 +64,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
 
           context "and there are no query parameters" do
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -73,17 +73,17 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           end
 
           context "and queried by distributor id" do
-            let(:'q[distributor_id_eq]') { order_dist_2.distributor.id }
+            let(:'q[distributor_id_eq]') { order_dist2.distributor.id }
 
-            before { order_dist_2.distributor.update owner: user }
+            before { order_dist2.distributor.update owner: user }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
               expect(orders.size).to eq 1
-              expect(orders.first["id"]).to eq order_dist_2.id
+              expect(orders.first["id"]).to eq order_dist2.id
             end
           end
 
@@ -92,7 +92,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
             let(:'q[completed_at_lt]') { Time.zone.today - 6.days }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -104,7 +104,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           context "and queried by complete state" do
             let(:'q[state_eq]') { "complete" }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -116,7 +116,7 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           context "and queried by credit_owed payment_state" do
             let(:'q[payment_state_eq]') { "credit_owed" }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
@@ -126,31 +126,31 @@ RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
           end
 
           context "and queried by buyer email contains a specific string" do
-            let(:'q[email_cont]') { order_dist_1.email.split("@").first }
+            let(:'q[email_cont]') { order_dist1.email.split("@").first }
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
               expect(orders.size).to eq 1
-              expect(orders.first["id"]).to eq order_dist_1.id
+              expect(orders.first["id"]).to eq order_dist1.id
             end
           end
 
           context "and queried by a specific order_cycle" do
             let(:'q[order_cycle_id_eq]') {
-              order_dist_2.order_cycle.id
+              order_dist2.order_cycle.id
             }
 
-            before { order_dist_2.distributor.update owner: user }
+            before { order_dist2.distributor.update owner: user }
 
             run_test! do |response|
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
 
               data = JSON.parse(response.body)
               orders = data["orders"]
               expect(orders.size).to eq 1
-              expect(orders.first["id"]).to eq order_dist_2.id
+              expect(orders.first["id"]).to eq order_dist2.id
             end
           end
 

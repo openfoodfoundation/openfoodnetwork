@@ -496,6 +496,7 @@ ca:
         inherits_properties: "Hereda propietats?"
         import_date: "Data d'importació"
         actions: Accions
+        tags: Etiquetes
       columns_selector:
         unit: Unitat
         price: Preu
@@ -761,6 +762,8 @@ ca:
           label: Productors
         categories:
           label: Categories
+        tags:
+          label: Etiquetes
         search: Cerca
       sort:
         pagination:
@@ -789,6 +792,7 @@ ca:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'impostos"
         producer_field_name: "Productora"
+        add_a_tag: Afegeix una etiqueta
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -849,7 +853,6 @@ ca:
         no_name: Sense nom
         blank_enterprise: alguns productes no tenen una organització definida
         reset_absent?: Restabliu els productes absents
-        reset_absent_tip: Establiu valors a zero per a tots els productes existents que no figurin al fitxer
         overwrite_all: Sobreescriu-ho tot
         overwrite_empty: Sobreescriu si està buit
         default_stock: Estableix el nivell d'existències
@@ -1029,12 +1032,6 @@ ca:
         images:
           legend: "Imatges"
           logo: Logotip
-          promo_image_placeholder: 'Aquesta imatge es mostra a "Sobre Nosaltres"'
-          promo_image_note1: 'ATENCIÓ:'
-          promo_image_note2: Qualsevol imatge promocional que es carregui aquí es tallarà a 1200 x 260.
-          promo_image_note3: 'La imatge promocional es mostra a la part superior de la pàgina de perfil i finestres emergents d''una organització '
-          remove_logo: "Elimina la imatge "
-          remove_promo_image: "Elimina la imatge "
         inventory_settings:
           legend: "Configuració de l'inventari"
           text1: 'Pots optar per gestionar els nivells d''existències i els preus a través del teu '
@@ -1199,9 +1196,6 @@ ca:
           active: Actiu?
         white_label:
           legend: "Marca blanca"
-          remove_logo: "Eliminar el logo"
-          remove_logo_confirm: "Esteu segur de voler eliminar el logo?"
-          remove_logo_success: "Logo eliminat"
           white_label_logo_link_label: "Enllaç del logotip utilitzat a botiga"
         connected_apps:
           affiliate_sales_data:
@@ -1429,6 +1423,18 @@ ca:
       searching: Buscant…
       no_matches: No he trobat coincidències
     shared:
+      attachment_field:
+        logo_label: "Logotip"
+        logo_remove: "Elimina la imatge "
+        logo_remove_confirm: "El logotip s'eliminarà immediatament després de confirmar."
+        promo_image_note1: 'ATENCIÓ:'
+        promo_image_note2: Qualsevol imatge promocional que es carregui aquí es tallarà a 1200 x 260.
+        promo_image_note3: 'La imatge promocional es mostra a la part superior de la pàgina de perfil i finestres emergents d''una organització '
+        promo_image_placeholder: 'Aquesta imatge es mostra a "Sobre Nosaltres"'
+        promo_image_remove: "Elimina la imatge "
+        promo_image_remove_confirm: "La imatge promocional s'eliminarà immediatament després de confirmar."
+        white_label_logo_remove: "Elimina la imatge "
+        white_label_logo_remove_confirm: "Esteu segur de voler eliminar el logo?"
       user_guide_link:
         user_guide: Guia de l'usuari
       enterprises_hubs_tabs:
@@ -1654,6 +1660,9 @@ ca:
         stripe_connect_cancelled: "S'ha cancel·lat la connexió a Stripe"
         stripe_connect_success: "S'ha connectat correctament el compte de Stripe"
         stripe_connect_fail: Ho sentim, s'ha produït un error en la connexió del vostre compte de Stripe
+        remove_logo_success: "Logotip eliminat correctament"
+        remove_promo_image_success: "Imatge promocional eliminada correctament"
+        remove_white_label_logo_success: "Logotip eliminat correctament"
       stripe_connect_settings:
         resource: 'Configuració de la connexió amb Stripe '
   api:
@@ -1753,7 +1762,6 @@ ca:
       cancel: Tornar a mètodes de pagament
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
-      voucher_not_found: No trobat
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"
@@ -3212,10 +3220,6 @@ ca:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logotip eliminat correctament"
-            immediate_logo_removal_warning: "El logotip s'eliminarà immediatament després de confirmar."
-            removed_promo_image_successfully: "Imatge promocional eliminada correctament"
-            immediate_promo_image_removal_warning: "La imatge promocional s'eliminarà immediatament després de confirmar."
             immediate_terms_and_conditions_removal_warning: "El fitxer de termes i condicions s’eliminarà immediatament després de confirmar-ho."
             removed_terms_and_conditions_successfully: "El fitxer de termes i condicions s’ha eliminat correctament"
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
@@ -3510,10 +3514,6 @@ ca:
     rma_credit: "credit RMA"
     refund: "Reembossament"
     server_error: "Error del servidor"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Recollida a la granja"
-      delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     updating: "Actualitzant"
@@ -4380,3 +4380,5 @@ ca:
     pagination:
       next: Següent
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Afegeix una etiqueta

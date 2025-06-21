@@ -14,7 +14,7 @@ export default class extends Controller {
   }
 
   checkFile() {
-    if (!this.loadedTarget.classList.contains(HIDE_CLASS)) {
+    if (!this.hasLoadedTarget || !this.loadedTarget.classList.contains(HIDE_CLASS)) {
       // If link already loaded successfully, we don't need to check anymore.
       return;
     }
@@ -29,10 +29,10 @@ export default class extends Controller {
     });
   }
 
-  setTimeout(){
+  setTimeout() {
     this.timeout = setTimeout(this.checkFile.bind(this), NOTIFICATION_TIME);
   }
-  clearTimeout(){
+  clearTimeout() {
     clearTimeout(this.timeout);
   }
 }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::UsersController, type: :controller do
+RSpec.describe Spree::UsersController do
   routes { Spree::Core::Engine.routes }
 
   include AuthenticationHelper

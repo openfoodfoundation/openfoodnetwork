@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::ProductImportController, type: :controller do
+RSpec.describe Admin::ProductImportController do
   describe 'validate_file_path' do
     let(:tmp_directory_base) { Rails.root.join("tmp/product_import-") }
 

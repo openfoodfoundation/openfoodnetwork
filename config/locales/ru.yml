@@ -532,6 +532,7 @@ ru:
         inherits_properties: "Наследовать Свойства?"
         import_date: "Дата Импорта"
         actions: Действия
+        tags: Метки
       columns_selector:
         unit: Единица измерения
         price: Цена
@@ -799,6 +800,8 @@ ru:
           label: Производители
         categories:
           label: Категории
+        tags:
+          label: Метки
         search: Поиск
       sort:
         pagination:
@@ -840,6 +843,7 @@ ru:
         category_field_name: "Категория"
         tax_category_field_name: "Налоговая Категория"
         producer_field_name: "Производитель"
+        add_a_tag: Добавить Метку
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -903,7 +907,6 @@ ru:
         no_name: Без имени
         blank_enterprise: некоторые товары не имеют определенного предприятия
         reset_absent?: Сбросить отсутствующие товары
-        reset_absent_tip: Установить запас в ноль всех существующих товаров, отсутствующих в файле
         overwrite_all: Всё перезаписать
         overwrite_empty: Перезаписать если пусто
         default_stock: Установить уровень запасов
@@ -1089,12 +1092,6 @@ ru:
           legend: "Изображения"
           logo: Логотип
           logo_size: "300 х 300 пикселей"
-          promo_image_placeholder: 'Это изображение будет отображаться в "О Нас"'
-          promo_image_note1: 'ОБРАТИТЕ ВНИМАНИЕ:'
-          promo_image_note2: Любое загруженное здесь промо изображение будет обрезано до 1200x260.
-          promo_image_note3: Промо изображение отображается в верхней части страницы профиля предприятия и всплывающих окнах.
-          remove_logo: "Удалить Изображение"
-          remove_promo_image: "Удалить Изображение"
         inventory_settings:
           legend: "Настройка товарной номенклатуры"
           text1: Вы можете управлять уровнем запасов и ценами через свой
@@ -1268,10 +1265,6 @@ ru:
         white_label:
           legend: "Белая Этикетка"
           hide_ofn_navigation: "Скрыть навигацию ОСП"
-          upload_logo: "Логотип используемый на витрине магазина"
-          remove_logo: "Удалить логотип"
-          remove_logo_confirm: "Вы уверены, что хотите удалить этот логотип?"
-          remove_logo_success: "Логотип удален"
           white_label_logo_link_label: "Ссылка на логотип, используемый на витрине магазина"
           hide_groups_tab: "Скрыть вкладку групп на витрине"
           create_custom_tab: "Создать пользовательскую вкладку на витрине магазина"
@@ -1519,6 +1512,20 @@ ru:
       searching: Идет поиск...
       no_matches: Ничего не найдено
     shared:
+      attachment_field:
+        logo_label: "Логотип"
+        logo_hint: 300 х 300 пикселей
+        logo_remove: "Удалить Изображение"
+        logo_remove_confirm: "Логотип будет удален сразу после подтверждения."
+        promo_image_note1: 'ОБРАТИТЕ ВНИМАНИЕ:'
+        promo_image_note2: Любое загруженное здесь промо изображение будет обрезано до 1200x260.
+        promo_image_note3: Промо изображение отображается в верхней части страницы профиля предприятия и всплывающих окнах.
+        promo_image_placeholder: 'Это изображение будет отображаться в "О Нас"'
+        promo_image_remove: "Удалить Изображение"
+        promo_image_remove_confirm: "Промо-изображение будет удалено сразу после подтверждения."
+        white_label_logo_label: "Логотип используемый на витрине магазина"
+        white_label_logo_remove: "Удалить Изображение"
+        white_label_logo_remove_confirm: "Вы уверены, что хотите удалить этот логотип?"
       user_guide_link:
         user_guide: Руководство Пользователя
       enterprises_hubs_tabs:
@@ -1788,6 +1795,9 @@ ru:
         stripe_connect_cancelled: "Подключение к Stripe было отменено"
         stripe_connect_success: "Аккаунт Stripe успешно подключен"
         stripe_connect_fail: К сожалению, не удалось подключиться к вашей учетной записи Stripe
+        remove_logo_success: "Логотип успешно удален"
+        remove_promo_image_success: "Промо-изображение успешно удалено"
+        remove_white_label_logo_success: "Логотип успешно удален"
       stripe_connect_settings:
         resource: Конфигурация Stripe Connect
     resend_confirmation_emails_feedback:
@@ -1921,7 +1931,6 @@ ru:
       select_a_shipping_method: Выберите способ доставки
       select_a_payment_method: Выберите способ оплаты
       no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
-      voucher_not_found: Не найден
       add_voucher_error: При добавлении ваучера произошла ошибка
   shops:
     hubs:
@@ -3442,10 +3451,6 @@ ru:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Логотип успешно удален"
-            immediate_logo_removal_warning: "Логотип будет удален сразу после подтверждения."
-            removed_promo_image_successfully: "Промо-изображение успешно удалено"
-            immediate_promo_image_removal_warning: "Промо-изображение будет удалено сразу после подтверждения."
             immediate_terms_and_conditions_removal_warning: "Файл Условий и Положений будет удален сразу после вашего подтверждения."
             removed_terms_and_conditions_successfully: "Файл Условий и Положений успешно удален"
     insufficient_stock: "Недостаточно доступных запасов, осталось только %{on_hand}"
@@ -3797,10 +3802,6 @@ ru:
     rma_credit: "Кредит RMA"
     refund: "Возврат"
     server_error: "Ошибка сервера"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Самовывоз на ферме"
-      delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     updating: "Обновление"
@@ -4726,3 +4727,5 @@ ru:
     pagination:
       next: Следующий
       previous: Предыдущий
+    tag_list_input:
+      default_placeholder: Добавить Метку

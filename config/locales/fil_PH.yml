@@ -318,6 +318,7 @@ fil_PH:
         inherits_properties: "gayahin ang mga katangian?"
         import_date: "petsa ng pag-import"
         actions: mga  kilos
+        tags: tags
       columns_selector:
         unit: yunit
         price: Presyo
@@ -537,6 +538,8 @@ fil_PH:
           label: Mga Producer
         categories:
           label: mga kategorya
+        tags:
+          label: tags
         search: hanapin
       product_variant_row:
         new_variant: bagong uri
@@ -545,6 +548,7 @@ fil_PH:
         category_field_name: "kategorya"
         tax_category_field_name: "kategorya ng tax"
         producer_field_name: "Producer"
+        add_a_tag: magdagdag ng tag
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
@@ -602,7 +606,6 @@ fil_PH:
         no_name: walang pangalan
         blank_enterprise: ang ibang mga produkto ay walang tinutukoy na enterprise
         reset_absent?: i-reset ang mga nawawalang produkto
-        reset_absent_tip: i-set ang stock sa zero ng lahat ng mga produkto na hindi makikita sa file
         overwrite_all: sulatan lahat
         overwrite_empty: sulatan kung walang nakalagay
         default_stock: i-set ang lebel ng stock
@@ -757,12 +760,6 @@ fil_PH:
         images:
           legend: "mga larawan"
           logo: Logo
-          promo_image_placeholder: 'ang larawan na ito ay makikita sa "tungkol sa amin"'
-          promo_image_note1: 'TANDAAN:'
-          promo_image_note2: ang kahit anong larawan na ilalagay dito ay maka-crop sa 1200 x 260.
-          promo_image_note3: ang promo na larawan ay makikita sa itaas na bahagi sa pahina ng profile ng enterprise at pop-ups.
-          remove_logo: "alisin ang larawan"
-          remove_promo_image: "alisin ang larawan"
         inventory_settings:
           legend: "mga setting para sa imbentaryo"
           text1: maaari mong piliin na pamahalaan ang lebel ng mga stock at presyo sa iyong
@@ -1122,6 +1119,17 @@ fil_PH:
       resume:
         could_not_resume_the_order: hindi maipagpatuloy ang order
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "alisin ang larawan"
+        logo_remove_confirm: "ang logo ay tatanggalin agad pagkatapos mong magkumpirma."
+        promo_image_note1: 'TANDAAN:'
+        promo_image_note2: ang kahit anong larawan na ilalagay dito ay maka-crop sa 1200 x 260.
+        promo_image_note3: ang promo na larawan ay makikita sa itaas na bahagi sa pahina ng profile ng enterprise at pop-ups.
+        promo_image_placeholder: 'ang larawan na ito ay makikita sa "tungkol sa amin"'
+        promo_image_remove: "alisin ang larawan"
+        promo_image_remove_confirm: "ang promo na larawan ay tatanggalin agad pagkatapos mong magkumpirma."
+        white_label_logo_remove: "alisin ang larawan"
       user_guide_link:
         user_guide: gabay sa gumagamit
       enterprises_hubs_tabs:
@@ -1329,6 +1337,9 @@ fil_PH:
         stripe_connect_cancelled: "koneksyon sa Stripe ay kinansel"
         stripe_connect_success: "matagumpay na nakonekta ang stripe account"
         stripe_connect_fail: paumanhin, ang koneksyon ng inyong Stripe account ay hindi nagtagumpay
+        remove_logo_success: "matagumpay na natanggal ang logo"
+        remove_promo_image_success: "ang promo na larawan ay matagumpay na natanggal"
+        remove_white_label_logo_success: "matagumpay na natanggal ang logo"
       stripe_connect_settings:
         resource: pagsasaayos ng pagkonekta sa Stripe
   api:
@@ -2761,13 +2772,6 @@ fil_PH:
         error_saving: "error sa pag-save ng subscription"
         new:
           please_select_a_shop: "Pumili ng shop"
-      enterprises:
-        form:
-          images:
-            removed_logo_successfully: "matagumpay na natanggal ang logo"
-            immediate_logo_removal_warning: "ang logo ay tatanggalin agad pagkatapos mong magkumpirma."
-            removed_promo_image_successfully: "ang promo na larawan ay matagumpay na natanggal"
-            immediate_promo_image_removal_warning: "ang promo na larawan ay tatanggalin agad pagkatapos mong magkumpirma."
     insufficient_stock: "Hindi sapat ang stock, mayroon na lamang%{on_hand} na natitira"
     out_of_stock:
       reduced_stock_available: binawasan ang stock na magagamit
@@ -3677,3 +3681,5 @@ fil_PH:
     pagination:
       next: sunod
       previous: nauna
+    tag_list_input:
+      default_placeholder: magdagdag ng tag

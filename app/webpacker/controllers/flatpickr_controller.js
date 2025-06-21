@@ -4,6 +4,7 @@ import { ar } from "flatpickr/dist/l10n/ar";
 import { cat } from "flatpickr/dist/l10n/cat";
 import { cy } from "flatpickr/dist/l10n/cy";
 import { de } from "flatpickr/dist/l10n/de";
+import { fi } from "flatpickr/dist/l10n/fi";
 import { fr } from "flatpickr/dist/l10n/fr";
 import { it } from "flatpickr/dist/l10n/it";
 import { nl } from "flatpickr/dist/l10n/nl";
@@ -28,6 +29,7 @@ export default class extends Flatpickr {
     cat: cat,
     cy: cy,
     de: de,
+    fi: fi,
     fr: fr,
     it: it,
     nl: nl,

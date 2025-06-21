@@ -851,7 +851,6 @@ mr:
         no_name: नाव नाही
         blank_enterprise: काही उत्पादनांमध्ये एंटरप्राइझ परिभाषित नाही
         reset_absent?: अनुपलब्ध उत्पादने रीसेट करा
-        reset_absent_tip: फाइलमध्ये उपस्थित नसलेल्या सर्व बाहेर जाणाऱ्या उत्पादनांसाठी स्टॉक शून्यावर सेट करा
         overwrite_all: सर्व ओव्हरराइट करा
         overwrite_empty: रिक्त असल्यास ओव्हरराइट करा
         default_stock: स्टॉक पातळी सेट करा
@@ -1039,12 +1038,6 @@ mr:
         images:
           legend: "इमेजेस्"
           logo: लोगो
-          promo_image_placeholder: 'ही इमेज ''आमच्याबद्दल'' मध्ये प्रदर्शित केली आहे'
-          promo_image_note1: 'कृपया नोंद घ्या:'
-          promo_image_note2: येथे अपलोड केलेली कोणतीही प्रोमो इमेज 1200 x 260 मध्ये क्रॉप केली जाईल.
-          promo_image_note3: प्रोमो इमेज एंटरप्राइझच्या प्रोफाइल पेज आणि पॉप-अपच्या शीर्षस्थानी प्रदर्शित केली जाते.
-          remove_logo: "इमेज काढून टाका"
-          remove_promo_image: "इमेज काढून टाका"
         inventory_settings:
           legend: "इन्व्हेंटरी सेटिंग्ज"
           text1: तुम्ही तुमच्या द्वारे स्टॉक पातळी आणि किमती व्यवस्थापित करण्याचा पर्याय निवडू शकता
@@ -1216,10 +1209,6 @@ mr:
         white_label:
           legend: "पांढरे लेबल"
           hide_ofn_navigation: "OFN नेव्हिगेशन लपवा"
-          upload_logo: "शॉपफ्रंटमध्ये  लोगो वापरला"
-          remove_logo: "लोगो काढा"
-          remove_logo_confirm: "तुमची खात्री आहे की तुम्ही हा लोगो काढू इच्छिता?"
-          remove_logo_success: "लोगो काढला"
           white_label_logo_link_label: "शॉपफ्रंटमध्ये वापरलेल्या लोगोची लिंक"
           hide_groups_tab: "शॉपफ्रंटमध्ये ग्रुप्स टॅब लपवा"
           create_custom_tab: "शॉपफ्रंटमध्ये कस्टम टॅब तयार करा"
@@ -1445,6 +1434,18 @@ mr:
       searching: शोधत आहे...
       no_matches: कोणतेही जुळले नाहीत
     shared:
+      attachment_field:
+        logo_label: "लोगो"
+        logo_remove: "इमेज काढून टाका"
+        logo_remove_confirm: "तुम्ही पुष्टी केल्यानंतर लगेच लोगो काढला जाईल."
+        promo_image_note1: 'कृपया नोंद घ्या:'
+        promo_image_note2: येथे अपलोड केलेली कोणतीही प्रोमो इमेज 1200 x 260 मध्ये क्रॉप केली जाईल.
+        promo_image_note3: प्रोमो इमेज एंटरप्राइझच्या प्रोफाइल पेज आणि पॉप-अपच्या शीर्षस्थानी प्रदर्शित केली जाते.
+        promo_image_placeholder: 'ही इमेज ''आमच्याबद्दल'' मध्ये प्रदर्शित केली आहे'
+        promo_image_remove: "इमेज काढून टाका"
+        promo_image_remove_confirm: "तुम्ही पुष्टी केल्यानंतर प्रोमो इमेज लगेच काढून टाकली जाईल."
+        white_label_logo_label: "शॉपफ्रंटमध्ये  लोगो वापरला"
+        white_label_logo_remove: "इमेज काढून टाका"
       user_guide_link:
         user_guide: वापरकर्ता मार्गदर्शक
       enterprises_hubs_tabs:
@@ -3281,10 +3282,6 @@ mr:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "लोगो यशस्वीरित्या काढला"
-            immediate_logo_removal_warning: "तुम्ही पुष्टी केल्यानंतर लगेच लोगो काढला जाईल."
-            removed_promo_image_successfully: "प्रोमो इमेज यशस्वीरित्या काढली"
-            immediate_promo_image_removal_warning: "तुम्ही पुष्टी केल्यानंतर प्रोमो इमेज लगेच काढून टाकली जाईल."
             immediate_terms_and_conditions_removal_warning: "तुम्ही पुष्टी केल्यानंतर अटी आणि नियम फाइल ताबडतोब काढून टाकली जाईल."
             removed_terms_and_conditions_successfully: "अटी आणि नियम फाइल यशस्वीरित्या काढली"
     insufficient_stock: " उपलब्ध स्टॉक अपुरा आहे, फक्त %{on_hand} शिल्लक आहे"
@@ -3585,10 +3582,6 @@ mr:
     rma_credit: "RMA क्रेडिट"
     refund: "परतावा"
     server_error: "सर्व्हर त्रुटी"
-    shipping_method_names:
-      UPS Ground: "UPS  ग्राउंड"
-      pick_up: "शेतात पिक-अप"
-      delivery: "स्वाक्षरी, सीलबंद, वितरित"
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
     updating: "अपडेट करत आहे"

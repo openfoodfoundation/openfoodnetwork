@@ -108,13 +108,12 @@ module VariantStock
   #   only one stock item per variant
   #
   # This enables us to override this behaviour for variant overrides
-  def move(quantity, originator = nil)
+  def move(quantity)
     return if deleted_at
 
     raise_error_if_no_stock_item_available
 
-    # Creates a stock movement: it updates stock_item.count_on_hand and fills backorders
-    stock_item.stock_movements.create!(quantity:, originator:)
+    stock_item.adjust_count_on_hand(quantity)
   end
 
   # There shouldn't be any other stock items, because we should
@@ -141,10 +140,6 @@ module VariantStock
   end
 
   # Overwrites stock_item.count_on_hand
-  #
-  # Calling stock_item.adjust_count_on_hand will bypass filling backorders
-  #   and creating stock movements
-  # If that was required we could call self.move
   def overwrite_stock_levels(new_level)
     stock_item.adjust_count_on_hand(new_level.to_i - stock_item.count_on_hand)
   end

@@ -69,13 +69,15 @@ module Admin
       delete_custom_tab if params[:custom_tab] == 'false'
 
       if @object.update(enterprise_params)
-        flash[:success] = flash_message_for(@object, :successfully_updated)
+        flash[:success] = flash_success_message
+
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
           format.json {
             render_as_json @object, ams_prefix: 'index', spree_current_user:
           }
+          format.turbo_stream
         end
       else
         respond_with(@object) do |format|
@@ -163,6 +165,25 @@ module Admin
     end
 
     private
+
+    def flash_success_message
+      if attachment_removal?
+        I18n.t("admin.controllers.enterprises.#{attachment_removal_parameter}_success")
+      else
+        flash_message_for(@object, :successfully_updated)
+      end
+    end
+
+    def attachment_removal?
+      attachment_removal_parameter.present?
+    end
+
+    def attachment_removal_parameter
+      if enterprise_params.keys.one? && enterprise_params.keys.first.to_s.start_with?("remove_")
+        enterprise_params.keys.first
+      end
+    end
+    helper_method :attachment_removal_parameter
 
     def load_enterprise_set_on_index
       return unless spree_current_user.admin?
@@ -254,7 +275,7 @@ module Admin
       # methods that are specific to each class do not become available until after the
       # record is persisted. This problem is compounded by the use of calculators.
       @object.transaction do
-        tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each do |_i, attrs|
+        tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each_value do |attrs|
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
 
@@ -293,7 +314,7 @@ module Admin
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
-      params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+      params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
         unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
           enterprise_params.delete :sells
         end
@@ -327,7 +348,7 @@ module Admin
     def check_can_change_bulk_owner
       return if spree_current_user.admin?
 
-      bulk_params[:collection_attributes].each do |_i, enterprise_params|
+      bulk_params[:collection_attributes].each_value do |enterprise_params|
         enterprise_params.delete :owner_id
       end
     end

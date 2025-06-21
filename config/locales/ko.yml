@@ -455,6 +455,7 @@ ko:
         inherits_properties: "속성을 상속하시겠습니까?"
         import_date: "수입 날짜"
         actions: 사용자 응용
+        tags: 태그
       columns_selector:
         unit: 단위
         price: 가격
@@ -694,6 +695,8 @@ ko:
           label: 생산자들
         categories:
           label: 카테고리
+        tags:
+          label: 태그
         search: 탐색
       sort:
         pagination:
@@ -705,6 +708,7 @@ ko:
         category_field_name: "목록"
         tax_category_field_name: "세금 목록"
         producer_field_name: "제공자"
+        add_a_tag: 태그 추가
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
@@ -763,7 +767,6 @@ ko:
         no_name: 이름 없음
         blank_enterprise: 일부 제품이 회사가 정의되지 않았습니다.
         reset_absent?: 없는 제품 재설정하기
-        reset_absent_tip: 파일에 없는 모든 기존 제품에 대해 재고를 0으로 설정하기
         overwrite_all: 모두 덮어쓰기
         overwrite_empty: 비어 있는 경우 덮어쓰기
         default_stock: 재고 수준 설정
@@ -940,12 +943,6 @@ ko:
         images:
           legend: "사진"
           logo: 로고
-          promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
-          promo_image_note1: '참고 사항: '
-          promo_image_note2: 여기에 업로드된 프로모션 이미지는 1200 x 260으로 잘립니다.
-          promo_image_note3: 프로모션 이미지는 기업의 프로필 페이지 및 팝업 맨 위에 표시됩니다.
-          remove_logo: "사진 삭제"
-          remove_promo_image: "사진 삭제"
         inventory_settings:
           legend: "인벤토리 설정"
           text1: 다음을 통해 재고 수준 및 가격을 관리할 수 있습니다.
@@ -1319,6 +1316,17 @@ ko:
       resume:
         could_not_resume_the_order: 주문을 진행할 수 없습니다.
     shared:
+      attachment_field:
+        logo_label: "로고"
+        logo_remove: "사진 삭제"
+        logo_remove_confirm: "확인 후 로고가 즉시 제거됩니다."
+        promo_image_note1: '참고 사항: '
+        promo_image_note2: 여기에 업로드된 프로모션 이미지는 1200 x 260으로 잘립니다.
+        promo_image_note3: 프로모션 이미지는 기업의 프로필 페이지 및 팝업 맨 위에 표시됩니다.
+        promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
+        promo_image_remove: "사진 삭제"
+        promo_image_remove_confirm: "확인 후 바로 프로모션 이미지가 제거됩니다."
+        white_label_logo_remove: "사진 삭제"
       user_guide_link:
         user_guide: 사용자 가이드
       enterprises_hubs_tabs:
@@ -1542,6 +1550,9 @@ ko:
         stripe_connect_cancelled: "Stripe와의 연결이 취소되었습니다"
         stripe_connect_success: "Stripe 계정이 성공적으로 연결되었습니다."
         stripe_connect_fail: 죄송합니다. 당신의 Stripe 계정에 연결하는 것이 실패했습니다.
+        remove_logo_success: "로고가 삭제되었습니다."
+        remove_promo_image_success: "프로모션 이미지가 제거되었습니다."
+        remove_white_label_logo_success: "로고가 삭제되었습니다."
       stripe_connect_settings:
         resource: Stripe Connect  환경 설정
   api:
@@ -1648,7 +1659,6 @@ ko:
       invalid_email: "올바른 이메일 주소를 입력하십시오."
       select_a_shipping_method: 전송 방법을 선택하세요.
       select_a_payment_method: 결제 방법을 선택하세요.
-      voucher_not_found: 찾을 수 없습니다
   shops:
     hubs:
       show_closed_shops: "휴무점 표시"
@@ -3089,10 +3099,6 @@ ko:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "로고가 삭제되었습니다."
-            immediate_logo_removal_warning: "확인 후 로고가 즉시 제거됩니다."
-            removed_promo_image_successfully: "프로모션 이미지가 제거되었습니다."
-            immediate_promo_image_removal_warning: "확인 후 바로 프로모션 이미지가 제거됩니다."
             immediate_terms_and_conditions_removal_warning: "확인 후 계약 조건 파일이 즉시 제거됩니다."
             removed_terms_and_conditions_successfully: "계약 조건 파일이 제거되었습니다."
     insufficient_stock: "재고 부족, %{on_hand}만 남아 있습니다."
@@ -3362,8 +3368,6 @@ ko:
     rma_credit: "RMA 거래"
     refund: "환불"
     server_error: "서버 오류"
-    shipping_method_names:
-      UPS Ground: "UPS 배경"
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
     updating: "업데이트 중"
@@ -4184,3 +4188,5 @@ ko:
     pagination:
       next: 다음
       previous: 이전으로
+    tag_list_input:
+      default_placeholder: 태그 추가

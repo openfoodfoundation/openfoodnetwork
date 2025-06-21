@@ -147,6 +147,10 @@ nb:
       message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
     general_error:
       message: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
+    unauthorized:
+      message: "Du er ikke autorisert til å utføre den handlingen."
+    network_error:
+      message: "Nettverksfeil: prøv igjen senere."
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
@@ -275,6 +279,7 @@ nb:
         send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
     oidc:
       failure: "Kunne ikke logge på: %{error}"
+      record_not_unique: "%{uid} er allerede tilknyttet en annen konto"
   home_page_alert_html: "HTML for varsler på hjemmeside "
   hub_signup_case_studies_html: "Hub-registrering studier HTML"
   hub_signup_detail_html: "Hub registrering detaljer HTML"
@@ -308,6 +313,8 @@ nb:
   sku: "SKU"
   subtotal: "Subtotal"
   tax_rate: "Avgiftsrate"
+  with_tax_incl: "%{amount} inkl. mva."
+  producer_mail_qty: ANTALL
   validators:
     date_time_string_validator:
       not_string_error: "må være en streng"
@@ -530,6 +537,15 @@ nb:
   depth: "Dybde"
   payment_could_not_process: "Betalingen kunne ikke behandles"
   payment_could_not_complete: "Betalingen kunne ikke fullføres"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "Det oppsto en feil under kommunikasjonen med API-et. Prøv på nytt senere."
+      invalid_voucher: "Kupongen er ikke gyldig"
+      not_found_voucher: "Beklager, vi fant ikke kupongen. Sjekk koden."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Det oppsto en feil under kommunikasjonen med API-et"
+      redeeming_failed: "Innløsning av kupongen mislyktes"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -573,6 +589,7 @@ nb:
         inherits_properties: "Arver egenskaper?"
         import_date: "Importdato"
         actions: Handlinger
+        tags: Merkelapper
       columns_selector:
         unit: Enhet
         price: Pris
@@ -766,12 +783,35 @@ nb:
         user_guide: Brukermanual
         map: Kart
     dfc_product_imports:
+      connection_invalid_html: |
+          Tilkobling til OIDC-kontoen din mislyktes.
+          Vennligst oppdater OIDC-tilkoblingen din på: %{oidc_settings_link}
+      absent_variant:
+        reset: "Tilbakestill lagerbeholdning"
       index:
+        title: "DFC-produktkatalog"
+        catalog_url: "%{count} produkter som skal importeres fra: %{catalog_url}"
+        absent_products:
+          one: |
+              Ett produkt er ikke lenger i katalogen.
+              Det vil bli merket som utilgjengelig ved å tilbakestille lagerbeholdningen til null.
+          other: |
+              %{count} produkter er ikke lenger i katalogen.
+              De vil bli merket som utilgjengelige ved å tilbakestille lagerbeholdningen til null.
+        enterprise: "Importer til bedrift: %{enterprise_name}"
+        select_all: "Merk/fjern merking av alle"
         update: Oppdater
         new: Ny
         selected:
+          zero: "0 valgt"
+          one: "1 valgt"
           other: "%{count} valgt"
         import: Import
+        invalid_url: Denne katalog-URL-en er ikke gyldig.
+      import:
+        title: "Import av DFC-produktkatalog"
+        imported_products: "Importerte produkter: %{count}"
+        reset_products: "Lagertilbakestilling for manglende produkter: %{count}"
     enterprise_fees:
       index:
         title: "Bedriftsavgifter"
@@ -862,6 +902,8 @@ nb:
           label: Produsenter
         categories:
           label: Kategorier
+        tags:
+          label: Merkelapper
         search: Søk
       sort:
         pagination:
@@ -905,6 +947,8 @@ nb:
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
         producer_field_name: "Produsent"
+        select_unit_scale: Velg enhetsskala
+        add_a_tag: Legg til en merkelapp
       clone:
         success: Kloning av produktet var vellykket
         error: Kan ikke klone produktet
@@ -951,6 +995,7 @@ nb:
         shipping_categories: Fraktkategorier
       dfc_import_form:
         title: "Importer fra DFC-katalogen"
+        enterprise: "Lag produkter for bedrifter"
         catalog_url: "DFC-katalog-URL"
         preview: Forhåndsvisning
       import:
@@ -972,7 +1017,6 @@ nb:
         no_name: Ingen navn
         blank_enterprise: noen produkter har ikke en bedrift definert
         reset_absent?: Tilbakestill fraværende produkter
-        reset_absent_tip: Sett lager til null for alle gjeldende produkter som ikke er til stede i filen
         overwrite_all: Overskrive alt
         overwrite_empty: Overskriv hvis tomt
         default_stock: Sett lagernivå
@@ -1159,12 +1203,6 @@ nb:
           legend: "Bilder"
           logo: Logo
           logo_size: "300 x 300 piksler"
-          promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
-          promo_image_note1: 'VENNLIGST MERK:'
-          promo_image_note2: Ethvert promobilde lastet opp her vil bli kuttet til 1200x260.
-          promo_image_note3: Promobildet vises på toppen av en bedrifts profilside og i pop-ups.
-          remove_logo: "Fjern Bilde"
-          remove_promo_image: "Fjern Bilde"
         inventory_settings:
           legend: "Beholdningsinnstillinger"
           text1: Du kan velge å administrere lagernivå og priser inn via din
@@ -1199,11 +1237,15 @@ nb:
           own: Egen
           sells: Selger
           sells_tip: "Ingen - bedriften selger ikke til kunder direkte.<br />Egne - Bedrift selger egne produkter til kunder.<br />Både og - Bedrift kan selge egne eller andre bedrfiters produkter.<br />"
+          external_billing_id: Ekstern fakturerings-ID
+          external_billing_id_placeholder: f.eks. FAKTURA-2024-123456
+          external_billing_id_tip: "Dette er ID-en som brukes av det eksterne faktureringssystemet for å identifisere denne bedriften."
           visible_in_search: Synlig i søk?
           visible_in_search_tip: "Butikker kan være<br /> 1. offentlig synlig, vises på OFN-kartet og listene.<br /> 2. Skjult på kart og oppføringer, men referert av andre butikker og koblet til i deres profil.<br /> 3. Helt skjult."
           visible: Offentlig
           not_visible: Skjult
           hidden: Skjul alle referanser
+          admin_only_legend: Kun administratorer
         properties:
           legend: "Egenskaper"
         permalink:
@@ -1242,8 +1284,12 @@ nb:
           enable_subscriptions_true: "Aktivert"
           customer_names_in_reports: "Kundenavn i rapporter"
           customer_names_tip: "La leverandørene dine se kundenes navn i rapporter"
+          producers_to_edit_orders: "Mulighet for produsenter til å redigere bestillinger"
+          producers_to_edit_orders_tip: "Gjør det mulig for leverandørene dine å se bestillinger som inneholder produktene deres, og redigere mengde og vekt kun for sine egne produkter."
           customer_names_false: "Deaktivert"
           customer_names_true: "Aktivert"
+          customer_contacts_in_reports: "Kundekontaktdetaljer i rapporter"
+          customer_contacts_tip: "Gjør det mulig for leverandørene dine å se kundenes e-postadresser og telefonnumre i rapporter"
           customer_contacts_false: "Deaktivert"
           customer_contacts_true: "Aktivert"
           producers_edit_orders_false: "Deaktivert"
@@ -1337,10 +1383,6 @@ nb:
         white_label:
           legend: "Blank"
           hide_ofn_navigation: "Skjul OFN-navigasjon"
-          upload_logo: "Logo brukt i butikk"
-          remove_logo: "Fjern logo"
-          remove_logo_confirm: "Er du sikker på at du vil fjerne denne logoen?"
-          remove_logo_success: "Logo fjernet"
           white_label_logo_link_label: "Link til logoen som brukes i butikk"
           hide_groups_tab: "Skjul grupper-fanen i butikken"
           create_custom_tab: "Lag egendefinert fane i butikk"
@@ -1350,10 +1392,12 @@ nb:
           legend: "Tilkoblede apper"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Tillat dette forskningsprosjektet å få tilgang til bestillingsdataene dine anonymt."
             enable: "Tillat datadeling"
             disable: "Stopp deling"
             loading: "Laster"
             need_to_be_manager: "Bare ledere kan koble til apper."
+            description: "INRAE og UFC QUE CHOISIR samarbeider for å studere matpriser i korte matkjedesystemer og sammenligne dem med priser i supermarkedet for et gitt sett med produkter. Dataene som brukes av INRAE er blandet med data fra andre korte matkjedeplattformer i Frankrike. Ingen individuelle produktpriser vil bli offentliggjort gjennom dette prosjektet."
           discover_regen:
             title: "Oppdag Regenerativ"
             tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
@@ -1605,6 +1649,20 @@ nb:
       searching: Søker...
       no_matches: Ingen treff funnet
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_hint: 300 x 300 piksler
+        logo_remove: "Fjern Bilde"
+        logo_remove_confirm: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
+        promo_image_note1: 'VENNLIGST MERK:'
+        promo_image_note2: Ethvert promobilde lastet opp her vil bli kuttet til 1200x260.
+        promo_image_note3: Promobildet vises på toppen av en bedrifts profilside og i pop-ups.
+        promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
+        promo_image_remove: "Fjern Bilde"
+        promo_image_remove_confirm: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
+        white_label_logo_label: "Logo brukt i butikk"
+        white_label_logo_remove: "Fjern Bilde"
+        white_label_logo_remove_confirm: "Er du sikker på at du vil fjerne denne logoen?"
       user_guide_link:
         user_guide: Brukermanual
       enterprises_hubs_tabs:
@@ -1875,6 +1933,9 @@ nb:
         stripe_connect_cancelled: "Tilkobling til Stripe har blitt avbrutt"
         stripe_connect_success: "Stripe-konto tilkoblet vellykket"
         stripe_connect_fail: Beklager, forbindelsen til Stripe-kontoen din mislyktes
+        remove_logo_success: "Logo fjernet vellykket"
+        remove_promo_image_success: "Promobilde fjernet vellykket"
+        remove_white_label_logo_success: "Logo fjernet vellykket"
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
     resend_confirmation_emails_feedback:
@@ -2004,7 +2065,6 @@ nb:
       select_a_shipping_method: Velg en leveringsmetode
       select_a_payment_method: Velg en betalingsmetode
       no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
-      voucher_not_found: Ikke funnet
       add_voucher_error: Det oppsto en feil under innlegging av kupongen
   shops:
     hubs:
@@ -3519,10 +3579,6 @@ nb:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo fjernet vellykket"
-            immediate_logo_removal_warning: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
-            removed_promo_image_successfully: "Promobilde fjernet vellykket"
-            immediate_promo_image_removal_warning: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
             immediate_terms_and_conditions_removal_warning: "Vilkår og Betingelser-filen vil bli fjernet umiddelbart etter at du har bekreftet."
             removed_terms_and_conditions_successfully: "Vilkår og Betingleser-filen ble fjernet"
     insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
@@ -3839,10 +3895,6 @@ nb:
     rma_credit: "RMA-kreditt"
     refund: "Refusjon"
     server_error: "Serverfeil"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Henting på gården"
-      delivery: "Signert, forseglet, levert"
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
     updating: "Oppdaterer"
@@ -4761,6 +4813,8 @@ nb:
     pagination:
       next: Neste
       previous: Tidligere
+    tag_list_input:
+      default_placeholder: Legg til en merkelapp
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

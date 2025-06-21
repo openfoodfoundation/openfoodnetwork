@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 # Devise calls OmniauthCallbacksController for OpenID Connect callbacks.
-RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request do
+RSpec.describe '/user/spree_user/auth/openid_connect/callback' do
   include AuthenticationHelper
 
   let(:user) { create(:user) }
@@ -33,7 +33,7 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
       account = OidcAccount.last
       expect(account.provider).to eq "openid_connect"
       expect(account.uid).to eq "ofn@example.com"
-      expect(response.status).to eq(302)
+      expect(response).to have_http_status(:found)
     end
 
     context 'when OIDC account already linked with a different user' do
@@ -45,7 +45,7 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
       it 'fails with error message' do
         expect { request! }.not_to change { OidcAccount.count }
 
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
         expect(flash[:error]).to match "ofn@example.com is already associated with another account"
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
     it 'fails with bad auth data' do
       expect { request! }.not_to change { OidcAccount.count }
 
-      expect(response.status).to eq(302)
+      expect(response).to have_http_status(:found)
       expect(flash[:error]).to match "Could not sign in"
     end
   end

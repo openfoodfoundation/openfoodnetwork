@@ -432,6 +432,7 @@ it_CH:
         inherits_properties: "Eredita proprietà?"
         import_date: "Data di importazione"
         actions: Azioni
+        tags: Etichette
       columns_selector:
         unit: Unità
         price: Prezzo
@@ -671,6 +672,8 @@ it_CH:
           label: Produttori
         categories:
           label: categorie
+        tags:
+          label: Etichette
         search: Cerca
       sort:
         pagination:
@@ -682,6 +685,7 @@ it_CH:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria di imposta"
         producer_field_name: "Produttore"
+        add_a_tag: Aggiungi un'etichetta
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -740,7 +744,6 @@ it_CH:
         no_name: Nessun nome
         blank_enterprise: alcuni prodotti non hanno un'azienda definita
         reset_absent?: Elimina i prodotti assenti
-        reset_absent_tip: Imposta la scorta a zero per tutti i prodotti esistenti non presenti in questo file
         overwrite_all: Sovrascrivi tutto
         overwrite_empty: Sovrascrivi se vuoto
         default_stock: Imposta il livello di scorta
@@ -917,12 +920,6 @@ it_CH:
         images:
           legend: "Immagini"
           logo: Logo
-          promo_image_placeholder: 'Questa immagine sarà visibile in "Chi Siamo"'
-          promo_image_note1: 'Per favore nota:'
-          promo_image_note2: Ogni immagine caricata sarà ritagliata a 1200 x 260
-          promo_image_note3: L'immagine promo sarà visualizzata in cima alla pagina del profilo azienda e nei pop-up.
-          remove_logo: "Rimuovi immagine"
-          remove_promo_image: "Rimuovi immagine"
         inventory_settings:
           legend: "Impostazioni Inventario"
           text1: Puoi optare per la gestione dei livelli di scorta e dei prezzi attraverso il tuo
@@ -1299,6 +1296,17 @@ it_CH:
       resume:
         could_not_resume_the_order: Non è possibile riprendere la gentile richiesta
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Rimuovi immagine"
+        logo_remove_confirm: "Il logo verrà rimosso immediatamente dopo la conferma."
+        promo_image_note1: 'Per favore nota:'
+        promo_image_note2: Ogni immagine caricata sarà ritagliata a 1200 x 260
+        promo_image_note3: L'immagine promo sarà visualizzata in cima alla pagina del profilo azienda e nei pop-up.
+        promo_image_placeholder: 'Questa immagine sarà visibile in "Chi Siamo"'
+        promo_image_remove: "Rimuovi immagine"
+        promo_image_remove_confirm: "L'immagine promozionale verrà rimossa immediatamente dopo la conferma da parte tua.."
+        white_label_logo_remove: "Rimuovi immagine"
       user_guide_link:
         user_guide: Guida per gli utenti
       enterprises_hubs_tabs:
@@ -1513,6 +1521,9 @@ it_CH:
         stripe_connect_cancelled: "La connessione con Stripe è stata cancellata"
         stripe_connect_success: "Account Stripe connesso con successo"
         stripe_connect_fail: Spiacente, la connessione del tuo account Stripe non è riuscita
+        remove_logo_success: "Logo rimosso con successo"
+        remove_promo_image_success: "Immagine promozionale rimossa con successo"
+        remove_white_label_logo_success: "Logo rimosso con successo"
       stripe_connect_settings:
         resource: 'Configurazione Stripe Connect '
   api:
@@ -1619,7 +1630,6 @@ it_CH:
       invalid_email: "Per favore inserisci un indirizzo email valido"
       select_a_shipping_method: Seleziona un metodo di consegna
       select_a_payment_method: Seleziona un metodo di pagamento
-      voucher_not_found: Non trovato
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -3073,10 +3083,6 @@ it_CH:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo rimosso con successo"
-            immediate_logo_removal_warning: "Il logo verrà rimosso immediatamente dopo la conferma."
-            removed_promo_image_successfully: "Immagine promozionale rimossa con successo"
-            immediate_promo_image_removal_warning: "L'immagine promozionale verrà rimossa immediatamente dopo la conferma da parte tua.."
             immediate_terms_and_conditions_removal_warning: "I Termini e Condizioni verranno rimossi non appena darai la tua conferma."
             removed_terms_and_conditions_successfully: "File di Termini e Condizioni rimosso con successo"
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
@@ -3396,8 +3402,6 @@ it_CH:
     rma_credit: "Credito RMA"
     refund: "Rimborsa"
     server_error: "Errore Server"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     updating: "In aggiornamento"
@@ -4243,3 +4247,5 @@ it_CH:
     pagination:
       next: Prossimo
       previous: Precedente
+    tag_list_input:
+      default_placeholder: Aggiungi un'etichetta

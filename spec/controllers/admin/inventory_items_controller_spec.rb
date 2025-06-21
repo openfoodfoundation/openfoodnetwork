@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::InventoryItemsController, type: :controller do
+RSpec.describe Admin::InventoryItemsController do
   describe "create" do
     context "json" do
       let(:format) { :json }
@@ -68,7 +68,7 @@ RSpec.describe Admin::InventoryItemsController, type: :controller do
 
             it "returns an error message" do
               expect{ spree_post :create, bad_params }.to change{ InventoryItem.count }.by(0)
-              expect(response.body).to eq Hash[:errors, ["Visible must be true or false"]].to_json
+              expect(response.body).to eq({ errors: ["Visible must be true or false"] }.to_json)
             end
           end
         end
@@ -134,7 +134,7 @@ RSpec.describe Admin::InventoryItemsController, type: :controller do
 
             it "returns an error message" do
               expect{ spree_put :update, bad_params }.to change{ InventoryItem.count }.by(0)
-              expect(response.body).to eq Hash[:errors, ["Visible must be true or false"]].to_json
+              expect(response.body).to eq({ errors: ["Visible must be true or false"] }.to_json)
             end
           end
         end

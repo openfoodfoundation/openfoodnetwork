@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe CheckoutController, type: :controller do
+RSpec.describe CheckoutController do
   let(:user) { order.user }
   let(:address) { create(:address) }
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
@@ -21,7 +21,7 @@ RSpec.describe CheckoutController, type: :controller do
   describe "#edit" do
     it "renders the checkout" do
       get :edit, params: { step: "details" }
-      expect(response.status).to eq 200
+      expect(response).to have_http_status :ok
     end
 
     it "redirects to current step if no step is given" do
@@ -74,7 +74,7 @@ RSpec.describe CheckoutController, type: :controller do
           it "updates the order state to payment" do
             get :edit, params: { step: "payment" }
 
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("payment")
           end
         end
@@ -83,7 +83,7 @@ RSpec.describe CheckoutController, type: :controller do
           it "updates the order state to address" do
             get :edit, params: { step: "details" }
 
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
         end
@@ -98,7 +98,7 @@ RSpec.describe CheckoutController, type: :controller do
           it "updates the order state to address" do
             get :edit, params: { step: "details" }
 
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
         end
@@ -119,7 +119,7 @@ RSpec.describe CheckoutController, type: :controller do
         it "returns 422 and some feedback" do
           put(:update, params:)
 
-          expect(response.status).to eq 422
+          expect(response).to have_http_status :unprocessable_entity
           expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
           expect(order.reload.state).to eq "cart"
         end
@@ -276,7 +276,7 @@ RSpec.describe CheckoutController, type: :controller do
         it "returns 422 and some feedback" do
           put(:update, params:)
 
-          expect(response.status).to eq 422
+          expect(response).to have_http_status :unprocessable_entity
           expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
           expect(order.reload.state).to eq "payment"
         end
@@ -405,7 +405,7 @@ RSpec.describe CheckoutController, type: :controller do
           it "updates and redirects to summary step" do
             put(:update, params:)
 
-            expect(response.status).to be 302
+            expect(response).to have_http_status :found
             expect(response).to redirect_to checkout_step_path(:summary)
             expect(order.reload.state).to eq "confirmation"
           end
@@ -420,7 +420,7 @@ RSpec.describe CheckoutController, type: :controller do
 
           it "updates and redirects to summary step" do
             put(:update, params:)
-            expect(response.status).to eq 422
+            expect(response).to have_http_status :unprocessable_entity
             expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
             expect(order.reload.state).to eq "payment"
           end
@@ -557,7 +557,7 @@ RSpec.describe CheckoutController, type: :controller do
           it "returns 422 and some feedback" do
             put(:update, params:)
 
-            expect(response.status).to eq 422
+            expect(response).to have_http_status :unprocessable_entity
             expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
             expect(order.reload.state).to eq "confirmation"
           end
@@ -607,7 +607,7 @@ RSpec.describe CheckoutController, type: :controller do
 
             put(:update, params:)
 
-            expect(response.status).to eq 422
+            expect(response).to have_http_status :unprocessable_entity
             expect(flash[:error]).to match "Redeeming the voucher failed"
           end
         end
@@ -621,7 +621,7 @@ RSpec.describe CheckoutController, type: :controller do
 
             put(:update, params:)
 
-            expect(response.status).to eq 422
+            expect(response).to have_http_status :unprocessable_entity
             expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
         end

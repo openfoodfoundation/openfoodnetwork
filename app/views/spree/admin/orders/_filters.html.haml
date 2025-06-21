@@ -38,7 +38,7 @@
       .field
         = label_tag nil, t(:shipping_method)
         = select_tag(:shipping_method_id,
-          options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
+          options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).map {|s| [s.name, s.id]}),
           { include_blank: true, class: "primary", "data-controller": "tom-select" })
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)

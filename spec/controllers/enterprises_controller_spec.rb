@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe EnterprisesController, type: :controller do
+RSpec.describe EnterprisesController do
   describe "shopping for a distributor" do
     let(:user) { create(:user) }
     let(:order) { controller.current_order(true) }
@@ -162,16 +162,16 @@ RSpec.describe EnterprisesController, type: :controller do
 
     it "responds with status of 200 when the route does not exist" do
       get :check_permalink, xhr: true, params: { permalink: 'some_nonexistent_route' }, as: :js
-      expect(response.status).to be 200
+      expect(response).to have_http_status :ok
     end
 
     it "responds with status of 409 when the permalink matches an existing route" do
       # get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
       # expect(response.status).to be 409
       get :check_permalink, xhr: true, params: { permalink: 'map' }, as: :js
-      expect(response.status).to be 409
+      expect(response).to have_http_status :conflict
       get :check_permalink, xhr: true, params: { permalink: '' }, as: :js
-      expect(response.status).to be 409
+      expect(response).to have_http_status :conflict
     end
   end
 

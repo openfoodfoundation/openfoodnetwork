@@ -19,24 +19,24 @@
         .alpha.six.columns
           %fieldset.legal.no-border-bottom
             %legend{:align => "center"}= t('.legal_settings')
-            .field
+            .field.label-inline
               = preference_field_tag(:enterprises_require_tos, Spree::Config[:enterprises_require_tos], :type => Spree::Config.preference_type(:enterprises_require_tos))
               = label_tag(:enterprises_require_tos, t('.enterprises_require_tos')) + tag(:br)
-            .field
+            .field.label-inline
               = preference_field_tag(:shoppers_require_tos, Spree::Config[:shoppers_require_tos], :type => Spree::Config.preference_type(:shoppers_require_tos))
               = label_tag(:shoppers_require_tos, t('.shoppers_require_tos')) + tag(:br)
-            .field
+            .field.label-inline
               = preference_field_tag(:cookies_consent_banner_toggle, Spree::Config[:cookies_consent_banner_toggle], :type => Spree::Config.preference_type(:cookies_consent_banner_toggle))
               = label_tag(:cookies_consent_banner_toggle, t('.cookies_consent_banner_toggle')) + tag(:br)
-            .field
+            .field.label-inline
               = preference_field_tag(:cookies_policy_matomo_section, Spree::Config[:cookies_policy_matomo_section], :type => Spree::Config.preference_type(:cookies_policy_matomo_section))
               = label_tag(:cookies_policy_matomo_section, t('.cookies_policy_matomo_section')) + tag(:br)
-            .field
+            .field.label-inline
               = label_tag(:privacy_policy_url, t('.privacy_policy_url')) + tag(:br)
               = preference_field_tag(:privacy_policy_url, Spree::Config[:privacy_policy_url], type: Spree::Config.preference_type(:privacy_policy_url))
           %fieldset.embedded_shopfronts.no-border-bottom
             %legend{:align => "center"}= t('admin.shopfront_settings.embedded_shopfront_settings')
-            .field
+            .field.label-inline
               = preference_field_tag(:enable_embedded_shopfronts, Spree::Config[:enable_embedded_shopfronts], type: Spree::Config.preference_type(:enable_embedded_shopfronts))
               = label_tag(:enable_embedded_shopfronts, t('admin.shopfront_settings.enable_embedded_shopfronts')) + tag(:br)
             .field
@@ -73,7 +73,7 @@
               = text_field_tag :currency_thousands_separator, Spree::Config[:currency_thousands_separator], :size => 3
           %fieldset.number_localization.no-border-bottom
             %legend{:align => "center"}= t('admin.number_localization.number_localization_settings')
-            .field
+            .field.label-inline
               = preference_field_tag(:enable_localized_number?, Spree::Config[:enable_localized_number?], type: Spree::Config.preference_type(:enable_localized_number?))
               = label_tag(:enable_localized_number?, t('admin.number_localization.enable_localized_number')) + tag(:br)
           %fieldset.available_units.no-border-bottom

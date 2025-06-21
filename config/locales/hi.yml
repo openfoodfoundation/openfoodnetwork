@@ -524,6 +524,7 @@ hi:
         inherits_properties: "प्रॉपर्टीज़ है?"
         import_date: "इम्पोर्ट की तिथि"
         actions: एक्शन्स
+        tags: टैग्स
       columns_selector:
         unit: यूनिट
         price: कीमत
@@ -775,6 +776,8 @@ hi:
           label: उत्पादक
         categories:
           label: श्रेणियां
+        tags:
+          label: टैग्स
         search: सर्च
       sort:
         pagination:
@@ -806,6 +809,7 @@ hi:
         category_field_name: "श्रेणी"
         tax_category_field_name: "टैक्स श्रेणी"
         producer_field_name: "उत्पादक"
+        add_a_tag: एक टैग जोड़ें
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी
@@ -866,7 +870,6 @@ hi:
         no_name: कोई नाम नहीं
         blank_enterprise: कुछ उत्पादों में कोई एक एंटरप्राइज़ परिभाषित नहीं किया गया है
         reset_absent?: अनुपस्थित उत्पादों को रिसेट करें
-        reset_absent_tip: फ़ाइल में मौजूद नहीं होने वाले सभी बाहर निकलने वाले उत्पादों के लिए स्टॉक को शून्य पर सेट करें
         overwrite_all: सभी को मिटाकर लिखें
         overwrite_empty: खाली होने पर इसे मिटाकर लिखें
         default_stock: स्टॉक स्तर सेट करें
@@ -1051,12 +1054,6 @@ hi:
         images:
           legend: "छवियाँ"
           logo: लोगो
-          promo_image_placeholder: 'यह छवि “हमारे बारे में” में प्रदर्शित होती है'
-          promo_image_note1: 'कृपया ध्यान दें:'
-          promo_image_note2: यहां अपलोड की गई किसी भी प्रोमो छवि को 1200 x 260 पर क्रॉप किया जाएगा।
-          promo_image_note3: प्रोमो छवि किसी एंटरप्राइज़ के प्रोफ़ाइल पेज और पॉप-अप के शीर्ष पर प्रदर्शित होती है।
-          remove_logo: "छवि हटाएँ"
-          remove_promo_image: "छवि हटाएँ"
         inventory_settings:
           legend: "इन्वेंट्री सेटिंग्स"
           text1: आप अपने माध्यम से स्टॉक स्तर और कीमतों का प्रबंधन करने का विकल्प चुन सकते हैं
@@ -1229,10 +1226,6 @@ hi:
         white_label:
           legend: "व्हाइट लेबल"
           hide_ofn_navigation: "OFN नेविगेशन छुपाएं"
-          upload_logo: "शॉपफ्रन्ट में उपयोग किया गया लोगो"
-          remove_logo: "लोगो हटाएँ"
-          remove_logo_confirm: "क्या आप वाकई इस लोगो को हटाना चाहते हैं?"
-          remove_logo_success: "लोगो हटा दिया गया"
           white_label_logo_link_label: "शॉपफ्रन्ट में इस्तेमाल किए गए लोगो के लिए लिंक"
           hide_groups_tab: "शॉपफ्रन्ट में ग्रुप टैब छुपाएं"
           create_custom_tab: "शॉपफ्रन्ट में कस्टम टैब बनाएं"
@@ -1468,6 +1461,19 @@ hi:
       searching: सर्च हो रहा हैं...
       no_matches: कोई मैच नहीं मिला
     shared:
+      attachment_field:
+        logo_label: "लोगो"
+        logo_remove: "छवि हटाएँ"
+        logo_remove_confirm: "आपके द्वारा पुष्टि करने के तुरंत बाद लोगो हटा दिया जाएगा।"
+        promo_image_note1: 'कृपया ध्यान दें:'
+        promo_image_note2: यहां अपलोड की गई किसी भी प्रोमो छवि को 1200 x 260 पर क्रॉप किया जाएगा।
+        promo_image_note3: प्रोमो छवि किसी एंटरप्राइज़ के प्रोफ़ाइल पेज और पॉप-अप के शीर्ष पर प्रदर्शित होती है।
+        promo_image_placeholder: 'यह छवि “हमारे बारे में” में प्रदर्शित होती है'
+        promo_image_remove: "छवि हटाएँ"
+        promo_image_remove_confirm: "आपके द्वारा पुष्टि करने के तुरंत बाद प्रोमो छवि हटा दी जाएगी।"
+        white_label_logo_label: "शॉपफ्रन्ट में उपयोग किया गया लोगो"
+        white_label_logo_remove: "छवि हटाएँ"
+        white_label_logo_remove_confirm: "क्या आप वाकई इस लोगो को हटाना चाहते हैं?"
       user_guide_link:
         user_guide: यूज़र गाइड
       enterprises_hubs_tabs:
@@ -1727,6 +1733,9 @@ hi:
         stripe_connect_cancelled: "Stripe से कनेक्शन रद्द कर दिया गया है"
         stripe_connect_success: "Stripe अकाउंट सफलतापूर्वक कनेक्ट हो गया"
         stripe_connect_fail: माफ करें, आपके Stripe अकाउंट का कनेक्शन विफल हुआ
+        remove_logo_success: "लोगो सफलतापूर्वक हटा दिया गया"
+        remove_promo_image_success: "प्रोमो छवि सफलतापूर्वक हटा दी गई"
+        remove_white_label_logo_success: "लोगो सफलतापूर्वक हटा दिया गया"
       stripe_connect_settings:
         resource: Stripe कनेक्ट कॉन्फ़िगरेशन
     resend_confirmation_emails_feedback:
@@ -1856,7 +1865,6 @@ hi:
       select_a_shipping_method: शिपिंग विधि चुनें
       select_a_payment_method: भुगतान विधि चुनें
       no_shipping_methods_available: शिपिंग विकल्पों की अनुपस्थिति के कारण चेकआउट संभव नहीं है। कृपया शॉप के मालिक से संपर्क करें।
-      voucher_not_found: नहीं मिला
       add_voucher_error: वाउचर जोड़ते समय एक त्रुटि हुई
   shops:
     hubs:
@@ -3365,10 +3373,6 @@ hi:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "लोगो सफलतापूर्वक हटा दिया गया"
-            immediate_logo_removal_warning: "आपके द्वारा पुष्टि करने के तुरंत बाद लोगो हटा दिया जाएगा।"
-            removed_promo_image_successfully: "प्रोमो छवि सफलतापूर्वक हटा दी गई"
-            immediate_promo_image_removal_warning: "आपके द्वारा पुष्टि करने के तुरंत बाद प्रोमो छवि हटा दी जाएगी।"
             immediate_terms_and_conditions_removal_warning: "आपके द्वारा पुष्टि करने के तुरंत बाद नियम और शर्तें फ़ाइल हटा दी जाएगी।"
             removed_terms_and_conditions_successfully: "नियम और शर्तें की फ़ाइल सफलतापूर्वक हटा दी गई"
     insufficient_stock: "अपर्याप्त स्टॉक उपलब्ध, केवल %{on_hand} बाकी"
@@ -3672,10 +3676,6 @@ hi:
     rma_credit: "RMA क्रेडिट"
     refund: "रिफंड"
     server_error: "सर्वर त्रुटि"
-    shipping_method_names:
-      UPS Ground: "UPS ग्राउंड"
-      pick_up: "फार्म/खेत में पिक-अप करें"
-      delivery: "हस्ताक्षरित, सीलबंद, डिलीवर किया गया"
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
     updating: "अपडेट किया जा रहा है"
@@ -4561,3 +4561,5 @@ hi:
     pagination:
       next: अगला
       previous: पिछला
+    tag_list_input:
+      default_placeholder: एक टैग जोड़ें

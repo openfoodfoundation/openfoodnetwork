@@ -9,6 +9,7 @@ module Spree
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :refuse_changing_shipped_orders, only: [:update]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
       before_action :restore_saved_query!, only: :index
@@ -159,6 +160,13 @@ module Spree
 
         @order.create_tax_charge!
         @order.update_order!
+      end
+
+      def refuse_changing_shipped_orders
+        return unless @order.shipped?
+
+        flash[:error] = I18n.t("spree.admin.orders.add_product.cannot_add_item_to_shipped_order")
+        redirect_to spree.edit_admin_order_path(@order)
       end
 
       def order_params

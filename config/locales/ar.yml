@@ -466,6 +466,7 @@ ar:
         inherits_properties: "الخصائص الموروثة؟"
         import_date: "تاريخ الاستيراد"
         actions: أجراءات
+        tags: الاوسمة
       columns_selector:
         unit: وحدة
         price: السعر
@@ -712,6 +713,8 @@ ar:
           label: المنتجين
         categories:
           label: التصنيفات
+        tags:
+          label: الاوسمة
         search: بحث
       sort:
         pagination:
@@ -723,6 +726,7 @@ ar:
         category_field_name: "الفئة"
         tax_category_field_name: "الفئة الضريبية"
         producer_field_name: "المنتج"
+        add_a_tag: أضف وسم
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -783,7 +787,6 @@ ar:
         no_name: لا يوجد اسم
         blank_enterprise: بعض المنتجات لا تملك شركة محددة
         reset_absent?: إعادة تعيين المنتجات الغائبة
-        reset_absent_tip: قم بتعيين المخزون على صفر لجميع المنتجات الموجودة و الغير موجودة في الملف
         overwrite_all: الكتابة فوق الجميع
         overwrite_empty: الكتابةمن جديد إذا فارغة
         default_stock: 'ضبط مستوى المخزون '
@@ -967,12 +970,6 @@ ar:
         images:
           legend: "صور"
           logo: شعار
-          promo_image_placeholder: 'يتم عرض هذه الصورة في &quot;من نحن&quot;'
-          promo_image_note1: 'يرجى الملاحظة:'
-          promo_image_note2: سيتم اقتصاص أي صورة ترويجية تم تحميلها هنا إلى 1200 × 260.
-          promo_image_note3: يتم عرض صورة الترويجي في الجزء العلوي من صفحة الملف الشخصي للشركات والنوافذ المنبثقة.
-          remove_logo: "إزالة الصورة"
-          remove_promo_image: "إزالة الصورة"
         inventory_settings:
           legend: "إعدادات المخزون"
           text1: يمكنك اختيار إدارة مستويات المخزون والأسعار عبر
@@ -1367,6 +1364,17 @@ ar:
       resume:
         could_not_resume_the_order: لا يمكن استئناف الطلب
     shared:
+      attachment_field:
+        logo_label: "شعار"
+        logo_remove: "إزالة الصورة"
+        logo_remove_confirm: "سيتم إزالة الشعار مباشرة بعد التأكيد."
+        promo_image_note1: 'يرجى الملاحظة:'
+        promo_image_note2: سيتم اقتصاص أي صورة ترويجية تم تحميلها هنا إلى 1200 × 260.
+        promo_image_note3: يتم عرض صورة الترويجي في الجزء العلوي من صفحة الملف الشخصي للشركات والنوافذ المنبثقة.
+        promo_image_placeholder: 'يتم عرض هذه الصورة في &quot;من نحن&quot;'
+        promo_image_remove: "إزالة الصورة"
+        promo_image_remove_confirm: "ستتم إزالة صورة الترويجي فور التأكيد."
+        white_label_logo_remove: "إزالة الصورة"
       user_guide_link:
         user_guide: دليل المستخدم
       enterprises_hubs_tabs:
@@ -1607,6 +1615,9 @@ ar:
         stripe_connect_cancelled: "تم إلغاء الاتصال بـ Stripe"
         stripe_connect_success: "حساب الالكتروني متصل بنجاح"
         stripe_connect_fail: عذرًا ، فشل اتصال حساب Stripe الخاص بك
+        remove_logo_success: "تمت إزالة الشعار بنجاح"
+        remove_promo_image_success: "تمت إزالة الصورة الترويجية بنجاح"
+        remove_white_label_logo_success: "تمت إزالة الشعار بنجاح"
       stripe_connect_settings:
         resource: تهيئة ربط Strip
     resend_confirmation_emails_feedback:
@@ -1736,7 +1747,6 @@ ar:
       select_a_shipping_method: حدد طريقة الشحن
       select_a_payment_method: اختر طريقة الدفع
       no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
-      voucher_not_found: غير موجود
   shops:
     hubs:
       show_closed_shops: "عرض المتاجر المغلقة"
@@ -3224,10 +3234,6 @@ ar:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "تمت إزالة الشعار بنجاح"
-            immediate_logo_removal_warning: "سيتم إزالة الشعار مباشرة بعد التأكيد."
-            removed_promo_image_successfully: "تمت إزالة الصورة الترويجية بنجاح"
-            immediate_promo_image_removal_warning: "ستتم إزالة صورة الترويجي فور التأكيد."
             immediate_terms_and_conditions_removal_warning: "ستتم إزالة ملف الشروط والأحكام فورًا بعد التأكيد."
             removed_terms_and_conditions_successfully: "تمت إزالة ملف الشروط والأحكام بنجاح"
     insufficient_stock: "مخزون غير متوفر ، تبقى %{on_hand}"
@@ -3626,10 +3632,6 @@ ar:
     rma_credit: "رصيد RMA"
     refund: "إعادة المال"
     server_error: "خطأ في الخادم"
-    shipping_method_names:
-      UPS Ground: "UPS الأرضي"
-      pick_up: "التسليم من المزرعة مباشرة"
-      delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     updating: "تحديث"
@@ -4558,3 +4560,5 @@ ar:
     pagination:
       next: التالى
       previous: السابق
+    tag_list_input:
+      default_placeholder: أضف وسم

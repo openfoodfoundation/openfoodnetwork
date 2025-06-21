@@ -373,6 +373,7 @@ tr:
         inherits_properties: "Özellikler devralınsın mı?"
         import_date: "İçe Aktarım Tarihi"
         actions: İşlemler
+        tags: ETİKETLER
       columns_selector:
         unit: Birim
         price: Fiyat
@@ -612,6 +613,8 @@ tr:
           label: ÜRETİCİLER
         categories:
           label: Kategoriler
+        tags:
+          label: ETİKETLER
         search: Ara
       sort:
         pagination:
@@ -623,6 +626,7 @@ tr:
         category_field_name: "Kategori"
         tax_category_field_name: "Vergi Kategorisi"
         producer_field_name: "ÜRETİCİ"
+        add_a_tag: Etiket ekle
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -681,7 +685,6 @@ tr:
         no_name: İSİMSİZ
         blank_enterprise: bazı ürünler için tanımlanmış bir işletme yok
         reset_absent?: Mevcut olmayan ürünleri sıfırla
-        reset_absent_tip: Dosyada bulunmayan tüm mevcut ürünler için stoğu sıfıra ayarlayın
         overwrite_all: Hepsinin üzerine yaz
         overwrite_empty: Boşsa üzerine yaz
         default_stock: Stok seviyesini ayarla
@@ -842,12 +845,6 @@ tr:
         images:
           legend: "Görseller"
           logo: Logo
-          promo_image_placeholder: 'Bu görsel ''Hakkımızda'' kısmında görüntülenir'
-          promo_image_note1: 'DİKKAT:'
-          promo_image_note2: Kapak resmi 1200 x 260 formatına göre kırpılacaktır.
-          promo_image_note3: Kapak resmi, işletmenin profil sayfasının üstünde görüntülenir.
-          remove_logo: "Resmi Kaldır"
-          remove_promo_image: "Resmi Kaldır"
         inventory_settings:
           legend: "Stok Ayarları"
           text1: 'Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz:'
@@ -1217,6 +1214,17 @@ tr:
       resume:
         could_not_resume_the_order: Sipariş sürdürülemedi
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Resmi Kaldır"
+        logo_remove_confirm: "Onayladıktan hemen sonra logo kaldırılacaktır."
+        promo_image_note1: 'DİKKAT:'
+        promo_image_note2: Kapak resmi 1200 x 260 formatına göre kırpılacaktır.
+        promo_image_note3: Kapak resmi, işletmenin profil sayfasının üstünde görüntülenir.
+        promo_image_placeholder: 'Bu görsel ''Hakkımızda'' kısmında görüntülenir'
+        promo_image_remove: "Resmi Kaldır"
+        promo_image_remove_confirm: "Kapak resmi, onayladıktan hemen sonra kaldırılacaktır."
+        white_label_logo_remove: "Resmi Kaldır"
       user_guide_link:
         user_guide: Kullanıcı Kılavuzu
       enterprises_hubs_tabs:
@@ -1425,6 +1433,9 @@ tr:
         stripe_connect_cancelled: "Iyzico bağlantısı iptal edildi"
         stripe_connect_success: "Iyzico hesabı başarıyla bağlandı"
         stripe_connect_fail: Maalesef, Iyzico hesabınızın bağlantısı başarısız oldu
+        remove_logo_success: "Logo başarıyla kaldırıldı"
+        remove_promo_image_success: "Kapak resmi başarıyla kaldırıldı"
+        remove_white_label_logo_success: "Logo başarıyla kaldırıldı"
       stripe_connect_settings:
         resource: Iyzico yapılandırması
   api:
@@ -1514,7 +1525,6 @@ tr:
       required: Alan boş olamaz
       invalid_number: "Geçerli bir telefon numarası giriniz"
       invalid_email: "Lütfen geçerli bir e-posta adresi girin"
-      voucher_not_found: Bulunamadı
   shops:
     hubs:
       show_closed_shops: "Kapalı dükkanları göster"
@@ -2956,10 +2966,6 @@ tr:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo başarıyla kaldırıldı"
-            immediate_logo_removal_warning: "Onayladıktan hemen sonra logo kaldırılacaktır."
-            removed_promo_image_successfully: "Kapak resmi başarıyla kaldırıldı"
-            immediate_promo_image_removal_warning: "Kapak resmi, onayladıktan hemen sonra kaldırılacaktır."
             immediate_terms_and_conditions_removal_warning: "Şartlar ve Koşullar dosyası, onayladıktan hemen sonra kaldırılacaktır."
             removed_terms_and_conditions_successfully: "Şartlar ve Koşullar dosyası başarıyla kaldırıldı. "
     insufficient_stock: "Yetersiz stok, sadece %{on_hand} kaldı"
@@ -4083,3 +4089,5 @@ tr:
     pagination:
       next: Sonrakİ
       previous: Önceki
+    tag_list_input:
+      default_placeholder: Etiket ekle

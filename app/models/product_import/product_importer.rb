@@ -292,7 +292,7 @@ module ProductImport
 
     def build_entries_from_rows(rows, offset = 0)
       rows.each_with_index.inject([]) do |entries, (row, i)|
-        row_data = Hash[[headers, row].transpose]
+        row_data = [headers, row].transpose.to_h
         entry = SpreadsheetEntry.new(row_data)
         entry.line_number = offset + i + 2
         entries.push entry

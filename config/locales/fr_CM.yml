@@ -391,6 +391,7 @@ fr_CM:
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unité
         price: Prix
@@ -630,6 +631,8 @@ fr_CM:
           label: Producteurs
         categories:
           label: Conditions de transport
+        tags:
+          label: Tags
         search: Rechercher
       sort:
         pagination:
@@ -641,6 +644,7 @@ fr_CM:
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
         producer_field_name: "Producteur"
+        add_a_tag: Ajouter un tag
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -699,7 +703,6 @@ fr_CM:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le stock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -868,12 +871,6 @@ fr_CM:
         images:
           legend: "Images"
           logo: Logo
-          promo_image_placeholder: 'Cette image est affichée dans "A propos"'
-          promo_image_note1: 'ATTENTION:'
-          promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
-          promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
-          remove_logo: "Supprimer l'image"
-          remove_promo_image: "Supprimer l'image"
         inventory_settings:
           legend: "Catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
@@ -1249,6 +1246,17 @@ fr_CM:
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Supprimer l'image"
+        logo_remove_confirm: "Le logo sera supprimé juste après votre confirmation."
+        promo_image_note1: 'ATTENTION:'
+        promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
+        promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
+        promo_image_placeholder: 'Cette image est affichée dans "A propos"'
+        promo_image_remove: "Supprimer l'image"
+        promo_image_remove_confirm: "La bannière sera supprimée juste après votre confirmation."
+        white_label_logo_remove: "Supprimer l'image"
       user_guide_link:
         user_guide: Guide utilisateur
       enterprises_hubs_tabs:
@@ -1463,6 +1471,9 @@ fr_CM:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
         stripe_connect_success: "Compte Stripe connecté avec succès"
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
+        remove_logo_success: "Logo supprimé avec succès"
+        remove_promo_image_success: "Bannière supprimée avec succès"
+        remove_white_label_logo_success: "Logo supprimé avec succès"
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
   api:
@@ -1565,7 +1576,6 @@ fr_CM:
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
-      voucher_not_found: Non trouvé
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -3038,10 +3048,6 @@ fr_CM:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo supprimé avec succès"
-            immediate_logo_removal_warning: "Le logo sera supprimé juste après votre confirmation."
-            removed_promo_image_successfully: "Bannière supprimée avec succès"
-            immediate_promo_image_removal_warning: "La bannière sera supprimée juste après votre confirmation."
             immediate_terms_and_conditions_removal_warning: "Le fichier sera supprimé après confirmation."
             removed_terms_and_conditions_successfully: "Le fichier a été supprimé avec succès"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
@@ -3361,8 +3367,6 @@ fr_CM:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"
@@ -4208,3 +4212,5 @@ fr_CM:
     pagination:
       next: Suivant
       previous: Précédent
+    tag_list_input:
+      default_placeholder: Ajouter un tag

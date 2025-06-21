@@ -327,6 +327,7 @@ nl_BE:
         inherits_properties: "Erft Eigenschappen?"
         import_date: "Importdatum"
         actions: Acties
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Prijs
@@ -550,6 +551,8 @@ nl_BE:
           label: Producenten
         categories:
           label: Categorieën
+        tags:
+          label: Tags
         search: Zoeken
       sort:
         pagination:
@@ -561,6 +564,7 @@ nl_BE:
         category_field_name: "Categorie"
         tax_category_field_name: "Belastingcategorie"
         producer_field_name: "Producent"
+        add_a_tag: Voeg een tag toe
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -619,7 +623,6 @@ nl_BE:
         no_name: Geen naam
         blank_enterprise: sommige producten hebben geen onderneming gedefinieerd
         reset_absent?: Reset afwezige producten
-        reset_absent_tip: Zet de voorraad op nul voor alle producten die niet in het bestand aanwezig zijn
         overwrite_all: Alles overschrijven
         overwrite_empty: Overschrijven indien leeg
         default_stock: Voorraadniveau instellen
@@ -774,12 +777,6 @@ nl_BE:
         images:
           legend: "Afbeeldingen"
           logo: Logo
-          promo_image_placeholder: 'Deze afbeelding wordt afgebeeld in "Over Ons"'
-          promo_image_note1: 'Hou er rekening mee dat:'
-          promo_image_note2: 'Elke promotie-afbeelding die hier wordt geüpload zal herschaald worden tot 1200 x 260. '
-          promo_image_note3: De promotie-afbeelding wordt afgebeeld bovenaan de ondernemingsprofielpagina en op pop-ups.
-          remove_logo: "Afbeelding Verwijderen"
-          remove_promo_image: "Afbeelding Verwijderen"
         inventory_settings:
           legend: "Catalogus winkel"
           text1: U kunt ervoor kiezen om de voorraadniveaus en prijzen te beheren via uw
@@ -1147,6 +1144,17 @@ nl_BE:
       resume:
         could_not_resume_the_order: Kon de bestelling niet hervatten
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Afbeelding Verwijderen"
+        logo_remove_confirm: "Het logo wordt onmiddellijk na uw bevestiging verwijderd."
+        promo_image_note1: 'Hou er rekening mee dat:'
+        promo_image_note2: 'Elke promotie-afbeelding die hier wordt geüpload zal herschaald worden tot 1200 x 260. '
+        promo_image_note3: De promotie-afbeelding wordt afgebeeld bovenaan de ondernemingsprofielpagina en op pop-ups.
+        promo_image_placeholder: 'Deze afbeelding wordt afgebeeld in "Over Ons"'
+        promo_image_remove: "Afbeelding Verwijderen"
+        promo_image_remove_confirm: "De promo afbeelding wordt onmiddellijk na bevestiging verwijderd."
+        white_label_logo_remove: "Afbeelding Verwijderen"
       user_guide_link:
         user_guide: Gebruikershandleiding
       enterprises_hubs_tabs:
@@ -1354,6 +1362,9 @@ nl_BE:
         stripe_connect_cancelled: "Koppelen met Stripe werd geannuleerd."
         stripe_connect_success: "Je stripe-account werd succesvol gekoppeld"
         stripe_connect_fail: Sorry, het koppelen met je Stripe-account mislukte
+        remove_logo_success: "Logo succesvol verwijderd"
+        remove_promo_image_success: "Promo afbeelding succesvol verwijderd"
+        remove_white_label_logo_success: "Logo succesvol verwijderd"
       stripe_connect_settings:
         resource: Stripe Koppelingsconfiguratie
   api:
@@ -2819,13 +2830,6 @@ nl_BE:
         error_saving: "Fout bij het opslaan van uw abonnement."
         new:
           please_select_a_shop: "Selecteer een winkel"
-      enterprises:
-        form:
-          images:
-            removed_logo_successfully: "Logo succesvol verwijderd"
-            immediate_logo_removal_warning: "Het logo wordt onmiddellijk na uw bevestiging verwijderd."
-            removed_promo_image_successfully: "Promo afbeelding succesvol verwijderd"
-            immediate_promo_image_removal_warning: "De promo afbeelding wordt onmiddellijk na bevestiging verwijderd."
     insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
     out_of_stock:
       reduced_stock_available: Stock beschikbaar
@@ -3703,3 +3707,5 @@ nl_BE:
     pagination:
       next: Volgende
       previous: Voorgaande
+    tag_list_input:
+      default_placeholder: Voeg een tag toe

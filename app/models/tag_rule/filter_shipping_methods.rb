@@ -11,6 +11,6 @@ class TagRule::FilterShippingMethods < TagRule
   def tags_match?(shipping_method)
     shipping_method_tags = shipping_method&.tag_list || []
     preferred_tags = preferred_shipping_method_tags.split(",")
-    ( shipping_method_tags & preferred_tags ).any?
+    shipping_method_tags.intersect?(preferred_tags)
   end
 end

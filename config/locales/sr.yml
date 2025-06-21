@@ -964,7 +964,6 @@ sr:
         no_name: Без имена
         blank_enterprise: неки производи немају дефинисано предузеће
         reset_absent?: Ресетујте одсутне производе
-        reset_absent_tip: Поставите залихе на нулу за све излазне производе који нису присутни у датотеци
         overwrite_all: Замени све
         overwrite_empty: Замените ако је празно
         default_stock: Подесите ниво залиха
@@ -1151,12 +1150,6 @@ sr:
           legend: "Слике"
           logo: Лого
           logo_size: "300 к 300 пиксела"
-          promo_image_placeholder: 'Ова слика је приказана у &quot;О нама&quot;'
-          promo_image_note1: 'МОЛИМ ОБРАТИТЕ ПАЖЊУ:'
-          promo_image_note2: Свака промотивна слика која се овде отпреми биће исечена на 1200 к 260.
-          promo_image_note3: Промотивна слика се приказује на врху странице профила предузећа и искачућих прозора.
-          remove_logo: "Уклони слику"
-          remove_promo_image: "Уклони слику"
         inventory_settings:
           legend: "Подешавања инвентара"
           text1: Можете се одлучити за управљање нивоима залиха и ценама путем вашег
@@ -1326,10 +1319,6 @@ sr:
         white_label:
           legend: "Бела ознака"
           hide_ofn_navigation: "Сакриј ОФН навигацију"
-          upload_logo: "Лого коришћен у излогу продавнице"
-          remove_logo: "Уклоните лого"
-          remove_logo_confirm: "Да ли сте сигурни да желите да уклоните овај логотип?"
-          remove_logo_success: "Лого уклоњен"
           white_label_logo_link_label: "Линк за лого који се користи у излогу продавнице"
           hide_groups_tab: "Сакриј картицу групе у излогу"
           create_custom_tab: "Направите прилагођену картицу у излогу продавнице"
@@ -1994,7 +1983,6 @@ sr:
       select_a_shipping_method: Изаберите начин испоруке
       select_a_payment_method: Изаберите начин плаћања
       no_shipping_methods_available: Плаћање није могуће због непостојања опција испоруке. Молимо контактирајте власника продавнице.
-      voucher_not_found: Није пронађено
       add_voucher_error: Дошло је до грешке при додавању ваучера
   shops:
     hubs:
@@ -3510,10 +3498,6 @@ sr:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Лого је успешно уклоњен"
-            immediate_logo_removal_warning: "Лого ће бити уклоњен одмах након што потврдите."
-            removed_promo_image_successfully: "Промотивна слика је успешно уклоњена"
-            immediate_promo_image_removal_warning: "Промотивна слика ће бити уклоњена одмах након што потврдите."
             immediate_terms_and_conditions_removal_warning: "Датотека са условима и одредбама биће уклоњена одмах након што потврдите."
             removed_terms_and_conditions_successfully: "Датотека са условима и одредбама је успешно уклоњена"
     insufficient_stock: "Нема довољно доступних залиха, преостаје само %{on_hand}"
@@ -3856,10 +3840,6 @@ sr:
     rma_credit: "РМА кредит"
     refund: "Враћање новца"
     server_error: "Грешка на серверу"
-    shipping_method_names:
-      UPS Ground: "УПС Гроунд"
-      pick_up: "Преузимање на фарми"
-      delivery: "Потписано, запечаћено, достављено"
     start_date: "Датум почетка"
     successfully_removed: "Успешно уклоњено"
     updating: "Ажурирање"

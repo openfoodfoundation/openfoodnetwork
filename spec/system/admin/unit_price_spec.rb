@@ -48,7 +48,7 @@ RSpec.describe '
     end
   end
 
-  describe "when admin use es as default language (and comma as decimal separator)", :debug do
+  describe "when admin use es as default language (and comma as decimal separator)" do
     it "creating a new product with a comma separated decimal price" do
       login_as_admin
       visit spree.admin_dashboard_path(locale: 'es')

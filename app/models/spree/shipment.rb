@@ -313,11 +313,11 @@ module Spree
     end
 
     def manifest_unstock(item)
-      item.variant.move(-1 * item.quantity, self)
+      item.variant.move(-1 * item.quantity)
     end
 
     def manifest_restock(item)
-      item.variant.move(item.quantity, self)
+      item.variant.move(item.quantity)
     end
 
     def generate_shipment_number

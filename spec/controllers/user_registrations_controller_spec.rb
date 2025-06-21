@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe UserRegistrationsController, type: :controller do
+RSpec.describe UserRegistrationsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end
@@ -20,7 +20,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
 
     it "returns validation errors" do
       post :create, params: { spree_user: {}, use_route: :spree }, as: :json
-      expect(response.status).to eq(401)
+      expect(response).to have_http_status(:unauthorized)
       json = response.parsed_body
       expect(json).to eq("email" => ["can't be blank"], "password" => ["can't be blank"])
     end
@@ -31,7 +31,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
 
       post :create, params: { spree_user: user_params, use_route: :spree }, as: :json
 
-      expect(response.status).to eq(401)
+      expect(response).to have_http_status(:unauthorized)
       json = response.parsed_body
       expect(json).to eq(
         "message" =>
@@ -41,7 +41,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
 
     it "returns 200 when registration succeeds" do
       post :create, params: { spree_user: user_params, use_route: :spree }, as: :json
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
       json = response.parsed_body
       expect(json).to eq("email" => "test@test.com")
       expect(controller.spree_current_user).to be_nil

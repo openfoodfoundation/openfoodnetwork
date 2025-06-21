@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Spree::Admin::PaymentsController, type: :request do
+RSpec.describe Spree::Admin::PaymentsController do
   let(:user) { order.user }
   let(:order) { create(:completed_order_with_fees) }
 

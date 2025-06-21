@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::CreditCardsController, type: :controller do
+RSpec.describe Spree::CreditCardsController do
   describe "using VCR", :vcr, :stripe_version do
     let(:user) { create(:user) }
 
@@ -172,7 +172,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
           expect(controller).not_to receive(:destroy_at_stripe)
           spree_delete :destroy, params
           expect(flash[:error]).to eq 'Sorry, the card could not be removed'
-          expect(response.status).to eq 200
+          expect(response).to have_http_status :ok
         end
       end
 
@@ -204,7 +204,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
             it "doesn't delete the card" do
               expect{ spree_delete :destroy, params }.not_to change { Spree::CreditCard.count }
               expect(flash[:error]).to eq 'Sorry, the card could not be removed'
-              expect(response.status).to eq 422
+              expect(response).to have_http_status :unprocessable_entity
             end
           end
 
@@ -218,7 +218,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
               expect{ spree_delete :destroy, params }.to change { Spree::CreditCard.count }.by(-1)
               expect(flash[:success])
                 .to eq "Your card has been removed (number: %s)" % "x-#{card.last_digits}"
-              expect(response.status).to eq 200
+              expect(response).to have_http_status :ok
             end
 
             context "card is the default card and there are existing authorizations for the user" do

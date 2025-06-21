@@ -5,6 +5,8 @@ de_CH:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/image:
+        attachment: Anhang
       spree/order/ship_address:
         address1: "Lieferadresse Straße + Hausnummer"
         address2: "Lieferadresse Adresszusatz"
@@ -13,6 +15,14 @@ de_CH:
         phone: "Telefonnummer"
         firstname: "Vorname"
         lastname: "Nachname"
+        zipcode: "Postleitzahl der Lieferadresse"
+      spree/order/bill_address:
+        address1: "Rechnungsadresse (Strasse + Hausnummer)"
+        zipcode: "Postleitzahl der Rechnungsadresse"
+        city: "Ort der Rechnungsadresse"
+        country: "Land der Rechnungsadresse"
+        firstname: "Rechnungsadresse Vorname"
+        lastname: "Rechnungsadresse Nachname"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -39,7 +49,9 @@ de_CH:
         primary_taxon: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
         supplier: "Lieferant"
+        variant_unit: "Einheit"
         variant_unit_name: "Name der Varianteneinheit"
+        unit_value: "Einheitswert"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -50,6 +62,8 @@ de_CH:
         orders_close_at: Schliesszeitpunkt
       variant_override:
         count_on_hand: "Verfügbar"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Rechner Pauschalprozentsatz:"
     errors:
       models:
         spree/user:
@@ -96,6 +110,8 @@ de_CH:
       aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
       aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
       image_not_processable: "ist kein gültiges Bild"
+    not_found:
+      title: "Die gesuchte Seite existiert nicht (404)"
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -251,6 +267,10 @@ de_CH:
     integer_array_validator:
       not_array_error: "muss ein Array sein"
       invalid_element_error: "darf nur ganze Zahlen enthalten"
+  report_job:
+    report_failed: |
+        Dieser Bericht ist fehlgeschlagen. Er ist möglicherweise zu gross für die Verarbeitung.
+        Wir werden uns darum kümmern, aber lassen Sie uns bitte wissen, wenn das Problem weiterhin besteht.
   backorder_mailer:
     backorder_failed:
       product: "Produkt"
@@ -397,6 +417,7 @@ de_CH:
   none: Keine
   notes: Anmerkungen
   error: Fehler
+  voucher: Gutschein
   processing_payment: "Bezahlung wird verarbeitet ..."
   no_pending_payments: "Keine ausstehenden Zahlungen."
   invalid_payment_state: "Ungültiger Zahlungsstatus: %{state}"
@@ -423,6 +444,13 @@ de_CH:
   depth: "Tiefe"
   payment_could_not_process: "Die Zahlung konnte nicht verarbeitet werden"
   payment_could_not_complete: "Die Zahlung konnte nicht abgeschlossen werden"
+  vine_voucher_validator_service:
+    errors:
+      invalid_voucher: "Der Gutschein ist ungültig"
+      not_found_voucher: "Leider konnten wir diesen Gutschein nicht finden. Bitte überprüfen Sie den Code."
+  vine_voucher_redeemer_service:
+    errors:
+      redeeming_failed: "Das Einlösen des Gutscheins ist fehlgeschlagen"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
@@ -445,11 +473,15 @@ de_CH:
           title: Lieferkategorien
         producers:
           title: Unsere Produzenten
+        per_page: "%{count} Artikel pro Seite"
         colums: Spalten
       columns:
         image: Bild
         name: Name
+        unit_scale: Einheit
         unit: Einheit
+        unit_value: Einheitswert
+        display_as: Einheit anzeigen als
         price: Preis
         producer: Produzent
         category: Kategorie
@@ -460,6 +492,7 @@ de_CH:
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
         import_date: "Importdatum"
         actions: Aktionen
+        tags: Stichwörter
       columns_selector:
         unit: Einheit
         price: Preis
@@ -476,9 +509,11 @@ de_CH:
         clone: Duplizieren
         delete: Löschen
         remove: Löschen
+        preview: Vorschau
       image:
         edit: Bearbeiten
       product_preview:
+        product_preview: Produktvorschau
         shop_tab: Laden
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
@@ -557,6 +592,7 @@ de_CH:
         terms_of_service: "Nutzungsbedingungen"
         delete: "Löschen"
         confirm_delete: "Sind Sie sicher, dass Sie die derzeitigen Nutzungsbedingungen löschen möchten?"
+        attachment: "Anhang"
     number_localization:
       number_localization_settings: "Zahlenformateinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
@@ -612,6 +648,9 @@ de_CH:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
+    column_preferences:
+      bulk_update:
+        success: "Spalteneinstellungen gespeichert"
     contents:
       edit:
         title: Inhalt
@@ -683,6 +722,7 @@ de_CH:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
+      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -694,24 +734,51 @@ de_CH:
       index:
         header:
           title: Produkte verwalten
+      content:
+        loading: Laden Ihrer Produkte
       filters:
+        search_products: Nach Produkten suchen
+        all_producers: Alle Produzenten
+        all_categories: Alle Kategorien
         producers:
           label: Unsere Produzenten
         categories:
           label: Lieferkategorien
+        tags:
+          label: Stichwörter
         search: Suche
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count} Produkt</strong> für Ihre Suchkriterien gefunden. Es werden %{from} bis %{to} angezeigt."
+            other: "<strong>%{count} Produkte</strong> zu Ihren Suchkriterien gefunden. Es werden %{from} bis %{to} angezeigt."
+          per_page:
+            show: Anzeigen
+            per_page: "%{num} pro Seite"
           clear_search: Suche zurücksetzen
       no_products:
         no_products_found: Keine Produkte gefunden.
+      table:
+        changed_summary:
+          one: "%{count} Produkt geändert."
+          other: "%{count} Produkte geändert."
+        error_summary:
+          invalid:
+            one: "%{count} Produkt konnte nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
+            other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie den Fehler und versuchen Sie es erneut."
+        reset: Änderungen verwerfen
+        save: Änderungen speichern
       product_variant_row:
         new_variant: Neue Produktvariante
+      bulk_update:
+        success: Änderungen gespeichert
       variant_row:
         none_tax_category: Keine
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        select_unit_scale: Einheit auswählen
+        add_a_tag: Stichwort hinzufügen
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -751,6 +818,8 @@ de_CH:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        preview: Vorschau
       import:
         review: Überprüfung
         import: Importieren
@@ -770,7 +839,7 @@ de_CH:
         no_name: Für einige Produkte ist kein Name definiert.
         blank_enterprise: Für einige Produkte ist kein Unternehmen definiert.
         reset_absent?: Fehlende Produkte zurücksetzen?
-        reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
+        reset_absent_tip: Setzen Sie den Bestand für alle vorhandenen Produkte, die nicht in der Datei vorhanden sind, auf Null
         overwrite_all: Alle überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -852,6 +921,7 @@ de_CH:
     orders:
       edit:
         order_sure_want_to: Sind Sie sicher, dass Sie diese Bestellung %{event} möchten?
+        voucher_tax_included_in_price: "%{label} (Steuer im Gutschein enthalten)"
       invoice_email_sent: 'Rechnung wurde gesendet per E-Mail gesendet.'
       order_email_resent: 'Bestellbestätigung wurde erneut per E-Mail gesendet.'
       bulk_management:
@@ -947,12 +1017,6 @@ de_CH:
         images:
           legend: "Bilder"
           logo: Logo
-          promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
-          promo_image_note1: 'BITTE BEACHTEN SIE:'
-          promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
-          promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
-          remove_logo: "Bild löschen"
-          remove_promo_image: "Bild löschen"
         inventory_settings:
           legend: "Katalog"
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
@@ -1031,8 +1095,12 @@ de_CH:
           enable_subscriptions_true: "aktiviert"
           customer_names_in_reports: "Kundennamen in Berichten anzeigen"
           customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
+          producers_to_edit_orders: "Möglichkeit für Produzenten, Bestellungen zu bearbeiten"
+          producers_to_edit_orders_tip: "Ermöglichen Sie Ihren Lieferanten, Bestellungen mit ihren Produkten anzuzeigen und Menge und Gewicht nur für ihre eigenen Produkte zu bearbeiten."
           customer_names_false: "deaktiviert"
           customer_names_true: "aktiviert"
+          customer_contacts_in_reports: "Kundenkontaktdetails in Berichten"
+          customer_contacts_tip: "Ermöglichen Sie Ihren Lieferanten, die E-Mail-Adressen und Telefonnummern Ihrer Kunden in Berichten anzuzeigen"
           customer_contacts_false: "deaktiviert"
           customer_contacts_true: "aktiviert"
           producers_edit_orders_false: "deaktiviert"
@@ -1111,10 +1179,17 @@ de_CH:
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
+          legend: Gutscheine
           voucher_code: Gutschein-Code
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
+          add_new: Neu hinzufügen
+          no_voucher_yet: Noch keine Gutscheine
+        white_label:
+          hide_ofn_navigation: "OFN-Navigation ausblenden"
+          hide_groups_tab: "Gruppenregisterkarte im Schaufenster ausblenden"
+          create_custom_tab: "Benutzerdefinierte Registerkarte im Schaufenster erstellen"
         connected_apps:
           affiliate_sales_data:
             loading: "Wird geladen ..."
@@ -1174,8 +1249,10 @@ de_CH:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
+        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
+        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Schweiz!
         welcome_text: 'Erfolgreich erstellt:'
@@ -1241,6 +1318,7 @@ de_CH:
       checkout_options:
         back_end: "Nur im Backoffice"
         cancel: "Stornieren"
+        checkout_options: "Checkout Optionen"
         distributor: "Verteilstelle"
         payment_methods: "Zahlungsarten"
         save: "Speichern"
@@ -1251,6 +1329,7 @@ de_CH:
         edit: "1. Allgemeine Einstellungen"
         incoming: "2. Eingehende Produkte"
         outgoing: "3. Ausgehende Produkte"
+        checkout_options: "4. Checkout Optionen"
       exchange_form:
         pickup_time_tip: Datum und Uhrzeit, ab wann Bestellungen dieses Bestellzylus für den Kunden bereit sind.
         pickup_instructions_placeholder: "Informationen zur Abholung"
@@ -1334,6 +1413,18 @@ de_CH:
       resume:
         could_not_resume_the_order: Die Bestellung konnte nicht fortgesetzt werden.
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Bild löschen"
+        logo_remove_confirm: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
+        promo_image_label: "Promo-Bild"
+        promo_image_note1: 'BITTE BEACHTEN SIE:'
+        promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
+        promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
+        promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
+        promo_image_remove: "Bild löschen"
+        promo_image_remove_confirm: "Das Bild wird sofort nach Ihrer Bestätigung gelöscht."
+        white_label_logo_remove: "Bild löschen"
       user_guide_link:
         user_guide: Benutzerhandbuch
       enterprises_hubs_tabs:
@@ -1358,6 +1449,7 @@ de_CH:
           tag_rules: "Stichwortregeln"
           shop_preferences: "Laden"
           users: "Benutzer"
+          vouchers: Gutscheine
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
@@ -1388,11 +1480,14 @@ de_CH:
       lettuce_share: LettuceShare
       payment_methods: Zahlungsarten
       delivery: Lieferungen
+      sales_tax_totals_by_producer: Umsatzsteuersumme nach Produzent
+      sales_tax_totals_by_order: Umsatzsteuersumme nach Bestellung
       tax_types: Steuerarten
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
       pack_by_product: Packliste nach Produkten
+      pay_your_suppliers: Bezahlen Sie Ihre Lieferanten
       orders_and_distributors:
         name: Bestellungen und Verteilstellen
         description: Bestellungen mit Verteilstellendetails
@@ -1421,6 +1516,10 @@ de_CH:
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
+      suppliers:
+        name: Lieferanten
+      enterprise_fees_with_tax_report_by_order: "Unternehmensgebühren mit Steuerbericht nach Auftrag"
+      enterprise_fees_with_tax_report_by_producer: "Unternehmensgebühren mit Steuerbericht nach Produzent"
       errors:
         no_report_type: "Bitte wählen Sie eine Berichtsart aus."
         report_not_found: "Bericht wurde nicht gefunden."
@@ -1549,15 +1648,20 @@ de_CH:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
     vouchers:
       new:
+        legend: Neuer Gutschein
         back: Zurück
         save: Speichern
         voucher_code: Gutschein-Code
         voucher_amount: Betrag
+        voucher_type: Gutscheintyp
     controllers:
       enterprises:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen."
         stripe_connect_success: "Stripe-Konto erfolgreich verbunden."
         stripe_connect_fail: Die Verbindung Ihres Stripe-Kontos ist fehlgeschlagen.
+        remove_logo_success: "Das Logo wurde erfolgreich gelöscht."
+        remove_promo_image_success: "Bild wurde erfolgreich gelöscht."
+        remove_white_label_logo_success: "Das Logo wurde erfolgreich gelöscht."
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
   api:
@@ -1641,6 +1745,8 @@ de_CH:
         apply_voucher: Gutschein einlösen
         apply: Einlösen
         placeholder: Gutschein-Code eingeben
+        confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
+        warning_forfeit_remaining_amount: "Hinweis: Wenn der Gesamtbetrag Ihrer Bestellung geringer ist als der Wert Ihres Gutscheins, können Sie den Restwert möglicherweise nicht einlösen."
     step3:
       delivery_details:
         title: Lieferdetails
@@ -1669,7 +1775,9 @@ de_CH:
       invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
-      voucher_not_found: Nicht gefunden
+      no_shipping_methods_available: Eine Kaufabwicklung ist aufgrund fehlender Versandoptionen nicht möglich. Bitte kontaktieren Sie den Shop-Betreiber.
+      voucher_code_blank: Bitte geben Sie einen gültigen Gutscheincode ein
+      add_voucher_error: Beim Hinzufügen des Gutscheins ist ein Fehler aufgetreten
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
@@ -1736,10 +1844,11 @@ de_CH:
   invoice_column_price: "Preis"
   invoice_column_item: "Artikel"
   invoice_column_qty: "Menge"
-  invoice_column_unit_price_with_taxes: "Stückpreis (inkl. Steuern)"
-  invoice_column_unit_price_without_taxes: "Stückpreis (zzgl. Steuern)"
+  invoice_column_unit_price_with_taxes: "Stückpreis (inkl. MwSt.)"
+  invoice_column_unit_price_without_taxes: "Stückpreis (ohne MwSt.)"
   invoice_column_price_with_taxes: "Gesamtpreis (inkl. Steuern)"
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
+  invoice_column_price_per_unit_without_taxes: "Preis pro Einheit (ohne MwSt.)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
@@ -2362,7 +2471,7 @@ de_CH:
         title: "Art des Profils"
         headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
         question: "Ist das Unternehmen ein Produzent?"
-        yes_producer: "Ja, es ist ein Produzent."
+        yes_producer: "Ja, ich bin ein Produzent."
         no_producer: "Nein, es ist kein Produzent."
         producer_field_error: "Bitte wählen Sie: Ist das Unternehmen ein Produzent?"
         yes_producer_help: "Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
@@ -2791,6 +2900,8 @@ de_CH:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_header_voucher_label: Gutscheinetikett
+  report_header_voucher_amount: "Gutscheinbetrag ( %{currency_symbol} )"
   report_xero_configuration: Xero-Konfiguration
   initial_invoice_number: "Ursprüngliche Rechnungsnummer"
   invoice_date: "Rechnungsdatum"
@@ -3142,10 +3253,6 @@ de_CH:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Das Logo wurde erfolgreich gelöscht."
-            immediate_logo_removal_warning: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
-            removed_promo_image_successfully: "Bild wurde erfolgreich gelöscht."
-            immediate_promo_image_removal_warning: "Das Bild wird sofort nach Ihrer Bestätigung gelöscht."
             immediate_terms_and_conditions_removal_warning: "Die AGB-Datei wird sofort nach Ihrer Bestätigung gelöscht."
             removed_terms_and_conditions_successfully: "Die AGB-Datei wurde erfolgreich gelöscht."
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar."
@@ -3440,8 +3547,6 @@ de_CH:
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"
@@ -3752,6 +3857,8 @@ de_CH:
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
           resend_confirmation: "Bestätigung erneut senden"
+          selected:
+            zero: "Keine Bestellung ausgewählt"
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
@@ -3937,6 +4044,7 @@ de_CH:
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
+        hidden_customer_details_tip: "Wenn Kundennamen und/oder Kontaktdaten ausgeblendet sind, können Sie den Händler bitten, seine Shop-Einstellungen zu aktualisieren, damit seine Lieferanten Kundendetails in Berichten anzeigen können."
       users:
         index:
           listing_users: "Benutzer verwalten"
@@ -3977,8 +4085,10 @@ de_CH:
           display_name: "Variantenname"
           display_as_placeholder: 'z. B. 2 kg'
           display_name_placeholder: 'z. B. Tomaten'
+          unit_scale: "Einheit"
           unit: Einheit
           price: Preis
+          unit_value: Einheitswert
           variant_category: Kategorie
         autocomplete:
           out_of_stock: "nicht vorrätig"
@@ -3998,6 +4108,7 @@ de_CH:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Zurück zur Produktkategorienliste"
         index:
           title: "Produktkategorien"
         form:
@@ -4085,6 +4196,7 @@ de_CH:
         invoice_attached_text: Im Anhang finden Sie die Rechnung Ihrer letzten Bestellung vom
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Liebe Kundin, lieber Kunde,"
         request_sent_text: |
             Wir haben eine Anfrage zum Zurücksetzen Ihres Passworts erhalten.
             Sollten Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese E-Mail.
@@ -4192,6 +4304,7 @@ de_CH:
         total: Gesamt
         paid?: Bezahlt?
         status: Status
+        completed: Abgeschlossen
         cancelled: Storniert
       saved_cards:
         default?: Standard?
@@ -4274,3 +4387,5 @@ de_CH:
     pagination:
       next: Nächste
       previous: Vorherige
+    tag_list_input:
+      default_placeholder: Stichwort hinzufügen

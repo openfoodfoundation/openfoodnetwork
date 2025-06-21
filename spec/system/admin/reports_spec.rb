@@ -261,15 +261,18 @@ RSpec.describe '
 
     before do
       order1.reload
-      break unless order1.next! until order1.delivery?
+      while !order1.delivery?
+        break unless order1.next!
+      end
 
       order1.select_shipping_method(shipping_method.id)
       order1.recreate_all_fees!
-      break unless order1.next! until order1.payment?
+      order_workflow = Orders::WorkflowService.new(order1)
+      order_workflow.advance_to_payment
 
       create(:payment, state: "checkout", order: order1, amount: order1.reload.total,
                        payment_method: create(:payment_method, distributors: [distributor1]))
-      break unless order1.next! until order1.complete?
+      order_workflow.complete!
 
       login_as_admin
       visit admin_reports_path

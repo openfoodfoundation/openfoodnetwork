@@ -7,7 +7,7 @@ class TagRule::FilterPaymentMethods < TagRule
   def tags_match?(payment_method)
     payment_method_tags = payment_method&.tag_list || []
     preferred_tags = preferred_payment_method_tags.split(",")
-    ( payment_method_tags & preferred_tags ).any?
+    payment_method_tags.intersect?(preferred_tags)
   end
 
   def reject_matched?

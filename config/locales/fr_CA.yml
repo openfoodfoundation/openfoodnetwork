@@ -589,6 +589,7 @@ fr_CA:
         inherits_properties: "Hériter des propriétés ?"
         import_date: "Date d'import"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unité
         price: Prix
@@ -785,9 +786,18 @@ fr_CA:
       connection_invalid_html: |
           La connexion avec votre compte OIDC a échoué.
           Merci de rafraîchir votre connexion OIDC à :  %{oidc_settings_link}
+      absent_variant:
+        reset: "Réinitialiser le stock"
       index:
         title: "Catalogue produit DFC"
         catalog_url: "%{count}produits à importer de :  %{catalog_url}"
+        absent_products:
+          one: |
+              Un produit n'est plus dans le catalogue produits.
+              Il sera marqué indisponible quand vous remettrez votre stock à zéro.
+          other: |
+              %{count}produits ne sont plus dans votre catalogue produits.
+              Ils seront marqués indisponibles quand vous remettrez votre stock à zéro.
         enterprise: "Import vers l'entreprise : %{enterprise_name}"
         select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour
@@ -800,6 +810,8 @@ fr_CA:
         invalid_url: L'URL de ce catalogue n'est pas valide.
       import:
         title: "Import du catalogue produit DFC"
+        imported_products: "Produits importés :  %{count}"
+        reset_products: "Réinitialiser le stock pour les produits absents : %{count}"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -886,10 +898,13 @@ fr_CA:
         search_for_categories: Rechercher des catégories
         select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
+        select_tag: Choisir le tag
         producers:
           label: Producteurs
         categories:
           label: Conditions de transport
+        tags:
+          label: Tags
         search: Chercher
       sort:
         pagination:
@@ -936,6 +951,7 @@ fr_CA:
         tax_category_field_name: "Type de taxe"
         producer_field_name: "Producteur"
         select_unit_scale: Select unit scale
+        add_a_tag: Ajouter un tag
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
@@ -1004,7 +1020,7 @@ fr_CA:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
+        reset_absent_tip: Mettre le stock à zéro pour tous les produits existants non présents dans le fichier
         overwrite_all: Modifier tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -1191,12 +1207,6 @@ fr_CA:
           legend: "Images"
           logo: Logo
           logo_size: "300 x 300 pixels"
-          promo_image_placeholder: 'Cette image est affichée dans "A propos"'
-          promo_image_note1: 'ATTENTION:'
-          promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
-          promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
-          remove_logo: "Supprimer l'image"
-          remove_promo_image: "Supprimer l'image"
         inventory_settings:
           legend: "Paramètres catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
@@ -1279,6 +1289,8 @@ fr_CA:
           enable_subscriptions_true: "Activée"
           customer_names_in_reports: "Affichage du nom des acheteurs"
           customer_names_tip: "Permettre aux producteurs de voir les noms de vos acheteurs"
+          producers_to_edit_orders: "Possibilité pour les producteurs de modifier les commandes"
+          producers_to_edit_orders_tip: "Permettre à vos fournisseurs de visualiser les commandes comprenant leurs produits et de modifier la quantité et le poids de leurs produits seulement."
           customer_names_false: "Désactivée"
           customer_names_true: "Activée"
           customer_contacts_in_reports: "Affichage des contacts clients"
@@ -1377,10 +1389,6 @@ fr_CA:
         white_label:
           legend: "Marque blanche"
           hide_ofn_navigation: "Masquer la navigation du site"
-          upload_logo: "logo utilisé pour la boutique"
-          remove_logo: "Supprimer le logo"
-          remove_logo_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
-          remove_logo_success: "logo supprimé"
           white_label_logo_link_label: "Lien vers le logo utilisé pour la boutique"
           hide_groups_tab: "Cacher l'onglet groupes dans la boutique"
           create_custom_tab: "Créer un onglet personnalisé dans la boutique"
@@ -1655,6 +1663,22 @@ fr_CA:
       searching: Recherche...
       no_matches: Pas de correspondance trouvée
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_hint: 300 x 300 pixels
+        logo_remove: "Supprimer l'image"
+        logo_remove_confirm: "Le logo sera supprimé juste après votre confirmation."
+        promo_image_label: "image promotionnelle"
+        promo_image_note1: 'ATTENTION:'
+        promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
+        promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
+        promo_image_placeholder: 'Cette image est affichée dans "A propos"'
+        promo_image_remove: "Supprimer l'image"
+        promo_image_remove_confirm: "La bannière sera supprimée juste après votre confirmation."
+        white_label_logo_label: "logo utilisé pour la boutique"
+        white_label_logo_hint: 217 x 44 pixels
+        white_label_logo_remove: "Supprimer l'image"
+        white_label_logo_remove_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
       user_guide_link:
         user_guide: Guide utilisateur
       enterprises_hubs_tabs:
@@ -1699,6 +1723,7 @@ fr_CA:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      none: aucun
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden_field: "< Masqué >"
       unitsize: Unité de mesure
@@ -1929,6 +1954,9 @@ fr_CA:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
         stripe_connect_success: "Compte Stripe connecté avec succès"
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
+        remove_logo_success: "Logo supprimé avec succès"
+        remove_promo_image_success: "Bannière supprimée avec succès"
+        remove_white_label_logo_success: "Logo supprimé avec succès"
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
     resend_confirmation_emails_feedback:
@@ -2060,7 +2088,8 @@ fr_CA:
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
-      voucher_not_found: Non trouvé
+      voucher_code_blank: Veuillez entrer un bon de réduction valide
+      voucher_code_not_found: Invalide. Soit il n'existe pas, soit il a été utilisé en totalité
       add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
       create_voucher_error: "Il y a eu une erreur lors de la création du bon de réduction : %{error}"
       voucher_redeeming_error: Il y a eu une erreur lors de la tentative d'utilisation de votre bon de réduction.
@@ -3603,10 +3632,6 @@ fr_CA:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo supprimé avec succès"
-            immediate_logo_removal_warning: "Le logo sera supprimé juste après votre confirmation."
-            removed_promo_image_successfully: "Bannière supprimée avec succès"
-            immediate_promo_image_removal_warning: "La bannière sera supprimée juste après votre confirmation."
             immediate_terms_and_conditions_removal_warning: "Le fichier sera supprimé après confirmation."
             removed_terms_and_conditions_successfully: "Le fichier a été supprimé avec succès"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
@@ -3992,10 +4017,6 @@ fr_CA:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Retrait"
-      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"
@@ -4299,6 +4320,7 @@ fr_CA:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée."
+          cannot_add_item_to_shipped_order: "Il n'est pas possible d'ajouter des produits sur une commande livrée."
           include_out_of_stock_variants: "Inclure les variantes sans stock"
         shipment:
           mark_as_shipped_message_html: "Cette action marque la commande comme livrée. <br /> Etes-vous certain de vouloir faire ceci? "
@@ -4931,6 +4953,8 @@ fr_CA:
     pagination:
       next: Suivant
       previous: Précédent
+    tag_list_input:
+      default_placeholder: Ajouter un tag
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

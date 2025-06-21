@@ -147,6 +147,10 @@ en_GB:
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
     general_error:
       message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    unauthorized:
+      message: "You are not authorised to perform that action."
+    network_error:
+      message: "Network error: please try again later."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -275,6 +279,7 @@ en_GB:
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
     oidc:
       failure: "Could not sign in: %{error}"
+      record_not_unique: "%{uid}is already associated with another account"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -308,6 +313,8 @@ en_GB:
   sku: "Product Code"
   subtotal: "Subtotal"
   tax_rate: "Tax rate"
+  with_tax_incl: "%{amount}tax incl."
+  producer_mail_qty: QTY
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -530,6 +537,15 @@ en_GB:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "There was an error communicating with the API, please try again later."
+      invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -573,6 +589,7 @@ en_GB:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -766,12 +783,35 @@ en_GB:
         user_guide: User Guide
         map: Map
     dfc_product_imports:
+      connection_invalid_html: |
+          Connecting with your OIDC account failed.
+          Please refresh your OIDC connection at: %{oidc_settings_link}
+      absent_variant:
+        reset: "Reset stock"
       index:
+        title: "DFC product catalogue"
+        catalog_url: "%{count}products to be imported from:%{catalog_url}"
+        absent_products:
+          one: |
+              One product is no longer in the catalogue.
+              It will be marked as unavailable by resetting stock to zero.
+          other: |
+              %{count}products are no longer in the catalogue.
+              They will be marked as unavailable by resetting stock to zero.
+        enterprise: "Import to enterprise: %{enterprise_name}"
+        select_all: "Select/deselect all"
         update: Update
         new: New
         selected:
+          zero: "0 selected"
+          one: "1 selected"
           other: "%{count} selected"
         import: Import
+        invalid_url: This catalog URL is not valid.
+      import:
+        title: "DFC product catalog import"
+        imported_products: "Imported products: %{count}"
+        reset_products: "Stock reset for absent products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -858,10 +898,13 @@ en_GB:
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag
         producers:
           label: Producer
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
@@ -905,6 +948,8 @@ en_GB:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        select_unit_scale: Select unit scale
+        add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -951,6 +996,7 @@ en_GB:
         shipping_categories: Shipping Categories
       dfc_import_form:
         title: "Import from DFC catalogue"
+        enterprise: "Create products for enterprise"
         catalog_url: "DFC catalogue URL"
         preview: Preview
       import:
@@ -972,7 +1018,7 @@ en_GB:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all exiting products not present in the file
+        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -1159,12 +1205,6 @@ en_GB:
           legend: "Images"
           logo: Logo
           logo_size: "300 x 300 pixels"
-          promo_image_placeholder: 'This image is displayed in "About Us"'
-          promo_image_note1: 'PLEASE NOTE:'
-          promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
-          promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
-          remove_logo: "Remove Image"
-          remove_promo_image: "Remove Image"
         inventory_settings:
           legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
@@ -1199,11 +1239,15 @@ en_GB:
           own: Own
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          external_billing_id: External Billing ID
+          external_billing_id_placeholder: eg. INV-2024-123456
+          external_billing_id_tip: "This is the ID used by the external billing system to identify this enterprise."
           visible_in_search: Visible in search?
           visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the GrownHere map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+          admin_only_legend: Admin only
         properties:
           legend: "Properties"
         permalink:
@@ -1224,7 +1268,7 @@ en_GB:
         shop_preferences:
           legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
-          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
+          shopfront_requires_login_tip: "Choose whether customers must be added to your Customers list before they can place an order"
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Visible to registered customers only"
           recommend_require_login: "We recommend to require users to login when orders can be changed."
@@ -1242,8 +1286,12 @@ en_GB:
           enable_subscriptions_true: "Enabled"
           customer_names_in_reports: "Customer Names in Reports"
           customer_names_tip: "Enable your suppliers to see your customers names in reports"
+          producers_to_edit_orders: "Ability for producers to edit orders"
+          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
+          customer_contacts_in_reports: "Customer contact details in reports"
+          customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
           producers_edit_orders_false: "Disabled"
@@ -1337,10 +1385,6 @@ en_GB:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "Hide OFN navigation"
-          upload_logo: "Logo used in shopfront"
-          remove_logo: "Remove logo"
-          remove_logo_confirm: "Are you sure you want to remove this logo?"
-          remove_logo_success: "Logo removed"
           white_label_logo_link_label: "Link for the logo used in shopfront"
           hide_groups_tab: "Hide groups tab in shopfront"
           create_custom_tab: "Create custom tab in shopfront"
@@ -1350,10 +1394,14 @@ en_GB:
           legend: "Connected apps"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously."
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
             need_to_be_manager: "Only managers can connect apps."
+            description: "INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project."
+            link_label_html: "Learn more about this research project <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
@@ -1365,6 +1413,9 @@ en_GB:
                 Your GrownHere account is connected to Discover Regenerative.
                 Add or update information on your Discover Regenerative listing here.
             link_label: "Manage listing"
+            description: "Eligible producers can showcase their regenerative credentials, farming practices and more through a profile listing. Simplifying how buyers can find regenerative produce and connect with producers of interest."
+            link_label_html: "Learn more about Discover Regenerative <i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Allow redemption of VINE vouchers in your shopfront."
@@ -1373,6 +1424,9 @@ en_GB:
             need_to_be_manager: "Only managers can connect apps."
             vine_api_key: "VINE API Key"
             vine_secret: "VINE secret"
+            description: "To enable VINE for your enterprise, enter your API key and secret."
+            link_label_html: "VINE <i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
@@ -1605,6 +1659,22 @@ en_GB:
       searching: Searching...
       no_matches: No matches found
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_hint: 300 x 300 pixels
+        logo_remove: "Remove Image"
+        logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_label: "Promo image"
+        promo_image_note1: 'PLEASE NOTE:'
+        promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
+        promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+        promo_image_placeholder: 'This image is displayed in "About Us"'
+        promo_image_remove: "Remove Image"
+        promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
+        white_label_logo_label: "Logo used in shopfront"
+        white_label_logo_hint: 217 x 44 pixels
+        white_label_logo_remove: "Remove Image"
+        white_label_logo_remove_confirm: "Are you sure you want to remove this logo?"
       user_guide_link:
         user_guide: User Guide
       enterprises_hubs_tabs:
@@ -1649,6 +1719,7 @@ en_GB:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      none: none
       deprecated: "This report is deprecated and will be removed in a future release."
       hidden_field: "< Hidden >"
       unitsize: UNITSIZE
@@ -1878,6 +1949,9 @@ en_GB:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
         stripe_connect_success: "Stripe account connected successfully"
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
+        remove_logo_success: "Logo removed successfully"
+        remove_promo_image_success: "Promo image removed successfully"
+        remove_white_label_logo_success: "Logo removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
     resend_confirmation_emails_feedback:
@@ -2007,8 +2081,9 @@ en_GB:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2343,6 +2418,7 @@ en_GB:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(includes tax):"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_description: Payment Description at Checkout
@@ -2622,6 +2698,7 @@ en_GB:
   confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
   confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
   location_placeholder: "Type in a location..."
+  gmap_load_failure: "Unable to load map. Please check your browser settings and allow 3rd party cookies for this website."
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"
@@ -2916,6 +2993,7 @@ en_GB:
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
+  spree_admin_enterprises_showing: "Showing %{count} of %{total}"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_supplier: Supplier
@@ -3014,6 +3092,7 @@ en_GB:
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
   report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_external_billing_id: "Hub External Billing Id"
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
@@ -3135,6 +3214,8 @@ en_GB:
   report_header_item_fees_price: "Item + Fees (%{currency})"
   report_header_admin_handling_fees: "Admin & Handling (%{currency})"
   report_header_ship_price: "Ship (%{currency})"
+  report_header_producer_charges_gst: Producer charges VAT?
+  report_header_total_tax_on_product: "Total tax on product (%{currency})"
   report_header_pay_fee_price: "Pay fee (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Product Total (%{currency})"
@@ -3537,10 +3618,6 @@ en_GB:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo removed successfully"
-            immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
-            removed_promo_image_successfully: "Promo image removed successfully"
-            immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file has been removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
@@ -3722,9 +3799,39 @@ en_GB:
     sack:
       one: "sack"
       other: "sacks"
+    bucket:
+      one: "bucket"
+      other: "buckets"
+    pail:
+      one: pail
+      other: pails
+    stem:
+      one: "stem"
+      other: "stems"
+    plug:
+      one: "plug"
+      other: "plugs"
+    plant:
+      one: "plant"
+      other: "plants"
     bundle:
       one: "bundle"
       other: "bundles"
+    bulb:
+      one: "bulb"
+      other: "bulbs"
+    root:
+      one: "root"
+      other: "roots"
+    tuber:
+      one: "tuber"
+      other: "tubers"
+    corm:
+      one: "corm"
+      other: "corms"
+    crate:
+      one: "crate"
+      other: "crates"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -3823,6 +3930,7 @@ en_GB:
       error: Webhook endpoint failed to delete
   spree:
     order_updated: "Order Updated"
+    cannot_perform_operation: "Can not perform this operation"
     add_country: "Add country"
     add_state: "Add county"
     adjustment: "Adjustment"
@@ -3860,10 +3968,6 @@ en_GB:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Pick-up at the farm"
-      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     updating: "Updating"
@@ -4167,6 +4271,7 @@ en_GB:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          cannot_add_item_to_shipped_order: "Cannot add item to shipped order"
           include_out_of_stock_variants: "Include variants with no available stock"
         shipment:
           mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
@@ -4401,6 +4506,7 @@ en_GB:
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
+        hidden_customer_details_tip: "If customer names and/or contact details are hidden, you can ask the distributor to update their shop preferences to allow their suppliers to view customer details in reports."
         products_and_inventory:
           all_products:
             message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
@@ -4419,6 +4525,7 @@ en_GB:
         form:
           disabled: "Disabled?"
           email: "Email"
+          admin: "Super admin?"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
@@ -4570,6 +4677,7 @@ en_GB:
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Dear customer,"
         request_sent_text: |
             A request to reset your password has been made.
             If you did not make this request, simply ignore this email.
@@ -4782,6 +4890,8 @@ en_GB:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

@@ -406,7 +406,7 @@ GEM
       activesupport (>= 4.2)
     jwt (2.8.1)
       base64
-    knapsack_pro (7.4.0)
+    knapsack_pro (8.1.2)
       rake
     language_server-protocol (3.17.0.3)
     launchy (3.0.0)
@@ -495,6 +495,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.1)
     pagy (9.3.4)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
@@ -765,7 +766,7 @@ GEM
     state_machines-activerecord (0.9.0)
       activerecord (>= 6.0)
       state_machines-activemodel (>= 0.9.0)
-    stimulus_reflex (3.5.3)
+    stimulus_reflex (3.5.5)
       actioncable (>= 5.2)
       actionpack (>= 5.2)
       actionview (>= 5.2)
@@ -773,6 +774,7 @@ GEM
       cable_ready (~> 5.0)
       nokogiri (~> 1.0)
       nokogiri-html5-inference (~> 0.3)
+      ostruct (~> 0.6)
       rack (>= 2, < 4)
       railties (>= 5.2)
       redis (>= 4.0, < 6.0)

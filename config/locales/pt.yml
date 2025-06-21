@@ -364,6 +364,7 @@ pt:
         inherits_properties: "Herda Propriedades?"
         import_date: "Data de Importação"
         actions: Acções
+        tags: Etiquetas
       columns_selector:
         unit: Unidade
         price: Preço
@@ -589,6 +590,8 @@ pt:
           label: Produtores
         categories:
           label: Categorias
+        tags:
+          label: Etiquetas
         search: Procurar
       product_variant_row:
         new_variant: Nova variante
@@ -597,6 +600,7 @@ pt:
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de Imposto"
         producer_field_name: "Produtor/a"
+        add_a_tag: Acrescentar uma etiqueta
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
@@ -655,7 +659,6 @@ pt:
         no_name: Sem nome
         blank_enterprise: alguns produtos não têm uma organização definida
         reset_absent?: Restabelecer productos ausentes
-        reset_absent_tip: Restabelecer stock a zero para todos os produtos não presentes no ficheiro
         overwrite_all: Substituir todos
         overwrite_empty: Substituir se vazio
         default_stock: Definir nível de stock
@@ -823,12 +826,6 @@ pt:
         images:
           legend: "Imagens"
           logo: Logo
-          promo_image_placeholder: 'Esta imagem aparece em "Sobre nós"'
-          promo_image_note1: 'POR FAVOR OBSERVE:'
-          promo_image_note2: Qualquer imagem promocional carregada aqui será cortada para 1200 x 260.
-          promo_image_note3: A imagem promocional é exibida no topo da página de perfil da organização e em janelas pop-up.
-          remove_logo: "Remover Imagem"
-          remove_promo_image: "Remover Imagem"
         inventory_settings:
           legend: "Configurações de Inventário"
           text1: Pode optar por gerir o seu nível de stock e preços através do seu
@@ -1180,6 +1177,17 @@ pt:
       resume:
         could_not_resume_the_order: Não foi possível prosseguir com a encomenda
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Remover Imagem"
+        logo_remove_confirm: "O logotipo será removido imediatamente após a confirmação."
+        promo_image_note1: 'POR FAVOR OBSERVE:'
+        promo_image_note2: Qualquer imagem promocional carregada aqui será cortada para 1200 x 260.
+        promo_image_note3: A imagem promocional é exibida no topo da página de perfil da organização e em janelas pop-up.
+        promo_image_placeholder: 'Esta imagem aparece em "Sobre nós"'
+        promo_image_remove: "Remover Imagem"
+        promo_image_remove_confirm: "A imagem promocional será removida imediatamente após confirmação."
+        white_label_logo_remove: "Remover Imagem"
       user_guide_link:
         user_guide: Manual do Utilizador
       enterprises_hubs_tabs:
@@ -1381,6 +1389,9 @@ pt:
         stripe_connect_cancelled: "A ligação ao Stripe foi cancelada"
         stripe_connect_success: "Conta Stripe ligada com sucesso"
         stripe_connect_fail: Pedimos desculpa, mas a ligação à sua conta Stripe falhou
+        remove_logo_success: "Logotipo removido com sucesso"
+        remove_promo_image_success: "Imagem promocional removida com sucesso"
+        remove_white_label_logo_success: "Logotipo removido com sucesso"
       stripe_connect_settings:
         resource: Configuração Stripe Connect
   api:
@@ -2794,13 +2805,6 @@ pt:
       subscriptions:
         new:
           please_select_a_shop: "Por favor selecione uma loja"
-      enterprises:
-        form:
-          images:
-            removed_logo_successfully: "Logotipo removido com sucesso"
-            immediate_logo_removal_warning: "O logotipo será removido imediatamente após a confirmação."
-            removed_promo_image_successfully: "Imagem promocional removida com sucesso"
-            immediate_promo_image_removal_warning: "A imagem promocional será removida imediatamente após confirmação."
     insufficient_stock: "Stock disponível insuficiente, apenas %{on_hand} disponíveis"
     out_of_stock:
       reduced_stock_available: Stock reduzido disponível
@@ -3658,3 +3662,5 @@ pt:
     pagination:
       next: Seguinte
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Acrescentar uma etiqueta

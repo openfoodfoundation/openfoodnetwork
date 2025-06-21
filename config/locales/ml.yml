@@ -524,6 +524,7 @@ ml:
         inherits_properties: "അനന്തരാവകാശമായി ലഭിച്ച സ്വത്തുക്കൾ?"
         import_date: "ഇറക്കുമതി തീയതി"
         actions: പ്രവർത്തനങ്ങൾ
+        tags: ടാഗുകൾ
       columns_selector:
         unit: യൂണിറ്റ്
         price: വില
@@ -778,6 +779,8 @@ ml:
           label: പ്രൊഡ്യൂസഴ്സ്
         categories:
           label: വിഭാഗങ്ങൾ
+        tags:
+          label: ടാഗുകൾ
         search: തിരയുക
       sort:
         pagination:
@@ -811,6 +814,7 @@ ml:
         category_field_name: "വിഭാഗം"
         tax_category_field_name: "നികുതി വിഭാഗം"
         producer_field_name: "പ്രൊഡ്യൂസർ"
+        add_a_tag: ഒരു ടാഗ് ചേർക്കുക
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി
       file_not_found: ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല
@@ -871,7 +875,6 @@ ml:
         no_name: പേരില്ല
         blank_enterprise: ചില ഉൽപ്പന്നങ്ങൾക്ക് ഒരു എന്റർപ്രൈസ് വ്യതിരിക്തത ഇല്ല
         reset_absent?: ഇല്ലാത്ത ഉൽപ്പന്നങ്ങൾ പുനഃസജ്ജമാക്കുക
-        reset_absent_tip: ഫയലിൽ ഇല്ലാത്ത എല്ലാ ഉൽപ്പന്നങ്ങൾക്കും സ്റ്റോക്ക് പൂജ്യമായി സജ്ജമാക്കുക
         overwrite_all: എല്ലാം തിരുത്തിയെഴുതുക
         overwrite_empty: ശൂന്യമാണെങ്കിൽ തിരുത്തിയെഴുതുക
         default_stock: സ്റ്റോക്ക് ലെവൽ സജ്ജമാക്കുക
@@ -1056,12 +1059,6 @@ ml:
         images:
           legend: "ചിത്രങ്ങൾ"
           logo: ലോഗോ
-          promo_image_placeholder: '"ഞങ്ങളെക്കുറിച്ച്" എന്നതിൽ ഈ ചിത്രം പ്രദർശിപ്പിച്ചിരിക്കുന്നു'
-          promo_image_note1: 'ദയവായി ശ്രദ്ധിക്കുക:'
-          promo_image_note2: ഇവിടെ അപ്‌ലോഡ് ചെയ്യുന്ന ഏത് പ്രൊമോ ചിത്രത്തിന്റെയും വലിപ്പം 1200 x 260 ആക്കി മാറ്റും.
-          promo_image_note3: ഒരു എന്റർപ്രൈസിന്റെ പ്രൊഫൈൽ പേജിന്റെയും പോപ്പ്-അപ്പുകളുടെയും മുകളിൽ പ്രൊമോ ചിത്രം പ്രദർശിപ്പിക്കും.
-          remove_logo: "ചിത്രം നീക്കം ചെയ്യുക"
-          remove_promo_image: "ചിത്രം നീക്കം ചെയ്യുക"
         inventory_settings:
           legend: "ചരക്കുപ്പട്ടിക ക്രമീകരണങ്ങൾ"
           text1: സ്റ്റോക്ക് ലെവലുകളും വിലകളും കൈകാര്യം ചെയ്യാൻ നിങ്ങൾക്ക് ഇത് തിരഞ്ഞെടുക്കാം -
@@ -1236,10 +1233,6 @@ ml:
         white_label:
           legend: "വൈറ്റ് ലേബൽ"
           hide_ofn_navigation: "ഒഎഫ്എൻ നാവിഗേഷൻ മറയ്ക്കുക"
-          upload_logo: "ഷോപ്പ്ഫ്രണ്ടിൽ ലോഗോ ഉപയോഗിക്കുന്നു"
-          remove_logo: "ലോഗോ നീക്കം ചെയ്യുക"
-          remove_logo_confirm: "ഈ ലോഗോ നീക്കം ചെയ്യണമെന്ന് തീർച്ചയാണോ?"
-          remove_logo_success: "ലോഗോ നീക്കം ചെയ്തു"
           white_label_logo_link_label: "കടയുടെ മുൻവശത്ത് ഉപയോഗിക്കുന്ന ലോഗോയ്ക്കുള്ള ലിങ്ക്"
           hide_groups_tab: "ഷോപ്പ്ഫ്രണ്ടിൽ ഗ്രൂപ്പുകളുടെ ടാബ് മറയ്ക്കുക"
           create_custom_tab: "ഷോപ്പ്ഫ്രണ്ടിൽ ഇഷ്‌ടാനുസൃത ടാബ് സൃഷ്‌ടിക്കുക"
@@ -1477,6 +1470,19 @@ ml:
       searching: തിരയുന്നു...
       no_matches: പൊരുത്തങ്ങളൊന്നും കണ്ടെത്തിയില്ല
     shared:
+      attachment_field:
+        logo_label: "ലോഗോ"
+        logo_remove: "ചിത്രം നീക്കം ചെയ്യുക"
+        logo_remove_confirm: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ ലോഗോ നീക്കം ചെയ്യപ്പെടും."
+        promo_image_note1: 'ദയവായി ശ്രദ്ധിക്കുക:'
+        promo_image_note2: ഇവിടെ അപ്‌ലോഡ് ചെയ്യുന്ന ഏത് പ്രൊമോ ചിത്രത്തിന്റെയും വലിപ്പം 1200 x 260 ആക്കി മാറ്റും.
+        promo_image_note3: ഒരു എന്റർപ്രൈസിന്റെ പ്രൊഫൈൽ പേജിന്റെയും പോപ്പ്-അപ്പുകളുടെയും മുകളിൽ പ്രൊമോ ചിത്രം പ്രദർശിപ്പിക്കും.
+        promo_image_placeholder: '"ഞങ്ങളെക്കുറിച്ച്" എന്നതിൽ ഈ ചിത്രം പ്രദർശിപ്പിച്ചിരിക്കുന്നു'
+        promo_image_remove: "ചിത്രം നീക്കം ചെയ്യുക"
+        promo_image_remove_confirm: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ പ്രമോ ചിത്രം നീക്കം ചെയ്യപ്പെടും."
+        white_label_logo_label: "ഷോപ്പ്ഫ്രണ്ടിൽ ലോഗോ ഉപയോഗിക്കുന്നു"
+        white_label_logo_remove: "ചിത്രം നീക്കം ചെയ്യുക"
+        white_label_logo_remove_confirm: "ഈ ലോഗോ നീക്കം ചെയ്യണമെന്ന് തീർച്ചയാണോ?"
       user_guide_link:
         user_guide: ഉപയോക്തൃ ഗൈഡ്
       enterprises_hubs_tabs:
@@ -1739,6 +1745,9 @@ ml:
         stripe_connect_cancelled: "സ്ട്രൈപ്പിലേക്കുള്ള കണക്ഷൻ റദ്ദാക്കി"
         stripe_connect_success: "സ്ട്രൈപ്പ് അക്കൗണ്ട് കണക്റ്റ് ചെയ്തു"
         stripe_connect_fail: ക്ഷമിക്കണം, നിങ്ങളുടെ സ്ട്രൈപ്പ് അക്കൗണ്ടിന്റെ കണക്ഷൻ പരാജയപ്പെട്ടു
+        remove_logo_success: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
+        remove_promo_image_success: "പ്രമോ ചിത്രം വിജയകരമായി നീക്കം ചെയ്തു"
+        remove_white_label_logo_success: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
       stripe_connect_settings:
         resource: സ്ട്രൈപ്പ് കണക്റ്റ് കോൺഫിഗറേഷൻ
     resend_confirmation_emails_feedback:
@@ -1868,7 +1877,6 @@ ml:
       select_a_shipping_method: ഒരു ഷിപ്പിംഗ് രീതി തിരഞ്ഞെടുക്കുക
       select_a_payment_method: ഒരു പേയ്‌മെന്റ് രീതി തിരഞ്ഞെടുക്കുക
       no_shipping_methods_available: ഷിപ്പിംഗ് ഓപ്ഷനുകൾ ഇല്ലാത്തതിനാൽ ചെക്ക്ഔട്ട് സാധ്യമല്ല. കട ഉടമയുമായി ബന്ധപ്പെടുക.
-      voucher_not_found: കണ്ടെത്തിയില്ല
       add_voucher_error: വൗച്ചർ ചേർക്കുമ്പോൾ ഒരു തകരാറ് ഉണ്ടായി
   shops:
     hubs:
@@ -3389,10 +3397,6 @@ ml:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
-            immediate_logo_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ ലോഗോ നീക്കം ചെയ്യപ്പെടും."
-            removed_promo_image_successfully: "പ്രമോ ചിത്രം വിജയകരമായി നീക്കം ചെയ്തു"
-            immediate_promo_image_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ പ്രമോ ചിത്രം നീക്കം ചെയ്യപ്പെടും."
             immediate_terms_and_conditions_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ നിബന്ധനകളും വ്യവസ്ഥകളും എന്ന ഫയൽ നീക്കം ചെയ്യപ്പെടും."
             removed_terms_and_conditions_successfully: "നിബന്ധനകളും വ്യവസ്ഥകളും എന്ന ഫയൽ വിജയകരമായി നീക്കം ചെയ്തു"
     insufficient_stock: "മതിയായ സ്റ്റോക്ക് ലഭ്യമല്ല, %{on_hand} മാത്രം ശേഷിക്കുന്നു"
@@ -3696,10 +3700,6 @@ ml:
     rma_credit: "ആർഎംഎ ക്രെഡിറ്റ്"
     refund: "റീഫണ്ട്"
     server_error: "സെർവർ തകരാർ"
-    shipping_method_names:
-      UPS Ground: "യുപിഎസ് ഗ്രൗണ്ട്"
-      pick_up: "ഫാമിൽ നിന്നും പിക്കപ്പ് ചെയ്യുക"
-      delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
@@ -4588,3 +4588,5 @@ ml:
     pagination:
       next: അടുത്തത്
       previous: മുന്നിലത്തേത്
+    tag_list_input:
+      default_placeholder: ഒരു ടാഗ് ചേർക്കുക

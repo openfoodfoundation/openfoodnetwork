@@ -517,6 +517,7 @@ pa:
         inherits_properties: "ਪ੍ਰਾਪਰਟੀਜ਼ ਅਪਣਾਉਂਦੇ ਹਨ?"
         import_date: "ਇਮਪੋਰਟ ਮਿਤੀ"
         actions: <div></div>
+        tags: ਟੈਗ
       columns_selector:
         unit: ਯੂਨਿਟ
         price: ਕੀਮਤ
@@ -767,6 +768,8 @@ pa:
           label: ਉਤਪਾਦਕ
         categories:
           label: ਸ਼੍ਰੇਣੀਆਂ
+        tags:
+          label: ਟੈਗ
         search: ਖੋਜੋ
       sort:
         pagination:
@@ -790,6 +793,7 @@ pa:
         category_field_name: "ਸ਼੍ਰੇਣੀ"
         tax_category_field_name: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
         producer_field_name: "ਉਤਪਾਦਕ"
+        add_a_tag: ਟੈਗ ਜੋੜੋ
     product_import:
       title: ਉਤਪਾਦ ਦਾ ਇਮਪੋਰਟ
       file_not_found: ਫ਼ਾਈਲ ਨਹੀਂ ਮਿਲੀ ਜਾਂ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ
@@ -850,7 +854,6 @@ pa:
         no_name: ਕੋਈ ਨਾਂ ਨਹੀਂ
         blank_enterprise: ਕੁਝ ਉਤਪਾਦਾਂ ਲਈ ਕੋਈ ਵੀ ਪਰਿਭਾਸ਼ਿਤ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਨਹੀਂ ਹੈ
         reset_absent?: ਗੈਰਹਾਜ਼ਰ ਉਤਪਾਦਾਂ ਨੂੰ ਰੀਸੈਟ ਕਰੋ
-        reset_absent_tip: ਫਾਈਲ ਵਿੱਚ ਮੌਜੂਦ ਨਾ ਹੋਣ ਵਾਲੇ ਸਾਰੇ ਉਤਪਾਦਾਂ ਲਈ ਸਟਾਕ ਨੂੰ ਜ਼ੀਰੋ ਤੇ ਸੇਟ ਕਰੋ
         overwrite_all: ਸਭ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰੋ
         overwrite_empty: ਜੇਕਰ ਖਾਲੀ ਹੈ ਤਾਂ ਓਵਰਰਾਈਟ ਕਰੋ
         default_stock: ਸਟਾਕ ਦਾ ਪੱਧਰ ਸੇਟ ਕਰੋ
@@ -1035,12 +1038,6 @@ pa:
         images:
           legend: "ਫੋਟੋ"
           logo: ਲੋਗੋ
-          promo_image_placeholder: 'ਇਹ ਫੋਟੋ "ਸਾਡੇ ਬਾਰੇ ਵਿੱਚ" ਪ੍ਰਦਰਸ਼ਿਤ ਹੈ'
-          promo_image_note1: 'ਕਿਰਪਾ ਕਰਕੇ ਨੋਟ ਕਰੋ:'''
-          promo_image_note2: ਇੱਥੇ ਅੱਪਲੋਡ ਕੀਤੀ ਕਿਸੇ ਵੀ ਪ੍ਰੋਮੋ ਦੀ ਫੋਟੋ ਨੂੰ 1200 x 260 ਵਿੱਚ ਕੱਟਿਆ ਜਾਵੇਗਾ।
-          promo_image_note3: ਪ੍ਰੋਮੋ ਫੋਟੋ ਕਿਸੇ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੀ ਪ੍ਰੋਫਾਈਲ ਪੇਜ ਦੇ ਉਪਰ ਦੀ ਔਰ ਅਤੇ ਪੌਪ-ਅਪ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।
-          remove_logo: "ਫੋਟੋ ਹਟਾਓ"
-          remove_promo_image: "ਫੋਟੋ ਹਟਾਓ"
         inventory_settings:
           legend: "ਇਨਵੇਂਟਰੀ ਸੈਟਿੰਗਾਂ"
           text1: ਤੁਸੀਂ ਆਪਣੀ ਇਨਵੇਂਟਰੀ ਰਾਹੀਂ ਸਟਾਕ ਦੇ ਪੱਧਰ ਅਤੇ ਕੀਮਤਾਂ ਦੇ ਪ੍ਰਬੰਧਨ ਦਾ ਵਿਕਲਪ ਚੁਣ ਸਕਦੇ ਹੋ
@@ -1213,10 +1210,6 @@ pa:
         white_label:
           legend: "ਚਿੱਟਾ ਲੇਬਲ"
           hide_ofn_navigation: "OFN ਨੈਵੀਗੇਸ਼ਨ ਲੁਕਾਓ"
-          upload_logo: "ਸ਼ੋਪਫ੍ਰੰਟ ਵਿੱਚ ਵਰਤਿਆ ਗਿਆ ਲੋਗੋ"
-          remove_logo: "ਲੋਗੋ ਹਟਾਓ"
-          remove_logo_confirm: "ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ ਤੇ ਇਸ ਲੋਗੋ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
-          remove_logo_success: "ਲੋਗੋ ਹਟਾਇਆ ਗਿਆ"
           white_label_logo_link_label: "ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਵਰਤੇ ਗਏ ਲੋਗੋ ਦਾ ਲਿੰਕ"
           hide_groups_tab: "ਸ਼ਾਪਫਰੰਟ ਵਿੱਚ ਸਮੂਹ ਟੈਬ ਨੂੰ ਲੁਕਾਓ"
           create_custom_tab: "ਸ਼ਾਪਫ੍ਰੰਟ ਵਿੱਚ ਕਸਟਮ ਟੈਬ ਬਣਾਓ"
@@ -1452,6 +1445,19 @@ pa:
       searching: ਖੋਜ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...
       no_matches: ਕੋਈ ਮੇਲ ਨਹੀਂ ਮਿਲਿਆ
     shared:
+      attachment_field:
+        logo_label: "ਲੋਗੋ"
+        logo_remove: "ਫੋਟੋ ਹਟਾਓ"
+        logo_remove_confirm: "ਤੁਹਾਡੇ ਵੱਲੋਂ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਬਾਅਦ ਲੋਗੋ ਤੁਰੰਤ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
+        promo_image_note1: 'ਕਿਰਪਾ ਕਰਕੇ ਨੋਟ ਕਰੋ:'''
+        promo_image_note2: ਇੱਥੇ ਅੱਪਲੋਡ ਕੀਤੀ ਕਿਸੇ ਵੀ ਪ੍ਰੋਮੋ ਦੀ ਫੋਟੋ ਨੂੰ 1200 x 260 ਵਿੱਚ ਕੱਟਿਆ ਜਾਵੇਗਾ।
+        promo_image_note3: ਪ੍ਰੋਮੋ ਫੋਟੋ ਕਿਸੇ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੀ ਪ੍ਰੋਫਾਈਲ ਪੇਜ ਦੇ ਉਪਰ ਦੀ ਔਰ ਅਤੇ ਪੌਪ-ਅਪ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।
+        promo_image_placeholder: 'ਇਹ ਫੋਟੋ "ਸਾਡੇ ਬਾਰੇ ਵਿੱਚ" ਪ੍ਰਦਰਸ਼ਿਤ ਹੈ'
+        promo_image_remove: "ਫੋਟੋ ਹਟਾਓ"
+        promo_image_remove_confirm: "ਤੁਹਾਡੇ ਵੱਲੋਂ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਬਾਅਦ ਪ੍ਰੋਮੋ ਫੋਟੋ ਨੂੰ ਤੁਰੰਤ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
+        white_label_logo_label: "ਸ਼ੋਪਫ੍ਰੰਟ ਵਿੱਚ ਵਰਤਿਆ ਗਿਆ ਲੋਗੋ"
+        white_label_logo_remove: "ਫੋਟੋ ਹਟਾਓ"
+        white_label_logo_remove_confirm: "ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ ਤੇ ਇਸ ਲੋਗੋ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
       user_guide_link:
         user_guide: ਉਪਭੋਗਤਾ ਗਾਈਡ
       enterprises_hubs_tabs:
@@ -1710,6 +1716,9 @@ pa:
         stripe_connect_cancelled: "ਸਟ੍ਰਾਈਪ ਨਾਲ ਕਨੇਕਸ਼ਨ ਰੱਦ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ"
         stripe_connect_success: "ਸਟ੍ਰਾਈਪ ਖਾਤੇ ਸਫ਼ਲਤਾਪੂਰਵਕ ਕਨੇਕਟ ਕੀਤਾ ਗਿਆ"
         stripe_connect_fail: ਮਾਫ਼ ਕਰਨਾ, ਤੁਹਾਡੇ ਸਟ੍ਰਾਈਪ ਖਾਤੇ ਦਾ ਕਨੇਕਸ਼ਨ ਅਸਫਲ ਰਿਹਾ
+        remove_logo_success: "ਲੋਗੋ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
+        remove_promo_image_success: "ਪ੍ਰੋਮੋ ਦੀ ਫੋਟੋ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
+        remove_white_label_logo_success: "ਲੋਗੋ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
       stripe_connect_settings:
         resource: ਸਟ੍ਰਾਈਪ ਕਨੇਕਟ ਕੌਂਫਿਗਰੇਸ਼ਨ
   api:
@@ -1833,7 +1842,6 @@ pa:
       select_a_shipping_method: ਇੱਕ ਸ਼ਿਪਿੰਗ ਦਾ ਢੰਗ ਚੁਣੋ
       select_a_payment_method: ਇੱਕ ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ ਚੁਣੋ
       no_shipping_methods_available: ਸ਼ਿਪਿੰਗ ਵਿਕਲਪਾਂ ਦੀ ਅਣਹੋਂਦ ਕਾਰਨ ਚੈਕਆਉਟ ਸੰਭਵ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਾਪ ਦੇ ਮਾਲਕ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।
-      voucher_not_found: ਨਹੀਂ ਲਭਿਆ
       add_voucher_error: ਵਾਊਚਰ ਜੋੜਦੇ ਸਮੇਂ ਇੱਕ ਤਰੁੱਟੀ ਉਤਪੰਨ ਹੋਈ
   shops:
     hubs:
@@ -3335,10 +3343,6 @@ pa:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "ਲੋਗੋ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
-            immediate_logo_removal_warning: "ਤੁਹਾਡੇ ਵੱਲੋਂ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਬਾਅਦ ਲੋਗੋ ਤੁਰੰਤ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
-            removed_promo_image_successfully: "ਪ੍ਰੋਮੋ ਦੀ ਫੋਟੋ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
-            immediate_promo_image_removal_warning: "ਤੁਹਾਡੇ ਵੱਲੋਂ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਬਾਅਦ ਪ੍ਰੋਮੋ ਫੋਟੋ ਨੂੰ ਤੁਰੰਤ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
             immediate_terms_and_conditions_removal_warning: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ ਦੀ ਫਾਈਲ ਤੁਹਾਡੇ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਤੁਰੰਤ ਬਾਅਦ ਹਟਾ ਦਿੱਤੀ ਜਾਵੇਗੀ।"
             removed_terms_and_conditions_successfully: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ ਦੀ ਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਈ ਗਈ"
     insufficient_stock: "ਨਾਕਾਫ਼ੀ ਸਟਾਕ ਉਪਲਬਧ ਹੈ, ਸਿਰਫ਼ %{on_hand} ਬਾਕੀ"
@@ -3566,10 +3570,6 @@ pa:
     rma_credit: "RMA ਕ੍ਰੈਡਿਟ"
     refund: "ਰਿਫੰਡ"
     server_error: "ਸਰਵਰ ਤਰੁੱਟੀ"
-    shipping_method_names:
-      UPS Ground: "ਯੂਪੀਐਸ ਗਰਾਊਂਡ"
-      pick_up: "ਖੇਤ ਤੋਂ ਪਿਕ-ਅੱਪ"
-      delivery: "ਦਸਤਖਤ ਕੀਤੇ, ਸੀਲ ਕੀਤੇ, ਡਿਲੀਵਰ ਕੀਤੇ ਗਏ"
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
     successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"
@@ -4414,3 +4414,5 @@ pa:
     pagination:
       next: ਅਗਲਾ
       previous: ਪਿਛਲਾ
+    tag_list_input:
+      default_placeholder: ਟੈਗ ਜੋੜੋ

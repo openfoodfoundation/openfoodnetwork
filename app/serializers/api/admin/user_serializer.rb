@@ -11,11 +11,11 @@ module Api
       has_one :bill_address, serializer: Api::AddressSerializer
 
       def ship_address
-        OpenFoodNetwork::AddressFinder.new(object.email, object).ship_address
+        OpenFoodNetwork::AddressFinder.new(email: object.email, user: object).ship_address
       end
 
       def bill_address
-        OpenFoodNetwork::AddressFinder.new(object.email, object).bill_address
+        OpenFoodNetwork::AddressFinder.new(email: object.email, user: object).bill_address
       end
 
       def confirmed

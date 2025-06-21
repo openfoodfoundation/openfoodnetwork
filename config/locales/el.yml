@@ -542,6 +542,7 @@ el:
         inherits_properties: "Διατήρηση Ιδιοτήτων"
         import_date: "Ημερομηνία καταχώρησης"
         actions: Ενέργειες
+        tags: Ετικέτες
       columns_selector:
         unit: Μονάδα
         price: Τιμή
@@ -813,6 +814,8 @@ el:
           label: Παραγωγοί
         categories:
           label: Κατηγορίες
+        tags:
+          label: Ετικέτες
         search: Αναζήτηση
       sort:
         pagination:
@@ -850,6 +853,7 @@ el:
         category_field_name: "Κατηγορία"
         tax_category_field_name: "Φορολογική Κατηγορία"
         producer_field_name: "Παραγωγός"
+        add_a_tag: Προσθήκη ετικέτας
       clone:
         success: Το προϊόν κλωνοποιήθηκε επιτυχώς.
         error: Δεν ήταν δυνατή η κλωνοποίηση του προϊόντος
@@ -916,7 +920,6 @@ el:
         no_name: Δεν υπάρχει όνομα
         blank_enterprise: ορισμένα προϊόντα δεν έχουν συσχετιστεί με κάποια επιχείρηση
         reset_absent?: Σχετικά με τα υπόλοιπα προϊόντα
-        reset_absent_tip: Ορίστε μηδενικό απόθεμα για όλα τα προϊόντα που δεν υπάρχουν στο αρχείο
         overwrite_all: Αντικατάσταση Όλων
         overwrite_empty: Αντικατάσταση αν είναι κενό
         default_stock: Ορισμός επιπέδου αποθέματος
@@ -1103,12 +1106,6 @@ el:
           legend: "Εικόνες"
           logo: Επωνυμία
           logo_size: "300 x 300 pixels"
-          promo_image_placeholder: 'Αυτή η φωτογραφία εμφανίζεται για "Σχετικά με Εμάς"'
-          promo_image_note1: 'ΠΑΡΑΚΑΛΏ ΣΗΜΕΙΏΣΤΕ'
-          promo_image_note2: Κάθε προωθητική φωτογραφία που θα ανεβαίνει εδώ θα εχεί περικοπή 1200×260.
-          promo_image_note3: Η προωθητική φωτογραφία θα εμφανίζεται στην κορυφή της σελίδας μιας επιχείρησης και σε κάθε αναδυόμενο  παράθυρο.
-          remove_logo: "Αφαίρεση Εικόνας"
-          remove_promo_image: "Αφαίρεση Εικόνας"
         inventory_settings:
           legend: "Ρυθμίσεις Αποθεμάτων"
           text1: Μπορείτε να επιλέξετε να διαχειριστείτε τα επίπεδα και τις τιμές των μετοχών μέσω του δικτύου σας
@@ -1282,10 +1279,6 @@ el:
           no_voucher_yet: 'Δεν υπάρχουν κουπόνια '
         white_label:
           hide_ofn_navigation: "Απόκρυψη πλοήγησης OFN"
-          upload_logo: "Λογότυπο καταστήματος"
-          remove_logo: "Αφαίρεση λογότυπου."
-          remove_logo_confirm: "Είστε σίγουροι ότι θέλετε να αφαιρέσετε το λογότυπο;"
-          remove_logo_success: "Το λογότυπο αφαιρέθηκε"
           white_label_logo_link_label: "Σύνδεσμος για το λογότυπο που χρησιμοποιείται στο κατάστημα"
           hide_groups_tab: "Απόκρυψη της καρτέλας ομάδων από το κατάστημα."
           create_custom_tab: "Δημιουργία προσαρμοσμένης καρτέλας στο κατάστημα."
@@ -1538,6 +1531,20 @@ el:
       searching: Αναζήτηση...
       no_matches: Δεν βρέθηκαν αποτελέσματα
     shared:
+      attachment_field:
+        logo_label: "Επωνυμία"
+        logo_hint: 300 x 300 pixels
+        logo_remove: "Αφαίρεση Εικόνας"
+        logo_remove_confirm: "Το λογότυπο θα αφαιρεθεί αμέσως μετά την επιβεβαίωση."
+        promo_image_note1: 'ΠΑΡΑΚΑΛΏ ΣΗΜΕΙΏΣΤΕ'
+        promo_image_note2: Κάθε προωθητική φωτογραφία που θα ανεβαίνει εδώ θα εχεί περικοπή 1200×260.
+        promo_image_note3: Η προωθητική φωτογραφία θα εμφανίζεται στην κορυφή της σελίδας μιας επιχείρησης και σε κάθε αναδυόμενο  παράθυρο.
+        promo_image_placeholder: 'Αυτή η φωτογραφία εμφανίζεται για "Σχετικά με Εμάς"'
+        promo_image_remove: "Αφαίρεση Εικόνας"
+        promo_image_remove_confirm: "Η εικόνα προώθησης θα αφαιρεθεί αμέσως μετά την επιβεβαίωση."
+        white_label_logo_label: "Λογότυπο καταστήματος"
+        white_label_logo_remove: "Αφαίρεση Εικόνας"
+        white_label_logo_remove_confirm: "Είστε σίγουροι ότι θέλετε να αφαιρέσετε το λογότυπο;"
       user_guide_link:
         user_guide: Οδηγός Χρήσης
       enterprises_hubs_tabs:
@@ -1803,6 +1810,9 @@ el:
         stripe_connect_cancelled: "Η σύνδεση με το Stripe ακυρώθηκε"
         stripe_connect_success: "Ο λογαριασμός Stripe συνδέθηκε με επιτυχία"
         stripe_connect_fail: Λυπούμαστε, η σύνδεση του λογαριασμού σας Stripe απέτυχε
+        remove_logo_success: "Το λογότυπο καταργήθηκε με επιτυχία"
+        remove_promo_image_success: "Η εικόνα προώθησης καταργήθηκε με επιτυχία"
+        remove_white_label_logo_success: "Το λογότυπο καταργήθηκε με επιτυχία"
       stripe_connect_settings:
         resource: Διαμόρφωση Stripe Connect
   api:
@@ -1926,7 +1936,6 @@ el:
       select_a_shipping_method: 'Επιλέξτε μέθοδο αποστολής. '
       select_a_payment_method: Επιλέξτε μέθοδο πληρωμής.
       no_shipping_methods_available: Η παραγγελία δεν μπορεί να ολοκληρωθεί λόγω απουσίας τρόπου αποστολής. Παρακαλώ επικοινωνήστε με τον ιδιοκτήτη του καταστήματος.
-      voucher_not_found: Δεν βρέθηκε
       add_voucher_error: Διαπιστώθηκε σφάλμα κατά την καταχώρηση του κουπονιού
   shops:
     hubs:
@@ -3438,10 +3447,6 @@ el:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Το λογότυπο καταργήθηκε με επιτυχία"
-            immediate_logo_removal_warning: "Το λογότυπο θα αφαιρεθεί αμέσως μετά την επιβεβαίωση."
-            removed_promo_image_successfully: "Η εικόνα προώθησης καταργήθηκε με επιτυχία"
-            immediate_promo_image_removal_warning: "Η εικόνα προώθησης θα αφαιρεθεί αμέσως μετά την επιβεβαίωση."
             immediate_terms_and_conditions_removal_warning: "Το αρχείο Όρων και Προϋποθέσεων θα καταργηθεί αμέσως μετά την επιβεβαίωση."
             removed_terms_and_conditions_successfully: "Το αρχείο Όρων και Προϋποθέσεων καταργήθηκε με επιτυχία"
     insufficient_stock: "Ανεπαρκές διαθέσιμο απόθεμα, απομένει μόνο %{on_hand}"
@@ -3746,10 +3751,6 @@ el:
     rma_credit: "Πίστωση RMA"
     refund: "Επιστροφή χρημάτων"
     server_error: "Σφάλμα Διακομιστή"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Παραλαβή από το αγρόκτημα"
-      delivery: "Υπογράφηκε, σφραγίστηκε, παραδόθηκε"
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     updating: "Ενημέρωση"
@@ -4660,6 +4661,8 @@ el:
     pagination:
       next: Επόμενο
       previous: Προηγούμενο
+    tag_list_input:
+      default_placeholder: Προσθήκη ετικέτας
   invisible_captcha:
     sentence_for_humans: "Παρακαλώ αφήστε κενό"
     timestamp_error_message: "Παρακαλώ δοκιμάστε ξανά σε 5 δευτερόλεπτα."

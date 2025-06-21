@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::BulkLineItemsController, type: :controller do
+RSpec.describe Admin::BulkLineItemsController do
   describe '#index' do
     render_views
 
@@ -254,7 +254,7 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
 
           it 'returns a 204 response' do
             spree_put :update, params
-            expect(response.status).to eq 204
+            expect(response).to have_http_status :no_content
           end
 
           it 'applies enterprise fees locking the order with an exclusive row lock' do
@@ -280,7 +280,7 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
 
             it 'returns a 412 response' do
               spree_put :update, params
-              expect(response.status).to eq 412
+              expect(response).to have_http_status :precondition_failed
             end
           end
         end
@@ -341,7 +341,7 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
 
       it 'returns a 204 response' do
         spree_delete :destroy, params
-        expect(response.status).to eq 204
+        expect(response).to have_http_status :no_content
       end
     end
   end

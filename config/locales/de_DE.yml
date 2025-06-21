@@ -524,6 +524,7 @@ de_DE:
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
         import_date: "Importdatum"
         actions: Aktionen
+        tags: Stichwörter
       columns_selector:
         unit: Einheit
         price: Preis
@@ -778,6 +779,8 @@ de_DE:
           label: Unsere Produzenten
         categories:
           label: Lieferkategorien
+        tags:
+          label: Stichwörter
         search: Suche
       sort:
         pagination:
@@ -811,6 +814,7 @@ de_DE:
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        add_a_tag: Stichwort hinzufügen
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -871,7 +875,6 @@ de_DE:
         no_name: Für einige Produkte ist kein Name angegeben.
         blank_enterprise: Für einige Produkte ist kein Unternehmen angegeben.
         reset_absent?: Fehlende Produkte zurücksetzen?
-        reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alle überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -1056,12 +1059,6 @@ de_DE:
         images:
           legend: "Bilder"
           logo: Logo
-          promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
-          promo_image_note1: 'BITTE BEACHTEN SIE:'
-          promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
-          promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
-          remove_logo: "Bild löschen"
-          remove_promo_image: "Bild löschen"
         inventory_settings:
           legend: "Katalog"
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
@@ -1235,10 +1232,6 @@ de_DE:
         white_label:
           legend: "OFN verbergen"
           hide_ofn_navigation: "OFN Navigation ausblenden"
-          upload_logo: "Logo des Online-Shops"
-          remove_logo: "Logo löschen"
-          remove_logo_confirm: "Möchten Sie das Logo wirklich löschen?"
-          remove_logo_success: "Das Logo wurde gelöscht."
           white_label_logo_link_label: "Verlinkungsziel des Logos im Online-Shop"
           hide_groups_tab: "Reiter \"Gruppen\" im Online-Shop verbergen"
           create_custom_tab: "Benutzerdefinierten Reiter im Online-Shop hinzufügen"
@@ -1475,6 +1468,19 @@ de_DE:
       searching: Suche läuft...
       no_matches: Keine Treffer gefunden.
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Bild löschen"
+        logo_remove_confirm: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
+        promo_image_note1: 'BITTE BEACHTEN SIE:'
+        promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
+        promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
+        promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
+        promo_image_remove: "Bild löschen"
+        promo_image_remove_confirm: "Das Bild wird sofort nach Ihrer Bestätigung gelöscht."
+        white_label_logo_label: "Logo des Online-Shops"
+        white_label_logo_remove: "Bild löschen"
+        white_label_logo_remove_confirm: "Möchten Sie das Logo wirklich löschen?"
       user_guide_link:
         user_guide: Benutzerhandbuch
       enterprises_hubs_tabs:
@@ -1735,6 +1741,9 @@ de_DE:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen."
         stripe_connect_success: "Stripe-Konto erfolgreich verbunden."
         stripe_connect_fail: Die Verbindung Ihres Stripe-Kontos ist fehlgeschlagen.
+        remove_logo_success: "Das Logo wurde erfolgreich gelöscht."
+        remove_promo_image_success: "Bild wurde erfolgreich gelöscht."
+        remove_white_label_logo_success: "Das Logo wurde erfolgreich gelöscht."
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
     resend_confirmation_emails_feedback:
@@ -1864,7 +1873,6 @@ de_DE:
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
       no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
-      voucher_not_found: Nicht gefunden
       add_voucher_error: Beim Anwenden des Gutscheins ist ein Fehler aufgetreten.
   shops:
     hubs:
@@ -3381,10 +3389,6 @@ de_DE:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Das Logo wurde erfolgreich gelöscht."
-            immediate_logo_removal_warning: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
-            removed_promo_image_successfully: "Bild wurde erfolgreich gelöscht."
-            immediate_promo_image_removal_warning: "Das Bild wird sofort nach Ihrer Bestätigung gelöscht."
             immediate_terms_and_conditions_removal_warning: "Die AGB-Datei wird sofort nach Ihrer Bestätigung gelöscht."
             removed_terms_and_conditions_successfully: "Die AGB-Datei wurde erfolgreich gelöscht."
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar."
@@ -3687,10 +3691,6 @@ de_DE:
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Abholung"
-      delivery: "Lieferung"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"
@@ -4575,3 +4575,5 @@ de_DE:
     pagination:
       next: Nächste
       previous: Vorherige
+    tag_list_input:
+      default_placeholder: Stichwort hinzufügen

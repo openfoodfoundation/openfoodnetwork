@@ -10,7 +10,7 @@
     "pretty-quick": "pretty-quick"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.13",
+    "@floating-ui/dom": "^1.7.1",
     "@hotwired/stimulus": "^3.2",
     "@hotwired/turbo": "^8.0.13",
     "@rails/webpacker": "5.4.4",
@@ -18,7 +18,7 @@
     "cable_ready": "5.0.6",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
-    "hotkeys-js": "^3.13.9",
+    "hotkeys-js": "^3.13.14",
     "jquery-ui": "1.14.1",
     "js-big-decimal": "^2.2.0",
     "leaflet": "1.9.4",
@@ -30,21 +30,21 @@
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
-    "stimulus_reflex": "3.5.3",
+    "stimulus_reflex": "3.5.5",
     "tom-select": "^2.4.3",
-    "trix": "^2.1.13",
+    "trix": "^2.1.15",
     "turbo_power": "^0.7.0",
     "webpack": "~4"
   },
   "devDependencies": {
-    "jasmine-core": "~5.7.0",
+    "jasmine-core": "~5.8.0",
     "jest": "^27.4.7",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
-    "pretty-quick": "4.1.1",
+    "pretty-quick": "4.2.2",
     "webpack-dev-server": "~3"
   }
 }

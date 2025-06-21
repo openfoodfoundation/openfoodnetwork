@@ -2,7 +2,31 @@
 
 require 'spec_helper'
 
-RSpec.describe Admin::VariantOverridesController, type: :controller do
+RSpec.describe Admin::VariantOverridesController do
+  describe "index" do
+    context "not logged in" do
+      it "redirects to login" do
+        get :index
+        expect(response).to redirect_to(
+          root_path(anchor: "/login", after_login: admin_inventory_path)
+        )
+      end
+    end
+
+    context "where I manage the variant override hub" do
+      let(:hub) { create(:distributor_enterprise) }
+
+      before do
+        allow(controller).to receive(:spree_current_user) { hub.owner }
+      end
+
+      it "succeeds" do
+        get :index
+        expect(response).to have_http_status :ok
+      end
+    end
+  end
+
   describe "bulk_update" do
     context "json" do
       let(:format) { :json }
@@ -60,7 +84,7 @@ RSpec.describe Admin::VariantOverridesController, type: :controller do
             put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [variant.supplier]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [variant.supplier.id]]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.supplier.id] })
             expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 
@@ -163,7 +187,7 @@ RSpec.describe Admin::VariantOverridesController, type: :controller do
             put(:bulk_reset, params:)
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [producer]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [producer.id]]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [producer.id] })
             expect(assigns[:inventory_items]).to eq []
           end
 

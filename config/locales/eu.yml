@@ -573,6 +573,7 @@ eu:
         inherits_properties: "Jabetzak heredatzen ditu?"
         import_date: "Inportazio-data"
         actions: Ekintzak
+        tags: Tags
       columns_selector:
         unit: Unitatea
         price: Prezioa
@@ -847,6 +848,8 @@ eu:
           label: Ekoizleak
         categories:
           label: Kategoriak
+        tags:
+          label: Tags
         search: Bilatu
       sort:
         pagination:
@@ -875,6 +878,7 @@ eu:
         category_field_name: "Kategoria"
         tax_category_field_name: "Zergen kategoria"
         producer_field_name: "Ekoizlea"
+        add_a_tag: Add a tag
       clone:
         success: Produktua klonatu du
         error: Ezin izan da produktua klonatu
@@ -942,7 +946,6 @@ eu:
         no_name: Izenik gabe
         blank_enterprise: Produktu batzuek ez dute antolamendu zehatzik.
         reset_absent?: Falta diren produktuak berrezartzea
-        reset_absent_tip: Ezarri zero stocka artxiboan ez dauden produktu guztietarako.
         overwrite_all: Gainidatzi dena
         overwrite_empty: Gainidatzi hutsik badago
         default_stock: Izakinen maila ezartzea
@@ -1128,12 +1131,6 @@ eu:
           legend: "Irudiak"
           logo: Logoa
           logo_size: "300 x 300 pixel"
-          promo_image_placeholder: 'Irudi hau "Sobre nosotras" -en agertzen da'
-          promo_image_note1: 'ADI:'
-          promo_image_note2: Irudia 1200 x 260ra moztuko da.
-          promo_image_note3: Irudia erakundearen profilaren goiko aldean eta pop-up-etan erakutsiko da.
-          remove_logo: "Ezabatu irudia"
-          remove_promo_image: "Ezabatu irudia"
         inventory_settings:
           legend: "Inbentarioaren konfigurazioa"
           text1: Stock mailak eta prezioak zure
@@ -1305,10 +1302,6 @@ eu:
         white_label:
           legend: "Etiketa zuria"
           hide_ofn_navigation: "Ezkutatu OFNren nabigazioa"
-          upload_logo: "Erakusleihoan erabiliko den logoa"
-          remove_logo: "Logoa ezabatu"
-          remove_logo_confirm: "Ziur zaude logo hau ezabatu nahi duzula?"
-          remove_logo_success: "Logoa kenduta"
           white_label_logo_link_label: "Erakusleihoan erabiliko den log-erako esteka"
           hide_groups_tab: "Ezkutatu taldeen erlaitza erakusleihoan"
           create_custom_tab: "Sortu erlaitz pertsonalizatua erakusleihoan"
@@ -1553,6 +1546,20 @@ eu:
       searching: Bila...
       no_matches: Ez da kointzidentziarik aurkitu
     shared:
+      attachment_field:
+        logo_label: "Logoa"
+        logo_hint: 300 x 300 pixel
+        logo_remove: "Ezabatu irudia"
+        logo_remove_confirm: "Logotipoa konfirmatu eta berehala ezabatuko da."
+        promo_image_note1: 'ADI:'
+        promo_image_note2: Irudia 1200 x 260ra moztuko da.
+        promo_image_note3: Irudia erakundearen profilaren goiko aldean eta pop-up-etan erakutsiko da.
+        promo_image_placeholder: 'Irudi hau "Sobre nosotras" -en agertzen da'
+        promo_image_remove: "Ezabatu irudia"
+        promo_image_remove_confirm: "Promozio-irudia ezabatu egingo da baieztatu eta berehala."
+        white_label_logo_label: "Erakusleihoan erabiliko den logoa"
+        white_label_logo_remove: "Ezabatu irudia"
+        white_label_logo_remove_confirm: "Ziur zaude logo hau ezabatu nahi duzula?"
       user_guide_link:
         user_guide: Erabiltzailearen eskuliburua
       enterprises_hubs_tabs:
@@ -1798,6 +1805,9 @@ eu:
         stripe_connect_cancelled: "Striperako konexioa bertan behera geratu da"
         stripe_connect_success: "Stripe kontua behar bezala konektatu da"
         stripe_connect_fail: Sentitzen dugu, Stripe kontuaren konexioak huts egin du
+        remove_logo_success: "Logotipoa arrakastaz ezabatu da"
+        remove_promo_image_success: "Sustapen-irudia arrakastaz ezabatu da"
+        remove_white_label_logo_success: "Logotipoa arrakastaz ezabatu da"
       stripe_connect_settings:
         resource: Stripe Connect konfiguratzea
   api:
@@ -1825,7 +1835,7 @@ eu:
     payment_method_without_number: Ordaintzeko modua
     order_summary_without_number: Eskaeraren laburpena
     already_ordered:
-      cart: "gurditxoa"
+      cart: "Saskia"
       message_html: "Eskaera bat egin duzu eskaera-ziklo honetarako. Egiaztatu %{cart}, eskatu zenituen artikuluak ikusteko. Halaber, artikuluak ezeztatu ahal izango duzu eskaera zikloa irekita dagoen bitartean. "
     step1:
       contact_information:
@@ -1909,7 +1919,6 @@ eu:
       invalid_email: "Sartu baliozko mezu elektroniko bat"
       select_a_shipping_method: Hautatu bidalketa-metodoa
       select_a_payment_method: Hautatu ordainketa-metodoa
-      voucher_not_found: Ez da aurkitu
   shops:
     hubs:
       show_closed_shops: "Denda itxiak erakutsi"
@@ -1922,19 +1931,19 @@ eu:
         powered_html: "Zure erosketa-esperientziaren bultzatzailea %{open_food_network} da."
     menu:
       cart:
-        cart: "Gurditxoa"
+        cart: "Saskia"
       cart_sidebar:
         checkout: "Balidatu"
         edit_cart: "Editatu orgatxoa"
         items_in_cart_singular: " %{num} artikulu bere orgatxoan"
         items_in_cart_plural: " %{num} artikulu bere orgatxoan"
         close: "Itxi"
-        cart_empty: "Zure gurditxoa hutsik dago"
+        cart_empty: "Zure saskia hutsik dago"
         take_me_shopping: "Eraman nazazu erosketak egitera!"
       signed_in:
         profile: "Profila"
       mobile_menu:
-        cart: "Gurditxoa"
+        cart: "Saskia"
     register_call:
       selling_on_ofn: "Interesa duzu Open Food Network-en sartzeko?"
       register: "Erregistratu hemen"
@@ -1993,13 +2002,13 @@ eu:
   order_number: "Eskaera-zenbakia:"
   date_of_transaction: "Transakzio-data:"
   menu_1_title: "Dendak"
-  menu_1_url: "/ shops"
+  menu_1_url: "/shops"
   menu_2_title: "Mapa"
-  menu_2_url: "/ map"
+  menu_2_url: "/map"
   menu_3_title: "Ekoizleak"
-  menu_3_url: "/ ekoizleak"
+  menu_3_url: "/producers"
   menu_4_title: "Sareak"
-  menu_4_url: "/ groups"
+  menu_4_url: "/groups"
   menu_5_title: "Honi buruz"
   menu_5_url: "http://katuma.org /"
   menu_6_title: "Konektatu"
@@ -2074,7 +2083,7 @@ eu:
   cart_items: "elementuak"
   cart_headline: "Zure erosketa-orgatxoa"
   total: "Guztira"
-  cart_updating: "Gurditxoa eguneratzen..."
+  cart_updating: "Saskia eguneratzen..."
   cart_empty: "Gurditxo hutsa"
   cart_edit: "Editatu orgatxoa"
   item: "Artikulua"
@@ -2341,7 +2350,7 @@ eu:
   products_filter_clear: "Garbitu"
   products_filter_done: "Egina"
   products_loading: "Produktuak kargatzen..."
-  products_updating_cart: "Zure gurditxoa eguneratzen..."
+  products_updating_cart: "Zure saskia eguneratzen..."
   products_cart_empty: "Gurditxo hutsa"
   products_edit_cart: "Zure orgatxoa editatu"
   products_from: Noiztik
@@ -2452,7 +2461,7 @@ eu:
   orders_edit_time: "Eskaera prest dago"
   orders_edit_continue: "Erosten jarraitu"
   orders_edit_checkout: "Balidatu"
-  orders_form_empty_cart: "Hustu gurditxoa"
+  orders_form_empty_cart: "Hustu saskia"
   orders_form_update_cart: "Eguneratu"
   orders_form_subtotal: "Produktuen guztizko partziala"
   orders_form_total: "Guztira"
@@ -3325,7 +3334,7 @@ eu:
           adjustments: "doikuntzak"
           awaiting_return: "Itzuleraren zain"
           canceled: "ezeztatuta"
-          cart: "gurditxoa"
+          cart: "saskia"
           complete: "osatu"
           confirm: "Baieztatu"
           delivery: "Entrega"
@@ -3389,10 +3398,6 @@ eu:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logotipoa arrakastaz ezabatu da"
-            immediate_logo_removal_warning: "Logotipoa konfirmatu eta berehala ezabatuko da."
-            removed_promo_image_successfully: "Sustapen-irudia arrakastaz ezabatu da"
-            immediate_promo_image_removal_warning: "Promozio-irudia ezabatu egingo da baieztatu eta berehala."
             immediate_terms_and_conditions_removal_warning: "Terminoen eta baldintzen artxiboa konfirmatu eta berehala ezabatuko da."
             removed_terms_and_conditions_successfully: "Terminoen eta baldintzen artxiboa behar bezala ezabatu da"
     insufficient_stock: "Stock gutxiegi erabilgarria, %{on_hand} baino ez da geratzen"
@@ -3623,9 +3628,6 @@ eu:
     rma_credit: "RMA kreditua"
     refund: "Dirua itzultzea"
     server_error: "Zerbitzariaren errorea"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Baserrian jaso"
     start_date: "Hasiera-data"
     successfully_removed: "Arrakastaz ezabatua"
     updating: "Eguneratzen"
@@ -4459,6 +4461,8 @@ eu:
     pagination:
       next: Hurrengoa
       previous: Aurrekoa
+    tag_list_input:
+      default_placeholder: Add a tag
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

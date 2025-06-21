@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::OrdersController, type: :controller do
+RSpec.describe Spree::Admin::OrdersController do
   describe "#edit" do
     let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }
 
@@ -47,7 +47,7 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
 
         spree_put :update, params
 
-        expect(response.status).to eq 302
+        expect(response).to have_http_status :found
       end
 
       context "recalculating fees and taxes" do
@@ -85,7 +85,7 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
                                                        order_cycle:)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
-          break unless order.next! while !order.completed?
+          Orders::WorkflowService.new(order).complete!
           order.recreate_all_fees!
           order
         end
@@ -226,6 +226,17 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
         end
       end
 
+      context "when order is shipped" do
+        it "redirects to order details page with flash error" do
+          order.update(shipment_state: :ready)
+          order.update(shipment_state: :shipped)
+          spree_put :update, { id: order }
+
+          expect(flash[:error]).to eq "Cannot add item to shipped order"
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
+      end
+
       context "with line items" do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:shipment){ create(:shipment) }
@@ -290,7 +301,7 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
 
       it "should allow access" do
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
       end
     end
   end

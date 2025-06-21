@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-RSpec.describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml" do
+RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:enterprise) {
     create(

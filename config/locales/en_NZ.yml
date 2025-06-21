@@ -457,6 +457,7 @@ en_NZ:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -697,6 +698,8 @@ en_NZ:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
         search: Search
       sort:
         pagination:
@@ -708,6 +711,7 @@ en_NZ:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        add_a_tag: Add a tag
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -766,7 +770,6 @@ en_NZ:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -948,12 +951,6 @@ en_NZ:
         images:
           legend: "Images"
           logo: Logo
-          promo_image_placeholder: 'This image is displayed in "About Us"'
-          promo_image_note1: 'PLEASE NOTE:'
-          promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
-          promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
-          remove_logo: "Remove Image"
-          remove_promo_image: "Remove Image"
         inventory_settings:
           legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
@@ -1335,6 +1332,17 @@ en_NZ:
       resume:
         could_not_resume_the_order: Could not resume the order
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Remove Image"
+        logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_note1: 'PLEASE NOTE:'
+        promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
+        promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+        promo_image_placeholder: 'This image is displayed in "About Us"'
+        promo_image_remove: "Remove Image"
+        promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
+        white_label_logo_remove: "Remove Image"
       user_guide_link:
         user_guide: User Guide
       enterprises_hubs_tabs:
@@ -1556,6 +1564,9 @@ en_NZ:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
         stripe_connect_success: "Stripe account connected successfully"
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
+        remove_logo_success: "Logo removed successfully"
+        remove_promo_image_success: "Promo image removed successfully"
+        remove_white_label_logo_success: "Logo removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
@@ -3100,10 +3111,6 @@ en_NZ:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo removed successfully"
-            immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
-            removed_promo_image_successfully: "Promo image removed successfully"
-            immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
@@ -4137,3 +4144,5 @@ en_NZ:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag

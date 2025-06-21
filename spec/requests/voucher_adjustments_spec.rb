@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe VoucherAdjustmentsController, type: :request do
+RSpec.describe VoucherAdjustmentsController do
   let(:user) { order.user }
   let(:address) { create(:address) }
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
@@ -47,7 +47,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
         post("/voucher_adjustments", params:)
 
         expect(response).to be_unprocessable
-        expect(flash[:error]).to match "Voucher code Not found"
+        expect(flash[:error]).to match "Voucher code invalid."
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
             post("/voucher_adjustments", params:)
 
             expect(response).to be_unprocessable
-            expect(flash[:error]).to match "Voucher code Not found"
+            expect(flash[:error]).to match "Voucher code invalid."
           end
         end
 
@@ -149,7 +149,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
             post("/voucher_adjustments", params:)
 
             expect(response).to be_unprocessable
-            expect(flash[:error]).to match "Voucher code Not found"
+            expect(flash[:error]).to match "Voucher code invalid"
           end
         end
 

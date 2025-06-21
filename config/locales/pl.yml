@@ -324,6 +324,7 @@ pl:
         tax_category: "Kategoria podatku"
         inherits_properties: "Dziedziczy właściwości?"
         actions: Akcje
+        tags: Tagi
       columns_selector:
         unit: Jednostka
         price: Cena
@@ -528,6 +529,8 @@ pl:
       filters:
         producers:
           label: Producenci
+        tags:
+          label: Tagi
         search: Szukaj
       variant_row:
         none_tax_category: Nic
@@ -592,7 +595,6 @@ pl:
         no_name: Bez nazwy
         blank_enterprise: niektóre produkty nie mają zdefiniowanego podmiotu
         reset_absent?: Zresetuj nieobecne produkty
-        reset_absent_tip: Ustaw zapasy na zero dla wszystkich produktów, których nie ma w pliku
         overwrite_all: Zastąp wszystko
         overwrite_empty: Zastąp, jeśli jest pusty
         default_stock: Ustaw stan magazynu
@@ -743,12 +745,6 @@ pl:
         images:
           legend: "Obrazy"
           logo: Logo
-          promo_image_placeholder: 'Ten obraz jest wyświetlany w „O nas”'
-          promo_image_note1: 'PROSZĘ ZANOTOWAĆ:'
-          promo_image_note2: Wszelkie przesłane tutaj obrazy promocyjne zostaną przycięte do rozmiaru 1200 x 260.
-          promo_image_note3: Obraz promocyjny jest wyświetlany u góry strony profilu podmiotu i wyskakujących okienek.
-          remove_logo: "Usuń obraz"
-          remove_promo_image: "Usuń obraz"
         inventory_settings:
           text1: Możesz zdecydować się na zarządzanie stanami magazynowymi i cenami za pośrednictwem swojego
           inventory: Zapasy
@@ -1078,6 +1074,8 @@ pl:
       resume:
         could_not_resume_the_order: Nie udało się wznowić zamówienia
     shared:
+      attachment_field:
+        promo_image_note3: Obraz promocyjny jest wyświetlany u góry strony profilu podmiotu i wyskakujących okienek.
       user_guide_link:
         user_guide: Podręcznik użytkownika
       enterprises_hubs_tabs:
@@ -2681,10 +2679,6 @@ pl:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo zostało pomyślnie usunięte"
-            immediate_logo_removal_warning: "Logo zostanie usunięte natychmiast po potwierdzeniu."
-            removed_promo_image_successfully: "Obraz promocyjny został pomyślnie usunięty"
-            immediate_promo_image_removal_warning: "Obraz promocyjny zostanie usunięty natychmiast po potwierdzeniu."
             immediate_terms_and_conditions_removal_warning: "Plik Warunków zostanie usunięty natychmiast po potwierdzeniu."
             removed_terms_and_conditions_successfully: "Plik warunków korzystania z usługi został pomyślnie usunięty"
     insufficient_stock: "Niewystarczające zapasy, pozostało tylko %{on_hand}"

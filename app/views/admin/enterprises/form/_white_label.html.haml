@@ -5,20 +5,9 @@
     = f.label :hide_ofn_navigation, t('.hide_ofn_navigation')
   .thirteen.columns
     = f.check_box :hide_ofn_navigation, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "white_label_logo" }
-    
+
 %div{id: "white_label_logo"}
-  .row
-    .three.columns.alpha
-      = f.label :white_label_logo, t('.upload_logo')
-      %br
-      217 x 44 pixels
-    .thirteen.columns
-      = image_tag @object.white_label_logo_url if @object.white_label_logo.present?
-      %br
-      = f.file_field :white_label_logo, accept: "image/*"
-      - if @object.white_label_logo.present?
-        %button.button.small.red{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_logo" }
-          = t('.remove_logo')
+  = render "admin/shared/attachment_field", attachment_url: @object.white_label_logo_url, attachment_name: :white_label_logo, f: f
 
   - if @object.white_label_logo.present?
     .row
@@ -26,12 +15,6 @@
         = f.label :white_label_logo_link, t('.white_label_logo_link_label')
       .thirteen.columns
         = f.text_field :white_label_logo_link
-    
-
-- if @object.white_label_logo.present?
-  = render ConfirmModalComponent.new(id: "remove_logo", confirm_reflexes: "click->WhiteLabel#remove_logo" ) do
-    .margin-bottom-30
-      = t('.remove_logo_confirm')
 
 // Hide groups tab boolean attribute
 
@@ -50,7 +33,7 @@
     = check_box_tag :custom_tab, "true", checked, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "custom_tab_form" }
 
 %div{id: "custom_tab_form"}
-  = f.fields_for :custom_tab, @object.custom_tab do |custom_tab_form|  
+  = f.fields_for :custom_tab, @object.custom_tab do |custom_tab_form|
     .row
       .three.columns.alpha
         = custom_tab_form.label :title, t('.custom_tab_title')

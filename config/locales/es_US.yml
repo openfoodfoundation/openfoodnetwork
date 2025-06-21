@@ -432,6 +432,7 @@ es_US:
         inherits_properties: "¿Hereda propiedades?"
         import_date: "Fecha de importación"
         actions: Acciones
+        tags: Etiquetas
       columns_selector:
         unit: Unidad
         price: Precio
@@ -671,6 +672,8 @@ es_US:
           label: Productoras
         categories:
           label: Categorías
+        tags:
+          label: Etiquetas
         search: Buscar
       sort:
         pagination:
@@ -682,6 +685,7 @@ es_US:
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría del impuesto"
         producer_field_name: "Productora"
+        add_a_tag: Add a tag
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -740,7 +744,6 @@ es_US:
         no_name: Sin nombre
         blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
-        reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias
@@ -911,12 +914,6 @@ es_US:
         images:
           legend: "Imágenes"
           logo: Logo
-          promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
-          promo_image_note1: 'ATENCIÓN:'
-          promo_image_note2: La imagen será recortada a  1200 x 260.
-          promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
-          remove_logo: "Eliminar la imagen"
-          remove_promo_image: "Eliminar la imagen"
         inventory_settings:
           legend: "Configuración del Inventario"
           text1: Puedes optar por administrar los niveles de stock y los precios a través de tu
@@ -1292,6 +1289,17 @@ es_US:
       resume:
         could_not_resume_the_order: No se pudo reanudar el pedido
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Eliminar la imagen"
+        logo_remove_confirm: "El logotipo se eliminará inmediatamente después de confirmar."
+        promo_image_note1: 'ATENCIÓN:'
+        promo_image_note2: La imagen será recortada a  1200 x 260.
+        promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
+        promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
+        promo_image_remove: "Eliminar la imagen"
+        promo_image_remove_confirm: "La imagen promocional se eliminará inmediatamente después de confirmar."
+        white_label_logo_remove: "Eliminar la imagen"
       user_guide_link:
         user_guide: Manual de Usuario
       enterprises_hubs_tabs:
@@ -1506,6 +1514,9 @@ es_US:
         stripe_connect_cancelled: "Se ha cancelado la conexión a Stripe"
         stripe_connect_success: "La cuenta Stripe se ha conectado correctamente"
         stripe_connect_fail: Lo sentimos, la conexión de tu cuenta Stripe ha fallado
+        remove_logo_success: "Logotipo eliminado con éxito"
+        remove_promo_image_success: "Imagen promocional eliminada con éxito"
+        remove_white_label_logo_success: "Logotipo eliminado con éxito"
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
@@ -1574,7 +1585,6 @@ es_US:
         terms_and_conditions: "Términos y Condiciones"
     errors:
       invalid_email: "Introduce un email válido"
-      voucher_not_found: no encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -3007,10 +3017,6 @@ es_US:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logotipo eliminado con éxito"
-            immediate_logo_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
-            removed_promo_image_successfully: "Imagen promocional eliminada con éxito"
-            immediate_promo_image_removal_warning: "La imagen promocional se eliminará inmediatamente después de confirmar."
             immediate_terms_and_conditions_removal_warning: "El archivo de términos y condiciones se eliminará inmediatamente después de que confirme."
             removed_terms_and_conditions_successfully: "Archivo de términos y condiciones eliminado correctamente"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
@@ -4106,3 +4112,5 @@ es_US:
     pagination:
       next: Siguiente
       previous: Anterior
+    tag_list_input:
+      default_placeholder: Add a tag

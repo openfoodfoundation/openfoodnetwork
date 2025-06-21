@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ProxyOrder, type: :model do
+RSpec.describe ProxyOrder do
   describe "cancel" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:subscription) { create(:subscription) }
@@ -116,7 +116,7 @@ RSpec.describe ProxyOrder, type: :model do
           allow(Spree::OrderMailer).to receive(:cancel_email) {
                                          double(:email, deliver_later: true)
                                        }
-          break unless order.next! while !order.completed?
+          Orders::WorkflowService.new(order).complete!
           order.cancel
           order.reload
         end
@@ -130,7 +130,7 @@ RSpec.describe ProxyOrder, type: :model do
       end
 
       context "and the order has not been cancelled" do
-        before { break unless order.next! while !order.completed? }
+        before { Orders::WorkflowService.new(order).complete! }
 
         it "returns true and clears canceled_at" do
           expect(proxy_order.resume).to be true
@@ -159,7 +159,7 @@ RSpec.describe ProxyOrder, type: :model do
           allow(Spree::OrderMailer).to receive(:cancel_email) {
                                          double(:email, deliver_later: true)
                                        }
-          break unless order.next! while !order.completed?
+          Orders::WorkflowService.new(order).complete!
           order.cancel
         end
 
@@ -172,7 +172,7 @@ RSpec.describe ProxyOrder, type: :model do
       end
 
       context "and the order has not been cancelled" do
-        before { break unless order.next! while !order.completed? }
+        before { Orders::WorkflowService.new(order).complete! }
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false

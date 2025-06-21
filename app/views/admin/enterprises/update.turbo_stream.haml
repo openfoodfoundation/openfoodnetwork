@@ -1,0 +1,5 @@
+= turbo_stream.remove enterprise_attachment_removal_modal_id
+= turbo_stream.update "flashes" do
+  = render partial: "admin/shared/flashes", locals: { flashes: flash } if defined? flash
+= turbo_stream.update enterprise_attachment_removal_panel_id do
+  = render partial: "admin/enterprises/form/#{enterprise_attachment_removal_panel}", locals: { f: ActionView::Helpers::FormBuilder.new(:enterprise, @enterprise, self, {}), enterprise: @enterprise }
