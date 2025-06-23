@@ -202,6 +202,8 @@ module Openfoodnetwork
     config.assets.precompile += ['mail.scss']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
+    config.assets.paths += ['app/assets/images']
+
     # Highlight code that triggered database queries in logs.
     config.active_record.verbose_query_logs = ENV.fetch("VERBOSE_QUERY_LOGS", false)
 
