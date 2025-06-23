@@ -24,6 +24,7 @@ end
 
 # Configure Capybara to use :cuprite_ofn driver by default
 Capybara.default_driver = Capybara.javascript_driver = :cuprite_ofn
+Capybara.default_max_wait_time = 5 if ENV['TEST']
 
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
