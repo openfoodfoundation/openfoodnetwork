@@ -64,6 +64,13 @@ module CheckoutHelper
 
   def place_order
     click_on "Complete order"
-    expect(page).to have_content "Back To Store"
+    start_time = Time.current
+
+    expect(page).to have_current_path(/#{order_path(order)}/, wait: 5)
+
+    elapsed = Time.current - start_time
+    puts "---> Capybara required #{elapsed.round(2)} seconds for the URL to change!!"
+
+    expect(page).to have_selector(".button", text: "Back To Store")
   end
 end
