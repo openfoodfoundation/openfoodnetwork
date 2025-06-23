@@ -237,6 +237,12 @@ RSpec.describe ProducerMailer do
         expect(table).not_to have_selector("th", text: "Last Name")
         expect(table).not_to have_selector("th", text: "Phone")
         expect(table).not_to have_selector("th", text: "Email")
+
+        row = parsed_email.find("table.order-summary.customer-order tbody tr")
+        expect(row).not_to have_selector("td", text: order.billing_address.phone)
+        expect(row).not_to have_selector("td", text: order.customer.email)
+        expect(row).not_to have_selector("td", text: order.billing_address.lastname)
+        expect(row).not_to have_selector("td", text: order.billing_address.firstname)
       end
     end
   end
