@@ -64,6 +64,9 @@ module OpenFoodNetwork
       "variant_tag" => <<~DESC,
         Variant Tag are available on the Bulk Edit Products page.
       DESC
+      "hub_address" => <<~DESC,
+        Show the hub's address as shipping address on pickup orders.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
