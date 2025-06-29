@@ -11,8 +11,8 @@ RSpec.describe '
   include WebHelper
 
   let!(:hub1) { create(:distributor_enterprise, name: 'My hub1') }
-  let!(:hub1_v1) { create(:variant, supplier_id: hub1.id) }
-  let!(:hub1_v2) { create(:variant, supplier_id: hub1.id) }
+  let!(:hub1_v1) { create(:variant, supplier: hub1) }
+  let!(:hub1_v2) { create(:variant, supplier: hub1) }
   let(:order_cycle) do
     create(
       :simple_order_cycle,
