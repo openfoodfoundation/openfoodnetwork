@@ -263,7 +263,7 @@ module Spree
     def add_order_cycle_management_abilities(user)
       can [:admin, :index], OrderCycle do |order_cycle|
         OrderCycle.visible_by(user).include?(order_cycle) ||
-          order_cycle.orders.any? { |order| can_edit_as_producer(order, user) }
+          order_cycle.orders.editable_by_producers(user.enterprises).exists?
       end
 
       can [
@@ -294,10 +294,10 @@ module Spree
         cannot?(:manage_order_sections, order) && can_edit_as_producer(order, user)
       end
 
-      can [:index], Spree::Order do |order|
+      can [:index], Spree::Order do
         user.admin? ||
           user.enterprises.any?(&:is_distributor) ||
-          can_edit_as_producer(order, user)
+          user.enterprises.distributors.where(enable_producers_to_edit_orders: true).exist?
       end
 
       can [:create], Spree::Order
