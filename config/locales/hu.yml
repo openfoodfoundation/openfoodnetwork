@@ -1653,7 +1653,7 @@ hu:
       email_confirmation: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{email}."
       not_visible: "%{enterprise} nem látható, ezért nem található a térképen vagy a keresésekben"
     reports:
-      none: egyik sem
+      none: n.a.
       deprecated: "Ez a jelentés elavult, és egy későbbi kiadásban eltávolításra kerül."
       hidden_field: "< Rejtett >"
       unitsize: EGYSÉGMÉRET
@@ -2240,9 +2240,9 @@ hu:
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "Ügyelj arra, hogy ha törlöd vagy módosítod az Open Food Network által használt alapvető sütiket, a webhely nem fog működni, nem tudsz semmit sem a kosárba tenni, és fizetni sem fogsz tudni."
     cookies_banner:
-      cookies_usage: "Ez az oldal úgynevezett sütiket (cookie-kat) használ annak érdekében, hogy az oldalon való navigációt zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használod az oldalt, hogy javíthassuk az oldal működését."
+      cookies_usage: "Ez az oldal sütiket használ a zökkenőmentes és biztonságos navigációhoz és az oldal működésének javításához."
       cookies_definition: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
-      cookies_desc: "Csak olyan sütiket használunk, amelyek az élelmiszerek online értékesítéséhez/vásárlásához szükségesek. Az adataidat nem adjuk el senkinek. A sütiket elsősorban azért használjuk, hogy megjegyezzük ki vagy ha „bejelentkezel” a szolgáltatásba, vagy hogy emlékezzünk az általad kosárba tett termékekre. Még akkor is, ha nem kattintottál a „Sütik elfogadása\" gombra, feltételezzük, hogy hozzájárulsz ahhoz, hogy a weboldal működéséhez nélkülözhetetlen sütiket tároljuk, különben nem használható az oldal."
+      cookies_desc: "Csak az online értékesítéshez/vásárláshoz szükséges sütiket használjuk. Ezek segítenek megjegyezni a bejelentkezést és a kosár tartalmát. Adataidat nem adjuk el. Még ha nem is fogadod el a sütiket, a működéshez elengedhetetleneket akkor is használjuk, különben az oldal nem működne."
       cookies_policy_link_desc: "Ha többet szeretnél megtudni, olvasd el a "
       cookies_policy_link: "sütikre vonatkozó szabályzatot"
       cookies_accept_button: "Sütik elfogadása"
@@ -3012,7 +3012,7 @@ hu:
   report_header_user: Felhasználó
   report_header_email: Email
   report_header_status: Státusz
-  report_header_comments: Hozzászólások
+  report_header_comments: Vevői megjegyzés
   report_header_first_name: Keresztnév
   report_header_last_name: Vezetéknév
   report_header_suburb: Település
@@ -3039,7 +3039,7 @@ hu:
   report_header_hub_address_state_name: "Átvételi Pont megye"
   report_header_code: Kód
   report_header_paid: Fizetett?
-  report_header_delivery: Áruátadás?
+  report_header_delivery: Kiszállítás?
   report_header_shipping: Szállítás
   report_header_shipping_instructions: Szállítási utasítások
   report_header_ship_street: Szállítási utca

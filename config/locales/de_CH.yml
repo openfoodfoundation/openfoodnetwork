@@ -1846,17 +1846,18 @@ de_CH:
   invoice_column_qty: "Menge"
   invoice_column_unit_price_with_taxes: "Stückpreis (inkl. MwSt.)"
   invoice_column_unit_price_without_taxes: "Stückpreis (ohne MwSt.)"
-  invoice_column_price_with_taxes: "Gesamtpreis (inkl. Steuern)"
-  invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
+  invoice_column_price_with_taxes: "Gesamtpreis (inkl. MwSt.)"
+  invoice_column_price_without_taxes: "Gesamtpreis (zzgl. MwSt.)"
   invoice_column_price_per_unit_without_taxes: "Preis pro Einheit (ohne MwSt.)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
-  tax_total: "davon Steuern (%{rate}):"
+  tax_total: "davon MwSt. (%{rate}):"
   invoice_shipping_category_delivery: "Lieferung"
   invoice_shipping_category_pickup: "Abholen"
-  total_excl_tax: "Netto (zzgl. Steuern):"
-  total_incl_tax: "GESAMT (inkl. Steuern):"
+  total_excl_tax: "Netto (zzgl. MwSt.):"
+  total_incl_tax: "Gesamt (inkl. MwSt.):"
+  total_all_tax: "Summe MwSt.:"
   abn: "MWST nr."
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
@@ -2799,9 +2800,9 @@ de_CH:
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
   report_header_tax_category: "Steuerkategorie"
-  report_header_total_tax: "Summe Steuern (%{currency_symbol})"
-  report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
-  report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
+  report_header_total_tax: "Summe MwSt. (%{currency_symbol})"
+  report_header_total_excl_tax: "Summe exkl. MwSt. (%{currency_symbol})"
+  report_header_total_incl_tax: "Summe inkl. MwSt. (%{currency_symbol})"
   report_header_total_orders: "Anzahl der Bestellungen"
   report_header_enterprise: Unternehmen
   report_header_enterprise_fee_name: Name
@@ -2868,6 +2869,7 @@ de_CH:
   report_header_item_fees_price: "Produkt + Gebühren (%{currency})"
   report_header_admin_handling_fees: "Bearbeitungsgebühr (%{currency})"
   report_header_ship_price: "Liefergebühr (%{currency})"
+  report_header_total_tax_on_product: "Mwst. auf das Produkt ( %{currency} )"
   report_header_pay_fee_price: "Zahlungsgebühr (%{currency})"
   report_header_total_price: "Gesamt (%{currency})"
   report_header_product_total_price: "Produkte gesamt (%{currency})"
@@ -2883,8 +2885,11 @@ de_CH:
   report_header_total_max: Gesamt max
   report_header_total_units: Gesamteinheiten
   report_header_sum_max_total: "Summe Max. Summe"
-  report_header_total_excl_vat: "Summe exkl. Steuern (%{currency_symbol})"
-  report_header_total_incl_vat: "Summe inkl. Steuern (%{currency_symbol})"
+  report_header_total_excl_vat: "Summe exkl. MwSt. (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Gesamtgebühren exkl. MwSt. ( %{currency_symbol} )"
+  report_header_total_tax_on_fees: "MwSt. auf Gebühren ( %{currency_symbol} )"
+  report_header_total_incl_vat: "Summe inkl. MwSt. (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Gesamtbetrag exkl. Gebühren und MwSt. ( %{currency_symbol} )"
   report_header_temp_controlled: Temperaturüberwachte Artikel?
   report_header_shipment_state: "Lieferstatus"
   report_header_shipping_method: "Lieferoption"
@@ -2892,14 +2897,14 @@ de_CH:
   report_header_not_confirmed: Nicht bestätigt
   report_header_gst_on_income: Umsatzsteuer auf Einkommen
   report_header_gst_free_income: Unbesteuertes Einkommen
-  report_header_total_untaxable_produce: Summe nicht steuerpflichtiger Produkte (keine Steuer)
-  report_header_total_taxable_produce: Summe steuerpflichtiger Produkte (inkl. Steuern)
-  report_header_total_untaxable_fees: Summe nicht steuerpflichtiger Gebühren (keine Steuern)
-  report_header_total_taxable_fees: Summe steuerpflichtiger Gebühren (inkl. Steuern)
+  report_header_total_untaxable_produce: Summe nicht steuerpflichtiger Produkte (keine MwSt.)
+  report_header_total_taxable_produce: Summe steuerpflichtiger Produkte (inkl. MwSt.)
+  report_header_total_untaxable_fees: Summe nicht steuerpflichtiger Gebühren (keine MwSt.)
+  report_header_total_taxable_fees: Summe steuerpflichtiger Gebühren (inkl. Mwst.)
   report_header_delivery_shipping_cost: Lieferkosten (inkl. MwSt.)
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
-  report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
-  report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine MwSt.)
+  report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. MwSt.)
   report_header_voucher_label: Gutscheinetikett
   report_header_voucher_amount: "Gutscheinbetrag ( %{currency_symbol} )"
   report_xero_configuration: Xero-Konfiguration
