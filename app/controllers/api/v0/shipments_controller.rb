@@ -113,9 +113,10 @@ module Api
       def scoped_variant(variant_id)
         variant = Spree::Variant.find(variant_id)
 
-        if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, @order.distributor)
-          OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
-        end
+        OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(
+          variant,
+          inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, @order.distributor)
+        )
 
         variant
       end
