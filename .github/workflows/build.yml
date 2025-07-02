@@ -412,3 +412,4 @@ jobs:
         run: |
           git fetch --no-tags origin master:master
           bundle exec undercover
+        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch
