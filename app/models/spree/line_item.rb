@@ -296,9 +296,10 @@ module Spree
     end
 
     def scope_variant
-      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
-        scoper.scope(variant)
-      end
+      scoper.scope(
+        variant,
+        inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
+      )
 
       variant
     end

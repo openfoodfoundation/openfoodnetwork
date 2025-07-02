@@ -195,9 +195,10 @@ module Spree
         states = {}
         units.group_by(&:state).each { |state, iu| states[state] = iu.count }
 
-        if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
-          scoper.scope(variant)
-        end
+        scoper.scope(
+          variant,
+          inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
+        )
 
         OpenStruct.new(variant:, quantity: units.length, states:)
       end
