@@ -34,9 +34,15 @@ RSpec.describe SuppliedProductImporter do
 
     before do
       taxon.save!
+
+      stub_request(:get, "https://cd.net/tomato.png?v=5").to_return(
+        status: 200,
+        body: black_logo_path.read
+      )
+      allow(product).to receive(:image).and_return("https://cd.net/tomato.png?v=5")
     end
 
-    it "stores a new Spree Product and Variant" do
+    it "stores a new Spree Product and Variant with image" do
       expect { subject }.to change {
         Spree::Product.count
       }.by(1)
@@ -49,6 +55,10 @@ RSpec.describe SuppliedProductImporter do
       expect(subject.variant_unit_scale).to eq(nil)
       expect(subject.variant_unit_with_scale).to eq("items")
       expect(subject.unit_value).to eq(1)
+
+      expect(subject.product.image).to be_present
+      expect(subject.product.image.attachment).to be_attached
+      expect(subject.product.image.url(:product)).to match(/^http.*tomato\.png/)
     end
   end
 
@@ -107,7 +117,7 @@ RSpec.describe SuppliedProductImporter do
       )
     end
 
-    it "creates a new Spree::Product" do
+    it "builds an unsaved Spree::Product with all mapped attributes" do
       product = importer.import_product(supplied_product, supplier)
 
       expect(product).to be_a(Spree::Product)
@@ -116,7 +126,6 @@ RSpec.describe SuppliedProductImporter do
       expect(product.variant_unit).to eq("weight")
       expect(product.image).to be_present
       expect(product.image.attachment).to be_attached
-      expect(product.image.url(:product)).to match /^http.*tomato\.png/
     end
 
     describe "taxon" do
