@@ -57,7 +57,7 @@ module DfcProvider
 
     def platforms
       id = DfcProvider::Engine.routes.url_helpers.enterprise_platforms_url(current_enterprise.id)
-      platforms = PLATFORM_IDS.keys.map(&method(:platform))
+      platforms = available_platforms.map(&method(:platform))
 
       {
         '@context': "https://cdn.startinblox.com/owl/context-bis.jsonld",
@@ -67,6 +67,10 @@ module DfcProvider
           '@list': platforms,
         }
       }
+    end
+
+    def available_platforms
+      PLATFORM_IDS.keys.select(&method(:feature?))
     end
 
     def platform(key)
