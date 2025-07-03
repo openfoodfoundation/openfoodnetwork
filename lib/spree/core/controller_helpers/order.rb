@@ -20,7 +20,11 @@ module Spree
           if order&.line_items.present?
             scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
             order.line_items.each do |li|
-              scoper.scope(li.variant)
+              scoper.scope(
+                li.variant,
+                inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory,
+                                                                           order.distributor)
+              )
             end
           end
 
