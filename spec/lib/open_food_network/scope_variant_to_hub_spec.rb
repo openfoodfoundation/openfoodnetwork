@@ -233,5 +233,13 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
         end
       end
     end
+
+    context "with inventory is disabled" do
+      it "doesn't override the variant" do
+        vo
+        scoper.scope(v, inventory_enabled: false)
+        expect(v.price).to eq(11.11)
+      end
+    end
   end
 end
