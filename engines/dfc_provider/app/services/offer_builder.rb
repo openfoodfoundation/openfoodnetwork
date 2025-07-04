@@ -9,12 +9,7 @@ class OfferBuilder < DfcBuilder
 
     price = DataFoodConsortium::Connector::Price.new(
       value: variant.price.to_f,
-
-      # The DFC measures define only five currencies at the moment.
-      # And they are not standardised enough to align with our ISO 4217
-      # currency codes. So I propose to just use those currency codes instead.
-      # https://github.com/datafoodconsortium/taxonomies/issues/48
-      unit: "dfc-m:#{variant.currency}",
+      unit: price_measure(variant)&.semanticId,
     )
     DataFoodConsortium::Connector::Offer.new(
       id, price:, stockLimitation: stock_limitation(variant),
@@ -37,6 +32,27 @@ class OfferBuilder < DfcBuilder
       offer.price.value
     else
       offer.price
+    end
+  end
+
+  # The DFC measures define only five currencies at the moment.
+  # And they are not standardised enough to align with our ISO 4217
+  # currency codes. So I propose to just use those currency codes instead.
+  # https://github.com/datafoodconsortium/taxonomies/issues/48
+  def self.price_measure(variant)
+    measures = DfcLoader.vocabulary("measures")
+
+    case variant.currency
+    when "AUD"
+      measures.AUSTRALIANDOLLAR
+    when "CAD"
+      measures.CANADIANDOLLAR
+    when "EUR"
+      measures.EURO
+    when "GBP"
+      measures.POUNDSTERLING
+    when "USD"
+      measures.USDOLLAR
     end
   end
 end

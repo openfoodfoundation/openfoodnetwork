@@ -30,6 +30,10 @@ module Spree
       preferences.transform_keys(&:to_sym)
     end
 
+    def respond_to_missing?(method_name, include_private = false)
+      @provider.respond_to?(method_name, include_private) || super
+    end
+
     def method_missing(method, *args)
       if @provider.nil? || !@provider.respond_to?(method)
         super

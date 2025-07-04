@@ -2310,9 +2310,9 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
 brace-expansion@^1.1.7:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
-  integrity sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.12.tgz#ab9b454466e5a8cc3a187beaad580412a9c5b843"
+  integrity sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
@@ -4539,10 +4539,10 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-hotkeys-js@^3.13.11:
-  version "3.13.11"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.13.11.tgz#d2480f052d5e114f7bf3469f035ae1f9c73a6f5d"
-  integrity sha512-8kCCodk9rI8iPhlaBtaeTvC/er/tjC1/pCSK+/XeiQikxCJkw6jprMCk+xkKWc5F3PiZM9JegfUxi/RkZ/UbqA==
+hotkeys-js@^3.13.14:
+  version "3.13.14"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.13.14.tgz#735e9cb533915ac6db2176c160f02226ed641e5a"
+  integrity sha512-jmWwEP3twlpPV2/WpzuQzJTg/0MRjWlvKJScEREueIuzoMJ6gmqNrv6sm1WIpW+3g0TzDmQpj2pX8HvYPx90hw==
 
 hpack.js@^2.1.6:
   version "2.1.6"

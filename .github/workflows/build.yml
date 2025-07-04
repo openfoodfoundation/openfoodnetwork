@@ -408,3 +408,8 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
           include-hidden-files: true
+      - name: Compare SimpleCov results with Undercover
+        run: |
+          git fetch --no-tags origin master:master
+          bundle exec undercover
+        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch

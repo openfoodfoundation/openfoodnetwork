@@ -209,6 +209,21 @@ RSpec.describe ProducerMailer do
         expect(table).to have_selector("th", text: "Last Name")
       end
     end
+
+    context "validate phone and email" do
+      let(:table_header) do
+        parsed_email.find("table.order-summary.customer-order thead")
+      end
+
+      it 'displays phone and email for the customer' do
+        expect(table_header).to have_selector("th", text: 'Phone') &
+                                have_selector("th", text: 'Email')
+        expect(
+          parsed_email.find("table.order-summary.customer-order tbody tr")
+        ).to have_selector("td", text: order.billing_address.phone) &
+             have_selector("td", text: order.customer.email)
+      end
+    end
   end
 
   context 'when flag show_customer_names_to_suppliers is false' do
@@ -216,10 +231,17 @@ RSpec.describe ProducerMailer do
       order_cycle.coordinator.show_customer_names_to_suppliers = false
     end
 
-    it "does not add customer names in the table" do
+    it "does not add customer names, phone and email in the table" do
       parsed_email.find(".order-summary.customer-order").tap do |table|
         expect(table).not_to have_selector("th", text: "First Name")
         expect(table).not_to have_selector("th", text: "Last Name")
+        expect(table).not_to have_selector("th", text: "Phone")
+        expect(table).not_to have_selector("th", text: "Email")
+
+        expect(parsed_email).not_to have_content order.billing_address.phone
+        expect(parsed_email).not_to have_content order.customer.email
+        expect(parsed_email).not_to have_content order.billing_address.lastname
+        expect(parsed_email).not_to have_content order.billing_address.firstname
       end
     end
   end

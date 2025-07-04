@@ -5,8 +5,9 @@
 Capybara.enable_aria_label = true
 
 # The default wait time is 2 seconds. Small is good for test-driven development
-# ensuring efficient code but CI can be a bit slow. We want to avoid flakiness.
-Capybara.default_max_wait_time = 10 if ENV["CI"]
+# ensuring efficient code but some machines can be a bit slow.
+# And we want to avoid flakiness.
+Capybara.default_max_wait_time = ENV.fetch("CAPYBARA_MAX_WAIT_TIME").to_i
 
 # Normalize whitespaces when using `has_text?` and similar matchers,
 # i.e., ignore newlines, trailing spaces, etc.

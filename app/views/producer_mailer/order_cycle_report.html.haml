@@ -87,6 +87,11 @@
             = t :business_name
         %th.text-right
           = t '.order_number'
+        - if @display_customer_names
+          %th.text-right
+            = t :phone
+          %th.text-right
+            = t :email
     %tbody
       - @customer_line_items.each do |line_item|
         %tr
@@ -109,6 +114,11 @@
               = line_item[:business_name]
           %td
             = line_item[:order_number]
+          - if @display_customer_names
+            %td
+              = line_item[:phone]
+            %td
+              = line_item[:email]
 %p
   = t :producer_mail_text_after
 %p

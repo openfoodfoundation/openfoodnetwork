@@ -36,6 +36,7 @@ RSpec.describe "As a consumer, I want to check unit price information for a prod
       expect(page).to have_selector '.variant-unit-price'
       within '.variant-unit-price' do
         expect(page).to have_selector '.question-mark-icon'
+        expect(page).to have_content("$19,990.00 / kg") # displays the unit price value
       end
       find('.question-mark-icon').click
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
@@ -62,7 +63,10 @@ RSpec.describe "As a consumer, I want to check unit price information for a prod
 
     it "shows/hide the unit price information with the question mark icon in the sidebar" do
       expect(page).to have_selector ".cart-content .question-mark-icon"
-      find(".cart-content .question-mark-icon").click
+      within ".cart-content" do
+        expect(page).to have_content("$19,990.00 / kg") # displays the unit price value
+        find(".question-mark-icon").click
+      end
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
       within '.joyride-tip-guide.question-mark-tooltip' do
         expect(page).to have_content('This is the unit price of this product. ' \
@@ -74,6 +78,8 @@ RSpec.describe "As a consumer, I want to check unit price information for a prod
       expect(page).not_to have_content('This is the unit price of this product. ' \
                                        'It allows you to compare the price of products ' \
                                        'independent of packaging sizes & weights.')
+
+      expect(page).to have_content("$19,990.00 / kg")
     end
   end
 end

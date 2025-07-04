@@ -752,7 +752,7 @@ es:
         update_address: "Actualizar Dirección"
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por email/código"
-        guest_label: "Hacer pedido como invitado"
+        guest_label: "Pedido hecho como invitada"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
     column_preferences:
