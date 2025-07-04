@@ -12,6 +12,7 @@ module OpenFoodNetwork
     def initialize(params, spree_current_user)
       @params = params
       @spree_current_user = spree_current_user
+      @ability = Spree::Ability.new(spree_current_user)
     end
 
     def search
@@ -21,14 +22,14 @@ module OpenFoodNetwork
       scope_to_schedule if params[:schedule_id]
       scope_to_order_cycle if params[:order_cycle_id]
       scope_to_distributor if params[:distributor_id]
-      scope_to_supplier if spree_current_user.can_manage_line_items_in_orders_only?
+      scope_to_supplier if scope_to_supplier?
 
       @variants
     end
 
     private
 
-    attr_reader :params, :spree_current_user
+    attr_reader :params, :spree_current_user, :ability
 
     def search_params
       { product_name_cont: params[:q], sku_cont: params[:q], product_sku_cont: params[:q] }
@@ -45,6 +46,10 @@ module OpenFoodNetwork
 
     def distributor
       @distributor ||= Enterprise.find params[:distributor_id]
+    end
+
+    def order
+      @order ||= Spree::Order.find(params[:order_id])
     end
 
     def scope_to_schedule
@@ -101,6 +106,10 @@ module OpenFoodNetwork
 
     def scope_to_supplier
       @variants = @variants.where(supplier_id: spree_current_user.enterprises.ids)
+    end
+
+    def scope_to_supplier?
+      params[:search_variants_as] == 'supplier' && ability.can?(:edit_as_producer_only, order)
     end
   end
 end

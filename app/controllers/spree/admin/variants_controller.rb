@@ -117,7 +117,7 @@ module Spree
       def variant_search_params
         params.permit(
           :q, :distributor_id, :order_cycle_id, :schedule_id, :eligible_for_subscriptions,
-          :include_out_of_stock
+          :include_out_of_stock, :search_variants_as, :order_id
         ).to_h.with_indifferent_access
       end
 
