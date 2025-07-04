@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
-  disable_ddl_transaction!
-
   module Spree
     class LineItem < ApplicationRecord
       self.table_name = "spree_line_items"
@@ -49,8 +47,9 @@ class UpdateProductNameInLineItems < ActiveRecord::Migration[7.0]
 
     line_items_query.in_batches do |batch|
       batch.each do |line_item|
-        line_item.copy_product_name
-        line_item.save!
+        line_item.update_columns(
+          product_name: variant.product.name
+        )
       end
     end
   end
