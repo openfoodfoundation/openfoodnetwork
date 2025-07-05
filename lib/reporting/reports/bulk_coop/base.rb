@@ -85,7 +85,7 @@ module Reporting
         end
 
         def product_name(line_items)
-          line_items.first.product.name
+          line_items.first.product_name
         end
 
         def remainder(line_items)
