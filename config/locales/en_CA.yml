@@ -1413,9 +1413,9 @@ en_CA:
                 Your Open Food Network account is connected to the Waterloo Food Directory.
                 Changes made to your OFN profile will update your Waterloo Food Directory listing when you click the 'Update listing' button.  For any other changes please contact OFN Support at support@openfoodnetwork.ca.
             link_label: "Update listing"
-            description: "Eligible producers can showcase their regenerative credentials, farming practices and more through a profile listing. Simplifying how buyers can find regenerative produce and connect with producers of interest."
-            link_label_html: "Learn more about Discover Regenerative <i class=\"icon-external-link\"></i>"
-            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
+            description: "Eligible producers can showcase call to actions to Eat Local, Give Local, and/or Grow Local. This simplifies how producers can connect in the Waterloo region around food justice and sovereignty."
+            link_label_html: "Learn more about the Waterloo Food Directory <i class=\"icon-external-link\"></i>"
+            link_url: "https://waterlooregionfood.ca/"
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Allow redemption of VINE vouchers in your shopfront."
