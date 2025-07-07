@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class DfcBuilder
-  def self.catalog_item(variant)
+  def self.catalog_item(variant, include_product: true)
     id = urls.enterprise_catalog_item_url(
       enterprise_id: variant.supplier_id,
       id: variant.id,
     )
-    product = SuppliedProductBuilder.supplied_product(variant)
+    product = SuppliedProductBuilder.supplied_product(variant) if include_product
 
     DataFoodConsortium::Connector::CatalogItem.new(
       id, product:,

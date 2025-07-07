@@ -5,7 +5,7 @@ module Spree
     class AvailabilityValidator < ActiveModel::Validator
       def validate(line_item)
         # OFN specific check for in-memory :skip_stock_check attribute
-        return if line_item.skip_stock_check
+        return if line_item.skip_stock_check || line_item.variant.blank?
 
         quantity_to_validate = line_item.quantity - quantity_in_shipment(line_item)
         return if quantity_to_validate < 1
