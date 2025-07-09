@@ -205,7 +205,7 @@ RSpec.describe ProductsRenderer do
       expect(products_renderer.products_json).to include "998.0"
     end
 
-    context "when inventory is enabled" do
+    context "when inventory is enabled", feature: :inventory do
       it "loads tag_list for variants" do
         products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
                                                  inventory_enabled: true)

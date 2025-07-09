@@ -63,7 +63,7 @@ RSpec.describe Spree::Variant do
       )
     end
 
-    describe "with VariantOverride" do
+    describe "with VariantOverride", feature: :inventory do
       subject(:hub_variant) {
         Spree::Variant.find(variant.id).tap { |v| scoper.scope(v) }
       }

@@ -105,7 +105,7 @@ RSpec.describe Spree::Admin::VariantsController do
         expect(assigns(:variants)).to eq([v1])
       end
 
-      it "applies variant overrides" do
+      it "applies variant overrides", feature: :inventory do
         spree_get :search, q: 'Prod', distributor_id: d.id.to_s
         expect(assigns(:variants)).to eq([v1])
         expect(assigns(:variants).first.on_hand).to eq(44)

@@ -138,7 +138,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
         expect(result.first.price).to eq 5
       end
 
-      it "considers variant overrides with distributor" do
+      it "considers variant overrides with distributor", feature: :inventory do
         distributor = create(:distributor_enterprise)
         product = create(:simple_product, supplier_id: supplier.id, price: 5)
         variant = product.variants.first
