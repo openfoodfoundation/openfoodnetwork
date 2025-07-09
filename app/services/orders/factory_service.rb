@@ -52,6 +52,7 @@ module Orders
         next unless variant = Spree::Variant.find_by(id: li[:variant_id])
 
         scoper.scope(variant)
+
         li[:quantity] = stock_limited_quantity(variant.on_demand, variant.on_hand, li[:quantity])
         li[:price] = variant.price
         build_item_from(li)

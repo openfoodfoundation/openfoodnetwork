@@ -22,7 +22,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
   }
   let(:scoper) { described_class.new(hub) }
 
-  describe "overriding price" do
+  describe "overriding price", feature: :inventory do
     it "returns the overridden price when one is present" do
       vo
       scoper.scope v
@@ -35,7 +35,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
     end
   end
 
-  describe "overriding price_in" do
+  describe "overriding price_in", feature: :inventory do
     it "returns the overridden price when one is present" do
       vo
       scoper.scope v
@@ -48,7 +48,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
     end
   end
 
-  describe "overriding stock levels" do
+  describe "overriding stock levels", feature: :inventory do
     it "returns the overridden stock level when one is present" do
       vo
       scoper.scope v
@@ -60,7 +60,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
       expect(v.on_hand).to eq(1)
     end
 
-    describe "overriding stock on an on_demand variant" do
+    describe "overriding stock on an on_demand variant", feature: :inventory do
       let(:v) { create(:variant, price: 11.11, on_demand: true) }
 
       it "clears on_demand when the stock is overridden" do
@@ -81,7 +81,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
       end
     end
 
-    describe "overriding on_demand" do
+    describe "overriding on_demand", feature: :inventory do
       context "when an override exists" do
         before { vo }
 
@@ -124,7 +124,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
     # in_stock? is indirectly overridden through can_supply?
     #   can_supply? is indirectly overridden by on_demand and total_on_hand
     #   these tests validate this chain is working correctly
-    describe "overriding in_stock?" do
+    describe "overriding in_stock?", feature: :inventory do
       before { v.on_demand = false }
 
       context "when an override exists" do
@@ -173,7 +173,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
       end
     end
 
-    describe "overriding #move" do
+    describe "overriding #move", feature: :inventory do
       context "when override is on_demand" do
         before do
           vo2
@@ -205,7 +205,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
       end
     end
 
-    describe "overriding sku" do
+    describe "overriding sku", feature: :inventory do
       context "when an override exists" do
         before { vo }
 
@@ -232,6 +232,14 @@ RSpec.describe OpenFoodNetwork::ScopeVariantToHub do
           expect(v.sku).to eq "VARIANTSKU"
         end
       end
+    end
+  end
+
+  context "with inventory is disabled" do
+    it "doesn't override the variant" do
+      vo
+      scoper.scope(v)
+      expect(v.price).to eq(11.11)
     end
   end
 end

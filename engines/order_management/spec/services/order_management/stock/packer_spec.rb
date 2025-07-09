@@ -29,7 +29,7 @@ module OrderManagement
         expect(package.backordered.size).to eq 5
       end
 
-      it "accounts for variant overrides" do
+      it "accounts for variant overrides", feature: :inventory do
         variant = order.line_items.first.variant
         variant.on_hand = 0
         variant.on_demand = false

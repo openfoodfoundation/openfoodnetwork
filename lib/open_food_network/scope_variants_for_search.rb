@@ -81,16 +81,25 @@ module OpenFoodNetwork
     end
 
     def scope_to_in_stock_only
-      @variants = @variants.joins(
-        "INNER JOIN spree_stock_items ON spree_stock_items.variant_id = spree_variants.id
-         LEFT JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id AND
-                                        variant_overrides.hub_id = #{distributor.id}"
-      ).where("
-        variant_overrides.on_demand IS TRUE OR
-        variant_overrides.count_on_hand > 0 OR
-        (variant_overrides.on_demand IS NULL AND spree_stock_items.backorderable IS TRUE) OR
-        (variant_overrides.count_on_hand IS NULL AND spree_stock_items.count_on_hand > 0)
-      ")
+      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
+        @variants = @variants.joins(
+          "INNER JOIN spree_stock_items ON spree_stock_items.variant_id = spree_variants.id
+           LEFT JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id AND
+                                          variant_overrides.hub_id = #{distributor.id}"
+        ).where("
+          variant_overrides.on_demand IS TRUE OR
+          variant_overrides.count_on_hand > 0 OR
+          (variant_overrides.on_demand IS NULL AND spree_stock_items.backorderable IS TRUE) OR
+          (variant_overrides.count_on_hand IS NULL AND spree_stock_items.count_on_hand > 0)
+        ")
+      else
+        @variants = @variants.joins(
+          "INNER JOIN spree_stock_items ON spree_stock_items.variant_id = spree_variants.id"
+        ).where("
+          spree_stock_items.backorderable IS TRUE OR
+          spree_stock_items.count_on_hand > 0
+        ")
+      end
     end
 
     def scope_to_in_stock_only?
