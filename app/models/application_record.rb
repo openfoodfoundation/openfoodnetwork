@@ -20,6 +20,10 @@ class ApplicationRecord < ActiveRecord::Base
     if ENV["S3_BUCKET"].present? && variant.service.public?
       variant.processed.url
     else
+      unless variant.blob.persisted?
+        raise "ActiveStorage blob for variant is not persisted. Cannot generate URL."
+      end
+
       url_for(variant)
     end
   end
