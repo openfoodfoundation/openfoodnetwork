@@ -34,9 +34,7 @@ module OrderManagement
       def price_estimate_for(variant, fallback)
         return fallback unless fee_calculator && variant
 
-        scoper.scope(
-          variant, inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, shop)
-        )
+        scoper.scope(variant)
 
         fees = fee_calculator.indexed_fees_for(variant)
         (variant.price + fees).to_d

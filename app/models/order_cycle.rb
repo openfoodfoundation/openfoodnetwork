@@ -290,12 +290,7 @@ class OrderCycle < ApplicationRecord
     items = Spree::LineItem.includes(:variant).joins(:order).merge(orders)
 
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-    items.each do |li|
-      scoper.scope(
-        li.variant,
-        inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
-      )
-    end
+    items.each { |li| scoper.scope(li.variant) }
 
     items
   end

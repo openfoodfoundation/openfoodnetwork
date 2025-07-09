@@ -59,10 +59,7 @@ class CartService
   end
 
   def attempt_cart_add(variant, quantity, max_quantity = nil)
-    scoper.scope(
-      variant,
-      inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order.distributor)
-    )
+    scoper.scope(variant)
 
     return unless valid_variant?(variant)
 

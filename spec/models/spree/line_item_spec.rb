@@ -343,7 +343,7 @@ RSpec.describe Spree::LineItem do
       let!(:line_item) { order.reload.line_items.first }
       let!(:variant) { line_item.variant }
 
-      context "when a variant override applies" do
+      context "when a variant override applies", feature: :inventory do
         let!(:vo) { create(:variant_override, hub: shop, variant:, count_on_hand: 3 ) }
 
         it "draws stock from the variant override" do

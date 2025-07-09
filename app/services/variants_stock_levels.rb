@@ -39,9 +39,7 @@ class VariantsStockLevels
   def scoped_variant(distributor, variant)
     return variant if distributor.blank?
 
-    scoper(distributor).scope(
-      variant, inventory_enabled: OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
-    )
+    scoper(distributor).scope(variant)
     variant
   end
 
