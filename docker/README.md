@@ -5,7 +5,7 @@ Docker is intended to provide a common virtual environment available to all deve
 ## Limitations
 1. The docker environment can't directly control your host system browser, which means that browser specs (under `/spec/system/`) and email previews will not work. You may be able to find a solution with [this article](https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing). If so, please contribute!
 
-2. You can try circumventing this by setting the option `DOCKER=true` on the `.env.test file`, which will disable the `sandbox` mode for Chrome, used for system tests.
+2. You can try circumventing this by setting the option `DOCKER=true` on the `.env.test.local` file, which will disable the `sandbox` mode for Chrome, used for system tests.
 
 ## Installing Docker
 ### Requirements
