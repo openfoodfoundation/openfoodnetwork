@@ -21,20 +21,18 @@ module Permissions
       filtered_orders(orders)
     end
 
-    def managed_or_coordinated_orders_where_clause
-      Spree::Order.where(
-        managed_orders_where_values.or(coordinated_orders_where_values)
-      )
-    end
-
     # Any orders that the user can edit
     def editable_orders
-      orders = Spree::Order.joins(:distributor).where(
-        id: produced_orders.select(:id),
-        distributor: { enable_producers_to_edit_orders: true }
-      ).or(
-        managed_or_coordinated_orders_where_clause
-      )
+      orders = if @user.can_manage_line_items_in_orders_only?
+                 Spree::Order.joins(:distributor).where(
+                   id: produced_orders.select(:id),
+                   distributor: { enable_producers_to_edit_orders: true }
+                 )
+               else
+                 Spree::Order.where(
+                   managed_orders_where_values.or(coordinated_orders_where_values)
+                 )
+               end
 
       filtered_orders(orders)
     end
@@ -45,13 +43,13 @@ module Permissions
 
     # Any line items that I can edit
     def editable_line_items
-      Spree::LineItem.editable_by_producers(
-        @permissions.managed_enterprises.select("enterprises.id")
-      ).or(
-        Spree::LineItem.where(
-          order_id: filtered_orders(managed_or_coordinated_orders_where_clause).select(:id)
+      if @user.can_manage_line_items_in_orders_only?
+        Spree::LineItem.editable_by_producers(
+          @permissions.managed_enterprises.select("enterprises.id")
         )
-      )
+      else
+        Spree::LineItem.where(order_id: editable_orders.select(:id))
+      end
     end
 
     private

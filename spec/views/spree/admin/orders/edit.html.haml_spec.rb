@@ -14,19 +14,14 @@ RSpec.describe "spree/admin/orders/edit.html.haml" do
     Spree::Config[:enable_invoices?] = original_config
   end
 
-  let(:current_test_user) { create(:admin_user) }
-
   before do
     controller.singleton_class.class_eval do
-      attr_accessor :current_test_user
-
       def current_ability
-        Spree::Ability.new(current_test_user)
+        Spree::Ability.new(Spree::User.new)
       end
     end
 
-    controller.current_test_user = current_test_user
-    allow(view).to receive_messages spree_current_user: current_test_user
+    allow(view).to receive_messages spree_current_user: create(:admin_user)
   end
 
   context "when order is complete" do
@@ -59,6 +54,7 @@ RSpec.describe "spree/admin/orders/edit.html.haml" do
       it "doesn't display a table of out of stock line items" do
         render
 
+        expect(rendered).not_to have_content "Out of Stock"
         expect(rendered).not_to have_selector ".insufficient-stock-items",
                                               text: out_of_stock_line_item.variant.display_name
       end
@@ -100,7 +96,7 @@ RSpec.describe "spree/admin/orders/edit.html.haml" do
       it "doesn't display a table of out of stock line items" do
         render
 
-        expect(rendered).not_to have_selector ".insufficient-stock-items"
+        expect(rendered).not_to have_content "Out of Stock"
       end
     end
 
