@@ -48,7 +48,7 @@ class AffiliateSalesQuery
 
     def fields
       <<~SQL.squish
-        spree_products.name AS product_name,
+        product_name,
         spree_variants.display_name AS unit_name,
         spree_products.variant_unit AS unit_type,
         spree_variants.unit_value AS units,
