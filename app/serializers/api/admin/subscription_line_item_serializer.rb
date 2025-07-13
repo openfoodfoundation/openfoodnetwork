@@ -7,7 +7,7 @@ module Api
                  :in_open_and_upcoming_order_cycles
 
       def description
-        "#{object.product_name} - #{object.variant.full_name}"
+        "#{object.variant.product.name} - #{object.variant.full_name}"
       end
 
       def price_estimate
