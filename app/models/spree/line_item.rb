@@ -25,6 +25,7 @@ module Spree
     before_validation :copy_tax_category
     before_validation :copy_dimensions
     before_validation :copy_product_name, on: :create
+    before_validation :copy_variant_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -280,6 +281,12 @@ module Spree
       return if variant.nil? || variant.product.nil?
 
       self.product_name = variant.product.name
+    end
+
+    def copy_variant_name
+      return if variant.nil?
+
+      self.variant_name = variant.full_name
     end
 
     def update_inventory_before_destroy

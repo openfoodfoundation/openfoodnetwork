@@ -41,7 +41,7 @@ module Reporting
         end
 
         def variant_name
-          proc { |line_items| line_items.first.variant.full_name }
+          proc { |line_items| line_items.first.variant_name }
         end
 
         def variant_sku
