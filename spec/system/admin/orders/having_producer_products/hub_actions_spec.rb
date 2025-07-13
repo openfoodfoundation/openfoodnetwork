@@ -2,44 +2,40 @@
 
 require 'system_helper'
 
-RSpec.describe 'As a producer who have the ability to update orders' do
+RSpec.describe '
+  As a hub (producer seller) who have the ability to update
+  orders having their products
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
 
-  let!(:supplier1) { create(:supplier_enterprise, name: 'My supplier1') }
-  let!(:supplier2) { create(:supplier_enterprise, name: 'My supplier2') }
-  let!(:supplier1_v1) { create(:variant, supplier_id: supplier1.id) }
-  let!(:supplier1_v2) { create(:variant, supplier_id: supplier1.id) }
-  let!(:supplier2_v1) { create(:variant, supplier_id: supplier2.id) }
+  let!(:hub1) { create(:distributor_enterprise, name: 'My hub1') }
+  let!(:hub1_v1) { create(:variant, supplier: hub1) }
+  let!(:hub1_v2) { create(:variant, supplier: hub1) }
   let(:order_cycle) do
-    create(:simple_order_cycle, distributors: [distributor], variants: [supplier1_v1, supplier1_v2])
+    create(
+      :simple_order_cycle,
+      distributors: [distributor],
+      variants: [hub1_v1, hub1_v2],
+      coordinator: distributor
+    )
   end
-  let!(:order_containing_supplier1_products) do
+  let!(:order_containing_hub1_products) do
     o = create(
       :completed_order_with_totals,
       distributor:, order_cycle:,
-      user: supplier1_ent_user, line_items_count: 1
+      line_items_count: 1
     )
-    o.line_items.first.update_columns(variant_id: supplier1_v1.id)
+    o.line_items.first.update_columns(variant_id: hub1_v1.id)
     o
   end
-  let!(:order_containing_supplier2_v1_products) do
-    o = create(
-      :completed_order_with_totals,
-      distributor:, order_cycle:,
-      user: supplier2_ent_user, line_items_count: 1
-    )
-    o.line_items.first.update_columns(variant_id: supplier2_v1.id)
-    o
-  end
-  let(:supplier1_ent_user) { create(:user, enterprises: [supplier1]) }
-  let(:supplier2_ent_user) { create(:user, enterprises: [supplier2]) }
+  let(:hub1_ent_user) { create(:user, enterprises: [hub1]) }
 
-  context "As supplier1 enterprise user" do
-    before { login_as(supplier1_ent_user) }
-    let(:order) { order_containing_supplier1_products }
-    let(:user) { supplier1_ent_user }
+  context "As hub1 enterprise user" do
+    before { login_as(hub1_ent_user) }
+    let(:order) { order_containing_hub1_products }
+    let(:user) { hub1_ent_user }
 
     describe 'orders index page' do
       before { visit spree.admin_orders_path }
@@ -47,19 +43,16 @@ RSpec.describe 'As a producer who have the ability to update orders' do
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }
 
-        it "should not allow producer to view orders page" do
-          expect(page).to have_content 'Unauthorized'
+        it "does not allow producer to view orders page" do
+          expect(page).to have_content 'NO ORDERS FOUND'
         end
       end
 
       context "when distributor allows the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }
-        it "should not allow to add new orders" do
-          expect(page).not_to have_link('New Order')
-        end
 
         context "when distributor doesn't allow to view customer details" do
-          it "should allow producer to view orders page with HIDDEN customer details" do
+          it "allows producer to view orders page with HIDDEN customer details" do
             within('#listing_orders tbody') do
               expect(page).to have_selector('tr', count: 1) # Only one order
               # One for Email, one for Name
@@ -76,7 +69,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
               show_customer_names_to_suppliers: true
             )
           end
-          it "should allow producer to view orders page with customer details" do
+          it "allows producer to view orders page with customer details" do
             within('#listing_orders tbody') do
               name = order.bill_address&.full_name_for_sorting
               email = order.email
@@ -101,16 +94,16 @@ RSpec.describe 'As a producer who have the ability to update orders' do
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }
 
-        it "should not allow producer to view orders page" do
+        it "does not allow producer to view orders page" do
           expect(page).to have_content 'Unauthorized'
         end
       end
 
       context "when distributor allows to edit orders" do
         let(:distributor) { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }
-        let(:product) { supplier1_v2.product }
+        let(:product) { hub1_v2.product }
 
-        it "should allow me to manage my products in the order" do
+        it "allows me to manage my products in the order" do
           expect(page).to have_content 'Add Product'
 
           # Add my product

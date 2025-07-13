@@ -6,7 +6,7 @@
 - content_for :page_actions do
   - if can?(:fire, @order)
     %li= event_links(@order)
-  - if spree_current_user.can_manage_orders?
+  - if can?(:manage_order_sections, @order)
     = render partial: 'spree/admin/shared/order_links'
   - if can?(:admin, Spree::Order)
     %li
@@ -14,7 +14,7 @@
         = t(:back_to_orders_list)
 
 = render partial: "spree/admin/shared/order_page_title"
-- if spree_current_user.can_manage_orders?
+- if can?(:manage_order_sections, @order)
   = render partial: "spree/admin/shared/order_tabs", locals: { current: 'Order Details' }
 
 %div
@@ -22,7 +22,13 @@
 
   = admin_inject_shops(@shops, module: 'admin.orders')
   = admin_inject_order_cycles(@order_cycles)
-  %div{"ng-controller" => "orderCtrl", "ofn-distributor-id" => @order.distributor_id, "ofn-order-cycle-id" => @order.order_cycle_id}
+  %div{
+    "ng-controller" => "orderCtrl",
+    "ofn-distributor-id" => @order.distributor_id,
+    "ofn-order-cycle-id" => @order.order_cycle_id,
+    "ofn-search-variants-as" => (can?(:manage_order_sections, @order) ? 'hub' : 'supplier'),
+    "ofn-order-id" => @order.id,
+  }
 
     = render :partial => 'add_product' if can?(:update, @order)
 

@@ -102,9 +102,8 @@ module Api
       end
 
       def display_value_for_producer(order, value)
-        filter_by_supplier =
-          order.distributor&.enable_producers_to_edit_orders &&
-          options[:current_user]&.can_manage_line_items_in_orders_only?
+        @ability ||= Spree::Ability.new(options[:current_user])
+        filter_by_supplier = @ability.can?(:edit_as_producer_only, order)
         return value unless filter_by_supplier
 
         if order.distributor&.show_customer_names_to_suppliers

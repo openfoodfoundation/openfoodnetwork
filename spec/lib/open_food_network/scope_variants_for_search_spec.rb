@@ -68,10 +68,11 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
       it "returns all products distributed through that distributor" do
         expect{ result }.to query_database [
           "Enterprise Load",
+          "EnterpriseGroup Load",
+          "OrderCycle Exists?",
+          "Enterprise Load",
           "VariantOverride Load",
-          "SQL",
-          "Enterprise Pluck",
-          "Enterprise Load"
+          "SQL"
         ]
 
         expect(result).to include v4
@@ -185,12 +186,18 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
     end
 
     context "when search is done by the producer allowing to edit orders" do
-      let(:params) { { q: "product" } }
+      let(:order) { create(:order) }
+      let(:params) { { q: "product", search_variants_as: 'supplier', order_id: order.id } }
       let(:producer) { create(:supplier_enterprise) }
+      let(:ability) { instance_double('Spree::Ability', can?: true) }
       let!(:spree_current_user) {
-        instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id),
-                                       can_manage_line_items_in_orders_only?: true)
+        instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id))
       }
+
+      before do
+        allow(Spree::Ability).to receive(:new).with(spree_current_user).and_return(ability)
+        allow(ability).to receive(:can?).with(:edit_as_producer_only, order).and_return(true)
+      end
 
       it "returns products distributed by distributors allowing producers to edit orders" do
         v1.supplier_id = producer.id
