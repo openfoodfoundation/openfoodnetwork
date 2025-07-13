@@ -253,6 +253,12 @@ module Spree
       adjustments.enterprise_fee
     end
 
+    def full_variant_name
+      return variant_name if variant_name.present?
+
+      variant.full_name
+    end
+
     private
 
     def computed_weight_from_variant
