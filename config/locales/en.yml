@@ -420,6 +420,10 @@ en:
       subject: "Order cycle report for %{producer}"
     order_cycle_report:
       order_number: "Order Number"
+  layouts:
+    mailer:
+      open_food_network: "Open Food Network"
+      powered_html: "This service is powered by the %{open_food_network}."
   provider_settings: "Provider settings"
   report_mailer:
     report_ready:
