@@ -8,7 +8,7 @@
     = stylesheet_link_tag 'mail'
   %body{:bgcolor => "#FFFFFF" }
     - unless @hide_ofn_navigation
-      %table.head-wrap
+      %table.wrap
         %tr
           %td
           %td.container
@@ -34,7 +34,7 @@
                   = yield
         %td
 
-    %table.footer-wrap
+    %table.wrap
       %tr
         %td
         %td.container
