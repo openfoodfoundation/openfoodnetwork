@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples 'email header without white labelling' do |mail|
   it 'displays the OFN header by default' do
-    expect(send(mail).body).to include(ContentConfig.url_for(:logo))
+    expect(public_send(mail).body).to include(ContentConfig.url_for(:logo))
   end
 end
 
@@ -11,7 +13,7 @@ RSpec.shared_examples 'remains unaffected by white labelling' do |mail|
     end
 
     it 'still displays the OFN header' do
-      expect(send(mail).body).to include(ContentConfig.url_for(:logo))
+      expect(public_send(mail).body).to include(ContentConfig.url_for(:logo))
     end
   end
 end
@@ -23,7 +25,7 @@ RSpec.shared_examples 'is affected by white labelling' do |mail|
     end
 
     it 'does not display the OFN header' do
-      expect(send(mail).body).not_to include(ContentConfig.url_for(:logo))
+      expect(public_send(mail).body).not_to include(ContentConfig.url_for(:logo))
     end
   end
 end

@@ -20,7 +20,6 @@ RSpec.describe EnterpriseMailer do
 
     include_examples 'email header without white labelling', :mail
     include_examples 'remains unaffected by white labelling', :mail
-
   end
 
   describe "#manager_invitation" do
@@ -37,6 +36,5 @@ RSpec.describe EnterpriseMailer do
 
     include_examples 'email header without white labelling', :mail
     include_examples 'remains unaffected by white labelling', :mail
-
   end
 end

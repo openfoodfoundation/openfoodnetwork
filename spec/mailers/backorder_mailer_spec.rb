@@ -20,11 +20,14 @@ RSpec.describe BackorderMailer do
 
     include_examples 'email header without white labelling', :mail
     include_examples 'remains unaffected by white labelling', :mail
-
   end
 
   describe "#backorder_incomplete" do
-    subject(:mail) { described_class.backorder_incomplete(user, distributor, order_cycle, order_id) }
+    subject(:mail) {
+      described_class.backorder_incomplete(
+        user, distributor, order_cycle, order_id
+      )
+    }
     let(:user) { build(:user, email: "jane@example.net") }
     let(:distributor) { build(:enterprise) }
     let(:order_cycle) { build(:order_cycle) }
@@ -40,6 +43,5 @@ RSpec.describe BackorderMailer do
 
     include_examples 'email header without white labelling', :mail
     include_examples 'remains unaffected by white labelling', :mail
-
   end
 end

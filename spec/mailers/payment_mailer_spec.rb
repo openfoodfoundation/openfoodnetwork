@@ -46,7 +46,6 @@ RSpec.describe PaymentMailer do
 
       include_examples 'email header without white labelling', :mail
       include_examples 'remains unaffected by white labelling', :mail
-
     end
   end
 end
