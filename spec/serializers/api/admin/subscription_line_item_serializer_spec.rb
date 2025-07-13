@@ -10,7 +10,7 @@ module Api
       it "serializes a subscription line item with the product name" do
         serializer = described_class.new(subscription_line_item)
 
-        expect(serializer.to_json).to match subscription_line_item.variant.product.name
+        expect(serializer.to_json).to match subscription_line_item.product_name
       end
 
       context "when the variant of the subscription line item is soft deleted" do
@@ -19,7 +19,7 @@ module Api
 
           serializer = described_class.new(subscription_line_item.reload)
 
-          expect(serializer.to_json).to match subscription_line_item.variant.product.name
+          expect(serializer.to_json).to match subscription_line_item.product_name
         end
       end
     end
