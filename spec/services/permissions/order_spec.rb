@@ -27,7 +27,9 @@ RSpec.describe Permissions::Order do
   before { allow(OpenFoodNetwork::Permissions).to receive(:new) { basic_permissions } }
 
   context "with user cannot only manage line_items in orders" do
-    let(:user) { instance_double('Spree::User', can_manage_line_items_in_orders_only?: false) }
+    let(:user) do
+      instance_double('Spree::User', can_manage_line_items_in_orders_only?: false, admin?: false)
+    end
 
     describe "finding orders that are visible in reports" do
       let(:random_enterprise) { create(:distributor_enterprise) }

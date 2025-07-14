@@ -29,12 +29,17 @@ module Permissions
 
     # Any orders that the user can edit
     def editable_orders
-      orders = Spree::Order.joins(:distributor).where(
-        id: produced_orders.select(:id),
-        distributor: { enable_producers_to_edit_orders: true }
-      ).or(
-        managed_or_coordinated_orders_where_clause
-      )
+      orders = if @user.admin?
+                 # It returns all orders if the user is an admin
+                 managed_or_coordinated_orders_where_clause
+               else
+                 Spree::Order.joins(:distributor).where(
+                   id: produced_orders.select(:id),
+                   distributor: { enable_producers_to_edit_orders: true }
+                 ).or(
+                   managed_or_coordinated_orders_where_clause
+                 )
+               end
 
       filtered_orders(orders)
     end
@@ -45,13 +50,20 @@ module Permissions
 
     # Any line items that I can edit
     def editable_line_items
-      Spree::LineItem.editable_by_producers(
-        @permissions.managed_enterprises.select("enterprises.id")
-      ).or(
-        Spree::LineItem.where(
-          order_id: filtered_orders(managed_or_coordinated_orders_where_clause).select(:id)
-        )
+      managed_or_coordinated_line_items_where_clause = Spree::LineItem.where(
+        order_id: filtered_orders(managed_or_coordinated_orders_where_clause).select(:id)
       )
+
+      if @user.admin?
+        # It returns all line_items if the user is an admin
+        managed_or_coordinated_line_items_where_clause
+      else
+        Spree::LineItem.editable_by_producers(
+          @permissions.managed_enterprises.select("enterprises.id")
+        ).or(
+          managed_or_coordinated_line_items_where_clause
+        )
+      end
     end
 
     private
