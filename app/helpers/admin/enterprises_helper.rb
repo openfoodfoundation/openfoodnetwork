@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  module EnterprisesHelper
+  module EnterprisesHelper # rubocop:disable Metrics/ModuleLength
     def add_check_if_single(count)
       if count == 1
         { checked: true }
@@ -75,6 +75,38 @@ module Admin
       scope = "admin.enterprises.admin_index.sells_options"
       Enterprise::SELLS.map { |s| [I18n.t(s, scope:), s] }
     end
+
+    def rule_data(rule) # rubocop:disable Metrics/MethodLength
+      case rule.type
+      when "TagRule::FilterShippingMethods"
+        {
+          text_top: t('js.admin.tag_rules.shipping_method_tagged_top'),
+          text_bottom: t('js.admin.tag_rules.shipping_method_tagged_bottom'),
+          taggable: "shipping_method",
+          input_template: "admin/tag_rules/filter_shipping_methods_input",
+        }
+      when "TagRule::FilterPaymentMethods"
+        {
+          text_top: t('js.admin.tag_rules.payment_method_tagged_top'),
+          text_bottom: t('js.admin.tag_rules.payment_method_tagged_bottom'),
+          taggable: "payment_method",
+          input_template: "admin/tag_rules/filter_payment_methods_input",
+        }
+      when "TagRule::FilterOrderCycles"
+        {
+          text_top: t('js.admin.tag_rules.order_cycle_tagged_top'),
+          text_bottom: t('js.admin.tag_rules.order_cycle_tagged_bottom'),
+          taggable: "exchange",
+          input_template: "admin/tag_rules/filter_order_cycles_input",
+        }
+      when "TagRule::FilterProducts"
+        {
+          text_top: t('js.admin.tag_rules.inventory_tagged_top'),
+          text_bottom: t('js.admin.tag_rules.inventory_tagged_bottom'),
+          taggable: "variant",
+          input_template: "admin/tag_rules/filter_products_input",
+        }
+      end
 
     private
 
