@@ -18,5 +18,9 @@ class TagRule
     def reject_matched?
       preferred_matched_variants_visibility != "visible"
     end
+
+    def tags
+      preferred_variant_tags
+    end
   end
 end

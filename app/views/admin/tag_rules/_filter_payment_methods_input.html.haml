@@ -1,0 +1,10 @@
+%div
+
+  - if rule.is_default 
+    = hidden_field_tag "enterprise[tag_rules_attributes][#{index}][preferred_matched_payment_methods_visibility]", "hidden"
+    %span.text-normal
+      = t(:not_visible)
+  - else
+    - #TODO
+    %input.fullwidth.light.ofn-select2{ id: "enterprise_tag_rules_attributes_#{index}_preferred_matched_payment_methods_visibility", name: "enterprise[tag_rules_attributes][#{index}][preferred_matched_payment_methods_visibility]", data: 'visibilityOptions', "min-search": 5, "ng-model": "rule.preferred_matched_payment_methods_visibility", "ng-if": "!rule.is_default" }
+
