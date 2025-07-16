@@ -126,6 +126,17 @@ describe("TagListInputController", () => {
         expect(variant_add_tag.classList).toContain("tag-error");
       });
     });
+
+    describe("when no tag yet", () => {
+      it("doesn't include leading comma in hidden tag list input", () => {
+        variant_tag_list.value = "";
+
+        variant_add_tag.value = "latest";
+        variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+        expect(variant_tag_list.value).toBe("latest");
+      });
+    });
   });
 
   describe("removeTag", () => {
