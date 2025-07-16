@@ -3,7 +3,15 @@
 require 'spec_helper'
 
 RSpec.describe TagRule::FilterProducts do
-  let!(:tag_rule) { build_stubbed(:filter_products_tag_rule) }
+  let!(:tag_rule) { build_stubbed(:filter_products_tag_rule, preferred_variant_tags: "my_tag") }
+
+  describe "#tags" do
+    it "return the variants tags" do
+      tag_rule = create(:filter_products_tag_rule, preferred_variant_tags: "my_tag")
+
+      expect(tag_rule.tags).to eq("my_tag")
+    end
+  end
 
   describe "determining whether tags match for a given variant" do
     context "when the variant is nil" do
