@@ -22,7 +22,11 @@ export default class extends Controller {
     }
 
     // add to tagList
-    this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
+    if (this.tagListTarget.value == "") {
+      this.tagListTarget.value = newTagName;
+    } else {
+      this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
+    }
 
     // Create new li component with value
     const newTagElement = this.templateTarget.content.cloneNode(true);
@@ -40,7 +44,7 @@ export default class extends Controller {
 
     // Remove tag from list
     const tags = this.tagListTarget.value.split(",");
-    this.tagListTarget.value = tags.filter(tag => tag != tagName).join(",");
+    this.tagListTarget.value = tags.filter((tag) => tag != tagName).join(",");
 
     // manualy dispatch an Input event so the change gets picked up by the bulk form controller
     this.tagListTarget.dispatchEvent(new InputEvent("input"));
