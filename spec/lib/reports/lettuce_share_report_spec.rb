@@ -65,7 +65,7 @@ module Reporting
               expect(report.table_rows.count).to eq 3
             end
 
-            it "only available items considering overrides" do
+            it "only available items considering overrides", feature: :inventory do
               create(:exchange, incoming: false, receiver_id: hub.id,
                                 variants: [variant, variant2, variant3])
               # create the overrides

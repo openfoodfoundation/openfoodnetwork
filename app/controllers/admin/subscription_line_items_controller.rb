@@ -53,7 +53,9 @@ module Admin
       return unless @order_cycle
 
       fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle)
+
       OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
+
       @variant.price + fee_calculator.indexed_fees_for(@variant)
     end
 

@@ -53,7 +53,7 @@ module Spree
           end
         end
 
-        context "when the line item's variant has an override" do
+        context "when the line item's variant has an override", feature: :inventory do
           let(:hub) { order.distributor }
           let(:variant) { line_item.variant }
           let(:vo_stock) { 999 }

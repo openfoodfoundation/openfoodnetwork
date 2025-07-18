@@ -13,7 +13,7 @@ RSpec.describe Admin::VariantOverridesController do
       end
     end
 
-    context "where I manage the variant override hub" do
+    context "where I manage the variant override hub", feature: :inventory do
       let(:hub) { create(:distributor_enterprise) }
 
       before do
@@ -27,7 +27,7 @@ RSpec.describe Admin::VariantOverridesController do
     end
   end
 
-  describe "bulk_update" do
+  describe "bulk_update", feature: :inventory do
     context "json" do
       let(:format) { :json }
 
@@ -131,7 +131,7 @@ RSpec.describe Admin::VariantOverridesController do
     end
   end
 
-  describe "bulk_reset" do
+  describe "bulk_reset", feature: :inventory do
     context "json" do
       let(:format) { :json }
 
