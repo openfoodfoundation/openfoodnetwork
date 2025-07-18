@@ -3,7 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe Spree::TestMailer do
+  subject(:mail) { described_class.test_email(order) }
   let(:user) { create(:user) }
+  let(:order) { build(:order_with_distributor) }
 
   context ":from not set explicitly" do
     it "falls back to spree config" do
@@ -18,4 +20,7 @@ RSpec.describe Spree::TestMailer do
       Spree::TestMailer.test_email(user.id).deliver_now
     }.not_to raise_error
   end
+
+  include_examples 'email header without white labelling', :mail
+  include_examples 'remains unaffected by white labelling', :mail
 end
