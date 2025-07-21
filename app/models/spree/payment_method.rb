@@ -57,7 +57,7 @@ module Spree
     end
 
     def configured?
-      !twint? || !stripe? || stripe_configured?
+      (!twint? && !stripe?) || stripe_configured?
     end
 
     def provider_class
