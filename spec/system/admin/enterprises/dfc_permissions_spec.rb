@@ -21,9 +21,6 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
     scroll_to :bottom
     click_link "Connected apps"
 
-    # We only allow the browser to load local resources, no Stripe or Google Maps.
-    pending "Loading of DFC Permissions module is currently blocked by our test setup."
-
     expect(page).to have_content "Proxy Dev Portal"
     expect(page).to have_selector "svg.unchecked" # permission not granted
 
