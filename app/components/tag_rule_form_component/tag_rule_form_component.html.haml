@@ -1,0 +1,29 @@
+%div{ id: "tr_#{index}" } 
+  %table
+    %colgroup
+      %col.text{ width: "35%" }
+      %col.inputs{ width: "55%" }
+      %col.actions{ width: "10%" }
+    %tr
+      %td
+        = hidden_field_tag element_name("id")
+        = hidden_field_tag element_name("type"), rule.type
+        = hidden_field_tag element_name("priority"), index
+        = hidden_field_tag element_name("is_default"), rule.is_default
+        = hidden_field_tag element_name("preferred_customer_tags")
+        %span.text-normal
+          = rule_data[:text_top]
+      %td
+        = render TagListInputComponent.new(name: element_name("preferred_#{rule_data[:taggable]}_tags"), tags: rule.tags.split(","))
+      %td.actions{ rowspan: 2 }
+        -#%a{ class: "delete-tag-rule icon-trash no-text", "ng-click": "deleteTagRule(tagGroup || defaultTagGroup, rule)" }
+        -# TODO implement delete action in turbo
+        %a{ class: "delete-tag-rule icon-trash no-text" }
+    %tr
+      %td
+        %span.text-normal 
+          = rule_data[:text_bottom]
+      %td
+        %div
+          = render partial: rule_data[:input_template], locals: { rule: rule, index: index }
+

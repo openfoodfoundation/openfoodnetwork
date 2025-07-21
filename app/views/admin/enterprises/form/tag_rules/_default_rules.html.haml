@@ -8,47 +8,22 @@
           %h5
             = t('.by_default')
           %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
-  - default_rules = @enterprise.tag_rules.select(&:is_default)
-  - if default_rules.empty?
-    .no_rules
-      = t('.no_rules_yet')
-    .add_rule.text-center
-      %input.button.icon-plus{ type: 'button', value: t('.add_new_button') }
-  - else
-    - default_rules.each_with_index do |default_rule, index|
-      #default-tag-rule
-        %div{ id: "tr_#{index}" } 
-          %table
-            %colgroup
-              %col.text{ width: "35%" }
-              %col.inputs{ width: "55%" }
-              %col.actions{ width: "10%" }
-            %tr
-              %td
-                %input{ type: "hidden", id: "enterprise_tag_rules_attributes_#{index}_id", name: "enterprise[tag_rules_attributes][#{index}][id]", value: default_rule.id }
-                %input{ type: "hidden", id: "enterprise_tag_rules_attributes_#{index}_type", name: "enterprise[tag_rules_attributes][#{index}][type]", value: default_rule.type }
-                %input{ type: "hidden", id: "enterprise_tag_rules_attributes_#{index}_priority", name: "enterprise[tag_rules_attributes][#{index}][priority]", value: index }
-                %input{ type: "hidden", id: "enterprise_tag_rules_attributes_#{index}_is_default", name: "enterprise[tag_rules_attributes][#{index}][is_default]", value: default_rule.is_default }
-                %input{ type: "hidden", id: "enterprise_tag_rules_attributes_#{index}_preferred_customer_tags", name: "enterprise[tag_rules_attributes][#{index}][preferred_customer_tags]", value: default_rule.preferred_customer_tags }
-             
-                %span.text-normal
-                  = rule_data(default_rule)[:text_top]
-              %td
-                = # TODO limit to one tag
-                = render TagListInputComponent.new(form: f, method: "tag_rules_attributes][#{index}][preferred_#{rule_data(default_rule)[:taggable]}_tags", tags: default_rule.tags.split(","))
-              %td.actions{ rowspan: 2 }
-                %a{ class: "delete-tag-rule icon-trash no-text" }
-            %tr
-              %td
-                %span.text-normal 
-                  = rule_data(default_rule)[:text_bottom]
-              %td
-                %div
-                  = render partial: rule_data(default_rule)[:input_template], locals: { rule: default_rule, index: index }
-        %hr
-
+  #default-tag-rule
+    - default_rules = @enterprise.tag_rules.select(&:is_default)
+    - current_index = 0
+    - if default_rules.empty?
+      .no_rules
+        = t('.no_rules_yet')
       .add_rule.text-center
         %input.button.icon-plus{ type: 'button', value: t('.add_new_button') }
+    - else
+      - default_rules.each_with_index do |default_rule, index|
+        - current_index = index + 1
+        = render TagRuleFormComponent.new(rule: default_rule, rule_data: rule_data(default_rule), index: index)
+        %hr
+
+  .add_rule.text-center
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button') }
 
 = render HelpModalComponent.new(id: "tag_rule_help_modal") do
   #tag-rule-help
