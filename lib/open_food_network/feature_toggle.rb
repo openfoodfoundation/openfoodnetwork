@@ -64,6 +64,9 @@ module OpenFoodNetwork
       "variant_tag" => <<~DESC,
         Variant Tag are available on the Bulk Edit Products page.
       DESC
+      "cqcm-dev" => <<~DESC,
+        Show DFC Permissions interface to share data with CQCM dev platform.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

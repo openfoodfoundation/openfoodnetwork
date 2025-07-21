@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.gstatic.com/generate_204
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Content-Length:
+      - '0'
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Date:
+      - Fri, 11 Jul 2025 05:04:02 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 11 Jul 2025 05:04:02 GMT
+recorded_with: VCR 6.2.0
