@@ -1,4 +1,6 @@
-.row{ "ng-controller": "TagRulesCtrl" }
+= render partial: "admin/json/injection_ams", locals: { ngModule: "admin.tagRules", name: "ruleTypes", json: @tag_rule_types.to_json }
+
+.row{ "ng-app" => "admin.tagRules", "ng-controller": "TagRulesCtrl" }
   .eleven.columns.alpha.omega
     %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", "after-sort": "updateRuleCounts()" }
       .no_tags{ "ng-show": "tagGroups.length == 0" }

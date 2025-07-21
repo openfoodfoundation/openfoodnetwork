@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe CartService do
-  let(:order) { double(:order, id: 123) }
+  let(:order) { instance_double(Spree::Order, id: 123) }
   let(:currency) { "EUR" }
   let(:params) { {} }
-  let(:distributor) { double(:distributor) }
-  let(:order_cycle) { double(:order_cycle) }
+  let(:distributor) { instance_double(Enterprise) }
+  let(:order_cycle) { instance_double(OrderCycle) }
   let(:cart_service) { CartService.new(order) }
 
   before do
@@ -135,7 +135,7 @@ RSpec.describe CartService do
 
     it "returns true when quantity varies" do
       variant_data = { variant_id: variant.id, quantity: 2 }
-      line_item = double(:line_item, quantity: 1, max_quantity: nil)
+      line_item = instance_double(Spree::LineItem, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
       expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be true
@@ -143,7 +143,7 @@ RSpec.describe CartService do
 
     it "returns true when max_quantity varies" do
       variant_data = { variant_id: variant.id, quantity: 1, max_quantity: 3 }
-      line_item = double(:line_item, quantity: 1, max_quantity: nil)
+      line_item = instance_double(Spree::LineItem, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
       expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be true
@@ -151,7 +151,7 @@ RSpec.describe CartService do
 
     it "returns false when max_quantity varies only in nil vs 0" do
       variant_data = { variant_id: variant.id, quantity: 1 }
-      line_item = double(:line_item, quantity: 1, max_quantity: nil)
+      line_item = instance_double(Spree::LineItem, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
       expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be false
@@ -159,7 +159,7 @@ RSpec.describe CartService do
 
     it "returns false when both are specified and neither varies" do
       variant_data = { variant_id: variant.id, quantity: 1, max_quantity: 2 }
-      line_item = double(:line_item, quantity: 1, max_quantity: 2)
+      line_item = instance_double(Spree::LineItem, quantity: 1, max_quantity: 2)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
       expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be false
@@ -169,10 +169,12 @@ RSpec.describe CartService do
   describe "attempt_cart_add" do
     let!(:variant) { create(:variant, on_hand: 250) }
     let(:quantity) { 123 }
+    let(:distributor) { create(:distributor_enterprise) }
 
     before do
       allow(Spree::Variant).to receive(:find).and_return(variant)
       allow(VariantOverride).to receive(:for).and_return(nil)
+      allow(order).to receive(:distributor).and_return(distributor)
     end
 
     it "performs additional validations" do
@@ -214,7 +216,7 @@ RSpec.describe CartService do
   end
 
   describe "#final_quantities" do
-    let(:v) { double(:variant, on_hand: 10) }
+    let(:v) { instance_double(Spree::Variant, on_hand: 10) }
 
     context "when backorders are not allowed" do
       before do
@@ -265,7 +267,7 @@ RSpec.describe CartService do
 
   describe "validations" do
     describe "checking order cycle is provided for a variant, OR is not needed" do
-      let(:variant) { double(:variant) }
+      let(:variant) { instance_double(Spree::Variant) }
 
       it "returns false and errors when order cycle is not provided" do
         expect(cart_service.__send__(:check_order_cycle_provided)).to be false
@@ -273,15 +275,17 @@ RSpec.describe CartService do
       end
 
       it "returns true when order cycle is provided" do
-        cart_service.instance_variable_set :@order_cycle, double(:order_cycle)
+        cart_service.instance_variable_set :@order_cycle, instance_double(OrderCycle)
         expect(cart_service.__send__(:check_order_cycle_provided)).to be true
       end
     end
 
     describe "checking variant is available under the distributor" do
-      let(:product) { double(:product) }
-      let(:variant) { double(:variant, product:) }
-      let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
+      let(:product) { instance_double(Spree::Product) }
+      let(:variant) { instance_double(Spree::Variant, product:) }
+      let(:order_cycle_distributed_variants) {
+        instance_double(OrderCycles::DistributedVariantsService)
+      }
 
       before do
         expect(OrderCycles::DistributedVariantsService)

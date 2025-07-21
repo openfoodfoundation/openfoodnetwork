@@ -1,4 +1,4 @@
-angular.module("admin.tagRules").directive 'newTagRuleDialog', ($rootScope, $compile, $templateCache, DialogDefaults) ->
+angular.module("admin.tagRules").directive 'newTagRuleDialog', ($rootScope, $compile, $templateCache, DialogDefaults, ruleTypes) ->
   restrict: 'A'
   scope:
     tagGroup: '='
@@ -7,12 +7,7 @@ angular.module("admin.tagRules").directive 'newTagRuleDialog', ($rootScope, $com
     # Compile modal template
     template = $compile($templateCache.get('admin/new_tag_rule_dialog.html'))(scope)
 
-    scope.ruleTypes = [
-      { id: "FilterProducts", name: t('js.tag_rules.show_hide_variants') }
-      { id: "FilterShippingMethods", name: t('js.tag_rules.show_hide_shipping') }
-      { id: "FilterPaymentMethods", name: t('js.tag_rules.show_hide_payment') }
-      { id: "FilterOrderCycles", name: t('js.tag_rules.show_hide_order_cycles') }
-    ]
+    scope.ruleTypes = ruleTypes
 
     scope.ruleType = scope.ruleTypes[0].id
 

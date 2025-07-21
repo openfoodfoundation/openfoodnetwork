@@ -59,7 +59,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       expect(product_ids).not_to include product2.id
     end
 
-    context "with variant overrides" do
+    context "with variant overrides", feature: :inventory do
       let!(:vo1) {
         create(:variant_override,
                hub: distributor,
@@ -91,7 +91,6 @@ RSpec.describe Api::V0::OrderCyclesController do
       before do
         product1.update!(properties: [property1, property2])
       end
-
       it "filters by product property" do
         api_get :products, id: order_cycle.id, distributor: distributor.id,
                            q: { with_properties: [property1.id, property2.id] }
@@ -133,7 +132,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       end
     end
 
-    context "when tag rules apply" do
+    context "when tag rules apply", feature: :inventory do
       let!(:vo1) {
         create(:variant_override,
                hub: distributor,

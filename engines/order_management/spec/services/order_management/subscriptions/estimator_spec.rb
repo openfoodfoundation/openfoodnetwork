@@ -58,7 +58,7 @@ RSpec.describe OrderManagement::Subscriptions::Estimator do
         end
       end
 
-      context "when variant overrides apply" do
+      context "when variant overrides apply", feature: :inventory do
         let!(:override1) {
           create(:variant_override, hub: subscription.shop, variant: sli1.variant, price: 1.2)
         }

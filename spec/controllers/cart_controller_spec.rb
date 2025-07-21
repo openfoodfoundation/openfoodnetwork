@@ -6,8 +6,8 @@ RSpec.describe CartController do
   let(:order) { create(:order) }
 
   describe "basic behaviour" do
-    let(:cart_service) { double }
-    let(:errors) { double }
+    let(:cart_service) { instance_double(CartService) }
+    let(:errors) { instance_double(ActiveModel::Errors) }
 
     before do
       allow(CartService).to receive(:new).and_return(cart_service)
@@ -42,7 +42,7 @@ RSpec.describe CartController do
     end
   end
 
-  context "handling variant overrides correctly" do
+  context "handling variant overrides correctly", feature: :inventory do
     let(:product) { create(:simple_product, supplier: producer) }
     let(:producer) { create(:supplier_enterprise) }
     let!(:variant_in_the_order) { create(:variant) }

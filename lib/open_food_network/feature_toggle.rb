@@ -64,6 +64,9 @@ module OpenFoodNetwork
       "variant_tag" => <<~DESC,
         Variant Tag are available on the Bulk Edit Products page.
       DESC
+      "inventory" => <<~DESC,
+        Enable the inventory.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

@@ -416,7 +416,7 @@ RSpec.describe '
   end
 
   # Regression test for #7337
-  context "creating a new order with a variant override" do
+  context "creating a new order with a variant override", feature: :inventory do
     let!(:override) {
       create(:variant_override, hub: distributor, variant: product.variants.first,
                                 count_on_hand: 100)

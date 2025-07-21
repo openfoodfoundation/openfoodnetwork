@@ -3,6 +3,20 @@
 require 'spec_helper'
 
 RSpec.describe Admin::ProductImportController do
+  describe "#import" do
+    context "when importing into inventory with inventory disabled" do
+      it "redirect with an error" do
+        allow(controller).to receive(:spree_current_user).and_return(create(:admin_user))
+        allow(controller).to receive(:validate_upload_presence).and_return(true)
+
+        spree_post :import, { settings: { import_into: "inventories" } }
+
+        expect(response).to redirect_to admin_product_import_url
+        expect(flash[:notice]).to eq "Importing into inventories is not available"
+      end
+    end
+  end
+
   describe 'validate_file_path' do
     let(:tmp_directory_base) { Rails.root.join("tmp/product_import-") }
 

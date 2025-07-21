@@ -111,7 +111,7 @@ RSpec.describe Admin::SubscriptionLineItemsController do
                 end
               end
 
-              context "where a relevant variant override exists" do
+              context "where a relevant variant override exists", feature: :inventory do
                 let!(:override) {
                   create(:variant_override, hub_id: shop.id, variant_id: variant.id, price: 12.00)
                 }

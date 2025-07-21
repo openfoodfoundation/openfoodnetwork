@@ -104,7 +104,7 @@ RSpec.describe Orders::FactoryService do
         end
       end
 
-      context "when an override is present" do
+      context "when an override is present", feature: :inventory do
         let!(:override) {
           create(:variant_override, hub_id: shop.id, variant_id: variant1.id, count_on_hand: 3)
         }
@@ -137,7 +137,7 @@ RSpec.describe Orders::FactoryService do
         end
       end
 
-      context "when an override is present" do
+      context "when an override is present", feature: :inventory do
         let!(:override) {
           create(:variant_override, hub_id: shop.id, variant_id: variant1.id, price: 3.0)
         }
