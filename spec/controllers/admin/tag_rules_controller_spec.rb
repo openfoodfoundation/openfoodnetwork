@@ -34,4 +34,31 @@ RSpec.describe Admin::TagRulesController do
       end
     end
   end
+
+  describe "#edit" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:params) { { rule_type:, index: 1 } }
+    let(:rule_type) { "FilterProducts" }
+
+    before do
+      controller_login_as_enterprise_user [enterprise]
+    end
+
+    it "returns new tag rule form" do
+      spree_get(:new, format: :turbo_stream, id: enterprise, params:)
+
+      expect(response).to render_template :new
+    end
+
+    context "wiht a wrong tag rule type" do
+      let(:rule_type) { "OtherType" }
+
+      it "returns an error" do
+        spree_get(:new, format: :turbo_stream, id: enterprise,  params:)
+
+        expect(response).to render_template :new
+        expect(flash[:error]).to eq "Tag rule type not supported"
+      end
+    end
+  end
 end

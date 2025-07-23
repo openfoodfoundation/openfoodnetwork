@@ -15,6 +15,7 @@
       .no_rules
         = t('.no_rules_yet')
       .add_rule.text-center
+        -# TODO add pop up
         %input.button.icon-plus{ type: 'button', value: t('.add_new_button') }
     - else
       - default_rules.each_with_index do |default_rule, index|
@@ -23,8 +24,18 @@
         %hr
 
   .add_rule.text-center
-    %input.button.icon-plus{ type: 'button', value: t('.add_new_button') }
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "tag_rule_add_new_default_rule" }
 
+= render ModalComponent.new(id: "tag_rule_add_new_default_rule", close_button: false, modal_class: "tiny" ) do
+  #new-tag-rule-dialog{ "data-controller": "default-tag-rule" }
+    =hidden_field_tag "current_index", current_index, { "data-default-tag-rule-target": "index" }
+    .text-normal.margin-bottom-30.text-center
+      = t('.new_tag_rule_dialog.select_rule_type')
+    .text-center.margin-bottom-30
+      = select_tag :rule_type_selector, options_for_select(@tag_rule_types), { "data-controller": "tom-select", "data-default-tag-rule-target": "rule", class: "primary no-search" }
+    .text-center
+      %input.button.red.icon-plus{ type: 'button', value: "#{t('.new_tag_rule_dialog.add_rule')}", "data-action": "click->default-tag-rule#add click->modal#close", }
+         
 = render HelpModalComponent.new(id: "tag_rule_help_modal") do
   #tag-rule-help
     .margin-bottom-30.text-center

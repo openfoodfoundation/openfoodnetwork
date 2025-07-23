@@ -379,16 +379,15 @@ module Admin
     end
 
     def load_tag_rule_types
-      # Load rule types
       @tag_rule_types = [
-        { id: "FilterShippingMethods", name: t('js.tag_rules.show_hide_shipping') },
-        { id: "FilterPaymentMethods", name: t('js.tag_rules.show_hide_payment') },
-        { id: "FilterOrderCycles", name: t('js.tag_rules.show_hide_order_cycles') }
+        [t(".form.tag_rules.show_hide_shipping"), "FilterShippingMethods"],
+        [t(".form.tag_rules.show_hide_payment"), "FilterPaymentMethods"],
+        [t(".form.tag_rules.show_hide_order_cycles"), "FilterOrderCycles"]
       ]
 
       return unless helpers.feature?(:inventory, @object)
 
-      @tag_rule_types.prepend({ id: "FilterProducts", name: t('js.tag_rules.show_hide_variants') })
+      @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterProducts"])
     end
 
     def setup_property

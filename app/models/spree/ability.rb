@@ -142,6 +142,7 @@ module Spree
 
       can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
+      can :new, TagRule
       can [:admin, :map_by_tag, :destroy], TagRule do |tag_rule|
         user.enterprises.include? tag_rule.enterprise
       end
