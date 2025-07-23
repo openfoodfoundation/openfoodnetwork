@@ -15,10 +15,11 @@
           = rule_data[:text_top]
       %td
         = render TagListInputComponent.new(name: element_name("preferred_#{rule_data[:taggable]}_tags"), tags: rule.tags.split(","))
-      %td.actions{ rowspan: 2 }
-        -#%a{ class: "delete-tag-rule icon-trash no-text", "ng-click": "deleteTagRule(tagGroup || defaultTagGroup, rule)" }
-        -# TODO implement delete action in turbo
-        %a{ class: "delete-tag-rule icon-trash no-text" }
+      %td.actions{ rowspan: 2 , "data-controller": "delete-tag-rule", "data-delete-tag-rule-index-value": index }
+        - if rule.new_record?
+          = link_to("", "#", { "data-action": "click->delete-tag-rule#delete" ,class: "delete-tag-rule icon-trash no-text"})
+        - else
+          = link_to("", "#{admin_enterprise_tag_rule_url(rule.enterprise_id, rule.id)}?index=#{index}", { "data-turbo-method": "delete", "data-turbo-confirm": t("admin.tag_rules.confirm_delete"), class: "delete-tag-rule icon-trash no-text" })
     %tr
       %td
         %span.text-normal 
