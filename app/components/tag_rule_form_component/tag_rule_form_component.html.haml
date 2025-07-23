@@ -6,7 +6,7 @@
       %col.actions{ width: "10%" }
     %tr
       %td
-        = hidden_field_tag element_name("id")
+        = hidden_field_tag element_name("id"), rule.id
         = hidden_field_tag element_name("type"), rule.type
         = hidden_field_tag element_name("priority"), index
         = hidden_field_tag element_name("is_default"), rule.is_default

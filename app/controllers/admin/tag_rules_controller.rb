@@ -8,6 +8,21 @@ module Admin
       success: lambda { head :no_content }
     } }
 
+    def new
+      @index = params[:index]
+      status = :ok
+      if permitted_tag_rule_type.include?(params[:rule_type])
+        @default_rule = "TagRule::#{params[:rule_type]}".constantize.new(is_default: true)
+      else
+        flash.now[:error] = t(".not_supported_type")
+        status = :internal_server_error
+      end
+
+      respond_with do |format|
+        return format.turbo_stream { render :new, status: }
+      end
+    end
+
     def map_by_tag
       respond_to do |format|
         format.json do
@@ -38,6 +53,10 @@ module Admin
       else
         Enterprise.managed_by(spree_current_user)
       end
+    end
+
+    def permitted_tag_rule_type
+      %w{FilterOrderCycles FilterPaymentMethods FilterProducts FilterShippingMethods}
     end
   end
 end

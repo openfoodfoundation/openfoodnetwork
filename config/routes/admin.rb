@@ -41,7 +41,7 @@ Openfoodnetwork::Application.routes.draw do
         post :update_positions, on: :collection
       end
 
-      resources :tag_rules, only: [:destroy]
+      resources :tag_rules, only: [:destroy, :new]
 
       resources :vouchers, only: [:new, :create]
     end
