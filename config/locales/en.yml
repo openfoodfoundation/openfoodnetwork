@@ -1582,6 +1582,8 @@ en:
         error: "Something went wrong"
     tag_rules:
       not_supported_type: Tag rule type not supported
+      confirm_delete: Are you sure you want to delete this rule ?
+      destroy_error: There was an issue when removing the Tag rule
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES

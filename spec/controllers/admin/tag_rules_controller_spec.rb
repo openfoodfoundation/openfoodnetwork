@@ -3,34 +3,42 @@
 require 'spec_helper'
 
 RSpec.describe Admin::TagRulesController do
-  describe "destroy" do
-    context "json" do
-      let(:format) { :json }
+  let(:format) { :turbo_stream }
 
-      let(:enterprise) { create(:distributor_enterprise) }
-      let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise:) }
-      let(:params) { { format:, id: tag_rule.id } }
+  describe "#destroy" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise:) }
+    let(:params) { { format:, id: tag_rule.id } }
 
-      context "where I don't manage the tag rule enterprise" do
-        let(:user) { create(:user) }
+    context "where I don't manage the tag rule enterprise" do
+      let(:user) { create(:user) }
 
-        before do
-          user.owned_enterprises << create(:enterprise)
-          allow(controller).to receive(:spree_current_user) { user }
-        end
-
-        it "redirects to unauthorized" do
-          spree_delete :destroy, params
-          expect(response).to redirect_to unauthorized_path
-        end
+      before do
+        user.owned_enterprises << create(:enterprise)
+        allow(controller).to receive(:spree_current_user) { user }
       end
 
-      context "where I manage the tag rule enterprise" do
-        before do
-          allow(controller).to receive(:spree_current_user) { enterprise.owner }
-        end
+      it "redirects to unauthorized" do
+        spree_delete :destroy, params
+        expect(response).to redirect_to unauthorized_path
+      end
+    end
 
-        it { expect{ spree_delete :destroy, params }.to change{ TagRule.count }.by(-1) }
+    context "where I manage the tag rule enterprise" do
+      before do
+        allow(controller).to receive(:spree_current_user) { enterprise.owner }
+      end
+
+      it { expect{ spree_delete :destroy, params }.to change{ TagRule.count }.by(-1) }
+
+      context "when an error happens" do
+        it "displays an error flash" do
+          allow_any_instance_of(TagRule).to receive(:destroy).and_return(false)
+
+          spree_delete :destroy, params
+
+          expect(flash[:error]).to eq "There was an issue when removing the Tag rule"
+        end
       end
     end
   end
@@ -45,7 +53,7 @@ RSpec.describe Admin::TagRulesController do
     end
 
     it "returns new tag rule form" do
-      spree_get(:new, format: :turbo_stream, id: enterprise, params:)
+      spree_get(:new, format:, id: enterprise, params:)
 
       expect(response).to render_template :new
     end
@@ -54,7 +62,7 @@ RSpec.describe Admin::TagRulesController do
       let(:rule_type) { "OtherType" }
 
       it "returns an error" do
-        spree_get(:new, format: :turbo_stream, id: enterprise,  params:)
+        spree_get(:new, format:, id: enterprise, params:)
 
         expect(response).to render_template :new
         expect(flash[:error]).to eq "Tag rule type not supported"
