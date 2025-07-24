@@ -11,34 +11,7 @@
         = @order.shipping_method.name
         %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
       .two-columns
-        %div
-          .summary-subtitle
-            = t("checkout.step3.delivery_details.address")
-          %span
-            = @order.ship_address.firstname
-            = @order.ship_address.lastname
-          %div
-            = @order.ship_address.phone
-          %div
-            = @order.user.email if @order.user
-          %br
-          %div
-            = @order.ship_address.address1
-          - unless @order.ship_address.address2.blank?
-            %div
-              = @order.ship_address.address2
-          %div
-            = @order.ship_address.city
-          %div
-            = @order.ship_address.state
-          %div
-            = @order.ship_address.zipcode
-          %div
-            = @order.ship_address.country
-          - if @order.special_instructions.present?
-            %br
-            %em
-              = @order.special_instructions
+        = render "delivery_details" if @order.shipping_method.delivery? || feature?(:hub_address)
         - if @order.shipping_method.description.present?
           %div
             .summary-subtitle
