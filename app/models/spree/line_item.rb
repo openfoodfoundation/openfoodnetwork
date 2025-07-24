@@ -34,7 +34,6 @@ module Spree
     }
     validates :price, numericality: true
     validates_with Stock::AvailabilityValidator
-    validates :product_name, presence: true
 
     before_save :update_inventory
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
