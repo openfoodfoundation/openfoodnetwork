@@ -5,7 +5,7 @@ require "capybara/cuprite"
 headless = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HEADLESS", true))
 
 browser_options = {}
-browser_options["no-sandbox"] = nil if ENV['CI']
+browser_options["no-sandbox"] = nil if ENV['CI'] || ENV['DOCKER']
 
 Capybara.register_driver(:cuprite_ofn) do |app|
   Capybara::Cuprite::Driver.new(

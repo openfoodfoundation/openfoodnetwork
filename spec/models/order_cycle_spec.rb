@@ -477,7 +477,7 @@ RSpec.describe OrderCycle do
       expect(items).to match_array order.reload.line_items
     end
 
-    it "returns items with scoped variants" do
+    it "returns items with scoped variants", feature: :inventory do
       overridden_variant = order.line_items.first.variant
       create(:variant_override, hub: shop, variant: overridden_variant, count_on_hand: 1000)
 

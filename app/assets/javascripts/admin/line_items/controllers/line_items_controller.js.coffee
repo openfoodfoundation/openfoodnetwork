@@ -19,18 +19,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.page = 1
   $scope.per_page = $scope.per_page_options[0].id
   $scope.filterByVariantId = null
-  searchThrough = ["order_distributor_name_alias",
-    "order_bill_address_phone",
-    "order_bill_address_firstname",
-    "order_bill_address_lastname",
-    "order_bill_address_full_name",
-    "order_bill_address_full_name_reversed",
-    "order_bill_address_full_name_with_comma",
-    "order_bill_address_full_name_with_comma_reversed",
-    "variant_supplier_name",
-    "order_email",
-    "order_number",
-    "product_name"].join("_or_") + "_cont"
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
@@ -75,11 +63,10 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
 
     RequestMonitor.load LineItems.index(
-      "q[#{searchThrough}]": $scope.query,
-      "q[variant_id_eq]": $scope.filterByVariantId if $scope.filterByVariantId,
       "q[order_state_not_eq]": "canceled",
       "q[order_shipment_state_not_eq]": "shipped",
       "q[order_completed_at_not_null]": "true",
+      "q[variant_id_eq]": $scope.filterByVariantId if $scope.filterByVariantId,
       "q[order_distributor_id_eq]": $scope.distributorFilter,
       "q[variant_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
@@ -87,7 +74,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
       "q[s]": "order_completed_at desc",
       "page": $scope.page,
-      "per_page": $scope.per_page
+      "per_page": $scope.per_page,
+      "search_query": $scope.query
     )
 
   $scope.formatDates = (startDate, endDate) ->

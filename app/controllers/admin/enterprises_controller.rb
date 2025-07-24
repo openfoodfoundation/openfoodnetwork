@@ -48,6 +48,9 @@ module Admin
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
       @object.build_custom_tab if @object.custom_tab.nil?
+
+      load_tag_rule_types
+
       return unless params[:stimulus]
 
       @enterprise.is_primary_producer = params[:is_primary_producer]
@@ -373,6 +376,19 @@ module Admin
 
     def load_properties
       @properties = Spree::Property.pluck(:name)
+    end
+
+    def load_tag_rule_types
+      # Load rule types
+      @tag_rule_types = [
+        { id: "FilterShippingMethods", name: t('js.tag_rules.show_hide_shipping') },
+        { id: "FilterPaymentMethods", name: t('js.tag_rules.show_hide_payment') },
+        { id: "FilterOrderCycles", name: t('js.tag_rules.show_hide_order_cycles') }
+      ]
+
+      return unless helpers.feature?(:inventory, @object)
+
+      @tag_rule_types.prepend({ id: "FilterProducts", name: t('js.tag_rules.show_hide_variants') })
     end
 
     def setup_property

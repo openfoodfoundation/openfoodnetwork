@@ -1036,7 +1036,7 @@ hu:
         import_date: Importált
         select_a_shop: Válassz Átvételi Pontot
         review_now: Tekintsd át most
-        new_products_alert_message: '%{new_product_count} új termék áll rendelkezésre, amelyet hozzáadhat készletéhez.'
+        new_products_alert_message: '%{new_product_count} új termék áll rendelkezésre, amelyet hozzáadhatsz a készletedhez.'
         currently_empty: A leltár jelenleg üres
         no_matching_products: Nem található megfelelő termék a leltárban
         no_hidden_products: Egyetlen termék sincs elrejtve ebből a leltárból
@@ -1460,7 +1460,7 @@ hu:
         notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
       date_time_warning_modal_content:
         title: 'Ebben a rendelési ciklusban már vannak rendelések.'
-        content: 'Ha új rendelési ciklust szeretnél létrehozni, ajánlott először megduplázni a rendelési ciklust, majd módosítani a dátumokat.'
+        content: 'Ha új rendelési ciklust szeretnél létrehozni, ajánlott először klónozni a rendelési ciklust, majd módosítani a dátumokat.'
         proceed: 'Folytatás mindenképp'
         cancel: 'Mégsem'
       incoming:
@@ -1607,6 +1607,7 @@ hu:
         promo_image_remove: "Kép eltávolítása"
         promo_image_remove_confirm: "A promóciós képet a megerősítésed után azonnal eltávolítjuk."
         white_label_logo_label: "A Profil által használt logo"
+        white_label_logo_hint: 217 x 44 pixel
         white_label_logo_remove: "Kép eltávolítása"
         white_label_logo_remove_confirm: "Biztos vagy benne, hogy eltávolítod ezt a logo-t?"
       user_guide_link:
@@ -2095,7 +2096,7 @@ hu:
   invoice_cancel_and_replace_invoice: "érvényteleníti és cseréli a számlát"
   tax_invoice: "VEVŐI LAP"
   tax_total: "Teljes adó (%{rate}):"
-  invoice_shipping_category_delivery: "Szállítás"
+  invoice_shipping_category_delivery: "Kiszállítás"
   invoice_shipping_category_pickup: "Személyes átvétel"
   total_excl_tax: "Összesen (adó nélkül):"
   total_incl_tax: "Összesen (adóval együtt):"
@@ -2358,7 +2359,7 @@ hu:
   email_payment_description: Fizetési információk
   email_payment_summary: 'Fizetési összesítő (tájékoztató információ):'
   email_payment_method: "Fizetés:"
-  email_so_placement_intro_html: "Új rendelése van a <strong>%{distributor}</strong>-nál"
+  email_so_placement_intro_html: "Új rendelésed van a <strong>%{distributor}</strong>-nál"
   email_so_placement_details_html: "A megrendelésed részletei <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Sajnos nem minden kért termék volt elérhető. Az általad kért eredeti mennyiségek alább áthúzva jelennek meg."
   email_so_payment_success_intro_html: "A megrendelés automatikus fizetése megtörtént <strong>%{distributor}</strong>  felé."
@@ -2893,8 +2894,8 @@ hu:
   flat_rate_per_order: "Átalánydíj (rendelésenként)"
   flexible_rate: "Rugalmas díj"
   price_sack: "Rendelési összeg függő"
-  new_order_cycles: "Új Rendelési Ciklusok"
-  new_order_cycle: "Új Rendelési Ciklus"
+  new_order_cycles: "Új rendelési ciklusok"
+  new_order_cycle: "Új rendelési ciklus"
   new_order_cycle_tooltip: "Nyisd meg az üzletet egy bizonyos intervallumra"
   select_a_coordinator_for_your_order_cycle: "Válasszon koordinátort a rendelési ciklushoz"
   notify_producers: 'Értesítse a termelőket'
@@ -2959,7 +2960,7 @@ hu:
   first_name_begins_with: "Keresztnév kezdő karaktere"
   last_name_begins_with: "Vezetéknév kezdő karaktere"
   shipping_method: "Szállítási Mód"
-  new_order: "Új Rendelés"
+  new_order: "Új rendelés"
   enterprise_tos_link: "Szolgáltatási Feltételek termelőknek, vállalkozásoknak link"
   enterprise_tos_message: "Olyan emberekkel szeretnénk dolgozni, akik osztoznak a céljainkban és az értékeinkben. Ezért arra kérjük az új vállalkozásokat, hogy egyeztessenek velünk."
   enterprise_tos_agree: "Elfogadom a fenti feltételeket"
@@ -3800,7 +3801,7 @@ hu:
   shipping_tax_rate: "Szállítási adó mértéke"
   category: "Kategória"
   import_date: "Importálás dátuma"
-  delivery: "Szállítás"
+  delivery: "Kiszállítás"
   temperature_controlled: "Hőmérséklet szabályozott"
   new_product: "Új termék"
   administration: "Adminisztráció"
@@ -3972,7 +3973,7 @@ hu:
     countries: "Országok"
     listing_countries: "Országok listázása"
     iso_name: "ISO név"
-    states_required: "Állam kötelező"
+    states_required: "Megye kötelező"
     editing_country: "Ország szerkesztése"
     back_to_countries_list: "Vissza az országok listájához"
     states: "Megyék"
@@ -4164,13 +4165,14 @@ hu:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "A törölt rendeléshez nem lehet tételt hozzáadni"
+          cannot_add_item_to_shipped_order: "Lezárt rendeléshez nem adható hozzá további tétel"
           include_out_of_stock_variants: "Tartalmazza azokat a változatokat, amelyeknél nincs raktárkészlet"
         shipment:
           mark_as_shipped_message_html: "Ezzel a megrendelést KISZÁLLÍTVA-ként jelölöd meg. Biztos, hogy folytatni szeretnéd?"
           mark_as_shipped_label_message: "Szállítási/átvételi értesítő e-mail küldése az ügyfélnek."
         index:
           listing_orders: "Megrendelések listája"
-          new_order: "Új rend"
+          new_order: "Új rendelés"
           capture: "Elfog"
           ship: "Szállítás"
           edit: "Szerkesztés"

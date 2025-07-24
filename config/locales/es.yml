@@ -141,8 +141,10 @@ es:
       message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
     internal_server_error:
       title: "Lo sentimos pero algo fue mal (500)"
+      message_html: "<b>Por favor, inténtalo de nuevo.</b><p> Puede que se trate de un problema temporal. Haz clic en el botón «Atrás» para volver a la pantalla anterior o vuelve a la <a href='/''>página de inicio</a> e inténtalo de nuevo.</p><b> Estamos en ello.</b> <p>Si ya has tenido este problema anteriormente, es probable que ya lo conozcamos y estemos trabajando para solucionarlo. Registramos todos los errores que se producen.</p><b> Póngase en contacto con el servicio de asistencia</b><p> Si el problema persiste o es urgente, infórmenos al respecto. Encontrará nuestros datos de contacto en la página <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>global de Open Food Network Local.</a></p><p> Nos será de gran ayuda que nos facilite tantos detalles como sea posible sobre lo que estaba haciendo cuando se produjo el error.</p>"
     unprocessable_entity:
       title: "El cambio deseado ha sido rechazado (422)"
+      message_html: "<p>El cambio que deseabas ha sido rechazado. Quizás hayas intentado cambiar algo a lo que no tienes acceso.<br><h3><a href='/' > Vuelve a la página de inicio.</a></h3></p>"
     general_error:
       message: "Lo sentimos, pero algo ha ido mal.\n\nPuede que se trate de un problema temporal, así que inténtalo de nuevo o recarga la página.\nRegistramos todos los errores y es posible que estemos trabajando en una solución.\nSi el problema persiste o es urgente, póngase en contacto con nosotras."
     unauthorized:
@@ -277,6 +279,7 @@ es:
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
     oidc:
       failure: "No se ha podido iniciar sesión: %{error}"
+      record_not_unique: "%{uid} ya está asociado a otra cuenta."
   home_page_alert_html: "HTML de alerta de página de inicio"
   hub_signup_case_studies_html: "HTML casos de estudio de registro de hub"
   hub_signup_detail_html: "HTML detalle de registro de hub"
@@ -566,6 +569,8 @@ es:
           selected_categories: "%{count} categorías seleccionadas"
         producers:
           title: Productoras
+          selected_producers: "%{count} productores seleccionados"
+        per_page: "%{count} elementos por página"
         colums: Columnas
       columns:
         image: Imagen
@@ -710,6 +715,7 @@ es:
         status: Estado
         ok: Ok
         instance_secret_key: Clave secreta de instancia
+        instance_publishable_key: Clave publicable de instancia
         account_id: Account ID
         business_name: Nombre de la Organización
         charges_enabled: Cargos habilitados
@@ -728,6 +734,7 @@ es:
     connected_app_settings:
       edit:
         title: "Ajustes de la aplicación conectada"
+        info_html: "Las aplicaciones habilitadas aparecerán en Configuración organización > Aplicaciones conectadas."
         enabled_legend: "Aplicaciones conectadas habilitadas"
         connected_apps_enabled:
           discover_regen: Descubrir el Portal Regenerativo
@@ -755,6 +762,8 @@ es:
         guest_label: "Pedido hecho como invitada"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
+      destroy:
+        has_associated_subscriptions: "Eliminación fallida: este consumidor tiene suscripciones activas. Cancélelas primero."
     column_preferences:
       bulk_update:
         success: "Preferencias de columna guardadas"
@@ -775,6 +784,16 @@ es:
       absent_variant:
         reset: "Restablecer stock"
       index:
+        title: "Catálogo de productos DFC"
+        catalog_url: "%{count} productos para importar de: %{catalog_url}"
+        absent_products:
+          one: |
+              Un productos no ya no esta en este catálogo
+              Se le marcara como no disponible poniendo su stock a cero.
+          other: |
+              %{count} productos ya no están en el catálogo.
+              Se marcarán como no disponibles restableciendo el stock a cero.
+        enterprise: "Importar a la empresa: %{enterprise_name}"
         select_all: "Seleccionar/deseleccionar todo"
         update: Actualizar
         new: Nuevo
@@ -784,6 +803,10 @@ es:
           other: "%{count} seleccionados"
         import: Importar
         invalid_url: Esta URL de catálogo no es correcta
+      import:
+        title: "Importación del catálogo de productos DFC"
+        imported_products: "Productos importados: %{count}"
+        reset_products: "Restablecimiento del stock para productos ausentes: %{count}"
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -854,10 +877,12 @@ es:
       delete_modal:
         delete_product_modal:
           heading: "Borrar producto"
+          prompt: "Esto lo eliminará permanentemente de tu lista."
           confirmation_text: "Borrar producto"
           cancellation_text: "Mantener producto"
         delete_variant_modal:
           heading: "Borrar variante"
+          prompt: "Esto lo eliminará permanentemente de tu lista."
           confirmation_text: "Borrar variante"
           cancellation_text: "Mantener variante"
       filters:
@@ -878,13 +903,30 @@ es:
         search: Buscar
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count}producto</strong> encontrado para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            many: "<strong> %{count}productos </strong>encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            other: "<strong>%{count}productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
           per_page:
             show: Mostrar
+            per_page: "%{num} por página"
           clear_search: Limpiar la búsqueda
       no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
+        no_products_found_for_search: No se han encontrado productos que coincidan con tus criterios de búsqueda.
       table:
+        changed_summary:
+          one: "%{count} producto modificado."
+          other: "%{count} productos modificados."
+        error_summary:
+          saved:
+            one: "%{count} producto ha sido guardado correctamente, pero"
+            other: "%{count} productos han sido guardados correctamente, pero"
+          invalid:
+            one: "No se ha podido guardar %{count} producto. Revise los errores e inténtelo de nuevo."
+            many: "No se han podido guardar %{count} productos. Revise los errores e inténtelo de nuevo."
+            other: "No se han podido guardar %{count} productos. Revise los errores e inténtelo de nuevo."
         reset: Desechar Cambios
         save: Guardar Cambios
       product_variant_row:
@@ -899,6 +941,7 @@ es:
         error: No se puede eliminar la variante
       variant_row:
         none_tax_category: Ninguno
+        search_for_tax_categories: "Buscar categorías fiscales"
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría de impuestos"
         producer_field_name: "Productora"
@@ -950,6 +993,7 @@ es:
         shipping_categories: Categorías de envío
       dfc_import_form:
         title: "Importar del catálogo DFC"
+        enterprise: "Crear productos para organización"
         catalog_url: "URL del catálogo DFC"
         preview: Vista previa
       import:
@@ -971,6 +1015,7 @@ es:
         no_name: Sin nombre
         blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
+        reset_absent_tip: Establecer el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias
@@ -1191,6 +1236,7 @@ es:
           own: Propio
           sells: Vende
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
+          external_billing_id_tip: "Este es el ID utilizado por el sistema de facturación externo para identificar esta organización."
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
           not_visible: Oculto
@@ -1234,8 +1280,12 @@ es:
           enable_subscriptions_true: "Habilitado"
           customer_names_in_reports: "Nombres de consumidoras en informes"
           customer_names_tip: "Permita que sus proveedores vean los nombres de sus consumidoras en los informes"
+          producers_to_edit_orders: "Posibilidad de que los productores editen los pedidos."
+          producers_to_edit_orders_tip: "Permita a sus proveedores ver los pedidos que contienen sus productos y editar la cantidad y el peso solo de sus propios productos."
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
+          customer_contacts_in_reports: "Datos de contacto del cliente en los informes"
+          customer_contacts_tip: "Permita que sus proveedores vean los correos electrónicos y números de teléfono de sus consumidoras en los informes."
           customer_contacts_false: "Deshabilitado"
           customer_contacts_true: "Habilitado"
           producers_edit_orders_false: "Deshabilitado"
