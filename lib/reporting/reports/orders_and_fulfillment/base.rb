@@ -57,7 +57,7 @@ module Reporting
         end
 
         def product_name
-          proc { |line_items| line_items.first.product_name }
+          proc { |line_items| line_items.first.full_product_name }
         end
 
         def product_tax_category
