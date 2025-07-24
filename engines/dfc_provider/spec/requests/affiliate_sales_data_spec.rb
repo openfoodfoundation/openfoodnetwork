@@ -20,7 +20,7 @@ RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml" do
 
         before do
           order = create(:order_with_totals_and_distribution, :completed)
-          order.line_items.first.update!(product_name: "Tomato")
+          order.variants.first.product.update!(name: "Tomato")
           ConnectedApps::AffiliateSalesData.new(
             enterprise: order.distributor
           ).connect({})
