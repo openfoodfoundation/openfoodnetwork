@@ -110,6 +110,8 @@ ca:
       message_html: "<p>El canvi que volies va ser rebutjat. Potser heu intentat canviar alguna cosa a la qual no teniu accés.<br><h3> <a href='/' >Tornar a l'inici</a></h3></p>"
     general_error:
       message: "Ens sap greu, però alguna cosa ha anat malament.\n\n Pot ser que sigui un problema temporal, així que si us plau, torna-ho a provar o torna a carregar la pàgina.\n Enregistrem tots els errors i és possible que estiguem treballant en una solució.\n Si el problema persisteix o és urgent, poseu-vos en contacte amb nosaltres."
+    unauthorized:
+      message: "No rens permisos per a realitzar aquesta acció"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -275,6 +277,7 @@ ca:
         Ho analitzarem, però si el problema persisteix, si us plau, aviseu-nos.
   backorder_mailer:
     backorder_failed:
+      stock: "Estoc"
       product: "Producte"
   enterprise_mailer:
     confirmation_instructions:

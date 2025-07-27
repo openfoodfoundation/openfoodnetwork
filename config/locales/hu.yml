@@ -728,9 +728,9 @@ hu:
         edit_ship_address: "Szállítási cím szerkesztése"
         required_fileds: "A kötelező mezőket csillag jelöli"
         select_country: "Válassz országot"
-        select_state: "Válaszd az Állam lehetőséget"
+        select_state: "Válassz megyét"
         edit: "Szerkesztés"
-        update_address: "Frissítse a címet"
+        update_address: "Cím frissítése"
         confirm_delete: "Biztosan törli?"
         search_by_email: "Keresés email/kód alapján..."
         guest_label: "Vendég kijelentkezés"
@@ -2150,10 +2150,10 @@ hu:
   latitude: Szélességi kör
   latitude_placeholder: például -37.4713077
   latitude_longitude_tip: A szélességi kör és a hosszúsági fok szükséges ahhoz, hogy a vállalkozásod megjelenjen a térképen.
-  longitude: Hosszúság
+  longitude: Hosszúsági fok
   longitude_placeholder: például 144.7851531
   use_geocoder: Próbálja automatikusan kiszámítani a szélességi kört és hosszúsági fokot a címből?
-  state: Ország-
+  state: Megye
   postcode: Irányítószám
   postcode_placeholder: például 3070
   suburb: Település
@@ -3245,6 +3245,7 @@ hu:
   product_importer_products_save_error: egyetlen termék mentése sem sikerült
   product_import_file_not_found_notice: 'A fájl nem található vagy nem nyitható meg'
   product_import_no_data_in_spreadsheet_notice: 'Nem található adat a táblázatban'
+  product_import_inventory_disable: Importálás leltár termékek közé nem lehetséges
   order_choosing_hub_notice: Átvételi pontod ki lett választva.
   order_cycle_selecting_notice: Megrendelési ciklusod kiválasztásra került.
   adjustments_tax_rate_error: "^Kérjük, ellenőrizze, hogy az adókulcs megfelelő-e ehhez a korrekcióhoz."
