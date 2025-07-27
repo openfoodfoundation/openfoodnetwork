@@ -8,16 +8,10 @@ module OpenFoodNetwork
   #
   module FeatureToggle
     def self.conditional_features
-      features = {}
-      if Rails.env.development?
-        features.merge!({
-                          "admin_style_v3" => <<~DESC,
-                            Test the work-in-progress design updates.
-                          DESC
-                        });
-      end
+      # Returns environment-specific features that are conditionally available
+      # Currently empty but can be used to add features based on environment
 
-      features
+      {}
     end
 
     # Please add your new feature here to appear in the Flipper UI.
@@ -73,9 +67,6 @@ module OpenFoodNetwork
     ACTIVE_BY_DEFAULT = {
       # Copy features here that were activated in a migration so that new
       # instances, development and test environments have the feature active.
-      "admin_style_v3" => <<~DESC,
-        Test the work-in-progress design updates.
-      DESC
     }.freeze
 
     def self.setup!
@@ -94,9 +85,6 @@ module OpenFoodNetwork
 
     # Checks weather a feature is enabled for any of the given actors.
     def self.enabled?(feature_name, *actors)
-      # TODO: Need to remove these checks when we fully remove the toggle from development as well
-      # need this check as Flipper won't recognize 'admin_style_v3' as it is removed for server envs
-      return true if !Rails.env.development? && feature_name == :admin_style_v3
       return Flipper.enabled?(feature_name) if actors.empty?
 
       actors.any? do |actor|
