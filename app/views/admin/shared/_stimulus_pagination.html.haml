@@ -22,9 +22,6 @@
 
   - if pagy.next
     %button.page.next{ data: { action: 'click->search#changePage', page: pagy.next } }
-      - if feature?(:admin_style_v3, spree_current_user)
-        %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
-      - else
-        != pagy_t('pagy.next')
+      %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
   - else
     %button.page.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.next')
