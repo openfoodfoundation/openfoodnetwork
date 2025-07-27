@@ -50,7 +50,7 @@ Spree::Core::Engine.routes.draw do
 
     resources :users
 
-    resources :products do
+    resources :products, except: [:index, :destroy] do
       member do
         get :group_buy_options
         get :seo
