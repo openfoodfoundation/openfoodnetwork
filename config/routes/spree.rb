@@ -68,7 +68,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resources :variants do
+      resources :variants, except: :destroy do
         collection do
           post :update_positions
         end

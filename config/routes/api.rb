@@ -16,7 +16,6 @@ Openfoodnetwork::Application.routes.draw do
     namespace :v0 do
       resources :products do
         collection do
-          get :bulk_products
           get :overridable
         end
         post :clone

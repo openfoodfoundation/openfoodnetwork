@@ -38,37 +38,10 @@ module Api
         end
       end
 
-      def destroy
-        authorize! :delete, Spree::Product
-        @product = product_finder.find_product
-        authorize! :delete, @product
-        @product.destroyed_by = current_api_user
-        @product.destroy
-        head :no_content
-      end
-
-      def bulk_products
-        @products = product_finder.bulk_products
-
-        render_paged_products @products
-      end
-
       def overridable
         @products = product_finder.products_for_producers
 
         render_paged_products @products, ::Api::Admin::ProductSimpleSerializer
-      end
-
-      # POST /api/products/:product_id/clone
-      #
-      def clone
-        authorize! :create, Spree::Product
-        original_product = product_finder.find_product_to_be_cloned
-        authorize! :update, original_product
-
-        @product = original_product.duplicate
-
-        render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
       end
 
       private
