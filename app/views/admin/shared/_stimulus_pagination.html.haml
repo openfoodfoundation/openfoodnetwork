@@ -3,10 +3,7 @@
 .pagination{ "data-controller": "search" }
   - if pagy.prev
     %button.page.prev{ data: { action: 'click->search#changePage', page: pagy.prev } }
-      - if feature?(:admin_style_v3, spree_current_user)
-        %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
-      - else
-        != pagy_t('pagy.prev')
+      %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
   - else
     %button.page.disabled{disabled: "disabled"}!= pagy_t('pagy.prev')
 
