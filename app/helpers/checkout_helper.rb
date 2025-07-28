@@ -5,10 +5,6 @@ module CheckoutHelper
     order.ship_address == order.bill_address
   end
 
-  def guest_checkout_allowed?
-    current_order.distributor.allow_guest_orders?
-  end
-
   def checkout_adjustments_for(order, opts = {})
     exclude = opts[:exclude] || {}
     reject_zero_amount = opts.fetch(:reject_zero_amount, true)
