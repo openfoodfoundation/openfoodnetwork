@@ -21,14 +21,43 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
     scroll_to :bottom
     click_link "Connected apps"
 
-    within(page.find('solid-permissioning').shadow_root) do
-      expect(page).to have_content "APPROVED PLATFORMS"
+    # The component displays something and then replaces it with the real
+    # list. That leads to a race condition and we have to just wait until
+    # the component is loaded. :-(
+    sleep 10
+
+    within(platform_list("without-permissions")) do
+      expect(page).to have_content "Proxy Dev Portal"
+
+      # NotSupportedError: Failed to execute 'evaluate' on 'Document':
+      # The node provided is '#document-fragment', which is not a valid context node type.
+      #
+      # click_on "Agree and share"
+
+      # This hack works
+      find("button", text: "Agree and share").native.trigger("click")
     end
 
-    # expect(page).to have_content "Proxy Dev Portal"
-    # expect(page).to have_selector "svg.unchecked" # permission not granted
+    sleep 5
+    within(platform_list("approved")) do
+      expect(page).to have_content "Proxy Dev Portal"
+      find("button", text: "Stop sharing").native.trigger("click")
+    end
 
-    # click_on "Agree and share"
-    # expect(page).to have_selector "svg.checked" # permission granted
+    sleep 5
+    within(platform_list("without-permissions")) do
+      expect(page).to have_content "Proxy Dev Portal"
+      find("button", text: "Agree and share").native.trigger("click")
+    end
+
+    sleep 5
+    within(platform_list("approved")) do
+      expect(page).to have_content "Proxy Dev Portal"
+    end
+  end
+
+  def platform_list(variant)
+    page.find('solid-permissioning').shadow_root
+      .find("platform-block[variant='#{variant}']").shadow_root
   end
 end
