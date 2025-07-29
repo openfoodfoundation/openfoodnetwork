@@ -21,7 +21,9 @@
   <solid-permissioning
     data-src="#{DfcProvider::Engine.routes.url_helpers.enterprise_platforms_url(@enterprise.id)}"
     scopes-uri="https://cdn.startinblox.com/owl/dfc/taxonomies/scopes.jsonld"
-    noRouter>
+    noRouter
+    auto-lang
+    lang="en">
   </solid-permissioning>
 
 %script{type: "module", src: "https://cdn.jsdelivr.net/npm/@startinblox/solid-data-permissioning@latest/dist/index.js"}
