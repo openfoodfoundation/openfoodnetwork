@@ -88,9 +88,8 @@ module DfcProvider
     def scopes(platform_id)
       granted_scopes(platform_id).map do |scope|
         {
-          '@id': "https://example.com/scopes/#{scope}",
+          '@id': "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/scopes.rdf##{scope}",
           '@type': "dfc-t:Scope",
-          'dfc-t:scope': scope,
         }
       end
     end
