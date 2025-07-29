@@ -21,8 +21,10 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
     scroll_to :bottom
     click_link "Connected apps"
 
-    # TODO: interact with shadow root of web component
-    #
+    within(page.find('solid-permissioning').shadow_root) do
+      expect(page).to have_content "APPROVED PLATFORMS"
+    end
+
     # expect(page).to have_content "Proxy Dev Portal"
     # expect(page).to have_selector "svg.unchecked" # permission not granted
 
