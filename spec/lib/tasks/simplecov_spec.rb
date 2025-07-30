@@ -26,6 +26,10 @@ RSpec.describe "simplecov.rake" do
 
             and change { File.exist?(File.join(output_dir, "index.html")) }.
             from(false).
+            to(true).
+
+            and change { File.exist?(File.join(output_dir, "coverage.json")) }.
+            from(false).
             to(true)
         end
       end

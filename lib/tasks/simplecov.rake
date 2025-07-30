@@ -5,7 +5,7 @@ namespace :simplecov do
   task :collate_results, # rubocop:disable Rails/RakeEnvironment doesn't need the full env
        [:path_to_results, :coverage_dir] do |_t, args|
     require "simplecov"
-    require "simplecov-lcov"
+    require "undercover/simplecov_formatter"
 
     path_to_results = args[:path_to_results].presence || "tmp/simplecov"
     output_path = args[:coverage_dir].presence || "coverage"
@@ -15,9 +15,8 @@ namespace :simplecov do
       coverage_dir(output_path)
     end
 
-    SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
     SimpleCov.collate Dir[File.join(path_to_results, "**", ".resultset.json")], "rails" do
-      formatter(SimpleCov::Formatter::LcovFormatter)
+      formatter(SimpleCov::Formatter::Undercover)
       coverage_dir(output_path)
     end
   end
