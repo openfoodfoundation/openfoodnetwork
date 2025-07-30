@@ -1,0 +1,901 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://deb.debian.org/debian/
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      Upgrade-Insecure-Requests:
+      - '1'
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+      Sec-Ch-Ua:
+      - '"Not)A;Brand";v="8", "Chromium";v="138"'
+      Sec-Ch-Ua-Mobile:
+      - "?0"
+      Sec-Ch-Ua-Platform:
+      - '"Linux"'
+      Sec-Fetch-Site:
+      - none
+      Sec-Fetch-Mode:
+      - navigate
+      Sec-Fetch-User:
+      - "?1"
+      Sec-Fetch-Dest:
+      - document
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '5820'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - text/html;charset=UTF-8
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_accumu_debian_backend_mirrors_debian_org
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Wed, 30 Jul 2025 02:22:24 GMT
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-ams21082-AMS, cache-syd10146-SYD
+      X-Cache:
+      - HIT, HIT
+      X-Cache-Hits:
+      - 4, 1
+      X-Timer:
+      - S1753842144.042689,VS0,VE198
+      Vary:
+      - Accept-Encoding
+      X-Req-Url:
+      - recv="/debian/",deliver="/debian/"
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+        <html>
+         <head>
+          <title>Index of /debian</title>
+         </head>
+         <body>
+        <h1>Index of /debian</h1>
+          <table>
+           <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th></tr>
+           <tr><th colspan="4"><hr></th></tr>
+        <tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/hand.right.gif" alt="[   ]"></td><td><a href="README">README</a></td><td align="right">2025-05-17 08:29  </td><td align="right">1.2K</td></tr>
+        <tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="README.CD-manufacture">README.CD-manufacture</a></td><td align="right">2010-06-26 09:52  </td><td align="right">1.3K</td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.html">README.html</a></td><td align="right">2025-07-12 22:19  </td><td align="right">2.6K</td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.mirrors.html">README.mirrors.html</a></td><td align="right">2017-03-04 20:08  </td><td align="right">291 </td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.mirrors.txt">README.mirrors.txt</a></td><td align="right">2017-03-04 20:08  </td><td align="right"> 86 </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="dists/">dists/</a></td><td align="right">2025-07-22 17:15  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="doc/">doc/</a></td><td align="right">2025-07-29 19:54  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="extrafiles">extrafiles</a></td><td align="right">2025-07-29 20:27  </td><td align="right">168K</td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="indices/">indices/</a></td><td align="right">2025-07-29 20:26  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/compressed.gif" alt="[   ]"></td><td><a href="ls-lR.gz">ls-lR.gz</a></td><td align="right">2025-07-29 20:23  </td><td align="right"> 12M</td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="pool/">pool/</a></td><td align="right">2022-10-05 17:09  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="project/">project/</a></td><td align="right">2008-11-17 23:05  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="tools/">tools/</a></td><td align="right">2012-10-10 16:29  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="zzz-dists/">zzz-dists/</a></td><td align="right">2025-07-12 22:20  </td><td align="right">  - </td></tr>
+           <tr><th colspan="4"><hr></th></tr>
+        </table>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <html>
+        <head>
+          <title>Debian Archive</title>
+          <meta name="Modified" content="2025-07-13">
+        </head>
+        <body>
+
+        <h1>Debian Archive</h1>
+
+        <p>See <a href="https://www.debian.org/">https://www.debian.org/</a>
+        for information about Debian GNU/Linux.</p>
+
+        <h2>Current Releases</h2>
+
+        <p>Four Debian releases are available on the main site:</p>
+
+        <blockquote>
+        <dl>
+
+        <dt><a href="dists/bullseye/">Debian 11.11, or bullseye</a></dt>
+        <dd>Debian 11.11 was released Saturday, 31st August 2024.
+        <a href="https://www.debian.org/releases/bullseye/amd64/">Installation
+        and upgrading instructions</a>,
+        <a href="https://www.debian.org/releases/bullseye/">More information</a>
+        </dd>
+
+        <dt><a href="dists/bookworm/">Debian 12.11, or bookworm</a></dt>
+        <dd>Debian 12.11 was released Saturday, 17th May 2025.
+        <a href="https://www.debian.org/releases/bookworm/amd64/">Installation
+        and upgrading instructions</a>,
+        <a href="https://www.debian.org/releases/bookworm/">More information</a>
+        </dd>
+
+        <dt><a href="dists/testing/">Testing, or trixie</a></dt>
+        <dd>The current tested development snapshot is named trixie.<br>
+        Packages which have been tested in unstable and passed automated
+        tests propagate to this release.<br>
+        <a href="https://www.debian.org/releases/testing/">More information</a>
+        </dd>
+
+        <dt><a href="dists/unstable/">Unstable, or sid</a></dt>
+        <dd>The current development snapshot is named sid.<br>
+        Untested candidate packages for future releases.<br>
+        <a href="https://www.debian.org/releases/unstable/">More information</a>
+        </dd>
+        </dl>
+        </blockquote>
+
+        <h2>Old Releases</h2>
+
+        <p>Older releases of Debian are at
+        <a href="http://archive.debian.org/debian-archive/">http://archive.debian.org/debian-archive</a>
+        <br>
+        <a href="https://www.debian.org/distrib/archive">More information</a>
+        </p>
+
+        <h2>CDs</h2>
+
+        <p>For more information about Debian CDs, please see
+        <a href="README.CD-manufacture">README.CD-manufacture</a>.
+        <br>
+        <a href="https://www.debian.org/CD/">Further information</a>
+        </p>
+
+        <h2>Mirrors</h2>
+
+        <p>For more information about Debian mirrors, please see
+        <a href="README.mirrors.html">README.mirrors.html</a>.
+        <br>
+        <a href="https://www.debian.org/mirror/">Further information</a>
+        </p>
+
+        <h2>Other directories</h2>
+
+        <table border="0" summary="Other directories">
+        <tr><td><a href="doc/">doc</a></td>          <td>Debian documentation.</td></tr>
+        <tr><td><a href="indices/">indices</a></td>  <td>Various indices of the site.</td></tr>
+        <tr><td><a href="project/">project</a></td>  <td>Experimental packages and other miscellaneous files.</td></tr>
+        </table>
+
+        </body>
+        </html>
+        </body></html>
+  recorded_at: Wed, 30 Jul 2025 02:22:24 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/debian/
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      Upgrade-Insecure-Requests:
+      - '1'
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '5820'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - text/html;charset=UTF-8
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_accumu_debian_backend_mirrors_debian_org
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:24 GMT
+      X-Served-By:
+      - cache-ams21082-AMS, cache-syd10179-SYD
+      X-Cache:
+      - HIT, MISS
+      X-Cache-Hits:
+      - 4, 0
+      X-Timer:
+      - S1753842144.982706,VS0,VE258
+      Vary:
+      - Accept-Encoding
+      X-Req-Url:
+      - recv="/debian/",deliver="/debian/"
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+        <html>
+         <head>
+          <title>Index of /debian</title>
+         </head>
+         <body>
+        <h1>Index of /debian</h1>
+          <table>
+           <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th></tr>
+           <tr><th colspan="4"><hr></th></tr>
+        <tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/hand.right.gif" alt="[   ]"></td><td><a href="README">README</a></td><td align="right">2025-05-17 08:29  </td><td align="right">1.2K</td></tr>
+        <tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="README.CD-manufacture">README.CD-manufacture</a></td><td align="right">2010-06-26 09:52  </td><td align="right">1.3K</td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.html">README.html</a></td><td align="right">2025-07-12 22:19  </td><td align="right">2.6K</td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.mirrors.html">README.mirrors.html</a></td><td align="right">2017-03-04 20:08  </td><td align="right">291 </td></tr>
+        <tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="README.mirrors.txt">README.mirrors.txt</a></td><td align="right">2017-03-04 20:08  </td><td align="right"> 86 </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="dists/">dists/</a></td><td align="right">2025-07-22 17:15  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="doc/">doc/</a></td><td align="right">2025-07-29 19:54  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="extrafiles">extrafiles</a></td><td align="right">2025-07-29 20:27  </td><td align="right">168K</td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="indices/">indices/</a></td><td align="right">2025-07-29 20:26  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/compressed.gif" alt="[   ]"></td><td><a href="ls-lR.gz">ls-lR.gz</a></td><td align="right">2025-07-29 20:23  </td><td align="right"> 12M</td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="pool/">pool/</a></td><td align="right">2022-10-05 17:09  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="project/">project/</a></td><td align="right">2008-11-17 23:05  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="tools/">tools/</a></td><td align="right">2012-10-10 16:29  </td><td align="right">  - </td></tr>
+        <tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="zzz-dists/">zzz-dists/</a></td><td align="right">2025-07-12 22:20  </td><td align="right">  - </td></tr>
+           <tr><th colspan="4"><hr></th></tr>
+        </table>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <html>
+        <head>
+          <title>Debian Archive</title>
+          <meta name="Modified" content="2025-07-13">
+        </head>
+        <body>
+
+        <h1>Debian Archive</h1>
+
+        <p>See <a href="https://www.debian.org/">https://www.debian.org/</a>
+        for information about Debian GNU/Linux.</p>
+
+        <h2>Current Releases</h2>
+
+        <p>Four Debian releases are available on the main site:</p>
+
+        <blockquote>
+        <dl>
+
+        <dt><a href="dists/bullseye/">Debian 11.11, or bullseye</a></dt>
+        <dd>Debian 11.11 was released Saturday, 31st August 2024.
+        <a href="https://www.debian.org/releases/bullseye/amd64/">Installation
+        and upgrading instructions</a>,
+        <a href="https://www.debian.org/releases/bullseye/">More information</a>
+        </dd>
+
+        <dt><a href="dists/bookworm/">Debian 12.11, or bookworm</a></dt>
+        <dd>Debian 12.11 was released Saturday, 17th May 2025.
+        <a href="https://www.debian.org/releases/bookworm/amd64/">Installation
+        and upgrading instructions</a>,
+        <a href="https://www.debian.org/releases/bookworm/">More information</a>
+        </dd>
+
+        <dt><a href="dists/testing/">Testing, or trixie</a></dt>
+        <dd>The current tested development snapshot is named trixie.<br>
+        Packages which have been tested in unstable and passed automated
+        tests propagate to this release.<br>
+        <a href="https://www.debian.org/releases/testing/">More information</a>
+        </dd>
+
+        <dt><a href="dists/unstable/">Unstable, or sid</a></dt>
+        <dd>The current development snapshot is named sid.<br>
+        Untested candidate packages for future releases.<br>
+        <a href="https://www.debian.org/releases/unstable/">More information</a>
+        </dd>
+        </dl>
+        </blockquote>
+
+        <h2>Old Releases</h2>
+
+        <p>Older releases of Debian are at
+        <a href="http://archive.debian.org/debian-archive/">http://archive.debian.org/debian-archive</a>
+        <br>
+        <a href="https://www.debian.org/distrib/archive">More information</a>
+        </p>
+
+        <h2>CDs</h2>
+
+        <p>For more information about Debian CDs, please see
+        <a href="README.CD-manufacture">README.CD-manufacture</a>.
+        <br>
+        <a href="https://www.debian.org/CD/">Further information</a>
+        </p>
+
+        <h2>Mirrors</h2>
+
+        <p>For more information about Debian mirrors, please see
+        <a href="README.mirrors.html">README.mirrors.html</a>.
+        <br>
+        <a href="https://www.debian.org/mirror/">Further information</a>
+        </p>
+
+        <h2>Other directories</h2>
+
+        <table border="0" summary="Other directories">
+        <tr><td><a href="doc/">doc</a></td>          <td>Debian documentation.</td></tr>
+        <tr><td><a href="indices/">indices</a></td>  <td>Various indices of the site.</td></tr>
+        <tr><td><a href="project/">project</a></td>  <td>Experimental packages and other miscellaneous files.</td></tr>
+        </table>
+
+        </body>
+        </html>
+        </body></html>
+  recorded_at: Wed, 30 Jul 2025 02:22:24 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/blank.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '148'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"94-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:24 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10125-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.402396,VS0,VE414
+      X-Req-Url:
+      - recv="/icons/blank.gif",deliver="/icons/blank.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAKEAAP///8z//wAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAACE4yPqcvtD6OctNqLs968+w+GSQEAOw==
+  recorded_at: Wed, 30 Jul 2025 02:22:24 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/back.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '216'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"d8-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:24 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10140-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.402014,VS0,VE418
+      X-Req-Url:
+      - recv="/icons/back.gif",deliver="/icons/back.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAMIAAP///8z//5mZmWZmZjMzMwAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAADSxi63P4jEPJqEDNTu6LO3PVpnDdOFnaCkHQGBTcqRRxuWG0v+5LrNUZQ8QPqeMakkaZsFihOpyDajMCoOoJAGNVWkt7QVfzokc+LBAA7
+  recorded_at: Wed, 30 Jul 2025 02:22:24 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/hand.right.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '217'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"d9-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:24 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10160-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.402195,VS0,VE417
+      X-Req-Url:
+      - recv="/icons/hand.right.gif",deliver="/icons/hand.right.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAMIAAP/////Mmcz//5lmMwAAAAAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAACACwAAAAAFAAWAAADTCi63P4wykkdubiSwDuRVydi5CWEYjBsKbe2rDjMdMwRw1iaaZx7jcDm8nOpVsFjsSh0CFuq46fxko0eKOtsiu0UuRHfVlOqmM9oSgIAOw==
+  recorded_at: Wed, 30 Jul 2025 02:22:24 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/text.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '229'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"e5-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:25 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10179-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.431907,VS0,VE589
+      X-Req-Url:
+      - recv="/icons/text.gif",deliver="/icons/text.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAMIAAP///8z//5mZmTMzMwAAAAAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAADWDi6vPEwDECrnSO+aTvPEddVIriN1wVxROtSxBDPJwq7bo23luALhJqt8gtKbrsXBSgcEo2spBLAPDp7UKT02bxWRdrp94rtbpdZMrrr/A5+8LhPFpHajQkAOw==
+  recorded_at: Wed, 30 Jul 2025 02:22:25 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/folder.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '225'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"e1-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:25 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10182-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.432033,VS0,VE589
+      X-Req-Url:
+      - recv="/icons/folder.gif",deliver="/icons/folder.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAMIAAP/////Mmcz//5lmMzMzMwAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAACACwAAAAAFAAWAAADVCi63P4wyklZufjOErrvRcR9ZKYpxUB6aokGQyzHKxyO9RoTV54PPJyPBewNSUXhcWc8soJOIjTaSVJhVphWxd3CeILUbDwmgMPmtHrNIyxM8Iw7AQA7
+  recorded_at: Wed, 30 Jul 2025 02:22:25 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/unknown.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '245'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"f5-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:25 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10136-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842144.402202,VS0,VE623
+      X-Req-Url:
+      - recv="/icons/unknown.gif",deliver="/icons/unknown.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAMIAAP///8z//5mZmTMzMwAAAAAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAADaDi6vPEwDECrnSO+aTvPEQcIAmGaIrhR5XmKgMq1LkoMN7ECrjDWp52r0iPpJJ0KjUAq7SxLE+sI+9V8vycFiM0iLb2O80s8JcfVJJTaGYrZYPNby5Ov6WolPD+XDJqAgSQ4EUCGQQEJADs=
+  recorded_at: Wed, 30 Jul 2025 02:22:25 GMT
+- request:
+    method: get
+    uri: http://deb.debian.org/icons/compressed.gif
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept:
+      - image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1038'
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      Referrer-Policy:
+      - no-referrer
+      X-Xss-Protection:
+      - '1'
+      Permissions-Policy:
+      - interest-cohort=()
+      Last-Modified:
+      - Sat, 20 Nov 2004 20:16:24 GMT
+      Etag:
+      - '"40e-3e9564c23b600"'
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      Content-Type:
+      - image/gif
+      Backend:
+      - 4qpvL1tJyeV1P6Tmf0Lj8g--F_static_backend
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Wed, 30 Jul 2025 02:22:25 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-syd10169-SYD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1753842145.932677,VS0,VE585
+      X-Req-Url:
+      - recv="/icons/compressed.gif",deliver="/icons/compressed.gif"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        R0lGODlhFAAWAOcAAP//////zP//mf//Zv//M///AP/M///MzP/Mmf/MZv/MM//MAP+Z//+ZzP+Zmf+ZZv+ZM/+ZAP9m//9mzP9mmf9mZv9mM/9mAP8z//8zzP8zmf8zZv8zM/8zAP8A//8AzP8Amf8AZv8AM/8AAMz//8z/zMz/mcz/Zsz/M8z/AMzM/8zMzMzMmczMZszMM8zMAMyZ/8yZzMyZmcyZZsyZM8yZAMxm/8xmzMxmmcxmZsxmM8xmAMwz/8wzzMwzmcwzZswzM8wzAMwA/8wAzMwAmcwAZswAM8wAAJn//5n/zJn/mZn/Zpn/M5n/AJnM/5nMzJnMmZnMZpnMM5nMAJmZ/5mZzJmZmZmZZpmZM5mZAJlm/5lmzJlmmZlmZplmM5lmAJkz/5kzzJkzmZkzZpkzM5kzAJkA/5kAzJkAmZkAZpkAM5kAAGb//2b/zGb/mWb/Zmb/M2b/AGbM/2bMzGbMmWbMZmbMM2bMAGaZ/2aZzGaZmWaZZmaZM2aZAGZm/2ZmzGZmmWZmZmZmM2ZmAGYz/2YzzGYzmWYzZmYzM2YzAGYA/2YAzGYAmWYAZmYAM2YAADP//zP/zDP/mTP/ZjP/MzP/ADPM/zPMzDPMmTPMZjPMMzPMADOZ/zOZzDOZmTOZZjOZMzOZADNm/zNmzDNmmTNmZjNmMzNmADMz/zMzzDMzmTMzZjMzMzMzADMA/zMAzDMAmTMAZjMAMzMAAAD//wD/zAD/mQD/ZgD/MwD/AADM/wDMzADMmQDMZgDMMwDMAACZ/wCZzACZmQCZZgCZMwCZAABm/wBmzABmmQBmZgBmMwBmAAAz/wAzzAAzmQAzZgAzMwAzAAAA/wAAzAAAmQAAZgAAM+4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABEAAADuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEe7u7t3d3bu7u6qqqoiIiHd3d1VVVURERCIiIhEREQAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAAkACwAAAAAFAAWAAAImQBJCCTBqmDBgQgTDmQFAABDVgojEmzI0KHEhBUrWrwoMGNDihwnAvjHiqRJjhX/qVz5D+VHAFZiWmmZ8BGHji9hxqTJ4ZFAmzc1vpxJgkPPn0Y5CP04M6lPEkCN5mxoJelRqFY5TM36NGrPqV67Op0KM6rYnkup/gMq1mdamC1tdn36lijUpwjr0pSoFyUrmTJLhiTBkqXCgAA7
+  recorded_at: Wed, 30 Jul 2025 02:22:25 GMT
+recorded_with: VCR 6.2.0
