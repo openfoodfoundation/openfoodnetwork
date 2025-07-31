@@ -38,6 +38,8 @@ services:
       bash -c "rm -f tmp/pids/server.pid &&
                (bundle check || bundle install) &&
                bundle exec rake db:create &&
+               chmod +x ./script/load_schema.sh &&
+               ./script/load_schema.sh &&
                yarn install &&
                bundle exec foreman start -f Procfile.docker"
 volumes:
