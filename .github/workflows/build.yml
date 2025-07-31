@@ -45,6 +45,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Docker Hub login
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        
       - name: Setup redis
         uses: supercharge/redis-github-action@1.4.0
         with:
