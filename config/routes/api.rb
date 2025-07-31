@@ -16,6 +16,7 @@ Openfoodnetwork::Application.routes.draw do
     namespace :v0 do
       resources :products do
         collection do
+          get :bulk_products
           get :overridable
         end
         post :clone
@@ -73,6 +74,8 @@ Openfoodnetwork::Application.routes.draw do
       resources :customers, only: [:index, :update]
 
       resources :enterprise_fees, only: [:destroy]
+
+      post '/product_images/:product_id', to: 'product_images#update_product_image'
 
       resources :states, :only => [:index, :show]
 
