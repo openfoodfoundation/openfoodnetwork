@@ -84,6 +84,7 @@ module ReportsActions
                         else
                           params[:fields_to_show]
                         end,
+        display_metadata_rows: false,
         display_summary_row: request.get?,
         display_header_row: false
       }
@@ -94,6 +95,7 @@ module ReportsActions
     rendering_options.update(
       options: {
         fields_to_show: params[:fields_to_show],
+        display_metadata_rows: params[:display_metadata_rows].present?,
         display_summary_row: params[:display_summary_row].present?,
         display_header_row: params[:display_header_row].present?
       }
