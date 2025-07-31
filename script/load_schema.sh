@@ -13,3 +13,5 @@ if [ -z "$DB_VERSION" ] || [ "$DB_VERSION" != "$FILE_VERSION" ]; then
 else
   echo "✅ Schema is up to date (version $DB_VERSION)."
 fi
+
+####################
