@@ -12,7 +12,9 @@ SimpleCov.start 'rails' do
   add_filter '/script'
   add_filter '/log'
   add_filter '/db'
-  add_filter '/lib/tasks/sample_data/'
+
+  # We haven't managed to make simplecov recognise rake coverage accurately.
+  add_filter '/lib/tasks/'
 
   formatter SimpleCov::Formatter::SimpleFormatter
 end
