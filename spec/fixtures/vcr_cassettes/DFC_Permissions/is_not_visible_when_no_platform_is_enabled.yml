@@ -1,0 +1,157 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://clients2.google.com/time/1/current?cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&cup2key=9:xgNLAoOqba-lEGVM6YOjj7pIq8HoxNPpUp9EWljo6sc
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Proxy-Connection:
+      - keep-alive
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept-Encoding:
+      - ''
+      Connection:
+      - close
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Content-Type-Options:
+      - nosniff
+      X-Cup-Server-Proof:
+      - 30460221009b0f46a5511673ea580081ce4e919d37745231029ab508ecbda5d9ee8e4c6a22022100e20234b939fd368c664f74624bab1cb2cefb9e966650a6a13f1b7fdf7a0c8549:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 29 Jul 2025 05:06:27 GMT
+      Content-Disposition:
+      - attachment; filename="json.txt"; filename*=UTF-8''json.txt
+      Cross-Origin-Resource-Policy:
+      - same-site
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Accept-Ranges:
+      - none
+      Vary:
+      - Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site,Accept-Encoding
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |-
+        )]}'
+        {"current_time_millis":1753765587344,"server_nonce":4.706974222338465E-226}
+  recorded_at: Tue, 29 Jul 2025 05:06:27 GMT
+- request:
+    method: post
+    uri: https://accounts.google.com/ListAccounts?gpsia=1&json=standard&source=ChromiumBrowser
+    body:
+      encoding: UTF-8
+      string: " "
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1'
+      Origin:
+      - https://www.google.com
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Sec-Fetch-Site:
+      - none
+      Sec-Fetch-Mode:
+      - no-cors
+      Sec-Fetch-Dest:
+      - empty
+      User-Agent:
+      - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0
+        Safari/537.36
+      Accept-Encoding:
+      - ''
+      Accept-Language:
+      - en-US,en;q=0.9
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Access-Control-Allow-Origin:
+      - https://www.google.com
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 29 Jul 2025 05:06:28 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Accept-Ch:
+      - Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version, Sec-CH-UA-Full-Version-List,
+        Sec-CH-UA-Model, Sec-CH-UA-WoW64, Sec-CH-UA-Form-Factors, Sec-CH-UA-Platform,
+        Sec-CH-UA-Platform-Version
+      Content-Security-Policy:
+      - require-trusted-types-for 'script';report-uri /_/IdentityListAccountsHttp/cspreport
+      - script-src 'report-sample' 'nonce-k53NvqeKlfwH5MjGJUn81Q' 'unsafe-inline';object-src
+        'none';base-uri 'self';report-uri /_/IdentityListAccountsHttp/cspreport;worker-src
+        'self'
+      - 'script-src ''unsafe-inline'' ''unsafe-eval'' blob: data: ''self'' https://apis.google.com
+        https://ssl.gstatic.com https://www.google.com https://www.googletagmanager.com
+        https://www.gstatic.com https://www.google-analytics.com;report-uri /_/IdentityListAccountsHttp/cspreport/allowlist'
+      - 'script-src ''unsafe-inline'' ''unsafe-eval'' blob: data:;report-uri /_/IdentityListAccountsHttp/cspreport/fine-allowlist'
+      Permissions-Policy:
+      - ch-ua-arch=*, ch-ua-bitness=*, ch-ua-full-version=*, ch-ua-full-version-list=*,
+        ch-ua-model=*, ch-ua-wow64=*, ch-ua-form-factors=*, ch-ua-platform=*, ch-ua-platform-version=*
+      Reporting-Endpoints:
+      - default="/_/IdentityListAccountsHttp/web-reports?context=eJzjEtHikmJw05BiOHxtB5Meyy0mIyAW4uG4snbhETaBDxc-TmNS0k3KL4zPTEnNK8ksqczJLC5JTE7OL80rKS5OLSpLLYo3MjAyNTA3MtAzsIgvMAAAgSYcZg"
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Accept-Ranges:
+      - none
+      Vary:
+      - Origin,Accept-Encoding
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["gaia.l.a.r",[]]'
+  recorded_at: Tue, 29 Jul 2025 05:06:28 GMT
+recorded_with: VCR 6.2.0

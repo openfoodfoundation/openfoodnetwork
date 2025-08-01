@@ -410,6 +410,6 @@ jobs:
           include-hidden-files: true
       - name: Compare SimpleCov results with Undercover
         run: |
-          git fetch --no-tags origin master:master
+          git fetch --no-tags origin ${{ github.event.pull_request.base.ref }}:master
           bundle exec undercover
         if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch
