@@ -22,11 +22,12 @@
               checked: (payment_method.id == selected_payment_method),
               "data-action": "paymentmethod#selectPaymentMethod",
               "data-paymentmethod-id": "#{payment_method.id}",
+              "data-paymentmethod-name": "#{payment_method.name}",
               "data-paymentmethod-target": "input"
             = f.label :payment_method_id, "#{payment_method.name}", for: "payment_method_#{payment_method.id}"
             %em.fees=payment_or_shipping_price(payment_method, @order)
 
-          .paymentmethod-container{"data-paymentmethod-id": "#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
+          .paymentmethod-container{"data-paymentmethod-id": "#{payment_method.id}","data-paymentmethod-name": "#{payment_method.name}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
             - if payment_method.description && !payment_method.description.empty?
               .paymentmethod-description.panel
                 = simple_format(html_escape(payment_method.description))
