@@ -19,11 +19,6 @@ module Spree
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
 
-      def index
-        @current_user = spree_current_user
-        @show_latest_import = params[:latest_import] || false
-      end
-
       def show
         session[:return_to] ||= request.referer
         redirect_to( action: :edit )
@@ -63,28 +58,6 @@ module Spree
           end
           redirect_to spree.edit_admin_product_url(@object, @url_filters)
         end
-      end
-
-      def bulk_update
-        product_set = product_set_from_params
-
-        product_set.collection.each { |p| authorize! :update, p }
-
-        if product_set.save
-          redirect_to main_app.bulk_products_api_v0_products_path(bulk_index_query)
-        elsif product_set.errors.present?
-          render json: { errors: product_set.errors }, status: :bad_request
-        else
-          render body: nil, status: :internal_server_error
-        end
-      end
-
-      def clone
-        @new = @product.duplicate
-        raise "Clone failed" unless @new.save
-
-        flash[:success] = t('.success')
-        redirect_to spree.admin_products_url
       end
 
       def group_buy_options

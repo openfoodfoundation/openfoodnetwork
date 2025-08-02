@@ -1,6 +1,6 @@
 - content_for :sub_menu do
   %ul#sub_nav.inline-menu
-    = tab :products, :products_v3
+    = tab :products, :products_v3, url: admin_products_path
     = tab :properties
     = tab :variant_overrides, url: main_app.admin_inventory_path, match_path: '/inventory' if feature?(:inventory, spree_current_user.enterprises) 
     = tab :import, url: main_app.admin_product_import_path, match_path: '/product_import'
