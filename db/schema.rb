@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_03_04_234657) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_13_110052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -566,6 +566,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_04_234657) do
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
     t.string "unit_presentation"
+    t.string "product_name"
+    t.string "variant_name"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
