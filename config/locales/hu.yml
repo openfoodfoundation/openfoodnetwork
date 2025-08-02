@@ -728,9 +728,9 @@ hu:
         edit_ship_address: "Szállítási cím szerkesztése"
         required_fileds: "A kötelező mezőket csillag jelöli"
         select_country: "Válassz országot"
-        select_state: "Válaszd az Állam lehetőséget"
+        select_state: "Válassz megyét"
         edit: "Szerkesztés"
-        update_address: "Frissítse a címet"
+        update_address: "Cím frissítése"
         confirm_delete: "Biztosan törli?"
         search_by_email: "Keresés email/kód alapján..."
         guest_label: "Vendég kijelentkezés"
@@ -922,7 +922,7 @@ hu:
         not_updatable: nem frissíthető a meglévő termékeken termékimporttal
         values_must_be_same: azonos név alatt azonos terméknek kell szerepelnie
         blank: nem lehet üres
-        products_no_permission: nincs engedélye a vállalkozás termékeinek kezelésére
+        products_no_permission: nincs engedélyed a vállalkozás termékeinek kezelésére
         inventory_no_permission: nincs engedélye készlet létrehozására ehhez a termelőhöz
         none_saved: egyetlen terméket sem mentett sikeresen
         line_number: "%{number}. sor:"
@@ -1011,7 +1011,7 @@ hu:
         producer: Termelő
         sku: SKU
         name: Név
-        display_name: Megjelenítendő név
+        display_name: Alternatív név
         category: Kategória
         description: Leírás
         units: Egységek
@@ -2150,10 +2150,10 @@ hu:
   latitude: Szélességi kör
   latitude_placeholder: például -37.4713077
   latitude_longitude_tip: A szélességi kör és a hosszúsági fok szükséges ahhoz, hogy a vállalkozásod megjelenjen a térképen.
-  longitude: Hosszúság
+  longitude: Hosszúsági fok
   longitude_placeholder: például 144.7851531
   use_geocoder: Próbálja automatikusan kiszámítani a szélességi kört és hosszúsági fokot a címből?
-  state: Ország-
+  state: Megye
   postcode: Irányítószám
   postcode_placeholder: például 3070
   suburb: Település
@@ -2397,11 +2397,11 @@ hu:
     set_a_password: "Ezután a rendszer kéri, hogy állítson be egy jelszót, mielőtt felügyelheti a vállalkozást."
     mistakenly_sent: "Nem tudod, miért kaptad ezt az e-mailt? További információért fordulj %{owner_email}-hoz."
   producer_mail_greeting: "Kedves"
-  producer_mail_text_before: "Alább megtalálja a rendelési ciklusra vonatkozó frissítést:"
-  producer_mail_order_text: "Íme a termékei megrendelésének összefoglalása:"
+  producer_mail_text_before: "Küldjük az alábbi rendelési ciklusra vonatkozó összesítést:"
+  producer_mail_order_text: "Megrendelt termékek:"
   producer_mail_delivery_instructions: "Raktári átvételi/szállítási instrukciók:"
-  producer_mail_signoff: "Köszönet és jókívánságok"
-  producer_mail_order_customer_text: "Itt található a rendelések összegzése ügyfelek szerint csoportosítva"
+  producer_mail_signoff: "Üdvözlettel,"
+  producer_mail_order_customer_text: "A rendelések vásárlók szerint csoportosítva:"
   shopping_oc_closed: A rendelések lezárva
   shopping_oc_closed_description: "Kérjük, várd meg, amíg a következő ciklus megnyílik."
   shopping_oc_last_closed: "Az utolsó ciklus ennyi ideje zárult:  %{distance_of_time}"
@@ -3245,6 +3245,7 @@ hu:
   product_importer_products_save_error: egyetlen termék mentése sem sikerült
   product_import_file_not_found_notice: 'A fájl nem található vagy nem nyitható meg'
   product_import_no_data_in_spreadsheet_notice: 'Nem található adat a táblázatban'
+  product_import_inventory_disable: Importálás leltár termékek közé nem lehetséges
   order_choosing_hub_notice: Átvételi pontod ki lett választva.
   order_cycle_selecting_notice: Megrendelési ciklusod kiválasztásra került.
   adjustments_tax_rate_error: "^Kérjük, ellenőrizze, hogy az adókulcs megfelelő-e ehhez a korrekcióhoz."
@@ -3471,7 +3472,7 @@ hu:
           compiling_invoices: "Vevői lapok összeállítása"
           bulk_invoice_created: "Vevői lapok létrehozva"
           bulk_invoice_failed: "Nem sikerült létrehozni a tömeges számlát"
-          please_wait: "A modul bezárása előtt várja meg, amíg a PDF elkészül."
+          please_wait: "A modul bezárása előtt várd meg, amíg a PDF elkészül."
         order_state:
           address: "cím"
           adjustments: "kiigazításokat"
@@ -4444,7 +4445,7 @@ hu:
           sku: "SKU"
           unit_price: "Egységár"
           display_as: "Megjelenítés mint"
-          display_name: "Megjelenítendő név"
+          display_name: "Alternatív név"
           display_as_placeholder: 'például 2 kg'
           display_name_placeholder: 'például paradicsom'
           unit_scale: "Mértékegység skála"

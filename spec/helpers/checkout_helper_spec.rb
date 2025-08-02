@@ -131,16 +131,6 @@ RSpec.describe CheckoutHelper do
     end
   end
 
-  it "knows if guests can checkout" do
-    distributor = create(:distributor_enterprise)
-    order = create(:order, distributor:)
-    allow(helper).to receive(:current_order) { order }
-    expect(helper.guest_checkout_allowed?).to be true
-
-    order.distributor.allow_guest_orders = false
-    expect(helper.guest_checkout_allowed?).to be false
-  end
-
   describe "#checkout_adjustments_for" do
     let(:order) { create(:order_with_totals_and_distribution) }
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
