@@ -1,0 +1,8 @@
+%div
+  - visibility_field_name = "preferred_matched_#{field_name}_visibility"
+  - if rule.is_default 
+    = hidden_field_tag "enterprise[tag_rules_attributes][#{index}][#{visibility_field_name}]", "hidden"
+    %span.text-normal
+      = t(:not_visible)
+  - else
+    = select_tag "enterprise[tag_rules_attributes][#{index}][#{visibility_field_name}]", options_for_select(@visibility_options, rule.public_send(visibility_field_name.to_sym) ), { "data-controller": "tom-select", class: "primary no-search" }

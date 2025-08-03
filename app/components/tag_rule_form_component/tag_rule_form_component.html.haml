@@ -26,5 +26,5 @@
           = rule_data[:text_bottom]
       %td
         %div
-          = render partial: rule_data[:input_template], locals: { rule: rule, index: index }
+          = render partial: "admin/tag_rules/filter_input" , locals: { rule: rule, index: index, field_name: rule_data[:visibility_field] }
 

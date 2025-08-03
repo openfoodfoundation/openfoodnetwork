@@ -83,28 +83,28 @@ module Admin
           text_top: t('js.admin.tag_rules.shipping_method_tagged_top'),
           text_bottom: t('js.admin.tag_rules.shipping_method_tagged_bottom'),
           taggable: "shipping_method",
-          input_template: "admin/tag_rules/filter_shipping_methods_input",
+          visibility_field: "shipping_methods",
         }
       when "TagRule::FilterPaymentMethods"
         {
           text_top: t('js.admin.tag_rules.payment_method_tagged_top'),
           text_bottom: t('js.admin.tag_rules.payment_method_tagged_bottom'),
           taggable: "payment_method",
-          input_template: "admin/tag_rules/filter_payment_methods_input",
+          visibility_field: "payment_methods",
         }
       when "TagRule::FilterOrderCycles"
         {
           text_top: t('js.admin.tag_rules.order_cycle_tagged_top'),
           text_bottom: t('js.admin.tag_rules.order_cycle_tagged_bottom'),
           taggable: "exchange",
-          input_template: "admin/tag_rules/filter_order_cycles_input",
+          visibility_field: "order_cycles",
         }
       when "TagRule::FilterProducts"
         {
           text_top: t('js.admin.tag_rules.inventory_tagged_top'),
           text_bottom: t('js.admin.tag_rules.inventory_tagged_bottom'),
           taggable: "variant",
-          input_template: "admin/tag_rules/filter_products_input",
+          visibility_field: "variants",
         }
       end
 
