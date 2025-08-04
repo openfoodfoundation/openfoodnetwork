@@ -77,7 +77,7 @@ class LineItemSyncer
   end
 
   def add_order_update_issue(order, line_item)
-    issue_description = "#{line_item.product.name} - #{line_item.variant.full_name}"
+    issue_description = "#{line_item.product.name} - #{line_item.full_variant_name}"
     issue_description << " - #{stock_issue_description(line_item)}" if line_item.insufficient_stock?
     order_update_issues.add(order, issue_description)
   end
