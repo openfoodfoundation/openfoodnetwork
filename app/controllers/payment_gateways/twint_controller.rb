@@ -13,11 +13,18 @@ module PaymentGateways
       validate_stock
 
       redirect_to order_failed_route if @any_out_of_stock == true
-      @order.payments.last.state = "completed"
-      @order.payments.last.captured_at = Time.zone.now
-      @order.payments.last.update_columns(state: @order.payments.last.state,
-                                          captured_at: @order.payments.last.captured_at)
-      process_payment_completion!
+      raise Core::GatewayError, Spree.t(:no_pending_payments) if @order.pending_payments.empty?
+
+      @order.pending_payments.each do |payment|
+        payment.update_columns(state: "completed", captured_at: Time.zone.now)
+      end
+      @order.update_columns(payment_state: "paid",
+                            shipment_state: "ready",
+                            state: "complete",
+                            payment_total: @order.total,
+                            completed_at: Time.zone.now)
+
+      redirect_to order_completion_route
     end
 
     private

@@ -57,7 +57,7 @@ module OrderCompletion
   end
 
   def process_payment_completion!
-    unless @order.payments.last&.state == 'completed' || @order.process_payments!
+    unless @order.process_payments!
       payment_failed
       return redirect_to order_failed_route(step: 'payment')
     end
