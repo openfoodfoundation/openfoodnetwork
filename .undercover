@@ -1,5 +1,4 @@
 #!/bin/env ruby
 # frozen_string_literal: true
 
--l coverage/lcov/openfoodnetwork.lcov
 -c master
