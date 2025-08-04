@@ -1038,6 +1038,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sidekiq-scheduler
+  simplecov
   spreadsheet_architect
   spring
   spring-commands-rspec
