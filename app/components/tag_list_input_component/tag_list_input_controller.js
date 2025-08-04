@@ -27,7 +27,9 @@ export default class extends Controller {
     } else {
       this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
     }
-
+    // manualy dispatch an Input event so the change can get picked up by other controllers
+    this.tagListTarget.dispatchEvent(new InputEvent("input"))
+    
     // Create new li component with value
     const newTagElement = this.templateTarget.content.cloneNode(true);
     const spanElement = newTagElement.querySelector("span");
