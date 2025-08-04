@@ -8,7 +8,7 @@
           = payment_method_form.label :stripe_account_owner
         .omega.twelve.columns
           - if @stripe_account_holder.nil? || spree_current_user.enterprises.include?(@stripe_account_holder)
-            %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number', name: 'payment_method[preferred_enterprise_id]', placeholder: t(".enterprise_select_placeholder"), data: 'shops',  "ng-init": "paymentMethod.preferred_enterprise_id = #{@payment_method.preferred_enterprise_id}" , "ng-model": 'paymentMethod.preferred_enterprise_id' }
+            %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number', name: 'payment_method[preferred_enterprise_id]', placeholder: t(".enterprise_select_placeholder"), data: 'shops', "ng-model": 'paymentMethod.preferred_enterprise_id' }
           - else
             %strong= Enterprise.find_by(id: @payment_method)&.name
 
