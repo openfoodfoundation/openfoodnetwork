@@ -11,8 +11,9 @@ class OfferBuilder < DfcBuilder
       value: variant.price.to_f,
       unit: price_measure(variant)&.semanticId,
     )
+
     DataFoodConsortium::Connector::Offer.new(
-      id, price:, stockLimitation: stock_limitation(variant),
+      id, price:, stockLimitation: stock_limitation(variant)
     )
   end
 
@@ -24,6 +25,10 @@ class OfferBuilder < DfcBuilder
     return if offer.price.nil?
 
     variant.price = price(offer)
+  end
+
+  def self.add_offered_item(offer, variant)
+    offer.offeredItem = SuppliedProductBuilder.supplied_product(variant)
   end
 
   def self.price(offer)

@@ -7,6 +7,16 @@ module Spree
     RSpec.describe AvailabilityValidator do
       let(:validator) { AvailabilityValidator.new({}) }
 
+      context "new line item without variant" do
+        let(:order) { create(:order) }
+        let(:line_item) { order.line_items.build }
+
+        it "fails gracefully" do
+          validator.validate(line_item)
+          expect(line_item).not_to be_valid
+        end
+      end
+
       context "line item without existing inventory units" do
         let(:order) { create(:order_with_line_items) }
         let(:line_item) { order.line_items.first }

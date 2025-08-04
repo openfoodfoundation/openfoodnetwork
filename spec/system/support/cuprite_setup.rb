@@ -42,10 +42,15 @@ RSpec.configure do |config|
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|
     original_host = Rails.application.default_url_options[:host]
-    Rails.application.default_url_options[:host] =
-      "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+    system_host = "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+
+    Rails.application.default_url_options[:host] = system_host
+    DfcProvider::Engine.routes.default_url_options[:host] = system_host
+
     example.run
+
     Rails.application.default_url_options[:host] = original_host
+    DfcProvider::Engine.routes.default_url_options[:host] = original_host
     remove_downloaded_files
   end
 end
