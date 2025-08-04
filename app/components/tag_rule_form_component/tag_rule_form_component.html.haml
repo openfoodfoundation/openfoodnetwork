@@ -10,7 +10,7 @@
         = hidden_field_tag element_name("type"), rule.type
         = hidden_field_tag element_name("priority"), index
         = hidden_field_tag element_name("is_default"), rule.is_default
-        = hidden_field_tag element_name("preferred_customer_tags")
+        = hidden_field_tag element_name("preferred_customer_tags"), customer_tags, hidden_field_customer_tag_options
         %span.text-normal
           = rule_data[:text_top]
       %td
