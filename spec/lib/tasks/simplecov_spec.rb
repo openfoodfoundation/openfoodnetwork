@@ -13,10 +13,16 @@ RSpec.describe "simplecov.rake" do
         Dir.mktmpdir do |tmp_dir|
           output_dir = File.join(tmp_dir, "output")
 
+          task_name = "simplecov:collate_results[#{input_dir},#{output_dir}]"
+
           expect {
-            invoke_task(
-              "simplecov:collate_results[#{input_dir},#{output_dir}]"
-            )
+            if ENV["COVERAGE"]
+              # Start task in a new process to not mess with our coverage report.
+              `bundle exec rake #{task_name}`
+            else
+              # Use the quick standard invocation in dev.
+              invoke_task(task_name)
+            end
           }.to change { Dir.exist?(output_dir) }.
             from(false).
             to(true).
