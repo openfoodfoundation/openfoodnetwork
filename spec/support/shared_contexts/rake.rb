@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Let this context take of Rake testing gotchas.
+# Let this context take care of Rake testing gotchas.
 #
 # ```rb
 # RSpec.describe "my_task.rake" do
