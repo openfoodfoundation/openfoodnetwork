@@ -12,34 +12,7 @@
         -# TODO both index can't overlap
         - customer_rule_index = 10
         - tag_groups(rules).each_with_index do |group, group_index|
-          %div{ id: "tg_#{group_index}", "data-controller": "tag-rule-group"}
-            .customer_tag
-              .header
-                %table
-                  %colgroup
-                    %col{width: '35%'}
-                    %col{width: '65%'}
-                  %tr
-                    %td
-                      %h5
-                        = t('.for_customers_tagged')
-                    %td
-                      = render(TagListInputComponent.new(name: "group[#{group_index}][preferred_customer_tags]",
-                        tags: group[:tags],
-                        hidden_field_data_options: { "data-action": "input->tag-rule-group#updatePreferredCustomerTag", "data-tag-rule-group-target": "customerTag" }))
-              #new-customer-tag-rule
-                - group[:rules].each_with_index do |rule, rule_index|
-                  - customer_rule_index = customer_rule_index + 1
-                  = render(TagRuleFormComponent.new(rule: rule,
-                    rule_data: rule_data(rule),
-                    index: customer_rule_index,
-                    customer_tags: group[:tags],
-                    hidden_field_customer_tag_options: { "data-tag-rule-group-target": "ruleCustomerTag" }))
-
-              %hr
-              .add_rule.text-center
-                %input.button{ type: 'button', value: t('.add_new_rule') }
+          = render TagRuleGroupFormComponent.new(group:, index: group_index, customer_rule_index: )
 
       .add_tag
         %input.button{ type: 'button', value: t('.add_new_tag') }
-
