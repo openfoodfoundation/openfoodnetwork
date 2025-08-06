@@ -1,0 +1,33 @@
+%div{ id: form_id, "data-controller": "tag-rule-group-form-component--tag-rule-group-form"}
+  .customer_tag
+    .header
+      %table
+        %colgroup
+          %col{width: '35%'}
+          %col{width: '65%'}
+        %tr
+          %td
+            %h5
+              = t('.for_customers_tagged')
+          %td
+            -# TODO multiple tags ?
+            = render(TagListInputComponent.new(name: tag_list_input_name,
+              tags: group[:tags],
+              hidden_field_data_options: { "data-action": "input->tag-rule-group-form-component--tag-rule-group-form#updatePreferredCustomerTag", "data-tag-rule-group-form-component--tag-rule-group-form-target": "customerTag" }))
+    - if group[:rules].empty?
+      .no_rules
+        = t('components.tag_rule_group_form.no_rules_yet')
+    - else
+      #new-customer-tag-rule
+        - rule_index = customer_rule_index
+        - group[:rules].each_with_index do |rule, rule_index|
+          -rule_index += 1
+          = render(TagRuleFormComponent.new(rule: rule,
+            rule_data: helpers.rule_data(rule),
+            index: rule_index,
+            customer_tags: group[:tags],
+            hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
+
+    %hr
+    .add_rule.text-center
+      %input.button{ type: 'button', value: t('.add_new_rule') }
