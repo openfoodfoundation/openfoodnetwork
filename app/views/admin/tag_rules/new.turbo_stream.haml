@@ -2,5 +2,9 @@
   = turbo_stream.append "flashes" do
     = render(partial: 'admin/shared/flashes', locals: { flashes: flash })
 - else
-  = turbo_stream.append "default-tag-rule" do
-    = render TagRuleFormComponent.new(rule: @default_rule, rule_data: rule_data(@default_rule), index: @index)
+  = turbo_stream.append @div_id do
+    = render(TagRuleFormComponent.new(rule: @default_rule,
+      rule_data: rule_data(@default_rule),
+      index: @index, customer_tags: @customer_tags,
+      hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
+  = turbo_stream.remove_all ".no_rules"

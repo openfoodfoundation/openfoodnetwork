@@ -33,6 +33,7 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :welcome
         patch :register
+        get :new_tag_rule_group
       end
 
       resources :connected_apps, only: [:create, :destroy]

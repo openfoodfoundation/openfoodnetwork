@@ -1,6 +1,7 @@
 .row
   .eleven.columns.alpha.omega
     %div{ "data-turbo": true }
+      - current_group_index = 0
       - rules = @enterprise.tag_rules.prioritised.reject(&:is_default)
       - if rules.empty?
         .no_tags
@@ -10,9 +11,13 @@
 
       #customer-tag-rule
         -# TODO both index can't overlap
-        - customer_rule_index = 10
+        - customer_rule_index = 0
         - tag_groups(rules).each_with_index do |group, group_index|
-          = render TagRuleGroupFormComponent.new(group:, index: group_index, customer_rule_index: )
+          - current_group_index = group_index + 1
+          - customer_rule_index +=10
+          = render TagRuleGroupFormComponent.new(group:, index: group_index, customer_rule_index:, tag_rule_types: @tag_rule_types)
 
-      .add_tag
-        %input.button{ type: 'button', value: t('.add_new_tag') }
+      .add_tag{ "data-controller": "tag-rule" }
+        = hidden_field_tag "customer_rule_index", current_group_index, { "data-tag-rule-target": "index" }
+        %input.button{ type: 'button', value: t('.add_new_tag'), "data-action": "click->tag-rule#add" }
+
