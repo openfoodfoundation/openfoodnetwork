@@ -6,9 +6,15 @@ module Admin
 
     def new
       @index = params[:index]
+      @div_id = params[:div_id]
+      is_default = params[:is_default]
+      @customer_tags = params[:customer_tags]
+      # TODO translation
+      @visibility_options = [[t('js.tag_rules.visible'), "visible"],
+                             [t('js.tag_rules.not_visible'), "hidden"]]
       status = :ok
       if permitted_tag_rule_type.include?(params[:rule_type])
-        @default_rule = "TagRule::#{params[:rule_type]}".constantize.new(is_default: true)
+        @default_rule = "TagRule::#{params[:rule_type]}".constantize.new(is_default:)
       else
         flash.now[:error] = t(".not_supported_type")
         status = :internal_server_error
