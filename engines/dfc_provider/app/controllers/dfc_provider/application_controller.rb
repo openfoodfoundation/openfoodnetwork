@@ -16,6 +16,12 @@ module DfcProvider
 
     private
 
+    def require_permission(scope)
+      return true if current_user.is_a? Spree::User
+
+      current_user.permissions(scope).where(enterprise: current_enterprise).exists?
+    end
+
     def check_authorization
       unauthorized if current_user.nil?
     end
