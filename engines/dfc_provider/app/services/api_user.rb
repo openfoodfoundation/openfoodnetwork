@@ -17,4 +17,8 @@ class ApiUser
   def initialize(id)
     @id = id
   end
+
+  def enterprises
+    Enterprise.none
+  end
 end
