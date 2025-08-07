@@ -137,6 +137,8 @@ paths:
         type: string
     get:
       summary: List CatalogItems
+      security:
+      - oidc_token: []
       tags:
       - CatalogItems
       responses:

@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
+  let(:Authorization) { nil }
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:enterprise) {
     create(
@@ -35,8 +36,23 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
 
     get "List CatalogItems" do
       produces "application/json"
+      security [oidc_token: []]
 
       response "404", "not found" do
+        context "as platform user" do
+          let(:enterprise_id) { 10_000 }
+          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
+          let(:Authorization) { "Bearer #{sib_token}" }
+
+          before { login_as nil }
+
+          around do |example|
+            Timecop.travel(Date.parse("2025-06-13")) { example.run }
+          end
+
+          run_test!
+        end
+
         context "without enterprises" do
           let(:enterprise_id) { "default" }
 
