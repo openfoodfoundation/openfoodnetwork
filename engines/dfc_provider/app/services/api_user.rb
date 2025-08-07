@@ -18,6 +18,10 @@ class ApiUser
     @id = id
   end
 
+  def customers
+    Customer.none
+  end
+
   def enterprises
     Enterprise.where(dfc_permissions: permissions("ReadEnterprise"))
   end
