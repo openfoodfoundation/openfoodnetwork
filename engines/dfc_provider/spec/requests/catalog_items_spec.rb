@@ -78,6 +78,10 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
             login_as nil
             DfcPermission.create!(
               user:, enterprise_id:,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+            DfcPermission.create!(
+              user:, enterprise_id:,
               scope: "ReadProducts", grantee: "cqcm-dev",
             )
           }

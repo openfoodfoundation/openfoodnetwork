@@ -7,6 +7,8 @@ module DfcProvider
     before_action :check_enterprise
 
     def index
+      require_permission "ReadProducts"
+
       enterprises = current_user.enterprises.map do |enterprise|
         EnterpriseBuilder.enterprise(enterprise)
       end

@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
+  let(:Authorization) { nil }
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
@@ -51,6 +52,26 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
       produces "application/json"
 
       response "200", "successful" do
+        context "as platform user" do
+          let(:id) { 10_000 }
+          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
+          let(:Authorization) { "Bearer #{sib_token}" }
+
+          before {
+            login_as nil
+            DfcPermission.create!(
+              user:, enterprise_id: id,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+          }
+
+          around do |example|
+            Timecop.travel(Date.parse("2025-06-13")) { example.run }
+          end
+
+          run_test!
+        end
+
         context "without enterprise id" do
           let(:id) { "default" }
 
