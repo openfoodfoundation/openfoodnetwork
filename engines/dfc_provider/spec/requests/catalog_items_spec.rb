@@ -69,6 +69,26 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
       response "200", "success" do
         before { product }
 
+        context "as platform user" do
+          let(:enterprise_id) { 10_000 }
+          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
+          let(:Authorization) { "Bearer #{sib_token}" }
+
+          before {
+            login_as nil
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadProducts", grantee: "cqcm-dev",
+            )
+          }
+
+          around do |example|
+            Timecop.travel(Date.parse("2025-06-13")) { example.run }
+          end
+
+          run_test!
+        end
+
         context "with default enterprise id" do
           let(:enterprise_id) { "default" }
 

@@ -19,6 +19,7 @@ class ApiUser
   end
 
   def enterprises
-    Enterprise.none
+    permissions = DfcPermission.where(grantee: id, scope: "ReadProducts")
+    Enterprise.where(dfc_permissions: permissions)
   end
 end
