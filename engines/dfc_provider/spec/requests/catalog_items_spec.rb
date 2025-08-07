@@ -40,16 +40,8 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
 
       response "404", "not found" do
         context "as platform user" do
+          include_context "authenticated as platform"
           let(:enterprise_id) { 10_000 }
-          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
-          let(:Authorization) { "Bearer #{sib_token}" }
-
-          before { login_as nil }
-
-          around do |example|
-            Timecop.travel(Date.parse("2025-06-13")) { example.run }
-          end
-
           run_test!
         end
 
@@ -70,12 +62,11 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
         before { product }
 
         context "as platform user" do
+          include_context "authenticated as platform"
+
           let(:enterprise_id) { 10_000 }
-          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
-          let(:Authorization) { "Bearer #{sib_token}" }
 
           before {
-            login_as nil
             DfcPermission.create!(
               user:, enterprise_id:,
               scope: "ReadEnterprise", grantee: "cqcm-dev",
@@ -85,10 +76,6 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
               scope: "ReadProducts", grantee: "cqcm-dev",
             )
           }
-
-          around do |example|
-            Timecop.travel(Date.parse("2025-06-13")) { example.run }
-          end
 
           run_test!
         end

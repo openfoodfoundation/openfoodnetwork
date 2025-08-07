@@ -53,21 +53,16 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
 
       response "200", "successful" do
         context "as platform user" do
+          include_context "authenticated as platform"
+
           let(:id) { 10_000 }
-          let(:sib_token) { file_fixture("startinblox_access_token.jwt").read }
-          let(:Authorization) { "Bearer #{sib_token}" }
 
           before {
-            login_as nil
             DfcPermission.create!(
               user:, enterprise_id: id,
               scope: "ReadEnterprise", grantee: "cqcm-dev",
             )
           }
-
-          around do |example|
-            Timecop.travel(Date.parse("2025-06-13")) { example.run }
-          end
 
           run_test!
         end
