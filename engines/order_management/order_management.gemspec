@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["developers@ofn"]
   s.summary     = "Order Management domain of the OFN solution."
 
-  s.required_ruby_version = File.read(File.expand_path("../../.ruby-version", __dir__)).chomp
+  s.required_ruby_version = ">= 1.0.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
   s.metadata['rubygems_mfa_required'] = 'true'
