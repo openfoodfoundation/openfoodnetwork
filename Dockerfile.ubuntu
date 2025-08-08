@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y \
   libjemalloc-dev \
   libssl-dev \
   ca-certificates \
-  gnupg
+  gnupg \
+  cmake
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:/usr/local/src/nodenv/shims:/usr/local/src/nodenv/bin:$PATH
