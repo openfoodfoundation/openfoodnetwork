@@ -530,7 +530,7 @@ hu:
     save: "Mentés"
     edit: "Szerkesztés"
     update: "Frissítés"
-    delete: "Töröl"
+    delete: "Törlés"
     add: "Hozzáadás"
     cut: "Kivágás"
     paste: "Beillesztés"
@@ -580,7 +580,7 @@ hu:
       actions:
         edit: Szerkesztés
         clone: Klón
-        delete: Töröl
+        delete: Törlés
         remove: Eltávolítás
         preview: Előnézet
       image:
@@ -907,7 +907,7 @@ hu:
         success: Sikeresen klónozta a terméket
         error: A terméket nem sikerült klónozni
     product_import:
-      title: Termék importálása
+      title: Termék importálás
       file_not_found: A fájl nem található, vagy nem nyitható meg
       no_data: Nem található adat a táblázatban
       confirm_reset: "Ezzel nullára állítod a készletszintet a vállalkozás összes olyan termékénél, \namely nem szerepel a feltöltött fájlban"
@@ -970,6 +970,7 @@ hu:
         no_name: Névtelen
         blank_enterprise: egyes termékekhez nincs definiálva a vállalkozás
         reset_absent?: Hiányzó termékek visszaállítása
+        reset_absent_tip: Állítsa nullára a készletet az összes olyan terméknél, amely nem szerepel a fájlban
         overwrite_all: Az összes felülírása
         overwrite_empty: Ha üres, írja felül
         default_stock: Állítsd be a készletet
@@ -977,15 +978,15 @@ hu:
         default_shipping_cat: Szállítási kategória beállítása
         default_available_date: Állítsd be az elérhetőségi dátumot
         validation_overview: Az importálás ellenőrzésének áttekintése
-        entries_found: Bejegyzések találhatók az importált fájlban
+        entries_found: bejegyzés található az importált fájlban
         entries_with_errors: Az elemek hibákat tartalmaznak, és nem importálhatók
-        products_to_create: Termékek jönnek létre
+        products_to_create: termék jön létre
         products_to_update: A termékek frissítésre kerülnek
         inventory_to_create: A készletelemek létrehozásra kerülnek
         inventory_to_update: A készletelemek frissülnek
         products_to_reset: A meglévő termékek készlete nullára áll vissza
         inventory_to_reset: A meglévő készletelemek készlete nullára áll vissza
-        line: Vonal
+        line: Sor
         item_line: Tételsor
       import_review:
         not_updatable_tip: "A következő mezők nem frissíthetők tömeges importálással meglévő termékek esetén:"
@@ -993,14 +994,14 @@ hu:
       entries_table:
         not_updatable: Ez a mező nem frissíthető tömeges importálással meglévő termékeken
       save_results:
-        final_results: Végső eredmények importálása
-        products_created: Létrehozott termékek
+        final_results: Az importálás eredménye
+        products_created: létrehozott termék
         products_updated: Termékek frissítve
         inventory_created: Készletelemek létrehozva
         inventory_updated: A készletelemek frissítve
-        products_reset: A termékek készletszintjét nullára állítottuk vissza
+        products_reset: termék készletét nullára állítottuk
         inventory_reset: A készletelemek készletszintjét nullára állították vissza
-        all_saved: "Minden elem sikeresen mentve"
+        all_saved: "Minden termék mentése sikeres."
         some_saved: "elemek sikeresen mentve"
         save_errors: Mentse el a hibákat
         import_again: Másik fájl feltöltése
@@ -1518,7 +1519,7 @@ hu:
         add_distributor: 'Elosztó hozzáadása'
       advanced_settings:
         automatic_notifications: Automatikus értesítések
-        automatic_notifications_tip: Automatikusan értesíti a termelőket rendeléseikről e-mailben, amikor a rendelési ciklusok lezárulnak
+        automatic_notifications_tip: Automatikusan értesíti a termelőket rendeléseikről e-mailben, amikor a rendelés ciklus lezárul
         title: További beállítások
         choose_product_tip: bejövő és kimenő termékeket csak %{inventory} készletére korlátozhatja.
         preferred_product_selection_from_coordinator_inventory_only_here: Csak a koordinátor leltár
@@ -2865,7 +2866,7 @@ hu:
   admin_enterprise_groups_web_website_placeholder: "például www.truffles.com"
   admin_order_cycles: "Admin Rendelési Ciklusok"
   open: "Nyit"
-  close: "Zár"
+  close: "Bezárás"
   create: "Létrehozás"
   search: "Keresés"
   supplier: "Beszállító"
@@ -2902,7 +2903,7 @@ hu:
   edit_order_cycle: "Rendelési Ciklus Szerkesztése"
   roles: "Szerepek"
   update: "Frissítés"
-  delete: Töröl
+  delete: Törlés
   add_producer_property: "Termelői tulajdonság hozzáadása"
   in_progress: "Folyamatban"
   started_at: "Kezdődött:"
@@ -3888,7 +3889,7 @@ hu:
     total: "Összesen"
     edit: "Szerkesztés"
     split: "Hasított"
-    delete: "Töröl"
+    delete: "Törlés"
     cannot_set_shipping_method_without_address: "A áruátvételi módot nem lehet beállítani, amíg meg nem adják az ügyfél adatait."
     no_tracking_present: "Nincsenek megadva nyomkövetési adatok."
     tracking: "Követés"
