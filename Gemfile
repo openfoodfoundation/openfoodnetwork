@@ -152,6 +152,7 @@ end
 group :test, :development do
   gem 'bullet'
   gem 'capybara'
+  gem 'capybara-shadowdom'
   gem 'cuprite'
   gem 'database_cleaner', require: false
   gem 'debug', '>= 1.0.0'
