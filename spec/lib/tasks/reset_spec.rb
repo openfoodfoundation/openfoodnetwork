@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'rake'
 
 RSpec.describe "reset.rake" do
-  before(:all) do
-    Rake.application.rake_require("tasks/reset")
-    Rake::Task.define_task(:environment)
-  end
+  include_context "rake"
 
   it "clears job queues" do
     job_class = Class.new do
@@ -18,7 +14,7 @@ RSpec.describe "reset.rake" do
     queue = Sidekiq::Queue.all.first # rubocop:disable Rails/RedundantActiveRecordAllMethod
 
     expect {
-      Rake.application.invoke_task "ofn:reset_sidekiq"
+      invoke_task "ofn:reset_sidekiq"
     }.to change {
       queue.count
     }.to(0)
