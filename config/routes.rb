@@ -79,6 +79,8 @@ Openfoodnetwork::Application.routes.draw do
 
     get "/stripe/confirm", to: "stripe#confirm", as: :confirm_stripe
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
+
+    get "/twint/confirm", to: "twint#confirm", as: :confirm_twint
   end
 
   get '/checkout', to: 'checkout#edit'
