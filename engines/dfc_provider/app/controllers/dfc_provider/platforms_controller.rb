@@ -25,7 +25,7 @@ module DfcProvider
       requested_scopes = requested_platform
         .dig("dfc-t:hasAssignedScopes", "@list")
         .pluck("@id")
-        .map { |uri| uri[/[a-zA-Z]+$/] } # return last part like ReadEnterprise
+        .map { |uri| uri[/[a-zA-Z]+\z/] } # return last part like ReadEnterprise
       current_scopes = granted_scopes(key)
       scopes_to_delete = current_scopes - requested_scopes
       scopes_to_create = requested_scopes - current_scopes
