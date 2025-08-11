@@ -8,12 +8,7 @@ module DfcProvider
       'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
     }.freeze
 
-    # DANGER!
-    # This endpoint is open to CSRF attacks.
-    # This is a temporary measure until the DFC Permissions module accesses
-    # the API with a valid OIDC token to authenticate the user.
-    skip_before_action :verify_authenticity_token
-
+    prepend_before_action :move_authenticity_token
     before_action :check_enterprise
 
     def index
@@ -100,6 +95,14 @@ module DfcProvider
         enterprise: current_enterprise,
         grantee: platform_id,
       ).pluck(:scope)
+    end
+
+    # The DFC Permission Module is sending tokens in the Authorization header.
+    # It assumes that it's an OIDC access token but we are passing the Rails
+    # CSRF token to the component to allow POST request with cookie auth.
+    def move_authenticity_token
+      token = request.delete_header('HTTP_AUTHORIZATION').to_s.split.last
+      request.headers['X-CSRF-Token'] = token if token
     end
   end
 end
