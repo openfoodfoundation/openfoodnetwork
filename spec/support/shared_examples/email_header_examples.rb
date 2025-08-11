@@ -9,7 +9,7 @@ end
 RSpec.shared_examples 'non-customer facing email with active white labelling' do |mail|
   context 'when hide OFN navigation is enabled for the distributor of the order' do
     before do
-      allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true)
+      order.distributor.hide_ofn_navigation = true
     end
 
     it 'still displays the OFN header with logo' do
@@ -21,7 +21,7 @@ end
 RSpec.shared_examples 'customer facing email with active white labelling' do |mail|
   context 'when hide OFN navigation is enabled for the distributor of the order' do
     before do
-      allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true)
+      order.distributor.hide_ofn_navigation = true
     end
 
     it 'does not display the OFN header and logo' do
