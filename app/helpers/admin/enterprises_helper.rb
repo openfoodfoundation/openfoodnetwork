@@ -51,7 +51,7 @@ module Admin
 
     def dfc_platforms_available?
       DfcProvider::PlatformsController::PLATFORM_IDS.keys.any? do |id|
-        feature?(id)
+        feature?(id, spree_current_user)
       end
     end
 
