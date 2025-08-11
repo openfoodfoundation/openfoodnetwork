@@ -10,5 +10,6 @@ RSpec.describe DfcPermission do
   it {
     is_expected.to validate_inclusion_of(:scope)
       .in_array(%w[ReadEnterprise ReadProducts ReadOrders])
+      .in_array(%w[WriteEnterprise WriteProducts WriteOrders])
   }
 end
