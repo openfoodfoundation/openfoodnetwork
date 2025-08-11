@@ -625,14 +625,30 @@ RSpec.describe CheckoutController do
             expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
         end
+
+        context "when an external payment gateway is used" do
+          before do
+            expect(payment_method).to receive(:external_gateway?) { true }
+            expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
+            mock_payment_method_fetcher(payment_method)
+          end
+
+          it "redeems the voucher and redirect to the payment gateway's URL" do
+            expect(vine_voucher_redeemer).to receive(:redeem).and_return(true)
+
+            put(:update, params:)
+
+            expect(response.body).to match("https://example.com/pay").and match("redirect")
+            expect(order.reload.state).to eq "confirmation"
+          end
+        end
       end
 
       context "when an external payment gateway is used" do
         before do
-          expect(Checkout::PaymentMethodFetcher).
-            to receive_message_chain(:new, :call) { payment_method }
           expect(payment_method).to receive(:external_gateway?) { true }
           expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
+          mock_payment_method_fetcher(payment_method)
         end
 
         describe "confirming the order" do
@@ -692,5 +708,10 @@ RSpec.describe CheckoutController do
     expect(response.parsed_body).to eq(
       [{ "url" => "/checkout/details", "operation" => "redirectTo" }].to_json
     )
+  end
+
+  def mock_payment_method_fetcher(payment_method)
+    payment_method_fetcher = instance_double(Checkout::PaymentMethodFetcher, call: payment_method)
+    expect(Checkout::PaymentMethodFetcher).to receive(:new).and_return(payment_method_fetcher)
   end
 end
