@@ -4,6 +4,9 @@ namespace :simplecov do
   desc "Collates all result sets produced during parallel test runs"
   task :collate_results, # rubocop:disable Rails/RakeEnvironment doesn't need the full env
        [:path_to_results, :coverage_dir] do |_t, args|
+    # This code is covered by a spec but trying to measure the code coverage of
+    # the spec breaks the coverage report. We need to ignore it to avoid warnings.
+    # :nocov:
     require "simplecov"
     require "undercover/simplecov_formatter"
 
@@ -19,5 +22,6 @@ namespace :simplecov do
       formatter(SimpleCov::Formatter::Undercover)
       coverage_dir(output_path)
     end
+    # :nocov:
   end
 end
