@@ -17,10 +17,9 @@ describe("FlatpickrController", () => {
         ["when no base_locale is set", {}],
         ["when base_locale doesn't match a Flatpickr locale", { base_locale: "invalid-locale" }],
         ["when base_locale is 'en'", { base_locale: "en" }],
-      ])("%s", async (_description, i18nData) => {
-        const I18n = i18nData;
+      ])("%s", async (_description, i18n) => {
         const controller = new FlatpickrController();
-        const locale = await controller.importFlatpickrLocale(I18n.base_locale);
+        const locale = await controller.importFlatpickrLocale(i18n.base_locale);
         expect(locale).toBeNull();
       });
     });
