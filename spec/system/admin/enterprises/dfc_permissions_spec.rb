@@ -75,10 +75,10 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
 
     yield
   rescue on
-    if Time.now.utc < finish
-      sleep 0.1
-      retry
-    end
+    raise if Time.now.utc > finish
+
+    sleep 0.1
+    retry
   end
 
   def platform_list(variant)
