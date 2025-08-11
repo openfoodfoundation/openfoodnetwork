@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:10.19
+    image: postgres:14
     restart: always
     environment:
       POSTGRES_PASSWORD: f00d
