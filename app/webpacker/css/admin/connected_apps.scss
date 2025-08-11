@@ -68,19 +68,3 @@
     }
   }
 }
-
-solid-permissioning {
-  @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
-  --font-family: "Inter", sans-serif;
-  --color-text: #181d27;
-  --color-primary: #0096AD;
-  --color-primary-dark: #007B8A;
-  --color-primary-light: #5498DA;
-  --color-secondary: #23A877;
-  --color-third: #F1F8FE;
-  --color-third-dark: #d8e6f5;
-  --color-heading: #0096AD;
-  --color-grey: #4d4d4d;
-  font-family: var(--font-family);
-}
