@@ -24,7 +24,7 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
     # The component displays something and then replaces it with the real
     # list. That leads to a race condition and we have to just wait until
     # the component is loaded. :-(
-    sleep 10
+    wait_for_component_loaded
 
     within(platform_list("without-permissions")) do
       expect(page).to have_content "Proxy Dev Portal"
@@ -38,21 +38,46 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
       find("button", text: "Agree and share").native.trigger("click")
     end
 
-    sleep 5
-    within(platform_list("approved")) do
+    within_platform_list("approved") do
       expect(page).to have_content "Proxy Dev Portal"
       find("button", text: "Stop sharing").native.trigger("click")
     end
 
-    sleep 5
-    within(platform_list("without-permissions")) do
+    within_platform_list("without-permissions") do
       expect(page).to have_content "Proxy Dev Portal"
       find("button", text: "Agree and share").native.trigger("click")
     end
 
-    sleep 5
-    within(platform_list("approved")) do
+    within_platform_list("approved") do
       expect(page).to have_content "Proxy Dev Portal"
+    end
+  end
+
+  def wait_for_component_loaded
+    retry_expectations do
+      within(page.find('solid-permissioning').shadow_root) do
+        expect(page).to have_content "APPROVED PLATFORMS"
+      end
+    end
+  end
+
+  def within_platform_list(variant, &block)
+    retry_expectations(on: Ferrum::JavaScriptError) do
+      within(platform_list(variant), &block)
+    end
+  end
+
+  # Handy helper adopted from CERES Fair Food and modified.
+  # We may want to share this but don't have a need for it now.
+  def retry_expectations(on: RSpec::Expectations::ExpectationNotMetError)
+    start = Time.now.utc
+    finish = start + Capybara.default_max_wait_time
+
+    yield
+  rescue on
+    if Time.now.utc < finish
+      sleep 0.1
+      retry
     end
   end
 
