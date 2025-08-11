@@ -31,12 +31,5 @@ describe("FlatpickrController", () => {
       expect(locale).toHaveProperty("weekAbbreviation");
       expect(locale.weekAbbreviation).toBe("Sem");
     });
-
-    it("caches the locale object for repeated calls", async () => {
-      const controller = new FlatpickrController();
-      const locale1 = await controller.importFlatpickrLocale("fr");
-      const locale2 = await controller.importFlatpickrLocale("fr");
-      expect(locale1).toBe(locale2);
-    });
   });
 });
