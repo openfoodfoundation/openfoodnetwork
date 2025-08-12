@@ -32,4 +32,4 @@
     .add_rule.text-center
       %input.button{ type: 'button', value: t('components.tag_rule_group_form.add_new_rule'), "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "tag_rule_add_new_rule_#{index}" }
 
-  = render AddTagRuleModalComponent.new(id: "tag_rule_add_new_rule_#{index}", tag_rule_types: tag_rule_types, current_index: (rule_index + 1), div_id: customer_tag_rule_div_id)
+  = render AddTagRuleModalComponent.new(id: "tag_rule_add_new_rule_#{index}", tag_rule_types: tag_rule_types, current_index: (rule_index + 1), div_id: customer_tag_rule_div_id, customer_tag: group[:tags])
