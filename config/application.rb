@@ -80,16 +80,6 @@ module Openfoodnetwork
       end
     end
 
-    # filter sensitive information during logging
-    initializer "spree.params.filter" do |app|
-      app.config.filter_parameters += [
-        :password,
-        :password_confirmation,
-        :number,
-        :verification_value
-      ]
-    end
-
     initializer "load_spree_calculators" do |app|
       # Register Spree calculators
       Rails.application.reloader.to_prepare do
