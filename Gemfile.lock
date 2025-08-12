@@ -861,7 +861,7 @@ GEM
       simplecov_json_formatter
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
-    uri (0.13.0)
+    uri (0.13.2)
     valid_email2 (5.2.3)
       activemodel (>= 3.2)
       mail (~> 2.5)
