@@ -1,14 +1,14 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["rule", "index", "divId", "isDefault", "customerTag"];
+  static targets = ["rule", "index", "divId", "isDefault", "ruleCustomerTag"];
 
   add() {
     const rule_type = this.ruleTarget.value;
     const index = this.indexTarget.value;
     const divId = this.divIdTarget.value;
     const isDefault = this.isDefaultTarget.value;
-    const customerTags = this.hasCustomerTagTarget ? this.customerTagTarget.value : undefined;
+    const customerTags = this.hasRuleCustomerTagTarget ? this.ruleCustomerTagTarget.value : undefined;
 
     const urlParams = new URLSearchParams();
     urlParams.append("rule_type", rule_type);
