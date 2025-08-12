@@ -9,43 +9,27 @@
         %tr
           %td
             %h5
-              = #TODO translation
-              = t('.for_customers_tagged')
+              = t('components.tag_rule_group_form.for_customers_tagged')
           %td
             -# TODO multiple tags ?
             = render(TagListInputComponent.new(name: tag_list_input_name,
               tags: group[:tags],
               hidden_field_data_options: { "data-action": "input->tag-rule-group-form-component--tag-rule-group-form#updatePreferredCustomerTag", "data-tag-rule-group-form-component--tag-rule-group-form-target": "customerTag" }))
     %div{ id: customer_tag_rule_div_id }
-    - if group[:rules].empty?
-      .no_rules
-        = t('components.tag_rule_group_form.no_rules_yet')
-    - else
-      - group[:rules].each do |rule|
-        -rule_index += 1
-        = render(TagRuleFormComponent.new(rule: rule,
-          rule_data: helpers.rule_data(rule),
-          index: rule_index,
-          customer_tags: group[:tags],
-          hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
+      - if group[:rules].empty?
+        .no_rules
+          = t('components.tag_rule_group_form.no_rules_yet')
+      - else
+        - group[:rules].each do |rule|
+          -rule_index += 1
+          = render(TagRuleFormComponent.new(rule: rule,
+            rule_data: helpers.rule_data(rule),
+            index: rule_index,
+            customer_tags: group[:tags],
+            hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
 
     %hr
     .add_rule.text-center
       %input.button{ type: 'button', value: t('components.tag_rule_group_form.add_new_rule'), "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "tag_rule_add_new_rule_#{index}" }
 
-  -# TODO sort this out, should probably create a component, need to make sure to use the correct index, and insert in the correct place, 
-  -# need to dinamically have the correct index and div id, or create 2 diferent modal. Probaly component that create 2 different modal, need to sort out the opening of modal
-  = render ModalComponent.new(id: "tag_rule_add_new_rule_#{index}", close_button: false, modal_class: "tiny" ) do
-    #new-tag-rule-dialog{ "data-controller": "default-tag-rule" }
-      = hidden_field_tag "current_index", (rule_index + 1), { "data-default-tag-rule-target": "index" }
-      = hidden_field_tag "customer_tag", group[:tags], { "data-default-tag-rule-target": "customerTag", "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }
-      =# TODO pass all of this as value
-      = hidden_field_tag "div_id", customer_tag_rule_div_id, { "data-default-tag-rule-target": "divId" }
-      = hidden_field_tag "is_default", false, { "data-default-tag-rule-target": "isDefault" }
-      .text-normal.margin-bottom-30.text-center
-        = t('.new_tag_rule_dialog.select_rule_type')
-      .text-center.margin-bottom-30
-        = select_tag :rule_type_selector, options_for_select(tag_rule_types), { "data-controller": "tom-select", "data-default-tag-rule-target": "rule", class: "primary no-search" }
-      .text-center
-        %input.button{ type: 'button', value: "#{t('.new_tag_rule_dialog.add_rule')}", "data-action": "click->default-tag-rule#add click->modal#close", }
-  
+  = render AddTagRuleModalComponent.new(id: "tag_rule_add_new_rule_#{index}", tag_rule_types: tag_rule_types, current_index: (rule_index + 1), div_id: customer_tag_rule_div_id)

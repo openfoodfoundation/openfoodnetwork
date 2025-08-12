@@ -155,6 +155,7 @@ module Admin
       load_tag_rule_types
 
       @index = params[:index]
+      @customer_rule_index = params[:customer_rule_index].to_i
       @group = { tags: [], rules: [] }
 
       respond_to do |format|
