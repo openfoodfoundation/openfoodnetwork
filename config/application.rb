@@ -189,23 +189,10 @@ module Openfoodnetwork
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.2'
+    config.assets.initialize_on_precompile = true
 
     # Unset X-Frame-Options header for embedded pages.
     config.action_dispatch.default_headers.except! "X-Frame-Options"
-
-    # css and js files other than application.* are not precompiled by default
-    # Instead, they must be explicitly included below
-    # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
-    config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['admin/*.js', 'admin/**/*.js', 'admin_minimal.js']
-    config.assets.precompile += ['web/all.js']
-    config.assets.precompile += ['darkswarm/all.js']
-    config.assets.precompile += ['shared/*']
-    config.assets.precompile += ['mail.scss']
-    config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     # Highlight code that triggered database queries in logs.
     config.active_record.verbose_query_logs = ENV.fetch("VERBOSE_QUERY_LOGS", false)
