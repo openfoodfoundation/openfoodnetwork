@@ -262,7 +262,7 @@ GEM
     database_cleaner-core (2.0.1)
     datafoodconsortium-connector (1.1.0)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
-    date (3.3.4)
+    date (3.4.1)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -481,7 +481,7 @@ GEM
     mutex_m (0.3.0)
     net-http (0.4.1)
       uri
-    net-imap (0.4.10)
+    net-imap (0.4.20)
       date
       net-protocol
     net-pop (0.1.2)
@@ -841,7 +841,7 @@ GEM
     thread-local (1.1.0)
     tilt (2.3.0)
     timecop (0.9.8)
-    timeout (0.4.1)
+    timeout (0.4.3)
     ttfunk (1.7.0)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
