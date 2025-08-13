@@ -64,6 +64,9 @@ module OpenFoodNetwork
       "hub_address" => <<~DESC,
         Show the hub's address as shipping address on pickup orders.
       DESC
+      "cqcm-dev" => <<~DESC,
+        Show DFC Permissions interface to share data with CQCM dev platform.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

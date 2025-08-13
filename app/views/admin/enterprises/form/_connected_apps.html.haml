@@ -1,3 +1,5 @@
-- connected_apps_enabled.each do |type|
+- connected_apps_enabled(enterprise).each do |type|
   = render partial: "/admin/enterprises/form/connected_apps/#{type}",
            locals: { enterprise:, connected_app: enterprise.connected_apps.public_send(type).first }
+
+= render partial: "/admin/enterprises/form/dfc_permissions" if dfc_platforms_available?
