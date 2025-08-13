@@ -18,6 +18,10 @@ class ApiUser
     @id = id
   end
 
+  def admin?
+    false
+  end
+
   def customers
     Customer.none
   end
