@@ -575,7 +575,7 @@ GEM
       railties (>= 4.2)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (2.2.11)
+    rack (2.2.14)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
     rack-oauth2 (2.2.1)
