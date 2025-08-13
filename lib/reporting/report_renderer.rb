@@ -43,7 +43,7 @@ module Reporting
 
     def report_headers
       q = if @report.respond_to?(:ransack_params)
-          @report.ransack_params || {}
+            @report.ransack_params || {}
           else
             @report.params[:q] || {}
           end
