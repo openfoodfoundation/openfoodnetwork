@@ -678,6 +678,8 @@ paths:
         type: string
     get:
       summary: Show ProductGroup
+      security:
+      - oidc_token: []
       tags:
       - ProductGroups
       responses:

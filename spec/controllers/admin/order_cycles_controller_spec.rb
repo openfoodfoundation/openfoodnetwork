@@ -142,7 +142,7 @@ RSpec.describe Admin::OrderCyclesController do
               select: {
                 enterprise_fees: 3,
                 enterprise_groups: 1,
-                enterprises: 22,
+                enterprises: 19,
                 exchanges: 7,
                 order_cycles: 6,
                 proxy_orders: 1,

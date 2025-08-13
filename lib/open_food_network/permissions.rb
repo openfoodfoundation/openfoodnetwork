@@ -113,7 +113,9 @@ module OpenFoodNetwork
     end
 
     def managed_enterprises
-      @managed_enterprises ||= Enterprise.managed_by(@user)
+      return Enterprise.all if admin?
+
+      @user.enterprises
     end
 
     def coordinated_order_cycles
