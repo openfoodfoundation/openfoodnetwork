@@ -42,9 +42,11 @@ module Reporting
     end
 
     def report_headers
-      q = @report.respond_to?(:ransack_params) ?
-        (@report.ransack_params || {}) :
-        (@report.params[:q] || {})
+      q = if @report.respond_to?(:ransack_params)
+          @report.ransack_params || {}
+          else
+            @report.params[:q] || {}
+          end
 
       title = @report.params[:report_type].to_s.tr('_', ' ').titleize
       from  = q["completed_at_gt"]  || q["completed_at_gteq"]
