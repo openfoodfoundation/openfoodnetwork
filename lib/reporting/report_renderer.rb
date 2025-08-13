@@ -46,7 +46,6 @@ module Reporting
         (@report.ransack_params || {}) :
         (@report.params[:q] || {})
 
-
       title = @report.params[:report_type].to_s.tr('_', ' ').titleize
       from  = q["completed_at_gt"]  || q["completed_at_gteq"]
       to    = q["completed_at_lt"]  || q["completed_at_lteq"]
