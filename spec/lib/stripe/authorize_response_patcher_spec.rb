@@ -17,14 +17,35 @@ RSpec.describe Stripe::AuthorizeResponsePatcher do
 
     context "when url is found in response" do
       let(:params) {
-        { "status" => "requires_source_action",
-          "next_source_action" => { "type" => "authorize_with_url",
-                                    "authorize_with_url" => { "url" => "https://test.stripe.com/authorize" } } }
+        {
+          "status" => "requires_source_action",
+          "next_source_action" => {
+            "type" => "authorize_with_url",
+            "authorize_with_url" => { "url" => "https://www.stripe.com/authorize" }
+          }
+        }
       }
 
       it "patches response.cvv_result.message with the url in the response" do
         new_response = patcher.call!
         expect(new_response.cvv_result['message']).to eq "https://www.stripe.com/authorize"
+      end
+
+      context "with invalid url containing 'stripe.com'" do
+        let(:params) {
+          {
+            "status" => "requires_source_action",
+            "next_source_action" => {
+              "type" => "authorize_with_url",
+              "authorize_with_url" => { "url" => "https://www.stripe.com.malicious.org/authorize" }
+            }
+          }
+        }
+
+        it "patches response.cvv_result.message with nil" do
+          new_response = patcher.call!
+          expect(new_response.cvv_result['message']).to be_nil
+        end
       end
     end
   end
