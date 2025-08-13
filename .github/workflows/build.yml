@@ -46,6 +46,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Docker Hub login
+        if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
         
       - name: Setup redis
