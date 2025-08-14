@@ -48,7 +48,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    Ascii85 (1.1.0)
+    Ascii85 (2.0.1)
     actioncable (7.1.5.2)
       actionpack (= 7.1.5.2)
       activesupport (= 7.1.5.2)
@@ -546,9 +546,9 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
-    pdf-reader (2.12.0)
-      Ascii85 (~> 1.0)
-      afm (~> 0.2.1)
+    pdf-reader (2.15.0)
+      Ascii85 (>= 1.0, < 3.0, != 2.0.0)
+      afm (>= 0.2.1, < 2)
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
@@ -842,7 +842,8 @@ GEM
     tilt (2.3.0)
     timecop (0.9.10)
     timeout (0.4.3)
-    ttfunk (1.7.0)
+    ttfunk (1.8.0)
+      bigdecimal (~> 3.1)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
