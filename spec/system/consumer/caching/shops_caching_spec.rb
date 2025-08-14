@@ -29,7 +29,7 @@ RSpec.describe "Shops caching", caching: true do
 
     it "keeps data cached for a short time on subsequent requests" do
       # Ensure sufficient time for requests to load and timed caches to expire
-      Timecop.travel(10.minutes.ago) do
+      travel(-10.minutes) do
         visit shops_path
 
         expect(page).to have_content distributor.name
@@ -95,7 +95,7 @@ RSpec.describe "Shops caching", caching: true do
 
     it "keeps data cached for a short time on subsequent requests" do
       # Ensure sufficient time for requests to load and timed caches to expire
-      Timecop.travel(10.minutes.ago) do
+      travel(-10.minutes) do
         visit enterprise_shop_path(distributor)
 
         # The page HTML contains the cached text but we need to test for the

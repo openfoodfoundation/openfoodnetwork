@@ -149,6 +149,6 @@ RSpec.describe Enterprise do
   end
 
   def later(&)
-    Timecop.travel(1.day.from_now, &)
+    travel(1.day, &)
   end
 end
