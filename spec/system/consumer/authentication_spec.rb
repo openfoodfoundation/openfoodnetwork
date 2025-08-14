@@ -139,7 +139,7 @@ RSpec.describe "Authentication" do
             end
 
             it "succeeding after time threshold" do
-              Timecop.travel(30.seconds.from_now) do
+              travel(30.seconds) do
                 fill_in "Your email", with: "test@foo.com"
                 fill_in "Choose a password", with: "test12345"
                 fill_in "Confirm password", with: "test12345"

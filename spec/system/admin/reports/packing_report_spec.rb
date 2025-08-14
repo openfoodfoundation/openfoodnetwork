@@ -6,8 +6,8 @@ RSpec.describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 
-  around do |example|
-    Timecop.freeze(Time.zone.now.strftime("%Y-%m-%d 00:00")) { example.run }
+  before do
+    travel_to(Time.zone.now.strftime("%Y-%m-%d 00:00"))
   end
 
   let!(:open_datetime) { 1.month.ago.strftime("%Y-%m-%d 00:00") }

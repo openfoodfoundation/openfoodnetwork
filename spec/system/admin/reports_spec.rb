@@ -102,13 +102,13 @@ RSpec.describe '
       expect(content).to match "<th>\nFirst Name\n</th>"
 
       # Let's also check the expiry of the emailed link:
-      Timecop.travel(3.days.from_now) do
+      travel(3.days) do
         content = URI.parse(report_link).read
         expect(content).to match "<th>\nFirst Name\n</th>"
       end
 
       # The link should still expire though:
-      Timecop.travel(3.months.from_now) do
+      travel(3.months) do
         expect { URI.parse(report_link).read }
           .to raise_error OpenURI::HTTPError, "404 Not Found"
       end
@@ -625,15 +625,13 @@ RSpec.describe '
         order1.update_order!
         order1.update!(email: 'customer@email.com')
         order1.shipment.update(included_tax_total: 10.06)
-        Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
+        travel_to(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
         order1.reload
         order1.create_tax_charge!
       end
 
-      around do |example|
-        Timecop.travel(Time.zone.local(2021, 4, 26, 14, 0, 0)) do
-          example.run
-        end
+      before do
+        travel_to(Time.zone.local(2021, 4, 26, 14, 0, 0))
       end
 
       context "summary report" do

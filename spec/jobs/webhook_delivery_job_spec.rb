@@ -23,7 +23,7 @@ RSpec.describe WebhookDeliveryJob do
   end
 
   it "delivers a payload" do
-    Timecop.freeze do
+    freeze_time do
       expected_body = {
         id: /.+/,
         at: at.to_s,

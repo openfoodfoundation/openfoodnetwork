@@ -116,9 +116,10 @@ RSpec.describe "Orders And Fulfillment" do
         let(:datetime_start1) { 1600.hours.ago } # 1600 hours in the past
         let(:datetime_start2) { 1800.hours.ago } # 1600 hours in the past
         let(:datetime_end) { 1400.hours.ago } # 1400 hours in the past
+
         before do
-          Timecop.travel(completed_at1) { order1.finalize! }
-          Timecop.travel(completed_at2) { order2.finalize! }
+          travel_to(completed_at1) { order1.finalize! }
+          travel_to(completed_at2) { order2.finalize! }
         end
 
         it "is precise to time of day, not just date" do
