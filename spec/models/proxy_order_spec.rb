@@ -7,10 +7,8 @@ RSpec.describe ProxyOrder do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:subscription) { create(:subscription) }
 
-    around do |example|
-      # We are testing if database columns have been set to "now".
-      Timecop.freeze(Time.zone.now) { example.run }
-    end
+    # We are testing if database columns have been set to "now".
+    before { freeze_time }
 
     context "when the order cycle is not yet closed" do
       let(:proxy_order) {
@@ -94,9 +92,7 @@ RSpec.describe ProxyOrder do
     let(:proxy_order) { create(:proxy_order, order:, canceled_at: Time.zone.now) }
     let(:order_cycle) { proxy_order.order_cycle }
 
-    around do |example|
-      Timecop.freeze(Time.zone.now) { example.run }
-    end
+    before { freeze_time }
 
     context "when the order cycle is not yet closed" do
       before { order_cycle.update(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
