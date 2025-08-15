@@ -201,7 +201,7 @@ GEM
     bugsnag (6.26.4)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
-    bullet (7.1.6)
+    bullet (8.0.8)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     cable_ready (5.0.6)
@@ -861,7 +861,7 @@ GEM
       simplecov
       simplecov_json_formatter
     unicode-display_width (2.5.0)
-    uniform_notifier (1.16.0)
+    uniform_notifier (1.17.0)
     uri (0.13.2)
     valid_email2 (5.2.3)
       activemodel (>= 3.2)
