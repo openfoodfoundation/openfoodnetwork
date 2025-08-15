@@ -5,7 +5,6 @@ services:
     environment:
       POSTGRES_PASSWORD: f00d
       POSTGRES_USER: ofn
-      POSTGRES_DB: open_food_network_dev
     ports:
       - 5432:5432
     volumes:
