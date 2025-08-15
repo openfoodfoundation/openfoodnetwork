@@ -13,8 +13,8 @@ RSpec.describe "Orders And Distributors" do
     let!(:distributor2) { create(:distributor_enterprise, name: "By Moto") }
     let!(:completed_at) { Time.zone.now.to_fs(:db) }
 
-    around do |example|
-      Timecop.travel(completed_at) { example.run }
+    before do
+      travel_to(completed_at)
     end
 
     let!(:order) {

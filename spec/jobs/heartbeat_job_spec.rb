@@ -8,8 +8,8 @@ RSpec.describe HeartbeatJob do
 
     before { Spree::Config.last_job_queue_heartbeat_at = nil }
 
-    around do |example|
-      Timecop.freeze(run_time) { example.run }
+    before do
+      travel_to(run_time)
     end
 
     it "updates the last_job_queue_heartbeat_at config var" do
