@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'csv'
 require 'spreadsheet_architect'
 
 module Reporting
@@ -40,6 +41,24 @@ module Reporting
       @report.table_rows || []
     end
 
+    def report_headers
+      q = if @report.respond_to?(:ransack_params)
+            @report.ransack_params || {}
+          else
+            @report.params[:q] || {}
+          end
+
+      title = @report.params[:report_type].to_s.tr('_', ' ').titleize
+      from  = q["completed_at_gt"]  || q["completed_at_gteq"]
+      to    = q["completed_at_lt"]  || q["completed_at_lteq"]
+      range = [from, to].compact.join(" → ")
+      rows = []
+      rows << ["Report Title", title]
+      rows << ["Printed At",   Time.zone.now.to_fs(:db)]
+      rows << ["Date Range",   range] unless range.empty?
+      rows
+    end
+
     def as_json(_context_controller = nil)
       @report.rows.map(&:to_h).as_json
     end
@@ -61,7 +80,14 @@ module Reporting
     end
 
     def to_csv
-      SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      # append headers
+      csv_string = CSV.generate do |csv|
+        report_headers.each do |row|
+          csv << row
+        end
+      end
+      csv_base = SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      csv_string + csv_base
     end
 
     def to_xlsx
