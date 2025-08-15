@@ -5,7 +5,6 @@ services:
     environment:
       POSTGRES_PASSWORD: f00d
       POSTGRES_USER: ofn
-      POSTGRES_DB: open_food_network_dev
     ports:
       - 5432:5432
     volumes:
@@ -18,7 +17,6 @@ services:
     build: .
     ports:
       - 3000:3000
-      - 3035:3035
     volumes:
       - .:/usr/src/app
       - gems:/bundles
@@ -30,6 +28,7 @@ services:
       - redis
     environment:
       DOCKER: true
+      DEV_CACHING: true
       OFN_DB_HOST: db
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
@@ -37,9 +36,39 @@ services:
     command: >
       bash -c "rm -f tmp/pids/server.pid &&
                (bundle check || bundle install) &&
-               bundle exec rake db:create &&
+               bundle exec rails db:prepare &&
                yarn install &&
-               bundle exec foreman start -f Procfile.docker"
+               bundle exec rails s -b 0.0.0.0 -p 3000"
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    environment:
+      DOCKER: true
+      DEV_CACHING: true
+      OFN_DB_HOST: db
+      OFN_REDIS_URL: redis://redis/
+      OFN_REDIS_JOBS_URL: redis://redis
+      OFN_REDIS_TEST_URL: redis://redis/3
+
+  webpack:
+    build: .
+    command: ./bin/webpack-dev-server
+    depends_on:
+      - web
+    ports:
+      - "3035:3035"
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    environment:
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 volumes:
   gems:
   postgres:
