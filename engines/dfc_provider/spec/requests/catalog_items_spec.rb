@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
+  let(:Authorization) { nil }
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:enterprise) {
     create(
@@ -35,8 +36,15 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
 
     get "List CatalogItems" do
       produces "application/json"
+      security [oidc_token: []]
 
       response "404", "not found" do
+        context "as platform user" do
+          include_context "authenticated as platform"
+          let(:enterprise_id) { 10_000 }
+          run_test!
+        end
+
         context "without enterprises" do
           let(:enterprise_id) { "default" }
 
@@ -52,6 +60,25 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
 
       response "200", "success" do
         before { product }
+
+        context "as platform user" do
+          include_context "authenticated as platform"
+
+          let(:enterprise_id) { 10_000 }
+
+          before {
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadProducts", grantee: "cqcm-dev",
+            )
+          }
+
+          run_test!
+        end
 
         context "with default enterprise id" do
           let(:enterprise_id) { "default" }
