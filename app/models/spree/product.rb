@@ -168,6 +168,19 @@ module Spree
     scope :by_producer, -> { joins(variants: :supplier).order('enterprises.name') }
     scope :by_name, -> { order('spree_products.name') }
 
+    # Scope for ordering by stock levels
+    scope :order_by_stock, lambda { |direction = :asc|
+      b_value = direction != :asc
+      on_hand_direction = direction == :asc ? 'ASC' : 'DESC'
+
+      joins(variants: :stock_items)
+        .group('spree_products.id, spree_products.name')
+        .order(
+          Arel.sql("CASE WHEN BOOL_OR(spree_stock_items.backorderable) = #{b_value} THEN 1 END"),
+          Arel.sql("SUM(spree_stock_items.count_on_hand) #{on_hand_direction}")
+        )
+    }
+
     scope :managed_by, lambda { |user|
       if user.admin?
         where(nil)
