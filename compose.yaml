@@ -9,6 +9,10 @@ services:
       - 5432:5432
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+    healthcheck:
+      test: ["CMD-SHELL", "PG_PASSWORD=$$POSTGRES_PASSWORD pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 10s
   redis:
     image: redis
   web:
@@ -24,8 +28,10 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
       DOCKER: true
       DEV_CACHING: true
