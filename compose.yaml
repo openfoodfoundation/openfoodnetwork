@@ -10,9 +10,11 @@ services:
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     healthcheck:
-      test: ["CMD-SHELL", "PG_PASSWORD=$$POSTGRES_PASSWORD pg_isready -U $$POSTGRES_USER"]
+      test: ["CMD-SHELL", "PGPASSWORD=$$POSTGRES_PASSWORD pg_isready -q -h 127.0.0.1 -p 5432 -U $$POSTGRES_USER || exit 1"]
       interval: 5s
       timeout: 10s
+      retries: 10
+
   redis:
     image: redis
   web:
@@ -32,6 +34,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+      webpack:
+        condition: service_started
     environment:
       DOCKER: true
       DEV_CACHING: true
@@ -39,6 +43,10 @@ services:
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
       OFN_REDIS_TEST_URL: redis://redis/3
+      WEBPACKER_DEV_SERVER_HOST: webpack
+      WEBPACKER_DEV_SERVER_PORT: 3035
+      WEBPACKER_DEV_SERVER_PUBLIC: localhost:3035
+
     command: >
       bash -c "rm -f tmp/pids/server.pid &&
                (bundle check || bundle install) &&
@@ -68,8 +76,6 @@ services:
   webpack:
     build: .
     command: ./bin/webpack-dev-server
-    depends_on:
-      - web
     ports:
       - "3035:3035"
     volumes:
