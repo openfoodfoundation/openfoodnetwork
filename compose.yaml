@@ -50,8 +50,10 @@ services:
     build: .
     command: bundle exec sidekiq
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - .:/usr/src/app
       - gems:/bundles
