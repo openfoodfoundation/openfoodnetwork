@@ -151,9 +151,6 @@ paths:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
-                    - "@id": http://test.host/api/dfc/persons/12345
-                      "@type": dfc-b:Person
-                      dfc-b:affiliates: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000
                       "@type": dfc-b:Enterprise
                       dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
@@ -558,6 +555,125 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
+  "/api/dfc/enterprises/{enterprise_id}/platforms":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: List platforms with scopes
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
+                    "@id": http://test.host/api/dfc/enterprises/10000/platforms
+                    dfc-t:platforms:
+                      "@type": rdf:List
+                      "@list":
+                      - "@type": dfc-t:Platform
+                        "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                        localId: cqcm-dev
+                        dfc-t:hasAssignedScopes:
+                          "@type": rdf:List
+                          "@list": []
+  "/api/dfc/enterprises/{enterprise_id}/platforms/{platform_id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: platform_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show platform scopes
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@type": dfc-t:Platform
+                    "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                    localId: cqcm-dev
+                    dfc-t:hasAssignedScopes:
+                      "@type": rdf:List
+                      "@list": []
+    put:
+      summary: Update authorized scopes of a platform
+      parameters: []
+      tags:
+      - Platforms
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@type": dfc-t:Platform
+                    "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
+                    localId: cqcm-dev
+                    dfc-t:hasAssignedScopes:
+                      "@type": rdf:List
+                      "@list":
+                      - "@id": https://example.com/scopes/ReadEnterprise
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadEnterprise
+                      - "@id": https://example.com/scopes/WriteEnterprise
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteEnterprise
+                      - "@id": https://example.com/scopes/ReadProducts
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadProducts
+                      - "@id": https://example.com/scopes/WriteProducts
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteProducts
+                      - "@id": https://example.com/scopes/ReadOrders
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: ReadOrders
+                      - "@id": https://example.com/scopes/WriteOrders
+                        "@type": dfc-t:Scope
+                        dfc-t:scope: WriteOrders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
+                "@id": http://localhost:3000/api/dfc/enterprises/3/platforms/cqcm-dev
+                dfc-t:hasAssignedScopes:
+                  "@list":
+                  - "@id": https://example.com/scopes/ReadEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteEnterprise
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/ReadProducts
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteProducts
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/ReadOrders
+                    "@type": dfc-t:Scope
+                  - "@id": https://example.com/scopes/WriteOrders
+                    "@type": dfc-t:Scope
+                  "@type": rdf:List
   "/api/dfc/product_groups/{id}":
     parameters:
     - name: enterprise_id

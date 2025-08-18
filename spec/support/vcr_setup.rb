@@ -5,9 +5,17 @@ require 'vcr'
 VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
-  config.ignore_localhost = true
   config.configure_rspec_metadata!
-  config.ignore_localhost = true
+
+  # Chrome calls a lot of services and they trip us up.
+  config.ignore_hosts(
+    "localhost", "127.0.0.1", "0.0.0.0",
+    "accounts.google.com",
+    "android.clients.google.com",
+    "clients2.google.com",
+    "content-autofill.googleapis.com",
+    "optimizationguide-pa.googleapis.com",
+  )
 
   # Filter sensitive environment variables
   %w[

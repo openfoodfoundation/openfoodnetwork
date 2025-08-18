@@ -68,9 +68,6 @@ InvisibleCaptcha.timestamp_enabled = false
 InvisibleCaptcha.spinner_enabled = false
 
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join('spec/fixtures').to_s
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -259,7 +256,6 @@ RSpec.configure do |config|
   config.include PreferencesHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
-  config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::PerformanceHelper

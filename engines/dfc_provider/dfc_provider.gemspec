@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary     = 'Provides an API stack implementing DFC semantic ' \
                      'specifications'
 
-  spec.required_ruby_version = File.read(File.expand_path("../../.ruby-version", __dir__)).chomp
+  spec.required_ruby_version = ">= 1.0.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
   spec.files = Dir["{app,config,lib}/**/*"] + ['README.md']
 

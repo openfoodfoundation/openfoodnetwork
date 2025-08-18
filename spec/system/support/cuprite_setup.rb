@@ -4,7 +4,9 @@ require "capybara/cuprite"
 
 headless = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HEADLESS", true))
 
-browser_options = {}
+browser_options = {
+  "ignore-certificate-errors" => nil,
+}
 browser_options["no-sandbox"] = nil if ENV['CI'] || ENV['DOCKER']
 
 Capybara.register_driver(:cuprite_ofn) do |app|
@@ -15,10 +17,22 @@ Capybara.register_driver(:cuprite_ofn) do |app|
     process_timeout: 60,
     timeout: 60,
     # Don't load scripts from external sources, like google maps or stripe
-    url_whitelist: [%r{http://localhost}i, %r{http://0.0.0.0}i, %r{http://127.0.0.1}],
+    url_whitelist: [
+      %r{^http://localhost}, %r{^http://0.0.0.0}, %r{http://127.0.0.1},
+
+      # Testing the DFC Permissions component by Startin'Blox:
+      %r{^https://cdn.jsdelivr.net/npm/@startinblox/},
+      %r{^https://cdn.startinblox.com/},
+      %r{^https://data-server.cqcm.startinblox.com/scopes$},
+      %r{^https://api.proxy-dev.cqcm.startinblox.com/profile$},
+
+      # Just for testing external connections: spec/system/billy_spec.rb
+      %r{^https?://deb.debian.org},
+    ],
     inspector: true,
     headless:,
-    js_errors: true
+    js_errors: true,
+    proxy: { host: Billy.proxy.host, port: Billy.proxy.port },
   )
 end
 
@@ -36,6 +50,7 @@ RSpec.configure do |config|
     original_host = Rails.application.default_url_options[:host]
     Rails.application.default_url_options[:host] =
       "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+    DfcProvider::Engine.routes.default_url_options = Rails.application.default_url_options
     example.run
     Rails.application.default_url_options[:host] = original_host
     remove_downloaded_files

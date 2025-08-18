@@ -38,5 +38,16 @@ RSpec.describe Admin::EnterprisesHelper do
         expect(visible_items.pluck(:name)).to include "inventory_settings"
       end
     end
+
+    it "hides Connected Apps by default" do
+      user.enterprises << enterprise
+      expect(visible_items.pluck(:name)).not_to include "connected_apps"
+    end
+
+    it "shows Connected Apps for specific user" do
+      user.enterprises << enterprise
+      Flipper.enable("cqcm-dev", user)
+      expect(visible_items.pluck(:name)).to include "connected_apps"
+    end
   end
 end

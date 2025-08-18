@@ -8,6 +8,7 @@ RSpec.describe Orders::GenerateInvoiceService do
   let!(:latest_invoice){
     create(:invoice,
            order:,
+           date: Time.zone.today - 2.days,
            data: invoice_data_generator.serialize_for_invoice)
   }
 

@@ -29,13 +29,7 @@ module Spree
                                   scope: [:admin, :tab]).capitalize
 
         css_classes = []
-
-        if options[:icon] && !feature?(:admin_style_v3, spree_current_user)
-          link = link_to_with_icon(options[:icon], titleized_label, destination_url)
-          css_classes << 'tab-with-icon'
-        else
-          link = link_to(titleized_label, destination_url)
-        end
+        link = link_to(titleized_label, destination_url)
 
         selected = if options[:match_path]
                      PathChecker

@@ -1,20 +1,5 @@
 // import Flatpickr
 import Flatpickr from "stimulus-flatpickr";
-import { ar } from "flatpickr/dist/l10n/ar";
-import { cat } from "flatpickr/dist/l10n/cat";
-import { cy } from "flatpickr/dist/l10n/cy";
-import { de } from "flatpickr/dist/l10n/de";
-import { fi } from "flatpickr/dist/l10n/fi";
-import { fr } from "flatpickr/dist/l10n/fr";
-import { it } from "flatpickr/dist/l10n/it";
-import { nl } from "flatpickr/dist/l10n/nl";
-import { pl } from "flatpickr/dist/l10n/pl";
-import { pt } from "flatpickr/dist/l10n/pt";
-import { ru } from "flatpickr/dist/l10n/ru";
-import { sv } from "flatpickr/dist/l10n/sv";
-import { tr } from "flatpickr/dist/l10n/tr";
-import { en } from "flatpickr/dist/l10n/default.js";
-import { hu } from "flatpickr/dist/l10n/hu";
 import ShortcutButtonsPlugin from "shortcut-buttons-flatpickr";
 import labelPlugin from "flatpickr/dist/plugins/labelPlugin/labelPlugin";
 
@@ -24,28 +9,11 @@ export default class extends Flatpickr {
    */
   static values = { enableTime: Boolean, mode: String, defaultDate: String };
   static targets = ["start", "end"];
-  locales = {
-    ar: ar,
-    cat: cat,
-    cy: cy,
-    de: de,
-    fi: fi,
-    fr: fr,
-    it: it,
-    nl: nl,
-    pl: pl,
-    pt: pt,
-    ru: ru,
-    sv: sv,
-    tr: tr,
-    en: en,
-    hu: hu,
-  };
 
   initialize() {
     const datetimepicker = this.enableTimeValue === true;
     const mode = this.modeValue === "range" ? "range" : "single";
-    // sets your language (you can also set some global setting for all time pickers)
+    // configure flatpickr options (locale set dynamically in connect())
     this.config = {
       altInput: true,
       altFormat: datetimepicker
@@ -54,13 +22,18 @@ export default class extends Flatpickr {
       dateFormat: datetimepicker ? "Y-m-d H:i" : "Y-m-d",
       enableTime: datetimepicker,
       time_24hr: datetimepicker,
-      locale: I18n.base_locale,
       plugins: this.plugins(mode, datetimepicker),
       mode,
     };
   }
 
-  connect() {
+  async connect() {
+    const locale = await this.importFlatpickrLocale(I18n.base_locale);
+    this.config = {
+      ...this.config,
+      locale,
+    };
+
     super.connect();
     window.addEventListener("flatpickr:change", this.onChangeEvent);
     window.addEventListener("flatpickr:clear", this.clear);
@@ -162,6 +135,18 @@ export default class extends Flatpickr {
        * the records between [23:59:00 ~ 23:59:59] of today
        */
       this.fp.setDate(moment().add(1, "days").startOf("day").format());
+    }
+  }
+
+  async importFlatpickrLocale(localeCode) {
+    // null tells flatpickr to fall back to its built-in english locale
+    if (!localeCode || localeCode === "en") return null;
+
+    try {
+      const localeModule = await import(`flatpickr/dist/l10n/${localeCode}.js`);
+      return localeModule.default?.[localeCode] ?? null;
+    } catch {
+      return null;
     }
   }
 }

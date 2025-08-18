@@ -152,6 +152,7 @@ end
 group :test, :development do
   gem 'bullet'
   gem 'capybara'
+  gem 'capybara-shadowdom'
   gem 'cuprite'
   gem 'database_cleaner', require: false
   gem 'debug', '>= 1.0.0'
@@ -171,9 +172,9 @@ end
 
 group :test do
   gem 'pdf-reader'
+  gem 'puffing-billy'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
-  gem 'simplecov-lcov', require: false
   gem 'undercover', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false
