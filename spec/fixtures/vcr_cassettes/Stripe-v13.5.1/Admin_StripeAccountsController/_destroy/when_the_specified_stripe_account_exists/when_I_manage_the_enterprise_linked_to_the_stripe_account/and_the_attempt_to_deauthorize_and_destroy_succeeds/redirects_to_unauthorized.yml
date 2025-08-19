@@ -8,15 +8,19 @@ http_interactions:
       string: type=standard&country=AU&email=jumping.jack%40example.com&business_type=non_profit
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/12.6.0
+      - Stripe/v1 RubyBindings/13.5.1
       Authorization:
       - "<HIDDEN-AUTHORIZATION-HEADER>"
-      Content-Type:
-      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_ZaGFaOccCqRUEk","request_duration_ms":3070}}'
+      Idempotency-Key:
+      - cd940104-5df6-423b-9b0d-b3fecd72390f
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       X-Stripe-Client-User-Agent:
       - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +33,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 14 Oct 2025 03:05:13 GMT
+      - Tue, 14 Oct 2025 03:04:32 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -52,17 +56,17 @@ http_interactions:
       Content-Security-Policy:
       - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
-        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=OM_QID4mkoXt71hL-zi5xW8jqDnQHEWcI3SnK_RU-cLKpURQ0m1ehrNriyw2idgVDNdNJm6WQolrhYkm
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=zMAvitsGz8tRrU1i-mcD7J8cHKX6iCCjz352qNHC7C8p9Rrzisc8V23f_plT4hGAPTOYRWwbHrmHrDYB
       Idempotency-Key:
-      - 0764d9d9-cc86-4f61-bcbf-a4e4059f567a
+      - cd940104-5df6-423b-9b0d-b3fecd72390f
       Original-Request:
-      - req_Dde6DIJj7rCd5m
+      - req_6txkuPkmqCOord
       Request-Id:
-      - req_Dde6DIJj7rCd5m
+      - req_6txkuPkmqCOord
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       Vary:
       - Origin
       X-Stripe-Priority-Routing-Enabled:
@@ -77,7 +81,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1SHyY03FQF0iBkHf",
+          "id": "acct_1SHyXK3YOFZTWKVE",
           "object": "account",
           "business_profile": {
             "annual_revenue": null,
@@ -133,7 +137,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1760411113,
+          "created": 1760411071,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "jumping.jack@example.com",
@@ -142,7 +146,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1SHyY03FQF0iBkHf/external_accounts"
+            "url": "/v1/accounts/acct_1SHyXK3YOFZTWKVE/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -243,24 +247,24 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Tue, 14 Oct 2025 03:05:13 GMT
+  recorded_at: Tue, 14 Oct 2025 03:04:32 GMT
 - request:
     method: delete
-    uri: https://api.stripe.com/v1/accounts/acct_1SHyY03FQF0iBkHf
+    uri: https://api.stripe.com/v1/accounts/acct_1SHyXK3YOFZTWKVE
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/12.6.0
+      - Stripe/v1 RubyBindings/13.5.1
       Authorization:
       - "<HIDDEN-AUTHORIZATION-HEADER>"
-      Content-Type:
-      - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_Dde6DIJj7rCd5m","request_duration_ms":2206}}'
+      - '{"last_request_metrics":{"request_id":"req_6txkuPkmqCOord","request_duration_ms":2094}}'
+      Idempotency-Key:
+      - 1115baf5-42ec-4ef7-84e5-a2c973101b7a
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       X-Stripe-Client-User-Agent:
       - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
@@ -275,7 +279,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 14 Oct 2025 03:05:17 GMT
+      - Tue, 14 Oct 2025 03:04:35 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -298,13 +302,15 @@ http_interactions:
       Content-Security-Policy:
       - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
-        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=n9RRkJMG-_sT7S00qoMfw6KTpB5HzihwzadWkFxV8oogN02JjXq4yoA4UGN9g2XYgSpjZYI00mhrpmzM
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=zMAvitsGz8tRrU1i-mcD7J8cHKX6iCCjz352qNHC7C8p9Rrzisc8V23f_plT4hGAPTOYRWwbHrmHrDYB
+      Idempotency-Key:
+      - 1115baf5-42ec-4ef7-84e5-a2c973101b7a
       Request-Id:
-      - req_iRYVWBCGQvkhl2
+      - req_OqdNwvqiZeumee
       Stripe-Account:
-      - acct_1SHyY03FQF0iBkHf
+      - acct_1SHyXK3YOFZTWKVE
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       Vary:
       - Origin
       X-Stripe-Priority-Routing-Enabled:
@@ -319,9 +325,9 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1SHyY03FQF0iBkHf",
+          "id": "acct_1SHyXK3YOFZTWKVE",
           "object": "account",
           "deleted": true
         }
-  recorded_at: Tue, 14 Oct 2025 03:05:17 GMT
+  recorded_at: Tue, 14 Oct 2025 03:04:35 GMT
 recorded_with: VCR 6.2.0
