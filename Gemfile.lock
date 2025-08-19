@@ -828,7 +828,7 @@ GEM
       redis (>= 4.0, < 6.0)
     stringex (2.8.6)
     stringio (3.1.0)
-    stripe (12.6.0)
+    stripe (13.5.1)
     swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -1046,7 +1046,7 @@ DEPENDENCIES
   stimulus_reflex
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
-  stripe (~> 12)
+  stripe
   timecop
   turbo-rails
   turbo_power
