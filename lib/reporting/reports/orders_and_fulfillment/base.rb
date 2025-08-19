@@ -28,6 +28,10 @@ module Reporting
           }.values
         end
 
+        def metadata_option_opt_in
+          true
+        end
+
         private
 
         def order_permissions
