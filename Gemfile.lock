@@ -840,7 +840,7 @@ GEM
       redis (>= 4.0, < 6.0)
     stringex (2.8.6)
     stringio (3.1.7)
-    stripe (12.6.0)
+    stripe (13.5.1)
     strscan (3.1.5)
     swd (2.0.3)
       activesupport (>= 3)
@@ -1060,7 +1060,7 @@ DEPENDENCIES
   stimulus_reflex
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
-  stripe (~> 12)
+  stripe (~> 13)
   turbo-rails
   turbo_power
   undercover

@@ -8,15 +8,19 @@ http_interactions:
       string: type=standard&country=AU&email=jumping.jack%40example.com&business_type=non_profit
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/12.6.0
+      - Stripe/v1 RubyBindings/13.5.1
       Authorization:
       - "<HIDDEN-AUTHORIZATION-HEADER>"
-      Content-Type:
-      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_ZIu5DReP1igubk","request_duration_ms":3060}}'
+      Idempotency-Key:
+      - 721b9634-36c2-4fad-b13d-d0e6357f84bf
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       X-Stripe-Client-User-Agent:
       - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +33,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 14 Oct 2025 03:05:13 GMT
+      - Tue, 14 Oct 2025 03:05:45 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -52,17 +56,17 @@ http_interactions:
       Content-Security-Policy:
       - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
-        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=OM_QID4mkoXt71hL-zi5xW8jqDnQHEWcI3SnK_RU-cLKpURQ0m1ehrNriyw2idgVDNdNJm6WQolrhYkm
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=AhPRuPruhbL6j1zm7HfE8eBayqlqQ7OFvgbuwa79BHVAhrQtpVyhDNiXCNs_ifCCE2UHDBjMUCZ4kqXt
       Idempotency-Key:
-      - 0764d9d9-cc86-4f61-bcbf-a4e4059f567a
+      - 721b9634-36c2-4fad-b13d-d0e6357f84bf
       Original-Request:
-      - req_Dde6DIJj7rCd5m
+      - req_IEQ4TYaklp6hBD
       Request-Id:
-      - req_Dde6DIJj7rCd5m
+      - req_IEQ4TYaklp6hBD
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       Vary:
       - Origin
       X-Stripe-Priority-Routing-Enabled:
@@ -77,7 +81,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1SHyY03FQF0iBkHf",
+          "id": "acct_1SHyYV3noFA2NjG2",
           "object": "account",
           "business_profile": {
             "annual_revenue": null,
@@ -133,7 +137,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1760411113,
+          "created": 1760411144,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "jumping.jack@example.com",
@@ -142,7 +146,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1SHyY03FQF0iBkHf/external_accounts"
+            "url": "/v1/accounts/acct_1SHyYV3noFA2NjG2/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -243,24 +247,95 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Tue, 14 Oct 2025 03:05:13 GMT
+  recorded_at: Tue, 14 Oct 2025 03:05:45 GMT
 - request:
-    method: delete
-    uri: https://api.stripe.com/v1/accounts/acct_1SHyY03FQF0iBkHf
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_fake_account
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/12.6.0
+      - Stripe/v1 RubyBindings/13.5.1
       Authorization:
       - "<HIDDEN-AUTHORIZATION-HEADER>"
-      Content-Type:
-      - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_Dde6DIJj7rCd5m","request_duration_ms":2206}}'
+      - '{"last_request_metrics":{"request_id":"req_IEQ4TYaklp6hBD","request_duration_ms":2038}}'
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 14 Oct 2025 03:05:45 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '366'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=AhPRuPruhbL6j1zm7HfE8eBayqlqQ7OFvgbuwa79BHVAhrQtpVyhDNiXCNs_ifCCE2UHDBjMUCZ4kqXt
+      Vary:
+      - Origin
+      X-Robots-Tag:
+      - none
+      X-Wc:
+      - ABHIJ
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "The provided key 'sk_test_******************************uCJm' does not have access to account 'acct_fake_account' (or that account does not exist). Application access may have been revoked.",
+            "type": "invalid_request_error",
+            "code": "account_invalid",
+            "doc_url": "https://stripe.com/docs/error-codes/account-invalid"
+          }
+        }
+  recorded_at: Tue, 14 Oct 2025 03:05:45 GMT
+- request:
+    method: delete
+    uri: https://api.stripe.com/v1/accounts/acct_1SHyYV3noFA2NjG2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/13.5.1
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Idempotency-Key:
+      - 6e111774-fb8d-4072-93c9-9bad532b0532
+      Stripe-Version:
+      - 2025-02-24.acacia
       X-Stripe-Client-User-Agent:
       - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
@@ -275,7 +350,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 14 Oct 2025 03:05:17 GMT
+      - Tue, 14 Oct 2025 03:05:48 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -298,13 +373,15 @@ http_interactions:
       Content-Security-Policy:
       - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
-        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=n9RRkJMG-_sT7S00qoMfw6KTpB5HzihwzadWkFxV8oogN02JjXq4yoA4UGN9g2XYgSpjZYI00mhrpmzM
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=AhPRuPruhbL6j1zm7HfE8eBayqlqQ7OFvgbuwa79BHVAhrQtpVyhDNiXCNs_ifCCE2UHDBjMUCZ4kqXt
+      Idempotency-Key:
+      - 6e111774-fb8d-4072-93c9-9bad532b0532
       Request-Id:
-      - req_iRYVWBCGQvkhl2
+      - req_tQUvraDmn8E5NZ
       Stripe-Account:
-      - acct_1SHyY03FQF0iBkHf
+      - acct_1SHyYV3noFA2NjG2
       Stripe-Version:
-      - '2024-06-20'
+      - 2025-02-24.acacia
       Vary:
       - Origin
       X-Stripe-Priority-Routing-Enabled:
@@ -319,9 +396,9 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1SHyY03FQF0iBkHf",
+          "id": "acct_1SHyYV3noFA2NjG2",
           "object": "account",
           "deleted": true
         }
-  recorded_at: Tue, 14 Oct 2025 03:05:17 GMT
+  recorded_at: Tue, 14 Oct 2025 03:05:48 GMT
 recorded_with: VCR 6.2.0
