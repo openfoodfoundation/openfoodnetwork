@@ -2,7 +2,6 @@
 
 require 'csv'
 require 'spreadsheet_architect'
-require 'csv'
 
 module Reporting
   class ReportRenderer
