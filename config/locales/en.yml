@@ -3668,15 +3668,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           loading_variants: "Loading Variants"
           no_variants: "No variant available for this product (hidden via inventory settings)."
           some_variants_hidden: "(Some variants might be hidden via inventory settings)"
-      tag_rules:
-        shipping_method_tagged_top: "Shipping methods tagged"
-        shipping_method_tagged_bottom: "are:"
-        payment_method_tagged_top: "Payment methods tagged"
-        payment_method_tagged_bottom: "are:"
-        order_cycle_tagged_top: "Order Cycles tagged"
-        order_cycle_tagged_bottom: "are:"
-        inventory_tagged_top: "Inventory variants tagged"
-        inventory_tagged_bottom: "are:"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -5072,6 +5063,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       previous: Previous
     tag_list_input:
       default_placeholder: Add a tag 
+    tag_rule_form: 
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
     tag_rule_group_form:
       for_customers_tagged: 'For customers tagged:'
       add_new_rule: '+ Add A New Rule'
