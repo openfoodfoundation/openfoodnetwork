@@ -22,7 +22,7 @@ services:
     build: .
     # Runs once: installs gems into /bundles, writes a checksum sentinel, then exits
     command: >
-      sh -lc 'bundle check || bundle install --jobs 4 --retry 3 --quiet;
+      sh -lc 'bundle install --jobs 4 --retry 3 --quiet;
               sha256sum Gemfile.lock > /bundles/.Gemfile.lock.sha'
     volumes:
       - .:/usr/src/app
