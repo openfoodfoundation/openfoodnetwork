@@ -10,7 +10,7 @@ module Stripe
 
     def call!
       if (url = url_for_authorization(@response)) && field_to_patch(@response).present?
-        field_to_patch(@response)['message'] = url
+        field_to_patch(@response)['redirect_auth_url'] = url
       end
 
       @response
