@@ -17,7 +17,7 @@
     - else
       - default_rules.each_with_index do |default_rule, index|
         - current_rule_index = index + 1
-        = render TagRuleFormComponent.new(rule: default_rule, rule_data: rule_data(default_rule), index: index)
+        = render TagRuleFormComponent.new(rule: default_rule, index: index)
         %hr
 
   .add_rule.text-center

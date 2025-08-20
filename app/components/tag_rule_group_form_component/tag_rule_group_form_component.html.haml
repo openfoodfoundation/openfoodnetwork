@@ -23,7 +23,6 @@
         - group[:rules].each do |rule|
           -rule_index += 1
           = render(TagRuleFormComponent.new(rule: rule,
-            rule_data: helpers.rule_data(rule),
             index: rule_index,
             customer_tags: group[:tags],
             hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
