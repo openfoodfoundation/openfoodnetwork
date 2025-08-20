@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  module EnterprisesHelper # rubocop:disable Metrics/ModuleLength
+  module EnterprisesHelper
     def add_check_if_single(count)
       if count == 1
         { checked: true }
@@ -69,39 +69,6 @@ module Admin
 
     def enterprise_attachment_removal_panel_id
       "#{enterprise_attachment_removal_panel}_panel"
-    end
-
-    def rule_data(rule) # rubocop:disable Metrics/MethodLength
-      case rule.type
-      when "TagRule::FilterShippingMethods"
-        {
-          text_top: t('js.admin.tag_rules.shipping_method_tagged_top'),
-          text_bottom: t('js.admin.tag_rules.shipping_method_tagged_bottom'),
-          taggable: "shipping_method",
-          visibility_field: "shipping_methods",
-        }
-      when "TagRule::FilterPaymentMethods"
-        {
-          text_top: t('js.admin.tag_rules.payment_method_tagged_top'),
-          text_bottom: t('js.admin.tag_rules.payment_method_tagged_bottom'),
-          taggable: "payment_method",
-          visibility_field: "payment_methods",
-        }
-      when "TagRule::FilterOrderCycles"
-        {
-          text_top: t('js.admin.tag_rules.order_cycle_tagged_top'),
-          text_bottom: t('js.admin.tag_rules.order_cycle_tagged_bottom'),
-          taggable: "exchange",
-          visibility_field: "order_cycles",
-        }
-      when "TagRule::FilterProducts"
-        {
-          text_top: t('js.admin.tag_rules.inventory_tagged_top'),
-          text_bottom: t('js.admin.tag_rules.inventory_tagged_bottom'),
-          taggable: "variant",
-          visibility_field: "variants",
-        }
-      end
     end
 
     # Group tag rules per rule.preferred_customer_tags
