@@ -17,6 +17,18 @@ services:
 
   redis:
     image: redis
+
+  bundler:
+    build: .
+    # Runs once: installs gems into /bundles, writes a checksum sentinel, then exits
+    command: >
+      sh -lc 'bundle check || bundle install --jobs 4 --retry 3 --quiet;
+              sha256sum Gemfile.lock > /bundles/.Gemfile.lock.sha'
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    restart: "no"
+
   web:
     tty: true
     stdin_open: true
@@ -48,15 +60,17 @@ services:
       WEBPACKER_DEV_SERVER_PUBLIC: localhost:3035
 
     command: >
-      bash -c "rm -f tmp/pids/server.pid &&
-               (bundle check || bundle install) &&
-               bundle exec rails db:prepare &&
-               yarn install &&
-               bundle exec rails s -b 0.0.0.0 -p 3000"
+      sh -lc 'rm -f tmp/pids/server.pid;
+              until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              bundle exec rails db:prepare &&
+              yarn install &&
+              exec bundle exec rails s -b 0.0.0.0 -p 3000'
 
   sidekiq:
     build: .
-    command: bundle exec sidekiq
+    command: >
+      sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              exec bundle exec sidekiq'
     depends_on:
       db:
         condition: service_healthy
@@ -75,12 +89,20 @@ services:
 
   webpack:
     build: .
-    command: ./bin/webpack-dev-server
+    command: >
+      sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              exec ./bin/webpack-dev-server'
     ports:
       - "3035:3035"
     volumes:
       - .:/usr/src/app
       - gems:/bundles
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3035/webpack-dev-server >/dev/null || wget -qO- http://localhost:3035/sockjs-node/info >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
     environment:
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 volumes:
