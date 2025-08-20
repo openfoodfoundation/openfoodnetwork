@@ -2,7 +2,9 @@ FROM ruby:3.1.4-alpine3.19 AS base
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     TZ=Europe/London \
-    RAILS_ROOT=/usr/src/app
+    RAILS_ROOT=/usr/src/app \
+    BUNDLE_PATH=/bundles \
+    BUNDLE_APP_CONFIG=/bundles
 RUN apk --no-cache upgrade && \
     apk add --no-cache tzdata postgresql-client imagemagick imagemagick-jpeg && \
     apk add --no-cache --virtual wkhtmltopdf
