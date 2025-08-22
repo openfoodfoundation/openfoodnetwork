@@ -62,6 +62,12 @@ module ShopHelper
     true
   end
 
+  def shop_tab_class(tab)
+    return unless (tab == "home" && show_home_tab?) || current_order(false)&.order_cycle.nil?
+
+    "with-darker-background"
+  end
+
   private
 
   def show_groups_tabs?
