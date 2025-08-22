@@ -102,11 +102,31 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
       end
 
       response "401", "unauthorized" do
-        let(:enterprise_id) { "default" }
+        context "as platform user" do
+          include_context "authenticated as platform"
 
-        before { login_as nil }
+          let(:enterprise_id) { 10_000 }
 
-        run_test!
+          before {
+            product
+
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+            # But no ReadProducts permission.
+          }
+
+          run_test!
+        end
+
+        context "without authorisation" do
+          let(:enterprise_id) { "default" }
+
+          before { login_as nil }
+
+          run_test!
+        end
       end
     end
   end
