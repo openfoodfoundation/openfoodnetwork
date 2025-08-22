@@ -13,7 +13,7 @@ module Reporting
         describe "option defaults" do
           let(:report) { Base.new user }
 
-          around { |example| Timecop.travel(Time.zone.local(2015, 5, 5, 14, 0, 0)) { example.run } }
+          before { travel_to(Time.zone.local(2015, 5, 5, 14, 0, 0)) }
 
           it "uses defaults when blank params are passed" do
             expect(report.params).to eq(invoice_date: Date.civil(2015, 5, 5),

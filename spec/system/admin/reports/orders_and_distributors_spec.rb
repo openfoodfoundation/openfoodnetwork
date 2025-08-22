@@ -13,10 +13,6 @@ RSpec.describe "Orders And Distributors" do
     let!(:distributor2) { create(:distributor_enterprise, name: "By Moto") }
     let!(:completed_at) { Time.zone.now.to_fs(:db) }
 
-    around do |example|
-      Timecop.travel(completed_at) { example.run }
-    end
-
     let!(:order) {
       create(:order_ready_to_ship, distributor_id: distributor.id, completed_at:)
     }
@@ -24,6 +20,10 @@ RSpec.describe "Orders And Distributors" do
       create(:order_ready_to_ship, distributor_id: distributor2.id, completed_at:)
     }
     let(:variant) { order.variants.first }
+
+    before do
+      travel_to(completed_at)
+    end
 
     context "as an enterprise user" do
       let(:header) {
