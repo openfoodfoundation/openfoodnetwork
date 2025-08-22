@@ -42,9 +42,9 @@
 .row
   .columns.large-12
     - if order.changes_allowed?
-      .alert-box.order-summary{ "ofn-inline-alert" => true, "ng-show" => "visible" }
+      .alert-box.order-summary{ "data-controller": "toggle-control", "data-toggle-control-target": "content", style: "display: block;" }
         = t(:orders_changeable_orders_alert_html, oc_close: l(order.order_cycle.orders_close_at, format: "%b %d, %Y %H:%M"))
-        %a.close{ "ng-click" => "close()" } &times;
+        %a.close{ "data-action": "toggle-control#toggleDisplay" } &times;
 
     = form_for order, url: main_app.order_path(order), html: {id: 'update-order', name: 'update_order_form' } do |order_form|
       - if order.changes_allowed?
