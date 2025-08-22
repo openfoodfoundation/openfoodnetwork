@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'csv'
 require 'spreadsheet_architect'
 
 module Reporting
@@ -40,6 +41,45 @@ module Reporting
       @report.table_rows || []
     end
 
+    def metadata_headers
+      return [] unless include_metadata?
+
+      rows = []
+
+      # Title from type/subtype (simple, no controller dependency)
+      type = @report.params[:report_type]
+      sub  = @report.params[:report_subtype]
+      if type.present?
+        title = [type, sub].compact.map { |s| s.to_s.tr('_', ' ').titleize }.join(' – ')
+        rows << ["Report Title", title]
+      end
+
+      # Ransack date range
+      q = (@report.ransack_params || {}).with_indifferent_access
+      from = q[:completed_at_gt] || q[:created_at_gt] || q[:updated_at_gt]
+      to   = q[:completed_at_lt] || q[:created_at_lt] || q[:updated_at_lt]
+      rows << ["Date range", [from, to].compact.join(" – ")] if from || to
+
+      # Printed timestamp
+      rows << ["Printed", (Time.zone || Time).now.strftime("%Y-%m-%d %H:%M:%S %Z")]
+
+      # Other ransack filters (everything except the date keys)
+      other = q.dup
+      %i[
+        completed_at_gt completed_at_lt
+        created_at_gt   created_at_lt
+        updated_at_gt   updated_at_lt
+      ].each { |k| other.delete(k) }
+
+      other.each do |k, v|
+        next if v.respond_to?(:blank?) ? v.blank? : v.nil?
+        rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(", ") : v.to_s]
+      end
+
+      rows << [] # spacer before the sheet
+      rows
+    end
+
     def as_json(_context_controller = nil)
       @report.rows.map(&:to_h).as_json
     end
@@ -61,7 +101,11 @@ module Reporting
     end
 
     def to_csv
-      SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      base = SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      meta = metadata_headers
+      return base if meta.empty?
+
+      CSV.generate { |csv| meta.each { |row| csv << row } } + base
     end
 
     def to_xlsx
@@ -74,6 +118,17 @@ module Reporting
     end
 
     private
+
+    def rendering_options
+      @rendering_options ||= begin
+        opts = @report.params[:rendering_options] || {}
+        opts.respond_to?(:with_indifferent_access) ? opts.with_indifferent_access : opts
+      end
+    end
+
+    def include_metadata?
+      !!rendering_options[:include_metadata]
+    end
 
     def spreadsheets_options
       {
