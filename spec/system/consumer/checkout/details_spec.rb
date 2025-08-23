@@ -311,7 +311,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                 expect(page).to have_field("Address", with: "")
                 expect(page).to have_field("City", with: "")
                 expect(page).to have_field("Postcode", with: "")
-                expect(page).to have_content("can't be blank", count: 3)
+                expect(page).to have_content("can't be blank", count: 4)
               end
               within ".flash[type='error']" do
                 expect(page).to have_content "Saving failed, please update the highlighted fields."
@@ -367,7 +367,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             expect(page).to have_field("Address", with: "")
             expect(page).to have_field("City", with: "")
             expect(page).to have_field("Postcode", with: "")
-            expect(page).to have_content("can't be blank", count: 7)
+            expect(page).to have_content("can't be blank", count: 8)
             expect(page).to have_content("Select a shipping method")
           end
           within ".flash[type='error']" do
