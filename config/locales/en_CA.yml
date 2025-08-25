@@ -3618,7 +3618,7 @@ en_CA:
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
-      reduced_stock_available: Reduced stock available
+      reduced_stock_available: 'Reduced stock '
       out_of_stock_text: >
           While you've been shopping, the stock levels for one or more of the products
           in your cart have reduced. Here's what's changed:
