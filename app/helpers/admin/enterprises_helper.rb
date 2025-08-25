@@ -72,9 +72,8 @@ module Admin
     end
 
     def enterprise_sells_options
-      Enterprise::SELLS.map do |s|
-        [I18n.t("admin.enterprises.admin_index.sells_options.#{s}"), s]
-      end
+      scope = "admin.enterprises.admin_index.sells_options"
+      Enterprise::SELLS.map { |s| [I18n.t(s, scope:), s] }
     end
 
     private
