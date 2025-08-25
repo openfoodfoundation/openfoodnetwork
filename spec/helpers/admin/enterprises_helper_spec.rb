@@ -50,4 +50,10 @@ RSpec.describe Admin::EnterprisesHelper do
       expect(visible_items.pluck(:name)).to include "connected_apps"
     end
   end
+
+  describe '#enterprise_sells_options' do
+    it 'returns sells options with translations' do
+      expect(helper.enterprise_sells_options.map(&:first)).to eq %w[unspecified none own any]
+    end
+  end
 end
