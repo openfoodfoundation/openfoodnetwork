@@ -1,14 +1,17 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["rule", "index", "divId", "isDefault", "ruleCustomerTag"];
+  static targets = ["rule", "ruleCustomerTag"];
+  static values = { index: Number };
 
-  add() {
+  add({ params }) {
     const rule_type = this.ruleTarget.value;
-    const index = this.indexTarget.value;
-    const divId = this.divIdTarget.value;
-    const isDefault = this.isDefaultTarget.value;
-    const customerTags = this.hasRuleCustomerTagTarget ? this.ruleCustomerTagTarget.value : undefined;
+    const index = this.indexValue;
+    const divId = params["divId"];
+    const isDefault = params["isDefault"];
+    const customerTags = this.hasRuleCustomerTagTarget
+      ? this.ruleCustomerTagTarget.value
+      : undefined;
 
     const urlParams = new URLSearchParams();
     urlParams.append("rule_type", rule_type);
@@ -29,7 +32,7 @@ export default class extends Controller {
       .then((r) => r.text())
       .then((html) => {
         Turbo.renderStreamMessage(html);
-        this.indexTarget.value = parseInt(index) + 1;
+        this.indexValue = parseInt(index) + 1;
       })
       .catch((error) => console.warn(error));
   }
