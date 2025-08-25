@@ -16,7 +16,7 @@
               %td
                 = payment.updated_at.strftime("%Y-%m-%d")
               %td
-                %a{ href: "#{payment.cvv_response_message}" }
+                %a{ href: "#{payment.redirect_auth_url}" }
                   %button.x-small
                     = t(".authorise")
               %td.text-right
