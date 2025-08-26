@@ -955,7 +955,7 @@ DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (= 0.8.4)
   active_storage_validations
-  activemerchant (~> 1.137.0)
+  activemerchant (>= 1.137.0)
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store
