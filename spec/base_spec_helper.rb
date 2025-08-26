@@ -257,6 +257,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::HtmlHelper
+  config.include ActiveSupport::Testing::TimeHelpers
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper

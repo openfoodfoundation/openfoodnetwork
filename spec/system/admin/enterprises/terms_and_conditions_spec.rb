@@ -34,7 +34,7 @@ RSpec.describe "Uploading Terms and Conditions PDF" do
         attach_file "enterprise[terms_and_conditions]", original_terms, make_visible: true
 
         time = Time.zone.local(2002, 4, 13, 0, 0, 0)
-        Timecop.freeze(run_time = time) do
+        travel_to(run_time = time) do
           click_button "Update"
           expect(distributor.reload.terms_and_conditions_blob.created_at).to eq run_time
         end

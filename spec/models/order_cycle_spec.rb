@@ -304,7 +304,7 @@ RSpec.describe OrderCycle do
     let(:oc) { build_stubbed(:simple_order_cycle) }
 
     it "reports status when an order cycle is upcoming" do
-      Timecop.freeze(oc.orders_open_at - 1.second) do
+      travel_to(oc.orders_open_at - 1.second) do
         expect(oc).not_to be_undated
         expect(oc).to     be_dated
         expect(oc).to     be_upcoming
@@ -322,7 +322,7 @@ RSpec.describe OrderCycle do
     end
 
     it "reports status when an order cycle has closed" do
-      Timecop.freeze(oc.orders_close_at + 1.second) do
+      travel_to(oc.orders_close_at + 1.second) do
         expect(oc).not_to be_undated
         expect(oc).to     be_dated
         expect(oc).not_to be_upcoming
