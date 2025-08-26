@@ -241,7 +241,8 @@ module Spree
             if response.cvv_result
               self.cvv_response_code = response.cvv_result['code']
               self.cvv_response_message = response.cvv_result['message']
-              if cvv_response_message.present?
+              self.redirect_auth_url = response.cvv_result['redirect_auth_url']
+              if redirect_auth_url.present?
                 return require_authorization!
               end
             end
