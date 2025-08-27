@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../../db/migrate/20250827205335_migrate_cvv_message_to_redirect_auth_url.rb'
+require_relative '../../db/migrate/20250827205335_migrate_cvv_message_to_redirect_auth_url'
 
 RSpec.describe MigrateCvvMessageToRedirectAuthUrl, type: :migration do
   let(:migration) { described_class.new }
@@ -85,7 +85,11 @@ RSpec.describe MigrateCvvMessageToRedirectAuthUrl, type: :migration do
     context 'mixed payment states' do
       let!(:eligible_payments) do
         [
-          create(:payment, cvv_response_message: 'https://url1.com', state: 'requires_authorization'),
+          create(
+            :payment,
+            cvv_response_message: 'https://url1.com',
+            state: 'requires_authorization'
+          ),
           create(:payment, cvv_response_message: 'https://url2.com', state: 'processing'),
           create(:payment, cvv_response_message: 'https://url3.com', state: 'pending'),
           create(:payment, cvv_response_message: 'https://url4.com', state: 'checkout'),
