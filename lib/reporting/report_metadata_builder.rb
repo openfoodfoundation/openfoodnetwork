@@ -15,15 +15,18 @@ module Reporting
       return [] unless include_metadata?
 
       rows = []
-      rows += title_rows
-      rows += date_range_rows
-      rows += printed_rows
-      rows += other_filter_rows
+      rows.concat(title_rows)
+      rows.concat(date_range_rows)
+      rows.concat(printed_rows)
+      rows.concat(other_filter_rows)
       rows << [] # spacer before the sheet
       rows
     end
 
     private
+
+    DATE_FROM_KEYS = %i[completed_at_gt created_at_gt updated_at_gt].freeze
+    DATE_TO_KEYS   = %i[completed_at_lt created_at_lt updated_at_lt].freeze
 
     def title_rows
       type = params[:report_type]
@@ -35,12 +38,20 @@ module Reporting
     end
 
     def date_range_rows
-      q = (report.ransack_params || {}).with_indifferent_access
-      from = q[:completed_at_gt] || q[:created_at_gt] || q[:updated_at_gt]
-      to   = q[:completed_at_lt] || q[:created_at_lt] || q[:updated_at_lt]
+      q = indifferent_ransack
+      from = first_present(q, DATE_FROM_KEYS)
+      to   = first_present(q, DATE_TO_KEYS)
       return [] unless from || to
 
       [['Date range', [from, to].compact.join(' – ')]]
+    end
+
+    def first_present(hash, keys)
+      keys.map { |k| hash[k] }.find { |v| present?(v) }
+    end
+
+    def indifferent_ransack
+      (report.ransack_params || {}).with_indifferent_access
     end
 
     def printed_rows
@@ -49,15 +60,11 @@ module Reporting
     end
 
     def other_filter_rows
-      q = (report.ransack_params || {}).with_indifferent_access
-      %i[
-        completed_at_gt completed_at_lt
-        created_at_gt created_at_lt
-        updated_at_gt updated_at_lt
-      ].each { |k| q.delete(k) }
+      q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
 
       q.each_with_object([]) do |(k, v), rows|
         next unless present?(v)
+
         rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(', ') : v.to_s]
       end
     end
@@ -67,7 +74,6 @@ module Reporting
     end
 
     def include_metadata?
-      # Matches your previous guard (CSV/raw should not include metadata)
       params[:report_format].to_s != 'csv'
     end
 
