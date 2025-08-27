@@ -63,8 +63,8 @@ module Admin
       @blob = ReportBlob.create_for_upload_later!(report_filename)
 
       ReportJob.perform_later(
-        report_class:, 
-        user: spree_current_user, 
+        report_class:,
+        user: spree_current_user,
         params: params.merge(rendering_options: @rendering_options.options),
         format: report_format,
         blob: @blob,

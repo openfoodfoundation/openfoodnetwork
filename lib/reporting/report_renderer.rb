@@ -67,12 +67,13 @@ module Reporting
       other = q.dup
       %i[
         completed_at_gt completed_at_lt
-        created_at_gt   created_at_lt
-        updated_at_gt   updated_at_lt
+        created_at_gt created_at_lt
+        updated_at_gt updated_at_lt
       ].each { |k| other.delete(k) }
 
       other.each do |k, v|
         next if v.respond_to?(:blank?) ? v.blank? : v.nil?
+
         rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(", ") : v.to_s]
       end
 
