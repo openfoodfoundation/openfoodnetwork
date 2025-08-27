@@ -44,7 +44,7 @@ RSpec.describe Stripe::AuthorizeResponsePatcher do
 
         it "patches response.cvv_result.message with nil" do
           new_response = patcher.call!
-          expect(new_response.cvv_result['message']).to be_nil
+          expect(new_response.cvv_result['redirect_auth_url']).to eq nil
         end
       end
     end

@@ -1048,11 +1048,11 @@ RSpec.describe Spree::Payment do
   end
 
   describe "#clear_authorization_url" do
-    let(:payment) { create(:payment, cvv_response_message: "message") }
+    let(:payment) { create(:payment, redirect_auth_url: "auth_url") }
 
-    it "removes the cvv_response_message" do
+    it "removes the redirect_auth_url" do
       payment.clear_authorization_url
-      expect(payment.cvv_response_message).to eq(nil)
+      expect(payment.redirect_auth_url).to eq(nil)
     end
   end
 
