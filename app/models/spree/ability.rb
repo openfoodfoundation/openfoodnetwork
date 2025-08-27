@@ -142,6 +142,7 @@ module Spree
 
       can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
+      can :new, TagRule
       can [:admin, :map_by_tag, :destroy], TagRule do |tag_rule|
         user.enterprises.include? tag_rule.enterprise
       end
@@ -149,7 +150,7 @@ module Spree
       can [:admin, :index, :create], Enterprise
       can [:read, :edit, :update,
            :remove_logo, :remove_promo_image, :remove_terms_and_conditions,
-           :bulk_update, :resend_confirmation], Enterprise do |enterprise|
+           :bulk_update, :resend_confirmation, :new_tag_rule_group], Enterprise do |enterprise|
         OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
       end
       can [:welcome, :register], Enterprise do |enterprise|
