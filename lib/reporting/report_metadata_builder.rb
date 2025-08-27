@@ -4,16 +4,12 @@ module Reporting
   class ReportMetadataBuilder
     attr_reader :report, :current_user
 
-    # Mirror ReportHeadersBuilder signature for consistency
     def initialize(report, current_user = nil)
       @report = report
       @current_user = current_user
     end
 
-    # Public API used by ReportRenderer
     def rows
-      return [] unless include_metadata?
-
       rows = []
       rows.concat(title_rows)
       rows.concat(date_range_rows)
@@ -61,7 +57,6 @@ module Reporting
 
     def other_filter_rows
       q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
-
       q.each_with_object([]) do |(k, v), rows|
         next unless present?(v)
 
@@ -70,11 +65,7 @@ module Reporting
     end
 
     def params
-      report.params || {}
-    end
-
-    def include_metadata?
-      params[:report_format].to_s != 'csv'
+      (report.params || {}).with_indifferent_access
     end
 
     def present?(value)
