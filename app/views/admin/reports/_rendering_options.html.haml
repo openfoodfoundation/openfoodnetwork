@@ -16,8 +16,8 @@
       .omega.fourteen.columns
         - if @report.metadata_option?
           %span.inline-checkbox
-            = check_box_tag :include_metadata, true, !!@rendering_options.options.with_indifferent_access[:include_metadata]
-            = label_tag :include_metadata, t(".include_metadata")
+            = check_box_tag :include_metadata, true, ActiveModel::Type::Boolean.new.cast(@rendering_options.options[:include_metadata]), id: 'include_metadata'
+            = label_tag :include_metadata, t('.include_metadata')
         - if @report.header_option?
           %span.inline-checkbox{ style: "margin-right: 1rem;" }
             = check_box_tag :display_header_row, true, @rendering_options.options[:display_header_row]
