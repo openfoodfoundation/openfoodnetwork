@@ -24,29 +24,36 @@ class TagRuleFormComponent < ViewComponent::Base
         text_top: t('components.tag_rule_form.tag_rules.shipping_method_tagged_top'),
         text_bottom: t('components.tag_rule_form.tag_rules.shipping_method_tagged_bottom'),
         taggable: "shipping_method",
-        visibility_field: "shipping_methods",
+        visibility_field: "preferred_matched_shipping_methods_visibility",
       }
     when "TagRule::FilterPaymentMethods"
       {
         text_top: t('components.tag_rule_form.tag_rules.payment_method_tagged_top'),
         text_bottom: t('components.tag_rule_form.tag_rules.payment_method_tagged_bottom'),
         taggable: "payment_method",
-        visibility_field: "payment_methods",
+        visibility_field: "preferred_matched_payment_methods_visibility",
       }
     when "TagRule::FilterOrderCycles"
       {
         text_top: t('components.tag_rule_form.tag_rules.order_cycle_tagged_top'),
         text_bottom: t('components.tag_rule_form.tag_rules.order_cycle_tagged_bottom'),
         taggable: "exchange",
-        visibility_field: "order_cycles",
+        visibility_field: "preferred_matched_order_cycles_visibility",
       }
     when "TagRule::FilterProducts"
       {
         text_top: t('components.tag_rule_form.tag_rules.inventory_tagged_top'),
         text_bottom: t('components.tag_rule_form.tag_rules.inventory_tagged_bottom'),
         taggable: "variant",
-        visibility_field: "variants",
+        visibility_field: "preferred_matched_variants_visibility",
       }
     end
+  end
+
+  def visibility_options
+    [
+      [t('components.tag_rule_form.tag_rules.visible'), "visible"],
+      [t('components.tag_rule_form.tag_rules.not_visible'), "hidden"]
+    ]
   end
 end
