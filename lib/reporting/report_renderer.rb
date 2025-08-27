@@ -42,6 +42,7 @@ module Reporting
     end
 
     def metadata_headers
+      return [] unless include_metadata?
       Reporting::ReportMetadataBuilder.new(@report, @report.try(:user)).rows
     end
 
