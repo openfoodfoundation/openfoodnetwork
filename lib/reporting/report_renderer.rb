@@ -93,7 +93,7 @@ module Reporting
     end
 
     def include_metadata?
-      !!rendering_options[:include_metadata]
+      ActiveModel::Type::Boolean.new.cast(rendering_options[:include_metadata])
     end
 
     def spreadsheets_options
