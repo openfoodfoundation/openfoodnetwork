@@ -23,6 +23,10 @@ module Reporting
           report_line_items.list(line_item_includes)
         end
 
+        def metadata_option_opt_in
+          true
+        end
+
         def columns
           {
             producer:,
