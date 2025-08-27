@@ -30,14 +30,20 @@ module DfcProvider
     # - Spree::Shipment
     # - Subscription
     def authorized(address)
-      current_user.ship_address_id == address.id ||
-        current_user.bill_address_id == address.id ||
+      user_address(address) ||
         [
           customer_address(address),
           public_enterprise_group_address(address),
           public_enterprise_address(address),
           managed_enterprise_address(address),
         ].any?(&:exists?)
+    end
+
+    def user_address(address)
+      return false if current_user.is_a? ApiUser
+
+      current_user.ship_address_id == address.id ||
+        current_user.bill_address_id == address.id
     end
 
     def customer_address(address)

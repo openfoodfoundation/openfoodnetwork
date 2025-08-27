@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
+  let(:Authorization) { nil }
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
@@ -51,6 +52,21 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
       produces "application/json"
 
       response "200", "successful" do
+        context "as platform user" do
+          include_context "authenticated as platform"
+
+          let(:id) { 10_000 }
+
+          before {
+            DfcPermission.create!(
+              user:, enterprise_id: id,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+          }
+
+          run_test!
+        end
+
         context "without enterprise id" do
           let(:id) { "default" }
 
