@@ -83,6 +83,7 @@ module Admin
           format.turbo_stream
         end
       else
+        load_tag_rule_types
         respond_with(@object) do |format|
           format.json {
             render json: { errors: @object.errors.messages }, status: :unprocessable_entity
