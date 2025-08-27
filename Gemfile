@@ -174,6 +174,7 @@ group :test do
   gem 'puffing-billy'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
+  gem 'timecop'
   gem 'undercover', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false

@@ -842,6 +842,7 @@ GEM
     thor (1.4.0)
     thread-local (1.1.0)
     tilt (2.3.0)
+    timecop (0.9.10)
     timeout (0.4.3)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
@@ -1048,6 +1049,7 @@ DEPENDENCIES
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
   stripe
+  timecop
   turbo-rails
   turbo_power
   undercover
