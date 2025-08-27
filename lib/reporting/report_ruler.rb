@@ -22,7 +22,6 @@ module Reporting
       @report.respond_to?(:metadata_option_opt_in) ? !!@report.metadata_option_opt_in : false
     end
 
-
     private
 
     def format_rule(rule)
