@@ -204,8 +204,9 @@ RSpec.describe Spree::Payment do
         context "authorization is required" do
           before do
             allow(success_response).to receive(:cvv_result) {
-              { 'code' => "123",
-                'message' => "https://stripe.com/redirect" }
+              { 'code' => nil,
+                'message' => nil,
+                'redirect_auth_url' => "https://stripe.com/redirect" }
             }
             expect(payment.payment_method).to receive(:authorize).with(
               amount_in_cents, card, anything
