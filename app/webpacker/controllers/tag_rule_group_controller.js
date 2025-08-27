@@ -9,7 +9,11 @@ export default class extends Controller {
     const customerRuleIndex = this.customerRuleIndexTarget.value;
 
     // fetch from backend
-    fetch(`new_tag_rule_group?index=${index}&customer_rule_index=${customerRuleIndex}`, {
+    const params = new URLSearchParams();
+    params.append("index", index);
+    params.append("customer_rule_index", customerRuleIndex);
+
+    fetch(`new_tag_rule_group?${params}`, {
       method: "GET",
       headers: {
         Accept: "text/vnd.turbo-stream.html",
