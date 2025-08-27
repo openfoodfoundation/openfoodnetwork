@@ -50,10 +50,6 @@ module Admin
       @object.build_custom_tab if @object.custom_tab.nil?
 
       load_tag_rule_types
-      # TODO translation
-      @visibility_options = [
-        [t('js.tag_rules.visible'), "visible"], [t('js.tag_rules.not_visible'), "hidden"]
-      ]
 
       return unless params[:stimulus]
 
