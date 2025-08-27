@@ -88,7 +88,11 @@ module Reporting
 
     def rendering_options
       @rendering_options ||= begin
-        opts = @report.params[:rendering_options] || {}
+        opts =
+          if @report.respond_to?(:params) && @report.params.is_a?(Hash)
+            @report.params[:rendering_options]
+          end
+        opts ||= {}
         opts.respond_to?(:with_indifferent_access) ? opts.with_indifferent_access : opts
       end
     end
