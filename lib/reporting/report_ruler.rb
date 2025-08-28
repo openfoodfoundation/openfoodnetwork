@@ -18,6 +18,10 @@ module Reporting
       formatted_rules.find { |rule| rule[:summary_row].present? }
     end
 
+    def metadata_option?
+      @report.respond_to?(:metadata_option_opt_in) ? !!@report.metadata_option_opt_in : false
+    end
+
     private
 
     def format_rule(rule)
