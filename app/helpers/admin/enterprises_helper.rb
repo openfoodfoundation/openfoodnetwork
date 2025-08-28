@@ -71,6 +71,11 @@ module Admin
       "#{enterprise_attachment_removal_panel}_panel"
     end
 
+    def enterprise_sells_options
+      scope = "admin.enterprises.admin_index.sells_options"
+      Enterprise::SELLS.map { |s| [I18n.t(s, scope:), s] }
+    end
+
     private
 
     def build_enterprise_side_menu_items(is_shop:, show_options: ) # rubocop:disable Metrics/MethodLength
