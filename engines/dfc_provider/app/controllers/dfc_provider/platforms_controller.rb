@@ -5,7 +5,7 @@ module DfcProvider
     # List of platform identifiers.
     #   local ID => semantic ID
     PLATFORM_IDS = {
-      'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
+      'cqcm-dev' => "https://api.proxy-stg.cqcm.startinblox.com/profile",
     }.freeze
 
     prepend_before_action :move_authenticity_token
