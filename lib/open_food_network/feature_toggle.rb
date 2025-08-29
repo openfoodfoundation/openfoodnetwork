@@ -62,7 +62,11 @@ module OpenFoodNetwork
         Enable the inventory.
       DESC
       "cqcm-dev" => <<~DESC,
-        Show DFC Permissions interface to share data with CQCM dev platform.
+        Show DFC Permissions interface with development platform.
+      DESC
+      "cqcm-stg" => <<~DESC,
+        Show DFC Permissions interface to share data with CQCM staging platform.
+        After approval, enteprises should apppear on https://cqcm-map.startinblox.com/.
       DESC
     }.merge(conditional_features).freeze;
 
