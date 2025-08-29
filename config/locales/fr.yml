@@ -1449,6 +1449,8 @@ fr:
         visible: Visible?
         owner: Gestionnaire principal
         producer: Producteur
+        sells_options:
+          none: aucun
       change_type_form:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs

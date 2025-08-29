@@ -1447,6 +1447,8 @@ en_CA:
         visible: Visible?
         owner: Owner
         producer: Producer
+        sells_options:
+          none: none
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN

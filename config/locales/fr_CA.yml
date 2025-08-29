@@ -1451,6 +1451,8 @@ fr_CA:
         visible: Visible?
         owner: Gérant
         producer: Producteur
+        sells_options:
+          none: aucun
       change_type_form:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFN
