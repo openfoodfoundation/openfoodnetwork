@@ -14,7 +14,6 @@ shared_context "rake" do
     # Otherwise we lose code coverage data.
     if Rake::Task.tasks.empty?
       Openfoodnetwork::Application.load_tasks
-      Rake::Task.define_task(:environment)
     end
   end
 
