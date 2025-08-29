@@ -25,7 +25,7 @@ module Stripe
 
         it "patches response.cvv_result.message with the url in the response" do
           new_response = patcher.call!
-          expect(new_response.cvv_result['message']).to eq "https://www.stripe.com/authorize"
+          expect(new_response.cvv_result['redirect_auth_url']).to eq "https://www.stripe.com/authorize"
         end
       end
     end
