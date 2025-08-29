@@ -6,11 +6,11 @@ RSpec.shared_context "authenticated as platform" do
     "Bearer #{file_fixture('startinblox_access_token.jwt').read}"
   }
 
-  around do |example|
+  before do
     # Once upon a time when the access token hadn't expired yet...
-    Timecop.travel(Date.parse("2025-06-13")) { example.run }
-  end
+    travel_to(Date.parse("2025-06-13"))
 
-  # Reset any login via session cookie.
-  before { login_as nil }
+    # Reset any login via session cookie.
+    login_as nil
+  end
 end
