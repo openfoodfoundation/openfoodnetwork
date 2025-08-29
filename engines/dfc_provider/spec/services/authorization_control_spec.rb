@@ -12,7 +12,7 @@ RSpec.describe AuthorizationControl do
       user.oidc_account.update!(uid: "testdfc@protonmail.com")
       lc_token = file_fixture("les_communs_access_token.jwt").read
 
-      Timecop.travel(Date.parse("2025-06-13")) do
+      travel_to(Date.parse("2025-06-13")) do
         expect(auth(oidc_token: lc_token).user).to eq user
       end
     end
@@ -20,7 +20,7 @@ RSpec.describe AuthorizationControl do
     it "accepts a token from Startin'Blox" do
       sib_token = file_fixture("startinblox_access_token.jwt").read
 
-      Timecop.travel(Date.parse("2025-06-13")) do
+      travel_to(Date.parse("2025-06-13")) do
         expect(auth(oidc_token: sib_token).user.id).to eq "cqcm-dev"
       end
     end
