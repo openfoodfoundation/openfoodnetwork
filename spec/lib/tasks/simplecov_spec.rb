@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe "simplecov.rake" do
-  include_context "rake"
-
   describe "simplecov:collate_results" do
     context "when there are reports to merge" do
       let(:input_dir) { Rails.root.join("spec/fixtures/simplecov") }

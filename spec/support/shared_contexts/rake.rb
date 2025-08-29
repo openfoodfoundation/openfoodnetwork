@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
-# Let this context take care of Rake testing gotchas.
-#
-# ```rb
-# RSpec.describe "my_task.rake" do
-#   include_context "rake"
-#   # ..
-# ```
-#
+# A shared context for all rake specs
 shared_context "rake" do
   before(:all) do
     # Make sure that Rake tasks are only loaded once.
