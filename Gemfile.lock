@@ -1043,6 +1043,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-commands-rubocop
+  sprockets (~> 3.7)
   state_machines-activerecord
   stimulus_reflex
   stimulus_reflex_testing!

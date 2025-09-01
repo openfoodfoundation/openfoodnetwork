@@ -20,6 +20,10 @@ gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
 
+# Indirect dependency but we access it directly in JS specs.
+# It turns out to be hard to upgrade but please do if you can.
+gem 'sprockets', '~> 3.7'
+
 gem 'i18n'
 gem 'i18n-js', '~> 3.9.0'
 gem 'rails-i18n'
