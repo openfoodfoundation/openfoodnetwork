@@ -23,7 +23,7 @@ module Stripe
                                       "authorize_with_url" => { "url" => "https://www.stripe.com/authorize" } } }
         }
 
-        it "patches response.cvv_result.message with the url in the response" do
+        it "patches response.cvv_result.redirect_auth_url with the url in the response" do
           new_response = patcher.call!
           expect(new_response.cvv_result['redirect_auth_url']).to eq "https://www.stripe.com/authorize"
         end
