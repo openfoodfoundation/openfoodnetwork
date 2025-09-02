@@ -15,21 +15,22 @@ RSpec.describe Reporting::ReportMetadataBuilder do
   let(:ransack_params) do
     {
       from_key => '2025-01-01',
-      to_key   => '2025-01-31',
-      status_in: %w[paid shipped],
-      hub_id_eq: '42'
+      to_key => '2025-01-31',
+      :status_in => %w[paid shipped],
+      :hub_id_eq => '42'
     }
   end
 
   # minimal report double exposing what the builder reads
   let(:report) do
-    double('Report', params: params, ransack_params: ransack_params)
+    double('Report', params:, ransack_params:)
   end
 
   subject(:builder) { described_class.new(report, nil) }
 
   it 'builds a title row from report_type and subtype' do
-    expect(builder.title_rows).to eq([['Report Title', 'Order Cycle Customer Totals – By Distributor']])
+    expect(builder.title_rows).to eq([['Report Title',
+                                       'Order Cycle Customer Totals – By Distributor']])
   end
 
   it 'builds a date range row from ransack params' do
@@ -78,7 +79,9 @@ RSpec.describe Reporting::ReportRenderer do
     { created_at_gteq: '2025-01-01', created_at_lteq: '2025-01-31', status_in: %w[paid shipped] }
   end
 
-  let(:report) { double('Report', params: report_params, ransack_params: ransack_params, user: user) }
+  let(:report) {
+    double('Report', params: report_params, ransack_params:, user:)
+  }
 
   subject { described_class.new(report) }
 
@@ -100,9 +103,8 @@ RSpec.describe Reporting::ReportRenderer do
       # Structure/labels we added in the builder:
       labels = rows.map(&:first)
       expect(labels).to include('Report Title')
-      expect(labels).to include('Date range').or include('Date Range') # tolerate minor i18n variants
+      expect(labels).to include('Date range').or include('Date Range')
       expect(labels).to include('Printed')
     end
   end
 end
-
