@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class MigrateCvvMessageToRedirectAuthUrl < ActiveRecord::Migration[7.1]
+  class SpreePayment < ActiveRecord::Base; end
+
   def up
-    records = Spree::Payment.where.not(
+    records = SpreePayment.where.not(
       cvv_response_message: nil
     ).where.not(
       state: :completed
@@ -14,7 +16,7 @@ class MigrateCvvMessageToRedirectAuthUrl < ActiveRecord::Migration[7.1]
   end
 
   def down
-    records = Spree::Payment.where.not(
+    records = SpreePayment.where.not(
       redirect_auth_url: nil
     ).where.not(
       state: :completed
