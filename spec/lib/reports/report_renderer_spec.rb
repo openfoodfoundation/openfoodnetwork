@@ -35,3 +35,48 @@ RSpec.describe Reporting::ReportRenderer do
     end
   end
 end
+
+# --- metadata headers coverage ---
+RSpec.describe Reporting::ReportRenderer do
+  let(:user) { create(:user) }
+
+  # Use the same keys the builder recognizes so we actually get a "Date range" row
+  let(:from_key) { Reporting::ReportMetadataBuilder::DATE_FROM_KEYS.first }
+  let(:to_key)   { Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first }
+
+  let(:meta_report) do
+    double(
+      'Report',
+      params: {
+        include_metadata: true,
+        report_type: :order_cycle_customer_totals,
+        report_subtype: 'by_distributor'
+      },
+      ransack_params: {
+        from_key => '2025-01-01',
+        to_key => '2025-01-31',
+        :status_in => %w[paid shipped]
+      },
+      user:
+    )
+  end
+
+  let(:renderer) { described_class.new(meta_report) }
+
+  describe '#metadata_headers' do
+    it 'returns [] when include_metadata? is false' do
+      allow(renderer).to receive(:include_metadata?).and_return(false)
+      expect(renderer.metadata_headers).to eq([])
+    end
+
+    it 'builds rows via ReportMetadataBuilder when include_metadata? is true' do
+      allow(renderer).to receive(:include_metadata?).and_return(true)
+      rows = renderer.metadata_headers
+
+      labels = rows.map(&:first)
+      expect(labels).to include('Report Title')
+      expect(labels).to include('Date range') # present because we used the recognized keys
+      expect(labels).to include('Printed')
+    end
+  end
+end
