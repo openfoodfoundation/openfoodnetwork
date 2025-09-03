@@ -3,14 +3,24 @@
 class TagListInputComponent < ViewComponent::Base
   def initialize(name:, tags:,
                  placeholder: I18n.t("components.tag_list_input.default_placeholder"),
+                 only_one: false,
                  aria_label: nil,
                  hidden_field_data_options: {})
     @name = name
     @tags = tags
     @placeholder = placeholder
+    @only_one = only_one
     @aria_label_option = aria_label ? { 'aria-label': aria_label } : {}
     @hidden_field_data_options = hidden_field_data_options
   end
 
-  attr_reader :name, :tags, :placeholder, :aria_label_option, :hidden_field_data_options
+  attr_reader :name, :tags, :placeholder, :only_one, :aria_label_option, :hidden_field_data_options
+
+  private
+
+  def display
+    return "none" if tags.length >= 1 && only_one == true
+
+    "block"
+  end
 end
