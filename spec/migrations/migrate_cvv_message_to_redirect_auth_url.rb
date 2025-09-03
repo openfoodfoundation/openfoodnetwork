@@ -120,7 +120,7 @@ RSpec.describe MigrateCvvMessageToRedirectAuthUrl, type: :migration do
         ineligible_payments.each do |payment|
           payment.reload
           expect(payment.redirect_auth_url).to be_nil
-          expect(payment.cvv_response_message).to eq(payment.cvv_response_message)
+          expect(payment.cvv_response_message).to be_nil
         end
       end
     end
