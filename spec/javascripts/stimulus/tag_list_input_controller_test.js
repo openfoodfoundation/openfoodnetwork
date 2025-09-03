@@ -12,6 +12,7 @@ describe("TagListInputController", () => {
   });
 
   beforeEach(() => {
+    // Tag input with three existing tags
     document.body.innerHTML = `
       <div data-controller="tag-list-input">
         <input 
@@ -137,6 +138,55 @@ describe("TagListInputController", () => {
         expect(variant_tag_list.value).toBe("latest");
       });
     });
+
+    describe("when only one tag allowed", () => {
+      beforeEach(() => {
+        // Tag input with non existing tag
+        document.body.innerHTML = `
+          <div 
+            data-controller="tag-list-input-component--tag-list-input" 
+            data-tag-list-input-component--tag-list-input-only-one-value="true"
+          >
+            <input 
+              value="" 
+              data-tag-list-input-component--tag-list-input-target="tagList" 
+              type="hidden" 
+              name="variant_tag_list" id="variant_tag_list"
+            >
+            <div class="tags-input">
+              <div class="tags">
+                <ul class="tag-list" data-tag-list-input-component--tag-list-input-target="list">
+                  <template data-tag-list-input-component--tag-list-input-target="template">
+                    <li class="tag-item">
+                      <div class="tag-template">
+                      <span></span>
+                      <a 
+                        class="remove-button" 
+                        data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                      >✖</a>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+                <input 
+                  type="text" 
+                  name="variant_add_tag" 
+                  id="variant_add_tag" 
+                  placeholder="Add a tag" 
+                  data-action="keydown.enter->tag-list-input-component--tag-list-input#addTag keyup->tag-list-input-component--tag-list-input#filterInput" data-tag-list-input-component--tag-list-input-target="newTag"
+                  style="display: block;"
+                >
+              </div>
+            </div>
+          </div>`;
+      });
+
+      it("hides the tag input ", () => {
+        variant_add_tag.value = "new_tag";
+        variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+        expect(variant_add_tag.style.display).toBe("none");
+      });
+    });
   });
 
   describe("removeTag", () => {
@@ -154,6 +204,65 @@ describe("TagListInputController", () => {
       const tagList = document.getElementsByClassName("tag-list")[0];
       // 1 template + 2 tags
       expect(tagList.childElementCount).toBe(3);
+    });
+
+    describe("when only one tag allowed", () => {
+      beforeEach(() => {
+        // Tag input with one existing tag
+        document.body.innerHTML = `
+          <div 
+            data-controller="tag-list-input-component--tag-list-input" 
+            data-tag-list-input-component--tag-list-input-only-one-value="true"
+          >
+            <input 
+              value="" 
+              data-tag-list-input-component--tag-list-input-target="tagList" 
+              type="hidden" 
+              name="variant_tag_list" id="variant_tag_list"
+            >
+            <div class="tags-input">
+              <div class="tags">
+                <ul class="tag-list" data-tag-list-input-component--tag-list-input-target="list">
+                  <template data-tag-list-input-component--tag-list-input-target="template">
+                    <li class="tag-item">
+                      <div class="tag-template">
+                      <span></span>
+                      <a 
+                        class="remove-button" 
+                        data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                      >✖</a>
+                      </div>
+                    </li>
+                  </template>
+                  <li class="tag-item">
+                    <div class="tag-template">
+                      <span>tag 1</span>
+                      <a 
+                        class="remove-button" 
+                        data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                      >✖</a>
+                    </div>
+                  </li>
+                </ul>
+                <input 
+                  type="text" 
+                  name="variant_add_tag" 
+                  id="variant_add_tag" 
+                  placeholder="Add a tag" 
+                  data-action="keydown.enter->tag-list-input-component--tag-list-input#addTag keyup->tag-list-input-component--tag-list-input#filterInput" data-tag-list-input-component--tag-list-input-target="newTag"
+                  style="display: none;"
+                >
+              </div>
+            </div>
+          </div>`;
+      });
+
+      it("shows the tag input", () => {
+        const removeButtons = document.getElementsByClassName("remove-button");
+        removeButtons[0].click();
+
+        expect(variant_add_tag.style.display).toBe("block");
+      });
     });
   });
 

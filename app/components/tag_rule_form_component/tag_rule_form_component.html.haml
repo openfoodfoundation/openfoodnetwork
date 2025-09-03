@@ -14,7 +14,7 @@
         %span.text-normal
           = rule_data[:text_top]
       %td
-        = render TagListInputComponent.new(name: element_name("preferred_#{rule_data[:taggable]}_tags"), tags: rule.tags.split(","))
+        = render TagListInputComponent.new(name: element_name("preferred_#{rule_data[:taggable]}_tags"), tags: rule.tags.split(","), only_one: true)
       %td.actions{ rowspan: 2 , "data-controller": "delete-tag-rule", "data-delete-tag-rule-index-value": index }
         - if rule.new_record?
           = link_to("", "#", { "data-action": "click->delete-tag-rule#delete" ,class: "delete-tag-rule icon-trash no-text"})

@@ -11,9 +11,9 @@
             %h5
               = t('components.tag_rule_group_form.for_customers_tagged')
           %td
-            -# TODO multiple tags ?
             = render(TagListInputComponent.new(name: tag_list_input_name,
               tags: group[:tags],
+              only_one: true,
               hidden_field_data_options: { "data-action": "input->tag-rule-group-form-component--tag-rule-group-form#updatePreferredCustomerTag", "data-tag-rule-group-form-component--tag-rule-group-form-target": "customerTag" }))
     %div{ id: customer_tag_rule_div_id }
       - if group[:rules].empty?
