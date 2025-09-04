@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 jobs:
-  move-pr-to-project:
+  move-pr-to-code-review:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'dependabot[bot]' || startsWith(github.event.pull_request.title, 'Bump')
     steps:
