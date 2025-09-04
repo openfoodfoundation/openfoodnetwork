@@ -7,7 +7,7 @@ on:
 jobs:
   move-pr-to-project:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]' || startsWith(github.event.pull_request.title, 'Bump')
     steps:
       - name: Move PR to Code Review in Project v2
         uses: actions/github-script@v7
