@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  module EnterprisesHelper
+  module EnterprisesHelper # rubocop:disable Metrics/ModuleLength
     def add_check_if_single(count)
       if count == 1
         { checked: true }
@@ -76,7 +76,29 @@ module Admin
       Enterprise::SELLS.map { |s| [I18n.t(s, scope:), s] }
     end
 
+    # Group tag rules per rule.preferred_customer_tags
+    def tag_groups(tag_rules)
+      tag_rules.each_with_object([]) do |tag_rule, tag_groups|
+        tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.split(","))
+
+        if tag_group[:rules].blank?
+          tag_groups << tag_group
+          tag_group[:position] = tag_groups.count
+        end
+
+        tag_group[:rules] << tag_rule
+      end
+    end
+
     private
+
+    def find_match(tag_groups, tags)
+      tag_groups.each do |tag_group|
+        return tag_group if tag_group[:tags].length == tags.length &&
+                            (tag_group[:tags] & tags) == tag_group[:tags]
+      end
+      { tags:, rules: [] }
+    end
 
     def build_enterprise_side_menu_items(is_shop:, show_options: ) # rubocop:disable Metrics/MethodLength
       [

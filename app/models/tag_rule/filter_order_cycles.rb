@@ -14,6 +14,10 @@ class TagRule::FilterOrderCycles < TagRule
     preferred_matched_order_cycles_visibility != "visible"
   end
 
+  def tags
+    preferred_exchange_tags
+  end
+
   private
 
   def exchange_for(order_cycle)

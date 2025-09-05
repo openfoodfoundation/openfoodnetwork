@@ -13,4 +13,8 @@ class TagRule::FilterPaymentMethods < TagRule
   def reject_matched?
     preferred_matched_payment_methods_visibility != "visible"
   end
+
+  def tags
+    preferred_payment_method_tags
+  end
 end

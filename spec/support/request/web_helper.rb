@@ -102,10 +102,11 @@ module WebHelper
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
 
-  def fill_in_tag(tag_name, selector = "tags-input .tags input")
+  def fill_in_tag(tag_name, selector = ".tags-input .tags input")
     expect(page).to have_selector selector
     find(:css, selector).click
     find(:css, selector).set "#{tag_name}\n"
+    find(:css, selector).send_keys :enter
     expect(page).to have_selector ".tag-list .tag-item span", text: tag_name
   end
 
