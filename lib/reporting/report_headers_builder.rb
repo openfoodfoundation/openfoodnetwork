@@ -4,9 +4,8 @@ module Reporting
   class ReportHeadersBuilder
     attr_reader :report
 
-    def initialize(report, current_user)
+    def initialize(report)
       @report = report
-      @current_user = current_user
     end
 
     def table_headers

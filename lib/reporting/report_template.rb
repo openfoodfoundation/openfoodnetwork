@@ -114,11 +114,11 @@ module Reporting
     end
 
     def rows_builder
-      @rows_builder ||= ReportRowsBuilder.new(self, @user)
+      @rows_builder ||= ReportRowsBuilder.new(self)
     end
 
     def headers_builder
-      @headers_builder ||= ReportHeadersBuilder.new(self, @user)
+      @headers_builder ||= ReportHeadersBuilder.new(self)
     end
 
     def ruler

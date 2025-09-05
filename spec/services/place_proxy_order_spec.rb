@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe PlaceProxyOrder do
-  include ActiveSupport::Testing::TimeHelpers
-
   subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }
 
   let(:proxy_order) { create(:proxy_order, order:) }
