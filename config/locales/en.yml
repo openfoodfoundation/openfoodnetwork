@@ -1900,6 +1900,7 @@ en:
         display: Display
         summary_row: Summary Row
         header_row: Header Row
+        include_metadata: Include Metadata
         raw_data: Raw Data
         formatted_data: Formatted Data
       packing:

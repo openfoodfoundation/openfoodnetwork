@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'csv'
 require 'spreadsheet_architect'
 
 module Reporting
@@ -40,6 +41,12 @@ module Reporting
       @report.table_rows || []
     end
 
+    def metadata_headers
+      return [] unless include_metadata?
+
+      Reporting::ReportMetadataBuilder.new(@report, @report.try(:user)).rows
+    end
+
     def as_json(_context_controller = nil)
       @report.rows.map(&:to_h).as_json
     end
@@ -61,7 +68,11 @@ module Reporting
     end
 
     def to_csv
-      SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      base = SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
+      meta = metadata_headers
+      return base if meta.empty?
+
+      CSV.generate { |csv| meta.each { |row| csv << row } } + base
     end
 
     def to_xlsx
@@ -74,6 +85,21 @@ module Reporting
     end
 
     private
+
+    def rendering_options
+      @rendering_options ||= begin
+        opts =
+          if @report.respond_to?(:params) && @report.params.is_a?(Hash)
+            @report.params[:rendering_options]
+          end
+        opts ||= {}
+        opts.respond_to?(:with_indifferent_access) ? opts.with_indifferent_access : opts
+      end
+    end
+
+    def include_metadata?
+      ActiveModel::Type::Boolean.new.cast(rendering_options[:include_metadata])
+    end
 
     def spreadsheets_options
       {
