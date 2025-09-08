@@ -3,48 +3,59 @@
 require 'spec_helper'
 
 RSpec.describe TagRule::FilterPaymentMethods do
-  let!(:tag_rule) { build_stubbed(:filter_payment_methods_tag_rule) }
+  let(:tag_rule) {
+    build(:filter_payment_methods_tag_rule, preferred_payment_method_tags: payment_method_tags)
+  }
+  let(:payment_method_tags) { "" }
 
   describe "#tags" do
-    it "return the payment method tags" do
-      tag_rule = create(:filter_payment_methods_tag_rule, preferred_payment_method_tags: "my_tag")
+    let(:payment_method_tags) { "my_tag" }
 
+    it "return the payment method tags" do
       expect(tag_rule.tags).to eq("my_tag")
     end
   end
 
-  describe "determining whether tags match for a given payment method" do
+  describe "#tag_match?" do
     context "when the payment method is nil" do
       it "returns false" do
-        expect(tag_rule.__send__(:tags_match?, nil)).to be false
+        expect(tag_rule.tags_match?(nil)).to be false
       end
     end
 
     context "when the payment method is not nil" do
-      let(:payment_method) { create(:payment_method, tag_list: ["member", "local", "volunteer"]) }
+      let(:payment_method) { build(:payment_method, tag_list: ["member", "local", "volunteer"]) }
 
       context "when the rule has no preferred payment method tags specified" do
-        before { allow(tag_rule).to receive(:preferred_payment_method_tags) { "" } }
-        it { expect(tag_rule.__send__(:tags_match?, payment_method)).to be false }
+        it { expect(tag_rule.tags_match?(payment_method)).to be false }
       end
 
       context "when the rule has preferred customer tags specified that match ANY customer tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_payment_method_tags) {
-                               "wholesale,some_tag,member"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, payment_method)).to be true }
+        let(:payment_method_tags) { "wholesale,some_tag,member" }
+
+        it { expect(tag_rule.tags_match?(payment_method)).to be true }
       end
 
       context "when the rule has preferred customer tags specified that match NO customer tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_payment_method_tags) {
-                               "wholesale,some_tag,some_other_tag"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, payment_method)).to be false }
+        let(:payment_method_tags) { "wholesale,some_tag,some_other_tag" }
+
+        it { expect(tag_rule.tags_match?(payment_method)).to be false }
       end
+    end
+  end
+
+  describe "#reject_matched?" do
+    it "return false with default visibility (visible)" do
+      expect(tag_rule.reject_matched?).to be false
+    end
+
+    context "when visiblity is set to hidden" do
+      let(:tag_rule) {
+        build(:filter_payment_methods_tag_rule,
+              preferred_matched_payment_methods_visibility: "hidden")
+      }
+
+      it { expect(tag_rule.reject_matched?).to be true }
     end
   end
 end

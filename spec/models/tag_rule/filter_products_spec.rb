@@ -3,20 +3,23 @@
 require 'spec_helper'
 
 RSpec.describe TagRule::FilterProducts do
-  let!(:tag_rule) { build_stubbed(:filter_products_tag_rule, preferred_variant_tags: "my_tag") }
+  let(:tag_rule) { build(:filter_products_tag_rule, preferred_variant_tags: variant_tags) }
+  let(:variant_tags) { "" }
 
   describe "#tags" do
-    it "return the variants tags" do
-      tag_rule = create(:filter_products_tag_rule, preferred_variant_tags: "my_tag")
+    let(:variant_tags) { "my_tag" }
 
+    it "return the variants tags" do
       expect(tag_rule.tags).to eq("my_tag")
     end
   end
 
   describe "determining whether tags match for a given variant" do
+    let(:variant_tags) { "my_tag" }
+
     context "when the variant is nil" do
       it "returns false" do
-        expect(tag_rule.__send__(:tags_match?, nil)).to be false
+        expect(tag_rule.tags_match?(nil)).to be false
       end
     end
 
@@ -24,27 +27,34 @@ RSpec.describe TagRule::FilterProducts do
       let(:variant_object) { { "tag_list" => ["member", "local", "volunteer"] } }
 
       context "when the rule has no preferred variant tags specified" do
-        before { allow(tag_rule).to receive(:preferred_variant_tags) { "" } }
-        it { expect(tag_rule.__send__(:tags_match?, variant_object)).to be false }
+        it { expect(tag_rule.tags_match?(variant_object)).to be false }
       end
 
       context "when the rule has preferred variant tags specified that match ANY variant tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_variant_tags) {
-                               "wholesale,some_tag,member"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, variant_object)).to be true }
+        let(:variant_tags) { "wholesale,some_tag,member" }
+
+        it { expect(tag_rule.tags_match?(variant_object)).to be true }
       end
 
       context "when the rule has preferred variant tags specified that match NO variant tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_variant_tags) {
-                               "wholesale,some_tag,some_other_tag"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, variant_object)).to be false }
+        let(:variant_tags) { "wholesale,some_tag,some_other_tag" }
+
+        it { expect(tag_rule.tags_match?(variant_object)).to be false }
       end
+    end
+  end
+
+  describe "#reject_matched?" do
+    it "return false with default visibility (visible)" do
+      expect(tag_rule.reject_matched?).to be false
+    end
+
+    context "when visiblity is set to hidden" do
+      let(:tag_rule) {
+        build(:filter_products_tag_rule, preferred_matched_variants_visibility: "hidden")
+      }
+
+      it { expect(tag_rule.reject_matched?).to be true }
     end
   end
 end
