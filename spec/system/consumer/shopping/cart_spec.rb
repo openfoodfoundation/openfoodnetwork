@@ -241,8 +241,8 @@ RSpec.describe "full-page cart" do
                                                 'Please update the selected quantities.'
 
             # "Continue Shopping" and "Checkout" buttons are disabled
-            expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
-            expect(page).to have_selector "a#checkout-link[disabled=disabled]"
+            expect(page).to have_selector "a.continue-shopping[aria-disabled=true]"
+            expect(page).to have_selector "a#checkout-link[aria-disabled=true]"
 
             # Quantity field clearly marked as invalid and "Update" button is not highlighted
             expect(page).to have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
@@ -260,8 +260,8 @@ RSpec.describe "full-page cart" do
             click_button 'Update'
 
             # "Continue Shopping" and "Checkout" buttons are not disabled after cart is updated
-            expect(page).not_to have_selector "a.continue-shopping[disabled=disabled]"
-            expect(page).not_to have_selector "a#checkout-link[disabled=disabled]"
+            expect(page).not_to have_selector "a.continue-shopping[aria-disabled=true]"
+            expect(page).not_to have_selector "a#checkout-link[aria-disabled=true]"
           end
         end
       end

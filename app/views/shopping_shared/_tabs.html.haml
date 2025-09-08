@@ -10,8 +10,8 @@
         .columns.large-4.show-for-large-up
           = render partial: "shopping_shared/order_cycles"
     - shop_tabs.each do |tab|
-      %div{id: "#{tab[:name]}_panel", "data-tabs-and-panels-target": "panel #{'default' if tab[:default]} #{'shop' if tab[:shop]}" } 
-        .page-view
+      %div{id: "#{tab[:name]}_panel", "data-tabs-and-panels-target": "panel #{'default' if tab[:default]} #{'shop' if tab[:shop]}" }
+        .page-view{ class: shop_tab_class(tab[:name]) }
           - if tab[:custom]
             = render "shopping_shared/tabs/custom"
           - else
