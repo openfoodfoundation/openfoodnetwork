@@ -7,9 +7,8 @@ module Reporting
 
     attr_reader :report
 
-    def initialize(report, current_user)
+    def initialize(report)
       @report = report
-      @current_user = current_user
     end
 
     # Compute the query result item into a result row
