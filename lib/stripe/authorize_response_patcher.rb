@@ -27,9 +27,9 @@ module Stripe
       next_action_type = next_action["type"]
       return unless %w(authorize_with_url redirect_to_url).include?(next_action_type)
 
-      url = next_action[next_action_type]["url"]
-      host = URI(url).host
-      url if url.match(%r{https?://\S+}) && host.match?(/\S?stripe.com\Z/)
+      url = URI(next_action[next_action_type]["url"])
+      # Check the URL is from a stripe subdomain
+      url.to_s if url.is_a?(URI::HTTPS) && url.host.match?(/\.stripe.com\Z/)
     end
 
     # This field is used because the Spree code recognizes and stores it

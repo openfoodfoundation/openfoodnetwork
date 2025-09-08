@@ -37,7 +37,7 @@ RSpec.describe Stripe::AuthorizeResponsePatcher do
             "status" => "requires_source_action",
             "next_source_action" => {
               "type" => "authorize_with_url",
-              "authorize_with_url" => { "url" => "https://www.stripe.com.malicious.org/authorize" }
+              "authorize_with_url" => { "url" => "https://www.evil-stripe.com.malicious.org/authorize" }
             }
           }
         }
