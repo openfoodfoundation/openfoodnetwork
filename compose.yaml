@@ -1,12 +1,10 @@
 services:
   db:
-    image: postgres:10.19
+    image: postgres:16
     restart: always
     environment:
       POSTGRES_PASSWORD: f00d
       POSTGRES_USER: ofn
-    ports:
-      - 5432:5432
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     healthcheck:
