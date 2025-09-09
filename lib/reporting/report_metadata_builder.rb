@@ -27,12 +27,12 @@ module Reporting
     def title_rows
       type = params[:report_type]
       sub  = params[:report_subtype]
-      return [] unless present?(type)
+      return [] unless type.present?
 
       label = I18n.t("admin.reports.metadata.report_title")
       type_name = I18n.t("admin.reports.#{type}.name")
       sub_name = 
-        if present?(sub)
+        if sub.present?
           sub.to_s.tr('_', ' ').titleize
         end
       title = [type_name, sub_name].compact.join(' - ')
@@ -50,7 +50,7 @@ module Reporting
     end
 
     def first_present(hash, keys)
-      keys.map { |k| hash[k] }.find { |v| present?(v) }
+      keys.map { |k| hash[k] }.find { |v| v.present? }
     end
 
     def indifferent_ransack
@@ -65,7 +65,7 @@ module Reporting
     def other_filter_rows
       q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
       q.each_with_object([]) do |(k, v), rows|
-        next unless present?(v)
+        next unless v.present?
 
         rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(', ') : v.to_s]
       end
@@ -73,10 +73,6 @@ module Reporting
 
     def params
       (report.params || {}).with_indifferent_access
-    end
-
-    def present?(value)
-      value.respond_to?(:present?) ? value.present? : !!value
     end
   end
 end
