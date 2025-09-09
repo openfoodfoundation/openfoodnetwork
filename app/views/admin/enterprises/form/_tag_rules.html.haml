@@ -10,7 +10,7 @@
         .no_tags
           = t('.no_tags_yet')
 
-      = render 'admin/enterprises/form/tag_rules/default_rules', f: f, current_rule_index: current_rule_index
+      = render 'admin/enterprises/form/tag_rules/default_rules', f:, current_rule_index: 
 
       #customer-tag-rule
         - tag_groups(rules).each_with_index do |group, group_index|

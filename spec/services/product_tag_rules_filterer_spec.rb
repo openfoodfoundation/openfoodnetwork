@@ -72,7 +72,7 @@ RSpec.describe ProductTagRulesFilterer do
           expect(filterer.call).not_to include(variant_hidden_by_rule.variant)
         end
 
-        context "with mutiple conflicting rules" do
+        context "with multiple conflicting rules" do
           it "applies the hide rule" do
             # Customer has show rule tag and hide rule tag
             customer.update_attribute(:tag_list,
@@ -117,7 +117,7 @@ RSpec.describe ProductTagRulesFilterer do
             expect(filterer.call).to include(variant_hidden_by_default.variant)
           end
 
-          context "with mutiple conflicting rules applying to same variant" do
+          context "with multiple conflicting rules applying to same variant" do
             it "applies the show rule" do
               # customer has show rule and hide rule tag
               customer.update_attribute(:tag_list,
