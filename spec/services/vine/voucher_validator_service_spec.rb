@@ -448,7 +448,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         }
 
         it "adds a specific error message" do
-          mock_api_exception(type: Faraday::BadRequestError, status: 400, body: data)
+          mock_api_exception(type: Faraday::BadRequestError, status: 409, body: data)
 
           validate_voucher_service.validate
 

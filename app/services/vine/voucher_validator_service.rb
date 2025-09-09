@@ -47,7 +47,7 @@ module Vine
     end
 
     def handle_errors(response)
-      if response[:status] == 400
+      if [400, 409].include?(response[:status])
         message = response[:body] && JSON.parse(response[:body]).dig("meta", "message")
         key = VINE_ERRORS.fetch(message, :invalid_voucher)
         errors[:invalid_voucher] = I18n.t("vine_voucher_validator_service.errors.#{key}")

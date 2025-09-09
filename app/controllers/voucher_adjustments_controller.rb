@@ -90,11 +90,13 @@ class VoucherAdjustmentsController < BaseController
       voucher_code: voucher_params[:voucher_code], enterprise: @order.distributor
     )
     voucher = vine_voucher_validator.validate
+    errors = vine_voucher_validator.errors
 
-    return nil if vine_voucher_validator.errors[:not_found_voucher].present?
+    return nil if errors[:not_found_voucher].present?
 
-    if vine_voucher_validator.errors.present?
-      @order.errors.add(:voucher_code, I18n.t('checkout.errors.add_voucher_error'))
+    if errors.present?
+      message = errors[:invalid_voucher] || I18n.t('checkout.errors.add_voucher_error')
+      @order.errors.add(:voucher_code, message)
       return nil
     end
 
