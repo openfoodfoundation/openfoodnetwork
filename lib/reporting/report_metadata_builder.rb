@@ -10,12 +10,14 @@ module Reporting
     end
 
     def rows
+      return [] unless include_metadata_param?
+
       rows = []
       rows.concat(title_rows)
       rows.concat(date_range_rows)
       rows.concat(printed_rows)
       rows.concat(other_filter_rows)
-      rows << [] # spacer before the sheet
+      rows << [] if rows.any? # spacer only if something was added
       rows
     end
 
@@ -24,17 +26,22 @@ module Reporting
     DATE_FROM_KEYS = %i[completed_at_gt created_at_gt updated_at_gt].freeze
     DATE_TO_KEYS   = %i[completed_at_lt created_at_lt updated_at_lt].freeze
 
+    def include_metadata_param?
+      ActiveModel::Type::Boolean.new.cast(params.dig(:rendering_options, :include_metadata))
+    end
+
     def title_rows
       type = params[:report_type]
       sub  = params[:report_subtype]
       return [] unless type.present?
 
-      label = I18n.t("admin.reports.metadata.report_title")
-      type_name = I18n.t("admin.reports.#{type}.name")
-      sub_name = 
-        if sub.present?
-          sub.to_s.tr('_', ' ').titleize
-        end
+      label     = I18n.t("admin.reports.metadata.report_title", default: "Report Title")
+      type_name = I18n.t("admin.reports.#{type}.name",
+                         default: I18n.t("admin.reports.#{type}", default: type.to_s.tr('_', ' ').titleize))
+
+      # For now: translate the title, titleize the sub if present
+      sub_name = sub.present? ? sub.to_s.tr('_', ' ').titleize : nil
+
       title = [type_name, sub_name].compact.join(' - ')
       [[label, title]]
     end
@@ -45,12 +52,12 @@ module Reporting
       to   = first_present(q, DATE_TO_KEYS)
       return [] unless from || to
 
-      label = I18n.t("date_range")
-      [[label, [from, to].compact.join(' – ')]]
+      label = I18n.t("date_range", default: "Date Range")
+      [[label, [from, to].compact.join(' – ')]] # en dash
     end
 
     def first_present(hash, keys)
-      keys.map { |k| hash[k] }.find { |v| v.present? }
+      keys.map { |k| hash[k] }.find(&:present?)
     end
 
     def indifferent_ransack
@@ -59,14 +66,13 @@ module Reporting
 
     def printed_rows
       tz = defined?(Time.zone) && Time.zone ? Time.zone : Time
-      [['Printed', tz.now.strftime('%Y-%m-%d %H:%M:%S %Z')]]
+      [[I18n.t("printed", default: "Printed"), tz.now.strftime('%Y-%m-%d %H:%M:%S %Z')]]
     end
 
     def other_filter_rows
       q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
       q.each_with_object([]) do |(k, v), rows|
         next unless v.present?
-
         rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(', ') : v.to_s]
       end
     end
