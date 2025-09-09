@@ -25,10 +25,6 @@ module Reporting
             ordered_by(ordering_fields)
         end
 
-        def metadata_option_opt_in
-          true
-        end
-
         def columns_format
           { quantity: :quantity }
         end
