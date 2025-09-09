@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-# This is used to test non implemented methods
-class TestTagRule < TagRule; end
-
 RSpec.describe TagRule do
   describe "validations" do
     it "requires a enterprise" do
@@ -13,7 +10,7 @@ RSpec.describe TagRule do
   end
 
   describe '#tags' do
-    subject(:rule) { TestTagRule.new }
+    subject(:rule) { Class.new(TagRule).new }
 
     it "raises not implemented error" do
       expect{ rule.tags }.to raise_error(NotImplementedError, 'please use concrete TagRule')
