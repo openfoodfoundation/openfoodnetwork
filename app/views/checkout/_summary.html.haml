@@ -11,7 +11,7 @@
         = @order.shipping_method.name
         %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
       .two-columns
-        = render "delivery_details" if @order.shipping_method.delivery? || feature?(:hub_address)
+        = render "delivery_details" if @order.shipping_method.delivery?
         - if @order.shipping_method.description.present?
           %div
             .summary-subtitle
