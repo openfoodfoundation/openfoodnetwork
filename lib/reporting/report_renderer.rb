@@ -34,7 +34,10 @@ module Reporting
     end
 
     def table_headers
-      @report.table_headers || []
+      base = @report.table_headers || []
+      return base unless include_metadata?
+
+      [*metadata_headers, base]
     end
 
     def table_rows
@@ -68,11 +71,7 @@ module Reporting
     end
 
     def to_csv
-      base = SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
-      meta = metadata_headers
-      return base if meta.empty?
-
-      CSV.generate { |csv| meta.each { |row| csv << row } } + base
+      SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
     end
 
     def to_xlsx
