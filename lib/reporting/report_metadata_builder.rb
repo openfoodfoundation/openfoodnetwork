@@ -29,8 +29,14 @@ module Reporting
       sub  = params[:report_subtype]
       return [] unless present?(type)
 
-      title = [type, sub].compact.map { |s| s.to_s.tr('_', ' ').titleize }.join(' – ')
-      [['Report Title', title]]
+      label = I18n.t('reports.metadata.report_title')
+      type_name = I18n.t('reports.#{type}.name')
+      sub_name = 
+        if present?(sub)
+          I18n.t('reports.#{type}.#{sub}.name')
+        end
+      title = [type_name, sub_name].compact.join(' - ')
+      [[label, title]]
     end
 
     def date_range_rows
