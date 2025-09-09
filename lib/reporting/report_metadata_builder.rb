@@ -29,11 +29,11 @@ module Reporting
       sub  = params[:report_subtype]
       return [] unless present?(type)
 
-      label = I18n.t('reports.metadata.report_title')
-      type_name = I18n.t('reports.#{type}.name')
+      label = I18n.t("admin.reports.metadata.report_title")
+      type_name = I18n.t("admin.reports.#{type}.name")
       sub_name = 
         if present?(sub)
-          I18n.t('reports.#{type}.#{sub}.name')
+          sub.to_s.tr('_', ' ').titleize
         end
       title = [type_name, sub_name].compact.join(' - ')
       [[label, title]]
@@ -45,7 +45,8 @@ module Reporting
       to   = first_present(q, DATE_TO_KEYS)
       return [] unless from || to
 
-      [['Date range', [from, to].compact.join(' – ')]]
+      label = I18n.t("date_range")
+      [[label, [from, to].compact.join(' – ')]]
     end
 
     def first_present(hash, keys)
