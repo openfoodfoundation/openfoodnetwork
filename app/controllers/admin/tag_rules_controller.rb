@@ -19,7 +19,7 @@ module Admin
       end
 
       respond_with do |format|
-        return format.turbo_stream { render :new, status: }
+        format.turbo_stream { render :new, status: }
       end
     end
 

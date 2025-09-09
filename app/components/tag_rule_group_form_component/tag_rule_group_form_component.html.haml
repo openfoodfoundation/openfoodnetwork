@@ -21,7 +21,7 @@
           = t('components.tag_rule_group_form.no_rules_yet')
       - else
         - group[:rules].each do |rule|
-          -rule_index += 1
+          - rule_index += 1
           = render(TagRuleFormComponent.new(rule: rule,
             index: rule_index,
             customer_tags: group[:tags],
