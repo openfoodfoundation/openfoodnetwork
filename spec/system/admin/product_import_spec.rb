@@ -672,7 +672,7 @@ RSpec.describe "Product Import" do
       within "#product_#{carrots.id}" do
         expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
                                    text: "Carrots")
-        expect(page).to have_input("[products][2][variants_attributes][][0][unit_to_display]",
+        expect(page).to have_input("[products][2][variants_attributes][0][unit_to_display]",
                                    text: "1 lb")
         within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
           expect(page).to have_content("5")
