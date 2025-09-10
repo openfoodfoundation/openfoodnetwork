@@ -66,7 +66,9 @@ module DfcProvider
     end
 
     def available_platforms
-      PLATFORM_IDS.keys.select(&method(:feature?))
+      PLATFORM_IDS.keys.select do |platform|
+        feature?(platform, current_user)
+      end
     end
 
     def platform(key)
