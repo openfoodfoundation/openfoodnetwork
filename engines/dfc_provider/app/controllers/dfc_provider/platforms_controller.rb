@@ -6,6 +6,7 @@ module DfcProvider
     #   local ID => semantic ID
     PLATFORM_IDS = {
       'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
+      'cqcm-stg' => "https://api.proxy-stg.cqcm.startinblox.com/profile",
     }.freeze
 
     prepend_before_action :move_authenticity_token
@@ -65,7 +66,9 @@ module DfcProvider
     end
 
     def available_platforms
-      PLATFORM_IDS.keys.select(&method(:feature?))
+      PLATFORM_IDS.keys.select do |platform|
+        feature?(platform, current_user)
+      end
     end
 
     def platform(key)
