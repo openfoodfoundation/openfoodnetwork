@@ -35,7 +35,7 @@ module Reporting
 
     def table_headers
       base = @report.table_headers || []
-      return base unless include_metadata?
+      return base unless display_metadata_rows?
 
       [*metadata_headers, base]
     end
@@ -45,7 +45,7 @@ module Reporting
     end
 
     def metadata_headers
-      return [] unless include_metadata?
+      return [] unless display_metadata_rows?
 
       Reporting::ReportMetadataBuilder.new(@report, @report.try(:user)).rows
     end
@@ -96,8 +96,8 @@ module Reporting
       end
     end
 
-    def include_metadata?
-      ActiveModel::Type::Boolean.new.cast(rendering_options[:include_metadata])
+    def display_metadata_rows?
+      ActiveModel::Type::Boolean.new.cast(rendering_options[:display_metadata_rows])
     end
 
     def spreadsheets_options

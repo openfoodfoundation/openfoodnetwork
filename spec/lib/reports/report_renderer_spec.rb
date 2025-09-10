@@ -48,7 +48,7 @@ RSpec.describe Reporting::ReportRenderer do
     double(
       'Report',
       params: {
-        include_metadata: true,
+        display_metadata_rows: true,
         report_type: :order_cycle_customer_totals,
         report_subtype: 'by_distributor'
       },
@@ -64,13 +64,13 @@ RSpec.describe Reporting::ReportRenderer do
   let(:renderer) { described_class.new(meta_report) }
 
   describe '#metadata_headers' do
-    it 'returns [] when include_metadata? is false' do
-      allow(renderer).to receive(:include_metadata?).and_return(false)
+    it 'returns [] when display_metadata_rows? is false' do
+      allow(renderer).to receive(:display_metadata_rows?).and_return(false)
       expect(renderer.metadata_headers).to eq([])
     end
 
-    it 'builds rows via ReportMetadataBuilder when include_metadata? is true' do
-      allow(renderer).to receive(:include_metadata?).and_return(true)
+    it 'builds rows via ReportMetadataBuilder when display_metadata_rows? is true' do
+      allow(renderer).to receive(:display_metadata_rows?).and_return(true)
       rows = renderer.metadata_headers
 
       labels = rows.map(&:first)
@@ -85,7 +85,7 @@ end
 RSpec.describe Reporting::ReportRenderer do
   include ActiveSupport::Testing::TimeHelpers
 
-  it 'prepends metadata rows to CSV when include_metadata is true' do
+  it 'prepends metadata rows to CSV when display_metadata_rows is true' do
     from_key = Reporting::ReportMetadataBuilder::DATE_FROM_KEYS.first
     to_key   = Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first
 
@@ -98,7 +98,7 @@ RSpec.describe Reporting::ReportRenderer do
       table_headers: data.first.keys,
       table_rows: data.map(&:values),
       params: {
-        include_metadata: true,
+        display_metadata_rows: true,
         report_type: :order_cycle_customer_totals,
         report_subtype: 'by_distributor',
         report_format: 'csv' # ensure CSV path
@@ -113,8 +113,8 @@ RSpec.describe Reporting::ReportRenderer do
 
     renderer = described_class.new(meta_report)
 
-    # Force the metadata branch, regardless of how include_metadata? is implemented
-    allow(renderer).to receive(:include_metadata?).and_return(true)
+    # Force the metadata branch, regardless of how display_metadata_rows? is implemented
+    allow(renderer).to receive(:display_metadata_rows?).and_return(true)
 
     # Provide deterministic metadata rows so we definitely hit the CSV.generate { ... } + base code
     title   = 'Order Cycle Customer Totals – By Distributor'

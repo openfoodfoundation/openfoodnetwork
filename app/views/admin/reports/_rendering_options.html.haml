@@ -15,9 +15,9 @@
       .alpha.two.columns= label_tag nil, t(".display")
       .omega.fourteen.columns
         %span.inline-checkbox
-          - checked = ActiveModel::Type::Boolean.new.cast(@rendering_options.options[:include_metadata])
-          = check_box_tag :include_metadata, "1", checked, id: "include_metadata"
-          = label_tag :include_metadata, t(".include_metadata")
+          - checked = ActiveModel::Type::Boolean.new.cast(@rendering_options.options[:display_metadata_rows])
+          = check_box_tag :display_metadata_rows, "1", checked, id: "display_metadata_rows"
+          = label_tag :display_metadata_rows, t(".display_metadata_rows")
         - if @report.header_option?
           %span.inline-checkbox{ style: "margin-right: 1rem;" }
             = check_box_tag :display_header_row, true, @rendering_options.options[:display_header_row]
