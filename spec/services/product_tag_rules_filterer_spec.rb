@@ -73,7 +73,7 @@ RSpec.describe ProductTagRulesFilterer do
         end
 
         context "with multiple conflicting rules" do
-          it "applies the hide rule" do
+          it "applies the show rule" do
             # Customer has show rule tag and hide rule tag
             customer.update_attribute(:tag_list,
                                       [hide_rule.preferred_customer_tags,
@@ -81,17 +81,17 @@ RSpec.describe ProductTagRulesFilterer do
             # Variant has show rule tag and hide rule tag
             variant_hidden_by_rule.update_attribute(:tag_list,
                                                     [hide_rule.preferred_variant_tags,
-                                                     hide_rule.preferred_variant_tags,])
+                                                     show_rule.preferred_variant_tags])
             hide_rule.update_attribute(:priority, 1)
             show_rule.update_attribute(:priority, 2)
 
-            expect(filterer.call).not_to include(variant_hidden_by_rule.variant)
+            expect(filterer.call).to include(variant_hidden_by_rule.variant)
 
             # Re order rule
             hide_rule.update_attribute(:priority, 2)
             show_rule.update_attribute(:priority, 1)
 
-            expect(filterer.call).not_to include(variant_hidden_by_rule.variant)
+            expect(filterer.call).to include(variant_hidden_by_rule.variant)
           end
         end
       end
