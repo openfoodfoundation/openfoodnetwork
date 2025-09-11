@@ -15,7 +15,7 @@
       .alpha.two.columns= label_tag nil, t(".display")
       .omega.fourteen.columns
         - if @report.metadata_option?
-          %span.inline-checkbox
+          %span.inline-checkbox{ style: "margin-right: 1rem;" }
             = check_box_tag :display_metadata_rows, true, @rendering_options.options[:display_metadata_rows]
             = label_tag :display_metadata_rows, t(".metadata_rows")
         - if @report.header_option?
