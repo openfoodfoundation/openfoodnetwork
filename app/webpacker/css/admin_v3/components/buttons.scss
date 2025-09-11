@@ -182,6 +182,10 @@ a.button {
   text-decoration: none;
 }
 
+a[aria-disabled] {
+  pointer-events: none;
+}
+
 .button.disruptive::before {
   margin-right: 3px;
 

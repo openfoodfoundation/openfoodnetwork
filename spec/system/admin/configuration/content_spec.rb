@@ -55,4 +55,21 @@ RSpec.describe "
     expect(page).to have_link("User Guide", href: "http://www.openfoodnetwork.org/platform/user-guide/")
     expect(find_link("User Guide")[:target]).to eq("_blank")
   end
+
+  it "sets home page alert message, supporting HTML formatting" do
+    fill_in "home_page_alert_html", with: '<h6>Click me: </h6>' \
+                                          '<a href="http://localhost/shops/">' \
+                                          '<strong>Bold hyperlink</strong></a>'
+    click_button "Update"
+    expect(page).to have_content "Your content has been successfully updated!"
+
+    visit root_path
+
+    within ".page-alert" do
+      expect(page).to have_content "Click me: "
+      expect(page).to have_selector "h6", text: "Click me: "
+      expect(page).to have_link "Bold hyperlink", href: "http://localhost/shops/"
+      expect(page).to have_selector "a strong", text: "Bold hyperlink"
+    end
+  end
 end

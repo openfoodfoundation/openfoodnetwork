@@ -640,7 +640,7 @@ en_CA:
     product: Product
     quantity: Quantity
     schedule: Schedule
-    shipping: Shipping
+    shipping: Shipping/Pickup
     shipping_method: Shipping/Pick-up Method
     shop: Shop
     sku: SKU
@@ -1448,7 +1448,10 @@ en_CA:
         owner: Owner
         producer: Producer
         sells_options:
+          unspecified: unspecified
           none: none
+          own: own
+          any: any
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -2359,7 +2362,7 @@ en_CA:
   checkout_send: Place order now
   checkout_your_order: Your order
   checkout_cart_total: Cart total
-  checkout_shipping_price: Shipping
+  checkout_shipping_price: Shipping/Pickup
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"

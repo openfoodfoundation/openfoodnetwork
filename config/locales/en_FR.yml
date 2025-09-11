@@ -1448,7 +1448,10 @@ en_FR:
         owner: Owner
         producer: Producer
         sells_options:
+          unspecified: unspecified
           none: none
+          own: own
+          any: any
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN

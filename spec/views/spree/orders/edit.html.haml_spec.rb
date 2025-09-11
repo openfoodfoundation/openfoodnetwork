@@ -7,6 +7,7 @@ RSpec.describe "spree/orders/edit.html.haml" do
   helper ShopHelper
   helper ApplicationHelper
   helper CheckoutHelper
+  helper LinkHelper
   helper SharedHelper
   helper FooterLinksHelper
   helper MarkdownHelper
