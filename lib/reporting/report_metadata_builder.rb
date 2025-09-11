@@ -33,11 +33,12 @@ module Reporting
     def title_rows
       type = params[:report_type]
       sub  = params[:report_subtype]
-      return [] unless type.present?
+      return [] if type.blank?
 
       label     = I18n.t("admin.reports.metadata.report_title", default: "Report Title")
       type_name = I18n.t("admin.reports.#{type}.name",
-                         default: I18n.t("admin.reports.#{type}", default: type.to_s.tr('_', ' ').titleize))
+                         default: I18n.t("admin.reports.#{type}",
+                                         default: type.to_s.tr('_', ' ').titleize))
 
       # For now: translate the title, titleize the sub if present
       sub_name = sub.present? ? sub.to_s.tr('_', ' ').titleize : nil
@@ -72,7 +73,8 @@ module Reporting
     def other_filter_rows
       q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
       q.each_with_object([]) do |(k, v), rows|
-        next unless v.present?
+        next if v.blank?
+
         rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(', ') : v.to_s]
       end
     end

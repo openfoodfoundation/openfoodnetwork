@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'active_support/testing/time_helpers'
 
 RSpec.describe Reporting::ReportMetadataBuilder do
-  include ActiveSupport::Testing::TimeHelpers
-
   let(:from_key) { described_class::DATE_FROM_KEYS.first }
   let(:to_key)   { described_class::DATE_TO_KEYS.first }
 

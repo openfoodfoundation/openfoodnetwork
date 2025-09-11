@@ -25,6 +25,10 @@ module Reporting
       @report.params[:report_format].in?([nil, '', 'pdf'])
     end
 
+    def display_metadata_rows?
+      @report.params[:display_metadata_rows].present? && raw_render?
+    end
+
     def display_header_row?
       @report.params[:display_header_row].present? && !raw_render?
     end
@@ -94,10 +98,6 @@ module Reporting
         opts ||= {}
         opts.respond_to?(:with_indifferent_access) ? opts.with_indifferent_access : opts
       end
-    end
-
-    def display_metadata_rows?
-      ActiveModel::Type::Boolean.new.cast(rendering_options[:display_metadata_rows])
     end
 
     def spreadsheets_options
