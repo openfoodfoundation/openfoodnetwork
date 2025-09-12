@@ -60,7 +60,7 @@
         %th.align-left.col-unit.with-input= t('admin.products_page.columns.unit')
         %th.align-left.col-price.with-input= t('admin.products_page.columns.price')
         = render partial: 'spree/admin/shared/stimulus_sortable_header',
-            locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'on_hand asc' }
+            locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'name asc' }
         %th.align-left.col-producer= t('admin.products_page.columns.producer')
         %th.align-left.col-category= t('admin.products_page.columns.category')
         %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
