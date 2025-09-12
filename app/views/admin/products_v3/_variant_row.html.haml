@@ -84,7 +84,7 @@
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
-  = render(VerticalEllipsisMenu::Component.new) do
+  = render(VerticalEllipsisMenuComponent.new) do
     - if variant.persisted?
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
       - if variant.product.variants.size > 1

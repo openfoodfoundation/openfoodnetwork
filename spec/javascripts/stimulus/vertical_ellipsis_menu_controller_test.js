@@ -3,7 +3,7 @@
  */
 
 import { Application } from "stimulus";
-import vertical_ellipsis_menu_controller from "../../../app/components/vertical_ellipsis_menu/component_controller";
+import vertical_ellipsis_menu_controller from "../../../app/components/vertical_ellipsis_menu_component/vertical_ellipsis_menu_controller";
 
 describe("VerticalEllipsisMenuController test", () => {
   beforeAll(() => {
@@ -30,7 +30,6 @@ describe("VerticalEllipsisMenuController test", () => {
     expect(content.classList.contains("show")).toBe(true);
   });
 
-
   it("remove show class from content when clicking button", () => {
     button.click();
     expect(content.classList.contains("show")).toBe(true);
@@ -38,7 +37,6 @@ describe("VerticalEllipsisMenuController test", () => {
     expect(content.classList.contains("show")).toBe(false);
   });
 
-  
   it("remove show class from content when clicking outside", () => {
     button.click();
     expect(content.classList.contains("show")).toBe(true);

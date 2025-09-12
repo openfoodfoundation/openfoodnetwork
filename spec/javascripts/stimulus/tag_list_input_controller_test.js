@@ -8,28 +8,28 @@ import tag_list_input_controller from "../../../app/components/tag_list_input_co
 describe("TagListInputController", () => {
   beforeAll(() => {
     const application = Application.start();
-    application.register("tag-list-input-component--tag-list-input", tag_list_input_controller);
+    application.register("tag-list-input", tag_list_input_controller);
   });
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="tag-list-input-component--tag-list-input">
+      <div data-controller="tag-list-input">
         <input 
           value="tag 1,tag 2,tag 3" 
-          data-tag-list-input-component--tag-list-input-target="tagList" 
+          data-tag-list-input-target="tagList" 
           type="hidden" 
           name="variant_tag_list" id="variant_tag_list"
         >
         <div class="tags-input">
           <div class="tags">
-            <ul class="tag-list" data-tag-list-input-component--tag-list-input-target="list">
-              <template data-tag-list-input-component--tag-list-input-target="template">
+            <ul class="tag-list" data-tag-list-input-target="list">
+              <template data-tag-list-input-target="template">
                 <li class="tag-item">
                   <div class="tag-template">
                   <span></span>
                   <a 
                     class="remove-button" 
-                    data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                    data-action="click->tag-list-input#removeTag"
                   >✖</a>
                   </div>
                 </li>
@@ -39,7 +39,7 @@ describe("TagListInputController", () => {
                   <span>tag 1</span>
                   <a 
                     class="remove-button" 
-                    data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                    data-action="click->tag-list-input#removeTag"
                   >✖</a>
                 </div>
               </li>
@@ -48,7 +48,7 @@ describe("TagListInputController", () => {
                   <span>tag 2</span>
                   <a 
                     class="remove-button" 
-                    data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                    data-action="click->tag-list-input#removeTag"
                   >✖</a>
                 </div>
               </li>
@@ -57,7 +57,7 @@ describe("TagListInputController", () => {
                   <span>tag 3</span>
                   <a 
                     class="remove-button" 
-                    data-action="click->tag-list-input-component--tag-list-input#removeTag"
+                    data-action="click->tag-list-input#removeTag"
                   >✖</a>
                 </div>
               </li>
@@ -67,7 +67,7 @@ describe("TagListInputController", () => {
               name="variant_add_tag" 
               id="variant_add_tag" 
               placeholder="Add a tag" 
-              data-action="keydown.enter->tag-list-input-component--tag-list-input#addTag keyup->tag-list-input-component--tag-list-input#filterInput" data-tag-list-input-component--tag-list-input-target="newTag"
+              data-action="keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput" data-tag-list-input-target="newTag"
               >
           </div>
         </div>
