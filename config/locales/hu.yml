@@ -962,8 +962,8 @@ hu:
         some_invalid_entries: Az importált fájl érvénytelen bejegyzéseket tartalmaz
         fix_before_import: Kérjük, javítsd ki ezeket a hibákat, és próbáld újra importálni a fájlt
         save_valid?: Mented az érvényes bejegyzéseket, és elveted a többit?
-        no_errors: Nem észleltek hibát!
-        save_all_imported?: Mented az összes importált terméket?
+        no_errors: Nem észleltem hibát.
+        save_all_imported?: Mentsük a termékimport eredményeit?
         options_and_defaults: Importálási lehetőségek és alapértelmezett beállítások
         no_permission: nincs engedélye ennek a vállalkozásnak a kezelésére
         not_found: vállalkozás nem található az adatbázisban
@@ -977,11 +977,11 @@ hu:
         default_tax_cat: Adókategória beállítása
         default_shipping_cat: Szállítási kategória beállítása
         default_available_date: Állítsd be az elérhetőségi dátumot
-        validation_overview: Az importálás ellenőrzésének áttekintése
+        validation_overview: Importálás előtti ellenőrzés eredménye
         entries_found: bejegyzés található az importált fájlban
         entries_with_errors: Az elemek hibákat tartalmaznak, és nem importálhatók
         products_to_create: termék jön létre
-        products_to_update: A termékek frissítésre kerülnek
+        products_to_update: termék fog frissülni
         inventory_to_create: A leltár elemek létrehozásra kerülnek
         inventory_to_update: A leltár elemek frissültek
         products_to_reset: A meglévő termékek készlete nullára áll vissza
