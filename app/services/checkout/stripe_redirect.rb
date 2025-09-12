@@ -40,7 +40,7 @@ module Checkout
     # Stripe::AuthorizeResponsePatcher patches the Stripe authorization response
     #   so that this field stores the redirect URL. It also verifies that it is a Stripe URL.
     def stripe_payment_url(payment)
-      payment.cvv_response_message
+      payment.redirect_auth_url
     end
   end
 end

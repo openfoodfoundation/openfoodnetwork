@@ -17,7 +17,7 @@ RSpec.describe ProcessPaymentIntent do
       create(
         :payment,
         payment_method:,
-        cvv_response_message: "https://stripe.com/redirect",
+        redirect_auth_url: "https://stripe.com/redirect",
         response_code: "pi_123",
         order:,
         state: "requires_authorization"
@@ -104,7 +104,7 @@ RSpec.describe ProcessPaymentIntent do
           service.call!
           payment.reload
           expect(payment.state).to eq("completed")
-          expect(payment.cvv_response_message).to be nil
+          expect(payment.redirect_auth_url).to be nil
         end
 
         it "completes the order" do
