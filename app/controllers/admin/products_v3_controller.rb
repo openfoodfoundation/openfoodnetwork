@@ -124,7 +124,7 @@ module Admin
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
 
-      # Transform on_hand sorting to include backorderable_priority for proper ordering
+      # Transform on_hand sorting to include backorderable_priority (on-demand) for proper ordering
       if @q[:s] == 'on_hand asc'
         @q[:s] = ['backorderable_priority asc', @q[:s]]
       elsif @q[:s] == 'on_hand desc'
@@ -177,7 +177,12 @@ module Admin
         )
       end
 
-      @pagy, @products = pagy(product_query, limit: @per_page, page: @page, size: [1, 2, 2, 1])
+      @pagy, @products = pagy(
+        product_query.order(:name),
+        limit: @per_page,
+        page: @page,
+        size: [1, 2, 2, 1]
+      )
     end
 
     def product_scope

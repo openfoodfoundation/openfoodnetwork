@@ -164,6 +164,41 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         end
       end
     end
+
+    context "when clicked on 'On Hand' column header" do
+      it 'sorts products with on-demand at the top in descending order (bottom in ascending),
+          then by total stock across all variants' do
+        # Setup products with different stock levels and backorderable (on-demand) settings
+        # product with 2 on_hand stock items
+        product_a.variants.first.stock_items.update_all(count_on_hand: 2)
+        # product with on-demand stock items
+        product_b.variants.first.stock_items.update_all(count_on_hand: 0, backorderable: true)
+
+        # product with multiple variants having different on_hand stock items
+        product_c = create(:simple_product, name: "Cherries")
+        product_c.variants.first.stock_items.update_all(count_on_hand: 1, backorderable: false)
+        create(:variant, product: product_c, on_hand: 3)
+
+        # product with multiple variants having one on-demand item
+        product_d = create(:simple_product, name: "Dates")
+        product_d.variants.first.stock_items.update_all(count_on_hand: 1, backorderable: false)
+        create(:variant, product: product_d, on_hand: 0, on_demand: true)
+
+        within products_table do
+          on_hand_header = page.find('th > a[data-column="on_hand"]')
+
+          # Sort in acscending order
+          on_hand_header.click
+          expect(page).to have_content("On Hand ▲") # this indicates the re-sorted
+          expect(all_input_values).to match /Apples.*Cherries.*Bananas.*Dates/
+
+          # Sort in descending order
+          on_hand_header.click
+          expect(page).to have_content("On Hand ▼") # this indicates the re-sorted
+          expect(all_input_values).to match /Dates.*Bananas.*Cherries.*Apples/
+        end
+      end
+    end
   end
 
   describe "pagination" do
