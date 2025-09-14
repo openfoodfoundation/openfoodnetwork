@@ -163,7 +163,7 @@ module Admin
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
       # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
-      # If the current ransack sort uses the computed stock columns, include them in the select
+      # When the current ransack sort uses the computed stock columns, include them in the select
       # so the generated COUNT/DISTINCT query is valid.
       sort_columns = Array(@q && @q[:s]).flatten
       if sort_columns.any? { |s|

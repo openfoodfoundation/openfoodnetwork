@@ -59,7 +59,7 @@ RSpec.describe 'ProductSortByStocks' do
       mid.variants.first.stock_items.update_all(count_on_hand: 5)
       high.variants.first.stock_items.update_all(count_on_hand: 10)
 
-      # But make 'mid' backorderable so it should be sorted before 'low' when backorderable_priority asc
+      # Make 'mid' backorderable so it sorts before 'low' in backorderable_priority asc
       mid.variants.first.stock_items.update_all(backorderable: true)
 
       # Controller transforms 'on_hand asc' into ['backorderable_priority asc', 'on_hand asc']

@@ -24,12 +24,10 @@ module ProductSortByStocks
       attr_reader :on_hand_sql, :backorderable_priority_sql
     end
 
-    # Ransacker for ordering by stock levels
     ransacker :on_hand do
       @on_hand_sql
     end
 
-    # Ransacker for backorderable status (used for complex sorting)
     ransacker :backorderable_priority do
       @backorderable_priority_sql
     end
