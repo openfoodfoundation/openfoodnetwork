@@ -28,10 +28,10 @@ RSpec.describe Reporting::ReportMetadataBuilder do
       rows = builder.rows
 
       # Title
-      expect(rows).to include(['Report Title', 'Order Cycle Customer Totals – By Distributor'])
+      expect(rows).to include(['Report Title', 'Order Cycle Customer Totals - By Distributor'])
 
       # Date range
-      expect(rows).to include(['Date range', '2025-01-01 – 2025-01-31'])
+      expect(rows).to include(['Date range', '2025-01-01 - 2025-01-31'])
 
       # Printed timestamp
       printed = rows.find { |r| r.first == 'Printed' }
