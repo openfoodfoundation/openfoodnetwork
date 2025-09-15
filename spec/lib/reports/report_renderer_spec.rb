@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-
-include 'csv'
-
 require 'spec_helper'
 
 RSpec.describe Reporting::ReportRenderer do
