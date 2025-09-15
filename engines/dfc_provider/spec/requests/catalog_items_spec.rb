@@ -89,8 +89,6 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
               id: 10_001, owner: user, name: "Fred's Icecream", description: "Yum",
               address: build(:address, id: 40_001),
             )
-
-            pending "Fix publishing all enterprises!!!"
           end
 
           run_test! do
