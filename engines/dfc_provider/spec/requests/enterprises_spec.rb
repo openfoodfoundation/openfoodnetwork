@@ -18,6 +18,14 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
       address: build(:address, id: 40_000, address1: "42 Doveton Street"),
     )
   end
+  let!(:other_enterprise) do
+    create(
+      :distributor_enterprise,
+      id: 10_001, owner: user, abn: "123 457", name: "Fred's Icecream",
+      description: "We use our strawberries to make icecream.",
+      address: build(:address, id: 40_001, address1: "42 Doveton Street"),
+    )
+  end
   let!(:enterprise_group) do
     create(
       :enterprise_group,
@@ -45,6 +53,75 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
   }
 
   before { login_as user }
+
+  path "/api/dfc/enterprises" do
+    get "List enterprises" do
+      produces "application/json"
+
+      response "200", "successful" do
+        context "as platform user" do
+          include_context "authenticated as platform"
+
+          context "without permissions" do
+            run_test! do
+              expect(response.body).to eq ""
+            end
+          end
+
+          context "with access to one enterprise" do
+            before do
+              DfcPermission.create!(
+                user:, enterprise_id: enterprise.id,
+                scope: "ReadEnterprise", grantee: "cqcm-dev",
+              )
+            end
+
+            run_test! do
+              expect(response.body).to include "Fred's Farm"
+              expect(response.body).not_to include "Fred's Icecream"
+            end
+          end
+
+          context "with access to two enterprises" do
+            before do
+              DfcPermission.create!(
+                user:, enterprise_id: enterprise.id,
+                scope: "ReadEnterprise", grantee: "cqcm-dev",
+              )
+              DfcPermission.create!(
+                user:, enterprise_id: other_enterprise.id,
+                scope: "ReadEnterprise", grantee: "cqcm-dev",
+              )
+            end
+
+            run_test! do
+              expect(response.body).to include "Fred's Farm"
+              expect(response.body).to include "Fred's Icecream"
+            end
+          end
+        end
+
+        context "as user owning two enterprises" do
+          run_test! do
+            expect(response.body).to include "Fred's Farm"
+            expect(response.body).to include "Fred's Icecream"
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+              "active_storage/url/logo-white.png",
+            ).gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
+              "active_storage/url/logo.png",
+            ).gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
+              "active_storage/url/promo.png",
+            )
+          end
+        end
+      end
+    end
+  end
 
   path "/api/dfc/enterprises/{id}" do
     get "Show enterprise" do
