@@ -400,7 +400,7 @@ ca:
   order_cycles: Cicles de comanda
   bulk_order_management: Gestió de comandes en bloc
   enterprises: Organitzacions
-  enterprise_groups: Grups
+  enterprise_groups: Xarxes
   reports: Informes
   listing_reports: Llistat d'informes
   variant_overrides: Inventari
@@ -675,8 +675,13 @@ ca:
         map: Mapa
     dfc_product_imports:
       index:
+        select_all: "Seleccionar/Desseleccionar Tot"
         update: Actualitzar
         new: Nou
+        selected:
+          zero: "Res seleccionat"
+          one: "1 seleccionat"
+          other: "%{count} seleccionat"
         import: Importa
     enterprise_fees:
       index:
@@ -2280,12 +2285,12 @@ ca:
   sell_motivation: "Mostra el teu bonic menjar."
   sell_producers: "Productors"
   sell_hubs: "Grups"
-  sell_groups: "Grups"
+  sell_groups: "Xarxes"
   sell_producers_detail: "Configura un perfil per a la vostra empresa a Katuma en qüestió de minuts. En qualsevol moment pots convertir el teu perfil en una botiga en línia i vendre els teus productes directament a les consumidores."
   sell_hubs_detail: "Configura un perfil per a la teva organització alimentària a Katuma. En qualsevol moment, pots modificar i convertir el teu perfil en una botiga de diverses productores."
   sell_groups_detail: "Configura un directori personalitzat d'empreses (productores i altres empreses alimentàries) per a la teva regió o per a la teva xarxa, organització."
   sell_user_guide: "Troba més informació a la nostra Guia d'usuari."
-  sell_listing_price: "El llistat al OFN és gratuït. L’obertura i l’execució d’una botiga a OFN és gratuïta fins a 500 dòlars de vendes mensuals. Si veneu més, podeu escollir la vostra contribució comunitària entre l'1% i el 3% de les vendes. Per obtenir més informació sobre preus, consulteu la secció Plataforma de programari a través de l’enllaç Sobre al menú superior."
+  sell_listing_price: "La inscripció a Katuma-OFN és gratuïta. Consulteu les tarifes d'ús de la plataforma a https://www.katuma.org/quotes. "
   sell_embed: "També podem incrustar una botiga OFN al vostre web personalitzat o crear un lloc web personalitzat de la xarxa alimentària per a la teva regió."
   sell_ask_services: "Pregunta'ns sobre els serveis d'OFN."
   shops_title: Botigues
@@ -3750,7 +3755,7 @@ ca:
         enterprises: "Organitzacions"
         enterprise_relationships: "Permisos"
         customers: "Consumidores"
-        groups: "Grups"
+        groups: "Xarxes"
         overview: "Visió general"
         product_import: "Importa"
         enterprise_roles: "Rols"
@@ -4379,6 +4384,7 @@ ca:
     search_input:
       placeholder: Cerca
     selector_with_filter:
+      selected_items: "%{count} seleccionat"
       search_placeholder: Cerca
     pagination:
       next: Següent
