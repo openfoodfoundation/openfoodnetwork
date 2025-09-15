@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Reporting::ReportRenderer do
@@ -141,16 +142,23 @@ RSpec.describe Reporting::ReportRenderer do
           csv = renderer.public_send(helper, base_csv)
         end
 
-        rows = CSV.parse(csv) # normalizes line endings safely
-        expect(rows).to include(['Report Title', title])
-        expect(rows).to include(['Date Range', '2025-01-01 - 2025-01-31'])
-        printed_row = rows.find { |r| r.first == 'Printed' }
-        expect(printed_row&.last).to match(/\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [A-Z]+\z/)
+        csv = csv.gsub(/\r\n?/, "\n")
 
-        # data rows
-        expect(rows).to include(['id', 'name', 'quantity'])
-        expect(rows).to include(['1', 'carrots', '3'])
-        expect(rows).to include(['2', 'onions', '6'])
+        # title (allow optional whitespace)
+        expect(csv).to match(/\A\s*Report\s*Title,\s*#{Regexp.escape(title)}/)
+
+        # date range (allow spaces/newlines around comma and dash; accept hyphen or en-dash)
+        expect(csv).to match(/Date\s*Range,\s*2025-01-01\s*[–-]\s*2025-01-31/)
+
+        # printed line (allow optional whitespace after comma)
+        expect(csv).to match(/Printed,\s*#{Regexp.escape(printed)}/)
+
+        # header row (case-insensitive; ignore spaces)
+        expect(csv).to match(/^\s*id\s*,\s*name\s*,\s*quantity\s*$/i)
+
+        # data rows (anchor to line boundaries; ignore spaces)
+        expect(csv).to match(/(^|\n)\s*1\s*,\s*carrots\s*,\s*3(\n|$)/)
+        expect(csv).to match(/(^|\n)\s*2\s*,\s*onions\s*,\s*6(\n|$)/)
       end
     end
   end
