@@ -66,11 +66,7 @@ RSpec.describe 'ProductSortByStocks' do
       result = Spree::Product.ransack(s: ['backorderable_priority asc',
                                           'on_hand asc']).result.to_a
 
-      # backorderable_priority asc places non-backorderable products first,
-      # so low (non-backorderable) should appear before mid (backorderable)
-      expect(result.index(low)).to be < result.index(mid)
-      # and low should appear before high
-      expect(result.index(low)).to be < result.index(high)
+      expect(result).to eq([low, high, mid])
     end
 
     it 'supports combined sorting: backorderable_priority (on-demand) then on_hand (desc)' do
@@ -86,8 +82,7 @@ RSpec.describe 'ProductSortByStocks' do
       result = Spree::Product.ransack(s: ['backorderable_priority desc',
                                           'on_hand desc']).result.to_a
 
-      expect(result.index(mid)).to be < result.index(high)
-      expect(result.index(high)).to be < result.index(low)
+      expect(result).to eq([mid, high, low])
     end
   end
 end
