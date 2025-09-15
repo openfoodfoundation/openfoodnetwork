@@ -110,10 +110,11 @@ RSpec.describe Reporting::ReportRenderer do
       title   = 'Order Cycle Customer Totals - By Distributor'
       printed = '2025-06-13 10:20:30 UTC'
       allow(renderer).to receive(:metadata_headers).and_return([
-        ['Report Title', title],
-        ['Date Range', '2025-01-01 - 2025-01-31'],
-        ['Printed', printed]
-      ])
+                                                                 ['Report Title', title],
+                                                                 ['Date Range',
+                                                                  '2025-01-01 - 2025-01-31'],
+                                                                 ['Printed', printed]
+                                                               ])
 
       travel_to(Time.zone.parse(printed)) do
         csv = renderer.render_as('csv')
