@@ -10,8 +10,6 @@ module Reporting
     end
 
     def rows
-      return [] unless display_metadata_rows_param?
-
       rows = []
       rows.concat(title_rows)
       rows.concat(date_range_rows)
