@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+include 'csv'
+
 require 'spec_helper'
 
 RSpec.describe Reporting::ReportRenderer do
@@ -142,12 +144,16 @@ RSpec.describe Reporting::ReportRenderer do
           csv = renderer.public_send(helper, base_csv)
         end
 
-        expect(csv).to start_with("Report Title,#{title}")
-        expect(csv).to include("Date Range, 2025-01-01 - 2025-01-31")
-        expect(csv).to include("Printed,#{printed}")
-        expect(csv).to match(/\n(id|Id),(name|Name),(quantity|Quantity)\n/)
-        expect(csv).to include("\n1,carrots,3\n")
-        expect(csv).to include("\n2,onions,6\n")
+        rows = CSV.parse(csv) # normalizes line endings safely
+        expect(rows).to include(['Report Title', title])
+        expect(rows).to include(['Date Range', '2025-01-01 - 2025-01-31'])
+        printed_row = rows.find { |r| r.first == 'Printed' }
+        expect(printed_row&.last).to match(/\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [A-Z]+\z/)
+
+        # data rows
+        expect(rows).to include(['id', 'name', 'quantity'])
+        expect(rows).to include(['1', 'carrots', '3'])
+        expect(rows).to include(['2', 'onions', '6'])
       end
     end
   end
