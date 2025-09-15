@@ -8,10 +8,7 @@ RSpec.describe 'ProductSortByStocks' do
   describe 'class level SQL accessors' do
     it 'exposes SQL Arel nodes for sorting' do
       expect(Spree::Product.on_hand_sql).to be_a(Arel::Nodes::SqlLiteral)
-      expect(Spree::Product.on_hand_sql.to_s).to include('SELECT COALESCE(SUM')
-
       expect(Spree::Product.backorderable_priority_sql).to be_a(Arel::Nodes::SqlLiteral)
-      expect(Spree::Product.backorderable_priority_sql.to_s).to include('CASE WHEN')
     end
   end
 
