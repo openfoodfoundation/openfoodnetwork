@@ -72,7 +72,7 @@ RSpec.describe Reporting::ReportRenderer do
 
       labels = rows.map(&:first)
       expect(labels).to include('Report Title')
-      expect(labels).to include('Date range') # present because we used the recognized keys
+      expect(labels).to include('Date Range') # present because we used the recognized keys
       expect(labels).to include('Printed')
     end
   end
