@@ -109,12 +109,11 @@ RSpec.describe Reporting::ReportRenderer do
 
       title   = 'Order Cycle Customer Totals - By Distributor'
       printed = '2025-06-13 10:20:30 UTC'
-      expected_output = [
+      allow(renderer).to receive(:metadata_headers).and_return([
         ['Report Title', title],
         ['Date Range', '2025-01-01 - 2025-01-31'],
         ['Printed', printed]
-      ]
-      allow(renderer).to receive(:metadata_headers).and_return(expected_output)
+      ])
 
       travel_to(Time.zone.parse(printed)) do
         csv = renderer.render_as('csv')
@@ -143,7 +142,7 @@ RSpec.describe Reporting::ReportRenderer do
         end
 
         expect(csv).to start_with("Report Title,#{title}")
-        expect(csv).to include("Date Range, 2025-01-01 - 2025-01-31")
+        expect(csv).to include("Date Range,2025-01-01 - 2025-01-31")
         expect(csv).to include("Printed,#{printed}")
         expect(csv).to match(/\n(id|Id),(name|Name),(quantity|Quantity)\n/)
         expect(csv).to include("\n1,carrots,3\n")
