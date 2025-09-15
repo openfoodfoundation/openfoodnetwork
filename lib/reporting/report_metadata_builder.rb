@@ -52,7 +52,7 @@ module Reporting
       return [] unless from || to
 
       label = I18n.t("date_range", default: "Date Range")
-      [[label, [from, to].compact.join(' – ')]] # en dash
+      [[label, [from, to].compact.join(' - ')]] # en dash
     end
 
     def first_present(hash, keys)
