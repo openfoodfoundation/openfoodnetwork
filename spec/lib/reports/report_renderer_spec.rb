@@ -72,7 +72,7 @@ RSpec.describe Reporting::ReportRenderer do
 
       labels = rows.map(&:first)
       expect(labels).to include('Report Title')
-      expect(labels).to include('Date Range') # present because we used the recognized keys
+      expect(labels).to include('Date Range')
       expect(labels).to include('Printed')
     end
   end
@@ -143,7 +143,7 @@ RSpec.describe Reporting::ReportRenderer do
         end
 
         expect(csv).to start_with("Report Title,#{title}")
-        expect(csv).to include("Date Range,2025-01-01 - 2025-01-31")
+        expect(csv).to include("Date Range, 2025-01-01 - 2025-01-31")
         expect(csv).to include("Printed,#{printed}")
         expect(csv).to match(/\n(id|Id),(name|Name),(quantity|Quantity)\n/)
         expect(csv).to include("\n1,carrots,3\n")

@@ -38,7 +38,6 @@ module Reporting
                          default: I18n.t("admin.reports.#{type}",
                                          default: type.to_s.tr('_', ' ').titleize))
 
-      # For now: translate the title, titleize the sub if present
       sub_name = sub.present? ? sub.to_s.tr('_', ' ').titleize : nil
 
       title = [type_name, sub_name].compact.join(' - ')
