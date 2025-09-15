@@ -13,7 +13,7 @@ module ProductSortByStocks
     )")
 
     @backorderable_priority_sql = Arel.sql("(
-      SELECT CASE WHEN BOOL_OR(si.backorderable) = true THEN 1 ELSE 0 END
+      SELECT BOOL_OR(si.backorderable)
       FROM spree_variants v
       JOIN spree_stock_items si ON si.variant_id = v.id
       WHERE v.product_id = spree_products.id
