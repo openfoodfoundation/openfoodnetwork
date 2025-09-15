@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import showHttpError from "../../webpacker/js/services/show_http_error";
 
 export default class extends Controller {
   static targets = ["rule", "ruleCustomerTag"];
@@ -29,11 +30,17 @@ export default class extends Controller {
         Accept: "text/vnd.turbo-stream.html",
       },
     })
-      .then((r) => r.text())
+      .then((response) => {
+        if (!response.ok) {
+          showHttpError(response.status);
+          throw response;
+        }
+        return response.text();
+      })
       .then((html) => {
         Turbo.renderStreamMessage(html);
         this.indexValue = parseInt(index) + 1;
       })
-      .catch((error) => console.warn(error));
+      .catch((error) => console.error(error));
   }
 }
