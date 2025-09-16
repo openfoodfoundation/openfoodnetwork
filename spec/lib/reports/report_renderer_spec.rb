@@ -162,4 +162,34 @@ RSpec.describe Reporting::ReportRenderer do
       end
     end
   end
+
+  describe "#rendering_options" do
+    it "pulls :rendering_options from @report.params and returns an indifferent-access hash" do
+      report = OpenStruct.new(
+        params: { rendering_options: { "display_metadata_rows" => "1", foo: "bar" } }
+      )
+      renderer = described_class.new(report)
+
+      opts = renderer.send(:rendering_options)
+
+      # indifferent access check
+      expect(opts[:display_metadata_rows]).to eq("1")
+      expect(opts["foo"]).to eq("bar")
+
+      # memoization: second call returns the same object
+      first_id  = opts.__id__
+      second_id = renderer.send(:rendering_options).__id__
+      expect(second_id).to eq(first_id)
+    end
+
+    it "returns {} when report has empty params" do
+      renderer = described_class.new(OpenStruct.new(params: {}))
+      expect(renderer.send(:rendering_options)).to eq({})
+    end
+
+    it "returns {} when report does not respond to params" do
+      renderer = described_class.new(double("report_without_params"))
+      expect(renderer.send(:rendering_options)).to eq({})
+    end
+  end
 end
