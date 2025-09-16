@@ -61,9 +61,6 @@ module OpenFoodNetwork
       "inventory" => <<~DESC,
         Enable the inventory.
       DESC
-      "hub_address" => <<~DESC,
-        Show the hub's address as shipping address on pickup orders.
-      DESC
       "cqcm-dev" => <<~DESC,
         Show DFC Permissions interface to share data with CQCM dev platform.
       DESC
