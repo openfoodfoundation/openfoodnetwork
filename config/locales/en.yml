@@ -1419,6 +1419,7 @@ en:
           no_tags_yet: No tags apply to this enterprise yet
           add_new_tag: '+ Add A New Tag'
           show_hide_variants: 'Show or Hide variants in my shopfront'
+          show_hide_variants_new: 'Show or Hide variants in my shopfront'
           show_hide_shipping: 'Show or Hide shipping methods at checkout'
           show_hide_payment: 'Show or Hide payment methods at checkout'
           show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
@@ -5076,6 +5077,8 @@ en:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_top: "Variants tagged"
+        variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
     tag_rule_group_form:
