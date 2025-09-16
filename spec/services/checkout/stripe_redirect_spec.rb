@@ -36,7 +36,7 @@ RSpec.describe Checkout::StripeRedirect do
           true
         end
 
-        expect(stripe_payment).to receive(:cvv_response_message).and_return(test_redirect_url)
+        expect(stripe_payment).to receive(:redirect_auth_url).and_return(test_redirect_url)
 
         expect(service.path).to eq test_redirect_url
       end

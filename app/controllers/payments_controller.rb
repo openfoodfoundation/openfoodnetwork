@@ -9,11 +9,7 @@ class PaymentsController < BaseController
     @payment = Spree::Payment.find(params[:id])
     authorize! :show, @payment.order
 
-    if (url = @payment.cvv_response_message)
-      redirect_to url
-    else
-      redirect_to order_url(@payment.order)
-    end
+    redirect_to(@payment.redirect_auth_url || order_url(@payment.order))
   end
 
   private

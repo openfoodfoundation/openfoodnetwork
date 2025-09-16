@@ -78,7 +78,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         context "where further action is required" do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
-              payment.update cvv_response_message: "https://www.stripe.com/authorize"
+              payment.update redirect_auth_url: "https://www.stripe.com/authorize"
               payment.update state: "requires_authorization"
             end
           end
@@ -234,7 +234,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
         request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
-        allow(payment).to receive(:cvv_response_message).and_return("https://www.stripe.com/authorize")
+        allow(payment).to receive(:redirect_auth_url).and_return("https://www.stripe.com/authorize")
         allow(payment).to receive(:requires_authorization?) { true }
       end
 

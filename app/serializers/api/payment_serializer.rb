@@ -2,7 +2,7 @@
 
 module Api
   class PaymentSerializer < ActiveModel::Serializer
-    attributes :amount, :updated_at, :payment_method, :state, :cvv_response_message
+    attributes :amount, :updated_at, :payment_method, :state, :redirect_auth_url
 
     def payment_method
       object.payment_method.try(:name)
