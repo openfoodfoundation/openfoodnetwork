@@ -84,7 +84,7 @@ module ReportsActions
                         else
                           params[:fields_to_show]
                         end,
-        display_metadata_rows: false,
+        display_metadata_rows: request.get?,
         display_summary_row: request.get?,
         display_header_row: false
       }
