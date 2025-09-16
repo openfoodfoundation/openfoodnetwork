@@ -24,10 +24,6 @@ module Reporting
     DATE_FROM_KEYS = %i[completed_at_gt created_at_gt updated_at_gt].freeze
     DATE_TO_KEYS   = %i[completed_at_lt created_at_lt updated_at_lt].freeze
 
-    def display_metadata_rows_param?
-      ActiveModel::Type::Boolean.new.cast(params.dig(:rendering_options, :display_metadata_rows))
-    end
-
     def title_rows
       type = params[:report_type]
       sub  = params[:report_subtype]
