@@ -2,6 +2,7 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["tagList", "newTag", "template", "list"];
+  static values = { onlyOne: Boolean };
 
   addTag(event) {
     // prevent hotkey form submitting the form (default action for "enter" key)
@@ -22,7 +23,13 @@ export default class extends Controller {
     }
 
     // add to tagList
-    this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
+    if (this.tagListTarget.value == "") {
+      this.tagListTarget.value = newTagName;
+    } else {
+      this.tagListTarget.value = this.tagListTarget.value.concat(`,${newTagName}`);
+    }
+    // manualy dispatch an Input event so the change can get picked up by other controllers
+    this.tagListTarget.dispatchEvent(new InputEvent("input"));
 
     // Create new li component with value
     const newTagElement = this.templateTarget.content.cloneNode(true);
@@ -32,6 +39,11 @@ export default class extends Controller {
 
     // Clear new tag value
     this.newTagTarget.value = "";
+
+    // hide tag input if limited to one tag
+    if (this.tagListTarget.value.split(",").length == 1 && this.onlyOneValue == true) {
+      this.newTagTarget.style.display = "none";
+    }
   }
 
   removeTag(event) {
@@ -40,13 +52,18 @@ export default class extends Controller {
 
     // Remove tag from list
     const tags = this.tagListTarget.value.split(",");
-    this.tagListTarget.value = tags.filter(tag => tag != tagName).join(",");
+    this.tagListTarget.value = tags.filter((tag) => tag != tagName).join(",");
 
     // manualy dispatch an Input event so the change gets picked up by the bulk form controller
     this.tagListTarget.dispatchEvent(new InputEvent("input"));
 
     // Remove HTML element from the list
     event.srcElement.parentElement.parentElement.remove();
+
+    // Make sure the tag input is displayed
+    if (this.tagListTarget.value.length == 0) {
+      this.newTagTarget.style.display = "block";
+    }
   }
 
   filterInput(event) {
