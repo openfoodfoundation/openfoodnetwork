@@ -9,13 +9,12 @@
             = t('.by_default')
           %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
   #default-tag-rule
-    - default_rules = @enterprise.tag_rules.select(&:is_default)
     - current_rule_index = 0
-    - if default_rules.empty?
+    - if @default_rules.empty?
       .no_rules
         = t('.no_rules_yet')
     - else
-      - default_rules.each_with_index do |default_rule, index|
+      - @default_rules.each_with_index do |default_rule, index|
         - current_rule_index = index + 1
         = render TagRuleFormComponent.new(rule: default_rule, index: index)
         %hr

@@ -7,6 +7,8 @@ class TagRule < ApplicationRecord
 
   scope :for, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :prioritised, -> { order('priority ASC') }
+  scope :exclude_inventory, -> { where.not(type: "TagRule::FilterProducts") }
+  scope :exclude_variant, -> { where.not(type: "TagRule::FilterVariants") }
 
   def self.mapping_for(enterprises)
     self.for(enterprises).each_with_object({}) do |rule, mapping|

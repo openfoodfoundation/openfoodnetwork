@@ -8,6 +8,71 @@ RSpec.describe 'Tag Rules' do
 
   let!(:enterprise) { create(:distributor_enterprise) }
 
+  describe "loading rules" do
+    let!(:default_order_cycle_tag_rule) {
+      create(:filter_order_cycles_tag_rule, enterprise:, is_default: true)
+    }
+    let!(:inventory_order_cycle_rule) { create(:filter_order_cycles_tag_rule, enterprise:) }
+    let!(:default_inventory_tag_rule) {
+      create(:filter_products_tag_rule, enterprise:, is_default: true)
+    }
+    let!(:inventory_tag_rule) { create(:filter_products_tag_rule, enterprise:) }
+    let!(:default_variant_tag_rule) {
+      create(:filter_variants_tag_rule, enterprise:, is_default: true)
+    }
+    let!(:variant_tag_rule) { create(:filter_variants_tag_rule, enterprise:) }
+
+    before do
+      visit_tag_rules
+    end
+
+    it "displays all existing rules" do
+      within "#default-tag-rule" do
+        expect(page).to have_content "Order Cycles tagged"
+        expect(page).not_to have_content "Inventory variants tagged"
+        expect(page).not_to have_content "Variants tagged"
+      end
+
+      within "#customer-tag-rule" do
+        expect(page).to have_content "Order Cycles tagged"
+        expect(page).not_to have_content "Inventory variants tagged"
+        expect(page).not_to have_content "Variants tagged"
+      end
+    end
+
+    context "with inventory enabled", feature: :inventory do
+      it "does not display filter by variants rules" do
+        within "#default-tag-rule" do
+          expect(page).to have_content "Order Cycles tagged"
+          expect(page).to have_content "Inventory variants tagged"
+          expect(page).not_to have_content "Variants tagged"
+        end
+
+        within "#customer-tag-rule" do
+          expect(page).to have_content "Order Cycles tagged"
+          expect(page).to have_content "Inventory variants tagged"
+          expect(page).not_to have_content "Variants tagged"
+        end
+      end
+    end
+
+    context "with variant tag enabled", feature: :variant_tag do
+      it "does not display filter by inventory variants rules" do
+        within "#default-tag-rule" do
+          expect(page).to have_content "Order Cycles tagged"
+          expect(page).not_to have_content "Inventory variants tagged"
+          expect(page).to have_content "Variants tagged"
+        end
+
+        within "#customer-tag-rule" do
+          expect(page).to have_content "Order Cycles tagged"
+          expect(page).not_to have_content "Inventory variants tagged"
+          expect(page).to have_content "Variants tagged"
+        end
+      end
+    end
+  end
+
   context "creating" do
     before do
       visit_tag_rules
@@ -90,6 +155,33 @@ RSpec.describe 'Tag Rules' do
       expect(tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
     end
 
+    context "when variant_tag enabled", feature: :variant_tag do
+      it "allows creation of filter variant type" do
+        # Creating a new tag
+        expect(page).to have_content 'No tags apply to this enterprise yet'
+        click_button '+ Add A New Tag'
+        fill_in_tag "New Product"
+
+        # New FilterProducts Rule
+        click_button '+ Add A New Rule'
+        tomselect_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
+        click_button "Add Rule"
+        within("#customer-tag-rule #tr_1001") do
+          fill_in_tag "new product"
+          tomselect_select "VISIBLE",
+                           from: "enterprise_tag_rules_attributes_1001_preferred_matched_" \
+                                 "variants_visibility"
+        end
+
+        click_button 'Update'
+
+        tag_rule = TagRule::FilterVariants.last
+        expect(tag_rule.preferred_customer_tags).to eq "New Product"
+        expect(tag_rule.preferred_variant_tags).to eq "new product"
+        expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
+      end
+    end
+
     context "when inventory enabled", feature: :inventory do
       it "allows creation of filter variant type" do
         # Creating a new tag
@@ -118,7 +210,7 @@ RSpec.describe 'Tag Rules' do
     end
   end
 
-  context "updating" do
+  context "updating", feature: :inventory do
     let!(:default_fsm_tag_rule) {
       create(:filter_shipping_methods_tag_rule, enterprise:,
                                                 preferred_matched_shipping_methods_visibility:
@@ -242,10 +334,10 @@ RSpec.describe 'Tag Rules' do
 
   context "deleting" do
     let!(:tag_rule) {
-      create(:filter_products_tag_rule, enterprise:, preferred_customer_tags: "member" )
+      create(:filter_order_cycles_tag_rule, enterprise:, preferred_customer_tags: "member" )
     }
     let!(:default_rule) {
-      create(:filter_products_tag_rule, is_default: true, enterprise: )
+      create(:filter_order_cycles_tag_rule, is_default: true, enterprise: )
     }
 
     before do

@@ -51,6 +51,7 @@ module Admin
 
       load_tag_rule_types
 
+      load_tag_rules
       return unless params[:stimulus]
 
       @enterprise.is_primary_producer = params[:is_primary_producer]
@@ -398,9 +399,26 @@ module Admin
         [t(".form.tag_rules.show_hide_order_cycles"), "FilterOrderCycles"]
       ]
 
-      return unless helpers.feature?(:inventory, @object)
+      if helpers.feature?(:variant_tag, @object)
+        @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants_new"), "FilterVariants"])
+      elsif helpers.feature?(:inventory, @object)
+        @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterProducts"])
+      end
+    end
 
-      @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterProducts"])
+    def load_tag_rules
+      if helpers.feature?(:variant_tag, @object)
+        @default_rules = @enterprise.tag_rules.exclude_inventory.select(&:is_default)
+        @rules = @enterprise.tag_rules.exclude_inventory.prioritised.reject(&:is_default)
+      elsif helpers.feature?(:inventory, @object)
+        @default_rules = @enterprise.tag_rules.exclude_variant.select(&:is_default)
+        @rules = @enterprise.tag_rules.exclude_variant.prioritised.reject(&:is_default)
+      else
+        @default_rules =
+          @enterprise.tag_rules.exclude_inventory.exclude_variant.select(&:is_default)
+        @rules =
+          @enterprise.tag_rules.exclude_inventory.exclude_variant.prioritised.reject(&:is_default)
+      end
     end
 
     def setup_property

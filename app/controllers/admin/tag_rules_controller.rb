@@ -78,7 +78,7 @@ module Admin
     end
 
     def permitted_tag_rule_type
-      %w{FilterOrderCycles FilterPaymentMethods FilterProducts FilterShippingMethods}
+      %w{FilterOrderCycles FilterPaymentMethods FilterProducts FilterShippingMethods FilterVariants}
     end
   end
 end
