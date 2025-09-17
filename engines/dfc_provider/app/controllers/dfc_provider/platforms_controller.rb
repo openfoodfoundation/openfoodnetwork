@@ -46,6 +46,9 @@ module DfcProvider
           grantee: key,
         )
       end
+
+      ProxyNotifier.new.refresh(PLATFORM_IDS[key])
+
       render json: platform(key)
     end
 
