@@ -1,0 +1,13 @@
+{
+  "pull_request": {
+    "number": 13490,
+    "title": "Bump rails from 7.0.4 to 7.0.8",
+    "id": 99999999,
+    "user": { "login": "dependabot[bot]" }
+  },
+  "repository": {
+    "owner": { "login": "openfoodnetwork" },
+    "name": "openfoodnetwork"
+  },
+  "sender": { "login": "dependabot[bot]" }
+}
