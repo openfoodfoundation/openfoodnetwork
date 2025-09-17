@@ -24,7 +24,7 @@
 %td.col-inherits_properties.align-left
   .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
 %td.align-right
-  = render(VerticalEllipsisMenu::Component.new) do
+  = render(VerticalEllipsisMenuComponent.new) do
     = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product), 'data-turbo': false
     = link_to t('admin.products_page.actions.clone'), admin_clone_product_path(product), 'data-turbo-method': :post
     %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
