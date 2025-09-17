@@ -73,12 +73,6 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
         context "as user owning two enterprises" do
           run_test! do
             expect(response.body).to include "Pesto"
-
-            # Insert static value to keep documentation deterministic:
-            response.body.gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-              "active_storage/url/logo-white.png",
-            )
           end
         end
       end
@@ -218,10 +212,6 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
               "supplied_products/#{variant_id}",
               "supplied_products/10001"
             )
-              .gsub!(
-                %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-                "active_storage/url/logo-white.png",
-              )
           end
         end
       end
@@ -246,12 +236,6 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
           expect(json_response["ofn:spree_product_id"]).to eq 90_000
           expect(json_response["dfc-b:hasType"]).to eq("dfc-pt:processed-vegetable")
           expect(json_response["ofn:image"]).to include("logo-white.png")
-
-          # Insert static value to keep documentation deterministic:
-          response.body.gsub!(
-            %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-            "active_storage/url/logo-white.png",
-          )
         end
       end
 
