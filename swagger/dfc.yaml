@@ -810,6 +810,52 @@ paths:
                     dfc-b:URL: https://facebook.com/user
         '404':
           description: not found
+  "/api/dfc/supplied_products":
+    get:
+      summary: Index SuppliedProducts
+      tags:
+      - SuppliedProducts
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: BP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Pesto - 1g
+                      dfc-b:description: Basil Pesto
+                      dfc-b:hasType: dfc-pt:processed-vegetable
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Pesto
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 5
   "/api/dfc/enterprises/{enterprise_id}/supplied_products":
     parameters:
     - name: enterprise_id

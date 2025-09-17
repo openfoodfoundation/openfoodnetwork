@@ -14,7 +14,11 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
     )
   }
   let(:variant) {
-    build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon, supplier: enterprise)
+    build(
+      :base_variant,
+      id: 10_001, sku: "BP", unit_value: 1,
+      primary_taxon: taxon, supplier: enterprise,
+    )
   }
   let(:taxon) {
     build(
@@ -33,6 +37,53 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
   }
 
   before { login_as user }
+
+  path "/api/dfc/supplied_products" do
+    get "Index SuppliedProducts" do
+      produces "application/json"
+
+      response "200", "success" do
+        context "as platform user" do
+          include_context "authenticated as platform"
+
+          context "without permissions" do
+            run_test! do
+              expect(response.body).to eq ""
+            end
+          end
+
+          context "with access to products" do
+            before do
+              DfcPermission.create!(
+                user:, enterprise_id: 10_000,
+                scope: "ReadEnterprise", grantee: "cqcm-dev",
+              )
+              DfcPermission.create!(
+                user:, enterprise_id: 10_000,
+                scope: "ReadProducts", grantee: "cqcm-dev",
+              )
+            end
+
+            run_test! do
+              expect(response.body).to include "Pesto"
+            end
+          end
+        end
+
+        context "as user owning two enterprises" do
+          run_test! do
+            expect(response.body).to include "Pesto"
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+              "active_storage/url/logo-white.png",
+            )
+          end
+        end
+      end
+    end
+  end
 
   path "/api/dfc/enterprises/{enterprise_id}/supplied_products" do
     parameter name: :enterprise_id, in: :path, type: :string
