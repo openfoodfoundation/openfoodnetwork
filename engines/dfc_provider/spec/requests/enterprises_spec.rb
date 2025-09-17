@@ -105,18 +105,6 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
           run_test! do
             expect(response.body).to include "Fred's Farm"
             expect(response.body).to include "Fred's Icecream"
-
-            # Insert static value to keep documentation deterministic:
-            response.body.gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-              "active_storage/url/logo-white.png",
-            ).gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
-              "active_storage/url/logo.png",
-            ).gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
-              "active_storage/url/promo.png",
-            )
           end
         end
       end
@@ -167,18 +155,6 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
             expect(json_response["@graph"][0]).to include(
               "dfc-b:affiliates" => "http://test.host/api/dfc/enterprise_groups/60000",
               "dfc-b:websitePage" => "https://openfoodnetwork.org",
-            )
-
-            # Insert static value to keep documentation deterministic:
-            response.body.gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
-              "active_storage/url/logo-white.png",
-            ).gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
-              "active_storage/url/logo.png",
-            ).gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
-              "active_storage/url/promo.png",
             )
           end
         end
