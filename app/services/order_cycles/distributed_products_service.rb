@@ -118,11 +118,20 @@ module OrderCycles
     end
 
     def variants
-      options[:inventory_enabled] ? stocked_variants_and_overrides : stocked_variants
+      return tag_rule_filtered_variants if options[:variant_tag_enabled]
+
+      return stocked_variants_and_overrides if options[:inventory_enabled]
+
+      stocked_variants
     end
 
     def stocked_variants
       Spree::Variant.joins(:stock_items).where(query_stock)
+    end
+
+    def tag_rule_filtered_variants
+      VariantTagRulesFilterer.new(distributor:, customer:,
+                                  variants_relation: stocked_variants).call
     end
 
     def stocked_variants_and_overrides
