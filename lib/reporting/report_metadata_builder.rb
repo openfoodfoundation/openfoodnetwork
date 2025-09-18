@@ -60,7 +60,7 @@ module Reporting
 
     def printed_rows
       tz = defined?(Time.zone) && Time.zone ? Time.zone : Time
-      [[I18n.t("printed", default: "Printed"), tz.now.strftime('%Y-%m-%d %H:%M:%S %Z')]]
+      [[I18n.t("printed", default: "Printed"), tz.now.utc.strftime('%Y-%m-%d %H:%M:%S %Z')]]
     end
 
     def other_filter_rows
