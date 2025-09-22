@@ -705,7 +705,7 @@ hu:
         matomo_site_id: "Matomo webhelyazonosító"
         matomo_tag_manager_url: "Matomo Címkekezelő URL-je"
         info_html: "A Matomo egy webes és mobilelemző alkalmazás. A Matomo helyszíni üzemeltetését vagy felhőalapú szolgáltatást is használhatja. További információért lásd: <a href='http://matomo.org' target='_blank'>matomo.org</a>."
-        config_instructions_html: "Itt konfigurálhatja az OFN Matomo integrációt. Az alábbi Matomo URL-nek arra a Matomo-példányra kell mutatnia, ahová a felhasználó követési információkat küldi; ha üresen marad, a Matomo felhasználókövetés le lesz tiltva. A Webhelyazonosító mező nem kötelező, de hasznos, ha egynél több webhelyet követ nyomon egyetlen Matomo-példányon; a Matomo példánykonzolon található."
+        config_instructions_html: "Itt konfigurálhatod az OFN Matomo integrációt. Az alábbi Matomo URL-nek arra a Matomo-példányra kell mutatnia, ahová a felhasználó követési információkat küldi; ha üresen marad, a Matomo felhasználókövetés le lesz tiltva. A Webhelyazonosító mező nem kötelező, de hasznos, ha egynél több webhelyet követ nyomon egyetlen Matomo-példányon; a Matomo példánykonzolon található."
         config_instructions_tag_manager_html: "A Matomo Címkekezelő URL-címének beállítása engedélyezi a Matomo Címkekezelőt. Ez az eszköz lehetővé teszi az elemzési események beállítását. A Matomo Címkekezelő URL-címe a Matomo Tag Manager Telepítési kód szakaszából lett kimásolva. Győződj meg róla, hogy a megfelelő tárolót és környezetet választotta, mivel ezek a beállítások megváltoztatják az URL-t."
     connected_app_settings:
       edit:
@@ -956,7 +956,7 @@ hu:
         import: Importálás
         save: Mentés
         results: Eredmények
-        save_imported: Mentse el az importált termékeket
+        save_imported: Importált termékek mentése
         no_valid_entries: Nem található érvényes bejegyzés
         none_to_save: Nincsenek menthető bejegyzések
         some_invalid_entries: Az importált fájl érvénytelen bejegyzéseket tartalmaz
@@ -1003,7 +1003,7 @@ hu:
         inventory_reset: A leltárelemek készletszintjét nullára állítottuk vissza
         all_saved: "Minden termék mentése sikeres."
         some_saved: "elemek sikeresen mentve"
-        save_errors: Mentse el a hibákat
+        save_errors: Hibák mentése
         import_again: Másik fájl feltöltése
         view_products: Ugrás a Termékek oldalra
         view_inventory: Ugrás a Leltár oldalra
@@ -1051,7 +1051,7 @@ hu:
         back_to_my_inventory: Vissza a leltárhoz
     orders:
       edit:
-        order_sure_want_to: Biztosan %{event} akarja ezt a megrendelést?
+        order_sure_want_to: Biztosan %{event} akarod ezt a megrendelést?
         voucher_tax_included_in_price: "%{label}(a kupon tartalmazza az adót)"
         tax_on_fees: "Díjak adója"
       invoice_email_sent: 'Számla e-mail elküldve'
@@ -1578,7 +1578,7 @@ hu:
       bulk_update:
         no_data: Hm, valami elromlott. Nem található rendelési ciklus adat.
       date_warning:
-        msg: Ez a rendelési ciklus %{n} nyitott előfizetéses megrendeléshez kapcsolódik. A dátum módosítása nem érinti a már leadott rendeléseket, de lehetőség szerint kerülni kell. Biztosan folytatja?
+        msg: Ez a rendelési ciklus %{n} nyitott előfizetéses megrendeléshez kapcsolódik. A dátum módosítása nem érinti a már leadott rendeléseket, de lehetőség szerint kerülni kell. Biztosan folytatod?
         cancel: Mégsem
         proceed: Folytassa
       status:
@@ -1735,7 +1735,7 @@ hu:
       enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentései megrendelés alapján"
       enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak Jelentés termelőnként"
       errors:
-        no_report_type: "Adja meg a jelentés típusát"
+        no_report_type: "Add meg a jelentés típusát"
         report_not_found: "A jelentés nem található"
         missing_ransack_params: "Kérjük, add meg a Ransack keresési paramétereit a kérelemben"
       summary_row:
@@ -1816,11 +1816,11 @@ hu:
         details: 1. Alapvető részletek
         address: 2. Cím
         products: 3. Termékek hozzáadása
-        review: 4. Tekintse át és mentse el
+        review: 4. Áttekintés és mentés
       subscription_line_items:
         this_is_an_estimate: |
-            The displayed prices are only an estimate and calculated at the time the subscription is changed.: A megjelenített árak csak becslések, és az előfizetés megváltoztatásakor számíthatók ki.
-            If you change prices or fees, orders will be updated, but the subscription will still display the old values.: Ha módosítja az árakat vagy díjakat, a rendelések frissítésre kerülnek, de az előfizetés továbbra is a régi értékeket jeleníti meg.
+            A megjelenített árak csak becslések, és az előfizetés megváltoztatásakor számíthatók ki.
+            Ha módosítod az árakat vagy díjakat, a rendelések frissítésre kerülnek, de az előfizetés továbbra is a régi értékeket jeleníti meg.
         not_in_open_and_upcoming_order_cycles_warning: "Ehhez a termékhez nincsenek nyitott vagy közelgő rendelési ciklusok."
       autocomplete:
         name_or_sku: "NÉV VAGY Cikkszám"
@@ -1861,7 +1861,7 @@ hu:
       confirm_unpause_msg: "Ha az előfizetés ütemtervében van egy nyitott rendelési ciklus, akkor ennek az ügyfélnek a rendelése jön létre. Biztosan feloldja az előfizetés szüneteltetését?"
       unpause_failure_msg: "Sajnáljuk, a szüneteltetés feloldása nem sikerült!"
       confirm_cancel_open_orders_msg: "Az előfizetéshez tartozó néhány rendelés jelenleg nyitva van. A vásárlót már értesítették a rendelés feladásáról. Szeretné törölni vagy megtartani ezeket a rendelése(ke)t?"
-      resume_canceled_orders_msg: "Az előfizetéshez tartozó egyes rendelések már most újraindíthatók. A megrendelések legördülő menüből folytathatja őket."
+      resume_canceled_orders_msg: "Néhány ehhez az előfizetéshez tartozó rendelés már most újraindítható. Azokat a megrendelések legördülő menüből indíthatod újra."
       yes_cancel_them: Törölje őket
       no_keep_them: Tartsd meg
       yes_i_am_sure: Igen, biztos vagyok benne
@@ -1975,9 +1975,9 @@ hu:
           label: Év
         stripe:
           use_saved_card: Használd a mentett kártyát
-          use_new_card: Adja meg kártyaazonosítóit
-          save_card: Mentse el a kártyát későbbi használatra
-          create_new_card: vagy adja meg alább az új kártyaadatokat
+          use_new_card: Add meg kártyaazonosítóit
+          save_card: Kártya mentése későbbi használatra
+          create_new_card: vagy add meg alább az új kártyaadatokat
       explaination: A következő lépésben megtekintheted és megerősítheted megrendelésedet, amely tartalmazza a várható költségeket. Amennyiben "Változó súlyú termék" jelölésű terméket rendeltél, a végösszeg a pontos súlyok függvényében változhat.
       submit: Következő - Megrendelés összegzése
       cancel: Vissza az adataidhoz
@@ -2370,7 +2370,7 @@ hu:
   email_so_payment_success_intro_html: "A megrendelés automatikus fizetése megtörtént <strong>%{distributor}</strong>  felé."
   email_so_placement_explainer_html: "Ez a rendelés automatikusan létrejött számodra."
   email_so_edit_true_html: "Addig <a href='%{order_url}'>módosításokat hajthat végre</a>, amíg a rendelések le nem zárulnak a következő napon: %{orders_close_at}."
-  email_so_edit_false_html: "Bármikor <a href='%{order_url}'>megtekintheti a rendelés részleteit</a>."
+  email_so_edit_false_html: "Bármikor <a href='%{order_url}'>megtekintheted a rendelés részleteit</a>."
   email_so_contact_distributor_html: "Ha bármilyen kérdésed van, itt érdeklődj: <strong>%{distributor}</strong>, %{email} ."
   email_so_contact_distributor_to_change_order_html: "Ez a rendelés automatikusan létrejött számodra. Ha módosítási igényed van, %{orders_close_at} napon a rendelések lezárásáig jelezd itt: <strong>%{distributor}</strong>, %{email} ."
   email_so_confirmation_intro_html: " <strong>%{distributor} </strong> megerősítette a rendelésedet."
@@ -2399,7 +2399,7 @@ hu:
     greeting: "Üdv!"
     invited_to_manage: "Meghívást kaptál, hogy kezeld a(z) %{enterprise} %{instance} szolgáltatást."
     confirm_your_email: "Egy megerősítő linket tartalmazó e-mailt kellett volna kapnia, vagy hamarosan kapni fog. Addig nem férhetsz hozzá %{enterprise} profiljához, amíg meg nem erősíted az e-mail címedet."
-    set_a_password: "Ezután a rendszer kéri, hogy állítson be egy jelszót, mielőtt felügyelheti a vállalkozást."
+    set_a_password: "Ezután a rendszer kéri, hogy állíts be egy jelszót, mielőtt felügyeled a vállalkozást."
     mistakenly_sent: "Nem tudod, miért kaptad ezt az e-mailt? További információért fordulj %{owner_email}-hoz."
   producer_mail_greeting: "Kedves"
   producer_mail_text_before: "Küldjük az alábbi rendelési ciklusra vonatkozó összesítést:"
@@ -2447,11 +2447,11 @@ hu:
   hubs_distance: Legközelebb
   hubs_distance_filter: "Mutass átvételi pontokat %{location} közelében"
   shop_changeable_orders_alert_html:
-    one: 'Megrendelése a következővel: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a> nyitva áll ellenőrzésre. A módosításokat a következő időpontig hajthatja végre: %{oc_close}.'
+    one: 'Megrendelésed a következővel: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a> nyitva áll ellenőrzésre. A módosításokat a következő időpontig hajthatod végre: %{oc_close}.'
     few: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
     many: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
     other: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-  orders_changeable_orders_alert_html: 'Ezt a rendelést megerősítették, de módosíthatja a következőt: <strong>%{oc_close}</strong>.'
+  orders_changeable_orders_alert_html: 'Ez a rendelés meg lett erősítve, de módosíthatod a következő időpontig: <strong>%{oc_close}</strong>.'
   products_clear: Mégsem
   products_showing: "Megjelenítve:"
   products_results_for: "eredmények"
@@ -2605,7 +2605,7 @@ hu:
   orders_confirm_cancel: "Biztosan törlöd ezt a rendelést?"
   order_processed_successfully: "Megrendelésed sikeresen feldolgoztuk"
   thank_you_for_your_order: "Köszönjük a rendelésed!"
-  products_cart_distributor_choice: "Megrendelését az alábbi szervezet szolgáltatja:"
+  products_cart_distributor_choice: "Megrendelésed szolgáltatója:"
   products_cart_distributor_change: "Ennek a rendelésnek a forgalmazója a következőre változik: %{name}, ha ezt a terméket a kosarába helyezi."
   products_cart_distributor_is: "Megrendelésed szolgáltatója: %{name}."
   products_distributor_error: "Kérjük, fejezd be a rendelésed a %{link} címen, mielőtt másik szolgáltatónál vásárolnál."
@@ -2922,8 +2922,8 @@ hu:
   product: "Termék"
   price: "Ár"
   review: "Felülvizsgálat"
-  save_changes: "Változtatások Mentése"
-  order_saved: "Rendelés Mentve"
+  save_changes: "Változtatások mentése"
+  order_saved: "Rendelés mentve"
   no_products: Nincsenek termékek
   spree_admin_overview_enterprises_header: "Vállalkozásaim"
   spree_admin_overview_enterprises_footer: "VÁLLALKOZÁSAIM KEZELÉSE"
@@ -3383,7 +3383,7 @@ hu:
               csomagot a listából.: opciók a bal oldalon.
           choose_package_text2: >
               Kattints egy opcióra, hogy részletesebb információt kapj az egyes csomagokról,
-              és nyomja meg a piros MENTÉS gombot, ha végeztél!
+              és nyomd meg a piros MENTÉS gombot, ha végeztél!
           profile_only: Csak profil
           profile_only_cost: "KÖLTSÉG: MINDIG INGYENES"
           profile_only_text1: >
@@ -3874,7 +3874,7 @@ hu:
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelésed üres, kérünk adj hozzá legalább egy terméket"
     add_product: "Termék hozzáadása"
-    name_or_sku: "Név vagy cikkszám (adja meg a termék nevének legalább első 4 karakterét)"
+    name_or_sku: "Név vagy cikkszám (gépelj be legalább 3 karaktert a termék nevéből)"
     resend: "Újraküldés"
     back_to_orders_list: "Vissza a rendelési listához"
     back_to_payments_list: "Vissza a fizetési listához"
@@ -4172,7 +4172,7 @@ hu:
         add_product:
           cannot_add_item_to_canceled_order: "A törölt rendeléshez nem lehet tételt hozzáadni"
           cannot_add_item_to_shipped_order: "Lezárt rendeléshez nem adható hozzá további tétel"
-          include_out_of_stock_variants: "Tartalmazza azokat a változatokat, amelyeknél nincs raktárkészlet"
+          include_out_of_stock_variants: "Mutassa a készleten nem lévő termékeket is"
         shipment:
           mark_as_shipped_message_html: "Ezzel a megrendelést KISZÁLLÍTVA-ként jelölöd meg. Biztos, hogy folytatni szeretnéd?"
           mark_as_shipped_label_message: "Szállítási/átvételi értesítő e-mail küldése az ügyfélnek."
@@ -4508,13 +4508,13 @@ hu:
       payment:
         stripe:
           choose_one: Válasszon
-          enter_new_card: Adja meg az új kártya adatait
+          enter_new_card: Add meg az új kártya adatait
           used_saved_card: "Mentett kártya használata:"
-          or_enter_new_card: "Vagy adja meg az új kártya adatait:"
+          or_enter_new_card: "Vagy add meg az új kártya adatait:"
           remember_this_card: Emlékszel erre a kártyára?
         stripe_sca:
           choose_one: Válassz egyet
-          enter_new_card: Adja meg az új kártya adatait
+          enter_new_card: Add meg az új kártya adatait
           used_saved_card: "Mentett kártya használata:"
           or_enter_new_card: "Vagy add meg az új kártya adatait:"
           remember_this_card: Emlékezzen erre a kártyára?

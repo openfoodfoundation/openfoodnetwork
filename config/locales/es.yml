@@ -38,11 +38,11 @@ es:
         shipment_state: Provincia de envío
         completed_at: Completado en
         number: Número
-        state: Estado
+        state: Provincia
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
-        state: Estado
+        state: Provincia
         source: Fuente
       spree/product:
         name: "nombre del producto"
@@ -1702,7 +1702,9 @@ es:
       pack_by_customer: Pack por Consumidor
       pack_by_supplier: Pack por proveedor
       pack_by_product: Empaquetar por producto
+      pay_your_suppliers: Paga tus proveedoras
       display:
+        report_is_big: "Este informe es grande y puede ralentizar su dispositivo."
         display_anyway: "Mostrar de todos modos"
       download:
         button: "Descargar informe"
@@ -2937,7 +2939,7 @@ es:
   admin_share_city: "Ciudad"
   admin_share_zipcode: "Código Postal"
   admin_share_country: "País"
-  admin_share_state: "Estado"
+  admin_share_state: "Provincia"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Ninguno Disponible"
   hub_sidebar_manage: "Gestionar"
@@ -3502,6 +3504,7 @@ es:
         add_to_cart: "Añadir"
         in_cart: "en el carrito"
         quantity_in_cart: "%{quantity} en el carrito"
+        remaining_in_stock: "Solo queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
@@ -3951,7 +3954,7 @@ es:
     states_required: "Estados requeridos"
     editing_country: "Editar país"
     back_to_countries_list: "Volver a la lista de países"
-    states: "Estados"
+    states: "Provincias"
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
     payment_methods: "Métodos de Pago"
@@ -4038,6 +4041,7 @@ es:
       messages:
         included_price_validation: "no se puede seleccionar a menos que haya establecido una zona fiscal predeterminada"
         blank: "no puede estar vacío"
+        invalid_instagram_url: "Debe ser solo el nombre de usuario, por ejemplo, la_prof."
     layouts:
       admin:
         login_nav:
@@ -4368,6 +4372,9 @@ es:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
         hidden_customer_details_tip: "Si los nombres y/o los datos de contacto de las consumidoras están ocultos, puede solicitar a la distribuidora que actualice las preferencias de su tienda para permitir que sus proveedores vean los datos de las consumidoras en los informes."
+        products_and_inventory:
+          all_products:
+            message: "Ten en cuenta que los niveles de existencias indicados proceden únicamente de las listas de productos de los proveedores. Si utiliza Inventario para gestionar sus cantidades de existencias, estos valores se ignorarán en este informe."
       users:
         index:
           listing_users: "Listado de Usuarias"

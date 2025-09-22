@@ -1919,6 +1919,7 @@ eu:
       invalid_email: "Sartu baliozko mezu elektroniko bat"
       select_a_shipping_method: Hautatu bidalketa-metodoa
       select_a_payment_method: Hautatu ordainketa-metodoa
+      add_voucher_error: Errore bat gertatu da bonoa gehitzean
   shops:
     hubs:
       show_closed_shops: "Denda itxiak erakutsi"
@@ -2191,6 +2192,7 @@ eu:
   order_not_paid: ORDAINDU GABE
   order_total: Eskaera, guztira
   order_payment: "Honekin ordainduz:"
+  no_payment_required: "Ez da ordainketarik behar"
   order_billing_address: Kobratzeko helbidea
   order_delivery_on: 'Entregatu hemen:'
   order_delivery_address: Entregatzeko helbidea
@@ -2353,7 +2355,7 @@ eu:
   products_updating_cart: "Zure saskia eguneratzen..."
   products_cart_empty: "Gurditxo hutsa"
   products_edit_cart: "Zure orgatxoa editatu"
-  products_from: Noiztik
+  products_from: 'nekazaria: '
   products_change: "Ez dago aldaketarik gordetzeko."
   products_update_error: "Akats hauengatik ezin izan da gorde:"
   products_update_error_msg: "Ezin izan da gorde."
@@ -3174,6 +3176,7 @@ eu:
     admin:
       unit_price_tooltip: "Prezio unitarioak gardentasuna handitzen du, bezeroei produktuen eta bilgarriaren tamainen arteko prezioak erraz alderatzeko aukera ematen baitie. Kontuan izan erakusleihoan erakusten den azken prezio unitarioa diferentea izan daitekeela, zergak eta tarifak barne hartzen baititu. "
       enterprise_limit_reached: "Konturako erakundeen muga estandarra lortu duzu. Idatzi %{contact_email} helbidera, handitu behar baduzu. "
+      deleting_item_will_cancel_order: "Eragiketa honek eskaera huts bat edo gehiago sortuko ditu, eta bertan behera utziko dira. Jarraitu nahi duzu?"
       modals:
         got_it: "Ulertzen dut"
         confirm: "Baieztatu"
@@ -3413,6 +3416,7 @@ eu:
         add_to_cart: "Gehitu"
         in_cart: "orgatxoan"
         quantity_in_cart: " %{quantity} orgatxoan"
+        remaining_in_stock: "%{quantity} bakarrik geratzen da"
       bulk_buy_modal:
         min_quantity: "Gutxieneko kopurua"
         max_quantity: "Gehieneko kopurua"
@@ -3491,15 +3495,21 @@ eu:
     trix:
       bold: "Lodia"
       code: "Kodea"
+      indent: "Maila handitu"
       italic: "Italica"
       link: "Esteka"
       numbers: "Zenbakiak"
+      outdent: "Maila jaitsi"
       redo: "Berregin"
       strike: "Tatxatuta"
       undo: "Desegin"
       unlink: "Askatu"
       url: "URL"
       urlPlaceholder: "Mesedez, sartu URL bat txertatzeko"
+  inflections:
+    pot:
+      one: "lapiko"
+      other: "lapikoak"
   producers:
     signup:
       start_free_profile: "Hasi doako profil batekin, eta zabaldu prest zaudenean!"
@@ -4100,6 +4110,7 @@ eu:
           title: "Produktu berria"
           new_product: "Produktu berria"
           supplier: "Hornitzailea"
+          search_for_units: "Bilatu unitateak"
           product_name: "produktuaren izena"
           units: "Neurketa-unitatea"
           value: "Balioa"
@@ -4216,6 +4227,9 @@ eu:
           title: "Produktuaren kategoria berria"
         edit:
           title: "Produktuaren kategoria editatu"
+        destroy:
+          delete_taxon:
+            success: "Produktu-kategoria behar bezala ezabatu da"
         form:
           name: Izena
           description: Deskribapena
