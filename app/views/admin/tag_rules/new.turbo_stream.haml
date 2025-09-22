@@ -6,5 +6,5 @@
     = render(TagRuleFormComponent.new(rule: @default_rule,
       index: @index,
       customer_tags: @customer_tags,
-      hidden_field_customer_tag_options: { "data-tag-rule-group-form-component--tag-rule-group-form-target": "ruleCustomerTag" }))
+      hidden_field_customer_tag_options: { "data-tag-rule-group-form-target": "ruleCustomerTag" }))
   = turbo_stream.remove_all ".no_rules"
