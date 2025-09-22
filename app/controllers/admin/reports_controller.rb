@@ -61,7 +61,7 @@ module Admin
       ReportJob.perform_later(
         report_class:,
         user: spree_current_user,
-        params: params.merge(rendering_options: @rendering_options.options),
+        params:,
         format: report_format,
         blob: @blob,
         channel: ScopedChannel.for_id(params[:uuid]),
