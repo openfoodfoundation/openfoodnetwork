@@ -22,14 +22,12 @@ module Admin
     def show
       @report = report_class.new(spree_current_user, params, render: false)
       @rendering_options = rendering_options
-      attach_rendering_options_to_report!
       show_report
     end
 
     def create
       @report = report_class.new(spree_current_user, params, render: true)
       update_rendering_options
-      attach_rendering_options_to_report!
       render_in_background
     end
 
@@ -68,13 +66,6 @@ module Admin
         blob: @blob,
         channel: ScopedChannel.for_id(params[:uuid]),
       )
-    end
-
-    def attach_rendering_options_to_report!
-      opts = @rendering_options&.options || {}
-      return unless @report.respond_to?(:params) && @report.params.is_a?(Hash)
-
-      @report.params[:rendering_options] = opts
     end
   end
 end
