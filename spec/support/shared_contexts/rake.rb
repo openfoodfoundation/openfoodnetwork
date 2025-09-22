@@ -12,9 +12,7 @@ shared_context "rake" do
   before(:all) do
     # Make sure that Rake tasks are only loaded once.
     # Otherwise we lose code coverage data.
-    if Rake::Task.tasks.empty?
-      Openfoodnetwork::Application.load_tasks
-    end
+    Rails.application.load_tasks if Rake::Task.tasks.empty?
   end
 
   # Use the same task string as you would on the command line.
