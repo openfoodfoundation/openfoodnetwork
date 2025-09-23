@@ -19,7 +19,7 @@ RSpec.describe Reporting::ReportMetadataBuilder do
     }
   end
 
-  let(:report) { double('Report', params:, ransack_params:) }
+  let(:report) { instance_double('Report', params:, ransack_params:) }
 
   subject(:builder) { described_class.new(report, nil) }
 

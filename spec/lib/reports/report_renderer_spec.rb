@@ -42,7 +42,7 @@ RSpec.describe Reporting::ReportRenderer do
   let(:to_key)   { Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first }
 
   let(:meta_report) do
-    double(
+    instance_double(
       'MetaReport',
       rows: data,
       params: {
