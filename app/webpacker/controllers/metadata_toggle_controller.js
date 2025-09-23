@@ -5,8 +5,8 @@ export default class extends Controller {
 
   handleSelectChange() {
     this.reportTypeTarget.value == "csv" ?
-      this.disableField():
-      this.enableField();
+      this.enableField():
+      this.disableField();
   }
 
   disableField() {

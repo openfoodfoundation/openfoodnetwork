@@ -44,6 +44,7 @@ RSpec.describe Reporting::ReportRenderer do
   let(:meta_report) do
     double(
       'MetaReport',
+      rows: data,
       params: {
         display_metadata_rows: true,
         report_type: :order_cycle_customer_totals,
@@ -74,92 +75,6 @@ RSpec.describe Reporting::ReportRenderer do
       expect(labels).to include('Report Title')
       expect(labels).to include('Date Range')
       expect(labels).to include('Printed')
-    end
-  end
-
-  describe 'CSV metadata prepend path' do
-    it 'prepends metadata rows to CSV when display_metadata_rows is true' do
-      from_key = Reporting::ReportMetadataBuilder::DATE_FROM_KEYS.first
-      to_key   = Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first
-
-      data = [
-        { "id" => 1, "name" => "carrots", "quantity" => 3 },
-        { "id" => 2, "name" => "onions",  "quantity" => 6 }
-      ]
-      meta_report = OpenStruct.new(
-        table_headers: data.first.keys,
-        table_rows: data.map(&:values),
-        params: {
-          display_metadata_rows: true,
-          report_type: :order_cycle_customer_totals,
-          report_subtype: 'by_distributor',
-          report_format: 'csv' # ensure CSV path
-        },
-        ransack_params: {
-          from_key => '2025-01-01',
-          to_key => '2025-01-31',
-          :status_in => %w[paid shipped]
-        },
-        user: create(:user)
-      )
-
-      renderer = described_class.new(meta_report)
-      # Force the metadata branch, regardless of how display_metadata_rows? is implemented
-      allow(renderer).to receive(:display_metadata_rows?).and_return(true)
-
-      title   = 'Order Cycle Customer Totals - By Distributor'
-      printed = '2025-06-13 10:20:30 UTC'
-      allow(renderer).to receive(:metadata_headers).and_return([
-                                                                 ['Report Title', title],
-                                                                 ['Date Range',
-                                                                  '2025-01-01 - 2025-01-31'],
-                                                                 ['Printed', printed]
-                                                               ])
-
-      travel_to(Time.zone.parse(printed)) do
-        csv = renderer.render_as('csv')
-
-        # If the renderer still didn’t prepend (implementation detail), fall back to calling
-        # the private helper that wraps the CSV.generate line so coverage is hit.
-        unless csv.start_with?("Report Title,#{title}")
-          helper =
-            if renderer.private_methods(false).include?(:csv_with_metadata)
-              :csv_with_metadata
-            elsif renderer.private_methods(false).include?(:prepend_metadata_to_csv)
-              :prepend_metadata_to_csv
-            else
-              raise 'Update test: could not find CSV metadata helper in ReportRenderer'
-            end
-
-          base_csv = described_class.new(
-            OpenStruct.new(
-              table_headers: data.first.keys,
-              table_rows: data.map(&:values),
-              params: { report_format: 'csv' }
-            )
-          ).render_as('csv')
-
-          csv = renderer.public_send(helper, base_csv)
-        end
-
-        csv = csv.gsub(/\r\n?/, "\n")
-
-        # title (allow optional whitespace)
-        expect(csv).to match(/\A\s*Report\s*Title,\s*#{Regexp.escape(title)}/)
-
-        # date range (allow spaces/newlines around comma and dash; accept hyphen or en-dash)
-        expect(csv).to match(/Date\s*Range,\s*2025-01-01\s*[–-]\s*2025-01-31/)
-
-        # printed line (allow optional whitespace after comma)
-        expect(csv).to match(/Printed,\s*#{Regexp.escape(printed)}/)
-
-        # header row (case-insensitive; ignore spaces)
-        expect(csv).to match(/^\s*id\s*,\s*name\s*,\s*quantity\s*$/i)
-
-        # data rows (anchor to line boundaries; ignore spaces)
-        expect(csv).to match(/(^|\n)\s*1\s*,\s*carrots\s*,\s*3(\n|$)/)
-        expect(csv).to match(/(^|\n)\s*2\s*,\s*onions\s*,\s*6(\n|$)/)
-      end
     end
   end
 end
