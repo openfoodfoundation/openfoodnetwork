@@ -16,7 +16,7 @@ describe("TagListInputController", () => {
     document.body.innerHTML = `
       <div data-controller="tag-list-input">
         <input 
-          value="tag 1,tag 2,tag 3" 
+          value="tag-1,tag-2,tag-3" 
           data-tag-list-input-target="tagList" 
           type="hidden" 
           name="variant_tag_list" id="variant_tag_list"
@@ -37,7 +37,7 @@ describe("TagListInputController", () => {
               </template>
               <li class="tag-item">
                 <div class="tag-template">
-                  <span>tag 1</span>
+                  <span>tag-1</span>
                   <a 
                     class="remove-button" 
                     data-action="click->tag-list-input#removeTag"
@@ -46,7 +46,7 @@ describe("TagListInputController", () => {
               </li>
               <li class="tag-item">
                 <div class="tag-template">
-                  <span>tag 2</span>
+                  <span>tag-2</span>
                   <a 
                     class="remove-button" 
                     data-action="click->tag-list-input#removeTag"
@@ -55,7 +55,7 @@ describe("TagListInputController", () => {
               </li>
               <li class="tag-item">
                 <div class="tag-template">
-                  <span>tag 3</span>
+                  <span>tag-3</span>
                   <a 
                     class="remove-button" 
                     data-action="click->tag-list-input#removeTag"
@@ -83,7 +83,7 @@ describe("TagListInputController", () => {
     });
 
     it("updates the hidden input tag list", () => {
-      expect(variant_tag_list.value).toBe("tag 1,tag 2,tag 3,new_tag");
+      expect(variant_tag_list.value).toBe("tag-1,tag-2,tag-3,new_tag");
     });
 
     it("adds the new tag to the HTML tag list", () => {
@@ -95,6 +95,22 @@ describe("TagListInputController", () => {
 
     it("clears the tag input", () => {
       expect(variant_add_tag.value).toBe("");
+    });
+
+    describe("with a tag with spaces", () => {
+      it("replaces spaces by -", () => {
+        variant_add_tag.value = "tag other";
+        variant_add_tag.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+        const tagList = document.getElementsByClassName("tag-list")[0];
+
+        // 1 template + 3 tags + new tag (added in the beforeEach) + tag other
+        expect(tagList.childElementCount).toBe(6);
+        // Get the last span which is the last added tag
+        const spans = document.getElementsByTagName("span");
+        const span = spans.item(spans.length - 1);
+        expect(span.innerText).toBe("tag-other");
+      });
     });
 
     describe("with an empty new tag", () => {
@@ -193,12 +209,12 @@ describe("TagListInputController", () => {
   describe("removeTag", () => {
     beforeEach(() => {
       const removeButtons = document.getElementsByClassName("remove-button");
-      // Click on tag 2
+      // Click on tag-2
       removeButtons[1].click();
     });
 
     it("updates the hidden input tag list", () => {
-      expect(variant_tag_list.value).toBe("tag 1,tag 3");
+      expect(variant_tag_list.value).toBe("tag-1,tag-3");
     });
 
     it("removes the tag from the HTML tag list", () => {
@@ -237,7 +253,7 @@ describe("TagListInputController", () => {
                   </template>
                   <li class="tag-item">
                     <div class="tag-template">
-                      <span>tag 1</span>
+                      <span>tag-1</span>
                       <a 
                         class="remove-button" 
                         data-action="click->tag-list-input#removeTag"

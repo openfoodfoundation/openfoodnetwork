@@ -8,12 +8,12 @@ export default class extends Controller {
     // prevent hotkey form submitting the form (default action for "enter" key)
     event.preventDefault();
 
-    // Check if tag already exist
-    const newTagName = this.newTagTarget.value.trim();
+    const newTagName = this.newTagTarget.value.trim().replaceAll(" ", "-");
     if (newTagName.length == 0) {
       return;
     }
 
+    // Check if tag already exist
     const tags = this.tagListTarget.value.split(",");
     const index = tags.indexOf(newTagName);
     if (index != -1) {
