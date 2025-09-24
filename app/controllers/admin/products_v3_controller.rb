@@ -123,6 +123,13 @@ module Admin
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
+
+      # Transform on_hand sorting to include backorderable_priority (on-demand) for proper ordering
+      if @q[:s] == 'on_hand asc'
+        @q[:s] = ['backorderable_priority asc', @q[:s]]
+      elsif @q[:s] == 'on_hand desc'
+        @q[:s] = ['backorderable_priority desc', @q[:s]]
+      end
     end
 
     def producers
@@ -155,8 +162,27 @@ module Admin
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
-      @pagy, @products = pagy(product_query.order(:name), limit: @per_page, page: @page,
-                                                          size: [1, 2, 2, 1])
+      # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
+      # When the current ransack sort uses the computed stock columns, include them in the select
+      # so the generated COUNT/DISTINCT query is valid.
+      sort_columns = Array(@q && @q[:s]).flatten
+      if sort_columns.any? { |s|
+           s.to_s.include?('on_hand') || s.to_s.include?('backorderable_priority')
+         }
+
+        product_query = product_query.select(
+          Arel.sql('spree_products.*'),
+          Spree::Product.backorderable_priority_sql,
+          Spree::Product.on_hand_sql
+        )
+      end
+
+      @pagy, @products = pagy(
+        product_query.order(:name),
+        limit: @per_page,
+        page: @page,
+        size: [1, 2, 2, 1]
+      )
     end
 
     def product_scope
