@@ -34,4 +34,47 @@ RSpec.describe Reporting::ReportRenderer do
       expect { subject.render_as("give_me_everything") }.to raise_error
     end
   end
+
+  # metadata headers
+
+  let(:user) { create(:user) }
+  let(:from_key) { Reporting::ReportMetadataBuilder::DATE_FROM_KEYS.first }
+  let(:to_key)   { Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first }
+
+  let(:meta_report) do
+    instance_double(
+      'MetaReport',
+      rows: data,
+      params: {
+        display_metadata_rows: true,
+        report_type: :order_cycle_customer_totals,
+        report_subtype: 'by_distributor'
+      },
+      ransack_params: {
+        from_key => '2025-01-01',
+        to_key => '2025-01-31',
+        :status_in => %w[paid shipped]
+      },
+      user:
+    )
+  end
+
+  let(:renderer) { described_class.new(meta_report) }
+
+  describe '#metadata_headers' do
+    it 'returns [] when display_metadata_rows? is false' do
+      allow(renderer).to receive(:display_metadata_rows?).and_return(false)
+      expect(renderer.metadata_headers).to eq([])
+    end
+
+    it 'builds rows via ReportMetadataBuilder when display_metadata_rows? is true' do
+      allow(renderer).to receive(:display_metadata_rows?).and_return(true)
+      rows = renderer.metadata_headers
+
+      labels = rows.map(&:first)
+      expect(labels).to include('Report Title')
+      expect(labels).to include('Date Range')
+      expect(labels).to include('Printed')
+    end
+  end
 end
