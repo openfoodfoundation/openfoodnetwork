@@ -5,20 +5,13 @@ require "private_address_check/tcpsocket_ext"
 
 # Call a webhook to notify a data proxy about changes in our data.
 class ProxyNotifier
-  TOKEN_ENDPOINTS = {
-    'https://api.proxy-dev.cqcm.startinblox.com/profile' => "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
-    'https://api.proxy-stg.cqcm.startinblox.com/profile' => "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
-    'https://carte.cqcm.coop/profile' => "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
-
-  }.freeze
-
-  def refresh(platform_url)
+  def refresh(platform)
     PrivateAddressCheck.only_public_connections do
-      notify_proxy(platform_url)
+      notify_proxy(platform)
     end
   end
 
-  def request_token(platform_url)
+  def request_token(platform)
     connection = Faraday.new(
       request: { timeout: 5 },
     ) do |f|
@@ -27,7 +20,7 @@ class ProxyNotifier
       f.response :raise_error
     end
 
-    url = TOKEN_ENDPOINTS[platform_url]
+    url = ApiUser.token_endpoint(platform)
     data = {
       grant_type: "client_credentials",
       client_id: ENV.fetch("OPENID_APP_ID", nil),
@@ -38,8 +31,8 @@ class ProxyNotifier
     response.body["access_token"]
   end
 
-  def notify_proxy(platform_url)
-    token = request_token(platform_url)
+  def notify_proxy(platform)
+    token = request_token(platform)
     data = {
       eventType: "refresh",
       enterpriseUrlid: DfcProvider::Engine.routes.url_helpers.enterprises_url,
@@ -56,10 +49,11 @@ class ProxyNotifier
       f.response :json
       f.response :raise_error
     end
-    connection.post(webhook_url(platform_url), data)
+    connection.post(webhook_url(platform), data)
   end
 
-  def webhook_url(platform_url)
+  def webhook_url(platform)
+    platform_url = ApiUser.platform_url(platform)
     URI.parse(platform_url).tap do |url|
       url.path = "/djangoldp-dfc/webhook/"
     end
