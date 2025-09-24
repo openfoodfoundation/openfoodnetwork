@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe 'ofn:import:product_images' do
-  include_context "rake"
-
   describe 'task' do
     context "filename is blank" do
       it 'raises an error' do

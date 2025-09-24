@@ -145,6 +145,10 @@ RSpec.configure do |config|
     config.default_formatter = "doc"
   end
 
+  config.define_derived_metadata(file_path: %r{/spec/lib/tasks/}) do |metadata|
+    metadata[:type] = :rake
+  end
+
   # Reset locale for all specs.
   config.around(:each) do |example|
     locale = ENV.fetch('LOCALE', 'en_TST')
@@ -244,6 +248,8 @@ RSpec.configure do |config|
 
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
+
+  config.include_context "rake", type: :rake
 
   # Helpers
   config.include FactoryBot::Syntax::Methods

@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe "reset.rake" do
-  include_context "rake"
-
   it "clears job queues" do
     job_class = Class.new do
       include Sidekiq::Job
