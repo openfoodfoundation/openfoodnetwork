@@ -66,7 +66,9 @@ module OpenFoodNetwork
       DESC
       "cqcm-stg" => <<~DESC,
         Show DFC Permissions interface to share data with CQCM staging platform.
-        After approval, enteprises should apppear on https://cqcm-map.startinblox.com/.
+      DESC
+      "cqcm" => <<~DESC,
+        Show DFC Permissions interface to share data with CQCM.
       DESC
     }.merge(conditional_features).freeze;
 

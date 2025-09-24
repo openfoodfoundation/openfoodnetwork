@@ -7,6 +7,7 @@ module DfcProvider
     PLATFORM_IDS = {
       'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
       'cqcm-stg' => "https://api.proxy-stg.cqcm.startinblox.com/profile",
+      'cqcm' => "https://carte.cqcm.coop/profile",
     }.freeze
 
     prepend_before_action :move_authenticity_token

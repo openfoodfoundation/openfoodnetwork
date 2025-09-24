@@ -5,6 +5,7 @@ class ApiUser
   CLIENT_MAP = {
     "https://waterlooregionfood.ca/portal/profile" => "cqcm-dev",
     "https://api.proxy-stg.cqcm.startinblox.com/profile" => "cqcm-stg",
+    "https://carte.cqcm.coop/profile" => "cqcm",
   }.freeze
 
   def self.from_client_id(client_id)

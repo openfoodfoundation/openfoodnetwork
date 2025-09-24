@@ -8,7 +8,7 @@ class ProxyNotifier
   TOKEN_ENDPOINTS = {
     'https://api.proxy-dev.cqcm.startinblox.com/profile' => "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
     'https://api.proxy-stg.cqcm.startinblox.com/profile' => "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
-    'https://api.proxy.cqcm.startinblox.com/profile' => "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
+    'https://carte.cqcm.coop/profile' => "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
 
   }.freeze
 
