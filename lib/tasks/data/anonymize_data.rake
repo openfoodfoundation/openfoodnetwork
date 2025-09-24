@@ -64,7 +64,7 @@ namespace :ofn do
                                        environment = '#{Rails.env}'")
       Spree::Payment.update_all("response_code = null, avs_response = null,
                                  cvv_response_code = null, identifier = null,
-                                 cvv_response_message = null")
+                                 cvv_response_message = null, redirect_auth_url = null")
       Spree::CreditCard.update_all("
         month = 12, year = 2020, start_month = 12, start_year = 2000,
         cc_type = 'VISA', first_name = 'Dummy', last_name = 'Dummy', last_digits = '2543'")
