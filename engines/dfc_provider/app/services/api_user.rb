@@ -2,11 +2,29 @@
 
 # Authorised user or client using the API
 class ApiUser
-  CLIENT_MAP = {
-    "https://api.proxy-dev.cqcm.startinblox.com/profile" => "cqcm-dev",
-    "https://api.proxy-stg.cqcm.startinblox.com/profile" => "cqcm-stg",
-    "https://carte.cqcm.coop/profile" => "cqcm",
+  PLATFORMS = {
+    'cqcm-dev' => {
+      id: "https://api.proxy-dev.cqcm.startinblox.com/profile",
+      tokens: "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
+    },
+    'cqcm-stg' => {
+      id: "https://api.proxy-stg.cqcm.startinblox.com/profile",
+      tokens: "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token",
+    },
+    'cqcm' => {
+      id: "https://carte.cqcm.coop/profile",
+      tokens: "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
+    },
   }.freeze
+  CLIENT_MAP = PLATFORMS.keys.index_by { |key| PLATFORMS.dig(key, :id) }.freeze
+
+  def self.platform_url(platform)
+    PLATFORMS.dig(platform, :id)
+  end
+
+  def self.token_endpoint(platform)
+    PLATFORMS.dig(platform, :tokens)
+  end
 
   def self.from_client_id(client_id)
     id = CLIENT_MAP[client_id]

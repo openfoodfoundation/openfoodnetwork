@@ -8,10 +8,10 @@ require_relative "../spec_helper"
 #     OPENID_APP_ID="..."
 #     OPENID_APP_SECRET="..."
 RSpec.describe ProxyNotifier do
-  let(:platform_url) { "https://api.proxy-dev.cqcm.startinblox.com/profile" }
+  let(:platform) { "cqcm-dev" }
 
   it "receives an access token", :vcr do
-    token = subject.request_token(platform_url)
+    token = subject.request_token(platform)
     expect(token).to be_a String
     expect(token.length).to be > 20
   end
@@ -21,7 +21,7 @@ RSpec.describe ProxyNotifier do
     # If you don't have valid credentials, you'll get an unauthorized error.
     # Correctly authenticated, the server fails to update its data.
     expect {
-      subject.refresh(platform_url)
+      subject.refresh(platform)
     }.to raise_error Faraday::ServerError
   end
 end
