@@ -3,7 +3,7 @@
 # Authorised user or client using the API
 class ApiUser
   CLIENT_MAP = {
-    "https://waterlooregionfood.ca/portal/profile" => "cqcm-dev",
+    "https://api.proxy-dev.cqcm.startinblox.com/profile" => "cqcm-dev",
     "https://api.proxy-stg.cqcm.startinblox.com/profile" => "cqcm-stg",
     "https://carte.cqcm.coop/profile" => "cqcm",
   }.freeze
