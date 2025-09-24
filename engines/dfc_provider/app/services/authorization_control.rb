@@ -18,6 +18,13 @@ class AuthorizationControl
       MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqtvdb3BdHoLnNeMLaWd7nugPwdRAJJpdSySTtttEQY2/v1Q3byJ/kReSNGrUNkPVkOeDN3milgN5Apz+sNCwbtzOCulyFMmvuIOZFBqz5tcgwjZinSwpGBXpn6ehXyCET2LlcfLYAPA9axtaNg9wBLIHoxIPWpa2LcZstogyZY/yKUZXQTDqM5B5TyUkPN89xHFdq8SQuXPasbpYl7mGhZHkTDHiKZ9VK7K5tqsEZTD9dCuTGMKsthbOrlDnc9bAJ3PyKLRdib21Y1GGlTozo4Y/1q448E/DFp5rVC6jG6JFnsEnP0WVn+6qz7yxI7IfUU2YSAGgtGYaQkWtEfED0QIDAQAB
       -----END PUBLIC KEY-----
     KEY
+
+    # Copied from: https:///authentification.cqcm.coop/realms/cqcm
+    "https:///authentification.cqcm.coop/realms/cqcm" => <<~KEY,
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhz7dK3xQAWL+u++E/64T1OHEvnFrZRLzgCmw0leib3JL/XbaE4Jbd3fs2+zc3+dCwvCuLEKKO9Hc9wg79ifjtMKFfZDE1Ba+qhw7J9tYnu7TBtaxKuWUCdtwuultEdW+NFndaUvhD/TdyjDkRiO98mgvUbm2A3q/zyDmoUpR2IEfevkMSz8MnxUo1bDTJIyoYoKwnbToI1E9RVx2uYsYKk24Pfd+r6oTbi7TxA6Ia4EiREFki2gNIAdp66IqF0Gxyd+nGlkIbQGrW+9xynU4ar3ZNq/P8EZFdO57AdEvC3ZAzpTvOVcQ0cQ4XbRSYWQHyZ8jnjggpeddTGSqVlgx1wIDAQAB
+      -----END PUBLIC KEY-----
+    KEY
   }.freeze
 
   def self.public_key(token)

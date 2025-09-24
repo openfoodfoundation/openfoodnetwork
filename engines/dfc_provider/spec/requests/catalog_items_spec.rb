@@ -80,6 +80,23 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
           run_test!
         end
 
+        context "with a second enterprise" do
+          let(:enterprise_id) { 10_000 }
+
+          before do
+            create(
+              :distributor_enterprise,
+              id: 10_001, owner: user, name: "Fred's Icecream", description: "Yum",
+              address: build(:address, id: 40_001),
+            )
+          end
+
+          run_test! do
+            expect(response.body).to include "Apple"
+            expect(response.body).not_to include "Icecream"
+          end
+        end
+
         context "with default enterprise id" do
           let(:enterprise_id) { "default" }
 

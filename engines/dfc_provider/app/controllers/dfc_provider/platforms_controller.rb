@@ -2,12 +2,6 @@
 
 module DfcProvider
   class PlatformsController < DfcProvider::ApplicationController
-    # List of platform identifiers.
-    #   local ID => semantic ID
-    PLATFORM_IDS = {
-      'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
-    }.freeze
-
     prepend_before_action :move_authenticity_token
     before_action :check_enterprise
 
@@ -45,6 +39,9 @@ module DfcProvider
           grantee: key,
         )
       end
+
+      ProxyNotifier.new.refresh(key)
+
       render json: platform(key)
     end
 
@@ -65,13 +62,15 @@ module DfcProvider
     end
 
     def available_platforms
-      PLATFORM_IDS.keys.select(&method(:feature?))
+      ApiUser::PLATFORMS.keys.select do |platform|
+        feature?(platform, current_user)
+      end
     end
 
     def platform(key)
       {
         '@type': "dfc-t:Platform",
-        '@id': PLATFORM_IDS[key],
+        '@id': ApiUser.platform_url(key),
         localId: key,
         'dfc-t:hasAssignedScopes': {
           '@type': "rdf:List",
