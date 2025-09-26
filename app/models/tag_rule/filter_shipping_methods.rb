@@ -13,4 +13,8 @@ class TagRule::FilterShippingMethods < TagRule
     preferred_tags = preferred_shipping_method_tags.split(",")
     shipping_method_tags.intersect?(preferred_tags)
   end
+
+  def tags
+    preferred_shipping_method_tags
+  end
 end

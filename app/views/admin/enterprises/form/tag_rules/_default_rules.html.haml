@@ -8,12 +8,23 @@
           %h5
             = t('.by_default')
           %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
-  .no_rules{ "ng-show": "defaultTagGroup.rules.length == 0" }
-    = t('.no_rules_yet')
-  .tag_rule{ "ng-repeat": "rule in defaultTagGroup.rules" }
-  .add_rule.text-center
-    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
+  #default-tag-rule
+    - default_rules = @enterprise.tag_rules.select(&:is_default)
+    - current_rule_index = 0
+    - if default_rules.empty?
+      .no_rules
+        = t('.no_rules_yet')
+    - else
+      - default_rules.each_with_index do |default_rule, index|
+        - current_rule_index = index + 1
+        = render TagRuleFormComponent.new(rule: default_rule, index: index)
+        %hr
 
+  .add_rule.text-center
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "tag_rule_add_new_default_rule" }
+
+  = render AddTagRuleModalComponent.new(id: "tag_rule_add_new_default_rule", tag_rule_types: @tag_rule_types, current_index: current_rule_index, div_id: "default-tag-rule", is_default: true)
+         
 = render HelpModalComponent.new(id: "tag_rule_help_modal") do
   #tag-rule-help
     .margin-bottom-30.text-center
