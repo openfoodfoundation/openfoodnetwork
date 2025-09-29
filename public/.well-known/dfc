@@ -1,4 +1,0 @@
-{
-    "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/scopes.rdf#ReadEnterprise": "/api/dfc/enterprises/",
-    "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/scopes.rdf#ReadProducts": "/api/dfc/supplied_products/",
-}
