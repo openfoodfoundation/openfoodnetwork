@@ -4264,7 +4264,7 @@ en_CA:
         states:
           authorized: "Authorized"
           received: "Received"
-          canceled: "Canceled"
+          canceled: "Cancelled"
       line_items:
         index:
           results_found: " %{number}  Results found."
@@ -4641,7 +4641,7 @@ en_CA:
       pending: pending
       ready: ready
       shipped: shipped
-      canceled: canceled
+      canceled: cancelled
     payment_states:
       balance_due: balance due
       completed: completed

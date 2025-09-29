@@ -1452,7 +1452,10 @@ fr_CA:
         owner: Gérant
         producer: Producteur
         sells_options:
+          unspecified: non spécifié
           none: aucun
+          own: propre
+          any: Tous
       change_type_form:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFN

@@ -766,6 +766,8 @@ hu:
           one: "1 kiválasztva"
           other: "%{count}kiválasztva"
         import: Importálás
+      import:
+        imported_products: "Importált termékek: %{count}"
     enterprise_fees:
       index:
         title: "Vállalkozási díjak"
@@ -890,7 +892,7 @@ hu:
       bulk_update:
         success: Változtatások mentve
       delete_product:
-        success: Sikeresen törölte a terméket
+        success: Sikeresen törölted a terméket
         error: A terméket nem lehet törölni
       delete_variant:
         success: Sikeresen törölte a termék változatot
@@ -904,7 +906,7 @@ hu:
         select_unit_scale: Válassz mértékegységet
         add_a_tag: Adj hozzá egy címkét
       clone:
-        success: Sikeresen klónozta a terméket
+        success: Sikeresen klónoztad a terméket
         error: A terméket nem sikerült klónozni
     product_import:
       title: Termék importálás
@@ -1387,6 +1389,8 @@ hu:
         producer: Termelő
         sells_options:
           none: n.a.
+          own: saját
+          any: bárkié
       change_type_form:
         producer_profile: Termelői Profil
         connect_ofn: Csatlakozás OFN-en keresztül
@@ -1670,7 +1674,7 @@ hu:
       supplier_totals: Rendelési ciklus Beszállítói végösszegek
       percentage: "%{value} %"
       supplier_totals_by_distributor: A ciklus Beszállítói végösszegei Elosztónként
-      totals_by_supplier: Megrendelési ciklus Elosztói végösszegi Beszállító szerint
+      totals_by_supplier: Megrendelési ciklus Elosztói összesítések Beszállító szerint
       customer_totals: Rendelési ciklus Ügyfélösszegek
       all_products: Minden termék
       inventory: Leltár (készleten)
@@ -1758,7 +1762,7 @@ hu:
         generate_report: "Készíts jelentést"
         on_screen: "A képernyőn"
         spreadsheet: "Táblázat (Excel, OpenOffice...)"
-        display: Kijelző
+        display: Megjelenítés
         summary_row: Összefoglaló sor
         header_row: Fejléc sor
         raw_data: Nyers adatok
@@ -2887,7 +2891,7 @@ hu:
   delivery_method: Áruátvételi Mód
   fee_type: "Díjtípus"
   tax_category: "Adókategória"
-  display: "Kijelző"
+  display: "Megjelenítés"
   tags: "Címkék"
   calculator: "Kiszámítási mód"
   calculator_values: "Kiszámítás értékek"
@@ -4002,7 +4006,7 @@ hu:
     default: "alapértelmezett"
     calculator: "Díjszámítási mód"
     zone: "Zóna"
-    display: "Kijelző"
+    display: "Megjelenítés"
     environment: "Környezet"
     active: "Aktív"
     nore: "Több"
@@ -4248,13 +4252,13 @@ hu:
           products_tip: "A termékek, melyeket az Open Food hálózatán keresztül kínálsz"
           active_products:
             zero: "Nincsenek aktív termékeid."
-            one: "Egy aktív terméke van"
-            few: "%{count} aktív terméke van"
-            many: "%{count} aktív terméke van"
-            other: "%{count} aktív terméke van"
+            one: "Egy aktív terméked van"
+            few: "%{count} aktív terméked van"
+            many: "%{count} aktív terméked van"
+            other: "%{count} aktív terméked van"
         order_cycles:
           order_cycles: "Rendelési ciklusok"
-          order_cycles_tip: "A rendelési ciklusok határozzák meg, hogy a termékei mikor és hol állnak az ügyfelek rendelkezésére."
+          order_cycles_tip: "A rendelési ciklusok határozzák meg, hogy a termékeid mikor és hol állnak az ügyfelek rendelkezésére."
           you_have_active:
             zero: "Nincsenek aktív rendelési ciklusaid."
             one: "Egy aktív rendelési ciklusod van."
@@ -4577,7 +4581,7 @@ hu:
         invoice_attached_text: Mellékelten talál egy összesítőt a legutóbbi rendeléséről
     user_mailer:
       reset_password_instructions:
-        dear_customer: "Kedves Fogyasztó,"
+        dear_customer: "Kedves Megrendelő,"
         request_sent_text: |
             Jelszó visszaállítására irányuló kérés érkezett.
             Ha nem te nyújtottad be ezt a kérést, egyszerűen hagyd figyelmen kívül ezt az e-mailt.

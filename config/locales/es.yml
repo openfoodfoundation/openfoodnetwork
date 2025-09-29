@@ -1946,7 +1946,7 @@ es:
           label: País
       shipping_info:
         title: Información de envío
-      submit: Siguente - método de pago
+      submit: Siguiente - método de pago
       cancel: Regresar a Editar cesta
     step2:
       payment_method:
