@@ -1026,6 +1026,10 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} has 1 rule"
+          other: "%{tag} has %{count} rules"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
