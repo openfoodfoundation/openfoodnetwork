@@ -16,4 +16,13 @@
               %span=tag
               %a.remove-button{ "data-action": "click->tag-list-input#removeTag" }
                 ×
-      = text_field_tag "variant_add_tag", nil, class: "input", placeholder: placeholder, "data-action": "keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput blur->tag-list-input#addTag", "data-tag-list-input-target": "newTag", **aria_label_option, style: "display: #{display};"
+      = text_field_tag("variant_add_tag",
+        nil,
+        { class: "input",
+          placeholder: placeholder,
+          "data-action": "keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput blur->tag-list-input#addTag",
+          "data-tag-list-input-target": "newTag",
+          **aria_label_option,
+          style: "display: #{display};"}.merge(input_field_data_options))
+      - if content?
+        = content
