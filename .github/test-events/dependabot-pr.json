@@ -1,0 +1,15 @@
+{
+  "pull_request": {
+    "number": 13545,
+    "title": "Bump test from 7.0.4 to 7.0.8",
+    "user": {
+      "login": "dependabot[bot]"
+    }
+  },
+  "repository": {
+    "owner": {
+      "login": "openfoodfoundation"
+    },
+    "name": "openfoodnetwork"
+  }
+}
