@@ -1,0 +1,4 @@
+%div{ "data-controller": "autocomplete", "data-autocomplete-url-value": autocomplete_url }
+  = render tag_list_input_component.new(name: , tags: , placeholder: , aria_label: , only_one: , input_field_data_options: {"data-autocomplete-target": "input"}) do
+    .autocomplete
+      %ul.suggestion-list{ "data-autocomplete-target": "results" }
