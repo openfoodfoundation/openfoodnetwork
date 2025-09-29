@@ -10,6 +10,7 @@ class TagRule < ApplicationRecord
   scope :exclude_inventory, -> { where.not(type: "TagRule::FilterProducts") }
   scope :exclude_variant, -> { where.not(type: "TagRule::FilterVariants") }
 
+  # TODO doesn not exluce inventory and or variant tag rule
   def self.mapping_for(enterprises)
     self.for(enterprises).each_with_object({}) do |rule, mapping|
       rule.preferred_customer_tags.split(",").each do |tag|
@@ -20,6 +21,14 @@ class TagRule < ApplicationRecord
         end
       end
     end
+  end
+
+  def self.matching_variant_tag_rules_by_enterprises(enterprise_id, tag)
+    rules = where(type: "TagRule::FilterVariants").for(enterprise_id)
+
+    return [] if rules.empty?
+
+    rules.select { |r| r.preferred_customer_tags =~ /#{tag}/ }
   end
 
   # The following method must be overriden in a concrete tagRule
