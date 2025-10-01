@@ -3,6 +3,10 @@
 require 'system_helper'
 
 RSpec.describe "Testing external scripts loaded in the browser" do
+  before do
+    skip "Puffing Billy seems to make our rspec processes hand at the end."
+  end
+
   it "loads a website", :vcr do
     visit "http://deb.debian.org:80/debian/"
     expect(page).to have_content "Debian Archive"
