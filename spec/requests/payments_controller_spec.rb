@@ -18,18 +18,18 @@ RSpec.describe "/payments/:id/authorize" do
   describe "when user is logged in" do
     before { sign_in user }
 
-    context "has cvv response message" do
+    context "has redirect auth url" do
       before do
-        allow_any_instance_of(Spree::Payment).to receive(:cvv_response_message).and_return('http://example.com')
+        allow_any_instance_of(Spree::Payment).to receive(:redirect_auth_url).and_return('http://example.com')
       end
 
-      it "redirects to the CVV response URL" do
+      it "redirects to the 3D-Auth url" do
         get authorize_payment_path(payment)
         expect(response).to redirect_to('http://example.com')
       end
     end
 
-    context "doesn't have cvv response message" do
+    context "doesn't have redirect auth url" do
       it "redirect to order URL" do
         get authorize_payment_path(payment)
         expect(response).to redirect_to(order_url(order))
