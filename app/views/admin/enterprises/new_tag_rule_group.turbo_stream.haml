@@ -1,0 +1,4 @@
+= turbo_stream.append "customer-tag-rule" do
+  = render TagRuleGroupFormComponent.new(group: @group, index: @index, customer_rule_index: @customer_rule_index, tag_rule_types: @tag_rule_types)
+
+= turbo_stream.remove_all ".no_tags"

@@ -1,8 +1,8 @@
-%div{ "data-controller": "tag-list-input" }
+%div{ "data-controller": "tag-list-input", "data-tag-list-input-only-one-value": "#{only_one}" }
   .tags-input
     .tags
       - # We use display:none instead of hidden field, so changes to the value can be picked up by the bulkFormController 
-      = f.text_field method.to_sym, value: tags.join(","), "data-tag-list-input-target": "tagList", "style": "display: none" 
+      = text_field_tag name, tags.join(","), {"data-tag-list-input-target": "tagList", "style": "display: none"}.merge(hidden_field_data_options)
       %ul.tag-list{"data-tag-list-input-target": "list"}
         %template{"data-tag-list-input-target": "template"}
           %li.tag-item
@@ -16,4 +16,4 @@
               %span=tag
               %a.remove-button{ "data-action": "click->tag-list-input#removeTag" }
                 ×
-      = text_field_tag "variant_add_tag_#{f.object.id}".to_sym, nil, class: "input", placeholder: placeholder, "data-action": "keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput", "data-tag-list-input-target": "newTag", **aria_label_option
+      = text_field_tag "variant_add_tag", nil, class: "input", placeholder: placeholder, "data-action": "keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput blur->tag-list-input#addTag", "data-tag-list-input-target": "newTag", **aria_label_option, style: "display: #{display};"

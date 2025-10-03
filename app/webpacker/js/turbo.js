@@ -1,4 +1,5 @@
 import "@hotwired/turbo";
+import showHttpError from "./services/show_http_error";
 
 import TurboPower from "turbo_power";
 TurboPower.initialize(Turbo.StreamActions);
@@ -12,20 +13,9 @@ document.addEventListener("turbo:frame-missing", (event) => {
 });
 
 document.addEventListener("turbo:submit-end", (event) => {
-  if (!event.detail.success){
+  if (!event.detail.success) {
     // show error message on failure
-    showError(event.detail.fetchResponse?.statusCode);
+    showHttpError(event.detail.fetchResponse?.statusCode);
     event.preventDefault();
   }
 });
-
-function showError(status) {
-  // Note that other 4xx errors will be handled differently.
-  if(status == 401) {
-    alert(I18n.t("errors.unauthorized.message"));
-  } else if(status === undefined) {
-    alert(I18n.t("errors.network_error.message"));
-  } else if (status >= 500) {
-    alert(I18n.t("errors.general_error.message"));
-  }
-}

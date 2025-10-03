@@ -7,7 +7,7 @@
       = render partial: 'product_row', locals: { f: product_form, product:, product_index: }
 
     - product.variants.each_with_index do |variant, variant_index|
-      = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
+      = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
         %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
           = render partial: 'variant_row', locals: { variant:, f: variant_form, category_options:, tax_category_options:, producer_options: }
 
