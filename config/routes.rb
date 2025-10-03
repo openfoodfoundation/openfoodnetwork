@@ -29,6 +29,9 @@ Openfoodnetwork::Application.routes.draw do
   get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
   get '/payments/:id/authorize' => 'payments#redirect_to_authorize', as: "authorize_payment"
 
+  # Well known paths
+  get "/.well-known/dfc/", to: "well_known#dfc"
+
   resource :cart, controller: "cart" do
     post :populate
   end
