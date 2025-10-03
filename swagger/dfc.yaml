@@ -467,6 +467,8 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
@@ -541,6 +543,8 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct

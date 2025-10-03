@@ -15,9 +15,16 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
       email_address: "hello@example.org",
       phone: "0404 444 000 200",
       website: "https://openfoodnetwork.org",
-      address: build(:address, id: 40_000, address1: "42 Doveton Street"),
+      address:,
     )
   end
+  let(:address) {
+    build(
+      :address,
+      id: 40_000, address1: "42 Doveton Street",
+      latitude: -25.345376, longitude: 131.0312006,
+    )
+  }
   let!(:other_enterprise) do
     create(
       :distributor_enterprise,

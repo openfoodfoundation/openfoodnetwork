@@ -8,7 +8,9 @@ class AddressBuilder < DfcBuilder
       postalCode: address.zipcode,
       city: address.city,
       country: address.country.name,
-      region: address.state.name
+      region: address.state.name,
+      latitude: address.latitude,
+      longitude: address.longitude,
     )
   end
 end
