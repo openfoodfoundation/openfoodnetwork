@@ -15,6 +15,8 @@ jobs:
         with:
           app_id: ${{ secrets.DEPENDABOT_PR_APP_ID }}
           private_key: ${{ secrets.DEPENDABOT_PR_APP_PRIVATE_KEY }}
+          installation_retrieval_mode: id
+          installation_retrieval_payload: ${{ secrets.DEPENDABOT_PR_APP_INSTALLATION_ID }}
 
       - name: Move PR to Code Review in Project v2
         uses: actions/github-script@v7
