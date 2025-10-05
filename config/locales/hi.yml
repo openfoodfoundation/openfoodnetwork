@@ -4253,6 +4253,7 @@ hi:
           terms_of_service: "सेवा की शर्तें"
         sortable_header:
           name: "नाम"
+          on_hand: "अभी उपलब्ध"
           number: "नंबर"
           completed_at: "इस पर पूरा हुआ"
           state: "राज्य"

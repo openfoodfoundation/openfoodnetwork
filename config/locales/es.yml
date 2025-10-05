@@ -1494,6 +1494,8 @@ es:
         re_notify_producers: Re notificar a los productores
         notify_producers_tip: Esto le enviará un correo a cada productor con su lista de pedidos.
       date_time_warning_modal_content:
+        title: 'Hay pedidos ya asociados a este ciclo de pedido'
+        content: 'Si quieres crear un nuevo ciclo de pedido, se recomienda duplicarlo primero y luego cambiar las fechas'
         proceed: 'Proceda de todos modos'
         cancel: 'Cancelar'
       incoming:
@@ -4431,6 +4433,7 @@ es:
           terms_of_service: "Términos de servicio"
         sortable_header:
           name: "Nombre"
+          on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completado en"
           state: "Provincia"

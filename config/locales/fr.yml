@@ -4634,6 +4634,7 @@ fr:
           terms_of_service: "Conditions Générales d'Utilisation et de Vente"
         sortable_header:
           name: "Produit/Variante"
+          on_hand: "En stock"
           number: "N° commande"
           completed_at: "Date"
           state: "Statut"

@@ -4568,6 +4568,7 @@ en_CA:
           terms_of_service: "Terms of Service"
         sortable_header:
           name: "Name"
+          on_hand: "On Hand"
           number: "Number"
           completed_at: "Completed At"
           state: "State"

@@ -3506,6 +3506,7 @@ nl_BE:
       shared:
         sortable_header:
           name: "Naam"
+          on_hand: "Bij de Hand"
           number: "Nummer"
           completed_at: "Voltooid op"
           state: "Staat"

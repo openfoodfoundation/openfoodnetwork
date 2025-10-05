@@ -3549,6 +3549,7 @@ en_IN:
       shared:
         sortable_header:
           name: "Name"
+          on_hand: "In Stock"
           number: "Number"
           completed_at: "Completed At"
           state: "State"

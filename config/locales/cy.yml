@@ -4585,6 +4585,7 @@ cy:
           terms_of_service: "Telerau Gwasanaeth"
         sortable_header:
           name: "Enw"
+          on_hand: "Ar gael"
           number: "Nifer"
           completed_at: "Cwblhawyd am"
           state: "Sir"

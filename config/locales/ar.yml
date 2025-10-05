@@ -4200,6 +4200,7 @@ ar:
           terms_of_service: "شروط الخدمة"
         sortable_header:
           name: "الاسم"
+          on_hand: "متوفر"
           number: "رقم "
           completed_at: "تم الانتهاء عند "
           state: "ولاية"

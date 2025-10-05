@@ -4622,6 +4622,7 @@ fr_CA:
           terms_of_service: "Conditions Générales d'Utilisation"
         sortable_header:
           name: "Nom"
+          on_hand: "En stock"
           number: "N° commande"
           completed_at: "Passée à "
           state: "Département"

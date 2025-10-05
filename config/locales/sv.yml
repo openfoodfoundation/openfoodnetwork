@@ -2358,6 +2358,7 @@ sv:
       shared:
         sortable_header:
           name: "Namn"
+          on_hand: "På lager"
           state: "Region"
           payment_state: "Betalningsstatus"
           shipment_state: "Leveransstatus"

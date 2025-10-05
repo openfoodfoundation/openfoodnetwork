@@ -3495,6 +3495,7 @@ fil_PH:
       shared:
         sortable_header:
           name: "Pangalan"
+          on_hand: "on hand"
           number: "Bilang"
           completed_at: "Nakumpleto"
           state: "province"

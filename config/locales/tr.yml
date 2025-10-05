@@ -3804,6 +3804,7 @@ tr:
           terms_of_service: "Üyelik Sözleşmesi"
         sortable_header:
           name: "Ad"
+          on_hand: "Mevcut"
           number: "Numara"
           completed_at: "Oluşturulma TARİHİ"
           state: "Durum"

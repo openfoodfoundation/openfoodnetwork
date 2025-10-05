@@ -628,7 +628,7 @@ eu:
     shipping_method: Bidaltzeko metodoa
     shop: Denda
     sku: erreferentzia-zenbakia
-    status_state: Probintzia
+    status_state: Egoera
     tags: Etiketak
     variant: Barietatea
     weight: Pisua
@@ -734,7 +734,7 @@ eu:
         edit_ship_address: "Editatu bidalketa-helbidea"
         required_fileds: "Nahitaezko eremuak izartxo batekin adierazten dira"
         select_country: "Aukeratu herrialdea"
-        select_state: "Hautatu probintzia"
+        select_state: "Hautatu erkidegoa"
         edit: "Editatu"
         update_address: "Zuzendaritza eguneratu"
         confirm_delete: "Baieztatzen duzu ezabatu nahi duzula?"
@@ -1102,7 +1102,7 @@ eu:
           legal_phone_number: Legezko telefono-zenbakia
           phone_placeholder: "98 123 4565"
           select_country: "Aukeratu herrialdea"
-          select_state: "Hautatu probintzia"
+          select_state: "Hautatu erkidegoa"
         contact:
           legend: "Kontaktua"
           name: Izena
@@ -1416,7 +1416,9 @@ eu:
         re_notify_producers: Ekoizleei berriz jakinaraztea
         notify_producers_tip: Horrek mezu bat bidaliko dio produktore bakoitzari bere eskaera-zerrendarekin.
       date_time_warning_modal_content:
-        proceed: 'Dena dela'
+        title: 'Dagoeneko eskaera-ziklo honekin lotutako eskaerak daude'
+        content: 'Eskaera-ziklo berri bat sortu nahi baduzu, lehenik bikoiztea gomendatzen da, eta, ondoren, datak aldatzea.'
+        proceed: 'Aurrera, hala ere. '
         cancel: 'Ezeztatu'
       incoming:
         incoming: "Sartu"
@@ -1936,8 +1938,8 @@ eu:
       cart_sidebar:
         checkout: "Balidatu"
         edit_cart: "Editatu orgatxoa"
-        items_in_cart_singular: " %{num} artikulu bere orgatxoan"
-        items_in_cart_plural: " %{num} artikulu bere orgatxoan"
+        items_in_cart_singular: " %{num} artikulu bere saskian"
+        items_in_cart_plural: " %{num} artikulu bere saskian"
         close: "Itxi"
         cart_empty: "Zure saskia hutsik dago"
         take_me_shopping: "Eraman nazazu erosketak egitera!"
@@ -2047,7 +2049,7 @@ eu:
   longitude: Luzera
   longitude_placeholder: adib. 144.7851531
   use_geocoder: Kalkulatu latitudea eta longitudea automatikoki helbidetik?
-  state: Egoera
+  state: Erkidegoa
   postcode: Posta-kodea
   postcode_placeholder: adib. 08025
   suburb: Auzoa
@@ -2110,7 +2112,7 @@ eu:
       header: "Nola erabiltzen ditugu cookieak"
       desc_part_1: "Cookieak testu-fitxategi oso txikiak dira, eta zure ordenagailuan gordetzen dira webgune batzuk bisitatzen dituzunean."
       desc_part_2: "OFNn errespetuz jokatzen dugu zure pribatutasunarekin. Elikagaiak online salerosteko zerbitzua eskaintzeko beharrezkoak diren cookieak bakarrik erabiltzen ditugu. Ez dugu zure daturik saltzen. Baliteke etorkizunean zure daturen bat partekatzea proposatzea, ekosistemarako baliagarriak izan daitezkeen zerbitzu komun berriak sortzeko (adibidez, elikadura-sistema laburretarako zerbitzu logistikoak), baina oraindik ez gara puntu horretara iritsi, eta ez dugu egingo zure baimenik gabe: -) "
-      desc_part_3: "Cookieak erabiltzen ditugu, batez ere, 'saioa hasten baduzu' nor zaren gogoratzeko edo zure orgatxoan jartzen dituzun artikuluak gogoratzeko, saioa hasi ez baduzu ere. Webgunean nabigatzen jarraitzen baduzu\"Cookieak onartu\" klik egin gabe, suposatzen dugu baimena ematen diguzula webgunearen funtzionamendurako funtsezkoak diren cookieak gordetzeko. Hona hemen erabiltzen ditugun cookien zerrenda! "
+      desc_part_3: "Cookieak erabiltzen ditugu, batez ere, 'saioa hasten baduzu' nor zaren gogoratzeko edo zure saskian jartzen dituzun artikuluak gogoratzeko, saioa hasi ez baduzu ere. Webgunean nabigatzen jarraitzen baduzu\"Cookieak onartu\" klik egin gabe, suposatzen dugu baimena ematen diguzula webgunearen funtzionamendurako funtsezkoak diren cookieak gordetzeko. Hona hemen erabiltzen ditugun cookien zerrenda! "
       essential_cookies: "Funtsezko cookieak"
       essential_cookies_desc: "Cookie hauek behar-beharrezkoak dira gure webgunearen funtzionamendurako."
       essential_cookies_note: "Cookie gehienek identifikatzaile bakarra dute, baina ez beste datu batzuk, eta, beraz, haien helbide elektronikoa eta pasahitza, adibidez, ez dira inoiz sartzen eta ez dira azaltzen."
@@ -2133,11 +2135,11 @@ eu:
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/es/cookies /"
-      disabling_cookies_note: "Baina kontuan izan Open Food Networkek erabiltzen dituen funtsezko cookieak ezabatzen edo aldatzen baditu, webguneak ez duela funtzionatuko, ezingo duela orgatxoan ezer gehitu edo eskaerarik egin, adibidez."
+      disabling_cookies_note: "Baina kontuan izan Open Food Networkek erabiltzen dituen funtsezko cookieak ezabatzen edo aldatzen baditu, webguneak ez duela funtzionatuko, ezingo duela saskian ezer gehitu edo eskaerarik egin, adibidez."
     cookies_banner:
       cookies_usage: "Webgune honek cookieak erabiltzen ditu nabigazioa arina eta segurua izan dadin, eta nola erabiltzen duen ulertzen laguntzeko, eskaintzen ditugun funtzioak hobetzeko."
       cookies_definition: "Cookieak testu-fitxategi oso txikiak dira, eta zure ordenagailuan gordetzen dira webgune batzuk bisitatzen dituzunean."
-      cookies_desc: "Elikagaiak online saltzeko/erosteko zerbitzua eskaintzeko beharrezkoak diren cookieak bakarrik erabiltzen ditugu. Ez dugu zure daturik saltzen. Cookieak erabiltzen ditugu, batez ere, gogoan izateko nor zaren zerbitzuan 'saioa hasten' baduzu, edo zure orgatxoan jarri zenituen artikuluak gogoratu ahal izateko, saioa hasi ez baduzu ere. Webgunean nabigatzen jarraitzen baduzu\"Cookieak onartu\" n klik egin gabe, onartzen dugu baimena ematen digula webgunearen funtzionamendurako funtsezkoak diren cookieak gordetzeko. "
+      cookies_desc: "Elikagaiak online saltzeko/erosteko zerbitzua eskaintzeko beharrezkoak diren cookieak bakarrik erabiltzen ditugu. Ez dugu zure daturik saltzen. Cookieak erabiltzen ditugu, batez ere, gogoan izateko nor zaren zerbitzuan 'saioa hasten' baduzu, edo zure saskian jarri zenituen artikuluak gogoratu ahal izateko, saioa hasi ez baduzu ere. Webgunean nabigatzen jarraitzen baduzu\"Cookieak onartu\" n klik egin gabe, onartzen dugu baimena ematen digula webgunearen funtzionamendurako funtsezkoak diren cookieak gordetzeko. "
       cookies_policy_link_desc: "Informazio gehiago nahi izanez gero, kontsultatu gure"
       cookies_policy_link: "cookie-politika"
       cookies_accept_button: "Cookieak onartu"
@@ -2317,7 +2319,7 @@ eu:
   maps_closed: "Itxita"
   map_title: "Mapa"
   hubs_buy: "Erosi:"
-  hubs_shopping_here: "Hemen erosten"
+  hubs_shopping_here: "Hemen erosi"
   hubs_orders_closed: "Eskaera itxiak"
   hubs_profile_only: "Profila bakarrik"
   hubs_delivery_options: "Entregatzeko aukerak"
@@ -2355,7 +2357,7 @@ eu:
   products_updating_cart: "Zure saskia eguneratzen..."
   products_cart_empty: "Gurditxo hutsa"
   products_edit_cart: "Zure orgatxoa editatu"
-  products_from: 'nekazaria: '
+  products_from: 'ekoizlea: '
   products_change: "Ez dago aldaketarik gordetzeko."
   products_update_error: "Akats hauengatik ezin izan da gorde:"
   products_update_error_msg: "Ezin izan da gorde."
@@ -2522,7 +2524,7 @@ eu:
   x_filters_applied: "aplikatutako iragazkiak"
   submitting_order: "Zure agindua bidaltzen: itxaron"
   confirm_hub_change: "Ziur zaude? Horrek zure kontsumo-taldea aldatuko du eta erosketa-orgako edozein artikulu ezabatuko du. "
-  confirm_oc_change: "Ziur zaude? Horrek hautatutako ordena-zikloa aldatuko du, eta erosketa-orgatxoan edozein artikulu ezabatuko du. "
+  confirm_oc_change: "Ziur zaude? Horrek hautatutako ordena-zikloa aldatuko du, eta erosketa-saskian edozein artikulu ezabatuko du. "
   location_placeholder: "Idatzi kokapen bat..."
   error_required: "ezin da hutsik egon"
   error_number: "zenbaki bat izan behar du"
@@ -2591,8 +2593,8 @@ eu:
         postcode_field: "Posta-kodea:"
         postcode_field_placeholder: "adib. 08025"
         postcode_field_error: "Posta-kode bat behar du"
-        state_field: "Eskualdea:"
-        state_field_error: "Eskatutako eskualdea"
+        state_field: "Erkidegoa:"
+        state_field_error: "Eskatutako erkidegoa"
         country_field: "Herrialdea:"
         country_field_error: "Hautatu herrialde bat, mesedez"
         map_location: "Kokapena mapan"
@@ -2747,7 +2749,7 @@ eu:
   admin_enterprise_groups_contact_city_placeholder: "adib. Bartzelona"
   admin_enterprise_groups_contact_zipcode: "Posta-kodea"
   admin_enterprise_groups_contact_zipcode_placeholder: "08025 adib."
-  admin_enterprise_groups_contact_state_id: "Probintzia"
+  admin_enterprise_groups_contact_state_id: "Erkidegoa"
   admin_enterprise_groups_contact_country_id: "Herrialdea"
   admin_enterprise_groups_web_twitter: "adib: the_prof"
   admin_enterprise_groups_web_website_placeholder: "adib. www.truffles.com"
@@ -2824,8 +2826,8 @@ eu:
   spree_admin_single_enterprise_hint: "Iradokizuna: Jendeak aurkitu zaitzan, aktibatu zure ikuspena"
   spree_admin_eg_pickup_from_school: "adib. 'Kooperatiban biltzea' "
   spree_admin_eg_collect_your_order: "adib. 'Mesedez, jaso ezazu zure eskaera Inurritegi kaleko 3. zenbakian' "
-  spree_order_availability_error: "Banatzaileak edo eskaera-zikloak ezin ditu produktuak bere orgatxoan hornitu"
-  spree_order_populator_error: "Banatzaile edo eskaera-ziklo honek ezin ditu produktu guztiak zure orgatxoan hornitu. Mesedez, aukeratu beste bat. "
+  spree_order_availability_error: "Banatzaileak edo eskaera-zikloak ezin ditu produktuak bere saskian hornitu"
+  spree_order_populator_error: "Banatzaile edo eskaera-ziklo honek ezin ditu produktu guztiak zure saskian hornitu. Mesedez, aukeratu beste bat. "
   spree_order_cycle_error: "Aukeratu eskaera-ziklo bat eskaera honetarako."
   spree_order_populator_availability_error: "Produktu hau ez dago eskuragarri aukeratutako banatzailean edo eskaera-zikloan."
   spree_distributors_error: "Gutxienez talde bat hautatu behar da"
@@ -2858,7 +2860,7 @@ eu:
   admin_share_city: "Hiria"
   admin_share_zipcode: "Posta-kodea"
   admin_share_country: "Herrialdea"
-  admin_share_state: "Egoera"
+  admin_share_state: "Erkidegoa"
   hub_sidebar_hubs: "Taldeak"
   hub_sidebar_none_available: "Bat ere ez dago erabilgarri"
   hub_sidebar_manage: "Kudeatu"
@@ -2919,7 +2921,7 @@ eu:
   report_header_hub_address_line1: "Taldearen 1. helbidea"
   report_header_hub_address_line2: "Taldearen 2. helbidea"
   report_header_hub_address_zipcode: "Taldearen posta-kodea"
-  report_header_hub_address_state_name: "Taldearen eskualdea"
+  report_header_hub_address_state_name: "Taldearen Erkidegoa"
   report_header_code: Kodea
   report_header_paid: Ordainduta?
   report_header_delivery: Entregatua?
@@ -2929,14 +2931,14 @@ eu:
   report_header_ship_street_2: Bidalketa-kalea 2
   report_header_ship_city: Bidalketa-hiria
   report_header_ship_postcode: Bidalketaren posta-kodea
-  report_header_ship_state: Bidalketa-probintzia
+  report_header_ship_state: Bidalketa-erkidegoa
   report_header_billing_street: Fakturazio-kalea
   report_header_billing_street_2: Fakturazio-kalea 2
   report_header_billing_street_3: Fakturazio-kalea 3
   report_header_billing_street_4: Fakturazio-kalea 4
   report_header_billing_city: Fakturazio-hiria
   report_header_billing_postcode: Fakturazioaren posta-kodea
-  report_header_billing_state: Fakturazio-probintzia
+  report_header_billing_state: Fakturazio-erkidegoa
   report_header_incoming_transport: Sartzen den garraioa
   report_header_special_instructions: jarraibide bereziak
   report_header_order_number: Eskaera-zenbakia
@@ -3044,7 +3046,7 @@ eu:
   report_header_total: "Guztira ( %{currency_symbol})"
   report_header_total_incl_vat: "Zergak guztira ( %{currency_symbol})"
   report_header_temp_controlled: Tenperatura-kontrola?
-  report_header_shipment_state: "Bidalketa-probintzia"
+  report_header_shipment_state: "Bidalketa-erkidegoa"
   report_header_shipping_method: "Bidaltzeko metodoa"
   report_header_is_producer: Ekoizlea?
   report_header_not_confirmed: Baieztatu gabe
@@ -3171,7 +3173,7 @@ eu:
     default_card_voids_auth: Txartel lehenetsia aldatzeak dendetan txartel hori kargatzeko dauden baimenak ezabatuko ditu. Aurrez zehaztutako txartela eguneratu ondoren, dendak berriro baimendu ditzakezu. Aurretik zehaztutako txartela aldatu nahi duzu?
     cart:
       add_to_cart_failed: >
-          Arazo bat egon da orgatxoan produktu hori gehitzean. Baliteke  libre egoteari
+          Arazo bat egon da saskian produktu hori gehitzean. Baliteke  libre egoteari
           utzi izana edo denda itxi izana.
     admin:
       unit_price_tooltip: "Prezio unitarioak gardentasuna handitzen du, bezeroei produktuen eta bilgarriaren tamainen arteko prezioak erraz alderatzeko aukera ematen baitie. Kontuan izan erakusleihoan erakusten den azken prezio unitarioa diferentea izan daitekeela, zergak eta tarifak barne hartzen baititu. "
@@ -3414,8 +3416,8 @@ eu:
     shopfront:
       variant:
         add_to_cart: "Gehitu"
-        in_cart: "orgatxoan"
-        quantity_in_cart: " %{quantity} orgatxoan"
+        in_cart: "saskian"
+        quantity_in_cart: " %{quantity} saskian"
         remaining_in_stock: "%{quantity} bakarrik geratzen da"
       bulk_buy_modal:
         min_quantity: "Gutxieneko kopurua"
@@ -3602,7 +3604,7 @@ eu:
   spree:
     order_updated: "Eskaera eguneratua"
     add_country: "Gehitu herrialdea"
-    add_state: "Gehitu egoera"
+    add_state: "Gehitu erkidegoa"
     adjustment: "Doikuntza"
     all: "Denak"
     associated_adjustment_closed: "Doikuntza elkartu itxia"
@@ -3617,7 +3619,7 @@ eu:
     editing_tax_category: "Kategoria fiskala editatzen"
     editing_tax_rate: "Zerga-tasa editatzen"
     editing_zone: "Eremua editatzen"
-    editing_state: "Probintzia editatzen"
+    editing_state: "Erkidegoa editatzen"
     expiration: "Mugaeguna"
     invalid_payment_provider: "Ordainketa-hornitzaile baliogabea"
     items_cannot_be_shipped: "Artikuluak ezin dira bidali"
@@ -3647,7 +3649,7 @@ eu:
     resend: "Birbidali"
     back_to_orders_list: "Itzuli eskaeren zerrendara"
     back_to_payments_list: "Itzuli ordainketa-zerrendara"
-    back_to_states_list: "Itzuli eskualdeen zerrendara"
+    back_to_states_list: "Itzuli Erkidegoen zerrendara"
     return_authorizations: "Itzultzeko baimenak"
     cannot_create_returns: "Ezin da itzulketarik sortu, eskaera honek ez baitu bidalitako unitaterik."
     select_stock: "Aukeratu stocka"
@@ -3682,7 +3684,7 @@ eu:
     city: "Hiria"
     zip: "Posta-kodea"
     country: "Herrialdea"
-    state: "Probintzia"
+    state: "Erkidegoa"
     phone: "Telefonoa"
     update: "Eguneratu"
     use_billing_address: "Erabili fakturazio-helbidea"
@@ -3743,16 +3745,16 @@ eu:
     default_tax: "Zerga lehenetsia"
     default_tax_zone: "Zerga-eremu lehenetsia"
     country_based: "Herrialdean oinarritua"
-    state_based: "Estatuan oinarritua"
+    state_based: "Erkidegoan oinarritua"
     countries: "Herrialdeak"
     listing_countries: "Herrialdeen zerrenda"
     iso_name: "ISO izena"
-    states_required: "Eskatutako egoerak"
+    states_required: "Erkidegoako egoerak"
     editing_country: "Editatu herrialdea"
     back_to_countries_list: "Itzuli herrialdeen zerrendara"
-    states: "Egoerak"
+    states: "Erkidegoak"
     abbreviation: "Laburdura"
-    new_state: "Egoera berria"
+    new_state: "Erkidegoa berria"
     payment_methods: "Ordaintzeko metodoak"
     taxons: "Produktuaren kategoriak"
     shipping_methods: "Bidaltzeko metodoak"
@@ -4210,6 +4212,7 @@ eu:
           terms_of_service: "Zerbitzu-baldintzak"
         sortable_header:
           name: "Izena"
+          on_hand: "Eskuragarri"
           number: "Zenbakia"
           completed_at: "Hemen osatua:"
           state: "Probintzia"

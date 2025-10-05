@@ -4040,6 +4040,7 @@ uk:
           terms_of_service: "Умови обслуговування"
         sortable_header:
           name: "Ім'я"
+          on_hand: "Під рукою"
           number: "Номер"
           completed_at: "Завершено"
           state: "Стан"

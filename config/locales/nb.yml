@@ -4491,6 +4491,7 @@ nb:
           terms_of_service: "Vilkår for bruk"
         sortable_header:
           name: "Navn"
+          on_hand: "Tilgjengelig"
           number: "Antall"
           completed_at: "Fullført på"
           state: "Tilstand"

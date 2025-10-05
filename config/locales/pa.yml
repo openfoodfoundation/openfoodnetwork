@@ -4147,6 +4147,7 @@ pa:
           terms_of_service: "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ"
         sortable_header:
           name: "ਨਾਮ"
+          on_hand: "ਹੱਥ ਵਿਚ"
           number: "ਨੰਬਰ"
           completed_at: "ਇਸ ਸਮੇਂ ਪੂਰਾ ਹੋਇਆ"
           state: "ਸਥਿਤੀ"

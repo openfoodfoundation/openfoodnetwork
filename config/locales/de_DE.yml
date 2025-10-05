@@ -4268,6 +4268,7 @@ de_DE:
           terms_of_service: "Nutzungsbedingungen"
         sortable_header:
           name: "Name"
+          on_hand: "Verfügbar"
           number: "Nummer"
           completed_at: "Abgeschlossen am"
           state: "Status"

@@ -3948,6 +3948,7 @@ it_CH:
           terms_of_service: "Termini di Servizio"
         sortable_header:
           name: "Nome"
+          on_hand: "Disponibile"
           number: "Numero"
           completed_at: "Completo al"
           state: "Provincia"

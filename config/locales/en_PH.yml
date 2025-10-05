@@ -3484,6 +3484,7 @@ en_PH:
       shared:
         sortable_header:
           name: "Name"
+          on_hand: "On Hand"
           number: "Number"
           completed_at: "Completed At"
           state: "Province"
