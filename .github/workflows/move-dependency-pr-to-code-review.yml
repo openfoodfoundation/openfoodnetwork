@@ -1,4 +1,8 @@
 name: Auto-move Dependabot PRs to Code Review
+permissions:
+  contents: read
+  pull-requests: read
+  project: write
 
 on:
   pull_request:
