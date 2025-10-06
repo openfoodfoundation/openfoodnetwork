@@ -9,6 +9,7 @@ require_relative "../spec_helper"
 #     OPENID_APP_SECRET="..."
 RSpec.describe ProxyNotifier do
   let(:platform) { "cqcm-dev" }
+  let(:enterprise_url) { "http://ofn.example.net/api/dfc/enterprises/10000" }
 
   it "receives an access token", :vcr do
     token = subject.request_token(platform)
@@ -21,7 +22,7 @@ RSpec.describe ProxyNotifier do
     # If you don't have valid credentials, you'll get an unauthorized error.
     # Correctly authenticated, the server fails to update its data.
     expect {
-      subject.refresh(platform)
+      subject.refresh(platform, enterprise_url)
     }.to raise_error Faraday::ServerError
   end
 end

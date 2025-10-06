@@ -40,7 +40,9 @@ module DfcProvider
         )
       end
 
-      ProxyNotifier.new.refresh(key)
+      urls = DfcProvider::Engine.routes.url_helpers
+      enterprise_url = urls.enterprise_url(current_enterprise.id)
+      ProxyNotifier.new.refresh(key, enterprise_url)
 
       render json: platform(key)
     end

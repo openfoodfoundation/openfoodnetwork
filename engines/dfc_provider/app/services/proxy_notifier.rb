@@ -5,9 +5,9 @@ require "private_address_check/tcpsocket_ext"
 
 # Call a webhook to notify a data proxy about changes in our data.
 class ProxyNotifier
-  def refresh(platform)
+  def refresh(platform, enterprise_url)
     PrivateAddressCheck.only_public_connections do
-      notify_proxy(platform)
+      notify_proxy(platform, enterprise_url)
     end
   end
 
@@ -31,11 +31,11 @@ class ProxyNotifier
     response.body["access_token"]
   end
 
-  def notify_proxy(platform)
+  def notify_proxy(platform, enterprise_url)
     token = request_token(platform)
     data = {
       eventType: "refresh",
-      enterpriseUrlid: DfcProvider::Engine.routes.url_helpers.enterprises_url,
+      enterpriseUrlid: enterprise_url,
       scope: "ReadEnterprise",
     }
 
