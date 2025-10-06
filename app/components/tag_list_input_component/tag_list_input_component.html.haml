@@ -1,4 +1,4 @@
-%div{ "data-controller": "tag-list-input", "data-tag-list-input-only-one-value": "#{only_one}" }
+%div{ "data-controller": "tag-list-input", "data-tag-list-input-only-one-value": "#{only_one}", "data-tag-list-input-url-value": autocomplete_url, "data-action": "autocomplete.change->tag-list-input#addTag" }
   .tags-input
     .tags
       - # We use display:none instead of hidden field, so changes to the value can be picked up by the bulkFormController 
@@ -20,9 +20,8 @@
         nil,
         { class: "input",
           placeholder: placeholder,
-          "data-action": "keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput blur->tag-list-input#addTag",
-          "data-tag-list-input-target": "newTag",
+          "data-action": "keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange",
+          "data-tag-list-input-target": "input",
           **aria_label_option,
-          style: "display: #{display};"}.merge(input_field_data_options))
-      - if content?
-        = content
+          style: "display: #{display};"})
+      %ul.suggestion-list{ "data-tag-list-input-target": "results" }
