@@ -24,20 +24,10 @@ module DfcProvider
       scopes_to_delete = current_scopes - requested_scopes
       scopes_to_create = requested_scopes - current_scopes
 
-      DfcPermission.where(
-        user: current_user,
-        enterprise: current_enterprise,
-        scope: scopes_to_delete,
-        grantee: key,
-      ).delete_all
+      dfc_permissions(key).where(scope: scopes_to_delete).delete_all
 
       scopes_to_create.each do |scope|
-        DfcPermission.create!(
-          user: current_user,
-          enterprise: current_enterprise,
-          scope:,
-          grantee: key,
-        )
+        dfc_permissions(key).create!(scope:)
       end
 
       urls = DfcProvider::Engine.routes.url_helpers
@@ -91,11 +81,15 @@ module DfcProvider
     end
 
     def granted_scopes(platform_id)
+      dfc_permissions(platform_id).pluck(:scope)
+    end
+
+    def dfc_permissions(platform_id)
       DfcPermission.where(
         user: current_user,
         enterprise: current_enterprise,
         grantee: platform_id,
-      ).pluck(:scope)
+      )
     end
 
     # The DFC Permission Module is sending tokens in the Authorization header.
