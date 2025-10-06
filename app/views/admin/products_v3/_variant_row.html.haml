@@ -80,7 +80,7 @@
   = error_message_on variant, :tax_category
 - if feature?(:variant_tag, spree_current_user)
   %td.col-tags.field.naked_inputs
-    = render VariantTagListInputComponent.new(name: f.field_name(:tag_list), variant:, placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags'))
+    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: "/admin/tag_rules/variant_tag_rules?enterprise_id=#{variant.supplier_id}", placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags'))
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
