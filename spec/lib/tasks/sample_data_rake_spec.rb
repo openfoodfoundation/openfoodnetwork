@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe 'sample_data.rake' do
-  include_context "rake"
-
   before do
     # Create seed data required by the sample data.
     create(:user)

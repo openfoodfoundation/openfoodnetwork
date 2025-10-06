@@ -4,8 +4,6 @@ require 'spec_helper'
 require 'rake'
 
 RSpec.describe 'users.rake' do
-  include_context "rake"
-
   describe ':remove_enterprise_limit' do
     context 'when the user exists' do
       let(:user) { create(:user) }
