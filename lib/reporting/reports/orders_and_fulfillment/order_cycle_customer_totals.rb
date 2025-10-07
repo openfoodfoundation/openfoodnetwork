@@ -23,7 +23,7 @@ module Reporting
             product: product_name,
             variant: variant_name,
 
-            quantity: proc { |line_items| line_items.to_a.map(&:quantity).sum(&:to_) },
+            quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
             item_price: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
             item_fees_price: proc { |line_items|
               line_items.map(&:amount_with_adjustments).sum(&:to_f)
