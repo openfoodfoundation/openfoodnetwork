@@ -14,7 +14,6 @@ module Reporting
       rows.concat(title_rows)
       rows.concat(date_range_rows)
       rows.concat(printed_rows)
-      rows.concat(other_filter_rows)
       rows << [] if rows.any? # spacer only if something was added
       rows
     end
@@ -60,15 +59,6 @@ module Reporting
 
     def printed_rows
       [[I18n.t("printed", default: "Printed"), Time.now.utc.strftime('%F %T %Z')]]
-    end
-
-    def other_filter_rows
-      q = indifferent_ransack.except(*DATE_FROM_KEYS, *DATE_TO_KEYS)
-      q.each_with_object([]) do |(k, v), rows|
-        next if v.blank?
-
-        rows << [k.to_s.humanize, v.is_a?(Array) ? v.join(', ') : v.to_s]
-      end
     end
 
     def params
