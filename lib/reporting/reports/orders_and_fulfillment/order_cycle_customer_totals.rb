@@ -23,9 +23,11 @@ module Reporting
             product: product_name,
             variant: variant_name,
 
-            quantity: proc { |line_items| line_items.to_a.sum(&:quantity) },
-            item_price: proc { |line_items| line_items.sum(&:amount) },
-            item_fees_price: proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+            quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
+            item_price: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
+            item_fees_price: proc { |line_items|
+              line_items.map(&:amount_with_adjustments).sum(&:to_f)
+            },
             admin_handling_fees: proc { |_line_items| "" },
             ship_price: proc { |_line_items| "" },
             pay_fee_price: proc { |_line_items| "" },
@@ -66,7 +68,9 @@ module Reporting
 
             order_number: proc { |line_items| line_items.first.order.number },
             date: proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
-            final_weight_volume: proc { |line_items| line_items.sum(&:final_weight_volume) },
+            final_weight_volume: proc { |line_items|
+              line_items.map(&:final_weight_volume).sum(&:to_f)
+            },
             shipment_state: proc { |line_items| line_items.first.order.shipment_state },
           }
         end
