@@ -436,7 +436,7 @@ hu:
   ongoing: Folyamatban lévő
   bill_address: Számlázási cím
   ship_address: Szállítási cím
-  sort_order_cycles_on_shopfront_by: "Rendelési ciklusok rendezése az online Kirakatban az alábbi szerint:"
+  sort_order_cycles_on_shopfront_by: "Rendelési ciklusok rendezése az alábbi szerint:"
   required_fields: A kötelező mezőket csillag jelöli
   select_continue: Válassz és Folytasd
   remove: Eltávolítás
@@ -1250,21 +1250,21 @@ hu:
           customer_contacts_true: "Engedélyezve"
           producers_edit_orders_false: "Tiltva"
           producers_edit_orders_true: "Engedélyezve"
-          shopfront_message: "Online Kirakat üzenete"
+          shopfront_message: "Nyitott átadópont üzenete"
           shopfront_message_placeholder: >
               Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
               vásárolhatnak Nálad. Ha itt szöveget írsz be, az megjelenik a kezdőlapon,
               amikor az ügyfelek először érkeznek az oldaladra.
-          shopfront_closed_message: "Kirakat zárt üzenet"
+          shopfront_closed_message: "Zárt átadópont üzenete"
           shopfront_closed_message_placeholder: >
-              Üzenet a fogyasztóknak az oldaladon, ha épp nincs aktív rendelési ciklus
-              (azaz zárva van). Írd le mikor várható a következő rendelési ciklus
+              Információk a fogyasztóknak az oldaladon, ha nincs aktív rendelési ciklus
+              (azaz zárva van). Írd le, hogy mikor várható a következő rendelési ciklus
               megnyitása.
           shopfront_category_ordering: "Kirakati kategória rendelése"
           shopfront_category_ordering_note: "(fentről lefelé)"
           open_date: "Nyitás dátuma"
           close_date: "Zárás dátuma"
-          display_ordering_in_shopfront: "Rendelés megjelenítése a kirakatban:"
+          display_ordering_in_shopfront: "Termékek megjelenítése:"
           shopfront_sort_by_product: "Termékek szerint"
           shopfront_sort_by_category: "Kategória szerint"
           shopfront_sort_by_producer: "A termelő szerint"
@@ -4471,6 +4471,7 @@ hu:
           terms_of_service: "Szolgáltatás feltételei"
         sortable_header:
           name: "Név"
+          on_hand: "Készlet"
           number: "Szám"
           completed_at: "Elkészült:"
           state: "Státusz!"

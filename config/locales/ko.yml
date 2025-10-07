@@ -3915,6 +3915,7 @@ ko:
           terms_of_service: "서비스 약관"
         sortable_header:
           name: "이름"
+          on_hand: "대기 중"
           number: "숫자"
           completed_at: "완료 시간:"
           state: "상태"

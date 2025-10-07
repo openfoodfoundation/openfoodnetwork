@@ -3799,6 +3799,7 @@ pt_BR:
           terms_of_service: "Termos de serviço"
         sortable_header:
           name: "Nome"
+          on_hand: "Disponível"
           number: "Número"
           completed_at: "Concluído em "
           state: "Estado"

@@ -3865,6 +3865,7 @@ es_US:
           terms_of_service: "La latitud y longitud son necesarias para mostrar su empresa en el mapa."
         sortable_header:
           name: "Nombre"
+          on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completado en"
           state: "Provincia"

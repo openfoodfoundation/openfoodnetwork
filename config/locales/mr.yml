@@ -4151,6 +4151,7 @@ mr:
           terms_of_service: "सेवा अटी"
         sortable_header:
           name: "नाव"
+          on_hand: "आता उपलब्ध"
           number: "क्रमांक"
           completed_at: "येथे पूर्ण झाले"
           state: "राज्य"

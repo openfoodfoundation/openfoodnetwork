@@ -4571,6 +4571,7 @@ en_GB:
           terms_of_service: "Terms of Service"
         sortable_header:
           name: "Name"
+          on_hand: "In Stock"
           number: "Number"
           completed_at: "Completed At"
           state: "State"

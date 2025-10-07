@@ -4050,6 +4050,7 @@ fr_BE:
           terms_of_service: "Conditions d'utilisation"
         sortable_header:
           name: "Nom"
+          on_hand: "En stock"
           number: "N° commande"
           completed_at: "Terminé à"
           state: "Province"

@@ -4392,6 +4392,7 @@ ru:
           terms_of_service: "Условия Сервиса"
         sortable_header:
           name: "Имя"
+          on_hand: "В наличии"
           number: "Номер"
           completed_at: "Завершено"
           state: "Статус"

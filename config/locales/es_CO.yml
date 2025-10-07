@@ -3606,6 +3606,7 @@ es_CO:
       shared:
         sortable_header:
           name: "Nombre"
+          on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completado en"
           state: "Provincia"

@@ -4341,6 +4341,7 @@ el:
           terms_of_service: "Όροι Χρήσης της Υπηρεσίας"
         sortable_header:
           name: "Όνομα"
+          on_hand: "Διαθέσιμο απόθεμα"
           number: "Αριθμός"
           completed_at: "Ολοκληρώθηκε στις"
           state: "Κατάσταση"

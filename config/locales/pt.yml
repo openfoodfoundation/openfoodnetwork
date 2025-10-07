@@ -3474,6 +3474,7 @@ pt:
       shared:
         sortable_header:
           name: "Nome"
+          on_hand: "Disponível"
           number: "Número"
           completed_at: "Concluído Em"
           state: "Estado"

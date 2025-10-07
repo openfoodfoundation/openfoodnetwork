@@ -1446,7 +1446,10 @@ fi:
         owner: Omistaja
         producer: Tuottaja
         sells_options:
+          unspecified: määrittämätön
           none: ei yhtään
+          own: oma
+          any: Mitä tahansa
       change_type_form:
         producer_profile: Tuottajan profiili
         connect_ofn: Yhdistä OFN:n kautta
@@ -2490,7 +2493,7 @@ fi:
   enterprises_currently_open: "Tilaukset ovat tällä hetkellä avoinna"
   enterprises_ready_for: "Valmis"
   enterprises_choose: "Valitse milloin haluat tilauksesi:"
-  maps_open: "Avata"
+  maps_open: "Avautuu"
   maps_closed: "Suljettu"
   map_title: "Kartta"
   hubs_buy: "Osta:"
@@ -2934,8 +2937,8 @@ fi:
   admin_enterprise_groups_web_twitter: "esim. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "esim. www.truffles.com"
   admin_order_cycles: "Ylläpitäjän tilausjaksot"
-  open: "Avata"
-  close: "Lähellä"
+  open: "Avautuu"
+  close: "Sulkeutuu"
   create: "Luoda"
   search: "Haku"
   supplier: "toimittaja"
@@ -3318,6 +3321,7 @@ fi:
   product_importer_products_save_error: did not save any products successfully
   product_import_file_not_found_notice: 'Tiedostoa ei löytynyt tai sitä ei voitu avata'
   product_import_no_data_in_spreadsheet_notice: 'Laskentataulukosta ei löytynyt tietoja'
+  product_import_inventory_disable: Tuonti varastoihin ei ole käytettävissä
   order_choosing_hub_notice: Keskittimesi on valittu.
   order_cycle_selecting_notice: Tilausjaksosi on valittu.
   adjustments_tax_rate_error: "^Tarkista, että tämän oikaisun veroprosentti on oikea."
@@ -4565,6 +4569,7 @@ fi:
           terms_of_service: "Palveluehdot"
         sortable_header:
           name: "Nimi"
+          on_hand: "Varastossa"
           number: "Määrä"
           completed_at: "Valmistui klo"
           state: "Tila"
