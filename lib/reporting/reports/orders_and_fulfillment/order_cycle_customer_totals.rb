@@ -131,8 +131,8 @@ module Reporting
           {
             hub: rows.last.hub,
             customer: rows.last.customer,
-            item_price: rows.sum(&:item_price),
-            item_fees_price: rows.sum(&:item_fees_price),
+            item_price: rows.map(&:item_price).sum(&:to_f),
+            item_fees_price: rows.map(&:item_fees_price).sum(&:to_f),
             admin_handling_fees: order.admin_and_handling_total,
             ship_price: order.ship_total,
             pay_fee_price: order.payment_fee,

@@ -9,10 +9,10 @@ module Reporting
             producer: supplier_name,
             product: product_name,
             variant: variant_name,
-            quantity: proc { |line_items| line_items.sum(&:quantity) },
+            quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
             total_units: proc { |line_items| total_units(line_items) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
-            total_cost: proc { |line_items| line_items.sum(&:amount) },
+            total_cost: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
             sku: variant_sku,
             producer_charges_sales_tax?: supplier_charges_sales_tax?,
             product_tax_category:
@@ -27,14 +27,14 @@ module Reporting
               summary_row: proc do |_key, _items, rows|
                 total_units = rows.map(&:total_units)
                 summary_total_units = if total_units.all?(&:present?)
-                                        rows.sum(&:total_units)
+                                        rows.map(&:total_units).sum(&:to_f)
                                       else
                                         " "
                                       end
                 {
-                  quantity: rows.sum(&:quantity),
+                  quantity: rows.map(&:quantity).sum(&:to_i),
                   total_units: summary_total_units,
-                  total_cost: rows.sum(&:total_cost)
+                  total_cost: rows.map(&:total_cost).sum(&:to_f)
                 }
               end
             }
