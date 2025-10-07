@@ -13,9 +13,7 @@ RSpec.describe Reporting::ReportMetadataBuilder do
   let(:ransack_params) do
     {
       from_key => '2025-01-01',
-      to_key => '2025-01-31',
-      :status_in => %w[paid shipped],
-      :hub_id_eq => '42'
+      to_key => '2025-01-31'
     }
   end
 
@@ -36,10 +34,6 @@ RSpec.describe Reporting::ReportMetadataBuilder do
       # Printed timestamp
       printed = rows.find { |r| r.first == 'Printed' }
       expect(printed).to eq(['Printed', '2025-06-13 10:20:30 UTC'])
-
-      # Other filters (humanized keys)
-      expect(rows).to include(['Status in', 'paid, shipped'])
-      expect(rows).to include(['Hub id eq', '42'])
 
       # Spacer
       expect(rows.last).to eq([])

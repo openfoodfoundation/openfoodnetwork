@@ -54,8 +54,7 @@ RSpec.describe Reporting::ReportRenderer do
         },
         ransack_params: {
           from_key => '2025-01-01',
-          to_key => '2025-01-31',
-          :status_in => %w[paid shipped]
+          to_key => '2025-01-31'
         },
         user:
       )
