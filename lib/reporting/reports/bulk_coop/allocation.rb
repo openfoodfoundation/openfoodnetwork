@@ -32,7 +32,7 @@ module Reporting
               summary_row: proc do |_key, items, rows|
                 line_items = items.flatten
                 {
-                  sum_total: rows.sum(&:sum_total),
+                  sum_total: rows.map(&:sum_total).sum(&:to_f),
                   total_available: total_available(line_items),
                   unallocated: remainder(line_items),
                   max_quantity_excess: max_quantity_excess(line_items)
