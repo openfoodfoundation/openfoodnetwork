@@ -71,9 +71,9 @@ module Reporting
         def total_units(line_items)
           return " " if not_all_have_unit?(line_items)
 
-          total_units = line_items.sum do |li|
+          total_units = line_items.map do |li|
             li.quantity * li.unit_value / scale_factor(li.variant)
-          end
+          end.sum(&:to_f)
 
           total_units.round(3)
         end

@@ -22,7 +22,7 @@ module Reporting
         private
 
         def total_quantity(line_items)
-          line_items.sum(&:quantity)
+          line_items.map(&:quantity).sum(&:to_i)
         end
       end
     end
