@@ -21,7 +21,6 @@ export default class extends Controller {
 
   enableField() {
     if (this.hasCheckboxTarget) {
-      this.checkboxTarget.checked = true;
       this.checkboxTarget.disabled = false;
     }
     if (this.hasLabelTarget) {
