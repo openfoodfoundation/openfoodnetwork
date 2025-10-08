@@ -43,7 +43,7 @@ RSpec.describe Reporting::ReportRenderer do
     let(:to_key)   { Reporting::ReportMetadataBuilder::DATE_TO_KEYS.first }
 
     let(:meta_report) do
-      instance_double(
+      double(
         'MetaReport',
         rows: data,
         params: {
@@ -56,11 +56,17 @@ RSpec.describe Reporting::ReportRenderer do
           from_key => '2025-01-01',
           to_key => '2025-01-31'
         },
-        user:
+        user:,
+        table_headers: nil
       )
     end
 
     let(:renderer) { described_class.new(meta_report) }
+
+    it 'appends empty base headers when report.table_headers is nil
+    and metadata rows are enabled' do
+      expect(renderer.table_headers.last).to eq []
+    end
 
     it 'builds rows via ReportMetadataBuilder when display_metadata_rows?
       is true and report_format is csv' do
