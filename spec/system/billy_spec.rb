@@ -4,7 +4,7 @@ require 'system_helper'
 
 RSpec.describe "Testing external scripts loaded in the browser" do
   before do
-    skip "Puffing Billy seems to make our rspec processes hand at the end."
+    skip "Puffing Billy seems to make our rspec processes hang at the end."
   end
 
   it "loads a website", :vcr do
