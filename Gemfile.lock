@@ -282,7 +282,7 @@ GEM
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
     diff-lcs (1.6.2)
-    digest (3.1.1)
+    digest (3.2.0)
     docile (1.4.1)
     dotenv (3.1.2)
     drb (2.2.3)
