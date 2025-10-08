@@ -32,7 +32,10 @@ Capybara.register_driver(:cuprite_ofn) do |app|
     inspector: true,
     headless:,
     js_errors: true,
-    proxy: { host: Billy.proxy.host, port: Billy.proxy.port },
+    # Puffing Billy seems to make our rspec processes hang at the end.
+    # Deactivating for now.
+    #
+    # proxy: { host: Billy.proxy.host, port: Billy.proxy.port },
   )
 end
 

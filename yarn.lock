@@ -5337,10 +5337,10 @@ istanbul-reports@^3.1.3:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-jasmine-core@~5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.11.0.tgz#1343e324a0148508511031a1d5fc0d4b7ee92446"
-  integrity sha512-MPJ8L5yyNul0F2SuEsLASwESXQjJvBXnKu31JWFyRZSvuv2B79K4GDWN3pSqvLheUNh7Fyb6dXwd4rsz95O2Kg==
+jasmine-core@~5.12.0:
+  version "5.12.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.12.0.tgz#a0cd016483756e9537ba354c52a4ec6d8e9e7951"
+  integrity sha512-QqO4pX33GEML5JoGQU6BM5NHKPgEsg+TXp3jCIDek9MbfEp2JUYEFBo9EF1+hegWy/bCHS1m5nP0BOp18G6rVA==
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
