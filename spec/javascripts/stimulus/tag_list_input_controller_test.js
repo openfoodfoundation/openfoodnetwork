@@ -3,7 +3,7 @@
  */
 
 import { Application } from "stimulus";
-import tag_list_input_controller from "../../../app/components/tag_list_input_component/tag_list_input_controller";
+import tag_list_input_controller from "tag_list_input_component/tag_list_input_controller";
 
 describe("TagListInputController", () => {
   beforeAll(() => {
@@ -14,12 +14,17 @@ describe("TagListInputController", () => {
   beforeEach(() => {
     // Tag input with three existing tags
     document.body.innerHTML = `
-      <div data-controller="tag-list-input">
+      <div 
+        data-controller="tag-list-input"
+        data-action="autocomplete.change->tag-list-input#addTag"
+        data-tag-list-input-url-value="/admin/tag_rules/variant_tag_rules?enterprise_id=3" 
+       >
         <input 
           value="tag-1,tag-2,tag-3" 
           data-tag-list-input-target="tagList" 
           type="hidden" 
-          name="variant_tag_list" id="variant_tag_list"
+          name="variant_tag_list" 
+          id="variant_tag_list"
         >
         <div class="tags-input">
           <div class="tags">
@@ -68,10 +73,12 @@ describe("TagListInputController", () => {
               name="variant_add_tag" 
               id="variant_add_tag" 
               placeholder="Add a tag" 
-              data-action="keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput" data-tag-list-input-target="newTag"
+              data-action="keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange"
+              data-tag-list-input-target="input"
               style="display: block;"
             >
           </div>
+          <ul class="suggestion-list" data-tag-list-input-target="results" hidden></ul>
         </div>
       </div>`;
   });
@@ -162,6 +169,8 @@ describe("TagListInputController", () => {
         document.body.innerHTML = `
           <div 
             data-controller="tag-list-input" 
+            data-action="autocomplete.change->tag-list-input#addTag"
+            data-tag-list-input-url-value="/admin/tag_rules/variant_tag_rules?enterprise_id=3"
             data-tag-list-input-only-one-value="true"
           >
             <input 
@@ -190,10 +199,12 @@ describe("TagListInputController", () => {
                   name="variant_add_tag" 
                   id="variant_add_tag" 
                   placeholder="Add a tag" 
-                  data-action="keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput" data-tag-list-input-target="newTag"
+                  data-action="keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange"
+                  data-tag-list-input-target="input"
                   style="display: block;"
                 >
               </div>
+              <ul class="suggestion-list" data-tag-list-input-target="results" hidden></ul>
             </div>
           </div>`;
       });
@@ -229,6 +240,8 @@ describe("TagListInputController", () => {
         document.body.innerHTML = `
           <div 
             data-controller="tag-list-input" 
+            data-action="autocomplete.change->tag-list-input#addTag"
+            data-tag-list-input-url-value="/admin/tag_rules/variant_tag_rules?enterprise_id=3"
             data-tag-list-input-only-one-value="true"
           >
             <input 
@@ -266,10 +279,12 @@ describe("TagListInputController", () => {
                   name="variant_add_tag" 
                   id="variant_add_tag" 
                   placeholder="Add a tag" 
-                  data-action="keydown.enter->tag-list-input#addTag keyup->tag-list-input#filterInput" data-tag-list-input-target="newTag"
-                  style="display: none;"
+                  data-action="keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange"
+                  data-tag-list-input-target="input"
+                  style="display: block;"
                 >
               </div>
+              <ul class="suggestion-list" data-tag-list-input-target="results" hidden></ul>
             </div>
           </div>`;
       });
