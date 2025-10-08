@@ -22,7 +22,7 @@ module DfcProvider
     end
 
     def show
-      catalog_item = DfcBuilder.catalog_item(variant)
+      catalog_item = CatalogItemBuilder.catalog_item(variant)
       offers = catalog_item.offers
       render json: DfcIo.export(catalog_item, *offers)
     end

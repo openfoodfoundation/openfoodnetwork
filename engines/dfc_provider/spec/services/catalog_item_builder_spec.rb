@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-RSpec.describe DfcBuilder do
+RSpec.describe CatalogItemBuilder do
   let(:variant) { build(:variant) }
 
   describe ".catalog_item" do
@@ -10,7 +10,7 @@ RSpec.describe DfcBuilder do
       variant.id = 5
       variant.supplier_id = 7
 
-      item = DfcBuilder.catalog_item(variant)
+      item = CatalogItemBuilder.catalog_item(variant)
 
       expect(item.semanticId).to eq(
         "http://test.host/api/dfc/enterprises/7/catalog_items/5"
@@ -21,7 +21,7 @@ RSpec.describe DfcBuilder do
       variant.id = 5
       variant.supplier_id = 7
 
-      item = DfcBuilder.catalog_item(variant)
+      item = CatalogItemBuilder.catalog_item(variant)
 
       expect(item.product.semanticId).to eq(
         "http://test.host/api/dfc/enterprises/7/supplied_products/5"
