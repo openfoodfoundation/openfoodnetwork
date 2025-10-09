@@ -11,8 +11,8 @@ module Reporting
             product_total_price: proc { |orders| orders.map(&:item_total).sum(&:to_f) },
             shipping_total_price: proc { |orders| orders.map(&:ship_total).sum(&:to_f) },
             outstanding_balance_price: proc do |orders|
-              orders.map { |order| order.outstanding_balance }
-            end.sum(&:to_f),
+              orders.map(&:outstanding_balance).sum(&:to_f)
+            end,
             total_price: proc { |orders| orders.map(&:total).sum(&:to_f) }
           }
         end

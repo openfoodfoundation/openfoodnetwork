@@ -30,7 +30,7 @@ module Reporting
       result = row.to_h.select { |k, _v| k.in?(report.fields_to_show) }
 
       unless report.unformatted_render?
-        result = result.map { |k, v| [k, format_cell(v, k)] }.to_h
+        result = result.to_h { |k, v| [k, format_cell(v, k)] }
       end
       OpenStruct.new(result)
     end

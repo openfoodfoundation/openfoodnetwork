@@ -14,8 +14,8 @@ module Reporting
             eft_price: proc { |orders| total_by_payment_method(orders, "EFT") },
             paypal_price: proc { |orders| total_by_payment_method(orders, "PayPal") },
             outstanding_balance_price: proc { |orders|
-              orders.map{ |order| order.outstanding_balance }
-            }.sum(&:to_f)
+              orders.map(&:outstanding_balance).sum(&:to_f)
+            }
           }
         end
 
