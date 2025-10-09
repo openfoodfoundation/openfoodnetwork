@@ -136,7 +136,7 @@ module Reporting
               .where(originator_id: tax_rate_id(query_result_row))
               .map(&:amount)
               .sum(&:to_f)
-          end.sum(&:to_f)
+          end&.sum(&:to_f)
         end
 
         def total_incl_tax(query_result_row)
