@@ -233,7 +233,7 @@ module Reporting
 
         def tax_on_shipping_s(order)
           tax_on_shipping = order.shipments
-            .map{ |shipment | shipment.additional_tax_total + shipment.included_tax_total }
+            .map{ |shipment| shipment.additional_tax_total + shipment.included_tax_total }
             .sum(&:to_f)
             .positive?
           if tax_on_shipping
