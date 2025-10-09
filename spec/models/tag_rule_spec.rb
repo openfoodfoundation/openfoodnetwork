@@ -8,4 +8,12 @@ RSpec.describe TagRule do
       expect(subject).to belong_to(:enterprise)
     end
   end
+
+  describe '#tags' do
+    subject(:rule) { Class.new(TagRule).new }
+
+    it "raises not implemented error" do
+      expect{ rule.tags }.to raise_error(NotImplementedError, 'please use concrete TagRule')
+    end
+  end
 end

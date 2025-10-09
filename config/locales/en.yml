@@ -1417,10 +1417,11 @@ en:
             no_rules_yet: No default rules apply yet
             add_new_button: '+ Add A New Default Rule'
           no_tags_yet: No tags apply to this enterprise yet
-          no_rules_yet: No rules apply to this tag yet
-          for_customers_tagged: 'For customers tagged:'
-          add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
+          show_hide_variants: 'Show or Hide variants in my shopfront'
+          show_hide_shipping: 'Show or Hide shipping methods at checkout'
+          show_hide_payment: 'Show or Hide payment methods at checkout'
+          show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
@@ -1573,6 +1574,10 @@ en:
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
+    tag_rules:
+      not_supported_type: Tag rule type not supported
+      confirm_delete: Are you sure you want to delete this rule ?
+      destroy_error: There was an issue when removing the Tag rule
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
@@ -3668,18 +3673,6 @@ en:
           loading_variants: "Loading Variants"
           no_variants: "No variant available for this product (hidden via inventory settings)."
           some_variants_hidden: "(Some variants might be hidden via inventory settings)"
-      tag_rules:
-        shipping_method_tagged_top: "Shipping methods tagged"
-        shipping_method_tagged_bottom: "are:"
-        payment_method_tagged_top: "Payment methods tagged"
-        payment_method_tagged_bottom: "are:"
-        order_cycle_tagged_top: "Order Cycles tagged"
-        order_cycle_tagged_bottom: "are:"
-        inventory_tagged_top: "Inventory variants tagged"
-        inventory_tagged_bottom: "are:"
-      new_tag_rule_dialog:
-        select_rule_type: "Select a rule type:"
-        add_rule: "Add Rule"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3808,13 +3801,6 @@ en:
       some_trouble: "I had some trouble saving: %{errors}"
       changing_on_hand_stock: Changing on hand stock levels...
       stock_reset: Stocks reset to defaults.
-    tag_rules:
-      show_hide_variants: 'Show or Hide variants in my shopfront'
-      show_hide_shipping: 'Show or Hide shipping methods at checkout'
-      show_hide_payment: 'Show or Hide payment methods at checkout'
-      show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
-      visible: VISIBLE
-      not_visible: NOT VISIBLE
     services:
       unsaved_changes_message: Unsaved changes currently exist, save now or ignore?
       save: SAVE
@@ -5080,6 +5066,25 @@ en:
       previous: Previous
     tag_list_input:
       default_placeholder: Add a tag 
+    tag_rule_form: 
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
+        visible: VISIBLE
+        not_visible: NOT VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'For customers tagged:'
+      add_new_rule: '+ Add A New Rule'
+      no_rules_yet: No rules apply to this tag yet
+    add_tag_rule_modal:
+      select_rule_type: "Select a rule type:"
+      add_rule: "Add Rule"
 
 
   # Gem to prevent bot form submissions

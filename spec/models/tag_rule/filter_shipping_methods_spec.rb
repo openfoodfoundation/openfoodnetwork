@@ -5,6 +5,14 @@ require 'spec_helper'
 RSpec.describe TagRule::FilterShippingMethods do
   let!(:tag_rule) { build_stubbed(:filter_shipping_methods_tag_rule) }
 
+  describe "#tags" do
+    it "return the shipping method tags" do
+      tag_rule = create(:filter_shipping_methods_tag_rule, preferred_shipping_method_tags: "my_tag")
+
+      expect(tag_rule.tags).to eq("my_tag")
+    end
+  end
+
   describe "determining whether tags match for a given shipping method" do
     context "when the shipping method is nil" do
       it "returns false" do
