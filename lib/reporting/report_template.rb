@@ -13,7 +13,7 @@ module Reporting
     delegate :available_headers, :table_headers, :fields_to_hide, :fields_to_show,
              to: :headers_builder
 
-    delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
+    delegate :formatted_rules, :header_option?, :summary_row_option?, :metadata_option?, to: :ruler
 
     def initialize(user, params = {}, render: false)
       unless render
