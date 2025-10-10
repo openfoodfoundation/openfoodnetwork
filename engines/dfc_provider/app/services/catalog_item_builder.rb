@@ -6,13 +6,15 @@ class CatalogItemBuilder < DfcBuilder
       enterprise_id: variant.supplier_id,
       id: variant.id,
     )
+    supplier_url = urls.enterprise_url(variant.supplier_id)
     product = SuppliedProductBuilder.supplied_product(variant)
 
-    DataFoodConsortium::Connector::CatalogItem.new(
+    DfcProvider::CatalogItem.new(
       id, product:,
           sku: variant.sku,
           stockLimitation: stock_limitation(variant),
           offers: [OfferBuilder.build(variant)],
+          managedBy: supplier_url,
     )
   end
 

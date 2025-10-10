@@ -9,6 +9,7 @@ require "dfc_provider/engine"
 # Custom data types
 require "dfc_provider/supplied_product"
 require "dfc_provider/address"
+require "dfc_provider/catalog_item"
 require "dfc_provider/coordination"
 
 # 🙈 Monkey-patch a better inspector for semantic objects

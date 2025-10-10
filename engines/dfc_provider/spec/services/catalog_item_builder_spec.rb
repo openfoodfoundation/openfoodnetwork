@@ -6,10 +6,12 @@ RSpec.describe CatalogItemBuilder do
   let(:variant) { build(:variant) }
 
   describe ".catalog_item" do
-    it "assigns a semantic id" do
+    before do
       variant.id = 5
       variant.supplier_id = 7
+    end
 
+    it "assigns a semantic id" do
       item = CatalogItemBuilder.catalog_item(variant)
 
       expect(item.semanticId).to eq(
@@ -18,13 +20,18 @@ RSpec.describe CatalogItemBuilder do
     end
 
     it "refers to a supplied product" do
-      variant.id = 5
-      variant.supplier_id = 7
-
       item = CatalogItemBuilder.catalog_item(variant)
 
       expect(item.product.semanticId).to eq(
         "http://test.host/api/dfc/enterprises/7/supplied_products/5"
+      )
+    end
+
+    it "refers to the supplier" do
+      item = CatalogItemBuilder.catalog_item(variant)
+
+      expect(item.managedBy).to eq(
+        "http://test.host/api/dfc/enterprises/7"
       )
     end
   end
