@@ -31,6 +31,7 @@ class CheckoutController < BaseController
       check_step
     end
 
+    @payment_method = selected_payment_method&.name
     return if available_shipping_methods.any?
 
     flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')
