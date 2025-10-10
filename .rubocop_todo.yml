@@ -47,7 +47,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 47
+# Offense count: 48
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -88,6 +88,7 @@ Metrics/ClassLength:
     - 'app/services/cart_service.rb'
     - 'app/services/order_cycles/form_service.rb'
     - 'app/services/orders/sync_service.rb'
+    - 'app/services/permissions/order.rb'
     - 'app/services/sets/product_set.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
@@ -98,7 +99,6 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_producer.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
-    - 'app/services/permissions/order.rb'
 
 # Offense count: 30
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -129,14 +129,13 @@ Metrics/CyclomaticComplexity:
     - 'lib/spree/localized_number.rb'
     - 'spec/models/product_importer_spec.rb'
 
-# Offense count: 23
+# Offense count: 22
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
-    - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/gateway/pay_pal_express.rb'
     - 'app/models/spree/order/checkout.rb'
@@ -149,7 +148,7 @@ Metrics/MethodLength:
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
-# Offense count: 47
+# Offense count: 10
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
@@ -174,13 +173,34 @@ Metrics/ParameterLists:
     - 'spec/support/controller_requests_helper.rb'
     - 'spec/system/admin/reports_spec.rb'
 
-# Offense count: 3
+# Offense count: 4
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/models/enterprise_relationship.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
+
+# Offense count: 1
+# Configuration parameters: EnforcedStyle, AllowedPatterns.
+# SupportedStyles: snake_case, camelCase
+Naming/MethodName:
+  Exclude:
+    - 'engines/dfc_provider/lib/dfc_provider/catalog_item.rb'
+
+# Offense count: 1
+# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
+# AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
+Naming/MethodParameterName:
+  Exclude:
+    - 'engines/dfc_provider/lib/dfc_provider/catalog_item.rb'
+
+# Offense count: 3
+# Configuration parameters: EnforcedStyle, AllowedIdentifiers, AllowedPatterns.
+# SupportedStyles: snake_case, camelCase
+Naming/VariableName:
+  Exclude:
+    - 'engines/dfc_provider/lib/dfc_provider/catalog_item.rb'
 
 # Offense count: 1
 # Configuration parameters: TransactionMethods.

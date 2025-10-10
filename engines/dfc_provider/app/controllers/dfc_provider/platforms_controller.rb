@@ -2,12 +2,6 @@
 
 module DfcProvider
   class PlatformsController < DfcProvider::ApplicationController
-    # List of platform identifiers.
-    #   local ID => semantic ID
-    PLATFORM_IDS = {
-      'cqcm-dev' => "https://api.proxy-dev.cqcm.startinblox.com/profile",
-    }.freeze
-
     prepend_before_action :move_authenticity_token
     before_action :check_enterprise
 
@@ -30,21 +24,16 @@ module DfcProvider
       scopes_to_delete = current_scopes - requested_scopes
       scopes_to_create = requested_scopes - current_scopes
 
-      DfcPermission.where(
-        user: current_user,
-        enterprise: current_enterprise,
-        scope: scopes_to_delete,
-        grantee: key,
-      ).delete_all
+      dfc_permissions(key).where(scope: scopes_to_delete).delete_all
 
       scopes_to_create.each do |scope|
-        DfcPermission.create!(
-          user: current_user,
-          enterprise: current_enterprise,
-          scope:,
-          grantee: key,
-        )
+        dfc_permissions(key).create!(scope:)
       end
+
+      urls = DfcProvider::Engine.routes.url_helpers
+      enterprise_url = urls.enterprise_url(current_enterprise.id)
+      ProxyNotifier.new.refresh(key, enterprise_url)
+
       render json: platform(key)
     end
 
@@ -65,13 +54,15 @@ module DfcProvider
     end
 
     def available_platforms
-      PLATFORM_IDS.keys.select(&method(:feature?))
+      ApiUser::PLATFORMS.keys.select do |platform|
+        feature?(platform, current_user)
+      end
     end
 
     def platform(key)
       {
         '@type': "dfc-t:Platform",
-        '@id': PLATFORM_IDS[key],
+        '@id': ApiUser.platform_url(key),
         localId: key,
         'dfc-t:hasAssignedScopes': {
           '@type': "rdf:List",
@@ -90,11 +81,15 @@ module DfcProvider
     end
 
     def granted_scopes(platform_id)
+      dfc_permissions(platform_id).pluck(:scope)
+    end
+
+    def dfc_permissions(platform_id)
       DfcPermission.where(
         user: current_user,
         enterprise: current_enterprise,
         grantee: platform_id,
-      ).pluck(:scope)
+      )
     end
 
     # The DFC Permission Module is sending tokens in the Authorization header.
