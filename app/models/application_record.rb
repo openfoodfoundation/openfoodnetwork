@@ -12,13 +12,16 @@ class ApplicationRecord < ActiveRecord::Base
   self.include_root_in_json = true
 
   def self.image_service
-    ENV["S3_BUCKET"].present? ? :amazon_public : :local
+    ENV["S3_BUCKET"].present? ? :amazon_public : :local_public
   end
 
   # We might have a development environment without S3 but with a database
   # dump pointing to S3 images. Accessing the service fails then.
   def image_variant_url_for(variant)
-    if ENV["S3_BUCKET"].present? && variant.service.public?
+    ActiveStorage::Current.url_options ||=
+      Rails.application.routes.default_url_options
+
+    if variant.service.public? && variant.try(:processed)
       variant.processed.url
     else
       unless variant.blob.persisted?

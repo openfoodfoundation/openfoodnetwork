@@ -2,6 +2,11 @@ local:
   service: Disk
   root: <%= Rails.root.join(Rails.env.test? ? "tmp/storage" : "storage") %>
 
+local_public:
+  service: Disk
+  root: <%= Rails.root.join(Rails.env.test? ? "tmp/storage" : "storage") %>
+  public: true
+
 test_amazon:
   service: S3
   access_key_id: "A...A"

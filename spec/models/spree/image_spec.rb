@@ -17,7 +17,7 @@ module Spree
     describe "#url" do
       it "returns URLs for different sizes" do
         expect(subject.url(:small)).to match(
-          %r|^http://test\.host/rails/active_storage/representations/redirect/.+/logo-black\.png$|
+          %r|^http://test\.host/rails/active_storage/disk/.+/logo-black\.png$|
         )
       end
 
@@ -50,21 +50,6 @@ module Spree
           expect(subject).to receive(:attachment) { raise ActiveStorage::FileNotFoundError }
 
           expect(subject.url(:small)).to eq "/noimage/small.png"
-        end
-      end
-
-      context "when using public images" do
-        it "returns the direct URL for the processed image" do
-          allow(ENV).to receive(:[])
-          expect(ENV).to receive(:[]).with("S3_BUCKET").and_return("present")
-
-          variant = double(:variant)
-          allow(subject).to receive_message_chain(:attachment, :attached?) { true }
-          expect(subject).to receive(:variant) { variant }
-          expect(variant).to receive_message_chain(:service, :public?) { true }
-          expect(variant).to receive_message_chain(:processed, :url) { "https://ofn-s3/123.png" }
-
-          expect(subject.url(:small)).to eq "https://ofn-s3/123.png"
         end
       end
     end
