@@ -19,6 +19,8 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml", feature: :api_v1 do
   }
   let!(:customer2) { create(:customer, enterprise: enterprise1, created_manually: true,) }
   let!(:customer3) { create(:customer, enterprise: enterprise2, created_manually: true,) }
+  let(:json_response_ids) { json_response[:data]&.pluck(:id) }
+  let(:json_error_detail) { json_response[:errors][0][:detail] }
 
   before do
     login_as enterprise1.owner
