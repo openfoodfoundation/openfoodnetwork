@@ -31,7 +31,9 @@ RSpec.describe Reporting::ReportRenderer do
 
   describe ".render_as" do
     it "raise an error if format is not supported" do
-      expect { subject.render_as("give_me_everything") }.to raise_error
+      expect {
+        subject.render_as("give_me_everything")
+      }.to raise_error(ActionController::BadRequest)
     end
   end
 
