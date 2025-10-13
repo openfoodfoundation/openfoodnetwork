@@ -160,14 +160,14 @@ RSpec.describe 'Tag Rules' do
         # Creating a new tag
         expect(page).to have_content 'No tags apply to this enterprise yet'
         click_button '+ Add A New Tag'
-        fill_in_tag "New Product"
+        fill_in_tag "New-Product"
 
         # New FilterProducts Rule
         click_button '+ Add A New Rule'
         tomselect_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
         click_button "Add Rule"
         within("#customer-tag-rule #tr_1001") do
-          fill_in_tag "new product"
+          fill_in_tag "new-product"
           tomselect_select "VISIBLE",
                            from: "enterprise_tag_rules_attributes_1001_preferred_matched_" \
                                  "variants_visibility"
@@ -176,8 +176,8 @@ RSpec.describe 'Tag Rules' do
         click_button 'Update'
 
         tag_rule = TagRule::FilterVariants.last
-        expect(tag_rule.preferred_customer_tags).to eq "New Product"
-        expect(tag_rule.preferred_variant_tags).to eq "new product"
+        expect(tag_rule.preferred_customer_tags).to eq "New-Product"
+        expect(tag_rule.preferred_variant_tags).to eq "new-product"
         expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
       end
     end
