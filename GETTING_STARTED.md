@@ -73,7 +73,7 @@ To login as the default user, use:
     email: ofn@example.com
     password: ofn123
     
-Seee [Locale and sample data] about loading data.
+See [Locale and sample data] about loading data.
 
 ### Testing
 
