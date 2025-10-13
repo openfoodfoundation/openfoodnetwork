@@ -85,6 +85,7 @@ module Admin
         end
       else
         load_tag_rule_types
+        load_tag_rules
         respond_with(@object) do |format|
           format.json {
             render json: { errors: @object.errors.messages }, status: :unprocessable_entity
