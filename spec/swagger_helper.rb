@@ -80,6 +80,12 @@ RSpec.configure do |config|
 
     next if response&.body.blank?
 
+    # Replace random values from generated strings for a deterministic documentation.
+    response.body.gsub!(
+      %r{/rails/active_storage/[0-9A-Za-z/=-]*/([^/.]+).png},
+      '/rails/active_storage/url/\1.png',
+    )
+
     # Include response as example in the documentation.
     example.metadata[:response][:content] ||= {}
     example.metadata[:response][:content].deep_merge!(

@@ -93,6 +93,12 @@ RSpec.describe "Platforms", swagger_doc: "dfc.yaml" do
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
+        before do
+          stub_request(:post, "https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token")
+            .and_return(body: { access_token: "testtoken" }.to_json)
+          stub_request(:post, "https://api.proxy-dev.cqcm.startinblox.com/djangoldp-dfc/webhook/")
+        end
+
         run_test! do
           expect(json_response["@id"]).to eq "https://api.proxy-dev.cqcm.startinblox.com/profile"
         end

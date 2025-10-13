@@ -11,6 +11,9 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
 
   before do
     login_as enterprise.owner
+
+    # Disable data proxy webhook which can't reach our test server.
+    allow_any_instance_of(ProxyNotifier).to receive(:refresh)
   end
 
   it "is not visible when no platform is enabled" do

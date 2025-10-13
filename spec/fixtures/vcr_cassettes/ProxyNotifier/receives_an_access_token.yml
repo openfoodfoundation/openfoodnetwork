@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://kc.cqcm.startinblox.com/realms/startinblox/protocol/openid-connect/token
+    body:
+      encoding: UTF-8
+      string: client_id=https%3A%2F%2Fstaging.openfoodnetwork.org.uk%2F&client_secret=<HIDDEN-OPENID_APP_SECRET>&grant_type=client_credentials&scope=WriteEnterprise
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.22.1
+      Date:
+      - Fri, 19 Sep 2025 06:09:58 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1726'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - no-referrer
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<HIDDEN-OPENID-TOKEN>","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","not-before-policy":0,"scope":"WriteEnterprise
+        profile email"}'
+  recorded_at: Fri, 19 Sep 2025 06:09:58 GMT
+recorded_with: VCR 6.2.0
