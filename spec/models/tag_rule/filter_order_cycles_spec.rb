@@ -34,6 +34,7 @@ RSpec.describe TagRule::FilterOrderCycles do
       before do
         exchange = order_cycle.exchanges.outgoing.first
         exchange.tag_list = "member,local,volunteer"
+        exchange.save!
       end
 
       context "when the rule has no preferred exchange tags specified" do
