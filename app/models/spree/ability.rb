@@ -213,7 +213,7 @@ module Spree
           managed_product_enterprises.include? variant.supplier
       end
 
-      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, user.enterprises)
+      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, *user.enterprises)
         can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
           next false unless vo.hub.present? && vo.variant&.supplier.present?
 

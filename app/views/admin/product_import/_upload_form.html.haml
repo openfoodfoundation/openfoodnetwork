@@ -5,7 +5,7 @@
     %h6= t('admin.product_import.index.choose_import_type')
     %br
     - options = { "#{t('admin.product_import.index.product_list')}" => :product_list }
-    - options = options.merge("#{t('admin.product_import.index.inventories')}" => :inventories) if feature?(:inventory, spree_current_user.enterprises)
+    - options = options.merge("#{t('admin.product_import.index.inventories')}" => :inventories) if feature?(:inventory, *spree_current_user.enterprises)
     = select_tag "settings[import_into]",
       options_for_select(options),
       { "data-controller": "tom-select", class: "primary inline no-search", "ng-model": "settings.import_into" }

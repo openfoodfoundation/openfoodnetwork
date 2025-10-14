@@ -28,7 +28,7 @@ module Admin
       show_connected_apps = can?(:manage_connected_apps, enterprise) &&
                             (connected_apps_enabled(enterprise).present? ||
                              dfc_platforms_available?)
-      show_inventory_settings = feature?(:inventory, spree_current_user.enterprises) && is_shop
+      show_inventory_settings = feature?(:inventory, *spree_current_user.enterprises) && is_shop
 
       show_options = {
         show_properties:,
