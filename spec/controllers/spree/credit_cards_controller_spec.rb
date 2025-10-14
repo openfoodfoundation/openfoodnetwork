@@ -16,7 +16,7 @@ RSpec.describe Spree::CreditCardsController do
                                card: {
                                  number: '4242424242424242',
                                  exp_month: 9,
-                                 exp_year: 2024,
+                                 exp_year: 1.year.from_now.year,
                                  cvc: '314',
                                },
                              })
