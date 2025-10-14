@@ -670,7 +670,7 @@ RSpec.describe Spree::Payment do
                 source: card,
                 payment_method:
               )
-            end.should raise_error(Spree::Core::GatewayError)
+            end.to raise_error(Spree::Core::GatewayError)
           end
         end
 
