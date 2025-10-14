@@ -421,7 +421,7 @@ RSpec.describe '
         end
       end
 
-      context "when variants are hidden via inventory settings" do
+      context "'outgoing products' tab, when variants are hidden in inventory" do
         let(:oc) do
           create(:simple_order_cycle, suppliers: [supplier_managed],
                                       coordinator: distributor_managed,
@@ -446,16 +446,15 @@ RSpec.describe '
           v1.inventory_items = [inventory_item_v1]
           ex_out.save!
 
-          # hide via inventory settings variant v1
-          distributor_managed.update preferred_product_selection_from_inventory_only: true
           oc.update prefers_product_selection_from_coordinator_inventory_only: false
         end
 
-        it "shows a warning when going to 'outgoing products' tab" do
+        it "shows a warning when distributor allows only products from inventory" do
+          # hide via inventory settings variant v1
+          distributor_managed.update preferred_product_selection_from_inventory_only: true
+
           # hides/displays variant within coordinator's inventory
           inventory_item_v1.update!(visible: false)
-          # changes coordinator's inventory preferences
-          supplier_managed.update preferred_product_selection_from_inventory_only: true
 
           visit edit_admin_order_cycle_path(oc)
           click_link "Outgoing Products"
@@ -467,15 +466,17 @@ RSpec.describe '
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
           expect(page).to have_content v1.product.name
+
+          expect(page).to have_content "No variant available for this product"
+          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
         end
 
-        it "doesn't show a warning when going to 'outgoing products' tab" do
-          pending("#11851")
+        it "shows a warning when distributor allows any products from supplier" do
+          # unhide via inventory settings variant v1
+          distributor_managed.update preferred_product_selection_from_inventory_only: false
 
           # hides/displays variant within coordinator's inventory
           inventory_item_v1.update!(visible: false)
-          # changes coordinator's inventory preferences
-          supplier_managed.update preferred_product_selection_from_inventory_only: false
 
           visit edit_admin_order_cycle_path(oc)
           click_link "Outgoing Products"
@@ -488,7 +489,7 @@ RSpec.describe '
           expect(page).to have_content v1.product.name
 
           expect(page).not_to have_content "No variant available for this product"
-          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
+          expect(page).not_to have_content "(Some variants might be hidden via inventory settings)"
         end
       end
 
