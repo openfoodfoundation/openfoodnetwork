@@ -27,7 +27,7 @@ Rails.application.configure do
   # To override this, set the appropriate locale in .env[.*] file.
   config.time_zone = ENV.fetch("TIMEZONE", "UTC")
 
-  config.log_level = ENV.fetch("DEV_LOG_LEVEL", :debug)
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", :debug)
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
