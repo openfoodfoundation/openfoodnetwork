@@ -5,7 +5,7 @@
 
 set -e # Exit if any command fails
 
-git rm spec/fixtures/vcr_cassettes/Stripe-v* -r
+git rm spec/fixtures/vcr_cassettes/Stripe-v* -r --ignore-unmatch
 ./bin/rspec --tag stripe_version
 
 git add spec/fixtures/vcr_cassettes/Stripe-v*
