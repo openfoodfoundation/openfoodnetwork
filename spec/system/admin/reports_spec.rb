@@ -142,12 +142,8 @@ RSpec.describe '
       # Now the controller response will show the loading spinner again and
       # the fallback mechanism will render the report later.
       expect(page).to have_selector ".loading"
-
-      # Wait for the fallback mechanism:
-      sleep 3
-
-      expect(page).not_to have_selector ".loading"
       expect(page).to have_content "First Name Last Name Billing Address Email"
+      expect(page).not_to have_selector ".loading"
     end
   end
 
