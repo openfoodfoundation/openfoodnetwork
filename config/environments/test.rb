@@ -66,6 +66,9 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  # Reduced logging by default; set the desired level in .env.test.local file.
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", :fatal)
+
   # Fail tests on deprecated code unless it's a known case to solve.
   Rails.application.deprecators.behavior = ->(message, callstack, deprecator) do
     allowed_warnings = [
