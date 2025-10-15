@@ -14,7 +14,7 @@ RSpec.describe TagRule::FilterProducts do
     end
   end
 
-  describe "determining whether tags match for a given variant" do
+  describe "#tags_match?" do
     let(:variant_tags) { "my_tag" }
 
     context "when the variant is nil" do

@@ -16,7 +16,7 @@ RSpec.describe TagRule::FilterShippingMethods do
     end
   end
 
-  describe "#tag_match?" do
+  describe "#tags_match?" do
     context "when the shipping method is nil" do
       it "returns false" do
         expect(tag_rule.tags_match?(nil)).to be false
