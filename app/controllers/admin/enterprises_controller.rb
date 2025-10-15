@@ -401,7 +401,7 @@ module Admin
       ]
 
       if helpers.feature?(:variant_tag, @object)
-        @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants_new"), "FilterVariants"])
+        @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterVariants"])
       elsif helpers.feature?(:inventory, @object)
         @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterProducts"])
       end
