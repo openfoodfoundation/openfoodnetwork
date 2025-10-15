@@ -18,7 +18,8 @@ RSpec.describe TagRule do
       create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "filtered" )
     }
     let!(:rule3) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "filtered" )
+      create(:filter_variants_tag_rule, enterprise: create(:enterprise),
+                                        preferred_customer_tags: "filtered" )
     }
     let!(:rule4) {
       create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "other-tag" )
@@ -30,8 +31,8 @@ RSpec.describe TagRule do
     it "returns a list of rule partially matching the tag" do
       rules = described_class.matching_variant_tag_rules_by_enterprises(enterprise.id, "filte")
 
-      expect(rules).to include rule1, rule2, rule3
-      expect(rules).not_to include rule4
+      expect(rules).to include rule1, rule2
+      expect(rules).not_to include rule3, rule4, rule5
     end
 
     context "when no matching rules" do
