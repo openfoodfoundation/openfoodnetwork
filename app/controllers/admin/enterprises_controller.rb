@@ -83,6 +83,7 @@ module Admin
           format.turbo_stream
         end
       else
+        load_tag_rule_types
         respond_with(@object) do |format|
           format.json {
             render json: { errors: @object.errors.messages }, status: :unprocessable_entity
@@ -144,6 +145,18 @@ module Admin
           render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic',
                                       spree_current_user:
         end
+      end
+    end
+
+    def new_tag_rule_group
+      load_tag_rule_types
+
+      @index = params[:index]
+      @customer_rule_index = params[:customer_rule_index].to_i
+      @group = { tags: [], rules: [] }
+
+      respond_to do |format|
+        format.turbo_stream
       end
     end
 
@@ -379,16 +392,15 @@ module Admin
     end
 
     def load_tag_rule_types
-      # Load rule types
       @tag_rule_types = [
-        { id: "FilterShippingMethods", name: t('js.tag_rules.show_hide_shipping') },
-        { id: "FilterPaymentMethods", name: t('js.tag_rules.show_hide_payment') },
-        { id: "FilterOrderCycles", name: t('js.tag_rules.show_hide_order_cycles') }
+        [t(".form.tag_rules.show_hide_shipping"), "FilterShippingMethods"],
+        [t(".form.tag_rules.show_hide_payment"), "FilterPaymentMethods"],
+        [t(".form.tag_rules.show_hide_order_cycles"), "FilterOrderCycles"]
       ]
 
       return unless helpers.feature?(:inventory, @object)
 
-      @tag_rule_types.prepend({ id: "FilterProducts", name: t('js.tag_rules.show_hide_variants') })
+      @tag_rule_types.prepend([t(".form.tag_rules.show_hide_variants"), "FilterProducts"])
     end
 
     def setup_property

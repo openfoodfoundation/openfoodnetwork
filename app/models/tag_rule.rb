@@ -19,4 +19,9 @@ class TagRule < ApplicationRecord
       end
     end
   end
+
+  # The following method must be overriden in a concrete tagRule
+  def tags
+    raise NotImplementedError, 'please use concrete TagRule'
+  end
 end

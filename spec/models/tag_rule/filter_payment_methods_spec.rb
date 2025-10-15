@@ -5,6 +5,14 @@ require 'spec_helper'
 RSpec.describe TagRule::FilterPaymentMethods do
   let!(:tag_rule) { build_stubbed(:filter_payment_methods_tag_rule) }
 
+  describe "#tags" do
+    it "return the payment method tags" do
+      tag_rule = create(:filter_payment_methods_tag_rule, preferred_payment_method_tags: "my_tag")
+
+      expect(tag_rule.tags).to eq("my_tag")
+    end
+  end
+
   describe "determining whether tags match for a given payment method" do
     context "when the payment method is nil" do
       it "returns false" do

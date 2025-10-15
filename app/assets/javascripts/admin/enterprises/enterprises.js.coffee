@@ -6,7 +6,6 @@ angular.module("admin.enterprises", [
   "admin.side_menu",
   "admin.taxons",
   'admin.indexUtils',
-  'admin.tagRules',
   'admin.dropdown',
   'ngSanitize']
 )

@@ -92,7 +92,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         .and change{ variant_a1.on_hand }.to(6)
         .and change{ variant_a1.variant_unit }.to("volume")
         .and change{ variant_a1.variant_unit_scale }.to(0.001)
-        .and change{ variant_a1.tag_list }.to(["tag one"])
+        .and change{ variant_a1.tag_list }.to(["tag-one"])
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
