@@ -17,7 +17,7 @@ RSpec.describe TagRule::FilterOrderCycles do
     end
   end
 
-  describe "#reject_matched?" do
+  describe "#tags_match?" do
     context "when the exchange is nil" do
       before do
         allow(tag_rule).to receive(:exchange_for) { nil }
