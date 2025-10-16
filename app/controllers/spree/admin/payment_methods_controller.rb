@@ -89,8 +89,13 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = params[:provider_type].constantize.new
+          @payment_method = if allowed_payment_methods.include?(params[:provider_type])
+                              params[:provider_type].constantize.new
+                            else
+                              PaymentMethod.new
+                            end
         end
+
         render partial: 'provider_settings'
       end
 
@@ -201,6 +206,10 @@ module Spree
 
       def add_type_to_calculator_attributes(hash)
         hash["calculator_attributes"]["type"] = hash["calculator_type"]
+      end
+
+      def allowed_payment_methods
+        %w{Spree::PaymentMethod::Check Spree::Gateway::PayPalExpress Spree::Gateway::StripeSCA}
       end
     end
   end
