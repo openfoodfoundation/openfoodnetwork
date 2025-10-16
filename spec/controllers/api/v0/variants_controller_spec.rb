@@ -165,7 +165,6 @@ RSpec.describe Api::V0::VariantsController do
       expect(response).to have_http_status(:ok)
       variant.reload
       expect(variant.sku).to eq "12345"
-      pending
       expect(variant.variant_unit_with_scale).to eq "weight_1000"
     end
 
