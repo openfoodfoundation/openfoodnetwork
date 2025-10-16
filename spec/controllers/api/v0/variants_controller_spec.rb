@@ -159,6 +159,8 @@ RSpec.describe Api::V0::VariantsController do
       api_put :update, id: variant.to_param, variant: { sku: "12345" }
 
       expect(response).to have_http_status(:ok)
+      variant.reload
+      expect(variant.sku).to eq "12345"
     end
 
     it "can delete a variant" do
