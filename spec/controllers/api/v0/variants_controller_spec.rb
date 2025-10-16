@@ -156,11 +156,17 @@ RSpec.describe Api::V0::VariantsController do
     end
 
     it "can update a variant" do
-      api_put :update, id: variant.to_param, variant: { sku: "12345" }
+      variant.variant_unit_with_scale = "volume_1"
+      variant.save!
+
+      api_put :update, id: variant.to_param,
+                       variant: { sku: "12345", variant_unit_with_scale: "weight_1000" }
 
       expect(response).to have_http_status(:ok)
       variant.reload
       expect(variant.sku).to eq "12345"
+      pending
+      expect(variant.variant_unit_with_scale).to eq "weight_1000"
     end
 
     it "can delete a variant" do
