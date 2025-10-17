@@ -1170,10 +1170,11 @@ mr:
             no_rules_yet: अजून कोणतेही डीफॉल्ट नियम लागू नाहीत
             add_new_button: '+ नवीन डीफॉल्ट नियम जोडा'
           no_tags_yet: 'या एंटरप्राइझला कोणतेही टॅग अजून लागू नाहीत '
-          no_rules_yet: या टॅगवर अद्याप कोणतेही नियम लागू नाहीत
-          for_customers_tagged: 'टॅग केलेल्या ग्राहकांसाठी:'
-          add_new_rule: '+ एक नवीन नियम जोडा'
           add_new_tag: '+ एक नवीन टॅग जोडा'
+          show_hide_variants: 'माझ्या शॉपफ्रंटमधील प्रकार दाखवा किंवा लपवा'
+          show_hide_shipping: 'चेकआउट करताना शिपिंग पद्धती दृश्यमान किंवा अदृश्यमान करा '
+          show_hide_payment: 'चेकआउट करताना पेमेंट पद्धती दृश्यमान किंवा अदृश्यमान करा '
+          show_hide_order_cycles: 'माझ्या शॉपफ्रंटमध्ये ऑर्डर सायकल दृश्यमान किंवा अदृश्यमान करा '
         users:
           legend: "वापरकर्ते"
           email_confirmation_notice_html: "ईमेल पुष्टीकरण प्रलंबित आहे. आम्ही %{email} वर पुष्टीकरण ईमेल पाठवला आहे."
@@ -2083,10 +2084,8 @@ mr:
   email_confirmed: "तुमच्या ईमेल पत्त्याची पुष्टी केल्याबद्दल धन्यवाद."
   email_confirmation_activate_account: "आम्ही तुमचे नवीन खाते सक्रिय करण्यापूर्वी, आम्हाला तुमच्या ईमेल पत्त्याची पुष्टी करणे आवश्यक आहे."
   email_confirmation_greeting: "नमस्कार, %{contact} !"
-  email_confirmation_profile_created: "%{name} साठी प्रोफाइल यशस्वीरित्या तयार केले गेले आहे! तुमचे प्रोफाइल सक्रिय करण्यासाठी आम्हाला या ईमेल पत्त्याची पुष्टी करणे आवश्यक आहे."
   email_confirmation_click_link: "कृपया तुमच्या ईमेलची पुष्टी करण्यासाठी आणि तुमची प्रोफाइल बनवणे सुरू ठेवण्यासाठी खालील लिंकवर क्लिक करा."
   email_confirmation_link_label: "या ईमेल पत्त्याची पुष्टी करा »"
-  email_confirmation_help_html: "तुमच्या ईमेलची पुष्टी केल्यानंतर तुम्ही या एंटरप्राइझच्या तुमच्या अ‍ॅडमिनिस्ट्रेशन खात्यात प्रवेश करू शकता. %{sitename} च्या सुविधांबद्दल अधिक जाणून घेण्यासाठी आणि तुमचे प्रोफाइल किंवा ऑनलाइन स्टोअर वापरणे सुरू करण्यासाठी %{link} पहा."
   email_confirmation_notice_unexpected: "तुम्हाला हा संदेश मिळाला आहे कारण तुम्ही %{sitename} वर साइन अप केले आहे किंवा तुमच्या ओळखीच्या व्यक्तीने साइन अप करण्यासाठी आमंत्रित केले आहे. तुम्हाला हा ईमेल का मिळत आहे हे माहीत नसल्यास, कृपया %{contact} वर लिहा."
   email_social: "आमच्याशी कनेक्ट व्हा:"
   email_contact: "आम्हाला ईमेल करा:"
@@ -3184,18 +3183,6 @@ mr:
           loading_variants: "प्रकार लोड करत आहे"
           no_variants: "या उत्पादनासाठी कोणतेही प्रकार उपलब्ध नाहीत ( इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केलेले)."
           some_variants_hidden: "(काही प्रकार इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केले जाऊ शकतात)"
-      tag_rules:
-        shipping_method_tagged_top: "शिपिंग पद्धती टॅग केल्या आहेत"
-        shipping_method_tagged_bottom: "आहेत:"
-        payment_method_tagged_top: "पेमेंट पद्धती टॅग केल्या आहेत"
-        payment_method_tagged_bottom: "आहेत:"
-        order_cycle_tagged_top: "ऑर्डर सायकल टॅग केली"
-        order_cycle_tagged_bottom: "आहेत:"
-        inventory_tagged_top: "इन्व्हेंटरी प्रकार टॅग केले"
-        inventory_tagged_bottom: "आहेत:"
-      new_tag_rule_dialog:
-        select_rule_type: "नियम प्रकार निवडा:"
-        add_rule: "नियम जोडा"
       enterprise_fees:
         inherit_from_product: "उत्पादनाकडून मिळवा"
       orders:
@@ -3323,13 +3310,6 @@ mr:
       some_trouble: "मला सेव्ह करण्यात काही अडचण आली: %{errors}"
       changing_on_hand_stock: उपलब्ध स्टॉकची पातळी बदलत आहे...
       stock_reset: स्टॉक्स डीफॉल्टवर रीसेट केले.
-    tag_rules:
-      show_hide_variants: 'माझ्या शॉपफ्रंटमधील प्रकार दाखवा किंवा लपवा'
-      show_hide_shipping: 'चेकआउट करताना शिपिंग पद्धती दृश्यमान किंवा अदृश्यमान करा '
-      show_hide_payment: 'चेकआउट करताना पेमेंट पद्धती दृश्यमान किंवा अदृश्यमान करा '
-      show_hide_order_cycles: 'माझ्या शॉपफ्रंटमध्ये ऑर्डर सायकल दृश्यमान किंवा अदृश्यमान करा '
-      visible: दृश्यमान
-      not_visible: अदृश्य
     services:
       unsaved_changes_message: सेव्ह न केलेले बदल सध्या अस्तित्वात आहेत, आता सेव्ह करायचे अथवा नाही?
       save: सेव्ह करा
@@ -4457,3 +4437,7 @@ mr:
     pagination:
       next: पुढील
       previous: मागील
+    tag_rule_group_form:
+      for_customers_tagged: 'टॅग केलेल्या ग्राहकांसाठी:'
+      add_new_rule: '+ एक नवीन नियम जोडा'
+      no_rules_yet: या टॅगवर अद्याप कोणतेही नियम लागू नाहीत

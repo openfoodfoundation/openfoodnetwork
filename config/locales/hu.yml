@@ -20,12 +20,12 @@ hu:
         lastname: "Vezetéknév"
         zipcode: "Szállítási cím Irányítószám"
       spree/order/bill_address:
-        address1: "Számlázási cím (Utca és Házszám)"
+        address1: "Számlázási cím (utca és házszám)"
         zipcode: "Számlázási cím Irányítószám"
         city: "Számlázási cím Város"
         country: "Számlázási cím Ország"
         firstname: "Számlázási név Keresztnév"
-        lastname: "Számlázási cím Vezetéknév"
+        lastname: "Számlázási név Vezetéknév"
         phone: Vásárlói telefonszám
       spree/user:
         password: "Jelszó"
@@ -1130,7 +1130,7 @@ hu:
           legal_phone_number: Hivatalos telefonszám
           phone_placeholder: "98 123 4565"
           select_country: "Válassz országot"
-          select_state: "Válassz államot"
+          select_state: "Válassz megyét"
         contact:
           legend: "Kapcsolat"
           name: Név
@@ -1299,10 +1299,11 @@ hu:
             no_rules_yet: Még nincsenek alapértelmezett szabályok
             add_new_button: '+ Új alapértelmezett szabály hozzáadása'
           no_tags_yet: Ehhez a vállalkozáshoz még nem tartozik címke
-          no_rules_yet: Erre a címkére még nem vonatkoznak szabályok
-          for_customers_tagged: 'A következő címkével rendelkező ügyfelek számára:'
-          add_new_rule: '+ Új szabály hozzáadása'
           add_new_tag: '+ Új címke hozzáadása'
+          show_hide_variants: 'Változatok megjelenítése vagy elrejtése a kirakatomban'
+          show_hide_shipping: 'Áruátadási módok megjelenítése vagy elrejtése fizetéskor'
+          show_hide_payment: 'Fizetési módok megjelenítése vagy elrejtése a pénztárnál'
+          show_hide_order_cycles: 'Rendelési ciklusok megjelenítése vagy elrejtése az online kirakatban'
         users:
           legend: "Felhasználók"
           email_confirmation_notice_html: "Az email megerősítés függőben van. Megerősítő emailt küldtünk a következő címre: %{email}."
@@ -2338,10 +2339,8 @@ hu:
   email_confirmed: "Köszönjük, hogy megerősítetted az e-mail címed."
   email_confirmation_activate_account: "Mielőtt aktiválhatnánk az új fiókodat, meg kell erősíteni az e-mail címed."
   email_confirmation_greeting: "Kedves %{contact}!"
-  email_confirmation_profile_created: "A %{name} profilod sikeresen létrejött! Profilod aktiválásához meg kell erősíteni ezt az e-mail címet."
   email_confirmation_click_link: "Kérjük, kattints az alábbi linkre az e-mail-cím megerősítéséhez és a profil beállításának folytatásához."
   email_confirmation_link_label: "E-mail cím megerősítése »"
-  email_confirmation_help_html: "Az e-mail-cím megerősítése után hozzáférhetsz a vállalkozás adminisztrációs fiókjához. Tekintsd meg a %{link} webhelyet, hogy többet megtudj %{sitename} szolgáltatásairól, és elkezdhesd használni profilod vagy online áruházad."
   email_confirmation_notice_unexpected: "Azért kaptad ezt az üzenetet, mert regisztráltál a(z) %{sitename} webhelyen, vagy egy olyan személy, akit valószínűleg ismersz, meghívott. Ha nem érted, miért kaptad ezt az e-mailt, kérjük, írj a %{contact} címre."
   email_social: "Lépj kapcsolatba velünk:"
   email_contact: "Küldj emailt nekünk:"
@@ -3056,14 +3055,14 @@ hu:
   report_header_ship_street_2: Szállítási utca 2
   report_header_ship_city: Szállítási város
   report_header_ship_postcode: Szállítás irányítószáma
-  report_header_ship_state: Szállítási állam
+  report_header_ship_state: Szállítási megye
   report_header_billing_street: Számlázási utca
   report_header_billing_street_2: Számlázási utca 2
   report_header_billing_street_3: Számlázási utca 3
   report_header_billing_street_4: Számlázási utca 4
   report_header_billing_city: Számlázási város
   report_header_billing_postcode: Számlázási irányítószám
-  report_header_billing_state: Számlázási állapot
+  report_header_billing_state: Számlázási megye
   report_header_incoming_transport: Bejövő szállítás
   report_header_special_instructions: Különleges utasítások
   report_header_order_number: Rendelésszám
@@ -3460,18 +3459,6 @@ hu:
           loading_variants: "Változatok betöltése"
           no_variants: "Nincs elérhető termékváltozat ehhez a termékhez (a leltár beállításokban rejtett státuszúak)."
           some_variants_hidden: "(Egyes termékváltozatok a leltárbeállítások miatt rejtve maradhatnak)"
-      tag_rules:
-        shipping_method_tagged_top: "Áruátadási módok felcímkézve"
-        shipping_method_tagged_bottom: "vannak:"
-        payment_method_tagged_top: "Fizetési módok felcímkézve"
-        payment_method_tagged_bottom: "vannak:"
-        order_cycle_tagged_top: "Rendelési ciklusok felcímkézve"
-        order_cycle_tagged_bottom: "vannak:"
-        inventory_tagged_top: "Leltár változatok felcímkézve"
-        inventory_tagged_bottom: "vannak:"
-      new_tag_rule_dialog:
-        select_rule_type: "Válassz egy szabálytípust:"
-        add_rule: "Szabály hozzáadása"
       enterprise_fees:
         inherit_from_product: "Öröklés a terméktől"
       orders:
@@ -3600,13 +3587,6 @@ hu:
       some_trouble: "Problémáim akadtak a mentésnél: %{errors}"
       changing_on_hand_stock: Változás a kézi készletszinten...
       stock_reset: A készletek visszaállnak az alapértelmezett értékekre.
-    tag_rules:
-      show_hide_variants: 'Változatok megjelenítése vagy elrejtése a kirakatomban'
-      show_hide_shipping: 'Áruátadási módok megjelenítése vagy elrejtése fizetéskor'
-      show_hide_payment: 'Fizetési módok megjelenítése vagy elrejtése a pénztárnál'
-      show_hide_order_cycles: 'Rendelési ciklusok megjelenítése vagy elrejtése az online kirakatban'
-      visible: LÁTHATÓ
-      not_visible: NEM LÁTHATÓ
     services:
       unsaved_changes_message: Jelenleg nem mentett módosítások vannak, mented most vagy figyelmen kívül hagyod?
       save: MENTÉS
@@ -3837,7 +3817,7 @@ hu:
   spree:
     order_updated: "Rendelés frissült"
     add_country: "Ország hozzáadása"
-    add_state: "Állam hozzáadása"
+    add_state: "Megye hozzáadása"
     adjustment: "Beállítás"
     all: "Mind"
     associated_adjustment_closed: "A kapcsolódó beállítás lezárva"
@@ -3917,7 +3897,7 @@ hu:
     city: "Város"
     zip: "Postai irányítószám"
     country: "Ország"
-    state: "Állam"
+    state: "Megye"
     phone: "Telefon"
     update: "Frissítés"
     use_billing_address: "Használd a Számlázási címet"
@@ -4797,6 +4777,25 @@ hu:
       previous: Előző
     tag_list_input:
       default_placeholder: Adj hozzá egy címkét
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Áruátadási módok felcímkézve"
+        shipping_method_tagged_bottom: "vannak:"
+        payment_method_tagged_top: "Fizetési módok felcímkézve"
+        payment_method_tagged_bottom: "vannak:"
+        order_cycle_tagged_top: "Rendelési ciklusok felcímkézve"
+        order_cycle_tagged_bottom: "vannak:"
+        inventory_tagged_top: "Leltár változatok felcímkézve"
+        inventory_tagged_bottom: "vannak:"
+        visible: LÁTHATÓ
+        not_visible: NEM LÁTHATÓ
+    tag_rule_group_form:
+      for_customers_tagged: 'A következő címkével rendelkező ügyfelek számára:'
+      add_new_rule: '+ Új szabály hozzáadása'
+      no_rules_yet: Erre a címkére még nem vonatkoznak szabályok
+    add_tag_rule_modal:
+      select_rule_type: "Válassz egy szabálytípust:"
+      add_rule: "Szabály hozzáadása"
   invisible_captcha:
     sentence_for_humans: "Kérjük, hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."

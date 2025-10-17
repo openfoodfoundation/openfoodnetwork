@@ -1155,10 +1155,11 @@ de_CH:
             no_rules_yet: Es gelten noch keine Standardregeln.
             add_new_button: 'neue Standardregel +'
           no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden.
-          no_rules_yet: Für dieses Stichwort gelten noch keine Regeln.
-          for_customers_tagged: 'Für Kunden mit dem Stichwort:'
-          add_new_rule: '+ Neue Regel hinzufügen'
           add_new_tag: '+ Neues Stichwort hinzufügen'
+          show_hide_variants: 'Produktvarianten im Laden anzeigen?'
+          show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
+          show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
+          show_hide_order_cycles: 'Bestellzyklen im Laden anzeigen?'
         users:
           legend: "Benutzer"
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
@@ -2082,10 +2083,8 @@ de_CH:
   email_confirmed: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
   email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren können, bestätigen Sie bitte Ihre E-Mail-Adresse."
   email_confirmation_greeting: "Hallo %{contact}!"
-  email_confirmation_profile_created: "Das Profil für %{name} wurde erfolgreich erstellt! Zur Aktivierung des Profils, bitten wir Sie diese E-Mail-Adresse zu bestätigen."
   email_confirmation_click_link: "Bitte klicken Sie auf den untenstehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
   email_confirmation_link_label: "E-Mail-Adresse bestätigen"
-  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf die Einstellungen dieses Unternehmens zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen des Open Food Networks zu erfahren und Ihr Profil oder Ihren Online-Shop einzurichten."
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich im Open Food Network angemeldet haben oder von einer Person dazu eingeladen wurden. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
@@ -3164,18 +3163,6 @@ de_CH:
           select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
           variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
           loading_variants: "Produktvarianten werden geladen ..."
-      tag_rules:
-        shipping_method_tagged_top: "Lieferoptionen markiert mit"
-        shipping_method_tagged_bottom: "sind:"
-        payment_method_tagged_top: "Zahlungsarten markiert mit"
-        payment_method_tagged_bottom: "sind:"
-        order_cycle_tagged_top: "Bestellzyklen markiert mit"
-        order_cycle_tagged_bottom: "sind:"
-        inventory_tagged_top: "Produktvarianten markiert mit"
-        inventory_tagged_bottom: "sind:"
-      new_tag_rule_dialog:
-        select_rule_type: "Wählen Sie einen Regelart aus:"
-        add_rule: "Regel hinzufügen"
       enterprise_fees:
         inherit_from_product: "Vom Produkt übernehmen"
       orders:
@@ -3300,13 +3287,6 @@ de_CH:
       some_trouble: "Probleme beim Speichern: %{errors}"
       changing_on_hand_stock: Änderung der Lagerbestände ...
       stock_reset: Lagerbestände werden auf Standardwerte zurückgesetzt.
-    tag_rules:
-      show_hide_variants: 'Produktvarianten im Laden anzeigen?'
-      show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
-      show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
-      show_hide_order_cycles: 'Bestellzyklen im Laden anzeigen?'
-      visible: SICHTBAR
-      not_visible: NICHT SICHTBAR
     services:
       unsaved_changes_message: Es sind nicht gespeicherte Änderungen vorhanden. Diese jetzt speichern oder ignorieren?
       save: SPEICHERN
@@ -4395,3 +4375,22 @@ de_CH:
       previous: Vorherige
     tag_list_input:
       default_placeholder: Stichwort hinzufügen
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Lieferoptionen markiert mit"
+        shipping_method_tagged_bottom: "sind:"
+        payment_method_tagged_top: "Zahlungsarten markiert mit"
+        payment_method_tagged_bottom: "sind:"
+        order_cycle_tagged_top: "Bestellzyklen markiert mit"
+        order_cycle_tagged_bottom: "sind:"
+        inventory_tagged_top: "Produktvarianten markiert mit"
+        inventory_tagged_bottom: "sind:"
+        visible: SICHTBAR
+        not_visible: NICHT SICHTBAR
+    tag_rule_group_form:
+      for_customers_tagged: 'Für Kunden mit dem Stichwort:'
+      add_new_rule: '+ Neue Regel hinzufügen'
+      no_rules_yet: Für dieses Stichwort gelten noch keine Regeln.
+    add_tag_rule_modal:
+      select_rule_type: "Wählen Sie einen Regelart aus:"
+      add_rule: "Regel hinzufügen"

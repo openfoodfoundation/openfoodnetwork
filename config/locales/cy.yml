@@ -1345,10 +1345,11 @@ cy:
             no_rules_yet: Nid oes unrhyw reolau diofyn yn berthnasol eto
             add_new_button: '+ Ychwanegu Rheol Ddiofyn Newydd'
           no_tags_yet: Nid oes tagiau yn berthnasol i'r fenter hon eto
-          no_rules_yet: Nid oes unrhyw reolau yn berthnasol i'r tag hwn eto
-          for_customers_tagged: 'Ar gyfer cwsmeriaid a dagiwyd:'
-          add_new_rule: '+ Ychwanegu Rheol Newydd'
           add_new_tag: '+ Ychwanegu Tag Newydd'
+          show_hide_variants: 'Dangos neu Guddio amrywolion yn fy ffrynt siop'
+          show_hide_shipping: 'Dangos neu Guddio dulliau anfon wrth y ddesg dalu'
+          show_hide_payment: 'Dangos neu Guddio dulliau talu wrth y ddesg dalu'
+          show_hide_order_cycles: 'Dangos neu Guddio cylchoedd archebu yn fy ffrynt siop'
         users:
           legend: "Defnyddwyr"
           email_confirmation_notice_html: "Mae cadarnhad e-bost yn yr arfaeth. Anfonwyd cadarnhad e-bost at %{email}."
@@ -2399,10 +2400,8 @@ cy:
   email_confirmed: "Diolch am gadarnhau eich cyfeiriad e-bost."
   email_confirmation_activate_account: "Cyn y gallwn actifadu eich cyfrif newydd, mae angen i ni gadarnhau eich cyfeiriad e-bost."
   email_confirmation_greeting: "Helo, %{contact}!"
-  email_confirmation_profile_created: "Llwyddwyd i greu proffil ar gyfer %{name}! Er mwyn actifadu eich Proffil mae angen i ni gadarnhau'r cyfeiriad e-bost hwn."
   email_confirmation_click_link: "Cliciwch ar y ddolen isod i gadarnhau eich e-bost ac i barhau i sefydlu'ch proffil."
   email_confirmation_link_label: "Cadarnhau'r cyfeiriad e-bost hwn »"
-  email_confirmation_help_html: "Ar ôl cadarnhau eich e-bost gallwch gael mynediad i'ch cyfrif gweinyddol ar gyfer y fenter hon. Gweler  %{link} i ddarganfod mwy am nodweddion %{sitename} ac i ddechrau defnyddio'ch proffil neu'ch siop ar-lein."
   email_confirmation_notice_unexpected: "Rydych wedi derbyn y neges hon oherwydd i chi gofrestru ar %{sitename}, neu ar ôl cael eich gwahodd i gofrestru gan rywun rydych chi'n ei adnabod mae'n debyg. Os nad ydych yn deall pam eich bod yn derbyn yr e-bost hwn, ysgrifennwch at %{contact}."
   email_social: "Cysylltu â Ni:"
   email_contact: "Anfon ebost atom:"
@@ -3519,18 +3518,6 @@ cy:
           loading_variants: "Yn llwytho Amrywolion"
           no_variants: "Nid oes amrywiolyn ar gael ar gyfer y cynnyrch yma (cuddiwyd trwy osodiadau’r stocrestr )"
           some_variants_hidden: "(Hwyrach y cuddiwyd amrywiolion trwy osodiadau’r stocrestr)"
-      tag_rules:
-        shipping_method_tagged_top: "Tagiwyd dulliau anfon"
-        shipping_method_tagged_bottom: "yw:"
-        payment_method_tagged_top: "Tagiwyd dulliau talu "
-        payment_method_tagged_bottom: "yw:"
-        order_cycle_tagged_top: "Tagiwyd cylchoedd archebu "
-        order_cycle_tagged_bottom: "yw:"
-        inventory_tagged_top: "Tagiwyd amrywolion stocrestr"
-        inventory_tagged_bottom: "yw:"
-      new_tag_rule_dialog:
-        select_rule_type: "Dewis math o reol:"
-        add_rule: "Ychwanegu Rheol"
       enterprise_fees:
         inherit_from_product: "Etifeddu o'r Cynnyrch"
       orders:
@@ -3661,13 +3648,6 @@ cy:
       some_trouble: "Ges i ychydig o drafferth yn cadw: %{errors}"
       changing_on_hand_stock: Yn newid lefelau stoc sydd ar gael ...
       stock_reset: Ailosodwyd stoc i lefelau diofyn.
-    tag_rules:
-      show_hide_variants: 'Dangos neu Guddio amrywolion yn fy ffrynt siop'
-      show_hide_shipping: 'Dangos neu Guddio dulliau anfon wrth y ddesg dalu'
-      show_hide_payment: 'Dangos neu Guddio dulliau talu wrth y ddesg dalu'
-      show_hide_order_cycles: 'Dangos neu Guddio cylchoedd archebu yn fy ffrynt siop'
-      visible: GWELEDOL
-      not_visible: DDIM YN WELEDOL
     services:
       unsaved_changes_message: Mae newidiadau heb eu cadw yn bodoli ar hyn o bryd, hoffech eu cadw nawr neu eu hanwybyddu?
       save: CADW
@@ -4937,6 +4917,25 @@ cy:
       previous: Blaenorol
     tag_list_input:
       default_placeholder: Ychwanegu tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Tagiwyd dulliau anfon"
+        shipping_method_tagged_bottom: "yw:"
+        payment_method_tagged_top: "Tagiwyd dulliau talu "
+        payment_method_tagged_bottom: "yw:"
+        order_cycle_tagged_top: "Tagiwyd cylchoedd archebu "
+        order_cycle_tagged_bottom: "yw:"
+        inventory_tagged_top: "Tagiwyd amrywolion stocrestr"
+        inventory_tagged_bottom: "yw:"
+        visible: GWELEDOL
+        not_visible: DDIM YN WELEDOL
+    tag_rule_group_form:
+      for_customers_tagged: 'Ar gyfer cwsmeriaid a dagiwyd:'
+      add_new_rule: '+ Ychwanegu Rheol Newydd'
+      no_rules_yet: Nid oes unrhyw reolau yn berthnasol i'r tag hwn eto
+    add_tag_rule_modal:
+      select_rule_type: "Dewis math o reol:"
+      add_rule: "Ychwanegu Rheol"
   invisible_captcha:
     sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
     timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."

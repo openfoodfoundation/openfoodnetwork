@@ -1123,10 +1123,11 @@ it:
             no_rules_yet: Non è ancora stata fissata nessuna regola predefinita
             add_new_button: ' + Aggiungi una nuova regola predefinita'
           no_tags_yet: Nessuna etichetta per questa azienda
-          no_rules_yet: Nessuna regola per questa etichetta
-          for_customers_tagged: 'Per i clienti con l''etichetta:'
-          add_new_rule: '+ Aggiungi una nuova regola'
           add_new_tag: '+ Aggiungi una nuova etichetta'
+          show_hide_variants: 'Mostra o nascondi varianti nella mia vetrina'
+          show_hide_shipping: 'Mostra o nascondi metodi di consegna al checkout'
+          show_hide_payment: 'Mostra o nascondi metodi di pagamento al checkout'
+          show_hide_order_cycles: 'Mostra o nascondi cicli di richieste nella mia vetrina'
         users:
           legend: "Utenti"
           email_confirmation_notice_html: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
@@ -2036,10 +2037,8 @@ it:
   email_confirmed: "Grazie per aver confermato il tuo indirizzo email"
   email_confirmation_activate_account: "Prima di attivare il tuo nuovo account, dobbiamo verificare il tuo indirizzo email"
   email_confirmation_greeting: "Ciao, %{contact}!"
-  email_confirmation_profile_created: "Un profilo per %{name} è stato creato con successo! Per attivare il tuo Profilo abbiamo bisogno di confermare questo indirizzo email."
   email_confirmation_click_link: "Per favore clicca il link di seguito per confermare la tua email e continuare l'impostazione del tuo profilo"
   email_confirmation_link_label: "Conferma questo indirizzo email »"
-  email_confirmation_help_html: "Dopo aver confermato il tuo indirizzo email puoi accedere al tuo account di amministrazione per questa impresa. Vedi il link %{link} per scoprire di più sulle funzionalità di %{sitename} e iniziare a usare il tuo profilo e il tuo negozio online."
   email_confirmation_notice_unexpected: "Hai ricevuto questo messaggio perché ti sei iscritto a %{sitename} o sei stato invitato a iscriverti da qualcuno che probabilmente conosci. Se non capisci perché stai ricevendo questa e-mail, scrivi a %{contact}."
   email_social: "Connettiti con Noi:"
   email_contact: "Scrivici:"
@@ -3131,18 +3130,6 @@ it:
           select_all_variants: "Seleziona tutto %{total_number_of_variants} varianti"
           variants_loaded: "%{num_of_variants_loaded} di %{total_number_of_variants} varianti caricate"
           loading_variants: "Caricamento Varianti"
-      tag_rules:
-        shipping_method_tagged_top: "Metodi di consegna etichettati"
-        shipping_method_tagged_bottom: "sono:"
-        payment_method_tagged_top: "Metodi di Pagamento etichettati"
-        payment_method_tagged_bottom: "sono:"
-        order_cycle_tagged_top: "Cicli di richieste etichettati"
-        order_cycle_tagged_bottom: "sono:"
-        inventory_tagged_top: "Varianti inventario etichettate"
-        inventory_tagged_bottom: "sono:"
-      new_tag_rule_dialog:
-        select_rule_type: "Seleziona un tipo di regola:"
-        add_rule: "Aggiungi regola"
       enterprise_fees:
         inherit_from_product: "Eredita dal prodotto"
       orders:
@@ -3267,13 +3254,6 @@ it:
       some_trouble: "Abbiamo avuto problemi durante il salvataggio: %{errors}"
       changing_on_hand_stock: Modifica a mano i livelli delle scorte ...
       stock_reset: Quantità resettate alle predefinite.
-    tag_rules:
-      show_hide_variants: 'Mostra o nascondi varianti nella mia vetrina'
-      show_hide_shipping: 'Mostra o nascondi metodi di consegna al checkout'
-      show_hide_payment: 'Mostra o nascondi metodi di pagamento al checkout'
-      show_hide_order_cycles: 'Mostra o nascondi cicli di richieste nella mia vetrina'
-      visible: VISIBILE
-      not_visible: NON VISIBILE
     services:
       unsaved_changes_message: 'Ci sono modifiche non salvate: salva ora o ignora?'
       save: SALVA
@@ -4423,3 +4403,22 @@ it:
       previous: Precedente
     tag_list_input:
       default_placeholder: Aggiungi un'etichetta
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Metodi di consegna etichettati"
+        shipping_method_tagged_bottom: "sono:"
+        payment_method_tagged_top: "Metodi di Pagamento etichettati"
+        payment_method_tagged_bottom: "sono:"
+        order_cycle_tagged_top: "Cicli di richieste etichettati"
+        order_cycle_tagged_bottom: "sono:"
+        inventory_tagged_top: "Varianti inventario etichettate"
+        inventory_tagged_bottom: "sono:"
+        visible: VISIBILE
+        not_visible: NON VISIBILE
+    tag_rule_group_form:
+      for_customers_tagged: 'Per i clienti con l''etichetta:'
+      add_new_rule: '+ Aggiungi una nuova regola'
+      no_rules_yet: Nessuna regola per questa etichetta
+    add_tag_rule_modal:
+      select_rule_type: "Seleziona un tipo di regola:"
+      add_rule: "Aggiungi regola"

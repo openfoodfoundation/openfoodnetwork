@@ -853,10 +853,8 @@ pl:
             no_rules_yet: Nie obowiązują jeszcze żadne reguły domyślne
             add_new_button: '+ Dodaj nową regułę domyślną'
           no_tags_yet: Żadne tagi nie mają jeszcze zastosowania do tego podmiotu
-          no_rules_yet: Żadne zasady nie mają jeszcze zastosowania do tego tagu
-          for_customers_tagged: 'Dla klientów otagowanych:'
-          add_new_rule: '+ Dodaj nową regułę'
           add_new_tag: '+ Dodaj nowy tag'
+          show_hide_shipping: 'Pokaż lub ukryj metody dostaw przy kasie'
         users:
           email_confirmation_notice_html: "Oczekuje na potwierdzenie e-mailem. Wysłaliśmy wiadomość e-mail z potwierdzeniem na adres %{email}."
           resend: Wysłać ponownie
@@ -1585,10 +1583,8 @@ pl:
   email_confirmed: "Dziękujemy za potwierdzenie adresu e-mail."
   email_confirmation_activate_account: "Zanim będziemy mogli aktywować Twoje nowe konto, musimy potwierdzić Twój adres e-mail."
   email_confirmation_greeting: "Cześć, %{contact}!"
-  email_confirmation_profile_created: "Profil dla %{name} został pomyślnie utworzony! Aby aktywować Twój profil, musimy potwierdzić ten adres e-mail."
   email_confirmation_click_link: "Kliknij poniższy link, aby potwierdzić swój adres e-mail i kontynuować konfigurację profilu."
   email_confirmation_link_label: "Potwierdź ten adres e-mail »"
-  email_confirmation_help_html: "Po potwierdzeniu adresu e-mail możesz uzyskać dostęp do swojego konta administracyjnego dla tego podmiotu. Zobacz %{link}, aby dowiedzieć się więcej o funkcjach %{sitename} i zacząć korzystać ze swojego profilu lub sklepu internetowego."
   email_confirmation_notice_unexpected: "Otrzymałeś tę wiadomość, ponieważ zarejestrowałeś się na %{sitename} lub zostałeś zaproszony do zarejestrowania się przez osobę, którą prawdopodobnie znasz. Jeśli nie rozumiesz, dlaczego otrzymujesz tę wiadomość e-mail, napisz do %{contact}."
   email_social: "Połącz się z nami:"
   email_contact: "Wyślij do nas e-mail:"
@@ -2592,18 +2588,6 @@ pl:
           select_all_variants: "Wybierz wszystkie warianty %{total_number_of_variants}"
           variants_loaded: "%{num_of_variants_loaded} z %{total_number_of_variants} Wczytane warianty"
           loading_variants: "Ładowanie wariantów"
-      tag_rules:
-        shipping_method_tagged_top: "Oznaczone metody dostaw"
-        shipping_method_tagged_bottom: "są:"
-        payment_method_tagged_top: "Oznaczone metody płatności"
-        payment_method_tagged_bottom: "są:"
-        order_cycle_tagged_top: "Cykle zamówień oznaczone"
-        order_cycle_tagged_bottom: "są:"
-        inventory_tagged_top: "Oznaczono warianty asortymentu"
-        inventory_tagged_bottom: "są:"
-      new_tag_rule_dialog:
-        select_rule_type: "Wybierz typ reguły:"
-        add_rule: "Dodaj regułę"
       enterprise_fees:
         inherit_from_product: "Dziedzicz z produktu"
       orders:
@@ -2712,13 +2696,6 @@ pl:
       some_trouble: "Miałem problemy z zapisaniem: %{errors}"
       changing_on_hand_stock: Zmiana stanów magazynowych ...
       stock_reset: Stany zresetowane do wartości domyślnych.
-    tag_rules:
-      show_hide_variants: 'Pokaż lub ukryj warianty w moim sklepie'
-      show_hide_shipping: 'Pokaż lub ukryj metody dostaw przy kasie'
-      show_hide_payment: 'Pokaż lub ukryj metody płatności przy kasie'
-      show_hide_order_cycles: 'Pokaż lub ukryj cykle zamówień w moim sklepie'
-      visible: WIDOCZNY
-      not_visible: NIEWIDOCZNY
     services:
       unsaved_changes_message: Niezapisane zmiany obecnie istnieją, zapisać czy zignorować?
       save: ZAPISAĆ
@@ -3653,3 +3630,7 @@ pl:
       placeholder: Szukaj
     selector_with_filter:
       search_placeholder: Szukaj
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Oznaczone metody dostaw"
+        order_cycle_tagged_top: "Cykle zamówień oznaczone"

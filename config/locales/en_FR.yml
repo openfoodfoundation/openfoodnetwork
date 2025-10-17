@@ -1346,10 +1346,11 @@ en_FR:
             no_rules_yet: No default rules apply yet
             add_new_button: '+ Add A New Default Rule'
           no_tags_yet: No tags apply to this enterprise yet
-          no_rules_yet: No rules apply to this tag yet
-          for_customers_tagged: 'For customers tagged:'
-          add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
+          show_hide_variants: 'Show or Hide variants in my shopfront'
+          show_hide_shipping: 'Show or Hide shipping methods at checkout'
+          show_hide_payment: 'Show or Hide payment methods at checkout'
+          show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
@@ -2401,10 +2402,8 @@ en_FR:
   email_confirmed: "Thank you for confirming your email address."
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
-  email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
-  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
@@ -3522,18 +3521,6 @@ en_FR:
           loading_variants: "Loading Variants"
           no_variants: "No variant available for this product (hidden via inventory settings)."
           some_variants_hidden: "(Some variants might be hidden via inventory settings)"
-      tag_rules:
-        shipping_method_tagged_top: "Shipping methods tagged"
-        shipping_method_tagged_bottom: "are:"
-        payment_method_tagged_top: "Payment methods tagged"
-        payment_method_tagged_bottom: "are:"
-        order_cycle_tagged_top: "Order Cycles tagged"
-        order_cycle_tagged_bottom: "are:"
-        inventory_tagged_top: "Inventory variants tagged"
-        inventory_tagged_bottom: "are:"
-      new_tag_rule_dialog:
-        select_rule_type: "Select a rule type:"
-        add_rule: "Add Rule"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3662,13 +3649,6 @@ en_FR:
       some_trouble: "I had some trouble saving: %{errors}"
       changing_on_hand_stock: Changing on hand stock levels...
       stock_reset: Stocks reset to defaults.
-    tag_rules:
-      show_hide_variants: 'Show or Hide variants in my shopfront'
-      show_hide_shipping: 'Show or Hide shipping methods at checkout'
-      show_hide_payment: 'Show or Hide payment methods at checkout'
-      show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
-      visible: VISIBLE
-      not_visible: NOT VISIBLE
     services:
       unsaved_changes_message: Unsaved changes currently exist, save now or ignore?
       save: SAVE
@@ -4895,6 +4875,25 @@ en_FR:
       previous: Previous
     tag_list_input:
       default_placeholder: Add a tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
+        visible: VISIBLE
+        not_visible: NOT VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'For customers tagged:'
+      add_new_rule: '+ Add A New Rule'
+      no_rules_yet: No rules apply to this tag yet
+    add_tag_rule_modal:
+      select_rule_type: "Select a rule type:"
+      add_rule: "Add Rule"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

@@ -1043,10 +1043,11 @@ es_US:
             no_rules_yet: No hay reglas por defecto aplicadas
             add_new_button: '+ Añadir una nueva regla por defecto'
           no_tags_yet: No hay etiquetas para esta organización
-          no_rules_yet: Todavía no se aplican reglas a esta etiqueta
-          for_customers_tagged: 'Para los consumidores etiquetados:'
-          add_new_rule: '+ Añadir una nueva regla'
           add_new_tag: '+ Añadir una nueva etiqueta'
+          show_hide_variants: 'Mostrar u ocultar variantes en mi tienda'
+          show_hide_shipping: 'Mostrar u ocultar los métodos de envío al comprar'
+          show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
+          show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
         users:
           legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
@@ -1880,10 +1881,8 @@ es_US:
   email_confirmed: "Gracias por confirmar la dirección de correo electrónico."
   email_confirmation_activate_account: "Antes de que podamos activar su nueva cuenta, necesitamos confirmar su dirección de correo electrónico."
   email_confirmation_greeting: "Hola, %{contact}!"
-  email_confirmation_profile_created: "¡Se creó un un perfil para %{name} con éxito! Para activar su Perfil necesitamos que confirme esta dirección de correos."
   email_confirmation_click_link: "Por favor haga clic en el enlace de abajo para confirmar el correo electrónico y continuar configurando su perfil."
   email_confirmation_link_label: "Confirmar este correo electrónico »"
-  email_confirmation_help_html: "Después de confirmar el correo electrónico puedes acceder a tu cuenta de administración para esta organización. Visita %{link} para encontrar más información sobre las características de %{sitename} y empieza a usar tu perfil o tienda online."
   email_confirmation_notice_unexpected: "Recibes este mensaje porque te has registrado en %{sitename} o has sido invitado a inscribirte por alguien que probablemente conozcas. Si no entiendes por qué estás recibiendo este correo electrónico, escribe a %{contact}."
   email_social: "Conecte con nosotros:"
   email_contact: "Envíenos un correo electrónico:"
@@ -2929,18 +2928,6 @@ es_US:
           select_all_variants: "Seleccionar todo"
           variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} variantes cargadas"
           loading_variants: "Cargando variantes"
-      tag_rules:
-        shipping_method_tagged_top: "Métodos de envío etiquetados"
-        shipping_method_tagged_bottom: "son:"
-        payment_method_tagged_top: "Métodos de pago etiquetados"
-        payment_method_tagged_bottom: "son:"
-        order_cycle_tagged_top: "Ciclos de pedido etiquetados"
-        order_cycle_tagged_bottom: "son:"
-        inventory_tagged_top: "Variantes de inventario etiquetadas"
-        inventory_tagged_bottom: "son:"
-      new_tag_rule_dialog:
-        select_rule_type: "Selecciona un tipo de regla:"
-        add_rule: "Añadir regla"
       enterprise_fees:
         inherit_from_product: "Heredar del producto"
       orders:
@@ -3058,13 +3045,6 @@ es_US:
       some_trouble: "Han habido algunos problemas al guardar: %{errors}"
       changing_on_hand_stock: Cambiando los niveles de stock...
       stock_reset: Reset Stock a valores por defecto
-    tag_rules:
-      show_hide_variants: 'Mostrar u ocultar variantes en mi tienda'
-      show_hide_shipping: 'Mostrar u ocultar los métodos de envío al comprar'
-      show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
-      show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
-      visible: VISIBLE
-      not_visible: NO VISIBLE
     services:
       unsaved_changes_message: Los cambios no guardados existen todavía, ¿guardar ahora o ignorar?
       save: GUARDAR
@@ -4115,3 +4095,22 @@ es_US:
       previous: Anterior
     tag_list_input:
       default_placeholder: Add a tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Métodos de envío etiquetados"
+        shipping_method_tagged_bottom: "son:"
+        payment_method_tagged_top: "Métodos de pago etiquetados"
+        payment_method_tagged_bottom: "son:"
+        order_cycle_tagged_top: "Ciclos de pedido etiquetados"
+        order_cycle_tagged_bottom: "son:"
+        inventory_tagged_top: "Variantes de inventario etiquetadas"
+        inventory_tagged_bottom: "son:"
+        visible: VISIBLE
+        not_visible: NO VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'Para los consumidores etiquetados:'
+      add_new_rule: '+ Añadir una nueva regla'
+      no_rules_yet: Todavía no se aplican reglas a esta etiqueta
+    add_tag_rule_modal:
+      select_rule_type: "Selecciona un tipo de regla:"
+      add_rule: "Añadir regla"

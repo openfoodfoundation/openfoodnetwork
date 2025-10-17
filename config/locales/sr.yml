@@ -1280,9 +1280,6 @@ sr:
             no_rules_yet: Још увек се не примењују подразумевана правила
             add_new_button: '+ Додајте ново подразумевано правило'
           no_tags_yet: Још увек се не примењују ознаке за ово предузеће
-          no_rules_yet: За ову ознаку још увек не важе правила
-          for_customers_tagged: 'За купце означене:'
-          add_new_rule: '+ Додајте ново правило'
           add_new_tag: '+ Додајте нову ознаку'
         users:
           legend: "Корисници"
@@ -2294,10 +2291,8 @@ sr:
   email_confirmed: "Хвала вам што сте потврдили своју адресу е-поште."
   email_confirmation_activate_account: "Пре него што можемо да активирамо ваш нови налог, морамо да потврдимо вашу адресу е-поште."
   email_confirmation_greeting: "Здраво, %{contact} !"
-  email_confirmation_profile_created: "Профил за %{name} је успешно направљен! Да бисмо активирали ваш профил, морамо да потврдимо ову адресу е-поште."
   email_confirmation_click_link: "Кликните на везу испод да потврдите своју е-пошту и да наставите са подешавањем свог профила."
   email_confirmation_link_label: "Потврдите ову адресу е-поште »"
-  email_confirmation_help_html: "Након што потврдите своју е-пошту, можете приступити свом административном налогу за ово предузеће. Погледајте %{link} да бисте сазнали више о функцијама %{sitename} и да бисте почели да користите свој профил или продавницу на мрежи."
   email_confirmation_notice_unexpected: "Ову поруку сте добили јер сте се пријавили на %{sitename} или вас је неко кога вероватно познајете позвао да се пријавите. Ако не разумете зашто добијате ову е-пошту, пишите на %{contact} ."
   email_social: "Повежите се са нама:"
   email_contact: "Пошаљите нам е-пошту:"
@@ -3399,18 +3394,6 @@ sr:
           loading_variants: "Варијанте учитавања"
           no_variants: "За овај производ није доступна ниједна варијанта (скривена преко подешавања инвентара)."
           some_variants_hidden: "(Неке варијанте могу бити скривене преко подешавања инвентара)"
-      tag_rules:
-        shipping_method_tagged_top: "Методе испоруке означене"
-        shipping_method_tagged_bottom: "су:"
-        payment_method_tagged_top: "Означени начини плаћања"
-        payment_method_tagged_bottom: "су:"
-        order_cycle_tagged_top: "Наручите циклуси означени"
-        order_cycle_tagged_bottom: "су:"
-        inventory_tagged_top: "Означене варијанте инвентара"
-        inventory_tagged_bottom: "су:"
-      new_tag_rule_dialog:
-        select_rule_type: "Изаберите тип правила:"
-        add_rule: "Додај правило"
       enterprise_fees:
         inherit_from_product: "Наследи од производа"
       orders:
@@ -3539,13 +3522,6 @@ sr:
       some_trouble: "Имао сам проблема са чувањем: %{errors}"
       changing_on_hand_stock: Промена нивоа залиха у руци...
       stock_reset: Акције се враћају на подразумеване вредности.
-    tag_rules:
-      show_hide_variants: 'Прикажи или Сакриј варијанте у мојој продавници'
-      show_hide_shipping: 'Прикажи или Сакриј начине испоруке при плаћању'
-      show_hide_payment: 'Прикажи или Сакриј начине плаћања при плаћању'
-      show_hide_order_cycles: 'Прикажи или Сакриј циклусе поруџбина у мојој радњи'
-      visible: ВИДЉИВ
-      not_visible: НИЈЕ ВИДЉИВО
     services:
       unsaved_changes_message: Несачуване промене тренутно постоје, сачувати одмах или игнорисати?
       save: САЧУВАТИ

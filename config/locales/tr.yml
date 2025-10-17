@@ -972,10 +972,11 @@ tr:
             no_rules_yet: Henüz varsayılan bir kural uygulanmadı
             add_new_button: '+ Yeni Bir Varsayılan Kural Ekle'
           no_tags_yet: Bu işletme için henüz etiket yok
-          no_rules_yet: Bu etikete henüz bir kural işlenmedi
-          for_customers_tagged: 'Etiketlenen müşteriler için:'
-          add_new_rule: '+ Yeni Kural Ekle'
           add_new_tag: '+ Yeni Etiket Ekle'
+          show_hide_variants: 'Dükkanımda çeşitleri göster veya gizle'
+          show_hide_shipping: 'Ödeme sırasında teslimat yöntemlerini göster veya gizle'
+          show_hide_payment: 'Ödeme sırasında ödeme yöntemlerini göster veya gizle'
+          show_hide_order_cycles: 'Dükkanımda sipariş dönemlerini göster veya gizle'
         users:
           legend: "Kullanıcılar"
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
@@ -1824,10 +1825,8 @@ tr:
   email_confirmed: "E-posta adresinizi onayladığınız için teşekkür ederiz."
   email_confirmation_activate_account: "Yeni hesabınızı etkinleştirmeden önce e-posta adresinizi doğrulamamız gerekiyor."
   email_confirmation_greeting: "Merhaba, %{contact}!"
-  email_confirmation_profile_created: "%{name} adlı kullanıcının profili başarıyla oluşturuldu! Profilinizi etkinleştirmek için bu e-posta adresini onaylamamız gerekiyor."
   email_confirmation_click_link: "E-postanızı doğrulamak ve profilinizi oluşturmaya devam etmek için lütfen aşağıdaki bağlantıyı tıklayın."
   email_confirmation_link_label: "Bu e-posta adresini onaylayın »"
-  email_confirmation_help_html: "E-postanızı onayladıktan sonra bu işletme için yönetim hesabınıza erişebilirsiniz. %{sitename} 'ın özellikleri ve kullanımı hakkında daha fazla bilgi edinmek için %{link} sayfasına bakın."
   email_confirmation_notice_unexpected: "Bu mesajı, %{sitename} adresine kaydolduğunuz veya muhtemelen tanıdığınız biri tarafından kaydolmaya davet edildiğiniz için aldınız. Bu e-postayı neden aldığınızı anlamıyorsanız, lütfen %{contact} adresine yazın."
   email_social: "Bizimle iletişime geçin:"
   email_contact: "Bize e-posta gönderin:"
@@ -2876,18 +2875,6 @@ tr:
           select_all_variants: "Tüm %{total_number_of_variants} Çeşiti Seç"
           variants_loaded: "%{total_number_of_variants} çeşitten %{num_of_variants_loaded} tanesi yüklendi"
           loading_variants: "Çeşitler Yükleniyor"
-      tag_rules:
-        shipping_method_tagged_top: "Teslimat Yöntemi etiketi"
-        shipping_method_tagged_bottom: "ise durumu:"
-        payment_method_tagged_top: "Ödeme Yöntemi etiketi"
-        payment_method_tagged_bottom: "ise durumu:"
-        order_cycle_tagged_top: "Sipariş Dönemi etiketi"
-        order_cycle_tagged_bottom: "ise durumu:"
-        inventory_tagged_top: "Stok çeşidi etiketi"
-        inventory_tagged_bottom: "ise durumu:"
-      new_tag_rule_dialog:
-        select_rule_type: "Bir kural türü seçin:"
-        add_rule: "Kural Ekle"
       enterprise_fees:
         inherit_from_product: "Üründen Devral"
       orders:
@@ -3007,13 +2994,6 @@ tr:
       some_trouble: "Kaydetmeyle ilgili bazı sorunlar yaşadım: %{errors}"
       changing_on_hand_stock: Eldeki stok seviyeleri değiştiriliyor ...
       stock_reset: Stoklar varsayılana ayarlanır
-    tag_rules:
-      show_hide_variants: 'Dükkanımda çeşitleri göster veya gizle'
-      show_hide_shipping: 'Ödeme sırasında teslimat yöntemlerini göster veya gizle'
-      show_hide_payment: 'Ödeme sırasında ödeme yöntemlerini göster veya gizle'
-      show_hide_order_cycles: 'Dükkanımda sipariş dönemlerini göster veya gizle'
-      visible: GÖRÜNÜR
-      not_visible: GİZLİ
     services:
       unsaved_changes_message: Kaydedilmemiş değişiklikler var, şimdi kaydet veya yoksay?
       save: KAYDET
@@ -4092,3 +4072,22 @@ tr:
       previous: Önceki
     tag_list_input:
       default_placeholder: Etiket ekle
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Teslimat Yöntemi etiketi"
+        shipping_method_tagged_bottom: "ise durumu:"
+        payment_method_tagged_top: "Ödeme Yöntemi etiketi"
+        payment_method_tagged_bottom: "ise durumu:"
+        order_cycle_tagged_top: "Sipariş Dönemi etiketi"
+        order_cycle_tagged_bottom: "ise durumu:"
+        inventory_tagged_top: "Stok çeşidi etiketi"
+        inventory_tagged_bottom: "ise durumu:"
+        visible: GÖRÜNÜR
+        not_visible: GİZLİ
+    tag_rule_group_form:
+      for_customers_tagged: 'Etiketlenen müşteriler için:'
+      add_new_rule: '+ Yeni Kural Ekle'
+      no_rules_yet: Bu etikete henüz bir kural işlenmedi
+    add_tag_rule_modal:
+      select_rule_type: "Bir kural türü seçin:"
+      add_rule: "Kural Ekle"

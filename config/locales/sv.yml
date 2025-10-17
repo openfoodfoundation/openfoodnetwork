@@ -548,10 +548,10 @@ sv:
             no_rules_yet: Standardregler har ännu ej fasttällts
             add_new_button: '+ Lägg till ny standardregel'
           no_tags_yet: Inga etiketter finns för detta företag ännu
-          no_rules_yet: Inga regler finns för denna etikett ännu
-          for_customers_tagged: 'För kunder taggade med:'
-          add_new_rule: '+ Lägg till en ny regel'
           add_new_tag: '+ Lägg till en ny etikett'
+          show_hide_shipping: 'Visa eller dölj leveransmetoder vid kassan'
+          show_hide_payment: 'Visa eller dölj betalningsmetoder vid kassan'
+          show_hide_order_cycles: 'Visa eller dölj beställningsomgångar i min butik'
         users:
           legend: "Användare"
           email_confirmation_notice_html: "E-post bekräftelse har inte kommit. Vi har sänt en bekräftande e-post till %{email}."
@@ -1084,10 +1084,8 @@ sv:
   products_elsewhere: "Produkter funna annorstädes"
   email_confirmed: "Tack för att du bekräftat din e-postadress."
   email_confirmation_greeting: "Hej, %{contact}!"
-  email_confirmation_profile_created: "En profil för %{name} har skapats! För att aktivera din profil behöver vi få en bekräftelse på din e-postadress."
   email_confirmation_click_link: "Var vänlig att klicka på länken nedan för att bekräfta din e-postadress och fortsätt att skapa din profil."
   email_confirmation_link_label: "Bekräfta din e-postadress »"
-  email_confirmation_help_html: "Sedan du bekräftat din e-postadress har du tillgång till ditt konto för denna firma. Se %{link} för att ta reda på mer om %{sitename} artiklar och börja använda din profil eller online butik."
   email_social: "Koppla ihop med Oss:"
   email_contact: "Mejla oss:"
   email_signoff: "Hälsningar,"
@@ -1990,8 +1988,6 @@ sv:
           severity: Allvarlighet
           description: Beskrivning
           resolve: Besluta
-      new_tag_rule_dialog:
-        select_rule_type: "Välj en regeltyp:"
       orders:
         order_state:
           address: "adress"
@@ -2065,13 +2061,6 @@ sv:
       some_trouble: "Jag hade problem med att spara: %{errors}"
       changing_on_hand_stock: Byter lagersaldon...
       stock_reset: Lagersaldon återställdes till standardvärden.
-    tag_rules:
-      show_hide_variants: 'Visa eller dölj varianter i mitt butik'
-      show_hide_shipping: 'Visa eller dölj leveransmetoder vid kassan'
-      show_hide_payment: 'Visa eller dölj betalningsmetoder vid kassan'
-      show_hide_order_cycles: 'Visa eller dölj beställningsomgångar i min butik'
-      visible: SYNLIG
-      not_visible: INTE SYNLIG
     services:
       unsaved_changes_message: Det finns osparade ändringar. Spara nu eller ignorera?
       save: SPARA
@@ -2457,3 +2446,13 @@ sv:
       search_placeholder: Sök
     pagination:
       next: Näst
+    tag_rule_form:
+      tag_rules:
+        visible: SYNLIG
+        not_visible: INTE SYNLIG
+    tag_rule_group_form:
+      for_customers_tagged: 'För kunder taggade med:'
+      add_new_rule: '+ Lägg till en ny regel'
+      no_rules_yet: Inga regler finns för denna etikett ännu
+    add_tag_rule_modal:
+      select_rule_type: "Välj en regeltyp:"

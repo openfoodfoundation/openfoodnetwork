@@ -984,10 +984,11 @@ pt_BR:
             no_rules_yet: Ainda não existe nenhuma regra padrão
             add_new_button: '+ Adicionar nova regra padrão'
           no_tags_yet: Nenhuma tag foi aplicada a esta iniciativa
-          no_rules_yet: Nenhuma regra foi aplicada a essa tag
-          for_customers_tagged: 'Para compradores marcados:'
-          add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova tag'
+          show_hide_variants: 'Mostrar ou Ocultar variantes na minha loja virtual'
+          show_hide_shipping: 'Mostrar ou Ocultar métodos de envio no checkout'
+          show_hide_payment: 'Mostrar ou Ocultar métodos de pagamento no checkout'
+          show_hide_order_cycles: 'Mostrar ou ocultar ciclos de pedidos na minha loja virtual'
         users:
           legend: "Usuários"
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
@@ -1814,10 +1815,8 @@ pt_BR:
   email_confirmed: "Obrigado por confirmar seu e-mail"
   email_confirmation_activate_account: "Antes de podermos ativar sua nova conta, precisamos confirmar seu endereço de e-mail."
   email_confirmation_greeting: "Olá, %{contact}!"
-  email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar seu Perfil precisamos que você confirme seu endereço de e-mail."
   email_confirmation_click_link: "Clique no link abaixo para confirmar seu e-mail e continuar criando seu perfil."
   email_confirmation_link_label: "Confirme esse endereço de e-mail »"
-  email_confirmation_help_html: "Depois de confirmar seu e-mail você pode acessar a conta de administração desta iniciativa. Veja o %{link} para descobrir mais sobre as funcionalidades de%{sitename} e começar a usar seu perfil ou loja online."
   email_confirmation_notice_unexpected: "Você recebeu esta mensagem porque se inscreveu no %{sitename} ou foi convidado a se inscrever por alguém que provavelmente conhece. Se você não entende por que está recebendo este e-mail, escreva para %{contact}."
   email_social: "Conecte-se com a gente:"
   email_contact: "Envie-nos um e-mail:"
@@ -2862,18 +2861,6 @@ pt_BR:
           select_all_variants: "Selecionar todas as %{total_number_of_variants} variantes"
           variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} Variantes carregadas"
           loading_variants: "Carregando variantes"
-      tag_rules:
-        shipping_method_tagged_top: "Métodos de envio selecionados"
-        shipping_method_tagged_bottom: "são:"
-        payment_method_tagged_top: "Métodos de pagamento marcados"
-        payment_method_tagged_bottom: "são:"
-        order_cycle_tagged_top: "Ciclos de pedidos marcados"
-        order_cycle_tagged_bottom: "são:"
-        inventory_tagged_top: "Variantes do inventário marcadas com tag"
-        inventory_tagged_bottom: "são:"
-      new_tag_rule_dialog:
-        select_rule_type: "Selecione um tipo de regra:"
-        add_rule: "Adicionar regra"
       enterprise_fees:
         inherit_from_product: "Herdar do produto"
       orders:
@@ -2991,13 +2978,6 @@ pt_BR:
       some_trouble: "Eu tive alguns problemas para salvar: %{errors}"
       changing_on_hand_stock: Mudando nos níveis de estoque de mão...
       stock_reset: Estoque redefinido para padrões.
-    tag_rules:
-      show_hide_variants: 'Mostrar ou Ocultar variantes na minha loja virtual'
-      show_hide_shipping: 'Mostrar ou Ocultar métodos de envio no checkout'
-      show_hide_payment: 'Mostrar ou Ocultar métodos de pagamento no checkout'
-      show_hide_order_cycles: 'Mostrar ou ocultar ciclos de pedidos na minha loja virtual'
-      visible: VISÍVEL
-      not_visible: NÃO VISÍVEL
     services:
       unsaved_changes_message: Existem alterações não salvas. Salvar agora ou ignorar?
       save: SALVAR
@@ -4095,3 +4075,19 @@ pt_BR:
       previous: Anterior
     tag_list_input:
       default_placeholder: Adicionar tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Métodos de envio selecionados"
+        shipping_method_tagged_bottom: "são:"
+        payment_method_tagged_bottom: "são:"
+        order_cycle_tagged_bottom: "são:"
+        inventory_tagged_top: "Variantes do inventário marcadas com tag"
+        inventory_tagged_bottom: "são:"
+        visible: VISÍVEL
+        not_visible: NÃO VISÍVEL
+    tag_rule_group_form:
+      for_customers_tagged: 'Para compradores marcados:'
+      add_new_rule: '+ Adicionar nova regra'
+      no_rules_yet: Nenhuma regra foi aplicada a essa tag
+    add_tag_rule_modal:
+      select_rule_type: "Selecione um tipo de regra:"

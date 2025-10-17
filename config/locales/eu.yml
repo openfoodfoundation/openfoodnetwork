@@ -1263,10 +1263,11 @@ eu:
             no_rules_yet: Ez dago lehenespenez aplikatutako araurik
             add_new_button: '+ Lehenetsitako arau berri bat gehitu'
           no_tags_yet: Ez dago etiketarik erakunde honetarako
-          no_rules_yet: Oraindik ez zaio araurik aplikatzen etiketa horri
-          for_customers_tagged: 'Kontsumitzaile etiketatuentzat:'
-          add_new_rule: '+ Arau berri bat gehitu'
           add_new_tag: '+ Etiketa berri bat erantsi'
+          show_hide_variants: 'Aldaerak erakutsi edo ezkutatu nire dendan'
+          show_hide_shipping: 'Erosterakoan bidalketa-metodoak erakutsi edo ezkutatu'
+          show_hide_payment: 'Erosterakoan ordaintzeko moduak erakutsi edo ezkutatu'
+          show_hide_order_cycles: 'Nire dendan eskaera-zikloak erakutsi edo ezkutatu'
         users:
           legend: "Erabiltzaileak"
           email_confirmation_notice_html: "Helbide elektronikoa berrestea falta da. Baieztapen-mezu bat bidali dizugu %{email} helbidera. "
@@ -2223,10 +2224,8 @@ eu:
   email_confirmed: "Eskerrik asko helbide elektronikoa berresteagatik."
   email_confirmation_activate_account: "Zure kontu berria aktibatu aurretik, zure helbide elektronikoa berretsi behar dugu."
   email_confirmation_greeting: "Kaixo, %{contact}!"
-  email_confirmation_profile_created: " %{name} rako profil bat sortu zen arrakastaz! Zure profila aktibatzeko, posta-helbide hau berretsi behar dugu. "
   email_confirmation_click_link: "Mesedez, egin klik beheko estekan posta elektronikoa berresteko eta zure profila konfiguratzen jarraitzeko."
   email_confirmation_link_label: "Berretsi mezu elektroniko hau"
-  email_confirmation_help_html: "Posta elektronikoa baieztatu ondoren, zure administrazio-kontuan sar zaitezke erakunde honetarako. Bisita ezazu %{link}, %{sitename} ren ezaugarriei buruzko informazio gehiago aurkitzeko, eta has zaitez zure profila edo online denda erabiltzen. "
   email_confirmation_notice_unexpected: "Mezu hau jasotzen duzu %{sitename} (e) n erregistratu zarelako edo ziurrenik ezagutzen duzun norbaitek izena ematera gonbidatu zaituelako. Ez baduzu ulertzen zergatik ari zaren posta elektroniko hori jasotzen, idatzi %{contact} helbidera. "
   email_social: "Konektatu gurekin:"
   email_contact: "Bidali mezu elektroniko bat:"
@@ -3312,18 +3311,6 @@ eu:
           select_all_variants: "Hautatu dena"
           variants_loaded: " %{num_of_variants_loaded} {total_number_of_variants} kargatutako aldaeren"
           loading_variants: "Aldaerak kargatzen"
-      tag_rules:
-        shipping_method_tagged_top: "Etiketatutako bidalketa-metodoak"
-        shipping_method_tagged_bottom: "dira:"
-        payment_method_tagged_top: "Etiketatutako ordainketa-metodoak"
-        payment_method_tagged_bottom: "dira:"
-        order_cycle_tagged_top: "Etiketatutako eskaera-zikloak"
-        order_cycle_tagged_bottom: "dira:"
-        inventory_tagged_top: "Inbentario-aldaera etiketatuak"
-        inventory_tagged_bottom: "dira:"
-      new_tag_rule_dialog:
-        select_rule_type: "Hautatu erregela mota bat:"
-        add_rule: "Erregela gehitu"
       enterprise_fees:
         inherit_from_product: "Produktutik heredatu"
       orders:
@@ -3445,13 +3432,6 @@ eu:
       some_trouble: "Arazo batzuk izan dira gordetzean: %{errors}"
       changing_on_hand_stock: Stock-mailak aldatuz...
       stock_reset: Reset Stock lehenetsitako balioetara
-    tag_rules:
-      show_hide_variants: 'Aldaerak erakutsi edo ezkutatu nire dendan'
-      show_hide_shipping: 'Erosterakoan bidalketa-metodoak erakutsi edo ezkutatu'
-      show_hide_payment: 'Erosterakoan ordaintzeko moduak erakutsi edo ezkutatu'
-      show_hide_order_cycles: 'Nire dendan eskaera-zikloak erakutsi edo ezkutatu'
-      visible: IKUSGAI
-      not_visible: EZ DA IKUSTEN
     services:
       unsaved_changes_message: Gorde gabeko aldaketak oraindik existitzen dira, gorde orain ala ez jakin?
       save: GORDE
@@ -4480,6 +4460,25 @@ eu:
       previous: Aurrekoa
     tag_list_input:
       default_placeholder: Add a tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Etiketatutako bidalketa-metodoak"
+        shipping_method_tagged_bottom: "dira:"
+        payment_method_tagged_top: "Etiketatutako ordainketa-metodoak"
+        payment_method_tagged_bottom: "dira:"
+        order_cycle_tagged_top: "Etiketatutako eskaera-zikloak"
+        order_cycle_tagged_bottom: "dira:"
+        inventory_tagged_top: "Inbentario-aldaera etiketatuak"
+        inventory_tagged_bottom: "dira:"
+        visible: IKUSGAI
+        not_visible: EZ DA IKUSTEN
+    tag_rule_group_form:
+      for_customers_tagged: 'Kontsumitzaile etiketatuentzat:'
+      add_new_rule: '+ Arau berri bat gehitu'
+      no_rules_yet: Oraindik ez zaio araurik aplikatzen etiketa horri
+    add_tag_rule_modal:
+      select_rule_type: "Hautatu erregela mota bat:"
+      add_rule: "Erregela gehitu"
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

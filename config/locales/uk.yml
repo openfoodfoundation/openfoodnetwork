@@ -1087,10 +1087,11 @@ uk:
             no_rules_yet: Правила за умовчанням ще не застосовані
             add_new_button: '+ Додайте нове правило за замовчуванням'
           no_tags_yet: До цього підприємства ще не застосовані теги
-          no_rules_yet: До цього тегу ще не застосовуються правила
-          for_customers_tagged: 'Для клієнтів з тегами:'
-          add_new_rule: '+ Додати нове правило'
           add_new_tag: '+ Додати новий тег'
+          show_hide_variants: 'Показати або приховати варіанти в моїй вітрині'
+          show_hide_shipping: 'Показати або приховати способи доставки під час оформлення замовлення'
+          show_hide_payment: 'Показати або приховати способи оплати під час оформлення замовлення'
+          show_hide_order_cycles: 'Показати або приховати цикли замовлень у моїй вітрині'
         users:
           legend: "Користувачі"
           email_confirmation_notice_html: "Очікується підтвердження електронною поштою. Ми надіслали електронний лист із підтвердженням на адресу %{email}."
@@ -1980,10 +1981,8 @@ uk:
   email_confirmed: "Дякуємо за підтвердження адреси електронної пошти."
   email_confirmation_activate_account: "Перш ніж ми зможемо активувати ваш новий обліковий запис, нам потрібно підтвердити вашу електронну адресу."
   email_confirmation_greeting: "Привіт, %{contact}!"
-  email_confirmation_profile_created: "Профіль для %{name} успішно створено! Щоб активувати ваш профіль, нам потрібно підтвердити цю електронну адресу."
   email_confirmation_click_link: "Клацніть посилання нижче, щоб підтвердити свою електронну адресу та продовжити налаштування профілю."
   email_confirmation_link_label: "Підтвердіть цю електронну адресу »"
-  email_confirmation_help_html: "Після підтвердження електронної пошти ви зможете отримати доступ до облікового запису адміністратора цього підприємства. Перегляньте %{link}, щоб дізнатися більше про функції %{sitename} і почати використовувати свій профіль або онлайн-магазин."
   email_confirmation_notice_unexpected: "Ви отримали це повідомлення, оскільки ви зареєструвалися на %{sitename} або вас запросив зареєструватися хтось, кого ви, напевно, знаєте. Якщо ви не розумієте, чому ви отримали цей електронний лист, напишіть на %{contact}."
   email_social: "Зв'яжіться з нами:"
   email_contact: "Напишіть нам:"
@@ -3051,18 +3050,6 @@ uk:
           select_all_variants: "Виберіть усі %{total_number_of_variants} варіанти"
           variants_loaded: "%{num_of_variants_loaded} з %{total_number_of_variants} Варіанти завантажено"
           loading_variants: "Варіанти завантаження"
-      tag_rules:
-        shipping_method_tagged_top: "Способи доставки позначені тегами"
-        shipping_method_tagged_bottom: "є:"
-        payment_method_tagged_top: "Способи оплати позначені"
-        payment_method_tagged_bottom: "є:"
-        order_cycle_tagged_top: "Цикли замовлення позначено"
-        order_cycle_tagged_bottom: "є:"
-        inventory_tagged_top: "Варіанти асортименту позначено тегами"
-        inventory_tagged_bottom: "є:"
-      new_tag_rule_dialog:
-        select_rule_type: "Виберіть тип правила:"
-        add_rule: "Додати правило"
       enterprise_fees:
         inherit_from_product: "Успадкувати від продукту"
       orders:
@@ -3187,13 +3174,6 @@ uk:
       some_trouble: "У мене виникли проблеми зі збереженням: %{errors}"
       changing_on_hand_stock: Зміна рівня запасів на руках...
       stock_reset: Склади скинуті до значень за замовчуванням.
-    tag_rules:
-      show_hide_variants: 'Показати або приховати варіанти в моїй вітрині'
-      show_hide_shipping: 'Показати або приховати способи доставки під час оформлення замовлення'
-      show_hide_payment: 'Показати або приховати способи оплати під час оформлення замовлення'
-      show_hide_order_cycles: 'Показати або приховати цикли замовлень у моїй вітрині'
-      visible: ВИДИМІ
-      not_visible: НЕ ВИДИМІ
     services:
       unsaved_changes_message: Наразі існують незбережені зміни, зберегти чи проігнорувати?
       save: ЗБЕРЕГТИ
@@ -4355,3 +4335,22 @@ uk:
       previous: Попередній
     tag_list_input:
       default_placeholder: Додати тег
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Способи доставки позначені тегами"
+        shipping_method_tagged_bottom: "є:"
+        payment_method_tagged_top: "Способи оплати позначені"
+        payment_method_tagged_bottom: "є:"
+        order_cycle_tagged_top: "Цикли замовлення позначено"
+        order_cycle_tagged_bottom: "є:"
+        inventory_tagged_top: "Варіанти асортименту позначено тегами"
+        inventory_tagged_bottom: "є:"
+        visible: ВИДИМІ
+        not_visible: НЕ ВИДИМІ
+    tag_rule_group_form:
+      for_customers_tagged: 'Для клієнтів з тегами:'
+      add_new_rule: '+ Додати нове правило'
+      no_rules_yet: До цього тегу ще не застосовуються правила
+    add_tag_rule_modal:
+      select_rule_type: "Виберіть тип правила:"
+      add_rule: "Додати правило"
