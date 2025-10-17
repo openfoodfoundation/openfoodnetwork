@@ -17,28 +17,52 @@ RSpec.describe Checkout::StripeRedirect do
 
     context "when the payment method is a Stripe method" do
       let(:payment_method) { create(:stripe_sca_payment_method) }
-      let(:stripe_payment) { create(:payment, payment_method_id: payment_method.id) }
       let(:test_redirect_url) { "http://stripe_auth_url/" }
 
       before do
         order.payments << stripe_payment
       end
 
-      it "authorizes the payment and returns the redirect path" do
-        expect(Orders::FindPaymentService).to receive_message_chain(:new, :last_pending_payment).
-          and_return(stripe_payment)
+      context "when payment is in checkout state" do
+        let(:stripe_payment) { create(:payment, payment_method_id: payment_method.id) }
 
-        expect(OrderManagement::Order::StripeScaPaymentAuthorize).to receive(:new).and_call_original
+        it "authorizes the payment and returns the redirect path" do
+          expect(Orders::FindPaymentService).to receive_message_chain(:new, :last_pending_payment).
+            and_return(stripe_payment)
 
-        expect(stripe_payment).to receive(:authorize!) do
-          # Authorization moves the payment state from checkout/processing to pending
-          stripe_payment.state = 'pending'
-          true
+          expect(
+            OrderManagement::Order::StripeScaPaymentAuthorize
+          ).to receive(:new).and_call_original
+          expect(stripe_payment).to receive(:authorize!) do
+            # Authorization moves the payment state from checkout/processing to pending
+            stripe_payment.state = 'pending'
+            true
+          end
+          expect(stripe_payment).to receive(:redirect_auth_url).and_return(test_redirect_url)
+          expect(service.path).to eq test_redirect_url
         end
+      end
 
-        expect(stripe_payment).to receive(:redirect_auth_url).and_return(test_redirect_url)
+      context "when payment is in requires_authorization state" do
+        let(:stripe_payment) {
+          create(
+            :payment,
+            payment_method_id: payment_method.id,
+            state: 'requires_authorization',
+            redirect_auth_url: test_redirect_url
+          )
+        }
 
-        expect(service.path).to eq test_redirect_url
+        it "returns the redirect path without authorizing the payment again" do
+          expect(Orders::FindPaymentService).to receive_message_chain(:new, :last_pending_payment).
+            and_return(stripe_payment)
+
+          expect(
+            OrderManagement::Order::StripeScaPaymentAuthorize
+          ).to receive(:new).and_call_original
+          expect(stripe_payment).not_to receive(:authorize!)
+          expect(service.path).to eq test_redirect_url
+        end
       end
     end
   end
