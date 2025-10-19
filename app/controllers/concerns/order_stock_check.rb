@@ -20,12 +20,14 @@ module OrderStockCheck
     @updated_variants = check_stock_service.update_line_items
   end
 
-  def check_order_cycle_expiry
+  def check_order_cycle_expiry(should_empty_order: true)
     return unless current_order_cycle&.closed?
 
     Alert.raise_with_record("Notice: order cycle closed during checkout completion", current_order)
-    current_order.empty!
-    current_order.assign_order_cycle! nil
+    if should_empty_order
+      current_order.empty!
+      current_order.assign_order_cycle! nil
+    end
 
     flash[:info] = I18n.t('order_cycle_closed')
     respond_to do |format|
