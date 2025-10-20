@@ -24,7 +24,7 @@
   .row
     .small-12.columns
       .active_table
-        %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+        %producer.active_table_node.row.animate-repeat{
         "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties:'supplied_properties')",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
