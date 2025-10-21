@@ -58,7 +58,7 @@ RSpec.describe StripeAccount do
         create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
       end
 
-      it "Doesn't make a Stripe API disconnection request " do
+      it "doesn't make a Stripe API disconnection request " do
         expect(Stripe::OAuth).not_to receive(:deauthorize)
         stripe_account.deauthorize_and_destroy
         expect(StripeAccount.all).not_to include(stripe_account)
