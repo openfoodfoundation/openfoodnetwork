@@ -13,6 +13,8 @@ RSpec.describe StripeAccount do
     }
 
     context "when the Stripe API disconnect fails" do
+      let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
+
       before { Stripe.client_id = "bogus_client_id" }
 
       it "destroys the record and notifies Bugsnag" do
@@ -33,10 +35,9 @@ RSpec.describe StripeAccount do
                                })
       end
 
-      before do
-        Stripe.client_id = ENV.fetch('STRIPE_CLIENT_ID', nil)
-        stripe_account.update!(stripe_user_id: connected_account.id)
-      end
+      let(:stripe_user_id) { connected_account.id }
+
+      before { Stripe.client_id = ENV.fetch('STRIPE_CLIENT_ID', nil) }
 
       it "destroys the record" do
         # returns status 200
@@ -51,6 +52,7 @@ RSpec.describe StripeAccount do
 
     context "if the account is also associated with another Enterprise" do
       let!(:enterprise2) { create(:enterprise) }
+      let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
 
       before do
         create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
