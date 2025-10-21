@@ -112,6 +112,21 @@ RSpec.describe '
       end
     end
 
+    context "with Stripe setup" do
+      include StripeHelper
+
+      around do |example|
+        with_stripe_setup { example.call }
+      end
+
+      it "does not cause js errors even if Stripe connect is disabled" do
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(false)
+
+        visit "/account"
+        expect(page).to have_content "My account"
+      end
+    end
+
     context "as a disabled user" do
       before do
         user.disabled = '1'
