@@ -18,6 +18,8 @@ module OrderManagement
       end
 
       def call!(return_url = off_session_return_url)
+        # if the payment requires_authorization (3D Secure), can't be authorized again
+        return payment if payment&.requires_authorization?
         return unless payment&.checkout?
 
         payment.authorize!(return_url)

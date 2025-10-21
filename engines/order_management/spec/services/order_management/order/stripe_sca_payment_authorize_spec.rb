@@ -19,6 +19,15 @@ module OrderManagement
           end
         end
 
+        context "when the payment already requires 3D Secure authorization" do
+          let(:payment) { create(:payment, amount: 10, state: 'requires_authorization') }
+          before { allow(order).to receive(:pending_payments).once { [payment] } }
+
+          it "returns the payment without authorizing because it has already been authorized" do
+            expect(payment_authorize.call!).to eq payment
+          end
+        end
+
         context "when a payment is present" do
           let(:payment) { create(:payment, amount: 10) }
 
