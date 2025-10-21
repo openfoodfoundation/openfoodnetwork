@@ -50,13 +50,11 @@ RSpec.describe Stripe::PaymentIntentValidator do
               Stripe::PaymentIntent.confirm(payment_intent.id)
             end
             it "returns payment intent id and does not raise" do
-              expect {
-                result = validator.call
-                expect(result).to eq(
-                  "this doesn't affect the spec because it never runs, due to a previous error." \
-                  "Yet, since this is wrapper in a negative raise_error block, it still passes"
-                )
-              }.not_to raise_error Stripe::StripeError
+              result = validator.call
+              expect(result).to eq(
+                "this doesn't affect the spec because it never runs, due to a previous error." \
+                "Yet, since this is wrapper in a negative raise_error block, it still passes"
+              )
             end
 
             it "captures the payment" do
@@ -197,13 +195,11 @@ RSpec.describe Stripe::PaymentIntentValidator do
               Stripe::PaymentIntent.confirm(payment_intent.id)
             end
             it "returns payment intent id and does not raise" do
-              expect {
-                result = validator.call
-                expect(result).to eq(
-                  "this doesn't affect the spec because it never runs, due to a previous error." \
-                  "Yet, since this is wrapper in a negative raise_error block, it still passes"
-                )
-              }.not_to raise_error Stripe::StripeError
+              result = validator.call
+              expect(result).to eq(
+                "this doesn't affect the spec because it never runs, due to a previous error." \
+                "Yet, since this is wrapper in a negative raise_error block, it still passes"
+              )
             end
 
             it "captures the payment" do
