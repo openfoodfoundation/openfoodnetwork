@@ -9,7 +9,6 @@ RSpec.describe StripeAccount do
     let!(:enterprise2) { create(:enterprise) }
     let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
     let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
-    let(:stripe_publishable_key) { ENV.fetch('STRIPE_PUBLIC_TEST_API_KEY', nil) }
 
     let!(:stripe_account) {
       create(:stripe_account, enterprise:, stripe_user_id:)
@@ -38,7 +37,7 @@ RSpec.describe StripeAccount do
 
       before do
         Stripe.client_id = client_id
-        stripe_account.update!(stripe_publishable_key:, stripe_user_id: connected_account.id)
+        stripe_account.update!(stripe_user_id: connected_account.id)
       end
 
       it "destroys the record" do
