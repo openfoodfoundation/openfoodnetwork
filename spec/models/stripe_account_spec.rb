@@ -52,9 +52,10 @@ RSpec.describe StripeAccount do
 
     context "if the account is also associated with another Enterprise" do
       let!(:enterprise2) { create(:enterprise) }
-      let!(:another_stripe_account) {
+
+      before do
         create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
-      }
+      end
 
       it "Doesn't make a Stripe API disconnection request " do
         expect(Stripe::OAuth).not_to receive(:deauthorize)
