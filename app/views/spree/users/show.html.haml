@@ -3,7 +3,7 @@
   = inject_json_array("shops", @shops.all, Api::ShopForOrdersSerializer)
   = inject_saved_credit_cards
 
-  - if Stripe.publishable_key
+  - if Spree::Config.stripe_connect_enabled && Stripe.publishable_key
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
       angular.module('Darkswarm').value("stripePublishableKey", "#{Stripe.publishable_key}")
