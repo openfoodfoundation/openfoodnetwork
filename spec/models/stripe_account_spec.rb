@@ -6,7 +6,6 @@ require 'stripe/oauth'
 RSpec.describe StripeAccount do
   describe "deauthorize_and_destroy", :vcr, :stripe_version do
     let!(:enterprise) { create(:enterprise) }
-    let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
     let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
     let(:stripe_publishable_key) { ENV.fetch('STRIPE_PUBLIC_TEST_API_KEY', nil) }
 
@@ -36,7 +35,7 @@ RSpec.describe StripeAccount do
       end
 
       before do
-        Stripe.client_id = client_id
+        Stripe.client_id = ENV.fetch('STRIPE_CLIENT_ID', nil)
         stripe_account.update!(stripe_publishable_key:, stripe_user_id: connected_account.id)
       end
 
