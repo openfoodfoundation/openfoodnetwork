@@ -1,4 +1,4 @@
--# locals: (form:, product:, product_index:, producer_options:, category_options:, tax_category_options:)
+-# locals: (form:, product:, product_index:, producer_options:, category_options:, tax_category_options:, allowed_producers:)
 = form.fields_for("products", product, index: product_index) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
@@ -8,6 +8,8 @@
       = render partial: 'product_row', locals: { f: product_form, product:, product_index: }
 
     - product.variants.each_with_index do |variant, variant_index|
+
+      - next unless allowed_producers.include?(variant.supplier)
       = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
         %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
           = render partial: 'variant_row', locals: { variant:, f: variant_form, category_options:, tax_category_options:, producer_options: }

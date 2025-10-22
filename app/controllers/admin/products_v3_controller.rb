@@ -11,7 +11,8 @@ module Admin
     def index
       fetch_products
       render "index",
-             locals: { producers:, categories:, tax_category_options:, available_tags:, flash: }
+             locals: { producer_options:, categories:, tax_category_options:, available_tags:,
+                       flash:, allowed_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -32,7 +33,8 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          producers:, categories:, tax_category_options:, available_tags:, flash:
+                          producer_options:, categories:, tax_category_options:, available_tags:,
+                          flash:
                         }
       end
     end
@@ -88,7 +90,7 @@ module Admin
         flash.now[:success] = t('.success')
 
         @product_index = "-#{@cloned_product.id}"
-        @producer_options = producers
+        @producer_options = producer_options
         @category_options = categories
         @tax_category_options = tax_category_options
       rescue ActiveRecord::ActiveRecordError => e
@@ -132,10 +134,13 @@ module Admin
       end
     end
 
-    def producers
-      producers = OpenFoodNetwork::Permissions.new(spree_current_user)
+    def allowed_producers
+      OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises.is_primary_producer.by_name
-      producers.map { |p| [p.name, p.id] }
+    end
+
+    def producer_options
+      allowed_producers.map { |p| [p.name, p.id] }
     end
 
     def categories
