@@ -15,7 +15,6 @@ describe("FlashController", () => {
     document.body.innerHTML = `
       <div id="element" data-controller='flash' data-flash-auto-close-value='true'></div>
     `;
-
   });
 
   describe("autoClose", () => {

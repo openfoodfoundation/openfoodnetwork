@@ -34,11 +34,11 @@ describe("Dropdown controller", () => {
       document.body.innerHTML = "";
     });
 
-    it ("hide menu when click outside", () => {
+    it("hide menu when click outside", () => {
       const dropdown = document.getElementById("dropdown");
       const menu = document.getElementById("menu");
       //open the details
-      dropdown.toggleAttribute('open') 
+      dropdown.toggleAttribute("open");
       //click elsewhere
       document.body.click();
 
