@@ -12,9 +12,11 @@ RSpec.describe Stripe::PaymentIntentValidator do
   let(:year_valid) { Time.zone.now.year.next }
 
   describe "#call", :vcr, :stripe_version do
+    let!(:user) { create(:user, email: "apple.customer@example.com") }
+    let(:credit_card) { create(:credit_card, user:) }
     let(:payment) {
       create(:payment, amount: payment_intent.amount, payment_method:,
-                       response_code: payment_intent.id, source: pm_card)
+                       response_code: payment_intent.id, source: credit_card)
     }
     let(:validator) { Stripe::PaymentIntentValidator.new(payment) }
 
@@ -153,8 +155,6 @@ RSpec.describe Stripe::PaymentIntentValidator do
       context "when payment intent is valid" do
         let(:payment_method_id) { pm_card.id }
         let(:customer_id) { customer.id }
-        let!(:user) { create(:user, email: "apple.customer@example.com") }
-        let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
         let(:customer) do
           Stripe::Customer.create({
                                     name: 'Apple Customer',
@@ -244,8 +244,6 @@ RSpec.describe Stripe::PaymentIntentValidator do
       context "when payment intent is invalid" do
         let(:payment_method_id) { pm_card.id }
         let(:customer_id) { customer.id }
-        let!(:user) { create(:user, email: "apple.customer@example.com") }
-        let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
         let(:customer) do
           Stripe::Customer.create({
                                     name: 'Apple Customer',
