@@ -21,13 +21,13 @@ jobs:
 
       - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
 
-      - name: prettier
-        uses: EPMatt/reviewdog-action-prettier@v1
+      - uses: reviewdog/action-setup@v1
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
-          level: error
-          fail_on_error: true
+          reviewdog_version: v0.21.0
+
+      - run: ./script/reviewdog-prettier.sh
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
 
       - name: rubocop
         uses: reviewdog/action-rubocop@v2

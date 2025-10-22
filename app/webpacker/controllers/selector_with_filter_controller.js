@@ -1,4 +1,4 @@
-import SelectorController from "./selector_controller";
+import SelectorController from "./selector_controller"
 
 export default class extends SelectorController {
   static targets = ["items"];
