@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 #
 # Test Stripe API integration and record new cassettes.
-# Requires account details in .env.test.local. You can copy from Bitwarden, or [set up a new Stripe account](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance)
+# Requires account details in .env.test.local. See [Stripe testing](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Stripe-testing) for details
 
 set -e # Exit if any command fails
 
