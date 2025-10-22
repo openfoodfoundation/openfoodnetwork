@@ -1,3 +1,4 @@
+-# locals: (form:, product:, product_index:, producer_options:, category_options:, tax_category_options:)
 = form.fields_for("products", product, index: product_index) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
