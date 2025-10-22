@@ -34,7 +34,7 @@ module Admin
         render "index", status: :unprocessable_entity,
                         locals: {
                           producer_options:, categories:, tax_category_options:, available_tags:,
-                          flash:
+                          allowed_producers:, flash:
                         }
       end
     end
@@ -80,27 +80,29 @@ module Admin
     end
 
     def clone
-      @product = Spree::Product.find(params[:id])
-      authorize! :clone, @product
+      product = Spree::Product.find(params[:id])
+      authorize! :clone, product
 
       status = :ok
 
       begin
-        @cloned_product = @product.duplicate
+        cloned_product = product.duplicate
         flash.now[:success] = t('.success')
 
-        @product_index = "-#{@cloned_product.id}"
-        @producer_options = producer_options
-        @category_options = categories
-        @tax_category_options = tax_category_options
+        product_index = "-#{cloned_product.id}"
       rescue ActiveRecord::ActiveRecordError => e
         flash.now[:error] = clone_error_message(e)
         status = :unprocessable_entity
-        @product_index = "-1" # Create a unique enough index
+        product_index = "-1" # Create a unique enough index
       end
 
       respond_with do |format|
-        format.turbo_stream { render :clone, status: }
+        format.turbo_stream {
+          render :clone, status:,
+                         locals: { product:, cloned_product:, product_index:, producer_options:,
+                                   category_options: categories, tax_category_options:,
+                                   allowed_producers: }
+        }
       end
     end
 
