@@ -4,8 +4,8 @@ import { Controller } from "stimulus";
 export default class PopoutController extends Controller {
   static targets = ["button", "dialog"];
   static values = {
-    updateDisplay: { Boolean, default: true }
-  }
+    updateDisplay: { Boolean, default: true },
+  };
 
   connect() {
     this.displayElements = Array.from(this.element.querySelectorAll('input:not([type="hidden"]'));

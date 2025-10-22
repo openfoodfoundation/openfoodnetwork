@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 import L from "leaflet";
 import LeafetProviders from "leaflet-providers";
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { OpenStreetMapProvider } from "leaflet-geosearch";
 
 export default class extends Controller {
   static targets = ["confirmAddressField", "dragPinNote"];
@@ -9,7 +9,7 @@ export default class extends Controller {
     defaultLatitude: Number,
     defaultLongitude: Number,
     providerName: String,
-    providerOptions: Object
+    providerOptions: Object,
   };
 
   connect() {
@@ -23,7 +23,7 @@ export default class extends Controller {
 
   async locateAddress() {
     const results = await this.provider.search({ query: this.#addressQuery() });
-    if(results.length > 0) {
+    if (results.length > 0) {
       const result = results[0];
       this.#setLatitudeLongitude(result.y, result.x);
       this.#addMarker(result.y, result.x);
@@ -46,13 +46,15 @@ export default class extends Controller {
     // If someone clicks the locate address on map button without filling in their address the
     // geocoded address will not be very accurate so don't zoom in too close so it's easier for
     // people to see where the marker is.
-    if(!addressLine1 && !city && !zipcode) {
+    if (!addressLine1 && !city && !zipcode) {
       this.zoomLevel = 6;
     } else {
       this.zoomLevel = 14;
     }
 
-    return [addressLine1, addressLine2, city, state, zipcode, country].filter((value) => !!value).join(", ")
+    return [addressLine1, addressLine2, city, state, zipcode, country]
+      .filter((value) => !!value)
+      .join(", ");
   }
 
   #addMarker(latitude, longitude) {
@@ -72,13 +74,13 @@ export default class extends Controller {
 
   #displayMap() {
     // Don't initialise map in test environment because that could possibly abuse OSM tile servers
-    if(process.env.RAILS_ENV == "test") {
+    if (process.env.RAILS_ENV == "test") {
       return false;
     }
 
-    this.map = L.map('open-street-map')
-    L.tileLayer.provider(this.providerNameValue, this.providerOptionsValue).addTo(this.map)
-    this.map.setView([this.defaultLatitudeValue, this.defaultLongitudeValue], this.zoomLevel)
+    this.map = L.map("open-street-map");
+    L.tileLayer.provider(this.providerNameValue, this.providerOptionsValue).addTo(this.map);
+    this.map.setView([this.defaultLatitudeValue, this.defaultLongitudeValue], this.zoomLevel);
     this.provider = new OpenStreetMapProvider();
   }
 
@@ -88,12 +90,12 @@ export default class extends Controller {
   #displayMapWhenAtRegistrationDetailsStep() {
     const observer = new IntersectionObserver(
       ([intersectionObserverEntry]) => {
-        if(intersectionObserverEntry.target.offsetParent !== null) {
+        if (intersectionObserverEntry.target.offsetParent !== null) {
           this.#displayMap();
-          observer.disconnect()
+          observer.disconnect();
         }
       },
-      { threshold: [0] }
+      { threshold: [0] },
     );
     observer.observe(document.getElementById("registration-details"));
   }

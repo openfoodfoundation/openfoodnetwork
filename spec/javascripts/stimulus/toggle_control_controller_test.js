@@ -44,17 +44,17 @@ describe("ToggleControlController", () => {
       });
 
       it("Disables when input is filled", () => {
-        input.value = "test"
+        input.value = "test";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(true);
       });
 
       it("Enables when input is emptied", () => {
-        input.value = "test"
+        input.value = "test";
         input.dispatchEvent(new Event("input"));
 
-        input.value = ""
+        input.value = "";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(false);
@@ -72,7 +72,7 @@ describe("ToggleControlController", () => {
       });
 
       it("Enables when input is filled and focuses the control", () => {
-        input.value = "a"
+        input.value = "a";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(false);
@@ -80,10 +80,10 @@ describe("ToggleControlController", () => {
       });
 
       it("Disables when input is emptied", () => {
-        input.value = "test"
+        input.value = "test";
         input.dispatchEvent(new Event("input"));
 
-        input.value = ""
+        input.value = "";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(true);
@@ -100,7 +100,7 @@ describe("ToggleControlController", () => {
       it("Enables the button control when input is filled, focus remains on input", () => {
         // Simulating click on input to focus it
         input.focus();
-        input.value = "test"
+        input.value = "test";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(false);
@@ -110,16 +110,16 @@ describe("ToggleControlController", () => {
       it("Disables the button control when input is emptied, focus remains on input", () => {
         // Simulating click on input to focus it
         input.focus();
-        input.value = "test"
+        input.value = "test";
         input.dispatchEvent(new Event("input"));
 
-        input.value = ""
+        input.value = "";
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(true);
         expect(document.activeElement).toBe(input);
       });
-    })
+    });
   });
 
   describe("#displayIfMatch", () => {
@@ -135,14 +135,14 @@ describe("ToggleControlController", () => {
       });
 
       it("Shows when match is selected", () => {
-        select.value = "items"
+        select.value = "items";
         select.dispatchEvent(new Event("change"));
 
         expect(control.style.display).toBe("block");
       });
 
       it("Hides when match is not selected", () => {
-        select.value = "weight_1"
+        select.value = "weight_1";
         select.dispatchEvent(new Event("change"));
 
         expect(control.style.display).toBe("none");

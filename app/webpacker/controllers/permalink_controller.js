@@ -12,9 +12,7 @@ export default class extends Controller {
     this.hideAvailability();
     this.showSpinner();
 
-    const response = await fetch(
-      this.urlValue + `?permalink="${this.permalinkFieldTarget.value}"`
-    );
+    const response = await fetch(this.urlValue + `?permalink="${this.permalinkFieldTarget.value}"`);
     const result = await response.text();
 
     if (this.initialPermalinkValue == result) {

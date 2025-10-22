@@ -8,7 +8,7 @@ class Element {
       el = document.querySelector(el);
     }
 
-    el.classList.add('StripeElement');
+    el.classList.add("StripeElement");
 
     el.innerHTML = `
       <input id="stripe-cardnumber" name="cardnumber" placeholder="Card number" size="16" type="text">
@@ -29,31 +29,31 @@ window.Stripe = () => {
 
   return {
     createPaymentMethod: () => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         resolve({
           paymentMethod: {
             id: "pm_123",
             card: {
-              brand: 'visa',
+              brand: "visa",
               last4: fetchLastFour(),
               exp_month: "10",
-              exp_year: "2050"
-            }
-          }
+              exp_year: "2050",
+            },
+          },
         });
       });
     },
 
     elements: () => {
       return {
-        create: (type, options) => new Element()
+        create: (type, options) => new Element(),
       };
     },
 
-    createToken: card => {
-      return new Promise(resolve => {
+    createToken: (card) => {
+      return new Promise((resolve) => {
         resolve({ token: { id: "tok_123", card: { last4: fetchLastFour() } } });
       });
-    }
+    },
   };
 };

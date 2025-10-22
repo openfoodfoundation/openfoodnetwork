@@ -24,7 +24,7 @@ describe("CheckboxDisplayController", () => {
     it("show the content if the checkbox is checked, hide content either", () => {
       const checkbox = document.getElementById("checkbox");
       const content = document.getElementById("content");
-      
+
       expect(content.style.display).toBe("none");
 
       checkbox.click();

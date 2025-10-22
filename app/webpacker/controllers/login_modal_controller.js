@@ -40,20 +40,11 @@ export default class extends Controller {
       document.querySelector("body").classList.add("modal-open");
     });
 
-    window._paq?.push([
-      "trackEvent",
-      "Signin/Signup",
-      "Login Modal View",
-      window.location.href,
-    ]);
+    window._paq?.push(["trackEvent", "Signin/Signup", "Login Modal View", window.location.href]);
   };
 
   close() {
-    history.pushState(
-      {},
-      "",
-      window.location.pathname + window.location.search
-    );
+    history.pushState({}, "", window.location.pathname + window.location.search);
 
     this.modalTarget.classList.remove("in");
     this.backgroundTarget.classList.remove("in");

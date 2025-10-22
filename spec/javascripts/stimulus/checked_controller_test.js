@@ -39,13 +39,13 @@ describe("CheckedController", () => {
       expect(checkboxA.checked).toBe(false);
       expect(checkboxB.checked).toBe(false);
 
-      selectAllCheckbox.click()
+      selectAllCheckbox.click();
 
       expect(selectAllCheckbox.checked).toBe(true);
       expect(checkboxA.checked).toBe(true);
       expect(checkboxB.checked).toBe(true);
 
-      selectAllCheckbox.click()
+      selectAllCheckbox.click();
 
       expect(selectAllCheckbox.checked).toBe(false);
       expect(checkboxA.checked).toBe(false);
@@ -58,18 +58,18 @@ describe("CheckedController", () => {
       const selectAllCheckbox = document.getElementById("selectAllCheckbox");
       const checkboxA = document.getElementById("checkboxA");
       const checkboxB = document.getElementById("checkboxB");
-      checkboxA.click()
+      checkboxA.click();
       expect(selectAllCheckbox.checked).toBe(false);
       expect(checkboxA.checked).toBe(true);
       expect(checkboxB.checked).toBe(false);
 
-      checkboxB.click()
+      checkboxB.click();
 
       expect(selectAllCheckbox.checked).toBe(true);
       expect(checkboxA.checked).toBe(true);
       expect(checkboxB.checked).toBe(true);
 
-      checkboxB.click()
+      checkboxB.click();
 
       expect(selectAllCheckbox.checked).toBe(false);
       expect(checkboxA.checked).toBe(true);

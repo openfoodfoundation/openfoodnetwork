@@ -4,9 +4,7 @@ export default class extends Controller {
   static targets = ["reportType", "checkbox", "label"];
 
   handleSelectChange() {
-    this.reportTypeTarget.value == "csv" ?
-      this.enableField():
-      this.disableField();
+    this.reportTypeTarget.value == "csv" ? this.enableField() : this.disableField();
   }
 
   disableField() {

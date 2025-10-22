@@ -57,7 +57,7 @@ describe("PopoutController", () => {
     // For some reason this has to be in a separate block
     beforeEach(() => {
       button.dispatchEvent(new Event("click")); // Dialog is open
-    })
+    });
 
     it("closes the dialog when click outside", () => {
       input4.click();
@@ -97,7 +97,7 @@ describe("PopoutController", () => {
     });
 
     it("doesn't close the dialog when a field is invalid", () => {
-      input1.value = "" // field is required
+      input1.value = ""; // field is required
 
       input4.click();
       expectToBeShown(dialog);
@@ -115,8 +115,8 @@ describe("PopoutController", () => {
 
   describe("disable update-display", () => {
     beforeEach(() => {
-      document.body.innerHTML = htmlTemplate({updateDisplay: "false" });
-    })
+      document.body.innerHTML = htmlTemplate({ updateDisplay: "false" });
+    });
 
     it("doesn't update display value", () => {
       expect(button.textContent).toBe("On demand");
@@ -133,9 +133,9 @@ describe("PopoutController", () => {
   });
 });
 
-function htmlTemplate(opts = {updateDisplay: ""}) {
+function htmlTemplate(opts = { updateDisplay: "" }) {
   return `
-    <div data-controller="popout" data-popout-update-display-value="${opts['updateDisplay']}">
+    <div data-controller="popout" data-popout-update-display-value="${opts["updateDisplay"]}">
       <button id="button" data-popout-target="button">On demand</button>
       <div id="dialog" data-popout-target="dialog" style="display: none;">
         <input id="input1" value="value1" required>

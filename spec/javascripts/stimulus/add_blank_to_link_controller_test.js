@@ -17,8 +17,8 @@ describe("AddBlankToLink", () => {
     });
 
     it("adds target='_blank' to anchor tags", () => {
-      const anchorTag = document.querySelector('a')
-      expect(anchorTag.getAttribute('target')).toBe("_blank");
+      const anchorTag = document.querySelector("a");
+      expect(anchorTag.getAttribute("target")).toBe("_blank");
     });
   });
 });

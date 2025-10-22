@@ -9,10 +9,7 @@ export default class extends Controller {
   }
 
   countCharacters() {
-    this.displayCount(
-      this.inputTarget.value.length,
-      this.inputTarget.maxLength
-    );
+    this.displayCount(this.inputTarget.value.length, this.inputTarget.maxLength);
   }
 
   displayCount(count, max) {

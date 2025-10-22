@@ -42,11 +42,11 @@ export default class extends TomSelectController {
       });
       this.setValueOnTomSelectController(
         document.querySelector(attribute_wrapper + "state_id"),
-        data ? data.state_id : ""
+        data ? data.state_id : "",
       );
       this.setValueOnTomSelectController(
         document.querySelector(attribute_wrapper + "country_id"),
-        data ? data.country_id : ""
+        data ? data.country_id : "",
       );
     });
     document.querySelector("#order_email").value = customer.email;

@@ -23,7 +23,7 @@ export default class extends Controller {
       {
         method: "GET",
         headers: { "Content-type": "application/json; charset=UTF-8" },
-      }
+      },
     )
       .then((data) => data.json())
       .then((operation) => {

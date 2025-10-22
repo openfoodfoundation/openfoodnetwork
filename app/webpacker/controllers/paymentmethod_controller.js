@@ -21,11 +21,8 @@ export default class extends Controller {
   }
 
   setPaymentMethod(paymentMethodContainerId) {
-    Array.from(
-      document.getElementsByClassName("paymentmethod-container")
-    ).forEach((container) => {
-      const enabled =
-        container.dataset.paymentmethodId === paymentMethodContainerId;
+    Array.from(document.getElementsByClassName("paymentmethod-container")).forEach((container) => {
+      const enabled = container.dataset.paymentmethodId === paymentMethodContainerId;
 
       if (enabled) {
         container.style.display = "block";

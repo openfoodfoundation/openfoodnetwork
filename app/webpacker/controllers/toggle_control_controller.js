@@ -1,6 +1,6 @@
 import { Controller } from "stimulus";
 
-const BUTTON_TYPES = ['submit', 'button'];
+const BUTTON_TYPES = ["submit", "button"];
 
 // Toggle state of a control based on a condition.
 //
@@ -65,7 +65,7 @@ export default class extends Controller {
 
   #toggleDisplay(show) {
     this.controlTargets.forEach((target) => {
-      target.style.display = (show ? "block" : "none");
+      target.style.display = show ? "block" : "none";
     });
 
     // Focus first when displayed
@@ -83,6 +83,6 @@ export default class extends Controller {
   #focusFieldControl() {
     const control = this.controlTargets[0];
     const isButton = BUTTON_TYPES.includes(control.type);
-    if(!isButton) control.focus();
+    if (!isButton) control.focus();
   }
 }

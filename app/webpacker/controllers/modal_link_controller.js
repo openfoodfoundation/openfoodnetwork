@@ -7,7 +7,7 @@ export default class extends Controller {
     let modal = document.getElementById(this.targetValue);
     let modalController = this.application.getControllerForElementAndIdentifier(
       modal,
-      this.getIdentifier()
+      this.getIdentifier(),
     );
     modalController.open();
   }
