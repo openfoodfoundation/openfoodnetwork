@@ -163,8 +163,11 @@ module Admin
     end
 
     def destroy
-      @object.destroy
-      flash.now[:success] = flash_message_for(@object, :successfully_removed)
+      if @object.destroy
+        flash.now[:success] = flash_message_for(@object, :successfully_removed)
+      else
+        flash.now[:error] = @object.errors.full_messages.to_sentence
+      end
 
       respond_to do |format|
         format.turbo_stream { render :destroy, status: :ok }

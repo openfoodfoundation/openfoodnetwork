@@ -88,6 +88,28 @@ RSpec.describe '
     end.to change{ Enterprise.count }.by(-1)
   end
 
+  it "deleting an existing enterprise unsuccessfully" do
+    enterprise = create(:enterprise)
+    create(:order, distributor: enterprise)
+
+    user = create(:user)
+
+    admin = login_as_admin
+
+    visit '/admin/enterprises'
+
+    expect do
+      accept_alert do
+        within "tr.enterprise-#{enterprise.id}" do
+          first("a", text: 'Delete').click
+        end
+      end
+
+      expect(page).to have_content("Cannot delete record because dependent distributed order")
+      expect(page).to have_content(enterprise.name)
+    end.to change{ Enterprise.count }.by(0)
+  end
+
   it "editing an existing enterprise" do
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
