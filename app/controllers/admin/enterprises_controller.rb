@@ -162,6 +162,15 @@ module Admin
       end
     end
 
+    def destroy
+      @object.destroy
+      flash.now[:success] = flash_message_for(@object, :successfully_removed)
+
+      respond_to do |format|
+        format.turbo_stream { render :destroy, status: :ok }
+      end
+    end
+
     protected
 
     def delete_custom_tab
