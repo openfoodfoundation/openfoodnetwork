@@ -2723,9 +2723,9 @@ eu:
   not_visible: ez da ikusten
   you_have_no_orders_yet: "Oraindik ez duzu eskaerarik"
   show_only_complete_orders: "Erakutsi eskaera osoak bakarrik"
-  successfully_created: ' %{resource} arrakastaz sortu da!'
-  successfully_removed: ' %{resource} arrakastaz ezabatu da!'
-  successfully_updated: ' %{resource} ondo eguneratu da!'
+  successfully_created: '%{resource} arrakastaz sortu da!'
+  successfully_removed: '%{resource} arrakastaz ezabatu da!'
+  successfully_updated: '%{resource} ondo eguneratu da!'
   running_balance: "Egungo saldoa"
   outstanding_balance: "Aparteko saldoa"
   admin_enterprise_relationships: "Erakundearen baimenak"
