@@ -2590,9 +2590,9 @@ fr_BE:
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   show_only_complete_orders: "Montrer uniquement les commandes finalisées"
-  successfully_created: '%{resource}est crée avec succès! '
-  successfully_removed: '%{resource}est été supprimé avec succès! '
-  successfully_updated: '%{resource}a été enregistrée avec succès'
+  successfully_created: '%{resource} est crée avec succès! '
+  successfully_removed: '%{resource} est été supprimé avec succès! '
+  successfully_updated: '%{resource} a été enregistrée avec succès'
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
   admin_enterprise_relationships: "Permissions Inter-entreprises"

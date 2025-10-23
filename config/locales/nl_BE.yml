@@ -2200,9 +2200,9 @@ nl_BE:
   not_visible: niet zichtbaar
   you_have_no_orders_yet: "U heeft geen bestellingen momenteel"
   show_only_complete_orders: "Uitsluitend de volledige bestellingen tonen"
-  successfully_created: '%{resource}is met succes gedaan! '
-  successfully_removed: '%{resource}is succesvol verwijderd!'
-  successfully_updated: '%{resource}is succesvol bijgewerkt!'
+  successfully_created: '%{resource} is met succes gedaan! '
+  successfully_removed: '%{resource} is succesvol verwijderd!'
+  successfully_updated: '%{resource} is succesvol bijgewerkt!'
   running_balance: "Lopend saldo"
   outstanding_balance: "Nog te betalen bedrag"
   admin_enterprise_relationships: "Bedrijfstoestemming"
