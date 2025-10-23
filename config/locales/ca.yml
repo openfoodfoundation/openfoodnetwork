@@ -3477,7 +3477,6 @@ ca:
     card_code: "Codi de la targeta"
     card_number: "Número de targeta"
     category: "Categoria"
-    created_successfully: "Creat correctament"
     credit: "Crèdit"
     editing_tax_category: "Editant la categoria fiscal"
     editing_tax_rate: "Editant el tipus impositiu"
@@ -3503,7 +3502,6 @@ ca:
     refund: "Reembossament"
     server_error: "Error del servidor"
     start_date: "Data d'inici"
-    successfully_removed: "S'ha suprimit correctament"
     updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
@@ -3669,8 +3667,6 @@ ca:
     please_define_payment_methods: "Primer definiu alguns mètodes de pagament."
     options: "Opcions"
     has_no_shipped_units: "no té cap unitat enviada"
-    successfully_created: '%{resource} s''ha creat correctament.'
-    successfully_updated: '%{resource} s''ha actualitzat correctament.'
     payment_method: "Mètode de pagament"
     payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
     not_available: "No disponible"

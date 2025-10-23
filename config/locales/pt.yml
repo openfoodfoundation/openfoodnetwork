@@ -3144,8 +3144,6 @@ pt:
     inventory: Inventário
     zipcode: Código postal
     options: "Opções"
-    successfully_created: '%{resource} foi criado/a com sucesso!'
-    successfully_updated: '%{resource} foi actualizado/a com sucesso!'
     payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
     sku: "SKU"

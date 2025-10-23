@@ -3594,7 +3594,6 @@ eu:
     card_code: "Txartelaren kodea"
     card_number: "Txartelaren zenbakia"
     category: "Kategoria"
-    created_successfully: "Arrakastaz sortua"
     credit: "Kreditua"
     editing_tax_category: "Kategoria fiskala editatzen"
     editing_tax_rate: "Zerga-tasa editatzen"
@@ -3621,7 +3620,6 @@ eu:
     refund: "Dirua itzultzea"
     server_error: "Zerbitzariaren errorea"
     start_date: "Hasiera-data"
-    successfully_removed: "Arrakastaz ezabatua"
     updating: "Eguneratzen"
     your_order_is_empty_add_product: "Zure eskaera hutsik dago, bilatu eta gehitu produktu bat goian"
     add_product: "Gehitu produktua"
@@ -3790,8 +3788,6 @@ eu:
     please_define_payment_methods: "mesedez, definitu ordainketa-metodoak"
     options: "Aukerak"
     has_no_shipped_units: "ez du bidalitako unitaterik"
-    successfully_created: ' %{resource} arrakastaz sortu da!'
-    successfully_updated: ' %{resource} ondo eguneratu da!'
     payment_method: "Ordaintzeko modua"
     payment_processing_failed: "Ezin izan da ordainketa prozesatu, mesedez egiaztatu sartu dituzun xehetasunak"
     not_available: "Ez dago eskuragarri"

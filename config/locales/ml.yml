@@ -3655,7 +3655,6 @@ ml:
     card_code: "കാർഡ് കോഡ്"
     card_number: "കാർഡ് നമ്പർ"
     category: "വിഭാഗം"
-    created_successfully: "വിജയകരമായി സൃഷ്ടിച്ചു"
     credit: "ക്രെഡിറ്റ്"
     editing_tax_category: "നികുതി വിഭാഗം എഡിറ്റുചെയ്യുന്നു"
     editing_tax_rate: "നികുതി നിരക്ക് എഡിറ്റുചെയ്യുന്നു"
@@ -3681,7 +3680,6 @@ ml:
     refund: "റീഫണ്ട്"
     server_error: "സെർവർ തകരാർ"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
-    successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
     your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"
     add_product: "ഉൽപ്പന്നം ചേർക്കുക"
@@ -3849,8 +3847,6 @@ ml:
     please_define_payment_methods: "ദയവായി ആദ്യം ചില പേയ്മെന്റ് രീതികൾ നിർവ്വചിക്കുക."
     options: "ഓപ്ഷനുകൾ"
     has_no_shipped_units: "ഷിപ്പ് ചെയ്ത യൂണിറ്റുകൾ ഇല്ല"
-    successfully_created: '%{resource} വിജയകരമായി സൃഷ്‌ടിച്ചു!'
-    successfully_updated: '%{resource} വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്‌തു!'
     payment_method: "പണമടയ്ക്കൽ രീതി"
     payment_processing_failed: "പേയ്‌മെന്റ് പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല, നിങ്ങൾ നൽകിയ വിശദാംശങ്ങൾ പരിശോധിക്കുക"
     not_available: "ബാധകമല്ല"

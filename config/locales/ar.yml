@@ -3587,7 +3587,6 @@ ar:
     card_code: "رمز البطاقة"
     card_number: "رقم البطاقة"
     category: "الفئة"
-    created_successfully: "تم إنشاؤه بنجاح"
     credit: "اجل"
     editing_tax_category: "تحرير فئة الضريبة"
     editing_tax_rate: "تعديل معدل الضريبة"
@@ -3613,7 +3612,6 @@ ar:
     refund: "إعادة المال"
     server_error: "خطأ في الخادم"
     start_date: "تاريخ البدء"
-    successfully_removed: "تمت الإزالة بنجاح"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
@@ -3779,8 +3777,6 @@ ar:
     please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."
     options: "خيارات"
     has_no_shipped_units: "لا يوجد لديه طلبات مشحونة"
-    successfully_created: '%{resource} تم إنشاؤه بنجاح!'
-    successfully_updated: 'تم تحديث %{resource} بنجاح!'
     payment_method: "طريقة الدفع او السداد"
     payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
     not_available: "غير متاح"
