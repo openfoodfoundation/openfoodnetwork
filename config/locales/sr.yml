@@ -3790,7 +3790,6 @@ sr:
     card_code: "Код картице"
     card_number: "Број картице"
     category: "Категорија"
-    created_successfully: "Цреатед Суццессфулли"
     credit: "Кредит"
     editing_tax_category: "Уређивање пореске категорије"
     editing_tax_rate: "Уређивање пореске стопе"
@@ -3817,7 +3816,6 @@ sr:
     refund: "Враћање новца"
     server_error: "Грешка на серверу"
     start_date: "Датум почетка"
-    successfully_removed: "Успешно уклоњено"
     updating: "Ажурирање"
     your_order_is_empty_add_product: "Ваша поруџбина је празна, потражите и додајте производ изнад"
     add_product: "Додај производ"
@@ -3988,8 +3986,6 @@ sr:
     please_define_payment_methods: "Прво дефинишите неке начине плаћања."
     options: "Опције"
     has_no_shipped_units: "нема испоручених јединица"
-    successfully_created: '%{resource} је успешно креиран!'
-    successfully_updated: '%{resource} је успешно ажуриран!'
     payment_method: "Начин плаћања"
     payment_processing_failed: "Уплата није могла да се обради, проверите детаље које сте унели"
     not_available: "Н/А"

@@ -2102,7 +2102,7 @@ en_BE:
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show complete orders"
   successfully_created: '%{resource} has been successfully created! '
-  successfully_removed: ' %{resource} has been successfully removed!'
+  successfully_removed: '%{resource} has been successfully removed!'
   successfully_updated: '%{resource} has been successfully updated!'
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
@@ -2990,8 +2990,6 @@ en_BE:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    successfully_created: '%{resource} has been successfully created! '
-    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     sku: "SKU"

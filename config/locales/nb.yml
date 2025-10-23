@@ -3849,7 +3849,6 @@ nb:
     card_code: "Kortkode"
     card_number: "Kortnummer"
     category: "Kategori"
-    created_successfully: "Opprettet vellykket"
     credit: "Kreditt"
     editing_tax_category: "Redigering av avgiftskategori"
     editing_tax_rate: "Redigering av avgiftssats"
@@ -3876,7 +3875,6 @@ nb:
     refund: "Refusjon"
     server_error: "Serverfeil"
     start_date: "Startdato"
-    successfully_removed: "Fjernet OK"
     updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
@@ -4047,8 +4045,6 @@ nb:
     please_define_payment_methods: "Vennligst angi noen betalingsmetoder først."
     options: "Valg"
     has_no_shipped_units: "har ingen sendte enheter"
-    successfully_created: 'Opprettelsen av %{resource} var vellykket!'
-    successfully_updated: 'Oppdatering av%{resource} var vellykket!'
     payment_method: "Betalingsmetode"
     payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
     not_available: "Ikke relevant"

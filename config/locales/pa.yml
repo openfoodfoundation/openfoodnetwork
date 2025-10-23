@@ -3525,7 +3525,6 @@ pa:
     card_code: "ਕਾਰਡ ਕੋਡ"
     card_number: "ਕਾਰਡ ਨੰਬਰ"
     category: "ਸ਼੍ਰੇਣੀ"
-    created_successfully: "ਸਫ਼ਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ"
     credit: "ਕ੍ਰੈਡਿਟ"
     editing_tax_category: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ ਦਾ ਸੰਪਾਦਨ"
     editing_tax_rate: "ਟੈਕਸ ਦਰ ਦਾ ਸੰਪਾਦਨ"
@@ -3551,7 +3550,6 @@ pa:
     refund: "ਰਿਫੰਡ"
     server_error: "ਸਰਵਰ ਤਰੁੱਟੀ"
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
-    successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"
     your_order_is_empty_add_product: "ਤੁਹਾਡਾ ਆਰਡਰ ਖਾਲੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਪਰ ਇੱਕ ਉਤਪਾਦ ਦੀ ਖੋਜ ਕਰੋ ਅਤੇ ਜੋੜੋ"
     add_product: "ਉਤਪਾਦ ਜੋੜੋ"
@@ -3719,8 +3717,6 @@ pa:
     please_define_payment_methods: "ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਕੁਝ ਭੁਗਤਾਨ ਦੇ ਢੰਗਾਂ ਨੂੰ ਪਰਿਭਾਸ਼ਿਤ ਕਰੋ।"
     options: "ਵਿਕਲਪ"
     has_no_shipped_units: "ਕੋਈ ਵੀ ਭੇਜੇ ਗਏ ਯੂਨਿਟ ਨਹੀਂ ਹਨ"
-    successfully_created: '%{resource} ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ ਹੈ!'
-    successfully_updated: '%{resource} ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ ਹੈ!'''
     payment_method: "ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ"
     payment_processing_failed: "ਭੁਗਤਾਨ ਸੰਸਾਧਿਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡੇ ਦੁਆਰਾ ਦਰਜ ਕੀਤੇ ਵੇਰਵਿਆਂ ਦੀ ਜਾਂਚ ਕਰੋ"
     not_available: "ਉਪਲਬਧ ਨਹੀਂ"
