@@ -58,7 +58,7 @@ RSpec.describe Enterprise do
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
     end
 
-    it "raises a DeleteRestrictionError on destroy if distributed_orders exist" do
+    it "does not destroy distributed_orders upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:order, 2, distributor: enterprise)
 
@@ -69,7 +69,7 @@ RSpec.describe Enterprise do
         .and change { Spree::Order.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_payment_methods exist" do
+    it "does not destroy distributor_payment_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_payment_method, 2, distributor: enterprise)
 
@@ -80,7 +80,7 @@ RSpec.describe Enterprise do
         .and change { DistributorPaymentMethod.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_shipping_methods exist" do
+    it "does not destroy distributor_shipping_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_shipping_method, 2, distributor: enterprise)
 
