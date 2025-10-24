@@ -3146,8 +3146,6 @@ fil_PH:
     cannot_create_payment_without_payment_methods: "hindi maaaring magbayad para sa isang order na walang nakasaad na paraan ng pagbabayad."
     please_define_payment_methods: "isaad muna ang paraan ng pagbabayad"
     options: "pagpipilian"
-    successfully_created: '%{resource}ay matagumpay na nagawa!'
-    successfully_updated: '%{resource}ay matagumpay na na-update'
     payment_method: "Paraan ng pagbayad"
     payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     sku: "SKU"

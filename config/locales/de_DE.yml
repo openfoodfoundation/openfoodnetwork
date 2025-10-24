@@ -3646,7 +3646,6 @@ de_DE:
     card_code: "Kartenprüfnummer (3-stellig)"
     card_number: "Kreditkartennummer"
     category: "Steuerkategorie"
-    created_successfully: "Erfolgreich erstellt"
     credit: "Guthaben"
     editing_tax_category: "Steuerkategorie bearbeiten"
     editing_tax_rate: "Steuersatz bearbeiten"
@@ -3672,7 +3671,6 @@ de_DE:
     refund: "Rückerstattung"
     server_error: "Serverfehler"
     start_date: "Anfangsdatum"
-    successfully_removed: "Erfolgreich gelöscht"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
@@ -3840,8 +3838,6 @@ de_DE:
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsarten."
     options: "Optionen"
     has_no_shipped_units: "hat keine gelieferten Einheiten"
-    successfully_created: '%{resource} wurde erfolgreich erstellt.'
-    successfully_updated: '%{resource} wurde erfolgreich gespeichert.'
     payment_method: "Zahlungsart"
     payment_processing_failed: "Die Zahlung konnte nicht verarbeitet werden. Bitte überprüfen Sie die von Ihnen eingegebenen Daten."
     not_available: "N / A"

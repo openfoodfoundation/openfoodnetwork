@@ -3357,7 +3357,6 @@ it_CH:
     card_code: "Codice carta"
     card_number: "Numero carta"
     category: "Categoria"
-    created_successfully: "Creato con successo"
     credit: "Credito"
     editing_tax_category: "Modifica categoria imposta"
     editing_tax_rate: "Modifica imposta"
@@ -3383,7 +3382,6 @@ it_CH:
     refund: "Rimborsa"
     server_error: "Errore Server"
     start_date: "Data inizio"
-    successfully_removed: "Rimosso con successo"
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
     add_product: "Aggiungi prodotto"
@@ -3547,8 +3545,6 @@ it_CH:
     please_define_payment_methods: "Definisci prima alcuni metodi di pagamento."
     options: "Opzioni"
     has_no_shipped_units: "non ha unità spedite"
-    successfully_created: '%{resource} è stato creato con successo!'
-    successfully_updated: '%{resource} è stato aggiornato con successo!'
     payment_method: "Metodo di pagamento"
     payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     not_available: "N/A"

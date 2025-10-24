@@ -3240,8 +3240,6 @@ es_CO:
     cannot_create_payment_without_payment_methods: "No se puede crear un pago para una orden sin un método de pago definido."
     please_define_payment_methods: "Por favor definir métodos de pago primero."
     options: "Opciones"
-    successfully_created: '%{resource} se ha creado exitosamente!'
-    successfully_updated: '%{resource} ha sido actualizado exitosamente!'
     payment_method: "Método de pago"
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     sku: "SKU"

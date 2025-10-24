@@ -3323,7 +3323,6 @@ ko:
     card_code: "카드 코드"
     card_number: "카드 번호"
     category: "목록"
-    created_successfully: "성공적으로 생성됨"
     credit: "신용 거래"
     editing_tax_category: "세금 카테고리 편집 중"
     editing_tax_rate: "세율 편집 중"
@@ -3349,7 +3348,6 @@ ko:
     refund: "환불"
     server_error: "서버 오류"
     start_date: "시작 날짜"
-    successfully_removed: "성공적으로 제거됨"
     updating: "업데이트 중"
     your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."
     add_product: "상품 추가"
@@ -3513,8 +3511,6 @@ ko:
     please_define_payment_methods: "먼저 일부 결제 방법을 정의하십시오."
     options: "옵션"
     has_no_shipped_units: "출하된 물건이 없습니다."
-    successfully_created: '%{resource}가 성공적으로 생성되었습니다!'
-    successfully_updated: '%{resource}가 성공적으로 업데이트 되었습니다!'
     payment_method: "결제 방식"
     payment_processing_failed: "결제를 처리할 수 없습니다. 입력한 정보를 확인하십시오."
     not_available: "N/A"

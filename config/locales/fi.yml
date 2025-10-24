@@ -2903,9 +2903,9 @@ fi:
   not_visible: ei näkyvissä
   you_have_no_orders_yet: "Sinulla ei ole vielä tilauksia"
   show_only_complete_orders: "Näytä vain täydelliset tilaukset"
-  successfully_created: '%{resource} has been successfully created!'
+  successfully_created: '%{resource} on luotu onnistuneesti!'
   successfully_removed: '%{resource} on poistettu onnistuneesti!'
-  successfully_updated: '%{resource} has been successfully updated!'
+  successfully_updated: '%{resource} on päivitetty onnistuneesti!'
   running_balance: "Juokseva saldo"
   outstanding_balance: "Maksamaton saldo"
   admin_enterprise_relationships: "yritys -käyttöoikeudet"
@@ -3921,7 +3921,6 @@ fi:
     card_code: "Kortin koodi"
     card_number: "Kortin numero"
     category: "Kategoria"
-    created_successfully: "Luotu onnistuneesti"
     credit: "Luotto"
     editing_tax_category: "Verokategorian muokkaaminen"
     editing_tax_rate: "Veroprosentin muokkaaminen"
@@ -3948,7 +3947,6 @@ fi:
     refund: "Palauttaa"
     server_error: "Palvelinvirhe"
     start_date: "Aloituspäivämäärä"
-    successfully_removed: "Poistettu onnistuneesti"
     updating: "Päivittäminen"
     your_order_is_empty_add_product: "Tilauksesi on tyhjä, hae ja lisää tuote yllä"
     add_product: "Lisää tuote"
@@ -4119,8 +4117,6 @@ fi:
     please_define_payment_methods: "Määrittele ensin joitakin maksutapoja."
     options: "Vaihtoehdot"
     has_no_shipped_units: "ei ole toimitettuja yksiköitä"
-    successfully_created: '%{resource} on luotu onnistuneesti!'
-    successfully_updated: '%{resource} on päivitetty onnistuneesti!'
     payment_method: "Maksutapa"
     payment_processing_failed: "Maksua ei voitu käsitellä, tarkista antamasi tiedot"
     not_available: "Ei saatavilla"

@@ -3322,7 +3322,6 @@ fr_CM:
     card_code: "Code de la carte"
     card_number: "Numéro de la carte"
     category: "Catégorie"
-    created_successfully: "Créé avec succès"
     credit: "Créditer"
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
@@ -3348,7 +3347,6 @@ fr_CM:
     refund: "Remboursement"
     server_error: "Erreur serveur"
     start_date: "Date de début"
-    successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3512,8 +3510,6 @@ fr_CM:
     please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
     options: "Options"
     has_no_shipped_units: "n'a pas d'éléments envoyés"
-    successfully_created: '%{resource} a été créé avec succès !'
-    successfully_updated: '%{resource} a été mis à jour avec succès !'
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
     not_available: "N/A"

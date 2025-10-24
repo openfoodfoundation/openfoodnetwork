@@ -3214,7 +3214,6 @@ tr:
     card_code: "Kart kodu"
     card_number: "Kart numarası"
     category: "Kategori"
-    created_successfully: "Başarıyla Oluşturuldu"
     credit: "Bakiye"
     editing_tax_category: "Vergi kategorisini düzenleme"
     editing_tax_rate: "Vergi oranını düzenleme"
@@ -3240,7 +3239,6 @@ tr:
     refund: "İade"
     server_error: "Server hatası"
     start_date: "Başlangıç tarihi"
-    successfully_removed: "Başarıyla Kaldırıldı"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
@@ -3404,8 +3402,6 @@ tr:
     please_define_payment_methods: "Lütfen önce ödeme bir yöntemi belirleyin."
     options: "Seçenekler"
     has_no_shipped_units: "gönderilmiş birim yok"
-    successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
-    successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
     payment_method: "ÖDEME YÖNTEMİ"
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
     not_available: "Yok"

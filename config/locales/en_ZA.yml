@@ -3064,8 +3064,6 @@ en_ZA:
     inventory: Inventory
     zipcode: Postcode
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
-    successfully_created: '%{resource} has been successfully created!'
-    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     sku: "SKU"

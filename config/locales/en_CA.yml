@@ -2916,7 +2916,7 @@ en_CA:
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show completed orders"
   successfully_created: '%{resource} has been successfully created!'
-  successfully_removed: '%{resource}has been successfully removed!'
+  successfully_removed: '%{resource} has been successfully removed!'
   successfully_updated: '%{resource} has been successfully updated!'
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
@@ -3933,7 +3933,6 @@ en_CA:
     card_code: "Card code"
     card_number: "Card number"
     category: "Category"
-    created_successfully: "Created Successfully"
     credit: "Credit"
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
@@ -3960,7 +3959,6 @@ en_CA:
     refund: "Refund"
     server_error: "Server error"
     start_date: "Start date"
-    successfully_removed: "Successfully Removed"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -4131,8 +4129,6 @@ en_CA:
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     has_no_shipped_units: "has no shipped units"
-    successfully_created: '%{resource} has been successfully created!'
-    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered."
     not_available: "N/A"

@@ -2590,9 +2590,9 @@ fr_BE:
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   show_only_complete_orders: "Montrer uniquement les commandes finalisées"
-  successfully_created: '%{resource}est crée avec succès! '
-  successfully_removed: '%{resource}est été supprimé avec succès! '
-  successfully_updated: '%{resource}a été enregistrée avec succès'
+  successfully_created: '%{resource} est crée avec succès! '
+  successfully_removed: '%{resource} est été supprimé avec succès! '
+  successfully_updated: '%{resource} a été enregistrée avec succès'
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
   admin_enterprise_relationships: "Permissions Inter-entreprises"
@@ -3457,7 +3457,6 @@ fr_BE:
     back_to_zones_list: "Retour aux zones"
     card_number: "Numéro de carte"
     category: "Catégorie"
-    created_successfully: "Créé avec succès"
     credit: "Crédit"
     editing_tax_category: "Éditer la catégorie de taxe"
     editing_tax_rate: "Éditer le taux de taxe"
@@ -3638,8 +3637,6 @@ fr_BE:
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
     please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."
     options: "Options"
-    successfully_created: '%{resource}est crée avec succès! '
-    successfully_updated: '%{resource}a été enregistrée avec succès'
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
     sku: "Référence produit"
