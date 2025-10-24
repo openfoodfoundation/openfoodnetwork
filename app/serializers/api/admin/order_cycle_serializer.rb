@@ -67,8 +67,7 @@ module Api
                          visible_for(enterprise)
                      else
                        permissions.
-                         visible_variants_for_outgoing_exchanges_to(enterprise).
-                         not_hidden_for(enterprise)
+                         visible_variants_for_outgoing_exchanges_to(enterprise)
                      end.pluck(:id)
           visible[enterprise.id] = variants if variants.any?
         end
