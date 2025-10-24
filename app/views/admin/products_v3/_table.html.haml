@@ -1,3 +1,4 @@
+-# locals: (products:, producer_options:, category_options:, tax_category_options:, allowed_producers:)
 = form_with url: admin_products_bulk_update_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
             html: { data: { 'turbo-frame': "_self",
@@ -69,4 +70,4 @@
         %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
-      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, producer_options:, category_options:, tax_category_options: }
+      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, producer_options:, category_options:, tax_category_options: , allowed_producers:}

@@ -1,3 +1,4 @@
+-# locals: (products:, pagy:, search_term:, producer_options:, producer_id:, category_options:, category_id:, tax_category_options:, available_tags:, tags:, flashes:, display_search_filter:, allowed_producers:)
 %turbo-frame#products-content{ target: "_top", refresh: "morph" }
   .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading", class: "hidden" }
     .spinner-container
@@ -17,7 +18,7 @@
     .container.results
       .sixteen.columns
         = render partial: 'sort', locals: { pagy:, search_term:, producer_id:, category_id:, tags: }
-        = render partial: 'table', locals: { products:, producer_options:, category_options:, tax_category_options: }
+        = render partial: 'table', locals: { products:, producer_options:, category_options:, tax_category_options: , allowed_producers: }
     - if pagy.present? && pagy.pages > 1
       = render partial: 'admin/shared/stimulus_pagination', locals: { pagy: pagy }
   - else
