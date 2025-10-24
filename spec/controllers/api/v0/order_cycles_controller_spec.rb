@@ -132,7 +132,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       end
     end
 
-    context "when tag rules apply", feature: :inventory do
+    context "when inventory tag rules apply", feature: :inventory do
       let!(:vo1) {
         create(:variant_override,
                hub: distributor,
@@ -192,6 +192,63 @@ RSpec.describe Api::V0::OrderCyclesController do
         vo3.update_attribute(:tag_list,
                              "#{show_rule.preferred_variant_tags}," \
                              "#{default_hide_rule.preferred_variant_tags}")
+        customer.update_attribute(:tag_list, show_rule.preferred_customer_tags)
+
+        api_get :products, id: order_cycle.id, distributor: distributor.id
+
+        expect(product_ids).not_to include product1.id
+        expect(product_ids).to include product3.id
+      end
+    end
+
+    context "when variant tag rules apply", feature: :variant_tag do
+      let!(:variant1) { product1.variants.first.tap { |v| v.update(supplier: distributor) } }
+      let!(:variant2) { product2.variants.first.tap { |v| v.update(supplier: distributor) } }
+      let!(:variant3) { product3.variants.first.tap { |v| v.update(supplier: distributor) } }
+      let(:default_hide_rule) {
+        create(:filter_variants_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_variant_tags: "hide_these_variants_from_everyone",
+               preferred_matched_variants_visibility: "hidden")
+      }
+      let(:hide_rule) {
+        create(:filter_variants_tag_rule,
+               enterprise: distributor,
+               preferred_variant_tags: "hide_these_variants",
+               preferred_customer_tags: "hide_from_these_customers",
+               preferred_matched_variants_visibility: "hidden" )
+      }
+      let(:show_rule) {
+        create(:filter_variants_tag_rule,
+               enterprise: distributor,
+               preferred_variant_tags: "show_these_variants",
+               preferred_customer_tags: "show_for_these_customers",
+               preferred_matched_variants_visibility: "visible" )
+      }
+
+      it "does not return variants hidden by general rules" do
+        variant1.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
+
+        api_get :products, id: order_cycle.id, distributor: distributor.id
+
+        expect(product_ids).not_to include product1.id
+      end
+
+      it "does not return variants hidden for this specific customer" do
+        variant2.update_attribute(:tag_list, hide_rule.preferred_variant_tags)
+        customer.update_attribute(:tag_list, hide_rule.preferred_customer_tags)
+
+        api_get :products, id: order_cycle.id, distributor: distributor.id
+
+        expect(product_ids).not_to include product2.id
+      end
+
+      it "returns hidden variants made visible for this specific customer" do
+        variant1.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
+        variant3.update_attribute(:tag_list,
+                                  "#{show_rule.preferred_variant_tags}," \
+                                  "#{default_hide_rule.preferred_variant_tags}")
         customer.update_attribute(:tag_list, show_rule.preferred_customer_tags)
 
         api_get :products, id: order_cycle.id, distributor: distributor.id

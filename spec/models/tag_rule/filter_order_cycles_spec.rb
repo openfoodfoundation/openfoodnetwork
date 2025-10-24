@@ -3,56 +3,69 @@
 require 'spec_helper'
 
 RSpec.describe TagRule::FilterOrderCycles do
-  let!(:tag_rule) { build_stubbed(:filter_order_cycles_tag_rule) }
+  let(:tag_rule) {
+    build(:filter_order_cycles_tag_rule, preferred_exchange_tags: order_cycle_tags, enterprise:)
+  }
+  let(:order_cycle_tags) { "" }
+  let(:enterprise) { build(:enterprise) }
 
   describe "#tags" do
-    it "return the exchange tags" do
-      tag_rule = create(:filter_order_cycles_tag_rule, preferred_exchange_tags: "my_tag")
+    let(:order_cycle_tags) { "my_tag" }
 
+    it "return the exchange tags" do
       expect(tag_rule.tags).to eq("my_tag")
     end
   end
 
-  describe "determining whether tags match for a given exchange" do
+  describe "#tags_match?" do
     context "when the exchange is nil" do
       before do
         allow(tag_rule).to receive(:exchange_for) { nil }
       end
 
       it "returns false" do
-        expect(tag_rule.__send__(:tags_match?, nil)).to be false
+        expect(tag_rule.tags_match?(nil)).to be false
       end
     end
 
     context "when the exchange is not nil" do
-      let(:exchange_object) { double(:exchange, tag_list: ["member", "local", "volunteer"]) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [enterprise]) }
 
       before do
-        allow(tag_rule).to receive(:exchange_for) { exchange_object }
+        exchange = order_cycle.exchanges.outgoing.first
+        exchange.tag_list = "member,local,volunteer"
+        exchange.save!
       end
 
       context "when the rule has no preferred exchange tags specified" do
-        before { allow(tag_rule).to receive(:preferred_exchange_tags) { "" } }
-        it { expect(tag_rule.__send__(:tags_match?, exchange_object)).to be false }
+        it { expect(tag_rule.tags_match?(order_cycle)).to be false }
       end
 
       context "when the rule has preferred exchange tags specified that match ANY exchange tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_exchange_tags) {
-                               "wholesale,some_tag,member"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, exchange_object)).to be true }
+        let(:order_cycle_tags) { "wholesale,some_tag,member" }
+
+        it { expect(tag_rule.tags_match?(order_cycle)).to be true }
       end
 
       context "when the rule has preferred exchange tags specified that match NO exchange tags" do
-        before {
-          allow(tag_rule).to receive(:preferred_exchange_tags) {
-                               "wholesale,some_tag,some_other_tag"
-                             }
-        }
-        it { expect(tag_rule.__send__(:tags_match?, exchange_object)).to be false }
+        let(:order_cycle_tags) { "wholesale,some_tag,some_other_tag" }
+
+        it { expect(tag_rule.tags_match?(order_cycle)).to be false }
       end
+    end
+  end
+
+  describe "#reject_matched?" do
+    it "return false with default visibility (visible)" do
+      expect(tag_rule.reject_matched?).to be false
+    end
+
+    context "when visiblity is set to hidden" do
+      let(:tag_rule) {
+        build(:filter_order_cycles_tag_rule, preferred_matched_order_cycles_visibility: "hidden")
+      }
+
+      it { expect(tag_rule.reject_matched?).to be true }
     end
   end
 end

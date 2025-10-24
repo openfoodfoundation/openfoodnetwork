@@ -9,7 +9,7 @@
 #    ( despite the use of `TagRule::FilterProducts.prioritised` ). It will apply the "show rule"
 #    if any
 #  * When there is no default rule, the order of customer related rules doesn't matter, it will
-#    apply the "hide rule" if any
+#    apply the "show rule" over any hide rule
 #
 class ProductTagRulesFilterer
   def initialize(distributor, customer, variants_relation)
