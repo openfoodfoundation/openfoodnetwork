@@ -640,7 +640,6 @@ GEM
     rails-i18n (7.0.10)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 8)
-    rails_safe_tasks (1.0.0)
     railties (7.1.5.2)
       actionpack (= 7.1.5.2)
       activesupport (= 7.1.5.2)
@@ -1029,7 +1028,6 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rails-i18n
-  rails_safe_tasks (~> 1.0)
   ransack (~> 4.1.0)
   redcarpet
   redis
