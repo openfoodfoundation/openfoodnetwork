@@ -76,10 +76,11 @@ module Reporting
               group_by: :order_cycle,
               summary_row: proc do |_key, items, _rows|
                 line_items = items.flat_map(&:second).flatten.uniq
-                total_excl_tax = line_items.sum(&:amount) - line_items.sum(&:included_tax)
+                total_excl_tax =
+                  line_items.map(&:amount).sum(&:to_f) - line_items.map(&:included_tax).sum(&:to_f)
                 tax = line_items.map do |line_item|
-                  line_item.adjustments.eligible.tax.sum(&:amount)
-                end.sum
+                  line_item.adjustments.eligible.tax.map(&:amount).sum(&:to_f)
+                end.sum(&:to_f)
                 {
                   total_excl_tax:,
                   tax:,
@@ -125,16 +126,17 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          line_items(query_result_row).sum(&:amount) -
-            line_items(query_result_row).sum(&:included_tax)
+          line_items(query_result_row).map(&:amount).sum(&:to_f) -
+            line_items(query_result_row).map(&:included_tax).sum(&:to_f)
         end
 
         def tax(query_result_row)
           line_items(query_result_row)&.map do |line_item|
             line_item.adjustments.eligible.tax
               .where(originator_id: tax_rate_id(query_result_row))
-              .sum(&:amount)
-          end&.sum
+              .map(&:amount)
+              .sum(&:to_f)
+          end&.sum(&:to_f)
         end
 
         def total_incl_tax(query_result_row)

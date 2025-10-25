@@ -57,10 +57,10 @@ module Reporting
         end
 
         def max_quantity_amount(line_items)
-          line_items.sum do |line_item|
+          line_items.map do |line_item|
             max_quantity = [line_item.max_quantity || 0, line_item.quantity || 0].max
             max_quantity * scaled_unit_value(line_item.variant)
-          end
+          end.sum(&:to_i)
         end
 
         def scaled_unit_value(variant)
@@ -94,7 +94,7 @@ module Reporting
         end
 
         def total_amount(line_items)
-          line_items.sum { |li| scaled_final_weight_volume(li) }
+          line_items.map { |li| scaled_final_weight_volume(li) }.sum(&:to_f)
         end
 
         def scaled_final_weight_volume(line_item)

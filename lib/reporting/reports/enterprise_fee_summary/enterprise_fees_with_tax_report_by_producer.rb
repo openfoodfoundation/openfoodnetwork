@@ -232,7 +232,7 @@ module Reporting
                 line_item.supplier_id == supplier_id
               end
 
-            tax_for_enterprise_fees = rows.map(&:tax).sum
+            tax_for_enterprise_fees = rows.map(&:tax).sum(&:to_f)
             total_excl_tax = total_fees_excl_tax(items) + line_items_excl_tax(line_items)
             tax = tax_for_enterprise_fees + tax_for_line_items(line_items)
             {
@@ -280,18 +280,18 @@ module Reporting
         end
 
         def line_items_excl_tax(line_items)
-          cost_of_line_items(line_items) - line_items.sum(&:included_tax)
+          cost_of_line_items(line_items) - line_items.map(&:included_tax).sum(&:to_f)
         end
 
         def cost_of_line_items(line_items)
-          line_items.sum(&:amount)
+          line_items.map(&:amount).sum(&:to_f)
         end
 
         # This query gets called twice for each set of line_items, ideally it would be cached.
         def tax_for_line_items(line_items)
           line_items.map do |line_item|
-            line_item.adjustments.eligible.tax.sum('amount')
-          end.sum
+            line_item.adjustments.eligible.tax.map(&:amount).sum(&:to_f)
+          end.sum(&:to_f)
         end
 
         def included_tax_for_order_ids(order_ids, enterprise_fee_ids)

@@ -53,7 +53,7 @@ module Reporting
         end
 
         def tax_included_in(line_item)
-          line_item.adjustments.tax.inclusive.sum(:amount)
+          line_item.adjustments.tax.inclusive.map(&:amount).sum(&:to_f)
         end
       end
     end
