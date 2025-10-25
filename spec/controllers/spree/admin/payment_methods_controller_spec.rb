@@ -230,7 +230,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
     end
   end
 
-  context "Requesting provider preference fields" do
+  describe "#show_provider_preferences" do
     let(:enterprise) { create(:distributor_enterprise) }
     let(:user) do
       new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah',
@@ -244,7 +244,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       allow(controller).to receive_messages spree_current_user: user
     end
 
-    context "on an existing payment method" do
+    context "with an existing payment method" do
       let(:payment_method) { create(:payment_method) }
 
       context "where I have permission" do
@@ -273,7 +273,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
         end
       end
 
-      context "where I do not have permission" do
+      context "when I do not have permission" do
         before do
           payment_method.distributors = []
         end
@@ -288,13 +288,24 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       end
     end
 
-    context "on a new payment method" do
+    context "with a new payment method" do
       it "renders provider settings with a new payment method of type" do
         spree_get :show_provider_preferences,
                   pm_id: "",
                   provider_type: "Spree::Gateway::PayPalExpress"
         expect(assigns(:payment_method)).to be_a_new Spree::Gateway::PayPalExpress
         expect(response).to render_template partial: '_provider_settings'
+      end
+
+      context "with a non valid payment method" do
+        it "renders provider settings with a new generic payment method" do
+          spree_get :show_provider_preferences,
+                    pm_id: "",
+                    provider_type: "Spree::Gateway::Hacked"
+
+          expect(assigns(:payment_method)).to be_a_new Spree::PaymentMethod
+          expect(response).to render_template partial: '_provider_settings'
+        end
       end
     end
   end
