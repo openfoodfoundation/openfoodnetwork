@@ -3,6 +3,7 @@
 # Renders a report and stores it in a given blob.
 class ReportJob < ApplicationJob
   include CableReady::Broadcaster
+
   delegate :render, to: ActionController::Base
 
   before_perform :enable_active_storage_urls

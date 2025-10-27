@@ -3,6 +3,7 @@
 module Admin
   class BulkLineItemsController < Spree::Admin::BaseController
     include PaginationData
+
     # GET /admin/bulk_line_items.json
     #
     def index

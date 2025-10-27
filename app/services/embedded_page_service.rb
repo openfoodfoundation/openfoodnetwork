@@ -36,7 +36,7 @@ class EmbeddedPageService
 
   def embedding_without_https?
     @request.referer && URI(@request.referer).scheme != 'https' &&
-      !Rails.env.test? && !Rails.env.development?
+      !Rails.env.local?
   end
 
   def process_embedded_request

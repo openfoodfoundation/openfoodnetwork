@@ -13,8 +13,6 @@ RSpec.describe 'sitemap' do
   end
 end
 
-private
-
 def return_page(website)
   # routing does not include the port of the session, this method adds it
   url = URI(page.driver.browser.url)

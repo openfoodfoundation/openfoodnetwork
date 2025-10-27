@@ -31,9 +31,7 @@ module Spree
       self.class.name.titleize.gsub("Calculator/", "")
     end
 
-    def description
-      self.class.description
-    end
+    delegate :description, to: :class
 
     def available?(_object)
       true

@@ -97,7 +97,7 @@ module Spree
     }
     validate :disallow_guest_order
     validates :email, presence: true,
-                      format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
+                      format: /\A([\w.%+\-']+)@([\w-]+\.)+(\w{2,})\z/i,
                       if: :require_email
 
     validates :order_cycle, presence: true, on: :require_distribution
@@ -417,7 +417,7 @@ module Spree
 
     # Helper methods for checkout steps
     def paid?
-      payment_state == 'paid' || payment_state == 'credit_owed'
+      ['paid', 'credit_owed'].include?(payment_state)
     end
 
     # "Checkout" is the initial state and, for card payments, "pending" is the state after auth

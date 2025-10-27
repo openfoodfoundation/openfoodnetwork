@@ -81,17 +81,13 @@ module ProductImport
       @reset_counts
     end
 
-    def enterprises_index
-      @spreadsheet_data.enterprises_index
-    end
+    delegate :enterprises_index, to: :@spreadsheet_data
 
     def enterprise_products
       @processor&.enterprise_products
     end
 
-    def total_enterprise_products
-      @processor.total_enterprise_products
-    end
+    delegate :total_enterprise_products, to: :@processor
 
     def entries_json
       entries = {}
@@ -130,13 +126,9 @@ module ProductImport
       @processor.inventory_updated
     end
 
-    def products_reset_count
-      @processor.products_reset_count
-    end
+    delegate :products_reset_count, to: :@processor
 
-    def total_saved_count
-      @processor.total_saved_count
-    end
+    delegate :total_saved_count, to: :@processor
 
     def import_results
       { entries: entries_json, reset_counts: }
@@ -183,7 +175,7 @@ module ProductImport
     end
 
     def staged_import?
-      @import_settings&.key?(:start) && @import_settings&.key?(:end)
+      @import_settings&.key?(:start) && @import_settings.key?(:end)
     end
 
     def init_permissions

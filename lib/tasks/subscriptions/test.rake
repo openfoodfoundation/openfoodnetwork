@@ -22,7 +22,8 @@ namespace :ofn do
         ProxyOrder.find_by(order_cycle_id:)&.update!(
           order_id: nil,
           confirmed_at: nil,
-          placed_at: nil)
+          placed_at: nil
+        )
 
         # Run placement job to create orders
         SubscriptionPlacementJob.perform_now

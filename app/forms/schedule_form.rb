@@ -36,9 +36,7 @@ class ScheduleForm
     false unless @schedule.update(permitted_resource_params)
   end
 
-  def order_cycle_ids
-    @schedule.order_cycle_ids
-  end
+  delegate :order_cycle_ids, to: :@schedule
 
   private
 

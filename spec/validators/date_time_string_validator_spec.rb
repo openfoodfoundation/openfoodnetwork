@@ -17,6 +17,7 @@ RSpec.describe DateTimeStringValidator do
     let(:instance) do
       Class.new do
         include ActiveModel::Validations
+
         attr_accessor :timestamp
 
         validates :timestamp, date_time_string: true

@@ -14,6 +14,7 @@ module Spree
     include Spree::Core::ControllerHelpers::Order
 
     include I18nHelper
+
     before_action :set_locale
 
     # Devise::PasswordsController allows for blank passwords.

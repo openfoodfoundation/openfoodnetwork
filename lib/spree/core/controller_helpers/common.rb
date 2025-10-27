@@ -5,6 +5,7 @@ module Spree
     module ControllerHelpers
       module Common
         extend ActiveSupport::Concern
+
         included do
           helper_method :title
           helper_method :title=

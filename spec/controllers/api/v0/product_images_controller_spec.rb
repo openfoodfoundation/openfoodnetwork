@@ -5,6 +5,7 @@ require 'spec_helper'
 RSpec.describe Api::V0::ProductImagesController do
   include AuthenticationHelper
   include FileHelper
+
   render_views
 
   describe "uploading an image" do

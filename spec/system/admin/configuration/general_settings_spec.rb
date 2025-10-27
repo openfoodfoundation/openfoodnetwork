@@ -63,8 +63,6 @@ RSpec.describe "General Settings" do
   end
 end
 
-private
-
 def update_and_assert_message
   click_button 'Update'
   within("[class='flash success']") do
