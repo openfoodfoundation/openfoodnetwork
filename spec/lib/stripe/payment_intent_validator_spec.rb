@@ -4,6 +4,66 @@ require 'spec_helper'
 require 'stripe/payment_intent_validator'
 
 RSpec.describe Stripe::PaymentIntentValidator do
+  # These are test payment method IDs, recognised by Stripe for testing purposes.
+  # See Cards By Brand > PaymentMethods here: https://docs.stripe.com/testing?testing-method=payment-methods#cards
+  # We do not send raw card numbers to the API.
+
+  self::VALID_NON_3DS_TEST_PAYMENT_METHODS = {
+    "pm_card_visa" => "Visa",
+    "pm_card_visa_debit" => "Visa (debit)",
+    "pm_card_mastercard" => "Mastercard",
+    "pm_card_mastercard_debit" => "Mastercard (debit)",
+    "pm_card_mastercard_prepaid" => "Mastercard (prepaid)",
+    "pm_card_amex" => "American Express",
+    "pm_card_discover" => "Discover",
+    "pm_card_diners" => "Diners Club",
+    "pm_card_jcb" => "JCB",
+    "pm_card_unionpay" => "UnionPay"
+  }.freeze
+
+  self::VALID_3DS_TEST_PAYMENT_METHODS = {
+    "pm_card_authenticationRequiredOnSetup" => "Authenticate unless set up",
+    "pm_card_authenticationRequired" => "Always authenticate",
+    "pm_card_authenticationRequiredSetupForOffSession" => "Already set up",
+    "pm_card_authenticationRequiredChargeDeclinedInsufficientFunds" => "Insufficient funds"
+  }.freeze
+
+  self::INVALID_TEST_PAYMENT_METHODS = {
+    "pm_card_visa_chargeDeclined" => {
+      type: "Generic decline",
+      message: "Your card was declined."
+    },
+    "pm_card_visa_chargeDeclinedInsufficientFunds" => {
+      type: "Insufficient funds decline",
+      message: "Your card has insufficient funds."
+    },
+    "pm_card_visa_chargeDeclinedLostCard" => {
+      type: "Lost card decline",
+      message: "Your card was declined."
+    },
+    "pm_card_visa_chargeDeclinedStolenCard" => {
+      type: "Stolen card decline",
+      message: "Your card was declined."
+    },
+    "pm_card_chargeDeclinedExpiredCard" => {
+      type: "Expired card decline",
+      message: "Your card has expired."
+    },
+    "pm_card_chargeDeclinedIncorrectCvc" => {
+      type: "Incorrect CVC decline",
+      message: "Your card's security code is incorrect."
+    },
+    "pm_card_chargeDeclinedProcessingError" => {
+      type: "Processing error decline",
+      message: "An error occurred while processing your card. Try again in a little bit."
+    },
+    "pm_card_visa_chargeDeclinedVelocityLimitExceeded" => {
+      type: "Exceeding velocity limit decline",
+      message: %(Your card was declined for making repeated attempts too frequently
+        or exceeding its amount limit.).squish
+    }
+  }.freeze
+
   let(:payment_method) {
     create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
                                        preferred_enterprise_id: create(:enterprise).id)
@@ -22,7 +82,7 @@ RSpec.describe Stripe::PaymentIntentValidator do
 
     describe "as a guest" do
       context "when payment intent is valid" do
-        shared_examples "payments intents" do |card_type, pm_card|
+        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |pm_card, card_type|
           context "from #{card_type}" do
             let!(:payment_intent) do
               Stripe::PaymentIntent.create({
@@ -56,34 +116,18 @@ RSpec.describe Stripe::PaymentIntentValidator do
           end
         end
 
-        context "valid non-3D credit cards are correctly handled" do
-          it_behaves_like "payments intents", "Visa", "pm_card_visa"
-          it_behaves_like "payments intents", "Visa (debit)", "pm_card_visa_debit"
-          it_behaves_like "payments intents", "Mastercard", "pm_card_mastercard"
-          it_behaves_like "payments intents", "Mastercard (debit)", "pm_card_mastercard_debit"
-          it_behaves_like "payments intents", "Mastercard (prepaid)", "pm_card_mastercard_prepaid"
-          it_behaves_like "payments intents", "American Express", "pm_card_amex"
-          it_behaves_like "payments intents", "Discover", "pm_card_discover"
-          it_behaves_like "payments intents", "Diners Club", "pm_card_diners"
-          it_behaves_like "payments intents", "JCB", "pm_card_jcb"
-          it_behaves_like "payments intents", "UnionPay", "pm_card_unionpay"
-        end
+        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |pm_card|
+          xcontext "from 3D card #{pm_card}" do
+            pending("updating spec to handle 3D2S cards")
 
-        xcontext "valid 3D cards are correctly handled" do
-          pending("updating spec to handle 3D2S cards")
-          it_behaves_like "payments intents", "Authenticate unless set up",
-                          "pm_card_authenticationRequiredOnSetup"
-          it_behaves_like "payments intents", "Always authenticate",
-                          "pm_card_authenticationRequired"
-          it_behaves_like "payments intents", "Already set up",
-                          "pm_card_authenticationRequiredSetupForOffSession"
-          it_behaves_like "payments intents", "Insufficient funds",
-                          "pm_card_authenticationRequiredChargeDeclinedInsufficientFunds"
+            it "is correctly handled"
+          end
         end
       end
+
       context "when payment intent is invalid" do
-        shared_examples "payments intents" do |card_type, pm_card, error_message|
-          context "from #{card_type}" do
+        self::INVALID_TEST_PAYMENT_METHODS.each do |pm_card, error|
+          context "from #{error[:type]}" do
             let(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
@@ -96,35 +140,9 @@ RSpec.describe Stripe::PaymentIntentValidator do
             it "raises Stripe error with payment intent last_payment_error as message" do
               expect {
                 Stripe::PaymentIntent.confirm(payment_intent.id)
-              }.to raise_error Stripe::StripeError, error_message
+              }.to raise_error Stripe::StripeError, error[:message]
             end
           end
-        end
-        context "invalid credit cards are correctly handled" do
-          it_behaves_like "payments intents", "Generic decline", "pm_card_visa_chargeDeclined",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Insufficient funds decline",
-                          "pm_card_visa_chargeDeclinedInsufficientFunds",
-                          "Your card has insufficient funds."
-          it_behaves_like "payments intents", "Lost card decline",
-                          "pm_card_visa_chargeDeclinedLostCard",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Stolen card decline",
-                          "pm_card_visa_chargeDeclinedStolenCard",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Expired card decline",
-                          "pm_card_chargeDeclinedExpiredCard",
-                          "Your card has expired."
-          it_behaves_like "payments intents", "Incorrect CVC decline",
-                          "pm_card_chargeDeclinedIncorrectCvc",
-                          "Your card's security code is incorrect."
-          it_behaves_like "payments intents", "Processing error decline",
-                          "pm_card_chargeDeclinedProcessingError",
-                          "An error occurred while processing your card. Try again in a little bit."
-          it_behaves_like "payments intents", "Exceeding velocity limit decline",
-                          "pm_card_visa_chargeDeclinedVelocityLimitExceeded",
-                          %(Your card was declined for making repeated attempts too frequently
-            or exceeding its amount limit.).squish
         end
       end
     end
@@ -140,7 +158,7 @@ RSpec.describe Stripe::PaymentIntentValidator do
                                   })
         end
 
-        shared_examples "payments intents" do |card_type, pm_card|
+        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |pm_card, card_type|
           context "from #{card_type}" do
             let!(:payment_intent) do
               Stripe::PaymentIntent.create({
@@ -176,29 +194,12 @@ RSpec.describe Stripe::PaymentIntentValidator do
           end
         end
 
-        context "valid non-3D credit cards are correctly handled" do
-          it_behaves_like "payments intents", "Visa", "pm_card_visa"
-          it_behaves_like "payments intents", "Visa (debit)", "pm_card_visa_debit"
-          it_behaves_like "payments intents", "Mastercard", "pm_card_mastercard"
-          it_behaves_like "payments intents", "Mastercard (debit)", "pm_card_mastercard_debit"
-          it_behaves_like "payments intents", "Mastercard (prepaid)", "pm_card_mastercard_prepaid"
-          it_behaves_like "payments intents", "American Express", "pm_card_amex"
-          it_behaves_like "payments intents", "Discover", "pm_card_discover"
-          it_behaves_like "payments intents", "Diners Club", "pm_card_diners"
-          it_behaves_like "payments intents", "JCB", "pm_card_jcb"
-          it_behaves_like "payments intents", "UnionPay", "pm_card_unionpay"
-        end
+        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |pm_card|
+          xcontext "from 3D card #{pm_card}" do
+            pending("updating spec to handle 3D2S cards")
 
-        xcontext "valid 3D cards are correctly handled" do
-          pending("updating spec to handle 3D2S cards")
-          it_behaves_like "payments intents", "Authenticate unless set up",
-                          "pm_card_authenticationRequiredOnSetup"
-          it_behaves_like "payments intents", "Always authenticate",
-                          "pm_card_authenticationRequired"
-          it_behaves_like "payments intents", "Already set up",
-                          "pm_card_authenticationRequiredSetupForOffSession"
-          it_behaves_like "payments intents", "Insufficient funds",
-                          "pm_card_authenticationRequiredChargeDeclinedInsufficientFunds"
+            it "is correctly handled"
+          end
         end
       end
       context "when payment intent is invalid" do
@@ -211,8 +212,8 @@ RSpec.describe Stripe::PaymentIntentValidator do
                                   })
         end
 
-        shared_examples "payments intents" do |card_type, pm_card, error_message|
-          context "from #{card_type}" do
+        self::INVALID_TEST_PAYMENT_METHODS.each do |pm_card, error|
+          context "from #{error[:type]}" do
             let(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
@@ -227,35 +228,9 @@ RSpec.describe Stripe::PaymentIntentValidator do
             it "raises Stripe error with payment intent last_payment_error as message" do
               expect {
                 Stripe::PaymentIntent.confirm(payment_intent.id)
-              }.to raise_error Stripe::StripeError, error_message
+              }.to raise_error Stripe::StripeError, error[:message]
             end
           end
-        end
-        context "invalid credit cards are correctly handled" do
-          it_behaves_like "payments intents", "Generic decline", "pm_card_visa_chargeDeclined",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Insufficient funds decline",
-                          "pm_card_visa_chargeDeclinedInsufficientFunds",
-                          "Your card has insufficient funds."
-          it_behaves_like "payments intents", "Lost card decline",
-                          "pm_card_visa_chargeDeclinedLostCard",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Stolen card decline",
-                          "pm_card_visa_chargeDeclinedStolenCard",
-                          "Your card was declined."
-          it_behaves_like "payments intents", "Expired card decline",
-                          "pm_card_chargeDeclinedExpiredCard",
-                          "Your card has expired."
-          it_behaves_like "payments intents", "Incorrect CVC decline",
-                          "pm_card_chargeDeclinedIncorrectCvc",
-                          "Your card's security code is incorrect."
-          it_behaves_like "payments intents", "Processing error decline",
-                          "pm_card_chargeDeclinedProcessingError",
-                          "An error occurred while processing your card. Try again in a little bit."
-          it_behaves_like "payments intents", "Exceeding velocity limit decline",
-                          "pm_card_visa_chargeDeclinedVelocityLimitExceeded",
-                          %(Your card was declined for making repeated attempts too frequently
-            or exceeding its amount limit.).squish
         end
       end
     end
