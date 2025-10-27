@@ -82,13 +82,13 @@ RSpec.describe Stripe::PaymentIntentValidator do
 
     describe "as a guest" do
       context "when payment intent is valid" do
-        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |pm_card, card_type|
+        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |payment_method_id, card_type|
           context "from #{card_type}" do
             let!(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
                                              currency: 'eur',
-                                             payment_method: pm_card,
+                                             payment_method: payment_method_id,
                                              payment_method_types: ['card'],
                                              capture_method: 'manual',
                                            })
@@ -116,8 +116,8 @@ RSpec.describe Stripe::PaymentIntentValidator do
           end
         end
 
-        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |pm_card|
-          xcontext "from 3D card #{pm_card}" do
+        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |payment_method_id|
+          xcontext "from 3D card #{payment_method_id}" do
             pending("updating spec to handle 3D2S cards")
 
             it "is correctly handled"
@@ -126,13 +126,13 @@ RSpec.describe Stripe::PaymentIntentValidator do
       end
 
       context "when payment intent is invalid" do
-        self::INVALID_TEST_PAYMENT_METHODS.each do |pm_card, error|
+        self::INVALID_TEST_PAYMENT_METHODS.each do |payment_method_id, error|
           context "from #{error[:type]}" do
             let(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
                                              currency: 'eur',
-                                             payment_method: pm_card,
+                                             payment_method: payment_method_id,
                                              payment_method_types: ['card'],
                                              capture_method: 'manual',
                                            })
@@ -149,7 +149,6 @@ RSpec.describe Stripe::PaymentIntentValidator do
 
     describe "as a Stripe customer" do
       context "when payment intent is valid" do
-        let(:payment_method_id) { pm_card.id }
         let(:customer_id) { customer.id }
         let(:customer) do
           Stripe::Customer.create({
@@ -158,13 +157,13 @@ RSpec.describe Stripe::PaymentIntentValidator do
                                   })
         end
 
-        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |pm_card, card_type|
+        self::VALID_NON_3DS_TEST_PAYMENT_METHODS.each do |payment_method_id, card_type|
           context "from #{card_type}" do
             let!(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
                                              currency: 'eur',
-                                             payment_method: pm_card,
+                                             payment_method: payment_method_id,
                                              payment_method_types: ['card'],
                                              capture_method: 'manual',
                                              customer: customer.id,
@@ -194,8 +193,8 @@ RSpec.describe Stripe::PaymentIntentValidator do
           end
         end
 
-        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |pm_card|
-          xcontext "from 3D card #{pm_card}" do
+        self::VALID_3DS_TEST_PAYMENT_METHODS.each_key do |payment_method_id|
+          xcontext "from 3D card #{payment_method_id}" do
             pending("updating spec to handle 3D2S cards")
 
             it "is correctly handled"
@@ -203,7 +202,6 @@ RSpec.describe Stripe::PaymentIntentValidator do
         end
       end
       context "when payment intent is invalid" do
-        let(:payment_method_id) { pm_card.id }
         let(:customer_id) { customer.id }
         let(:customer) do
           Stripe::Customer.create({
@@ -212,13 +210,13 @@ RSpec.describe Stripe::PaymentIntentValidator do
                                   })
         end
 
-        self::INVALID_TEST_PAYMENT_METHODS.each do |pm_card, error|
+        self::INVALID_TEST_PAYMENT_METHODS.each do |payment_method_id, error|
           context "from #{error[:type]}" do
             let(:payment_intent) do
               Stripe::PaymentIntent.create({
                                              amount: 100,
                                              currency: 'eur',
-                                             payment_method: pm_card,
+                                             payment_method: payment_method_id,
                                              payment_method_types: ['card'],
                                              capture_method: 'manual',
                                              customer: customer.id,
