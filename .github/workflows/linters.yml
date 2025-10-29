@@ -28,6 +28,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
           level: error
+          filter_mode: nofilter
           fail_on_error: true
 
       - name: rubocop
