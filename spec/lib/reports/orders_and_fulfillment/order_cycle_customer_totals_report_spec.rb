@@ -77,6 +77,24 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
         expect(report.rows.first.shipment_state).to eq order.shipment_state
       end
     end
+
+    describe "final weight volume column" do
+      # related to https://github.com/openfoodfoundation/openfoodnetwork/issues/13270
+      # not sure how we got DEPRECATION WARNING: Rails 7.0 has deprecated Enumerable.sum
+      # but these scenarios might be related
+      it "handles a nil instead of an actual value" do
+        order.line_items[0].update!(final_weight_volume: nil)
+        expect { report_table }.to raise_error(TypeError, "nil can't be coerced into Integer")
+      end
+      it "it handles a missing value" do
+        order.line_items[0].update!(final_weight_volume: "")
+        expect { report_table }.to raise_error(TypeError, "nil can't be coerced into Integer")
+      end
+      it "handles a string input" do
+        order.line_items[0].update!(final_weight_volume: "a string")
+        expect { report_table }.not_to raise_error
+      end
+    end
   end
 
   context "loading shipping methods" do
