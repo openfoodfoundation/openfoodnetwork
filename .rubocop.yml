@@ -4,7 +4,7 @@
 #
 # The configuration is split into three files. Look into those files for more details.
 #
-require:
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rails

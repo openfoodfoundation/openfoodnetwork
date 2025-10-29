@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe ShopsController do
   include WebHelper
+
   render_views
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }

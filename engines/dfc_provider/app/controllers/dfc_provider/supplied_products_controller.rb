@@ -31,6 +31,11 @@ module DfcProvider
       )
     end
 
+    def show
+      product = SuppliedProductBuilder.supplied_product(variant)
+      render json: DfcIo.export(product)
+    end
+
     def create
       supplied_product = import&.first
 
@@ -43,11 +48,6 @@ module DfcProvider
 
       supplied_product = SuppliedProductBuilder.supplied_product(variant)
       render json: DfcIo.export(supplied_product)
-    end
-
-    def show
-      product = SuppliedProductBuilder.supplied_product(variant)
-      render json: DfcIo.export(product)
     end
 
     def update

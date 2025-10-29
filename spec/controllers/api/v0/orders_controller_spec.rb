@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Api::V0::OrdersController do
   include AuthenticationHelper
+
   render_views
 
   let!(:regular_user) { create(:user) }

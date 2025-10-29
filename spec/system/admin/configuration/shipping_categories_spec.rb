@@ -5,6 +5,7 @@ require 'system_helper'
 RSpec.describe "Shipping Categories" do
   include AuthenticationHelper
   include WebHelper
+
   let(:admin_user) { create(:user) }
 
   context 'user visits shipping categories page' do

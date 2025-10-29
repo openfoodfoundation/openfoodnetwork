@@ -7,6 +7,7 @@ module Api
   module V0
     class ExchangeProductsController < Api::V0::BaseController
       include PaginationData
+
       DEFAULT_PER_PAGE = 100
 
       skip_authorization_check only: [:index]

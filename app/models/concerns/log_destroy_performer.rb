@@ -4,6 +4,7 @@ require 'active_support/concern'
 
 module LogDestroyPerformer
   extend ActiveSupport::Concern
+
   included do
     attr_accessor :destroyed_by
 

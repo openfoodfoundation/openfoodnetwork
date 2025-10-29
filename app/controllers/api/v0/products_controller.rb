@@ -7,6 +7,7 @@ module Api
   module V0
     class ProductsController < Api::V0::BaseController
       include PaginationData
+
       respond_to :json
       DEFAULT_PER_PAGE = 15
 

@@ -3,6 +3,7 @@
 module Reporting
   class ReportTemplate
     include ReportsHelper
+
     attr_accessor :user, :params, :ransack_params
 
     delegate :render_as, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer

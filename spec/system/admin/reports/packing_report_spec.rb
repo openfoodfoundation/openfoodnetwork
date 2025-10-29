@@ -183,8 +183,6 @@ RSpec.describe "Packing Reports" do
   end
 end
 
-private
-
 def check_prefilled_dates
   expect(page).to have_input "q[order_completed_at_gt]", value: open_datetime, visible: false
   expect(page).to have_input "q[order_completed_at_lt]", value: close_datetime, visible: false

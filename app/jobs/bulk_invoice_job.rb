@@ -2,6 +2,7 @@
 
 class BulkInvoiceJob < ApplicationJob
   include CableReady::Broadcaster
+
   delegate :render, to: ActionController::Base
   attr_reader :options
 

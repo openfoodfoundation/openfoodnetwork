@@ -10,6 +10,7 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
       include EnterprisesHelper
+
       helper ::Admin::ProductsHelper
       helper Spree::Admin::TaxCategoriesHelper
 

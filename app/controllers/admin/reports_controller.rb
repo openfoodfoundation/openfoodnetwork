@@ -4,6 +4,7 @@ module Admin
   class ReportsController < Spree::Admin::BaseController
     include ActiveStorage::SetCurrent
     include ReportsActions
+
     helper ReportsHelper
 
     before_action :authorize_report, only: [:show, :create]

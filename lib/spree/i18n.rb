@@ -22,9 +22,7 @@ module Spree
 
     alias_method :t, :translate
 
-    def context
-      Spree::ViewContext.context
-    end
+    delegate :context, to: :'Spree::ViewContext'
 
     def virtual_path
       return unless context

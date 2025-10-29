@@ -3,6 +3,7 @@
 class Invoice
   class DataPresenter
     include ::ActionView::Helpers::NumberHelper
+
     attr_reader :invoice
 
     delegate :display_number, :data, :previous_invoice, to: :invoice
@@ -142,7 +143,7 @@ class Invoice
     end
 
     def paid?
-      data[:payment_state] == 'paid' || data[:payment_state] == 'credit_owed'
+      ['paid', 'credit_owed'].include?(data[:payment_state])
     end
 
     def outstanding_balance?

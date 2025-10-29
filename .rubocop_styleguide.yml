@@ -94,7 +94,7 @@ Metrics/PerceivedComplexity:
   Enabled: true
   Max: 14 # default 8
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Enabled: false
 
 Naming/VariableNumber:

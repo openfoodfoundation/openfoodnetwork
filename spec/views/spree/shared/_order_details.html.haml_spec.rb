@@ -4,6 +4,7 @@ require "spec_helper"
 
 RSpec.describe "spree/shared/_order_details.html.haml" do
   include AuthenticationHelper
+
   helper Spree::BaseHelper
   helper CheckoutHelper
   helper OrderHelper

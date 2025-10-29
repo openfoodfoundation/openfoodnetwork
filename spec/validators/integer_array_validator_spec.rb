@@ -17,6 +17,7 @@ RSpec.describe IntegerArrayValidator do
     let(:instance) do
       Class.new do
         include ActiveModel::Validations
+
         attr_accessor :ids
 
         validates :ids, integer_array: true

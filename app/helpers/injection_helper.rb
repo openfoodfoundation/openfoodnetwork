@@ -120,7 +120,7 @@ module InjectionHelper
 
   def inject_enterprise_attributes(enterprise_attributes)
     render partial: "json/injection_ams",
-           locals: { name: 'enterpriseAttributes', json: enterprise_attributes.to_json.to_s }
+           locals: { name: 'enterpriseAttributes', json: enterprise_attributes.to_json }
   end
 
   def inject_saved_credit_cards

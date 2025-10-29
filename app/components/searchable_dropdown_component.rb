@@ -30,7 +30,7 @@ class SearchableDropdownComponent < ViewComponent::Base
               :aria_label, :other_attrs
 
   def classes
-    "fullwidth #{remove_search_plugin? ? 'no-input' : ''}"
+    "fullwidth #{'no-input' if remove_search_plugin?}"
   end
 
   def data
