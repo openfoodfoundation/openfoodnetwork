@@ -955,13 +955,13 @@ DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (= 0.8.4)
   active_storage_validations
-  activemerchant (>= 1.137.0)
+  activemerchant
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store
   acts-as-taggable-on
   acts_as_list (= 1.0.4)
-  angular-rails-templates (>= 0.3.0)
+  angular-rails-templates
   angular_rails_csrf
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.8.0)
