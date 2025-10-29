@@ -10,7 +10,7 @@ echo "::group:: Running prettier with reviewdog 🐶 ..."
 
 "$(npm root)/.bin/prettier" --check . 2>&1 | sed --regexp-extended 's/(\[warn\].*)$/\1 File is not properly formatted./' \
   | reviewdog \
-      -efm="%-G[warn] Code style issues found in the above file(s). Forgot to run Prettier%. File is not properly formatted." \
+      -efm="%-G[warn] Code style issues found in %s. Run Prettier to fix. File is not properly formatted." \
       -efm="[%tarn] %f %m" \
       -efm="%E[%trror] %f: %m (%l:%c)" \
       -efm="%C[error]%r" \
