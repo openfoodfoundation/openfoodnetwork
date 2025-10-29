@@ -43,7 +43,7 @@ gem 'web', path: './engines/web'
 
 gem "activerecord-postgresql-adapter"
 gem "arel-helpers", "~> 2.12"
-gem "pg", "~> 1.2.3"
+gem "pg", "~> 1.2"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'

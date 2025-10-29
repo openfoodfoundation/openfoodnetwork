@@ -557,7 +557,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (1.2.3)
+    pg (1.6.2)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -1023,7 +1023,7 @@ DEPENDENCIES
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
-  pg (~> 1.2.3)
+  pg (~> 1.2)
   private_address_check
   pry (~> 0.13.0)
   puffing-billy
@@ -1087,7 +1087,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 3.1.7p261
+   ruby 3.2.9p265
 
 BUNDLED WITH
    2.4.3
