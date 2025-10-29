@@ -1,15 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = [
-    "cardElement",
-    "cardErrors",
-    "expMonth",
-    "expYear",
-    "brand",
-    "last4",
-    "pmId",
-  ];
+  static targets = ["cardElement", "cardErrors", "expMonth", "expYear", "brand", "last4", "pmId"];
   static styles = {
     base: {
       fontFamily: "Roboto, Arial, sans-serif",
@@ -27,12 +19,10 @@ export default class extends Controller {
 
     // Initialize Stripe JS
     this.stripe = Stripe(this.data.get("key"));
-    this.stripeElement = this.stripe
-      .elements({ locale: I18n.base_locale })
-      .create("card", {
-        style: this.constructor.styles,
-        hidePostalCode: true,
-      });
+    this.stripeElement = this.stripe.elements({ locale: I18n.base_locale }).create("card", {
+      style: this.constructor.styles,
+      hidePostalCode: true,
+    });
 
     // Mount Stripe Elements JS to the form field
     this.stripeElement.mount(this.cardElementTarget);
@@ -58,34 +48,20 @@ export default class extends Controller {
     event.preventDefault();
     event.stopPropagation();
 
-    this.stripe
-      .createPaymentMethod({ type: "card", card: this.stripeElement })
-      .then((response) => {
-        if (response.error) {
-          this.updateErrors(response);
-        } else {
-          this.pmIdTarget.setAttribute("value", response.paymentMethod.id);
-          this.expMonthTarget.setAttribute(
-            "value",
-            response.paymentMethod.card.exp_month
-          );
-          this.expYearTarget.setAttribute(
-            "value",
-            response.paymentMethod.card.exp_year
-          );
-          this.brandTarget.setAttribute(
-            "value",
-            response.paymentMethod.card.brand
-          );
-          this.last4Target.setAttribute(
-            "value",
-            response.paymentMethod.card.last4
-          );
-          this.catchFormSubmit = false;
+    this.stripe.createPaymentMethod({ type: "card", card: this.stripeElement }).then((response) => {
+      if (response.error) {
+        this.updateErrors(response);
+      } else {
+        this.pmIdTarget.setAttribute("value", response.paymentMethod.id);
+        this.expMonthTarget.setAttribute("value", response.paymentMethod.card.exp_month);
+        this.expYearTarget.setAttribute("value", response.paymentMethod.card.exp_year);
+        this.brandTarget.setAttribute("value", response.paymentMethod.card.brand);
+        this.last4Target.setAttribute("value", response.paymentMethod.card.last4);
+        this.catchFormSubmit = false;
 
-          event.submitter.click();
-        }
-      });
+        event.submitter.click();
+      }
+    });
   };
 
   // Update validation messages from Stripe shown in the form

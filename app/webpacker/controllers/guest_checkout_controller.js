@@ -9,7 +9,7 @@ export default class extends Controller {
 
   connect() {
     if (this.hasSummaryTarget) {
-      window.addEventListener('beforeunload', this.handlePageUnload);
+      window.addEventListener("beforeunload", this.handlePageUnload);
     }
 
     if (!this.hasGuestTarget) {
@@ -50,7 +50,7 @@ export default class extends Controller {
 
   removeUnloadEvent() {
     if (this.hasSummaryTarget) {
-      window.removeEventListener('beforeunload', this.handlePageUnload);
+      window.removeEventListener("beforeunload", this.handlePageUnload);
     }
   }
 }

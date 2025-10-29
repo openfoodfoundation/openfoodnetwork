@@ -34,11 +34,9 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   connect() {
     // add onChange event to all form element
-    this.element
-      .querySelectorAll("input, select, textarea")
-      .forEach((input) => {
-        input.addEventListener("change", this.formIsChanged.bind(this));
-      });
+    this.element.querySelectorAll("input, select, textarea").forEach((input) => {
+      input.addEventListener("change", this.formIsChanged.bind(this));
+    });
 
     this.element.addEventListener("submit", this.handleSubmit.bind(this));
 

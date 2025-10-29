@@ -12,7 +12,7 @@ export default class extends Controller {
         received(data) {
           if (data.cableReady) CableReady.perform(data.operations);
         },
-      }
+      },
     );
   }
 

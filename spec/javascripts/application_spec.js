@@ -14,6 +14,6 @@
 //= require handlebars
 //= require jquery2
 
-angular.module('templates', [])
-angular.module('uiGmapgoogle-maps', []);
-angular.module('duScroll', []);
+angular.module("templates", []);
+angular.module("uiGmapgoogle-maps", []);
+angular.module("duScroll", []);

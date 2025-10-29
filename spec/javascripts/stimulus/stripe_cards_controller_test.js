@@ -28,9 +28,7 @@ describe("StripeCardsController", () => {
       const select = document.getElementById("select");
       select.value = "";
       select.dispatchEvent(new Event("change"));
-      expect(document.getElementById("stripeelements").style.display).toBe(
-        "block"
-      );
+      expect(document.getElementById("stripeelements").style.display).toBe("block");
     });
   });
   describe("#selectCard", () => {
@@ -39,23 +37,17 @@ describe("StripeCardsController", () => {
       select.value = "1";
       select.dispatchEvent(new Event("change"));
 
-      expect(document.getElementById("stripeelements").style.display).toBe(
-        "none"
-      );
+      expect(document.getElementById("stripeelements").style.display).toBe("none");
       expect(document.getElementById("input_1").disabled).toBe(true);
 
       select.value = "2";
       select.dispatchEvent(new Event("change"));
-      expect(document.getElementById("stripeelements").style.display).toBe(
-        "none"
-      );
+      expect(document.getElementById("stripeelements").style.display).toBe("none");
       expect(document.getElementById("input_1").disabled).toBe(true);
 
       select.value = "";
       select.dispatchEvent(new Event("change"));
-      expect(document.getElementById("stripeelements").style.display).toBe(
-        "block"
-      );
+      expect(document.getElementById("stripeelements").style.display).toBe("block");
       expect(document.getElementById("input_1").disabled).toBe(false);
     });
   });

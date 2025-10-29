@@ -17,13 +17,10 @@ export default class extends Controller {
       });
       // but not the one we want ie. the one that matches the shipping method id
       this.shippingMethodDescriptionTargets.find(
-        (e) => e.dataset["shippingmethodid"] == input.value
+        (e) => e.dataset["shippingmethodid"] == input.value,
       ).style.display = "block";
       // -- Require a ship address
-      if (
-        input.dataset.requireaddress === "true" &&
-        !this.shippingAddressCheckboxTarget.checked
-      ) {
+      if (input.dataset.requireaddress === "true" && !this.shippingAddressCheckboxTarget.checked) {
         this.shippingMethodAddressTarget.style.display = "block";
       } else {
         this.shippingMethodAddressTarget.style.display = "none";
