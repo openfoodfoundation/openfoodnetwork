@@ -33,8 +33,7 @@ jobs:
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
         with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
+          skip_install: true
           reporter: github-pr-check
           level: error
           filter_mode: nofilter
