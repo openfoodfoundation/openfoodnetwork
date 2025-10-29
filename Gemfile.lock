@@ -563,7 +563,7 @@ GEM
     prettyprint (0.2.0)
     prism (1.6.0)
     private_address_check (0.5.0)
-    pry (0.13.1)
+    pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     psych (5.2.6)
@@ -1025,7 +1025,7 @@ DEPENDENCIES
   pdf-reader
   pg (~> 1.2)
   private_address_check
-  pry (~> 0.13.0)
+  pry (~> 0.13)
   puffing-billy
   puma
   query_count

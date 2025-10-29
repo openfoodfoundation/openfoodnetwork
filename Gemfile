@@ -189,7 +189,7 @@ group :development do
   gem 'foreman'
   gem 'i18n-tasks'
   gem 'listen'
-  gem 'pry', '~> 0.13.0'
+  gem 'pry', '~> 0.13'
   gem 'query_count'
   gem 'rails-erd'
   gem 'rubocop'
