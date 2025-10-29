@@ -13,6 +13,10 @@ FactoryBot.define do
     enterprise factory: :distributor_enterprise
   end
 
+  factory :filter_variants_tag_rule, class: TagRule::FilterVariants do
+    enterprise factory: :distributor_enterprise
+  end
+
   factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
     enterprise factory: :distributor_enterprise
   end

@@ -5,15 +5,14 @@
       - # We use a high enough index increment so that the default tag rule should not overlap with the tag rules
       - # Rails will deal with non continous numbered tag_rules_attributes just fine, it saves us from having to manage the index state in javascript
       - current_rule_index = 1000 
-      - rules = @enterprise.tag_rules.prioritised.reject(&:is_default)
-      - if rules.empty?
+      - if @rules.empty?
         .no_tags
           = t('.no_tags_yet')
 
       = render 'admin/enterprises/form/tag_rules/default_rules', f:, current_rule_index: 
 
       #customer-tag-rule
-        - tag_groups(rules).each_with_index do |group, group_index|
+        - tag_groups(@rules).each_with_index do |group, group_index|
           - current_group_index = group_index + 1
           = render TagRuleGroupFormComponent.new(group:, index: group_index, customer_rule_index: current_rule_index, tag_rule_types: @tag_rule_types)
           - # Same as above, We use a high enough increcment so that the previous tag rule group does not overlap with the next tag rule group
