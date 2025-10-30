@@ -186,6 +186,7 @@ end
 
 group :development do
   gem 'foreman'
+  gem 'haml_lint', require: false
   gem 'i18n-tasks'
   gem 'listen'
   gem 'pry'

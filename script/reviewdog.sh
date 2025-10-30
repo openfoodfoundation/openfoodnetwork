@@ -39,4 +39,18 @@ bundle exec rubocop \
 
 rubocop=$?
 
-! (( prettier || rubocop ))
+echo "::group:: Running haml-lint with reviewdog 🐶 ..."
+
+bundle exec haml-lint \
+  --fail-level warning \
+  | reviewdog -f="haml-lint" \
+      -name="haml-lint" \
+      -reporter="github-pr-check" \
+      -filter-mode="nofilter" \
+      -level="error" \
+      -fail-level="any" \
+      -tee
+
+haml_lint=$?
+
+! (( prettier || rubocop || haml_lint ))

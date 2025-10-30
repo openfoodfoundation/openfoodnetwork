@@ -372,6 +372,12 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
+    haml_lint (0.67.0)
+      haml (>= 5.0)
+      parallel (~> 1.10)
+      rainbow
+      rubocop (>= 1.0)
+      sysexits (~> 1.1)
     hashdiff (1.2.1)
     hashery (2.1.2)
     hashie (5.0.0)
@@ -851,6 +857,7 @@ GEM
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
+    sysexits (1.2.0)
     temple (0.8.2)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
@@ -990,6 +997,7 @@ DEPENDENCIES
   gmaps4rails
   good_migrations
   haml
+  haml_lint
   highline (= 2.0.3)
   i18n
   i18n-js (~> 3.9.0)
