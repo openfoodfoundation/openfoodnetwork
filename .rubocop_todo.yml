@@ -133,7 +133,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 30
+# Offense count: 35
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
@@ -156,6 +156,11 @@ Metrics/CyclomaticComplexity:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/zone.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
+    - 'lib/reporting/reports/orders_and_fulfillment/order_cycle_customer_totals.rb'
+    - 'lib/reporting/reports/orders_and_fulfillment/order_cycle_supplier_totals.rb'
+    - 'lib/reporting/reports/payments/itemised_payment_totals.rb'
+    - 'lib/reporting/reports/payments/payment_totals.rb'
+    - 'lib/reporting/reports/sales_tax/sales_tax_totals_by_producer.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'lib/spree/core/controller_helpers/respond_with.rb'
@@ -403,13 +408,10 @@ Style/HashSlice:
     - 'app/services/product_filters.rb'
     - 'lib/reporting/report_row_builder.rb'
 
-# Offense count: 4
+# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/MapToHash:
   Exclude:
-    - 'lib/reporting/report_query_template.rb'
-    - 'lib/reporting/report_row_builder.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/fee_summary.rb'
     - 'lib/tasks/sample_data/user_factory.rb'
 
 # Offense count: 38
