@@ -25,11 +25,13 @@ class Customer < ApplicationRecord
   before_destroy :update_orders_and_delete_canceled_subscriptions
 
   belongs_to :bill_address, class_name: "Spree::Address", optional: true
-  alias_attribute :billing_address, :bill_address
+  alias_method :billing_address, :bill_address
+  alias_method :billing_address=, :bill_address=
   accepts_nested_attributes_for :bill_address
 
   belongs_to :ship_address, class_name: "Spree::Address", optional: true
-  alias_attribute :shipping_address, :ship_address
+  alias_method :shipping_address, :ship_address
+  alias_method :shipping_address=, :ship_address=
   accepts_nested_attributes_for :ship_address
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }

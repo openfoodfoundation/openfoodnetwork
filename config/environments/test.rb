@@ -79,9 +79,6 @@ Rails.application.configure do
 
       "Passing the class as positional argument",
 
-      # Spree::Order model aliases `bill_address`, but `bill_address` is not an attribute. Starting in Rails 7.2, alias_attribute with non-attribute targets will raise. Use `alias_method :billing_address, :bill_address` or define the method manually. (called from initialize at app/models/spree/order.rb:188)
-      "alias_attribute with non-attribute targets will raise",
-
       # Spree::CreditCard model aliases `cc_type` and has a method called `cc_type=` defined. Starting in Rails 7.2 `brand=` will not be calling `cc_type=` anymore. You may want to additionally define `brand=` to preserve the current behavior.
       "model aliases",
 

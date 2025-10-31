@@ -24,8 +24,10 @@ class Subscription < ApplicationRecord
   has_many :proxy_orders, dependent: :destroy
   has_many :orders, through: :proxy_orders
 
-  alias_attribute :billing_address, :bill_address
-  alias_attribute :shipping_address, :ship_address
+  alias_method :billing_address, :bill_address
+  alias_method :billing_address=, :bill_address=
+  alias_method :shipping_address, :ship_address
+  alias_method :shipping_address=, :ship_address=
 
   accepts_nested_attributes_for :subscription_line_items, allow_destroy: true
   accepts_nested_attributes_for :bill_address, :ship_address

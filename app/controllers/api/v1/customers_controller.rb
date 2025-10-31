@@ -88,17 +88,20 @@ module Api
         attributes = params.require(:customer).permit(
           :email, :enterprise_id,
           :code, :first_name, :last_name,
-          :billing_address, shipping_address: [
+          :billing_address,
+          shipping_address: [
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,
             :postal_code, :locality,
             { region: [:name, :code], country: [:name, :code] },
-          ]
+          ],
+          tags: [],
         ).to_h
 
         attributes.merge!(created_manually: true)
-        attributes.merge!(tag_list: params[:tags]) if params.key?(:tags)
+        tags = attributes.delete(:tags)
+        attributes.merge!(tag_list: tags) if tags.present?
 
         transform_address!(attributes, :billing_address, :bill_address)
         transform_address!(attributes, :shipping_address, :ship_address)
