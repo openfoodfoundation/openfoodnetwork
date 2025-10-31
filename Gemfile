@@ -14,8 +14,8 @@ gem "active_storage_validations"
 gem "aws-sdk-s3", require: false
 gem "image_processing"
 
-gem 'activemerchant', '>= 1.78.0'
-gem 'angular-rails-templates', '>= 0.3.0'
+gem 'activemerchant'
+gem 'angular-rails-templates'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
