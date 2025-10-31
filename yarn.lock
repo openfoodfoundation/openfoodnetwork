@@ -5970,10 +5970,10 @@ leaflet-geosearch@4.2.2:
     "@googlemaps/js-api-loader" "^1.16.6"
     leaflet "^1.6.0"
 
-leaflet-providers@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/leaflet-providers/-/leaflet-providers-2.0.0.tgz#dfdab9ca2dccc57c79e1462bc3dd20f78910afcb"
-  integrity sha512-CWwKEnHd66Qsx0m4o5q5ZOa60s00B91pMxnlr4Y22msubfs7dhbZhdMIz8bvZQkrZqi67ppI1fsZRS6vtrLcOA==
+leaflet-providers@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/leaflet-providers/-/leaflet-providers-3.0.0.tgz#93269327366b1e130e1da6d763674bc2a8aff58c"
+  integrity sha512-PWwsWRpf7xMrCofRUfWR6FBdw2v08j48tXCLQCoS1PinxPpVU70AQTr9N3NcbTIONiF9nS6m45LxBWVYx2i+wg==
 
 leaflet@1.9.4, leaflet@^1.6.0:
   version "1.9.4"
