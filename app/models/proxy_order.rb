@@ -76,7 +76,8 @@ class ProxyOrder < ApplicationRecord
 
   def cart?
     order&.state == 'complete' &&
-      order_cycle.orders_close_at > Time.zone.now
+      (order_cycle.orders_close_at.nil? ||
+      order_cycle.orders_close_at > Time.zone.now)
   end
 
   def order_attrs

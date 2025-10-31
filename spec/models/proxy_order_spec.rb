@@ -208,6 +208,49 @@ RSpec.describe ProxyOrder do
     end
   end
 
+  describe "#state" do
+    subject(:proxy_order) { build(:proxy_order, subscription:, order:, order_cycle:) }
+
+    let(:subscription) { build(:subscription) }
+    let(:order_cycle) { build(:simple_order_cycle) }
+
+    context "when order is not complete" do
+      let(:order) { build(:order) }
+
+      it "returns 'cart'" do
+        expect(proxy_order.state).to eq('cart')
+      end
+    end
+
+    context "when order is complete" do
+      let(:order) { build(:completed_order_with_totals) }
+
+      context "when order cycle is already closed" do
+        before { order_cycle.orders_close_at = 2.days.ago }
+
+        it "returns 'complete'" do
+          expect(proxy_order.state).to eq('complete')
+        end
+      end
+
+      context "when order cycle is still open" do
+        before { order_cycle.orders_close_at = 2.days.from_now }
+
+        it "returns 'cart'" do
+          expect(proxy_order.state).to eq('cart')
+        end
+      end
+
+      context "when order cycle never closes" do
+        before { order_cycle.orders_close_at = nil }
+
+        it "returns 'cart'" do
+          expect(proxy_order.state).to eq('cart')
+        end
+      end
+    end
+  end
+
   private
 
   def expect_cancelled_now(subject)
