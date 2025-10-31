@@ -1023,9 +1023,9 @@ DEPENDENCIES
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
-  pg (~> 1.2)
+  pg
   private_address_check
-  pry (~> 0.13)
+  pry
   puffing-billy
   puma
   query_count

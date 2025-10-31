@@ -43,7 +43,7 @@ gem 'web', path: './engines/web'
 
 gem "activerecord-postgresql-adapter"
 gem "arel-helpers", "~> 2.12"
-gem "pg", "~> 1.2"
+gem "pg"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
@@ -189,7 +189,7 @@ group :development do
   gem 'foreman'
   gem 'i18n-tasks'
   gem 'listen'
-  gem 'pry', '~> 0.13'
+  gem 'pry'
   gem 'query_count'
   gem 'rails-erd'
   gem 'rubocop'
