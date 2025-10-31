@@ -34,11 +34,11 @@ module Spree
       @provider.respond_to?(method_name, include_private) || super
     end
 
-    def method_missing(method, *args)
+    def method_missing(method, *)
       if @provider.nil? || !@provider.respond_to?(method)
         super
       else
-        provider.__send__(method, *args)
+        provider.__send__(method, *)
       end
     end
 

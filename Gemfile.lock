@@ -557,13 +557,13 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (1.2.3)
+    pg (1.6.2)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
     prism (1.6.0)
     private_address_check (0.5.0)
-    pry (0.13.1)
+    pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     psych (5.2.6)
@@ -1023,9 +1023,9 @@ DEPENDENCIES
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
-  pg (~> 1.2.3)
+  pg
   private_address_check
-  pry (~> 0.13.0)
+  pry
   puffing-billy
   puma
   query_count
@@ -1087,7 +1087,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 3.1.7p261
+   ruby 3.2.9p265
 
 BUNDLED WITH
-   2.4.3
+   2.4.19
