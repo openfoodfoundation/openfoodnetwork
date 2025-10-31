@@ -23,7 +23,7 @@ module Spree
         load_hubs
 
         if @payment_method.save
-          flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
+          flash[:success] = I18n.t(:successfully_created, resource: Spree.t(:payment_method))
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)
@@ -43,7 +43,7 @@ module Spree
         end
 
         if @payment_method.update(update_params)
-          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
+          flash[:success] = I18n.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)

@@ -3705,7 +3705,6 @@ el:
     card_code: "Κωδικός κάρτας"
     card_number: "Αριθμός κάρτας"
     category: "Κατηγορία"
-    created_successfully: "Δημιουργήθηκε με επιτυχία"
     credit: "Πίστωση"
     editing_tax_category: "Επεξεργασία κατηγορίας φόρου"
     editing_tax_rate: "Επεξεργασία φορολογικού συντελεστή"
@@ -3732,7 +3731,6 @@ el:
     refund: "Επιστροφή χρημάτων"
     server_error: "Σφάλμα Διακομιστή"
     start_date: "Ημερομηνία έναρξης"
-    successfully_removed: "Καταργήθηκε επιτυχώς"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"
     add_product: "Προσθήκη Προϊόντος"
@@ -3901,8 +3899,6 @@ el:
     please_define_payment_methods: "Καθορίστε πρώτα κάποιους τρόπους πληρωμής."
     options: "Επιλογές"
     has_no_shipped_units: "δεν έχει αποσταλεί μονάδες"
-    successfully_created: 'Το %{resource} δημιουργήθηκε με επιτυχία!'
-    successfully_updated: 'Το %{resource} ενημερώθηκε με επιτυχία!'
     payment_method: "Μέθοδος Πληρωμής"
     payment_processing_failed: "Δεν ήταν δυνατή η επεξεργασία της πληρωμής. Ελέγξτε τα στοιχεία που καταχωρίσατε"
     not_available: "N/A"

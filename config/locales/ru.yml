@@ -3757,7 +3757,6 @@ ru:
     card_code: "Код карты"
     card_number: "Номер карты"
     category: "Категория"
-    created_successfully: "Создано успешно"
     credit: "Кредит"
     editing_tax_category: "Редактирование налоговой категории"
     editing_tax_rate: "Редактирование налоговой ставки"
@@ -3783,7 +3782,6 @@ ru:
     refund: "Возврат"
     server_error: "Ошибка сервера"
     start_date: "Дата начала"
-    successfully_removed: "Успешно удалено"
     updating: "Обновление"
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"
     add_product: "Добавить Товар"
@@ -3951,8 +3949,6 @@ ru:
     please_define_payment_methods: "Сначала определите способ оплаты."
     options: "Опции"
     has_no_shipped_units: "не имеет отгруженных единиц"
-    successfully_created: '%{resource} был успешно создан!'
-    successfully_updated: '%{resource} был успешно обновлён!'
     payment_method: "Способ Оплаты"
     payment_processing_failed: "Платеж не может быть обработан, пожалуйста, проверьте введенные данные"
     not_available: "Нет данных"
