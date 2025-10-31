@@ -22,7 +22,7 @@
     %tbody
       = f.fields_for :collection do |enterprise_form|
         - enterprise = enterprise_form.object
-        %tr{class: "enterprise-#{enterprise.id}"}
+        %tr{class: "enterprise-#{enterprise.id}", id: "resource-#{enterprise.id}"}
           %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
             = enterprise_form.check_box :is_primary_producer

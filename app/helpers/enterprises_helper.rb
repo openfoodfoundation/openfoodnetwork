@@ -60,11 +60,14 @@ module EnterprisesHelper
   # Copied and modified from Spree's link_to_delete, which does not
   # allow customisation of the confirm message
   def link_to_delete_enterprise(enterprise)
-    url = object_url(enterprise)
+    url = "#{object_url(enterprise)}?index=#{enterprise.id}"
     name = t(:delete)
     options = {}
-    options[:class] = "delete-resource"
-    options[:data] = { action: 'remove', confirm: enterprise_confirm_delete_message(enterprise) }
+    options[:data] = {
+      turbo: true,
+      'turbo-method': 'delete',
+      'turbo-confirm': enterprise_confirm_delete_message(enterprise)
+    }
     link_to_with_icon 'icon-trash', name, url, options
   end
 

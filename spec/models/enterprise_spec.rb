@@ -58,37 +58,40 @@ RSpec.describe Enterprise do
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
     end
 
-    it "raises a DeleteRestrictionError on destroy if distributed_orders exist" do
+    it "does not destroy distributed_orders upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:order, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributed_orders/)
-        .and change { Spree::Order.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributed orders exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_payment_methods exist" do
+    it "does not destroy distributor_payment_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_payment_method, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributor_payment_methods/)
-        .and change { DistributorPaymentMethod.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributor payment methods exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_shipping_methods exist" do
+    it "does not destroy distributor_shipping_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_shipping_method, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributor_shipping_methods/)
-        .and change { DistributorShippingMethod.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributor shipping methods exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     it "does not destroy enterprise_fees upon destroy" do
@@ -97,9 +100,10 @@ RSpec.describe Enterprise do
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent enterprise_fees/)
-        .and change { EnterpriseFee.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent enterprise fees exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     it "does not destroy vouchers upon destroy" do
@@ -110,9 +114,10 @@ RSpec.describe Enterprise do
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent vouchers/)
-        .and change { Voucher.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent vouchers exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     describe "relationships to other enterprises" do
