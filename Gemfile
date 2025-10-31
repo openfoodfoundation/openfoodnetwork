@@ -57,7 +57,7 @@ gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant', '1.117.2'
-gem 'stripe'
+gem 'stripe', '~> 13'
 
 gem 'devise'
 gem 'devise-encryptable'
