@@ -8,7 +8,6 @@ module Reporting
         # rubocop:disable Metrics/AbcSize
         # rubocop:disable Metrics/MethodLength
         # rubocop:disable Metrics/PerceivedComplexity
-        # rubocop:disable Metrics/CyclomaticComplexity
         # rubocop:disable Naming/VariableNumber
         def columns
           {
@@ -77,7 +76,6 @@ module Reporting
         # rubocop:enable Metrics/AbcSize
         # rubocop:enable Metrics/MethodLength
         # rubocop:enable Metrics/PerceivedComplexity
-        # rubocop:enable Metrics/CyclomaticComplexity
         # rubocop:enable Naming/VariableNumber
 
         def rules
