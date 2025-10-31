@@ -386,33 +386,63 @@ RSpec.describe Enterprise do
       end
     end
 
-    describe "white label logo link" do
+    describe "white label logo" do
+      let(:enterprise) { build(:enterprise) }
+      let(:content_type) { 'image/png' }
+
       before do
-        # validate white_label_logo_link only if white_label_logo is present
-        allow_any_instance_of(Enterprise).to receive(:white_label_logo).and_return(true)
+        blob = double(
+          "ActiveStorage::Blob",
+          filename: ActiveStorage::Filename.new('white-label-logo.png'),
+          content_type:,
+          byte_size: 1024
+        )
+
+        attachment = double(
+          "ActiveStorage::Attached::One",
+          blank?: false,
+          attached?: true,
+          blob:
+        )
+
+        allow(enterprise)
+          .to receive(:white_label_logo).and_return(attachment)
+      end
+
+      context 'when the file attached is a PNG image' do
+        it 'is valid' do
+          expect(enterprise).to be_valid
+        end
+      end
+
+      context 'when the file attached is a BMP image' do
+        let(:content_type) { 'image/bmp' }
+        it 'is not valid' do
+          expect(enterprise).not_to be_valid
+        end
       end
 
       it "validates the white_label_logo_link attribute" do
-        e = build(:enterprise, white_label_logo_link: 'http://www.example.com')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = 'http://www.example.com'
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "adds http:// to the white_label_logo_link attribute if it is missing" do
-        e = build(:enterprise, white_label_logo_link: 'www.example.com')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = 'www.example.com'
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "ignores whitespace around the URL form copying and pasting" do
-        e = build(:enterprise, white_label_logo_link: ' www.example.com ')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = ' www.example.com '
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "does not validate if URL is invalid and can't be infered" do
-        e = build(:enterprise, white_label_logo_link: 'with spaces')
-        expect(e).not_to be_valid
+        enterprise.white_label_logo_link = 'with spaces'
+        expect(enterprise).not_to be_valid
       end
     end
 
