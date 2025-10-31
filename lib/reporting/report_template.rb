@@ -87,8 +87,8 @@ module Reporting
     #   fields_used_in_header: [:first_name, :last_name],
     #   summary_row: proc do |group_key, items, rows|
     #     {
-    #       quantity: rows.sum(&:quantity),
-    #       price: "#{rows.sum(&:price)} #{currency_symbol}"
+    #       quantity: rows.map(&:quantity).sum(&:to_i),
+    #       price: "#{rows.map(&:price).sum(&:to_f)} #{currency_symbol}"
     #     }
     #   end,
     #   summary_row_class: "", # by default 'text-bold'

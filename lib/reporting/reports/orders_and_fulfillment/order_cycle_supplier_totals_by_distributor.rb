@@ -10,9 +10,9 @@ module Reporting
             product: product_name,
             variant: variant_name,
             hub: hub_name,
-            quantity: proc { |line_items| line_items.to_a.sum(&:quantity) },
+            quantity: proc { |line_items| line_items.to_a.map(&:quantity).sum(&:to_i) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
-            total_cost: proc { |line_items| line_items.sum(&:amount) },
+            total_cost: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
             shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name }
           }
         end
@@ -31,8 +31,8 @@ module Reporting
               group_by: :hub,
               summary_row: proc do |_key, _items, rows|
                 {
-                  quantity: rows.sum(&:quantity),
-                  total_cost: rows.sum(&:total_cost)
+                  quantity: rows.map(&:quantity).sum(&:to_i),
+                  total_cost: rows.map(&:total_cost).sum(&:to_f)
                 }
               end,
             }

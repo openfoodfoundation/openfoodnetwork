@@ -13,7 +13,7 @@ module Reporting
 
     # Compute the query result item into a result row
     # We use OpenStruct to it's easier to access the properties
-    # i.e. row.my_field, rows.sum(&:quantity)
+    # i.e. row.my_field, rows.map(&:quantity).sum(&:to_i)
     def build_row(item)
       OpenStruct.new(
         report.columns.transform_values do |column_constructor|
@@ -30,7 +30,7 @@ module Reporting
       result = row.to_h.select { |k, _v| k.in?(report.fields_to_show) }
 
       unless report.unformatted_render?
-        result = result.map { |k, v| [k, format_cell(v, k)] }.to_h
+        result = result.to_h { |k, v| [k, format_cell(v, k)] }
       end
       OpenStruct.new(result)
     end

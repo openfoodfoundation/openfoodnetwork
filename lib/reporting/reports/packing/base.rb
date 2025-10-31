@@ -72,8 +72,8 @@ module Reporting
         def summary_row
           proc do |_key, _items, rows|
             {
-              quantity: rows.sum(&:quantity),
-              price: rows.sum(&:price)
+              quantity: rows.map(&:quantity).sum(&:to_i),
+              price: rows.map(&:price).sum(&:to_f)
             }
           end
         end
