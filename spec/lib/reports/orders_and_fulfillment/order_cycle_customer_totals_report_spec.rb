@@ -84,12 +84,14 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
       # but these scenarios might be related
       it "handles a nil instead of an actual value" do
         order.line_items[0].update!(final_weight_volume: nil)
-        expect { report_table }.to raise_error(TypeError, "nil can't be coerced into Integer")
+        expect { report_table }.not_to raise_error(TypeError, "nil can't be coerced into Integer")
       end
+
       it "it handles a missing value" do
         order.line_items[0].update!(final_weight_volume: "")
-        expect { report_table }.to raise_error(TypeError, "nil can't be coerced into Integer")
+        expect { report_table }.not_to raise_error(TypeError, "nil can't be coerced into Integer")
       end
+
       it "handles a string input" do
         order.line_items[0].update!(final_weight_volume: "a string")
         expect { report_table }.not_to raise_error
