@@ -347,57 +347,62 @@ paths:
             schema:
               type: object
               properties:
-                enterprise_id:
-                  type: integer
-                  example: 2
-                first_name:
-                  type: string
-                  nullable: true
-                  example: Alice
-                last_name:
-                  type: string
-                  nullable: true
-                  example: Springs
-                code:
-                  type: string
-                  nullable: true
-                  example: BUYER1
-                email:
-                  type: string
-                  example: alice@example.com
-                tags:
-                  type: array
-                  items:
-                    type: string
-                  example:
-                  - staff
-                  - discount
-                billing_address:
+                customer:
                   type: object
-                  nullable: true
-                  example:
-                shipping_address:
-                  type: object
-                  nullable: true
-                  example:
-                    phone: 0404 333 222 111
-                    latitude: -37.8173751
-                    longitude: 144.964803195704
-                    first_name: Alice
-                    last_name: Springs
-                    street_address_1: 1 Flinders Street
-                    street_address_2: ''
-                    postal_code: '1234'
-                    locality: Melbourne
-                    region:
-                      code: Vic
-                      name: Victoria
-                    country:
-                      code: AU
-                      name: Australia
+                  properties:
+                    enterprise_id:
+                      type: integer
+                      example: 2
+                    first_name:
+                      type: string
+                      nullable: true
+                      example: Alice
+                    last_name:
+                      type: string
+                      nullable: true
+                      example: Springs
+                    code:
+                      type: string
+                      nullable: true
+                      example: BUYER1
+                    email:
+                      type: string
+                      example: alice@example.com
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                      - staff
+                      - discount
+                    billing_address:
+                      type: object
+                      nullable: true
+                      example:
+                    shipping_address:
+                      type: object
+                      nullable: true
+                      example:
+                        phone: 0404 333 222 111
+                        latitude: -37.8173751
+                        longitude: 144.964803195704
+                        first_name: Alice
+                        last_name: Springs
+                        street_address_1: 1 Flinders Street
+                        street_address_2: ''
+                        postal_code: '1234'
+                        locality: Melbourne
+                        region:
+                          code: Vic
+                          name: Victoria
+                        country:
+                          code: AU
+                          name: Australia
+                  required:
+                  - enterprise_id
+                  - email
               required:
-              - enterprise_id
-              - email
+              - customer
   "/api/v1/customers/{id}":
     get:
       summary: Show customer
@@ -570,57 +575,62 @@ paths:
             schema:
               type: object
               properties:
-                enterprise_id:
-                  type: integer
-                  example: 2
-                first_name:
-                  type: string
-                  nullable: true
-                  example: Alice
-                last_name:
-                  type: string
-                  nullable: true
-                  example: Springs
-                code:
-                  type: string
-                  nullable: true
-                  example: BUYER1
-                email:
-                  type: string
-                  example: alice@example.com
-                tags:
-                  type: array
-                  items:
-                    type: string
-                  example:
-                  - staff
-                  - discount
-                billing_address:
+                customer:
                   type: object
-                  nullable: true
-                  example:
-                shipping_address:
-                  type: object
-                  nullable: true
-                  example:
-                    phone: 0404 333 222 111
-                    latitude: -37.8173751
-                    longitude: 144.964803195704
-                    first_name: Alice
-                    last_name: Springs
-                    street_address_1: 1 Flinders Street
-                    street_address_2: ''
-                    postal_code: '1234'
-                    locality: Melbourne
-                    region:
-                      code: Vic
-                      name: Victoria
-                    country:
-                      code: AU
-                      name: Australia
+                  properties:
+                    enterprise_id:
+                      type: integer
+                      example: 2
+                    first_name:
+                      type: string
+                      nullable: true
+                      example: Alice
+                    last_name:
+                      type: string
+                      nullable: true
+                      example: Springs
+                    code:
+                      type: string
+                      nullable: true
+                      example: BUYER1
+                    email:
+                      type: string
+                      example: alice@example.com
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                      - staff
+                      - discount
+                    billing_address:
+                      type: object
+                      nullable: true
+                      example:
+                    shipping_address:
+                      type: object
+                      nullable: true
+                      example:
+                        phone: 0404 333 222 111
+                        latitude: -37.8173751
+                        longitude: 144.964803195704
+                        first_name: Alice
+                        last_name: Springs
+                        street_address_1: 1 Flinders Street
+                        street_address_2: ''
+                        postal_code: '1234'
+                        locality: Melbourne
+                        region:
+                          code: Vic
+                          name: Victoria
+                        country:
+                          code: AU
+                          name: Australia
+                  required:
+                  - enterprise_id
+                  - email
               required:
-              - enterprise_id
-              - email
+              - customer
     delete:
       summary: Delete customer
       tags:
