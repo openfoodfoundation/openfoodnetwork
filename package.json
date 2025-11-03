@@ -37,7 +37,7 @@
   "devDependencies": {
     "@testing-library/dom": "<11.0.0",
     "jasmine-core": "~5.12.1",
-    "jest": "^27.4.7",
+    "jest": "^30.2.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coffee-preprocessor": "~1.0.1",
