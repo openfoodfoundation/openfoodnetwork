@@ -1,11 +1,5 @@
 version: "2"
 plugins:
-  rubocop:
-    enabled: true
-    channel: "rubocop-1-12"
-    config:
-      file: ".rubocop.yml"
-
   duplication:
     enabled: true
     exclude_patterns:
