@@ -156,9 +156,9 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       click_on "Checkout as guest"
       click_button "Next - Payment method"
       expect(page).to have_content("Saving failed, please update the highlighted fields")
-      expect(page).to have_css 'span.field_with_errors label', count: 6
+      expect(page).to have_css 'span.field_with_errors label', count: 7
       expect(page).to have_css 'span.field_with_errors input', count: 6
-      expect(page).to have_css 'span.formError', count: 7
+      expect(page).to have_css 'span.formError', count: 8
     end
 
     it "should validate once each needed field is filled" do
@@ -167,8 +167,10 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       fill_in "Last Name", with: "Doe"
       fill_in "Phone number", with: "07987654321"
       fill_in "Address (Street + House Number)", with: "Flat 1 Elm apartments"
-      fill_in "City", with: "London"
+      fill_in "City", with: "Brisbaine"
       fill_in "Postcode", with: "SW1A 1AA"
+      select "Australia", from: "Country"
+      select "Victoria", from: "State"
       choose free_shipping.name
 
       click_button "Next - Payment method"
