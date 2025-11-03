@@ -173,23 +173,15 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml", feature: :api_v1 do
 
       parameter name: :customer, in: :body, schema: {
         type: :object,
-        properties: {
-          customer: {
-            type: :object,
-            properties: CustomerSchema.writable_attributes,
-            required: CustomerSchema.required_attributes
-          }
-        },
-        required: ['customer']
+        properties: CustomerSchema.writable_attributes,
+        required: CustomerSchema.required_attributes
       }
 
       response "201", "Minimal customer created" do
         let(:customer) do
           {
-            customer: {
-              email: "test@example.com",
-              enterprise_id: enterprise1.id.to_s
-            }
+            email: "test@example.com",
+            enterprise_id: enterprise1.id.to_s
           }
         end
         schema '$ref': "#/components/schemas/customer"
@@ -207,15 +199,12 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml", feature: :api_v1 do
 
       response "201", "Example customer created" do
         let(:customer) do
-          {
-            customer: CustomerSchema.writable_attributes.transform_values do |attribute|
-              attribute[:example]
-            end.merge(
-              enterprise_id: enterprise1.id,
-            )
-          }
+          CustomerSchema.writable_attributes.transform_values do |attribute|
+            attribute[:example]
+          end.merge(
+            enterprise_id: enterprise1.id,
+          )
         end
-
         schema '$ref': "#/components/schemas/customer"
 
         run_test! do
@@ -234,11 +223,9 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml", feature: :api_v1 do
       response "422", "Unpermitted parameter" do
         let(:customer) do
           {
-            customer: {
-              email: "test@example.com",
-              enterprise_id: enterprise1.id.to_s,
-              allow_charges: true,
-            }
+            email: "test@example.com",
+            enterprise_id: enterprise1.id.to_s,
+            allow_charges: true,
           }
         end
         schema '$ref': "#/components/schemas/error_response"
@@ -360,14 +347,8 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml", feature: :api_v1 do
 
       parameter name: :customer, in: :body, schema: {
         type: :object,
-        properties: {
-          customer: {
-            type: :object,
-            properties: CustomerSchema.writable_attributes,
-            required: CustomerSchema.required_attributes
-          }
-        },
-        required: ['customer']
+        properties: CustomerSchema.writable_attributes,
+        required: CustomerSchema.required_attributes
       }
 
       response "200", "Customer updated" do
