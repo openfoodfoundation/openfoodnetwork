@@ -12,20 +12,20 @@ RSpec.describe TagRule do
   describe ".matching_variant_tag_rules_by_enterprises" do
     let(:enterprise) { create(:enterprise) }
     let!(:rule1) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "filtered" )
+      create(:filter_variants_tag_rule, enterprise:, preferred_variant_tags: "filtered" )
     }
     let!(:rule2) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "filtered" )
+      create(:filter_variants_tag_rule, enterprise:, preferred_variant_tags: "filtered" )
     }
     let!(:rule3) {
       create(:filter_variants_tag_rule, enterprise: create(:enterprise),
-                                        preferred_customer_tags: "filtered" )
+                                        preferred_variant_tags: "filtered" )
     }
     let!(:rule4) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "other-tag" )
+      create(:filter_variants_tag_rule, enterprise:, preferred_variant_tags: "other-tag" )
     }
     let!(:rule5) {
-      create(:filter_order_cycles_tag_rule, enterprise:, preferred_customer_tags: "filtered" )
+      create(:filter_order_cycles_tag_rule, enterprise:, preferred_exchange_tags: "filtered" )
     }
 
     it "returns a list of rule partially matching the tag" do

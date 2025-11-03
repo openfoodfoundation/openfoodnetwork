@@ -57,7 +57,7 @@ module Admin
         TagRule.matching_variant_tag_rules_by_enterprises(params[:enterprise_id], params[:q])
 
       @formatted_tag_rules = tag_rules.each_with_object({}) do |rule, mapping|
-        rule.preferred_customer_tags.split(",").each do |tag|
+        rule.preferred_variant_tags.split(",").each do |tag|
           if mapping[tag]
             mapping[tag][:rules] += 1
           else

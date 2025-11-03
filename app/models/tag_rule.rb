@@ -27,7 +27,7 @@ class TagRule < ApplicationRecord
 
     return [] if rules.empty?
 
-    rules.select { |r| r.preferred_customer_tags =~ /#{tag}/ }
+    rules.select { |r| r.preferred_variant_tags =~ /#{tag}/ }
   end
 
   # The following method must be overriden in a concrete tagRule
