@@ -56,8 +56,8 @@ module Spree
 
     # Send devise-based user emails asyncronously via ActiveJob
     # See: https://github.com/heartcombo/devise/tree/v3.5.10#activejob-integration
-    def send_devise_notification(notification, *args)
-      devise_mailer.public_send(notification, self, *args).deliver_later
+    def send_devise_notification(notification, *)
+      devise_mailer.public_send(notification, self, *).deliver_later
     end
 
     def regenerate_reset_password_token

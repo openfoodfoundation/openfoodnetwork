@@ -29,7 +29,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  def url_for(*args)
-    Rails.application.routes.url_helpers.url_for(*args)
+  def url_for(*)
+    Rails.application.routes.url_helpers.url_for(*)
   end
 end
