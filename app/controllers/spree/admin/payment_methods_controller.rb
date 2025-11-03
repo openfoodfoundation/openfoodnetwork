@@ -10,6 +10,12 @@ module Spree
 
       respond_to :html
 
+      PAYMENT_METHODS = %w{
+        Spree::PaymentMethod::Check
+        Spree::Gateway::PayPalExpress
+        Spree::Gateway::StripeSCA
+      }.index_with(&:constantize).freeze
+
       def create
         force_environment
 
@@ -89,11 +95,7 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = if allowed_payment_methods.include?(params[:provider_type])
-                              params[:provider_type].constantize.new
-                            else
-                              PaymentMethod.new
-                            end
+          @payment_method = PAYMENT_METHODS.fetch(params[:provider_type], PaymentMethod).new
         end
 
         render partial: 'provider_settings'
@@ -206,10 +208,6 @@ module Spree
 
       def add_type_to_calculator_attributes(hash)
         hash["calculator_attributes"]["type"] = hash["calculator_type"]
-      end
-
-      def allowed_payment_methods
-        %w{Spree::PaymentMethod::Check Spree::Gateway::PayPalExpress Spree::Gateway::StripeSCA}
       end
     end
   end
