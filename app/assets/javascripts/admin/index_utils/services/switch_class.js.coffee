@@ -8,3 +8,4 @@ angular.module("admin.indexUtils").factory "switchClass", ($timeout) ->
       element.timeout = $timeout(->
         element.removeClass classToAdd
       , timeout, true)
+    element
