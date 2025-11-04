@@ -214,6 +214,7 @@ RSpec.describe 'Customers' do
               expect(page).to have_content 'You have unsaved changes'
 
               click_button "Save Changes"
+              expect(page).to have_content 'All changes saved successfully'
 
               # changes are saved in the database
               expect(customer4.reload.code).to eq(nil)
@@ -250,6 +251,7 @@ RSpec.describe 'Customers' do
               expect(page).to have_content 'You have unsaved changes'
 
               click_button "Save Changes"
+              expect(page).to have_content 'All changes saved successfully'
 
               expect(customer4.reload.tag_list).to be_empty
             end
