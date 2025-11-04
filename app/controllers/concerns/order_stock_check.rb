@@ -25,7 +25,7 @@ module OrderStockCheck
 
     Alert.raise_with_record("Notice: order cycle closed during checkout completion", current_order)
 
-    handle_closed_order_cycle(should_empty_order)
+    handle_closed_order_cycle if should_empty_order
 
     flash[:info] = build_order_cycle_message(should_empty_order)
     redirect_to_shop_page(should_empty_order)
@@ -33,9 +33,7 @@ module OrderStockCheck
 
   private
 
-  def handle_closed_order_cycle(should_empty_order)
-    return unless should_empty_order
-
+  def handle_closed_order_cycle
     current_order.empty!
     current_order.assign_order_cycle!(nil)
   end
