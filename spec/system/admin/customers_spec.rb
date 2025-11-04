@@ -259,6 +259,13 @@ RSpec.describe 'Customers' do
 
       it "allows updating of attributes" do
         select2_select managed_distributor1.name, from: "shop_id"
+        expect(page).to have_button "Save Changes", disabled: true
+
+        # Editing attributes but undoing changes
+        within("tr#c_#{customer1.id}") { fill_in "first_name", with: "customer abc" }
+        expect(page).to have_content 'You have unsaved changes'
+        within("tr#c_#{customer1.id}") { fill_in "first_name", with: "John" }
+        expect(page).not_to have_content 'You have unsaved changes'
 
         within "tr#c_#{customer1.id}" do
           expect(find_field('first_name').value).to eq 'John'
