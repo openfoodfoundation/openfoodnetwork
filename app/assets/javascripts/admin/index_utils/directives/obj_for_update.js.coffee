@@ -4,15 +4,16 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
     type: "@objForUpdate"
     attr: "@attrForUpdate"
   link: (scope, element, attrs) ->
-    scope.savedValue = scope.object()[scope.attr]
+    scope.savedValue = scope.object()[scope.attr] || ""
 
     scope.$watch "object().#{scope.attr}", (value) ->
-      if value == scope.savedValue
+      strValue = value || ""
+      if strValue == scope.savedValue
         pendingChanges.remove(scope.object().id, scope.attr)
         scope.clear()
       else
         scope.pending()
-        addPendingChange(scope.attr, value ? "")
+        addPendingChange(scope.attr, strValue)
 
     scope.reset = (value) ->
       scope.savedValue = value

@@ -268,6 +268,10 @@ RSpec.describe 'Customers' do
         expect(page).to have_content 'You have unsaved changes'
         within("tr#c_#{customer1.id}") { fill_in "first_name", with: "John" }
         expect(page).not_to have_content 'You have unsaved changes'
+        within("tr#c_#{customer1.id}") { fill_in "code", with: "new-customer-code" }
+        expect(page).to have_content 'You have unsaved changes'
+        within("tr#c_#{customer1.id}") { fill_in "code", with: "" }
+        expect(page).not_to have_content 'You have unsaved changes'
 
         within "tr#c_#{customer1.id}" do
           expect(find_field('first_name').value).to eq 'John'
