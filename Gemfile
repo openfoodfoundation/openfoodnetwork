@@ -185,7 +185,6 @@ group :test do
 end
 
 group :development do
-  gem 'debugger-linecache'
   gem 'foreman'
   gem 'i18n-tasks'
   gem 'listen'

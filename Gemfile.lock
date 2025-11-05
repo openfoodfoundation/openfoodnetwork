@@ -268,7 +268,6 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    debugger-linecache (1.2.0)
     devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -971,7 +970,6 @@ DEPENDENCIES
   datafoodconsortium-connector
   db2fog!
   debug (>= 1.0.0)
-  debugger-linecache
   devise
   devise-encryptable
   devise-i18n
