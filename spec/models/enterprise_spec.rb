@@ -391,13 +391,15 @@ RSpec.describe Enterprise do
       let(:content_type) { 'image/png' }
 
       before do
-        blob = double(
+        blob = instance_double(
           "ActiveStorage::Blob",
           filename: ActiveStorage::Filename.new('white-label-logo.png'),
           content_type:,
           byte_size: 1024
         )
 
+        # InstanceDouble is not working for attachment case as the blob method is not yet defined
+        # on instantiation.
         attachment = double(
           "ActiveStorage::Attached::One",
           blank?: false,
