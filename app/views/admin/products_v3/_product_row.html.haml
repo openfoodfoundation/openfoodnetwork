@@ -18,7 +18,7 @@
 %td.col-category.align-left
   -# empty
 %td.col-tax_category.align-left
-- if feature?(:variant_tag, spree_current_user)
+- if variant_tag_enabled?(spree_current_user)
   %td.col-tags.align-left
     -# empty
 %td.col-inherits_properties.align-left
