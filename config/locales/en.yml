@@ -3500,6 +3500,7 @@ en:
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
+  order_cycle_closed_next_steps: "The order cycle you've selected has just closed. Please contact us to complete your order #%{order_number}!"
   back_to_orders_list: "Back To Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"

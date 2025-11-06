@@ -39,6 +39,47 @@ RSpec.describe CheckoutController do
     end
 
     context "when the given `step` params is inconsistent with the current order state" do
+      shared_examples "handles closed order cycle" do |step_param|
+        before do
+          allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+          allow(controller).to receive(:current_order).and_return(order).at_least(:once)
+          allow(order_cycle).to receive(:closed?).and_return(true)
+        end
+
+        it "redirects to shop with order cycle closed info message" do
+          expect(order).to receive(:empty!)
+          expect(order).to receive(:assign_order_cycle!).with(nil)
+
+          get :edit, params: { step: step_param }
+
+          message = "The order cycle you've selected has just closed. " \
+                    "Please try again!"
+          expect(flash[:info]).to eq(message)
+          expect(response).to redirect_to shop_url
+        end
+
+        context "when CableReady request" do
+          before do
+            request.headers["Accept"] = "text/vnd.cable-ready.json"
+          end
+
+          let(:cable_car) { instance_spy(CableReady::CableCar) }
+
+          it "redirects via CableReady" do
+            expect(order).to receive(:empty!)
+            expect(order).to receive(:assign_order_cycle!).with(nil)
+
+            get :edit, params: { step: step_param }
+
+            expect(response.parsed_body).to eq(
+              [{ url: "/shop", operation: "redirectTo" }].to_json
+            )
+            expect(response).to have_http_status(:see_other)
+            expect(response.media_type).to eq("text/vnd.cable-ready.json")
+          end
+        end
+      end
+
       context "when order state is `cart`" do
         before do
           order.update!(state: "cart")
@@ -52,6 +93,9 @@ RSpec.describe CheckoutController do
           get :edit, params: { step: "summary" }
           expect(response).to redirect_to checkout_step_path(:details)
         end
+
+        it_behaves_like "handles closed order cycle", "payment"
+        it_behaves_like "handles closed order cycle", "summary"
       end
 
       context "when order state is `payment`" do
@@ -63,6 +107,8 @@ RSpec.describe CheckoutController do
           get :edit, params: { step: "summary" }
           expect(response).to redirect_to checkout_step_path(:payment)
         end
+
+        it_behaves_like "handles closed order cycle", "summary"
       end
 
       context "when order state is 'confirmation'" do
@@ -77,6 +123,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("payment")
           end
+
+          it_behaves_like "handles closed order cycle", "payment"
         end
 
         context "when loading address step" do
@@ -86,6 +134,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
+
+          it_behaves_like "handles closed order cycle", "details"
         end
       end
 
@@ -101,6 +151,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
+
+          it_behaves_like "handles closed order cycle", "details"
         end
       end
     end

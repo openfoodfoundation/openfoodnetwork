@@ -28,6 +28,29 @@ RSpec.describe PaymentGateways::PaypalController do
       expect(session[:access_token]).to eq(controller.current_order.token)
     end
 
+    context "when the order cycle has closed" do
+      # previous_order (controller.current_order(true)) doesn't have order_cycle by default
+      let(:order_cycle) { create(:simple_order_cycle, orders: [previous_order]) }
+      let(:distributor) { previous_order.distributor }
+
+      it "redirects to shopfront with message if order cycle is expired" do
+        allow(controller).to receive(:current_distributor).and_return(distributor)
+        expect(controller).to receive(:current_order_cycle).and_return(order_cycle)
+        expect(controller).to receive(:current_order).and_return(previous_order).at_least(:once)
+        expect(order_cycle).to receive(:closed?).and_return(true)
+        expect(previous_order).not_to receive(:empty!)
+        expect(previous_order).not_to receive(:assign_order_cycle!).with(nil)
+
+        post :confirm, params: { payment_method_id: payment_method.id }
+
+        message = "The order cycle you've selected has just closed. " \
+                  "Please contact us to complete your order ##{previous_order.number}!"
+
+        expect(response).to redirect_to shops_url
+        expect(flash[:info]).to eq(message)
+      end
+    end
+
     context "if the stock ran out whilst the payment was being placed" do
       it "redirects to the details page with out of stock error" do
         mock_order_check_stock_service(controller.current_order)
@@ -100,6 +123,28 @@ RSpec.describe PaymentGateways::PaypalController do
       it "redirects to checkout_step_path with a flash error" do
         expect(post(:express)).to redirect_to checkout_step_path(:payment)
         expect(flash[:error]).to eq "Could not connect to PayPal."
+      end
+    end
+
+    context "when the order cycle has closed" do
+      let(:order_cycle) { order.order_cycle }
+      let(:distributor) { order.distributor }
+
+      it "redirects to shopfront with message if order cycle is expired" do
+        allow(controller).to receive(:current_distributor).and_return(distributor)
+        expect(controller).to receive(:current_order_cycle).and_return(order_cycle)
+        expect(controller).to receive(:current_order).and_return(order).at_least(:once)
+        expect(order_cycle).to receive(:closed?).and_return(true)
+        expect(order).not_to receive(:empty!)
+        expect(order).not_to receive(:assign_order_cycle!).with(nil)
+
+        post(:express)
+
+        message = "The order cycle you've selected has just closed. " \
+                  "Please contact us to complete your order ##{order.number}!"
+
+        expect(response).to redirect_to shops_url
+        expect(flash[:info]).to eq(message)
       end
     end
 
