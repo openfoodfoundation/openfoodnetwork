@@ -19,6 +19,11 @@ class ApiUser
       id: "https://www.litefarm.org/profile",
       tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
     },
+    'mo-dev' => {
+      id: "https://market.organic/profile",
+      tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
+    },
+
   }.freeze
   CLIENT_MAP = PLATFORMS.keys.index_by { |key| PLATFORMS.dig(key, :id) }.freeze
 
