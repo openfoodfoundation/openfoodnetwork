@@ -7,6 +7,7 @@ import consumer from "../channels/consumer";
 import controller from "../controllers/application_controller";
 import CableReady from "cable_ready";
 import RailsNestedForm from "@stimulus-components/rails-nested-form/dist/stimulus-rails-nested-form.umd.js"; // the default module entry point is broken
+import { Autocomplete } from "stimulus-autocomplete";
 
 const application = Application.start();
 const context = require.context("controllers", true, /_controller\.js$/);
@@ -37,6 +38,7 @@ contextComponents.keys().forEach((path) => {
 });
 
 application.register("nested-form", RailsNestedForm);
+application.register("autocomplete", Autocomplete);
 
 application.consumer = consumer;
 StimulusReflex.initialize(application, { controller, isolate: true });

@@ -1026,6 +1026,10 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} has 1 rule"
+          other: "%{tag} has %{count} rules"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -5077,6 +5081,8 @@ en:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_top: "Variants tagged"
+        variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
     tag_rule_group_form:

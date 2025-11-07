@@ -1,0 +1,3 @@
+- @formatted_tag_rules.each do |tag_rule|
+  %li.suggestion-item{ role: "option", "data-autocomplete-value": tag_rule[:tag], "data-autocomplete-label": tag_rule[:tag] }
+    = t("admin.products_v3.tag_rules.rules_per_tag", tag: tag_rule[:tag], count: tag_rule[:rules])

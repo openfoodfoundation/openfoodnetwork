@@ -41,12 +41,33 @@ module Admin
       end
     end
 
+    # Used by the tag input autocomplete
     def map_by_tag
       respond_to do |format|
         format.json do
           serializer = ActiveModel::ArraySerializer.new(collection)
           render json: serializer.to_json
         end
+      end
+    end
+
+    # Use to populate autocomplete with available rule for the given tag/enterprise
+    def variant_tag_rules
+      tag_rules =
+        TagRule.matching_variant_tag_rules_by_enterprises(params[:enterprise_id], params[:q])
+
+      @formatted_tag_rules = tag_rules.each_with_object({}) do |rule, mapping|
+        rule.preferred_variant_tags.split(",").each do |tag|
+          if mapping[tag]
+            mapping[tag][:rules] += 1
+          else
+            mapping[tag] = { tag:, rules: 1 }
+          end
+        end
+      end.values
+
+      respond_with do |format|
+        format.html { render :variant_tag_rules, layout: false }
       end
     end
 
@@ -78,7 +99,7 @@ module Admin
     end
 
     def permitted_tag_rule_type
-      %w{FilterOrderCycles FilterPaymentMethods FilterProducts FilterShippingMethods}
+      %w{FilterOrderCycles FilterPaymentMethods FilterProducts FilterShippingMethods FilterVariants}
     end
   end
 end

@@ -67,4 +67,35 @@
       font-size: 14px;
     }
   }
+
+  ul.suggestion-list {
+    margin-top: 5px;
+    padding: 5px 0;
+    z-index: $tag-drop-down-z-index;
+    width: fit-content;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: $shadow-dropdown;
+    list-style-type: none;
+    max-height: 280px;
+    overflow-y: auto;
+    position: relative;
+
+    li.suggestion-item {
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #000;
+      background-color: #fff;
+      width: stretch;
+
+      &.active,
+      &:hover {
+        color: #fff;
+        background-color: $color-link-visited;
+      }
+    }
+  }
 }

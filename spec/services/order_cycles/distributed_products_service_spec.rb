@@ -68,6 +68,20 @@ RSpec.describe OrderCycles::DistributedProductsService do
 
           expect(products_relation).not_to include product
         end
+
+        context "with variant_tag enabled" do
+          subject(:products_relation) {
+            described_class.new(
+              distributor, order_cycle, customer, variant_tag_enabled: true
+            ).products_relation
+          }
+
+          it "calls VariantTagRulesFilterer" do
+            expect(VariantTagRulesFilterer).to receive(:new).and_call_original
+
+            products_relation
+          end
+        end
       end
 
       context "with variant overrides" do
@@ -80,6 +94,12 @@ RSpec.describe OrderCycles::DistributedProductsService do
         let!(:override) {
           create(:variant_override, hub: distributor, variant:, count_on_hand: 0)
         }
+
+        it "calls ProductTagRulesFilterer" do
+          expect(ProductTagRulesFilterer).to receive(:new).and_call_original
+
+          products_relation
+        end
 
         it "does not return product when an override is out of stock" do
           expect(products_relation).not_to include product

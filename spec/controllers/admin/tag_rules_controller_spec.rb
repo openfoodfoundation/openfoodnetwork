@@ -69,4 +69,53 @@ RSpec.describe Admin::TagRulesController do
       end
     end
   end
+
+  describe "#variant_tag_rules", feature: :variant_tag do
+    render_views
+
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:q) { "" }
+    let!(:rule1) {
+      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "Tag-1",
+                                        preferred_variant_tags: "variant-tag-1" )
+    }
+    let!(:rule2) {
+      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "Tag-1",
+                                        preferred_variant_tags: "variant2-tag-1" )
+    }
+    let!(:rule3) {
+      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "organic",
+                                        preferred_variant_tags: "variant-organic" )
+    }
+    let!(:rule4) {
+      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "organic",
+                                        preferred_variant_tags: "variant-tag-1" )
+    }
+
+    before do
+      controller_login_as_enterprise_user [enterprise]
+    end
+
+    it "returns a list of tag rules and number of assiciated rules" do
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(response).to render_template :variant_tag_rules
+      expect(response.body).to include "variant-tag-1 has 2 rules"
+      expect(response.body).to include "variant2-tag-1 has 1 rule"
+      expect(response.body).to include "variant-organic has 1 rule"
+    end
+
+    context "with search string" do
+      let(:q) { "org" }
+
+      it "returns a list of tag rules matching the string" do
+        spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+        expect(response).to render_template :variant_tag_rules
+        expect(response.body).not_to include "variant-tag-1 has 2 rules"
+        expect(response.body).not_to include "variant2-tag-1 has 1 rule"
+        expect(response.body).to include "variant-organic has 1 rule"
+      end
+    end
+  end
 end

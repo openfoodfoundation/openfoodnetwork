@@ -47,6 +47,13 @@ class TagRuleFormComponent < ViewComponent::Base
         taggable: "variant",
         visibility_field: "preferred_matched_variants_visibility",
       }
+    when "TagRule::FilterVariants"
+      {
+        text_top: t('components.tag_rule_form.tag_rules.variant_tagged_top'),
+        text_bottom: t('components.tag_rule_form.tag_rules.variant_tagged_bottom'),
+        taggable: "variant",
+        visibility_field: "preferred_matched_variants_visibility",
+      }
     end
   end
 

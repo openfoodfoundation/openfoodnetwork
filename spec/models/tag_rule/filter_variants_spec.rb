@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-RSpec.describe TagRule::FilterProducts do
-  let(:tag_rule) { build(:filter_products_tag_rule, preferred_variant_tags: variant_tags) }
+RSpec.describe TagRule::FilterVariants do
+  let(:tag_rule) { build(:filter_variants_tag_rule, preferred_variant_tags: variant_tags) }
   let(:variant_tags) { "" }
 
   describe "#tags" do
@@ -51,7 +51,7 @@ RSpec.describe TagRule::FilterProducts do
 
     context "when visiblity is set to hidden" do
       let(:tag_rule) {
-        build(:filter_products_tag_rule, preferred_matched_variants_visibility: "hidden")
+        build(:filter_variants_tag_rule, preferred_matched_variants_visibility: "hidden")
       }
 
       it { expect(tag_rule.reject_matched?).to be true }

@@ -29,6 +29,7 @@
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
+    "stimulus-autocomplete": "^3.1.0",
     "stimulus-flatpickr": "^1.4.0",
     "stimulus_reflex": "3.5.5",
     "tom-select": "^2.4.3",
@@ -37,6 +38,7 @@
     "webpack": "~4"
   },
   "devDependencies": {
+    "@testing-library/dom": "<10.0.0",
     "jasmine-core": "~5.12.1",
     "jest": "^27.4.7",
     "karma": "~6.4.4",
