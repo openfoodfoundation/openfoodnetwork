@@ -15,6 +15,10 @@ class ApiUser
       id: "https://carte.cqcm.coop/profile",
       tokens: "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
     },
+    'lf-dev' => {
+      id: "https://www.litefarm.org/profile",
+      tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
+    },
   }.freeze
   CLIENT_MAP = PLATFORMS.keys.index_by { |key| PLATFORMS.dig(key, :id) }.freeze
 
