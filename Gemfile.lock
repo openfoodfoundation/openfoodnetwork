@@ -476,7 +476,7 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
-    minitest (5.26.0)
+    minitest (5.26.1)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
@@ -521,7 +521,7 @@ GEM
     omniauth_openid_connect (0.8.0)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    openid_connect (2.3.0)
+    openid_connect (2.3.1)
       activemodel
       attr_required (>= 1.0.0)
       email_validator
@@ -588,7 +588,7 @@ GEM
     rack (2.2.21)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
-    rack-oauth2 (2.2.1)
+    rack-oauth2 (2.3.0)
       activesupport
       attr_required
       faraday (~> 2.0)
