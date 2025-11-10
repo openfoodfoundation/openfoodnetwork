@@ -6,9 +6,6 @@
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
   "license": "AGPL-3.0",
-  "scripts": {
-    "pretty-quick": "pretty-quick"
-  },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",
     "@hotwired/stimulus": "^3.2",
@@ -46,7 +43,6 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
-    "pretty-quick": "4.2.2",
     "webpack-dev-server": "~3"
   }
 }
