@@ -3674,6 +3674,7 @@ fil_PH:
         order_cycle_tagged_bottom: "ay ang mga:"
         inventory_tagged_top: "nakatag- na mga uri ng imbentaryo"
         inventory_tagged_bottom: "ay ang mga:"
+        variant_tagged_bottom: "ay ang mga:"
         visible: NAKIKITA
         not_visible: HINDI NAKIKITA
     tag_rule_group_form:

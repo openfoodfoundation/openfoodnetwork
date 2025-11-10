@@ -4654,6 +4654,7 @@ el:
         order_cycle_tagged_bottom: "είναι:"
         inventory_tagged_top: "Ετικέτες παραλλαγών αποθέματος"
         inventory_tagged_bottom: "είναι:"
+        variant_tagged_bottom: "είναι:"
         visible: ΟΡΑΤΟ
         not_visible: ΜΗ ΟΡΑΤΟ
     tag_rule_group_form:

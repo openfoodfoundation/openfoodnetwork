@@ -3700,6 +3700,7 @@ nl_BE:
         order_cycle_tagged_bottom: "zijn:"
         inventory_tagged_top: "Inventarisatievarianten getagd"
         inventory_tagged_bottom: "zijn:"
+        variant_tagged_bottom: "zijn:"
         visible: ZICHTBAAR
         not_visible: NIET ZICHTBAAR
     tag_rule_group_form:

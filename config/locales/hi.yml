@@ -4554,6 +4554,7 @@ hi:
         order_cycle_tagged_bottom: "हैं:"
         inventory_tagged_top: "टैग किए गए इन्वेंट्री वैरिएंट्स"
         inventory_tagged_bottom: "हैं:"
+        variant_tagged_bottom: "हैं:"
         visible: दृश्यमान
         not_visible: अदृश्य है
     tag_rule_group_form:

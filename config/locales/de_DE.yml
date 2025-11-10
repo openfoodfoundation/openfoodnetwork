@@ -4568,6 +4568,7 @@ de_DE:
         order_cycle_tagged_bottom: "sind:"
         inventory_tagged_top: "Produktvarianten markiert mit"
         inventory_tagged_bottom: "sind:"
+        variant_tagged_bottom: "sind:"
         visible: SICHTBAR
         not_visible: NICHT SICHTBAR
     tag_rule_group_form:

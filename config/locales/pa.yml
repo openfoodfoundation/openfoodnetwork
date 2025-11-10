@@ -4407,6 +4407,7 @@ pa:
         order_cycle_tagged_bottom: "ਹਨ:"
         inventory_tagged_top: "ਟੈਗ ਕੀਤੇ ਗਏ ਇਨਵੇਂਟਰੀ ਵੇਰੀਐਂਟ"
         inventory_tagged_bottom: "ਹਨ:"
+        variant_tagged_bottom: "ਹਨ:"
         visible: ਵਿਖਾਈ ਦੇ ਰਿਹਾ ਹੈ
         not_visible: ਵਿਖਾਈ ਨਹੀਂ ਦੇ ਰਿਹਾ ਹੈ
     tag_rule_group_form:

@@ -4964,6 +4964,7 @@ fr:
         order_cycle_tagged_bottom: "sont:"
         inventory_tagged_top: "Les variantes du catalogue boutique taguées"
         inventory_tagged_bottom: "sont:"
+        variant_tagged_bottom: "sont:"
         visible: VISIBLE
         not_visible: INVISIBLE
     tag_rule_group_form:

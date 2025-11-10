@@ -4553,6 +4553,7 @@ ar:
         order_cycle_tagged_bottom: "هي:"
         inventory_tagged_top: "جرد الانواع الموسومة"
         inventory_tagged_bottom: "هي:"
+        variant_tagged_bottom: "هي:"
         visible: مرئي
         not_visible: غير مرئية
     tag_rule_group_form:

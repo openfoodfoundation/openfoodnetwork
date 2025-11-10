@@ -4240,6 +4240,7 @@ it_CH:
         order_cycle_tagged_bottom: "sono:"
         inventory_tagged_top: "Varianti inventario etichettate"
         inventory_tagged_bottom: "sono:"
+        variant_tagged_bottom: "sono:"
         visible: VISIBILE
         not_visible: NON VISIBILE
     tag_rule_group_form:

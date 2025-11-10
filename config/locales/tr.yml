@@ -4082,6 +4082,7 @@ tr:
         order_cycle_tagged_bottom: "ise durumu:"
         inventory_tagged_top: "Stok çeşidi etiketi"
         inventory_tagged_bottom: "ise durumu:"
+        variant_tagged_bottom: "ise durumu:"
         visible: GÖRÜNÜR
         not_visible: GİZLİ
     tag_rule_group_form:
