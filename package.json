@@ -35,7 +35,7 @@
     "webpack": "~4"
   },
   "devDependencies": {
-    "@testing-library/dom": "<10.0.0",
+    "@testing-library/dom": "<11.0.0",
     "jasmine-core": "~5.12.1",
     "jest": "^27.4.7",
     "karma": "~6.4.4",
