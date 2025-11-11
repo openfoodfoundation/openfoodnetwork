@@ -1,7 +1,7 @@
 - link = pagy_anchor(pagy)
 
-%nav.pagination{ "data-controller": "search" }
-  %ul
+%nav{ "data-controller": "search" }
+  %ul.pagination
     - if pagy.prev
       %li
         %a.page.prev{ data: { action: 'click->search#changePage', page: pagy.prev } }

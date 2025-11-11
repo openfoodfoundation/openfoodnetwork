@@ -8,8 +8,8 @@
   display: flex;
   justify-content: center;
   gap: 8px;
+  list-style-type: none;
 
-  button.page,
   .page {
     width: $btn-relaxed-height;
     line-height: $btn-relaxed-height;
@@ -69,17 +69,6 @@
 
     &:active {
       border: none;
-    }
-  }
-
-  button {
-    margin: 0 0.35em;
-
-    background-color: $white;
-    color: $near-black;
-    box-shadow: $box-shadow;
-
-    &.active {
       color: $white;
       background-color: $red;
       cursor: default;
