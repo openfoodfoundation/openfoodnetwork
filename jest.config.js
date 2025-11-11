@@ -166,11 +166,14 @@ module.exports = {
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
   // testURL: "http://localhost",
 
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  // timers: "real",
+  // Setting this enableGlobally to "true" allows the use of fake timers for functions such as "setTimeout"
+  // fakeTimers: {
+  //   enableGlobally: false
+  // }
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // https://jest-archive-august-2023.netlify.app/docs/28.x/configuration/#transform-objectstring-pathtotransformer--pathtotransformer-object
+  transform: { "\\.[jt]sx?$": "babel-jest" },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ["/node_modules/(?!(stimulus.+)/)"],
