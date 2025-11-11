@@ -4,8 +4,6 @@
   - if pagy.prev
     %a.page.prev{ rel: "prev", data: { action: 'click->search#changePage', page: pagy.prev } }
       %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
-  - else
-    %a.page.disabled{disabled: "disabled"}!= pagy_t('pagy.prev')
 
   %ul.pagelist
     - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
@@ -24,5 +22,3 @@
   - if pagy.next
     %a.page.next{ rel: "next", data: { action: 'click->search#changePage', page: pagy.next } }
       %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
-  - else
-    %a.page.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.next')
