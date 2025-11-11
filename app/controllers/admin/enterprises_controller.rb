@@ -162,6 +162,20 @@ module Admin
       end
     end
 
+    def destroy
+      @index = params[:index]
+
+      if @object.destroy
+        flash.now[:success] = Spree.t(:successfully_removed, resource: "Enterprise")
+      else
+        flash.now[:error] = @object.errors.full_messages.to_sentence
+      end
+
+      respond_to do |format|
+        format.turbo_stream { render :destroy, status: :ok }
+      end
+    end
+
     protected
 
     def delete_custom_tab
