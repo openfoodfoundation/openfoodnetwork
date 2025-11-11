@@ -3,7 +3,7 @@
  */
 
 import { Application } from "stimulus";
-import tabs_and_panels_controller from "../../../app/webpacker/controllers/tabs_and_panels_controller";
+import tabs_and_panels_controller from "controllers/tabs_and_panels_controller";
 
 describe("TabsAndPanelsController", () => {
   beforeAll(() => {
@@ -90,16 +90,8 @@ describe("TabsAndPanelsController", () => {
   });
 
   describe("when valid anchor is specified in the url", () => {
-    const oldWindowLocation = window.location;
     beforeAll(() => {
-      Object.defineProperty(window, "location", {
-        value: new URL("http://example.com/#boo_panel"),
-        configurable: true,
-      });
-    });
-    afterAll(() => {
-      delete window.location;
-      window.location = oldWindowLocation;
+      history.pushState({}, "", "#boo_panel");
     });
 
     it("#activateFromWindowLocationOrDefaultPanelTarget show panel based on anchor", () => {
@@ -121,16 +113,8 @@ describe("TabsAndPanelsController", () => {
   });
 
   describe("when non valid anchor is specified in the url", () => {
-    const oldWindowLocation = window.location;
     beforeAll(() => {
-      Object.defineProperty(window, "location", {
-        value: new URL("http://example.com/#non_valid_panel"),
-        configurable: true,
-      });
-    });
-    afterAll(() => {
-      delete window.location;
-      window.location = oldWindowLocation;
+      history.pushState({}, "", "#non_valid_panel");
     });
 
     it("#activateFromWindowLocationOrDefaultPanelTarget show default panel", () => {
