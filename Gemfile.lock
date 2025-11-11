@@ -126,13 +126,12 @@ GEM
       activerecord (>= 4.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
-    activerecord-session_store (2.1.0)
-      actionpack (>= 6.1)
-      activerecord (>= 6.1)
+    activerecord-session_store (2.2.0)
+      actionpack (>= 7.0)
+      activerecord (>= 7.0)
       cgi (>= 0.3.6)
-      multi_json (~> 1.11, >= 1.11.2)
       rack (>= 2.0.8, < 4)
-      railties (>= 6.1)
+      railties (>= 7.0)
     activestorage (7.1.5.2)
       actionpack (= 7.1.5.2)
       activejob (= 7.1.5.2)
@@ -194,7 +193,7 @@ GEM
     bcrypt (3.1.20)
     benchmark (0.5.0)
     bigdecimal (3.3.1)
-    bindata (2.5.0)
+    bindata (2.5.1)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -250,7 +249,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    css_parser (1.17.1)
+    css_parser (1.21.1)
       addressable
     csv (3.3.0)
     cuprite (0.15)
@@ -276,12 +275,13 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-i18n (1.12.1)
+    devise-i18n (1.15.0)
       devise (>= 4.9.0)
+      rails-i18n
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
     diff-lcs (1.6.2)
-    digest (3.2.0)
+    digest (3.2.1)
     docile (1.4.1)
     dotenv (3.1.2)
     drb (2.2.3)
@@ -313,9 +313,9 @@ GEM
       railties (>= 5.0.0)
     faraday (2.9.0)
       faraday-net_http (>= 2.0, < 3.2)
-    faraday-follow_redirects (0.3.0)
+    faraday-follow_redirects (0.4.0)
       faraday (>= 1, < 3)
-    faraday-net_http (3.1.0)
+    faraday-net_http (3.1.1)
       net-http
     ferrum (0.14)
       addressable (~> 2.5)
@@ -372,6 +372,12 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
+    haml_lint (0.67.0)
+      haml (>= 5.0)
+      parallel (~> 1.10)
+      rainbow
+      rubocop (>= 1.0)
+      sysexits (~> 1.1)
     hashdiff (1.2.1)
     hashery (2.1.2)
     hashie (5.0.0)
@@ -417,7 +423,7 @@ GEM
       railties (>= 3.2.16)
     json (2.15.2)
     json-canonicalization (1.0.0)
-    json-jwt (1.16.6)
+    json-jwt (1.17.0)
       activesupport (>= 4.2)
       aes_key_wrap
       base64
@@ -458,7 +464,8 @@ GEM
     loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    mail (2.8.1)
+    mail (2.9.0)
+      logger
       mini_mime (>= 0.1.1)
       net-imap
       net-pop
@@ -476,25 +483,25 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
-    minitest (5.26.0)
+    minitest (5.26.1)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
       i18n (>= 0.6.4, <= 2)
     msgpack (1.7.2)
-    multi_json (1.15.0)
+    multi_json (1.17.0)
     multi_xml (0.6.0)
     mutex_m (0.3.0)
-    net-http (0.4.1)
+    net-http (0.7.0)
       uri
-    net-imap (0.4.20)
+    net-imap (0.5.12)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.0)
+    net-smtp (0.5.1)
       net-protocol
     newrelic_rpm (9.22.0)
     nio4r (2.7.1)
@@ -510,17 +517,18 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
     observer (0.1.2)
-    omniauth (2.1.2)
+    omniauth (2.1.4)
       hashie (>= 3.4.6)
+      logger
       rack (>= 2.2.3)
       rack-protection
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth_openid_connect (0.7.1)
+    omniauth_openid_connect (0.8.0)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    openid_connect (2.3.0)
+    openid_connect (2.3.1)
       activemodel
       attr_required (>= 1.0.0)
       email_validator
@@ -536,8 +544,8 @@ GEM
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     pagy (9.3.4)
-    paper_trail (15.1.0)
-      activerecord (>= 6.1)
+    paper_trail (17.0.0)
+      activerecord (>= 7.1)
       request_store (~> 1.4)
     parallel (1.27.0)
     paranoia (2.6.4)
@@ -587,7 +595,7 @@ GEM
     rack (2.2.21)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
-    rack-oauth2 (2.2.1)
+    rack-oauth2 (2.3.0)
       activesupport
       attr_required
       faraday (~> 2.0)
@@ -674,7 +682,7 @@ GEM
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
-    request_store (1.5.1)
+    request_store (1.7.0)
       rack (>= 1.4)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -684,8 +692,8 @@ GEM
     roadie (5.2.1)
       css_parser (~> 1.4)
       nokogiri (~> 1.15)
-    roadie-rails (3.2.0)
-      railties (>= 5.1, < 8.0)
+    roadie-rails (3.4.0)
+      railties (>= 5.1, < 8.2)
       roadie (~> 5.0)
     rodf (1.2.0)
       builder (>= 3.0)
@@ -810,7 +818,7 @@ GEM
     spreadsheet_architect (5.0.0)
       caxlsx (>= 3.3.0, < 4)
       rodf (>= 1.0.0, < 2)
-    spring (4.2.1)
+    spring (4.4.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     spring-commands-rubocop (0.4.0)
@@ -823,10 +831,10 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    state_machines (0.20.0)
-    state_machines-activemodel (0.10.0)
+    state_machines (0.100.4)
+    state_machines-activemodel (0.31.0)
       activemodel (>= 7.1)
-      state_machines (>= 0.10.0)
+      state_machines (>= 0.31.0)
     state_machines-activerecord (0.31.0)
       activerecord (>= 7.1)
       state_machines-activemodel (>= 0.10.0)
@@ -851,6 +859,7 @@ GEM
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
+    sysexits (1.2.0)
     temple (0.8.2)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
@@ -881,7 +890,7 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
     uniform_notifier (1.17.0)
-    uri (0.13.2)
+    uri (1.1.1)
     valid_email2 (5.2.3)
       activemodel (>= 3.2)
       mail (~> 2.5)
@@ -990,6 +999,7 @@ DEPENDENCIES
   gmaps4rails
   good_migrations
   haml
+  haml_lint
   highline (= 2.0.3)
   i18n
   i18n-js (~> 3.9.0)

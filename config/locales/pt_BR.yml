@@ -4083,6 +4083,7 @@ pt_BR:
         order_cycle_tagged_bottom: "são:"
         inventory_tagged_top: "Variantes do inventário marcadas com tag"
         inventory_tagged_bottom: "são:"
+        variant_tagged_bottom: "são:"
         visible: VISÍVEL
         not_visible: NÃO VISÍVEL
     tag_rule_group_form:

@@ -953,6 +953,10 @@ en_CA:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} has 1 rule"
+          other: "%{tag} has %{count} rules"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -3356,6 +3360,7 @@ en_CA:
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
+  order_cycle_closed_next_steps: "The order cycle you've selected has just closed. Please contact us to complete your order #%{order_number}!"
   back_to_orders_list: "Back to Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
@@ -4898,6 +4903,8 @@ en_CA:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_top: "Variants tagged"
+        variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
     tag_rule_group_form:

@@ -4382,6 +4382,7 @@ ca:
         order_cycle_tagged_bottom: "son:"
         inventory_tagged_top: "Variants d'inventari etiquetades"
         inventory_tagged_bottom: "son:"
+        variant_tagged_bottom: "son:"
         visible: VISIBLE
         not_visible: NO VISIBLE
     tag_rule_group_form:

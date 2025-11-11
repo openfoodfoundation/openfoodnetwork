@@ -804,10 +804,10 @@ RSpec.describe OrderCycle do
           ).distributor_shipping_methods.first
           oc.selected_distributor_shipping_methods << other_distributor_shipping_method_i
 
-          expect(oc.distributor_shipping_methods).to eq [
+          expect(oc.distributor_shipping_methods).to contain_exactly(
             distributor_shipping_method,
             other_distributor_shipping_method_i
-          ]
+          )
         end
       end
     end

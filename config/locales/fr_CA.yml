@@ -955,6 +955,11 @@ fr_CA:
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} a 1 règle"
+          many: "%{tag} a  %{count} des règles"
+          other: "%{tag} a %{count} des règles"
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1507,6 +1512,10 @@ fr_CA:
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
+    tag_rules:
+      not_supported_type: Type de règle de balise non pris en charge
+      confirm_delete: Êtes-vous sûr de vouloir supprimer cette règle ?
+      destroy_error: Un problème s'est produit lors de la suppression de la règle de balise.
     order_cycles:
       loading_flash:
         loading_order_cycles: Cycles de vente en cours de chargement
@@ -1730,6 +1739,8 @@ fr_CA:
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
       none: aucun
+      metadata:
+        report_title: Titre du rapport
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden_field: "< Masqué >"
       unitsize: Unité de mesure
@@ -1833,6 +1844,7 @@ fr_CA:
         display: Afficher
         summary_row: Ligne TOTAL
         header_row: Ligne titre
+        metadata_rows: Lignes de métadonnée
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
@@ -2409,8 +2421,16 @@ fr_CA:
   email_confirmed: "Veuillez confirmer votre adresse email."
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact}!"
+  email_confirmation_profile_created: >
+      Un profil pour %{name}a été créé avec succès ! Pour activer votre profil, nous
+      devons confirmer cette adresse e-mail.
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
+  email_confirmation_help_html: >
+      Après avoir confirmé votre adresse e-mail, vous pouvez accéder à votre compte
+      d'administration pour cette entreprise.  Voir le  %{link} pour en savoir plus
+      sur %{sitename}'s fonctionnalités et commencer à utiliser votre profil ou votre
+      boutique en ligne."
   email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à %{contact}."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -3351,6 +3371,7 @@ fr_CA:
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "
+  order_cycle_closed_next_steps: "Le cycle de commande que vous avez sélectionné\nvient de se terminer. Veuillez nous contacter pour finaliser votre commande #%{order_number}!"
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée"
   order_information: "Info commande"
@@ -4952,6 +4973,8 @@ fr_CA:
         order_cycle_tagged_bottom: "sont:"
         inventory_tagged_top: "Les variantes du catalogue boutique taggées"
         inventory_tagged_bottom: "sont:"
+        variant_tagged_top: "Variantes marquées"
+        variant_tagged_bottom: "sont:"
         visible: VISIBLE
         not_visible: INVISIBLE
     tag_rule_group_form:

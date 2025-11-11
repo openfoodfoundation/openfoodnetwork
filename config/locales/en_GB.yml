@@ -1449,7 +1449,10 @@ en_GB:
         owner: Owner
         producer: Producer
         sells_options:
+          unspecified: unspecified
           none: none
+          own: own
+          any: any
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -1500,6 +1503,10 @@ en_GB:
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
+    tag_rules:
+      not_supported_type: Tag rule type not supported
+      confirm_delete: Are you sure you want to delete this rule ?
+      destroy_error: There was an issue when removing the Tag rule
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
@@ -1723,6 +1730,8 @@ en_GB:
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
       none: none
+      metadata:
+        report_title: Report Title
       deprecated: "This report is deprecated and will be removed in a future release."
       hidden_field: "< Hidden >"
       unitsize: UNITSIZE
@@ -1824,6 +1833,7 @@ en_GB:
         display: Display
         summary_row: Summary Row
         header_row: Header Row
+        metadata_rows: Metadata Rows
         raw_data: Raw Data
         formatted_data: Formatted Data
       packing:
@@ -2399,8 +2409,15 @@ en_GB:
   email_confirmed: "Thank you for confirming your email address."
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
+  email_confirmation_profile_created: >
+      A profile for %{name} has been successfully created! To activate your Profile
+      we need to confirm this email address.
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
+  email_confirmation_help_html: >
+      After confirming your email you can access your administration account for this
+      enterprise. See the %{link} to find out more about %{sitename}'s features and
+      to start using your profile or online store.
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
@@ -3316,6 +3333,7 @@ en_GB:
   product_importer_products_save_error: did not save any products successfully
   product_import_file_not_found_notice: 'File not found or could not be opened'
   product_import_no_data_in_spreadsheet_notice: 'No data found in spreadsheet'
+  product_import_inventory_disable: Importing into inventories is not available
   order_choosing_hub_notice: Your hub has been selected.
   order_cycle_selecting_notice: Your order cycle has been selected.
   adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
@@ -4887,6 +4905,7 @@ en_GB:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
     tag_rule_group_form:

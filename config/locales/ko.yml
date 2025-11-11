@@ -4181,6 +4181,7 @@ ko:
         order_cycle_tagged_bottom: "다음 항목:"
         inventory_tagged_top: "태그된 변경 사항 인벤토리"
         inventory_tagged_bottom: "다음 항목:"
+        variant_tagged_bottom: "다음 항목:"
         visible: 표시
         not_visible: 숨기기
     tag_rule_group_form:

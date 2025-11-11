@@ -4470,6 +4470,7 @@ eu:
         order_cycle_tagged_bottom: "dira:"
         inventory_tagged_top: "Inbentario-aldaera etiketatuak"
         inventory_tagged_bottom: "dira:"
+        variant_tagged_bottom: "dira:"
         visible: IKUSGAI
         not_visible: EZ DA IKUSTEN
     tag_rule_group_form:

@@ -4764,6 +4764,7 @@ en_IE:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
     tag_rule_group_form:

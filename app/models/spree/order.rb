@@ -35,10 +35,12 @@ module Spree
     belongs_to :created_by, class_name: "Spree::User", optional: true
 
     belongs_to :bill_address, class_name: 'Spree::Address', optional: true
-    alias_attribute :billing_address, :bill_address
+    alias_method :billing_address, :bill_address
+    alias_method :billing_address=, :bill_address=
 
     belongs_to :ship_address, class_name: 'Spree::Address', optional: true
-    alias_attribute :shipping_address, :ship_address
+    alias_method :shipping_address, :ship_address
+    alias_method :shipping_address=, :ship_address=
 
     has_many :state_changes, as: :stateful, dependent: :destroy
     has_many :line_items, -> {

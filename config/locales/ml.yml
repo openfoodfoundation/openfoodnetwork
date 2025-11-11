@@ -4581,6 +4581,7 @@ ml:
         order_cycle_tagged_bottom: "ഇവ:"
         inventory_tagged_top: "ഇൻവെന്ററി വേരിയന്റുകൾ ടാഗ് ചെയ്‌തു"
         inventory_tagged_bottom: "ഇവ:"
+        variant_tagged_bottom: "ഇവ:"
         visible: ദൃശ്യമാണ്
         not_visible: ദൃശ്യമല്ല
     tag_rule_group_form:

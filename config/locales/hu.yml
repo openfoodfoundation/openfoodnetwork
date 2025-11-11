@@ -1802,7 +1802,7 @@ hu:
         query_placeholder: "Keresés e-mailben..."
       setup_explanation:
         title: "Előfizetések"
-        just_a_few_more_steps: 'Még néhány lépés, mielőtt elkezdhetné:'''
+        just_a_few_more_steps: 'Még néhány lépés szükséges mielőtt elkezdhetnéd:'
         enable_subscriptions: "Engedélyezd a feliratkozásokat legalább egy oldalon"
         enable_subscriptions_step_1_html: 1. Nyisd meg a %{enterprises_link} oldalt, keresd meg az oldalad, és kattints a "Kezelés" gombra
         enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt, engedélyezd az Előfizetések opciót
@@ -2406,10 +2406,10 @@ hu:
     mistakenly_sent: "Nem tudod, miért kaptad ezt az e-mailt? További információért fordulj %{owner_email}-hoz."
   producer_mail_greeting: "Kedves"
   producer_mail_text_before: "Küldjük az alábbi rendelési ciklusra vonatkozó összesítést:"
-  producer_mail_order_text: "Megrendelt termékek:"
+  producer_mail_order_text: "Megrendelt termékek összesen:"
   producer_mail_delivery_instructions: "Raktári átvételi/szállítási instrukciók:"
   producer_mail_signoff: "Üdvözlettel,"
-  producer_mail_order_customer_text: "A rendelések vásárlók szerint csoportosítva:"
+  producer_mail_order_customer_text: "A rendelések vásárlók szerint szétbontva:"
   shopping_oc_closed: A rendelések lezárva
   shopping_oc_closed_description: "Kérjük, várd meg, amíg a következő ciklus megnyílik."
   shopping_oc_last_closed: "Az utolsó ciklus ennyi ideje zárult:  %{distance_of_time}"
@@ -4787,6 +4787,7 @@ hu:
         order_cycle_tagged_bottom: "vannak:"
         inventory_tagged_top: "Leltár változatok felcímkézve"
         inventory_tagged_bottom: "vannak:"
+        variant_tagged_bottom: "vannak:"
         visible: LÁTHATÓ
         not_visible: NEM LÁTHATÓ
     tag_rule_group_form:

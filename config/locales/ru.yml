@@ -4720,6 +4720,7 @@ ru:
         order_cycle_tagged_bottom: "являются:"
         inventory_tagged_top: "Помечены варианты Товарной Номенклатуры"
         inventory_tagged_bottom: "являются:"
+        variant_tagged_bottom: "являются:"
         visible: Видимый
         not_visible: Не видимый
     tag_rule_group_form:

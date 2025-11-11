@@ -4927,6 +4927,7 @@ cy:
         order_cycle_tagged_bottom: "yw:"
         inventory_tagged_top: "Tagiwyd amrywolion stocrestr"
         inventory_tagged_bottom: "yw:"
+        variant_tagged_bottom: "yw:"
         visible: GWELEDOL
         not_visible: DDIM YN WELEDOL
     tag_rule_group_form:

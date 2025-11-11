@@ -3805,6 +3805,7 @@ es_CO:
         order_cycle_tagged_bottom: "son:"
         inventory_tagged_top: "Variantes de inventario etiquetadas"
         inventory_tagged_bottom: "son:"
+        variant_tagged_bottom: "son:"
         visible: VISIBLE
         not_visible: NO VISIBLE
     tag_rule_group_form:

@@ -4806,6 +4806,7 @@ nb:
         order_cycle_tagged_bottom: "er:"
         inventory_tagged_top: "Varianter i varelager merket"
         inventory_tagged_bottom: "er:"
+        variant_tagged_bottom: "er:"
         visible: SYNLIG
         not_visible: USYNLIG
     tag_rule_group_form:

@@ -4345,6 +4345,7 @@ uk:
         order_cycle_tagged_bottom: "є:"
         inventory_tagged_top: "Варіанти асортименту позначено тегами"
         inventory_tagged_bottom: "є:"
+        variant_tagged_bottom: "є:"
         visible: ВИДИМІ
         not_visible: НЕ ВИДИМІ
     tag_rule_group_form:
