@@ -196,12 +196,15 @@ module Spree
     def add_product_management_abilities(user)
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
+      # An enterperprise user can change a product if they are supplier of at least
+      # one of the product's associated variants
       can [:admin, :read, :index, :update,
            :seo, :group_buy_options,
            :bulk_update, :clone, :delete,
            :destroy], Spree::Product do |product|
-        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include?(
-          product.variants.first.supplier
+        variant_suppliers = product.variants.map(&:supplier)
+        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.intersect?(
+          variant_suppliers
         )
       end
 

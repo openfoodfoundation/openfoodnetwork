@@ -324,6 +324,29 @@ RSpec.describe Spree::Ability do
         )
       end
 
+      context "with mutiple variant with different supplier" do
+        let(:product1) { create(:product, supplier_id: create(:supplier_enterprise).id) }
+        let(:product1_other_variant) { create(:variant, product: product1, supplier: s1) }
+
+        it "is able to read/write their enterprises' products and variants" do
+          product1_other_variant
+
+          is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
+                                      for: product1)
+
+          is_expected.to have_ability(
+            [:admin, :index, :read, :edit, :update, :search, :destroy,
+             :delete], for: product1.variants.last
+          )
+
+          # First variant belongs to another supplier
+          is_expected.not_to have_ability(
+            [:admin, :index, :read, :edit, :update, :search, :destroy,
+             :delete], for: product1.variants.first
+          )
+        end
+      end
+
       it "should be able to read/write related enterprises' products " \
          "and variants with manage_products permission" do
         er_ps
