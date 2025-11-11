@@ -1,15 +1,13 @@
 - link = pagy_anchor(pagy)
 
-%nav{ "aria-label": t('.navigation'), "data-controller": "search" }
-  %ul.pagination
-    - if pagy.prev
-      %li
-        %a.page.prev{ rel: "prev", data: { action: 'click->search#changePage', page: pagy.prev } }
-          %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
-    - else
-      %li
-        %a.page.disabled{disabled: "disabled"}!= pagy_t('pagy.prev')
+%nav.pagination{ "aria-label": t('.navigation'), "data-controller": "search" }
+  - if pagy.prev
+    %a.page.prev{ rel: "prev", data: { action: 'click->search#changePage', page: pagy.prev } }
+      %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
+  - else
+    %a.page.disabled{disabled: "disabled"}!= pagy_t('pagy.prev')
 
+  %ul.pagelist
     - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
       - if item.is_a?(Integer)                        # page link
         %li
@@ -23,10 +21,8 @@
         %li
           %span.page.gap.pagination-ellipsis!= pagy_t('pagy.gap')
 
-    - if pagy.next
-      %li
-        %a.page.next{ rel: "next", data: { action: 'click->search#changePage', page: pagy.next } }
-          %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
-    - else
-      %li
-        %a.page.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.next')
+  - if pagy.next
+    %a.page.next{ rel: "next", data: { action: 'click->search#changePage', page: pagy.next } }
+      %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
+  - else
+    %a.page.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.next')
