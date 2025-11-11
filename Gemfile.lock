@@ -151,8 +151,9 @@ GEM
       mutex_m
       securerandom (>= 0.3)
       tzinfo (~> 2.0)
-    acts-as-taggable-on (10.0.0)
-      activerecord (>= 6.1, < 7.2)
+    acts-as-taggable-on (13.0.0)
+      activerecord (>= 7.1, < 8.2)
+      zeitwerk (>= 2.4, < 3.0)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
     addressable (2.8.7)
