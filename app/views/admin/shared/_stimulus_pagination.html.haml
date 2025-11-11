@@ -1,6 +1,6 @@
 - link = pagy_anchor(pagy)
 
-.pagination{ "data-controller": "search" }
+%nav.pagination{ "data-controller": "search" }
   - if pagy.prev
     %button.page.prev{ data: { action: 'click->search#changePage', page: pagy.prev } }
       %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
