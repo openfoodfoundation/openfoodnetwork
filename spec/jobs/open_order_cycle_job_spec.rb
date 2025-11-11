@@ -75,6 +75,30 @@ RSpec.describe OpenOrderCycleJob do
     end
   end
 
+  context "with cloned order cycle" do
+    subject { OpenOrderCycleJob.perform_now(cloned_order_cycle.id) }
+
+    let!(:cloned_order_cycle) do
+      order_cycle.update!(opened_at: now - 5.minutes)
+
+      coc = OrderCycles::CloneService.new(order_cycle.reload).create
+      coc.update!(orders_open_at: now + 5.minutes)
+      coc.reload
+
+      coc
+    end
+
+    it "marks as open" do
+      expect {
+        subject
+        cloned_order_cycle.reload
+      }
+        .to change { cloned_order_cycle.opened_at }
+
+      expect(cloned_order_cycle.opened_at).to be_within(1).of(now)
+    end
+  end
+
   describe "concurrency", concurrency: true do
     let(:breakpoint) { Mutex.new }
 
