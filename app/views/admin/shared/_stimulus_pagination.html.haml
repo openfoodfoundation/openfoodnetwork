@@ -2,23 +2,23 @@
 
 %nav.pagination{ "aria-label": t('.navigation'), "data-controller": "search" }
   - if pagy.prev
-    %a.page.prev{ rel: "prev", data: { action: 'click->search#changePage', page: pagy.prev } }
+    %a.page.prev{ href: "#", rel: "prev", "aria-label": t('.previous'), data: { action: 'click->search#changePage', page: pagy.prev } }
       %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
 
   %ul.pagelist
     - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
       - if item.is_a?(Integer)                        # page link
         %li
-          %a.page{ "aria-label": t('.page', number: item), data: { action: 'click->search#changePage', page: item } }= item
+          %a.page{ href: "#", "aria-label": t('.page', number: item), data: { action: 'click->search#changePage', page: item } }= item
 
       - elsif item.is_a?(String)                      # current page
         %li
-          %a.page.current.active{"aria-label": t('.page', number: item), "aria-current": "page"}= item
+          %a.page.current.active{ href: "#", "aria-label": t('.page', number: item), "aria-current": "page" }= item
 
       - elsif item == :gap                            # page gap
         %li
           %span.page.gap.pagination-ellipsis!= pagy_t('pagy.gap')
 
   - if pagy.next
-    %a.page.next{ rel: "next", data: { action: 'click->search#changePage', page: pagy.next } }
+    %a.page.next{ href: "#", rel: "next", "aria-label": t('.next'), data: { action: 'click->search#changePage', page: pagy.next } }
       %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
