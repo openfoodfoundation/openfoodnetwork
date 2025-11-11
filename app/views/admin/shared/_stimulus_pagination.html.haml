@@ -1,6 +1,6 @@
 - link = pagy_anchor(pagy)
 
-%nav{ "data-controller": "search" }
+%nav{ "aria-label": t('.navigation'), "data-controller": "search" }
   %ul.pagination
     - if pagy.prev
       %li

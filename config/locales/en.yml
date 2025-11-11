@@ -1856,6 +1856,8 @@ en:
           images: "Images"
           contact: "Contact"
           web: "Web Resources"
+      stimulus_pagination:
+        navigation: Pagination
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
