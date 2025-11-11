@@ -1858,6 +1858,7 @@ en:
           web: "Web Resources"
       stimulus_pagination:
         navigation: Pagination
+        page: "Page %{number}"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email

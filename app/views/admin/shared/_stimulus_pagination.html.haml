@@ -13,11 +13,11 @@
     - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
       - if item.is_a?(Integer)                        # page link
         %li
-          %a.page{ data: { action: 'click->search#changePage', page: item } }= item
+          %a.page{ "aria-label": t('.page', number: item), data: { action: 'click->search#changePage', page: item } }= item
 
       - elsif item.is_a?(String)                      # current page
         %li
-          %a.page.current.active{"aria-current": "page"}= item
+          %a.page.current.active{"aria-label": t('.page', number: item), "aria-current": "page"}= item
 
       - elsif item == :gap                            # page gap
         %li
