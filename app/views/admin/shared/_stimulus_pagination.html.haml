@@ -4,7 +4,7 @@
   %ul.pagination
     - if pagy.prev
       %li
-        %a.page.prev{ data: { action: 'click->search#changePage', page: pagy.prev } }
+        %a.page.prev{ rel: "prev", data: { action: 'click->search#changePage', page: pagy.prev } }
           %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
     - else
       %li
@@ -25,7 +25,7 @@
 
     - if pagy.next
       %li
-        %a.page.next{ data: { action: 'click->search#changePage', page: pagy.next } }
+        %a.page.next{ rel: "next", data: { action: 'click->search#changePage', page: pagy.next } }
           %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
     - else
       %li
