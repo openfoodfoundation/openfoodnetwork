@@ -17,7 +17,7 @@
 
       - elsif item.is_a?(String)                      # current page
         %li
-          %a.page.current.active= item
+          %a.page.current.active{"aria-current": "page"}= item
 
       - elsif item == :gap                            # page gap
         %li
