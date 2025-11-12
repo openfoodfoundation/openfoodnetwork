@@ -38,6 +38,24 @@ Flipper.register(:enterprise_created_after_2025_08_11) do |actor|
   actor.respond_to?(:created_at?) && actor.created_at >= "2025-08-11".to_time
 end
 
+# This is group is to be used to turn on variant tags for enterprises with inventory enabled but
+# are not using it
+Flipper.register(:old_enterprise_with_no_inventory) do |actor|
+  # This group applies to enterprises only, so we return false if the actor is not an Enterprise
+  next false unless actor.actor.instance_of? Enterprise
+
+  enterprise_with_variant_override = Enterprise
+    .where(id: VariantOverride.joins(:hub).select(:hub_id))
+    .where("created_at < ?", "2025-08-11")
+    .distinct
+  enterprise_with_no_variant_override = Enterprise
+    .where.not(id: enterprise_with_variant_override)
+    .where("created_at < ?", "2025-08-11")
+    .pluck(:id)
+
+  enterprise_with_no_variant_override.include?(actor.id)
+end
+
 Flipper::UI.configure do |config|
   config.descriptions_source = ->(_keys) do
     # return has to be hash of {String key => String description}
@@ -59,4 +77,8 @@ Flipper::UI.configure do |config|
 end
 
 # Add known feature toggles. This may fail if the database isn't setup yet.
-OpenFoodNetwork::FeatureToggle.setup! rescue ActiveRecord::StatementInvalid
+begin
+  OpenFoodNetwork::FeatureToggle.setup!
+rescue StandardError
+  ActiveRecord::StatementInvalid
+end
