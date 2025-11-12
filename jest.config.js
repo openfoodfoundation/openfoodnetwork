@@ -138,7 +138,10 @@ module.exports = {
   // testEnvironment: "jest-environment-node",
 
   // Options that will be passed to the testEnvironment
-  // testEnvironmentOptions: {},
+  // this will become default in future jest release
+  testEnvironmentOptions: {
+    globalsCleanup: "on",
+  },
 
   // Adds a location field to test results
   // testLocationInResults: false,
