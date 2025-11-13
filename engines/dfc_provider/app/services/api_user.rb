@@ -36,8 +36,11 @@ class ApiUser
   end
 
   def self.from_client_id(client_id)
-    id = CLIENT_MAP[client_id]
+    # Some tokens contain a short client id:
+    return new(client_id) if PLATFORMS.key?(client_id)
 
+    # Some tokens have a full URI to identify the client:
+    id = CLIENT_MAP[client_id]
     new(id) if id
   end
 

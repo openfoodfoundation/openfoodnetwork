@@ -25,6 +25,14 @@ RSpec.describe AuthorizationControl do
       end
     end
 
+    it "accepts a token from FDC" do
+      sib_token = file_fixture("fdc_access_token.jwt").read
+
+      travel_to(Date.parse("2025-06-13")) do
+        expect(auth(oidc_token: sib_token).user.id).to eq "lf-dev"
+      end
+    end
+
     it "finds the right user" do
       create(:oidc_user) # another user
       token = allow_token_for(email: user.email)
