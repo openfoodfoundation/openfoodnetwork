@@ -17,7 +17,7 @@ echo "::group:: Running prettier with reviewdog 🐶 ..."
       -efm="%Z[error]%r" \
       -efm="%-G%r" \
       -name="prettier" \
-      -reporter="github-pr-check" \
+      -reporter="github-pr-annotations" \
       -filter-mode="nofilter" \
       -fail-level="any" \
       -level="error" \
@@ -31,7 +31,7 @@ bundle exec rubocop \
   --fail-level info \
   | reviewdog -f="rubocop" \
       -name="rubocop" \
-      -reporter="github-pr-check" \
+      -reporter="github-pr-annotations" \
       -filter-mode="nofilter" \
       -level="error" \
       -fail-level="any" \
@@ -45,7 +45,7 @@ bundle exec haml-lint \
   --fail-level warning \
   | reviewdog -f="haml-lint" \
       -name="haml-lint" \
-      -reporter="github-pr-check" \
+      -reporter="github-pr-annotations" \
       -filter-mode="nofilter" \
       -level="error" \
       -fail-level="any" \
