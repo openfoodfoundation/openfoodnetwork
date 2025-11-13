@@ -2,7 +2,6 @@ name: Linters
 on: [pull_request]
 permissions:
   contents: read # to fetch code (actions/checkout)
-  checks: write # to post check annotations
 jobs:
   lint:
     name: reviewdog
