@@ -175,8 +175,8 @@ module.exports = {
   // }
 
   // A map from regular expressions to paths to transformers
-  // https://jest-archive-august-2023.netlify.app/docs/28.x/configuration/#transform-objectstring-pathtotransformer--pathtotransformer-object
-  transform: { "\\.[jt]sx?$": "babel-jest" },
+  // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+  // transform: { "\\.[jt]sx?$": "babel-jest" },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ["/node_modules/(?!(stimulus.+)/)"],
