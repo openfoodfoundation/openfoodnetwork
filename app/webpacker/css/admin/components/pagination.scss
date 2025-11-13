@@ -39,6 +39,10 @@
       color: $white;
     }
 
+    &.disabled {
+      display: none;
+    }
+
     &.prev {
       margin-right: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
       & > i {
@@ -53,7 +57,7 @@
       }
     }
 
-    &:hover:not(.gap),
+    &:hover:not(.gap):not(.disabled),
     &[href]:hover {
       background-color: $color-5;
       color: $white;
