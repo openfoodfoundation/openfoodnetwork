@@ -162,8 +162,8 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     afm (0.2.2)
-    angular-rails-templates (1.2.1)
-      railties (>= 5.0, < 7.2)
+    angular-rails-templates (1.3.1)
+      railties (>= 5.0, < 8.1)
       sprockets (>= 3.0, < 5)
       sprockets-rails
       tilt
@@ -832,9 +832,9 @@ GEM
       base64
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.4.2)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
+    sprockets-rails (3.5.2)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     state_machines (0.100.4)
     state_machines-activemodel (0.31.0)
@@ -870,7 +870,7 @@ GEM
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.4.0)
     thread-local (1.1.0)
-    tilt (2.3.0)
+    tilt (2.6.1)
     timeout (0.4.4)
     tsort (0.2.0)
     ttfunk (1.8.0)
