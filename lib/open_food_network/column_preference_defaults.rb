@@ -93,7 +93,8 @@ module OpenFoodNetwork
           category: { name: t(:category), visible: true },
           tax_category: { name: t(:tax_category), visible: true },
         }
-        if OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, user)
+        if OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, user) ||
+           OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, *user.enterprises)
           columns[:tags] = { name: t(:tags), visible: true }
         end
 

@@ -17,7 +17,7 @@
     = select_tag :category_id, options_for_select(category_options, category_id),
       include_blank: t('.all_categories'), class: "fullwidth",
       data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_categories')}
-  -if feature?(:variant_tag, spree_current_user)
+  -if variant_tag_enabled?(spree_current_user)
     .tags
       = label_tag :tags_name_in, t('.tags.label')
       - select_tag_options = { class: "fullwidth",

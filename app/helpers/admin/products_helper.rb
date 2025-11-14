@@ -41,5 +41,11 @@ module Admin
     def hide_producer_column?(producer_options)
       spree_current_user.column_preferences.bulk_edit_product.empty? && producer_options.one?
     end
+
+    # check if the user is in the "admins" group or if it's enabled for any of
+    # the enterprises the user manages
+    def variant_tag_enabled?(user)
+      feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
+    end
   end
 end
