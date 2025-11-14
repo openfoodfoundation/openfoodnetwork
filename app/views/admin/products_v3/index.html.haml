@@ -1,3 +1,4 @@
+-# locals: (producer_options:, categories:, tax_category_options:, available_tags:, flash:, allowed_producers:)
 - content_for :page_title do
   = t('.header.title')
 - content_for :page_actions do
@@ -13,11 +14,13 @@
 
 #products_v3_page{ 'data-turbo': true }
   = render partial: "content", locals: { products: @products, pagy: @pagy, search_term: @search_term,
-                               producer_options: producers, producer_id: @producer_id,
+                               producer_options:, producer_id: @producer_id,
                                category_options: categories, category_id: @category_id,
                                tax_category_options:, available_tags:, tags: @tags,
                                flashes: flash,
-                               display_search_filter: (@products.any? || @search_term.present? || @category_id.present?) }
+                               display_search_filter: (@products.any? || @search_term.present? || @category_id.present?),
+                               allowed_producers:}
+
   - %w[product variant].each do |object_type|
     = render partial: 'delete_modal', locals: { object_type: }
   #modal-component
