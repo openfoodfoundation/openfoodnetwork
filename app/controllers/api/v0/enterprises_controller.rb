@@ -43,7 +43,7 @@ module Api
         @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
         authorize! :update, @enterprise
 
-        if params[:logo] && @enterprise.update( logo: params[:logo] )
+        if params[:logo] && @enterprise.update!(logo: params[:logo])
           render(html: @enterprise.logo_url(:medium), status: :ok)
         elsif params[:promo] && @enterprise.update!( promo_image: params[:promo] )
           render(html: @enterprise.promo_image_url(:medium), status: :ok)
