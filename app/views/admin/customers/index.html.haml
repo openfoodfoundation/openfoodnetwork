@@ -44,8 +44,8 @@
       %h1#no_results{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0' }
         =t :no_customers_found
 
-      %save-bar{ dirty: "customers_form.$dirty", persist: "false" }
-        %input.red{ type: "button", value: t(:save_changes), "ng-click": "submitAll(customers_form)" }
+      %save-bar{ persist: "filteredCustomers.length > 0" }
+        %input.red{ type: "button", value: t(:save_changes), "ng-click": "submitAll(customers_form)", "ng-disabled": "!hasUnsavedChanges()" }
 
       %table.index#customers{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length > 0' }
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }

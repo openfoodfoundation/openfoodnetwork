@@ -16,7 +16,10 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
     remove: (id, attr) =>
       if @pendingChanges.hasOwnProperty("#{id}")
         delete @pendingChanges["#{id}"]["#{attr}"]
-        delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
+
+        if @changeCount( @pendingChanges["#{id}"] ) < 1
+          delete @pendingChanges["#{id}"]
+          StatusMessage.clear()
 
     submitAll: (form=null) =>
       all = []
@@ -46,6 +49,9 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
 
     unsavedCount: ->
       Object.keys(@pendingChanges).length
+
+    yes: ->
+      @unsavedCount() > 0
 
     changeCount: (objectChanges) ->
       Object.keys(objectChanges).length

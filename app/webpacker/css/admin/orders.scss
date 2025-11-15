@@ -9,6 +9,10 @@ input,
 div {
   &.update-pending {
     border: solid 1px orange;
+
+    &:focus {
+      border: solid 1px orange;
+    }
   }
 }
 
