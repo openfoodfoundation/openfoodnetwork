@@ -128,11 +128,21 @@ module Admin
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
 
-      # Transform on_hand sorting to include backorderable_priority (on-demand) for proper ordering
+      # Transform on_hand sorting to properly handle On-Demand products:
+      #   - On-Demand products should ignore on_hand completely and sort alphabetically.
+      #   - Non-On-Demand products should continue sorting by on_hand as usual.
       if @q[:s] == 'on_hand asc'
-        @q[:s] = ['backorderable_priority asc', @q[:s]]
+        @q[:s] = [
+          'backorderable_priority asc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
       elsif @q[:s] == 'on_hand desc'
-        @q[:s] = ['backorderable_priority desc', @q[:s]]
+        @q[:s] = [
+          'backorderable_priority desc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
       end
     end
 
@@ -180,6 +190,7 @@ module Admin
         product_query = product_query.select(
           Arel.sql('spree_products.*'),
           Spree::Product.backorderable_priority_sql,
+          Spree::Product.backorderable_name_sql,
           Spree::Product.on_hand_sql
         )
       end
