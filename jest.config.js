@@ -138,7 +138,10 @@ module.exports = {
   // testEnvironment: "jest-environment-node",
 
   // Options that will be passed to the testEnvironment
-  // testEnvironmentOptions: {},
+  // this will become default in future jest release
+  testEnvironmentOptions: {
+    globalsCleanup: "on",
+  },
 
   // Adds a location field to test results
   // testLocationInResults: false,
@@ -166,11 +169,14 @@ module.exports = {
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
   // testURL: "http://localhost",
 
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  // timers: "real",
+  // Setting this enableGlobally to "true" allows the use of fake timers for functions such as "setTimeout"
+  // fakeTimers: {
+  //   enableGlobally: false
+  // }
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+  // transform: { "\\.[jt]sx?$": "babel-jest" },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ["/node_modules/(?!(stimulus.+)/)"],
