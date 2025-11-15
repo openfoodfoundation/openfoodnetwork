@@ -3827,7 +3827,6 @@ hu:
     card_code: "Kártya kódja"
     card_number: "Kártyaszám"
     category: "Kategória"
-    created_successfully: "Sikeresen létrehozva"
     credit: "Hitel"
     editing_tax_category: "Adókategória szerkesztése"
     editing_tax_rate: "Adókulcs szerkesztése"
@@ -3854,7 +3853,6 @@ hu:
     refund: "Visszatérítés"
     server_error: "Szerver hiba"
     start_date: "Kezdő dátum"
-    successfully_removed: "Sikeresen eltávolítva"
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelésed üres, kérünk adj hozzá legalább egy terméket"
     add_product: "Termék hozzáadása"
@@ -4025,8 +4023,6 @@ hu:
     please_define_payment_methods: "Kérjük, először határozz meg néhány fizetési módot."
     options: "Opciók"
     has_no_shipped_units: "nincsenek kiszállított egységek"
-    successfully_created: '%{resource} sikeresen létrehozva!'
-    successfully_updated: '%{resource} sikeresen frissítve!'
     payment_method: "Fizetési mód"
     payment_processing_failed: "A fizetést nem sikerült feldolgozni, kérjük, ellenőrizd a megadott adatokat"
     not_available: "N/A"

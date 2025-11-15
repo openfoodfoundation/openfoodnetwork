@@ -176,7 +176,7 @@ RSpec.describe "Managing users" do
           expect do
             click_button "Create"
           end.to change { Spree::User.count }.by 1
-          expect(page).to have_text "Created Successfully"
+          expect(page).to have_text "User has been successfully created!"
           expect(page).to have_text "Email confirmation is pending"
 
           expect(Spree::User.last.locale).to eq "es"

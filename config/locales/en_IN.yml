@@ -3182,8 +3182,6 @@ en_IN:
     cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
-    successfully_created: '%{resource} has been successfully created!'
-    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     sku: "Product Code"

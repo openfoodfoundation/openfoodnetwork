@@ -3216,7 +3216,6 @@ pt_BR:
     card_code: "Código do cartão"
     card_number: "Número do cartão"
     category: "Categoria"
-    created_successfully: "Criado com Sucesso"
     credit: "Crédito"
     editing_tax_category: "Editando categoria de taxas"
     editing_tax_rate: "Editando o valor da taxa"
@@ -3241,7 +3240,6 @@ pt_BR:
     refund: "Estorno"
     server_error: "Erro de servidor"
     start_date: "Data de início"
-    successfully_removed: "Removido com Sucesso"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
@@ -3404,8 +3402,6 @@ pt_BR:
     please_define_payment_methods: "Defina primeiro algum método de pagamento."
     options: "Opções"
     has_no_shipped_units: "não tem itens enviados"
-    successfully_created: '%{resource}foi criado com sucesso!'
-    successfully_updated: '%{resource}foi atualizado com sucesso!'
     payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pôde ser processado, favor verificar os dados informados. "
     not_available: "N/A"

@@ -3941,7 +3941,6 @@ cy:
     card_code: "Cod cerdyn"
     card_number: "Rhif cerdyn"
     category: "Categori"
-    created_successfully: "Llwyddwyd i greu"
     credit: "Credyd"
     editing_tax_category: "Yn golygu'r categori treth"
     editing_tax_rate: "Yn golygu'r gyfradd dreth"
@@ -3968,7 +3967,6 @@ cy:
     refund: "Ad-daliad"
     server_error: "Nam gyda'r gweinydd"
     start_date: "Dyddiad cychwyn"
-    successfully_removed: "Llwyddwyd i ddileu"
     updating: "Yn diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"
     add_product: "Ychwanegu Cynnyrch"
@@ -4139,8 +4137,6 @@ cy:
     please_define_payment_methods: "Diffiniwch ddulliau talu yn gyntaf."
     options: "Opsiynau"
     has_no_shipped_units: "dim unedau a anfonwyd"
-    successfully_created: 'llwyddwyd i greu %{resource}'
-    successfully_updated: 'llwyddwyd i ddiweddaru %{resource} '
     payment_method: "Dull talu"
     payment_processing_failed: "Nid oedd yn bosib prosesu'r taliad, gwiriwch y manylion a nodwyd gennych"
     not_available: "Amherthnasol"

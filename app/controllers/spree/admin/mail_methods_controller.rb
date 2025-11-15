@@ -12,7 +12,7 @@ module Spree
           Spree::Config[name] = value
         end
 
-        flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:mail_method_settings))
+        flash[:success] = I18n.t(:successfully_updated, resource: Spree.t(:mail_method_settings))
         render :edit
       end
 

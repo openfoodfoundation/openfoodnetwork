@@ -351,6 +351,7 @@ RSpec.describe 'Tag Rules' do
             first("a.delete-tag-rule").click
           end
         end
+        expect(page).to have_content "Tag Rule has been successfully removed!"
         expect(page).not_to have_selector "#tr_1001"
 
         accept_alert do
@@ -358,6 +359,7 @@ RSpec.describe 'Tag Rules' do
             first("a.delete-tag-rule").click
           end
         end
+        expect(page).to have_content "Tag Rule has been successfully removed!"
         expect(page).not_to have_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
     end
