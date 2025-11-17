@@ -1,32 +1,18 @@
 /**
  * @jest-environment jsdom
+ * @jest-environment-options {"url": "http://www.example.com/"}
  */
 
 import { Application } from "stimulus";
-import out_of_stock_modal_controller from "../../../app/webpacker/controllers/out_of_stock_modal_controller";
+import * as locationWrapper from "js/window_location_wrapper";
+import out_of_stock_modal_controller from "controllers/out_of_stock_modal_controller";
 
 describe("OutOfStockModalController", () => {
   beforeAll(() => {
     const application = Application.start();
     application.register("out-of-stock-modal", out_of_stock_modal_controller);
-  });
 
-  let originalWindowLocation = window.location;
-
-  beforeEach(() => {
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      enumerable: true,
-      value: new URL(window.location.href),
-    });
-  });
-
-  afterEach(() => {
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      enumerable: true,
-      value: originalWindowLocation,
-    });
+    jest.spyOn(locationWrapper, "locationPathName").mockImplementation(() => undefined);
   });
 
   // We use window to dispatch the closing event so we don't need to set up another controller
@@ -46,7 +32,7 @@ describe("OutOfStockModalController", () => {
         const event = new Event("closing");
         window.dispatchEvent(event);
 
-        expect(window.location.href).not.toBe("/shop");
+        expect(locationWrapper.locationPathName).not.toHaveBeenCalled();
       });
     });
 
@@ -65,7 +51,7 @@ describe("OutOfStockModalController", () => {
         const event = new Event("closing");
         window.dispatchEvent(event);
 
-        expect(window.location.pathname).toBe("/shop");
+        expect(locationWrapper.locationPathName).toHaveBeenCalledWith("/shop");
       });
     });
   });

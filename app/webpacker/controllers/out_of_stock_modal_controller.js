@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import { locationPathName } from "js/window_location_wrapper";
 
 // This is meant to be used with the "modal:closing" event, ie:
 //
@@ -13,7 +14,7 @@ export default class extends Controller {
 
   redirect() {
     if (this.redirectValue) {
-      window.location.pathname = "/shop";
+      locationPathName("/shop");
     }
   }
 }
