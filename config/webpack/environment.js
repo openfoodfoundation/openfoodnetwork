@@ -26,8 +26,8 @@ function addQuietDepsToSassLoader (subloader) {
   }
 }
 
-environment.loaders.keys().forEach(loaderName => {
-  const loader = environment.loaders.get(loaderName);
+environment.rules.keys().forEach(loaderName => {
+  const loader = environment.rules.get(loaderName);
   if (loaderName === 'sass') {
     loader.use.forEach(addQuietDepsToSassLoader);
   }
