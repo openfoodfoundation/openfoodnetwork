@@ -23,7 +23,7 @@
     %tr{ 'data-nested-form-target': "target" }
     %tr.condensed
       %td
-      - colspan = feature?(:variant_tag, spree_current_user) ? 12 : 11
+      - colspan = variant_tag_enabled?(spree_current_user) ? 12 : 11
       %td{ colspan: "#{colspan}" }
         %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
                                                       'aria-label': t('.new_variant') }
