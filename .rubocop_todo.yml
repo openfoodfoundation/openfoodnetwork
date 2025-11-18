@@ -80,7 +80,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 48
+# Offense count: 49
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -122,6 +122,7 @@ Metrics/ClassLength:
     - 'app/services/order_cycles/form_service.rb'
     - 'app/services/orders/sync_service.rb'
     - 'app/services/permissions/order.rb'
+    - 'app/services/products_renderer.rb'
     - 'app/services/sets/product_set.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
@@ -133,7 +134,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 35
+# Offense count: 37
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
@@ -234,7 +235,7 @@ Naming/MethodParameterName:
   Exclude:
     - 'engines/dfc_provider/lib/dfc_provider/catalog_item.rb'
 
-# Offense count: 59
+# Offense count: 60
 # Configuration parameters: Mode, AllowedMethods, AllowedPatterns, AllowBangMethods, WaywardPredicates.
 # AllowedMethods: call
 # WaywardPredicates: nonzero?

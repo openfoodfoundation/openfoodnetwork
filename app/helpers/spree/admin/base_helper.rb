@@ -147,6 +147,10 @@ module Spree
         dom_id(record, 'spree')
       end
 
+      def inventory_enabled?(enterprises)
+        !feature?(:variant_tag, *enterprises) && feature?(:inventory, *enterprises)
+      end
+
       private
 
       def attribute_name_for(field_name)
