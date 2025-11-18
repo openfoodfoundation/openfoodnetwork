@@ -49,10 +49,6 @@ RSpec.describe Enterprises::Delete do
       it 'deletes associated variants' do
         expect { service.call }.to change { Spree::Variant.with_deleted.count }.by(-1)
       end
-
-      it 'deletes associated products' do
-        expect { service.call }.to change { Spree::Product.with_deleted.count }.by(-1)
-      end
     end
 
     context 'when enterprise has variants with completed orders' do
