@@ -17,6 +17,9 @@ module Enterprises
         # TODO: Deal with related products after the variants
         related_product_ids = variants.pluck(:product_id)
 
+        # TODO: Handle related orders
+        related_order_ids = variants.joins(:line_items).pluck('spree_line_items.order_id')
+
         puts "==== Variants count before: #{variants.count}"
         variants.find_each do |variant|
           if skipping_condition_for(variant)
@@ -62,6 +65,8 @@ module Enterprises
 
         stock_item.really_destroy!
       end
+
+      variant.line_items.each(&:destroy)
 
       variant.really_destroy!
     end
