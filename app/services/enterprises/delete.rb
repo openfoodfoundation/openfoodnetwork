@@ -3,38 +3,39 @@
 module Enterprises
   class Delete
     attr_reader :enterprise
+    attr_accessor :skip_real_deletion
 
     def initialize(enterprise:)
       @enterprise = enterprise
     end
 
     def call
-      skip_real_deletion = false
+      self.skip_real_deletion = false
 
       ActiveRecord::Base.transaction do
         variants = enterprise.supplied_variants.with_deleted
 
         # TODO: Deal with related products after the variants
-        variants.pluck(:product_id)
+        related_product_ids = variants.pluck(:product_id)
 
         # TODO: Handle related orders
         variants.joins(:line_items).pluck('spree_line_items.order_id')
 
-        Rails.logger.debug { "==== Variants count before: #{variants.count}" }
+        puts "==== Variants count before: #{variants.count}"
         variants.find_each do |variant|
           if skipping_condition_for(variant)
-            skip_real_deletion = true
+            self.skip_real_deletion = true
             next
           end
 
           delete_variants_related_data_for(variant)
         end
-        Rails.logger.debug {
-          "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
-        }
+        puts "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
+
+        delete_related_product(related_product_ids)
 
         if skip_real_deletion
-          Rails.logger.debug '===== Real deletion impossible...'
+          puts '===== Real deletion impossible...'
         else
           # As we could force deletion when no orders were found
           ids = enterprise.distributor_shipping_methods.pluck(:id)
@@ -73,9 +74,22 @@ module Enterprises
       variant.really_destroy!
     end
 
+    def delete_related_product(product_ids)
+      Spree::Product.where(id: product_ids).includes(:variants).find_each do |product|
+        # For now, let's just really delete if the product is not linked to any variants,
+        # which means that the product was just linked to deletable variants from the
+        # current enterprise. 90% of our cases.
+        if product.variants.exists?
+          self.skip_real_deletion = true
+        else
+          product.really_destroy!
+        end
+      end
+    end
+
     def skipping_condition_for(variant)
       orders_per_state_count = variant.line_items.joins(:order).group('spree_orders.state').count
-      Rails.logger.debug { "== Related orders: #{orders_per_state_count}" }
+      puts "== Related orders: #{orders_per_state_count}"
 
       # For now, we decide that we cannot delete an enterprise if there is a completed order
       # linked to it.
