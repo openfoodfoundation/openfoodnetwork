@@ -15,6 +15,15 @@ class ApiUser
       id: "https://carte.cqcm.coop/profile",
       tokens: "https://authentification.cqcm.coop/realms/cqcm/protocol/openid-connect/token",
     },
+    'lf-dev' => {
+      id: "https://www.litefarm.org/profile",
+      tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
+    },
+    'mo-dev' => {
+      id: "https://market.organic/profile",
+      tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
+    },
+
   }.freeze
   CLIENT_MAP = PLATFORMS.keys.index_by { |key| PLATFORMS.dig(key, :id) }.freeze
 
@@ -27,8 +36,11 @@ class ApiUser
   end
 
   def self.from_client_id(client_id)
-    id = CLIENT_MAP[client_id]
+    # Some tokens contain a short client id:
+    return new(client_id) if PLATFORMS.key?(client_id)
 
+    # Some tokens have a full URI to identify the client:
+    id = CLIENT_MAP[client_id]
     new(id) if id
   end
 
