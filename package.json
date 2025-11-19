@@ -32,7 +32,7 @@
     "tom-select": "^2.4.3",
     "trix": "^2.1.15",
     "turbo_power": "^0.7.1",
-    "webpack": "~4"
+    "webpack": "~5"
   },
   "devDependencies": {
     "@testing-library/dom": "<11.0.0",
@@ -44,6 +44,6 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
-    "webpack-dev-server": "~3"
+    "webpack-dev-server": "~5"
   }
 }
