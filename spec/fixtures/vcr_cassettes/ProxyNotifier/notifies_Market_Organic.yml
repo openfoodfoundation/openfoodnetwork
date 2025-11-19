@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token
+    body:
+      encoding: UTF-8
+      string: client_id=<HIDDEN-OPENID_APP_ID>&client_secret=<HIDDEN-OPENID_APP_SECRET>&grant_type=client_credentials&scope=ReadEnterprise
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '1588'
+      Content-Type:
+      - application/json
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - no-referrer
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      Date:
+      - Fri, 21 Nov 2025 03:06:09 GMT
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<HIDDEN-OPENID-TOKEN>","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","not-before-policy":0,"scope":"ReadEnterprise
+        profile email"}'
+  recorded_at: Fri, 21 Nov 2025 03:06:09 GMT
+- request:
+    method: post
+    uri: https://market.organic/api/webhooks/ofn
+    body:
+      encoding: UTF-8
+      string: '{"eventType":"refresh","enterpriseUrlid":"http://ofn.example.net/api/dfc/enterprises/10000","scope":"ReadEnterprise"}'
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.29.1
+      Date:
+      - Fri, 21 Nov 2025 03:06:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '95'
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS, HEAD
+      Access-Control-Allow-Headers:
+      - Content-Type, Authorization, Cache-Control, Accept, Accept-Language
+      Access-Control-Expose-Headers:
+      - Content-Type, Content-Length
+      Etag:
+      - W/"5f-ip4J0TL+XJqsW6UbwFDqOBqtUAQ"
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"message":"Webhook received and stored","timestamp":"2025-11-21T03:06:10.659Z"}'
+  recorded_at: Fri, 21 Nov 2025 03:06:10 GMT
+recorded_with: VCR 6.2.0

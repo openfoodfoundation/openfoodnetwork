@@ -49,13 +49,6 @@ class ProxyNotifier
       f.response :json
       f.response :raise_error
     end
-    connection.post(webhook_url(platform), data)
-  end
-
-  def webhook_url(platform)
-    platform_url = ApiUser.platform_url(platform)
-    URI.parse(platform_url).tap do |url|
-      url.path = "/djangoldp-dfc/webhook/"
-    end
+    connection.post(ApiUser.webhook_url(platform), data)
   end
 end
