@@ -45,6 +45,12 @@ RSpec.describe Enterprises::Delete do
           Spree::Variant.with_deleted.where(id: variant.id).exists?
         }.from(true).to(false)
       end
+
+      it 'deletes the associated product' do
+        expect { service.call }.to change {
+          Spree::Product.where(id: product.id).exists?
+        }.from(true).to(false)
+      end
     end
 
     context 'when enterprise has variants with completed orders' do
@@ -93,6 +99,18 @@ RSpec.describe Enterprises::Delete do
       it 'skips deletion for variant with completed order' do
         expect { service.call }.not_to change { Spree::Variant.where(id: variant1.id).exists? }
       end
+
+      it 'does not delete the product related to the completed order' do
+        expect { service.call }.not_to change {
+          Spree::Product.where(id: product1.id).exists?
+        }
+      end
+
+      it 'deletes the product related to the draft order' do
+        expect { service.call }.to change {
+          Spree::Product.where(id: product2.id).exists?
+        }.from(true).to(false)
+      end
     end
 
     context 'when enterprise has soft-deleted variants' do
@@ -103,7 +121,7 @@ RSpec.describe Enterprises::Delete do
         variant.destroy
       end
 
-      it 'processes soft-deleted variants' do
+      it 'deletes really soft-deleted variants' do
         expect(enterprise.supplied_variants.with_deleted).to include(variant)
         expect { service.call }
           .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
@@ -118,7 +136,10 @@ RSpec.describe Enterprises::Delete do
       let!(:variant) { product.variants.first }
 
       it 'wraps deletion in a transaction' do
-        expect(ActiveRecord::Base).to receive(:transaction).twice.and_call_original
+        expect(ActiveRecord::Base).to receive(:transaction).exactly(3).times.and_call_original
+        # One call for the described class
+        # One call for variant#destruction
+        # One call for product#destruction
         service.call
       end
 
