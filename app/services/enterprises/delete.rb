@@ -77,7 +77,7 @@ module Enterprises
 
       # For now, we decide that we cannot delete an enterprise if there is a completed order
       # linked to it.
-      orders_per_state_count.dig(:complete).to_i > 0
+      orders_per_state_count.dig('complete').to_i > 0
     end
   end
 end
