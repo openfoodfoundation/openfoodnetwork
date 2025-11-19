@@ -15,12 +15,12 @@ module Enterprises
         variants = enterprise.supplied_variants.with_deleted
 
         # TODO: Deal with related products after the variants
-        related_product_ids = variants.pluck(:product_id)
+        variants.pluck(:product_id)
 
         # TODO: Handle related orders
-        related_order_ids = variants.joins(:line_items).pluck('spree_line_items.order_id')
+        variants.joins(:line_items).pluck('spree_line_items.order_id')
 
-        puts "==== Variants count before: #{variants.count}"
+        Rails.logger.debug { "==== Variants count before: #{variants.count}" }
         variants.find_each do |variant|
           if skipping_condition_for(variant)
             skip_real_deletion = true
@@ -29,10 +29,12 @@ module Enterprises
 
           delete_variants_related_data_for(variant)
         end
-        puts "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
+        Rails.logger.debug {
+          "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
+        }
 
         if skip_real_deletion
-          puts '===== Real deletion impossible...'
+          Rails.logger.debug '===== Real deletion impossible...'
         else
           # As we could force deletion when no orders were found
           ids = enterprise.distributor_shipping_methods.pluck(:id)
@@ -73,11 +75,11 @@ module Enterprises
 
     def skipping_condition_for(variant)
       orders_per_state_count = variant.line_items.joins(:order).group('spree_orders.state').count
-      puts "== Related orders: #{orders_per_state_count}"
+      Rails.logger.debug { "== Related orders: #{orders_per_state_count}" }
 
       # For now, we decide that we cannot delete an enterprise if there is a completed order
       # linked to it.
-      orders_per_state_count.dig(:complete).to_i > 0
+      orders_per_state_count['complete'].to_i > 0
     end
   end
 end
