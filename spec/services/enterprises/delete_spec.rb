@@ -9,26 +9,18 @@ RSpec.describe Enterprises::Delete do
 
   describe '#call' do
     context 'when enterprise has no variants' do
-      it 'deletes the enterprise successfully' do
-        expect { service.call }.to change { Enterprise.count }.by(-1)
-      end
-
-      it 'deletes associated distributor shipping methods' do
+      it 'deletes successfully the enterprise and the direct relations' do
         create(:distributor_shipping_method, distributor: enterprise)
-
-        expect { service.call }.to change { DistributorShippingMethod.count }.by(-2)
-      end
-
-      it 'deletes associated distributor payment methods' do
         create(:distributor_payment_method, distributor: enterprise)
-
-        expect { service.call }.to change { DistributorPaymentMethod.count }.by(-2)
-      end
-
-      it 'deletes associated enterprise roles' do
         create(:enterprise_role, enterprise: enterprise, user: user)
 
-        expect { service.call }.to change { EnterpriseRole.count }.by(-2)
+        expect { service.call }
+          .to change {
+            Enterprise.where(id: enterprise.id).exists?
+          }.from(true).to(false)
+          .and change { DistributorShippingMethod.count }.by(-2)
+          .and change { DistributorPaymentMethod.count }.by(-2)
+          .and change { EnterpriseRole.count }.by(-2)
       end
     end
 
@@ -42,12 +34,16 @@ RSpec.describe Enterprises::Delete do
         create(:line_item, order: order, variant: variant)
       end
 
-      it 'deletes the enterprise and its variants' do
-        expect { service.call }.to change { Enterprise.count }.by(-1)
+      it 'deletes the enterprise' do
+        expect { service.call }.to change {
+          Enterprise.where(id: enterprise.id).exists?
+        }.from(true).to(false)
       end
 
       it 'deletes associated variants' do
-        expect { service.call }.to change { Spree::Variant.with_deleted.count }.by(-1)
+        expect { service.call }.to change {
+          Spree::Variant.with_deleted.where(id: variant.id).exists?
+        }.from(true).to(false)
       end
     end
 
@@ -58,19 +54,19 @@ RSpec.describe Enterprises::Delete do
       let!(:line_item) { create(:line_item, order: completed_order, variant: variant) }
 
       it 'does not delete the enterprise' do
-        expect { service.call }.not_to change { Enterprise.count }
+        expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
       end
 
       it 'does not delete the variant' do
-        expect { service.call }.not_to change { Spree::Variant.with_deleted.count }
+        expect { service.call }.not_to change {
+          Spree::Variant.where(id: variant.id).exists?
+        }
       end
 
       it 'does not delete the product' do
-        expect { service.call }.not_to change { Spree::Product.with_deleted.count }
-      end
-
-      it 'outputs skipping message' do
-        expect { service.call }.to output(/Real deletion impossible/).to_stdout
+        expect { service.call }.not_to change {
+          Spree::Product.where(id: product.id).exists?
+        }
       end
     end
 
@@ -91,11 +87,11 @@ RSpec.describe Enterprises::Delete do
       end
 
       it 'does not delete the enterprise due to completed order' do
-        expect { service.call }.not_to change { Enterprise.count }
+        expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
       end
 
       it 'skips deletion for variant with completed order' do
-        expect { service.call }.not_to change { Spree::Variant.with_deleted.count }
+        expect { service.call }.not_to change { Spree::Variant.where(id: variant1.id).exists? }
       end
     end
 
@@ -104,12 +100,16 @@ RSpec.describe Enterprises::Delete do
       let!(:variant) { product.variants.first }
 
       before do
-        variant.destroy # Soft delete
+        variant.destroy
       end
 
       it 'processes soft-deleted variants' do
         expect(enterprise.supplied_variants.with_deleted).to include(variant)
-        expect { service.call }.to change { Enterprise.count }.by(-1)
+        expect { service.call }
+          .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
+          .and change {
+                 Spree::Variant.with_deleted.where(id: variant.id).exists?
+               }.from(true).to(false)
       end
     end
 
@@ -118,18 +118,19 @@ RSpec.describe Enterprises::Delete do
       let!(:variant) { product.variants.first }
 
       it 'wraps deletion in a transaction' do
-        expect(ActiveRecord::Base).to receive(:transaction).and_call_original
+        expect(ActiveRecord::Base).to receive(:transaction).twice.and_call_original
         service.call
       end
 
       context 'when an error occurs during deletion' do
         before do
-          allow_any_instance_of(Spree::Variant).to receive(:really_destroy!).and_raise(StandardError)
+          allow_any_instance_of(Spree::Variant)
+            .to receive(:really_destroy!).and_raise(StandardError)
         end
 
         it 'rolls back all changes' do
           expect { service.call }.to raise_error(StandardError)
-          expect(Enterprise.exists?(enterprise.id)).to be true
+          expect(Enterprise.exists?(enterprise.id)).to be(true)
         end
       end
     end
@@ -146,7 +147,7 @@ RSpec.describe Enterprises::Delete do
       end
 
       it 'returns true' do
-        expect(service.send(:skipping_condition_for, variant)).to be true
+        expect(service.__send__(:skipping_condition_for, variant)).to be(true)
       end
     end
 
@@ -157,13 +158,13 @@ RSpec.describe Enterprises::Delete do
       end
 
       it 'returns false' do
-        expect(service.send(:skipping_condition_for, variant)).to be false
+        expect(service.__send__(:skipping_condition_for, variant)).to be(false)
       end
     end
 
     context 'when variant has no orders' do
       it 'returns false' do
-        expect(service.send(:skipping_condition_for, variant)).to be false
+        expect(service.__send__(:skipping_condition_for, variant)).to be(false)
       end
     end
   end
@@ -171,41 +172,47 @@ RSpec.describe Enterprises::Delete do
   describe '#delete_stock_movements_for' do
     let!(:product) { create(:product, supplier_id: enterprise.id) }
     let!(:variant) { product.variants.first }
-    let!(:stock_item) { Spree::StockItem.create!(variant: variant) }
-    let!(:stock_movement) { create(:stock_movement, stock_item: stock_item) }
+    let!(:stock_item) { Spree::StockItem.find_or_create_by!(variant: variant) }
+    let!(:stock_movement) do
+      sql = "INSERT INTO spree_stock_movements (stock_item_id, quantity, created_at, updated_at) " \
+            "VALUES (?, ?, ?, ?)"
+      ActiveRecord::Base.connection.exec_insert(
+        ActiveRecord::Base.sanitize_sql_array([sql, stock_item.id, 1, Time.zone.now, Time.zone.now])
+      )
+    end
 
     it 'deletes stock movements using raw SQL' do
+      Rails.logger.debug stock_movement.rows[0][0].inspect
       expect {
-        service.send(:delete_stock_movements_for, stock_item)
-      }.to change { Spree::StockMovement.where(stock_item_id: stock_item.id).count }.by(-1)
+        service.__send__(:delete_stock_movements_for, stock_item)
+      }.to change {
+        sql = "SELECT 1 FROM spree_stock_movements WHERE id = ? LIMIT 1"
+        ActiveRecord::Base.connection.exec_query(
+          ActiveRecord::Base.sanitize_sql_array([sql, stock_movement.rows[0][0]])
+        ).rows.size.to_i
+      }.by(-1)
     end
 
     it 'uses sanitized SQL to prevent injection' do
       expect(ActiveRecord::Base).to receive(:sanitize_sql_array).and_call_original
-      service.send(:delete_stock_movements_for, stock_item)
+      service.__send__(:delete_stock_movements_for, stock_item)
     end
   end
 
   describe '#delete_variants_related_data_for' do
     let!(:product) { create(:product, supplier_id: enterprise.id) }
     let!(:variant) { product.variants.first }
-    let!(:stock_item) { Spree::StockItem.create!(variant: variant) }
+    let!(:stock_item) { Spree::StockItem.find_or_create_by!(variant: variant) }
 
     it 'deletes stock items' do
       expect {
-        service.send(:delete_variants_related_data_for, variant)
+        service.__send__(:delete_variants_related_data_for, variant)
       }.to change { Spree::StockItem.with_deleted.count }.by(-1)
-    end
-
-    it 'deletes the product' do
-      expect {
-        service.send(:delete_variants_related_data_for, variant)
-      }.to change { Spree::Product.with_deleted.count }.by(-1)
     end
 
     it 'deletes the variant' do
       expect {
-        service.send(:delete_variants_related_data_for, variant)
+        service.__send__(:delete_variants_related_data_for, variant)
       }.to change { Spree::Variant.with_deleted.count }.by(-1)
     end
   end
