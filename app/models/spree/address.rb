@@ -166,7 +166,10 @@ module Spree
       end
 
       # ensure at least one state field is populated
-      errors.add :state, :blank if state.blank? && state_name.blank?
+      return unless state.blank? && state_name.blank?
+
+      errors.add :state, :blank
+      errors.add :state_id, :blank
     end
 
     def touch_enterprise
