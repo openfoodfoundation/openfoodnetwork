@@ -48,39 +48,38 @@ RSpec.describe 'ProductSortByStocks' do
 
   describe 'backorderable_name ransacker behaviour' do
     it 'sorts alphabetically *only* within backorderable products' do
-      p1 = create(:product, name: "Product-A")
-      p2 = create(:product, name: "Product-C")
-      p3 = create(:product, name: "Product-B")
+      stock_c = create(:product, name: "Product-C")
+      bo_b = create(:product, name: "Product-B")
+      bo_a = create(:product, name: "Product-A")
 
       # Mark only Product-A and Product-B as backorderable
-      [p1, p3].each do |p|
+      [bo_a, bo_b].each do |p|
         p.variants.first.stock_items.update_all(backorderable: true)
       end
 
       # Product-C stays non-backorderable
-      p2.variants.first.stock_items.update_all(backorderable: false)
+      stock_c.variants.first.stock_items.update_all(backorderable: false)
 
       result = Spree::Product.ransack(s: ['backorderable_priority desc',
                                           'backorderable_name asc']).result.to_a
 
       # backorderable products come first, alphabetically:
       #   Product-A, Product-B, then non-backorderable Product-C
-      expect(result).to eq([p1, p3, p2])
+      expect(result).to eq([bo_a, bo_b, stock_c])
     end
 
     it 'returns NULL for non-backorderable products so alphabetical ordering does NOT apply' do
-      p1 = create(:product, name: "Product-Z")
-      p2 = create(:product, name: "Product-A")
+      bo_z = create(:product, name: "Product-Z")
+      stock_a = create(:product, name: "Product-A")
 
       # only Product-Z is backorderable → its name is used for sorting
-      p1.variants.first.stock_items.update_all(backorderable: true)
-      p2.variants.first.stock_items.update_all(backorderable: false)
-
+      bo_z.variants.first.stock_items.update_all(backorderable: true)
+      stock_a.variants.first.stock_items.update_all(backorderable: false)
       result = Spree::Product.ransack(s: ['backorderable_priority desc',
                                           'backorderable_name asc']).result.to_a
 
       # Product-Z (on-demand) comes before Product-A (normal stock)
-      expect(result).to eq([p1, p2])
+      expect(result).to eq([bo_z, stock_a])
     end
   end
 
