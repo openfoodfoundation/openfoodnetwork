@@ -125,5 +125,4 @@ RSpec.describe 'ProductSortByStocks' do
       expect(result).to eq([bo_a, bo_b, stock_high, stock_low])
     end
   end
-
 end
