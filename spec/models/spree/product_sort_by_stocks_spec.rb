@@ -9,6 +9,7 @@ RSpec.describe 'ProductSortByStocks' do
     it 'exposes SQL Arel nodes for sorting' do
       expect(Spree::Product.on_hand_sql).to be_a(Arel::Nodes::SqlLiteral)
       expect(Spree::Product.backorderable_priority_sql).to be_a(Arel::Nodes::SqlLiteral)
+      expect(Spree::Product.backorderable_name_sql).to be_a(Arel::Nodes::SqlLiteral)
     end
   end
 
@@ -45,41 +46,84 @@ RSpec.describe 'ProductSortByStocks' do
     end
   end
 
-  describe 'combined sorting' do
-    # shared products for combined sorting examples
-    let!(:low) { create(:product) }
-    let!(:mid) { create(:product) }
-    let!(:high) { create(:product) }
+  describe 'backorderable_name ransacker behaviour' do
+    it 'sorts alphabetically *only* within backorderable products' do
+      p1 = create(:product, name: "Product-A")
+      p2 = create(:product, name: "Product-C")
+      p3 = create(:product, name: "Product-B")
 
-    it 'supports combined sorting: backorderable_priority (on-demad) then on_hand (asc)' do
-      low.variants.first.stock_items.update_all(count_on_hand: 1)
-      mid.variants.first.stock_items.update_all(count_on_hand: 5)
-      high.variants.first.stock_items.update_all(count_on_hand: 10)
+      # Mark only Product-A and Product-B as backorderable
+      [p1, p3].each do |p|
+        p.variants.first.stock_items.update_all(backorderable: true)
+      end
 
-      # Make 'mid' backorderable so it sorts before 'low' in backorderable_priority asc
-      mid.variants.first.stock_items.update_all(backorderable: true)
+      # Product-C stays non-backorderable
+      p2.variants.first.stock_items.update_all(backorderable: false)
 
-      # Controller transforms 'on_hand asc' into ['backorderable_priority asc', 'on_hand asc']
-      result = Spree::Product.ransack(s: ['backorderable_priority asc',
-                                          'on_hand asc']).result.to_a
+      result = Spree::Product.ransack(s: ['backorderable_priority desc',
+                                          'backorderable_name asc']).result.to_a
 
-      expect(result).to eq([low, high, mid])
+      # backorderable products come first, alphabetically:
+      #   Product-A, Product-B, then non-backorderable Product-C
+      expect(result).to eq([p1, p3, p2])
     end
 
-    it 'supports combined sorting: backorderable_priority (on-demand) then on_hand (desc)' do
-      low.variants.first.stock_items.update_all(count_on_hand: 2)
-      mid.variants.first.stock_items.update_all(count_on_hand: 6)
-      high.variants.first.stock_items.update_all(count_on_hand: 9)
+    it 'returns NULL for non-backorderable products so alphabetical ordering does NOT apply' do
+      p1 = create(:product, name: "Product-Z")
+      p2 = create(:product, name: "Product-A")
 
-      # make 'mid' backorderable so with primary sort desc by backorderable_priority,
-      # so mid should appear before high and low
-      mid.variants.first.stock_items.update_all(backorderable: true)
+      # only Product-Z is backorderable → its name is used for sorting
+      p1.variants.first.stock_items.update_all(backorderable: true)
+      p2.variants.first.stock_items.update_all(backorderable: false)
 
-      # Controller transforms 'on_hand desc' into ['backorderable_priority desc', 'on_hand desc']
       result = Spree::Product.ransack(s: ['backorderable_priority desc',
-                                          'on_hand desc']).result.to_a
+                                          'backorderable_name asc']).result.to_a
 
-      expect(result).to eq([mid, high, low])
+      # Product-Z (on-demand) comes before Product-A (normal stock)
+      expect(result).to eq([p1, p2])
     end
   end
+
+  describe 'combined sorting' do
+    let!(:bo_a)     { create(:product, name: "Backorder-A") }
+    let!(:bo_b)     { create(:product, name: "Backorder-B") }
+    let!(:stock_low)  { create(:product, name: "Stock-Low") }
+    let!(:stock_high) { create(:product, name: "Stock-High") }
+
+    before do
+      stock_low.variants.first.stock_items.update_all(count_on_hand: 1)
+      stock_high.variants.first.stock_items.update_all(count_on_hand: 10)
+
+      bo_a.variants.first.stock_items.update_all(count_on_hand: 5, backorderable: true)
+      bo_b.variants.first.stock_items.update_all(count_on_hand: 6, backorderable: true)
+    end
+
+    it 'supports combined sorting: backorderable_priority then alphabetical then on_hand asc' do
+      result = Spree::Product.ransack(
+        s: [
+          'backorderable_priority asc',
+          'backorderable_name asc',
+          'on_hand asc'
+        ]
+      ).result.to_a
+
+      expect(result).to eq([stock_low, stock_high, bo_a, bo_b])
+    end
+
+    it 'supports combined sorting: backorderable_priority then alphabetical then on_hand desc' do
+      result = Spree::Product.ransack(
+        s: [
+          'backorderable_priority desc',
+          'backorderable_name asc',
+          'on_hand desc'
+        ]
+      ).result.to_a
+
+      # Explanation:
+      #   backorderables sorted first → A, B (alphabetical still applies)
+      #   then normal stock sorted by stock desc → High (10), Low (1)
+      expect(result).to eq([bo_a, bo_b, stock_high, stock_low])
+    end
+  end
+
 end
