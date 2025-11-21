@@ -3440,7 +3440,6 @@ uk:
     card_code: "Код картки"
     card_number: "Номер картки"
     category: "Категорія"
-    created_successfully: "Створено успішно"
     credit: "Кредит"
     editing_tax_category: "Редагування податкової категорії"
     editing_tax_rate: "Редагування ставки податку"
@@ -3466,7 +3465,6 @@ uk:
     refund: "Повернення коштів"
     server_error: "Помилка серверу"
     start_date: "Дата початку"
-    successfully_removed: "Успішно видалено"
     updating: "Оновлення"
     your_order_is_empty_add_product: "Ваше замовлення порожнє, знайдіть і додайте продукт вище"
     add_product: "Додати продукт"
@@ -3630,8 +3628,6 @@ uk:
     please_define_payment_methods: "Спочатку визначте деякі способи оплати."
     options: "Опції"
     has_no_shipped_units: "не має відвантажених одиниць"
-    successfully_created: '%{resource} успішно створено!'
-    successfully_updated: '%{resource} успішно оновлено!'
     payment_method: "Спосіб оплати"
     payment_processing_failed: "Не вдалося обробити платіж, перевірте введені дані"
     not_available: "N/A"

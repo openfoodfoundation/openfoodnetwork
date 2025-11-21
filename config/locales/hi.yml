@@ -3631,7 +3631,6 @@ hi:
     card_code: "कार्ड कोड"
     card_number: "कार्ड नंबर"
     category: "श्रेणी"
-    created_successfully: "सफलतापूर्वक बनाया गया"
     credit: "क्रेडिट"
     editing_tax_category: "टैक्स श्रेणी की एडिटिंग"
     editing_tax_rate: "टैक्स रेट की एडिटिंग"
@@ -3657,7 +3656,6 @@ hi:
     refund: "रिफंड"
     server_error: "सर्वर त्रुटि"
     start_date: "शुरू होने की तिथि"
-    successfully_removed: "सफलतापूर्वक हटाया गया"
     updating: "अपडेट किया जा रहा है"
     your_order_is_empty_add_product: "आपका ऑर्डर खाली है, कृपया ऊपर दिए गए उत्पाद को सर्च करें और जोड़ें"
     add_product: "उत्पाद जोड़ें"
@@ -3825,8 +3823,6 @@ hi:
     please_define_payment_methods: "कृपया पहले कुछ भुगतान विधियों को परिभाषित करें।"
     options: "विकल्प"
     has_no_shipped_units: "कोई शिप की गई यूनिट्स नहीं है"
-    successfully_created: '%{resource} सफलतापूर्वक बनाया गया है!'
-    successfully_updated: '%{resource} को सफलतापूर्वक अपडेट किया गया है!'
     payment_method: "भुगतान विधि"
     payment_processing_failed: "भुगतान प्रॉसेस नहीं किया जा सका, कृपया आपके द्वारा एंटर किए गए विवरण को चेक करें"
     not_available: "N/A"

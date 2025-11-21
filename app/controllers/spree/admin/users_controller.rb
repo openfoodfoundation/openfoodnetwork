@@ -23,7 +23,7 @@ module Spree
         @user = Spree::User.new(user_params)
         if @user.save
 
-          flash[:success] = Spree.t(:created_successfully)
+          flash[:success] = flash_message_for(@user, :successfully_created)
           redirect_to edit_admin_user_path(@user)
         else
           render :new

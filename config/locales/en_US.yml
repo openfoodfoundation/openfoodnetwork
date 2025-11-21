@@ -3326,7 +3326,6 @@ en_US:
     card_code: "Card code"
     card_number: "Card number"
     category: "Category"
-    created_successfully: "Created Successfully"
     credit: "Credit"
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
@@ -3352,7 +3351,6 @@ en_US:
     refund: "Refund"
     server_error: "Server error"
     start_date: "Start date"
-    successfully_removed: "Successfully Removed"
     updating: "Updating"
     your_order_is_empty_add_product: "Your cart is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -3516,8 +3514,6 @@ en_US:
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     has_no_shipped_units: "has no shipped units"
-    successfully_created: '%{resource} has been successfully created!'
-    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"

@@ -3538,7 +3538,6 @@ mr:
     card_code: "कार्ड कोड"
     card_number: "कार्ड क्रमांक"
     category: "श्रेणी"
-    created_successfully: "यशस्वीरित्या तयार केले"
     credit: "पत"
     editing_tax_category: "कर श्रेणी संपादित करणे"
     editing_tax_rate: "कर दर संपादित करणे"
@@ -3563,7 +3562,6 @@ mr:
     refund: "परतावा"
     server_error: "सर्व्हर त्रुटी"
     start_date: "प्रारंभ तारीख"
-    successfully_removed: "यशस्वीरित्या काढले"
     updating: "अपडेट करत आहे"
     your_order_is_empty_add_product: "तुमची ऑर्डर रिकामी आहे, कृपया उत्पादन शोधा आणि वर समाविष्ट करा"
     add_product: "उत्पादन जोडा"
@@ -3730,8 +3728,6 @@ mr:
     please_define_payment_methods: "कृपया प्रथम काही पेमेंट पद्धती निवडा. "
     options: "पर्याय"
     has_no_shipped_units: "कोणतेही शिप केलेले युनिट नाहीत"
-    successfully_created: '%{resource} यशस्वीरित्या तयार केले गेले आहे!'
-    successfully_updated: '%{resource} यशस्वीरित्या अपडेट केले गेले आहे!'
     payment_method: "पेमेंट पद्धत"
     payment_processing_failed: "पेमेंटवर प्रक्रिया करता आली नाही, कृपया तुम्ही प्रस्तुत केलेले तपशील तपासा"
     not_available: "N/A"
