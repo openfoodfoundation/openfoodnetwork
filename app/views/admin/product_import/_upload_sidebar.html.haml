@@ -5,7 +5,7 @@
     %i.icon-external-link
     = t('admin.product_import.index.product_list_template')
 
-  - if feature?(:inventory, *spree_current_user.enterprises)
+  - if inventory_enabled?(spree_current_user.enterprises)
     %a.download{href: '/inventory_template.csv'}
       %i.icon-external-link
       = t('admin.product_import.index.inventory_template')
