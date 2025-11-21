@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "flipper"
 require "flipper/adapters/active_record"
 require "open_food_network/feature_toggle"
@@ -23,19 +25,19 @@ Flipper.register(:admins) do |actor|
   actor.respond_to?(:admin?) && actor.admin?
 end
 Flipper.register(:new_2024_07_03) do |actor|
-  actor.respond_to?(:created_at?) && actor.created_at >= "2024-07-03".to_time
+  actor.respond_to?(:created_at?) && actor.created_at >= Time.zone.parse("2024-07-03")
 end
 Flipper.register(:enterprise_created_before_2025_08_11) do |actor|
   # This group applies to enterprises only, so we return false if the actor is not an Enterprise
   next false unless actor.actor.instance_of? Enterprise
 
-  actor.respond_to?(:created_at?) && actor.created_at < "2025-08-11".to_time
+  actor.respond_to?(:created_at?) && actor.created_at < Time.zone.parse("2025-08-11")
 end
 Flipper.register(:enterprise_created_after_2025_08_11) do |actor|
   # This group applies to enterprises only, so we return false if the actor is not an Enterprise
   next false unless actor.actor.instance_of? Enterprise
 
-  actor.respond_to?(:created_at?) && actor.created_at >= "2025-08-11".to_time
+  actor.respond_to?(:created_at?) && actor.created_at >= Time.zone.parse("2025-08-11")
 end
 
 # This is group is to be used to turn on variant tags for enterprises with inventory enabled but
@@ -46,11 +48,11 @@ Flipper.register(:old_enterprise_with_no_inventory) do |actor|
 
   enterprise_with_variant_override = Enterprise
     .where(id: VariantOverride.joins(:hub).select(:hub_id))
-    .where("created_at < ?", "2025-08-11")
+    .where(created_at: ..."2025-08-11")
     .distinct
   enterprise_with_no_variant_override = Enterprise
     .where.not(id: enterprise_with_variant_override)
-    .where("created_at < ?", "2025-08-11")
+    .where(created_at: ..."2025-08-11")
 
   enterprise_with_no_variant_override.exists?(actor.id)
 end
@@ -76,8 +78,4 @@ Flipper::UI.configure do |config|
 end
 
 # Add known feature toggles. This may fail if the database isn't setup yet.
-begin
-  OpenFoodNetwork::FeatureToggle.setup!
-rescue StandardError
-  ActiveRecord::StatementInvalid
-end
+OpenFoodNetwork::FeatureToggle.setup! rescue ActiveRecord::StatementInvalid
