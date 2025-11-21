@@ -181,7 +181,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         # product with multiple variants having one on-demand item
         product_d = create(:simple_product, name: "Dates")
-        product_d.variants.first.stock_items.update_all(count_on_hand: 1, backorderable: false)
+        product_d.variants.first.stock_items.update_all(count_on_hand: 100, backorderable: false)
         create(:variant, product: product_d, on_hand: 0, on_demand: true)
 
         within products_table do
@@ -195,7 +195,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           # Sort in descending order
           on_hand_header.click
           expect(page).to have_content("On Hand ▼") # this indicates the re-sorted
-          expect(all_input_values).to match /Dates.*Bananas.*Cherries.*Apples/
+          # For all on-demand products, alphabetical order is also applied
+          expect(all_input_values).to match /Bananas.*Dates.*Cherries.*Apples/
         end
       end
     end
