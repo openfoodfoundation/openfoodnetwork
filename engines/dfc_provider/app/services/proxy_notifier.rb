@@ -25,7 +25,7 @@ class ProxyNotifier
       grant_type: "client_credentials",
       client_id: ENV.fetch("OPENID_APP_ID", nil),
       client_secret: ENV.fetch("OPENID_APP_SECRET", nil),
-      scope: "WriteEnterprise",
+      scope: "ReadEnterprise",
     }
     response = connection.post(url, data)
     response.body["access_token"]
