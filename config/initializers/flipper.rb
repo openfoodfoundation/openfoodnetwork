@@ -51,9 +51,8 @@ Flipper.register(:old_enterprise_with_no_inventory) do |actor|
   enterprise_with_no_variant_override = Enterprise
     .where.not(id: enterprise_with_variant_override)
     .where("created_at < ?", "2025-08-11")
-    .pluck(:id)
 
-  enterprise_with_no_variant_override.include?(actor.id)
+  enterprise_with_no_variant_override.exists?(actor.id)
 end
 
 Flipper::UI.configure do |config|
