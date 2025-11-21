@@ -70,6 +70,9 @@ module OpenFoodNetwork
       "cqcm" => <<~DESC,
         Show DFC Permissions interface to share data with CQCM.
       DESC
+      "mo-dev" => <<~DESC,
+        Show DFC Permissions interface to share data with Market.Organic.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

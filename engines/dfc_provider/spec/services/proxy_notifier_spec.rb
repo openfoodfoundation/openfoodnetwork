@@ -25,4 +25,9 @@ RSpec.describe ProxyNotifier do
       subject.refresh(platform, enterprise_url)
     }.to raise_error Faraday::ServerError
   end
+
+  # Requires OIDC client secret for FDC dev realm.
+  it "notifies Market Organic", :vcr do
+    subject.refresh("mo-dev", enterprise_url)
+  end
 end
