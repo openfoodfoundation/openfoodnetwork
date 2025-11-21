@@ -66,6 +66,11 @@ RSpec.describe ProducerMailer do
     expect(mail.reply_to).to eq [order_cycle.coordinator.contact.email]
   end
 
+  context "white labelling" do
+    it_behaves_like 'email with inactive white labelling', :mail
+    it_behaves_like 'non-customer facing email with active white labelling', :mail
+  end
+
   it "includes the pickup time for each distributor" do
     expect(mail.body.encoded).to include "#{d1.name} (Tue, 23rd Dec)"
   end
