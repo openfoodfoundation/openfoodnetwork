@@ -48,13 +48,13 @@ module ReportsHelper
 
   def enterprise_fee_owner_ids(orders)
     EnterpriseFee.where(id: enterprise_fee_ids(orders))
-      .pluck(:enterprise_id)
+      .select(:enterprise_id)
   end
 
   def enterprise_fee_ids(orders)
     Spree::Adjustment.enterprise_fee
-      .where(order_id: orders.map(&:id))
-      .pluck(:originator_id)
+      .where(order_id: orders.select(:id))
+      .select(:originator_id)
   end
 
   def datepicker_time(datetime)
