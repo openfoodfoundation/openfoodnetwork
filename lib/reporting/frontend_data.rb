@@ -46,7 +46,7 @@ module Reporting
     end
 
     def order_customers
-      Customer.where(id: visible_order_customer_ids).select("customers.id, customers.email")
+      Customer.where(id: visible_order_customer_ids_query).select("customers.id, customers.email")
     end
 
     private
@@ -57,8 +57,8 @@ module Reporting
       @permissions ||= OpenFoodNetwork::Permissions.new(current_user)
     end
 
-    def visible_order_customer_ids
-      Permissions::Order.new(current_user).visible_orders.pluck(:customer_id)
+    def visible_order_customer_ids_query
+      Permissions::Order.new(current_user).visible_orders.select(:customer_id)
     end
   end
 end
