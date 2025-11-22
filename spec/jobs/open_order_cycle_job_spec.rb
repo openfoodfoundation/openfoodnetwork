@@ -97,6 +97,13 @@ RSpec.describe OpenOrderCycleJob do
 
       expect(cloned_order_cycle.opened_at).to be_within(1).of(now)
     end
+
+    it "enqueues webhook job" do
+      expect(OrderCycles::WebhookService)
+        .to receive(:create_webhook_job).with(cloned_order_cycle, 'order_cycle.opened', now).once
+
+      subject
+    end
   end
 
   describe "concurrency", concurrency: true do
