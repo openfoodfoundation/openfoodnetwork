@@ -809,12 +809,18 @@ de_DE:
         new_variant: Neue Produktvariante
       bulk_update:
         success: Die Änderungen wurden gespeichert.
+      delete_product:
+        success: Das Produkt wurde gelöscht.
+      delete_variant:
+        success: Die Produktvariante wurde gelöscht.
       variant_row:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
         add_a_tag: Stichwort hinzufügen
+      clone:
+        success: Das Produkt wurde dupliziert.
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -4260,6 +4266,9 @@ de_DE:
       taxons:
         index:
           title: "Produktkategorien"
+        destroy:
+          delete_taxon:
+            success: "Die Produktkategorie wurde gelöscht."
         form:
           name: Name
           description: Beschreibung

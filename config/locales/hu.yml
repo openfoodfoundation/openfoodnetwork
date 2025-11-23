@@ -1952,7 +1952,7 @@ hu:
         address1:
           label: Cím (utca + házszám)
         address2:
-          label: További címadatok (nem kötelező)
+          label: Adószám (nem kötelező)
         city:
           label: Város
         state_id:
@@ -2154,7 +2154,7 @@ hu:
   next: Következő
   address: Cím
   address_placeholder: pl. Saláta köz 15.
-  address2: Cím (folyt.)
+  address2: Adószám
   city: Város
   city_placeholder: pl. Kukutyin
   latitude: Szélességi kör
@@ -2975,7 +2975,7 @@ hu:
   tax_settings: "Adózási Beállítások"
   products_require_tax_category: "a termékek adókategóriát igényelnek"
   admin_shared_address_1: "Cím"
-  admin_shared_address_2: "Cím (folyt.)"
+  admin_shared_address_2: "Adószám"
   admin_share_city: "Város"
   admin_share_zipcode: "Irányítószám"
   admin_share_country: "Ország"
@@ -3276,6 +3276,7 @@ hu:
   order_cycles_no_permission_to_coordinate_error: "Egyik vállalkozásod sem rendelkezik engedéllyel egy rendelési ciklus koordinálására"
   order_cycles_no_permission_to_create_error: "Nincs engedélye az adott vállalkozás által koordinált rendelési ciklus létrehozására"
   order_cycle_closed: "A kiválasztott rendelési ciklus éppen most zárult le. Kérjük, próbáld újra!"
+  order_cycle_closed_next_steps: "A kiválasztott rendelési ciklus lezárult. Kérjük, vedd fel velünk a kapcsolatot a %{order_number} rendelés teljesítéséhez!"
   back_to_orders_list: "Vissza a rendelési listához"
   no_orders_found: "Nem található rendelés"
   order_information: "Rendelési információ"
@@ -3893,7 +3894,7 @@ hu:
     first_name: "Keresztnév"
     last_name: "Vezetéknév"
     street_address: "Cím"
-    street_address_2: "Cím (folytatás)"
+    street_address_2: "Adószám"
     city: "Város"
     zip: "Postai irányítószám"
     country: "Ország"

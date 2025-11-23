@@ -2347,7 +2347,7 @@ eu:
   products_filters_in: "en"
   products_with: 'honekin:'
   products_search: "Bilatu..."
-  products_filter_by: "Fitratu"
+  products_filter_by: "Iragazi"
   products_filter_selected: "hautatua"
   products_filter_heading: "Iragazkiak"
   products_filter_clear: "Garbitu"
@@ -4447,6 +4447,9 @@ eu:
     per_unit: Unitateko
   datetime:
     distance_in_words:
+      about_x_hours:
+        one: gutxi gorabehera %{count} ordu
+        other: gutxi gorabehera %{count} ordu
       half_a_minute: minutu erdi
   components:
     multiple_checked_select:

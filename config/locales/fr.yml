@@ -954,6 +954,11 @@ fr:
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} comporte une règle"
+          many: "%{tag} comporte %{count} règles"
+          other: "%{tag} comporte %{count} règles"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1452,6 +1457,8 @@ fr:
         producer: Producteur
         sells_options:
           none: aucun
+          own: les miens
+          any: tous
       change_type_form:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
@@ -1502,6 +1509,10 @@ fr:
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
+    tag_rules:
+      not_supported_type: Ce type de règle de tag n'est pas supporté
+      confirm_delete: Etes-vous certain de vouloir supprimer cette règle?
+      destroy_error: Il y a eu un problème à la suppression de cette règle de tag
     order_cycles:
       loading_flash:
         loading_order_cycles: Cycles de vente en cours de chargement
@@ -1725,6 +1736,8 @@ fr:
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
       none: aucun
+      metadata:
+        report_title: Titre du rapport
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden_field: "< Masqué >"
       unitsize: Unité de mesure
@@ -1828,6 +1841,7 @@ fr:
         display: Afficher
         summary_row: Ligne total produits commandés
         header_row: Ligne d'en-tête
+        metadata_rows: Lignes de métadonnées
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
@@ -2405,8 +2419,15 @@ fr:
   email_confirmed: "Veuillez confirmer votre adresse email."
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact},"
+  email_confirmation_profile_created: >
+      Un profil pour %{name} a été créé avec succès ! Pour activer votre profil, nous
+      avons besoin de la confirmation de cette adresse mail.
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
+  email_confirmation_help_html: >
+      Après avoir confirmé votre mail, vous pourrez accéder à votre compte administrateur
+      pour l'entreprise concernée. Regardez %{link} pour en savoir plus sur les fonctionnalités
+      de %{sitename}  et pour commencer à utiliser votre profil ou boutique en ligne."
   email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@coopcircuits.fr."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -3347,6 +3368,7 @@ fr:
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "
+  order_cycle_closed_next_steps: "Le cycle de vente que vous avez sélectionné est clos. Merci de nous contacter pour finaliser votre commande. #%{order_number}!"
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
@@ -4964,6 +4986,7 @@ fr:
         order_cycle_tagged_bottom: "sont:"
         inventory_tagged_top: "Les variantes du catalogue boutique taguées"
         inventory_tagged_bottom: "sont:"
+        variant_tagged_top: "Variantes tagguées"
         variant_tagged_bottom: "sont:"
         visible: VISIBLE
         not_visible: INVISIBLE
