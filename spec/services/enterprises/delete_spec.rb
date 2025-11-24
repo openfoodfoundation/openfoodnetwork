@@ -131,6 +131,36 @@ RSpec.describe Enterprises::Delete do
       end
     end
 
+    context 'when enterprise has orders with products from other enterprises' do
+      let(:other_enterprise) { create(:enterprise) }
+      let!(:product) { create(:product, supplier_id: other_enterprise.id) }
+      let!(:variant) { product.variants.first }
+
+      context 'when no orders are completed' do
+        it 'deletes the enterprise and the orders' do
+          cart_order = create(:order, state: 'cart', distributor_id: enterprise.id)
+          create(:line_item, order: cart_order, variant: variant)
+
+          expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
+          expect { service.call }
+            .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
+            .and change {
+                  Spree::Order.where(id: cart_order.id).exists?
+                }.from(true).to(false)
+        end
+      end
+
+      context 'when at least one order is completed' do
+        it 'skips deletion' do
+          completed_order = create(:order, state: 'complete', distributor_id: enterprise.id)
+          create(:line_item, order: completed_order, variant: variant)
+
+          expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
+          expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
+        end
+      end
+    end
+
     context 'database transaction behavior' do
       let!(:product) { create(:product, supplier_id: enterprise.id) }
       let!(:variant) { product.variants.first }
