@@ -15,7 +15,6 @@ module Enterprises
       ActiveRecord::Base.transaction do
         variants = enterprise.supplied_variants.with_deleted
 
-        # TODO: Deal with related products after the variants
         related_product_ids = variants.pluck(:product_id)
 
         # TODO: Handle related orders
@@ -39,24 +38,31 @@ module Enterprises
         delete_related_product(related_product_ids + remaining_product_ids)
 
         if skip_real_deletion
-          puts '===== Real deletion impossible...'
+          puts '===== Real deletion impossible: Blocked by variants...'
+        elsif !has_completed_orders?(enterprise)
+          delete_enterprise(enterprise)
         else
-          # As we could force deletion when no orders were found
-          ids = enterprise.distributor_shipping_methods.pluck(:id)
-          DistributorShippingMethod.where(id: ids).delete_all
-          ids = enterprise.distributor_payment_methods.pluck(:id)
-          DistributorPaymentMethod.where(id: ids).delete_all
-
-          # Getting cache issues on the relation locally, need to reload it
-          enterprise.reload.enterprise_roles.delete_all
-          enterprise.reload.connected_apps.delete_all
-
-          enterprise.destroy!
+          puts '===== Real deletion impossible: Blocked by enterprise...'
         end
       end
     end
 
     private
+
+    def delete_enterprise(enterprise)
+      # As we could force deletion when no orders were found
+      ids = enterprise.distributor_shipping_methods.pluck(:id)
+      DistributorShippingMethod.where(id: ids).delete_all
+      ids = enterprise.distributor_payment_methods.pluck(:id)
+      DistributorPaymentMethod.where(id: ids).delete_all
+      # Getting cache issues on the relation locally, needed to reload it
+      enterprise.enterprise_roles.delete_all
+      enterprise.connected_apps.delete_all
+      # We can delete them as we checked earlier that none was completed
+      enterprise.distributed_orders.each(&:destroy)
+
+      enterprise.reload.destroy!
+    end
 
     def delete_stock_movements_for(stock_item)
       # The table is present for history reasons. but there is no Ruby logic to call it.
@@ -73,6 +79,10 @@ module Enterprises
 
         stock_item.really_destroy!
       end
+
+      # VariantOverride has a default scope which is breaking the deletion dependency.
+      # Better to clean the table manually.
+      variant.variant_overrides.unscoped.each(&:destroy)
 
       variant.line_items.each(&:destroy)
 
@@ -94,7 +104,16 @@ module Enterprises
 
     def skipping_condition_for(variant)
       orders_per_state_count = variant.line_items.joins(:order).group('spree_orders.state').count
-      puts "== Related orders: #{orders_per_state_count}"
+      puts "== Related variant orders: #{orders_per_state_count}"
+
+      # For now, we decide that we cannot delete an enterprise if at least one related variant
+      # has at least one completed order linked to it.
+      orders_per_state_count['complete'].to_i > 0
+    end
+
+    def has_completed_orders?(enterprise)
+      orders_per_state_count = enterprise.distributed_orders.group('spree_orders.state').count
+      puts "== Related enterprise orders: #{orders_per_state_count}"
 
       # For now, we decide that we cannot delete an enterprise if there is a completed order
       # linked to it.
