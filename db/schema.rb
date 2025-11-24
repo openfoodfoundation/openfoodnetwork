@@ -1143,6 +1143,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", default: 0, null: false
+    t.string "webhook_type", limit: 255, null: false
     t.index ["user_id"], name: "index_webhook_endpoints_on_user_id"
   end
 
