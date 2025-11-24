@@ -63,7 +63,7 @@ paths:
                     dfc-b:hasStreet: 10 Lovely Street
                     dfc-b:hasPostalCode: '20170'
                     dfc-b:hasCity: Herndon
-                    dfc-b:hasCountry: Australia
+                    dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                     dfc-b:region: Victoria
         '404':
           description: not found
@@ -407,7 +407,7 @@ paths:
                       dfc-b:hasStreet: 8 Acres Drive
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:region: Victoria
   "/api/dfc/enterprises":
     get:
@@ -463,14 +463,14 @@ paths:
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:latitude: -25.345376
                       dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
@@ -549,7 +549,7 @@ paths:
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:latitude: -25.345376
                       dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
