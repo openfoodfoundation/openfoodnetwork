@@ -32,7 +32,11 @@ module Enterprises
         end
         puts "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
 
-        delete_related_product(related_product_ids)
+        # As it is possible to have deleted products not related to any variant, but still linked
+        # to an enterprise, we need to do this cleanup manually.
+        remaining_product_ids =
+          Spree::Product.with_deleted.where(supplier_id: enterprise.id).pluck(:id)
+        delete_related_product(related_product_ids + remaining_product_ids)
 
         if skip_real_deletion
           puts '===== Real deletion impossible...'
@@ -43,8 +47,9 @@ module Enterprises
           ids = enterprise.distributor_payment_methods.pluck(:id)
           DistributorPaymentMethod.where(id: ids).delete_all
 
-          # As the relation seems broken...
-          EnterpriseRole.where(enterprise_id: enterprise.id).delete_all
+          # Getting cache issues on the relation locally, need to reload it
+          enterprise.reload.enterprise_roles.delete_all
+          enterprise.reload.connected_apps.delete_all
 
           enterprise.destroy!
         end
@@ -75,11 +80,11 @@ module Enterprises
     end
 
     def delete_related_product(product_ids)
-      Spree::Product.where(id: product_ids).includes(:variants).find_each do |product|
+      Spree::Product.with_deleted.where(id: product_ids).find_each do |product|
         # For now, let's just really delete if the product is not linked to any variants,
-        # which means that the product was just linked to deletable variants from the
-        # current enterprise. 90% of our cases.
-        if product.variants.exists?
+        # which means that the product was just linked to previously-deleted variants
+        # from the current enterprise. 90% of our cases.
+        if product.variants.with_deleted.exists?
           self.skip_real_deletion = true
         else
           product.really_destroy!
