@@ -78,4 +78,8 @@ Flipper::UI.configure do |config|
 end
 
 # Add known feature toggles. This may fail if the database isn't setup yet.
-OpenFoodNetwork::FeatureToggle.setup! rescue ActiveRecord::StatementInvalid
+begin
+  OpenFoodNetwork::FeatureToggle.setup!
+rescue ActiveRecord::StatementInvalid
+  nil
+end
