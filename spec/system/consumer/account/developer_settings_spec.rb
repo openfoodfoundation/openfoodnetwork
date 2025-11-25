@@ -41,12 +41,12 @@ RSpec.describe "Developer Settings" do
             within "#webhook_endpoints" do
               fill_in "webhook_endpoint_url", with: "https://url"
 
-              click_button I18n.t(:create)
-              expect(page.document).to have_content I18n.t('webhook_endpoints.create.success')
+              click_button "Create"
+              expect(page.document).to have_content "Webhook endpoint successfully created"
               expect(page).to have_content "https://url"
 
-              click_button I18n.t(:delete)
-              expect(page.document).to have_content I18n.t('webhook_endpoints.destroy.success')
+              click_button "Delete"
+              expect(page.document).to have_content "Webhook endpoint successfully deleted"
               expect(page).not_to have_content "https://url"
             end
           end
