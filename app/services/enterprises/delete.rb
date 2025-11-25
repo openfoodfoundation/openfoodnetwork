@@ -13,34 +13,15 @@ module Enterprises
       self.skip_real_deletion = false
 
       ActiveRecord::Base.transaction do
-        variants = enterprise.supplied_variants.with_deleted
-
-        related_product_ids = variants.pluck(:product_id)
-
-        # TODO: Handle related orders
-        variants.joins(:line_items).pluck('spree_line_items.order_id')
-
-        puts "==== Variants count before: #{variants.count}"
-        variants.find_each do |variant|
-          if skipping_condition_for(variant)
-            self.skip_real_deletion = true
-            next
-          end
-
-          delete_variants_related_data_for(variant)
-        end
-        puts "==== Variants count after: #{enterprise.reload.supplied_variants.with_deleted.count}"
-
-        # As it is possible to have deleted products not related to any variant, but still linked
-        # to an enterprise, we need to do this cleanup manually.
-        remaining_product_ids =
-          Spree::Product.with_deleted.where(supplier_id: enterprise.id).pluck(:id)
-        delete_related_product(related_product_ids + remaining_product_ids)
+        delete_variants_for(enterprise)
+        delete_variant_overrides_for(enterprise)
 
         if skip_real_deletion
-          puts '===== Real deletion impossible: Blocked by variants...'
+          puts '===== Real deletion impossible: Blocked by related variants...'
         elsif !has_completed_orders?(enterprise)
-          delete_enterprise(enterprise)
+          delete_enterprise_related_data_for(enterprise)
+
+          enterprise.reload.destroy!
         else
           puts '===== Real deletion impossible: Blocked by enterprise...'
         end
@@ -49,7 +30,7 @@ module Enterprises
 
     private
 
-    def delete_enterprise(enterprise)
+    def delete_enterprise_related_data_for(enterprise)
       # As we could force deletion when no orders were found
       ids = enterprise.distributor_shipping_methods.pluck(:id)
       DistributorShippingMethod.where(id: ids).delete_all
@@ -60,8 +41,52 @@ module Enterprises
       enterprise.connected_apps.delete_all
       # We can delete them as we checked earlier that none was completed
       enterprise.distributed_orders.each(&:destroy)
+      # Direct relation from enterprise to order cycle was not found
+      OrderCycle.where(coordinator_id: enterprise.id).each do |order_cycle|
+        # There is an control on the order cycle in case linked orders are remaining
+        order_cycle.destroy!
+      end
+    end
 
-      enterprise.reload.destroy!
+    def delete_variants_for(enterprise)
+      variants = enterprise.supplied_variants.with_deleted
+
+      related_product_ids = variants.pluck(:product_id)
+
+      # TODO: Handle related orders
+      variants.joins(:line_items).pluck('spree_line_items.order_id')
+
+      variants.find_each do |variant|
+        if skipping_condition_for(variant)
+          self.skip_real_deletion = true
+          next
+        end
+
+        delete_variants_related_data_for(variant)
+      end
+
+      # As it is possible to have deleted products not related to any variant, but still linked
+      # to an enterprise, we need to do this cleanup manually.
+      remaining_product_ids =
+        Spree::Product.with_deleted.where(supplier_id: enterprise.id).pluck(:id)
+
+      delete_related_product(related_product_ids + remaining_product_ids)
+    end
+
+    def delete_variant_overrides_for(enterprise)
+      # We delete the variant override only if no completed orders are linked to it.
+      VariantOverride
+        .unscoped
+        .joins(:variant)
+        .where(hub_id: enterprise.id)
+        .find_each do |variant_override|
+        if skipping_condition_for(variant_override.variant)
+          self.skip_real_deletion = true
+          next
+        end
+
+        variant_override.destroy!
+      end
     end
 
     def delete_stock_movements_for(stock_item)

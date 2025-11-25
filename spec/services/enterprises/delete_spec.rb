@@ -157,6 +157,41 @@ RSpec.describe Enterprises::Delete do
 
           expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
           expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
+          expect { service.call }
+            .not_to change { Spree::Order.where(id: cart_order.id).exists? }
+        end
+      end
+    end
+
+    context 'when enterprise has variant overrides with variants from other enterprises' do
+      let(:other_enterprise) { create(:enterprise) }
+      let!(:product) { create(:product, supplier_id: other_enterprise.id) }
+      let!(:variant) { product.variants.first }
+      let!(:variant_override) { variant.variant_overrides.create!(hub_id: enterprise.id) }
+
+      context 'when no orders are completed' do
+        it 'deletes the enterprise and the variant overrides' do
+          cart_order = create(:order, state: 'cart', distributor_id: enterprise.id)
+          create(:line_item, order: cart_order, variant: variant)
+
+          expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
+          expect { service.call }
+            .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
+            .and change {
+                  VariantOverride.where(id: variant_override.id).exists?
+                }.from(true).to(false)
+        end
+      end
+
+      context 'when at least one order is completed' do
+        it 'skips deletion' do
+          completed_order = create(:order, state: 'complete', distributor_id: enterprise.id)
+          create(:line_item, order: completed_order, variant: variant)
+
+          expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
+          expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
+          expect { service.call }
+            .not_to change { VariantOverride.where(id: variant_override.id).exists? }
         end
       end
     end
