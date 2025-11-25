@@ -10,8 +10,9 @@
         %th= t('.url.header')
         %th.actions
     %tbody
+      -# TODO handle multiple endpoint and type and tooltip
       -# Existing endpoints
-      - @user.webhook_endpoints.each do |webhook_endpoint|
+      - @user.webhook_endpoints.order_cycle_opened.each do |webhook_endpoint|
         %tr
           %td= t('.event_types.order_cycle_opened') # For now, we only support one type.
           %td= webhook_endpoint.url
@@ -23,11 +24,12 @@
                 = I18n.t(:delete)
 
       -# Create new
-      - if @user.webhook_endpoints.empty? # Only one allowed for now.
+      - if @user.webhook_endpoints.order_cycle_opened.empty? # Only one allowed for now.
         %tr
           %td= t('.event_types.order_cycle_opened') # For now, we only support one type.
           %td
             = form_for(@user.webhook_endpoints.build, url: account_webhook_endpoints_path, id: 'new_webhook_endpoint') do |f|
               = f.url_field :url, placeholder: t('.url.create_placeholder'), required: true, size: 64
+              = f.hidden_field :webhook_type, value: "order_cycle_opened"
           %td.actions
             = button_tag t(:create), class: 'button primary tiny no-margin', form: 'new_webhook_endpoint'

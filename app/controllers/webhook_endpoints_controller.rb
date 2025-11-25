@@ -30,7 +30,7 @@ class WebhookEndpointsController < BaseController
   end
 
   def webhook_endpoint_params
-    params.require(:webhook_endpoint).permit(:url)
+    params.require(:webhook_endpoint).permit(:url, :webhook_type)
   end
 
   def redirect_path
