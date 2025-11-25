@@ -76,7 +76,7 @@ module Admin
     protected
 
     def resource_not_found
-      flash[:error] = flash_message_for(model_class.new, :not_found)
+      flash[:error] = Spree.t(:not_found)
       redirect_to collection_url
     end
 
