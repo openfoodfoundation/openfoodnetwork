@@ -943,7 +943,7 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    whenever (1.0.0)
+    whenever (1.1.0)
       chronic (>= 0.6.3)
     wicked_pdf (2.8.2)
       activesupport
