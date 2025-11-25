@@ -4938,13 +4938,10 @@ en:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Events in the system may trigger webhooks to external systems.
-        event_types:
-          order_cycle_opened: Order Cycle Opened
         event_type:
           header: Event type
         url:
           header: Endpoint URL
-          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:
@@ -5093,6 +5090,12 @@ en:
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Enter the URL of the remote webhook endpoint
+      event_types:
+        order_cycle_opened: Order Cycle Opened
+        payment_status_changed: Post webhook on Payment status change
 
 
   # Gem to prevent bot form submissions
