@@ -27,18 +27,6 @@ end
 Flipper.register(:new_2024_07_03) do |actor|
   actor.respond_to?(:created_at?) && actor.created_at >= Time.zone.parse("2024-07-03")
 end
-Flipper.register(:enterprise_created_before_2025_08_11) do |actor|
-  # This group applies to enterprises only, so we return false if the actor is not an Enterprise
-  next false unless actor.actor.instance_of? Enterprise
-
-  actor.respond_to?(:created_at?) && actor.created_at < Time.zone.parse("2025-08-11")
-end
-Flipper.register(:enterprise_created_after_2025_08_11) do |actor|
-  # This group applies to enterprises only, so we return false if the actor is not an Enterprise
-  next false unless actor.actor.instance_of? Enterprise
-
-  actor.respond_to?(:created_at?) && actor.created_at >= Time.zone.parse("2025-08-11")
-end
 
 Flipper.register(:enterprise_with_no_inventory) do |actor|
   # This group applies to enterprises only, so we return false if the actor is not an Enterprise
