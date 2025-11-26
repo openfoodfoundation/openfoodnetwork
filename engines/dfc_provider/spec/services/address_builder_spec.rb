@@ -33,7 +33,8 @@ RSpec.describe AddressBuilder do
     end
 
     it "assigns a country" do
-      expect(result.country).to eq "Australia"
+      expect(result.country)
+        .to eq "http://publications.europa.eu/resource/authority/country/AUS"
     end
 
     it "assigns a region" do

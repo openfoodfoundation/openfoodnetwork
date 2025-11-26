@@ -19,7 +19,7 @@ class EnterpriseBuilder < DfcBuilder
       catalogItems: catalog_items,
       emails: [enterprise.email_address].compact,
       localizations: [address],
-      phoneNumbers: [enterprise.phone].compact,
+      phoneNumbers: phone_numbers(enterprise),
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       logo: enterprise.logo_url(:small),
       mainContact: contact(enterprise),
@@ -70,5 +70,16 @@ class EnterpriseBuilder < DfcBuilder
       firstName:, # rubocop:disable Naming/VariableName
       lastName:, # rubocop:disable Naming/VariableName
     )
+  end
+
+  def self.phone_numbers(enterprise)
+    return [] if enterprise.phone.blank?
+
+    number = DataFoodConsortium::Connector::PhoneNumber.new(
+      nil,
+      phoneNumber: enterprise.phone,
+    )
+
+    [number]
   end
 end

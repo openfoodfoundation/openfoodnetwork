@@ -63,7 +63,7 @@ paths:
                     dfc-b:hasStreet: 10 Lovely Street
                     dfc-b:hasPostalCode: '20170'
                     dfc-b:hasCity: Herndon
-                    dfc-b:hasCountry: Australia
+                    dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                     dfc-b:region: Victoria
         '404':
           description: not found
@@ -168,6 +168,7 @@ paths:
                       dfc-b:sku: AR
                       dfc-b:stockLimitation: 0
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple - 1g
@@ -224,6 +225,7 @@ paths:
                       dfc-b:sku: AR
                       dfc-b:stockLimitation: 0
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
@@ -405,7 +407,7 @@ paths:
                       dfc-b:hasStreet: 8 Acres Drive
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:region: Victoria
   "/api/dfc/enterprises":
     get:
@@ -433,7 +435,9 @@ paths:
                     - "@id": http://test.host/api/dfc/enterprises/10000
                       "@type": dfc-b:Enterprise
                       dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
-                      dfc-b:hasPhoneNumber: 0404 444 000 200
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
                       dfc-b:email: hello@example.org
                       dfc-b:websitePage: https://openfoodnetwork.org
                       dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
@@ -459,14 +463,14 @@ paths:
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:latitude: -25.345376
                       dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
@@ -489,6 +493,7 @@ paths:
                       dfc-b:sku: APP
                       dfc-b:stockLimitation: 5
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
                       "@type": dfc-b:SocialMedia
                       dfc-b:name: facebook
@@ -517,7 +522,9 @@ paths:
                     - "@id": http://test.host/api/dfc/enterprises/10000
                       "@type": dfc-b:Enterprise
                       dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
-                      dfc-b:hasPhoneNumber: 0404 444 000 200
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
                       dfc-b:email: hello@example.org
                       dfc-b:websitePage: https://openfoodnetwork.org
                       dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
@@ -542,7 +549,7 @@ paths:
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
-                      dfc-b:hasCountry: Australia
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
                       dfc-b:latitude: -25.345376
                       dfc-b:longitude: 131.0312006
                       dfc-b:region: Victoria
@@ -565,6 +572,7 @@ paths:
                       dfc-b:sku: APP
                       dfc-b:stockLimitation: 5
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
                       "@type": dfc-b:SocialMedia
                       dfc-b:name: facebook
@@ -835,6 +843,7 @@ paths:
                       dfc-b:sku: BP
                       dfc-b:stockLimitation: 5
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Pesto - 1g
