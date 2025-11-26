@@ -120,7 +120,7 @@ module Spree
       end
 
       def cancel_event_link(order)
-        event_label = I18n.t("cancel", scope: "actions")
+        event_label = I18n.t("cancel_order", scope: "actions")
         button_link_to(event_label,
                        fire_admin_order_url(order, e: "cancel"),
                        method: :put, icon: "icon-cancel", form_id: "cancel_order_form")
