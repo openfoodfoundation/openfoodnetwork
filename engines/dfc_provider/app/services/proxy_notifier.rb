@@ -25,7 +25,7 @@ class ProxyNotifier
       grant_type: "client_credentials",
       client_id: ENV.fetch("OPENID_APP_ID", nil),
       client_secret: ENV.fetch("OPENID_APP_SECRET", nil),
-      scope: "WriteEnterprise",
+      scope: "ReadEnterprise",
     }
     response = connection.post(url, data)
     response.body["access_token"]
@@ -49,13 +49,6 @@ class ProxyNotifier
       f.response :json
       f.response :raise_error
     end
-    connection.post(webhook_url(platform), data)
-  end
-
-  def webhook_url(platform)
-    platform_url = ApiUser.platform_url(platform)
-    URI.parse(platform_url).tap do |url|
-      url.path = "/djangoldp-dfc/webhook/"
-    end
+    connection.post(ApiUser.webhook_url(platform), data)
   end
 end
