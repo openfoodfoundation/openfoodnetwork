@@ -138,6 +138,7 @@ RSpec.describe Spree::PaymentMethod do
       .to eq('Cash/EFT/etc. (payments for which automatic validation is not required)')
     expect(Spree::Gateway::PayPalExpress.clean_name).to eq('PayPal Express')
     expect(Spree::Gateway::StripeSCA.clean_name).to eq('Stripe SCA')
+    expect(Spree::Gateway::Twint.clean_name).to eq('Twint')
   end
 
   it "computes the amount of fees" do
