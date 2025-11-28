@@ -2,30 +2,26 @@
 
 module Enterprises
   class Delete
+    class DeletionError < StandardError; end
+
     attr_reader :enterprise
-    attr_accessor :skip_real_deletion
 
     def initialize(enterprise:)
       @enterprise = enterprise
     end
 
     def call
-      self.skip_real_deletion = false
-
       ActiveRecord::Base.transaction do
         delete_variants_for(enterprise)
         delete_variant_overrides_for(enterprise)
 
-        if skip_real_deletion
-          puts '===== Real deletion impossible: Blocked by related variants...'
-        elsif !has_completed_orders?(enterprise)
-          delete_enterprise_related_data_for(enterprise)
+        check_condition_for_enterprise(enterprise)
+        delete_enterprise_related_data_for(enterprise)
 
-          enterprise.reload.destroy!
-        else
-          puts '===== Real deletion impossible: Blocked by enterprise...'
-        end
+        enterprise.reload.destroy!
       end
+    rescue DeletionError => e
+      Rails.logger.debug { "DeletionError: #{e.message}" }
     end
 
     private
@@ -39,8 +35,14 @@ module Enterprises
       # Getting cache issues on the relation locally, needed to reload it
       enterprise.enterprise_roles.delete_all
       enterprise.connected_apps.delete_all
-      # We can delete them as we checked earlier that none was completed
+      # We can delete them as we checked earlier that none were completed
       enterprise.distributed_orders.each(&:destroy)
+
+      enterprise.enterprise_fees.with_deleted.delete_all
+    end
+
+    def delete_order_cycles_for(enterprise)
+      # Cleaning these data, assuming that no completed orders were found earlier on variants.
       # Direct relation from enterprise to order cycle was not found
       OrderCycle.where(coordinator_id: enterprise.id).each do |order_cycle|
         # There is an control on the order cycle in case linked orders are remaining
@@ -57,10 +59,7 @@ module Enterprises
       variants.joins(:line_items).pluck('spree_line_items.order_id')
 
       variants.find_each do |variant|
-        if skipping_condition_for(variant)
-          self.skip_real_deletion = true
-          next
-        end
+        check_condition_for_variant(variant)
 
         delete_variants_related_data_for(variant)
       end
@@ -80,10 +79,7 @@ module Enterprises
         .joins(:variant)
         .where(hub_id: enterprise.id)
         .find_each do |variant_override|
-        if skipping_condition_for(variant_override.variant)
-          self.skip_real_deletion = true
-          next
-        end
+        check_condition_for_variant(variant_override.variant)
 
         variant_override.destroy!
       end
@@ -107,7 +103,7 @@ module Enterprises
 
       # VariantOverride has a default scope which is breaking the deletion dependency.
       # Better to clean the table manually.
-      variant.variant_overrides.unscoped.each(&:destroy)
+      variant.variant_overrides.unscoped.find_each(&:destroy)
 
       variant.line_items.each(&:destroy)
 
@@ -120,29 +116,33 @@ module Enterprises
         # which means that the product was just linked to previously-deleted variants
         # from the current enterprise. 90% of our cases.
         if product.variants.with_deleted.exists?
-          self.skip_real_deletion = true
-        else
-          product.really_destroy!
+          raise DeletionError, "Product with External Variant Found (product id: #{product.id})"
         end
+
+        product.really_destroy!
       end
     end
 
-    def skipping_condition_for(variant)
+    def check_condition_for_variant(variant)
       orders_per_state_count = variant.line_items.joins(:order).group('spree_orders.state').count
-      puts "== Related variant orders: #{orders_per_state_count}"
+      Rails.logger.debug { "== Related variant orders: #{orders_per_state_count}" }
 
       # For now, we decide that we cannot delete an enterprise if at least one related variant
       # has at least one completed order linked to it.
-      orders_per_state_count['complete'].to_i > 0
+      return unless orders_per_state_count['complete'].to_i > 0
+
+      raise DeletionError, "Completed Orders on Variant Found (variant id: #{variant.id})"
     end
 
-    def has_completed_orders?(enterprise)
+    def check_condition_for_enterprise(enterprise)
       orders_per_state_count = enterprise.distributed_orders.group('spree_orders.state').count
-      puts "== Related enterprise orders: #{orders_per_state_count}"
+      Rails.logger.debug { "== Related enterprise orders: #{orders_per_state_count}" }
 
       # For now, we decide that we cannot delete an enterprise if there is a completed order
       # linked to it.
-      orders_per_state_count['complete'].to_i > 0
+      return unless orders_per_state_count['complete'].to_i > 0
+
+      raise DeletionError, "Completed Orders on Enterprise Found (enterprise id: #{enterprise.id})"
     end
   end
 end

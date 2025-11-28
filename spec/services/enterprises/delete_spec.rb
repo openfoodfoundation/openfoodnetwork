@@ -107,9 +107,7 @@ RSpec.describe Enterprises::Delete do
       end
 
       it 'deletes the product related to the draft order' do
-        expect { service.call }.to change {
-          Spree::Product.where(id: product2.id).exists?
-        }.from(true).to(false)
+        expect { service.call }.not_to change { Spree::Product.where(id: product2.id).exists? }
       end
     end
 
@@ -145,8 +143,8 @@ RSpec.describe Enterprises::Delete do
           expect { service.call }
             .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
             .and change {
-                  Spree::Order.where(id: cart_order.id).exists?
-                }.from(true).to(false)
+                   Spree::Order.where(id: cart_order.id).exists?
+                 }.from(true).to(false)
         end
       end
 
@@ -158,7 +156,7 @@ RSpec.describe Enterprises::Delete do
           expect(other_enterprise.supplied_variants.with_deleted).to include(variant)
           expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
           expect { service.call }
-            .not_to change { Spree::Order.where(id: cart_order.id).exists? }
+            .not_to change { Spree::Order.where(id: completed_order.id).exists? }
         end
       end
     end
@@ -178,8 +176,8 @@ RSpec.describe Enterprises::Delete do
           expect { service.call }
             .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
             .and change {
-                  VariantOverride.where(id: variant_override.id).exists?
-                }.from(true).to(false)
+                   VariantOverride.where(id: variant_override.id).exists?
+                 }.from(true).to(false)
         end
       end
 
@@ -222,7 +220,7 @@ RSpec.describe Enterprises::Delete do
     end
   end
 
-  describe '#skipping_condition_for' do
+  describe '#check_condition_for_variant' do
     let!(:product) { create(:product, supplier_id: enterprise.id) }
     let!(:variant) { product.variants.first }
 
@@ -232,8 +230,9 @@ RSpec.describe Enterprises::Delete do
         create(:line_item, order: completed_order, variant: variant)
       end
 
-      it 'returns true' do
-        expect(service.__send__(:skipping_condition_for, variant)).to be(true)
+      it 'raise error' do
+        expect { service.__send__(:check_condition_for_variant, variant) }
+          .to raise_error(Enterprises::Delete::DeletionError)
       end
     end
 
@@ -243,14 +242,16 @@ RSpec.describe Enterprises::Delete do
         create(:line_item, order: cart_order, variant: variant)
       end
 
-      it 'returns false' do
-        expect(service.__send__(:skipping_condition_for, variant)).to be(false)
+      it 'does not raise an error' do
+        expect { service.__send__(:check_condition_for_variant, variant) }
+          .not_to raise_error
       end
     end
 
     context 'when variant has no orders' do
-      it 'returns false' do
-        expect(service.__send__(:skipping_condition_for, variant)).to be(false)
+      it 'does not raise an error' do
+        expect { service.__send__(:check_condition_for_variant, variant) }
+          .not_to raise_error
       end
     end
   end
