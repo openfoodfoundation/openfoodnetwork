@@ -541,9 +541,11 @@ de_DE:
         clone: Duplizieren
         delete: Löschen
         remove: Löschen
+        preview: Vorschau
       image:
         edit: Bearbeiten
       product_preview:
+        product_preview: Produktvorschau
         shop_tab: Produkte
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
@@ -661,6 +663,13 @@ de_DE:
         info_html: "Matomo ist eine Web- und Mobile Analytics-Anwendung. Sie können Matomo entweder lokal hosten oder einen in der Cloud gehosteten Dienst verwenden. Weitere Informationen finden Sie unter <a href='http://matomo.org' target='_blank'>matomo.org</a>."
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
         config_instructions_tag_manager_html: "Durch Festlegen der Matomo Tag Manager URL wird Matomo Tag Manager aktiviert. Mit diesem Tool können Sie Analyseereignisse einrichten. Die Matomo Tag Manager URL wird aus dem Abschnitt Installationscode von Matomo Tag Manager kopiert. Stellen Sie sicher, dass Sie den richtigen Container und die richtige Umgebung auswählen, da diese Optionen die URL ändern."
+    connected_app_settings:
+      edit:
+        title: "Verknüpfte Apps"
+        info_html: "Aktivierte Apps werden in den Unternehmenseinstellungen unter Verknüpfte Apps angezeigt."
+        enabled_legend: "Aktivierte verknüpfte Apps"
+      update:
+        resource: Verknüpfte Apps
     customers:
       index:
         new_customer: "Neuer Kunde"
@@ -758,6 +767,7 @@ de_DE:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
+      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -771,6 +781,17 @@ de_DE:
           title: Produkte verwalten
       content:
         loading: Produkte werden geladen...
+      delete_modal:
+        delete_product_modal:
+          heading: "Produkt löschen"
+          prompt: "Das Produkt wird dauerhaft aus Ihrer Liste entfernt."
+          confirmation_text: "Produkt löschen"
+          cancellation_text: "Produkt beibehalten"
+        delete_variant_modal:
+          heading: "Produktvariante löschen"
+          prompt: "Die Produktvariante wird dauerhaft aus Ihrer Liste entfernt."
+          confirmation_text: "Produktvariante löschen"
+          cancellation_text: "Produktvariante beibehalten"
       filters:
         search_products: Nach Produkten suchen
         all_producers: Alle Produzenten
@@ -784,6 +805,9 @@ de_DE:
         search: Suche
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{total} Produkt</strong> für Ihre Suchkriterien gefunden."
+            other: "<strong>%{count} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -811,8 +835,10 @@ de_DE:
         success: Die Änderungen wurden gespeichert.
       delete_product:
         success: Das Produkt wurde gelöscht.
+        error: Das Produkt konnte nicht gelöscht werden.
       delete_variant:
         success: Die Produktvariante wurde gelöscht.
+        error: Die Produktvariante konnte nicht gelöscht werden.
       variant_row:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
@@ -862,6 +888,8 @@ de_DE:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        preview: Vorschau
       import:
         review: Überprüfung
         import: Importieren
@@ -1197,7 +1225,7 @@ de_DE:
           default_rules:
             by_default: Standardregeln
             no_rules_yet: Es gelten noch keine Standardregeln.
-            add_new_button: 'neue Standardregel +'
+            add_new_button: '+ Neue Standardregel'
           no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden.
           add_new_tag: '+ Neues Stichwort hinzufügen'
           show_hide_variants: 'Produktvarianten im Laden anzeigen?'
@@ -1234,7 +1262,7 @@ de_DE:
           customers: Kunde
           net_value: Nettowert
           active: Aktiv?
-          add_new: Neuer Gutschein
+          add_new: + Neuer Gutschein
           no_voucher_yet: Noch keine Gutscheine vorhanden.
         white_label:
           legend: "OFN verbergen"
@@ -1304,8 +1332,10 @@ de_DE:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
+        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
+        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -1316,6 +1346,8 @@ de_DE:
       invite_manager:
         user_already_exists: "Der Benutzer existiert bereits. Bitte verwenden Sie die Funktion \"vorhandenen Benutzer hinzufügen\"."
         error: "Etwas ist schief gelaufen."
+    tag_rules:
+      confirm_delete: Möchten Sie diese Regel wirklich löschen?
     order_cycles:
       loading_flash:
         loading_order_cycles: BESTELLZYKLEN WERDEN GELADEN ...
@@ -1494,6 +1526,8 @@ de_DE:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten."
         has_no_shipping_methods: "%{enterprise} hat keine Lieferoptionen."
         has_no_enterprise_fees: "%{enterprise} erhebt keine Gebühren."
+      flashes:
+        dismiss: Schließen
       side_menu:
         enterprise:
           primary_details: "Unternehmen"
@@ -1637,6 +1671,9 @@ de_DE:
         les_communs_link: "Les Communs Open ID-Server"
         link_your_account: "Sie müssen Ihr Benutzerkonto zunächst mit dem von DFC (Les Communs Open ID Connect) verwendeten Autorisierungsanbieter verbinden."
         link_account_button: "Verbinden Sie Ihr Les Communs OIDC-Konto"
+        note_expiry: |
+            Die Tokens für den Zugriff auf verknüpfte Apps sind abgelaufen. Bitte aktualisieren Sie Ihre
+            Kontoverknüpfung, damit alle Integrationen weiterhin funktionieren.
         view_account: "Ihr Benutzerkonto anzeigen:"
     subscriptions:
       index:
@@ -2177,6 +2214,9 @@ de_DE:
   order_back_to_store: Zurück zum Laden
   order_back_to_cart: Zurück zum Warenkorb
   order_back_to_website: 'zur Website '
+  checkout_details_title: Ihre Daten
+  checkout_payment_title: Zahlungsart
+  checkout_summary_title: Bestellabschluss
   bom_tip: "Verwenden Sie diese Seite, um Produktmengen über mehrere Bestellungen hinweg zu ändern. Produkte können bei Bedarf auch komplett aus Bestellungen entfernt werden."
   unsaved_changes_warning: "Sie haben nicht gespeicherte Änderungen, die beim Fortfahren verloren gehen."
   unsaved_changes_error: "Felder mit roten Rahmen enthalten Fehler."
@@ -3642,7 +3682,7 @@ de_DE:
   spree:
     order_updated: "Bestellung aktualisiert"
     add_country: "Neues Land"
-    add_state: "Neues Bundesland"
+    add_state: "Bundesland hinzufügen"
     adjustment: "Anpassung"
     all: "Alle"
     associated_adjustment_closed: "Zugehörige Anpassung geschlossen"
@@ -3686,6 +3726,7 @@ de_DE:
     resend: "Erneut senden"
     back_to_orders_list: "Zurück zur Bestellübersicht"
     back_to_payments_list: "Zurück zur Zahlungsliste"
+    back_to_states_list: "Zurück zur Bundesländerliste"
     return_authorizations: "Retouren"
     cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde."
     select_stock: "Bestand auswählen"
@@ -3775,6 +3816,7 @@ de_DE:
     tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
     included_in_price: "Im Preis enthalten"
     show_rate_in_label: "Steuersatz im Namen anzeigen"
+    back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
     new_zone: "Neue Zone"
@@ -3787,6 +3829,7 @@ de_DE:
     iso_name: "ISO-Name"
     states_required: "Staaten/Bundesländer/Regionen erforderlich"
     editing_country: "Land bearbeiten"
+    back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"
     abbreviation: "Abkürzung"
     new_state: "Neues Bundesland"
@@ -3949,6 +3992,7 @@ de_DE:
           continue: "Weiter"
         new:
           new_return_authorization: "Neue Retour"
+          back_to_return_authorizations_list: "Zurück zur Retourenliste"
           continue: "Weiter"
         edit:
           receive: "erhalten"
@@ -4041,6 +4085,7 @@ de_DE:
           has_no_payment_methods: "hat keine Zahlungsarten"
           has_no_shipping_methods: "hat keine Lieferoptionen"
         products:
+          products_tip: "Die Produkte, die Sie über das Open Food Network verkaufen."
           active_products:
             zero: "Sie haben keine aktiven Produkte."
             one: "Sie haben ein aktives Produkt"
@@ -4193,6 +4238,8 @@ de_DE:
           bulk_unit_size: Erforderliche Gesamtbestellmenge (in Gramm, Liter oder Stück)
         display_as:
           display_as: Anzeigen als
+        clone:
+          success: Produkt wurde dupliziert.
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
@@ -4264,11 +4311,16 @@ de_DE:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Zurück zur Produktkategorienliste"
         index:
           title: "Produktkategorien"
+          new_taxon: 'Neue Produktkategorie'
+        new:
+          title: "Neue Produktkategorie"
         destroy:
           delete_taxon:
             success: "Die Produktkategorie wurde gelöscht."
+            error: "Die Produktkategorie kann aufgrund zugewiesener Produkte nicht gelöscht werden."
         form:
           name: Name
           description: Beschreibung
