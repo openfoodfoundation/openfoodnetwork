@@ -16,6 +16,7 @@ module Enterprises
         delete_variant_overrides_for(enterprise)
 
         check_condition_for_enterprise(enterprise)
+        delete_order_cycles_for(enterprise)
         delete_enterprise_related_data_for(enterprise)
 
         enterprise.reload.destroy!
@@ -44,10 +45,10 @@ module Enterprises
     def delete_order_cycles_for(enterprise)
       # Cleaning these data, assuming that no completed orders were found earlier on variants.
       # Direct relation from enterprise to order cycle was not found
-      OrderCycle.where(coordinator_id: enterprise.id).each do |order_cycle|
-        # There is an control on the order cycle in case linked orders are remaining
-        order_cycle.destroy!
-      end
+      OrderCycle.where(coordinator_id: enterprise.id).find_each(&:destroy!)
+
+      Exchange.where(sender_id: enterprise.id).find_each(&:destroy!)
+      Exchange.where(receiver_id: enterprise.id).find_each(&:destroy!)
     end
 
     def delete_variants_for(enterprise)
