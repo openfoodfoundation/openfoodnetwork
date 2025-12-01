@@ -14,15 +14,15 @@ module Enterprises
       ActiveRecord::Base.transaction do
         delete_variants_for(enterprise)
         delete_variant_overrides_for(enterprise)
-
-        check_condition_for_enterprise(enterprise)
+        delete_orders_for(enterprise)
         delete_order_cycles_for(enterprise)
+        delete_preferences_for(enterprise)
         delete_enterprise_related_data_for(enterprise)
 
         enterprise.reload.destroy!
       end
     rescue DeletionError => e
-      Rails.logger.debug { "DeletionError: #{e.message}" }
+      Rails.logger.debug { "DeletionError for Enterprise #{enterprise.id}: #{e.message}" }
     end
 
     private
@@ -36,19 +36,34 @@ module Enterprises
       # Getting cache issues on the relation locally, needed to reload it
       enterprise.enterprise_roles.delete_all
       enterprise.connected_apps.delete_all
-      # We can delete them as we checked earlier that none were completed
-      enterprise.distributed_orders.each(&:destroy)
 
       enterprise.enterprise_fees.with_deleted.delete_all
+    end
+
+    def delete_preferences_for(enterprise)
+      Spree::Preference.where("key LIKE '%/#{enterprise.id}'").delete_all
     end
 
     def delete_order_cycles_for(enterprise)
       # Cleaning these data, assuming that no completed orders were found earlier on variants.
       # Direct relation from enterprise to order cycle was not found
-      OrderCycle.where(coordinator_id: enterprise.id).find_each(&:destroy!)
+      OrderCycle.where(coordinator_id: enterprise.id).find_each do |order_cycle|
+        check_condition_for_order_cycle(order_cycle)
+
+        order_cycle.orders.unscoped.find_each(&:destroy)
+
+        order_cycle.destroy!
+      end
 
       Exchange.where(sender_id: enterprise.id).find_each(&:destroy!)
       Exchange.where(receiver_id: enterprise.id).find_each(&:destroy!)
+    end
+
+    def delete_orders_for(enterprise)
+      check_condition_for_enterprise(enterprise)
+
+      # We can delete them as we checked earlier that none were completed
+      enterprise.distributed_orders.each(&:destroy)
     end
 
     def delete_variants_for(enterprise)
@@ -113,15 +128,30 @@ module Enterprises
 
     def delete_related_product(product_ids)
       Spree::Product.with_deleted.where(id: product_ids).find_each do |product|
-        # For now, let's just really delete if the product is not linked to any variants,
-        # which means that the product was just linked to previously-deleted variants
-        # from the current enterprise. 90% of our cases.
-        if product.variants.with_deleted.exists?
-          raise DeletionError, "Product with External Variant Found (product id: #{product.id})"
-        end
+        check_condition_for_product(product)
 
         product.really_destroy!
       end
+    end
+
+    def check_condition_for_order_cycle(order_cycle)
+      orders_per_state_count = order_cycle.orders.unscoped.group('spree_orders.state').count
+      Rails.logger.debug { "== Related order_cycle orders: #{orders_per_state_count}" }
+
+      # For now, we decide that we cannot delete an enterprise if at least one related variant
+      # has at least one completed order linked to it.
+      return unless orders_per_state_count['complete'].to_i > 0
+
+      raise DeletionError, "Completed Orders on OderCycle Found (order_cycle id: #{order_cycle.id})"
+    end
+
+    def check_condition_for_product(product)
+      # For now, let's just really delete if the product is not linked to any variants,
+      # which means that the product was just linked to previously-deleted variants
+      # from the current enterprise. 90% of our cases.
+      return unless product.variants.with_deleted.exists?
+
+      raise DeletionError, "Product with External Variant Found (product id: #{product.id})"
     end
 
     def check_condition_for_variant(variant)

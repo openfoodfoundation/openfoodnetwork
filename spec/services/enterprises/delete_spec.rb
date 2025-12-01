@@ -194,6 +194,43 @@ RSpec.describe Enterprises::Delete do
       end
     end
 
+    context 'when enterprise has linked order cycles' do
+      let(:other_enterprise) { create(:enterprise) }
+      let!(:product) { create(:product, supplier_id: other_enterprise.id) }
+      let!(:variant) { product.variants.first }
+      let!(:order_cycle) { create(:order_cycle, coordinator_id: enterprise.id) }
+
+      context 'with no completed orders' do
+        it 'deletes the enterprise and the related order cycle' do
+          cart_order = create(
+            :order, state: 'cart',
+                    distributor_id: other_enterprise.id, order_cycle_id: order_cycle.id
+          )
+          create(:line_item, order: cart_order, variant: variant)
+
+          expect { service.call }
+            .to change { Enterprise.where(id: enterprise.id).exists? }.from(true).to(false)
+            .and change {
+                   OrderCycle.where(id: order_cycle.id).exists?
+                 }.from(true).to(false)
+        end
+      end
+
+      context 'with at least one completed order' do
+        it 'skips deletion' do
+          completed_order = create(
+            :order, state: 'complete',
+                    distributor_id: other_enterprise.id, order_cycle_id: order_cycle.id
+          )
+          create(:line_item, order: completed_order, variant: variant)
+
+          expect { service.call }.not_to change { Enterprise.where(id: enterprise.id).exists? }
+          expect { service.call }
+            .not_to change { OrderCycle.where(id: order_cycle.id).exists? }
+        end
+      end
+    end
+
     context 'database transaction behavior' do
       let!(:product) { create(:product, supplier_id: enterprise.id) }
       let!(:variant) { product.variants.first }
