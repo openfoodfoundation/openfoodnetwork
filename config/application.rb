@@ -58,10 +58,15 @@ module Openfoodnetwork
       Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
     end
 
-    # We reload the routes here
-    #   so that the appended/prepended routes are available to the application.
     config.after_initialize do
+      # We reload the routes here
+      #   so that the appended/prepended routes are available to the application.
       Rails.application.routes_reloader.reload!
+
+      # Subscribe to payment transition events
+      ActiveSupport::Notifications.subscribe(
+        "ofn.payment_transition", Payments::StatusChangedListenerService.new
+      )
     end
 
     initializer "spree.environment", before: :load_config_initializers do |app|
