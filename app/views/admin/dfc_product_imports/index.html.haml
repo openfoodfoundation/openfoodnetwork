@@ -12,7 +12,7 @@
   = form_with url: main_app.import_admin_dfc_product_imports_path, html: { "data-controller": "checked" } do |form|
     -# This is a very inefficient way of holding a json blob. Maybe base64 encode or store as a temporary file
     = form.hidden_field :enterprise_id, value: @enterprise.id
-    = form.hidden_field :catalog_json, value: @catalog_json
+    = form.hidden_field :catalog_json, value: @catalog_data.to_json
 
     %table
       %thead

@@ -15,8 +15,8 @@ module Admin
     def index
       # Fetch DFC catalog JSON for preview
       @catalog_url = params.require(:catalog_url).strip
-      @catalog_json = api.call(@catalog_url)
-      catalog = DfcCatalog.from_json(@catalog_json)
+      @catalog_data = api.call(@catalog_url)
+      catalog = DfcCatalog.from_json(@catalog_data)
 
       # Render table and let user decide which ones to import.
       @items = list_products(catalog)
