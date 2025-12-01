@@ -137,6 +137,8 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     get '/reports', to: 'reports#index', as: :reports
+    get '/reports/search_enterprise_fees', to: 'reports#search_enterprise_fees', as: :search_enterprise_fees_admin_reports
+    get '/reports/search_enterprise_fee_owners', to: 'reports#search_enterprise_fee_owners', as: :search_enterprise_fee_owners_admin_reports
     match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: :get, as: :report
     match '/reports/:report_type(/:report_subtype)', to: 'reports#create', via: :post
   end
