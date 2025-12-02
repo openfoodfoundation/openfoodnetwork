@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static values = {
-    url: String
+    url: String,
   };
 
   connect() {
@@ -30,18 +30,18 @@ export default class extends Controller {
     const selectName = this.element.name;
     const selectId = this.element.id;
     const isMultiple = this.element.multiple;
-    
+
     // Get selected values to pre-populate
     const selectedValues = $element.val() || [];
 
     // Create a hidden input to replace the select
     const $hiddenInput = $('<input type="hidden" />');
-    $hiddenInput.attr('name', selectName);
-    $hiddenInput.attr('id', selectId);
+    $hiddenInput.attr("name", selectName);
+    $hiddenInput.attr("id", selectId);
     if (isMultiple) {
-      $hiddenInput.attr('multiple', 'multiple');
+      $hiddenInput.attr("multiple", "multiple");
     }
-    
+
     // Replace select with hidden input
     $element.replaceWith($hiddenInput);
 
@@ -50,13 +50,13 @@ export default class extends Controller {
         url: ajaxUrl,
         dataType: "json",
         quietMillis: 250,
-        data: function(term, page) {
+        data: function (term, page) {
           return {
             q: term || "",
             page: page || 1,
           };
         },
-        results: function(data, page) {
+        results: function (data, _page) {
           return {
             results: data.results || [],
             more: (data.pagination && data.pagination.more) || false,
@@ -67,10 +67,10 @@ export default class extends Controller {
       minimumInputLength: 0,
       multiple: isMultiple,
       width: "100%",
-      formatResult: function(item) {
+      formatResult: function (item) {
         return item.text;
       },
-      formatSelection: function(item) {
+      formatSelection: function (item) {
         return item.text;
       },
     };
