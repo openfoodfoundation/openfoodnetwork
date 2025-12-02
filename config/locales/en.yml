@@ -4088,6 +4088,8 @@ en:
     destroy:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
+    test:
+      success: Some test data has been sent to the webhook url
 
   spree:
     order_updated: "Order Updated"
@@ -5096,7 +5098,7 @@ en:
       event_types:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
-
+      test_endpoint: Test webhook endpoint 
 
   # Gem to prevent bot form submissions
   invisible_captcha:
