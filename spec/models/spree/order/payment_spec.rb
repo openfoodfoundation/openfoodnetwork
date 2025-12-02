@@ -35,6 +35,12 @@ module Spree
     }
 
     before do
+      # mock the call with "ofn.payment_transition" so we don't call the related listener
+      # and services
+      allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original
+      allow(ActiveSupport::Notifications).to receive(:instrument)
+        .with("ofn.payment_transition", any_args).and_return(nil)
+
       allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
       allow(order).to receive_messages total: 100
       stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
