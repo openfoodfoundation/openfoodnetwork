@@ -17,7 +17,7 @@ describe("Select2AjaxController", () => {
     select2InitOptions = null;
 
     // Mock jQuery and select2
-    const mockSelect2 = jest.fn(function(options) {
+    const mockSelect2 = jest.fn(function (options) {
       if (typeof options === "string" && options === "destroy") {
         return this;
       }
@@ -26,16 +26,17 @@ describe("Select2AjaxController", () => {
     });
 
     const jQueryMock = jest.fn((selector) => {
-      const element = typeof selector === "string" && selector.startsWith("<input") 
-        ? document.createElement("input")
-        : selector;
+      const element =
+        typeof selector === "string" && selector.startsWith("<input")
+          ? document.createElement("input")
+          : selector;
 
       return {
         val: jest.fn().mockReturnThis(),
         trigger: jest.fn().mockReturnThis(),
         select2: mockSelect2,
         hasClass: jest.fn().mockReturnValue(false),
-        replaceWith: jest.fn(function(newElement) {
+        replaceWith: jest.fn(function (newElement) {
           if (selector && selector.parentNode) {
             selector.parentNode.replaceChild(newElement[0] || newElement, selector);
           }
