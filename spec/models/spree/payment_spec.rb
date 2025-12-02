@@ -1071,4 +1071,17 @@ RSpec.describe Spree::Payment do
       expect(payment.captured_at).to be_present
     end
   end
+
+  describe "payment transition" do
+    it "notifies of payment status change" do
+      payment = create(:payment)
+
+      allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original
+      expect(ActiveSupport::Notifications).to receive(:instrument).with(
+        "ofn.payment_transition", payment: payment, event: "processing"
+      )
+
+      payment.started_processing!
+    end
+  end
 end
