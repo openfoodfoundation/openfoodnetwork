@@ -169,3 +169,12 @@ table {
     right: calc(12px + 2 * 2px + 2 * 1px);
   }
 }
+
+// Webhook Endpoints
+td.endpoints-actions {
+  display: flex;
+
+  form {
+    padding-right: $padding-small;
+  }
+}

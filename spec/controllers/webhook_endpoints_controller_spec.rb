@@ -69,4 +69,22 @@ RSpec.describe WebhookEndpointsController do
       expect(response).to redirect_to "/account#/developer_settings"
     end
   end
+
+  describe "#test" do
+    let(:webhook_endpoint) {
+      user.webhook_endpoints.create(url: "https://url", webhook_type: "payment_status_changed" )
+    }
+
+    subject { spree_post :test, id: webhook_endpoint.id, format: :turbo_stream }
+
+    it "enqueus a webhook job" do
+      expect { subject }.to enqueue_job(WebhookDeliveryJob).exactly(1).times
+    end
+
+    it "shows a success mesage" do
+      subject
+
+      expect(flash[:success]).to eq "Some test data has been sent to the webhook url"
+    end
+  end
 end
