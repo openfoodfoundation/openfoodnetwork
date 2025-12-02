@@ -4,6 +4,8 @@ module Enterprises
   class Delete
     class DeletionError < StandardError; end
 
+    BLOCKING_ORDER_STATES = %w[complete canceled confirmation delivery payment]
+
     attr_reader :enterprise
 
     def initialize(enterprise:)
@@ -50,12 +52,10 @@ module Enterprises
     end
 
     def check_condition_for_variant(variant)
-      orders_per_state_count = variant.line_items.joins(:order).group('spree_orders.state').count
-      Rails.logger.debug { "== Related variant orders: #{orders_per_state_count}" }
+      condition =
+        variant.line_items.joins(:order).where(spree_orders: { state: BLOCKING_ORDER_STATES })
 
-      # For now, we decide that we cannot delete an enterprise if at least one related variant
-      # has at least one completed order linked to it.
-      return unless orders_per_state_count['complete'].to_i > 0
+      return unless condition.exists?
 
       raise DeletionError, "Completed Orders on Variant Found (variant id: #{variant.id})"
     end
@@ -123,12 +123,10 @@ module Enterprises
     end
 
     def check_condition_for_enterprise(enterprise)
-      orders_per_state_count = enterprise.distributed_orders.group('spree_orders.state').count
-      Rails.logger.debug { "== Related enterprise orders: #{orders_per_state_count}" }
+      condition =
+        enterprise.distributed_orders.where(spree_orders: { state: BLOCKING_ORDER_STATES })
 
-      # For now, we decide that we cannot delete an enterprise if there is a completed order
-      # linked to it.
-      return unless orders_per_state_count['complete'].to_i > 0
+      return unless condition.exists?
 
       raise DeletionError, "Completed Orders on Enterprise Found (enterprise id: #{enterprise.id})"
     end
@@ -149,12 +147,10 @@ module Enterprises
     end
 
     def check_condition_for_order_cycle(order_cycle)
-      orders_per_state_count = order_cycle.orders.unscoped.group('spree_orders.state').count
-      Rails.logger.debug { "== Related order_cycle orders: #{orders_per_state_count}" }
+      condition =
+        order_cycle.orders.where(spree_orders: { state: BLOCKING_ORDER_STATES })
 
-      # For now, we decide that we cannot delete an enterprise if at least one related variant
-      # has at least one completed order linked to it.
-      return unless orders_per_state_count['complete'].to_i > 0
+      return unless condition.exists?
 
       raise DeletionError, "Completed Orders on OderCycle Found (order_cycle id: #{order_cycle.id})"
     end
