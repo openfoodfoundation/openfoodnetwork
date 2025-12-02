@@ -2,14 +2,20 @@
 
 module Enterprises
   class Delete
+    # Deletion Strategy:
+    # - Use delete_all for associations without callbacks
+    # - Use destroy for records with important callbacks
+    # - Use really_destroy! for paranoia gems to permanently remove
+    # - Use raw SQL only when ActiveRecord constraints prevent deletion
     class DeletionError < StandardError; end
 
-    BLOCKING_ORDER_STATES = %w[complete canceled confirmation delivery payment]
+    BLOCKING_ORDER_STATES = %w[complete canceled confirmation delivery payment].freeze
 
-    attr_reader :enterprise
+    attr_reader :enterprise, :error_message
 
     def initialize(enterprise:)
       @enterprise = enterprise
+      @error_message = nil
     end
 
     def call
@@ -24,18 +30,16 @@ module Enterprises
         enterprise.reload.destroy!
       end
     rescue DeletionError => e
-      Rails.logger.debug { "DeletionError for Enterprise #{enterprise.id}: #{e.message}" }
+      handle_deletion_error(e)
     end
 
     private
 
     def delete_variants_for(enterprise)
-      variants = enterprise.supplied_variants.with_deleted
+      variants =
+        enterprise.supplied_variants.with_deleted.includes(:stock_items, :line_items)
 
       related_product_ids = variants.pluck(:product_id)
-
-      # TODO: Handle related orders
-      variants.joins(:line_items).pluck('spree_line_items.order_id')
 
       variants.find_each do |variant|
         check_condition_for_variant(variant)
@@ -69,9 +73,9 @@ module Enterprises
 
       # VariantOverride has a default scope which is breaking the deletion dependency.
       # Better to clean the table manually.
-      variant.variant_overrides.unscoped.find_each(&:destroy)
+      VariantOverride.unscoped.where(variant_id: variant.id).find_each(&:destroy)
 
-      variant.line_items.each(&:destroy)
+      variant.line_items.find_each(&:destroy)
 
       variant.really_destroy!
     end
@@ -94,16 +98,15 @@ module Enterprises
     end
 
     def check_condition_for_product(product)
-      # For now, let's just really delete if the product is not linked to any variants,
+      # For now, let's allow deletion if the product is not linked to any variants,
       # which means that the product was just linked to previously-deleted variants
-      # from the current enterprise. 90% of our cases.
+      # from the current enterprise.
       return unless product.variants.with_deleted.exists?
 
       raise DeletionError, "Product with External Variant Found (product id: #{product.id})"
     end
 
     def delete_variant_overrides_for(enterprise)
-      # We delete the variant override only if no completed orders are linked to it.
       VariantOverride
         .unscoped
         .joins(:variant)
@@ -137,7 +140,7 @@ module Enterprises
       OrderCycle.where(coordinator_id: enterprise.id).find_each do |order_cycle|
         check_condition_for_order_cycle(order_cycle)
 
-        order_cycle.orders.unscoped.find_each(&:destroy)
+        order_cycle.orders.find_each(&:destroy)
 
         order_cycle.destroy!
       end
@@ -160,16 +163,22 @@ module Enterprises
     end
 
     def delete_enterprise_related_data_for(enterprise)
-      # As we could force deletion when no orders were found
+      # As we could force deletion when no blocking orders are found
+      # Calling delete_all on the relation is not working well...
       ids = enterprise.distributor_shipping_methods.pluck(:id)
       DistributorShippingMethod.where(id: ids).delete_all
       ids = enterprise.distributor_payment_methods.pluck(:id)
       DistributorPaymentMethod.where(id: ids).delete_all
-      # Getting cache issues on the relation locally, needed to reload it
+
       enterprise.enterprise_roles.delete_all
       enterprise.connected_apps.delete_all
-
       enterprise.enterprise_fees.with_deleted.delete_all
+    end
+
+    def handle_deletion_error(error)
+      @error_message = "DeletionError for Enterprise #{enterprise.id}: #{error.message}"
+
+      Rails.logger.debug { error_message }
     end
   end
 end

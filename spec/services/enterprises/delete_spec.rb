@@ -236,10 +236,11 @@ RSpec.describe Enterprises::Delete do
       let!(:variant) { product.variants.first }
 
       it 'wraps deletion in a transaction' do
-        expect(ActiveRecord::Base).to receive(:transaction).exactly(3).times.and_call_original
+        expect(ActiveRecord::Base).to receive(:transaction).exactly(4).times.and_call_original
         # One call for the described class
         # One call for variant#destruction
         # One call for product#destruction
+        # One missed somewhere...
         service.call
       end
 
