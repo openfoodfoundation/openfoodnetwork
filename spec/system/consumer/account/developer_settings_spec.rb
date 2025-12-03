@@ -39,30 +39,33 @@ RSpec.describe "Developer Settings" do
         describe "Webhook Endpoints" do
           it "creates a new webhook endpoint and deletes it" do
             within "#webhook_endpoints" do
-              fill_in "order_cycle_opened_webhook_endpoint_url", with: "https://url"
+              within(:table_row, ["Order Cycle Opened"]) do
+                fill_in "order_cycle_opened_webhook_endpoint_url", with: "https://url"
 
-              click_button "Create"
-              expect(page.document).to have_content "Webhook endpoint successfully created"
-              expect(page).to have_content "https://url"
+                click_button "Create"
+                expect(page.document).to have_content "Webhook endpoint successfully created"
+                expect(page).to have_content "https://url"
 
-              accept_confirm do
-                click_button "Delete"
+                accept_confirm do
+                  click_button "Delete"
+                end
               end
               expect(page.document).to have_content "Webhook endpoint successfully deleted"
               expect(page).not_to have_content "https://url"
 
-              within(:xpath, second_table_line) do
+              within(:table_row, ["Post webhook on Payment status change"]) do
                 fill_in "payment_status_changed_webhook_endpoint_url", with: "https://url/payment"
                 click_button "Create"
-              end
-              expect(page.document).to have_content "Webhook endpoint successfully created"
-              expect(page).to have_content "https://url/payment"
+                expect(page.document).to have_content "Webhook endpoint successfully created"
+                expect(page).to have_content "https://url/payment"
 
-              accept_confirm do
-                click_button "Delete"
+                accept_confirm do
+                  click_button "Delete"
+                end
               end
+
               expect(page.document).to have_content "Webhook endpoint successfully deleted"
-              expect(page).not_to have_content "https://urlpayment"
+              expect(page).not_to have_content "https://url/payment"
             end
           end
         end
@@ -78,10 +81,5 @@ RSpec.describe "Developer Settings" do
         end
       end
     end
-  end
-
-  def second_table_line
-    # It's actually the third line when you include the header
-    '(//tr)[3]'
   end
 end
