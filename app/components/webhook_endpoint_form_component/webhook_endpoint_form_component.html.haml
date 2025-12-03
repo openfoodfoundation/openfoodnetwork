@@ -1,4 +1,4 @@
--# Existing endpoints
+-# Create new endpoints
 - if webhooks.empty? # Only one allowed for now.
   %tr
     %td= t("components.webhook_endpoint_form.event_types.#{webhook_type}")
@@ -9,6 +9,7 @@
     %td.actions
       = button_tag t(:create), class: 'button primary tiny no-margin', form: "#{webhook_type}_webhook_endpoint"
 
+-# Existing endpoints
 - webhooks.each do |webhook_endpoint|
   %tr
     %td= t("components.webhook_endpoint_form.event_types.#{webhook_type}")
