@@ -25,40 +25,9 @@ class WebhookEndpointsController < BaseController
     redirect_to redirect_path
   end
 
-  def test # rubocop:disable Metrics/MethodLength
+  def test
     at = Time.zone.now
-    test_payload = {
-      payment: {
-        updated_at: at,
-        amount: 0.00,
-        state: "completed"
-      },
-      enterprise: {
-        abn: "65797115831",
-        acn: "",
-        name: "TEST Enterprise",
-        address: {
-          address1: "1 testing street",
-          address2: "",
-          city: "TestCity",
-          zipcode: "1234"
-        }
-      },
-      order: {
-        total: 0.00,
-        currency: "AUD",
-        line_items: [
-          {
-            quantity: 1,
-            price: 20.00,
-            tax_category_name: "VAT",
-            product_name: "Test product",
-            name_to_display: "",
-            unit_to_display: "1kg"
-          }
-        ]
-      }
-    }
+    test_payload = Payments::WebhookPayload.test_data.to_hash
 
     WebhookDeliveryJob.perform_later(@webhook_endpoint.url, "payment.completed", test_payload, at:)
 
