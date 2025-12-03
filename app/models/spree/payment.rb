@@ -108,17 +108,16 @@ module Spree
           "ofn.payment_transition", payment: payment, event: transition.to
         )
       rescue StandardError => e
+        Rails.logger.fatal "ActiveSupport::Notification.instrument failed params: " \
+                           "<event_type:ofn.payment_transition> " \
+                           "<payment_id:#{payment.id}> " \
+                           "<event:#{transition.to}>"
         Alert.raise(
           e,
           metadata: {
             event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
           }
         )
-      ensure
-        Rails.logger.fatal "ActiveSupport::Notification.instrument failed params: " \
-                           "<event_type:ofn.payment_transition> " \
-                           "<payment_id:#{payment.id}> " \
-                           "<event:#{transition.to}>"
       end
     end
 
