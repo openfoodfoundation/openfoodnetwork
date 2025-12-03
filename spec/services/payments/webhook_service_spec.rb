@@ -36,7 +36,7 @@ RSpec.describe Payments::WebhookService do
             tax_category_name: li.tax_category&.name,
             product_name: li.product.name,
             name_to_display: li.display_name,
-            unit_to_display: li.unit_presentation # TODO check this
+            unit_to_display: li.unit_presentation
           }
         end
 
