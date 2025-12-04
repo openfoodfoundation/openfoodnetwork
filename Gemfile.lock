@@ -228,7 +228,7 @@ GEM
       xpath (~> 3.2)
     capybara-shadowdom (0.3.0)
       capybara
-    caxlsx (3.3.0)
+    caxlsx (4.0.0)
       htmlentities (~> 4.3, >= 4.3.4)
       marcel (~> 1.0)
       nokogiri (~> 1.10, >= 1.10.4)
@@ -796,7 +796,7 @@ GEM
     ruby-vips (2.2.5)
       ffi (~> 1.12)
       logger
-    rubyzip (2.3.2)
+    rubyzip (2.4.1)
     rufus-scheduler (3.8.2)
       fugit (~> 1.1, >= 1.1.6)
     rugged (1.9.0)
@@ -830,9 +830,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    spreadsheet_architect (5.0.0)
-      caxlsx (>= 3.3.0, < 4)
-      rodf (>= 1.0.0, < 2)
+    spreadsheet_architect (5.1.0)
+      caxlsx (<= 4.0)
+      csv
+      rodf
     spring (4.4.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
