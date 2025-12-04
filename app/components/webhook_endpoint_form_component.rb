@@ -9,4 +9,8 @@ class WebhookEndpointFormComponent < ViewComponent::Base
   private
 
   attr_reader :webhooks, :webhook_type
+
+  def is_webhook_payment_status?
+    webhook_type == "payment_status_changed"
+  end
 end

@@ -21,6 +21,7 @@
                                                                              data: { confirm: I18n.t(:are_you_sure) } do
           = I18n.t(:delete)
 
-        = form_tag helpers.webhook_endpoint_test_account_path(webhook_endpoint), class: "button_to", 'data-turbo': true do
-          = button_tag type: "submit", class: "tiny alert no-margin", data: { confirm: I18n.t(:are_you_sure) } do
-            = I18n.t("components.webhook_endpoint_form.test_endpoint")
+        - if is_webhook_payment_status?
+          = form_tag helpers.webhook_endpoint_test_account_path(webhook_endpoint), class: "button_to", 'data-turbo': true do
+            = button_tag type: "submit", class: "tiny alert no-margin", data: { confirm: I18n.t(:are_you_sure) } do
+              = I18n.t("components.webhook_endpoint_form.test_endpoint")
