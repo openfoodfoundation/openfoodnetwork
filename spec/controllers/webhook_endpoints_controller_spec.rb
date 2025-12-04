@@ -84,7 +84,7 @@ RSpec.describe WebhookEndpointsController do
     it "shows a success mesage" do
       subject
 
-      expect(flash[:success]).to eq "Some test data has been sent to the webhook url"
+      expect(flash[:success]).to eq "Some test data will be sent to the webhook url"
     end
   end
 end

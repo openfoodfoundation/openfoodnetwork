@@ -4089,7 +4089,7 @@ en:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
     test:
-      success: Some test data has been sent to the webhook url
+      success: Some test data will be sent to the webhook url
 
   spree:
     order_updated: "Order Updated"
