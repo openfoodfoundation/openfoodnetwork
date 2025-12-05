@@ -3,9 +3,11 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "Events", swagger_doc: "dfc.yaml" do
-  let!(:user) { create(:oidc_user) }
-
-  before { login_as user }
+  include_context "authenticated as platform" do
+    let(:access_token) {
+      file_fixture("fdc_access_token.jwt").read
+    }
+  end
 
   path "/api/dfc/events" do
     post "Create Event" do
@@ -41,6 +43,28 @@ RSpec.describe "Events", swagger_doc: "dfc.yaml" do
 
         describe "with missing parameter" do
           let(:event) { { eventType: "refresh" } }
+          run_test!
+        end
+      end
+
+      response "401", "unauthorised" do
+        describe "as normal user" do
+          let(:Authorization) { nil }
+          let(:event) { { eventType: "refresh" } }
+
+          before { login_as create(:oidc_user) }
+
+          run_test!
+        end
+
+        describe "as other platform" do
+          let(:access_token) {
+            file_fixture("startinblox_access_token.jwt").read
+          }
+          let(:event) { { eventType: "refresh" } }
+
+          before { login_as create(:oidc_user) }
+
           run_test!
         end
       end
