@@ -15,7 +15,9 @@ class DfcImporter
 
   def import_profile(farm)
     owner = find_or_import_user(farm)
-    EnterpriseImporter.new.import(owner, farm)
+    enterprise = EnterpriseImporter.new(owner, farm).import
+    enterprise.save! if enterprise.changed?
+    enterprise.address.save! if enterprise.address.changed?
   end
 
   def find_or_import_user(farm)

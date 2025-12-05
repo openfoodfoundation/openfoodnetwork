@@ -18,5 +18,13 @@ RSpec.describe DfcImporter do
     # Consider creating a test helper if you find this useful elsewhere.
     # allow(ApplicationMailer).to receive(:delivery_method).and_return(:letter_opener)
     # perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
+
+    enterprise = Enterprise.last
+    expect(enterprise.semantic_link.semantic_id).to match /litefarm\.org/
+
+    # Repeating works without creating duplicates:
+    expect {
+      subject.import_enterprise_profiles("lf-dev")
+    }.not_to have_enqueued_mail
   end
 end
