@@ -44,7 +44,7 @@ class ProductsRenderer
 
       paginated_products = paginate(results)
 
-      if options[:inventory_enabled]
+      if inventory_enabled?
         # Scope results with variant_overrides
         paginated_products.each { |product| product_scoper.scope(product) }
       end
@@ -123,7 +123,7 @@ class ProductsRenderer
         includes(:default_price, :product).
         where(product_id: products)
 
-      if options[:inventory_enabled]
+      if inventory_enabled?
         # Scope results with variant_overrides
         scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
         variants = variants.each { |v| scoper.scope(v) }
@@ -142,5 +142,9 @@ class ProductsRenderer
       vs[v.product_id] ||= []
       vs[v.product_id] << v
     end
+  end
+
+  def inventory_enabled?
+    options[:inventory_enabled] && !options[:variant_tag_enabled]
   end
 end

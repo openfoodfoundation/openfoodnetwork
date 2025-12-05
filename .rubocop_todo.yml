@@ -80,7 +80,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 48
+# Offense count: 49
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -122,6 +122,7 @@ Metrics/ClassLength:
     - 'app/services/order_cycles/form_service.rb'
     - 'app/services/orders/sync_service.rb'
     - 'app/services/permissions/order.rb'
+    - 'app/services/products_renderer.rb'
     - 'app/services/sets/product_set.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
