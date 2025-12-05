@@ -370,4 +370,100 @@ RSpec.describe Admin::ReportsController do
       end
     end
   end
+
+  context "AJAX Search" do
+    let(:enterprise_fee1) {
+      create(:enterprise_fee, name: "Delivery Fee", enterprise: distributor1)
+    }
+    let(:enterprise_fee2) { create(:enterprise_fee, name: "Admin Fee", enterprise: distributor2) }
+
+    before do
+      controller_login_as_admin
+      orderA1.adjustments.create!(
+        originator: enterprise_fee1,
+        label: "Delivery Fee",
+        amount: 5.0,
+        state: "finalized",
+        order: orderA1
+      )
+      orderB1.adjustments.create!(
+        originator: enterprise_fee2,
+        label: "Admin Fee",
+        amount: 3.0,
+        state: "finalized",
+        order: orderB1
+      )
+    end
+
+    describe "#search_enterprise_fees" do
+      it "returns paginated JSON with enterprise fees ordered by name" do
+        spree_get(
+          :search_enterprise_fees,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+
+        expect(response).to have_http_status(:ok)
+        json_response = response.parsed_body
+
+        names = json_response["results"].pluck("text")
+        expect(names).to eq(['Admin Fee', 'Delivery Fee'])
+      end
+
+      it "caches and works with different report types" do
+        spree_get(
+          :search_enterprise_fees,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+        first_response = response.parsed_body
+
+        spree_get(
+          :search_enterprise_fees,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+        second_response = response.parsed_body
+
+        expect(first_response).to eq(second_response)
+      end
+    end
+
+    describe "#search_enterprise_fee_owners" do
+      it "returns paginated JSON with unique enterprise owners ordered by name" do
+        distributor1.update!(name: "Zebra Farm")
+        distributor2.update!(name: "Alpha Market")
+
+        spree_get(
+          :search_enterprise_fee_owners,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+
+        expect(response).to have_http_status(:ok)
+        json_response = response.parsed_body
+
+        names = json_response["results"].pluck("text")
+        expect(names).to eq(['Alpha Market', 'Zebra Farm'])
+      end
+
+      it "caches results" do
+        spree_get(
+          :search_enterprise_fee_owners,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+        first_response = response.parsed_body
+
+        spree_get(
+          :search_enterprise_fee_owners,
+          report_type: :enterprise_fee_summary,
+          report_subtype: :enterprise_fees_with_tax_report_by_order
+        )
+        second_response = response.parsed_body
+
+        expect(first_response).to eq(second_response)
+      end
+    end
+  end
 end
