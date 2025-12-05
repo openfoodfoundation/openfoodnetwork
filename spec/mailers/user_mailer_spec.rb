@@ -4,14 +4,19 @@ require 'spec_helper'
 
 RSpec.describe Spree::UserMailer do
   let(:user) { build(:user) }
+  let(:order) { build(:order_with_totals_and_distribution) }
+
+  before { ActionMailer::Base.deliveries.clear }
 
   describe '#signup_confirmation' do
+    subject(:mail) { Spree::UserMailer.signup_confirmation(user) }
+
     it "sends email when given a user" do
-      Spree::UserMailer.signup_confirmation(user).deliver_now
+      mail.deliver_now
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
-    describe "user locale" do
+    context "user locale handling" do
       around do |example|
         original_default_locale = I18n.default_locale
         I18n.default_locale = 'pt'
@@ -21,15 +26,20 @@ RSpec.describe Spree::UserMailer do
 
       it "sends email in user locale when user locale is defined" do
         user.locale = 'es'
-        Spree::UserMailer.signup_confirmation(user).deliver_now
+        mail.deliver_now
         expect(ActionMailer::Base.deliveries.first.body).to include "Gracias por unirte"
       end
 
       it "sends email in default locale when user locale is not available" do
         user.locale = 'cn'
-        Spree::UserMailer.signup_confirmation(user).deliver_now
+        mail.deliver_now
         expect(ActionMailer::Base.deliveries.first.body).to include "Obrigada por juntar-se"
       end
+    end
+
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'non-customer facing email with active white labelling', :mail
     end
   end
 
@@ -44,7 +54,6 @@ RSpec.describe Spree::UserMailer do
     context 'when the language is English' do
       it 'sends an email with the translated subject' do
         mail.deliver_now
-
         expect(ActionMailer::Base.deliveries.first.subject).to include(
           "Please confirm your OFN account"
         )
@@ -56,19 +65,28 @@ RSpec.describe Spree::UserMailer do
 
       it 'sends an email with the translated subject' do
         mail.deliver_now
-
         expect(ActionMailer::Base.deliveries.first.subject).to include(
           "Por favor, confirma tu cuenta de OFN"
         )
       end
     end
+
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
   end
 
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
-    describe 'message contents' do
-      subject(:mail) { described_class.reset_password_instructions(user, nil).deliver_now }
+    subject(:mail) { described_class.reset_password_instructions(user, nil).deliver_now }
 
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
+    describe 'message contents' do
       context 'subject includes' do
         it 'translated devise instructions' do
           expect(mail.subject).to include "Reset password instructions"
