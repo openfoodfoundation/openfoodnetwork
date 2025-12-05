@@ -37,12 +37,12 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Date:
-      - Mon, 01 Dec 2025 04:20:08 GMT
+      - Fri, 05 Dec 2025 05:25:57 GMT
     body:
       encoding: UTF-8
       string: '{"access_token":"<HIDDEN-OPENID-TOKEN>","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","not-before-policy":0,"scope":"ReadEnterprise
         profile email"}'
-  recorded_at: Mon, 01 Dec 2025 04:20:08 GMT
+  recorded_at: Fri, 05 Dec 2025 05:25:57 GMT
 - request:
     method: get
     uri: https://api.beta.litefarm.org/dfc/enterprises/
@@ -66,11 +66,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 01 Dec 2025 04:20:10 GMT
+      - Fri, 05 Dec 2025 05:25:58 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '4547'
+      - '8422'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -78,7 +78,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - Origin, X-Requested-With, Content-Type, Accept, Authorization
       Etag:
-      - W/"11c3-UUiD8CqcZCyYKDmozGTahVipqsk"
+      - W/"20e6-LH9X3cYKqQzTa8APsB58/EtePwg"
     body:
       encoding: UTF-8
       string: |-
@@ -87,9 +87,47 @@ http_interactions:
             "@context": "https://www.datafoodconsortium.org",
             "@graph": [
               {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb",
+                "@type": "dfc-b:Enterprise",
+                "dfc-b:hasAddress": {
+                  "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#address"
+                },
+                "dfc-b:hasMainContact": {
+                  "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact"
+                },
+                "dfc-b:name": "Canadian Farm (Minimal fields)",
+                "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#address",
+                "@type": "dfc-b:Address",
+                "dfc-b:hasCity": "Vancouver",
+                "dfc-b:hasCountry": "Canada",
+                "dfc-b:hasPostalCode": "V6A 3Z7",
+                "dfc-b:hasStreet": "1455 Quebec Street",
+                "dfc-b:region": "British Columbia"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact",
+                "@type": "dfc-b:Person",
+                "dfc-b:email": "engineering@litefarm.org",
+                "dfc-b:familyName": "Owner",
+                "dfc-b:firstName": "Minimal Farm"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:egg"
+              }
+            ]
+          },
+          {
+            "@context": "https://www.datafoodconsortium.org",
+            "@graph": [
+              {
                 "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d",
                 "@type": "dfc-b:Enterprise",
-                "dfc-b:email": "manager@testfarm.example.com",
+                "dfc-b:email": "dfcshop@example.com",
                 "dfc-b:hasAddress": {
                   "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#address"
                 },
@@ -113,6 +151,18 @@ http_interactions:
                 ],
                 "dfc-b:logo": "https://litefarmbeta.nyc3.digitaloceanspaces.com/farm_logo/bc35fc0f-19bc-4892-b487-869294abf37b.webp",
                 "dfc-b:name": "DFC Test Farm Beta (All Supplied Fields)",
+                "dfc-b:supplies": [
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant"
+                ],
                 "dfc-b:websitePage": "www.testfarm.example.com"
               },
               {
@@ -127,7 +177,7 @@ http_interactions:
               {
                 "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#person-mainContact",
                 "@type": "dfc-b:Person",
-                "dfc-b:email": "dfctestfarmowner@gmail.com",
+                "dfc-b:email": "engineering@litefarm.org",
                 "dfc-b:familyName": "Test",
                 "dfc-b:firstName": "DFC"
               },
@@ -154,9 +204,144 @@ http_interactions:
                 "@type": "dfc-b:SocialMedia",
                 "dfc-b:URL": "https://x.com/dfc_farm/",
                 "dfc-b:name": "X"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:alcoholic-beverage"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:bakery"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:dairy-product"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:egg"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:flower"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:frozen"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:fruit"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:meat-product"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:plant"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:vegetable"
               }
             ]
-          },
+          }
+        ]
+  recorded_at: Fri, 05 Dec 2025 05:25:58 GMT
+- request:
+    method: post
+    uri: https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token
+    body:
+      encoding: UTF-8
+      string: client_id=<HIDDEN-OPENID_APP_ID>&client_secret=<HIDDEN-OPENID_APP_SECRET>&grant_type=client_credentials&scope=ReadEnterprise
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '1588'
+      Content-Type:
+      - application/json
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - no-referrer
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      Date:
+      - Fri, 05 Dec 2025 05:26:00 GMT
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<HIDDEN-OPENID-TOKEN>","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","not-before-policy":0,"scope":"ReadEnterprise
+        profile email"}'
+  recorded_at: Fri, 05 Dec 2025 05:26:00 GMT
+- request:
+    method: get
+    uri: https://api.beta.litefarm.org/dfc/enterprises/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 05 Dec 2025 05:26:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '8422'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - https://beta.litefarm.org
+      Access-Control-Allow-Headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization
+      Etag:
+      - W/"20e6-LH9X3cYKqQzTa8APsB58/EtePwg"
+    body:
+      encoding: UTF-8
+      string: |-
+        [
           {
             "@context": "https://www.datafoodconsortium.org",
             "@graph": [
@@ -169,7 +354,8 @@ http_interactions:
                 "dfc-b:hasMainContact": {
                   "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact"
                 },
-                "dfc-b:name": "Canadian Farm (Minimal fields)"
+                "dfc-b:name": "Canadian Farm (Minimal fields)",
+                "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg"
               },
               {
                 "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#address",
@@ -183,12 +369,153 @@ http_interactions:
               {
                 "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact",
                 "@type": "dfc-b:Person",
-                "dfc-b:email": "owner@minimal.example.com",
+                "dfc-b:email": "engineering@litefarm.org",
                 "dfc-b:familyName": "Owner",
                 "dfc-b:firstName": "Minimal Farm"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:egg"
+              }
+            ]
+          },
+          {
+            "@context": "https://www.datafoodconsortium.org",
+            "@graph": [
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d",
+                "@type": "dfc-b:Enterprise",
+                "dfc-b:email": "dfcshop@example.com",
+                "dfc-b:hasAddress": {
+                  "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#address"
+                },
+                "dfc-b:hasDescription": "This is a fantastic farm.",
+                "dfc-b:hasMainContact": {
+                  "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#person-mainContact"
+                },
+                "dfc-b:hasPhoneNumber": {
+                  "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#phoneNumber"
+                },
+                "dfc-b:hasSocialMedia": [
+                  {
+                    "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-instagram"
+                  },
+                  {
+                    "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-facebook"
+                  },
+                  {
+                    "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-x"
+                  }
+                ],
+                "dfc-b:logo": "https://litefarmbeta.nyc3.digitaloceanspaces.com/farm_logo/bc35fc0f-19bc-4892-b487-869294abf37b.webp",
+                "dfc-b:name": "DFC Test Farm Beta (All Supplied Fields)",
+                "dfc-b:supplies": [
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
+                  "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant"
+                ],
+                "dfc-b:websitePage": "www.testfarm.example.com"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#address",
+                "@type": "dfc-b:Address",
+                "dfc-b:hasCity": "Vancouver",
+                "dfc-b:hasCountry": "Canada",
+                "dfc-b:hasPostalCode": "V6T 1W5",
+                "dfc-b:hasStreet": "3461 Ross Drive",
+                "dfc-b:region": "British Columbia"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#person-mainContact",
+                "@type": "dfc-b:Person",
+                "dfc-b:email": "engineering@litefarm.org",
+                "dfc-b:familyName": "Test",
+                "dfc-b:firstName": "DFC"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#phoneNumber",
+                "@type": "dfc-b:PhoneNumber",
+                "dfc-b:countryCode": "1",
+                "dfc-b:phoneNumber": "(604) 555-5555"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-facebook",
+                "@type": "dfc-b:SocialMedia",
+                "dfc-b:URL": "https://www.facebook.com/dfc_test_farm/",
+                "dfc-b:name": "Facebook"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-instagram",
+                "@type": "dfc-b:SocialMedia",
+                "dfc-b:URL": "https://www.instagram.com/dfctest/",
+                "dfc-b:name": "Instagram"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-x",
+                "@type": "dfc-b:SocialMedia",
+                "dfc-b:URL": "https://x.com/dfc_farm/",
+                "dfc-b:name": "X"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:alcoholic-beverage"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:bakery"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:dairy-product"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:egg"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:flower"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:frozen"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:fruit"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:meat-product"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:plant"
+              },
+              {
+                "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
+                "@type": "dfc-b:SuppliedProduct",
+                "dfc-b:hasType": "dfc-pt:vegetable"
               }
             ]
           }
         ]
-  recorded_at: Mon, 01 Dec 2025 04:20:10 GMT
+  recorded_at: Fri, 05 Dec 2025 05:26:02 GMT
 recorded_with: VCR 6.2.0
