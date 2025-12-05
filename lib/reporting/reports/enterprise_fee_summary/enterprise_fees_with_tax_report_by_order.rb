@@ -158,7 +158,7 @@ module Reporting
         end
 
         def enterprise_fees_sum(order)
-          amount = enterprise_fees(order).map(&:amount).sum(&:to_f)
+          amount = enterprise_fees(order).map(&:amount).sum(&:to_f).round(2)
           apply_voucher_on_amount(order, amount)
         end
 
@@ -182,7 +182,8 @@ module Reporting
           query = order.all_adjustments.tax
           query = query.inclusive if included == true
           query = query.additional if added == true
-          amount = query.where(adjustable: enterprise_fees(order)).map(&:amount).sum(&:to_f)
+          amount =
+            query.where(adjustable: enterprise_fees(order)).map(&:amount).sum(&:to_f).round(2)
           apply_voucher_on_amount(order, amount)
         end
 

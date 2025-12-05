@@ -23,9 +23,9 @@ module Reporting
             variant: variant_name,
 
             quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
-            item_price: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
+            item_price: proc { |line_items| line_items.map(&:amount).sum(&:to_f).round(2) },
             item_fees_price: proc { |line_items|
-              line_items.map(&:amount_with_adjustments).sum(&:to_f)
+              line_items.map(&:amount_with_adjustments).sum(&:to_f).round(2)
             },
             admin_handling_fees: proc { |_line_items| "" },
             ship_price: proc { |_line_items| "" },
@@ -68,7 +68,7 @@ module Reporting
             order_number: proc { |line_items| line_items.first.order.number },
             date: proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
             final_weight_volume: proc { |line_items|
-              line_items.map(&:final_weight_volume).sum(&:to_f)
+              line_items.map(&:final_weight_volume).sum(&:to_f).round(2)
             },
             shipment_state: proc { |line_items| line_items.first.order.shipment_state },
           }
@@ -129,8 +129,8 @@ module Reporting
           {
             hub: rows.last.hub,
             customer: rows.last.customer,
-            item_price: rows.map(&:item_price).sum(&:to_f),
-            item_fees_price: rows.map(&:item_fees_price).sum(&:to_f),
+            item_price: rows.map(&:item_price).sum(&:to_f).round(2),
+            item_fees_price: rows.map(&:item_fees_price).sum(&:to_f).round(2),
             admin_handling_fees: order.admin_and_handling_total,
             ship_price: order.ship_total,
             pay_fee_price: order.payment_fee,
