@@ -77,6 +77,7 @@ class Enterprise < ApplicationRecord
   has_many :connected_apps, dependent: :destroy
   has_many :dfc_permissions, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
+  has_one :semantic_link, as: :subject, dependent: :delete
 
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
