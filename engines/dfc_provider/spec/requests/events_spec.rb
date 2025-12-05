@@ -74,6 +74,12 @@ RSpec.describe "Events", swagger_doc: "dfc.yaml" do
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
+        before do
+          stub_request(:post, %r{openid-connect/token$})
+          stub_request(:get, "https://api.beta.litefarm.org/dfc/enterprises/")
+            .to_return(body: "[]")
+        end
+
         run_test! do
           expect(json_response["success"]).to eq true
         end
