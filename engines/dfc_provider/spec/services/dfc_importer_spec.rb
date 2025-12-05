@@ -11,7 +11,7 @@ RSpec.describe DfcImporter do
   it "fetches a list of enterprises", :vcr do
     expect {
       subject.import_enterprise_profiles("lf-dev")
-    }.to have_enqueued_mail(Spree::UserMailer, :confirmation_instructions).twice
+    }.to have_enqueued_mail(Spree::UserMailer, :confirmation_instructions)
       .and have_enqueued_mail(EnterpriseMailer, :welcome).twice
 
     # You can show the emails in your browser.
