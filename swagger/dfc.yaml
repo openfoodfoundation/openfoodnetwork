@@ -595,6 +595,15 @@ paths:
                   value:
                     success: false
                     message: Missing parameter `enterpriseUrlid`
+        '401':
+          description: unauthorised
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    success: false
+                    message: Your client_id is not authorised on this platform.
         '200':
           description: success
           content:
