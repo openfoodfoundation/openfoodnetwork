@@ -14,19 +14,8 @@ class DfcImporter
   end
 
   def import_profile(farm)
-    address = farm.localizations.first
-    state = Spree::State.find_by(name: address.region) || Spree::State.first
     owner = find_or_import_user(farm)
-    owner.owned_enterprises.create!(
-      name: farm.name,
-      address: Spree::Address.new(
-        address1: address.street,
-        city: address.city,
-        zipcode: address.postalCode,
-        state: state,
-        country: state.country,
-      ),
-    )
+    EnterpriseImporter.new.import(owner, farm)
   end
 
   def find_or_import_user(farm)
