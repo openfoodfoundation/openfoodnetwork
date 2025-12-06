@@ -10,7 +10,7 @@ gem 'dotenv', require: 'dotenv/load' # Load ENV vars before other gems
 gem 'rails'
 
 # Active Storage
-gem "active_storage_validations"
+gem "active_storage_validations", '~> 3.0.2'
 gem "aws-sdk-s3", require: false
 gem "image_processing"
 
