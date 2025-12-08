@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe ImageImporter do
-  let(:ofn_url) { "https://s3.amazonaws.com/ofn_production/eofop2en1y6tu9fr1x9b0wzwgs5r" }
+  let(:ofn_url) { "https://s3.amazonaws.com/ofn_production/eofop2en1y6tu9fr1x9b0wzwgs5r.png" }
   let(:product) { create(:product) }
 
   describe "#import" do

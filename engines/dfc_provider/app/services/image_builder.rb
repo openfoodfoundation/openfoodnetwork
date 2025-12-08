@@ -19,7 +19,7 @@ class ImageBuilder < DfcBuilder
 
   def self.import(image_link)
     url = URI.parse(image_link)
-    filename = File.basename(image_link)
+    filename = File.basename(url.path)
     metadata = { custom: { origin: image_link } }
 
     Spree::Image.new.tap do |image|
