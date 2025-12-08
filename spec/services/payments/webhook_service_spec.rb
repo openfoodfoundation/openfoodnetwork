@@ -14,8 +14,8 @@ RSpec.describe Payments::WebhookService do
   describe "creating payloads" do
     context "with order cycle coordinator owner webhook endpoints configured" do
       before do
-        order.order_cycle.coordinator.owner.webhook_endpoints.create!(
-          url: "http://coordinator.payment.url", webhook_type: "payment_status_changed"
+        order.order_cycle.coordinator.owner.webhook_endpoints.payment_status.create!(
+          url: "http://coordinator.payment.url"
         )
       end
 
@@ -80,12 +80,8 @@ RSpec.describe Payments::WebhookService do
         end
 
         it "calls endpoint for all user managing the order cycle coordinator" do
-          user1.webhook_endpoints.create!(
-            url: "http://user1.payment.url", webhook_type: "payment_status_changed"
-          )
-          user2.webhook_endpoints.create!(
-            url: "http://user2.payment.url", webhook_type: "payment_status_changed"
-          )
+          user1.webhook_endpoints.payment_status.create!(url: "http://user1.payment.url")
+          user2.webhook_endpoints.payment_status.create!(url: "http://user2.payment.url")
 
           expect{ subject }
             .to enqueue_job(WebhookDeliveryJob)
@@ -98,12 +94,8 @@ RSpec.describe Payments::WebhookService do
 
         context "wiht duplicate webhook endpoints configured" do
           it "calls each unique configured endpoint" do
-            user1.webhook_endpoints.create!(
-              url: "http://coordinator.payment.url", webhook_type: "payment_status_changed"
-            )
-            user2.webhook_endpoints.create!(
-              url: "http://user2.payment.url", webhook_type: "payment_status_changed"
-            )
+            user1.webhook_endpoints.payment_status.create!(url: "http://coordinator.payment.url")
+            user2.webhook_endpoints.payment_status.create!(url: "http://user2.payment.url")
 
             expect{ subject }
               .to enqueue_job(WebhookDeliveryJob)

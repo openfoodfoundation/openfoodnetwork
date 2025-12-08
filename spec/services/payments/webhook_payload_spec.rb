@@ -11,7 +11,7 @@ RSpec.describe Payments::WebhookPayload do
 
     subject { described_class.new(payment:, order:, enterprise: order.distributor) }
 
-    it "returns a formated hash" do
+    it "returns a hash with the relevant data" do
       order.line_items.update_all(tax_category_id: tax_category.id)
 
       enterprise = order.distributor
