@@ -1,23 +1,13 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'rake'
 
 RSpec.describe 'ofn:import:product_images' do
-  before(:all) do
-    Rake.application.rake_require("tasks/import_product_images")
-    Rake::Task.define_task(:environment)
-  end
-
-  before do
-    Rake::Task['ofn:import:product_images'].reenable
-  end
-
   describe 'task' do
     context "filename is blank" do
       it 'raises an error' do
         expect {
-          Rake.application.invoke_task('ofn:import:product_images')
+          invoke_task('ofn:import:product_images')
         }.to raise_error(RuntimeError,
                          'Filename required')
       end
@@ -28,7 +18,7 @@ RSpec.describe 'ofn:import:product_images' do
         allow(CSV).to receive(:read).and_return(CSV::Table.new([]))
 
         expect {
-          Rake.application.invoke_task('ofn:import:product_images["path/to/csv/file.csv"]')
+          invoke_task('ofn:import:product_images["path/to/csv/file.csv"]')
         }.to raise_error(RuntimeError, 'CSV columns reqired: ["producer", "name", "image_url"]')
       end
     end
@@ -74,7 +64,7 @@ RSpec.describe 'ofn:import:product_images' do
         OUTPUT
 
         expect {
-          Rake.application.invoke_task('ofn:import:product_images["path/to/csv/file.csv"]')
+          invoke_task('ofn:import:product_images["path/to/csv/file.csv"]')
         }.to output(expected_output).to_stdout
       end
     end

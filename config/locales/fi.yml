@@ -548,6 +548,7 @@ fi:
     create_and_add_another: "Luo ja lisää toinen"
     create: "Luo"
     cancel: "Peruuta"
+    cancel_order: "Peruuta"
     resume: "Jatka"
     save: "Tallenna"
     edit: "Muokkaa"
@@ -1344,10 +1345,8 @@ fi:
             no_rules_yet: Mitään oletussääntöjä ei vielä sovelleta
             add_new_button: '+ Lisää uusi oletussääntö'
           no_tags_yet: Tähän yritykseen ei vielä liity tägejä
-          no_rules_yet: Tähän tägiin ei vielä sovelleta sääntöjä
-          for_customers_tagged: 'Asiakkaille, jotka on tägätty:'
-          add_new_rule: '+ Lisää uusi sääntö'
           add_new_tag: '+ Lisää uusi tägi'
+          show_hide_order_cycles: 'Näytä tai piilota tilausjaksot verkkokaupassani'
         users:
           legend: "Käyttäjät"
           email_confirmation_notice_html: "Sähköpostivahvistus odottaa. Olemme lähettäneet vahvistussähköpostin osoitteeseen %{email}."
@@ -1445,6 +1444,11 @@ fi:
         visible: Näkyvissä?
         owner: Omistaja
         producer: Tuottaja
+        sells_options:
+          unspecified: määrittämätön
+          none: ei yhtään
+          own: oma
+          any: Mitä tahansa
       change_type_form:
         producer_profile: Tuottajan profiili
         connect_ofn: Yhdistä OFN:n kautta
@@ -2395,10 +2399,8 @@ fi:
   email_confirmed: "Kiitos sähköpostiosoitteesi vahvistamisesta."
   email_confirmation_activate_account: "Ennen kuin voimme aktivoida uuden tilisi, meidän on vahvistettava sähköpostiosoitteesi."
   email_confirmation_greeting: "Hei, %{contact} !"
-  email_confirmation_profile_created: "Profiili käyttäjälle %{name} on luotu onnistuneesti! Profiilisi aktivoimiseksi meidän on vahvistettava tämä sähköpostiosoite."
   email_confirmation_click_link: "Vahvista sähköpostiosoitteesi ja jatka profiilisi luomista napsauttamalla alla olevaa linkkiä."
   email_confirmation_link_label: "Vahvista tämä sähköpostiosoite »"
-  email_confirmation_help_html: "Vahvistettuasi sähköpostiosoitteesi voit käyttää tämän yrityksen järjestelmänvalvojan tiliäsi. Katso %{link} saadaksesi lisätietoja %{sitename} :n ominaisuuksista ja aloittaaksesi profiilisi tai verkkokauppasi käytön."
   email_confirmation_notice_unexpected: "Sait tämän viestin, koska rekisteröidyit palvelussa %{sitename} tai joku luultavasti tuntemasi henkilö kutsui sinut rekisteröitymään. Jos et ymmärrä, miksi saat tämän sähköpostin, kirjoita osoitteeseen %{contact} ."
   email_social: "Ota yhteyttä:"
   email_contact: "Lähetä meille sähköpostia:"
@@ -2488,7 +2490,7 @@ fi:
   enterprises_currently_open: "Tilaukset ovat tällä hetkellä avoinna"
   enterprises_ready_for: "Valmis"
   enterprises_choose: "Valitse milloin haluat tilauksesi:"
-  maps_open: "Avata"
+  maps_open: "Avautuu"
   maps_closed: "Suljettu"
   map_title: "Kartta"
   hubs_buy: "Osta:"
@@ -2932,8 +2934,8 @@ fi:
   admin_enterprise_groups_web_twitter: "esim. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "esim. www.truffles.com"
   admin_order_cycles: "Ylläpitäjän tilausjaksot"
-  open: "Avata"
-  close: "Lähellä"
+  open: "Avautuu"
+  close: "Sulkeutuu"
   create: "Luoda"
   search: "Haku"
   supplier: "toimittaja"
@@ -3316,6 +3318,7 @@ fi:
   product_importer_products_save_error: did not save any products successfully
   product_import_file_not_found_notice: 'Tiedostoa ei löytynyt tai sitä ei voitu avata'
   product_import_no_data_in_spreadsheet_notice: 'Laskentataulukosta ei löytynyt tietoja'
+  product_import_inventory_disable: Tuonti varastoihin ei ole käytettävissä
   order_choosing_hub_notice: Keskittimesi on valittu.
   order_cycle_selecting_notice: Tilausjaksosi on valittu.
   adjustments_tax_rate_error: "^Tarkista, että tämän oikaisun veroprosentti on oikea."
@@ -3516,18 +3519,6 @@ fi:
           loading_variants: "Varianttien lataaminen"
           no_variants: "Tälle tuotteelle ei ole saatavilla versioita (piilotettu varastoasetuksissa)."
           some_variants_hidden: "(Jotkin versiot saattavat olla piilotettuja varastoasetusten kautta)"
-      tag_rules:
-        shipping_method_tagged_top: "Toimitustavat merkitty tägillä"
-        shipping_method_tagged_bottom: "ovat:"
-        payment_method_tagged_top: "Maksutavat merkitty tägillä"
-        payment_method_tagged_bottom: "ovat:"
-        order_cycle_tagged_top: "Tilausjaksot merkitty tägillä"
-        order_cycle_tagged_bottom: "ovat:"
-        inventory_tagged_top: "Tägätyt varastomuunnelmat"
-        inventory_tagged_bottom: "ovat:"
-      new_tag_rule_dialog:
-        select_rule_type: "Valitse säännön tyyppi:"
-        add_rule: "Lisää sääntö"
       enterprise_fees:
         inherit_from_product: "Periytyy tuotteesta"
       orders:
@@ -3656,13 +3647,6 @@ fi:
       some_trouble: "Minulla oli hieman ongelmia tallentaessani: %{errors}"
       changing_on_hand_stock: Varastotilanteen muutos...
       stock_reset: Osakkeet palautettu oletusarvoihin.
-    tag_rules:
-      show_hide_variants: 'Näytä tai piilota versiot verkkokaupassani'
-      show_hide_shipping: 'Näytä tai piilota toimitustavat kassalla'
-      show_hide_payment: 'Näytä tai piilota maksutavat kassalla'
-      show_hide_order_cycles: 'Näytä tai piilota tilausjaksot verkkokaupassani'
-      visible: NÄKYVÄ
-      not_visible: EI NÄKYVÄ
     services:
       unsaved_changes_message: Tallentamattomia muutoksia on tällä hetkellä olemassa. Tallenna nyt vai jätä se huomiotta?
       save: Tallenna
@@ -4563,6 +4547,7 @@ fi:
           terms_of_service: "Palveluehdot"
         sortable_header:
           name: "Nimi"
+          on_hand: "Varastossa"
           number: "Määrä"
           completed_at: "Valmistui klo"
           state: "Tila"
@@ -4888,6 +4873,16 @@ fi:
       previous: Edellinen
     tag_list_input:
       default_placeholder: Lisää tägi
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Toimitustavat merkitty tägillä"
+        payment_method_tagged_top: "Maksutavat merkitty tägillä"
+        order_cycle_tagged_top: "Tilausjaksot merkitty tägillä"
+        inventory_tagged_top: "Tägätyt varastomuunnelmat"
+    tag_rule_group_form:
+      for_customers_tagged: 'Asiakkaille, jotka on tägätty:'
+      add_new_rule: '+ Lisää uusi sääntö'
+      no_rules_yet: Tähän tägiin ei vielä sovelleta sääntöjä
   invisible_captcha:
     sentence_for_humans: "Jätä tyhjäksi"
     timestamp_error_message: "Yritä uudelleen 5 sekunnin kuluttua."

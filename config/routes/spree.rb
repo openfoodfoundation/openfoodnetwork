@@ -50,16 +50,8 @@ Spree::Core::Engine.routes.draw do
 
     resources :users
 
-    constraints FeatureToggleConstraint.new(:admin_style_v3, negate: true) do
-      # Show old bulk products screen
-      resources :products, :index do
-        post :bulk_update, :on => :collection, :as => :bulk_update
-      end
-    end
-
-    resources :products, except: :index do
+    resources :products, except: [:index, :destroy] do
       member do
-        get :clone
         get :group_buy_options
         get :seo
       end
@@ -81,11 +73,6 @@ Spree::Core::Engine.routes.draw do
           post :update_positions
         end
       end
-    end
-
-    if Rails.env.development?
-      # duplicate old path for reference when admin_style_v3 enabled
-      resources :products_old, to: 'products#index', only: :index
     end
 
     get '/variants/search', :to => "variants#search", :as => :search_variants

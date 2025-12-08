@@ -304,7 +304,7 @@ RSpec.describe OrderCycle do
     let(:oc) { build_stubbed(:simple_order_cycle) }
 
     it "reports status when an order cycle is upcoming" do
-      Timecop.freeze(oc.orders_open_at - 1.second) do
+      travel_to(oc.orders_open_at - 1.second) do
         expect(oc).not_to be_undated
         expect(oc).to     be_dated
         expect(oc).to     be_upcoming
@@ -322,7 +322,7 @@ RSpec.describe OrderCycle do
     end
 
     it "reports status when an order cycle has closed" do
-      Timecop.freeze(oc.orders_close_at + 1.second) do
+      travel_to(oc.orders_close_at + 1.second) do
         expect(oc).not_to be_undated
         expect(oc).to     be_dated
         expect(oc).not_to be_upcoming
@@ -477,7 +477,7 @@ RSpec.describe OrderCycle do
       expect(items).to match_array order.reload.line_items
     end
 
-    it "returns items with scoped variants" do
+    it "returns items with scoped variants", feature: :inventory do
       overridden_variant = order.line_items.first.variant
       create(:variant_override, hub: shop, variant: overridden_variant, count_on_hand: 1000)
 
@@ -804,10 +804,10 @@ RSpec.describe OrderCycle do
           ).distributor_shipping_methods.first
           oc.selected_distributor_shipping_methods << other_distributor_shipping_method_i
 
-          expect(oc.distributor_shipping_methods).to eq [
+          expect(oc.distributor_shipping_methods).to contain_exactly(
             distributor_shipping_method,
             other_distributor_shipping_method_i
-          ]
+          )
         end
       end
     end

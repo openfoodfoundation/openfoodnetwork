@@ -17,7 +17,7 @@
     = render "layouts/matomo_tag"
     = language_meta_tags
 
-    = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload"
+    = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload", media: "screen"
     = javascript_pack_tag "application", "data-turbo-track": "reload"
 
     = render "layouts/shopfront_script" if @shopfront_layout

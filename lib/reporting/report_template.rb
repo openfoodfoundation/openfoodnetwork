@@ -3,6 +3,7 @@
 module Reporting
   class ReportTemplate
     include ReportsHelper
+
     attr_accessor :user, :params, :ransack_params
 
     delegate :render_as, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
@@ -13,7 +14,7 @@ module Reporting
     delegate :available_headers, :table_headers, :fields_to_hide, :fields_to_show,
              to: :headers_builder
 
-    delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
+    delegate :formatted_rules, :header_option?, :summary_row_option?, :metadata_option?, to: :ruler
 
     def initialize(user, params = {}, render: false)
       unless render
@@ -86,8 +87,8 @@ module Reporting
     #   fields_used_in_header: [:first_name, :last_name],
     #   summary_row: proc do |group_key, items, rows|
     #     {
-    #       quantity: rows.sum(&:quantity),
-    #       price: "#{rows.sum(&:price)} #{currency_symbol}"
+    #       quantity: rows.map(&:quantity).sum(&:to_i),
+    #       price: "#{rows.map(&:price).sum(&:to_f)} #{currency_symbol}"
     #     }
     #   end,
     #   summary_row_class: "", # by default 'text-bold'
@@ -114,11 +115,11 @@ module Reporting
     end
 
     def rows_builder
-      @rows_builder ||= ReportRowsBuilder.new(self, @user)
+      @rows_builder ||= ReportRowsBuilder.new(self)
     end
 
     def headers_builder
-      @headers_builder ||= ReportHeadersBuilder.new(self, @user)
+      @headers_builder ||= ReportHeadersBuilder.new(self)
     end
 
     def ruler

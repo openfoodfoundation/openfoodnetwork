@@ -1,7 +1,7 @@
 #save-bar {
   position: fixed;
   width: 100%;
-  z-index: 100;
+  z-index: $save-bar-z-index;
   bottom: 0px;
   left: 0;
   padding: 8px 8px;

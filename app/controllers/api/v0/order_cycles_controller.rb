@@ -22,7 +22,9 @@ module Api
           distributor,
           order_cycle,
           customer,
-          search_params
+          search_params,
+          inventory_enabled:,
+          variant_tag_enabled:
         ).products_json
 
         render plain: products
@@ -95,8 +97,16 @@ module Api
 
       def distributed_products
         OrderCycles::DistributedProductsService.new(
-          distributor, order_cycle, customer
+          distributor, order_cycle, customer, inventory_enabled:, variant_tag_enabled:,
         ).products_relation.pluck(:id)
+      end
+
+      def inventory_enabled
+        OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
+      end
+
+      def variant_tag_enabled
+        OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, distributor)
       end
     end
   end

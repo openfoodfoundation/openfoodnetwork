@@ -8,10 +8,10 @@ import help_modal_link_controller from "../../../app/webpacker/controllers/help_
 
 expect.extend({
   toBeVisible(element) {
-    if(element.className.includes("in") && element.style.display == "block") {
-      return { pass: true }
+    if (element.className.includes("in") && element.style.display == "block") {
+      return { pass: true };
     } else {
-      return { pass: false }
+      return { pass: false };
     }
   },
 });
@@ -21,7 +21,7 @@ describe("HelpModalController", () => {
     const application = Application.start();
     application.register("help-modal", help_modal_controller);
     application.register("help-modal-link", help_modal_link_controller);
-    jest.useFakeTimers()
+    jest.useFakeTimers();
   });
 
   beforeEach(() => {
@@ -54,36 +54,36 @@ describe("HelpModalController", () => {
     const modal = document.getElementById("modal");
     const openLink = document.getElementById("open-link");
     const closeLink = document.getElementById("close-link");
-    expect(document.body.className).not.toContain("modal-open")
-    expect(background).not.toBeVisible()
-    expect(modal).not.toBeVisible()
+    expect(document.body.className).not.toContain("modal-open");
+    expect(background).not.toBeVisible();
+    expect(modal).not.toBeVisible();
 
     openLink.click();
     jest.runAllTimers();
 
-    expect(document.body.className).toContain("modal-open")
-    expect(background).toBeVisible()
-    expect(modal).toBeVisible()
+    expect(document.body.className).toContain("modal-open");
+    expect(background).toBeVisible();
+    expect(modal).toBeVisible();
 
     closeLink.click();
     jest.runAllTimers();
 
-    expect(document.body.className).not.toContain("modal-open")
-    expect(background).not.toBeVisible()
-    expect(modal).not.toBeVisible()
+    expect(document.body.className).not.toContain("modal-open");
+    expect(background).not.toBeVisible();
+    expect(modal).not.toBeVisible();
   });
 
   it("closes when the escape key is pressed", () => {
     const modal = document.getElementById("modal");
     const openLink = document.getElementById("open-link");
     openLink.click();
-    jest.runAllTimers()
-    expect(modal).toBeVisible()
+    jest.runAllTimers();
+    expect(modal).toBeVisible();
 
-    document.dispatchEvent(new KeyboardEvent('keyup', { 'code': 'Escape' }));
-    jest.runAllTimers()
+    document.dispatchEvent(new KeyboardEvent("keyup", { code: "Escape" }));
+    jest.runAllTimers();
 
-    expect(modal).not.toBeVisible()
+    expect(modal).not.toBeVisible();
   });
 
   it("closes when the background is clicked", () => {
@@ -91,13 +91,12 @@ describe("HelpModalController", () => {
     const modal = document.getElementById("modal");
     const openLink = document.getElementById("open-link");
     openLink.click();
-    jest.runAllTimers()
-    expect(modal).toBeVisible()
+    jest.runAllTimers();
+    expect(modal).toBeVisible();
 
-    background.click()
-    jest.runAllTimers()
+    background.click();
+    jest.runAllTimers();
 
-    expect(modal).not.toBeVisible()
+    expect(modal).not.toBeVisible();
   });
 });
-

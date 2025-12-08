@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe SubscriptionPlacementJob do
-  include ActiveSupport::Testing::TimeHelpers
-
   let(:job) { SubscriptionPlacementJob.new }
   let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 

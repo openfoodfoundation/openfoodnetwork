@@ -1,19 +1,23 @@
 - if @report_subtypes.present? && @report_subtypes.count > 1
   %input{type: 'hidden', name: 'report_subtype', value: @report_subtype}
 
-.row.rendering-options{ "data-controller": "csv-select" }
+.row.rendering-options{ "data-controller": "csv-select metadata-toggle" }
   .alpha.two.columns
     = label_tag :report_format, t(".generate_report")
   .omega.fourteen.columns{ style: "margin-bottom: 1.5em;" }
     = select_tag :report_format, grouped_options_for_select({ |
       t('.formatted_data') => { t('.on_screen') => '', "PDF" => 'pdf', t('.spreadsheet') => 'xlsx' }, |
       t('.raw_data') => { "CSV" => 'csv' }, |
-    }), { "data-csv-select-target": "reportType", "data-action": "csv-select#handleSelectChange" }
+    }), { "data-csv-select-target": "reportType", "data-metadata-toggle-target": "reportType", "data-action": "csv-select#handleSelectChange metadata-toggle#handleSelectChange" }
 
-  - if @report.header_option? || @report.summary_row_option?
+  - if @report.header_option? || @report.summary_row_option? || @report.metadata_option?
     .row
       .alpha.two.columns= label_tag nil, t(".display")
       .omega.fourteen.columns
+        - if @report.metadata_option?
+          %span.inline-checkbox{ style: "margin-right: 1rem;" }
+            = check_box_tag :display_metadata_rows, true, @rendering_options.options[:display_metadata_rows], { "disabled": "true", "data-metadata-toggle-target": "checkbox" }
+            = label_tag :display_metadata_rows, t(".metadata_rows"), {"class": "disabled", "data-metadata-toggle-target": "label" }
         - if @report.header_option?
           %span.inline-checkbox{ style: "margin-right: 1rem;" }
             = check_box_tag :display_header_row, true, @rendering_options.options[:display_header_row]

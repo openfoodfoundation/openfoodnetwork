@@ -493,6 +493,7 @@ ru:
     create_and_add_another: "Создать и Добавить Другой"
     create: "Создать"
     cancel: "Отмена"
+    cancel_order: "Выход"
     resume: "Продолжить"
     save: "Сохранить"
     edit: "Изменить"
@@ -1226,10 +1227,11 @@ ru:
             no_rules_yet: Правила по умолчанию еще не применяются
             add_new_button: '+ Добавить Новое Правило По Умолчанию'
           no_tags_yet: К этому предприятию метки пока не применяются
-          no_rules_yet: К этой метке еще не применяются правила
-          for_customers_tagged: 'Для клиентов с метками:'
-          add_new_rule: '+ Добавить Новое Правило'
           add_new_tag: '+ Добавить Новую Метку'
+          show_hide_variants: 'Показать или Скрыть варианты в моей витрине'
+          show_hide_shipping: 'Показать или Скрыть способы доставки в оформлении заказа'
+          show_hide_payment: 'Показать или Скрыть способы оплаты в оформлении заказа'
+          show_hide_order_cycles: 'Показать или Скрыть циклы заказов в моей витрине'
         users:
           legend: "Пользователи"
           email_confirmation_notice_html: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
@@ -2242,10 +2244,8 @@ ru:
   email_confirmed: "Спасибо за подтверждение Вашего email адреса."
   email_confirmation_activate_account: "Перед тем как сможем активировать Ваш профиль, мы должны подтвердить Ваш email адрес."
   email_confirmation_greeting: "Привет, %{contact}!"
-  email_confirmation_profile_created: "Профиль для %{name} успешно создан! Для активации Вашего профиля нам необходимо подтвердить этот email адрес."
   email_confirmation_click_link: "Пожалуйста нажмите на ссылку ниже, чтобы подтвердить Ваш email и продолжить настраивать Ваш профиль."
   email_confirmation_link_label: "Подтвердить email адрес »"
-  email_confirmation_help_html: "После подтверждения Вашего email, Вы можете войти в свой административный профиль для этого предприятия. Смотрите %{link}, чтобы узнать больше о функциях %{sitename} и начать использовать свой профиль или интернет-магазин."
   email_confirmation_notice_unexpected: "Вы получили это сообщение, потому что Вы зарегистрировались в %{sitename} или Вас пригласил зарегистрироваться кто-то, кого Вы, вероятно, знаете. Если вы не понимаете, почему вы получили это письмо, напишите на %{contact}."
   email_social: "Связаться с нами:"
   email_contact: "Напишите нам:"
@@ -3351,18 +3351,6 @@ ru:
           loading_variants: "Загрузка Вариантов"
           no_variants: "Для этого товара нет доступных вариантов (скрыт в настройках инвентаря)."
           some_variants_hidden: "(Некоторые варианты могут быть скрыты в настройках инвентаря)"
-      tag_rules:
-        shipping_method_tagged_top: "Способы доставки помечены"
-        shipping_method_tagged_bottom: "являются:"
-        payment_method_tagged_top: "Способы оплаты помечены"
-        payment_method_tagged_bottom: "являются:"
-        order_cycle_tagged_top: "Циклы заказа помечены"
-        order_cycle_tagged_bottom: "являются:"
-        inventory_tagged_top: "Помечены варианты Товарной Номенклатуры"
-        inventory_tagged_bottom: "являются:"
-      new_tag_rule_dialog:
-        select_rule_type: "Выберите тип правила:"
-        add_rule: "Добавить Правило"
       enterprise_fees:
         inherit_from_product: "Наследовать От Товара"
       orders:
@@ -3493,13 +3481,6 @@ ru:
       some_trouble: "Были проблемы с сохранением: %{errors}"
       changing_on_hand_stock: Изменение уровня запасов в наличии ...
       stock_reset: Запасы сброшены до значений по умолчанию.
-    tag_rules:
-      show_hide_variants: 'Показать или Скрыть варианты в моей витрине'
-      show_hide_shipping: 'Показать или Скрыть способы доставки в оформлении заказа'
-      show_hide_payment: 'Показать или Скрыть способы оплаты в оформлении заказа'
-      show_hide_order_cycles: 'Показать или Скрыть циклы заказов в моей витрине'
-      visible: Видимый
-      not_visible: Не видимый
     services:
       unsaved_changes_message: Есть несохраненные изменения, сохранить или игнорировать?
       save: Сохранить
@@ -4392,6 +4373,7 @@ ru:
           terms_of_service: "Условия Сервиса"
         sortable_header:
           name: "Имя"
+          on_hand: "В наличии"
           number: "Номер"
           completed_at: "Завершено"
           state: "Статус"
@@ -4729,3 +4711,23 @@ ru:
       previous: Предыдущий
     tag_list_input:
       default_placeholder: Добавить Метку
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Способы доставки помечены"
+        shipping_method_tagged_bottom: "являются:"
+        payment_method_tagged_top: "Способы оплаты помечены"
+        payment_method_tagged_bottom: "являются:"
+        order_cycle_tagged_top: "Циклы заказа помечены"
+        order_cycle_tagged_bottom: "являются:"
+        inventory_tagged_top: "Помечены варианты Товарной Номенклатуры"
+        inventory_tagged_bottom: "являются:"
+        variant_tagged_bottom: "являются:"
+        visible: Видимый
+        not_visible: Не видимый
+    tag_rule_group_form:
+      for_customers_tagged: 'Для клиентов с метками:'
+      add_new_rule: '+ Добавить Новое Правило'
+      no_rules_yet: К этой метке еще не применяются правила
+    add_tag_rule_modal:
+      select_rule_type: "Выберите тип правила:"
+      add_rule: "Добавить Правило"

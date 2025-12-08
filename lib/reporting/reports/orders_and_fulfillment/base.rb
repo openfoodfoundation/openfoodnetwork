@@ -71,20 +71,24 @@ module Reporting
         def total_units(line_items)
           return " " if not_all_have_unit?(line_items)
 
-          total_units = line_items.sum do |li|
+          total_units = line_items.map do |li|
             li.quantity * li.unit_value / scale_factor(li.variant)
-          end
+          end.sum(&:to_f)
 
           total_units.round(3)
         end
 
         def variant_scoper_for(distributor_id)
           @variant_scopers_by_distributor_id ||= {}
+          variant_overrides = {}
+          distributor = Enterprise.find_by(id: distributor_id)
+
+          if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor)
+            variant_overrides = report_variant_overrides[distributor_id]
+          end
+
           @variant_scopers_by_distributor_id[distributor_id] ||=
-            OpenFoodNetwork::ScopeVariantToHub.new(
-              distributor_id,
-              report_variant_overrides[distributor_id] || {},
-            )
+            OpenFoodNetwork::ScopeVariantToHub.new(distributor, variant_overrides)
         end
 
         def not_all_have_unit?(line_items)

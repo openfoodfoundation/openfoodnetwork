@@ -2,19 +2,17 @@
 # frozen_string_literal: true
 
 SimpleCov.start 'rails' do
+  # The rails profile contains some filters already:
+  #
+  # - "/test/"
+  # - "/features/"
+  # - "/spec/"
+  # - "/autotest/"
+  # - /^\/config\//
+  # - /^\/db\//
   add_filter '/bin/'
-  add_filter '/config/'
-  add_filter '/jobs/application_job.rb'
-  add_filter '/schemas/'
-  add_filter '/lib/generators'
-  add_filter '/spec/'
-  add_filter '/vendor/'
-  add_filter '/public'
-  add_filter '/swagger'
+  add_filter '/config/' # to include engine config
   add_filter '/script'
-  add_filter '/log'
-  add_filter '/db'
-  add_filter '/lib/tasks/sample_data/'
 
   formatter SimpleCov::Formatter::SimpleFormatter
 end

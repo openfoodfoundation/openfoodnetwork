@@ -17,10 +17,7 @@ export default class extends ApplicationController {
     let confirmation = confirm(this.messageValue);
     if (confirmation) {
       location.hash = "";
-      this.stimulate(
-        "EnterpriseEdit#remove_terms_and_conditions",
-        event.target
-      );
+      this.stimulate("EnterpriseEdit#remove_terms_and_conditions", event.target);
     }
   }
 

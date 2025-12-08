@@ -38,11 +38,11 @@ es:
         shipment_state: Provincia de envío
         completed_at: Completado en
         number: Número
-        state: Estado
+        state: Provincia
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
-        state: Estado
+        state: Provincia
         source: Fuente
       spree/product:
         name: "nombre del producto"
@@ -141,8 +141,10 @@ es:
       message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
     internal_server_error:
       title: "Lo sentimos pero algo fue mal (500)"
+      message_html: "<b>Por favor, inténtalo de nuevo.</b><p> Puede que se trate de un problema temporal. Haz clic en el botón «Atrás» para volver a la pantalla anterior o vuelve a la <a href='/''>página de inicio</a> e inténtalo de nuevo.</p><b> Estamos en ello.</b> <p>Si ya has tenido este problema anteriormente, es probable que ya lo conozcamos y estemos trabajando para solucionarlo. Registramos todos los errores que se producen.</p><b> Póngase en contacto con el servicio de asistencia</b><p> Si el problema persiste o es urgente, infórmenos al respecto. Encontrará nuestros datos de contacto en la página <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>global de Open Food Network Local.</a></p><p> Nos será de gran ayuda que nos facilite tantos detalles como sea posible sobre lo que estaba haciendo cuando se produjo el error.</p>"
     unprocessable_entity:
       title: "El cambio deseado ha sido rechazado (422)"
+      message_html: "<p>El cambio que deseabas ha sido rechazado. Quizás hayas intentado cambiar algo a lo que no tienes acceso.<br><h3><a href='/' > Vuelve a la página de inicio.</a></h3></p>"
     general_error:
       message: "Lo sentimos, pero algo ha ido mal.\n\nPuede que se trate de un problema temporal, así que inténtalo de nuevo o recarga la página.\nRegistramos todos los errores y es posible que estemos trabajando en una solución.\nSi el problema persiste o es urgente, póngase en contacto con nosotras."
     unauthorized:
@@ -277,6 +279,7 @@ es:
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
     oidc:
       failure: "No se ha podido iniciar sesión: %{error}"
+      record_not_unique: "%{uid} ya está asociado a otra cuenta."
   home_page_alert_html: "HTML de alerta de página de inicio"
   hub_signup_case_studies_html: "HTML casos de estudio de registro de hub"
   hub_signup_detail_html: "HTML detalle de registro de hub"
@@ -387,7 +390,7 @@ es:
       instructions: "Tu pedido ha sido enviado"
       shipment_summary: "Resumen de envío"
       subject: "Notificación de envío"
-      thanks: "Gracias por hacer negocios."
+      thanks: "Gracias por ayudar a tus productoras locales"
       track_information: "Información de seguimiento: %{tracking}"
       track_link: "Enlace de seguimiento: %{url}"
   subscription_mailer:
@@ -547,6 +550,7 @@ es:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     resume: "Continuar"
     save: "Guardar"
     edit: "Editar"
@@ -566,6 +570,8 @@ es:
           selected_categories: "%{count} categorías seleccionadas"
         producers:
           title: Productoras
+          selected_producers: "%{count} productores seleccionados"
+        per_page: "%{count} elementos por página"
         colums: Columnas
       columns:
         image: Imagen
@@ -710,6 +716,7 @@ es:
         status: Estado
         ok: Ok
         instance_secret_key: Clave secreta de instancia
+        instance_publishable_key: Clave publicable de instancia
         account_id: Account ID
         business_name: Nombre de la Organización
         charges_enabled: Cargos habilitados
@@ -728,6 +735,7 @@ es:
     connected_app_settings:
       edit:
         title: "Ajustes de la aplicación conectada"
+        info_html: "Las aplicaciones habilitadas aparecerán en Configuración organización > Aplicaciones conectadas."
         enabled_legend: "Aplicaciones conectadas habilitadas"
         connected_apps_enabled:
           discover_regen: Descubrir el Portal Regenerativo
@@ -755,6 +763,8 @@ es:
         guest_label: "Pedido hecho como invitada"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
+      destroy:
+        has_associated_subscriptions: "Eliminación fallida: este consumidor tiene suscripciones activas. Cancélelas primero."
     column_preferences:
       bulk_update:
         success: "Preferencias de columna guardadas"
@@ -775,6 +785,16 @@ es:
       absent_variant:
         reset: "Restablecer stock"
       index:
+        title: "Catálogo de productos DFC"
+        catalog_url: "%{count} productos para importar de: %{catalog_url}"
+        absent_products:
+          one: |
+              Un productos no ya no esta en este catálogo
+              Se le marcara como no disponible poniendo su stock a cero.
+          other: |
+              %{count} productos ya no están en el catálogo.
+              Se marcarán como no disponibles restableciendo el stock a cero.
+        enterprise: "Importar a la empresa: %{enterprise_name}"
         select_all: "Seleccionar/deseleccionar todo"
         update: Actualizar
         new: Nuevo
@@ -784,6 +804,10 @@ es:
           other: "%{count} seleccionados"
         import: Importar
         invalid_url: Esta URL de catálogo no es correcta
+      import:
+        title: "Importación del catálogo de productos DFC"
+        imported_products: "Productos importados: %{count}"
+        reset_products: "Restablecimiento del stock para productos ausentes: %{count}"
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -854,10 +878,12 @@ es:
       delete_modal:
         delete_product_modal:
           heading: "Borrar producto"
+          prompt: "Esto lo eliminará permanentemente de tu lista."
           confirmation_text: "Borrar producto"
           cancellation_text: "Mantener producto"
         delete_variant_modal:
           heading: "Borrar variante"
+          prompt: "Esto lo eliminará permanentemente de tu lista."
           confirmation_text: "Borrar variante"
           cancellation_text: "Mantener variante"
       filters:
@@ -878,13 +904,30 @@ es:
         search: Buscar
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count}producto</strong> encontrado para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            many: "<strong> %{count}productos </strong>encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            other: "<strong>%{count}productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
           per_page:
             show: Mostrar
+            per_page: "%{num} por página"
           clear_search: Limpiar la búsqueda
       no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
+        no_products_found_for_search: No se han encontrado productos que coincidan con tus criterios de búsqueda.
       table:
+        changed_summary:
+          one: "%{count} producto modificado."
+          other: "%{count} productos modificados."
+        error_summary:
+          saved:
+            one: "%{count} producto ha sido guardado correctamente, pero"
+            other: "%{count} productos han sido guardados correctamente, pero"
+          invalid:
+            one: "No se ha podido guardar %{count} producto. Revise los errores e inténtelo de nuevo."
+            many: "No se han podido guardar %{count} productos. Revise los errores e inténtelo de nuevo."
+            other: "No se han podido guardar %{count} productos. Revise los errores e inténtelo de nuevo."
         reset: Desechar Cambios
         save: Guardar Cambios
       product_variant_row:
@@ -899,6 +942,7 @@ es:
         error: No se puede eliminar la variante
       variant_row:
         none_tax_category: Ninguno
+        search_for_tax_categories: "Buscar categorías fiscales"
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría de impuestos"
         producer_field_name: "Productora"
@@ -950,6 +994,7 @@ es:
         shipping_categories: Categorías de envío
       dfc_import_form:
         title: "Importar del catálogo DFC"
+        enterprise: "Crear productos para organización"
         catalog_url: "URL del catálogo DFC"
         preview: Vista previa
       import:
@@ -971,6 +1016,7 @@ es:
         no_name: Sin nombre
         blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
+        reset_absent_tip: Establecer el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
         overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias
@@ -1191,6 +1237,7 @@ es:
           own: Propio
           sells: Vende
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
+          external_billing_id_tip: "Este es el ID utilizado por el sistema de facturación externo para identificar esta organización."
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
           not_visible: Oculto
@@ -1234,8 +1281,12 @@ es:
           enable_subscriptions_true: "Habilitado"
           customer_names_in_reports: "Nombres de consumidoras en informes"
           customer_names_tip: "Permita que sus proveedores vean los nombres de sus consumidoras en los informes"
+          producers_to_edit_orders: "Posibilidad de que los productores editen los pedidos."
+          producers_to_edit_orders_tip: "Permita a sus proveedores ver los pedidos que contienen sus productos y editar la cantidad y el peso solo de sus propios productos."
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
+          customer_contacts_in_reports: "Datos de contacto del cliente en los informes"
+          customer_contacts_tip: "Permita que sus proveedores vean los correos electrónicos y números de teléfono de sus consumidoras en los informes."
           customer_contacts_false: "Deshabilitado"
           customer_contacts_true: "Habilitado"
           producers_edit_orders_false: "Deshabilitado"
@@ -1291,10 +1342,11 @@ es:
             no_rules_yet: No hay reglas por defecto aplicadas
             add_new_button: '+ Añadir una nueva regla por defecto'
           no_tags_yet: No hay etiquetas para esta organización
-          no_rules_yet: Todavía no se aplican reglas a esta etiqueta
-          for_customers_tagged: 'Para los consumidores etiquetados:'
-          add_new_rule: '+ Añadir una nueva regla'
           add_new_tag: '+ Añadir una nueva etiqueta'
+          show_hide_variants: 'Mostrar u ocultar variantes en mi tienda'
+          show_hide_shipping: 'Mostrar u ocultar los métodos de envío al comprar'
+          show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
+          show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
         users:
           legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
@@ -1435,15 +1487,17 @@ es:
         success: 'Los correos electrónicos que se enviarán a las productoras se han puesto en cola para enviarlos.'
       edit:
         save: "Guardar"
-        save_and_next: "Salvar y continuar"
+        save_and_next: "Guardar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
-        save_and_back_to_list: "Salvar y volver a lista"
+        save_and_back_to_list: "Guardar y volver a lista"
         choose_products_from: "Escoger Productos desde:"
         re_notify_producers: Re notificar a los productores
         notify_producers_tip: Esto le enviará un correo a cada productor con su lista de pedidos.
       date_time_warning_modal_content:
+        title: 'Hay pedidos ya asociados a este ciclo de pedido'
+        content: 'Si quieres crear un nuevo ciclo de pedido, se recomienda duplicarlo primero y luego cambiar las fechas'
         proceed: 'Proceda de todos modos'
         cancel: 'Cancelar'
       incoming:
@@ -1453,7 +1507,7 @@ es:
         receival_details: "Detalles de la recepción"
         fees: "Comisiones"
         save: "Guardar"
-        save_and_next: "Salvar y continuar"
+        save_and_next: "Guardar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
@@ -1467,7 +1521,7 @@ es:
         next: "Siguiente"
         previous: "Anterior"
         save: "Guardar"
-        save_and_next: "Salvar y continuar"
+        save_and_next: "Guardar y continuar"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       checkout_options:
@@ -1477,7 +1531,7 @@ es:
         distributor: "Distribuidora"
         payment_methods: "Métodos de Pago"
         save: "Guardar"
-        save_and_back_to_list: "Salvar y volver a lista"
+        save_and_back_to_list: "Guardar y volver a lista"
         select_all: "Seleccionar todo"
         shipping_methods: "Métodos de envío"
       wizard_progress:
@@ -1652,7 +1706,9 @@ es:
       pack_by_customer: Pack por Consumidor
       pack_by_supplier: Pack por proveedor
       pack_by_product: Empaquetar por producto
+      pay_your_suppliers: Paga tus proveedoras
       display:
+        report_is_big: "Este informe es grande y puede ralentizar su dispositivo."
         display_anyway: "Mostrar de todos modos"
       download:
         button: "Descargar informe"
@@ -1894,7 +1950,7 @@ es:
           label: País
       shipping_info:
         title: Información de envío
-      submit: Siguente - método de pago
+      submit: Siguiente - método de pago
       cancel: Regresar a Editar cesta
     step2:
       payment_method:
@@ -2250,10 +2306,8 @@ es:
   email_confirmed: "Gracias por confirmar la dirección de correo electrónico."
   email_confirmation_activate_account: "Antes de que podamos activar su nueva cuenta, necesitamos confirmar su dirección de correo electrónico."
   email_confirmation_greeting: "Hola, %{contact}!"
-  email_confirmation_profile_created: "¡Se creó un un perfil para %{name} con éxito! Para activar su Perfil necesitamos que confirme esta dirección de correos."
   email_confirmation_click_link: "Por favor haga clic en el enlace de abajo para confirmar el correo electrónico y continuar configurando su perfil."
   email_confirmation_link_label: "Confirmar este correo electrónico »"
-  email_confirmation_help_html: "Después de confirmar el correo electrónico puedes acceder a tu cuenta de administración para esta organización. Visita %{link} para encontrar más información sobre las características de %{sitename} y empieza a usar tu perfil o tienda online."
   email_confirmation_notice_unexpected: "Recibes este mensaje porque te has registrado en %{sitename} o has sido invitado a inscribirte por alguien que probablemente conozcas. Si no entiendes por qué estás recibiendo este correo electrónico, escribe a %{contact}."
   email_social: "Conecte con nosotros:"
   email_contact: "Envíenos un correo electrónico:"
@@ -2803,7 +2857,7 @@ es:
   tags: "Etiquetas"
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
-  calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
+  calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de guardar primero antes de editar las configuraciones de la calculadora"
   calculator_preferred_unit_error: "debe ser kg o lb"
   calculator_preferred_value_error: "Entrada inválida. Utilice solo números. Por ejemplo: 10, 5.5, -20"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
@@ -2887,7 +2941,7 @@ es:
   admin_share_city: "Ciudad"
   admin_share_zipcode: "Código Postal"
   admin_share_country: "País"
-  admin_share_state: "Estado"
+  admin_share_state: "Provincia"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Ninguno Disponible"
   hub_sidebar_manage: "Gestionar"
@@ -3345,18 +3399,6 @@ es:
           select_all_variants: "Seleccionar todo"
           variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} variantes cargadas"
           loading_variants: "Cargando variantes"
-      tag_rules:
-        shipping_method_tagged_top: "Métodos de envío etiquetados"
-        shipping_method_tagged_bottom: "son:"
-        payment_method_tagged_top: "Métodos de pago etiquetados"
-        payment_method_tagged_bottom: "son:"
-        order_cycle_tagged_top: "Ciclos de pedido etiquetados"
-        order_cycle_tagged_bottom: "son:"
-        inventory_tagged_top: "Variantes de inventario etiquetadas"
-        inventory_tagged_bottom: "son:"
-      new_tag_rule_dialog:
-        select_rule_type: "Selecciona un tipo de regla:"
-        add_rule: "Añadir regla"
       enterprise_fees:
         inherit_from_product: "Heredar del producto"
       orders:
@@ -3431,7 +3473,7 @@ es:
           customer_placeholder: "customer@example.org"
           valid_email_error: "Introduce un email válido"
       subscriptions:
-        error_saving: "Error al salvar suscripción "
+        error_saving: "Error al guardar suscripción "
         new:
           please_select_a_shop: "Por favor seleccione una tienda"
       enterprises:
@@ -3452,6 +3494,7 @@ es:
         add_to_cart: "Añadir"
         in_cart: "en el carrito"
         quantity_in_cart: "%{quantity} en el carrito"
+        remaining_in_stock: "Solo queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
@@ -3478,13 +3521,6 @@ es:
       some_trouble: "Han habido algunos problemas al guardar: %{errors}"
       changing_on_hand_stock: Cambiando los niveles de stock...
       stock_reset: Reset Stock a valores por defecto
-    tag_rules:
-      show_hide_variants: 'Mostrar u ocultar variantes en mi tienda'
-      show_hide_shipping: 'Mostrar u ocultar los métodos de envío al comprar'
-      show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
-      show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
-      visible: VISIBLE
-      not_visible: NO VISIBLE
     services:
       unsaved_changes_message: Los cambios no guardados existen todavía, ¿guardar ahora o ignorar?
       save: GUARDAR
@@ -3901,7 +3937,7 @@ es:
     states_required: "Estados requeridos"
     editing_country: "Editar país"
     back_to_countries_list: "Volver a la lista de países"
-    states: "Estados"
+    states: "Provincias"
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
     payment_methods: "Métodos de Pago"
@@ -3988,6 +4024,7 @@ es:
       messages:
         included_price_validation: "no se puede seleccionar a menos que haya establecido una zona fiscal predeterminada"
         blank: "no puede estar vacío"
+        invalid_instagram_url: "Debe ser solo el nombre de usuario, por ejemplo, la_prof."
     layouts:
       admin:
         login_nav:
@@ -4318,6 +4355,9 @@ es:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
         hidden_customer_details_tip: "Si los nombres y/o los datos de contacto de las consumidoras están ocultos, puede solicitar a la distribuidora que actualice las preferencias de su tienda para permitir que sus proveedores vean los datos de las consumidoras en los informes."
+        products_and_inventory:
+          all_products:
+            message: "Ten en cuenta que los niveles de existencias indicados proceden únicamente de las listas de productos de los proveedores. Si utiliza Inventario para gestionar sus cantidades de existencias, estos valores se ignorarán en este informe."
       users:
         index:
           listing_users: "Listado de Usuarias"
@@ -4374,6 +4414,7 @@ es:
           terms_of_service: "Términos de servicio"
         sortable_header:
           name: "Nombre"
+          on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completado en"
           state: "Provincia"
@@ -4505,9 +4546,10 @@ es:
         instructions: "Su pedido de %{distributor} ha sido enviado"
         shipment_summary: "Resumen de envío"
         subject: "Notificación de envío"
-        thanks: "Gracias por hacer negocios."
+        thanks: "Gracias por ayudar a tus productoras locales"
         track_information: "Información de seguimiento: %{tracking}"
         track_link: "Enlace de seguimiento: %{url}"
+        picked_up_instructions: "Tu pedido de %{distributor} ha sido entregado"
         picked_up_subject: "Notificación de recogida"
     test_mailer:
       test_email:
@@ -4699,6 +4741,26 @@ es:
       previous: Anterior
     tag_list_input:
       default_placeholder: Añadir una etiqueta
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Métodos de envío etiquetados"
+        shipping_method_tagged_bottom: "son:"
+        payment_method_tagged_top: "Métodos de pago etiquetados"
+        payment_method_tagged_bottom: "son:"
+        order_cycle_tagged_top: "Ciclos de pedido etiquetados"
+        order_cycle_tagged_bottom: "son:"
+        inventory_tagged_top: "Variantes de inventario etiquetadas"
+        inventory_tagged_bottom: "son:"
+        variant_tagged_bottom: "son:"
+        visible: VISIBLE
+        not_visible: NO VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'Para los consumidores etiquetados:'
+      add_new_rule: '+ Añadir una nueva regla'
+      no_rules_yet: Todavía no se aplican reglas a esta etiqueta
+    add_tag_rule_modal:
+      select_rule_type: "Selecciona un tipo de regla:"
+      add_rule: "Añadir regla"
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

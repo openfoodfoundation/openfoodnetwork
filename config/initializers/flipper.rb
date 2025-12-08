@@ -25,6 +25,18 @@ end
 Flipper.register(:new_2024_07_03) do |actor|
   actor.respond_to?(:created_at?) && actor.created_at >= "2024-07-03".to_time
 end
+Flipper.register(:enterprise_created_before_2025_08_11) do |actor|
+  # This group applies to enterprises only, so we return false if the actor is not an Enterprise
+  next false unless actor.actor.instance_of? Enterprise
+
+  actor.respond_to?(:created_at?) && actor.created_at < "2025-08-11".to_time
+end
+Flipper.register(:enterprise_created_after_2025_08_11) do |actor|
+  # This group applies to enterprises only, so we return false if the actor is not an Enterprise
+  next false unless actor.actor.instance_of? Enterprise
+
+  actor.respond_to?(:created_at?) && actor.created_at >= "2025-08-11".to_time
+end
 
 Flipper::UI.configure do |config|
   config.descriptions_source = ->(_keys) do

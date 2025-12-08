@@ -71,7 +71,9 @@ RSpec.describe "Managing enterprise images" do
           click_button "Confirm"
         end
 
-        expect(flash_message).to match(/Logo removed/)
+        # There's a race condition.
+        # Either of these messages can be observed.
+        expect(flash_message).to match /(Logo removed)|(Enterprise .* updated)/
 
         within ".page-admin-enterprises-form__logo-field-group" do
           expect_no_preview_image

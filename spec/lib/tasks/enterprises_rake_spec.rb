@@ -1,21 +1,15 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'rake'
 
 RSpec.describe 'enterprises.rake' do
-  before(:all) do
-    Rake.application.rake_require("tasks/enterprises")
-    Rake::Task.define_task(:environment)
-  end
-
   describe ':remove_enterprise' do
     context 'when the enterprises exists' do
       it 'removes the enterprise' do
         enterprise = create(:enterprise)
 
         expect {
-          Rake.application.invoke_task "ofn:remove_enterprise[#{enterprise.id}]"
+          invoke_task "ofn:remove_enterprise[#{enterprise.id}]"
         }.to change { Enterprise.count }.by(-1)
       end
     end
@@ -32,7 +26,7 @@ RSpec.describe 'enterprises.rake' do
         enterprise_diff.connected_apps.create
 
         expect {
-          Rake.application.invoke_task(
+          invoke_task(
             "ofn:enterprises:activate_connected_app_type[affiliate_sales_data]"
           )
         }.to change { ConnectedApps::AffiliateSalesData.count }.by(1)

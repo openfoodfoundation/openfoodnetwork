@@ -52,6 +52,18 @@ module Admin
     end
 
     # copy of Admin::ResourceController without flash notice
+    def update
+      if @object.update(permitted_resource_params)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_save }
+          format.js   { render layout: false }
+        end
+      else
+        respond_with(@object)
+      end
+    end
+
+    # copy of Admin::ResourceController without flash notice
     def destroy
       if @object.destroy
         respond_with(@object) do |format|

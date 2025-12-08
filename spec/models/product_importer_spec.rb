@@ -1033,8 +1033,6 @@ RSpec.describe ProductImport::ProductImporter do
   end
 end
 
-private
-
 def import_data(csv_data, args = {})
   import_user = args[:import_user] || admin
   import_into = args[:import_into] || 'product_list'

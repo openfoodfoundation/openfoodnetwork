@@ -21,7 +21,7 @@ RSpec.describe Vine::JwtService do
 
     it "includes issuing time" do
       generate_time = Time.zone.now
-      Timecop.freeze(generate_time) do
+      travel_to(generate_time) do
         token = subject.generate_token
 
         payload = decode(token, vine_secret)
@@ -32,7 +32,7 @@ RSpec.describe Vine::JwtService do
 
     it "includes expirations time" do
       generate_time = Time.zone.now
-      Timecop.freeze(generate_time) do
+      travel_to(generate_time) do
         token = subject.generate_token
 
         payload = decode(token, vine_secret)

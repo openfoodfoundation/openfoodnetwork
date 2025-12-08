@@ -1,24 +1,38 @@
 services:
   db:
-    image: postgres:10.19
+    image: postgres:16
     restart: always
     environment:
       POSTGRES_PASSWORD: f00d
       POSTGRES_USER: ofn
-      POSTGRES_DB: open_food_network_dev
-    ports:
-      - 5432:5432
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=$$POSTGRES_PASSWORD pg_isready -q -h 127.0.0.1 -p 5432 -U $$POSTGRES_USER || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
   redis:
     image: redis
+
+  bundler:
+    build: .
+    # Runs once: installs gems into /bundles, writes a checksum sentinel, then exits
+    command: >
+      sh -lc 'bundle install --jobs 4 --retry 3 --quiet;
+              sha256sum Gemfile.lock > /bundles/.Gemfile.lock.sha'
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    restart: "no"
+
   web:
     tty: true
     stdin_open: true
     build: .
     ports:
       - 3000:3000
-      - 3035:3035
     volumes:
       - .:/usr/src/app
       - gems:/bundles
@@ -26,20 +40,69 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      webpack:
+        condition: service_started
     environment:
       DOCKER: true
+      DEV_CACHING: true
       OFN_DB_HOST: db
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
       OFN_REDIS_TEST_URL: redis://redis/3
+      WEBPACKER_DEV_SERVER_HOST: webpack
+      WEBPACKER_DEV_SERVER_PORT: 3035
+      WEBPACKER_DEV_SERVER_PUBLIC: localhost:3035
+
     command: >
-      bash -c "rm -f tmp/pids/server.pid &&
-               (bundle check || bundle install) &&
-               bundle exec rake db:create &&
-               yarn install &&
-               bundle exec foreman start -f Procfile.docker"
+      sh -lc 'rm -f tmp/pids/server.pid;
+              until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              bundle exec rails db:prepare &&
+              yarn install &&
+              exec bundle exec rails s -b 0.0.0.0 -p 3000'
+
+  sidekiq:
+    build: .
+    command: >
+      sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              exec bundle exec sidekiq'
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    environment:
+      DOCKER: true
+      DEV_CACHING: true
+      OFN_DB_HOST: db
+      OFN_REDIS_URL: redis://redis/
+      OFN_REDIS_JOBS_URL: redis://redis
+      OFN_REDIS_TEST_URL: redis://redis/3
+
+  webpack:
+    build: .
+    command: >
+      sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
+              exec ./bin/webpack-dev-server'
+    ports:
+      - "3035:3035"
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3035/webpack-dev-server >/dev/null || wget -qO- http://localhost:3035/sockjs-node/info >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+    environment:
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 volumes:
   gems:
   postgres:

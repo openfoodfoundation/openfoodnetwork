@@ -549,6 +549,7 @@ fr:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
     cancel: "Annuler"
+    cancel_order: "Annuler"
     resume: "Reprendre"
     save: "Sauvegarder"
     edit: "Modifier"
@@ -954,6 +955,11 @@ fr:
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} comporte une règle"
+          many: "%{tag} comporte %{count} règles"
+          other: "%{tag} comporte %{count} règles"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1348,10 +1354,11 @@ fr:
             no_rules_yet: Aucune règle par défaut
             add_new_button: '+ Ajouter une règle par défaut'
           no_tags_yet: Aucun tag défini par cette entreprise pour le moment. Cliquez sur le bouton bleu pour ajouter une règle par défaut, puis sur le bouton rouge pour ajouter une règle conditionnelle.
-          no_rules_yet: Aucune règle ne concerne ce tag pour le moment
-          for_customers_tagged: 'Pour les acheteurs avec le tag:'
-          add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter une règle conditionnelle'
+          show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
+          show_hide_shipping: 'Afficher ou Masquer les méthodes de livraison lors de la finalisation de commande'
+          show_hide_payment: 'Afficher ou Masquer les méthodes de paiement lors de la finalisation de commande'
+          show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
         users:
           legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
@@ -1449,6 +1456,10 @@ fr:
         visible: Visible?
         owner: Gestionnaire principal
         producer: Producteur
+        sells_options:
+          none: aucun
+          own: les miens
+          any: tous
       change_type_form:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
@@ -1499,6 +1510,10 @@ fr:
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
+    tag_rules:
+      not_supported_type: Ce type de règle de tag n'est pas supporté
+      confirm_delete: Etes-vous certain de vouloir supprimer cette règle?
+      destroy_error: Il y a eu un problème à la suppression de cette règle de tag
     order_cycles:
       loading_flash:
         loading_order_cycles: Cycles de vente en cours de chargement
@@ -1722,6 +1737,8 @@ fr:
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
       none: aucun
+      metadata:
+        report_title: Titre du rapport
       deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden_field: "< Masqué >"
       unitsize: Unité de mesure
@@ -1825,6 +1842,7 @@ fr:
         display: Afficher
         summary_row: Ligne total produits commandés
         header_row: Ligne d'en-tête
+        metadata_rows: Lignes de métadonnées
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
@@ -2402,10 +2420,15 @@ fr:
   email_confirmed: "Veuillez confirmer votre adresse email."
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact},"
-  email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
+  email_confirmation_profile_created: >
+      Un profil pour %{name} a été créé avec succès ! Pour activer votre profil, nous
+      avons besoin de la confirmation de cette adresse mail.
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
-  email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
+  email_confirmation_help_html: >
+      Après avoir confirmé votre mail, vous pourrez accéder à votre compte administrateur
+      pour l'entreprise concernée. Regardez %{link} pour en savoir plus sur les fonctionnalités
+      de %{sitename}  et pour commencer à utiliser votre profil ou boutique en ligne."
   email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@coopcircuits.fr."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -3321,6 +3344,7 @@ fr:
   product_importer_products_save_error: n'a pu sauvegarder aucun produit :-(
   product_import_file_not_found_notice: 'Fichier non trouvé ou impossible à ouvrir'
   product_import_no_data_in_spreadsheet_notice: 'Aucune donnée trouvée dans le tableau'
+  product_import_inventory_disable: L'importation vers les catalogues boutique n'est pas disponible
   order_choosing_hub_notice: Votre boutique a été sélectionnée.
   order_cycle_selecting_notice: Votre cycle de vente a été sélectionné.
   adjustments_tax_rate_error: "^Veuillez vérifier la TVA applicable pour cet ajustement."
@@ -3345,6 +3369,7 @@ fr:
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "
+  order_cycle_closed_next_steps: "Le cycle de vente que vous avez sélectionné est clos. Merci de nous contacter pour finaliser votre commande. #%{order_number}!"
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
@@ -3548,18 +3573,6 @@ fr:
           loading_variants: "Chargement des variantes"
           no_variants: "Pas de variante disponible pour ce produit (caché via les paramètres du catalogue boutique). "
           some_variants_hidden: "(Certaines variantes sont susceptibles d'être cachées via les paramètres du catalogue boutique)"
-      tag_rules:
-        shipping_method_tagged_top: "Les méthodes de livraison taguées"
-        shipping_method_tagged_bottom: "sont:"
-        payment_method_tagged_top: "Les méthodes de payments taguées"
-        payment_method_tagged_bottom: "sont:"
-        order_cycle_tagged_top: "Les cycles de vente tagués"
-        order_cycle_tagged_bottom: "sont:"
-        inventory_tagged_top: "Les variantes du catalogue boutique taguées"
-        inventory_tagged_bottom: "sont:"
-      new_tag_rule_dialog:
-        select_rule_type: "Choisir le type de règle:"
-        add_rule: "Valider"
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
@@ -3690,13 +3703,6 @@ fr:
       some_trouble: "Nous n'avons pas pu sauvegarder : %{errors}"
       changing_on_hand_stock: Modification des niveaux de stock en cours...
       stock_reset: Les niveaux de stock ont été réinitiatlisés (valeurs par défaut)
-    tag_rules:
-      show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
-      show_hide_shipping: 'Afficher ou Masquer les méthodes de livraison lors de la finalisation de commande'
-      show_hide_payment: 'Afficher ou Masquer les méthodes de paiement lors de la finalisation de commande'
-      show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
-      visible: VISIBLE
-      not_visible: INVISIBLE
     services:
       unsaved_changes_message: Des modifications n'ont pas encore été sauvegardées, sauvegarder maintenant ou ignorer ?
       save: SAUVEGARDER
@@ -4631,6 +4637,7 @@ fr:
           terms_of_service: "Conditions Générales d'Utilisation et de Vente"
         sortable_header:
           name: "Produit/Variante"
+          on_hand: "En stock"
           number: "N° commande"
           completed_at: "Date"
           state: "Statut"
@@ -4970,6 +4977,27 @@ fr:
       previous: Précédent
     tag_list_input:
       default_placeholder: Ajouter un tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Les méthodes de livraison taguées"
+        shipping_method_tagged_bottom: "sont:"
+        payment_method_tagged_top: "Les méthodes de payments taguées"
+        payment_method_tagged_bottom: "sont:"
+        order_cycle_tagged_top: "Les cycles de vente tagués"
+        order_cycle_tagged_bottom: "sont:"
+        inventory_tagged_top: "Les variantes du catalogue boutique taguées"
+        inventory_tagged_bottom: "sont:"
+        variant_tagged_top: "Variantes tagguées"
+        variant_tagged_bottom: "sont:"
+        visible: VISIBLE
+        not_visible: INVISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'Pour les acheteurs avec le tag:'
+      add_new_rule: '+ Ajouter une nouvelle règle'
+      no_rules_yet: Aucune règle ne concerne ce tag pour le moment
+    add_tag_rule_modal:
+      select_rule_type: "Choisir le type de règle:"
+      add_rule: "Valider"
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

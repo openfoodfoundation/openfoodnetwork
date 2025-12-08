@@ -9,6 +9,7 @@ class ApplicationRecord < ActiveRecord::Base
   include ArelHelpers::JoinAssociation
 
   self.abstract_class = true
+  self.include_root_in_json = true
 
   def self.image_service
     ENV["S3_BUCKET"].present? ? :amazon_public : :local
@@ -28,7 +29,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  def url_for(*args)
-    Rails.application.routes.url_helpers.url_for(*args)
+  def url_for(*)
+    Rails.application.routes.url_helpers.url_for(*)
   end
 end

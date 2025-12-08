@@ -32,18 +32,20 @@ module Admin
       [precised_unit_value, variant.unit_description].compact_blank.join(" ")
     end
 
-    def products_return_to_url(url_filters)
-      if feature?(:admin_style_v3, spree_current_user)
-        return session[:products_return_to_url] || admin_products_url
-      end
-
-      "#{admin_products_path}#{url_filters.empty? ? '' : "#?#{url_filters.to_query}"}"
+    def products_return_to_url
+      session[:products_return_to_url] || admin_products_url
     end
 
     # if user hasn't saved any preferences on products page and there's only one producer;
     # we need to hide producer column
     def hide_producer_column?(producer_options)
       spree_current_user.column_preferences.bulk_edit_product.empty? && producer_options.one?
+    end
+
+    # check if the user is in the "admins" group or if it's enabled for any of
+    # the enterprises the user manages
+    def variant_tag_enabled?(user)
+      feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
     end
   end
 end

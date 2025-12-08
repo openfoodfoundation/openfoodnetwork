@@ -20,7 +20,7 @@ export default class extends Controller {
   #trixActionInvoke = (event) => {
     if (event.actionName === "hr") {
       this.element.editor.insertAttachment(
-        new Trix.Attachment({ content: "<hr />", contentType: "text/html" })
+        new Trix.Attachment({ content: "<hr />", contentType: "text/html" }),
       );
     }
   };
@@ -39,7 +39,7 @@ export default class extends Controller {
     const button_html = `
     <button type="button" class="trix-button trix-button--icon trix-button--icon-hr" data-trix-action="hr" title="Horizontal Rule" tabindex="-1">HR</button>`;
     const buttonGroup = this.element.toolbarElement.querySelector(
-      ".trix-button-group--block-tools"
+      ".trix-button-group--block-tools",
     );
     buttonGroup.insertAdjacentHTML("beforeend", button_html);
     buttonGroup.querySelector(".trix-button--icon-hr").addEventListener("click", (event) => {

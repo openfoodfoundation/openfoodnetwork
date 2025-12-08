@@ -11,11 +11,11 @@ RSpec.describe AffiliateSalesQuery do
     let(:yesterday) { Time.zone.yesterday }
     let(:tomorrow) { Time.zone.tomorrow }
 
-    around do |example|
+    before do
       # Query dates are interpreted as UTC while the spec runs in
       # Melbourne time. At noon in Melbourne, the date is the same.
       # That simplifies the spec.
-      Timecop.travel(Time.zone.today.noon, &example)
+      travel_to(Time.zone.today.noon)
     end
 
     it "returns data" do

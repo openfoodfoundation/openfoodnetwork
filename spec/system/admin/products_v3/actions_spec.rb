@@ -306,7 +306,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         within "table.products" do
           # Products does not include the cloned product.
-          expect(all_input_values).not_to match /COPY OF #{('L' * 254)}/
+          expect(all_input_values).not_to match /COPY OF #{'L' * 254}/
         end
       end
     end

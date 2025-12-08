@@ -10,6 +10,10 @@ module Reporting
       @formatted_rules ||= @report.rules.map { |rule| format_rule(rule) }
     end
 
+    def metadata_option?
+      true
+    end
+
     def header_option?
       formatted_rules.find { |rule| rule[:header].present? }
     end

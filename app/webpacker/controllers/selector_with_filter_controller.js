@@ -7,9 +7,7 @@ export default class extends SelectorController {
     const query = event.target.value;
 
     this.itemsTargets.forEach((el, i) => {
-      el.style.display = el.textContent.toLowerCase().includes(query)
-        ? ""
-        : "none";
+      el.style.display = el.textContent.toLowerCase().includes(query) ? "" : "none";
     });
   };
 }

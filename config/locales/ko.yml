@@ -422,6 +422,7 @@ ko:
     create_and_add_another: "추가 및 생성"
     create: "생성"
     cancel: "취소"
+    cancel_order: "취소"
     resume: "계속"
     save: "저장"
     edit: "편집"
@@ -1070,10 +1071,11 @@ ko:
             no_rules_yet: 아직 적용되는 기본 규칙이 없습니다.
             add_new_button: '+ 새 기본 규칙 추가'
           no_tags_yet: 아직 이 회사에 적용되는 태그가 없습니다.
-          no_rules_yet: 아직 이 태그에 적용되는 규칙이 없습니다.
-          for_customers_tagged: '태그된 고객의 경우:'
-          add_new_rule: '+ 새 규칙 추가'
           add_new_tag: '+ 새 태그 추가'
+          show_hide_variants: '내 매장 안에 변경 사항 보여주기 또는 숨기기'
+          show_hide_shipping: '체크아웃 시 배송 방법 표시 또는 숨기기'
+          show_hide_payment: '체크아웃 시 결제 방법 표시 또는 숨기기'
+          show_hide_order_cycles: '내 상점에서 주문 주기 표시 또는 숨기기.'
         users:
           legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
@@ -1960,10 +1962,8 @@ ko:
   email_confirmed: "이메일 주소를 확인해주셔서 감사합니다."
   email_confirmation_activate_account: "새 계정을 활성화하기 전에 이메일 주소를 확인해야 합니다."
   email_confirmation_greeting: "안녕하세요,  %{contact}님!"
-  email_confirmation_profile_created: "%{name}에 대한 프로필이 성공적으로 생성되었습니다! 프로필을 활성화하려면 이 이메일 주소를 확인해야 합니다."
   email_confirmation_click_link: "아래 링크를 클릭하여 이메일을 확인하고 프로필 설정을 계속하십시오."
   email_confirmation_link_label: "이 이메일 주소 확인 »"
-  email_confirmation_help_html: "이메일을 확인한 후 이 기업의 관리 계정에 접근할 수 있습니다. %{sitename}의 기능에 대해 자세히 알아보고 프로필 또는 온라인 상점을 사용하려면 %{link}를 참조하십시오."
   email_confirmation_notice_unexpected: "%{sitename}으로 등록하셨거나 아는 사람의 초대로 이 메시지를 받으셨습니다. 이 이메일을 받는 이유를 이해하지 못하셨을 경우, %{contact}로 메세지를 보내십시오."
   email_social: "연락 방법 :"
   email_contact: "이메일 주소 :"
@@ -3005,18 +3005,6 @@ ko:
           select_all_variants: "모든 %{total_number_of_variants}개의 변경 사항을 선택하기"
           variants_loaded: "%{total_number_of_variants}개 중 %{num_of_variants_loaded}개의 변경사항 불러오기"
           loading_variants: "변경 사항 불러오기"
-      tag_rules:
-        shipping_method_tagged_top: "태그된 배송 방법"
-        shipping_method_tagged_bottom: "다음 항목:"
-        payment_method_tagged_top: "태그된 결제 방법"
-        payment_method_tagged_bottom: "다음 항목:"
-        order_cycle_tagged_top: "태그된 주문 주기"
-        order_cycle_tagged_bottom: "다음 항목:"
-        inventory_tagged_top: "태그된 변경 사항 인벤토리"
-        inventory_tagged_bottom: "다음 항목:"
-      new_tag_rule_dialog:
-        select_rule_type: "규칙 유형 선택 :"
-        add_rule: "규칙 추가"
       enterprise_fees:
         inherit_from_product: "제품에서의 상속 사항"
       orders:
@@ -3140,13 +3128,6 @@ ko:
       some_trouble: "저장하는 데 문제가 발생했습니다 : %{errors}"
       changing_on_hand_stock: 재고 수준 변경 중...
       stock_reset: 재고를 기본값으로 재설정했습니다.
-    tag_rules:
-      show_hide_variants: '내 매장 안에 변경 사항 보여주기 또는 숨기기'
-      show_hide_shipping: '체크아웃 시 배송 방법 표시 또는 숨기기'
-      show_hide_payment: '체크아웃 시 결제 방법 표시 또는 숨기기'
-      show_hide_order_cycles: '내 상점에서 주문 주기 표시 또는 숨기기.'
-      visible: 표시
-      not_visible: 숨기기
     services:
       unsaved_changes_message: 저장하지 않은 변경 사항이 현재 존재합니다. 지금 저장하시겠습니까? 아니면 무시하시겠습니까?
       save: 저장
@@ -3915,6 +3896,7 @@ ko:
           terms_of_service: "서비스 약관"
         sortable_header:
           name: "이름"
+          on_hand: "대기 중"
           number: "숫자"
           completed_at: "완료 시간:"
           state: "상태"
@@ -4190,3 +4172,23 @@ ko:
       previous: 이전으로
     tag_list_input:
       default_placeholder: 태그 추가
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "태그된 배송 방법"
+        shipping_method_tagged_bottom: "다음 항목:"
+        payment_method_tagged_top: "태그된 결제 방법"
+        payment_method_tagged_bottom: "다음 항목:"
+        order_cycle_tagged_top: "태그된 주문 주기"
+        order_cycle_tagged_bottom: "다음 항목:"
+        inventory_tagged_top: "태그된 변경 사항 인벤토리"
+        inventory_tagged_bottom: "다음 항목:"
+        variant_tagged_bottom: "다음 항목:"
+        visible: 표시
+        not_visible: 숨기기
+    tag_rule_group_form:
+      for_customers_tagged: '태그된 고객의 경우:'
+      add_new_rule: '+ 새 규칙 추가'
+      no_rules_yet: 아직 이 태그에 적용되는 규칙이 없습니다.
+    add_tag_rule_modal:
+      select_rule_type: "규칙 유형 선택 :"
+      add_rule: "규칙 추가"

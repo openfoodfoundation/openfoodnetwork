@@ -10,7 +10,7 @@ module Stripe
 
     def call!
       if (url = url_for_authorization(@response)) && field_to_patch(@response).present?
-        field_to_patch(@response)['message'] = url
+        field_to_patch(@response)['redirect_auth_url'] = url
       end
 
       @response
@@ -27,8 +27,9 @@ module Stripe
       next_action_type = next_action["type"]
       return unless %w(authorize_with_url redirect_to_url).include?(next_action_type)
 
-      url = next_action[next_action_type]["url"]
-      url if url.match(%r{https?://\S+}) && url.include?("stripe.com")
+      url = URI(next_action[next_action_type]["url"])
+      # Check the URL is from a stripe subdomain
+      url.to_s if url.is_a?(URI::HTTPS) && url.host.match?(/\.stripe.com\Z/)
     end
 
     # This field is used because the Spree code recognizes and stores it

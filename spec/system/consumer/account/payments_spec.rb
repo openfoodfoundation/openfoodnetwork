@@ -17,7 +17,7 @@ RSpec.describe "Payments requiring action" do
       let!(:payment) do
         create(:payment,
                order:,
-               cvv_response_message: "https://stripe.com/redirect",
+               redirect_auth_url: "https://stripe.com/redirect",
                state: "requires_authorization")
       end
 
@@ -31,7 +31,7 @@ RSpec.describe "Payments requiring action" do
 
     context "there are no payments requiring authorization" do
       let!(:payment) do
-        create(:payment, order:, cvv_response_message: nil)
+        create(:payment, order:, redirect_auth_url: nil)
       end
 
       it "does not show the table of payments requiring authorization" do

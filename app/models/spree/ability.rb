@@ -142,14 +142,15 @@ module Spree
 
       can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
-      can [:admin, :map_by_tag, :destroy], TagRule do |tag_rule|
+      can :new, TagRule
+      can [:admin, :map_by_tag, :destroy, :variant_tag_rules], TagRule do |tag_rule|
         user.enterprises.include? tag_rule.enterprise
       end
 
       can [:admin, :index, :create], Enterprise
       can [:read, :edit, :update,
            :remove_logo, :remove_promo_image, :remove_terms_and_conditions,
-           :bulk_update, :resend_confirmation], Enterprise do |enterprise|
+           :bulk_update, :resend_confirmation, :new_tag_rule_group], Enterprise do |enterprise|
         OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
       end
       can [:welcome, :register], Enterprise do |enterprise|
@@ -195,12 +196,15 @@ module Spree
     def add_product_management_abilities(user)
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
+      # An enterperprise user can change a product if they are supplier of at least
+      # one of the product's associated variants
       can [:admin, :read, :index, :update,
            :seo, :group_buy_options,
            :bulk_update, :clone, :delete,
            :destroy], Spree::Product do |product|
-        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include?(
-          product.variants.first.supplier
+        variant_suppliers = product.variants.map(&:supplier)
+        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.intersect?(
+          variant_suppliers
         )
       end
 
@@ -213,18 +217,20 @@ module Spree
           managed_product_enterprises.include? variant.supplier
       end
 
-      can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
-        next false unless vo.hub.present? && vo.variant&.supplier.present?
+      if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, *user.enterprises)
+        can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
+          next false unless vo.hub.present? && vo.variant&.supplier.present?
 
-        hub_auth = OpenFoodNetwork::Permissions.new(user).
-          variant_override_hubs.
-          include? vo.hub
+          hub_auth = OpenFoodNetwork::Permissions.new(user).
+            variant_override_hubs.
+            include? vo.hub
 
-        producer_auth = OpenFoodNetwork::Permissions.new(user).
-          variant_override_producers.
-          include? vo.variant.supplier
+          producer_auth = OpenFoodNetwork::Permissions.new(user).
+            variant_override_producers.
+            include? vo.variant.supplier
 
-        hub_auth && producer_auth
+          hub_auth && producer_auth
+        end
       end
 
       can [:admin, :create, :update], InventoryItem do |ii|

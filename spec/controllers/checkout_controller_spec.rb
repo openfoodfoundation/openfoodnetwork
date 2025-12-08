@@ -39,6 +39,47 @@ RSpec.describe CheckoutController do
     end
 
     context "when the given `step` params is inconsistent with the current order state" do
+      shared_examples "handles closed order cycle" do |step_param|
+        before do
+          allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+          allow(controller).to receive(:current_order).and_return(order).at_least(:once)
+          allow(order_cycle).to receive(:closed?).and_return(true)
+        end
+
+        it "redirects to shop with order cycle closed info message" do
+          expect(order).to receive(:empty!)
+          expect(order).to receive(:assign_order_cycle!).with(nil)
+
+          get :edit, params: { step: step_param }
+
+          message = "The order cycle you've selected has just closed. " \
+                    "Please try again!"
+          expect(flash[:info]).to eq(message)
+          expect(response).to redirect_to shop_url
+        end
+
+        context "when CableReady request" do
+          before do
+            request.headers["Accept"] = "text/vnd.cable-ready.json"
+          end
+
+          let(:cable_car) { instance_spy(CableReady::CableCar) }
+
+          it "redirects via CableReady" do
+            expect(order).to receive(:empty!)
+            expect(order).to receive(:assign_order_cycle!).with(nil)
+
+            get :edit, params: { step: step_param }
+
+            expect(response.parsed_body).to eq(
+              [{ url: "/shop", operation: "redirectTo" }].to_json
+            )
+            expect(response).to have_http_status(:see_other)
+            expect(response.media_type).to eq("text/vnd.cable-ready.json")
+          end
+        end
+      end
+
       context "when order state is `cart`" do
         before do
           order.update!(state: "cart")
@@ -52,6 +93,9 @@ RSpec.describe CheckoutController do
           get :edit, params: { step: "summary" }
           expect(response).to redirect_to checkout_step_path(:details)
         end
+
+        it_behaves_like "handles closed order cycle", "payment"
+        it_behaves_like "handles closed order cycle", "summary"
       end
 
       context "when order state is `payment`" do
@@ -63,6 +107,8 @@ RSpec.describe CheckoutController do
           get :edit, params: { step: "summary" }
           expect(response).to redirect_to checkout_step_path(:payment)
         end
+
+        it_behaves_like "handles closed order cycle", "summary"
       end
 
       context "when order state is 'confirmation'" do
@@ -77,6 +123,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("payment")
           end
+
+          it_behaves_like "handles closed order cycle", "payment"
         end
 
         context "when loading address step" do
@@ -86,6 +134,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
+
+          it_behaves_like "handles closed order cycle", "details"
         end
       end
 
@@ -101,6 +151,8 @@ RSpec.describe CheckoutController do
             expect(response).to have_http_status :ok
             expect(order.reload.state).to eq("address")
           end
+
+          it_behaves_like "handles closed order cycle", "details"
         end
       end
     end
@@ -625,14 +677,30 @@ RSpec.describe CheckoutController do
             expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
         end
+
+        context "when an external payment gateway is used" do
+          before do
+            expect(payment_method).to receive(:external_gateway?) { true }
+            expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
+            mock_payment_method_fetcher(payment_method)
+          end
+
+          it "redeems the voucher and redirect to the payment gateway's URL" do
+            expect(vine_voucher_redeemer).to receive(:redeem).and_return(true)
+
+            put(:update, params:)
+
+            expect(response.body).to match("https://example.com/pay").and match("redirect")
+            expect(order.reload.state).to eq "confirmation"
+          end
+        end
       end
 
       context "when an external payment gateway is used" do
         before do
-          expect(Checkout::PaymentMethodFetcher).
-            to receive_message_chain(:new, :call) { payment_method }
           expect(payment_method).to receive(:external_gateway?) { true }
           expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
+          mock_payment_method_fetcher(payment_method)
         end
 
         describe "confirming the order" do
@@ -692,5 +760,10 @@ RSpec.describe CheckoutController do
     expect(response.parsed_body).to eq(
       [{ "url" => "/checkout/details", "operation" => "redirectTo" }].to_json
     )
+  end
+
+  def mock_payment_method_fetcher(payment_method)
+    payment_method_fetcher = instance_double(Checkout::PaymentMethodFetcher, call: payment_method)
+    expect(Checkout::PaymentMethodFetcher).to receive(:new).and_return(payment_method_fetcher)
   end
 end

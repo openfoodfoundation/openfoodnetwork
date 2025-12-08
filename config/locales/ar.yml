@@ -429,6 +429,7 @@ ar:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
     cancel: "إلغاء"
+    cancel_order: "إلغاء"
     resume: "اكمل"
     save: "حفظ"
     edit: "تعديل"
@@ -1101,10 +1102,11 @@ ar:
             no_rules_yet: لا توجد قواعد افتراضية تطبق حتى الآن
             add_new_button: '+ إضافة قاعدة افتراضية جديدة'
           no_tags_yet: لا يوجد وسم تنطبق على هذه الشركة حتى الآن
-          no_rules_yet: لا توجد قواعد تنطبق على هذه العلامة حتى الآن
-          for_customers_tagged: 'للعملاء الموسومين:'
-          add_new_rule: '+ أضف قاعدة جديدة'
           add_new_tag: '+ أضف وسم جديدة'
+          show_hide_variants: 'إظهار أو إخفاء الانواع في واجهة المتجر الخاصة بي'
+          show_hide_shipping: 'إظهار أو إخفاء طرق الشحن عند الخروج'
+          show_hide_payment: 'إظهار أو إخفاء طرق الدفع عند الخروج'
+          show_hide_order_cycles: 'إظهار أو إخفاء دورات الطلب في واجهة المتجر الخاصة بي'
         users:
           legend: "المستخدمين"
           email_confirmation_notice_html: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{email}."
@@ -2048,10 +2050,8 @@ ar:
   email_confirmed: "شكرا لتأكيد عنوان بريدك الإلكتروني."
   email_confirmation_activate_account: "قبل أن نتمكن من تنشيط حسابك الجديد ، نحتاج إلى تأكيد عنوان بريدك الإلكتروني."
   email_confirmation_greeting: "مرحبًا ، %{contact}!"
-  email_confirmation_profile_created: "تم إنشاء الملف الشخصي لل%{name} بنجاح! لتنشيط ملفك الشخصي ، نحتاج إلى تأكيد عنوان البريد الإلكتروني هذا."
   email_confirmation_click_link: "يرجى النقر على الرابط أدناه لتأكيد بريدك الإلكتروني ومتابعة إعداد ملفك الشخصي."
   email_confirmation_link_label: "تأكيد عنوان البريد الإلكتروني »"
-  email_confirmation_help_html: "بعد تأكيد بريدك الإلكتروني ، يمكنك الوصول إلى حساب الإدارة الخاص بك لهذه المؤسسة. راجع %{link} لمعرفة المزيد حول ميزات %{sitename} ولبدء استخدام ملفك الشخصي أو متجرك الإلكتروني."
   email_confirmation_notice_unexpected: "لقد تلقيت هذه الرسالة لأنك قمت بالتسجيل في %{sitename} ، أو تمت دعوتك للاشتراك من قبل شخص تعرفه على الأرجح. إذا كنت لا تفهم سبب تلقي هذا البريد الإلكتروني ، فيرجى الكتابة إلى %{contact}."
   email_social: "اتصل بنا:"
   email_contact: "ارسل لنا عبر البريد الإلكتروني:"
@@ -3133,18 +3133,6 @@ ar:
           select_all_variants: "حدد كل %{total_number_of_variants} المتغيرات"
           variants_loaded: "%{num_of_variants_loaded} من %{total_number_of_variants} تم تحميل المتغيرات"
           loading_variants: "تحميل المتغيرات"
-      tag_rules:
-        shipping_method_tagged_top: "طرق الشحن الموسومة"
-        shipping_method_tagged_bottom: "هي:"
-        payment_method_tagged_top: "طرق الدفع الموسومة"
-        payment_method_tagged_bottom: "هي:"
-        order_cycle_tagged_top: "ترتيب دورات الموسومة"
-        order_cycle_tagged_bottom: "هي:"
-        inventory_tagged_top: "جرد الانواع الموسومة"
-        inventory_tagged_bottom: "هي:"
-      new_tag_rule_dialog:
-        select_rule_type: "اختر نوع القاعدة:"
-        add_rule: "أضف قاعدة "
       enterprise_fees:
         inherit_from_product: "وراثة من المنتج"
       orders:
@@ -3276,13 +3264,6 @@ ar:
       some_trouble: "واجهت بعض المشكلات في حفظ: %{errors}"
       changing_on_hand_stock: تغيير على مستويات المخزون المتوفر ...
       stock_reset: إعادة تعيين المخزون إلى الإعدادات الافتراضية.
-    tag_rules:
-      show_hide_variants: 'إظهار أو إخفاء الانواع في واجهة المتجر الخاصة بي'
-      show_hide_shipping: 'إظهار أو إخفاء طرق الشحن عند الخروج'
-      show_hide_payment: 'إظهار أو إخفاء طرق الدفع عند الخروج'
-      show_hide_order_cycles: 'إظهار أو إخفاء دورات الطلب في واجهة المتجر الخاصة بي'
-      visible: مرئي
-      not_visible: غير مرئية
     services:
       unsaved_changes_message: التغييرات غير المحفوظة موجودة حاليًا ، هل تحفظها الآن أو تتجاهل؟
       save: حفظ
@@ -4200,6 +4181,7 @@ ar:
           terms_of_service: "شروط الخدمة"
         sortable_header:
           name: "الاسم"
+          on_hand: "متوفر"
           number: "رقم "
           completed_at: "تم الانتهاء عند "
           state: "ولاية"
@@ -4562,3 +4544,23 @@ ar:
       previous: السابق
     tag_list_input:
       default_placeholder: أضف وسم
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "طرق الشحن الموسومة"
+        shipping_method_tagged_bottom: "هي:"
+        payment_method_tagged_top: "طرق الدفع الموسومة"
+        payment_method_tagged_bottom: "هي:"
+        order_cycle_tagged_top: "ترتيب دورات الموسومة"
+        order_cycle_tagged_bottom: "هي:"
+        inventory_tagged_top: "جرد الانواع الموسومة"
+        inventory_tagged_bottom: "هي:"
+        variant_tagged_bottom: "هي:"
+        visible: مرئي
+        not_visible: غير مرئية
+    tag_rule_group_form:
+      for_customers_tagged: 'للعملاء الموسومين:'
+      add_new_rule: '+ أضف قاعدة جديدة'
+      no_rules_yet: لا توجد قواعد تنطبق على هذه العلامة حتى الآن
+    add_tag_rule_modal:
+      select_rule_type: "اختر نوع القاعدة:"
+      add_rule: "أضف قاعدة "

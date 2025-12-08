@@ -5,10 +5,11 @@
 
 module OrderCycles
   class DistributedProductsService # rubocop:disable Metrics/ClassLength
-    def initialize(distributor, order_cycle, customer)
+    def initialize(distributor, order_cycle, customer, **options)
       @distributor = distributor
       @order_cycle = order_cycle
       @customer = customer
+      @options = options
     end
 
     def products_relation
@@ -26,13 +27,13 @@ module OrderCycles
     def variants_relation
       order_cycle.
         variants_distributed_by(distributor).
-        merge(stocked_variants_and_overrides).
+        merge(variants).
         select("DISTINCT spree_variants.*")
     end
 
     private
 
-    attr_reader :distributor, :order_cycle, :customer
+    attr_reader :distributor, :order_cycle, :customer, :options
 
     def relation_by_sorting
       query = Spree::Product.where(id: stocked_products)
@@ -112,8 +113,25 @@ module OrderCycles
     def stocked_products
       order_cycle.
         variants_distributed_by(distributor).
-        merge(stocked_variants_and_overrides).
+        merge(variants).
         select("DISTINCT spree_variants.product_id")
+    end
+
+    def variants
+      return tag_rule_filtered_variants if options[:variant_tag_enabled]
+
+      return stocked_variants_and_overrides if options[:inventory_enabled]
+
+      stocked_variants
+    end
+
+    def stocked_variants
+      Spree::Variant.joins(:stock_items).where(query_stock)
+    end
+
+    def tag_rule_filtered_variants
+      VariantTagRulesFilterer.new(distributor:, customer:,
+                                  variants_relation: stocked_variants).call
     end
 
     def stocked_variants_and_overrides
@@ -124,6 +142,10 @@ module OrderCycles
         where(query_stock_with_overrides)
 
       ProductTagRulesFilterer.new(distributor, customer, stocked_variants).call
+    end
+
+    def query_stock
+      "( #{variant_on_demand} OR #{variant_in_stock} )"
     end
 
     def query_stock_with_overrides

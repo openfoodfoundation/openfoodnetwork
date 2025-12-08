@@ -44,9 +44,7 @@ module ReportsHelper
       .pluck(:name, :id)
   end
 
-  def currency_symbol
-    Spree::Money.currency_symbol
-  end
+  delegate :currency_symbol, to: :'Spree::Money'
 
   def enterprise_fee_owner_ids(orders)
     EnterpriseFee.where(id: enterprise_fee_ids(orders))

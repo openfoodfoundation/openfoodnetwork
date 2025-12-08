@@ -18,7 +18,7 @@ module Reporting
             payment_state: proc { |payments| payment_state(payments.first.order) },
             distributor: proc { |payments| payments.first.order.distributor.name },
             payment_type: proc { |payments| payments.first.payment_method&.name },
-            total_price: proc { |payments| payments.sum(&:amount) }
+            total_price: proc { |payments| payments.map(&:amount).sum(&:to_f) }
           }
         end
       end

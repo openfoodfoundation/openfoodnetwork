@@ -503,6 +503,7 @@ el:
     create_and_add_another: "Δημιουργία και Προσθήκη Νέου"
     create: "Δημιουργία"
     cancel: "Ακύρωση"
+    cancel_order: "Ακύρωση"
     resume: "Συνέχεια"
     save: "Αποθήκευση"
     edit: "Επεξεργασία"
@@ -1241,10 +1242,11 @@ el:
             no_rules_yet: 'Καμία προεπιλογή '
             add_new_button: '+ Πρόσθεσε μια νέα προεπιλογή'
           no_tags_yet: Καμία ταμπέλα δεν ισχύει για αυτή την επιχείρηση
-          no_rules_yet: Κανένας κανόνας δεν ισχύει για αυτή την ταμπέλα
-          for_customers_tagged: 'Για πελάτες με ετικέτα:'
-          add_new_rule: '+ Πρόσθεσε έναν νέο κανόνα'
           add_new_tag: '+ Πρόσθεσε μια νέα ταμπέλα'
+          show_hide_variants: 'Εμφάνιση ή απόκρυψη παραλλαγών στη βιτρίνα μου'
+          show_hide_shipping: 'Εμφάνιση ή απόκρυψη μεθόδων αποστολής στο ταμείο'
+          show_hide_payment: 'Εμφάνιση ή απόκρυψη τρόπων πληρωμής κατά την ολοκλήρωση αγοράς'
+          show_hide_order_cycles: 'Εμφάνιση ή απόκρυψη κύκλων παραγγελίας στη βιτρίνα μου'
         users:
           legend: "Χρήστες"
           email_confirmation_notice_html: "Η επιβεβαίωση email εκκρεμεί.Σας έχουμε ήδη στείλει επιβεβαίωση email %{email}"
@@ -2247,10 +2249,8 @@ el:
   email_confirmed: "Ευχαριστώ για την επιβεβαίωση του email"
   email_confirmation_activate_account: "Προτού μπορέσουμε να ενεργοποιήσουμε το νέο σου λογαριασμό, πρέπει να επιβεβαιώσουμε τη διεύθυνση email σου."
   email_confirmation_greeting: "Γεια, %{contact}!"
-  email_confirmation_profile_created: "Ένα προφίλ για %{name} δημιουργήθηκε με επιτυχία! Για να ενεργοποιήσετε το προφίλ σας πρέπει να επιβεβαιώσουμε αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου."
   email_confirmation_click_link: "Κάντε κλικ στον παρακάτω σύνδεσμο για να επιβεβαιώσετε το email σας και να συνεχίσετε τη ρύθμιση του προφίλ σας."
   email_confirmation_link_label: "Επιβεβαιώστε αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου »"
-  email_confirmation_help_html: "Αφού επιβεβαιώσεις το email σου, μπορείς να αποκτήσεις πρόσβαση στον λογαριασμό διαχείρισης για αυτήν την επιχείρηση. Δες το %{link} για να μάθεις περισσότερα σχετικά με τις δυνατότητες του %{sitename} και να αρχίσεις να χρησιμοποιείς το προφίλ ή το ηλεκτρονικό σου κατάστημα."
   email_confirmation_notice_unexpected: "Λάβατε αυτό το μήνυμα επειδή εγγραφήκατε στο %{sitename} ή κληθήκατε να εγγραφείτε από κάποιον που πιθανώς γνωρίζετε. Εάν δεν καταλαβαίνετε γιατί λαμβάνετε αυτό το μήνυμα ηλεκτρονικού ταχυδρομείου, γράψτε στο %{contact}."
   email_social: "Συνδεθείτε μαζί μας:"
   email_contact: "Στείλτε μας email:"
@@ -3352,18 +3352,6 @@ el:
           loading_variants: "Φόρτωση παραλλαγών"
           no_variants: "Δεν υπάρχει διαθέσιμη παραλλαγή για αυτό το προϊόν (κρυμμένο μέσω των ρυθμίσεων αποθεμάτων)."
           some_variants_hidden: "(Ορισμένες παραλλαγές μπορεί να είναι κρυμμένες μέσω των ρυθμίσεων αποθεμάτων)"
-      tag_rules:
-        shipping_method_tagged_top: "Μέθοδοι αποστολής με ετικέτα"
-        shipping_method_tagged_bottom: "είναι:"
-        payment_method_tagged_top: "Ετικέτες τρόπων πληρωμής"
-        payment_method_tagged_bottom: "είναι:"
-        order_cycle_tagged_top: "Ετικέτες κύκλων παραγγελίας"
-        order_cycle_tagged_bottom: "είναι:"
-        inventory_tagged_top: "Ετικέτες παραλλαγών αποθέματος"
-        inventory_tagged_bottom: "είναι:"
-      new_tag_rule_dialog:
-        select_rule_type: "Επιλέξτε έναν τύπο κανόνα:"
-        add_rule: "Προσθήκη κανόνα"
       enterprise_fees:
         inherit_from_product: "Κληρονομιά από το προϊόν"
       orders:
@@ -3489,13 +3477,6 @@ el:
       some_trouble: "Είχα κάποιο πρόβλημα με την αποθήκευση: %{errors}"
       changing_on_hand_stock: Αλλαγή στα επίπεδα μετοχών ...
       stock_reset: Οι μετοχές επαναφέρονται στις προεπιλογές.
-    tag_rules:
-      show_hide_variants: 'Εμφάνιση ή απόκρυψη παραλλαγών στη βιτρίνα μου'
-      show_hide_shipping: 'Εμφάνιση ή απόκρυψη μεθόδων αποστολής στο ταμείο'
-      show_hide_payment: 'Εμφάνιση ή απόκρυψη τρόπων πληρωμής κατά την ολοκλήρωση αγοράς'
-      show_hide_order_cycles: 'Εμφάνιση ή απόκρυψη κύκλων παραγγελίας στη βιτρίνα μου'
-      visible: ΟΡΑΤΟ
-      not_visible: ΜΗ ΟΡΑΤΟ
     services:
       unsaved_changes_message: Υπάρχουν μη αποθηκευμένες αλλαγές προς το παρόν, αποθηκεύστε τώρα ή αγνοήστε;
       save: ΑΠΟΘΗΚΕΥΣΗ
@@ -4341,6 +4322,7 @@ el:
           terms_of_service: "Όροι Χρήσης της Υπηρεσίας"
         sortable_header:
           name: "Όνομα"
+          on_hand: "Διαθέσιμο απόθεμα"
           number: "Αριθμός"
           completed_at: "Ολοκληρώθηκε στις"
           state: "Κατάσταση"
@@ -4663,6 +4645,26 @@ el:
       previous: Προηγούμενο
     tag_list_input:
       default_placeholder: Προσθήκη ετικέτας
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Μέθοδοι αποστολής με ετικέτα"
+        shipping_method_tagged_bottom: "είναι:"
+        payment_method_tagged_top: "Ετικέτες τρόπων πληρωμής"
+        payment_method_tagged_bottom: "είναι:"
+        order_cycle_tagged_top: "Ετικέτες κύκλων παραγγελίας"
+        order_cycle_tagged_bottom: "είναι:"
+        inventory_tagged_top: "Ετικέτες παραλλαγών αποθέματος"
+        inventory_tagged_bottom: "είναι:"
+        variant_tagged_bottom: "είναι:"
+        visible: ΟΡΑΤΟ
+        not_visible: ΜΗ ΟΡΑΤΟ
+    tag_rule_group_form:
+      for_customers_tagged: 'Για πελάτες με ετικέτα:'
+      add_new_rule: '+ Πρόσθεσε έναν νέο κανόνα'
+      no_rules_yet: Κανένας κανόνας δεν ισχύει για αυτή την ταμπέλα
+    add_tag_rule_modal:
+      select_rule_type: "Επιλέξτε έναν τύπο κανόνα:"
+      add_rule: "Προσθήκη κανόνα"
   invisible_captcha:
     sentence_for_humans: "Παρακαλώ αφήστε κενό"
     timestamp_error_message: "Παρακαλώ δοκιμάστε ξανά σε 5 δευτερόλεπτα."

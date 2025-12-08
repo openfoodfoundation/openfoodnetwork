@@ -1,5 +1,7 @@
 .darkswarm {
   products {
+    background-color: white;
+
     product {
       @import "shop_partials/shop-product-rows";
     }

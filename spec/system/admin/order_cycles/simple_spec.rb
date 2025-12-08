@@ -271,9 +271,8 @@ RSpec.describe '
         select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
 
         click_button 'Create'
-
-        # Wait for API requests to finish:
-        sleep 2
+        expect(page).to have_content 'Your order cycle has been created.'
+        click_button "Dismiss"
 
         expect(page).to have_select 'new_supplier_id', with_options: [
           "Managed supplier",

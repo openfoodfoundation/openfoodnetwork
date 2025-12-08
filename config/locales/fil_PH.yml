@@ -290,6 +290,7 @@ fil_PH:
     create_and_add_another: "Gumawa at magdagdag ng isa pa"
     create: "gumawa"
     cancel: "kanselahin"
+    cancel_order: "kanselahin"
     save: "i-save"
     edit: "i-edit"
     update: "i-update"
@@ -881,10 +882,11 @@ fil_PH:
             no_rules_yet: wala pang default na panuntunan na ginagamit
             add_new_button: '+ magdagdag ng bagong default na panuntunan'
           no_tags_yet: walang pang tag na magagamit sa enterprise na ito
-          no_rules_yet: wala pang panuntunan na magagamit sa tag na ito
-          for_customers_tagged: 'Para sa mga customer na naka-tag:'
-          add_new_rule: '+ magdagdag ng bagong panuntunan'
           add_new_tag: '+ Magdagdag ng bagong tag'
+          show_hide_variants: 'ipakita o itago ang mga variant sa aking Shopfront'
+          show_hide_shipping: 'ipakita o itago ang mga paraan ng pagpapadala sa checkout'
+          show_hide_payment: 'ipakita o itago ang mga paraan ng pagbabayad sa checkout'
+          show_hide_order_cycles: 'ipakita o itago ang mga order cycle sa aking shopfront'
         users:
           legend: "mga gumagamit"
           email_confirmation_notice_html: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
@@ -1676,10 +1678,8 @@ fil_PH:
   email_confirmed: "Maraming salamat sa pagkumpirma ng inyong email address."
   email_confirmation_activate_account: "Bago natin ma-activate ang inyong account, kailangan munang kumpirmahin ang iyong email address."
   email_confirmation_greeting: "magandang araw, %{contact}!"
-  email_confirmation_profile_created: "ang profile para kay/sa %{name}ay matagumpay na nagawa! para i-activate ang inyong profile, kailangan naming kumpirmahin ang email address na ito."
   email_confirmation_click_link: "pindutin ang link sa ibaba para kumpirmahin ang iyong email address at upang maipagpatuloy ang pagset-up ng inyong profile."
   email_confirmation_link_label: "kumpirmahin ang email address na ito »"
-  email_confirmation_help_html: "pagkatapos makumpirma ang iyong email, maaari mo na i-access ang iyong administration account para sa enterprise na ito. tignan ang%{link}upang lalong mas maunawaan ang%{sitename}at masimulan na ang paggamit ng inyong profile o online na tindahan."
   email_confirmation_notice_unexpected: "natanggap mo ang mensahe na ito sapagkat ikaw ay nagsign-up sa%{sitename}, o inimbitahan para magsign-up ng isang tao na maaring kilala mo. kung hindi maintindihan kung bakit ka nakakatanggap ng ganitong email, maaring sumulat sa%{contact}."
   email_social: "kumonekta sa amin:"
   email_contact: "i-email kami:"
@@ -2688,18 +2688,6 @@ fil_PH:
           select_all_variants: "piliin lahat%{total_number_of_variants}Variants"
           variants_loaded: "%{num_of_variants_loaded}ng%{total_number_of_variants}Variants ay na-load"
           loading_variants: "nilo-load ang Variants"
-      tag_rules:
-        shipping_method_tagged_top: "naka-tag ng mga paraan ng pagpapadala"
-        shipping_method_tagged_bottom: "ay ang mga:"
-        payment_method_tagged_top: "naka-tag na mga paraan ng pagbabayad"
-        payment_method_tagged_bottom: "ay ang mga:"
-        order_cycle_tagged_top: "naka-tag na mga Order Cycle"
-        order_cycle_tagged_bottom: "ay ang mga:"
-        inventory_tagged_top: "nakatag- na mga uri ng imbentaryo"
-        inventory_tagged_bottom: "ay ang mga:"
-      new_tag_rule_dialog:
-        select_rule_type: "pumili ng uri ng panuntunan:"
-        add_rule: "magdagdag ng panuntunan"
       enterprise_fees:
         inherit_from_product: "gayahin mula sa produkto"
       orders:
@@ -2806,13 +2794,6 @@ fil_PH:
       some_trouble: "nagkaroon ako ng problema sa pagse-save: %{errors}"
       changing_on_hand_stock: pagbabago sa lebel ng hand stock
       stock_reset: ni-reset sa default ang mga stock
-    tag_rules:
-      show_hide_variants: 'ipakita o itago ang mga variant sa aking Shopfront'
-      show_hide_shipping: 'ipakita o itago ang mga paraan ng pagpapadala sa checkout'
-      show_hide_payment: 'ipakita o itago ang mga paraan ng pagbabayad sa checkout'
-      show_hide_order_cycles: 'ipakita o itago ang mga order cycle sa aking shopfront'
-      visible: NAKIKITA
-      not_visible: HINDI NAKIKITA
     services:
       unsaved_changes_message: may mga hindi pa nase-save na pagbabago, i-save na ngayon o balewalain?
       save: I-SAVE
@@ -3495,6 +3476,7 @@ fil_PH:
       shared:
         sortable_header:
           name: "Pangalan"
+          on_hand: "on hand"
           number: "Bilang"
           completed_at: "Nakumpleto"
           state: "province"
@@ -3683,3 +3665,23 @@ fil_PH:
       previous: nauna
     tag_list_input:
       default_placeholder: magdagdag ng tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "naka-tag ng mga paraan ng pagpapadala"
+        shipping_method_tagged_bottom: "ay ang mga:"
+        payment_method_tagged_top: "naka-tag na mga paraan ng pagbabayad"
+        payment_method_tagged_bottom: "ay ang mga:"
+        order_cycle_tagged_top: "naka-tag na mga Order Cycle"
+        order_cycle_tagged_bottom: "ay ang mga:"
+        inventory_tagged_top: "nakatag- na mga uri ng imbentaryo"
+        inventory_tagged_bottom: "ay ang mga:"
+        variant_tagged_bottom: "ay ang mga:"
+        visible: NAKIKITA
+        not_visible: HINDI NAKIKITA
+    tag_rule_group_form:
+      for_customers_tagged: 'Para sa mga customer na naka-tag:'
+      add_new_rule: '+ magdagdag ng bagong panuntunan'
+      no_rules_yet: wala pang panuntunan na magagamit sa tag na ito
+    add_tag_rule_modal:
+      select_rule_type: "pumili ng uri ng panuntunan:"
+      add_rule: "magdagdag ng panuntunan"

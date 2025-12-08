@@ -480,6 +480,7 @@ pa:
     create_and_add_another: "ਬਣਾਓ ਅਤੇ ਦੂਜਾ ਜੋੜੋ"
     create: "ਬਣਾਓ"
     cancel: "ਰੱਦ ਕਰੋ"
+    cancel_order: "ਰੱਦ ਕਰੋ"
     resume: "ਮੁੜ ਤੋਂ ਸ਼ੁਰੂ ਕਰੋ"
     save: "ਸੇਵ ਕਰੋ"
     edit: "ਸੰਪਾਦਿਤ ਕਰੋ"
@@ -1171,10 +1172,11 @@ pa:
             no_rules_yet: ਅਜੇ ਤੱਕ ਕੋਈ ਡਿਫੌਲਟ ਨਿਯਮ ਲਾਗੂ ਨਹੀਂ ਹੁੰਦੇ
             add_new_button: '+ ਇੱਕ ਨਵਾਂ ਡਿਫੌਲਟ ਨਿਯਮ ਜੋੜੋ'''
           no_tags_yet: ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਤੇ ਅਜੇ ਤੱਕ ਕੋਈ ਟੈਗ ਲਾਗੂ ਨਹੀਂ ਹਨ
-          no_rules_yet: ਇਸ ਟੈਗ ਤੇ ਅਜੇ ਤੱਕ ਕੋਈ ਨਿਯਮ ਲਾਗੂ ਨਹੀਂ ਹਨ
-          for_customers_tagged: 'ਟੈਗ ਕੀਤੇ ਗਾਹਕਾਂ ਲਈ:'''
-          add_new_rule: '+ ਇੱਕ ਨਵਾਂ ਨਿਯਮ ਜੋੜੋ'''
           add_new_tag: '+ ਇੱਕ ਨਵਾਂ ਟੈਗ ਜੋੜੋ'''
+          show_hide_variants: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਵਾਰੀਏਂਟ ਵਿ ਓ ਜਾਂ ਲੁਕਾਓ'''
+          show_hide_shipping: 'ਚੈਕਆਉਟ ਵੇਲੇ ਸ਼ਿਪਿੰਗ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
+          show_hide_payment: 'ਚੈਕਆਉਟ ਵੇਲੇ ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
+          show_hide_order_cycles: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਆਰਡਰ ਸਾਈਕਲ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
         users:
           legend: "ਉਪਭੋਗਤਾ"
           email_confirmation_notice_html: "ਈਮੇਲ ਪੁਸ਼ਟੀਕਰਨ ਲੰਬਿਤ ਹੈ। ਅਸੀਂ %{email} ਨੂੰ ਇੱਕ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਭੇਜੀ ਹੈ।"
@@ -2145,10 +2147,8 @@ pa:
   email_confirmed: "ਆਪਣੇ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ।"
   email_confirmation_activate_account: "ਇਸ ਤੋਂ ਪਹਿਲਾਂ ਕਿ ਅਸੀਂ ਤੁਹਾਡੇ ਨਵੇਂ ਖਾਤੇ ਨੂੰ ਕਿਰਿਆਸ਼ੀਲ ਕਰ ਸਕੀਏ, ਸਾਨੂੰ ਤੁਹਾਡੇ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।"
   email_confirmation_greeting: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, %{contact}!"
-  email_confirmation_profile_created: "%{name} ਲਈ ਇੱਕ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ ਹੈ! ਤੁਹਾਡੇ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਕਿਰਿਆਸ਼ੀਲ ਕਰਨ ਲਈ ਸਾਨੂੰ ਇਸ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।"
   email_confirmation_click_link: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਅਤੇ ਆਪਣੀ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਸੇਟ ਕਰਨਾ ਜਾਰੀ ਰੱਖਣ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਲਿੰਕ ਉਤੇ ਕਲਿੱਕ ਕਰੋ।"
   email_confirmation_link_label: "ਇਸ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ »"
-  email_confirmation_help_html: "ਆਪਣੀ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਸੀਂ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਆਪਣੇ ਪ੍ਰਬੰਧਨ ਖਾਤੇ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦੇ ਹੋ। %{sitename} ਦੇ ਫ਼ੀਚਰ ਬਾਰੇ ਹੋਰ ਜਾਣਨ ਲਈ ਅਤੇ ਆਪਣੇ ਪ੍ਰੋਫਾਈਲ ਜਾਂ ਔਨਲਾਈਨ ਸਟੋਰ ਦੀ ਵਰਤੋਂ ਸ਼ੁਰੂ ਕਰਨ ਲਈ %{link} ਨੂੰ ਵੇਖੋ।"
   email_confirmation_notice_unexpected: "ਤੁਹਾਨੂੰ ਇਹ ਸੁਨੇਹਾ ਇਸ ਲਈ ਪ੍ਰਾਪਤ ਹੋਇਆ ਹੈ ਕਿਉਂਕਿ ਤੁਸੀਂ %{sitename} ਤੇ ਸਾਈਨ ਅੱਪ ਕੀਤਾ ਸੀ, ਜਾਂ ਕਿਸੇ ਅਜਿਹੇ ਵਿਅਕਤੀ ਦੁਆਰਾ ਸਾਈਨ ਅੱਪ ਕਰਨ ਲਈ ਤੁਹਾਨੂੰ ਸੱਦਾ ਦਿੱਤਾ ਗਿਆ ਸੀ ਜਿਸਨੂੰ ਤੁਸੀਂ ਸ਼ਾਇਦ ਜਾਣਦੇ ਹੋ। ਜੇਕਰ ਤੁਸੀਂ ਇਹ ਸਮਝ ਨਹੀਂ ਪਾ ਰਹੇ ਹੋ ਕਿ ਤੁਸੀਂ ਇਹ ਈਮੇਲ ਕਿਉਂ ਪ੍ਰਾਪਤ ਕੀਤਾ ਹੈ, ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ %{contact} ਨੂੰ ਲਿਖੋ।"
   email_social: "ਸਾਡੇ ਨਾਲ ਜੁੜੋ:"
   email_contact: "ਸਾਨੂੰ ਈਮੇਲ ਕਰੋ:"
@@ -3248,18 +3248,6 @@ pa:
           loading_variants: "ਵੇਰੀਐਂਟ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
           no_variants: "ਇਸ ਉਤਪਾਦ ਲਈ ਕੋਈ ਵੇਰੀਐਂਟ ਉਪਲਬਧ ਨਹੀਂ ਹੈ (ਇਨਵੇਂਟਰੀ ਸੈਟਿੰਗਾਂ ਰਾਹੀਂ ਲੁਕਿਆ ਹੋਇਆ)।"
           some_variants_hidden: "(ਕੁਝ ਵੇਰੀਐਂਟ ਇਨਵੇਂਟਰੀ ਸੈਟਿੰਗਾਂ ਰਾਹੀਂ ਲੁਕੇ ਹੋਏ ਹੋ ਸਕਦੇ ਹਨ)"
-      tag_rules:
-        shipping_method_tagged_top: "ਸ਼ਿਪਿੰਗ ਢੰਗ ਟੈਗ ਕੀਤੇ ਗਏ"
-        shipping_method_tagged_bottom: "ਹਨ:"
-        payment_method_tagged_top: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਟੈਗ ਕੀਤੇ ਗਏ"
-        payment_method_tagged_bottom: "ਹਨ:"
-        order_cycle_tagged_top: "ਟੈਗ ਕੀਤੇ ਆਰਡਰ ਸਾਈਕਲ"
-        order_cycle_tagged_bottom: "ਹਨ:"
-        inventory_tagged_top: "ਟੈਗ ਕੀਤੇ ਗਏ ਇਨਵੇਂਟਰੀ ਵੇਰੀਐਂਟ"
-        inventory_tagged_bottom: "ਹਨ:"
-      new_tag_rule_dialog:
-        select_rule_type: "ਇੱਕ ਨਿਯਮ ਕਿਸਮ ਚੁਣੋ:"
-        add_rule: "ਨਿਯਮ ਜੋੜੋ"
       enterprise_fees:
         inherit_from_product: "ਉਤਪਾਦ ਤੋਂ ਅਪਣਾਓ"
       orders:
@@ -3385,13 +3373,6 @@ pa:
       some_trouble: "ਮੈਨੂੰ ਸੇਵ ਕਰਨ ਵਿੱਚ ਕੁਝ ਮੁਸ਼ਕਲ ਆਈ: %{errors}"
       changing_on_hand_stock: ਹੱਥ ਵਿਚ ਸਟਾਕ ਦੇ ਪੱਧਰਾਂ ਨੂੰ ਬਦਲ ਰਹੇ ਹਾਂ...
       stock_reset: ਸਟਾਕ ਡਿਫੌਲਟ ਤੇ ਰੀਸੈਟ ਕੀਤੇ ਗਏ ਹਨ।
-    tag_rules:
-      show_hide_variants: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਵਾਰੀਏਂਟ ਵਿ ਓ ਜਾਂ ਲੁਕਾਓ'''
-      show_hide_shipping: 'ਚੈਕਆਉਟ ਵੇਲੇ ਸ਼ਿਪਿੰਗ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
-      show_hide_payment: 'ਚੈਕਆਉਟ ਵੇਲੇ ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
-      show_hide_order_cycles: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਆਰਡਰ ਸਾਈਕਲ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
-      visible: ਵਿਖਾਈ ਦੇ ਰਿਹਾ ਹੈ
-      not_visible: ਵਿਖਾਈ ਨਹੀਂ ਦੇ ਰਿਹਾ ਹੈ
     services:
       unsaved_changes_message: ਸੇਵ ਨਾ ਕਿੱਤੇ ਗਏ ਬਦਲਾਵ ਮੌਜੂਦ ਹਨ, ਹੁਣੇ ਸੇਵ ਕਰੋ ਜਾਂ ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰੋ?
       save: ਸੇਵ ਕਰੋ
@@ -4147,6 +4128,7 @@ pa:
           terms_of_service: "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ"
         sortable_header:
           name: "ਨਾਮ"
+          on_hand: "ਹੱਥ ਵਿਚ"
           number: "ਨੰਬਰ"
           completed_at: "ਇਸ ਸਮੇਂ ਪੂਰਾ ਹੋਇਆ"
           state: "ਸਥਿਤੀ"
@@ -4416,3 +4398,23 @@ pa:
       previous: ਪਿਛਲਾ
     tag_list_input:
       default_placeholder: ਟੈਗ ਜੋੜੋ
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "ਸ਼ਿਪਿੰਗ ਢੰਗ ਟੈਗ ਕੀਤੇ ਗਏ"
+        shipping_method_tagged_bottom: "ਹਨ:"
+        payment_method_tagged_top: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਟੈਗ ਕੀਤੇ ਗਏ"
+        payment_method_tagged_bottom: "ਹਨ:"
+        order_cycle_tagged_top: "ਟੈਗ ਕੀਤੇ ਆਰਡਰ ਸਾਈਕਲ"
+        order_cycle_tagged_bottom: "ਹਨ:"
+        inventory_tagged_top: "ਟੈਗ ਕੀਤੇ ਗਏ ਇਨਵੇਂਟਰੀ ਵੇਰੀਐਂਟ"
+        inventory_tagged_bottom: "ਹਨ:"
+        variant_tagged_bottom: "ਹਨ:"
+        visible: ਵਿਖਾਈ ਦੇ ਰਿਹਾ ਹੈ
+        not_visible: ਵਿਖਾਈ ਨਹੀਂ ਦੇ ਰਿਹਾ ਹੈ
+    tag_rule_group_form:
+      for_customers_tagged: 'ਟੈਗ ਕੀਤੇ ਗਾਹਕਾਂ ਲਈ:'''
+      add_new_rule: '+ ਇੱਕ ਨਵਾਂ ਨਿਯਮ ਜੋੜੋ'''
+      no_rules_yet: ਇਸ ਟੈਗ ਤੇ ਅਜੇ ਤੱਕ ਕੋਈ ਨਿਯਮ ਲਾਗੂ ਨਹੀਂ ਹਨ
+    add_tag_rule_modal:
+      select_rule_type: "ਇੱਕ ਨਿਯਮ ਕਿਸਮ ਚੁਣੋ:"
+      add_rule: "ਨਿਯਮ ਜੋੜੋ"

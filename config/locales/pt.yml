@@ -331,6 +331,7 @@ pt:
     create_and_add_another: "Criar e acrescentar outro"
     create: "Criar"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     resume: "Retomar"
     save: "Guardar"
     edit: "Editar"
@@ -943,10 +944,11 @@ pt:
             no_rules_yet: Ainda não existe nenhuma regra por defeito
             add_new_button: '+ Adicionar nova regra'
           no_tags_yet: Nenhuma etiqueta foi atribuída a esta organização
-          no_rules_yet: Nenhuma regra foi aplicada a esta etiqueta
-          for_customers_tagged: 'Para consumidores marcados:'
-          add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova etiqueta'
+          show_hide_variants: 'Mostrar ou esconder variantes na minha loja'
+          show_hide_shipping: 'Mostrar ou Esconder métodos de envio na finalização das encomendas'
+          show_hide_payment: 'Mostrar ou Esconder métodos de pagamento na finalização das encomendas'
+          show_hide_order_cycles: 'Mostrar ou Esconder ciclos de encomendas na minha loja'
         users:
           legend: "Utilizadores"
           email_confirmation_notice_html: "A confirmação do email está pendente. Enviamos um email de confirmação para %{email}."
@@ -1733,10 +1735,8 @@ pt:
   email_confirmed: "Obrigado por confirmar o seu endereço de email."
   email_confirmation_activate_account: "Antes de podermos activar a sua conta, precisamos de confirmar o seu endereço de email."
   email_confirmation_greeting: "Olá, %{contact}!"
-  email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar o seu Perfil precisamos que confirme este endereço de email."
   email_confirmation_click_link: "Clique no link abaixo para confirmar o seu email e continuar a criar o seu perfil."
   email_confirmation_link_label: "Confirme este endereço de email »"
-  email_confirmation_help_html: "Depois de confirmar o seu email, pode aceder à conta de administração desta organização. Veja o %{link} para saber mais sobre a %{sitename} e para começar a utilizar o seu perfil ou loja online."
   email_confirmation_notice_unexpected: "Está a receber esta mensagem por se registou em %{sitename}, ou foi convidado para se registar por alguém que provavelmente conhece. Se não entende porque está a receber esta mensagem, por favor escreva para  %{contact}."
   email_social: "Conecte-se connosco:"
   email_contact: "Envie-nos um email:"
@@ -2732,8 +2732,6 @@ pt:
           severity: Severidade
           description: Descrição
           resolve: Resolver
-      new_tag_rule_dialog:
-        select_rule_type: "Selecionar um tipo de regra:"
       enterprise_fees:
         inherit_from_product: "Herdar do Produto"
       orders:
@@ -2841,13 +2839,6 @@ pt:
       some_trouble: "Alguns problemas a guardar: %{errors}"
       changing_on_hand_stock: A alterar níveis de stock disponíveis...
       stock_reset: Redefinir os stocks para valores por defeito.
-    tag_rules:
-      show_hide_variants: 'Mostrar ou esconder variantes na minha loja'
-      show_hide_shipping: 'Mostrar ou Esconder métodos de envio na finalização das encomendas'
-      show_hide_payment: 'Mostrar ou Esconder métodos de pagamento na finalização das encomendas'
-      show_hide_order_cycles: 'Mostrar ou Esconder ciclos de encomendas na minha loja'
-      visible: VISÍVEL
-      not_visible: NÃO VISÍVEL
     services:
       unsaved_changes_message: Algumas alterações não foram gravadas, gravar agora ou ignorar?
       save: GUARDAR
@@ -3474,6 +3465,7 @@ pt:
       shared:
         sortable_header:
           name: "Nome"
+          on_hand: "Disponível"
           number: "Número"
           completed_at: "Concluído Em"
           state: "Estado"
@@ -3664,3 +3656,13 @@ pt:
       previous: Anterior
     tag_list_input:
       default_placeholder: Acrescentar uma etiqueta
+    tag_rule_form:
+      tag_rules:
+        visible: VISÍVEL
+        not_visible: NÃO VISÍVEL
+    tag_rule_group_form:
+      for_customers_tagged: 'Para consumidores marcados:'
+      add_new_rule: '+ Adicionar nova regra'
+      no_rules_yet: Nenhuma regra foi aplicada a esta etiqueta
+    add_tag_rule_modal:
+      select_rule_type: "Selecionar um tipo de regra:"

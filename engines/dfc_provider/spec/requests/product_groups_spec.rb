@@ -13,6 +13,7 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
       variants: [variant]
     )
   }
+  let(:Authorization) { nil }
   let(:variant) {
     build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon, supplier: enterprise)
   }
@@ -34,9 +35,27 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
 
     get "Show ProductGroup" do
       produces "application/json"
+      security [oidc_token: []]
 
       response "200", "success" do
         let(:id) { product.id }
+
+        context "as platform user" do
+          include_context "authenticated as platform"
+
+          before {
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadEnterprise", grantee: "cqcm-dev",
+            )
+            DfcPermission.create!(
+              user:, enterprise_id:,
+              scope: "ReadProducts", grantee: "cqcm-dev",
+            )
+          }
+
+          run_test!
+        end
 
         run_test! do
           expect(json_response["@id"]).to eq "http://test.host/api/dfc/product_groups/90000"

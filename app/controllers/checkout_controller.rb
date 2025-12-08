@@ -81,8 +81,6 @@ class CheckoutController < BaseController
 
     @order.customer.touch :terms_and_conditions_accepted_at
 
-    return true if redirect_to_payment_gateway
-
     # Redeem VINE voucher
     vine_voucher_redeemer = Vine::VoucherRedeemerService.new(order: @order)
     unless vine_voucher_redeemer.redeem
@@ -95,6 +93,9 @@ class CheckoutController < BaseController
       return false
       # rubocop:enable Rails/DeprecatedActiveModelErrorsMethods
     end
+
+    return true if redirect_to_payment_gateway
+
     @order.process_payments!
     @order.confirm!
     BackorderJob.check_stock(@order)

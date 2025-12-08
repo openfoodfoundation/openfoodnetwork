@@ -67,4 +67,30 @@ RSpec.describe CalculatedAdjustments do
       end
     end
   end
+
+  describe "#calculator_type=" do
+    subject(:tax_rate) { Spree::TaxRate.new }
+
+    it "set the calculator to the given type" do
+      tax_rate.calculator_type = "Calculator::FlatRate"
+
+      expect(tax_rate.calculator).to be_a(Calculator::FlatRate)
+    end
+
+    context "when no argument given" do
+      it "returns nil" do
+        tax_rate.calculator_type = nil
+
+        expect(tax_rate.calculator).to be_nil
+      end
+    end
+
+    context "when not allowed calculator type given" do
+      it "returns nil" do
+        tax_rate.calculator_type = "Calculator::Wrong"
+
+        expect(tax_rate.calculator).to be_nil
+      end
+    end
+  end
 end

@@ -6,16 +6,15 @@ require 'stripe/oauth'
 RSpec.describe StripeAccount do
   describe "deauthorize_and_destroy", :vcr, :stripe_version do
     let!(:enterprise) { create(:enterprise) }
-    let!(:enterprise2) { create(:enterprise) }
-    let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
     let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
-    let(:stripe_publishable_key) { ENV.fetch('STRIPE_PUBLIC_TEST_API_KEY', nil) }
 
     let!(:stripe_account) {
       create(:stripe_account, enterprise:, stripe_user_id:)
     }
 
     context "when the Stripe API disconnect fails" do
+      let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
+
       before { Stripe.client_id = "bogus_client_id" }
 
       it "destroys the record and notifies Bugsnag" do
@@ -36,10 +35,9 @@ RSpec.describe StripeAccount do
                                })
       end
 
-      before do
-        Stripe.client_id = client_id
-        stripe_account.update!(stripe_publishable_key:, stripe_user_id: connected_account.id)
-      end
+      let(:stripe_user_id) { connected_account.id }
+
+      before { Stripe.client_id = ENV.fetch('STRIPE_CLIENT_ID', nil) }
 
       it "destroys the record" do
         # returns status 200
@@ -53,11 +51,14 @@ RSpec.describe StripeAccount do
     end
 
     context "if the account is also associated with another Enterprise" do
-      let!(:another_stripe_account) {
-        create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
-      }
+      let!(:enterprise2) { create(:enterprise) }
+      let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
 
-      it "Doesn't make a Stripe API disconnection request " do
+      before do
+        create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
+      end
+
+      it "doesn't make a Stripe API disconnection request " do
         expect(Stripe::OAuth).not_to receive(:deauthorize)
         stripe_account.deauthorize_and_destroy
         expect(StripeAccount.all).not_to include(stripe_account)

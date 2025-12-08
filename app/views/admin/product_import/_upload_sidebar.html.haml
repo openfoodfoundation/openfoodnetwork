@@ -5,9 +5,10 @@
     %i.icon-external-link
     = t('admin.product_import.index.product_list_template')
 
-  %a.download{href: '/inventory_template.csv'}
-    %i.icon-external-link
-    = t('admin.product_import.index.inventory_template')
+  - if feature?(:inventory, *spree_current_user.enterprises)
+    %a.download{href: '/inventory_template.csv'}
+      %i.icon-external-link
+      = t('admin.product_import.index.inventory_template')
 
   %h5= t('admin.product_import.index.category_values')
 

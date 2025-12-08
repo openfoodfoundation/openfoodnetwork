@@ -16,6 +16,7 @@ AllCops:
     - node_modules/**/*
     # Excluding: inadequate Naming/FileName rule rejects GemFile name with camelcase
     - engines/web/Gemfile
+    - .undercover
 
 Bundler/DuplicatedGem:
   Enabled: false
@@ -93,7 +94,7 @@ Metrics/PerceivedComplexity:
   Enabled: true
   Max: 14 # default 8
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Enabled: false
 
 Naming/VariableNumber:

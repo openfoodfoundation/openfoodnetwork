@@ -46,7 +46,7 @@ WebMock.disable_net_connect!(
 # in spec/support/ and its subdirectories.
 Rails.root.glob("spec/support/**/*.rb").sort.each { |f| require f }
 
-Capybara.server = :puma
+Capybara.server = :puma, { Silent: true }
 Capybara.disable_animation = true
 
 Capybara.configure do |config|
@@ -68,9 +68,6 @@ InvisibleCaptcha.timestamp_enabled = false
 InvisibleCaptcha.spinner_enabled = false
 
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join('spec/fixtures').to_s
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -146,6 +143,10 @@ RSpec.configure do |config|
     # unless a formatter has already been configured
     # (e.g. via a command-line flag).
     config.default_formatter = "doc"
+  end
+
+  config.define_derived_metadata(file_path: %r{/spec/lib/tasks/}) do |metadata|
+    metadata[:type] = :rake
   end
 
   # Reset locale for all specs.
@@ -248,6 +249,8 @@ RSpec.configure do |config|
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
 
+  config.include_context "rake", type: :rake
+
   # Helpers
   config.include FactoryBot::Syntax::Methods
   config.include JsonSpec::Helpers
@@ -259,8 +262,8 @@ RSpec.configure do |config|
   config.include PreferencesHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
-  config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
+  config.include ActiveSupport::Testing::TimeHelpers
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper

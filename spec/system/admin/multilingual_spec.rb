@@ -5,6 +5,7 @@ require 'system_helper'
 RSpec.describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
+
   let(:admin_user) { create(:admin_user) }
 
   before do

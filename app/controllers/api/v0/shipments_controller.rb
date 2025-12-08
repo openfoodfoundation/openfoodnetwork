@@ -112,7 +112,9 @@ module Api
 
       def scoped_variant(variant_id)
         variant = Spree::Variant.find(variant_id)
+
         OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
+
         variant
       end
 

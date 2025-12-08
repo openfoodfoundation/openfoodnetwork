@@ -8,24 +8,14 @@ module Api
                :open_street_map_default_latitude,
                :open_street_map_default_longitude
 
-    def open_street_map_enabled
-      ContentConfig.open_street_map_enabled
-    end
+    delegate :open_street_map_enabled, to: :ContentConfig
 
-    def open_street_map_provider_name
-      ContentConfig.open_street_map_provider_name
-    end
+    delegate :open_street_map_provider_name, to: :ContentConfig
 
-    def open_street_map_provider_options
-      ContentConfig.open_street_map_provider_options
-    end
+    delegate :open_street_map_provider_options, to: :ContentConfig
 
-    def open_street_map_default_latitude
-      ContentConfig.open_street_map_default_latitude
-    end
+    delegate :open_street_map_default_latitude, to: :ContentConfig
 
-    def open_street_map_default_longitude
-      ContentConfig.open_street_map_default_longitude
-    end
+    delegate :open_street_map_default_longitude, to: :ContentConfig
   end
 end

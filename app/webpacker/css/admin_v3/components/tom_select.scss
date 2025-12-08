@@ -99,6 +99,7 @@
   .ts-dropdown {
     // Cover up the control with the input
     top: 0;
+    z-index: $ts-dropdown-z-index;
   }
 
   .dropdown-input-wrap::after {
@@ -184,7 +185,7 @@
   height: auto;
   min-height: 0;
 
-    .ts-control {
+  .ts-control {
     padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
 
     height: auto;
@@ -227,7 +228,8 @@
 
 // Display as "changed" if sibling select is marked as changed.
 select.changed + .ts-wrapper {
-  &.single, &.multi {
+  &.single,
+  &.multi {
     .ts-control {
       border-color: $color-txt-changed-brd;
     }

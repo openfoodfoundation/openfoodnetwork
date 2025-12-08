@@ -1,4 +1,5 @@
-= form_with url: bulk_update_admin_products_path, method: :post, id: "products-form",
+-# locals: (products:, producer_options:, category_options:, tax_category_options:, allowed_producers:)
+= form_with url: admin_products_bulk_update_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
             html: { data: { 'turbo-frame': "_self",
               controller: "bulk-form",
@@ -26,13 +27,13 @@
       %col.col-producer{ style:"min-width: 6em" }= # (grow to fill)
       %col.col-category{ width:"8%" }
       %col.col-tax_category{ width:"8%" }
-      - if feature?(:variant_tag, spree_current_user)
+      - if variant_tag_enabled?(spree_current_user)
         %col.col-tags{ width:"8%" }
       %col.col-inherits_properties{ width:"5%" }
       %col{ width:"5%", style:"min-width: 3em"}= # Actions
     %thead
       %tr
-        - colspan = feature?(:variant_tag, spree_current_user) ? 13 : 12
+        - colspan = variant_tag_enabled?(spree_current_user) ? 13 : 12
         %td.form-actions-wrapper{ colspan: "#{colspan}" }
           .form-actions-wrapper2
             %fieldset.form-actions{ class: ("hidden" unless defined?(@error_counts)), 'data-bulk-form-target': "actions" }
@@ -59,13 +60,14 @@
         %th.align-left.col-unit_scale.with-input= t('admin.products_page.columns.unit_scale')
         %th.align-left.col-unit.with-input= t('admin.products_page.columns.unit')
         %th.align-left.col-price.with-input= t('admin.products_page.columns.price')
-        %th.align-left.col-on_hand.with-input= t('admin.products_page.columns.on_hand')
+        = render partial: 'spree/admin/shared/stimulus_sortable_header',
+            locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'name asc' }
         %th.align-left.col-producer= t('admin.products_page.columns.producer')
         %th.align-left.col-category= t('admin.products_page.columns.category')
         %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
-        - if feature?(:variant_tag, spree_current_user)
+        - if variant_tag_enabled?(spree_current_user)
           %th.align-left.col-tags= t('admin.products_page.columns.tags')
         %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
-      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, producer_options:, category_options:, tax_category_options: }
+      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, producer_options:, category_options:, tax_category_options: , allowed_producers:}

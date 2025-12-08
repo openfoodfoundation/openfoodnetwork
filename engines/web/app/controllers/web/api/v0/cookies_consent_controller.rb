@@ -7,6 +7,7 @@ module Web
     module V0
       class CookiesConsentController < BaseController
         include ActionController::Cookies
+
         respond_to :json
 
         def show

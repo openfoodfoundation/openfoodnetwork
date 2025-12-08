@@ -33,6 +33,7 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :welcome
         patch :register
+        get :new_tag_rule_group
       end
 
       resources :connected_apps, only: [:create, :destroy]
@@ -41,7 +42,7 @@ Openfoodnetwork::Application.routes.draw do
         post :update_positions, on: :collection
       end
 
-      resources :tag_rules, only: [:destroy]
+      resources :tag_rules, only: [:destroy, :new]
 
       resources :vouchers, only: [:new, :create]
     end
@@ -73,17 +74,13 @@ Openfoodnetwork::Application.routes.draw do
       post :import, on: :collection
     end
 
-    constraints FeatureToggleConstraint.new(:admin_style_v3) do
-      # This might be easier to arrange once we rename the controller to plain old "products"
-      post '/products/bulk_update', to: 'products_v3#bulk_update'
-      get '/products', to: 'products_v3#index'
-      # we already have DELETE admin/products/:id here
-      delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
-      delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
-      post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
-
-      resources :product_preview, only: [:show]
-    end
+    # This might be easier to arrange once we rename the controller to plain old "products"
+    post '/products/bulk_update', to: 'products_v3#bulk_update', as: 'products_bulk_update'
+    get '/products', to: 'products_v3#index', as: 'products'
+    delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
+    delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
+    post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
+    resources :product_preview, only: [:show]
 
     resources :variant_overrides do
       post :bulk_update, on: :collection
@@ -94,8 +91,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy, :show]
 
-    resources :tag_rules, only: [], format: :json do
-      get :map_by_tag, on: :collection
+    resources :tag_rules, only: [] do
+      get :map_by_tag, on: :collection, format: :json
+      get :variant_tag_rules, on: :collection
     end
 
     resource :contents

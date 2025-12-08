@@ -273,7 +273,12 @@ de_CH:
         Wir werden uns darum kümmern, aber lassen Sie uns bitte wissen, wenn das Problem weiterhin besteht.
   backorder_mailer:
     backorder_failed:
+      subject: "Eine automatische Nachbestellung ist fehlgeschlagen"
+      headline: "Nachbestellung fehlgeschlagen"
+      order: "Betroffene Bestellung: %{number}"
       product: "Produkt"
+    backorder_incomplete:
+      affected: "%{enterprise} : %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network"
@@ -455,6 +460,7 @@ de_CH:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
+    cancel_order: "Abbrechen"
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
@@ -1155,10 +1161,11 @@ de_CH:
             no_rules_yet: Es gelten noch keine Standardregeln.
             add_new_button: 'neue Standardregel +'
           no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden.
-          no_rules_yet: Für dieses Stichwort gelten noch keine Regeln.
-          for_customers_tagged: 'Für Kunden mit dem Stichwort:'
-          add_new_rule: '+ Neue Regel hinzufügen'
           add_new_tag: '+ Neues Stichwort hinzufügen'
+          show_hide_variants: 'Produktvarianten im Laden anzeigen?'
+          show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
+          show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
+          show_hide_order_cycles: 'Bestellzyklen im Laden anzeigen?'
         users:
           legend: "Benutzer"
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
@@ -1290,7 +1297,8 @@ de_CH:
         re_notify_producers: Produzenten erneut benachrichtigen
         notify_producers_tip: Benachrichtigen Sie die Produzenten per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen.
       date_time_warning_modal_content:
-        cancel: 'Stornieren'
+        content: 'Wenn Sie einen neuen Bestellzyklus erstellen möchten, empfiehlt es sich, den Bestellzyklus zunächst zu duplizieren und dann die Daten zu ändern.'
+        cancel: 'Abbrechen'
       incoming:
         incoming: "Eingehend"
         supplier: "Lieferant"
@@ -1317,9 +1325,10 @@ de_CH:
         back_to_list: "Zurück zur Liste"
       checkout_options:
         back_end: "Nur im Backoffice"
-        cancel: "Stornieren"
+        cancel: "Abbrechen"
         checkout_options: "Checkout Optionen"
         distributor: "Verteilstelle"
+        no_payment_methods: Jeder Händler in diesem Bestellzyklus benötigt mindestens eine Zahlungsmethode.
         payment_methods: "Zahlungsarten"
         save: "Speichern"
         save_and_back_to_list: "Speichern und zurück zur Liste"
@@ -1634,7 +1643,7 @@ de_CH:
       unpause_failure_msg: "Die Fortsetzung des Abonnements ist fehlgeschlagen."
       confirm_cancel_open_orders_msg: "Einige Bestellungen für dieses Abonnement sind derzeit offen. Der Kunde wurde bereits informiert, dass die Bestellung aufgegeben wird. Möchten Sie diese Bestellung(en) stornieren oder erhalten?"
       resume_canceled_orders_msg: "Einige Bestellungen dieses Abonnements können jetzt fortgesetzt werden. Sie können sie im Bestellungen-Dropdown-Menü wiederaufnehmen."
-      yes_cancel_them: Stornieren
+      yes_cancel_them: Abbrechen
       no_keep_them: Erhalten
       yes_i_am_sure: Ja, ich bin mir sicher.
       number: "Bestellnummer"
@@ -1664,6 +1673,12 @@ de_CH:
         remove_white_label_logo_success: "Das Logo wurde erfolgreich gelöscht."
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Bestätigungs-E-Mail für 1 Bestellung gesendet."
+      other: "Bestätigungs-E-Mails für %{count} Bestellungen gesendet."
+    send_invoice_feedback:
+      one: "Rechnungs-E-Mail für 1 Bestellung gesendet."
+      other: "Rechnungs-E-Mails für %{count} Bestellungen gesendet."
   api:
     unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
     invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
@@ -1756,6 +1771,7 @@ de_CH:
         title: Zahlungsart
         edit: Bearbeiten
       order:
+        title: Bestelldetails
         edit: Bearbeiten
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
@@ -2082,10 +2098,8 @@ de_CH:
   email_confirmed: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
   email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren können, bestätigen Sie bitte Ihre E-Mail-Adresse."
   email_confirmation_greeting: "Hallo %{contact}!"
-  email_confirmation_profile_created: "Das Profil für %{name} wurde erfolgreich erstellt! Zur Aktivierung des Profils, bitten wir Sie diese E-Mail-Adresse zu bestätigen."
   email_confirmation_click_link: "Bitte klicken Sie auf den untenstehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
   email_confirmation_link_label: "E-Mail-Adresse bestätigen"
-  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf die Einstellungen dieses Unternehmens zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen des Open Food Networks zu erfahren und Ihr Profil oder Ihren Online-Shop einzurichten."
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich im Open Food Network angemeldet haben oder von einer Person dazu eingeladen wurden. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
@@ -2351,6 +2365,7 @@ de_CH:
   orders_bought_already_confirmed: "* schon bestätigt"
   orders_confirm_cancel: "Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?"
   order_processed_successfully: "Ihre Bestellung wurde erfolgreich verarbeitet."
+  thank_you_for_your_order: "Vielen Dank für Ihre Bestellung"
   products_cart_distributor_choice: "Verteilstelle Ihrer Bestellung:"
   products_cart_distributor_change: "Die Verteilstelle für diese Bestellung wird in %{name} geändert, wenn Sie dieses Produkt zu Ihrem Warenkorb hinzufügen."
   products_cart_distributor_is: "Die Verteilstelle dieser Bestellung ist %{name}."
@@ -2907,6 +2922,7 @@ de_CH:
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. MwSt.)
   report_header_voucher_label: Gutscheinetikett
   report_header_voucher_amount: "Gutscheinbetrag ( %{currency_symbol} )"
+  report_header_last_completed_order_date: Datum der letzten abgeschlossenen Bestellung
   report_xero_configuration: Xero-Konfiguration
   initial_invoice_number: "Ursprüngliche Rechnungsnummer"
   invoice_date: "Rechnungsdatum"
@@ -3025,9 +3041,10 @@ de_CH:
       deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
+        confirm: "Bestätigen"
         close: "Schliessen"
         continue: "Weiter"
-        cancel: "Stornieren"
+        cancel: "Abbrechen"
         invite: "Einladen"
         invite_title: "Geben Sie die E-Mail-Adresse eines nicht registrierten Benutzers ein, um dieses Unternehmen zu verwalten."
         tag_rule_help:
@@ -3164,18 +3181,6 @@ de_CH:
           select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
           variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
           loading_variants: "Produktvarianten werden geladen ..."
-      tag_rules:
-        shipping_method_tagged_top: "Lieferoptionen markiert mit"
-        shipping_method_tagged_bottom: "sind:"
-        payment_method_tagged_top: "Zahlungsarten markiert mit"
-        payment_method_tagged_bottom: "sind:"
-        order_cycle_tagged_top: "Bestellzyklen markiert mit"
-        order_cycle_tagged_bottom: "sind:"
-        inventory_tagged_top: "Produktvarianten markiert mit"
-        inventory_tagged_bottom: "sind:"
-      new_tag_rule_dialog:
-        select_rule_type: "Wählen Sie einen Regelart aus:"
-        add_rule: "Regel hinzufügen"
       enterprise_fees:
         inherit_from_product: "Vom Produkt übernehmen"
       orders:
@@ -3300,13 +3305,6 @@ de_CH:
       some_trouble: "Probleme beim Speichern: %{errors}"
       changing_on_hand_stock: Änderung der Lagerbestände ...
       stock_reset: Lagerbestände werden auf Standardwerte zurückgesetzt.
-    tag_rules:
-      show_hide_variants: 'Produktvarianten im Laden anzeigen?'
-      show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
-      show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
-      show_hide_order_cycles: 'Bestellzyklen im Laden anzeigen?'
-      visible: SICHTBAR
-      not_visible: NICHT SICHTBAR
     services:
       unsaved_changes_message: Es sind nicht gespeicherte Änderungen vorhanden. Diese jetzt speichern oder ignorieren?
       save: SPEICHERN
@@ -3516,6 +3514,7 @@ de_CH:
   previous: "Vorherige"
   last: "Letzte"
   spree:
+    order_updated: "Bestellung aktualisiert"
     add_country: "Neues Land"
     add_state: "Neuer Kanton"
     adjustment: "Anpassung"
@@ -3861,9 +3860,14 @@ de_CH:
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
+          cancel_orders: "Bestellungen stornieren"
           resend_confirmation: "Bestätigung erneut senden"
+          resend_confirmation_confirm_html: "Dadurch wird die Bestätigungs-E-Mail erneut an den Kunden gesendet.<br /> Möchten Sie wirklich fortfahren?"
+          send_invoice: "Rechnungen senden"
           selected:
             zero: "Keine Bestellung ausgewählt"
+            one: "1 Bestellung ausgewählt"
+            other: "%{count} Bestellungen ausgewählt"
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
@@ -4104,6 +4108,7 @@ de_CH:
           terms_of_service: "Nutzungsbedingungen"
         sortable_header:
           name: "Name"
+          on_hand: "Verfügbar"
           number: "Nummer"
           completed_at: "Abgeschlossen am"
           state: "Status"
@@ -4298,7 +4303,7 @@ de_CH:
         items: Artikel
         total: Gesamt
         edit: Bearbeiten
-        cancel: Stornieren
+        cancel: Abbrechen
         closed: Abgeschlossen
         until: Bis
       past_orders:
@@ -4394,3 +4399,23 @@ de_CH:
       previous: Vorherige
     tag_list_input:
       default_placeholder: Stichwort hinzufügen
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Lieferoptionen markiert mit"
+        shipping_method_tagged_bottom: "sind:"
+        payment_method_tagged_top: "Zahlungsarten markiert mit"
+        payment_method_tagged_bottom: "sind:"
+        order_cycle_tagged_top: "Bestellzyklen markiert mit"
+        order_cycle_tagged_bottom: "sind:"
+        inventory_tagged_top: "Produktvarianten markiert mit"
+        inventory_tagged_bottom: "sind:"
+        variant_tagged_bottom: "sind:"
+        visible: SICHTBAR
+        not_visible: NICHT SICHTBAR
+    tag_rule_group_form:
+      for_customers_tagged: 'Für Kunden mit dem Stichwort:'
+      add_new_rule: '+ Neue Regel hinzufügen'
+      no_rules_yet: Für dieses Stichwort gelten noch keine Regeln.
+    add_tag_rule_modal:
+      select_rule_type: "Wählen Sie einen Regelart aus:"
+      add_rule: "Regel hinzufügen"

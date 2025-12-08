@@ -5,7 +5,7 @@
 # /checkout; for admin payments and subscription payemnts it's the order url.
 #
 # This class confirms that the payment intent matches what's in our database,
-# marks the payment as complete, and removes the cvv_response_message field,
+# marks the payment as complete, and removes the redirect_auth_url field,
 # which we use to indicate that authorization is required. It also completes the
 # Order, if appropriate.
 

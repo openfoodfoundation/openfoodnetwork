@@ -8,6 +8,10 @@ module Api
       include AddressTransformation
       include ExtraFields
 
+      wrap_parameters :customer, include:
+        Customer.attribute_names +
+        [:billing_address, :shipping_address]
+
       skip_authorization_check only: :index
 
       before_action :authorize_action, only: [:show, :update, :destroy]
@@ -88,7 +92,8 @@ module Api
         attributes = params.require(:customer).permit(
           :email, :enterprise_id,
           :code, :first_name, :last_name,
-          :billing_address, shipping_address: [
+          :billing_address,
+          shipping_address: [
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,

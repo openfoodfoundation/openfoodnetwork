@@ -3,6 +3,7 @@
 module Spree
   class ShippingMethod < ApplicationRecord
     include CalculatedAdjustments
+
     DISPLAY_ON_OPTIONS = {
       both: "",
       back_end: "back_end"

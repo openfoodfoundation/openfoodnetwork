@@ -3,13 +3,15 @@ import { useOpenAndCloseAsAModal } from "./mixins/useOpenAndCloseAsAModal";
 
 export default class extends Controller {
   static targets = ["background", "modal"];
-  static values = { instant: { type: Boolean, default: false } }
+  static values = { instant: { type: Boolean, default: false } };
 
   connect() {
     useOpenAndCloseAsAModal(this);
     window.addEventListener("modal:close", this.close.bind(this));
 
-    if (this.instantValue) { this.open() }
+    if (this.instantValue) {
+      this.open();
+    }
   }
 
   disconnect() {
@@ -17,6 +19,6 @@ export default class extends Controller {
   }
 
   remove(event) {
-    this.close(event, true)
+    this.close(event, true);
   }
 }

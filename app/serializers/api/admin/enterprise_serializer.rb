@@ -10,8 +10,8 @@ module Api
                  :preferred_shopfront_taxon_order, :preferred_shopfront_producer_order,
                  :preferred_shopfront_order_cycle_order, :show_customer_names_to_suppliers,
                  :show_customer_contacts_to_suppliers,
-                 :preferred_shopfront_product_sorting_method, :owner, :contact, :users, :tag_groups,
-                 :default_tag_group, :require_login, :allow_guest_orders, :allow_order_changes,
+                 :preferred_shopfront_product_sorting_method, :owner, :contact, :users,
+                 :require_login, :allow_guest_orders, :allow_order_changes,
                  :logo, :promo_image, :terms_and_conditions,
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
@@ -50,40 +50,7 @@ module Api
         object.terms_and_conditions_blob&.created_at&.to_s
       end
 
-      def tag_groups
-        prioritized_tag_rules.each_with_object([]) do |tag_rule, tag_groups|
-          tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.
-                                               split(",").
-                                               map{ |t| { text: t } })
-          if tag_group[:rules].blank?
-            tag_groups << tag_group
-            tag_group[:position] = tag_groups.count
-          end
-          tag_group[:rules] << Api::Admin::TagRuleSerializer.new(tag_rule).serializable_hash
-        end
-      end
-
-      def default_tag_group
-        default_rules = object.tag_rules.select(&:is_default)
-        serialized_rules =
-          ActiveModel::ArraySerializer.new(default_rules,
-                                           each_serializer: Api::Admin::TagRuleSerializer)
-        { tags: [], rules: serialized_rules }
-      end
-
-      def find_match(tag_groups, tags)
-        tag_groups.each do |tag_group|
-          return tag_group if tag_group[:tags].length == tags.length &&
-                              (tag_group[:tags] & tags) == tag_group[:tags]
-        end
-        { tags:, rules: [] }
-      end
-
       private
-
-      def prioritized_tag_rules
-        object.tag_rules.prioritised.reject(&:is_default)
-      end
 
       # Returns a hash of URLs for specified versions of an attachment.
       #
@@ -95,7 +62,7 @@ module Api
       #     medium: LOGO_MEDIUM_URL
       #   }
       def attachment_urls(attachment, styles)
-        return unless attachment.variable?
+        return unless attachment.persisted? && attachment.variable?
 
         styles.index_with do |style|
           Rails.application.routes.url_helpers.

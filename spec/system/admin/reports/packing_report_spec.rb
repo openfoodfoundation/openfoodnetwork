@@ -6,8 +6,8 @@ RSpec.describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 
-  around do |example|
-    Timecop.freeze(Time.zone.now.strftime("%Y-%m-%d 00:00")) { example.run }
+  before do
+    travel_to(Time.zone.now.strftime("%Y-%m-%d 00:00"))
   end
 
   let!(:open_datetime) { 1.month.ago.strftime("%Y-%m-%d 00:00") }
@@ -182,8 +182,6 @@ RSpec.describe "Packing Reports" do
     end
   end
 end
-
-private
 
 def check_prefilled_dates
   expect(page).to have_input "q[order_completed_at_gt]", value: open_datetime, visible: false

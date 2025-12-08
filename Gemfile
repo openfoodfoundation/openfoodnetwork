@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source 'https://gem.coop'
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.read('.ruby-version').chomp
@@ -14,16 +14,19 @@ gem "active_storage_validations"
 gem "aws-sdk-s3", require: false
 gem "image_processing"
 
-gem 'activemerchant', '>= 1.78.0'
-gem 'angular-rails-templates', '>= 0.3.0'
+gem 'activemerchant'
+gem 'angular-rails-templates'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
 
+# Indirect dependency but we access it directly in JS specs.
+# It turns out to be hard to upgrade but please do if you can.
+gem 'sprockets', '~> 3.7'
+
 gem 'i18n'
 gem 'i18n-js', '~> 3.9.0'
 gem 'rails-i18n'
-gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
 gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-7"
@@ -40,7 +43,7 @@ gem 'web', path: './engines/web'
 
 gem "activerecord-postgresql-adapter"
 gem "arel-helpers", "~> 2.12"
-gem "pg", "~> 1.2.3"
+gem "pg"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
@@ -54,7 +57,7 @@ gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant', '1.117.2'
-gem 'stripe'
+gem 'stripe', '~> 13'
 
 gem 'devise'
 gem 'devise-encryptable'
@@ -152,6 +155,7 @@ end
 group :test, :development do
   gem 'bullet'
   gem 'capybara'
+  gem 'capybara-shadowdom'
   gem 'cuprite'
   gem 'database_cleaner', require: false
   gem 'debug', '>= 1.0.0'
@@ -166,14 +170,13 @@ group :test, :development do
   gem 'rswag'
   gem 'shoulda-matchers'
   gem 'stimulus_reflex_testing', github: "podia/stimulus_reflex_testing", branch: :main
-  gem 'timecop'
 end
 
 group :test do
   gem 'pdf-reader'
+  gem 'puffing-billy'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
-  gem 'simplecov-lcov', require: false
   gem 'undercover', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false
@@ -182,16 +185,19 @@ group :test do
 end
 
 group :development do
-  gem 'debugger-linecache'
   gem 'foreman'
+  gem 'haml_lint', require: false
   gem 'i18n-tasks'
   gem 'listen'
-  gem 'pry', '~> 0.13.0'
+  gem 'pry'
   gem 'query_count'
   gem 'rails-erd'
   gem 'rubocop'
+  gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'

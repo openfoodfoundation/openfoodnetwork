@@ -4,27 +4,13 @@ require 'spec_helper'
 require 'stripe/credit_card_remover'
 
 RSpec.describe Stripe::CreditCardRemover do
-  let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
+  let(:credit_card) { create(:credit_card, user:) }
 
   let!(:user) { create(:user, email: "apple.customer@example.com") }
   let!(:enterprise) { create(:enterprise) }
 
   describe "#remove", :vcr, :stripe_version do
-    let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
-
-    let(:pm_card) {
-      Stripe::PaymentMethod.create(
-        {
-          type: 'card',
-          card: {
-            number: '4242424242424242',
-            exp_month: 8,
-            exp_year: Time.zone.now.year.next,
-            cvc: '314',
-          },
-        },
-      )
-    }
+    let(:credit_card) { create(:credit_card, user:) }
 
     let(:connected_account) do
       Stripe::Account.create(
@@ -41,7 +27,7 @@ RSpec.describe Stripe::CreditCardRemover do
     end
 
     context 'Stripe customer exists' do
-      let(:payment_method_id) { pm_card.id }
+      let(:payment_method_id) { "pm_card_visa" }
       let(:customer_id) { customer.id }
 
       let(:customer) do

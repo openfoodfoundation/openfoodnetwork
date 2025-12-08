@@ -19,6 +19,7 @@ require 'open_food_network/property_merge'
 module Spree
   class Product < ApplicationRecord
     include LogDestroyPerformer
+    include ProductSortByStocks
 
     self.belongs_to_required_by_default = false
     # These columns have been moved to variant. Currently this is only for documentation purposes,
@@ -30,7 +31,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :meta_keywords, :sku
+    searchable_attributes :meta_keywords, :sku, :on_hand, :backorderable_priority,
+                          :backorderable_name
     searchable_associations :properties, :variants
     searchable_scopes :active, :with_properties
 

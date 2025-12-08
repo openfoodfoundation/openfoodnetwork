@@ -1,27 +1,24 @@
-.row{ "ng-controller": "TagRulesCtrl" }
+.row
   .eleven.columns.alpha.omega
-    %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", "after-sort": "updateRuleCounts()" }
-      .no_tags{ "ng-show": "tagGroups.length == 0" }
-        = t('.no_tags_yet')
-      = render 'admin/enterprises/form/tag_rules/default_rules'
-      -# = render 'customer_tags'
-      .customer_tag{ id: "tg_{{tagGroup.position}}", "ng-repeat": "tagGroup in tagGroups" }
-        .header
-          %table
-            %colgroup
-              %col{width: '35%'}
-              %col{width: '65%'}
-            %tr
-              %td
-                %h5
-                  = t('.for_customers_tagged')
-              %td
-                %tags-with-translation{ object: "tagGroup", max: 1, "on-tag-added": "updateTagsRulesFor(tagGroup)", "on-tag-removed": "updateTagsRulesFor(tagGroup)" }
+    %div{ "data-turbo": true }
+      - current_group_index = 0
+      - # We use a high enough index increment so that the default tag rule should not overlap with the tag rules
+      - # Rails will deal with non continous numbered tag_rules_attributes just fine, it saves us from having to manage the index state in javascript
+      - current_rule_index = 1000 
+      - if @rules.empty?
+        .no_tags
+          = t('.no_tags_yet')
 
-        .no_rules{ "ng-show": "tagGroup.rules.length == 0" }
-          = t('.no_rules_yet')
-        .tag_rule{ "ng-repeat": "rule in tagGroup.rules" }
-        .add_rule.text-center
-          %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true }
-      .add_tag
-        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), "ng-click": 'addNewTag()' }
+      = render 'admin/enterprises/form/tag_rules/default_rules', f:, current_rule_index: 
+
+      #customer-tag-rule
+        - tag_groups(@rules).each_with_index do |group, group_index|
+          - current_group_index = group_index + 1
+          = render TagRuleGroupFormComponent.new(group:, index: group_index, customer_rule_index: current_rule_index, tag_rule_types: @tag_rule_types)
+          - # Same as above, We use a high enough increcment so that the previous tag rule group does not overlap with the next tag rule group
+          - current_rule_index += 1000
+          
+      .add_tag{ "data-controller": "tag-rule-group" }
+        = hidden_field_tag "group_index", current_group_index, { "data-tag-rule-group-target": "index" }
+        = hidden_field_tag "customer_rule_index", current_rule_index, { "data-tag-rule-group-target": "customerRuleIndex" }
+        %input.button{ type: 'button', value: t('.add_new_tag'), "data-action": "click->tag-rule-group#add" }

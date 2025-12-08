@@ -6,6 +6,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       include OpenFoodNetwork::SpreeApiKeyLoader
+
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]

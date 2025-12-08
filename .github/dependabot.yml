@@ -4,7 +4,28 @@
 # Most of the configuration here is not used for security updates though.
 
 version: 2
+
+multi-ecosystem-groups:
+  turbo_power:
+    schedule:
+      interval: "daily"
+
 updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    patterns: ["turbo_power"]
+    multi-ecosystem-group: "turbo_power"
+
+    # Only specific requirements are specified in Gemfile, so don't touch it.
+    versioning-strategy: lockfile-only
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    patterns: ["turbo_power"]
+    multi-ecosystem-group: "turbo_power"
+
+    # Only specific requirements are specified in package.json, so don't touch it.
+    versioning-strategy: lockfile-only
 
   - package-ecosystem: "bundler"
     directory: "/"
@@ -19,5 +40,5 @@ updates:
     schedule:
       interval: "daily"
 
-    # All versions are specified in package.json, so please update them.
-    versioning-strategy: increase
+    # Only specific requirements are specified in package.json, so don't touch it.
+    versioning-strategy: lockfile-only

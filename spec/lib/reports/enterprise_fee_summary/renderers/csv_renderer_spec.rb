@@ -80,7 +80,7 @@ require "spec_helper"
 #   end
 
 #   it "generates filename correctly" do
-#     Timecop.freeze(Time.zone.local(2018, 10, 9, 7, 30, 0)) do
+#     travel_to(Time.zone.local(2018, 10, 9, 7, 30, 0)) do
 #       filename = renderer.__send__(:filename)
 #       expect(filename).to eq("enterprise_fee_summary_20181009.csv")
 #     end

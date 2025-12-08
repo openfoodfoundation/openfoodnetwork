@@ -11,7 +11,8 @@ module Admin
     def index
       fetch_products
       render "index",
-             locals: { producers:, categories:, tax_category_options:, available_tags:, flash: }
+             locals: { producer_options:, categories:, tax_category_options:, available_tags:,
+                       flash:, allowed_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -32,7 +33,8 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          producers:, categories:, tax_category_options:, available_tags:, flash:
+                          producer_options:, categories:, tax_category_options:, available_tags:,
+                          allowed_producers:, flash:
                         }
       end
     end
@@ -78,27 +80,29 @@ module Admin
     end
 
     def clone
-      @product = Spree::Product.find(params[:id])
-      authorize! :clone, @product
+      product = Spree::Product.find(params[:id])
+      authorize! :clone, product
 
       status = :ok
 
       begin
-        @cloned_product = @product.duplicate
+        cloned_product = product.duplicate
         flash.now[:success] = t('.success')
 
-        @product_index = "-#{@cloned_product.id}"
-        @producer_options = producers
-        @category_options = categories
-        @tax_category_options = tax_category_options
+        product_index = "-#{cloned_product.id}"
       rescue ActiveRecord::ActiveRecordError => e
         flash.now[:error] = clone_error_message(e)
         status = :unprocessable_entity
-        @product_index = "-1" # Create a unique enough index
+        product_index = "-1" # Create a unique enough index
       end
 
       respond_with do |format|
-        format.turbo_stream { render :clone, status: }
+        format.turbo_stream {
+          render :clone, status:,
+                         locals: { product:, cloned_product:, product_index:, producer_options:,
+                                   category_options: categories, tax_category_options:,
+                                   allowed_producers: }
+        }
       end
     end
 
@@ -123,12 +127,32 @@ module Admin
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
+
+      # Transform on_hand sorting to properly handle On-Demand products:
+      #   - On-Demand products should ignore on_hand completely and sort alphabetically.
+      #   - Non-On-Demand products should continue sorting by on_hand as usual.
+      if @q[:s] == 'on_hand asc'
+        @q[:s] = [
+          'backorderable_priority asc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
+      elsif @q[:s] == 'on_hand desc'
+        @q[:s] = [
+          'backorderable_priority desc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
+      end
     end
 
-    def producers
-      producers = OpenFoodNetwork::Permissions.new(spree_current_user)
+    def allowed_producers
+      OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises.is_primary_producer.by_name
-      producers.map { |p| [p.name, p.id] }
+    end
+
+    def producer_options
+      allowed_producers.map { |p| [p.name, p.id] }
     end
 
     def categories
@@ -155,8 +179,28 @@ module Admin
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
-      @pagy, @products = pagy(product_query.order(:name), limit: @per_page, page: @page,
-                                                          size: [1, 2, 2, 1])
+      # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
+      # When the current ransack sort uses the computed stock columns, include them in the select
+      # so the generated COUNT/DISTINCT query is valid.
+      sort_columns = Array(@q && @q[:s]).flatten
+      if sort_columns.any? { |s|
+           s.to_s.include?('on_hand') || s.to_s.include?('backorderable_priority')
+         }
+
+        product_query = product_query.select(
+          Arel.sql('spree_products.*'),
+          Spree::Product.backorderable_priority_sql,
+          Spree::Product.backorderable_name_sql,
+          Spree::Product.on_hand_sql
+        )
+      end
+
+      @pagy, @products = pagy(
+        product_query.order(:name),
+        limit: @per_page,
+        page: @page,
+        size: [1, 2, 2, 1]
+      )
     end
 
     def product_scope

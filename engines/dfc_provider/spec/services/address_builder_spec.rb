@@ -8,6 +8,7 @@ RSpec.describe AddressBuilder do
     build(
       :address,
       id: 1, address1: "Paradise 15", zipcode: "0001", city: "Goosnargh",
+      latitude: -25.345376, longitude: 131.0312006,
       state: build(:state, name: "Victoria")
     )
   }
@@ -32,11 +33,17 @@ RSpec.describe AddressBuilder do
     end
 
     it "assigns a country" do
-      expect(result.country).to eq "Australia"
+      expect(result.country)
+        .to eq "http://publications.europa.eu/resource/authority/country/AUS"
     end
 
     it "assigns a region" do
       expect(result.region).to eq "Victoria"
+    end
+
+    it "assigns coordinates" do
+      expect(result.latitude).to eq(-25.345376)
+      expect(result.longitude).to eq 131.0312006
     end
   end
 end

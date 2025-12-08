@@ -550,6 +550,7 @@ nb:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
     cancel: "Avbryt"
+    cancel_order: "Avbryt"
     resume: "Gjenoppta"
     save: "Lagre"
     edit: "Rediger"
@@ -1344,10 +1345,11 @@ nb:
             no_rules_yet: Ingen standard regler gjelder ennå
             add_new_button: '+ Legg til en Ny Standard Regel'
           no_tags_yet: Ingen emner gjelder for denne bedriften ennå
-          no_rules_yet: Ingen regler gjelder for dette emnet ennå
-          for_customers_tagged: 'For kunder merket:'
-          add_new_rule: '+ Legg til En Ny Regel'
           add_new_tag: '+ Legg til ny Merkelapp'
+          show_hide_variants: 'Vis eller skjul varianter i min butikk'
+          show_hide_shipping: 'Vis eller skjul fraktmetoder ved kassen'
+          show_hide_payment: 'Vis eller skjul betalingsmetoder ved kassen'
+          show_hide_order_cycles: 'Vis eller skjul bestillingsrunder i min butikk'
         users:
           legend: "Brukere"
           email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
@@ -2376,10 +2378,8 @@ nb:
   email_confirmed: "Takk for at du bekrefter din epostadresse"
   email_confirmation_activate_account: "Før vi kan aktivere den nye kontoen din, må vi bekrefte epostadressen din."
   email_confirmation_greeting: "Hei, %{contact}!"
-  email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
   email_confirmation_click_link: "Trykk på linken under for å bekrefte din epost og for å fortsette oppsettet av din profil."
   email_confirmation_link_label: "Bekreft denne epostadressen »"
-  email_confirmation_help_html: "Etter du har bekreftet epostadressen din får du tilgang til din administrasjonskonto for denne bedriften. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
   email_confirmation_notice_unexpected: "Du har mottatt denne meldingen fordi du registrerte deg på %{sitename}, eller ble invitert til å registrere deg av noen du sikkert kjenner. Hvis du ikke forstår hvorfor du mottar denne e-posten, skriv til %{contact}."
   email_social: "Her finner du oss:"
   email_contact: "Send oss en epost:"
@@ -3481,18 +3481,6 @@ nb:
           loading_variants: "Laster varianter"
           no_variants: "Ingen variant tilgjengelig for dette produktet (skjult via lagerinnstillinger)."
           some_variants_hidden: "(Noen varianter kan være skjult via beholdningsinnstillinger)"
-      tag_rules:
-        shipping_method_tagged_top: "Leveringsmetoder merket"
-        shipping_method_tagged_bottom: "er:"
-        payment_method_tagged_top: "Betalingsmetoder merket"
-        payment_method_tagged_bottom: "er:"
-        order_cycle_tagged_top: " Bestillingsrunder merket"
-        order_cycle_tagged_bottom: "er:"
-        inventory_tagged_top: "Varianter i varelager merket"
-        inventory_tagged_bottom: "er:"
-      new_tag_rule_dialog:
-        select_rule_type: "Velg en regeltype:"
-        add_rule: "Legg til Regel"
       enterprise_fees:
         inherit_from_product: "Arv fra Produkt"
       orders:
@@ -3621,13 +3609,6 @@ nb:
       some_trouble: "Jeg hadde noen problemer med å lagre: %{errors}"
       changing_on_hand_stock: Endrer lagernivåer på lager...
       stock_reset: Lager tilbakestilles til standardinnstillinger.
-    tag_rules:
-      show_hide_variants: 'Vis eller skjul varianter i min butikk'
-      show_hide_shipping: 'Vis eller skjul fraktmetoder ved kassen'
-      show_hide_payment: 'Vis eller skjul betalingsmetoder ved kassen'
-      show_hide_order_cycles: 'Vis eller skjul bestillingsrunder i min butikk'
-      visible: SYNLIG
-      not_visible: USYNLIG
     services:
       unsaved_changes_message: Ulagrede endringer eksisterer for øyeblikket, lagre nå eller ignorere?
       save: LAGRE
@@ -4491,6 +4472,7 @@ nb:
           terms_of_service: "Vilkår for bruk"
         sortable_header:
           name: "Navn"
+          on_hand: "Tilgjengelig"
           number: "Antall"
           completed_at: "Fullført på"
           state: "Tilstand"
@@ -4815,6 +4797,26 @@ nb:
       previous: Tidligere
     tag_list_input:
       default_placeholder: Legg til en merkelapp
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Leveringsmetoder merket"
+        shipping_method_tagged_bottom: "er:"
+        payment_method_tagged_top: "Betalingsmetoder merket"
+        payment_method_tagged_bottom: "er:"
+        order_cycle_tagged_top: " Bestillingsrunder merket"
+        order_cycle_tagged_bottom: "er:"
+        inventory_tagged_top: "Varianter i varelager merket"
+        inventory_tagged_bottom: "er:"
+        variant_tagged_bottom: "er:"
+        visible: SYNLIG
+        not_visible: USYNLIG
+    tag_rule_group_form:
+      for_customers_tagged: 'For kunder merket:'
+      add_new_rule: '+ Legg til En Ny Regel'
+      no_rules_yet: Ingen regler gjelder for dette emnet ennå
+    add_tag_rule_modal:
+      select_rule_type: "Velg en regeltype:"
+      add_rule: "Legg til Regel"
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

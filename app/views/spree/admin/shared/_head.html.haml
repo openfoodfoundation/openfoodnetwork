@@ -14,12 +14,7 @@
   = " - OFN #{t(:administration)}"
 
 %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese", :rel => "stylesheet", :type => "text/css"}
-
-- if feature?(:admin_style_v3, spree_current_user)
-  = stylesheet_pack_tag 'admin-style-v3', media: "screen, print"
-- else
-  = stylesheet_pack_tag 'admin-styles', media: "screen, print"
-
+= stylesheet_pack_tag 'admin-style-v3', media: "screen, print"
 = render "layouts/bugsnag_js"
 
 - if content_for? :minimal_js

@@ -7,17 +7,13 @@ module DfcProvider
     before_action :check_enterprise
 
     def index
-      person = PersonBuilder.person(current_user)
+      require_permission "ReadProducts"
 
-      enterprises = current_user.enterprises.map do |enterprise|
-        EnterpriseBuilder.enterprise(enterprise)
-      end
-      person.affiliatedOrganizations = enterprises
-      catalog_items = enterprises.flat_map(&:catalogItems)
+      enterprise = EnterpriseBuilder.enterprise(current_enterprise)
+      catalog_items = enterprise.catalogItems
 
       render json: DfcIo.export(
-        person,
-        *enterprises,
+        enterprise,
         *catalog_items,
         *catalog_items.map(&:product),
         *catalog_items.map(&:product).flat_map(&:isVariantOf),
@@ -26,7 +22,7 @@ module DfcProvider
     end
 
     def show
-      catalog_item = DfcBuilder.catalog_item(variant)
+      catalog_item = CatalogItemBuilder.catalog_item(variant)
       offers = catalog_item.offers
       render json: DfcIo.export(catalog_item, *offers)
     end

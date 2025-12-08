@@ -299,6 +299,7 @@ nl_BE:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
     cancel: "Annuleren"
+    cancel_order: "Annuleren"
     save: "Save"
     edit: "bewerking"
     update: "Update"
@@ -903,10 +904,11 @@ nl_BE:
             no_rules_yet: Er zijn nog geen standaard regels zijn van toepassing.
             add_new_button: '+Voeg een nieuwe standaardregel toe'
           no_tags_yet: Er zijn nog geen labels van toepassing op deze onderneming
-          no_rules_yet: Er zijn nog geen regels van toepassing op deze regel
-          for_customers_tagged: 'Voor de gelabelde klanten:'
-          add_new_rule: '+ Voeg een nieuwe regel toe'
           add_new_tag: '+Voeg een nieuw label toe'
+          show_hide_variants: 'Toon of schuil varianten in mijn winkel'
+          show_hide_shipping: 'Toon of schuil de leveringswijzes aan het einde van de bestelling'
+          show_hide_payment: 'Toon of schuil de betalingswijzes aan het einde van de bestelling'
+          show_hide_order_cycles: 'Toon of schuil de bestelcycli in mijn winkel'
         users:
           legend: "Gebruikers"
           email_confirmation_notice_html: "E-mailbevestiging is lopende. We hebben een bevestigings-e-mail gestuurd naar %{email}."
@@ -1716,10 +1718,8 @@ nl_BE:
   email_confirmed: "Bedankt om je E-mailadres te bevestigen."
   email_confirmation_activate_account: "Voor we je nieuwe account kunnen activeren, moet je je E-mailadres bevestigen."
   email_confirmation_greeting: "Hallo, %{contact}!"
-  email_confirmation_profile_created: "Het profiel aanmaken voor %{name} is goed gelukt! Om je Profiel te activeren moet je nu nog slechts je E-mailadres bevestigen."
   email_confirmation_click_link: "Klik alsjeblieft in de link hieronder om je E-mail te bevestigen en om verder te gaan met je profiel te vervolledigen."
   email_confirmation_link_label: "Bevestig dit E-mailadres »"
-  email_confirmation_help_html: "Na het bevestigen van je E-mailadres krijg je toegang tot je administratie-account voor deze onderneming. Bekijk de %{link} om meer te weten te komen over %{sitename} z'n toepassingen en om van start te gaan met je profiel of online winkel."
   email_confirmation_notice_unexpected: "Je krijgt dit bericht omdat je je inschreef op %{sitename}, of uitgenodigd was om in te schrijven door iemand die je waarschijnlijk kent. Als je niet begrijpt waarom je deze E-mail kreeg, contacteer dan alsjeblieft %{contact}."
   email_social: "Neem Contact met Ons op:"
   email_contact: "E-mail ons:"
@@ -2746,18 +2746,6 @@ nl_BE:
           select_all_variants: "Selecteer alle%{total_number_of_variants}Varianten"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants}Variante laden"
           loading_variants: "Laad varianten"
-      tag_rules:
-        shipping_method_tagged_top: "Verzendmethoden getagd"
-        shipping_method_tagged_bottom: "zijn:"
-        payment_method_tagged_top: "Betaalmethoden getagged"
-        payment_method_tagged_bottom: "zijn:"
-        order_cycle_tagged_top: "Bestel Cycles getagd"
-        order_cycle_tagged_bottom: "zijn:"
-        inventory_tagged_top: "Inventarisatievarianten getagd"
-        inventory_tagged_bottom: "zijn:"
-      new_tag_rule_dialog:
-        select_rule_type: "Selecteer een regel : "
-        add_rule: "Regel toevoegen"
       enterprise_fees:
         inherit_from_product: "Overnemen van product"
       orders:
@@ -2864,13 +2852,6 @@ nl_BE:
       some_trouble: "Is niet kunnen opgeslaan worden : %{errors}"
       changing_on_hand_stock: Wijziging  stockpeil in gang...
       stock_reset: Stocks standaard reset
-    tag_rules:
-      show_hide_variants: 'Toon of schuil varianten in mijn winkel'
-      show_hide_shipping: 'Toon of schuil de leveringswijzes aan het einde van de bestelling'
-      show_hide_payment: 'Toon of schuil de betalingswijzes aan het einde van de bestelling'
-      show_hide_order_cycles: 'Toon of schuil de bestelcycli in mijn winkel'
-      visible: ZICHTBAAR
-      not_visible: NIET ZICHTBAAR
     services:
       unsaved_changes_message: 'Wijzigingen blijven niet opgeslaan, nu opslaan of overslaan '
       save: Opslaan
@@ -3506,6 +3487,7 @@ nl_BE:
       shared:
         sortable_header:
           name: "Naam"
+          on_hand: "Bij de Hand"
           number: "Nummer"
           completed_at: "Voltooid op"
           state: "Staat"
@@ -3709,3 +3691,23 @@ nl_BE:
       previous: Voorgaande
     tag_list_input:
       default_placeholder: Voeg een tag toe
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Verzendmethoden getagd"
+        shipping_method_tagged_bottom: "zijn:"
+        payment_method_tagged_top: "Betaalmethoden getagged"
+        payment_method_tagged_bottom: "zijn:"
+        order_cycle_tagged_top: "Bestel Cycles getagd"
+        order_cycle_tagged_bottom: "zijn:"
+        inventory_tagged_top: "Inventarisatievarianten getagd"
+        inventory_tagged_bottom: "zijn:"
+        variant_tagged_bottom: "zijn:"
+        visible: ZICHTBAAR
+        not_visible: NIET ZICHTBAAR
+    tag_rule_group_form:
+      for_customers_tagged: 'Voor de gelabelde klanten:'
+      add_new_rule: '+ Voeg een nieuwe regel toe'
+      no_rules_yet: Er zijn nog geen regels van toepassing op deze regel
+    add_tag_rule_modal:
+      select_rule_type: "Selecteer een regel : "
+      add_rule: "Regel toevoegen"

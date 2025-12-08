@@ -10,9 +10,7 @@ module TermsAndConditionsHelper
     TermsOfService.required?(distributor)
   end
 
-  def platform_terms_required?
-    TermsOfService.platform_terms_required?
-  end
+  delegate :platform_terms_required?, to: :TermsOfService
 
   def distributor_terms_required?
     TermsOfService.distributor_terms_required?(current_order.distributor)

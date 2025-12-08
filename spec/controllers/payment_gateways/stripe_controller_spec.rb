@@ -63,15 +63,16 @@ RSpec.describe PaymentGateways::StripeController do
           expect(controller).to receive(:current_order_cycle).and_return(order_cycle)
           expect(controller).to receive(:current_order).and_return(order).at_least(:once)
           expect(order_cycle).to receive(:closed?).and_return(true)
-          expect(order).to receive(:empty!)
-          expect(order).to receive(:assign_order_cycle!).with(nil)
+          expect(order).not_to receive(:empty!)
+          expect(order).not_to receive(:assign_order_cycle!).with(nil)
 
           get :confirm, params: { payment_intent: "pi_123" }
 
-          expect(response).to redirect_to shop_url
-          expect(flash[:info]).to eq(
-            "The order cycle you've selected has just closed. Please try again!"
-          )
+          message = "The order cycle you've selected has just closed. " \
+                    "Please contact us to complete your order ##{order.number}!"
+
+          expect(response).to redirect_to shops_url
+          expect(flash[:info]).to eq(message)
         end
       end
 
@@ -208,7 +209,7 @@ RSpec.describe PaymentGateways::StripeController do
       create(
         :payment,
         payment_method:,
-        cvv_response_message: "https://stripe.com/redirect",
+        redirect_auth_url: "https://stripe.com/redirect",
         response_code: "pi_123",
         order:,
         state: "requires_authorization"
@@ -244,7 +245,7 @@ RSpec.describe PaymentGateways::StripeController do
             expect(response).to redirect_to order_path(order)
             payment.reload
             expect(payment.state).to eq("completed")
-            expect(payment.cvv_response_message).to be nil
+            expect(payment.redirect_auth_url).to be nil
           end
 
           it "moves the order state to completed" do
@@ -273,7 +274,7 @@ RSpec.describe PaymentGateways::StripeController do
             expect(response).to redirect_to order_path(order)
             payment.reload
             expect(payment.state).to eq("completed")
-            expect(payment.cvv_response_message).to be nil
+            expect(payment.redirect_auth_url).to be nil
           end
         end
 
@@ -288,7 +289,7 @@ RSpec.describe PaymentGateways::StripeController do
             expect(response).to redirect_to order_path(order)
             payment.reload
             expect(payment.state).to eq("completed")
-            expect(payment.cvv_response_message).to be nil
+            expect(payment.redirect_auth_url).to be nil
           end
         end
       end
@@ -307,7 +308,7 @@ RSpec.describe PaymentGateways::StripeController do
           expect(response).to redirect_to order_path(order)
           expect(flash[:error]).to eq("The payment could not be processed. error message")
           payment.reload
-          expect(payment.cvv_response_message).to be nil
+          expect(payment.redirect_auth_url).to be nil
           expect(payment.state).to eq("failed")
         end
       end
@@ -330,7 +331,7 @@ RSpec.describe PaymentGateways::StripeController do
           expect(response).to redirect_to order_path(order)
           expect(flash[:error]).to eq("The payment could not be processed. ")
           payment.reload
-          expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
+          expect(payment.redirect_auth_url).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("requires_authorization")
         end
       end

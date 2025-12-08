@@ -75,6 +75,7 @@ class Enterprise < ApplicationRecord
   has_one :stripe_account, dependent: :destroy
   has_many :vouchers, dependent: :restrict_with_exception
   has_many :connected_apps, dependent: :destroy
+  has_many :dfc_permissions, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
 
   delegate :latitude, :longitude, :city, :state_name, to: :address
@@ -112,6 +113,9 @@ class Enterprise < ApplicationRecord
             processable_image: true,
             content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
   validates :promo_image,
+            processable_image: true,
+            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+  validates :white_label_logo,
             processable_image: true,
             content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
   validates :terms_and_conditions, content_type: {
@@ -407,7 +411,7 @@ class Enterprise < ApplicationRecord
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
     cat = is_primary_producer ? "producer_" : "non_producer_"
-    cat << ("sells_#{sells}")
+    cat << "sells_#{sells}"
 
     # Map backend cases to front end cases.
     case cat

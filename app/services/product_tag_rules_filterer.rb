@@ -4,6 +4,13 @@
 # Tag rules exists in the context of enterprise, customer, and variant_overrides,
 # and are applied to variant_overrides only. Returns a Spree::Variant AR object.
 
+# The filtering is somewhat not intuitive when they are conflicting rules in play:
+#  * When a variant is hidden by a default rule, the order of customer related rules doesn't matter
+#    ( despite the use of `TagRule::FilterProducts.prioritised` ). It will apply the "show rule"
+#    if any
+#  * When there is no default rule, the order of customer related rules doesn't matter, it will
+#    apply the "show rule" over any hide rule
+#
 class ProductTagRulesFilterer
   def initialize(distributor, customer, variants_relation)
     @distributor = distributor

@@ -1,5 +1,3 @@
 .row.links
-  %a.continue-shopping.button.secondary{href: current_shop_products_path, "ng-disabled" => "#{@insufficient_stock_lines.any?}", "disable-dynamically" => true}
-    = t :orders_edit_continue
-  %a#checkout-link.button.primary.right{href: main_app.checkout_path, "ng-disabled" => "#{@insufficient_stock_lines.any?}", "disable-dynamically" => true}
-    = t :orders_edit_checkout
+  = link_to_or_disabled t(:orders_edit_continue), current_shop_products_path, class: "continue-shopping button secondary", disabled: @insufficient_stock_lines.any?
+  = link_to_or_disabled t(:orders_edit_checkout), main_app.checkout_path, class: "button primary right", disabled: @insufficient_stock_lines.any?, id: "checkout-link"

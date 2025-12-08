@@ -110,6 +110,8 @@ ca:
       message_html: "<p>El canvi que volies va ser rebutjat. Potser heu intentat canviar alguna cosa a la qual no teniu accés.<br><h3> <a href='/' >Tornar a l'inici</a></h3></p>"
     general_error:
       message: "Ens sap greu, però alguna cosa ha anat malament.\n\n Pot ser que sigui un problema temporal, així que si us plau, torna-ho a provar o torna a carregar la pàgina.\n Enregistrem tots els errors i és possible que estiguem treballant en una solució.\n Si el problema persisteix o és urgent, poseu-vos en contacte amb nosaltres."
+    unauthorized:
+      message: "No rens permisos per a realitzar aquesta acció"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -275,6 +277,7 @@ ca:
         Ho analitzarem, però si el problema persisteix, si us plau, aviseu-nos.
   backorder_mailer:
     backorder_failed:
+      stock: "Estoc"
       product: "Producte"
   enterprise_mailer:
     confirmation_instructions:
@@ -397,7 +400,7 @@ ca:
   order_cycles: Cicles de comanda
   bulk_order_management: Gestió de comandes en bloc
   enterprises: Organitzacions
-  enterprise_groups: Grups
+  enterprise_groups: Xarxes
   reports: Informes
   listing_reports: Llistat d'informes
   variant_overrides: Inventari
@@ -459,6 +462,7 @@ ca:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
     cancel: "Cancel·lar"
+    cancel_order: "Cancel·lar"
     resume: "Continuar"
     save: "Desa"
     edit: "Editar"
@@ -672,8 +676,13 @@ ca:
         map: Mapa
     dfc_product_imports:
       index:
+        select_all: "Seleccionar/Desseleccionar Tot"
         update: Actualitzar
         new: Nou
+        selected:
+          zero: "Res seleccionat"
+          one: "1 seleccionat"
+          other: "%{count} seleccionat"
         import: Importa
     enterprise_fees:
       index:
@@ -1167,10 +1176,11 @@ ca:
             no_rules_yet: Encara no s'aplica cap regla per defecte
             add_new_button: '+ Afegeix una nova regla per defecte'
           no_tags_yet: Encara no hi ha cap etiqueta aplicada a aquesta organització
-          no_rules_yet: Encara no hi ha cap regla aplicada a aquesta etiqueta
-          for_customers_tagged: 'Per als clients etiquetats:'
-          add_new_rule: '+ Afegeix una nova regla'
           add_new_tag: '+ Afegeix una nova etiqueta'
+          show_hide_variants: 'Mostra o amaga variants a la meva botiga'
+          show_hide_shipping: 'Mostra o amaga mètodes d''enviament en la validació de la comanda'
+          show_hide_payment: 'Mostra o amaga mètodes de pagament en la validació de la comanda'
+          show_hide_order_cycles: 'Mostra o amaga els cicles de comanda a la meva botiga'
         users:
           legend: "Usuàries"
           email_confirmation_notice_html: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{email}."
@@ -2063,10 +2073,8 @@ ca:
   email_confirmed: "Gràcies per confirmar la teva adreça de correu electrònic."
   email_confirmation_activate_account: "Abans de poder activar el compte nou hem de confirmar la teva adreça de correu electrònic."
   email_confirmation_greeting: "Hola, %{contact}!"
-  email_confirmation_profile_created: "S'ha creat exitosament un perfil per %{name}. Per activar el teu perfil hem de confirmar aquesta adreça de correu electrònic."
   email_confirmation_click_link: "Si us plau fes clic a l'enllaç següent per confirmar el teu correu electrònic i continuar configurant el teu perfil."
   email_confirmation_link_label: "Confirma aquesta adreça de correu electrònic »"
-  email_confirmation_help_html: "Després de confirmar el teu correu electrònic podràs accedir al teu compte d'administració per a aquesta organització. Consulta l'%{link} per obtenir més informació sobre les funcions d'%{sitename} i començar a utilitzar el teu perfil o botiga en línia."
   email_confirmation_notice_unexpected: "Has rebut aquest missatge perquè t'has inscrit a l'%{sitename} o perquè has estat convidada a registrar-te per algú que probablement coneixes. Si no entens per què estàs rebent aquest correu electrònic, escriu a %{contact}."
   email_social: "Connecta't amb nosaltres:"
   email_contact: "Envia'ns un correu electrònic:"
@@ -2277,12 +2285,12 @@ ca:
   sell_motivation: "Mostra el teu bonic menjar."
   sell_producers: "Productors"
   sell_hubs: "Grups"
-  sell_groups: "Grups"
+  sell_groups: "Xarxes"
   sell_producers_detail: "Configura un perfil per a la vostra empresa a Katuma en qüestió de minuts. En qualsevol moment pots convertir el teu perfil en una botiga en línia i vendre els teus productes directament a les consumidores."
   sell_hubs_detail: "Configura un perfil per a la teva organització alimentària a Katuma. En qualsevol moment, pots modificar i convertir el teu perfil en una botiga de diverses productores."
   sell_groups_detail: "Configura un directori personalitzat d'empreses (productores i altres empreses alimentàries) per a la teva regió o per a la teva xarxa, organització."
   sell_user_guide: "Troba més informació a la nostra Guia d'usuari."
-  sell_listing_price: "El llistat al OFN és gratuït. L’obertura i l’execució d’una botiga a OFN és gratuïta fins a 500 dòlars de vendes mensuals. Si veneu més, podeu escollir la vostra contribució comunitària entre l'1% i el 3% de les vendes. Per obtenir més informació sobre preus, consulteu la secció Plataforma de programari a través de l’enllaç Sobre al menú superior."
+  sell_listing_price: "La inscripció a Katuma-OFN és gratuïta. Consulteu les tarifes d'ús de la plataforma a https://www.katuma.org/quotes. "
   sell_embed: "També podem incrustar una botiga OFN al vostre web personalitzat o crear un lloc web personalitzat de la xarxa alimentària per a la teva regió."
   sell_ask_services: "Pregunta'ns sobre els serveis d'OFN."
   shops_title: Botigues
@@ -3129,18 +3137,6 @@ ca:
           select_all_variants: "Seleccioneu totes les %{total_number_of_variants} variants"
           variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} variants carregades"
           loading_variants: "Carregant variants"
-      tag_rules:
-        shipping_method_tagged_top: "Els mètodes d'enviament etiquetats"
-        shipping_method_tagged_bottom: "son:"
-        payment_method_tagged_top: "Mètodes de pagament etiquetats"
-        payment_method_tagged_bottom: "son:"
-        order_cycle_tagged_top: "Cicles de comandes etiquetats"
-        order_cycle_tagged_bottom: "son:"
-        inventory_tagged_top: "Variants d'inventari etiquetades"
-        inventory_tagged_bottom: "son:"
-      new_tag_rule_dialog:
-        select_rule_type: "Selecciona un tipus de regla:"
-        add_rule: "Afegeix una regla"
       enterprise_fees:
         inherit_from_product: "Heretar del producte"
       orders:
@@ -3262,13 +3258,6 @@ ca:
       some_trouble: "He tingut problemes per desar: %{errors}"
       changing_on_hand_stock: Canviant els nivells de disponibilitat d'existències...
       stock_reset: Existències restablertes als valors predeterminats.
-    tag_rules:
-      show_hide_variants: 'Mostra o amaga variants a la meva botiga'
-      show_hide_shipping: 'Mostra o amaga mètodes d''enviament en la validació de la comanda'
-      show_hide_payment: 'Mostra o amaga mètodes de pagament en la validació de la comanda'
-      show_hide_order_cycles: 'Mostra o amaga els cicles de comanda a la meva botiga'
-      visible: VISIBLE
-      not_visible: NO VISIBLE
     services:
       unsaved_changes_message: Actualment hi ha canvis sense desar, vols desar-los o ignorar-los?
       save: DESA
@@ -3747,7 +3736,7 @@ ca:
         enterprises: "Organitzacions"
         enterprise_relationships: "Permisos"
         customers: "Consumidores"
-        groups: "Grups"
+        groups: "Xarxes"
         overview: "Visió general"
         product_import: "Importa"
         enterprise_roles: "Rols"
@@ -4084,6 +4073,7 @@ ca:
           terms_of_service: "Termes del servei"
         sortable_header:
           name: "Nom"
+          on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completat a"
           state: "Estat"
@@ -4376,9 +4366,30 @@ ca:
     search_input:
       placeholder: Cerca
     selector_with_filter:
+      selected_items: "%{count} seleccionat"
       search_placeholder: Cerca
     pagination:
       next: Següent
       previous: Anterior
     tag_list_input:
       default_placeholder: Afegeix una etiqueta
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Els mètodes d'enviament etiquetats"
+        shipping_method_tagged_bottom: "son:"
+        payment_method_tagged_top: "Mètodes de pagament etiquetats"
+        payment_method_tagged_bottom: "son:"
+        order_cycle_tagged_top: "Cicles de comandes etiquetats"
+        order_cycle_tagged_bottom: "son:"
+        inventory_tagged_top: "Variants d'inventari etiquetades"
+        inventory_tagged_bottom: "son:"
+        variant_tagged_bottom: "son:"
+        visible: VISIBLE
+        not_visible: NO VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'Per als clients etiquetats:'
+      add_new_rule: '+ Afegeix una nova regla'
+      no_rules_yet: Encara no hi ha cap regla aplicada a aquesta etiqueta
+    add_tag_rule_modal:
+      select_rule_type: "Selecciona un tipus de regla:"
+      add_rule: "Afegeix una regla"

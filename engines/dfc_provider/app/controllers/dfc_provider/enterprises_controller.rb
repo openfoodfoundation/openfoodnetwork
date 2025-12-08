@@ -3,7 +3,22 @@
 # Controller used to provide the CatalogItem API for the DFC application
 module DfcProvider
   class EnterprisesController < DfcProvider::ApplicationController
-    before_action :check_enterprise
+    before_action :check_enterprise, except: :index
+
+    def index
+      enterprises = current_user.enterprises.map do |enterprise|
+        EnterpriseBuilder.enterprise(enterprise)
+      end
+
+      render json: DfcIo.export(
+        *enterprises,
+        *enterprises.map(&:mainContact),
+        *enterprises.flat_map(&:localizations),
+        *enterprises.flat_map(&:suppliedProducts),
+        *enterprises.flat_map(&:catalogItems),
+        *enterprises.flat_map(&:socialMedias),
+      )
+    end
 
     def show
       enterprise = EnterpriseBuilder.enterprise(current_enterprise)

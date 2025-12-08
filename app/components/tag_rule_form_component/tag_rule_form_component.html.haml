@@ -1,0 +1,35 @@
+%div{ id: "tr_#{index}" } 
+  %table
+    %colgroup
+      %col.text{ width: "35%" }
+      %col.inputs{ width: "55%" }
+      %col.actions{ width: "10%" }
+    %tr
+      %td
+        = hidden_field_tag element_name("id"), rule.id
+        = hidden_field_tag element_name("type"), rule.type
+        = hidden_field_tag element_name("priority"), index
+        = hidden_field_tag element_name("is_default"), rule.is_default
+        = hidden_field_tag element_name("preferred_customer_tags"), customer_tags, hidden_field_customer_tag_options
+        %span.text-normal
+          = rule_data[:text_top]
+      %td
+        = render TagListInputComponent.new(name: element_name("preferred_#{rule_data[:taggable]}_tags"), tags: rule.tags.split(","), only_one: true)
+      %td.actions{ rowspan: 2 , "data-controller": "delete-tag-rule", "data-delete-tag-rule-index-value": index }
+        - if rule.new_record?
+          = link_to("", "#", { "data-action": "click->delete-tag-rule#delete" ,class: "delete-tag-rule icon-trash no-text"})
+        - else
+          = link_to("", "#{admin_enterprise_tag_rule_url(rule.enterprise_id, rule.id)}?index=#{index}", { "data-turbo-method": "delete", "data-turbo-confirm": t("admin.tag_rules.confirm_delete"), class: "delete-tag-rule icon-trash no-text" })
+    %tr
+      %td
+        %span.text-normal 
+          = rule_data[:text_bottom]
+      %td
+        %div
+          %div
+            - if rule.is_default
+              = hidden_field_tag "enterprise[tag_rules_attributes][#{index}][#{rule_data[:visibility_field]}]", "hidden"
+              %span.text-normal
+                = t(:not_visible)
+            - else
+              = select_tag "enterprise[tag_rules_attributes][#{index}][#{rule_data[:visibility_field]}]", options_for_select(visibility_options, rule.public_send(rule_data[:visibility_field].to_sym) ), { "data-controller": "tom-select", class: "primary no-search" }

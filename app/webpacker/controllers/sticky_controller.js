@@ -17,7 +17,7 @@ export default class extends Controller {
       ([e]) => {
         e.target.classList.toggle("sticked", e.intersectionRatio < 1);
       },
-      { threshold: [1] }
+      { threshold: [1] },
     );
     observer.observe(this.containerTarget);
   }
