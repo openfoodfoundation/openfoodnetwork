@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://s3.amazonaws.com/ofn_production/eofop2en1y6tu9fr1x9b0wzwgs5r.png
+    uri: https://s3.amazonaws.com/ofn_production/eofop2en1y6tu9fr1x9b0wzwgs5r
     body:
       encoding: US-ASCII
       string: ''

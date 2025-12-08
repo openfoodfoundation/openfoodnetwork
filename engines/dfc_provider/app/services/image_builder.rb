@@ -24,7 +24,9 @@ class ImageBuilder < DfcBuilder
 
     Spree::Image.new.tap do |image|
       PrivateAddressCheck.only_public_connections do
-        image.attachment.attach(io: url.open, filename:, metadata:)
+        io = url.open
+        content_type = Marcel::MimeType.for(io)
+        image.attachment.attach(io:, filename:, metadata:, content_type:)
       end
     end
   rescue StandardError
