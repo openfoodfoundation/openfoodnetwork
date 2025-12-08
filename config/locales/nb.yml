@@ -550,6 +550,7 @@ nb:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
     cancel: "Avbryt"
+    cancel_order: "Avbryt"
     resume: "Gjenoppta"
     save: "Lagre"
     edit: "Rediger"

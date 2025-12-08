@@ -548,6 +548,7 @@ cy:
     create_and_add_another: "Creu ac Ychwanegu Un arall"
     create: "Creu"
     cancel: "Canslo"
+    cancel_order: "Canslo"
     resume: "Ail-ddechrau"
     save: "Cadw"
     edit: "Golygu"

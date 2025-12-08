@@ -487,6 +487,7 @@ hi:
     create_and_add_another: "एक और बनाएं और जोड़ें"
     create: "बनाएं"
     cancel: "रद्द करें"
+    cancel_order: "रद्द करें"
     resume: "फिर शुरू करें"
     save: "सेव करें"
     edit: "एडिट करें"

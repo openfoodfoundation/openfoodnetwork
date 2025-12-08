@@ -299,6 +299,7 @@ en_AU:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     resume: "Resume"
     save: "Save"
     edit: "Edit"

@@ -422,6 +422,7 @@ ko:
     create_and_add_another: "추가 및 생성"
     create: "생성"
     cancel: "취소"
+    cancel_order: "취소"
     resume: "계속"
     save: "저장"
     edit: "편집"

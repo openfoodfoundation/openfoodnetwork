@@ -548,6 +548,7 @@ fi:
     create_and_add_another: "Luo ja lisää toinen"
     create: "Luo"
     cancel: "Peruuta"
+    cancel_order: "Peruuta"
     resume: "Jatka"
     save: "Tallenna"
     edit: "Muokkaa"

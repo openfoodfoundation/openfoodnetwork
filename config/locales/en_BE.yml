@@ -278,6 +278,7 @@ en_BE:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     save: "Save"
     edit: "Edit"
     update: "Update"

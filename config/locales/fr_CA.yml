@@ -550,6 +550,7 @@ fr_CA:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
     cancel: "Annuler"
+    cancel_order: "Annuler"
     resume: "Reprendre"
     save: "Enregistrer"
     edit: "Modifier"

@@ -331,6 +331,7 @@ pt:
     create_and_add_another: "Criar e acrescentar outro"
     create: "Criar"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     resume: "Retomar"
     save: "Guardar"
     edit: "Editar"

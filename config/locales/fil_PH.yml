@@ -290,6 +290,7 @@ fil_PH:
     create_and_add_another: "Gumawa at magdagdag ng isa pa"
     create: "gumawa"
     cancel: "kanselahin"
+    cancel_order: "kanselahin"
     save: "i-save"
     edit: "i-edit"
     update: "i-update"

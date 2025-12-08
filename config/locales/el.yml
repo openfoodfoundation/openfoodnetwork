@@ -503,6 +503,7 @@ el:
     create_and_add_another: "Δημιουργία και Προσθήκη Νέου"
     create: "Δημιουργία"
     cancel: "Ακύρωση"
+    cancel_order: "Ακύρωση"
     resume: "Συνέχεια"
     save: "Αποθήκευση"
     edit: "Επεξεργασία"

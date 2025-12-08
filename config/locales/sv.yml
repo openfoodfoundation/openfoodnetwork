@@ -145,6 +145,7 @@ sv:
   actions:
     create: "Skapa"
     cancel: "Avbryt"
+    cancel_order: "Avbryt"
     edit: "Redigera"
     update: "Uppdatera"
     add: "Tillägga"

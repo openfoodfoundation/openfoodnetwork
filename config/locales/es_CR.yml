@@ -423,6 +423,7 @@ es_CR:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     resume: "Continuar"
     save: "Guardar"
     edit: "Editar"

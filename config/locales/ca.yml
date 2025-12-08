@@ -462,6 +462,7 @@ ca:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
     cancel: "Cancel·lar"
+    cancel_order: "Cancel·lar"
     resume: "Continuar"
     save: "Desa"
     edit: "Editar"

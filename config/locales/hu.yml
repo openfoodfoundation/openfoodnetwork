@@ -526,6 +526,7 @@ hu:
     create_and_add_another: "Hozz létre és adj hozzá egy másikat"
     create: "Létrehozás"
     cancel: "Mégsem"
+    cancel_order: "Mégsem"
     resume: "Összefoglaló"
     save: "Mentés"
     edit: "Szerkesztés"
@@ -854,6 +855,7 @@ hu:
         search_for_categories: Keresés termékkategóriára
         select_category: Válassz kategóriát
         all_categories: Minden kategória
+        select_tag: Válassz címkét
         producers:
           label: Termelők
         categories:
@@ -908,6 +910,10 @@ hu:
       clone:
         success: Sikeresen klónoztad a terméket
         error: A terméket nem sikerült klónozni
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} 1 szabályt tartalmaz"
+          other: "%{tag} címkének %{count} szabálya van érvényben"
     product_import:
       title: Termék importálás
       file_not_found: A fájl nem található, vagy nem nyitható meg
@@ -1442,6 +1448,10 @@ hu:
       invite_manager:
         user_already_exists: "A felhasználó már létezik"
         error: "Valami elromlott"
+    tag_rules:
+      not_supported_type: Címkeszabály típus nem támogatott
+      confirm_delete: Biztosan szeretnéd törölni ezt a szabályt?
+      destroy_error: Hiba történt a címkeszabályok eltávolításakor
     order_cycles:
       loading_flash:
         loading_order_cycles: MEGRENDELÉSI CIKLUSOK BETÖLTÉSE
@@ -2450,22 +2460,22 @@ hu:
   hubs_distance: Legközelebb
   hubs_distance_filter: "Mutass átvételi pontokat %{location} közelében"
   shop_changeable_orders_alert_html:
-    one: 'Megrendelésed a következővel: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a> nyitva áll ellenőrzésre. A módosításokat a következő időpontig hajthatod végre: %{oc_close}.'
-    few: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-    many: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-    other: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-  orders_changeable_orders_alert_html: 'Ez a rendelés meg lett erősítve, de módosíthatod a következő időpontig: <strong>%{oc_close}</strong>.'
+    one: 'Megrendelésed: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a>módosítható a következő időpontig: %{oc_close}.'
+    few: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+    many: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+    other: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+  orders_changeable_orders_alert_html: 'Ez a rendelés már meg lett erősítve, de módosíthatod a következő időpontig: <strong>%{oc_close}</strong>.'
   products_clear: Mégsem
   products_showing: "Megjelenítve:"
-  products_results_for: "eredmények"
+  products_results_for: "Találatok innen"
   products_or: "vagy"
   products_and: "és"
   products_filters_in: "ban ben"
   products_with: val vel
   products_search: "Keresés..."
-  products_filter_by: "Szűrés"
+  products_filter_by: "Kategóriák"
   products_filter_selected: "kiválasztott"
-  products_filter_heading: "Szűrők"
+  products_filter_heading: "Kategóriák"
   products_filter_clear: "Mégsem"
   products_filter_done: "Kész"
   products_loading: "Termékek betöltése..."
@@ -2895,7 +2905,7 @@ hu:
   calculator: "Kiszámítási mód"
   calculator_values: "Kiszámítás értékek"
   calculator_settings_warning: "Ha módosítod a kiszámítás típusát, először mentened kell ahhoz, hogy szerkeszthesd a kiszámítás beállításait"
-  calculator_preferred_unit_error: "kg-nak vagy lb-nak kell lennie"
+  calculator_preferred_unit_error: "kg-nak kell lennie"
   calculator_preferred_value_error: "Hibás bemenet. Kérjük, csak számokat használj. Pl.: 10, 5.5, -20"
   flat_percent_per_item: "Egységes százalék (tételenként)"
   flat_rate_per_item: "Átalánydíj (tételenként)"
@@ -3652,7 +3662,7 @@ hu:
       other: "darab"
     bunch:
       one: "csokor"
-      other: "fürt"
+      other: "csokor"
     pack:
       one: "csomag"
       other: "csomag"
@@ -3685,7 +3695,7 @@ hu:
       other: "kosárka"
     packet:
       one: "csomag"
-      other: "tasak"
+      other: "csomag"
     item:
       one: "tétel"
       other: "tétel"
@@ -4455,7 +4465,7 @@ hu:
           on_hand: "Készlet"
           number: "Szám"
           completed_at: "Elkészült:"
-          state: "Státusz!"
+          state: "Rendelésleadás státusz"
           payment_state: "Fizetési Státusz"
           shipment_state: "Szállítási Státusz"
           email: "Email"
@@ -4788,6 +4798,7 @@ hu:
         order_cycle_tagged_bottom: "vannak:"
         inventory_tagged_top: "Leltár változatok felcímkézve"
         inventory_tagged_bottom: "vannak:"
+        variant_tagged_top: "Változat felcímkézve"
         variant_tagged_bottom: "vannak:"
         visible: LÁTHATÓ
         not_visible: NEM LÁTHATÓ

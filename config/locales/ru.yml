@@ -493,6 +493,7 @@ ru:
     create_and_add_another: "Создать и Добавить Другой"
     create: "Создать"
     cancel: "Отмена"
+    cancel_order: "Выход"
     resume: "Продолжить"
     save: "Сохранить"
     edit: "Изменить"

@@ -314,6 +314,7 @@ es_CO:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     save: "Guardar"
     edit: "Editar"
     update: "Actualizar"

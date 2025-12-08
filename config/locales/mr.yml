@@ -484,6 +484,7 @@ mr:
     create_and_add_another: "तयार करा आणि दुसरे जोडा"
     create: "तयार करा"
     cancel: "रद्द करा"
+    cancel_order: "रद्द करा"
     resume: "पुन्हा सुरू करा"
     save: "जतन करा"
     edit: "सुधारणे"

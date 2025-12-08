@@ -487,6 +487,7 @@ de_DE:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
+    cancel_order: "Abbrechen"
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
@@ -847,6 +848,10 @@ de_DE:
         add_a_tag: Stichwort hinzufügen
       clone:
         success: Das Produkt wurde dupliziert.
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} hat 1 Regel"
+          other: "%{tag} hat %{count} Regeln"
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -1296,6 +1301,8 @@ de_DE:
         visible: Sichtbar?
         owner: Inhaber
         producer: Produzent
+        sells_options:
+          unspecified: nicht spezifiziert
       change_type_form:
         producer_profile: Profil
         connect_ofn: Stellen Sie sich und Ihre Produkte vor
@@ -1564,6 +1571,8 @@ de_DE:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
+      metadata:
+        report_title: Bericht
       deprecated: "Dieser Bericht ist veraltet und wird in einer zukünftigen Version entfernt."
       hidden_field: "< verborgen >"
       unitsize: EINHEIT
@@ -1615,7 +1624,7 @@ de_DE:
       orders_and_fulfillment:
         name: Bestellungs- & Erfüllungsberichte
       customers:
-        name: Kundenberichte
+        name: Kundenbericht
       products_and_inventory:
         name: Produkte und Katalog
       users_and_enterprises:
@@ -1657,9 +1666,10 @@ de_DE:
         generate_report: "Bericht erstellen"
         on_screen: "Auf dem Bildschirm"
         spreadsheet: "Tabellenkalkulation (Excel, OpenOffice, ..)"
-        display: Anzeige
+        display: Darstellung
         summary_row: Zeilen mit Zwischensummen
         header_row: Kopfzeile
+        metadata_rows: Kopfzeile mit Berichtdetails
         raw_data: Rohdaten
         formatted_data: Formatierte Daten
       packing:
@@ -3148,6 +3158,7 @@ de_DE:
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren."
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"
+  order_cycle_closed_next_steps: "Der von Ihnen gewählte Bestellzyklus wurde gerade geschlossen. Bitte kontaktieren Sie uns, um Ihre Bestellung mit der Bestellnummer %{order_number} abzuschließen!"
   back_to_orders_list: "Zurück zur Bestellübersicht"
   no_orders_found: "Keine Bestellungen gefunden."
   order_information: "Bestellinformationen"

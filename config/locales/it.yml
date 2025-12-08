@@ -450,6 +450,7 @@ it:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
     cancel: "Annulla"
+    cancel_order: "Annulla"
     resume: "Continuare"
     save: "Salva"
     edit: "Modifica"

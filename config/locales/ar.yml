@@ -429,6 +429,7 @@ ar:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
     cancel: "إلغاء"
+    cancel_order: "إلغاء"
     resume: "اكمل"
     save: "حفظ"
     edit: "تعديل"

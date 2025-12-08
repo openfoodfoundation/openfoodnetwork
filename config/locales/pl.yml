@@ -300,6 +300,7 @@ pl:
     create_and_add_another: "Utwórz i dodaj kolejny"
     create: "Utwórz"
     cancel: "Anuluj"
+    cancel_order: "Anuluj"
     save: "Zapisz"
     edit: "Edytuj"
     update: "Aktualizuj"

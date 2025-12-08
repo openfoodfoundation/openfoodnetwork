@@ -460,6 +460,7 @@ de_CH:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
+    cancel_order: "Abbrechen"
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"

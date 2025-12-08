@@ -536,6 +536,7 @@ eu:
     create_and_add_another: "Beste bat sortu eta gehitu"
     create: "Sortu"
     cancel: "Ezeztatu"
+    cancel_order: "Ezeztatu"
     resume: "Jarraitu"
     save: "Gorde"
     edit: "Editatu"

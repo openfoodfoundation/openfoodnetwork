@@ -424,6 +424,7 @@ uk:
     create_and_add_another: "Створити та додати ще один"
     create: "Створити"
     cancel: "Скасувати"
+    cancel_order: "Скасувати"
     resume: "Продовжити"
     save: "Зберегти"
     edit: "Редагувати"

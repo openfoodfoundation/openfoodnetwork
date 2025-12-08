@@ -340,6 +340,7 @@ tr:
     create_and_add_another: "Oluştur ve Yeni Ekle"
     create: "Oluştur"
     cancel: "İptal Et"
+    cancel_order: "İptal et"
     resume: "Devam Et"
     save: "Kaydet"
     edit: "Düzenle"
