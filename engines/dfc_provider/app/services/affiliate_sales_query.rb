@@ -50,7 +50,7 @@ class AffiliateSalesQuery
       <<~SQL.squish
         spree_products.name AS product_name,
         spree_variants.display_name AS unit_name,
-        spree_products.variant_unit AS unit_type,
+        spree_variants.variant_unit AS unit_type,
         spree_variants.unit_value AS units,
         spree_variants.unit_presentation,
         spree_line_items.price,

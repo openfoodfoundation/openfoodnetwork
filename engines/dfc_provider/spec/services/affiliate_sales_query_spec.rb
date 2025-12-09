@@ -61,7 +61,6 @@ RSpec.describe AffiliateSalesQuery do
     it "returns data" do
       labelled_row = query.label_row(query.data(order1.distributor).first)
 
-      pending "unit_type"
       expect(labelled_row).to include(
         product_name: "Tomatoes",
         unit_name: "Tomatoes - Roma",
