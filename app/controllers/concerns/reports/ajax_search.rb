@@ -5,55 +5,53 @@ module Reports
     extend ActiveSupport::Concern
 
     def search_enterprise_fees
-      cached_response = cached_search_response('enterprise_fees') do
-        report = report_class.new(spree_current_user, params, render: false)
-        fee_ids = enterprise_fee_ids(report.search.result)
-        EnterpriseFee.where(id: fee_ids)
-      end
+      report = report_class.new(spree_current_user, params, render: false)
+      fee_ids = enterprise_fee_ids(report.search.result)
+      query = EnterpriseFee.where(id: fee_ids)
 
-      render json: cached_response
+      render json: build_search_response(query)
     end
 
     def search_enterprise_fee_owners
-      cached_response = cached_search_response('enterprise_fee_owners') do
-        report = report_class.new(spree_current_user, params, render: false)
-        owner_ids = enterprise_fee_owner_ids(report.search.result)
-        Enterprise.where(id: owner_ids)
-      end
+      report = report_class.new(spree_current_user, params, render: false)
+      owner_ids = enterprise_fee_owner_ids(report.search.result)
+      query = Enterprise.where(id: owner_ids)
 
-      render json: cached_response
+      render json: build_search_response(query)
+    end
+
+    def search_distributors
+      query = frontend_data.distributors
+
+      render json: build_search_response(query)
+    end
+
+    def search_order_cycles
+      query = frontend_data.order_cycles
+
+      render json: build_search_response(query)
+    end
+
+    def search_order_customers
+      query = frontend_data.order_customers
+
+      render json: build_search_response(query)
+    end
+
+    def search_suppliers
+      query = frontend_data.orders_suppliers
+
+      render json: build_search_response(query)
     end
 
     private
-
-    def cached_search_response(resource_type)
-      cache_key = build_cache_key(resource_type)
-      CacheService.cache(cache_key, expires_in: 5.minutes) do
-        query = yield
-        build_search_response(query)
-      end
-    end
-
-    def build_cache_key(resource_type)
-      key_params = [
-        'reports',
-        params[:report_type],
-        params[:report_subtype],
-        resource_type,
-        'search',
-        spree_current_user.id,
-        params[:q],
-        params[:page]
-      ]
-      key_params.join('_')
-    end
 
     def build_search_response(query)
       page = (params[:page] || 1).to_i
       per_page = 30
 
       filtered_query = apply_search_filter(query)
-      total_count = filtered_query.count
+      total_count = filtered_query.size
       items = paginated_items(filtered_query, page, per_page)
       results = format_results(items)
 
@@ -64,15 +62,34 @@ module Reports
       search_term = params[:q]
       return query if search_term.blank?
 
-      query.where("name ILIKE ?", "%#{search_term}%")
+      # Handle different model types
+      if query.model == OrderCycle
+        query.where("order_cycles.name ILIKE ?", "%#{search_term}%")
+      elsif query.model == Customer
+        query.where("customers.email ILIKE ?", "%#{search_term}%")
+      else
+        query.where("name ILIKE ?", "%#{search_term}%")
+      end
     end
 
     def paginated_items(query, page, per_page)
-      query.order(:name).offset((page - 1) * per_page).limit(per_page).pluck(:name, :id)
+      if query.model == Customer
+        query.order(:email).offset((page - 1) * per_page).limit(per_page).pluck(:email, :id)
+      elsif query.model == OrderCycle
+        query.order('order_cycles.orders_close_at DESC').offset((page - 1) * per_page).limit(per_page).pluck(
+          :name, :id
+        )
+      else
+        query.order(:name).offset((page - 1) * per_page).limit(per_page).pluck(:name, :id)
+      end
     end
 
     def format_results(items)
       items.map { |name, id| { id: id, text: name } }
+    end
+
+    def frontend_data
+      @frontend_data ||= Reporting::FrontendData.new(spree_current_user)
     end
 
     def enterprise_fee_owner_ids(orders)

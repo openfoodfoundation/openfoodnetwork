@@ -49,7 +49,7 @@ export default class extends Controller {
       ajax: {
         url: ajaxUrl,
         dataType: "json",
-        quietMillis: 250,
+        quietMillis: 500,
         data: function (term, page) {
           return {
             q: term || "",
