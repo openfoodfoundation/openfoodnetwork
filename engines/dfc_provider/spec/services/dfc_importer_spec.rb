@@ -28,5 +28,11 @@ RSpec.describe DfcImporter do
     expect {
       subject.import_enterprise_profiles("lf-dev", endpoint)
     }.not_to have_enqueued_mail
+
+    expect(enterprise.name).to eq "DFC Test Farm Beta (All Supplied Fields)"
+    expect(enterprise.email_address).to eq "dfcshop@example.com"
+    expect(enterprise.logo.blob.content_type).to eq "image/webp"
+    expect(enterprise.logo.blob.byte_size).to eq 8974
+    expect(enterprise.visible).to eq "public"
   end
 end

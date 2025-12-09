@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "private_address_check"
+require "private_address_check/tcpsocket_ext"
+
 class EnterpriseImporter
   def initialize(owner, dfc_enterprise)
     @owner = owner
@@ -25,6 +28,7 @@ class EnterpriseImporter
     @owner.owned_enterprises.new(
       address: Spree::Address.new,
       semantic_link: SemanticLink.new(semantic_id: @dfc_enterprise.semanticId),
+      visible: "public",
     )
   end
 
@@ -40,5 +44,41 @@ class EnterpriseImporter
       state: state,
       country: state.country,
     )
+    enterprise.email_address = @dfc_enterprise.emails.first
+    enterprise.description = @dfc_enterprise.description
+    enterprise.phone = @dfc_enterprise.phoneNumbers.first&.phoneNumber
+    enterprise.website = @dfc_enterprise.websites.first
+    apply_social_media(enterprise)
+    apply_logo(enterprise)
+  end
+
+  def apply_social_media(enterprise)
+    attributes = {}
+    @dfc_enterprise.socialMedias.each do |media|
+      attributes[media.name.downcase] = media.url
+    end
+    attributes["twitter"] = attributes.delete("x") if attributes.key?("x")
+    enterprise_attributes = attributes.slice(SocialMediaBuilder::NAMES)
+    enterprise.assign_attributes(enterprise_attributes)
+  end
+
+  def apply_logo(enterprise)
+    link = @dfc_enterprise.logo
+    logo = enterprise.logo
+
+    return if link.blank?
+    return if logo.blob && (logo.blob.custom_metadata&.fetch("origin", nil) == link)
+
+    url = URI.parse(link)
+    filename = File.basename(url.path)
+    metadata = { custom: { origin: link } }
+
+    PrivateAddressCheck.only_public_connections do
+      logo.attach(io: url.open, filename:, metadata:)
+    end
+  rescue StandardError
+    # Any URL parsing or network error shouldn't impact the import
+    # at all. Maybe we'll add UX for error handling later.
+    nil
   end
 end
