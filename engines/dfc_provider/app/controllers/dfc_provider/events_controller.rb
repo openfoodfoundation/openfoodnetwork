@@ -33,7 +33,7 @@ module DfcProvider
         return
       end
 
-      DfcImporter.new.import_enterprise_profiles(current_user.id)
+      DfcImporter.new.import_enterprise_profiles(current_user.id, enterprises_url)
 
       render json: { success: true }
     end

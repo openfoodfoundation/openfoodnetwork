@@ -2,12 +2,11 @@
 
 # Fetch data from another platform and store it locally.
 class DfcImporter
-  def import_enterprise_profiles(platform)
+  def import_enterprise_profiles(platform, enterprises_url)
     raise "unsupported platform" if platform != "lf-dev"
 
-    endpoint = "https://api.beta.litefarm.org/dfc/enterprises/"
     api = DfcPlatformRequest.new(platform)
-    body = api.call(endpoint)
+    body = api.call(enterprises_url)
     graph = DfcIo.import(body).to_a
     farms = graph.select { |item| item.semanticType == "dfc-b:Enterprise" }
     farms.each { |farm| import_profile(farm) }

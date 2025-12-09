@@ -8,9 +8,11 @@ require_relative "../spec_helper"
 #     OPENID_APP_ID="..."
 #     OPENID_APP_SECRET="..."
 RSpec.describe DfcImporter do
+  let(:endpoint) { "https://api.beta.litefarm.org/dfc/enterprises/" }
+
   it "fetches a list of enterprises", :vcr do
     expect {
-      subject.import_enterprise_profiles("lf-dev")
+      subject.import_enterprise_profiles("lf-dev", endpoint)
     }.to have_enqueued_mail(Spree::UserMailer, :confirmation_instructions)
       .and have_enqueued_mail(EnterpriseMailer, :welcome).twice
 
@@ -24,7 +26,7 @@ RSpec.describe DfcImporter do
 
     # Repeating works without creating duplicates:
     expect {
-      subject.import_enterprise_profiles("lf-dev")
+      subject.import_enterprise_profiles("lf-dev", endpoint)
     }.not_to have_enqueued_mail
   end
 end
