@@ -10,7 +10,15 @@ RSpec.describe EnterpriseImporter do
       "litefarm.org",
       name: "Test Farm",
       localizations: [
-        DataFoodConsortium::Connector::Address.new(nil)
+        DataFoodConsortium::Connector::Address.new(
+          nil,
+          region: "Victoria",
+          country: {
+            scheme: "http",
+            host: "publications.europa.eu",
+            path: "/resource/authority/country/AUS",
+          }
+        )
       ],
     )
   }
@@ -21,6 +29,19 @@ RSpec.describe EnterpriseImporter do
     expect(enterprise.id).to eq nil
     expect(enterprise.semantic_link.semantic_id).to eq "litefarm.org"
     expect(enterprise.name).to eq "Test Farm"
+    expect(enterprise.address.state.name).to eq "Victoria"
+    expect(enterprise.address.country.name).to eq "Australia"
+  end
+
+  it "understands old country names" do
+    dfc_enterprise.localizations[0].country = "France"
+    dfc_enterprise.localizations[0].region = "Aquitaine"
+
+    enterprise = subject.import
+
+    expect(enterprise.id).to eq nil
+    expect(enterprise.address.country.name).to eq "France"
+    expect(enterprise.address.state.name).to eq "Aquitaine"
   end
 
   it "ignores errors during image import" do

@@ -34,15 +34,15 @@ class EnterpriseImporter
 
   def apply(enterprise)
     address = @dfc_enterprise.localizations.first
-    state = Spree::State.find_by(name: address.region) || Spree::State.first
+    country = find_country(address)
 
     enterprise.name = @dfc_enterprise.name
     enterprise.address.assign_attributes(
       address1: address.street,
       city: address.city,
       zipcode: address.postalCode,
-      state: state,
-      country: state.country,
+      state: find_state(country, address),
+      country:,
     )
     enterprise.email_address = @dfc_enterprise.emails.first
     enterprise.description = @dfc_enterprise.description
@@ -80,5 +80,18 @@ class EnterpriseImporter
     # Any URL parsing or network error shouldn't impact the import
     # at all. Maybe we'll add UX for error handling later.
     nil
+  end
+
+  def find_country(address)
+    country = address.country
+    country = country[:path] if country.is_a?(Hash)
+
+    Spree::Country.find_by(iso3: country.to_s[-3..]) ||
+      Spree::Country.find_by(name: country) ||
+      Spree::Country.first
+  end
+
+  def find_state(country, address)
+    country.states.find_by(name: address.region) || country.states.first
   end
 end
