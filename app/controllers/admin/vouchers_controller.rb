@@ -14,7 +14,7 @@ module Admin
       )
 
       if @voucher.save
-        flash[:success] = I18n.t(:successfully_created, resource: "Voucher")
+        flash[:success] = I18n.t(:successfully_created, resource: Spree.t(:voucher))
         redirect_to edit_admin_enterprise_path(@enterprise, anchor: :vouchers_panel)
       else
         render_error
