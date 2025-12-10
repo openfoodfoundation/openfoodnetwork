@@ -3,7 +3,7 @@
 require_relative "../spec_helper"
 
 # These tests depend on valid OpenID Connect client credentials in your
-# `.env.test.local` file.
+# `.env.test.local` file if you want to update the VCR cassettes.
 #
 #     OPENID_APP_ID="..."
 #     OPENID_APP_SECRET="..."
