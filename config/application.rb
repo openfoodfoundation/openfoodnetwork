@@ -211,7 +211,16 @@ module Openfoodnetwork
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 
-    config.active_storage.service = ENV["S3_BUCKET"].present? ? :amazon : :local
+    config.active_storage.service =
+      if ENV["S3_BUCKET"].present?
+        if ENV["S3_ENDPOINT"].present?
+          :s3_compatible_storage
+        else
+          :amazon
+        end
+      else
+        :local
+      end
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
     config.active_storage.variable_content_types += ["image/svg+xml"]
     config.active_storage.url_options = config.action_controller.default_url_options
