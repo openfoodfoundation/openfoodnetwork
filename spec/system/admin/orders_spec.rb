@@ -524,8 +524,8 @@ RSpec.describe '
 
       it "changes pagination and displays entries" do
         within ".pagination" do
-          expect(page).not_to have_css('button.page.prev')
-          expect(page).to have_css('button.page.next')
+          expect(page).not_to have_css('a.page.prev')
+          expect(page).to have_css('a.page.next')
           click_on "2"
         end
         # table displays 4 entries
@@ -534,8 +534,8 @@ RSpec.describe '
         end
         expect(page).to have_content "19 Results found. Viewing 16 to 19."
         within ".pagination" do
-          expect(page).to have_css('button.page.prev')
-          expect(page).not_to have_css('button.page.next')
+          expect(page).to have_css('a.page.prev')
+          expect(page).not_to have_css('a.page.next')
         end
       end
     end
