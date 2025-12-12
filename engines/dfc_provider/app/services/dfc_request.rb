@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "private_address_check"
-require "private_address_check/tcpsocket_ext"
-
 # Request a JSON document from a DFC API with authentication.
 #
 # All DFC API interactions are authenticated via OIDC tokens. If the user's
@@ -15,16 +12,15 @@ class DfcRequest
 
   def call(url, data = nil, method: nil)
     begin
-      response = request(url, data, method:)
+      request = OidcRequest.new(@user.oidc_account.token)
+      response = request.call(url, data, method:)
     rescue Faraday::UnauthorizedError, Faraday::ForbiddenError
       raise unless token_stale?
 
       # If access was denied and our token is stale then refresh and retry:
       refresh_access_token!
-      response = request(url, data, method:)
-    rescue Faraday::ServerError => e
-      Alert.raise(e, { dfc_request: { data: } })
-      raise
+      request = OidcRequest.new(@user.oidc_account.token)
+      response = request.call(url, data, method:)
     end
 
     response.body
@@ -32,39 +28,8 @@ class DfcRequest
 
   private
 
-  def request(url, data = nil, method: nil)
-    only_public_connections do
-      if method == :put
-        connection.put(url, data)
-      elsif data
-        connection.post(url, data)
-      else
-        connection.get(url)
-      end
-    end
-  end
-
   def token_stale?
     @user.oidc_account.updated_at < 15.minutes.ago
-  end
-
-  def connection
-    Faraday.new(
-      request: { timeout: 30 },
-      headers: {
-        'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{@user.oidc_account.token}",
-      }
-    ) do |f|
-      # Configure Faraday to raise errors on status 4xx and 5xx responses.
-      f.response :raise_error
-    end
-  end
-
-  def only_public_connections(&)
-    return yield if Rails.env.development?
-
-    PrivateAddressCheck.only_public_connections(&)
   end
 
   def refresh_access_token!
