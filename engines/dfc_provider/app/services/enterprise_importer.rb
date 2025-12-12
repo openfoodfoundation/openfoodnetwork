@@ -28,6 +28,7 @@ class EnterpriseImporter
     @owner.owned_enterprises.new(
       address: Spree::Address.new,
       semantic_link: SemanticLink.new(semantic_id: @dfc_enterprise.semanticId),
+      is_primary_producer: true,
       visible: "public",
     )
   end
