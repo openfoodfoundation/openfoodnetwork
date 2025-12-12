@@ -12,7 +12,7 @@ module Reporting
             variant: variant_name,
             quantity: proc { |line_items| line_items.to_a.map(&:quantity).sum(&:to_i) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
-            total_cost: proc { |line_items| line_items.map(&:amount).sum(&:to_f).round(2) },
+            total_cost: proc { |line_items| prices_sum(line_items.map(&:amount)) },
             total_shipping_cost: proc { |_line_items| "" },
             shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name }
           }
@@ -25,9 +25,9 @@ module Reporting
               header: proc { |key, _items, _rows| "#{I18n.t(:report_header_hub)} #{key}" },
               summary_row: proc do |_key, line_items, rows|
                 {
-                  total_cost: rows.map(&:total_cost).sum(&:to_f).round(2),
+                  total_cost: prices_sum(rows.map(&:total_cost)),
                   total_shipping_cost:
-                    line_items.map(&:first).map(&:order).uniq.map(&:ship_total).sum(&:to_f).round(2)
+                    prices_sum(line_items.map(&:first).map(&:order).uniq.map(&:ship_total))
                 }
               end
             }

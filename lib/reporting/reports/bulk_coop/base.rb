@@ -96,7 +96,7 @@ module Reporting
         def total_amount(line_items)
           line_items.map { |li|
             scaled_final_weight_volume(li)
-          }.sum(&:to_f).round(2)
+          }.sum(&:to_f).round(3)
         end
 
         def scaled_final_weight_volume(line_item)

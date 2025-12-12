@@ -207,29 +207,29 @@ module Reporting
         end
 
         def total_untaxable_products(order)
-          order.line_items.without_tax.map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.line_items.without_tax.map(&:amount))
         end
 
         def total_taxable_products(order)
-          order.line_items.with_tax.map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.line_items.with_tax.map(&:amount))
         end
 
         def total_untaxable_fees(order)
-          order.all_adjustments.enterprise_fee.where(tax_category: nil)
-            .map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.all_adjustments.enterprise_fee.where(tax_category: nil)
+            .map(&:amount))
         end
 
         def total_taxable_fees(order)
-          order.all_adjustments.enterprise_fee.where.not(tax_category: nil)
-            .map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.all_adjustments.enterprise_fee.where.not(tax_category: nil)
+            .map(&:amount))
         end
 
         def total_shipping(order)
-          order.all_adjustments.shipping.map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.all_adjustments.shipping.map(&:amount))
         end
 
         def total_transaction(order)
-          order.all_adjustments.payment_fee.map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.all_adjustments.payment_fee.map(&:amount))
         end
 
         def tax_on_shipping_s(order)
@@ -246,11 +246,11 @@ module Reporting
         end
 
         def total_untaxable_admin_adjustments(order)
-          order.adjustments.admin.where(tax_category: nil).map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.adjustments.admin.where(tax_category: nil).map(&:amount))
         end
 
         def total_taxable_admin_adjustments(order)
-          order.adjustments.admin.where.not(tax_category: nil).map(&:amount).sum(&:to_f).round(2)
+          prices_sum(order.adjustments.admin.where.not(tax_category: nil).map(&:amount))
         end
 
         def detail?
