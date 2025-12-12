@@ -2,6 +2,8 @@
 
 # Fetch data from another platform and store it locally.
 class DfcImporter
+  attr_reader :errors
+
   def import_enterprise_profiles(platform, enterprises_url)
     raise "unsupported platform" if platform != "lf-dev"
 
@@ -17,6 +19,10 @@ class DfcImporter
     enterprise = EnterpriseImporter.new(owner, farm).import
     enterprise.save! if enterprise.changed?
     enterprise.address.save! if enterprise.address.changed?
+  rescue ActiveRecord::RecordInvalid => e
+    Alert.raise(e, farm: DfcIo.export(farm))
+    @errors ||= []
+    @errors << e
   end
 
   def find_or_import_user(farm)

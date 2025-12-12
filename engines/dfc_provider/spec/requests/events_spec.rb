@@ -76,12 +76,50 @@ RSpec.describe "Events", swagger_doc: "dfc.yaml" do
 
         before do
           stub_request(:post, %r{openid-connect/token$})
-          stub_request(:get, "https://api.beta.litefarm.org/dfc/enterprises/")
-            .to_return(body: "[]")
         end
 
-        run_test! do
-          expect(json_response["success"]).to eq true
+        describe "when some records fail" do
+          before do
+            body = {
+              '@context': "https://www.datafoodconsortium.org",
+              '@graph': [
+                {
+                  '@id': "http://some-id",
+                  '@type': "dfc-b:Enterprise",
+                  'dfc-b:hasMainContact': "http://some-person",
+                  'dfc-b:hasAddress': "http://address",
+                },
+                {
+                  '@id': "http://some-person",
+                  '@type': "dfc-b:Person",
+                  'dfc-b:email': "community@litefarm.org",
+                },
+                {
+                  '@id': "http://address",
+                  '@type': "dfc-b:Address",
+                },
+              ]
+            }.to_json
+            stub_request(:get, "https://api.beta.litefarm.org/dfc/enterprises/")
+              .to_return(body:)
+          end
+
+          run_test! do
+            expect(json_response["success"]).to eq true
+            expect(json_response["messages"].first)
+              .to match "http://some-id: Validation failed: Address address1 can't be blank"
+          end
+        end
+
+        describe "importing an empty list" do
+          before do
+            stub_request(:get, "https://api.beta.litefarm.org/dfc/enterprises/")
+              .to_return(body: "[]")
+          end
+
+          run_test! do
+            expect(json_response["success"]).to eq true
+          end
         end
       end
     end

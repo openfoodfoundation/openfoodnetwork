@@ -33,9 +33,14 @@ module DfcProvider
         return
       end
 
-      DfcImporter.new.import_enterprise_profiles(current_user.id, enterprises_url)
+      importer = DfcImporter.new
+      importer.import_enterprise_profiles(current_user.id, enterprises_url)
 
-      render json: { success: true }
+      if importer.errors.blank?
+        render json: { success: true }
+      else
+        render json: { success: true, messages: error_messages(importer.errors) }
+      end
     end
 
     private
@@ -46,6 +51,13 @@ module DfcProvider
 
     def render_message(status, message)
       render status:, json: { success: false, message: }
+    end
+
+    def error_messages(errors)
+      errors.map do |error|
+        id = error.record.try(:semantic_link)&.semantic_id
+        "#{id}: #{error.message}"
+      end
     end
   end
 end
