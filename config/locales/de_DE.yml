@@ -487,7 +487,7 @@ de_DE:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
-    cancel_order: "Abbrechen"
+    cancel_order: "Stornieren"
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
@@ -2002,6 +2002,7 @@ de_DE:
   invoice_column_price_per_unit_without_taxes: "Einzelpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
+  invoice_cancel_and_replace_invoice: "ersetzt Rechnung"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
   invoice_shipping_category_delivery: "Lieferoptionen"
@@ -4088,6 +4089,9 @@ de_DE:
           line_item_adjustments: "Anpassungen der Einzelposten"
           order_adjustments: "Bestellanpassungen"
           order_total: "Bestellung insgesamt"
+      invoices:
+        index:
+          order_has_changed: "Die Bestellung hat sich seit Erstellung der letzten Rechnung geändert. Die hier angezeigte Rechnung ist möglicherweise nicht mehr aktuell."
       overview:
         enterprises_header:
           ofn_with_tip: Unternehmen sind Produzenten und/oder Läden und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.

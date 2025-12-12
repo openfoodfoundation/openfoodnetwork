@@ -526,7 +526,7 @@ hu:
     create_and_add_another: "Hozz létre és adj hozzá egy másikat"
     create: "Létrehozás"
     cancel: "Mégsem"
-    cancel_order: "Mégsem"
+    cancel_order: "Törlés"
     resume: "Összefoglaló"
     save: "Mentés"
     edit: "Szerkesztés"

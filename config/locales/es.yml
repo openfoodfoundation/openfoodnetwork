@@ -35,10 +35,10 @@ es:
         fee_type: Tipo de Comisión
       spree/order:
         payment_state: Estado del pago
-        shipment_state: Provincia de envío
+        shipment_state: Estado de envío
         completed_at: Completado en
         number: Número
-        state: Provincia
+        state: Estado
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
@@ -907,7 +907,7 @@ es:
           products_total_html:
             one: "<strong>%{count}producto</strong> encontrado para tus criterios de búsqueda. Mostrando %{from} de %{to}"
             many: "<strong> %{count}productos </strong>encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
-            other: "<strong>%{count}productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            other: "<strong>%{count} productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
           per_page:
             show: Mostrar
             per_page: "%{num} por página"
@@ -3198,6 +3198,7 @@ es:
   product_importer_products_save_error: No se guardó ningún producto con éxito
   product_import_file_not_found_notice: 'Archivo no encontrado o no se pudo abrir'
   product_import_no_data_in_spreadsheet_notice: 'No se encontraron datos en la hoja de cálculo'
+  product_import_inventory_disable: La importación a inventarios no está disponible.
   order_choosing_hub_notice: Tu Grupo se ha seleccionado.
   order_cycle_selecting_notice: Se ha seleccionado el ciclo de pedido.
   adjustments_tax_rate_error: "^Comprueba que los impuestos para este ajuste es correcta."
