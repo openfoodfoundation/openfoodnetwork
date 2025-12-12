@@ -44,6 +44,8 @@ module Admin
     def load_data
       @hubs = OpenFoodNetwork::Permissions.new(spree_current_user).
         variant_override_hubs.by_name
+      # Only display the ones with inventory enabled
+      @hubs = @hubs.select { |p| helpers.feature?(:inventory, p) }
 
       # Used in JS to look up the name of the producer of each product
       @producers = OpenFoodNetwork::Permissions.new(spree_current_user).

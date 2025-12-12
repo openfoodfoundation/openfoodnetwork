@@ -44,7 +44,7 @@ Flipper.register(:enterprise_with_no_inventory) do |actor|
   # This group applies to enterprises only, so we return false if the actor is not an Enterprise
   next false unless actor.actor.instance_of? Enterprise
 
-  # Uses 2025-08-11 as filter because variant tag did not exist before that, enterprise created 
+  # Uses 2025-08-11 as filter because variant tag did not exist before that, enterprise created
   # after never had access to the inventory
   enterprise_with_variant_override = Enterprise
     .where(id: VariantOverride.joins(:hub).select(:hub_id))
@@ -60,16 +60,16 @@ Flipper.register(:enterprise_with_inventory) do |actor|
   # This group applies to enterprises only, so we return false if the actor is not an Enterprise
   next false unless actor.actor.instance_of? Enterprise
 
-  # Uses 2025-08-11 as filter because variant tag did not exist before that, enterprise created 
+  # Uses 2025-08-11 as filter because variant tag did not exist before that, enterprise created
   # after never had access to the inventory
   enterprise_with_variant_override = Enterprise
     .where(id: VariantOverride.joins(:hub).select(:hub_id))
     .where(created_at: ..."2025-08-11")
     .distinct
 
-  enterprise_with_variant_override.exists?(actor.id)
+  # Entperprise with inventory and with variant tag not manually enabled.
+  enterprise_with_variant_override.exists?(actor.id) && !Flipper.enabled?(:variant_tag, actor)
 end
-
 
 Flipper::UI.configure do |config|
   config.descriptions_source = ->(_keys) do

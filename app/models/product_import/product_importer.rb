@@ -185,14 +185,9 @@ module ProductImport
         order('is_primary_producer ASC, name').
         map { |e| @editable_enterprises[e.name] = e.id }
 
-      return unless inventory_enabled?
+      return unless OpenFoodNetwork::FeatureToggle.enabled?(:inventory, *@current_user.enterprises)
 
       @inventory_permissions = permissions.variant_override_enterprises_per_hub
-    end
-
-    def inventory_enabled?
-      !OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, *@current_user.enterprises) &&
-        OpenFoodNetwork::FeatureToggle.enabled?(:inventory, *@current_user.enterprises)
     end
 
     def open_spreadsheet
