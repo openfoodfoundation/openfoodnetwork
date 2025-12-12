@@ -20,6 +20,13 @@ RSpec.describe EnterpriseImporter do
           }
         )
       ],
+      socialMedias: [
+        DataFoodConsortium::Connector::SocialMedia.new(
+          nil,
+          name: "Facebook",
+          url: "dfc_test_farm",
+        )
+      ],
     )
   }
 
@@ -31,6 +38,7 @@ RSpec.describe EnterpriseImporter do
     expect(enterprise.name).to eq "Test Farm"
     expect(enterprise.address.state.name).to eq "Victoria"
     expect(enterprise.address.country.name).to eq "Australia"
+    expect(enterprise.facebook).to eq "dfc_test_farm"
   end
 
   it "understands old country names" do

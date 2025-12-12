@@ -59,7 +59,7 @@ class EnterpriseImporter
       attributes[media.name.downcase] = media.url
     end
     attributes["twitter"] = attributes.delete("x") if attributes.key?("x")
-    enterprise_attributes = attributes.slice(SocialMediaBuilder::NAMES)
+    enterprise_attributes = attributes.slice(*SocialMediaBuilder::NAMES)
     enterprise.assign_attributes(enterprise_attributes)
   end
 
