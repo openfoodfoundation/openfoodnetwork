@@ -770,12 +770,12 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
       end
 
-      it 'shows a modal telling not a valid image when uploading a non valid image file' do
+      it 'shows a modal telling not a valid image when uploading an invalid image file' do
         within ".reveal-modal" do
           attach_file 'image[attachment]',
                       Rails.public_path.join('invalid_image.jpg'),
                       visible: false
-          expect(page).to have_content /Attachment is not a valid image/
+          expect(page).to have_content /Attachment is not identified as a valid media file/
         end
       end
     end

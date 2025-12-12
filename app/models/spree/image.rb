@@ -2,6 +2,8 @@
 
 module Spree
   class Image < Asset
+    ACCEPTED_CONTENT_TYPES = %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+
     has_one_attached :attachment, service: image_service do |attachment|
       attachment.variant :mini, resize_to_fill: [48, 48]
       attachment.variant :small, resize_to_fill: [227, 227]
@@ -11,8 +13,8 @@ module Spree
 
     validates :attachment,
               attached: true,
-              processable_image: true,
-              content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+              processable_file: true,
+              content_type: ACCEPTED_CONTENT_TYPES
     validate :no_attachment_errors
 
     def self.default_image_url(size)

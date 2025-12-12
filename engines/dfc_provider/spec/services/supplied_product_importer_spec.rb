@@ -251,7 +251,7 @@ RSpec.describe SuppliedProductImporter do
         supplied_product.isVariantOf << tomatoes
 
         imported_product = importer.import_variant(supplied_product, supplier).product
-        expect(imported_product.image.attachment.filename).to eq "tomato.png?v=1"
+        expect(imported_product.image.attachment.filename).to eq "tomato.png"
 
         expect {
           importer.import_variant(supplied_product, supplier).product
@@ -266,7 +266,7 @@ RSpec.describe SuppliedProductImporter do
         }
           .to change { imported_product.image }
 
-        expect(imported_product.image.attachment.filename).to eq "tomato.png?v=2"
+        expect(imported_product.image.attachment.filename).to eq "tomato.png"
       end
 
       context "when spree_product_uri doesn't match the server host" do

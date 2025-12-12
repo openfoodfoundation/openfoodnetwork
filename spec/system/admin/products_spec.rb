@@ -604,7 +604,7 @@ RSpec.describe '
         click_button "Create"
 
         expect(page).to have_text "Attachment has an invalid content type"
-        expect(page).to have_text "Attachment is not a valid image"
+        expect(page).to have_text "Attachment is not identified as a valid media file"
       end
 
       it "deleting product images" do
