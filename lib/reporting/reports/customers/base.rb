@@ -33,7 +33,7 @@ module Reporting
                          },
             shipping_method: proc { |orders| last_completed_order(orders).shipping_method&.name },
             total_orders: proc { |orders| orders.count },
-            total_incl_tax: proc { |orders| orders.map(&:total).sum(&:to_f).round(2) },
+            total_incl_tax: proc { |orders| prices_sum(orders.map(&:total)) },
             last_completed_order_date: proc { |orders| last_completed_order_date(orders) },
           }
         end

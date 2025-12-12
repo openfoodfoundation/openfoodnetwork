@@ -60,8 +60,8 @@ module Reporting
           grouped_orders.each do |orders|
             voucher_adjustments = calculate_voucher_adjustments(orders)
 
-            total_incl_tax = orders.map(&:total).sum(&:to_f).round(2)
-            total_tax = orders.map(&:total_tax).sum(&:to_f).round(2) + voucher_adjustments
+            total_incl_tax = prices_sum(orders.map(&:total))
+            total_tax = prices_sum(orders.map(&:total_tax)) + voucher_adjustments
             total_excl_tax = total_incl_tax - total_tax
 
             @tax_data[distributor(orders).id] = {
