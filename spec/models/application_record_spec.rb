@@ -10,21 +10,20 @@ RSpec.describe ApplicationRecord do
 
     context "with a S3 bucket defined" do
       before do
-        expect(ENV).to receive(:[]).with("S3_BUCKET").and_return("test-bucket")
-        expect(ENV).to receive(:[]).with("S3_ENDPOINT").and_return(nil)
+        allow(ENV).to receive(:[]).with("S3_BUCKET").and_return("test-bucket")
+        allow(ENV).to receive(:[]).with("S3_ENDPOINT").and_return(nil)
       end
 
       it { is_expected.to eq(:amazon_public) }
-    end
 
-    context "with a S3 bucket and endpoint defined" do
-      before do
-        expect(ENV).to receive(:[]).with("S3_BUCKET").and_return("test-bucket")
-        expect(ENV).to receive(:[]).with("S3_ENDPOINT")
-          .and_return("https://s3-compatible-alternative.com")
+      context "with a S3 endpoint defined" do
+        before do
+          allow(ENV).to receive(:[]).with("S3_ENDPOINT")
+            .and_return("https://s3-compatible-alternative.com")
+        end
+
+        it { is_expected.to eq(:s3_compatible_storage_public) }
       end
-
-      it { is_expected.to eq(:s3_compatible_storage_public) }
     end
   end
 end
