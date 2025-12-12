@@ -12,7 +12,10 @@ class ApplicationRecord < ActiveRecord::Base
   self.include_root_in_json = true
 
   def self.image_service
-    ENV["S3_BUCKET"].present? ? :amazon_public : :local
+    return :local if ENV["S3_BUCKET"].blank?
+    return :amazon_public if ENV["S3_ENDPOINT"].blank?
+
+    :s3_compatible_storage_public
   end
 
   # We might have a development environment without S3 but with a database
