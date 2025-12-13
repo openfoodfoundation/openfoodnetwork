@@ -1,0 +1,27 @@
+-# Create new endpoints
+- if webhooks.empty? # Only one allowed for now.
+  %tr
+    %td= t("components.webhook_endpoint_form.event_types.#{webhook_type}")
+    %td
+      = form_with(url: helpers.account_webhook_endpoints_path, id: "#{webhook_type}_webhook_endpoint") do |f|
+        = f.url_field :'webhook_endpoint[url]', id: "#{webhook_type}_webhook_endpoint_url", placeholder: t('components.webhook_endpoint_form.url.create_placeholder'), required: true, size: 64
+        = f.hidden_field :'webhook_endpoint[webhook_type]', id: "#{webhook_type}_webhook_endpoint_webhook_type", value: webhook_type
+    %td.actions
+      = button_tag t(:create), class: 'button primary tiny no-margin', form: "#{webhook_type}_webhook_endpoint"
+
+-# Existing endpoints
+- webhooks.each do |webhook_endpoint|
+  %tr
+    %td= t("components.webhook_endpoint_form.event_types.#{webhook_type}")
+    %td= webhook_endpoint.url
+    %td.actions.endpoints-actions
+      - if webhook_endpoint.persisted?
+        = button_to helpers.account_webhook_endpoint_path(webhook_endpoint), method: :delete,
+                                                                             class: "tiny alert no-margin",
+                                                                             data: { confirm: I18n.t(:are_you_sure) } do
+          = I18n.t(:delete)
+
+        - if is_webhook_payment_status?
+          = form_tag helpers.webhook_endpoint_test_account_path(webhook_endpoint), class: "button_to", 'data-turbo': true do
+            = button_tag type: "submit", class: "tiny alert no-margin", data: { confirm: I18n.t(:are_you_sure) } do
+              = I18n.t("components.webhook_endpoint_form.test_endpoint")
