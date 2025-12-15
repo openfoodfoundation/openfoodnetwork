@@ -1,14 +1,15 @@
-const { environment } = require('@rails/webpacker')
+const { webpackConfig } = require('@rails/webpacker')
 
-module.exports = environment
+module.exports = webpackConfig
 
+// TODO see if we can remove
 function hotfixPostcssLoaderConfig (subloader) {
   const subloaderName = subloader.loader
   if (subloaderName === 'postcss-loader') {
     if (subloader.options.postcssOptions) {
       console.log(
         '\x1b[31m%s\x1b[0m',
-        'Remove postcssOptions workaround in config/webpack/environment.js'
+        'Remove postcssOptions workaround in config/webpack/base.js'
       )
     } else {
       subloader.options.postcssOptions = subloader.options.config;
@@ -17,6 +18,7 @@ function hotfixPostcssLoaderConfig (subloader) {
   }
 }
 
+// TODO try removing this
 function addQuietDepsToSassLoader (subloader) {
   if (subloader.loader === 'sass-loader') {
     subloader.options.sassOptions = {
@@ -26,10 +28,11 @@ function addQuietDepsToSassLoader (subloader) {
   }
 }
 
-environment.loaders.keys().forEach(loaderName => {
-  const loader = environment.loaders.get(loaderName);
+webpackConfig.loaders.keys().forEach(loaderName => {
+  const loader = webpackConfig.loaders.get(loaderName);
   if (loaderName === 'sass') {
     loader.use.forEach(addQuietDepsToSassLoader);
   }
   loader.use.forEach(hotfixPostcssLoaderConfig);
 });
+

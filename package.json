@@ -10,7 +10,7 @@
     "@floating-ui/dom": "*",
     "@hotwired/stimulus": "*",
     "@hotwired/turbo": "*",
-    "@rails/webpacker": "5.4.4",
+    "@rails/webpacker": "^6.0.0-rc.6",
     "@stimulus-components/rails-nested-form": "*",
     "cable_ready": "5.0.6",
     "flatpickr": "*",
@@ -32,10 +32,20 @@
     "tom-select": "*",
     "trix": "*",
     "turbo_power": "*",
-    "webpack": "~4"
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   },
+  "babel": {
+    "presets": [
+      "./node_modules/@rails/webpacker/package/babel/preset.js"
+    ]
+  },
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
     "@testing-library/dom": "<11.0.0",
+    "@webpack-cli/serve": "^3.0.1",
     "jasmine-core": "~5.12.1",
     "jest": "*",
     "jest-environment-jsdom": "*",
@@ -44,6 +54,6 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "*",
-    "webpack-dev-server": "~3"
+    "webpack-dev-server": "^5.2.2"
   }
 }
