@@ -1,15 +1,17 @@
 .row
   .alpha.two.columns= label_tag nil, t(:report_hubs)
-  .omega.fourteen.columns= f.collection_select(:distributor_id_in, @data.distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+  .omega.fourteen.columns
+    = f.select(:distributor_id_in, [], {selected: params.dig(:q, :distributor_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_distributors_admin_reports_url(report_type: :enterprise_fee_summary, report_subtype: :enterprise_fees_with_tax_report_by_producer)}})
 
 .row
   .alpha.two.columns= label_tag nil, t(:report_producers)
-  .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@data.orders_suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
+  .omega.fourteen.columns
+    = select_tag(:supplier_id_in, [], {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_suppliers_admin_reports_url(report_type: :enterprise_fee_summary, report_subtype: :enterprise_fees_with_tax_report_by_producer)}})
 
 .row
   .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
   .omega.fourteen.columns
-    = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), {selected: params.dig(:q, :order_cycle_id_in)}, {class: "select2 fullwidth", multiple: true})
+    = f.select(:order_cycle_id_in, [], {selected: params.dig(:q, :order_cycle_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_order_cycles_admin_reports_url(report_type: :enterprise_fee_summary, report_subtype: :enterprise_fees_with_tax_report_by_producer)}})
 
 .row
   .alpha.two.columns= label_tag nil, t(:fee_name)
@@ -24,4 +26,4 @@
 .row
   .alpha.two.columns= label_tag nil, t(:report_customers)
   .omega.fourteen.columns
-    = f.select(:customer_id_in, customer_email_options(@data.order_customers), {selected: params.dig(:q, :customer_id_in)}, {class: "select2 fullwidth", multiple: true})
+    = f.select(:customer_id_in, [], {selected: params.dig(:q, :customer_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_order_customers_admin_reports_url(report_type: :enterprise_fee_summary, report_subtype: :enterprise_fees_with_tax_report_by_producer)}})
