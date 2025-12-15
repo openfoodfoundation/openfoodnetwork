@@ -1,0 +1,4 @@
+- unless flash[:error]
+  = turbo_stream.remove "resource-#{@object.id}"
+= turbo_stream.append "flashes" do
+  = render(partial: 'admin/shared/flashes', locals: { flashes: flash })
