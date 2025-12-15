@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_15_225535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -619,6 +619,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.string "note", default: "", null: false
     t.index ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx"
     t.index ["customer_id"], name: "index_spree_orders_on_customer_id"
+    t.index ["distributor_id", "order_cycle_id"], name: "idx_spree_orders_completed_not_canceled", where: "((completed_at IS NOT NULL) AND ((state)::text <> 'canceled'::text))"
     t.index ["distributor_id"], name: "index_spree_orders_on_distributor_id"
     t.index ["number"], name: "index_orders_on_number"
     t.index ["order_cycle_id"], name: "index_spree_orders_on_order_cycle_id"
