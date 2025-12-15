@@ -101,6 +101,24 @@ module Spree
       end
 
       after_transition to: :completed, do: :set_captured_at
+      after_transition do |payment, transition|
+        # Catch any exceptions to prevent any rollback potentially
+        # preventing payment from going through
+        ActiveSupport::Notifications.instrument(
+          "ofn.payment_transition", payment: payment, event: transition.to
+        )
+      rescue StandardError => e
+        Rails.logger.fatal "ActiveSupport::Notification.instrument failed params: " \
+                           "<event_type:ofn.payment_transition> " \
+                           "<payment_id:#{payment.id}> " \
+                           "<event:#{transition.to}>"
+        Alert.raise(
+          e,
+          metadata: {
+            event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
+          }
+        )
+      end
     end
 
     def money

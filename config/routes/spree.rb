@@ -34,6 +34,7 @@ Spree::Core::Engine.routes.draw do
 
   resource :account, :controller => 'users' do
     resources :webhook_endpoints, only: [:create, :destroy], controller: '/webhook_endpoints'
+    post '/webhook_endpoints/:id/test', to: "/webhook_endpoints#test", as: "webhook_endpoint_test"
   end
 
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
