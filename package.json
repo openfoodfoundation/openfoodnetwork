@@ -53,7 +53,8 @@
     ]
   },
   "browserslist": [
-    "defaults"
+    "defaults",
+    "IE 11"
   ],
   "devDependencies": {
     "@testing-library/dom": "<11.0.0",
