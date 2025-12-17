@@ -2,20 +2,19 @@
 // While in feature-toggle, we inherit all files from old admin design.
 // Individual files may be copied in order to replace the old files.
 
-// TODO remove ~
 @import "assets/stylesheets/normalize";
 @import "assets/stylesheets/responsive-tables";
 @import "assets/stylesheets/jquery.powertip";
-@import "~jquery-ui/themes/base/core";
-@import "~jquery-ui/themes/base/button";
-@import "~jquery-ui/themes/base/resizable";
+@import "jquery-ui/themes/base/core";
+@import "jquery-ui/themes/base/button";
+@import "jquery-ui/themes/base/resizable";
 @import "assets/stylesheets/jquery-ui-theme";
-@import "~jquery-ui/themes/base/dialog";
+@import "jquery-ui/themes/base/dialog";
 @import "../shared/ng-tags-input.min";
 @import "assets/stylesheets/select2";
-@import "~flatpickr/dist/flatpickr";
-@import "~flatpickr/dist/themes/material_blue";
-@import "~shortcut-buttons-flatpickr/dist/themes/light";
+@import "flatpickr/dist/flatpickr";
+@import "flatpickr/dist/themes/material_blue";
+@import "shortcut-buttons-flatpickr/dist/themes/light";
 
 @import "../admin/globals/functions";
 @import "globals/palette"; // admin_v3
@@ -124,7 +123,7 @@
 @import "shared/question-mark-icon";
 @import "../admin/question-mark-tooltip";
 
-@import "~tom-select/src/scss/tom-select.default";
+@import "tom-select/src/scss/tom-select.default";
 @import "components/tom_select"; // admin_v3
 
 @import "modal_component/modal_component";
