@@ -33,6 +33,8 @@
     "postcss-import": "^16.1.1",
     "postcss-loader": "^8.2.0",
     "postcss-preset-env": "^10.5.0",
+    "regenerator-transform": "^0.15.2",
+    "sass-embedded": "^1.96.0",
     "sass-loader": "^16.0.6",
     "select2": "*",
     "shortcut-buttons-flatpickr": "*",
