@@ -89,7 +89,7 @@ services:
     build: .
     command: >
       sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
-              exec ./bin/webpack-dev-server'
+              exec ./bin/webpacker-dev-server'
     ports:
       - "3035:3035"
     volumes:
