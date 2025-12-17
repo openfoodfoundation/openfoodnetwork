@@ -1,6 +1,6 @@
 
-@import 'vendor/assets/stylesheets/autocomplete';
-@import 'vendor/assets/stylesheets/leaflet';
+@import 'assets/stylesheets/autocomplete';
+@import 'assets/stylesheets/leaflet';
 @import 'variables';
 @import '../shared/variables/layout';
 @import '../shared/utilities';
@@ -77,4 +77,4 @@ ofn-modal {
 @import "../shared/question-mark-icon";
 @import '../admin/shared/scroll_bar';
 
-@import 'app/components/modal_component/modal_component';
+@import 'modal_component/modal_component';
