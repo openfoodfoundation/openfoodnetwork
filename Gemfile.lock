@@ -158,8 +158,8 @@ GEM
       zeitwerk (>= 2.4, < 3.0)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
-    addressable (2.8.7)
-      public_suffix (>= 2.0.2, < 7.0)
+    addressable (2.8.8)
+      public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     afm (0.2.2)
     angular-rails-templates (1.4.0)
@@ -251,7 +251,7 @@ GEM
     concurrent-ruby (1.3.5)
     connection_pool (2.5.5)
     cookiejar (0.3.4)
-    crack (1.0.0)
+    crack (1.0.1)
       bigdecimal
       rexml
     crass (1.0.6)
@@ -584,7 +584,7 @@ GEM
     psych (5.2.6)
       date
       stringio
-    public_suffix (6.0.2)
+    public_suffix (7.0.0)
     puffing-billy (4.0.2)
       addressable (~> 2.5)
       em-http-request (~> 1.1, >= 1.1.0)
@@ -936,7 +936,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.25.1)
+    webmock (3.26.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
