@@ -14,11 +14,17 @@ module DfcProvider
     # We will need to pull the updated data.
     def create
       unless current_user.is_a? ApiUser
-        unauthorized "You need to authenticate as authorised platform (client_id)."
+        render_message(
+          :unauthorized,
+          "You need to authenticate as authorised platform (client_id).",
+        )
         return
       end
       unless current_user.id == "lf-dev"
-        unauthorized "Your client_id is not authorised on this platform."
+        render_message(
+          :unauthorized,
+          "Your client_id is not authorised on this platform.",
+        )
         return
       end
 
@@ -44,10 +50,6 @@ module DfcProvider
     end
 
     private
-
-    def unauthorized(message)
-      render_message(:unauthorized, message)
-    end
 
     def render_message(status, message)
       render status:, json: { success: false, message: }
