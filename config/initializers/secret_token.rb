@@ -7,6 +7,3 @@
 
 # Rails 4+ key for signing and encrypting cookies.
 Openfoodnetwork::Application.credentials.secret_key_base = ENV["SECRET_TOKEN"]
-
-# Legacy secret_token variable. This is still used directly for encryption.
-Openfoodnetwork::Application.credentials.secret_token = ENV["SECRET_TOKEN"]
