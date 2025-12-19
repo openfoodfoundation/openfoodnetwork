@@ -289,7 +289,7 @@ GEM
     diff-lcs (1.6.2)
     digest (3.2.1)
     docile (1.4.1)
-    dotenv (3.1.8)
+    dotenv (3.2.0)
     drb (2.2.3)
     em-http-request (1.1.7)
       addressable (>= 2.3.4)
