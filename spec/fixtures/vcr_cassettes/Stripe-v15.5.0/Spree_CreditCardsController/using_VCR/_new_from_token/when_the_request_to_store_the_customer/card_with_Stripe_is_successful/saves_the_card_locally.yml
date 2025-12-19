@@ -1,0 +1,343 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: UTF-8
+      string: card[number]=4242424242424242&card[exp_month]=9&card[exp_year]=2026&card[cvc]=314
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/15.5.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_jYD9jjmlhAYEWs","request_duration_ms":2424}}'
+      Idempotency-Key:
+      - cbb6f9e0-66bf-47be-8c0d-b95351667429
+      Stripe-Version:
+      - 2025-08-27.basil
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 10 Dec 2025 04:58:41 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '925'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=vn-kdYNC1s3hDiXRhhwC1XR0hBLmLcsdIMCRlo13rosJ4C3caLqD_POExMdYc1IhbElyv04kp1IcvLWm
+      Idempotency-Key:
+      - cbb6f9e0-66bf-47be-8c0d-b95351667429
+      Original-Request:
+      - req_UfmMcYIwxuZ4lS
+      Request-Id:
+      - req_UfmMcYIwxuZ4lS
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2025-08-27.basil
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - ABGHIJ
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "tok_1ScfU5KuuB1fWySnCddGxE3l",
+          "object": "token",
+          "card": {
+            "id": "card_1ScfU4KuuB1fWySnL5neikIs",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "cvc_check": "unchecked",
+            "dynamic_last4": null,
+            "email": null,
+            "exp_month": 9,
+            "exp_year": 2026,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "last4": "4242",
+            "metadata": {},
+            "name": null,
+            "networks": {
+              "preferred": null
+            },
+            "phone": null,
+            "regulated_status": "unregulated",
+            "tokenization_method": null,
+            "wallet": null
+          },
+          "client_ip": "101.188.38.96",
+          "created": 1765342721,
+          "livemode": false,
+          "type": "card",
+          "used": false
+        }
+  recorded_at: Wed, 10 Dec 2025 04:59:11 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: email=beulah_schmitt%40murray.co.uk&source=tok_1ScfU5KuuB1fWySnCddGxE3l
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/15.5.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_UfmMcYIwxuZ4lS","request_duration_ms":419}}'
+      Idempotency-Key:
+      - b3db5536-5b0f-4a9b-9dbe-dfdaeffb79b1
+      Stripe-Version:
+      - 2025-08-27.basil
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 10 Dec 2025 04:58:41 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '694'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=vn-kdYNC1s3hDiXRhhwC1XR0hBLmLcsdIMCRlo13rosJ4C3caLqD_POExMdYc1IhbElyv04kp1IcvLWm
+      Idempotency-Key:
+      - b3db5536-5b0f-4a9b-9dbe-dfdaeffb79b1
+      Original-Request:
+      - req_Jxzs3G8IYLQVgV
+      Request-Id:
+      - req_Jxzs3G8IYLQVgV
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2025-08-27.basil
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - ABGHIJ
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "cus_TZp8VzK3Y14cbD",
+          "object": "customer",
+          "address": null,
+          "balance": 0,
+          "created": 1765342721,
+          "currency": null,
+          "customer_account": null,
+          "default_source": "card_1ScfU4KuuB1fWySnL5neikIs",
+          "delinquent": false,
+          "description": null,
+          "discount": null,
+          "email": "beulah_schmitt@murray.co.uk",
+          "invoice_prefix": "B0HZJQDX",
+          "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null,
+            "rendering_options": null
+          },
+          "livemode": false,
+          "metadata": {},
+          "name": null,
+          "next_invoice_sequence": 1,
+          "phone": null,
+          "preferred_locales": [],
+          "shipping": null,
+          "tax_exempt": "none",
+          "test_clock": null
+        }
+  recorded_at: Wed, 10 Dec 2025 04:59:12 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_TZp8VzK3Y14cbD/sources?limit=1&object=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/15.5.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_Jxzs3G8IYLQVgV","request_duration_ms":788}}'
+      Stripe-Version:
+      - 2025-08-27.basil
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 10 Dec 2025 04:58:42 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '935'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=vn-kdYNC1s3hDiXRhhwC1XR0hBLmLcsdIMCRlo13rosJ4C3caLqD_POExMdYc1IhbElyv04kp1IcvLWm
+      Request-Id:
+      - req_x3LhhVKjRWnE0c
+      Stripe-Version:
+      - 2025-08-27.basil
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - ABGHIJ
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1ScfU4KuuB1fWySnL5neikIs",
+              "object": "card",
+              "address_city": null,
+              "address_country": null,
+              "address_line1": null,
+              "address_line1_check": null,
+              "address_line2": null,
+              "address_state": null,
+              "address_zip": null,
+              "address_zip_check": null,
+              "allow_redisplay": "unspecified",
+              "brand": "Visa",
+              "country": "US",
+              "customer": "cus_TZp8VzK3Y14cbD",
+              "cvc_check": "pass",
+              "dynamic_last4": null,
+              "email": null,
+              "exp_month": 9,
+              "exp_year": 2026,
+              "fingerprint": "6E6tgVjx6U65iHFV",
+              "funding": "credit",
+              "last4": "4242",
+              "metadata": {},
+              "name": null,
+              "phone": null,
+              "regulated_status": "unregulated",
+              "tokenization_method": null,
+              "wallet": null
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/customers/cus_TZp8VzK3Y14cbD/sources"
+        }
+  recorded_at: Wed, 10 Dec 2025 04:59:12 GMT
+recorded_with: VCR 6.2.0
