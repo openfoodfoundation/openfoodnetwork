@@ -813,7 +813,7 @@ GEM
     sd_notify (0.1.1)
     securerandom (0.4.1)
     semantic_range (3.1.0)
-    shakapacker (6.0.0)
+    shakapacker (6.6.0)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -1080,7 +1080,7 @@ DEPENDENCIES
   rubocop-rspec_rails
   sd_notify
   select2-rails!
-  shakapacker (= 6.0.0)
+  shakapacker (= 6.6.0)
   shoulda-matchers
   sidekiq
   sidekiq-scheduler
