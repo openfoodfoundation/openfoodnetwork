@@ -1,4 +1,4 @@
-const { generateWebpackConfig } = require("@rails/webpacker")
+const { webpackConfig, merge } = require("shakapacker")
 
 const options = {
   resolve: {
@@ -7,4 +7,4 @@ const options = {
 }
 
 // This results in a new object copied from the mutable global
-module.exports = generateWebpackConfig(options)
+module.exports = merge(webpackConfig, options)

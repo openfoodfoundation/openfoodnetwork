@@ -15,11 +15,11 @@
     "@hotwired/stimulus": "*",
     "@hotwired/turbo": "*",
     "@stimulus-components/rails-nested-form": "*",
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^8.2.2",
     "cable_ready": "5.0.6",
     "coffee-loader": "^5.0.0",
     "coffeescript": "^2.7.0",
-    "compression-webpack-plugin": "^11.1.0",
+    "compression-webpack-plugin": "^9.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.4",
     "flatpickr": "*",
@@ -33,6 +33,7 @@
     "mini-css-extract-plugin": "^2.9.4",
     "moment": "*",
     "mrujs": "*",
+    "pnp-webpack-plugin": "^1.7.0",
     "postcss": "^8.5.6",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^16.1.1",
@@ -54,14 +55,14 @@
     "trix": "*",
     "turbo_power": "*",
     "webpack": "^5.104.0",
-    "webpack-assets-manifest": "^6.5.0",
-    "webpack-cli": "^6.0.1",
-    "webpack-merge": "^6.0.1",
+    "webpack-assets-manifest": "^5.0.6",
+    "webpack-cli": "^4.8.0",
+    "webpack-merge": "^5.8.0",
     "webpack-sources": "^3.3.3"
   },
   "babel": {
     "presets": [
-      "./node_modules/@rails/webpacker/package/babel/preset.js"
+      "./node_modules/shakapacker/package/babel/preset.js"
     ]
   },
   "browserslist": [
@@ -70,7 +71,6 @@
   ],
   "devDependencies": {
     "@testing-library/dom": "<11.0.0",
-    "@webpack-cli/serve": "^3.0.1",
     "jasmine-core": "~5.12.1",
     "jest": "*",
     "jest-environment-jsdom": "*",
