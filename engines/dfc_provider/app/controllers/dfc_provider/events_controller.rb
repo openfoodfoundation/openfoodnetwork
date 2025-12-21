@@ -13,14 +13,7 @@ module DfcProvider
     # It means that our permissions to access data on another platform changed.
     # We will need to pull the updated data.
     def create
-      unless current_user.is_a? ApiUser
-        unauthorized "You need to authenticate as authorised platform (client_id)."
-        return
-      end
-      unless current_user.id == "lf-dev"
-        unauthorized "Your client_id is not authorised on this platform."
-        return
-      end
+      return if rendered_errors?
 
       event = JSON.parse(request.body.read)
       enterprises_url = event["enterpriseUrlid"]
@@ -45,8 +38,23 @@ module DfcProvider
 
     private
 
-    def unauthorized(message)
-      render_message(:unauthorized, message)
+    def rendered_errors?
+      unless current_user.is_a? ApiUser
+        render_message(
+          :unauthorized,
+          "You need to authenticate as authorised platform (client_id).",
+        )
+        return true
+      end
+      unless current_user.id == "lf-dev"
+        render_message(
+          :unauthorized,
+          "Your client_id is not authorised on this platform.",
+        )
+        return true
+      end
+
+      false
     end
 
     def render_message(status, message)
