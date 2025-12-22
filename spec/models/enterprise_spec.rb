@@ -396,24 +396,8 @@ RSpec.describe Enterprise do
       let(:content_type) { 'image/png' }
 
       before do
-        blob = instance_double(
-          "ActiveStorage::Blob",
-          filename: ActiveStorage::Filename.new('white-label-logo.png'),
-          content_type:,
-          byte_size: 1024
-        )
-
-        # InstanceDouble is not working for attachment case as the blob method is not yet defined
-        # on instantiation.
-        attachment = double(
-          "ActiveStorage::Attached::One",
-          blank?: false,
-          attached?: true,
-          blob:
-        )
-
-        allow(enterprise)
-          .to receive(:white_label_logo).and_return(attachment)
+        blob = Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', content_type)
+        enterprise.white_label_logo.attach(blob)
       end
 
       context 'when the file attached is a PNG image' do
@@ -424,6 +408,12 @@ RSpec.describe Enterprise do
 
       context 'when the file attached is a BMP image' do
         let(:content_type) { 'image/bmp' }
+
+        before do
+          blob = Rack::Test::UploadedFile.new('spec/fixtures/files/logo.bmp', content_type)
+          enterprise.white_label_logo.attach(blob)
+        end
+
         it 'is not valid' do
           expect(enterprise).not_to be_valid
         end

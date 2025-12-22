@@ -11,7 +11,9 @@ class ImageImporter
 
     image = Spree::Image.create do |img|
       PrivateAddressCheck.only_public_connections do
-        img.attachment.attach(io: valid_url.open, filename:, metadata:)
+        io = valid_url.open
+        content_type = Marcel::MimeType.for(io)
+        img.attachment.attach(io:, filename:, metadata:, content_type:)
       end
     end
     product.image = image if image
