@@ -379,7 +379,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    haml_lint (0.67.0)
+    haml_lint (0.68.0)
       haml (>= 5.0)
       parallel (~> 1.10)
       rainbow
@@ -576,7 +576,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.6.0)
+    prism (1.7.0)
     private_address_check (0.5.0)
     pry (0.15.2)
       coderay (~> 1.1)
@@ -875,7 +875,7 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     sysexits (1.2.0)
-    temple (0.8.2)
+    temple (0.10.4)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.4.0)
@@ -902,7 +902,7 @@ GEM
       simplecov_json_formatter
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
-    unicode-emoji (4.1.0)
+    unicode-emoji (4.2.0)
     uniform_notifier (1.17.0)
     uri (1.1.1)
     valid_email2 (5.2.3)
