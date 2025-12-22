@@ -97,7 +97,7 @@ module Reports
     end
 
     def enterprise_fee_ids(orders)
-      Spree::Adjustment.enterprise_fee.where(order_id: orders.select(&:id)).select(:originator_id)
+      Spree::Adjustment.enterprise_fee.where(order_id: orders.select(:id)).select(:originator_id)
     end
   end
 end
