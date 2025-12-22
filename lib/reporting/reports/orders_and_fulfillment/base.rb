@@ -41,7 +41,7 @@ module Reporting
         end
 
         def variant_name
-          proc { |line_items| line_items.first.variant.full_name }
+          proc { |line_items| line_items.first.full_variant_name }
         end
 
         def variant_sku
@@ -57,7 +57,7 @@ module Reporting
         end
 
         def product_name
-          proc { |line_items| line_items.first.variant.product.name }
+          proc { |line_items| line_items.first.full_product_name }
         end
 
         def product_tax_category
