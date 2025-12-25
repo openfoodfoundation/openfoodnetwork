@@ -76,9 +76,11 @@ module Reports
       if query.model == Customer
         query.order(:email).offset((page - 1) * per_page).limit(per_page).pluck(:email, :id)
       elsif query.model == OrderCycle
-        query.order('order_cycles.orders_close_at DESC').offset((page - 1) * per_page).limit(per_page).pluck(
-          :name, :id
-        )
+        query.order('order_cycles.orders_close_at DESC')
+          .offset((page - 1) * per_page)
+          .limit(per_page).pluck(
+            :name, :id
+          )
       else
         query.order(:name).offset((page - 1) * per_page).limit(per_page).pluck(:name, :id)
       end

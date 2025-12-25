@@ -72,7 +72,7 @@ describe("Select2AjaxController", () => {
 
     it("configures select2 with correct options", () => {
       expect(select2InitOptions.ajax.dataType).toBe("json");
-      expect(select2InitOptions.ajax.quietMillis).toBe(250);
+      expect(select2InitOptions.ajax.quietMillis).toBe(500);
       expect(select2InitOptions.allowClear).toBe(true);
       expect(select2InitOptions.minimumInputLength).toBe(0);
       expect(select2InitOptions.width).toBe("100%");
