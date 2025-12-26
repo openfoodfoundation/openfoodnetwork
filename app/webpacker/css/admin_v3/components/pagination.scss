@@ -2,14 +2,17 @@
   text-align: center;
   margin: 0 0 1em;
   padding: 20px 0 28px 0;
-
   background-color: $color-7;
-
   display: flex;
   justify-content: center;
   gap: 8px;
 
-  button.page,
+  .pagelist {
+    display: flex;
+    gap: inherit;
+    list-style-type: none;
+  }
+
   .page {
     width: $btn-relaxed-height;
     line-height: $btn-relaxed-height;
@@ -69,17 +72,6 @@
 
     &:active {
       border: none;
-    }
-  }
-
-  button {
-    margin: 0 0.35em;
-
-    background-color: $white;
-    color: $near-black;
-    box-shadow: $box-shadow;
-
-    &.active {
       color: $white;
       background-color: $red;
       cursor: default;
