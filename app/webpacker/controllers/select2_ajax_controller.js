@@ -6,7 +6,6 @@ export default class extends Controller {
   };
 
   connect() {
-    // Wait for jQuery and select2 to be available
     if (typeof $ === "undefined" || typeof $.fn.select2 === "undefined") {
       console.error("Select2 AJAX Controller: jQuery or Select2 not loaded");
       return;
@@ -14,36 +13,24 @@ export default class extends Controller {
 
     const $element = $(this.element);
 
-    // Skip if already initialized
-    if ($element.hasClass("select2-hidden-accessible")) {
-      return;
-    }
+    if ($element.hasClass("select2-hidden-accessible")) return;
 
     const ajaxUrl = this.urlValue;
+    if (!ajaxUrl) return;
 
-    if (!ajaxUrl) {
-      console.warn("Select2 AJAX: No URL provided");
-      return;
-    }
-
-    // Store original select element details
-    const selectName = this.element.name;
+    const selectName = this.element.name; // e.g. supplier_id_in[]
     const selectId = this.element.id;
     const isMultiple = this.element.multiple;
-
-    // Get selected values to pre-populate
     const selectedValues = $element.val() || [];
 
-    // Create a hidden input to replace the select
-    const $hiddenInput = $('<input type="hidden" />');
-    $hiddenInput.attr("name", selectName);
-    $hiddenInput.attr("id", selectId);
-    if (isMultiple) {
-      $hiddenInput.attr("multiple", "multiple");
-    }
+    const container = document.createElement("div");
+    container.dataset.select2HiddenContainer = "true";
 
-    // Replace select with hidden input
-    $element.replaceWith($hiddenInput);
+    this.element.replaceWith(container);
+
+    const $select2Input = $('<input type="hidden" />');
+    $select2Input.attr("id", selectId);
+    container.appendChild($select2Input[0]);
 
     const select2Options = {
       ajax: {
@@ -67,32 +54,48 @@ export default class extends Controller {
       minimumInputLength: 0,
       multiple: isMultiple,
       width: "100%",
-      formatResult: function (item) {
-        return item.text;
-      },
-      formatSelection: function (item) {
-        return item.text;
-      },
+      formatResult: item => item.text,
+      formatSelection: item => item.text,
     };
 
-    // Initialize Select2 on the hidden input
-    $hiddenInput.select2(select2Options);
+    $select2Input.select2(select2Options);
+    this.select2Element = $select2Input[0];
 
-    // Store reference to the new element
-    this.select2Element = $hiddenInput[0];
+    // Rails-style array submission
+    const syncHiddenInputs = values => {
+      // remove old inputs
+      container
+        .querySelectorAll(`input[name="${selectName}"]`)
+        .forEach(e => e.remove());
 
-    // Pre-populate selected values if any
-    if (selectedValues && selectedValues.length > 0) {
-      $hiddenInput.val(selectedValues).trigger("change.select2");
+      values.forEach(value => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = `${selectName}`;
+        input.value = value;
+        container.appendChild(input);
+      });
+    };
+
+    // On change → rebuild hidden inputs
+    $select2Input.on("change", () => {
+      const valuesString = $select2Input.val() || "";
+      const values = valuesString.split(',') || [];
+
+      syncHiddenInputs(Array.isArray(values) ? values : [values]);
+    });
+
+    // Pre-populate
+    if (selectedValues.length > 0) {
+      $select2Input.val(selectedValues).trigger("change");
     }
   }
 
   disconnect() {
-    // Clean up the select2 element we created
     if (this.select2Element) {
-      const $element = $(this.select2Element);
-      if ($element.hasClass("select2-hidden-accessible")) {
-        $element.select2("destroy");
+      const $el = $(this.select2Element);
+      if ($el.hasClass("select2-hidden-accessible")) {
+        $el.select2("destroy");
       }
     }
   }
