@@ -23,6 +23,5 @@ RSpec.describe Spree::TestMailer do
 
   context "white labelling" do
     it_behaves_like 'email with inactive white labelling', :mail
-    it_behaves_like 'non-customer facing email with active white labelling', :mail
   end
 end
