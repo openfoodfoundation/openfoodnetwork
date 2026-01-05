@@ -179,6 +179,8 @@ module Admin
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
+      product_query = apply_tags_filter(product_query)
+
       # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
       # When the current ransack sort uses the computed stock columns, include them in the select
       # so the generated COUNT/DISTINCT query is valid.
@@ -225,10 +227,52 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
-      query.merge!(variants_tags_name_in: @tags) if @tags.present?
       query.merge!(@q) if @q
 
       query
+    end
+
+    # Apply tags filter with OR logic:
+    # - Products with variants having selected tags
+    # - OR products with variants having no tags (when "None" is selected)
+    #
+    # Note: This cannot be implemented using Ransack because Ransack applies
+    # AND semantics across associations and cannot express OR logic that combines
+    # the presence and absence of the same associated records.
+    def apply_tags_filter(base_query)
+      return base_query if @tags.blank?
+
+      tags = Array(@tags)
+      none_key = I18n.t('admin.products_v3.filters.tags.none')
+
+      has_none = tags.include?(none_key)
+      tag_names = tags.reject { |t| t == none_key }
+
+      queries = []
+
+      if tag_names.any?
+        # Products with at least one variant having one of the selected tags
+        tagged_product_ids = Spree::Variant
+          .joins(taggings: :tag)
+          .where(tags: { name: tag_names })
+          .select(:product_id)
+
+        queries << base_query.where(id: tagged_product_ids)
+      end
+
+      if has_none
+        # Products where no variants have any tags
+        tagged_product_ids = Spree::Variant
+          .joins(:taggings)
+          .select(:product_id)
+
+        queries << base_query.where.not(id: tagged_product_ids)
+      end
+
+      return base_query if queries.empty?
+
+      # Combine queries using ActiveRecord's or method
+      queries.reduce { |combined, query| combined.or(query) }
     end
 
     # Optimise by pre-loading required columns
