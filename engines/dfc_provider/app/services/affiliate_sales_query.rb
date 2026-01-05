@@ -14,7 +14,7 @@ class AffiliateSalesQuery
           },
         )
         .group(key_fields)
-        .pluck(fields)
+        .pluck(Arel.sql(fields))
     end
 
     # Create a hash with labels for an array of data points:
@@ -48,8 +48,8 @@ class AffiliateSalesQuery
 
     def fields
       <<~SQL.squish
-        spree_products.name AS product_name,
-        spree_variants.display_name AS unit_name,
+        COALESCE(spree_line_items.product_name, spree_products.name) AS product_name,
+        COALESCE(spree_line_items.variant_name, spree_variants.display_name) AS unit_name,
         spree_variants.variant_unit AS unit_type,
         spree_variants.unit_value AS units,
         spree_variants.unit_presentation,
@@ -65,8 +65,8 @@ class AffiliateSalesQuery
 
     def key_fields
       <<~SQL.squish
-        product_name,
-        unit_name,
+        COALESCE(spree_line_items.product_name, spree_products.name),
+        COALESCE(spree_line_items.variant_name, spree_variants.display_name),
         unit_type,
         units,
         spree_variants.unit_presentation,
