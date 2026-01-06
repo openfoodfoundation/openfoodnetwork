@@ -60,11 +60,6 @@
     "webpack-merge": "^5.8.0",
     "webpack-sources": "^3.3.3"
   },
-  "babel": {
-    "presets": [
-      "./node_modules/shakapacker/package/babel/preset.js"
-    ]
-  },
   "browserslist": [
     "defaults",
     "not IE 11"
