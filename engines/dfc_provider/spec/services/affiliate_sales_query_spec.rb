@@ -87,7 +87,7 @@ RSpec.describe AffiliateSalesQuery do
       expect(labelled_row).to include(
         product_name: "Tomatoes",
         unit_name: "Tomatoes - Roma",
-        price: 10.to_d,
+        price: 10.to_d, # this price is hardcoded in the line item factory.
       )
     end
 
