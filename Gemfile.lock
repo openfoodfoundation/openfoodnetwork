@@ -1017,7 +1017,7 @@ DEPENDENCIES
   good_migrations
   haml
   haml_lint
-  highline (= 2.0.3)
+  highline
   i18n
   i18n-js (~> 3.9.0)
   i18n-tasks
