@@ -52,14 +52,6 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
-    def self.providers
-      [
-        Spree::PaymentMethod::Check,
-        Spree::Gateway::StripeSCA,
-        Spree::Gateway::PayPalExpress,
-      ]
-    end
-
     def configured?
       !stripe? || stripe_configured?
     end

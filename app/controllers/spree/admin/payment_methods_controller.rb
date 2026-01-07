@@ -117,7 +117,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = Spree::PaymentMethod.providers.map(&:to_s)
+        valid_payment_methods = PAYMENT_METHODS.keys
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
@@ -133,7 +133,7 @@ module Spree
       end
 
       def load_providers
-        providers = Gateway.providers.sort_by(&:name)
+        providers = PAYMENT_METHODS.values.sort_by(&:name)
 
         unless show_stripe?
           providers.reject! { |provider| stripe_provider?(provider) }
