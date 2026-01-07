@@ -117,7 +117,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
+        valid_payment_methods = Spree::PaymentMethod.providers.map(&:to_s)
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)

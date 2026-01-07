@@ -53,7 +53,11 @@ module Spree
     }
 
     def self.providers
-      Rails.application.config.spree.payment_methods
+      [
+        Spree::PaymentMethod::Check,
+        Spree::Gateway::StripeSCA,
+        Spree::Gateway::PayPalExpress,
+      ]
     end
 
     def configured?
