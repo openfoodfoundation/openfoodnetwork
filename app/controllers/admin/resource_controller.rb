@@ -61,7 +61,7 @@ module Admin
 
     def destroy
       if @object.destroy
-        flash[:success] = flash_message_for(@object, :successfully_removed)
+        flash[:success] = Spree.t(:successfully_removed)
         respond_with(@object) do |format|
           format.html { redirect_to collection_url }
           format.js   { render partial: "spree/admin/shared/destroy" }
@@ -76,7 +76,7 @@ module Admin
     protected
 
     def resource_not_found
-      flash[:error] = flash_message_for(model_class.new, :not_found)
+      flash[:error] = Spree.t(:not_found)
       redirect_to collection_url
     end
 

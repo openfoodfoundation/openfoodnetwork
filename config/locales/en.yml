@@ -4195,6 +4195,8 @@ en:
     logourl: "Logourl"
     are_you_sure_delete: "Are you sure you want to delete this record?"
     confirm_delete: "Confirm Deletion"
+    tag_rule: "Tag Rule"
+    voucher: "Voucher"
 
     configurations: "Configurations"
     general_settings: "General Settings"

@@ -5,7 +5,7 @@ module Spree
     class TaxCategoriesController < ::Admin::ResourceController
       def destroy
         if @object.destroy
-          flash[:success] = flash_message_for(@object, :successfully_removed)
+          flash[:success] = Spree.t(:successfully_removed)
           respond_with(@object) do |format|
             format.html { redirect_to collection_url }
             format.js   { render partial: "spree/admin/shared/destroy" }
