@@ -388,7 +388,8 @@ GEM
     hashdiff (1.2.1)
     hashery (2.1.2)
     hashie (5.0.0)
-    highline (2.0.3)
+    highline (3.1.2)
+      reline
     htmlentities (4.4.2)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
