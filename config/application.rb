@@ -79,7 +79,9 @@ module Openfoodnetwork
     initializer "spree.register.payment_methods" do |app|
       Rails.application.reloader.to_prepare do
         app.config.spree.payment_methods = [
-          Spree::PaymentMethod::Check
+          Spree::PaymentMethod::Check,
+          Spree::Gateway::StripeSCA,
+          Spree::Gateway::PayPalExpress,
         ]
       end
     end
@@ -128,14 +130,6 @@ module Openfoodnetwork
         app.config.spree.calculators.tax_rates = [
           Calculator::DefaultTax
         ]
-      end
-    end
-
-    # Register Spree payment methods
-    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
-      Rails.application.reloader.to_prepare do
-        app.config.spree.payment_methods << Spree::Gateway::StripeSCA
-        app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
       end
     end
 
