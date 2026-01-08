@@ -19,12 +19,14 @@ class ImageBuilder < DfcBuilder
 
   def self.import(image_link)
     url = URI.parse(image_link)
-    filename = File.basename(image_link)
+    filename = File.basename(url.path)
     metadata = { custom: { origin: image_link } }
 
     Spree::Image.new.tap do |image|
       PrivateAddressCheck.only_public_connections do
-        image.attachment.attach(io: url.open, filename:, metadata:)
+        io = url.open
+        content_type = Marcel::MimeType.for(io)
+        image.attachment.attach(io:, filename:, metadata:, content_type:)
       end
     end
   rescue StandardError

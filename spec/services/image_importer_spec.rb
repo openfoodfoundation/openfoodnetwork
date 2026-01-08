@@ -7,7 +7,7 @@ RSpec.describe ImageImporter do
   let(:product) { create(:product) }
 
   describe "#import" do
-    it "downloads from the Internet", :vcr do
+    it "downloads from the Internet", :vcr, :aggregate_failures do
       expect {
         subject.import(ofn_url, product)
       }.to change {
