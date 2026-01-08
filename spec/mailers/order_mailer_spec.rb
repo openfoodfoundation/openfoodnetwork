@@ -4,19 +4,24 @@ require 'spec_helper'
 
 RSpec.describe Spree::OrderMailer do
   describe '#confirm_email_for_customer' do
-    subject(:email) { described_class.confirm_email_for_customer(order) }
+    subject(:mail) { described_class.confirm_email_for_customer(order) }
 
     let(:order) { build(:order_with_totals_and_distribution) }
 
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
     it 'renders the shared/_payment.html.haml partial' do
-      expect(email.body).to include('Payment summary')
+      expect(mail.body).to include('Payment summary')
     end
 
     context 'when the order has outstanding balance' do
       before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
       it 'renders the amount as money' do
-        expect(email.body).to include('$123')
+        expect(mail.body).to include('$123')
       end
     end
 
@@ -24,18 +29,18 @@ RSpec.describe Spree::OrderMailer do
       before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
-        expect(email.body).to include('NOT PAID')
+        expect(mail.body).to include('NOT PAID')
       end
     end
 
     context "when :from is not set explicitly" do
       it "falls back to spree config" do
-        expect(email.from).to eq [Spree::Config[:mails_from]]
+        expect(mail.from).to eq [Spree::Config[:mails_from]]
       end
     end
 
     it "doesn't aggressively escape double quotes body" do
-      expect(email.body).not_to include("&quot;")
+      expect(mail.body).not_to include("&quot;")
     end
 
     it "accepts an order id as an alternative to an Order object" do
@@ -44,46 +49,37 @@ RSpec.describe Spree::OrderMailer do
         described_class.confirm_email_for_customer(order.id).deliver_now
       }.not_to raise_error
     end
-
-    it "display the OFN header by default" do
-      expect(email.body).to include(ContentConfig.url_for(:logo))
-    end
-
-    context 'when hide OFN navigation is enabled for the distributor of the order' do
-      before do
-        allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true)
-      end
-
-      it 'does not display the OFN navigation' do
-        expect(email.body).not_to include(ContentConfig.url_for(:logo))
-      end
-    end
   end
 
   describe '#confirm_email_for_shop' do
-    subject(:email) { described_class.confirm_email_for_shop(order) }
+    subject(:mail) { described_class.confirm_email_for_shop(order) }
 
     let(:order) { build(:order_with_totals_and_distribution) }
 
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
     it 'renders the shared/_payment.html.haml partial' do
-      expect(email.body).to include('Payment summary')
+      expect(mail.body).to include('Payment summary')
     end
 
     it "sets a reply-to of the customer email" do
-      expect(email.reply_to).to eq([order.email])
+      expect(mail.reply_to).to eq([order.email])
     end
 
     context 'when the order has outstanding balance' do
       before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
       it 'renders the amount as money' do
-        expect(email.body).to include('$123')
+        expect(mail.body).to include('$123')
       end
     end
 
     context 'when the order has no outstanding balance' do
       it 'displays the payment status' do
-        expect(email.body).to include('NOT PAID')
+        expect(mail.body).to include('NOT PAID')
       end
     end
   end
@@ -151,6 +147,11 @@ RSpec.describe Spree::OrderMailer do
       expect(mail.to).to eq([distributor.contact.email])
     end
 
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
     end
@@ -169,6 +170,11 @@ RSpec.describe Spree::OrderMailer do
       expect(mail.to).to eq([order.email])
     end
 
+    context "white labelling" do
+      it_behaves_like 'email with inactive white labelling', :mail
+      it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
     it "displays the order number" do
       expect(mail.body).to include(order.number.to_s)
     end
@@ -178,7 +184,7 @@ RSpec.describe Spree::OrderMailer do
     end
   end
 
-  describe "order confimation" do
+  describe "order confirmation" do
     let(:bill_address) { create(:address) }
     let(:distributor_address) {
       create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
@@ -244,7 +250,7 @@ RSpec.describe Spree::OrderMailer do
   end
 
   describe "#invoice_email" do
-    subject(:email) { described_class.invoice_email(order) }
+    subject(:mail) { described_class.invoice_email(order) }
     let(:order) { create(:completed_order_with_totals) }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:invoice){
@@ -261,17 +267,17 @@ RSpec.describe Spree::OrderMailer do
       allow(InvoiceRenderer).to receive(:new).and_return(renderer)
     end
     context "When invoices feature is not enabled" do
-      it "should call the invoice render with order as argument" do
+      it "should call the invoice renderer with order as argument" do
         expect(generator).not_to receive(:generate_or_update_latest_invoice)
         expect(order).not_to receive(:invoices)
         expect(renderer).to receive(:render_to_string).with(order, nil).and_return("invoice")
         expect {
-          email.deliver_now
+          mail.deliver_now
         }.not_to raise_error
         expect(deliveries.count).to eq(1)
         expect(deliveries.first.attachments.count).to eq(1)
         expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)
-        expect(email.reply_to).to eq([order.distributor.contact.email])
+        expect(mail.reply_to).to eq([order.distributor.contact.email])
       end
     end
 
@@ -280,7 +286,7 @@ RSpec.describe Spree::OrderMailer do
         expect(generator).to receive(:generate_or_update_latest_invoice)
         expect(order).to receive(:invoices).and_return([invoice])
         expect(renderer).to receive(:render_to_string).with(invoice.presenter, nil)
-        email.deliver_now
+        mail.deliver_now
       end
     end
   end
