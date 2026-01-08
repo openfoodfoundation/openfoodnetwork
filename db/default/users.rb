@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'highline/import'
-
 # see last line where we create an admin if there is none, asking for email and password
 def prompt_for_admin_password
   if ENV['ADMIN_PASSWORD']
