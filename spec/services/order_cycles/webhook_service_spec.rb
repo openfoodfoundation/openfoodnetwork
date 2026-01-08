@@ -22,7 +22,7 @@ RSpec.describe OrderCycles::WebhookService do
       # The co-ordinating enterprise has a non-owner user with an endpoint.
       # They shouldn't receive a notification.
       coordinator_user = create(:user, enterprises: [coordinator])
-      coordinator_user.webhook_endpoints.create!(url: "http://coordinator_user_url")
+      coordinator_user.webhook_endpoints.order_cycle_opened.create!(url: "http://coordinator_user_url")
 
       expect{ subject }
         .not_to enqueue_job(WebhookDeliveryJob).with("http://coordinator_user_url", any_args)
@@ -30,7 +30,7 @@ RSpec.describe OrderCycles::WebhookService do
 
     context "coordinator owner has endpoint configured" do
       before do
-        coordinator.owner.webhook_endpoints.create! url: "http://coordinator_owner_url"
+        coordinator.owner.webhook_endpoints.order_cycle_opened.create!(url: "http://coordinator_owner_url")
       end
 
       it "creates webhook payload for order cycle coordinator" do
@@ -77,7 +77,7 @@ RSpec.describe OrderCycles::WebhookService do
         let(:two_distributors) {
           (1..2).map do |i|
             user = create(:user)
-            user.webhook_endpoints.create!(url: "http://distributor#{i}_owner_url")
+            user.webhook_endpoints.order_cycle_opened.create!(url: "http://distributor#{i}_owner_url")
             create(:distributor_enterprise, owner: user)
           end
         }
@@ -109,7 +109,7 @@ RSpec.describe OrderCycles::WebhookService do
         }
 
         it "creates only one webhook payload for the user's endpoint" do
-          user.webhook_endpoints.create! url: "http://coordinator_owner_url"
+          user.webhook_endpoints.order_cycle_opened.create!(url: "http://coordinator_owner_url")
 
           expect{ subject }
             .to enqueue_job(WebhookDeliveryJob).with("http://coordinator_owner_url", any_args)
@@ -128,7 +128,7 @@ RSpec.describe OrderCycles::WebhookService do
         }
         let(:supplier) {
           user = create(:user)
-          user.webhook_endpoints.create!(url: "http://supplier_owner_url")
+          user.webhook_endpoints.order_cycle_opened.create!(url: "http://supplier_owner_url")
           create(:supplier_enterprise, owner: user)
         }
 
