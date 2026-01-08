@@ -10,7 +10,7 @@ module Stripe
       let(:user) { create(:user) }
       let(:enterprise) { create(:enterprise) }
       let(:payload) { { "junk" => "Ssfs" } }
-      let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
+      let(:state) { JWT.encode(payload, Rails.application.secret_key_base) }
       let(:params) { { "state" => state } }
       let(:connector) { AccountConnector.new(user, params) }
 

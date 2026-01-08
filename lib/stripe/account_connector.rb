@@ -41,7 +41,7 @@ module Stripe
 
     def state
       # Returns the original payload
-      key = Openfoodnetwork::Application.config.secret_token
+      key = Rails.application.secret_key_base
       JWT.decode(params["state"], key, true, algorithm: 'HS256')[0]
     end
 
