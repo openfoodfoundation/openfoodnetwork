@@ -7,7 +7,7 @@
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
   policy.font_src :self, :https, :data, "fonts.gstatic.com"
-  policy.img_src :self, :https, :data, "*.s3.amazonaws.com"
+  policy.img_src :self, :https, :data, ENV.fetch("S3_CORS_POLICY_DOMAIN", "*.s3.amazonaws.com")
   policy.img_src :self, :http, :data, ENV["SITE_URL"] if Rails.env.development?
   policy.object_src :none
   policy.frame_ancestors :none
