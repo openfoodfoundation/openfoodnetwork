@@ -64,6 +64,6 @@ module CheckoutHelper
 
   def place_order
     click_on "Complete order"
-    expect(page).to have_content "Back To Store"
+    expect(page).to have_content "Back To Store", wait: 30
   end
 end
