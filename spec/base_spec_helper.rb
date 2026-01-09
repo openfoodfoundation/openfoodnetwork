@@ -52,6 +52,7 @@ Capybara.disable_animation = true
 Capybara.configure do |config|
   config.match = :prefer_exact
   config.ignore_hidden_elements = true
+  config.default_max_wait_time = 30
 end
 
 FactoryBot.use_parent_strategy = false
