@@ -95,7 +95,7 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = PAYMENT_METHODS.fetch(params[:provider_type], PaymentMethod).new
+          @payment_method = PaymentMethod.new(type: params[:provider_type])
         end
 
         render partial: 'provider_settings'
