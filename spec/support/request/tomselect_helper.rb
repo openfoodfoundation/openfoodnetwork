@@ -11,7 +11,7 @@ module TomselectHelper
     tomselect_wrapper.find(:css, '.ts-dropdown.multi .ts-dropdown-content .option',
                            text: value).click
     # Close the dropdown
-    tomselect_wrapper.find(".ts-control").click
+    page.find("body").click
   end
 
   def tomselect_search_and_select(value, options)
