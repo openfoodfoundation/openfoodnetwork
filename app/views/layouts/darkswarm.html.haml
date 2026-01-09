@@ -18,7 +18,7 @@
     = language_meta_tags
 
     = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload", media: "screen"
-    = javascript_pack_tag "application", "data-turbo-track": "reload"
+    = javascript_pack_tag "application", "data-turbo-track": "reload", defer: false
 
     = render "layouts/shopfront_script" if @shopfront_layout
     = render "layouts/bugsnag_js"
