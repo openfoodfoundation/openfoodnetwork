@@ -135,9 +135,7 @@ module Spree
       def load_providers
         providers = PAYMENT_METHODS.dup
 
-        unless show_stripe?
-          providers.reject! { |provider| stripe_provider?(provider) }
-        end
+        providers.delete("Spree::Gateway::StripeSCA") unless show_stripe?
 
         providers.map(&:constantize)
       end
@@ -162,10 +160,6 @@ module Spree
 
       def stripe_payment_method?
         @payment_method.try(:type) == "Spree::Gateway::StripeSCA"
-      end
-
-      def stripe_provider?(provider)
-        provider.ends_with?("StripeSCA")
       end
 
       def base_params
