@@ -115,27 +115,6 @@ es:
         blank: "no puede estar vacío"
         too_short: "es demasiado corto (el mínimo es %{count}caracteres)"
   errors:
-    messages:
-      content_type_invalid: "Tiene un tipo de contenido invalido"
-      file_size_out_of_range: "el tamaño %{file_size} no está en el rango requerido"
-      limit_out_of_range: "El número total está fuera de rango"
-      image_metadata_missing: "no es una imagen valida"
-      dimension_min_inclusion: "debe ser mayor o igual a %{width} x %{height} píxeles."
-      dimension_max_inclusion: "debe ser inferior o igual a %{width} x %{height} píxeles."
-      dimension_width_inclusion: "la anchura no se incluye entre %{min} y %{max} píxel."
-      dimension_height_inclusion: "la altura no se incluye entre %{min} y %{max} píxel."
-      dimension_width_greater_than_or_equal_to: "La anchura debe ser mayor o igual a %{length} píxeles."
-      dimension_height_greater_than_or_equal_to: "La altura debe ser mayor o igual que %{length} píxel."
-      dimension_width_less_than_or_equal_to: "La anchura debe ser menor o igual a %{length} píxeles."
-      dimension_height_less_than_or_equal_to: "La altura debe ser menor o igual a %{length} píxel."
-      dimension_width_equal_to: "La anchura debe ser igual a %{length} píxeles."
-      dimension_height_equal_to: "la altura debe ser igual a %{length} pixel."
-      aspect_ratio_not_square: "la imagen tiene que ser cuadrada"
-      aspect_ratio_not_portrait: "la imagen tiene que ser un retrato"
-      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
-      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
-      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
-      image_not_processable: "no es una imagen valida"
     not_found:
       title: "La página que estas buscando no existe (404)"
       message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
@@ -3892,6 +3871,7 @@ es:
     logourl: "URL del logo"
     are_you_sure_delete: "¿Está seguro de que desea eliminar este registro?"
     confirm_delete: "Confirmar la eliminación"
+    voucher: "Bono"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -4602,8 +4582,6 @@ es:
         title: API key
       webhook_endpoints:
         description: Los eventos del sistema pueden desencadenar webhooks a sistemas externos.
-        event_types:
-          order_cycle_opened: Ciclo de pedidos abierto
       developer_settings:
         title: Configuración de desarrollo
       form:
@@ -4762,6 +4740,9 @@ es:
     add_tag_rule_modal:
       select_rule_type: "Selecciona un tipo de regla:"
       add_rule: "Añadir regla"
+    webhook_endpoint_form:
+      event_types:
+        order_cycle_opened: Ciclo de pedidos abierto
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

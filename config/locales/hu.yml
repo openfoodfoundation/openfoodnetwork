@@ -115,27 +115,6 @@ hu:
         blank: "nem lehet üres"
         too_short: "túl rövid (minimum %{count}karakter)"
   errors:
-    messages:
-      content_type_invalid: "érvénytelen tartalom típus"
-      file_size_out_of_range: "a %{file_size} mérete nem esik bele a kívánt tartományba"
-      limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
-      image_metadata_missing: "nem használható kép"
-      dimension_min_inclusion: "legyen nagyobb vagy egyenlő %{width} x %{height} pixel"
-      dimension_max_inclusion: "legyen kisebb vagy egyenlő %{width} x %{height} pixel"
-      dimension_width_inclusion: "a szélesség nincs %{min} és %{max} pixel közt"
-      dimension_height_inclusion: "magasság nincs %{min} és %{max} pixel között"
-      dimension_width_greater_than_or_equal_to: "a szélesség legyen nagyobb vagy egyenlő %{length} pixel"
-      dimension_height_greater_than_or_equal_to: "a magasság legyen nagyobb vagy egyenlő %{length} pixel"
-      dimension_width_less_than_or_equal_to: "a szélesség legyen kisebb vagy egyenlő %{length} pixel"
-      dimension_height_less_than_or_equal_to: "a magasság legyen kisebb vagy egyenlő %{length} pixel"
-      dimension_width_equal_to: "a szélesség legyen egyenlő %{length} pixel"
-      dimension_height_equal_to: "a magasság legyen egyenlő %{length} pixel"
-      aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
-      aspect_ratio_not_portrait: "portré képnek kell lennie"
-      aspect_ratio_not_landscape: "fekvő tájolású kép legyen"
-      aspect_ratio_is_not: "%{aspect_ratio} arányú legyen"
-      aspect_ratio_unknown: "ismeretlen arány"
-      image_not_processable: "nem használható kép"
     not_found:
       title: "A keresett oldal nem található! (404)"
       message_html: "<b>Kérjük, próbáld újra!</b><p>Ez lehet egy átmeneti probléma. Kattints a vissza gombra, hogy visszatérj az előző képernyőre, vagy menj vissza a(z) <a href='/'> Kezdőlapra </a> és próbáld újra.</p> <b> Fordulj az Ügyfélszolgálathoz.</b> <p> Ha a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. Elérhetőségeinket a globális <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> Open Food Network helyi oldalán találod</a>. </p> <p> Nagy segítség, ha minél több részletet meg tudsz adni a nem található oldalról.</p>"
@@ -3930,6 +3909,7 @@ hu:
     logourl: "Logourl"
     are_you_sure_delete: "Biztosan törli ezt a rekordot?"
     confirm_delete: "Törlés megerősítése"
+    voucher: "Kupon"
     configurations: "Konfigurációk"
     general_settings: "Általános beállítások"
     site_name: "Webhely neve"
@@ -4654,13 +4634,10 @@ hu:
       webhook_endpoints:
         title: Webhook végpontok
         description: A rendszerben bekövetkező események webhookokat indíthatnak külső rendszerek felé.
-        event_types:
-          order_cycle_opened: Rendelési ciklus megnyitva
         event_type:
           header: Esemény típusa
         url:
           header: Végpont URL
-          create_placeholder: Add meg a távoli webhook végpont URL-címét
       developer_settings:
         title: Fejlesztői beállítások
       form:
@@ -4809,6 +4786,11 @@ hu:
     add_tag_rule_modal:
       select_rule_type: "Válassz egy szabálytípust:"
       add_rule: "Szabály hozzáadása"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Add meg a távoli webhook végpont URL-címét
+      event_types:
+        order_cycle_opened: Rendelési ciklus megnyitva
   invisible_captcha:
     sentence_for_humans: "Kérjük, hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."

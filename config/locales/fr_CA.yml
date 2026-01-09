@@ -115,27 +115,6 @@ fr_CA:
         blank: "Champ obligatoire"
         too_short: "est trop court (minimum %{count} caractère)"
   errors:
-    messages:
-      content_type_invalid: "a un contenu invalide"
-      file_size_out_of_range: "la taille %{file_size} n'est pas dans la fourchette requise"
-      limit_out_of_range: "le nombre total est hors de la fourchette"
-      image_metadata_missing: "n'est pas une image valide"
-      dimension_min_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
-      dimension_max_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
-      dimension_width_inclusion: "la largeur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_height_inclusion: "la hauteur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixel."
-      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixel."
-      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixel."
-      dimension_width_equal_to: "la largeur doit être égale à %{length} pixel."
-      dimension_height_equal_to: "la hauteur doit être égale à %{length} pixel. "
-      aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image en mode portrait"
-      aspect_ratio_not_landscape: "doit être une image en mode paysage"
-      aspect_ratio_is_not: "doit avoir un rapport d'aspect de %{aspect_ratio}"
-      aspect_ratio_unknown: "a un rapport d'aspect inconnu"
-      image_not_processable: "n'est pas une image valide"
     not_found:
       title: "La page que vous recherchez n'existe pas (erreur 404)"
       message_html: "<b>Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'<a href='/'> Accueil </a> et recommencez. <b> Contacter notre support  </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
@@ -4091,6 +4070,7 @@ fr_CA:
     logourl: "URL du logo"
     are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
     confirm_delete: "Confirmer la suppression"
+    voucher: "Bon de réduction"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
@@ -4817,13 +4797,10 @@ fr_CA:
       webhook_endpoints:
         title: 'Webhook '
         description: Les événements dans le système peuvent déclencher des webhooks vers des systèmes externes.
-        event_types:
-          order_cycle_opened: Cycle de vente ouvert
         event_type:
           header: Type d'évènement
         url:
           header: URL du point de terminaison
-          create_placeholder: Entrez l'URL du point de terminaison du webhook
       developer_settings:
         title: Paramètres développeurs
       form:
@@ -4985,6 +4962,11 @@ fr_CA:
     add_tag_rule_modal:
       select_rule_type: "Choisir le type de règle:"
       add_rule: "Ajouter une règle"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Entrez l'URL du point de terminaison du webhook
+      event_types:
+        order_cycle_opened: Cycle de vente ouvert
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

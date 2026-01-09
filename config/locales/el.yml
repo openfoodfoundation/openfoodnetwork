@@ -106,27 +106,6 @@ el:
         blank: "δεν μπορεί να είναι κενό"
         too_short: "είναι πολύ σύντομο (το ελάχιστο είναι %{count} χαρακτήρες)"
   errors:
-    messages:
-      content_type_invalid: "περιέχει λανθασμένο τύπο περιεχομένου"
-      file_size_out_of_range: "μέγεθος %{file_size} δεν είναι εντός της απαιτούμενης εμβέλειας"
-      limit_out_of_range: "Ο συνολικός αριθμός βρίσκεται εκτός εύρους"
-      image_metadata_missing: "δεν είναι έγκυρη εικόνα"
-      dimension_min_inclusion: "πρέπει να είναι μεγαλύτερο η ίσο με %{width} x %{height} pixels."
-      dimension_max_inclusion: "πρέπει να είναι μικρότερο από ή ίσο με %{width} x %{height} pixels."
-      dimension_width_inclusion: "Το πλάτος δεν είναι μεταξύ %{min} και %{max} pixels."
-      dimension_height_inclusion: "Το ύψος δεν είναι μεταξύ %{min} και %{max} pixels. "
-      dimension_width_greater_than_or_equal_to: "Το πλάτος πρέπει να είναι μεγαλύτερο από η ίσο με %{length} pixels."
-      dimension_height_greater_than_or_equal_to: "Το ύψος πρέπει να είναι μεγαλύτερο από η ίσο με %{length} pixels."
-      dimension_width_less_than_or_equal_to: "Το πλάτος πρέπει να είναι μικρότερο από ή ίσο με %{length} pixels."
-      dimension_height_less_than_or_equal_to: "Το ύψος πρέπει να είναι μικρότερο από η ίσο με %{length} pixels."
-      dimension_width_equal_to: "Το πλάτος πρέπει να είναι ίσο με %{length} pixels."
-      dimension_height_equal_to: "Το ύψος πρέπει να είναι ίσο με %{length} pixels."
-      aspect_ratio_not_square: "πρέπει να είναι τετράγωνη εικόνα. "
-      aspect_ratio_not_portrait: "πρέπει να είναι εικόνα πορτρέτο. "
-      aspect_ratio_not_landscape: "πρέπει να είναι εικόνα τοπίου."
-      aspect_ratio_is_not: "πρέπει να έχει λόγο διαστάσεων %{aspect_ratio}"
-      aspect_ratio_unknown: "έχει άγνωστη αναλογία εμφάνισης (aspect ratio)."
-      image_not_processable: "δεν είναι έγκυρη εικόνα"
     not_found:
       title: "Η συγκεκριμένη σελίδα δεν υπάρχει (404) "
       message_html: "<b>Παρακαλούμε προσπαθήστε ξανά</b> <p>Πιθανόν να πρόκειται για προσωρινό σφάλμα. Παρακαλούμε επιστρέψτε στην προηγούμενη σελίδα ή πηγαίνετε πίσω στην  <a href='/'>Αρχική σελίδα</a> και προσπαθήστε ξανά.</p> <b>Επικοινωνήστε με την εξυπηρέτηση πελατών</b> <p>Εάν το πρόβλημα παραμένει η επείγει, παρακαλούμε να μας ενημερώσετε. Βρείτε τα στοιχεία επικοινωνίας μας στο <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>. </p><p>Θα μας είναι απόλυτα χρήσιμο το να μας δώσετε όσες περισσότερες πληροφορίες γίνεται αναφορικά με τα στοιχεία της σελίδας που λείπουν.</p>"
@@ -3798,6 +3777,7 @@ el:
     logourl: "Logourl"
     are_you_sure_delete: "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την εγγραφή;"
     confirm_delete: "Επιβεβαίωση διαγραφής"
+    voucher: "Κουπόνι"
     configurations: "Διαμορφώσεις"
     general_settings: "Γενικές Ρυθμίσεις"
     site_name: "Ονομα ιστοσελίδας"
@@ -4513,11 +4493,8 @@ el:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Συμβάντα στο σύστημα μπορεί να πυροδοτήσουν webhooks σε εξωτερικά συστήματα.
-        event_types:
-          order_cycle_opened: Ο Κύκλος παραγγελίας άνοιξε
         url:
           header: Endpoint URL
-          create_placeholder: Εισάγετε το URL απο το απομακρυσμένο webhook endpoint.
       developer_settings:
         title: Ρυθμίσεις Developer
       form:
@@ -4665,6 +4642,11 @@ el:
     add_tag_rule_modal:
       select_rule_type: "Επιλέξτε έναν τύπο κανόνα:"
       add_rule: "Προσθήκη κανόνα"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Εισάγετε το URL απο το απομακρυσμένο webhook endpoint.
+      event_types:
+        order_cycle_opened: Ο Κύκλος παραγγελίας άνοιξε
   invisible_captcha:
     sentence_for_humans: "Παρακαλώ αφήστε κενό"
     timestamp_error_message: "Παρακαλώ δοκιμάστε ξανά σε 5 δευτερόλεπτα."

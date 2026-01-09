@@ -108,27 +108,6 @@ fr_BE:
         blank: "Champ obligatoire"
         too_short: "est trop court (le minimum est %{count} caractères)"
   errors:
-    messages:
-      content_type_invalid: "a un type de contenu non valide"
-      file_size_out_of_range: "la taille %{file_size} n'est pas comprise dans la plage requise"
-      limit_out_of_range: "le nombre total est hors plage"
-      image_metadata_missing: "n'est pas une image valide"
-      dimension_min_inclusion: "doit être supérieur ou égal à %{width} x %{height} pixel."
-      dimension_max_inclusion: "doit être inférieur ou égal à %{width} x %{height} pixel."
-      dimension_width_inclusion: "la largeur n'est pas incluse entre les pixels %{min} et %{max} ."
-      dimension_height_inclusion: "la hauteur n'est pas incluse entre %{min} et %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale au pixel %{length} ."
-      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale au pixel %{length} ."
-      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale au pixel %{length} ."
-      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale au pixel %{length} ."
-      dimension_width_equal_to: "la largeur doit être égale au pixel %{length} ."
-      dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
-      aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image en format portrait"
-      aspect_ratio_not_landscape: "doit être une image en format paysage"
-      aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
-      aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
-      image_not_processable: "n'est pas une image valide"
     not_found:
       title: "La page que vous cherchiez n'existe pas (404)"
       message_html: "<b>Veuillez réessayer</b><p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l'écran précédent ou revenir à <a href='/'>l'accueil</a> et réessayer.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur le sujet de la page manquante.</p>"
@@ -231,6 +210,8 @@ fr_BE:
   community_forum_url: "Lien vers le forum communautaire"
   customer_instructions: "Précisions pour la personne qui achète"
   additional_information: "Information complémentaire"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -268,16 +249,28 @@ fr_BE:
         updated: "Votre mot de passe a été changé avec succès. Vous êtes à présent connecté."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
   item_description: "Description de l'article"
+  menu_1_icon_name: "Nom de l'icône du menu 1"
+  menu_2_icon_name: "Nom de l'icône du menu 2"
+  menu_3_icon_name: "Nom de l'icône du menu 3"
+  menu_4_icon_name: "Nom de l'icône du menu 4"
+  menu_5_icon_name: "Nom de l'icône du menu 5"
+  menu_6_icon_name: "Nom de l'icône du menu 6"
+  menu_7_icon_name: "Nom de l'icône du menu 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
     tax_rate:
       included_in_price: "Inclus dans le prix"
   open_street_map_enabled: "Open Street Map activé"
+  open_street_map_default_latitude: "Latitude par défaut Open Street Map"
+  open_street_map_default_longitude: "Longitude par défaut Open Street Map"
+  open_street_map_provider_name: "Nom du fournisseur Open Street Map"
+  open_street_map_provider_options: "Options du fournisseur Open Street Map"
   resume_order: "Reprendre la commande"
   sku: "Référence produit"
   subtotal: "Sous-total"
   tax_rate: "TVA applicable"
+  producer_mail_qty: Qté
   validators:
     date_time_string_validator:
       not_string_error: "doit être une chaîne"
@@ -299,6 +292,7 @@ fr_BE:
       stock: "Stock"
       product: "Produit"
     backorder_incomplete:
+      headline: "Votre commande fournisseur n'est pas terminée"
       hints: |
           Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
           Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
@@ -485,7 +479,11 @@ fr_BE:
   payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
   vine_voucher_validator_service:
     errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API, merci de réessayer."
       invalid_voucher: "Le bon de réduction n'est pas valide."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
@@ -730,6 +728,8 @@ fr_BE:
           one: "1 sélectionné"
         import: Importer
         invalid_url: L'URL de ce catalogue n'est pas valide.
+      import:
+        title: "Import du catalogue produit DFC"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -811,9 +811,12 @@ fr_BE:
       filters:
         search_products: Rechercher des produits
         search_for_producers: Rechercher des producteurs
+        select_producer: Sélectionner producteur
         all_producers: Tous les producteurs
         search_for_categories: Rechercher des catégories
+        select_category: Sélectionner catégorie
         all_categories: Toutes catégories
+        select_tag: Choisir le tag
         producers:
           label: Producteur·trice·s
         categories:
@@ -856,6 +859,9 @@ fr_BE:
       delete_product:
         success: Le produit a bien été supprimé
         error: Le produit n'a pas pu être supprimé
+      delete_variant:
+        success: La variante a bien été supprimée
+        error: La variante n'a pas pu être supprimée
       variant_row:
         none_tax_category: Aucun
         search_for_tax_categories: "Rechercher des catégories de taxes"
@@ -909,6 +915,9 @@ fr_BE:
         tax_categories: TVA applicable
         shipping_categories: Condition de transport
       dfc_import_form:
+        title: "Importer depuis le catalogue DFC"
+        enterprise: "Créer les produits pour l'entreprise"
+        catalog_url: "URL du catalogue DFC"
         preview: Aperçu
       import:
         review: Vérifier
@@ -1037,6 +1046,9 @@ fr_BE:
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
         all: "Tous"
       select_variant: "Choisir une variante"
+      note:
+        note_label: "Note :"
+        no_note_present: "Aucune note n'a été ajoutée."
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -1146,6 +1158,7 @@ fr_BE:
           own: Les miens
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
+          external_billing_id_placeholder: 'ex : INV-2024-123456'
           visible_in_search: Apparaît sur la plateforme?
           visible_in_search_tip: "Les profils peuvent être 1 1. Visibles publiquement, sur la carte et la liste des comptoirs. 2 2. Invisibles sur la carte et la liste des comptoirs, mais référencées sur les profils des comptoirs et producteurs de leur réseau. 3 3. Complètement invisibles (sauf si on dispose du lien)."
           visible: Visible par tous
@@ -1190,6 +1203,7 @@ fr_BE:
           enable_subscriptions_true: "Activé"
           customer_names_in_reports: "Nom de client dans le rapport"
           customer_names_tip: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport "
+          producers_to_edit_orders: "Possibilité pour les producteurs de modifier les commandes"
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
           customer_contacts_tip: "Autoriser vos fournisseurs de voir l'adresse mail et le téléphone des clients dans les rapports"
@@ -3532,6 +3546,7 @@ fr_BE:
       indent: "Augmenter d'un niveau"
       italic: "Italique"
       link: "Lien"
+      numbers: "Nombres"
       outdent: "Diminuer d'un niveau"
       quote: "Citation"
       redo: "Refaire"
@@ -3553,6 +3568,10 @@ fr_BE:
       one: "caisse"
       many: "caisses"
       other: "caisses"
+    box:
+      one: "boîte"
+      many: "boîtes"
+      other: "boîtes"
     bottle:
       one: "bouteille"
       many: "bouteilles"
@@ -3754,6 +3773,7 @@ fr_BE:
     logourl: "Url logo"
     are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
     confirm_delete: "Confirmer la suppression"
+    voucher: "Bon d'achat"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -4033,6 +4053,9 @@ fr_BE:
             payment_method: "Mode de paiement"
             payment_state: "Statut du paiement"
             amount: "Quantité"
+        note:
+          note_label: "Note :"
+          no_note_present: "Aucune note n'a été ajoutée."
         form:
           distribution_fields:
             title: "Distribution"
