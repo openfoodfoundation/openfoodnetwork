@@ -14,7 +14,7 @@ module Spree
         Spree::PaymentMethod::Check
         Spree::Gateway::PayPalExpress
         Spree::Gateway::StripeSCA
-      }.index_with(&:constantize).freeze
+      }.freeze
 
       def create
         force_environment
@@ -117,7 +117,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = PAYMENT_METHODS.keys
+        valid_payment_methods = PAYMENT_METHODS
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
@@ -133,13 +133,13 @@ module Spree
       end
 
       def load_providers
-        providers = PAYMENT_METHODS.values.sort_by(&:name)
+        providers = PAYMENT_METHODS.sort
 
         unless show_stripe?
           providers.reject! { |provider| stripe_provider?(provider) }
         end
 
-        providers
+        providers.map(&:constantize)
       end
 
       # Show Stripe as an option if enabled, or if the
@@ -165,7 +165,7 @@ module Spree
       end
 
       def stripe_provider?(provider)
-        provider.name.ends_with?("StripeSCA")
+        provider.ends_with?("StripeSCA")
       end
 
       def base_params
