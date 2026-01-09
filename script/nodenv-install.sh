@@ -10,6 +10,12 @@ set -e
 
 if ! command -v nodenv > /dev/null; then
   printf "Please install https://github.com/nodenv/nodenv.\n"
+  printf '```'"\n"
+  printf "git clone https://github.com/nodenv/nodenv.git ~/.nodenv\n"
+  printf "git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build\n"
+  printf "nodenv init\n"
+  printf 'eval "$(nodenv init -)"'"\n"
+  printf '```'"\n"
   exit 1
 fi
 
