@@ -11,9 +11,9 @@ module Spree
       respond_to :html
 
       PAYMENT_METHODS = %w{
-        Spree::PaymentMethod::Check
         Spree::Gateway::PayPalExpress
         Spree::Gateway::StripeSCA
+        Spree::PaymentMethod::Check
       }.freeze
 
       def create
@@ -133,7 +133,7 @@ module Spree
       end
 
       def load_providers
-        providers = PAYMENT_METHODS.sort
+        providers = PAYMENT_METHODS.dup
 
         unless show_stripe?
           providers.reject! { |provider| stripe_provider?(provider) }
