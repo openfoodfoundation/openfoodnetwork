@@ -52,10 +52,6 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
-    def self.providers
-      Rails.application.config.spree.payment_methods
-    end
-
     def configured?
       !stripe? || stripe_configured?
     end
@@ -118,8 +114,8 @@ module Spree
     end
 
     def self.clean_name
-      i18n_key = "spree.admin.payment_methods.providers.#{name.demodulize.downcase}"
-      I18n.t(i18n_key)
+      scope = "spree.admin.payment_methods.providers"
+      I18n.t(name.demodulize.downcase, scope:)
     end
 
     private
