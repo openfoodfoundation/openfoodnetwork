@@ -21,4 +21,10 @@ RSpec.describe ReportsHelper do
       expect(select_options).to eq [[payment_method.name, payment_method.id]]
     end
   end
+
+  describe "#prices_sum" do
+    it "sums to prices list roundind to 2 decimals" do
+      expect(helper.prices_sum([1, nil, 2.333333, 1.5, 2.0])).to eq(6.83)
+    end
+  end
 end
