@@ -51,8 +51,6 @@ development:
     compress: true
     # Note that apps that do not check the host are vulnerable to DNS rebinding attacks
     allowed_hosts: "all"
-    #TODO Old config
-    #pretty: false
     pretty: true
     headers:
       'Access-Control-Allow-Origin': '*'
