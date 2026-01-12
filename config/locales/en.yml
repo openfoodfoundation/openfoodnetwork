@@ -4344,6 +4344,10 @@ en:
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
 
+    # Attributes of the Taler payment gateway
+    backend_url: "Backend URL"
+    api_key: "API key"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
@@ -4666,6 +4670,7 @@ en:
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
+          taler: "Taler"
       payments:
         source_forms:
           stripe:
