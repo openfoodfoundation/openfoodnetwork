@@ -53,9 +53,9 @@ services:
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
       OFN_REDIS_TEST_URL: redis://redis/3
-      WEBPACKER_DEV_SERVER_HOST: webpack
-      WEBPACKER_DEV_SERVER_PORT: 3035
-      WEBPACKER_DEV_SERVER_PUBLIC: localhost:3035
+      SHAKAPACKER_DEV_SERVER_HOST: webpack
+      SHAKAPACKER_DEV_SERVER_PORT: 3035
+      SHAKAPACKER_DEV_SERVER_PUBLIC: localhost:3035
 
     command: >
       sh -lc 'rm -f tmp/pids/server.pid;
@@ -89,7 +89,7 @@ services:
     build: .
     command: >
       sh -lc 'until [ -f /bundles/.Gemfile.lock.sha ] && sha256sum -c /bundles/.Gemfile.lock.sha >/dev/null 2>&1; do sleep 0.5; done;
-              exec ./bin/webpacker-dev-server'
+              exec ./bin/shakapacker-dev-server'
     ports:
       - "3035:3035"
     volumes:
@@ -102,7 +102,7 @@ services:
       retries: 30
 
     environment:
-      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+      SHAKAPACKER_DEV_SERVER_HOST: 0.0.0.0
 volumes:
   gems:
   postgres:
