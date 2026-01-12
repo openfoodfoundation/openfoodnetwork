@@ -7,6 +7,7 @@ module Admin
 
     before_action :init_filters_params
     before_action :init_pagination_params
+    before_action :init_none_tag
 
     def index
       fetch_products
@@ -242,11 +243,8 @@ module Admin
     def apply_tags_filter(base_query)
       return base_query if @tags.blank?
 
-      tags = Array(@tags)
-      none_key = I18n.t('admin.products_v3.filters.tags.none')
-
-      has_none = tags.include?(none_key)
-      tag_names = tags.reject { |t| t == none_key }
+      tag_names = Array(@tags).dup
+      has_none_tag = (tag_names.delete(@none_tag_value) == @none_tag_value)
 
       queries = []
 
@@ -260,7 +258,7 @@ module Admin
         queries << base_query.where(id: tagged_product_ids)
       end
 
-      if has_none
+      if has_none_tag
         # Products where no variants have any tags
         tagged_product_ids = Spree::Variant
           .joins(:taggings)
@@ -332,6 +330,10 @@ module Admin
       else
         t('.error')
       end
+    end
+
+    def init_none_tag
+      @none_tag_value = "without_any_tag"
     end
   end
 end
