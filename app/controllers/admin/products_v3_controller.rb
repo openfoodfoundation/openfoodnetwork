@@ -333,7 +333,7 @@ module Admin
     end
 
     def init_none_tag
-      @none_tag_value = "without_any_tag"
+      @none_tag_value = '""'
     end
   end
 end
