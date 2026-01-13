@@ -3,8 +3,6 @@
 def create_admin_user
   attributes = read_user_attributes
 
-  load 'spree/user.rb'
-
   if Spree::User.find_by(email: attributes[:email])
     printf <<~TEXT
 
