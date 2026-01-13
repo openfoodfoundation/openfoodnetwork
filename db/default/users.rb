@@ -3,18 +3,6 @@
 def create_admin_user
   attributes = read_user_attributes
 
-  if Spree::User.find_by(email: attributes[:email])
-    printf <<~TEXT
-
-      WARNING: There is already a user with the email: #{email},
-      so no account changes were made. If you wish to create an additional admin
-      user, please run rake spree_auth:admin:create again with a different email.
-
-    TEXT
-
-    return
-  end
-
   admin = Spree::User.new(attributes)
   admin.skip_confirmation!
   admin.skip_confirmation_notification!
@@ -49,4 +37,4 @@ def read_user_attributes
   }
 end
 
-create_admin_user if Spree::User.admin.empty?
+create_admin_user if Spree::User.none?
