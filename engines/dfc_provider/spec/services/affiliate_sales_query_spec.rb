@@ -6,7 +6,17 @@ RSpec.describe AffiliateSalesQuery do
   subject(:query) { described_class }
 
   describe ".data" do
-    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+    let(:product) { create(:simple_product, name: "Tomatoes") }
+    let(:variant1) {
+      product.variants.first.tap{ |v|
+        v.update!(
+          display_name: "Tomatoes - Roma",
+          variant_unit: "weight", unit_value: 1000, variant_unit_scale: 1000 # 1kg
+        )
+      }
+    }
+    let!(:order1) { create(:order_with_totals_and_distribution, :completed, variant: variant1) }
+
     let(:today) { Time.zone.today }
     let(:yesterday) { Time.zone.yesterday }
     let(:tomorrow) { Time.zone.tomorrow }
@@ -18,12 +28,12 @@ RSpec.describe AffiliateSalesQuery do
       travel_to(Time.zone.today.noon)
     end
 
-    it "returns data" do
+    it "returns records filtered by date" do
       # Test data creation takes time.
       # So I'm executing more tests in one `it` block here.
       # And make it simpler to call the subject many times:
       count_rows = lambda do |**args|
-        query.data(order.distributor, **args).count
+        query.data(order1.distributor, **args).count
       end
 
       # Without any filters:
@@ -46,6 +56,85 @@ RSpec.describe AffiliateSalesQuery do
 
       # From tomorrow:
       expect(count_rows.call(start_date: tomorrow)).to eq 0
+    end
+
+    it "returns data" do
+      labelled_row = query.label_row(query.data(order1.distributor).first)
+
+      expect(labelled_row).to include(
+        product_name: "Tomatoes",
+        unit_name: "Tomatoes - Roma",
+        unit_type: "weight",
+        units: 1000.to_f,
+        unit_presentation: "1kg",
+        price: 10.to_d,
+        distributor_postcode: order1.distributor.address.zipcode,
+        distributor_country: order1.distributor.address.country.name,
+        supplier_postcode: variant1.supplier.address.zipcode,
+        supplier_country: variant1.supplier.address.country.name,
+        quantity_sold: 1,
+      )
+    end
+
+    it "returns data stored in line item at time of order" do
+      # Records are updated after the orders are created
+      product.update! name: "Tomatoes Updated"
+      variant1.update! display_name: "Tomatoes - Updated Roma", price: 11
+
+      labelled_row = query.label_row(query.data(order1.distributor).first)
+
+      pending "#13220 store product and variant names"
+      expect(labelled_row).to include(
+        product_name: "Tomatoes",
+        unit_name: "Tomatoes - Roma",
+        price: 10.to_d, # this price is hardcoded in the line item factory.
+      )
+    end
+
+    context "with multiple orders" do
+      let!(:order2) {
+        create(:order_with_totals_and_distribution, :completed, variant: product.variants.first,
+                                                                distributor: order1.distributor)
+      }
+
+      it "returns data grouped by product name" do
+        labelled_row = query.label_row(query.data(order1.distributor).first)
+
+        expect(labelled_row).to include(
+          product_name: "Tomatoes",
+          quantity_sold: 2,
+        )
+      end
+
+      context "and multiple variants" do
+        let!(:order2) {
+          create(:order_with_totals_and_distribution, :completed, variant: variant2,
+                                                                  distributor: order1.distributor)
+        }
+        let(:variant2) {
+          create_variant_for(product,
+                             display_name: "Tomatoes - Cherry",
+                             variant_unit: "weight", unit_value: 500, variant_unit_scale: 1) # 500g
+        }
+
+        it "returns data grouped by variant name" do
+          labelled_data = query.data(order1.distributor).map{ |row| query.label_row(row) }
+
+          expect(labelled_data).to include a_hash_including(
+            product_name: "Tomatoes",
+            unit_name: "Tomatoes - Roma",
+            quantity_sold: 1,
+          )
+          expect(labelled_data).to include a_hash_including(
+            product_name: "Tomatoes",
+            unit_name: "Tomatoes - Cherry",
+            quantity_sold: 1,
+            units: 500,
+            unit_presentation: "500g",
+            price: 10,
+          )
+        end
+      end
     end
   end
 
@@ -80,5 +169,16 @@ RSpec.describe AffiliateSalesQuery do
         }
       )
     end
+  end
+
+  # Create variant for product, ready to add to line item
+  def create_variant_for(product, **attrs)
+    variant = product.variants.first.dup
+    variant.update!(
+      price: 10,
+      **attrs,
+    )
+    variant.update! on_demand: true
+    variant
   end
 end
