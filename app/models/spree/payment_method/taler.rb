@@ -31,8 +31,18 @@ module Spree
       # The backend provides this URL. It can look like this:
       # https://backend.demo.taler.net/instances/blog/orders/2026..?token=S8Y..&session_id=b0b..
       def external_payment_url(options)
-        # order = options.fetch(:order)
-        # Taler.create_order(backend_url, api_key, order.total, "OFN Order", "https://ofn.example.net")
+        order = options.fetch(:order)
+        total_amount = order&.total || 5
+        taler_amount = "KUDOS:#{total_amount}"
+        new_order = client.create_order(taler_amount, "OFN Order", "https://ofn.example.net")
+        order = client.fetch_order(new_order["order_id"])
+        order["order_status_url"]
+      end
+
+      private
+
+      def client
+        @client ||= ::Taler::Client.new(preferred_backend_url, preferred_api_key)
       end
     end
   end
