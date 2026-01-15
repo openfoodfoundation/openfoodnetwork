@@ -1616,7 +1616,7 @@ hu:
         has_no_shipping_methods: "%{enterprise} nem rendelkezik szállítási móddal"
         has_no_enterprise_fees: "A %{enterprise}-nek nincsenek vállalkozási díjai"
       flashes:
-        dismiss: Elutasítás
+        dismiss: Bezárás
       side_menu:
         enterprise:
           primary_details: "Főbb adatok"
@@ -2620,7 +2620,7 @@ hu:
   failed_to_create_enterprise: "Nem sikerült létrehozni a vállalkozást."
   failed_to_create_enterprise_unknown: "Nem sikerült létrehozni a vállalkozást. Győződj meg arról, hogy minden mezőt hiánytalanul kitöltöttél."
   failed_to_update_enterprise_unknown: "Nem sikerült frissíteni a vállalkozást. Győződj meg arról, hogy minden mezőt hiánytalanul kitöltöttél."
-  enterprise_confirm_delete_message: "Ezzel a vállalkozás által szállított %{product} is törlődik. Biztos, hogy akarod folytatni?"
+  enterprise_confirm_delete_message: "Ezzel a vállalkozás %{product} terméke is törlődik. Biztos, hogy akarod folytatni?"
   order_not_saved_yet: "Megrendelésed még nem lett elmentve. Adj nekünk néhány másodpercet, hogy befejezzük!"
   filter_by: "Szűrés"
   hide_filters: "Szűrők elrejtése"
@@ -2782,7 +2782,7 @@ hu:
         instagram: "Instagram"
         instagram_placeholder: "pl. @instagram_handle"
       limit_reached:
-        headline: "Ó ne!"
+        headline: "Ó, ne!"
         message: "Elérted a korlátot!"
         text: "Elérted a vállalkozások számának korlátját, amelyeknek a tulajdonosa lehetsz"
         action: "Vissza a kezdőlapra"
