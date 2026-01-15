@@ -58,6 +58,7 @@ gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant', '1.117.2'
 gem 'stripe', '~> 15'
+gem "taler"
 
 gem 'devise'
 gem 'devise-encryptable'
