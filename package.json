@@ -41,7 +41,7 @@
     "sass-embedded": "^1.96.0",
     "sass-loader": "^16.0.6",
     "select2": "*",
-    "shakapacker": "7.2.3",
+    "shakapacker": "8.4.0",
     "shortcut-buttons-flatpickr": "*",
     "stimulus": "*",
     "stimulus-autocomplete": "*",
