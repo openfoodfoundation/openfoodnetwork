@@ -76,4 +76,19 @@ module ApplicationHelper
   def cache_key_with_locale(key, locale)
     Array.wrap(key) + ["v2", locale.to_s, I18nDigests.for_locale(locale)]
   end
+
+  def pdf_stylesheet_pack_tag(source)
+    # With shakapacker dev server running, the wicked_pdf_stylesheet_pack_tag will produce a
+    # relative path, because we don't have `config.action_controller.asset_host`. Relative path
+    # can't be resolved by `wkhtmltopdf`. So we pass the wepacker dev server host and port to
+    # the shakapacker helper, so it generates the correct url.
+    # For more info: https://stackoverflow.com/questions/58490299/how-to-include-css-stylesheet-into-wicked-pdf/60541688#60541688
+    if running_in_development?
+      options = { media: "all",
+                  host: "#{Shakapacker.dev_server.host}:#{Shakapacker.dev_server.port}" }
+      stylesheet_pack_tag(source, **options)
+    else
+      wicked_pdf_stylesheet_pack_tag(source)
+    end
+  end
 end
