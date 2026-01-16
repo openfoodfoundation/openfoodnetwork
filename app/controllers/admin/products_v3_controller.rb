@@ -7,6 +7,7 @@ module Admin
 
     before_action :init_filters_params
     before_action :init_pagination_params
+    before_action :init_none_tag
 
     def index
       fetch_products
@@ -179,6 +180,8 @@ module Admin
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
+      product_query = apply_tags_filter(product_query)
+
       # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
       # When the current ransack sort uses the computed stock columns, include them in the select
       # so the generated COUNT/DISTINCT query is valid.
@@ -225,10 +228,49 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
-      query.merge!(variants_tags_name_in: @tags) if @tags.present?
       query.merge!(@q) if @q
 
       query
+    end
+
+    # Apply tags filter with OR logic:
+    # - Products with variants having selected tags
+    # - OR products with variants having no tags (when "None" is selected)
+    #
+    # Note: This cannot be implemented using Ransack because Ransack applies
+    # AND semantics across associations and cannot express OR logic that combines
+    # the presence and absence of the same associated records.
+    def apply_tags_filter(base_query)
+      return base_query if @tags.blank?
+
+      tag_names = Array(@tags).dup
+      has_none_tag = (tag_names.delete(@none_tag_value) == @none_tag_value)
+
+      queries = []
+
+      if tag_names.any?
+        # Products with at least one variant having one of the selected tags
+        tagged_product_ids = Spree::Variant
+          .joins(taggings: :tag)
+          .where(tags: { name: tag_names })
+          .select(:product_id)
+
+        queries << base_query.where(id: tagged_product_ids)
+      end
+
+      if has_none_tag
+        # Products where no variants have any tags
+        tagged_product_ids = Spree::Variant
+          .joins(:taggings)
+          .select(:product_id)
+
+        queries << base_query.where.not(id: tagged_product_ids)
+      end
+
+      return base_query if queries.empty?
+
+      # Combine queries using ActiveRecord's or method
+      queries.reduce { |combined, query| combined.or(query) }
     end
 
     # Optimise by pre-loading required columns
@@ -288,6 +330,10 @@ module Admin
       else
         t('.error')
       end
+    end
+
+    def init_none_tag
+      @none_tag_value = '""'
     end
   end
 end
