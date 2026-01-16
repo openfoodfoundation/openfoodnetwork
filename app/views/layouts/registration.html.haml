@@ -16,11 +16,11 @@
 
     = stylesheet_pack_tag "darkswarm", media: "screen"
     = javascript_include_tag "darkswarm/all"
-    = javascript_pack_tag "application"
+    = javascript_pack_tag "application", defer: false # do not use defer because our javascript currently depend on order of execution of loaded script.
 
     = csrf_meta_tags
 
-  %body.off-canvas{ style: "background-image: url(#{image_pack_path('tile-wide.png')})", "data-turbo": "false" }
+  %body.off-canvas{ style: "background-image: url(#{image_pack_path('images/tile-wide.png')})", "data-turbo": "false" }
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
 

@@ -555,7 +555,7 @@ RSpec.describe '
                 find_button("Confirm").click
               end
 
-              expect(page).to have_selector('.reveal-modal', visible: false)
+              expect(page).not_to have_content("This will mark the order as Shipped.")
               expect(page).to have_content "SHIPPED"
               click_link('Order Details') unless subpage == 'Order Details'
 
@@ -578,7 +578,7 @@ RSpec.describe '
                 find_button("Confirm").click
               end
 
-              expect(page).to have_selector('.reveal-modal', visible: false)
+              expect(page).not_to have_content("This will mark the order as Shipped.")
               click_link('Order Details') unless subpage == 'Order Details'
 
               expect(page).to have_content "SHIPPED"
