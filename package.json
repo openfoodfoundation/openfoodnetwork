@@ -17,8 +17,6 @@
     "@stimulus-components/rails-nested-form": "*",
     "babel-loader": "^8.2.2",
     "cable_ready": "5.0.6",
-    "coffee-loader": "^5.0.0",
-    "coffeescript": "^2.7.0",
     "compression-webpack-plugin": "^9.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.4",
