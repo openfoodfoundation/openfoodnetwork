@@ -4666,6 +4666,7 @@ en:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
+          twint: "Twint"
       payments:
         source_forms:
           stripe:
