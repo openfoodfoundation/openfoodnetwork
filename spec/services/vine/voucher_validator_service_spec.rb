@@ -270,11 +270,12 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
           enterprise: distributor, data: { api_key: "1234568", secret: "my_secret" }
         )
       }
+      # Faraday returns un-parsed json
       let(:data) {
         {
           meta: { responseCode: 400, limit: 50, offset: 0, message: "Invalid merchant team." },
           data: []
-        }.deep_stringify_keys
+        }.to_json
       }
 
       before do
@@ -285,12 +286,29 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         expect_validate_to_be_nil
       end
 
-      it "adds an error message" do
+      it "adds a general error message" do
         validate_voucher_service.validate
 
         expect(validate_voucher_service.errors).to include(
           { invalid_voucher: "The voucher is not valid" }
         )
+      end
+
+      context "it is expired" do
+        let(:data) {
+          {
+            meta: { responseCode: 400, limit: 50, offset: 0, message: "This voucher has expired." },
+            data: []
+          }.to_json
+        }
+
+        it "adds a specific error message" do
+          validate_voucher_service.validate
+
+          expect(validate_voucher_service.errors).to include(
+            { invalid_voucher: "The voucher has expired" }
+          )
+        end
       end
 
       it "doesn't creates a new VINE voucher" do
@@ -418,6 +436,25 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
           expect {
             validate_voucher_service.validate
           }.not_to change { voucher.reload.amount }
+        end
+      end
+
+      context "it is expired" do
+        let(:data) {
+          {
+            meta: { responseCode: 400, limit: 50, offset: 0, message: "This voucher has expired." },
+            data: []
+          }.to_json
+        }
+
+        it "adds a specific error message" do
+          mock_api_exception(type: Faraday::BadRequestError, status: 409, body: data)
+
+          validate_voucher_service.validate
+
+          expect(validate_voucher_service.errors).to include(
+            { invalid_voucher: "The voucher has expired" }
+          )
         end
       end
     end

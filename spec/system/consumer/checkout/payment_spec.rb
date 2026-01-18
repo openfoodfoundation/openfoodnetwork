@@ -198,7 +198,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                   fill_in "Enter voucher code", with: "KM1891"
                   click_button("Apply")
 
-                  expect(page).to have_content("There was an error while adding the voucher")
+                  expect(page).to have_content("The voucher is not valid")
                   expect(Vouchers::Vine.find_by(code: "KM1891", enterprise: distributor)).to be_nil
                 end
               end

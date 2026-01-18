@@ -627,6 +627,7 @@ en:
     errors:
       vine_api: "There was an error communicating with the API, please try again later."
       invalid_voucher: "The voucher is not valid"
+      expired: "The voucher has expired"
       not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
   vine_voucher_redeemer_service:
     errors:
