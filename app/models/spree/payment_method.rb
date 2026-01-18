@@ -93,8 +93,8 @@ module Spree
       type.demodulize.downcase
     end
 
-    def self.find_with_destroyed(*args)
-      unscoped { find(*args) }
+    def self.find_with_destroyed(*)
+      unscoped { find(*) }
     end
 
     def payment_profiles_supported?
