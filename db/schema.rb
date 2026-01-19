@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_19_024509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -86,6 +86,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.datetime "updated_at", null: false
     t.bigint "enterprise_id"
     t.index ["enterprise_id"], name: "index_custom_tabs_on_enterprise_id"
+  end
+
+  create_table "customer_account_transactions", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "currency"
+    t.string "description"
+    t.bigint "payment_method_id", null: false
+    t.integer "payment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
+    t.index ["payment_method_id"], name: "index_customer_account_transactions_on_payment_method_id"
   end
 
   create_table "customers", id: :serial, force: :cascade do |t|
@@ -1157,6 +1170,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
+  add_foreign_key "customer_account_transactions", "customers"
+  add_foreign_key "customer_account_transactions", "spree_payment_methods", column: "payment_method_id"
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "bill_address_id", name: "customers_bill_address_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "ship_address_id", name: "customers_ship_address_id_fk"
