@@ -437,18 +437,13 @@ module Spree
     #
     # Returns:
     # - true if all pending_payments processed successfully
-    # - true if a payment failed, ie. raised a GatewayError
-    #   which gets rescued and converted to TRUE when
-    #   :allow_checkout_gateway_error is set to true
     # - false if a payment failed, ie. raised a GatewayError
-    #   which gets rescued and converted to FALSE when
-    #   :allow_checkout_on_gateway_error is set to false
+    #   which gets rescued and converted to FALSE
     #
     def process_payments!
       process_each_payment(&:process!)
     rescue Core::GatewayError => e
-      result = !!Spree::Config[:allow_checkout_on_gateway_error]
-      errors.add(:base, e.message) && (return result)
+      errors.add(:base, e.message) && (return false)
     end
 
     def process_payments_offline!
