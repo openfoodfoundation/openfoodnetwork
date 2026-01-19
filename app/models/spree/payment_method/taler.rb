@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "taler"
+
 module Spree
   class PaymentMethod
     # GNU Taler is a distributed, open source payment system.
@@ -32,14 +34,45 @@ module Spree
       # https://backend.demo.taler.net/instances/blog/orders/2026..?token=S8Y..&session_id=b0b..
       def external_payment_url(options)
         order = options.fetch(:order)
-        total_amount = order&.total || 5
-        taler_amount = "KUDOS:#{total_amount}"
-        new_order = client.create_order(taler_amount, "OFN Order", "https://ofn.example.net")
-        order = client.fetch_order(new_order["order_id"])
-        order["order_status_url"]
+        payment = load_payment(order)
+
+        payment.source ||= self
+        payment.response_code ||= create_taler_order(payment)
+        payment.redirect_auth_url ||= fetch_order_url(payment)
+        payment.save! if payment.changed?
+
+        payment.redirect_auth_url
+      end
+
+      def purchase(_money, _creditcard, _gateway_options)
+        # TODO: implement
+        ActiveMerchant::Billing::Response.new(true, "test")
       end
 
       private
+
+      def load_payment(order)
+        order.payments.checkout.where(payment_method: self).last
+      end
+
+      def create_taler_order(payment)
+        # We are ignoring currency for now so that we can test with the
+        # current demo backend only working with the KUDOS currency.
+        taler_amount = "KUDOS:#{payment.amount}"
+        urls = Rails.application.routes.url_helpers
+        new_order = client.create_order(
+          taler_amount,
+          I18n.t("payment_method_taler.order_summary"),
+          urls.payment_gateways_confirm_taler_url(payment_id: payment.id),
+        )
+
+        new_order["order_id"]
+      end
+
+      def fetch_order_url(payment)
+        order = client.fetch_order(payment.response_code)
+        order["order_status_url"]
+      end
 
       def client
         @client ||= ::Taler::Client.new(preferred_backend_url, preferred_api_key)
