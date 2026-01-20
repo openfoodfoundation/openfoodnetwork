@@ -16,6 +16,7 @@ require 'rspec/retry'
 require 'capybara'
 require 'paper_trail/frameworks/rspec'
 require "factory_bot_rails"
+require 'database_cleaner'
 
 require 'shoulda/matchers'
 Shoulda::Matchers.configure do |config|
