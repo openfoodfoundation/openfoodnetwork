@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe VariantOverride do
   let(:variant) { create(:variant) }
   let(:hub)     { create(:distributor_enterprise) }

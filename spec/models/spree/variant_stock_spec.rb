@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::Variant do
   # These methods are defined in app/models/concerns/variant_stock.rb.
   # There is a separate spec for that concern but here I want to test

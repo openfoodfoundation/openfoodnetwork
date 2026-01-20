@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Payments::StatusChangedListenerService do
   let(:name) { "ofn.payment_transition" }
   let(:started) { Time.zone.parse("2025-11-28 09:00:00") }

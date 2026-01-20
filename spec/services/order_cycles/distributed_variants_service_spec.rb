@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::DistributedVariantsService do
   let(:order) { double(:order) }
   let(:distributor) { double(:distributor) }

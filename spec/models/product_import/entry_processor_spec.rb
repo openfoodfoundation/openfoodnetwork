@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ProductImport::EntryProcessor do
   let(:importer) { double(:importer) }
   let(:validator) { double(:validator) }

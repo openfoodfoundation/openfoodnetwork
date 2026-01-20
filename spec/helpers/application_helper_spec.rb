@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ApplicationHelper do
   describe "#feature?" do
     it "takes several actors" do

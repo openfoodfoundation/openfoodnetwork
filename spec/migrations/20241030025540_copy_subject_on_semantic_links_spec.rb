@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20241030025540_copy_subject_on_semantic_links'
 
 RSpec.describe CopySubjectOnSemanticLinks do

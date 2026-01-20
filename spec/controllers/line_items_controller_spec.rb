@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe LineItemsController do
   let(:user) { create(:user) }
   let(:distributor) { create(:distributor_enterprise) }

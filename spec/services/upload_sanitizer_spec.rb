@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe UploadSanitizer do
   describe "#call" do
     let(:upload) do

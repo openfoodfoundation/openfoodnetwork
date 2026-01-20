@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 class GatewayWithPassword < Spree::PaymentMethod
   preference :password, :string, default: "password"
 end

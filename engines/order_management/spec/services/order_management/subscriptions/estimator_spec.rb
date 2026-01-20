@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Subscriptions::Estimator do
   describe "estimating prices for subscription line items" do
     let!(:subscription) { create(:subscription, with_items: true) }

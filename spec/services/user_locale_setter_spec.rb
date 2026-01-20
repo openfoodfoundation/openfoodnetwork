@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe UserLocaleSetter do
   let(:user) { create(:user) }
   let(:default_locale) { I18n.default_locale }

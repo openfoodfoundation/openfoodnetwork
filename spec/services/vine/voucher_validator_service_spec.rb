@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
   subject(:validate_voucher_service) { described_class.new(voucher_code:, enterprise: distributor) }
 

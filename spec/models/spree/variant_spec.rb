@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 require 'spree/localized_number'
 
 RSpec.describe Spree::Variant do

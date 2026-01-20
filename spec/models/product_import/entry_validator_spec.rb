@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ProductImport::EntryValidator do
   let(:current_user) { double(:current_user) }
   let(:import_time) { double(:import_time) }

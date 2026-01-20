@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
 

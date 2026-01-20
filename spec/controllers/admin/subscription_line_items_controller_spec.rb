@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::SubscriptionLineItemsController do
   include AuthenticationHelper
 

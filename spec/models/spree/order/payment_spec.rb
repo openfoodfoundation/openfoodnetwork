@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Spree
   RSpec.describe Spree::Order do
     before { Stripe.api_key = "sk_test_12345" }

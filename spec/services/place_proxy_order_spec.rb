@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PlaceProxyOrder do
   subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }
 

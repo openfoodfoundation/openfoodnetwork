@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TagRule::FilterShippingMethods do
   let(:tag_rule) {
     build(:filter_shipping_methods_tag_rule, preferred_shipping_method_tags: shipping_method_tags)

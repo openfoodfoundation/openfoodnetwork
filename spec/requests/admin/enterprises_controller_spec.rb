@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::EnterprisesController do
   let(:admin) { create(:admin_user) }
   let(:enterprise) { create(:enterprise) }

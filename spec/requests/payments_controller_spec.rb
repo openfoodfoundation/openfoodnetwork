@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "/payments/:id/authorize" do
   let!(:user) { create(:user) }
   let!(:order) { create(:order, user:) }

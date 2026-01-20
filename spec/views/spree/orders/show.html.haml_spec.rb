@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "spree/orders/show.html.haml" do
   helper InjectionHelper
   helper ShopHelper

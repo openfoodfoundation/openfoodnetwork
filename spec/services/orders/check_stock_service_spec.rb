@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::CheckStockService do
   subject { described_class.new(order:) }
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe ReportBlob do
   it "preserves UTF-8 content" do
     content = "This works. ✓"

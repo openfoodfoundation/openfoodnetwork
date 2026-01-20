@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
   subject(:voucher_redeemer_service) { described_class.new(order: ) }
 

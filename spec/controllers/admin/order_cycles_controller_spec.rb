@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::OrderCyclesController do
   let!(:distributor_owner) { create(:user) }
   let(:datetime_confirmation_attrs) {

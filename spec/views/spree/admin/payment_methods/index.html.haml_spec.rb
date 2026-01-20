@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "spree/admin/payment_methods/index.html.haml" do
   include AuthenticationHelper
 

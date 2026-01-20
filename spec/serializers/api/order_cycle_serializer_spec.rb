@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::OrderCycleSerializer do
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:serializer) { Api::OrderCycleSerializer.new(order_cycle).to_json }

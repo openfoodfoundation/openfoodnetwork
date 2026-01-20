@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe EnterpriseFeesBulkUpdate do
   describe "error reporting" do
     let(:enterprise_fee) { build_stubbed(:enterprise_fee) }

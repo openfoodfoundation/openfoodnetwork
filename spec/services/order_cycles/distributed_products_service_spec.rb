@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::DistributedProductsService do
   # NOTE: product_relation_incl_supplier is tested via ProductsRenderer specs:
   # spec/services/products_renderer_spec.rb

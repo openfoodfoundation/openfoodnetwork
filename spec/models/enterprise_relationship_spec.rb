@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe EnterpriseRelationship do
   describe "scopes" do
     let(:e1)  { create(:enterprise, name: 'A') }
