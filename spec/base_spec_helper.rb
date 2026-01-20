@@ -156,6 +156,9 @@ RSpec.configure do |config|
     I18n.with_locale(locale) { example.run }
   end
 
+  # Fix encoding issue in Rails 5.0; allows passing empty arrays or hashes as params.
+  config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
+
   # Reset all feature toggles to prevent leaking.
   config.before(:each) do
     Flipper.features.each(&:remove)
