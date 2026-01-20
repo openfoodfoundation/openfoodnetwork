@@ -77,7 +77,7 @@ components:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true
@@ -190,7 +190,7 @@ components:
                   billing_address:
                     type: object
                     nullable: true
-                    example:
+                    example: 
                   shipping_address:
                     type: object
                     nullable: true
@@ -283,6 +283,92 @@ components:
       - data
       - meta
       - links
+    customer_account_transaction:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '1'
+            type:
+              type: string
+              example: customer_account_transaction
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                customer_id:
+                  type: integer
+                  example: 10
+                amount:
+                  type: decimal
+                  example: 10.5
+                currency:
+                  type: string
+                  example: AUD
+                payment_method_id:
+                  type: integer
+                  example: 100
+                description:
+                  type: string
+                  nullable: true
+                  example: Payment processed by POS
+                balance:
+                  type: decimal
+                  example: 10.5
+              required:
+              - id
+              - customer_id
+              - amount
+              - currency
+              - payment_method_id
+              - description
+              - balance
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          example: customer
+                    links:
+                      type: object
+                      properties:
+                        related:
+                          type: string
+                payment_method:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          example: payment_method
+                    links:
+                      type: object
+                      properties:
+                        related:
+                          type: string
+        meta:
+          type: object
+        links:
+          type: object
+      required:
+      - data
   securitySchemes:
     api_key_header:
       type: apiKey
@@ -300,6 +386,46 @@ components:
       in: cookie
       description: Authenticates using the current user's session if logged in
 paths:
+  "/api/v1/customer_account_transaction":
+    post:
+      summary: Create customer transaction
+      tags:
+      - Customer account transaction
+      parameters: []
+      responses:
+        '201':
+          description: Customer transaction created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/customer_account_transaction"
+        '422':
+          description: Invalid resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '401':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                  example: 10
+                amount:
+                  type: decimal
+                  example: 10.5
+                description:
+                  type: string
+                  nullable: true
+                  example: Payment processed by POS
+              required:
+              - customer_id
+              - amount
   "/api/v1/customers":
     get:
       summary: List customers
@@ -375,7 +501,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true
@@ -468,7 +594,7 @@ paths:
                           billing_address:
                             type: object
                             nullable: true
-                            example:
+                            example: 
                           shipping_address:
                             type: object
                             nullable: true
@@ -598,7 +724,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true

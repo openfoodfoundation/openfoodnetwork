@@ -92,6 +92,8 @@ Openfoodnetwork::Application.routes.draw do
       resources :enterprises do
         resources :customers, only: :index
       end
+
+      resources :customer_account_transaction, only: [:create]
     end
 
     match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all,
