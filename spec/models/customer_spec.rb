@@ -5,6 +5,7 @@ RSpec.describe Customer do
   it { is_expected.to belong_to(:user).optional }
   it { is_expected.to belong_to(:bill_address).optional }
   it { is_expected.to belong_to(:ship_address).optional }
+  it { is_expected.to have_many(:customer_account_transactions) }
 
   describe 'an existing customer' do
     let(:customer) { create(:customer) }

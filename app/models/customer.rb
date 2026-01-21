@@ -19,6 +19,7 @@ class Customer < ApplicationRecord
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User", optional: true
   has_many :orders, class_name: "Spree::Order", dependent: :nullify
+  has_many :customer_account_transactions, dependent: :restrict_with_error
   before_validation :downcase_email
   before_validation :empty_code
   before_create :associate_user
