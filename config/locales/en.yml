@@ -5011,6 +5011,7 @@ en:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
+          customer_account_transactions: Customer Transactions
           settings: Account Settings
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
@@ -5020,6 +5021,14 @@ en:
         transaction_history: Transaction History
         authorisation_required: Authorisation Required
         authorise: Authorize
+      customer_account_transactions:
+        title: Customer Transactions 
+        credit_available: "Credit available: %{credit}"
+        transaction_date: Transaction Date
+        payment_method: Payment method 
+        description: Description
+        amount: Amount
+        running_balance: Running balance
       open_orders:
         order: Order
         shop: Shop
