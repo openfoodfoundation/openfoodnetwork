@@ -91,6 +91,15 @@ RSpec.describe AffiliateSalesQuery do
       )
     end
 
+    it "returns data from variant if line item doesn't have it" do
+      labelled_row = query.label_row(query.data(order1.distributor).first)
+
+      expect(labelled_row).to include(
+        product_name: "Tomatoes",
+        unit_name: "Tomatoes - Roma",
+      )
+    end
+
     context "with multiple orders" do
       let!(:order2) {
         create(:order_with_totals_and_distribution, :completed, variant: product.variants.first,
