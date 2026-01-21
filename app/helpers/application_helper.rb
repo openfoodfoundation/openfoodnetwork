@@ -72,7 +72,8 @@ module ApplicationHelper
     end
   end
 
+  # Update "v1" to invalidate existing cache key
   def cache_key_with_locale(key, locale)
-    Array.wrap(key) + [locale.to_s, I18nDigests.for_locale(locale)]
+    Array.wrap(key) + ["v1", locale.to_s, I18nDigests.for_locale(locale)]
   end
 end
