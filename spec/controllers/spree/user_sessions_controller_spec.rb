@@ -39,7 +39,7 @@ RSpec.describe Spree::UserSessionsController do
         spree_post :create, spree_user: { email: user.email, password: "wrong" },
                             format: :turbo_stream
 
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to include "Invalid email or password"
       end
     end

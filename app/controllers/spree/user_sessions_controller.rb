@@ -28,7 +28,7 @@ module Spree
         message = t('devise.failure.invalid')
         render turbo_stream: turbo_stream.update(
           'login-feedback', partial: 'layouts/alert', locals: { message:, type: 'alert' }
-        ), status: :unauthorized
+        ), status: :unprocessable_entity
       end
     end
 
