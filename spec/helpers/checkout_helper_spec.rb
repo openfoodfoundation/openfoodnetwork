@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe CheckoutHelper do
   it "generates html for validated inputs" do
     expect(helper).to receive(:render).with(

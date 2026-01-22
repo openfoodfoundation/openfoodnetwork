@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module OpenFoodNetwork
   RSpec.describe PropertyMerge do
     let(:property) { create(:property, presentation: 'One') }

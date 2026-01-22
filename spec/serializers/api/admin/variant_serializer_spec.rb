@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::Admin::VariantSerializer do
   let(:variant) { create(:variant) }
 

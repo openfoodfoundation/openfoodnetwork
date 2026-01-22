@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'tasks/data/remove_transient_data'
 
 RSpec.describe RemoveTransientData do

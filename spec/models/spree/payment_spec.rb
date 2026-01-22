@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Payment do
   before do
     # mock the call with "ofn.payment_transition" so we don't call the related listener and services

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'open_food_network/address_finder'
 
 RSpec.describe OpenFoodNetwork::AddressFinder do

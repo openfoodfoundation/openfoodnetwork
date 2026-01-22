@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "registration/steps/_details.html.haml" do
   subject { render }
 

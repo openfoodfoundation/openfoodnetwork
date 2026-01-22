@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
   let!(:distributor) { create(:distributor_enterprise, name: "Apple Market") }
   let!(:customer) { create(:customer, enterprise: distributor, user:, code: "JHN") }

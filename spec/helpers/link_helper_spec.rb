@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe LinkHelper do
   describe "ext_url" do
     it "adds prefix if missing" do

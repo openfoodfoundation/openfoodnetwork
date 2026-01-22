@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe WebhookDeliveryJob do
   subject { WebhookDeliveryJob.new(url, event, data, at:) }
   let(:url) { 'https://test/endpoint' }

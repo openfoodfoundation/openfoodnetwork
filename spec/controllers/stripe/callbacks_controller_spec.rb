@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Stripe::CallbacksController do
   let(:enterprise) { create(:distributor_enterprise) }
 

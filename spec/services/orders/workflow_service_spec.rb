@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Orders::WorkflowService do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:order) do

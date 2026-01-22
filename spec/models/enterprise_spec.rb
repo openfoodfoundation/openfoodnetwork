@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Enterprise do
   describe "sending emails" do
     describe "on creation" do

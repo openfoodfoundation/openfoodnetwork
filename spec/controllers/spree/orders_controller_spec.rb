@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::OrdersController do
   include CheckoutHelper
   include StripeStubs

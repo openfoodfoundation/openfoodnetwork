@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe VariantStock do
   let(:variant) { create(:variant) }
 

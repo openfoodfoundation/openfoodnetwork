@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::WebhookService do
   let(:order_cycle) {
     create(

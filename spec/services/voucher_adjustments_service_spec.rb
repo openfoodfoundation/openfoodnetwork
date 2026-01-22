@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe VoucherAdjustmentsService do
   describe '#update' do
     let(:enterprise) { build(:enterprise) }

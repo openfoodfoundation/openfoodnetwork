@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::User do
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }

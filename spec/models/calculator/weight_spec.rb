@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Calculator::Weight do
   it "computes shipping cost for an order by total weight" do
     variant1 = build_stubbed(:variant, unit_value: 10_000)

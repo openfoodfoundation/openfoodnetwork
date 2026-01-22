@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "simplecov.rake" do
   describe "simplecov:collate_results" do
     context "when there are reports to merge" do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Reporting::Reports::EnterpriseFeeSummary::ReportData::EnterpriseFeeTypeTotal do
   it "sorts instances according to their attributes" do
     instance_a = described_class.new(

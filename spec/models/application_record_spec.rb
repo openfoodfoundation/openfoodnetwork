@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ApplicationRecord do
   describe ".image_service" do
     subject { described_class.image_service }

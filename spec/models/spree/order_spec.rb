@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user:) }

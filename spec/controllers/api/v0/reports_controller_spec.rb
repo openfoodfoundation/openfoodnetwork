@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Api::V0::ReportsController do
   let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
   let(:params) {

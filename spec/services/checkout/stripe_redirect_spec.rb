@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Checkout::StripeRedirect do
   describe '#path' do
     let(:order) { create(:order) }

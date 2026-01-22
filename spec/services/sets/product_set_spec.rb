@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Sets::ProductSet do
   describe '#save' do
     let(:product_set) do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::AppConfiguration do
   let(:prefs) { Rails.application.config.spree.preferences }
 

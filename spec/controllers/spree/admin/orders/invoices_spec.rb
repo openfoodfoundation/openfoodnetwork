@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::OrdersController do
   describe "#invoice" do
     let!(:user) { create(:user) }

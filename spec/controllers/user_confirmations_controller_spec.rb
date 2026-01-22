@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe UserConfirmationsController do
   let!(:user) { create(:user) }
   let!(:confirmed_user) { create(:user, confirmed_at: nil) }

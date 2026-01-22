@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Vine::ApiService do
   subject(:vine_api) { described_class.new(api_key: vine_api_key, jwt_generator: jwt_service) }
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ShippingRate do
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { build_stubbed(:shipping_method) }

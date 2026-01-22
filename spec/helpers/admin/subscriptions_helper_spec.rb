@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::SubscriptionsHelper do
   describe "checking if setup is complete for any [shop]" do
     let(:shop) { create(:distributor_enterprise) }

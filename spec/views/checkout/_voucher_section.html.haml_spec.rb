@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "checkout/_voucher_section.html.haml" do
   let(:order) { create(:order_with_distributor, total: 10) }
   let(:flat_voucher) {

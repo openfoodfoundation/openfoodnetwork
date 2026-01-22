@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TagRule::FilterProducts do
   let(:tag_rule) { build(:filter_products_tag_rule, preferred_variant_tags: variant_tags) }
   let(:variant_tags) { "" }

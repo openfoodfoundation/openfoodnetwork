@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
   let!(:distributor) { create(:distributor_enterprise) }
 

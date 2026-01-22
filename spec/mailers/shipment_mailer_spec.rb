@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ShipmentMailer do
   let(:shipment) do
     order = build(:order_with_distributor)

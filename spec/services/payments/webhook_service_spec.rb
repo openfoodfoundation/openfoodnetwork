@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Payments::WebhookService do
   let(:order) { create(:completed_order_with_totals, order_cycle: ) }
   let(:order_cycle) { create(:simple_order_cycle) }
