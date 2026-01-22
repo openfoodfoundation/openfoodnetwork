@@ -44,9 +44,20 @@ module Spree
         payment.redirect_auth_url
       end
 
-      def purchase(_money, _creditcard, _gateway_options)
-        # TODO: implement
-        ActiveMerchant::Billing::Response.new(true, "test")
+      # Main method called by Spree::Payment::Processing during checkout
+      # when the user is redirected back to the app.
+      #
+      # The payment has already been made and we need to verify the success.
+      def purchase(_money, _source, gateway_options)
+        payment = gateway_options[:payment]
+
+        return unless payment.response_code
+
+        taler_order = client.fetch_order(payment.response_code)
+        status = taler_order["order_status"]
+        success = (status == "paid")
+
+        ActiveMerchant::Billing::Response.new(success, status)
       end
 
       private
