@@ -33,6 +33,9 @@ FileUtils.chdir APP_ROOT do
   system! "bin/rails db:prepare log:clear tmp:clear"
   system! "rm -f tmp/capybara/screenshots/*.png"
 
+  puts "\n== Removing any precompiled assets that would be out of date now =="
+  system! "rm -rf public/assets/"
+
   puts "\n== Restarting application server =="
   # system! "bin/rails restart"
   # Faster to do it manually:
