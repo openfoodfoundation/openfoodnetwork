@@ -16,7 +16,7 @@ RSpec.describe Spree::UserSessionsController do
           spree_post :create, spree_user: { email: user.email, password: user.password }
 
           expect(response).to have_http_status(:found)
-          expect(response.body).to match(root_path).and match("redirect")
+          expect(response.location).to eq root_url
         end
       end
 
@@ -27,7 +27,7 @@ RSpec.describe Spree::UserSessionsController do
           spree_post :create, spree_user: { email: user.email, password: user.password }
 
           expect(response).to have_http_status(:found)
-          expect(response.body).to match(checkout_path).and match("redirect")
+          expect(response.location).to eq checkout_url
         end
       end
     end
