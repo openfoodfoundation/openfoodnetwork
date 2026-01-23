@@ -873,6 +873,7 @@ en:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         balance: "Balance"
+        credit: "Available Credit"
         update_address_success: "Address updated successfully."
         update_address_error: "Sorry! Please input all of the required fields!"
         edit_bill_address: "Edit Billing Address"
