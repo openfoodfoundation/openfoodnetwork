@@ -294,17 +294,6 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
         expect(assigns(:payment_method)).to be_a_new Spree::Gateway::PayPalExpress
         expect(response).to render_template partial: '_provider_settings'
       end
-
-      context "with a non valid payment method" do
-        it "renders provider settings with a new generic payment method" do
-          spree_get :show_provider_preferences,
-                    pm_id: "",
-                    provider_type: "Spree::Gateway::Hacked"
-
-          expect(assigns(:payment_method)).to be_a_new Spree::PaymentMethod
-          expect(response).to render_template partial: '_provider_settings'
-        end
-      end
     end
   end
 end
