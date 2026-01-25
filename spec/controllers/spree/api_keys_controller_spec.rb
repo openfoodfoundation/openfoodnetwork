@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ApiKeysController, performance: true do
   routes { Spree::Core::Engine.routes }
 

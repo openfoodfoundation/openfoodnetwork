@@ -55,4 +55,15 @@ RSpec.describe "Tax Categories" do
       expect(page).to have_content("desc 99")
     end
   end
+
+  context "admin deleting a tax category" do
+    it "should be able to delete an existing tax category" do
+      create(:tax_category, name: "To be removed")
+      click_link "Tax Categories"
+      accept_confirm('Are you sure?') do
+        within_row(1) { find(".icon-trash").click }
+      end
+      expect(page).not_to have_content("To be removed")
+    end
+  end
 end

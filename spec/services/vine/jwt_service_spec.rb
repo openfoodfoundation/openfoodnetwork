@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Vine::JwtService do
   describe "#generate_token" do
     subject { described_class.new(secret: vine_secret) }

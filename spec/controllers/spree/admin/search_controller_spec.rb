@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::SearchController do
   context "Distributor Enterprise User" do
     let!(:owner) { create(:user, email: "test1@email.com" ) }

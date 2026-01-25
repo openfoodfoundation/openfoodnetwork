@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PaymentsRequiringActionQuery do
   subject(:result) { described_class.new(user).call }
 

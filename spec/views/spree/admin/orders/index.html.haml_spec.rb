@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "spree/admin/orders/index.html.haml" do
   helper Spree::Admin::NavigationHelper
   helper EnterprisesHelper

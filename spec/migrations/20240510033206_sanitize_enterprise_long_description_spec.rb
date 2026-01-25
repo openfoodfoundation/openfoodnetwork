@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20240510033206_sanitize_enterprise_long_description'
 
 RSpec.describe SanitizeEnterpriseLongDescription do

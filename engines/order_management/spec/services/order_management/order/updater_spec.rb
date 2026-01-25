@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Order::Updater do
   let(:order) { create(:order) }
   let(:updater) { OrderManagement::Order::Updater.new(order) }

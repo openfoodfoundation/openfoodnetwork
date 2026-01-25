@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 RSpec.describe ProductImport::SpreadsheetEntry do
   let(:enterprise) { create(:enterprise) }
   let(:entry) {

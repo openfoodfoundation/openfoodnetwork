@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe UserDefaultAddressSetter do
   let(:customer_address) { create(:address, address1: "customer road") }
   let(:order_address) { create(:address, address1: "order road") }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::GeneralSettingsHelper do
   describe "#all_units" do
     it "returns all units" do

@@ -18,7 +18,7 @@ gem 'activemerchant'
 gem 'angular-rails-templates'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
-gem 'webpacker', '~> 5'
+gem 'shakapacker', '6.6.0'
 
 # Indirect dependency but we access it directly in JS specs.
 # It turns out to be hard to upgrade but please do if you can.
@@ -49,7 +49,7 @@ gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
 gem 'digest'
 gem 'ffaker'
-gem 'highline', '2.0.3' # Necessary for the install generator
+gem 'highline'
 gem 'json'
 gem 'monetize', '~> 1.11'
 gem 'paranoia', '~> 2.4'
@@ -57,7 +57,7 @@ gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant', '1.117.2'
-gem 'stripe', '~> 13'
+gem 'stripe', '~> 15'
 
 gem 'devise'
 gem 'devise-encryptable'
@@ -126,6 +126,8 @@ gem 'angular_rails_csrf'
 
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
+# TODO move away from sass-rails, master branch will get rid of dependency, so we can move to
+# https://github.com/sass/embedded-host-node
 gem "select2-rails", github: "openfoodfoundation/select2-rails", branch: "v349_with_thor_v1"
 
 gem 'good_migrations'

@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe EnterpriseGroup do
   describe "associations" do
     subject { build(:enterprise_group) }

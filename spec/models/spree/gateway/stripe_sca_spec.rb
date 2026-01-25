@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Gateway::StripeSCA, :vcr, :stripe_version do
   let(:order) { create(:order_ready_for_payment) }
 

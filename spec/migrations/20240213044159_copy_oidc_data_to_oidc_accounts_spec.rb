@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20240213044159_copy_oidc_data_to_oidc_accounts'
 
 RSpec.describe CopyOidcDataToOidcAccounts do

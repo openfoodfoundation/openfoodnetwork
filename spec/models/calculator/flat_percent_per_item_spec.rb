@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Calculator::FlatPercentPerItem do
   let(:calculator) { Calculator::FlatPercentPerItem.new preferred_flat_percent: 20 }
 

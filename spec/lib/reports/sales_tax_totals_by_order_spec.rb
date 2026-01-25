@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   subject(:report) { Reporting::Reports::SalesTax::SalesTaxTotalsByOrder.new(user, {}) }
 

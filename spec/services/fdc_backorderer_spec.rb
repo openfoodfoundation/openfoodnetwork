@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe FdcBackorderer do
   let(:subject) { FdcBackorderer.new(order.distributor.owner, urls) }
   let(:urls) { FdcUrlBuilder.new(product_link) }

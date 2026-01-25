@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "admin/products_v3/_filters.html.haml" do
   helper Admin::ProductsHelper
 

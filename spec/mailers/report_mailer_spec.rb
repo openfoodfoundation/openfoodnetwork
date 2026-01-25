@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ReportMailer do
   describe "#report_ready" do
     subject(:email) {

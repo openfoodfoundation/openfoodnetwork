@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "checking out an order with a Stripe SCA payment method" do
   include ShopWorkflow
   include AuthenticationHelper

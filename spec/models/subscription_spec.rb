@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Subscription do
   describe "associations" do
     it { expect(subject).to belong_to(:shop).optional }

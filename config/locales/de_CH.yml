@@ -89,27 +89,6 @@ de_CH:
       messages:
         blank: "darf nicht leer sein"
   errors:
-    messages:
-      content_type_invalid: "hat ein ungültiges Datenformat"
-      file_size_out_of_range: "Dateigrösse %{file_size} liegt ausserhalb des zulässigen Bereichs"
-      limit_out_of_range: "Gesamtzahl liegt ausserhalb des zulässigen Bereichs"
-      image_metadata_missing: "ist kein gültiges Bild"
-      dimension_min_inclusion: "muss grösser oder gleich %{width} x %{height} Pixel sein"
-      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
-      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_width_greater_than_or_equal_to: "Breite muss grösser oder gleich %{length} Pixel sein"
-      dimension_height_greater_than_or_equal_to: "Höhe muss grösser oder gleich %{length} Pixel sein"
-      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
-      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
-      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
-      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
-      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
-      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
-      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
-      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
-      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
-      image_not_processable: "ist kein gültiges Bild"
     not_found:
       title: "Die gesuchte Seite existiert nicht (404)"
   stripe:
@@ -3615,6 +3594,7 @@ de_CH:
     logourl: "URL des Logos"
     are_you_sure_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
     confirm_delete: "Löschen bestätigen"
+    voucher: "Gutschein"
     configurations: "Konfiguration"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Name der Website"

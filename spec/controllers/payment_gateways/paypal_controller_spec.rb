@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PaymentGateways::PaypalController do
   context '#cancel' do
     it 'redirects back to checkout' do

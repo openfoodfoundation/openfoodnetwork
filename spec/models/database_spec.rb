@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "Database" do
   let(:models_todo) {
     ["Spree::CreditCard", "Spree::Adjustment",

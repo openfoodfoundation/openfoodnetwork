@@ -115,27 +115,6 @@ nb:
         blank: "kan ikke være tomt"
         too_short: "er for kort (minimum er %{count} tegn)"
   errors:
-    messages:
-      content_type_invalid: "har en ugyldig innholdstype"
-      file_size_out_of_range: "størrelse %{file_size} er ikke i det nødvendige området"
-      limit_out_of_range: "totalt antall er utenfor rekkevidde"
-      image_metadata_missing: "er ikke et gyldig bilde"
-      dimension_min_inclusion: "må være større enn eller lik %{width} x %{height} piksel."
-      dimension_max_inclusion: "må være mindre enn eller lik %{width} x %{height} piksel."
-      dimension_width_inclusion: "bredde er ikke inkludert mellom %{min} og %{max} piksel."
-      dimension_height_inclusion: "høyde er ikke inkludert mellom %{min} og %{max} piksel."
-      dimension_width_greater_than_or_equal_to: "bredden må være større enn eller lik %{length} piksel."
-      dimension_height_greater_than_or_equal_to: "høyden må være større enn eller lik %{length} piksel."
-      dimension_width_less_than_or_equal_to: "bredden må være mindre enn eller lik %{length} piksel."
-      dimension_height_less_than_or_equal_to: "høyden må være mindre enn eller lik %{length} piksel."
-      dimension_width_equal_to: "bredde må være lik %{length} piksel."
-      dimension_height_equal_to: "høyden må være lik %{length} piksel."
-      aspect_ratio_not_square: "må være et firkantet bilde"
-      aspect_ratio_not_portrait: "må være et portrettbilde"
-      aspect_ratio_not_landscape: "må være et landskapsbilde"
-      aspect_ratio_is_not: "må ha et størrelsesforhold på %{aspect_ratio}"
-      aspect_ratio_unknown: "har et ukjent størrelsesforhold"
-      image_not_processable: "er ikke et gyldig bilde"
     not_found:
       title: "Siden du lette etter eksisterer ikke (404)"
       message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/'>Hjem</a> og prøv igjen.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva den manglende siden handler om.</p>"
@@ -3942,6 +3921,7 @@ nb:
     logourl: "Logourl"
     are_you_sure_delete: "Er du sikker på at du vil slette denne posten?"
     confirm_delete: "Bekreft Sletting"
+    voucher: "Kupong"
     configurations: "Konfigurasjoner"
     general_settings: "Generelle innstillinger"
     site_name: "Sidenavn"
@@ -4663,13 +4643,10 @@ nb:
       webhook_endpoints:
         title: Webhook-endepunkter
         description: Hendelser i systemet kan utløse webhooks til eksterne systemer.
-        event_types:
-          order_cycle_opened: Bestillingsrunde åpnet
         event_type:
           header: Hendelsestype
         url:
           header: Endepunkt URL
-          create_placeholder: Skriv inn URL-en til det eksterne webhook-endepunktet
       developer_settings:
         title: Utviklerinnstillinger
       form:
@@ -4817,6 +4794,11 @@ nb:
     add_tag_rule_modal:
       select_rule_type: "Velg en regeltype:"
       add_rule: "Legg til Regel"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Skriv inn URL-en til det eksterne webhook-endepunktet
+      event_types:
+        order_cycle_opened: Bestillingsrunde åpnet
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

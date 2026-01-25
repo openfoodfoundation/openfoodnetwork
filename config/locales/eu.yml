@@ -111,27 +111,6 @@ eu:
         blank: "ezin da hutsik egon"
         too_short: "laburregia da (gutxienekoa %{count} karaktere da)"
   errors:
-    messages:
-      content_type_invalid: "Eduki-mota baliogabea du"
-      file_size_out_of_range: " %{file_size} tamaina ez dago eskatutako barrutian"
-      limit_out_of_range: "Guztizko kopurua tartetik kanpo dago"
-      image_metadata_missing: "ez da irudi balioduna"
-      dimension_min_inclusion: " %{width} x %{height} pixelen adinakoa edo handiagoa izan behar du."
-      dimension_max_inclusion: " %{width} x %{height} pixelak baino txikiagoa edo berdina izan behar du."
-      dimension_width_inclusion: "zabalera ez da sartzen %{min} eta %{max} pixelen artean."
-      dimension_height_inclusion: "altuera ez da sartzen %{min} eta %{max} pixelen artean."
-      dimension_width_greater_than_or_equal_to: "Zabalerak %{length} pixelekoa edo handiagoa izan behar du."
-      dimension_height_greater_than_or_equal_to: "Altuerak %{length} pixela baino handiagoa edo berdina izan behar du."
-      dimension_width_less_than_or_equal_to: "Zabalerak %{length} pixelekoa edo txikiagoa izan behar du."
-      dimension_height_less_than_or_equal_to: "Altuerak %{length} pixela edo txikiagoa izan behar du."
-      dimension_width_equal_to: "Zabalerak %{length} pixelen berdina izan behar du."
-      dimension_height_equal_to: "altuerak %{length} pixel izan behar du."
-      aspect_ratio_not_square: "irudiak karratua izan behar du"
-      aspect_ratio_not_portrait: "irudiak erretratua izan behar du"
-      aspect_ratio_not_landscape: "paisaiaren irudia izan behar du"
-      aspect_ratio_is_not: " %{aspect_ratio} itxura-erlazioa izan behar du"
-      aspect_ratio_unknown: "itxura ezezaguneko harremana du"
-      image_not_processable: "ez da irudi balioduna"
     not_found:
       title: "Bilatzen ari zaren orrialdea ez da existitzen (404)"
       message_html: "<b>Mesedez, saiatu berriro</b> Hau denbora arazo bat izan daiteke.<p> Egin klik Atzera botoian aurreko pantailara itzultzeko edo itzuli <a href='/'>Hasiera</a> botoira eta saiatu berriro. <b>Jarri harremanetan laguntza-zerbitzuarekin</b> Arazoak jarraitzen badu edo premiazkoa bada, jakinaraz iezaguzu.</p><p> Aurkitu gure harremanetarako datuak <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network-en tokiko orrian</a>.<p>Oso lagungarria izango zaigu falta den orriaren arrazoiari buruzko xehetasun posible guztiak ematea.</p>"
@@ -3687,6 +3666,7 @@ eu:
     logourl: "Logoaren URLa"
     are_you_sure_delete: "Ziur zaude erregistro hau ezabatu nahi duzula?"
     confirm_delete: "Ezeztapena baieztatu"
+    voucher: "Bonoa"
     configurations: "Konfigurazioak"
     general_settings: "Konfigurazio orokorra"
     site_name: "Gunearen izena"
@@ -4376,8 +4356,6 @@ eu:
         regenerate_key: "Giltza birsortu"
       webhook_endpoints:
         description: Sistemaren gertaerek webhook-ak eragin diezazkiekete kanpoko sistemei.
-        event_types:
-          order_cycle_opened: Eskaera-ziklo irekia
       developer_settings:
         title: Garapenaren konfigurazioa
       form:
@@ -4484,6 +4462,9 @@ eu:
     add_tag_rule_modal:
       select_rule_type: "Hautatu erregela mota bat:"
       add_rule: "Erregela gehitu"
+    webhook_endpoint_form:
+      event_types:
+        order_cycle_opened: Eskaera-ziklo irekia
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

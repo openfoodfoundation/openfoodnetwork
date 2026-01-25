@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ContentSanitizer do
   let(:service) { described_class.new }
 

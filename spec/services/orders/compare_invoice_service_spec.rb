@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.shared_examples "attribute changes - payment total" do |boolean, type|
   before do
     Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total + 10)

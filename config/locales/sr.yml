@@ -115,27 +115,6 @@ sr:
         blank: "не може бити празно"
         too_short: "је прекратак (минимум је %{count} знакова)"
   errors:
-    messages:
-      content_type_invalid: "има неважећи тип садржаја"
-      file_size_out_of_range: "величина %{file_size} није између захтеваног опсега"
-      limit_out_of_range: "укупан број је ван опсега"
-      image_metadata_missing: "није важећа слика"
-      dimension_min_inclusion: "мора бити већи или једнак %{width} к %{height} пиксела."
-      dimension_max_inclusion: "мора бити мањи или једнак %{width} к %{height} пиксела."
-      dimension_width_inclusion: "ширина није укључена између %{min} и %{max} пиксела."
-      dimension_height_inclusion: "висина није укључена између %{min} и %{max} пиксела."
-      dimension_width_greater_than_or_equal_to: "ширина мора бити већа или једнака %{length} пиксела."
-      dimension_height_greater_than_or_equal_to: "висина мора бити већа или једнака %{length} пиксела."
-      dimension_width_less_than_or_equal_to: "ширина мора бити мања или једнака %{length} пиксела."
-      dimension_height_less_than_or_equal_to: "висина мора бити мања или једнака %{length} пиксела."
-      dimension_width_equal_to: "ширина мора бити једнака %{length} пиксела."
-      dimension_height_equal_to: "висина мора бити једнака %{length} пиксела."
-      aspect_ratio_not_square: "мора бити квадратна слика"
-      aspect_ratio_not_portrait: "мора бити портретна слика"
-      aspect_ratio_not_landscape: "мора бити пејзажна слика"
-      aspect_ratio_is_not: "мора имати однос ширине и висине %{aspect_ratio}"
-      aspect_ratio_unknown: "има непознати однос ширине и висине"
-      image_not_processable: "није важећа слика"
     not_found:
       title: "Страница коју сте тражили не постоји (404)"
       message_html: "<b>Молим вас, покушајте поново</b><p> Ово може бити привремени проблем. Кликните на дугме за повратак да бисте се вратили на претходни екран или се вратите на <a href='/'>почетну страницу</a> и покушајте поново.</p> <b>Контактирајте подршку</b><p> Ако проблем и даље постоји или је хитан, реците нам о томе. Пронађите наше контакт податке на глобалној <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>локалној страници Опен Фоод Нетворк</a> .</p><p> Заиста нам помаже ако можете дати што више детаља о томе о чему се ради на страници која недостаје.</p>"
@@ -4602,13 +4581,10 @@ sr:
       webhook_endpoints:
         title: Вебхоок Ендпоинтс
         description: Догађаји у систему могу покренути веб-хукове ка спољним системима.
-        event_types:
-          order_cycle_opened: Отворен циклус наруџби
         event_type:
           header: Тип догађаја
         url:
           header: УРЛ крајње тачке
-          create_placeholder: Унесите УРЛ крајње тачке удаљеног веб-хука
       developer_settings:
         title: Подешавања програмера
       form:

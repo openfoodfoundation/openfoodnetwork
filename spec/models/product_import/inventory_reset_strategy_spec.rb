@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ProductImport::InventoryResetStrategy do
   let(:inventory_reset) { described_class.new(excluded_items_ids) }
 

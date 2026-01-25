@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TermsOfService do
   let(:customer) { create(:customer) }
   let(:distributor) { create(:distributor_enterprise) }

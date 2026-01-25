@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Spree
   module Stock
     RSpec.describe Quantifier do

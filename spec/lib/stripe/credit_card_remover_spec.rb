@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 require 'stripe/credit_card_remover'
 
 RSpec.describe Stripe::CreditCardRemover do

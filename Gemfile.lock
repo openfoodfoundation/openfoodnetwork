@@ -104,11 +104,12 @@ GEM
       rails-html-sanitizer (~> 1.6)
     active_model_serializers (0.8.4)
       activemodel (>= 3.0)
-    active_storage_validations (1.1.4)
-      activejob (>= 5.2.0)
-      activemodel (>= 5.2.0)
-      activestorage (>= 5.2.0)
-      activesupport (>= 5.2.0)
+    active_storage_validations (3.0.2)
+      activejob (>= 6.1.4)
+      activemodel (>= 6.1.4)
+      activestorage (>= 6.1.4)
+      activesupport (>= 6.1.4)
+      marcel (>= 1.0.3)
     activejob (7.1.6)
       activesupport (= 7.1.6)
       globalid (>= 0.3.6)
@@ -379,7 +380,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    haml_lint (0.67.0)
+    haml_lint (0.68.0)
       haml (>= 5.0)
       parallel (~> 1.10)
       rainbow
@@ -388,7 +389,8 @@ GEM
     hashdiff (1.2.1)
     hashery (2.1.2)
     hashie (5.0.0)
-    highline (2.0.3)
+    highline (3.1.2)
+      reline
     htmlentities (4.4.2)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
@@ -576,7 +578,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.6.0)
+    prism (1.7.0)
     private_address_check (0.5.0)
     pry (0.15.2)
       coderay (~> 1.1)
@@ -613,7 +615,7 @@ GEM
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
-    rack-proxy (0.7.6)
+    rack-proxy (0.7.7)
       rack
     rack-rewrite (1.5.1)
     rack-session (1.0.2)
@@ -812,7 +814,12 @@ GEM
       tilt (>= 1.1, < 3)
     sd_notify (0.1.1)
     securerandom (0.4.1)
-    semantic_range (3.0.0)
+    semantic_range (3.1.0)
+    shakapacker (6.6.0)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     shoulda-matchers (7.0.1)
       activesupport (>= 7.1)
     sidekiq (7.2.4)
@@ -868,14 +875,14 @@ GEM
       redis (>= 4.0, < 6.0)
     stringex (2.8.6)
     stringio (3.1.8)
-    stripe (13.5.1)
+    stripe (15.5.0)
     swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
     sysexits (1.2.0)
-    temple (0.8.2)
+    temple (0.10.4)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.4.0)
@@ -902,7 +909,7 @@ GEM
       simplecov_json_formatter
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
-    unicode-emoji (4.1.0)
+    unicode-emoji (4.2.0)
     uniform_notifier (1.17.0)
     uri (1.1.1)
     valid_email2 (5.2.3)
@@ -940,11 +947,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.4)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     webrick (1.9.2)
     websocket-driver (0.7.7)
       base64
@@ -1017,7 +1019,7 @@ DEPENDENCIES
   good_migrations
   haml
   haml_lint
-  highline (= 2.0.3)
+  highline
   i18n
   i18n-js (~> 3.9.0)
   i18n-tasks
@@ -1081,6 +1083,7 @@ DEPENDENCIES
   rubocop-rspec_rails
   sd_notify
   select2-rails!
+  shakapacker (= 6.6.0)
   shoulda-matchers
   sidekiq
   sidekiq-scheduler
@@ -1094,7 +1097,7 @@ DEPENDENCIES
   stimulus_reflex
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
-  stripe (~> 13)
+  stripe (~> 15)
   turbo-rails
   turbo_power
   undercover
@@ -1106,13 +1109,12 @@ DEPENDENCIES
   web!
   web-console
   webmock
-  webpacker (~> 5)
   whenever
   wicked_pdf
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 3.2.9p265
+  ruby 3.4.8p72
 
 BUNDLED WITH
-   2.4.19
+  4.0.3

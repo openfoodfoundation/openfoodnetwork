@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Stock::Package do
   context "base tests" do
     let(:variant) { build(:variant, weight: 25.0) }

@@ -109,27 +109,6 @@ ru:
         blank: "не может быть пустым"
         too_short: "слишком короткий (минимум %{count} символов)"
   errors:
-    messages:
-      content_type_invalid: "имеет неверный тип контента"
-      file_size_out_of_range: "размер %{file_size} не входит в требуемый диапазон"
-      limit_out_of_range: "общее количество вне диапазона"
-      image_metadata_missing: "недопустимое изображение"
-      dimension_min_inclusion: "должно быть больше или равно %{width} x %{height} пикселей."
-      dimension_max_inclusion: "должно быть меньше или равно %{width} x %{height} пикселей."
-      dimension_width_inclusion: "ширина не включена между %{min} и %{max} пикселей."
-      dimension_height_inclusion: "высота не включена между %{min} и %{max} пикселями."
-      dimension_width_greater_than_or_equal_to: "ширина должна быть больше или равна %{length} пикселя."
-      dimension_height_greater_than_or_equal_to: "высота должна быть больше или равна %{length} пикселя."
-      dimension_width_less_than_or_equal_to: "ширина должна быть меньше или равна %{length} пикселя."
-      dimension_height_less_than_or_equal_to: "высота должна быть меньше или равна %{length} пикселя."
-      dimension_width_equal_to: "ширина должна быть равна %{length} пикселю."
-      dimension_height_equal_to: "высота должна быть равна %{length} пикселю."
-      aspect_ratio_not_square: "должно быть квадратное изображение"
-      aspect_ratio_not_portrait: "должно быть портретное изображение"
-      aspect_ratio_not_landscape: "должно быть пейзажное изображение"
-      aspect_ratio_is_not: "должен иметь соотношение сторон %{aspect_ratio}"
-      aspect_ratio_unknown: "имеет неизвестное соотношение сторон"
-      image_not_processable: "недопустимое изображение"
     not_found:
       title: "Страница не существует (404)"
       message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/'>Главную</a> страницу и повторите попытку.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете дать как можно больше подробностей о том, о чем пропавшая страница.</p>"
@@ -3848,6 +3827,7 @@ ru:
     logourl: "URL логотипа"
     are_you_sure_delete: "Вы уверены, что хотите удалить эту запись?"
     confirm_delete: "Подтвердить Удаление"
+    voucher: "Ваучер"
     configurations: "Настройки"
     general_settings: "Основные Настройки"
     site_name: "Имя Сайта"
@@ -4551,13 +4531,10 @@ ru:
       webhook_endpoints:
         title: Конечные точки веб-хука
         description: События в системе могут запускать веб-хуки к внешним системам.
-        event_types:
-          order_cycle_opened: Цикл Заказа Открыт
         event_type:
           header: Тип события
         url:
           header: URL-адрес конечной точки
-          create_placeholder: Введите URL-адрес конечной точки удаленного веб-хука.
       developer_settings:
         title: Настройки Разработчика
       form:
@@ -4731,3 +4708,8 @@ ru:
     add_tag_rule_modal:
       select_rule_type: "Выберите тип правила:"
       add_rule: "Добавить Правило"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Введите URL-адрес конечной точки удаленного веб-хука.
+      event_types:
+        order_cycle_opened: Цикл Заказа Открыт

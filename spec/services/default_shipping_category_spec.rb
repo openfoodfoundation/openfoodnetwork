@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe DefaultShippingCategory do
   describe '.create!' do
     it "names the location 'Default'" do

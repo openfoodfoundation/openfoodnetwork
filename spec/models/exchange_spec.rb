@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Exchange do
   it { is_expected.to have_many :semantic_links }
 

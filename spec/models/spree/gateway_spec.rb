@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Gateway do
   let(:test_gateway) do
     Class.new(Spree::Gateway) do

@@ -105,27 +105,6 @@ de_DE:
         blank: "darf nicht leer sein."
         too_short: "ist zu kurz (mindestens %{count} Zeichen)"
   errors:
-    messages:
-      content_type_invalid: "hat ein ungültiges Datenformat"
-      file_size_out_of_range: "Dateigröße %{file_size} liegt außerhalb des zulässigen Bereichs"
-      limit_out_of_range: "Gesamtzahl liegt außerhalb des zulässigen Bereichs"
-      image_metadata_missing: "ist kein gültiges Bild"
-      dimension_min_inclusion: "muss größer oder gleich %{width} x %{height} Pixel sein"
-      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
-      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_width_greater_than_or_equal_to: "Breite muss größer oder gleich %{length} Pixel sein"
-      dimension_height_greater_than_or_equal_to: "Höhe muss größer oder gleich %{length} Pixel sein"
-      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
-      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
-      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
-      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
-      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
-      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
-      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
-      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
-      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
-      image_not_processable: "ist kein gültiges Bild"
     not_found:
       title: "Die gesuchte Seite existiert nicht (404). "
       message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/'>Startseite</a> und versuchen Sie es erneut.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben können, worum es auf der fehlenden Seite geht.</p>"
@@ -795,12 +774,14 @@ de_DE:
           cancellation_text: "Produktvariante beibehalten"
       filters:
         search_products: Nach Produkten suchen
+        search_for_producers: Produzenten suchen
         all_producers: Alle Produzenten
+        search_for_categories: Kategorie suchen
         all_categories: Alle Kategorien
         producers:
           label: Unsere Produzenten
         categories:
-          label: Lieferkategorien
+          label: Produktkategorie
         tags:
           label: Stichwörter
         search: Suche
@@ -845,6 +826,7 @@ de_DE:
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        select_unit_scale: Einheit auswählen
         add_a_tag: Stichwort hinzufügen
       clone:
         success: Das Produkt wurde dupliziert.
@@ -1098,6 +1080,7 @@ de_DE:
         images:
           legend: "Bilder"
           logo: Logo
+          logo_size: "300 x 300 Pixel"
         inventory_settings:
           legend: "Katalog"
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
@@ -1259,7 +1242,7 @@ de_DE:
         vouchers:
           legend: Gutscheine
           voucher_code: Gutschein-Code
-          rate: Steuersatz
+          rate: Gutscheinwert
           label: Bezeichnung
           purpose: Zweck
           expiry: Gültigkeit
@@ -1516,6 +1499,7 @@ de_DE:
     shared:
       attachment_field:
         logo_label: "Logo"
+        logo_hint: 300 x 300 Pixel
         logo_remove: "Bild löschen"
         logo_remove_confirm: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
         promo_image_note1: 'BITTE BEACHTEN SIE:'
@@ -3078,6 +3062,8 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_header_voucher_label: Gutschein-Code
+  report_header_voucher_amount: "Gutscheinwert"
   report_line_cost_of_produce: Produktkosten
   report_line_line_items: Einzelposten
   report_header_last_completed_order_date: Letzte Bestellung
@@ -3795,6 +3781,7 @@ de_DE:
     logourl: "URL des Logos"
     are_you_sure_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
     confirm_delete: "Löschen bestätigen"
+    voucher: "Gutschein"
     configurations: "Konfiguration"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Name der Website"
@@ -4248,6 +4235,7 @@ de_DE:
           product_name: Produktname
         primary_taxon_form:
           product_category: Produktkategorie
+          search_for_categories: "Lieferkategorie suchen"
         group_buy_form:
           group_buy: "Gruppenkauf aktivieren?"
           bulk_unit_size: Erforderliche Gesamtbestellmenge (in Gramm, Liter oder Stück)
@@ -4500,13 +4488,10 @@ de_DE:
       webhook_endpoints:
         title: Webhook-Endpunkte
         description: Ereignisse im System können Webhooks zu externen Systemen auslösen.
-        event_types:
-          order_cycle_opened: Bestellzyklus eröffnet
         event_type:
           header: Ereignistyp
         url:
           header: Endpunkt-URL
-          create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
       developer_settings:
         title: Entwicklereinstellungen
       form:
@@ -4654,3 +4639,8 @@ de_DE:
     add_tag_rule_modal:
       select_rule_type: "Wählen Sie einen Regelart aus:"
       add_rule: "Regel hinzufügen"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
+      event_types:
+        order_cycle_opened: Bestellzyklus eröffnet

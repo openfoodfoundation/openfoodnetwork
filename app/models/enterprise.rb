@@ -111,14 +111,14 @@ class Enterprise < ApplicationRecord
   end
 
   validates :logo,
-            processable_image: true,
-            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
   validates :promo_image,
-            processable_image: true,
-            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
   validates :white_label_logo,
-            processable_image: true,
-            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
   validates :terms_and_conditions, content_type: {
     in: "application/pdf",
     message: I18n.t(:enterprise_terms_and_conditions_type_error),

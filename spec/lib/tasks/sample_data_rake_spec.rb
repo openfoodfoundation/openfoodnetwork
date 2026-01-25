@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe 'sample_data.rake' do
   before do
     # Create seed data required by the sample data.

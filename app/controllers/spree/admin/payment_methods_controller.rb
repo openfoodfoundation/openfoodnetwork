@@ -11,10 +11,10 @@ module Spree
       respond_to :html
 
       PAYMENT_METHODS = %w{
-        Spree::PaymentMethod::Check
         Spree::Gateway::PayPalExpress
         Spree::Gateway::StripeSCA
-      }.index_with(&:constantize).freeze
+        Spree::PaymentMethod::Check
+      }.freeze
 
       def create
         force_environment
@@ -95,7 +95,7 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = PAYMENT_METHODS.fetch(params[:provider_type], PaymentMethod).new
+          @payment_method = PaymentMethod.new(type: params[:provider_type])
         end
 
         render partial: 'provider_settings'
@@ -117,7 +117,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
+        valid_payment_methods = PAYMENT_METHODS
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
@@ -133,13 +133,11 @@ module Spree
       end
 
       def load_providers
-        providers = Gateway.providers.sort_by(&:name)
+        providers = PAYMENT_METHODS.dup
 
-        unless show_stripe?
-          providers.reject! { |provider| stripe_provider?(provider) }
-        end
+        providers.delete("Spree::Gateway::StripeSCA") unless show_stripe?
 
-        providers
+        providers.map(&:constantize)
       end
 
       # Show Stripe as an option if enabled, or if the
@@ -162,10 +160,6 @@ module Spree
 
       def stripe_payment_method?
         @payment_method.try(:type) == "Spree::Gateway::StripeSCA"
-      end
-
-      def stripe_provider?(provider)
-        provider.name.ends_with?("StripeSCA")
       end
 
       def base_params

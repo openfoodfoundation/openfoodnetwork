@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Permissions::Order do
   let(:permissions) { described_class.new(user) }
   let!(:basic_permissions) { OpenFoodNetwork::Permissions.new(user) }

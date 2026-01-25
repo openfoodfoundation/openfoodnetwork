@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::CurrentOrderSerializer do
   let(:distributor) { build(:distributor_enterprise) }
   let(:order_cycle) { build(:simple_order_cycle) }

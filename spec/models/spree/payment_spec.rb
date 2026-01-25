@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Payment do
+  before do
+    # mock the call with "ofn.payment_transition" so we don't call the related listener and services
+    allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original
+    allow(ActiveSupport::Notifications).to receive(:instrument)
+      .with("ofn.payment_transition", any_args).and_return(nil)
+  end
+
   context 'original specs from Spree' do
     before { Stripe.api_key = "sk_test_12345" }
     let(:order) { create(:order) }
@@ -1062,6 +1067,19 @@ RSpec.describe Spree::Payment do
     it "sets :captured_at to the current time" do
       payment.complete
       expect(payment.captured_at).to be_present
+    end
+  end
+
+  describe "payment transition" do
+    it "notifies of payment status change" do
+      payment = create(:payment)
+
+      allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original
+      expect(ActiveSupport::Notifications).to receive(:instrument).with(
+        "ofn.payment_transition", payment: payment, event: "processing"
+      )
+
+      payment.started_processing!
     end
   end
 end

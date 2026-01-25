@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
   describe 'orders and distributors report' do
     subject { described_class.new nil }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Checkout::PostCheckoutActions do
   let(:order) { create(:order_with_distributor) }
   let(:postCheckoutActions) { Checkout::PostCheckoutActions.new(order) }
