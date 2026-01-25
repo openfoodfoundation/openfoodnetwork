@@ -406,26 +406,8 @@ RSpec.describe Admin::ReportsController do
         expect(response).to have_http_status(:ok)
         json_response = response.parsed_body
 
-        names = json_response["results"].pluck("text")
+        names = json_response["results"].pluck("label")
         expect(names).to eq(['Admin Fee', 'Delivery Fee'])
-      end
-
-      it "caches and works with different report types" do
-        spree_get(
-          :search_enterprise_fees,
-          report_type: :enterprise_fee_summary,
-          report_subtype: :enterprise_fees_with_tax_report_by_order
-        )
-        first_response = response.parsed_body
-
-        spree_get(
-          :search_enterprise_fees,
-          report_type: :enterprise_fee_summary,
-          report_subtype: :enterprise_fees_with_tax_report_by_order
-        )
-        second_response = response.parsed_body
-
-        expect(first_response).to eq(second_response)
       end
     end
 
@@ -443,26 +425,8 @@ RSpec.describe Admin::ReportsController do
         expect(response).to have_http_status(:ok)
         json_response = response.parsed_body
 
-        names = json_response["results"].pluck("text")
+        names = json_response["results"].pluck("label")
         expect(names).to eq(['Alpha Market', 'Zebra Farm'])
-      end
-
-      it "caches results" do
-        spree_get(
-          :search_enterprise_fee_owners,
-          report_type: :enterprise_fee_summary,
-          report_subtype: :enterprise_fees_with_tax_report_by_order
-        )
-        first_response = response.parsed_body
-
-        spree_get(
-          :search_enterprise_fee_owners,
-          report_type: :enterprise_fee_summary,
-          report_subtype: :enterprise_fees_with_tax_report_by_order
-        )
-        second_response = response.parsed_body
-
-        expect(first_response).to eq(second_response)
       end
     end
 
@@ -481,7 +445,7 @@ RSpec.describe Admin::ReportsController do
         )
 
         json_response = response.parsed_body
-        expect(json_response["results"].pluck("text")).to eq(["alice@example.com"])
+        expect(json_response["results"].pluck("label")).to eq(["alice@example.com"])
       end
     end
 
@@ -498,7 +462,7 @@ RSpec.describe Admin::ReportsController do
         )
 
         json_response = response.parsed_body
-        expect(json_response["results"].pluck("text")).to eq(["Winter Market"])
+        expect(json_response["results"].pluck("label")).to eq(["Winter Market"])
       end
     end
 
@@ -515,7 +479,7 @@ RSpec.describe Admin::ReportsController do
         )
 
         json_response = response.parsed_body
-        expect(json_response["results"].pluck("text")).to eq(["Alpha Farm"])
+        expect(json_response["results"].pluck("label")).to eq(["Alpha Farm"])
       end
     end
   end

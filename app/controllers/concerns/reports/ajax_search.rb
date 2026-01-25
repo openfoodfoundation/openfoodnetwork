@@ -87,7 +87,7 @@ module Reports
     end
 
     def format_results(items)
-      items.map { |name, id| { id: id, text: name } }
+      items.map { |label, value| { value:, label: } }
     end
 
     def frontend_data

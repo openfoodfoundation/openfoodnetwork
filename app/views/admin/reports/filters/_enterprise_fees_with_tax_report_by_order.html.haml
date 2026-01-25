@@ -2,24 +2,49 @@
 .row
   .alpha.two.columns= label_tag nil, t(:report_hubs)
   .omega.fourteen.columns
-    = f.select(:distributor_id_in, [], {selected: params.dig(:q, :distributor_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_distributors_reports_url}})
+    = render(SearchableDropdownComponent.new(form: f,
+      name: :distributor_id_in,
+      options: [],
+      selected_option: params.dig(:q, :distributor_id_in),
+      multiple: true,
+      remote_url: admin_search_distributors_reports_url))
 
 .row
   .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
   .omega.fourteen.columns
-    = f.select(:order_cycle_id_in, [], {selected: params.dig(:q, :order_cycle_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_order_cycles_reports_url}})
+    = render(SearchableDropdownComponent.new(form: f,
+      name: :order_cycle_id_in,
+      options: [],
+      selected_option: params.dig(:q, :order_cycle_id_in),
+      multiple: true,
+      remote_url: admin_search_order_cycles_reports_url))
 
 .row
   .alpha.two.columns= label_tag nil, t(:fee_name)
   .omega.fourteen.columns
-    = f.select(:enterprise_fee_id_in, [], {selected: params.dig(:q, :enterprise_fee_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_enterprise_fees_reports_url(search_url_query)}})
+    = render(SearchableDropdownComponent.new(form: f,
+      name: :enterprise_fee_id_in,
+      options: [],
+      selected_option: params.dig(:q, :enterprise_fee_id_in),
+      multiple: true,
+      remote_url: admin_search_enterprise_fees_reports_url(search_url_query)))
 
 .row
   .alpha.two.columns= label_tag nil, t(:fee_owner)
   .omega.fourteen.columns
-    = f.select(:enterprise_fee_owner_id_in, [], {selected: params.dig(:q, :enterprise_fee_owner_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_enterprise_fee_owners_reports_url(search_url_query)}})
+    = render(SearchableDropdownComponent.new(form: f,
+      name: :enterprise_fee_owner_id_in,
+      options: [],
+      selected_option: params.dig(:q, :enterprise_fee_owner_id_in),
+      multiple: true,
+      remote_url: admin_search_enterprise_fee_owners_reports_url(search_url_query)))
 
 .row
   .alpha.two.columns= label_tag nil, t(:report_customers)
   .omega.fourteen.columns
-    = f.select(:customer_id_in, [], {selected: params.dig(:q, :customer_id_in)}, {class: "fullwidth", multiple: true, data: {controller: "select2-ajax", select2_ajax_url_value: admin_search_order_customers_reports_url}})
+    = render(SearchableDropdownComponent.new(form: f,
+      name: :customer_id_in,
+      options: [],
+      selected_option: params.dig(:q, :customer_id_in),
+      multiple: true,
+      remote_url: admin_search_order_customers_reports_url))
