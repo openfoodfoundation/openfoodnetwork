@@ -32,7 +32,6 @@ development:
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
-    https: false
     host: localhost
     port: 3035
     # Hot Module Replacement updates modules while the application is running without a full reload
@@ -51,8 +50,6 @@ development:
     compress: true
     # Note that apps that do not check the host are vulnerable to DNS rebinding attacks
     allowed_hosts: "all"
-    #TODO Old config
-    #pretty: false
     pretty: true
     headers:
       'Access-Control-Allow-Origin': '*'
