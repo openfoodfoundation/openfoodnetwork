@@ -34,8 +34,12 @@ module ProductsHelper
     click_button "Search"
   end
 
-  def search_by_tag(tag)
-    tomselect_multiselect tag, from: "tags_name_in"
+  def search_by_tag(*tags)
+    if tags.empty?
+      raise ArgumentError, "Please provide at least one tag to search for"
+    end
+
+    tags.each { |tag| tomselect_multiselect tag, from: "tags_name_in" }
     click_button "Search"
   end
 
