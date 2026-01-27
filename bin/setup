@@ -31,6 +31,16 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Preparing database, removing old logs and tempfiles =="
   system! "bin/rails db:prepare log:clear tmp:clear"
+  system! "rm -f tmp/capybara/screenshots/*.png"
+  system! "rm -f tmp/invoices/*.pdf"
+  system! "rm -f tmp/javascripts/*.js"
+  system! "rm -f tmp/karma_unit.js*"
+  system! "rm -f tmp/product_import-*"
+
+  puts "\n== Removing any precompiled assets that would be out of date now =="
+  system! "rm -rf public/assets/"
+  system! "rm -rf public/packs/"
+  system! "rm -rf public/packs-test/"
 
   puts "\n== Restarting application server =="
   # system! "bin/rails restart"
