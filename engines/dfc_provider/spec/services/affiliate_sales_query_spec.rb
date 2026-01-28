@@ -63,7 +63,7 @@ RSpec.describe AffiliateSalesQuery do
 
       expect(labelled_row).to include(
         product_name: "Tomatoes",
-        unit_name: "Tomatoes - Roma",
+        unit_name: "Tomatoes - Roma (1kg)",
         unit_type: "weight",
         units: 1000.to_f,
         unit_presentation: "1kg",
@@ -78,16 +78,27 @@ RSpec.describe AffiliateSalesQuery do
 
     it "returns data stored in line item at time of order" do
       # Records are updated after the orders are created
-      product.update! name: "Tomatoes Updated"
-      variant1.update! display_name: "Tomatoes - Updated Roma", price: 11
+      product.update! name: "Tommy toes"
+      variant1.update! display_name: "Tommy toes - Roma", price: 11
 
       labelled_row = query.label_row(query.data(order1.distributor).first)
 
-      pending "#13220 store product and variant names"
+      expect(labelled_row).to include(
+        product_name: "Tomatoes",
+        unit_name: "Tomatoes - Roma (1kg)",
+        price: 10.to_d, # this price is hardcoded in the line item factory.
+      )
+    end
+
+    it "returns data from variant if line item doesn't have it" do
+      # Old line item records (before migration 20250713110052) don't have these values stored
+      order1.line_items.first.update! product_name: nil, variant_name: nil
+
+      labelled_row = query.label_row(query.data(order1.distributor).first)
+
       expect(labelled_row).to include(
         product_name: "Tomatoes",
         unit_name: "Tomatoes - Roma",
-        price: 10.to_d, # this price is hardcoded in the line item factory.
       )
     end
 
@@ -122,12 +133,12 @@ RSpec.describe AffiliateSalesQuery do
 
           expect(labelled_data).to include a_hash_including(
             product_name: "Tomatoes",
-            unit_name: "Tomatoes - Roma",
+            unit_name: "Tomatoes - Roma (1kg)",
             quantity_sold: 1,
           )
           expect(labelled_data).to include a_hash_including(
             product_name: "Tomatoes",
-            unit_name: "Tomatoes - Cherry",
+            unit_name: "Tomatoes - Cherry (500g)",
             quantity_sold: 1,
             units: 500,
             unit_presentation: "500g",
