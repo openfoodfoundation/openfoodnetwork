@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+#
+# Install dependencies and migrate data during production deployments or
+# when updating your development environment.
+#
+# Take care when changing it and consider the ofn-install repository for
+# the context of deployments.
 require "fileutils"
 
 # path to your application root.
