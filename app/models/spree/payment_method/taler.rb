@@ -56,8 +56,9 @@ module Spree
         taler_order = client.fetch_order(payment.response_code)
         status = taler_order["order_status"]
         success = (status == "paid")
+        message = I18n.t(status, default: status, scope: "taler.order_status")
 
-        ActiveMerchant::Billing::Response.new(success, status)
+        ActiveMerchant::Billing::Response.new(success, message)
       end
 
       private

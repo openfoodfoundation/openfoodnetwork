@@ -288,6 +288,9 @@ en:
     success_code:
       disconnected: "Stripe account disconnected."
 
+  taler:
+    order_status:
+      claimed: "The payment request expired. Please try again."
   activemodel:
     errors:
       messages:
