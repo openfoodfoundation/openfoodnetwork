@@ -10,7 +10,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
     )
   }
 
-  describe "external_payment_url", vcr: true do
+  describe "#external_payment_url", vcr: true do
     it "retrieves a URL to pay at and stores it on the payment record" do
       order = create(:order_ready_for_confirmation, payment_method: taler)
       url = subject.external_payment_url(order:)
