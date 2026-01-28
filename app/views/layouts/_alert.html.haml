@@ -1,5 +1,5 @@
 .alert-box{ class: "#{type}" }
   = message
   - if local_assigns[:unconfirmed]
-    %a{ "data-action": "login-modal#resend_confirmation", "data-tab": local_assigns[:tab] }
+    = link_to spree_user_confirmation_path(spree_user: { email: }, tab: local_assigns[:tab]), data: { turbo_method: :post } do
       = t('devise.confirmations.resend_confirmation_email')

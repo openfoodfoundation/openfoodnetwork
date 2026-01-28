@@ -12,20 +12,20 @@ RSpec.describe UserPasswordsController do
 
   describe "create" do
     it "returns 404 if user is not found" do
-      spree_post :create, spree_user: { email: "xxxxxxxxxx@example.com" }
+      spree_post :create, spree_user: { email: "xxxxxxxxxx@example.com" }, format: :turbo_stream
       expect(response).to have_http_status :not_found
       expect(response.body).to match 'Email address not found'
     end
 
     it "returns 422 if user is registered but not confirmed" do
-      spree_post :create, spree_user: { email: unconfirmed_user.email }
+      spree_post :create, spree_user: { email: unconfirmed_user.email }, format: :turbo_stream
       expect(response).to have_http_status :unprocessable_entity
       expect(response.body).to match "You must confirm your email \
 address before you can reset your password."
     end
 
     it "returns 200 when password reset was successful" do
-      spree_post :create, spree_user: { email: user.email }
+      spree_post :create, spree_user: { email: user.email }, format: :turbo_stream
       expect(response).to have_http_status :ok
       expect(response.body).to match "An email with instructions on resetting \
 your password has been sent!"

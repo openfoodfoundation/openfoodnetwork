@@ -1,8 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["background", "modal", "email"];
-  static values = { email: String };
+  static targets = ["background", "modal"];
 
   connect() {
     if (this.hasModalTarget) {
@@ -17,13 +16,6 @@ export default class extends Controller {
   call(event) {
     event.preventDefault();
     window.dispatchEvent(new Event("login:modal:open"));
-  }
-
-  emailOnInput(event) {
-    this.emailValue = event.currentTarget.value;
-    this.emailTargets.forEach((element) => {
-      element.value = this.emailValue;
-    });
   }
 
   open = () => {
@@ -55,19 +47,6 @@ export default class extends Controller {
       this.backgroundTarget.style.display = "none";
       this.modalTarget.style.display = "none";
     }, 200);
-  }
-
-  resend_confirmation(event) {
-    fetch("/user/spree_user/confirmation", {
-      method: "POST",
-      body: JSON.stringify({
-        spree_user: { email: this.emailValue },
-        tab: event.currentTarget.dataset.tab,
-      }),
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
-      .then((data) => data.json())
-      .then(CableReady.perform);
   }
 
   returnHome() {
