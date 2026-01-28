@@ -260,7 +260,9 @@ module Spree
       can [:admin, :index, :import], ::Admin::DfcProductImportsController
 
       # Reports page
-      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :index, :show, :create, :search_enterprise_fees, :search_enterprise_fee_owners,
+           :search_distributors, :search_suppliers, :search_order_cycles, :search_order_customers],
+          ::Admin::ReportsController
       can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
            :packing, :enterprise_fee_summary, :bulk_coop, :suppliers], :report
