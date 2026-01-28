@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+#
+# Install dependencies and migrate data during production deployments or
+# when updating your development environment.
+#
+# Take care when changing it and consider the ofn-install repository for
+# the context of deployments.
 require "fileutils"
 
 # path to your application root.
@@ -21,8 +27,8 @@ FileUtils.chdir APP_ROOT do
   system("bundle check 2> /dev/null") || system!(BUNDLE_ENV, "bundle install")
 
   # Install JavaScript dependencies
-  system("script/nodenv-install.sh")
-  system("bin/yarn")
+  system!("script/nodenv-install.sh")
+  system!("bin/yarn")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
