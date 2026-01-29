@@ -14,6 +14,7 @@ module Spree
         Spree::Gateway::PayPalExpress
         Spree::Gateway::StripeSCA
         Spree::PaymentMethod::Check
+        Spree::PaymentMethod::Taler
       }.freeze
 
       def create

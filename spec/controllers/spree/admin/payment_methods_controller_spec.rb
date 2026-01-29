@@ -19,6 +19,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       expect(providers).to eq %w[
         Spree::Gateway::PayPalExpress
         Spree::PaymentMethod::Check
+        Spree::PaymentMethod::Taler
       ]
     end
 
