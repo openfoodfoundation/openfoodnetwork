@@ -761,6 +761,7 @@ ml:
           label: വിഭാഗങ്ങൾ
         tags:
           label: ടാഗുകൾ
+          none: ഒന്നുമില്ല
         search: തിരയുക
       sort:
         pagination:

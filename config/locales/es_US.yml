@@ -675,6 +675,7 @@ es_US:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       sort:
         pagination:

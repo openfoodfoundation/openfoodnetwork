@@ -841,6 +841,7 @@ hu:
           label: Kategóriák
         tags:
           label: Címkék
+          none: Egyik sem
         search: Keresés
       sort:
         pagination:

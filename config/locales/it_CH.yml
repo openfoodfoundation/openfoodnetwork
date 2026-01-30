@@ -675,6 +675,7 @@ it_CH:
           label: categorie
         tags:
           label: Etichette
+          none: Nessuno
         search: Cerca
       sort:
         pagination:

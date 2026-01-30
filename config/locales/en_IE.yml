@@ -845,6 +845,7 @@ en_IE:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:

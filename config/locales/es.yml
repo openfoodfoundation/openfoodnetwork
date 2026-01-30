@@ -880,6 +880,7 @@ es:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       sort:
         pagination:

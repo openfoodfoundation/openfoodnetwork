@@ -716,6 +716,7 @@ ar:
           label: التصنيفات
         tags:
           label: الاوسمة
+          none: لا شيء
         search: بحث
       sort:
         pagination:

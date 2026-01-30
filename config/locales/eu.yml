@@ -830,6 +830,7 @@ eu:
           label: Kategoriak
         tags:
           label: Tags
+          none: Bat ere ez
         search: Bilatu
       sort:
         pagination:

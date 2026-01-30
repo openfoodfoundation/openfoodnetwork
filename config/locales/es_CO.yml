@@ -568,6 +568,7 @@ es_CO:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       product_variant_row:
         new_variant: Nueva variante

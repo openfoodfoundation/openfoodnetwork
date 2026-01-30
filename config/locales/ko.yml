@@ -676,6 +676,7 @@ ko:
           label: 카테고리
         tags:
           label: 태그
+          none: None
         search: 탐색
       sort:
         pagination:

@@ -681,6 +681,7 @@ uk:
           label: Категорії
         tags:
           label: Мітки
+          none: Жодного
         search: Пошук
       sort:
         pagination:

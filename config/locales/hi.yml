@@ -758,6 +758,7 @@ hi:
           label: श्रेणियां
         tags:
           label: टैग्स
+          none: कोई नहीं
         search: सर्च
       sort:
         pagination:

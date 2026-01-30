@@ -750,6 +750,7 @@ pa:
           label: ਸ਼੍ਰੇਣੀਆਂ
         tags:
           label: ਟੈਗ
+          none: ਕੋਈ ਨਹੀਂ
         search: ਖੋਜੋ
       sort:
         pagination:

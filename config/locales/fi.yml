@@ -883,6 +883,7 @@ fi:
           label: Kategoriat
         tags:
           label: Tägit
+          none: Ei mitään
         search: Haku
       sort:
         pagination:

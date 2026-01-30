@@ -616,6 +616,7 @@ tr:
           label: Kategoriler
         tags:
           label: ETİKETLER
+          none: SATIŞ YAPMIYOR
         search: Ara
       sort:
         pagination:

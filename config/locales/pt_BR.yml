@@ -612,6 +612,7 @@ pt_BR:
           label: Produtores
         tags:
           label: Tags
+          none: Nenhum
         search: Buscar
       sort:
         pagination:

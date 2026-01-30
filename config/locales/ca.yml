@@ -762,6 +762,7 @@ ca:
           label: Categories
         tags:
           label: Etiquetes
+          none: Cap
         search: Cerca
       sort:
         pagination:

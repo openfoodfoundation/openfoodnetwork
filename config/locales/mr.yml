@@ -743,6 +743,8 @@ mr:
           label: उत्पादक
         categories:
           label: श्रेण्या
+        tags:
+          none: कोणतेही नाही
         search: शोधा
       sort:
         pagination:

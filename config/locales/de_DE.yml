@@ -784,6 +784,7 @@ de_DE:
           label: Produktkategorie
         tags:
           label: Stichwörter
+          none: Nichts
         search: Suche
       sort:
         pagination:

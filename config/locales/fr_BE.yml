@@ -823,6 +823,7 @@ fr_BE:
           label: Les catégories
         tags:
           label: Tags
+          none: Aucun
         search: Rechercher
       sort:
         pagination:
@@ -4442,6 +4443,7 @@ fr_BE:
     users:
       api_keys:
         regenerate_key: "Regénération de clé"
+        title: clé API
       webhook_endpoints:
         event_type:
           header: Type d'évènement
@@ -4463,6 +4465,7 @@ fr_BE:
       transactions:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation requise
+        authorise: Autoriser
       open_orders:
         order: Commander
         shop: Faire mes courses

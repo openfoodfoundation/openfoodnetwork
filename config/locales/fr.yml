@@ -115,6 +115,11 @@ fr:
         blank: "Champ obligatoire"
         too_short: "est trop court (minimum %{count} caractère)"
   errors:
+    messages:
+      content_type_invalid:
+        one: "a un contenu invalide (le type de contenu autorisé est %{authorized_human_content_types})"
+        many: "a un contenu invalide (les types de contenus autorisés sont  %{authorized_human_content_types})"
+        other: "a un contenu invalide (les types de contenus autorisés sont %{authorized_human_content_types})"
     not_found:
       title: "La page que vous recherchez n'existe pas (erreur 404)"
       message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'  <a href='/'> Accueil </a> et recommencez. </p> <b> Contacter notre support </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
@@ -884,6 +889,7 @@ fr:
           label: Catégories
         tags:
           label: Tags
+          none: Aucun
         search: Rechercher
       sort:
         pagination:

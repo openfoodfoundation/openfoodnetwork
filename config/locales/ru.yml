@@ -782,6 +782,7 @@ ru:
           label: Категории
         tags:
           label: Метки
+          none: Нет
         search: Поиск
       sort:
         pagination:

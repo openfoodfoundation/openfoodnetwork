@@ -881,6 +881,7 @@ cy:
           label: Categorïau
         tags:
           label: Tagiau
+          none: Dim
         search: Chwilio
       sort:
         pagination:

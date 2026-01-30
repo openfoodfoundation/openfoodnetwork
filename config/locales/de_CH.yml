@@ -731,6 +731,7 @@ de_CH:
           label: Lieferkategorien
         tags:
           label: Stichwörter
+          none: Keine
         search: Suche
       sort:
         pagination:

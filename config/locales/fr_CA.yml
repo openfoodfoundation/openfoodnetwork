@@ -885,6 +885,7 @@ fr_CA:
           label: Conditions de transport
         tags:
           label: Tags
+          none: Aucun
         search: Chercher
       sort:
         pagination:

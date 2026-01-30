@@ -532,6 +532,7 @@ pl:
           label: Producenci
         tags:
           label: Tagi
+          none: Nic
         search: Szukaj
       variant_row:
         none_tax_category: Nic

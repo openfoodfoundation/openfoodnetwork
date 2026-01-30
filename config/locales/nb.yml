@@ -884,6 +884,7 @@ nb:
           label: Kategorier
         tags:
           label: Merkelapper
+          none: Ingen
         search: Søk
       sort:
         pagination:
