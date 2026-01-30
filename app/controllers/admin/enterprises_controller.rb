@@ -67,7 +67,6 @@ module Admin
     def update
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
-      update_enterprise_notifications
       update_vouchers
 
       delete_custom_tab if params[:custom_tab] == 'false'
@@ -312,14 +311,6 @@ module Admin
           rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end
       end
-    end
-
-    def update_enterprise_notifications
-      user_id = params[:receives_notifications].to_i
-
-      return unless user_id.positive? && @enterprise.user_ids.include?(user_id)
-
-      @enterprise.update_contact(user_id)
     end
 
     def update_vouchers

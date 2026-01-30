@@ -191,7 +191,7 @@ module Spree
         user.enterprises.include? stripe_account.enterprise
       end
 
-      can [:admin, :create], :manager_invitation
+      can [:admin, :create], UserInvitation
 
       can [:admin, :index, :destroy], :oidc_setting
 
