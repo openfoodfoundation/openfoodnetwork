@@ -23,6 +23,7 @@ module Spree
     before_destroy :check_completed_orders
 
     scope :admin, -> { where(admin: true) }
+    scope :confirmed, -> { where.not(confirmed_at: nil) }
 
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles

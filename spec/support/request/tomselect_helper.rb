@@ -14,6 +14,15 @@ module TomselectHelper
     page.find("body").click
   end
 
+  # Allows adding new values that are not included in the list of possible options
+  def tomselect_fill_in(selector, with:)
+    tomselect_wrapper = page.find_field(selector).sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click
+    # Use send_keys as setting the value directly doesn't trigger the search
+    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').send_keys(with)
+    tomselect_wrapper.find(:css, '.ts-dropdown div.create').click
+  end
+
   def tomselect_search_and_select(value, options)
     tomselect_wrapper = page.find_field(options[:from]).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click
