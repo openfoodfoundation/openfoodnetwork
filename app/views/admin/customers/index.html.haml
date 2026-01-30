@@ -99,11 +99,14 @@
             %td.balance.align-center{ 'ng-show' => 'columns.balance.visible'}
               %span.state.white-space-nowrap{ 'ng-class' => 'customer.balance_status', 'ng-bind' => 'displayBalanceStatus(customer)' }
               %span{ 'ng-bind' => '::customer.balance' }
-            %td.balance.align-center{ 'ng-show' => 'columns.credit.visible'}
-              %span{ 'ng-bind' => '::customer.available_credit' }
+            %td.balance.align-center{ 'ng-show' => 'columns.credit.visible', "data-turbo": true}
+              %a{ "ng-href": "{{customer.available_credit_url}}", "data-turbo-stream": "" }
+                %span{ 'ng-bind' => '::customer.available_credit' }
             %td.actions
               %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
 
       .text-center{ "ng-show": "filteredCustomers.length > customerLimit" }
         %input{ type: 'button', value: t(:show_more), "ng-click": 'customerLimit = customerLimit + 20' }
         %input{ type: 'button', value: t(:show_all_with_more, num: '{{ filteredCustomers.length - customerLimit }}'), "ng-click": 'customerLimit = filteredCustomers.length' }
+
+  #customer-account-transactions-modal-container

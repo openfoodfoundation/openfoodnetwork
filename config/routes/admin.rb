@@ -89,7 +89,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :create, :update, :destroy, :show]
+    resources :customers, only: [:index, :create, :update, :destroy, :show] do
+      resources :customer_account_transaction, only: [:index]
+    end
 
     resources :tag_rules, only: [] do
       get :map_by_tag, on: :collection, format: :json

@@ -890,6 +890,14 @@ en:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    customer_account_transaction:
+      index:
+        available_credit: "Available credit: %{available_credit}"
+        transaction_date: Transaction Date
+        description: Description
+        payment_method: Payment method 
+        amount: Amount
+        running_balance: Running balance
     column_preferences:
       bulk_update:
         success: "Column preferences saved"

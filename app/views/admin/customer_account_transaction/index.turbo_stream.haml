@@ -1,0 +1,31 @@
+= turbo_stream.update "customer-account-transactions-modal-container" do
+  = render ModalComponent.new(id: "customer-account-transactions-modal", instant: true, modal_class: "big") do
+    %h3
+      = t(".available_credit", available_credit: Spree::Money.new(@available_credit))
+      %table.index
+        %thead
+          %tr
+            %th.transaction-date
+              = t(".transaction_date")  
+            %th.description
+              = t(".description")  
+            %th.payment-method
+              = t(".payment_method")  
+            %th.amount
+              = t(".amount")  
+            %th.running-balance
+              = t(".running_balance")  
+
+        %tbody
+          - @collection.each do |transaction|
+            %tr.transaction
+              %td.transaction-date
+                = transaction.updated_at.strftime("%Y-%m-%d")
+              %td.description
+                = transaction.description
+              %td.payment-method
+                = t(transaction.payment_method.name.to_s)
+              %td.amount
+                = Spree::Money.new(transaction.amount)
+              %td.running_balance
+                = Spree::Money.new(transaction.balance)
