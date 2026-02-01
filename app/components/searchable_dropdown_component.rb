@@ -46,8 +46,9 @@ class SearchableDropdownComponent < ViewComponent::Base
   end
 
   def tom_select_options_value
-    plugins = remove_search_plugin? ? [] : ['dropdown_input']
-    multiple ? plugins << 'remove_button' : plugins
+    plugins = ['virtual_scroll']
+    plugins << 'dropdown_input' unless remove_search_plugin?
+    plugins << 'remove_button' if multiple
 
     {
       plugins:,
