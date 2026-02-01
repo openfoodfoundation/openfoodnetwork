@@ -46,7 +46,8 @@ class SearchableDropdownComponent < ViewComponent::Base
   end
 
   def tom_select_options_value
-    plugins = ['virtual_scroll']
+    plugins = []
+    plugins << 'virtual_scroll' if @remote_url.present?
     plugins << 'dropdown_input' unless remove_search_plugin?
     plugins << 'remove_button' if multiple
 
