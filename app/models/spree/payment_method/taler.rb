@@ -38,7 +38,7 @@ module Spree
 
         payment.source ||= self
         payment.response_code ||= create_taler_order(payment)
-        payment.redirect_auth_url ||= fetch_order_url(payment)
+        payment.redirect_auth_url ||= taler_order.status_url
         payment.save! if payment.changed?
 
         payment.redirect_auth_url
@@ -53,8 +53,8 @@ module Spree
 
         return unless payment.response_code
 
-        taler_order = client.fetch_order(payment.response_code)
-        status = taler_order["order_status"]
+        taler_order = taler_order(id: payment.response_code)
+        status = taler_order.fetch("order_status")
         success = (status == "paid")
         message = I18n.t(status, default: status, scope: "taler.order_status")
 
@@ -72,22 +72,20 @@ module Spree
         # current demo backend only working with the KUDOS currency.
         taler_amount = "KUDOS:#{payment.amount}"
         urls = Rails.application.routes.url_helpers
-        new_order = client.create_order(
-          taler_amount,
-          I18n.t("payment_method_taler.order_summary"),
-          urls.payment_gateways_confirm_taler_url(payment_id: payment.id),
+        fulfillment_url = urls.payment_gateways_confirm_taler_url(payment_id: payment.id)
+        taler_order.create(
+          amount: taler_amount,
+          summary: I18n.t("payment_method_taler.order_summary"),
+          fulfillment_url:,
         )
-
-        new_order["order_id"]
       end
 
-      def fetch_order_url(payment)
-        order = client.fetch_order(payment.response_code)
-        order["order_status_url"]
-      end
-
-      def client
-        @client ||= ::Taler::Client.new(preferred_backend_url, preferred_api_key)
+      def taler_order(id: nil)
+        @taler_order ||= ::Taler::Order.new(
+          backend_url: preferred_backend_url,
+          password: preferred_api_key,
+          id:,
+        )
       end
     end
   end
