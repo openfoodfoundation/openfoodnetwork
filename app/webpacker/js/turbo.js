@@ -9,7 +9,7 @@ document.addEventListener("turbo:frame-missing", (event) => {
   event.preventDefault();
 
   // show error message instead
-  showError(event.detail.response?.status);
+  showHttpError(event.detail.response?.status);
 });
 
 document.addEventListener("turbo:submit-end", (event) => {
