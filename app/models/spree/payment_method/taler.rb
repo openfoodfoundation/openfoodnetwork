@@ -38,10 +38,9 @@ module Spree
 
         payment.source ||= self
         payment.response_code ||= create_taler_order(payment)
-        payment.redirect_auth_url ||= taler_order.status_url
         payment.save! if payment.changed?
 
-        payment.redirect_auth_url
+        taler_order.status_url
       end
 
       # Main method called by Spree::Payment::Processing during checkout

@@ -12,14 +12,14 @@ RSpec.describe Spree::PaymentMethod::Taler do
   let(:backend_url) { "https://backend.demo.taler.net/instances/sandbox" }
 
   describe "#external_payment_url", vcr: true do
-    it "retrieves a URL to pay at and stores it on the payment record" do
+    it "creates an order reference and retrieves a URL to pay at" do
       order = create(:order_ready_for_confirmation, payment_method: taler)
+
       url = subject.external_payment_url(order:)
-      expect(url).to start_with backend_url
+      expect(url).to eq "#{backend_url}/orders/2026.022-0284X4GE8WKMJ"
 
       payment = order.payments.last.reload
       expect(payment.response_code).to match "2026.022-0284X4GE8WKMJ"
-      expect(payment.redirect_auth_url).to eq url
     end
   end
 
