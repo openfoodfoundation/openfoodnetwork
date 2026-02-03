@@ -884,6 +884,7 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     sysexits (1.2.0)
+    taler (0.1.0)
     temple (0.10.4)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
@@ -1100,6 +1101,7 @@ DEPENDENCIES
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
   stripe (~> 15)
+  taler
   turbo-rails
   turbo_power
   undercover
