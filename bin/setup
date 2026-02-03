@@ -41,7 +41,7 @@ FileUtils.chdir APP_ROOT do
   system! "rm -f tmp/invoices/*.pdf"
   system! "rm -f tmp/javascripts/*.js"
   system! "rm -f tmp/karma_unit.js*"
-  system! "rm -f tmp/product_import-*"
+  system! "rm -rf tmp/product_import-*"
 
   puts "\n== Removing any precompiled assets that would be out of date now =="
   system! "rm -rf public/assets/"
