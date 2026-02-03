@@ -107,20 +107,11 @@ module Spree
 
           refund_amount = calculate_refund_amount(refund_amount)
 
-          response = if payment_method.payment_profiles_supported?
-                       payment_method.refund(
-                         (refund_amount * 100).round,
-                         source,
-                         response_code,
-                         gateway_options
-                       )
-                     else
-                       payment_method.refund(
-                         (refund_amount * 100).round,
-                         response_code,
-                         gateway_options
-                       )
-                     end
+          response = payment_method.refund(
+            (refund_amount * 100).round,
+            response_code,
+            gateway_options
+          )
 
           record_response(response)
 

@@ -106,6 +106,12 @@ module Spree
         provider.refund(money, payment_intent_id, gateway_options)
       end
 
+      # NOTE: this method is required by Spree::Payment::Processing
+      def refund(money, payment_intent_id, gateway_options)
+        gateway_options[:stripe_account] = stripe_account_id
+        provider.refund(money, payment_intent_id, gateway_options)
+      end
+
       def create_profile(payment)
         return unless payment.source.gateway_customer_profile_id.nil?
 
