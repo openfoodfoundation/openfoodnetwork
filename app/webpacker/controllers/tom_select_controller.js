@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import TomSelect from "tom-select/dist/esm/tom-select.complete";
+import showHttpError from "../../webpacker/js/services/show_http_error";
 
 export default class extends Controller {
   static values = {
@@ -51,7 +52,13 @@ export default class extends Controller {
     const url = this.control.getUrl(query);
 
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          showHttpError(response.status);
+          throw response;
+        }
+        return response.json();
+      })
       .then((json) => {
         /**
          * Expected API shape:
@@ -69,12 +76,15 @@ export default class extends Controller {
 
         callback(json.results || []);
       })
-      .catch(() => {
+      .catch((error) => {
         callback();
+        console.error(error);
       });
   }
 
   #addRemoteOptions(options) {
+    this.openedByClick = false;
+
     options.firstUrl = (query) => {
       return this.#buildUrl(query, 1);
     };
@@ -83,6 +93,19 @@ export default class extends Controller {
 
     options.onFocus = function () {
       this.control.load("", () => {});
+    }.bind(this);
+
+    options.onDropdownOpen = function () {
+      this.openedByClick = true;
+    }.bind(this);
+
+    options.onType = function () {
+      this.openedByClick = false;
+    }.bind(this);
+
+    // As per TomSelect source code, no result feedback after API call is shown when this callback returns true.
+    options.shouldLoad = function (query) {
+      return this.openedByClick || query.length > 0;
     }.bind(this);
 
     options.valueField = "value";

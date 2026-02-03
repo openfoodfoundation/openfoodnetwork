@@ -5,6 +5,12 @@
 import { Application } from "stimulus";
 import { fireEvent, waitFor } from "@testing-library/dom";
 import tom_select_controller from "controllers/tom_select_controller";
+import showHttpError from "js/services/show_http_error";
+
+jest.mock("js/services/show_http_error", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 /* ------------------------------------------------------------------
  * Helpers
@@ -28,6 +34,7 @@ const openDropdown = () => fireEvent.click(document.getElementById("select-ts-co
 const mockRemoteFetch = (...responses) => {
   responses.forEach((response) => {
     fetch.mockResolvedValueOnce({
+      ok: true,
       json: async () => response,
     });
   });
@@ -68,9 +75,10 @@ const expectDropdownToContain = (text) => {
   expect(document.querySelector(".ts-dropdown-content")?.textContent).toContain(text);
 };
 
-const expectEmptyDropdown = () => {
-  expect(document.querySelector(".ts-dropdown-content")?.textContent).toBe("");
+const expectDropdownWithNoResults = () => {
+  expect(document.querySelector(".ts-dropdown-content")?.textContent).toBe("No results found");
 };
+
 
 /* ------------------------------------------------------------------
  * Specs
@@ -86,6 +94,7 @@ describe("TomSelectController", () => {
 
   beforeEach(() => {
     global.fetch = jest.fn();
+    global.I18n = { t: (key) => key };
   });
 
   afterEach(() => {
@@ -240,13 +249,49 @@ describe("TomSelectController", () => {
     });
 
     it("handles fetch errors gracefully", async () => {
-      fetch.mockRejectedValueOnce(new Error("Network error"));
+      fetch.mockRejectedValueOnce(new Error("Fetch error"));
 
       openDropdown();
 
       await waitFor(() => {
-        expectEmptyDropdown();
+        expectDropdownWithNoResults();
       });
+
+      expect(showHttpError).not.toHaveBeenCalled();
+    });
+
+    it("displays HTTP error on failure", async () => {
+      fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        json: async () => ({}),
+      });
+
+      openDropdown();
+
+      await waitFor(() => {
+        expect(showHttpError).toHaveBeenCalledWith(500);
+      });
+
+      expectDropdownWithNoResults();
+    });
+
+    it("controls loading behavior based on user interaction", () => {
+      const settings = getTomSelect().settings;
+
+      // Initial state: openedByClick is false, query is empty
+      expect(settings.shouldLoad("")).toBe(false);
+
+      // Simulating opening the dropdown
+      settings.onDropdownOpen();
+      expect(settings.shouldLoad("")).toBe(true);
+
+      // Simulating typing
+      settings.onType();
+      expect(settings.shouldLoad("")).toBe(false);
+
+      // Query present
+      expect(settings.shouldLoad("a")).toBe(true);
     });
   });
 });

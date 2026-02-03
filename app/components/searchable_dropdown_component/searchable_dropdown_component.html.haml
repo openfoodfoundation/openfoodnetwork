@@ -1,4 +1,4 @@
 - if uses_form_builder?
   = f.select name, options, { selected: selected_option, include_blank:, multiple: }, class: classes, data:, 'aria-label': aria_label, **other_attrs
 - else
-  = select_tag name, options_for_select(options, selected_option), include_blank: include_blank, multiple: multiple, class: classes, data: data, 'aria-label': aria_label, **other_attrs
+  = select_tag name, options_for_select(options, selected_option), include_blank:, multiple:, class: classes, data:, 'aria-label': aria_label, **other_attrs

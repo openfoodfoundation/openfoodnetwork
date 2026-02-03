@@ -62,13 +62,16 @@ module Reports
       search_term = params[:q]
       return query if search_term.blank?
 
+      escaped_search_term = ActiveRecord::Base.sanitize_sql_like(search_term)
+      pattern = "%#{escaped_search_term}%"
+
       # Handle different model types
       if query.model == OrderCycle
-        query.where("order_cycles.name ILIKE ?", "%#{search_term}%")
+        query.where("order_cycles.name ILIKE ?", pattern)
       elsif query.model == Customer
-        query.where("customers.email ILIKE ?", "%#{search_term}%")
+        query.where("customers.email ILIKE ?", pattern)
       else
-        query.where("name ILIKE ?", "%#{search_term}%")
+        query.where("name ILIKE ?", pattern)
       end
     end
 
