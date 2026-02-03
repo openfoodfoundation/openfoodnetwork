@@ -5164,3 +5164,5 @@ en:
   api_payment_method:
     name: API customer credit
     description: Used to credit customer via customer account transactions endpoint
+  customer_account_transaction:
+    account_creation: Account creation
