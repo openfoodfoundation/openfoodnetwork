@@ -108,5 +108,58 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
         run_test!
       end
     end
+
+    describe "concurrency", concurrency: true do
+      let(:breakpoint) { Mutex.new }
+      let(:params) do
+        {
+          customer_account_transaction: {
+            customer_id: customer.id.to_s,
+            amount: "10.00",
+            description: "Concurent payment processed by POS",
+          }
+        }
+      end
+      let(:params2) do
+        {
+          customer_account_transaction: {
+            customer_id: customer.id.to_s,
+            amount: "15",
+            description: "Concurent payment processed by POS",
+          }
+        }
+      end
+
+      it "processes one transaction at the time, ensure correct balance calculation" do
+        breakpoint.lock
+        allow_any_instance_of(CustomerAccountTransaction).to receive(:save)
+          .and_wrap_original do |method, *args|
+            breakpoint.synchronize { nil }
+            method.call(*args)
+          end
+
+        # Create two transactions in parallel
+        threads = [
+          Thread.new {
+            login_as enterprise.owner
+            post "/api/v1/customer_account_transaction", params: params
+          },
+          Thread.new {
+            login_as enterprise.owner
+            post "/api/v1/customer_account_transaction", params: params2
+          },
+        ]
+
+        # Wait for both to transaction creation to pause
+        # This can reveal a race condition.
+        sleep 0.1
+
+        # Resume and complete both transaction creation:
+        breakpoint.unlock
+        threads.each(&:join)
+
+        expect(CustomerAccountTransaction.last.balance).to eq(25)
+      end
+    end
   end
 end
