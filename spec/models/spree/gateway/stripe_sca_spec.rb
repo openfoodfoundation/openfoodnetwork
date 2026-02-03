@@ -162,7 +162,7 @@ RSpec.describe Spree::Gateway::StripeSCA, :vcr, :stripe_version do
         stripe_account: stripe_test_account
       )
 
-      response = subject.credit(1000, nil, payment_intent.id, {})
+      response = subject.credit(1000, payment_intent.id, {})
 
       expect(response.success?).to eq true
     end

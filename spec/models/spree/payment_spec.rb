@@ -436,7 +436,7 @@ RSpec.describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
-            expect(payment_method).to receive(:credit).with(1000, card, '123',
+            expect(payment_method).to receive(:credit).with(1000, '123',
                                                             anything).and_return(success_response)
             payment.credit!
           end
@@ -462,7 +462,7 @@ RSpec.describe Spree::Payment do
 
           it "should call credit on the gateway with the credit amount and response_code" do
             expect(payment_method).to receive(:credit).with(
-              amount_in_cents, card, '123', anything
+              amount_in_cents, '123', anything
             ).and_return(success_response)
             payment.credit!
           end
@@ -475,7 +475,7 @@ RSpec.describe Spree::Payment do
 
           it "should call credit on the gateway with original payment amount and response_code" do
             expect(payment_method).to receive(:credit).with(
-              amount_in_cents.to_f, card, '123', anything
+              amount_in_cents.to_f, '123', anything
             ).and_return(success_response)
             payment.credit!
           end

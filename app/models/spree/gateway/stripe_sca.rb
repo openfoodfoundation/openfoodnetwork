@@ -101,7 +101,7 @@ module Spree
       end
 
       # NOTE: this method is required by Spree::Payment::Processing
-      def credit(money, _creditcard, payment_intent_id, gateway_options)
+      def credit(money, payment_intent_id, gateway_options)
         gateway_options[:stripe_account] = stripe_account_id
         provider.refund(money, payment_intent_id, gateway_options)
       end
