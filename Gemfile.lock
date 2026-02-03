@@ -234,7 +234,7 @@ GEM
       marcel (~> 1.0)
       nokogiri (~> 1.10, >= 1.10.4)
       rubyzip (>= 1.3.0, < 3)
-    cgi (0.5.0)
+    cgi (0.5.1)
     childprocess (5.0.0)
     choice (0.2.0)
     chronic (0.10.2)
@@ -249,8 +249,8 @@ GEM
     combine_pdf (1.0.31)
       matrix
       ruby-rc4 (>= 0.1.5)
-    concurrent-ruby (1.3.5)
-    connection_pool (2.5.5)
+    concurrent-ruby (1.3.6)
+    connection_pool (3.0.2)
     cookiejar (0.3.4)
     crack (1.0.1)
       bigdecimal
@@ -388,7 +388,8 @@ GEM
       sysexits (~> 1.1)
     hashdiff (1.2.1)
     hashery (2.1.2)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     highline (3.1.2)
       reline
     htmlentities (4.4.2)
@@ -470,7 +471,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    loofah (2.24.1)
+    loofah (2.25.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.9.0)
@@ -493,7 +494,8 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
-    minitest (5.26.2)
+    minitest (6.0.1)
+      prism (~> 1.5)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
@@ -515,7 +517,7 @@ GEM
       net-protocol
     newrelic_rpm (9.24.0)
     nio4r (2.7.5)
-    nokogiri (1.18.10)
+    nokogiri (1.19.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nokogiri-html5-inference (0.3.0)
@@ -532,7 +534,7 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-rails_csrf_protection (1.0.2)
+    omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     omniauth_openid_connect (0.8.0)
