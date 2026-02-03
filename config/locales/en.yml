@@ -3863,6 +3863,7 @@ en:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
+      create_sourced_variants: "create sourced variants"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:
