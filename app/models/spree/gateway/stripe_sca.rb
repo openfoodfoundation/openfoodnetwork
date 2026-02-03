@@ -84,7 +84,7 @@ module Spree
       end
 
       # NOTE: this method is required by Spree::Payment::Processing
-      def void(payment_intent_id, _creditcard, gateway_options)
+      def void(payment_intent_id, gateway_options)
         payment_intent_response = Stripe::PaymentIntent.retrieve(
           payment_intent_id, stripe_account: stripe_account_id
         )

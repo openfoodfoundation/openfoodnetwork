@@ -58,16 +58,7 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          response = if payment_method.payment_profiles_supported?
-                       # Gateways supporting payment profiles will need access to credit
-                       # card object because this stores the payment profile information
-                       # so supply the authorization itself as well as the credit card,
-                       # rather than just the authorization code
-                       payment_method.void(response_code, source, gateway_options)
-                     else
-                       # Standard ActiveMerchant void usage
-                       payment_method.void(response_code, gateway_options)
-                     end
+          response = payment_method.void(response_code, gateway_options)
 
           record_response(response)
 

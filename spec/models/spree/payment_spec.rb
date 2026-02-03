@@ -347,8 +347,7 @@ RSpec.describe Spree::Payment do
 
         context "when profiles are supported" do
           it "should call payment_enterprise.void with the payment's response_code" do
-            allow(payment_method).to receive(:payment_profiles_supported) { true }
-            expect(payment_method).to receive(:void).with('123', card,
+            expect(payment_method).to receive(:void).with('123',
                                                           anything).and_return(success_response)
             payment.void_transaction!
           end
@@ -357,7 +356,7 @@ RSpec.describe Spree::Payment do
         context "when profiles are not supported" do
           it "should call payment_gateway.void with the payment's response_code" do
             allow(payment_method).to receive(:payment_profiles_supported) { false }
-            expect(payment_method).to receive(:void).with('123', card,
+            expect(payment_method).to receive(:void).with('123',
                                                           anything).and_return(success_response)
             payment.void_transaction!
           end

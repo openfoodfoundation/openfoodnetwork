@@ -109,7 +109,7 @@ RSpec.describe Spree::Gateway::StripeSCA, :vcr, :stripe_version do
       end
 
       it "refunds the payment" do
-        response = subject.void(payment_intent.id, nil, {})
+        response = subject.void(payment_intent.id, {})
 
         expect(response.success?).to eq true
       end
@@ -131,7 +131,7 @@ RSpec.describe Spree::Gateway::StripeSCA, :vcr, :stripe_version do
       end
 
       it "void the payment" do
-        response = subject.void(payment_intent.id, nil, {})
+        response = subject.void(payment_intent.id, {})
 
         expect(response.success?).to eq true
       end
