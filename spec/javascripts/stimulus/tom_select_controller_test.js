@@ -79,7 +79,6 @@ const expectDropdownWithNoResults = () => {
   expect(document.querySelector(".ts-dropdown-content")?.textContent).toBe("No results found");
 };
 
-
 /* ------------------------------------------------------------------
  * Specs
  * ------------------------------------------------------------------ */
