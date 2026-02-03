@@ -6,6 +6,7 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
       'manage_products'
       'edit_profile'
       'create_variant_overrides'
+      'create_sourced_variants'
     ]
 
     constructor: ->
@@ -30,3 +31,4 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
         when "manage_products" then t('js.services.manage_products')
         when "edit_profile" then t('js.services.edit_profile')
         when "create_variant_overrides" then t('js.services.add_products_to_inventory')
+        when "create_sourced_variants" then t('js.services.create_sourced_variants')
