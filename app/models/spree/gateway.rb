@@ -5,7 +5,7 @@ module Spree
     acts_as_taggable
     include PaymentMethodDistributors
 
-    delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
+    delegate :authorize, :purchase, :capture, :void, :credit, :refund, to: :provider
 
     validates :name, :type, presence: true
 
@@ -35,6 +35,10 @@ module Spree
     end
 
     def method_missing(method, *)
+      message = "Deprecated delegation of Gateway##{method}"
+      Alert.raise(message)
+      raise message if Rails.env.local?
+
       if @provider.nil? || !@provider.respond_to?(method)
         super
       else
