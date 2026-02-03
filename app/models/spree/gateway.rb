@@ -42,10 +42,6 @@ module Spree
       end
     end
 
-    def payment_profiles_supported?
-      false
-    end
-
     def method_type
       'gateway'
     end

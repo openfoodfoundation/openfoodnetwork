@@ -35,10 +35,6 @@ module Spree
         ActiveMerchant::Billing::StripePaymentIntentsGateway
       end
 
-      def payment_profiles_supported?
-        true
-      end
-
       def stripe_account_id
         StripeAccount.find_by(enterprise_id: preferred_enterprise_id)&.stripe_user_id
       end
