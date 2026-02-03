@@ -5161,3 +5161,6 @@ en:
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
+  api_payment_method:
+    name: API customer credit
+    description: Used to credit customer via customer account transactions endpoint

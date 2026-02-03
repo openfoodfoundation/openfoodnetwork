@@ -14,6 +14,7 @@ module SampleData
       distributors.each do |enterprise|
         create_payment_methods(enterprise)
       end
+      create_api_method(distributors)
     end
 
     private
@@ -44,6 +45,17 @@ module SampleData
       )
       payment_method.calculator = calculator
       payment_method.save!
+    end
+
+    def create_api_method(enterprises)
+      log "Creating api payment method"
+      Spree::PaymentMethod::Check.create!(
+        name: "api_payment_method.name",
+        description: "api_payment_method.description",
+        environment: Rails.env,
+        distributors: enterprises,
+        display_on: "back_end"
+      )
     end
   end
 end
