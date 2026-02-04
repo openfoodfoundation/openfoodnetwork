@@ -20,6 +20,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
         Spree::Gateway::PayPalExpress
         Spree::PaymentMethod::Check
         Spree::PaymentMethod::Taler
+        Spree::PaymentMethod::CustomerCredit
       ]
     end
 
