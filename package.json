@@ -6,6 +6,7 @@
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
   "license": "AGPL-3.0",
+  "packageManager": "yarn@1.22.2",
   "dependencies": {
     "@babel/core": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.28.5",
@@ -41,7 +42,7 @@
     "sass-embedded": "^1.96.0",
     "sass-loader": "^16.0.6",
     "select2": "*",
-    "shakapacker": "7.2.3",
+    "shakapacker": "8.4.0",
     "shortcut-buttons-flatpickr": "*",
     "stimulus": "*",
     "stimulus-autocomplete": "*",
