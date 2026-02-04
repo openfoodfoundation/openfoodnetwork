@@ -4697,6 +4697,7 @@ en:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
           taler: "Taler"
+          customercredit: "Customer Credit"
       payments:
         source_forms:
           stripe:
