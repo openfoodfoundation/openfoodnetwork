@@ -4930,6 +4930,9 @@ en:
       authorization_required:
         subject: "A payment requires authorization from the customer"
         message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+      refund_available:
+        subject: "Refund available"
+        message: "Your payment for order %{order_number} is being refunded. Claim your refund following the link below."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"

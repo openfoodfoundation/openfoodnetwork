@@ -26,4 +26,17 @@ class PaymentMailer < ApplicationMailer
            reply_to: @order.email)
     end
   end
+
+  def refund_available(payment, taler_order_status_url)
+    @order = payment.order
+    @taler_order_status_url = taler_order_status_url
+
+    subject = I18n.t("spree.payment_mailer.refund_available.subject",
+                     order: @order)
+    I18n.with_locale valid_locale(@order.user) do
+      mail(to: @order.email,
+           subject:,
+           reply_to: @order.email)
+    end
+  end
 end

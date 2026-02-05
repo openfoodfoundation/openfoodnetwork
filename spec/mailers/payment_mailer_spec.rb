@@ -40,4 +40,16 @@ RSpec.describe PaymentMailer do
       end
     end
   end
+
+  describe "#refund_available" do
+    it "tells the user to accept a refund" do
+      payment = create(:payment)
+      link = "https://taler.example.com/order/1"
+      mail = PaymentMailer.refund_available(payment, link)
+
+      expect(mail.subject).to eq "Refund available"
+      expect(mail.body).to match "Claim your refund following the link below."
+      expect(mail.body).to match link
+    end
+  end
 end

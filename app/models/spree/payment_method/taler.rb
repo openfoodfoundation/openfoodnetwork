@@ -21,6 +21,14 @@ module Spree
       preference :backend_url, :string
       preference :api_key, :password
 
+      def actions
+        %w{void}
+      end
+
+      def can_void?(payment)
+        payment.state == "completed"
+      end
+
       # Name of the view to display during checkout
       def method_type
         "check" # empty view
@@ -58,6 +66,25 @@ module Spree
         message = I18n.t(status, default: status, scope: "taler.order_status")
 
         ActiveMerchant::Billing::Response.new(success, message)
+      end
+
+      def void(response_code, gateway_options)
+        payment = gateway_options[:payment]
+        taler_order = taler_order(id: response_code)
+        status = taler_order.fetch("order_status")
+
+        if status == "claimed"
+          return ActiveMerchant::Billing::Response.new(true, "Already expired")
+        end
+
+        raise "Unsupported action" if status != "paid"
+
+        amount = taler_order.fetch("contract_terms")["amount"]
+        taler_order.refund(refund: amount, reason: "void")
+
+        PaymentMailer.refund_available(payment, taler_order.status_url).deliver_later
+
+        ActiveMerchant::Billing::Response.new(true, "Refund initiated")
       end
 
       private
