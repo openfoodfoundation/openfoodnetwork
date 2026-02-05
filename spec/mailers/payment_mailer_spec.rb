@@ -2,7 +2,6 @@
 
 RSpec.describe PaymentMailer do
   describe '#payment_mailer' do
-    let(:enterprise) { create(:enterprise) }
     let(:payment_method) {
       create(:payment_method, distributors: [order.distributor])
     }
@@ -15,7 +14,8 @@ RSpec.describe PaymentMailer do
       subject(:email) { described_class.authorize_payment(payment) }
 
       it "includes the distributor's name in the subject" do
-        expect(email.subject).to include("authorize your payment to #{order.distributor.name}")
+        order.distributor.name = "Fennel Farmer"
+        expect(email.subject).to include("authorize your payment to Fennel Farmer")
       end
 
       it "sets a reply-to of the customer email" do
@@ -44,11 +44,12 @@ RSpec.describe PaymentMailer do
   describe "#refund_available" do
     it "tells the user to accept a refund" do
       payment = create(:payment)
+      payment.order.distributor = create(:enterprise, name: "Carrot Castle")
       link = "https://taler.example.com/order/1"
       mail = PaymentMailer.refund_available(payment, link)
 
-      expect(mail.subject).to eq "Refund available"
-      expect(mail.body).to match "Claim your refund following the link below."
+      expect(mail.subject).to eq "Refund from Carrot Castle"
+      expect(mail.body).to match "Your payment to Carrot Castle is being refunded."
       expect(mail.body).to match link
     end
   end
