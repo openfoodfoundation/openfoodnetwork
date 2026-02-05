@@ -17,6 +17,15 @@ GIT
       thor (>= 0.14)
 
 GIT
+  remote: https://github.com/openfoodfoundation/wicked_pdf.git
+  revision: bce498de547cdf00d037fdbec29fae844d69ee8e
+  branch: master
+  specs:
+    wicked_pdf (2.8.1)
+      activesupport
+      ostruct
+
+GIT
   remote: https://github.com/podia/stimulus_reflex_testing.git
   revision: abac2ee34de347c589795b4d1a8e83e0baafb201
   branch: main
@@ -949,9 +958,6 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.1.0)
       chronic (>= 0.6.3)
-    wicked_pdf (2.8.2)
-      activesupport
-      ostruct
     wkhtmltopdf-binary (0.12.6.10)
     xml-simple (1.1.8)
     xpath (3.2.0)
@@ -1106,7 +1112,7 @@ DEPENDENCIES
   web-console
   webmock
   whenever
-  wicked_pdf
+  wicked_pdf!
   wkhtmltopdf-binary
 
 RUBY VERSION

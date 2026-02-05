@@ -112,7 +112,7 @@ gem "turbo_power"
 gem "turbo-rails"
 
 gem 'combine_pdf'
-gem 'wicked_pdf'
+gem 'wicked_pdf', github: "openfoodfoundation/wicked_pdf", branch: "master"
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
