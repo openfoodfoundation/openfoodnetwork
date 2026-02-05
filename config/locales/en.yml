@@ -458,6 +458,16 @@ en:
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+  payment_mailer:
+    authorize_payment:
+      subject: "Please authorize your payment to %{distributor} on OFN"
+      instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+    authorization_required:
+      subject: "A payment requires authorization from the customer"
+      message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+    refund_available:
+      subject: "Refund available"
+      message: "Your payment for order %{order_number} is being refunded. Claim your refund following the link below."
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -4923,16 +4933,6 @@ en:
         subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
-    payment_mailer:
-      authorize_payment:
-        subject: "Please authorize your payment to %{distributor} on OFN"
-        instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
-      authorization_required:
-        subject: "A payment requires authorization from the customer"
-        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
-      refund_available:
-        subject: "Refund available"
-        message: "Your payment for order %{order_number} is being refunded. Claim your refund following the link below."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
