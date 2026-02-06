@@ -3656,6 +3656,7 @@ it:
     alt_text: "Testo alternativo"
     thumbnail: "Thumbnail"
     back_to_images_list: "Torna alla lista Immagini"
+    api_key: "Chiave API"
     email: Email
     account_updated: "Account aggiornato!"
     email_updated: "L'account sarà aggiornato una volta confermata la nuova email"
@@ -3953,9 +3954,7 @@ it:
         providers:
           provider: "Provider"
           check: "Contanti o altri metodi di pagamento per cui non è richiesta una validazione automatica"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

@@ -4171,6 +4171,7 @@ en_CA:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back to Images List"
+    api_key: "API key"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4487,9 +4488,7 @@ en_CA:
         providers:
           provider: "Provider"
           check: "Cash/EFT/Bank Transfer etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments (Only applicable to users in Australia)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe For Deletion"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

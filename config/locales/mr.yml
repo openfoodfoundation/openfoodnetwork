@@ -3696,6 +3696,7 @@ mr:
     alt_text: "पर्यायी मजकूर"
     thumbnail: "लघुप्रतिमा"
     back_to_images_list: "प्रतिमा सूचीकडे परत"
+    api_key: "API key"
     email: ईमेल
     account_updated: "खाते अपडेट केले!"
     email_updated: "नवीन ईमेलची पुष्टी झाल्यानंतर खाते अद्यतनित केले जाईल."
@@ -3995,9 +3996,7 @@ mr:
         providers:
           provider: "प्रदाता"
           check: "रोख/EFT/इ. (स्वयंचलित प्रमाणीकरण आवश्यक नसलेली पेमेंट्स)"
-          pin: "पेमेंट्स पिन करा"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

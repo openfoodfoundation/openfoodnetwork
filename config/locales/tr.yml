@@ -3676,9 +3676,7 @@ tr:
         providers:
           provider: "Sağlayıcı"
           check: "Nakit/EFT/vb. (otomatik doğrulamanın gerekli olmadığı ödemeler)"
-          pin: "Pin Ödemeleri"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

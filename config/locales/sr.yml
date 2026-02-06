@@ -4266,9 +4266,7 @@ sr:
         providers:
           provider: "Провајдер"
           check: "Готовина/ЕФТ/итд. (плаћања за која није потребна аутоматска валидација)"
-          pin: "Пин Паиментс"
           paypalexpress: "ПаиПал Екпресс"
-          stripeconnect: "Стрипе"
           stripesca: "Стрипе СЦА"
       payments:
         source_forms:

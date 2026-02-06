@@ -3685,6 +3685,7 @@ pa:
     alt_text: "ਵੈਕਲਪਿਕ ਟੈਕਸਟ"
     thumbnail: "ਥੰਬਨੇਲ"
     back_to_images_list: "ਫੋਟੋ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+    api_key: "API ਕੁੰਜੀ"
     email: ਈਮੇਲ
     account_updated: "ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ!"
     email_updated: "ਨਵੇਂ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਣ ਤੋਂ ਬਾਅਦ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾਵੇਗਾ।"
@@ -3990,9 +3991,7 @@ pa:
         providers:
           provider: "ਪ੍ਰਦਾਤਾ"
           check: "ਨਕਦ/ਈਐਫਟੀ/ਆਦਿ (ਭੁਗਤਾਨ ਜਿਸ ਲਈ ਸਵੈਚਲਿਤ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ)"
-          pin: "ਪਿੰਨ ਭੁਗਤਾਨ"
           paypalexpress: "ਪੇਪਾਲ ਐਕਸਪ੍ਰੈਸ"
-          stripeconnect: "ਸਟ੍ਰਾਈਪ"
           stripesca: "ਸਟ੍ਰਾਈਪ SCA"
       payments:
         source_forms:

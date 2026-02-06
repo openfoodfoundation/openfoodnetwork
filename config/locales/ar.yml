@@ -3765,6 +3765,7 @@ ar:
     alt_text: "نص بديل"
     thumbnail: "الباقة"
     back_to_images_list: "العودة إلى قائمة الصور"
+    api_key: "مفتاح API"
     email: البريد الإلكتروني
     account_updated: "تم تحديث الحساب!"
     email_updated: "سيتم تحديث الحساب بمجرد تأكيد البريد الإلكتروني الجديد."
@@ -4065,9 +4066,7 @@ ar:
         providers:
           provider: "مزود"
           check: "النقد / التحويل الإلكتروني / إلخ. (المدفوعات التي لا تتطلب المصادقة التلقائية)"
-          pin: "المدفوعات دبوس"
           paypalexpress: "باي بال اكسبريس"
-          stripeconnect: "Stripe SCA"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

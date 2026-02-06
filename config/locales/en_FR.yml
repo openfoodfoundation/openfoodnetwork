@@ -246,6 +246,9 @@ en_FR:
       disconnect_failure: "Failed to disconnect Stripe."
     success_code:
       disconnected: "Stripe account disconnected."
+  taler:
+    order_status:
+      claimed: "The payment request expired. Please try again."
   activemodel:
     errors:
       messages:
@@ -3358,6 +3361,8 @@ en_FR:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  payment_method_taler:
+    order_summary: "Open Food Network order"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
   tag_rules: "Tag Rules"
@@ -4172,6 +4177,8 @@ en_FR:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
+    backend_url: "Backend URL"
+    api_key: "API key"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4488,10 +4495,9 @@ en_FR:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (old version)"
           stripesca: "Stripe"
+          taler: "Taler"
       payments:
         source_forms:
           stripe:

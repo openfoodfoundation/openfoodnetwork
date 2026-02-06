@@ -3917,6 +3917,7 @@ ru:
     alt_text: "Альтернативный Текст"
     thumbnail: "Миниатюра"
     back_to_images_list: "Назад К Списку Изображений"
+    api_key: "Ключ API"
     email: Email
     account_updated: "Профиль обновлен!"
     email_updated: "Профиль будет обновлен после подтверждения нового адреса электронной почты..."
@@ -4231,9 +4232,7 @@ ru:
         providers:
           provider: "Провайдер"
           check: "Наличные/ EFT/т. д. (платежи, для которых автоматическая проверка не требуется)"
-          pin: "Пин Платежи"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

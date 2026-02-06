@@ -3820,9 +3820,7 @@ it_CH:
         providers:
           provider: "Provider"
           check: "Contanti o altri metodi di pagamento per cui non è richiesta una validazione automatica"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

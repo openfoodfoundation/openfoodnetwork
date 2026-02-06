@@ -4401,9 +4401,7 @@ fi:
         providers:
           provider: "Palveluntarjoaja"
           check: "Käteinen/sähköinen maksu/jne. (maksut, joille ei vaadita automaattista vahvistusta)"
-          pin: "PIN-maksut"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

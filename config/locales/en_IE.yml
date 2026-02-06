@@ -3971,6 +3971,7 @@ en_IE:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
+    api_key: "API key"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4286,9 +4287,7 @@ en_IE:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (Obsolete version)"
           stripesca: "Stripe"
       payments:
         source_forms:

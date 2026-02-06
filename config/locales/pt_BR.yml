@@ -3649,9 +3649,7 @@ pt_BR:
         providers:
           provider: "Provedor"
           check: "Dinheiro / Transferência Bancária / Maquininha / etc. (pagamentos para os quais é necessária a validação manual)."
-          pin: "Pagamentos via Pin"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

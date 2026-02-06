@@ -4013,6 +4013,7 @@ nb:
     alt_text: "Alternativ Tekst"
     thumbnail: "Miniatyrbilde"
     back_to_images_list: "Tilbake til bildelisten"
+    api_key: "API-nøkkel"
     email: Epost
     account_updated: "Konto oppdatert!"
     email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
@@ -4328,9 +4329,7 @@ nb:
         providers:
           provider: "Tilbyder"
           check: "Kontanter/ EFT/osv. (betalinger som det ikke kreves automatisk validering av)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

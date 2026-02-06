@@ -120,6 +120,64 @@ fr:
         one: "a un contenu invalide (le type de contenu autorisé est %{authorized_human_content_types})"
         many: "a un contenu invalide (les types de contenus autorisés sont  %{authorized_human_content_types})"
         other: "a un contenu invalide (les types de contenus autorisés sont %{authorized_human_content_types})"
+      content_type_spoofed:
+        one: "a un type de contenu qui n'est pas équivalent avec celui détecté (le type de contenu autorisé est %{authorized_human_content_types})"
+        many: "a un type de contenu qui n'est pas équivalent avec celui détecté (les types de contenus autorisés sont %{authorized_human_content_types})"
+        other: "a un type de contenu qui n'est pas équivalent avec celui détecté (les types de contenus autorisés sont %{authorized_human_content_types})"
+      file_size_not_less_than: "la taille du fichier doit être inférieure à %{max} (la taille actuelle est %{file_size})"
+      file_size_not_less_than_or_equal_to: "la taille du fichier doit être inférieure ou égale à %{max} (la taille actuelle est %{file_size})"
+      file_size_not_greater_than: "la taille du fichier doit être supérieure à %{min} (la taille actuelle est %{file_size})"
+      file_size_not_greater_than_or_equal_to: "la taille du fichier doit être supérieure ou égale à %{min} (la taille actuelle est %{file_size})"
+      file_size_not_between: "la taille du fichier doit être comprise entre %{min} et %{max} (la taille actuelle est %{file_size})"
+      file_size_not_equal_to: "La taille du fichier doit être égale à %{exact} (la taille actuelle est %{file_size} )"
+      total_file_size_not_less_than: "La taille totale du fichier doit être inférieure à %{max} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_less_than_or_equal_to: "La taille totale du fichier doit être inférieure ou égale à %{max} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_greater_than: "La taille totale du fichier doit être supérieure à %{min} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_greater_than_or_equal_to: "La taille totale du fichier doit être supérieure ou égale à %{min} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_between: "La taille totale du fichier doit être comprise entre %{min} et %{max} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_equal_to: "La taille totale du fichier doit être égale à %{exact} (la taille actuelle est %{total_file_size} )."
+      duration_not_less_than: "La durée doit être inférieure à %{max} (la durée actuelle est %{duration} )"
+      duration_not_less_than_or_equal_to: "La durée doit être inférieure ou égale à %{max} (la durée actuelle est %{duration})."
+      duration_not_greater_than: "La durée doit être supérieure à %{min} (la durée actuelle est %{duration})"
+      duration_not_greater_than_or_equal_to: "La durée doit être supérieure ou égale à %{min} (la durée actuelle est %{duration})"
+      duration_not_between: "La durée doit être comprise entre %{min} et %{max} (la durée actuelle est %{duration})"
+      duration_not_equal_to: "La durée doit être égale à %{exact} (la durée actuelle est %{duration})"
+      limit_out_of_range:
+        zero: "Aucun fichier joint (doit contenir entre %{min} et %{max} fichiers)"
+        one: "Seulement 1 fichier joint (doit contenir entre %{min} et %{max} fichiers)"
+        other: "Le nombre total de fichiers doit être compris entre %{min} et %{max} (il y a %{count} fichiers joints)."
+      limit_min_not_reached:
+        zero: "Aucun fichier joint (doit contenir au moins %{min} fichiers)"
+        one: "Seulement 1 fichier joint (doit contenir au moins %{min} fichiers)"
+        other: "%{count} fichiers joints (doit contenir au moins %{min} fichiers)"
+      limit_max_exceeded:
+        zero: "Aucun fichier joint (au maximum %{max} fichiers)"
+        one: "Trop de fichiers joints (le maximum est %{max} fichiers, il y en a %{count} )"
+        other: "Trop de fichiers joints (le maximum est %{max} fichiers, il y en a %{count} )"
+      attachment_missing: "une pièce jointe est manquante"
+      media_metadata_missing: "n'est pas un fichier multimédia valide"
+      dimension_min_not_included_in: "doit être plus grand ou égal à %{width} x %{height} pixels"
+      dimension_max_not_included_in: "doit être plus petit ou égal à %{width} x %{height} pixels"
+      dimension_width_not_included_in: "la largeur n'est pas comprise entre %{min} et %{max} pixels"
+      dimension_height_not_included_in: "la hauteur n'est pas comprise entre %{min} et %{max} pixels"
+      dimension_width_not_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixels"
+      dimension_height_not_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixels"
+      dimension_width_not_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixels"
+      dimension_height_not_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixels"
+      dimension_width_not_equal_to: "la largeur doit être égale à %{length} pixels"
+      dimension_height_not_equal_to: "La hauteur doit être égale à %{length} pixels"
+      aspect_ratio_not_square: "doit être carré (le fichier actuel est %{width} x %{height} px)"
+      aspect_ratio_not_portrait: "doit être au format portrait (le fichier actuel mesure %{width} x %{height} px)"
+      aspect_ratio_not_landscape: "doit être au format paysage (le fichier actuel mesure %{width} x %{height} px)"
+      aspect_ratio_not_x_y: "doit être %{authorized_aspect_ratios} (le fichier actuel est %{width} x %{height} px)"
+      aspect_ratio_invalid: "possède un ratio d'image invalide (les ratios d'image valides sont %{authorized_aspect_ratios})"
+      file_not_processable: "n'est pas identifié comme un fichier multimédia valide"
+      pages_not_less_than: "La durée doit être inférieure à %{max} (la durée actuelle est %{pages})"
+      pages_not_less_than_or_equal_to: "La durée doit être inférieure ou égale à %{max} (la durée actuelle est %{pages})"
+      pages_not_greater_than: "La durée doit être supérieure à %{max} (la durée actuelle est %{pages})"
+      pages_not_greater_than_or_equal_to: "La durée doit être supérieure ou égale à %{min} (la durée actuelle est %{pages})"
+      pages_not_between: "La durée doit être comprise entre %{min} et %{max} (la durée actuelle est %{pages})"
+      pages_not_equal_to: "La durée doit être égale à %{exact} (la durée actuelle est %{pages})"
     not_found:
       title: "La page que vous recherchez n'existe pas (erreur 404)"
       message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'  <a href='/'> Accueil </a> et recommencez. </p> <b> Contacter notre support </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
@@ -190,6 +248,9 @@ fr:
       disconnect_failure: "Déconnecter Stripe a échoué."
     success_code:
       disconnected: "Le compte Stripe est déconnecté."
+  taler:
+    order_status:
+      claimed: "La demande de paiement a expiré. Merci d'essayer à nouveau."
   activemodel:
     errors:
       messages:
@@ -524,6 +585,7 @@ fr:
     errors:
       vine_api: "Il y a eu une erreur de communication avec l'API, merci de réessayer."
       invalid_voucher: "Le bon de réduction n'est pas valide."
+      expired: "Le bon de réduction a expiré."
       not_found_voucher: "Désolé, nous n'avons pas trouvé ce bon de réduction. Merci de vérifier le code qui vous a été transmis."
   vine_voucher_redeemer_service:
     errors:
@@ -1442,6 +1504,7 @@ fr:
         owner: Gestionnaire principal
         producer: Producteur
         sells_options:
+          unspecified: non spécifié
           none: aucun
           own: les miens
           any: tous
@@ -3307,6 +3370,8 @@ fr:
   payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
   payment_method_not_supported: "Cette méthode de paiement n'est pas maintenue. Veuillez en sélectionner une autre."
   payment_updated: "Paiement mis à jour"
+  payment_method_taler:
+    order_summary: "Commande CoopCircuits"
   cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Une action est requise"
   tag_rules: "Règles de tag"
@@ -3983,6 +4048,8 @@ fr:
     destroy:
       success: Le webhook a bien été supprimé.
       error: Le webhook n'a pas pu être supprimé.
+    test:
+      success: Des données test vont être envoyées à l'URL du webhook
   spree:
     order_updated: "La commande a été mise à jour"
     cannot_perform_operation: "Cette opération ne peut pas être réalisée"
@@ -4089,6 +4156,7 @@ fr:
     logourl: "URL logo"
     are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
     confirm_delete: "Confirmer la suppression"
+    tag_rule: "Règle de tag"
     voucher: "Bon de réduction"
     configurations: "Configurations"
     general_settings: "Configurations générales"
@@ -4180,6 +4248,8 @@ fr:
     alt_text: "Texte alternatif"
     thumbnail: "Miniature"
     back_to_images_list: "Retour à la liste des images"
+    backend_url: "URL du backend"
+    api_key: "Clé API"
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
@@ -4496,10 +4566,9 @@ fr:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres "
-          pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
+          taler: "Taler"
       payments:
         source_forms:
           stripe:
@@ -4986,6 +5055,8 @@ fr:
         create_placeholder: Entrez l'URL du point de terminaison du webhook
       event_types:
         order_cycle_opened: Cycle de vente ouvert
+        payment_status_changed: Poster webhook sur le changement du statut de paiement
+      test_endpoint: Tester le point de terminaison du webhook
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

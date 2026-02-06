@@ -4162,6 +4162,7 @@ fr_CA:
     alt_text: "Texte alternatif"
     thumbnail: "Miniature"
     back_to_images_list: "Retour à la liste des images"
+    api_key: "Clé API"
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
@@ -4478,9 +4479,7 @@ fr_CA:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres "
-          pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

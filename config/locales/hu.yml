@@ -4001,6 +4001,7 @@ hu:
     alt_text: "Alternatív szöveg"
     thumbnail: "Miniatűr"
     back_to_images_list: "Vissza a képek listájához"
+    api_key: "API kulcs"
     email: Email
     account_updated: "Fiók frissítve!"
     email_updated: "A fiók az új e-mail-cím megerősítését követően frissül."
@@ -4316,9 +4317,7 @@ hu:
         providers:
           provider: "Szolgáltató"
           check: "Készpénz/EFT/stb. (olyan kifizetések, amelyeknél nincs szükség automatikus érvényesítésre)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

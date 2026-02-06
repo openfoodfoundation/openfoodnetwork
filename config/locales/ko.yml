@@ -3764,9 +3764,7 @@ ko:
         providers:
           provider: "제공자"
           check: "현금/온라인 이체/기타 등등 (자동 유효성 검사가 필요하지 않은 지불)"
-          pin: "핀 결제"
           paypalexpress: "페이팔 익스프레스"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

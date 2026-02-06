@@ -3976,9 +3976,7 @@ de_CH:
         providers:
           provider: "Anbieter"
           check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
-          pin: "Pin Zahlungen"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

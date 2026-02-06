@@ -3873,6 +3873,7 @@ de_DE:
     alt_text: "Alternativtext"
     thumbnail: "Miniaturansicht"
     back_to_images_list: "Zurück zur Bilderliste"
+    api_key: "API-Schlüssel"
     email: E-Mail-Adresse
     account_updated: "Konto aktualisiert!"
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
@@ -4183,9 +4184,7 @@ de_DE:
         providers:
           provider: "Anbieter"
           check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
-          pin: "Pin Zahlungen"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

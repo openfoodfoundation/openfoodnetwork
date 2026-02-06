@@ -3752,9 +3752,7 @@ en_NZ:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

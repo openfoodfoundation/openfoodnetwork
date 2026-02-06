@@ -3867,6 +3867,7 @@ el:
     alt_text: "Εναλλακτικό Κείμενο"
     thumbnail: "Μικρογραφία (Thumnail) "
     back_to_images_list: "Επιστροφή στη λίστα εικόνων"
+    api_key: "Κλειδί API"
     email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
     account_updated: "Ο λογαριασμός ενημερώθηκε!"
     email_updated: "Ο λογαριασμός θα ενημερωθεί μόλις επιβεβαιωθεί το νέο μήνυμα ηλεκτρονικού ταχυδρομείου."
@@ -4181,9 +4182,7 @@ el:
         providers:
           provider: "Προμηθευτής"
           check: "Μετρητά/EFT/κλπ. (πληρωμές για τις οποίες δεν απαιτείται αυτόματη επικύρωση)"
-          pin: "Καρφίτσωμα πληρωμών"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Ταινία"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

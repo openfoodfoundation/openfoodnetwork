@@ -3888,9 +3888,7 @@ uk:
         providers:
           provider: "Провайдер"
           check: "Готівка/електронний переказ коштів/і т.д. (платежі, для яких не потрібна автоматична перевірка)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

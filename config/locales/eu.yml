@@ -506,6 +506,7 @@ eu:
     errors:
       vine_api: "Errorea gertatu da HJArekiko komunikazioan, saia zaitez geroago."
       invalid_voucher: "Bonuak ez du balio"
+      expired: "Bonua iraungi da"
       not_found_voucher: "Sentitzen dugu, ezin izan dugu txartel hori aurkitu, mesedez, egiaztatu kodea."
   vine_voucher_redeemer_service:
     errors:
@@ -698,6 +699,8 @@ eu:
       edit:
         title: "Konektatutako aplikazioaren doikuntzak"
         enabled_legend: "Gaitutako aplikazio konektatuak"
+        connected_apps_enabled:
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Konektatutako aplikazioaren doikuntzak
     customers:
@@ -1008,6 +1011,7 @@ eu:
     orders:
       edit:
         order_sure_want_to: Ziur al zaude eskaera hau %{event} nahi duzula?
+        voucher_tax_included_in_price: "%{label} (bonuan zerga barne)"
         tax_on_fees: "Tasen gaineko zerga"
       invoice_email_sent: 'Posta elektronikoa bidali da fakturarekin.'
       order_email_resent: 'Eskaeraren posta elektronikoa berriz bidali da'
@@ -1302,6 +1306,8 @@ eu:
             loading: "Kargatzen"
             need_to_be_manager: "Administratzaileek bakarrik konekta ditzakete aplikazioak."
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Utzi VINE bonoen trukea zure dendaren erakusleihoan."
             enable: "Konektatu"
             disable: "Deskonektatu"
             need_to_be_manager: "Administratzaileek bakarrik konekta ditzakete aplikazioak."
@@ -1784,6 +1790,7 @@ eu:
         save: Gorde
         voucher_code: Sustapen-kodea
         voucher_amount: Kopurua
+        voucher_type: Bonu mota
     controllers:
       enterprises:
         stripe_connect_cancelled: "Striperako konexioa bertan behera geratu da"
@@ -1872,6 +1879,12 @@ eu:
       explaination: Zure eskaera berrikusteko eta berresteko aukera duzu hurrengo urratsean, azken kostuak barne.
       submit: Hurrengoa - Eskaeraren laburpena
       cancel: Itzuli Zure informazioa atalera
+      voucher:
+        voucher: "%{voucher_amount} Bonua"
+        apply_voucher: Aplikatu bonoa
+        placeholder: Sartu bonoaren kodea
+        confirm_delete: Ziur zaude bonoa kendu nahi duzula?
+        warning_forfeit_remaining_amount: "Oharra: zure eskaeraren guztizkoa zure bonoa baino txikiagoa bada, baliteke gainerako balioa ezin gastatu ahal izatea."
     step3:
       delivery_details:
         title: Entregaren xehetasunak
@@ -1903,7 +1916,10 @@ eu:
       invalid_email: "Sartu baliozko mezu elektroniko bat"
       select_a_shipping_method: Hautatu bidalketa-metodoa
       select_a_payment_method: Hautatu ordainketa-metodoa
+      voucher_code_blank: Mesedez, sartu bono-kode baliodun bat
       add_voucher_error: Errore bat gertatu da bonoa gehitzean
+      create_voucher_error: "Errore bat gertatu da bonoa sortzerakoan: %{error}"
+      voucher_redeeming_error: Errore bat gertatu da zure bonoa trukatzen saiatzean
   shops:
     hubs:
       show_closed_shops: "Denda itxiak erakutsi"
@@ -2227,6 +2243,7 @@ eu:
   email_order_summary_subtotal: "Subtotala:"
   email_order_summary_total: "Guztira:"
   email_order_summary_includes_tax: "(zergak barne):"
+  email_order_summary_voucher_label: "Bonua ( %{code} ):"
   email_payment_paid: ORDAINDUA
   email_payment_not_paid: ORDAINDU GABE
   email_payment_description: Erosketaren ordainketaren deskribapena
@@ -4058,9 +4075,7 @@ eu:
         providers:
           provider: "Hornitzailea"
           check: "Eskudirua/transferentzia/etab. (automatikoki baliozkotzea eskatzen ez duten ordainketak)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

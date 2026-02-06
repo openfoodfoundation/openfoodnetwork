@@ -3645,6 +3645,7 @@ ca:
     alt_text: "Text alternatiu"
     thumbnail: "Miniatura"
     back_to_images_list: "Torna a la llista d’imatges"
+    api_key: "Clau API"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
     email_updated: "El compte s’actualitzarà un cop es confirmi el nou correu electrònic."
@@ -3943,9 +3944,7 @@ ca:
         providers:
           provider: "Proveïdor"
           check: "Efectiu / transferència / etc. (pagaments per als quals no és necessària la validació automàtica)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (obsolet)"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

@@ -3791,6 +3791,7 @@ hi:
     alt_text: "वैकल्पिक टेक्स्ट"
     thumbnail: "थंबनेल"
     back_to_images_list: "छवियों की सूची पर वापस जाएं"
+    api_key: "API कुंजी"
     email: ईमेल
     account_updated: "अकाउंट अपडेट किया गया!"
     email_updated: "नए ईमेल की पुष्टि होने के बाद अकाउंट अपडेट हो जाएगा।"
@@ -4096,9 +4097,7 @@ hi:
         providers:
           provider: "प्रदाता"
           check: "नकद/EFT/आदि (ऐसे भुगतान जिनके लिए ऑटोमैटिक वेरिफिकेशन की आवश्यकता नहीं है)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

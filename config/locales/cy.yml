@@ -4105,6 +4105,7 @@ cy:
     alt_text: "Testun Amgen"
     thumbnail: "Cryno-lun"
     back_to_images_list: "Yn ôl i'r Rhestr Delweddau"
+    api_key: "Allwedd API"
     email: E-bost
     account_updated: "Diweddarwyd y cyfrif!"
     email_updated: "Bydd y cyfrif yn cael ei ddiweddaru ar ôl cadarnhau'r cyfeiriad e-bost newydd."
@@ -4420,9 +4421,7 @@ cy:
         providers:
           provider: "Darparwr"
           check: "Arian/TRhE/ac ati (taliadau lle nad oes angen dilysu awtomatig)."
-          pin: "Taliadau Pin"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
