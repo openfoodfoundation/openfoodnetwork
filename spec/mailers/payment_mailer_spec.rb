@@ -43,8 +43,8 @@ RSpec.describe PaymentMailer do
 
   describe "#refund_available" do
     it "tells the user to accept a refund" do
-      payment = create(:payment)
-      payment.order.distributor = create(:enterprise, name: "Carrot Castle")
+      payment = build(:payment)
+      payment.order.distributor = build(:enterprise, name: "Carrot Castle")
       link = "https://taler.example.com/order/1"
       mail = PaymentMailer.refund_available(payment, link)
 
