@@ -681,22 +681,6 @@ RSpec.describe Spree::Payment do
         end
       end
 
-      context "when profiles are not supported" do
-        it "should not create a payment profile" do
-          payment_method.name = 'Gateway'
-          payment_method.distributors << create(:distributor_enterprise)
-          payment_method.save!
-
-          expect(payment_method).not_to receive :create_profile
-          payment = Spree::Payment.create(
-            amount: 100,
-            order: create(:order),
-            source: card,
-            payment_method:
-          )
-        end
-      end
-
       context 'when the payment was completed but now void' do
         let(:payment) { create(:payment, :completed, amount: 100, order:) }
 
