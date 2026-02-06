@@ -23,14 +23,14 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
     report.table_rows
   end
 
+  let(:item) { order.line_items.first }
+  let(:variant) { item.variant }
+
   it "generates the report" do
     expect(report_table.length).to eq(1)
   end
 
   describe "total_units column" do
-    let(:item) { order.line_items.first }
-    let(:variant) { item.variant }
-
     it "contains a sum of total items" do
       variant.update!(variant_unit: "items", variant_unit_name: "bottle", unit_value: 6) # six-pack
       item.update!(final_weight_volume: nil) # reset unit information
@@ -177,5 +177,22 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
 
     expect(last_column_title).to eq "SKU"
     expect(first_row_last_column_value).to eq variant_sku
+  end
+
+  it "doesn't update product name in report" do
+    variant_sku = order.line_items.first.variant.sku
+    last_column_title = table_headers[-3]
+    first_row_last_column_value = report_table.first[-3]
+
+    expect(last_column_title).to eq "SKU"
+    expect(first_row_last_column_value).to eq variant_sku
+
+    expect(report_table.first[1]).to eq(variant.product.name)
+    product_name = variant.product.name
+    variant.product.update(name: "#{product_name} Updated")
+
+    new_report = described_class.new(current_user, params)
+
+    expect(new_report.table_rows.first[1]).to eq(product_name)
   end
 end
