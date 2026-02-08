@@ -107,7 +107,7 @@ RSpec.describe Spree::Payment do
         allow(payment).to receive(:create_payment_profile).and_return(true)
       end
 
-      context "#process!" do
+      describe "#process!" do
         it "should call purchase!" do
           payment = build_stubbed(:payment, payment_method:)
           expect(payment).to receive(:purchase!)
@@ -138,6 +138,18 @@ RSpec.describe Spree::Payment do
 
           it "should call purchase" do
             expect(payment).to receive(:purchase!)
+            payment.process!
+          end
+        end
+
+        context "with an internal payment method" do
+          let(:payment_method) {
+            create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
+          }
+
+          it "calls internal_purchase!" do
+            payment = build_stubbed(:payment, payment_method:)
+            expect(payment).to receive(:internal_purchase!)
             payment.process!
           end
         end
@@ -236,7 +248,7 @@ RSpec.describe Spree::Payment do
         end
       end
 
-      context "purchase" do
+      describe "#purchase!" do
         before do
           allow(payment_method).to receive(:purchase).and_return(success_response)
         end
@@ -284,6 +296,65 @@ RSpec.describe Spree::Payment do
             expect(payment).to receive(:failure)
             expect(payment).not_to receive(:pend)
             expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
+          end
+        end
+      end
+
+      describe "internal_purchase!" do
+        let(:order) { create(:order, customer:) }
+        let(:customer) { create(:customer) }
+        let(:payment_method) {
+          create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
+        }
+        let(:success_response) do
+          instance_double(
+            ActiveMerchant::Billing::Response,
+            success?: true,
+            authorization: nil,
+          )
+        end
+        let(:options) {
+          { customer_id: customer.id, payment_id: payment.id, order_number: payment.order.number }
+        }
+
+        before do
+          allow(payment_method).to receive(:purchase).and_return(success_response)
+        end
+
+        it "calls purchase on the internal payment method" do
+          expect(payment_method).to receive(:purchase).with(
+            amount_in_cents, nil, options
+          ).and_return(success_response)
+
+          payment.internal_purchase!
+        end
+
+        it "logs the response" do
+          expect(payment).to receive(:record_response)
+
+          payment.internal_purchase!
+        end
+
+        context "when successful" do
+          before do
+            expect(payment.payment_method).to receive(:purchase).with(
+              amount_in_cents, nil, options
+            ).and_return(success_response)
+          end
+
+          it "makes payment complete" do
+            expect(payment).to receive(:complete!)
+            payment.internal_purchase!
+          end
+        end
+
+        context "when unsuccessful" do
+          it "makes payment failed" do
+            allow(payment_method).to receive(:purchase).and_return(failed_response)
+
+            expect(payment).to receive(:failure)
+            expect(payment).not_to receive(:pend)
+            expect { payment.internal_purchase! }.to raise_error(Spree::Core::GatewayError)
           end
         end
       end
