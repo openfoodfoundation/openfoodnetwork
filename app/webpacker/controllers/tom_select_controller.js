@@ -103,7 +103,9 @@ export default class extends Controller {
       this.openedByClick = false;
     }.bind(this);
 
-    // As per TomSelect source code, no result feedback after API call is shown when this callback returns true.
+    // As per TomSelect source code, Loading state is shown on the UI when this function returns true.
+    // By default it shows loading state only when there is some input in the search box.
+    // We want to show loading state on focus as well (when there is no input) to indicate that options are being loaded.
     options.shouldLoad = function (query) {
       return this.openedByClick || query.length > 0;
     }.bind(this);
