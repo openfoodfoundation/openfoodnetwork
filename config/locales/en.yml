@@ -5183,5 +5183,16 @@ en:
   api_payment_method:
     name: API customer credit
     description: Used to credit customer via customer account transactions endpoint
+  credit_payment_method:
+    name: Customer credit
+    description: Allow customer to pay with credit
+    success: Payment with credit was sucessful
+    order_payment_description: "Payment for order: %{order_number}" 
+    errors:
+      customer_not_found: Customer not found 
+      missing_payment: Missing payment
+      credit_payment_method_missing: Credit payment method is missing
+      no_credit_available: No credit available
+      not_enough_credit_available: Not enough credit available 
   customer_account_transaction:
     account_creation: Account creation

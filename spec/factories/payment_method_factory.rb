@@ -29,4 +29,12 @@ FactoryBot.define do
     distributor { FactoryBot.create(:distributor_enterprise) }
     payment_method { FactoryBot.create(:payment_method) }
   end
+
+  factory :customer_credit_payment_method, class: Spree::PaymentMethod::CustomerCredit do
+    name { "credit_payment_method.name" }
+    description { "credit_payment_method.description" }
+    environment { 'test' }
+
+    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
+  end
 end
