@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class PaymentMethod < ApplicationRecord
+  class PaymentMethod < ApplicationRecord # rubocop:disable Metrics/ClassLength
     include CalculatedAdjustments
     include PaymentMethodDistributors
 
@@ -109,6 +109,14 @@ module Spree
       distributors.include?(distributor)
     end
 
+    def display_name
+      try_translating(name)
+    end
+
+    def display_description
+      try_translating(description)
+    end
+
     private
 
     def distributor_validation
@@ -125,6 +133,12 @@ module Spree
         preferred_enterprise_id.present? &&
         preferred_enterprise_id > 0 &&
         stripe_account_id.present?
+    end
+
+    def try_translating(value)
+      I18n.t!(value)
+    rescue I18n::MissingTranslationData
+      value
     end
   end
 end
