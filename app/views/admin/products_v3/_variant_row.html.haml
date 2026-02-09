@@ -1,4 +1,4 @@
--# locals: (variant:, f:, category_options:, tax_category_options:, producer_options:)
+-# locals: (variant:, f:, product_index: nil, category_options:, tax_category_options:, producer_options:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
 %td.col-image
   -# empty
@@ -89,7 +89,7 @@
     - if variant.persisted?
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
       / TODO: only show if have permission. need to load permissions efficiently please. maybe the PErmissions object can cache result for each enterprise. maybe we preload it with the product query.
-      = link_to t('admin.products_page.actions.create_sourced_variant'), "TODO" # see next commit
+      = link_to t('admin.products_page.actions.create_sourced_variant'), admin_create_sourced_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
       - if variant.product.variants.size > 1
         %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
             "data-modal-link-target-value": "variant-delete-modal", "class": "delete",

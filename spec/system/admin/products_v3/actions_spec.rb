@@ -302,7 +302,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       let!(:enterprise_relationship) {
         # Other producer grants me access to manage their variant
         create(:enterprise_relationship, parent: other_producer, child: producer,
-                                       permissions_list: [:manage_products])
+                                         permissions_list: [:manage_products])
       }
 
       before do
@@ -310,20 +310,28 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
 
       context "with create_sourced_variant permission for my, and other's variants" do
-        it "shows an option to create sourced variant" do
-
+        it "creates a sourced variant" do
           create(:enterprise_relationship, parent: producer, child: producer,
                                            permissions_list: [:create_sourced_variant])
           enterprise_relationship.permissions.create! name: :create_sourced_variant
 
+          # Check my own variant
           within row_containing_name("My box") do
             click_button "Actions"
-            expect(page).to have_link "Create sourced variant" #, href: admin_clone_product_path(product_a)
+            expect(page).to have_link "Create sourced variant"
           end
 
+          # Create variant sourced from my friend
           within row_containing_name("My friends box") do
             click_button "Actions"
-            expect(page).to have_link "Create sourced variant" #, href: admin_clone_product_path(product_a)
+            click_link "Create sourced variant"
+          end
+
+          expect(page).to have_content "Successfully created sourced variant"
+
+          within "table.products" do
+            # There are now two copies
+            expect(all_input_values).to match /My friends box.*My friends box/
           end
         end
       end
