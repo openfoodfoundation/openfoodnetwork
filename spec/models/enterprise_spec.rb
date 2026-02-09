@@ -490,6 +490,22 @@ RSpec.describe Enterprise do
           .and change { distributor2.reload.updated_at }
       end
     end
+
+    describe "add_credit_payment_method" do
+      it "links credit payment method to the enterprise" do
+        expect(CreditPaymentMethod::LinkerService).to receive(:link)
+
+        create(:distributor_enterprise)
+      end
+
+      context "when not a distributor" do
+        it "doesn't link credit payment method" do
+          expect(CreditPaymentMethod::LinkerService).not_to receive(:link)
+
+          create(:supplier_enterprise)
+        end
+      end
+    end
   end
 
   describe "scopes" do
