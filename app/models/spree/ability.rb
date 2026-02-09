@@ -196,7 +196,7 @@ module Spree
     def add_product_management_abilities(user)
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
-      # An enterperprise user can change a product if they are supplier of at least
+      # An enterprise user can change a product if they are supplier of at least
       # one of the product's associated variants
       can [:admin, :read, :index, :update,
            :seo, :group_buy_options,
@@ -206,6 +206,12 @@ module Spree
         OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.intersect?(
           variant_suppliers
         )
+      end
+
+      # An enterprise user can clone if they have been granted permission to the source variant.
+      # Technically I'd call this permission clone_source_variant, but it would be less confusing to use the same name as everywhere else.
+      can [:create_sourced_variant], Spree::Variant do |variant|
+        OpenFoodNetwork::Permissions.new(user).can_create_sourced_variant?(variant.supplier)
       end
 
       can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone], :products_v3
