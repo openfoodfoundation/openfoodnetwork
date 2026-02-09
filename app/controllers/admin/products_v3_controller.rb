@@ -107,6 +107,39 @@ module Admin
       end
     end
 
+    # Clone a variant, retaining a link to the "source"
+    def create_sourced_variant
+      source_variant = Spree::Variant.find(params[:variant_id])
+      product_index = params[:product_index]
+      authorize! :create_sourced_variant, source_variant
+      status = :ok
+
+      begin
+        variant = source_variant.dup #may need a VariantDuplicator like producs?
+        variant.price = source_variant.price
+        variant.save!
+        variant.on_demand = source_variant.on_demand
+        variant.on_hand = source_variant.on_hand
+        variant.save!
+          #todo: create link to source
+
+        flash.now[:success] = t('.success')
+        variant_index = "-#{variant.id}"
+      rescue ActiveRecord::RecordInvalid
+        flash.now[:error] = variant.errors.full_messages.to_sentence
+        status = :unprocessable_entity
+        variant_index = "-1" # Create a unique-enough index
+      end
+
+      respond_with do |format|
+        format.turbo_stream {
+          locals = { source_variant:, variant:, product_index:, variant_index:,
+                     producer_options:, category_options: categories, tax_category_options: }
+          render :create_sourced_variant, status:, locals:
+        }
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end

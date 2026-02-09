@@ -94,7 +94,7 @@ module OpenFoodNetwork
       @user.enterprises
         .joins(:relationships_as_child)
         .merge(
-          EnterpriseRelationship.where(parent: supplier).with_permission(:create_sourced_variant)
+          EnterpriseRelationship.where(parent: supplier).with_permission(:create_sourced_variants)
         ).exists?
     end
 

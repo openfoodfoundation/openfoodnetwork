@@ -1073,6 +1073,8 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      create_sourced_variant:
+        success: "Successfully created sourced variant"
       tag_rules:
         rules_per_tag:
           one: "%{tag} has 1 rule"
