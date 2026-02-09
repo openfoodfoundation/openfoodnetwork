@@ -80,6 +80,7 @@ Openfoodnetwork::Application.routes.draw do
     delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
     delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
     post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
+    post 'products/create_sourced_variant', to: 'products_v3#create_sourced_variant', as: 'create_sourced_variant'
     resources :product_preview, only: [:show]
 
     resources :variant_overrides do
