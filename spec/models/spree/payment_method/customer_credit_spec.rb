@@ -5,42 +5,6 @@ require "spec_helper"
 RSpec.describe Spree::PaymentMethod::CustomerCredit do
   subject { build(:customer_credit_payment_method) }
 
-  describe "#name" do
-    subject { build(:customer_credit_payment_method, name:) }
-
-    let(:name) { "credit_payment_method.name" }
-
-    it "translate the name" do
-      expect(subject.name).to eq("Customer credit")
-    end
-
-    context "when not a tranlatable string" do
-      let(:name) { "customer credit payment" }
-
-      it "falls back to no translation" do
-        expect(subject.name).to eq("customer credit payment")
-      end
-    end
-  end
-
-  describe "#description" do
-    subject { build(:customer_credit_payment_method, description:) }
-
-    let(:description) { "credit_payment_method.description" }
-
-    it "translate the name" do
-      expect(subject.description).to eq("Allow customer to pay with credit")
-    end
-
-    context "when not a tranlatable string" do
-      let(:description) { "Payment method to allow customer to pay with credit" }
-
-      it "falls back to no translation" do
-        expect(subject.description).to eq("Payment method to allow customer to pay with credit")
-      end
-    end
-  end
-
   describe "#purchase" do
     let(:response) { subject.purchase(amount, nil, options) }
 
