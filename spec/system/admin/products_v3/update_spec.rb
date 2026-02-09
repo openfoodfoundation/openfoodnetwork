@@ -396,7 +396,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
 
         within new_variant_row do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           page.find('a', text: 'Remove').click
         end
 
@@ -424,14 +424,14 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).to have_css('form.disabled-section#filters')
 
         within first_new_variant_row do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           page.find('a', text: 'Remove').click
         end
 
         expect(page).to have_text("1 product modified.")
 
         within second_new_variant_row do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           page.find('a', text: 'Remove').click
         end
         # Only when all non persistent variants are gone that product is non modified
@@ -475,7 +475,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
 
           within apples_new_variant_row do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             page.find('a', text: 'Remove').click
           end
           # New variant for apples is no more, expect only 1 modified product
@@ -484,7 +484,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           expect(page).to have_css('form.disabled-section#filters')
 
           within tomatoes_new_variant_row do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             page.find('a', text: 'Remove').click
           end
           # Back to page without any alteration
@@ -618,7 +618,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           expect(page).to have_text("1 product could not be saved.")
 
           within row_containing_name("N" * 256) do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             page.find('a', text: 'Remove').click
           end
 

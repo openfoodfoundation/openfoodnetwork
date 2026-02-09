@@ -250,7 +250,7 @@ RSpec.describe 'Subscriptions' do
         modal_selector = "div[data-modal-target=modal]"
 
         within product_selector do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           page.find(delete_option_selector).click
         end
         within modal_selector do

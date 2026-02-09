@@ -1,4 +1,4 @@
 .vertical-ellipsis-menu{ "data-controller": "vertical-ellipsis-menu" }
-  %i.fa.fa-ellipsis-v{ "data-action": "click->vertical-ellipsis-menu#toggle" }
+  %button.vertical-ellipsis-menu-button.fa.fa-ellipsis-v{ "data-action": "click->vertical-ellipsis-menu#toggle", 'aria-label': t('admin.products_page.columns.actions') }
   .vertical-ellipsis-menu-content{ "data-vertical-ellipsis-menu-target": "content" }
     = content
