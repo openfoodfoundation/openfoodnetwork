@@ -364,6 +364,19 @@ RSpec.describe Spree::Ability do
                                         for: p2.variants.first)
       end
 
+      describe "create_sourced_variant" do
+        it "should not be able to create sourced variant without permission" do
+          is_expected.not_to have_ability([:create_sourced_variant], for: p_related.variants.first)
+        end
+
+        it "should be able to create sourced variant when granted permission" do
+          create(:enterprise_relationship, parent: s_related, child: s1,
+                                           permissions_list: [:create_sourced_variant])
+
+          is_expected.to have_ability([:create_sourced_variant], for: p_related.variants.first)
+        end
+      end
+
       it "should not be able to access admin actions on orders" do
         is_expected.not_to have_ability([:admin], for: Spree::Order)
       end
@@ -720,6 +733,19 @@ RSpec.describe Spree::Ability do
       it "can request permitted enterprise fees for an order cycle" do
         is_expected.to have_ability([:for_order_cycle], for: EnterpriseFee)
       end
+
+      describe "create_sourced_variant" do
+        it "should not be able to create sourced variant without permission" do
+          is_expected.not_to have_ability([:create_sourced_variant], for: p_related.variants.first)
+        end
+
+        it "should be able to create sourced variant when granted permission" do
+          create(:enterprise_relationship, parent: s_related, child: d1,
+                                           permissions_list: [:create_sourced_variant])
+
+          is_expected.to have_ability([:create_sourced_variant], for: p_related.variants.first)
+        end
+      end
     end
 
     context 'Order Cycle co-ordinator, distributor enterprise manager' do
@@ -794,6 +820,19 @@ RSpec.describe Spree::Ability do
 
       it "has the ability to manage vouchers" do
         is_expected.to have_ability([:admin, :create], for: Voucher)
+      end
+
+      describe "create_sourced_variant for own enterprise" do
+        it "should not be able to create own sourced variant without permission" do
+          is_expected.not_to have_ability([:create_sourced_variant], for: p1.variants.first)
+        end
+
+        it "should be able to create own sourced variant when granted self permission" do
+          create(:enterprise_relationship, parent: s1, child: s1,
+                                           permissions_list: [:create_sourced_variant])
+
+          is_expected.to have_ability([:create_sourced_variant], for: p1.variants.first)
+        end
       end
     end
 

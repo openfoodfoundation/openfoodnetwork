@@ -90,6 +90,14 @@ module OpenFoodNetwork
       @user.enterprises.length == 1
     end
 
+    def can_create_sourced_variant?(supplier)
+      @user.enterprises
+        .joins(:relationships_as_child)
+        .merge(
+          EnterpriseRelationship.where(parent: supplier).with_permission(:create_sourced_variant)
+        ).exists?
+    end
+
     def editable_schedules
       Schedule.
         joins(:order_cycles).
