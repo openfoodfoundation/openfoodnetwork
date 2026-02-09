@@ -126,6 +126,15 @@ module Openfoodnetwork
       end
     end
 
+    config.api_payment_method = {
+      name: "api_payment_method.name",
+      description: "api_payment_method.description"
+    }
+    config.credit_payment_method = {
+      name: "credit_payment_method.name",
+      description: "credit_payment_method.description"
+    }
+
     initializer "ofn.reports" do |_app|
       module ::Reporting; end
       Rails.application.reloader.to_prepare do

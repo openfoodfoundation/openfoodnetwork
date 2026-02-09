@@ -3,14 +3,6 @@
 module Spree
   class PaymentMethod
     class CustomerCredit < Spree::PaymentMethod
-      def name
-        try_translating(super)
-      end
-
-      def description
-        try_translating(super)
-      end
-
       # Main method called by Spree::Payment::Processing during checkout
       # - amount is in cents
       # - options: {
@@ -72,12 +64,6 @@ module Spree
 
       def currency
         CurrentConfig.get(:currency)
-      end
-
-      def try_translating(value)
-        I18n.t!(value)
-      rescue I18n::MissingTranslationData
-        value
       end
     end
   end
