@@ -201,13 +201,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
       it "shows an actions menu with an edit link for product and variant" do
         within row_containing_name("Apples") do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
         close_action_menu
 
         within row_containing_name("Medium box") do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           expect(page).to have_link "Edit",
                                     href: spree.edit_admin_product_variant_path(product_a,
                                                                                 variant_a1)
@@ -232,13 +232,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       describe "Actions columns (clone)" do
         it "shows an actions menu with a clone link when clicking on icon for product" do
           within row_containing_name("Apples") do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
           close_action_menu
 
           within row_containing_name("Medium box") do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).not_to have_link "Clone", href: admin_clone_product_path(product_a)
           end
         end
@@ -246,7 +246,19 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
       describe "Cloning product" do
         it "shows the cloned product on page when clicked on the cloned option" do
-          click_product_clone "Apples"
+          # TODO, variant supplier missing, needs to be copied from variant and not product
+          within "table.products" do
+            # Gather input values, because page.content doesn't include them.
+            input_content = page.find_all('input[type=text]').map(&:value).join
+
+            # Products does not include the cloned product.
+            expect(input_content).not_to match /COPY OF Apples/
+          end
+
+          within row_containing_name("Apples") do
+            click_button "Actions"
+            click_link "Clone"
+          end
 
           expect(page).to have_content "Successfully cloned the product"
           within "table.products" do
@@ -273,7 +285,10 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         product_a.update_columns(name: "L" * 254)
 
         # The page has not been reloaded so the product's name is still "Apples"
-        click_product_clone "Apples"
+        within row_containing_name("Apples") do
+          click_button "Actions"
+          click_link "Clone"
+        end
 
         expect(page).to have_content "Product Name is too long (maximum is 255 characters)"
 
@@ -383,14 +398,14 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         it "shows an actions menu with a delete link when clicking on icon for product. " \
            "doesn't show delete link for the single variant" do
           within product_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
           page.find("div#content").click # to close the vertical actions menu
 
           # to select the default variant
           within default_variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).not_to have_css(delete_option_selector)
           end
         end
@@ -406,13 +421,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
           # to select the default variant
           within default_variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
           page.find("div#content").click # to close the vertical actions menu
 
           within variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
         end
@@ -435,7 +450,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # Keep Product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -448,7 +463,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # Keep Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -467,7 +482,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             visit admin_products_url
             # Delete Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -484,7 +499,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # Delete product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -504,7 +519,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # Delete Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -519,7 +534,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # Delete product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -542,7 +557,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
               # Delete Variant
               within variant_selector do
-                page.find(".vertical-ellipsis-menu").click
+                click_button "Actions"
                 page.find(delete_option_selector).click
               end
 
@@ -569,7 +584,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         visit admin_products_url
 
         within row_containing_name("Apples") do
-          open_action_menu
+          click_button "Actions"
           click_link "Preview"
         end
 
@@ -593,10 +608,6 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).not_to have_content("Product preview")
       end
     end
-  end
-
-  def open_action_menu
-    page.find(".vertical-ellipsis-menu").click
   end
 
   def close_action_menu
