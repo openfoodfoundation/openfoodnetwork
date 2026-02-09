@@ -291,6 +291,58 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
     end
 
+    describe "Create sourced variant" do
+      let!(:variant) {
+        create(:variant, display_name: "My box", supplier: producer)
+      }
+      let!(:other_producer) { create(:supplier_enterprise) }
+      let!(:other_variant) {
+        create(:variant, display_name: "My friends box", supplier: other_producer)
+      }
+      let!(:enterprise_relationship) {
+        # Other producer grants me access to manage their variant
+        create(:enterprise_relationship, parent: other_producer, child: producer,
+                                         permissions_list: [:manage_products])
+      }
+
+      before do
+        visit admin_products_url
+      end
+
+      context "with create_sourced_variants permission for my, and other's variants" do
+        it "shows an option to create sourced variant" do
+          create(:enterprise_relationship, parent: producer, child: producer,
+                                           permissions_list: [:create_sourced_variants])
+          enterprise_relationship.permissions.create! name: :create_sourced_variants
+
+          within row_containing_name("My box") do
+            click_button "Actions"
+            expect(page).to have_link "Create sourced variant" # , href: admin_clone_product_path(product_a)
+          end
+
+          within row_containing_name("My friends box") do
+            click_button "Actions"
+            expect(page).to have_link "Create sourced variant" # , href: admin_clone_product_path(product_a)
+          end
+        end
+      end
+
+      context "without create_sourced_variants permission" do
+        it "does not show the option in the menu" do
+          pending "TODO: hide option if you can't use it."
+          within row_containing_name("My box") do
+            click_button "Actions"
+            expect(page).not_to have_link "Create sourced variant"
+          end
+
+          within row_containing_name("My friends box") do
+            click_button "Actions"
+            expect(page).not_to have_link "Create sourced variant"
+          end
+        end
+      end
+    end
+
     describe "delete" do
       let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
       let(:delete_option_selector) { "a[data-controller='modal-link'].delete" }

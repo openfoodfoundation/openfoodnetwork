@@ -701,6 +701,7 @@ en:
         delete: Delete
         remove: Remove
         preview: Preview
+        create_sourced_variant: Create sourced variant
       image:
         edit: Edit
       product_preview:
