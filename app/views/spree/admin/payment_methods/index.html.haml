@@ -32,7 +32,7 @@
     %tbody
       - @payment_methods.each do |method|
         %tr{class: "#{cycle('odd', 'even')}", id: "#{spree_dom_id method}"}
-          %td.align-center= method.name
+          %td.align-center= method.display_name
           %td.align-center
             - method.distributors.each do |distributor|
               = distributor.name

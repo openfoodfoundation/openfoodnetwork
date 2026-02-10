@@ -11,7 +11,7 @@ module Spree
     end
 
     def payment_method_name(payment)
-      payment_method(payment)&.name
+      payment_method(payment)&.display_name
     end
   end
 end

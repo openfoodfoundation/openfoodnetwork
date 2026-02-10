@@ -136,9 +136,9 @@ module Spree
     end
 
     def try_translating(value)
-      I18n.t!(value)
-    rescue I18n::MissingTranslationData
-      value
+      return value if value.blank?
+
+      I18n.t(value, default: value)
     end
   end
 end

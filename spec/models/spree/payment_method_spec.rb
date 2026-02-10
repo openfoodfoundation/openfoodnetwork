@@ -208,5 +208,13 @@ RSpec.describe Spree::PaymentMethod do
         )
       end
     end
+
+    context "when description is empty" do
+      let(:description) { "" }
+
+      it "falls back to no translation" do
+        expect(subject.display_description).to eq("")
+      end
+    end
   end
 end
