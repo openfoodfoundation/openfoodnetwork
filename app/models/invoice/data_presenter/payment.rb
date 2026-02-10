@@ -18,7 +18,7 @@ class Invoice
       end
 
       def payment_method_name
-        payment_method&.name
+        payment_method&.display_name
       end
     end
   end

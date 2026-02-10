@@ -2,6 +2,6 @@
 
 class Invoice
   class PaymentMethodSerializer < ActiveModel::Serializer
-    attributes :id, :name, :description
+    attributes :id, :display_name, :display_description
   end
 end

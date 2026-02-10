@@ -23,13 +23,13 @@
               "data-action": "paymentmethod#selectPaymentMethod",
               "data-paymentmethod-id": "#{payment_method.id}",
               "data-paymentmethod-target": "input"
-            = f.label :payment_method_id, "#{payment_method.name}", for: "payment_method_#{payment_method.id}"
+            = f.label :payment_method_id, "#{payment_method.display_name}", for: "payment_method_#{payment_method.id}"
             %em.fees=payment_or_shipping_price(payment_method, @order)
 
           .paymentmethod-container{"data-paymentmethod-id": "#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
             - if payment_method.description && !payment_method.description.empty?
               .paymentmethod-description.panel
-                = simple_format(html_escape(payment_method.description))
+                = simple_format(html_escape(payment_method.display_description))
             .paymentmethod-form
               = render partial: "checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
 

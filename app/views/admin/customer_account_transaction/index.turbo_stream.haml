@@ -24,7 +24,7 @@
               %td.description
                 = transaction.description
               %td.payment-method
-                = t(transaction.payment_method.name.to_s)
+                = transaction.payment_method.display_name
               %td.amount
                 = Spree::Money.new(transaction.amount)
               %td.running_balance
