@@ -3,10 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe CustomerAccountTransaction do
-  let!(:payment_method) {
-    create(:payment_method, name: CustomerAccountTransaction::DEFAULT_PAYMENT_METHOD_NAME)
-  }
-
   describe "validations" do
     subject { build(:customer_account_transaction) }
 
@@ -60,12 +56,21 @@ RSpec.describe CustomerAccountTransaction do
     end
 
     context "when the default payment method is missing" do
-      let!(:payment_method) { nil }
+      around do |example|
+        # A Customer account transaction is linked to a customer which is linked to an enterprise.
+        # That means FactoryBot will create an enterprise, so we disable the after create callback
+        # so that credit payment are not created.
+        Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
+        example.run
+        Enterprise.set_callback(:create, :after, :add_credit_payment_method)
+      end
 
       it "raises an error" do
-        expect { create(:customer_account_transaction, amount: 12.00) }.to raise_error(
-          ActiveRecord::RecordNotFound
-        )
+        expect do
+          create(
+            :customer_account_transaction, amount: 12.00, payment_method: create(:payment_method)
+          )
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

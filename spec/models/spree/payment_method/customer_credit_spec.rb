@@ -8,9 +8,6 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
   describe "#purchase" do
     let(:response) { subject.purchase(amount, nil, options) }
 
-    let!(:payment_method) {
-      create(:payment_method, name: CustomerAccountTransaction::DEFAULT_PAYMENT_METHOD_NAME)
-    }
     let!(:credit_payment_method) {
       create(:customer_credit_payment_method)
     }
@@ -94,6 +91,15 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
 
     context "when credit payment method is not configured" do
       let!(:credit_payment_method) { nil }
+
+      around do |example|
+        # Customer is needed to create a purchase and a customer which is linked to an enterprise.
+        # That means FactoryBot will create an enterprise, so we disable the after create callback
+        # so that credit payment methods are not created.
+        Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
+        example.run
+        Enterprise.set_callback(:create, :after, :add_credit_payment_method)
+      end
 
       it "returns an error" do
         expect(response.success?).to be(false)

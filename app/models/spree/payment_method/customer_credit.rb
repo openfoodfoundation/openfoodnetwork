@@ -13,14 +13,10 @@ module Spree
 
         customer = Customer.find_by(id: options[:customer_id])
         return error_response("customer_not_found") if customer.nil?
-
         return error_response("missing_payment") if options[:payment_id].nil?
-
-        payment_method = Spree::PaymentMethod.find_by(name: "credit_payment_method.name")
         return error_response("credit_payment_method_missing") if payment_method.nil?
 
         available_credit = customer.customer_account_transactions.last&.balance
-
         return error_response("no_credit_available") if available_credit.nil?
 
         return error_response("not_enough_credit_available") if calculated_amount > available_credit
@@ -56,6 +52,12 @@ module Spree
       end
 
       private
+
+      def payment_method
+        Spree::PaymentMethod.find_by(
+          name: Rails.application.config.credit_payment_method[:name]
+        )
+      end
 
       def error_response(translation_key)
         message = I18n.t(translation_key, scope: "credit_payment_method.errors")

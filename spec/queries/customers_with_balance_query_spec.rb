@@ -212,15 +212,6 @@ RSpec.describe CustomersWithBalanceQuery do
     end
 
     context "with customer payments" do
-      # TODO should not be needed, need to add this to seed somehow
-      let!(:payment_method) {
-        create(
-          :payment_method,
-          name: CustomerAccountTransaction::DEFAULT_PAYMENT_METHOD_NAME,
-          distributors: [customer.enterprise]
-        )
-      }
-
       it 'returns the customer available credit' do
         create(:customer_account_transaction, customer:, amount: 10.00)
         create(:customer_account_transaction, customer:, amount: -2.00)
