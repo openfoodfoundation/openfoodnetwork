@@ -38,7 +38,7 @@
                     %td.order2
                       = transaction.description
                     %td.order3
-                      = t(transaction.payment_method.name.to_s)
+                      = transaction.payment_method.display_name
                     %td.order4
                       = Spree::Money.new(transaction.amount)
                     %td.order5
