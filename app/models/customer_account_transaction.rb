@@ -5,8 +5,6 @@ require "spree/localized_number"
 class CustomerAccountTransaction < ApplicationRecord
   extend Spree::LocalizedNumber
 
-  DEFAULT_PAYMENT_METHOD_NAME = "api_payment_method.name"
-
   localize_number :amount
 
   belongs_to :customer
@@ -43,7 +41,9 @@ class CustomerAccountTransaction < ApplicationRecord
 
   # Creates the first transaction with a 0 amount
   def create_initial_transaction
-    api_payment_method = Spree::PaymentMethod.find_by!(name: DEFAULT_PAYMENT_METHOD_NAME)
+    api_payment_method = Spree::PaymentMethod.find_by!(
+      name: Rails.application.config.api_payment_method[:name]
+    )
     CustomerAccountTransaction.create!(
       customer: customer,
       amount: 0.00,
