@@ -7,13 +7,6 @@ RSpec.describe Admin::CustomerAccountTransactionController do
     let(:enterprise_user) { create(:user, enterprises: [enterprise]) }
     let(:enterprise) { create(:enterprise) }
     let(:customer) { create(:customer, enterprise:) }
-    let!(:payment_method) {
-      create(
-        :payment_method,
-        name: CustomerAccountTransaction::DEFAULT_PAYMENT_METHOD_NAME,
-        distributors: [enterprise]
-      )
-    }
 
     before do
       login_as enterprise_user

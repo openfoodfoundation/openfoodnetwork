@@ -5,6 +5,8 @@ FactoryBot.define do
     customer { build(:customer) }
     amount { 10.00 }
     currency { "AUD" }
-    payment_method { build(:payment_method) }
+    payment_method {
+      build(:payment_method, name: Rails.application.config.api_payment_method[:name])
+    }
   end
 end

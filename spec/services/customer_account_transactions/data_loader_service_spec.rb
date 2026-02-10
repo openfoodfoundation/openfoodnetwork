@@ -5,13 +5,6 @@ require 'spec_helper'
 RSpec.describe CustomerAccountTransactions::DataLoaderService do
   subject { described_class.new(user:, enterprise:) }
 
-  let!(:payment_method) {
-    create(
-      :payment_method,
-      name: CustomerAccountTransaction::DEFAULT_PAYMENT_METHOD_NAME,
-      distributors: [enterprise]
-    )
-  }
   let(:user) { create(:user) }
   let(:enterprise) { create(:distributor_enterprise) }
 
