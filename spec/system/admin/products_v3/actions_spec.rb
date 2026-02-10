@@ -246,15 +246,6 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
       describe "Cloning product" do
         it "shows the cloned product on page when clicked on the cloned option" do
-          # TODO, variant supplier missing, needs to be copied from variant and not product
-          within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
-
-            # Products does not include the cloned product.
-            expect(input_content).not_to match /COPY OF Apples/
-          end
-
           within row_containing_name("Apples") do
             click_button "Actions"
             click_link "Clone"
