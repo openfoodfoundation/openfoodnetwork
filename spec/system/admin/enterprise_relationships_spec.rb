@@ -56,7 +56,7 @@ create(:enterprise)
       # Permissions appear.. in a different order for some reason.
       expect_relationship_with_permissions e1, e2,
                                            ['to add to order cycle',
-                                            'to create sourced variants',
+                                            'to create sourced variants [BETA]',
                                             'to add products to inventory',
                                             'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
