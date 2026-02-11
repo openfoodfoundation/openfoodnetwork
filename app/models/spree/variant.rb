@@ -72,6 +72,10 @@ module Spree
     has_many :semantic_links, as: :subject, dependent: :delete_all
     has_many :supplier_properties, through: :supplier, source: :properties
 
+    has_many :variant_links, dependent: :delete_all
+    has_one :source_variant, through: :variant_links
+    has_many :linked_variants, through: :variant_links
+
     localize_number :price, :weight
 
     validates_lengths_from_database

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
+ActiveRecord::Schema[7.1].define(version: 2026_02_11_055758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -243,8 +243,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.text "white_label_logo_link"
     t.boolean "hide_groups_tab", default: false
     t.string "external_billing_id", limit: 128
-    t.boolean "enable_producers_to_edit_orders", default: false, null: false
     t.boolean "show_customer_contacts_to_suppliers", default: false, null: false
+    t.boolean "enable_producers_to_edit_orders", default: false, null: false
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
@@ -1098,6 +1098,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "variant_links", primary_key: ["linked_variant_id", "source_variant_id"], force: :cascade do |t|
+    t.integer "source_variant_id", null: false
+    t.integer "linked_variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_variant_id"], name: "index_variant_links_on_source_variant_id"
+  end
+
   create_table "variant_overrides", id: :serial, force: :cascade do |t|
     t.integer "variant_id", null: false
     t.integer "hub_id", null: false
@@ -1260,6 +1268,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
   add_foreign_key "tag_rules", "enterprises"
+  add_foreign_key "variant_links", "spree_variants", column: "linked_variant_id"
+  add_foreign_key "variant_links", "spree_variants", column: "source_variant_id"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
   add_foreign_key "vouchers", "enterprises"
