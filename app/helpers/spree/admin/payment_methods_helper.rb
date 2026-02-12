@@ -9,6 +9,10 @@ module Spree
 
         I18n.t(key, scope:)
       end
+
+      def payment_method_type_options(providers)
+        providers.map { |p| [payment_method_type_name(p), p] }
+      end
     end
   end
 end
