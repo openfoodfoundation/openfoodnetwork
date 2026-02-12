@@ -250,7 +250,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
       describe "choosing" do
         shared_examples "different payment methods" do |pay_method|
-          context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
+          context "checking out with #{pay_method}" do
             before do
               visit checkout_step_path(:payment)
             end
@@ -264,46 +264,9 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               expect(order.reload.state).to eq "complete"
             end
           end
-
-          context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
-            around do |example|
-              with_stripe_setup { example.run }
-            end
-
-            before do
-              stripe_enable
-              visit checkout_step_path(:payment)
-            end
-
-            it "selects Stripe SCA and proceeds to the summary step" do
-              choose pay_method.to_s
-              fill_out_card_details
-              click_on "Next - Order summary"
-              proceed_to_summary
-            end
-
-            context "when saving card" do
-              it "selects Stripe SCA and proceeds to the summary step" do
-                stub_customers_post_request(email: order.user.email)
-                stub_payment_method_attach_request
-
-                choose pay_method.to_s
-                fill_out_card_details
-                check "Save card for future use"
-
-                click_on "Next - Order summary"
-                proceed_to_summary
-
-                # Verify card has been saved with correct stripe IDs
-                user_credit_card = order.reload.user.credit_cards.first
-                expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
-                expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
-              end
-            end
-          end
         end
 
-        describe "shared examples" do
+        describe "payment method" do
           let!(:cash) { create(:payment_method, distributors: [distributor], name: "Cash") }
 
           context "Cash" do
@@ -338,7 +301,40 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               create(:stripe_sca_payment_method, distributors: [distributor], name: "Stripe SCA")
             }
 
-            it_behaves_like "different payment methods", "Stripe SCA"
+            around do |example|
+              with_stripe_setup { example.run }
+            end
+
+            before do
+              stripe_enable
+              visit checkout_step_path(:payment)
+            end
+
+            it "selects Stripe SCA and proceeds to the summary step" do
+              choose "Stripe SCA"
+              fill_out_card_details
+              click_on "Next - Order summary"
+              proceed_to_summary
+            end
+
+            context "when saving card" do
+              it "selects Stripe SCA and proceeds to the summary step" do
+                stub_customers_post_request(email: order.user.email)
+                stub_payment_method_attach_request
+
+                choose "Stripe SCA"
+                fill_out_card_details
+                check "Save card for future use"
+
+                click_on "Next - Order summary"
+                proceed_to_summary
+
+                # Verify card has been saved with correct stripe IDs
+                user_credit_card = order.reload.user.credit_cards.first
+                expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
+                expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
+              end
+            end
           end
 
           context "Taler" do
