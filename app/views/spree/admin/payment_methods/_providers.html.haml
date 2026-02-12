@@ -3,6 +3,6 @@
     .alpha.four.columns
       = label :payment_method, :type, t('.provider')
     .omega.twelve.columns
-      = select(:payment_method, :type, payment_method_type_options(@providers), {}, { class: 'select2 fullwidth', 'provider-prefs-for' => "#{@object.id}"})
+      = select(:payment_method, :type, payment_method_type_options(@providers), {}, { class: 'select2 fullwidth', required: true, placeholder: t("admin.choose"), 'provider-prefs-for' => "#{@object.id}"})
 
   %div{"ng-include" => "include_html" }

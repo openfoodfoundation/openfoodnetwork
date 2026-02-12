@@ -20,10 +20,11 @@ RSpec.describe '
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
-      # Selects the first one by default:
-      expect(page).to have_select2 "payment_method_type", selected: "PayPal Express"
+      expect(page).to have_select2 "payment_method_type", selected: "Choose..."
 
       fill_in 'payment_method_name', with: 'Cheque payment method'
+      cash_name = "Cash/EFT/etc. (payments for which automatic validation is not required)"
+      select2_select cash_name, from: "payment_method_type"
 
       check "payment_method_distributor_ids_#{@distributors[0].id}"
       click_button 'Create'
@@ -246,6 +247,9 @@ RSpec.describe '
     it "creates payment methods" do
       visit spree.new_admin_payment_method_path
       fill_in 'payment_method_name', with: 'Cheque payment method'
+      cash_name = "Cash/EFT/etc. (payments for which automatic validation is not required)"
+      select2_select cash_name, from: "payment_method_type"
+
       expect(page).to have_field 'payment_method_description'
       expect(page).to have_select 'payment_method_display_on'
 
