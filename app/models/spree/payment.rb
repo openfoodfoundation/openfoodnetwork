@@ -34,7 +34,7 @@ module Spree
 
     # invalidate previously entered payments
     after_create :invalidate_old_payments
-    after_save :create_payment_profile, if: :profiles_supported?
+    after_save :create_payment_profile
 
     # update the order totals, etc.
     after_save :ensure_correct_adjustment, :update_order
@@ -217,18 +217,13 @@ module Spree
       errors.blank?
     end
 
-    def profiles_supported?
-      payment_method.respond_to?(:payment_profiles_supported?) &&
-        payment_method.payment_profiles_supported?
-    end
-
     def create_payment_profile
       return unless source.is_a?(CreditCard)
       return unless source.try(:save_requested_by_customer?)
       return unless source.number || source.gateway_payment_profile_id
       return unless source.gateway_customer_profile_id.nil?
 
-      payment_method.create_profile(self)
+      payment_method.try(:create_profile, self)
     rescue ActiveMerchant::ConnectionError => e
       gateway_error e
     end
