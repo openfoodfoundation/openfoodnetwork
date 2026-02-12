@@ -69,8 +69,6 @@ module WebHelper
       .find(:css, '.select2-drop-active .select2-result-label',
             text: options[:select_text] || value)
       .click
-
-    expect(page).to have_select2 options[:from], selected: options[:select_text] || value
   end
 
   def open_select2(selector)

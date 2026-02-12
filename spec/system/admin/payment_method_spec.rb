@@ -20,6 +20,9 @@ RSpec.describe '
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
+      # Selects the first one by default:
+      expect(page).to have_select2 "payment_method_type", selected: "PayPal Express"
+
       fill_in 'payment_method_name', with: 'Cheque payment method'
 
       check "payment_method_distributor_ids_#{@distributors[0].id}"
