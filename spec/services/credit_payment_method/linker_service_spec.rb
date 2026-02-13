@@ -42,9 +42,7 @@ RSpec.describe CreditPaymentMethod::LinkerService do
         )
         expect(api_payment_method.display_on).to eq("back_end")
 
-        credit_payment_method = Spree::PaymentMethod.find_by(
-          name: Rails.application.config.credit_payment_method[:name]
-        )
+        credit_payment_method = Spree::PaymentMethod.customer_credit
         expect(credit_payment_method).not_to be_nil
         expect(credit_payment_method.description).to eq(
           Rails.application.config.credit_payment_method[:description]
