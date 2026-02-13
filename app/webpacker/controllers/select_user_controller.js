@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import TomSelect from "tom-select/dist/esm/tom-select.complete";
+import showHttpError from "js/services/show_http_error";
 
 export default class extends Controller {
   connect() {
@@ -25,7 +26,13 @@ export default class extends Controller {
   #load(query, callback) {
     const url = "/admin/search/known_users.json?q=" + encodeURIComponent(query);
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          showHttpError(response.status);
+          throw response;
+        }
+        return response.json();
+      })
       .then((json) => {
         callback({ items: json });
       })
