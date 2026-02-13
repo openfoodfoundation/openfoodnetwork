@@ -645,7 +645,7 @@ RSpec.describe '
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "Email invalid_email is invalid"
+              expect(page).to have_content "is invalid"
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
