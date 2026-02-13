@@ -314,6 +314,10 @@ en:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: is already a manager
   card_details: "Card details"
   card_type: "Card type"
   card_type_is: "Card type is"
@@ -1473,24 +1477,24 @@ en:
           show_hide_payment: 'Show or Hide payment methods at checkout'
           show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
+          description: The users with permission to manage this enterprise.
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
-          owner: 'Owner'
           contact: "Contact"
+          manager: "Manager"
+          owner: 'Owner'
           contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
           notifications_placeholder: eg. gustav@truffles.com
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
-          managers: Managers
-          managers_tip: The other users with permission to manage this enterprise.
           invite_manager: "Invite Manager"
-          invite_manager_tip: "Invite an unregistered user to sign up and become a manager of this enterprise."
-          add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+          set_as_contact: "Set %{email} as contact"
+          set_as_owner: "Set %{email} as owner"
         vouchers:
           legend: Vouchers
           voucher_code: Voucher Code
@@ -1621,9 +1625,6 @@ en:
         choose_starting_point: 'Choose your package:'
         profile: 'Profile'
         producer_profile: 'Producer Profile'
-      invite_manager:
-        user_already_exists: "User already exists"
-        error: "Something went wrong"
     tag_rules:
       not_supported_type: Tag rule type not supported
       confirm_delete: Are you sure you want to delete this rule ?
@@ -2072,6 +2073,14 @@ en:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    user_invitations:
+      new:
+        back: Back
+        description: "Invite a user to sign up and become a manager of this enterprise."
+        eg_email_address: e.g. email address of a new or existing user
+        email: Email
+        invite_new_user: Invite a new user
+        invite: Invite
     vouchers:
       new:
         legend: New Voucher

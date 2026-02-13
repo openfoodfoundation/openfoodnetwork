@@ -4,8 +4,17 @@ form[name="enterprise_form"] {
   }
 
   table.managers {
+    th {
+      div[data-controller="tooltip"] {
+        display: inline-block;
+      }
+    }
+
+    .center {
+      text-align: center;
+    }
+
     i.role {
-      float: right;
       margin-left: 0.5em;
       font-size: 1.5em;
       cursor: pointer;
