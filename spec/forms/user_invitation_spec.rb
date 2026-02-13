@@ -42,7 +42,7 @@ RSpec.describe UserInvitation do
       user_invitation = UserInvitation.new(defaults.merge(email: "new_user@example.com"))
 
       expect do
-        user_invitation.save
+        user_invitation.save!
       end.to have_enqueued_mail(EnterpriseMailer, :manager_invitation)
 
       new_user = Spree::User.find_by(email: "new_user@example.com")
@@ -58,7 +58,7 @@ RSpec.describe UserInvitation do
       user_invitation = UserInvitation.new(defaults.merge(email: existing_user.email))
 
       expect do
-        user_invitation.save
+        user_invitation.save!
       end.to have_enqueued_mail(EnterpriseMailer, :manager_invitation)
 
       expect(enterprise.users).to include(existing_user)
