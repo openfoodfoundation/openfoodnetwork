@@ -113,11 +113,6 @@ module Spree
       distributors.include?(distributor)
     end
 
-    def self.clean_name
-      scope = "spree.admin.payment_methods.providers"
-      I18n.t(name.demodulize.downcase, scope:)
-    end
-
     private
 
     def distributor_validation

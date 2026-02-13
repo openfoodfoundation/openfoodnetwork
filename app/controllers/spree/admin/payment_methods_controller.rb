@@ -138,7 +138,7 @@ module Spree
 
         providers.delete("Spree::Gateway::StripeSCA") unless show_stripe?
 
-        providers.map(&:constantize)
+        providers
       end
 
       # Show Stripe as an option if enabled, or if the
