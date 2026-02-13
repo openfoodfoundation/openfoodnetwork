@@ -12,10 +12,10 @@
         %th= t('.manager')
         %th.center
           = t('.owner')
-          = render partial: 'admin/shared/question_circle_tooltip', locals: { tooltip_text: t('.owner_tip') }
+          = render AdminTooltipComponent.new(text: t('.owner_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
         %th.center
           = t('.contact')
-          = render partial: 'admin/shared/question_circle_tooltip', locals: { tooltip_text: t('.contact_tip') }
+          = render AdminTooltipComponent.new(text: t('.contact_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
     %tbody
       - @enterprise.users.each do |user|
         - contact = user.id == @enterprise.contact&.id
