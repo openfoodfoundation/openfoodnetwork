@@ -52,6 +52,10 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
+    def self.customer_credit
+      find_by(name: Rails.application.config.credit_payment_method[:name])
+    end
+
     def configured?
       !stripe? || stripe_configured?
     end

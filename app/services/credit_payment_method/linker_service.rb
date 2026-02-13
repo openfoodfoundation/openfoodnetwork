@@ -44,7 +44,7 @@ module CreditPaymentMethod
     end
 
     def credit_payment_method
-      Spree::PaymentMethod.find_by(name: Rails.application.config.credit_payment_method[:name])
+      Spree::PaymentMethod.customer_credit
     end
 
     def create_credit_payment_method
