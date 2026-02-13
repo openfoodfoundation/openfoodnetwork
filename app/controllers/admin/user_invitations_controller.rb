@@ -8,7 +8,7 @@ module Admin
 
     def create
       @user_invitation.attributes = permitted_resource_params
-      if @user_invitation.save
+      if @user_invitation.save!
         flash[:success] = I18n.t(:user_invited, email: @user_invitation.email)
       else
         render :new

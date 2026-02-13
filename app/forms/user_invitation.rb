@@ -14,17 +14,17 @@ class UserInvitation
   validates :enterprise, presence: true
   validate :not_existing_enterprise_user
 
-  def save
+  def save!
     return unless valid?
 
-    user = find_or_create_user
+    user = find_or_create_user!
     enterprise.users << user
     EnterpriseMailer.manager_invitation(enterprise, user).deliver_later
   end
 
   private
 
-  def find_or_create_user
+  def find_or_create_user!
     Spree::User.find_or_create_by!(email: email) do |user|
       user.email = email
       user.password = SecureRandom.base58(64)
