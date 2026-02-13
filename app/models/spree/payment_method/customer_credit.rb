@@ -54,9 +54,7 @@ module Spree
       private
 
       def payment_method
-        Spree::PaymentMethod.find_by(
-          name: Rails.application.config.credit_payment_method[:name]
-        )
+        Spree::PaymentMethod.customer_credit
       end
 
       def error_response(translation_key)
