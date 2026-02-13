@@ -6,6 +6,11 @@ module Spree
   class Ability
     include CanCan::Ability
 
+    REPORTS_SEARCH_ACTIONS = [
+      :search_enterprise_fees, :search_enterprise_fee_owners, :search_distributors,
+      :search_suppliers, :search_order_cycles, :search_order_customers
+    ].freeze
+
     def initialize(user)
       clear_aliased_actions
 
@@ -260,7 +265,8 @@ module Spree
       can [:admin, :index, :import], ::Admin::DfcProductImportsController
 
       # Reports page
-      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS],
+          ::Admin::ReportsController
       can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
            :packing, :enterprise_fee_summary, :bulk_coop, :suppliers], :report
@@ -392,7 +398,7 @@ module Spree
       end
 
       # Reports page
-      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS], ::Admin::ReportsController
       can [:admin, :customers, :group_buys, :sales_tax, :payments,
            :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
            :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report
