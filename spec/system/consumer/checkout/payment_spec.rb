@@ -49,7 +49,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
     before do
       login_as(user)
-      visit checkout_path
     end
 
     context "payment step" do
@@ -67,6 +66,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
       context "with a transaction fee" do
         before do
+          visit checkout_path
           click_button "Next - Order summary"
         end
 
@@ -84,6 +84,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
         context "after completing the order" do
           before do
+            visit checkout_path
             click_on "Complete order"
           end
           it_behaves_like "displays the transaction fee", "order confirmation"
