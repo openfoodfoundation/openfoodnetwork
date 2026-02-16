@@ -24,10 +24,9 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                                 coordinator: create(:distributor_enterprise), variants: [variant])
   }
   let(:order) {
-    create(:order, order_cycle:, distributor:, bill_address_id: nil,
-                   ship_address_id: nil, state: "cart",
-                   line_items: [create(:line_item, variant:)])
+    create(:order_ready_for_confirmation, distributor:)
   }
+
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
@@ -52,10 +51,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
     end
 
     context "summary step" do
-      let(:order) {
-        create(:order_ready_for_confirmation, distributor:)
-      }
-
       describe "display the delivery address and not the ship address" do
         let(:ship_address) { create(:address, :randomized) }
         let(:bill_address) { create(:address, :randomized) }
@@ -383,6 +378,100 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               expect(page).to have_content "$-0.01"
             end
             expect(order.reload.state).to eq "complete"
+          end
+        end
+      end
+
+      context "with customer credit" do
+        let(:credit_payment_method) { Spree::PaymentMethod.customer_credit }
+        let(:order) { create(:order_ready_for_payment, distributor:) }
+        let(:payment_amount) { 10.00 }
+
+        before do
+          create(
+            :customer_account_transaction,
+            amount: 100,
+            customer: order.customer,
+            payment_method: credit_payment_method
+          )
+          # Add credit payment
+          payment = order.payments.create!(payment_method: credit_payment_method,
+                                           amount: payment_amount)
+          payment.internal_purchase!
+        end
+
+        it "displays the customer credit used" do
+          # Move to ready for confirmation
+          order.next!
+
+          visit checkout_step_path(:summary)
+
+          expect(page).to have_content "Customer credit"
+
+          within ".summary-right" do
+            expect(page).to have_content "Credit"
+            expect(page).to have_selector("#customer-credit", text: with_currency(-10.00))
+            expect(page).to have_selector("#order_total", text: with_currency(0.00))
+          end
+        end
+
+        context "when completing order" do
+          it "displays the order as paid" do
+            # Move to ready for confirmation
+            order.next!
+
+            visit checkout_step_path(:summary)
+            place_order
+
+            # TODO it should be displaying some kind indication it was paid with credit
+            expect(page).to have_content "PAID"
+            expect(page).to have_content "Paying via: Customer credit"
+            expect(page).to have_selector("#amount-paid", text: with_currency(10.00))
+          end
+        end
+
+        context "when credit doesn't cover the whole order" do
+          let(:payment_amount) { 2.00 }
+          let(:payment_method) { create(:payment_method, distributors: [distributor]) }
+
+          before do
+            # Add another payment to cover the rest of the order
+            order.payments.create!(payment_method:, amount: 8.00)
+          end
+
+          it "displays the customer credit used" do
+            # Move to ready for confirmation
+            order.next!
+
+            visit checkout_step_path(:summary)
+
+            expect(page).to have_content payment_method.display_name
+
+            within ".summary-right" do
+              expect(page).to have_content "Credit"
+              expect(page).to have_selector("#customer-credit", text: with_currency(-2.00))
+              # actual order total is 10.00
+              expect(page).to have_selector("#order_total", text: with_currency(8.00))
+            end
+          end
+
+          context "when completing order" do
+            it "displays part of the order whas paid with credit" do
+              # Move to ready for confirmation
+              order.next!
+
+              visit checkout_step_path(:summary)
+              place_order
+
+              expect(page).to have_content "NOT PAID"
+              expect(page).to have_content "Paying via: #{payment_method.display_name}"
+              within "#line-items" do
+                expect(page).to have_selector("#amount-paid", text: with_currency(2.00))
+                # actual order total is 10.00
+                expect(page).to have_content("Balance Due")
+                expect(page).to have_selector("#balance-due", text: with_currency(8.00))
+              end
+            end
           end
         end
       end

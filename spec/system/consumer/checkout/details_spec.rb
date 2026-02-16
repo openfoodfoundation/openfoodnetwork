@@ -350,6 +350,45 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
           end
         end
+
+        context "wiht customer credit" do
+          let(:credit_payment_method) { Spree::PaymentMethod.customer_credit }
+          let(:credit_amount) { 100.00 }
+          let(:customer) { create(:customer, user:, enterprise: distributor) }
+
+          before do
+            order.update(customer_id: customer.id)
+            order.update_totals_and_states
+
+            create(
+              :customer_account_transaction,
+              amount: credit_amount,
+              customer: order.customer,
+              payment_method: credit_payment_method
+            )
+            visit checkout_step_path(:details)
+            fill_out_details
+            fill_out_billing_address
+            choose free_shipping.name
+            proceed_to_payment
+          end
+
+          it "adds a customer credit payment" do
+            credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+            expect(credit_payment).not_to be_nil
+            expect(credit_payment.amount).to eq(10.00) # order.total is 10.00
+          end
+
+          context "when credit doesn't cover the whole order" do
+            let(:credit_amount) { 5.00 }
+
+            it "adds a customer credit payment using the remaining credit" do
+              credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+              expect(credit_payment).not_to be_nil
+              expect(credit_payment.amount).to eq(5.00) # order.total is 10.00
+            end
+          end
+        end
       end
 
       describe "not filling out delivery details" do
