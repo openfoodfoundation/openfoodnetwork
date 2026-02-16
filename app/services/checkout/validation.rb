@@ -28,6 +28,8 @@ module Checkout
     def validate_payment
       return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
       return true if order.zero_priced_order?
+      # No payment required, it's usually due to the order being paid by customer credit
+      return true if order.outstanding_balance.zero?
 
       order.errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
     end

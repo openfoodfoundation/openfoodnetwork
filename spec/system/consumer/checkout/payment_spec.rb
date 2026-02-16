@@ -22,12 +22,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                 coordinator: create(:distributor_enterprise), variants: [variant])
   }
-  let(:order) {
-    create(:order, order_cycle:, distributor:, bill_address_id: nil,
-                   ship_address_id: nil, state: "cart",
-                   line_items: [create(:line_item, variant:)])
-  }
-
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
@@ -111,6 +105,40 @@ RSpec.describe "As a consumer, I want to checkout my order" do
         it "requires choosing a payment method" do
           click_on "Next - Order summary"
           expect(page).to have_content "Select a payment method"
+        end
+      end
+
+      context "with credit available" do
+        let(:credit_payment_method) { Spree::PaymentMethod.customer_credit }
+        let(:payment_amount) { 10.00 }
+
+        before do
+          create(
+            :customer_account_transaction,
+            amount: 100, customer: order.customer,
+            payment_method: credit_payment_method
+          )
+          # Add credit payment
+          payment = order.payments.create!(payment_method: credit_payment_method,
+                                           amount: payment_amount)
+          payment.internal_purchase!
+
+          visit checkout_step_path(:payment)
+        end
+
+        it "displays no payment required" do
+          expect(page).to have_content "No payment required"
+          expect(page).to have_content "Credit used: $10.00"
+        end
+
+        context "when credit does not cover the whole order" do
+          let(:credit_amount) { 5.00 }
+          let(:payment_amount) { 5.00 }
+
+          it "shows credit used and available payment method" do
+            expect(page).to have_content "Credit used: $5.00"
+            expect(page).to have_content "Payment with Fee $1.23"
+          end
         end
       end
 

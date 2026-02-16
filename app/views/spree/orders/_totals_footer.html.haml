@@ -38,7 +38,7 @@
         %h5.not-paid
           = t :order_balance_due
       %td.text-right.total.not-paid
-        %h5.not-paid
+        %h5.not-paid#balance-due
           = order.display_outstanding_balance.to_html
   - if order.outstanding_balance.negative?
     %tr.total

@@ -31,6 +31,11 @@ class CheckoutController < BaseController
       check_step
     end
 
+    if payment_step? || summary_step?
+      credit_payment_method = @order.distributor.payment_methods.customer_credit
+      @paid_with_credit = @order.payments.find_by(payment_method: credit_payment_method)&.amount
+    end
+
     return if available_shipping_methods.any?
 
     flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')
@@ -113,7 +118,7 @@ class CheckoutController < BaseController
     @selected_payment_method ||= Checkout::PaymentMethodFetcher.new(@order).call
   end
 
-  def update_order
+  def update_order # rubocop:disable Metrics/CyclomaticComplexity
     return if params[:confirm_order] || @order.errors.any?
 
     # Checking if shipping method updated before @order get updated. We can't use this guard
@@ -121,6 +126,9 @@ class CheckoutController < BaseController
     shipping_method_updated = @order.shipping_method&.id != params[:shipping_method_id].to_i
 
     @order.select_shipping_method(params[:shipping_method_id])
+
+    add_payment_with_credit if credit_available? && details_step?
+
     @order.update(order_params)
     # We need to update voucher to take into account:
     #  * when moving away from "details" step : potential change in shipping method fees
@@ -137,6 +145,29 @@ class CheckoutController < BaseController
     return unless shipping_method_updated
 
     VoucherAdjustmentsService.new(@order).update
+  end
+
+  def credit_available?
+    return false if @order.customer.nil?
+
+    available_credit > 0
+  end
+
+  def add_payment_with_credit
+    credit_payment_method = @order.distributor.payment_methods.customer_credit
+
+    return if @order.payments.where(payment_method: credit_payment_method).exists?
+
+    amount = [available_credit, @order.total].min
+
+    ActiveRecord::Base.transaction do
+      payment = @order.payments.create!(payment_method: credit_payment_method, amount:)
+      payment.internal_purchase!
+    end
+  end
+
+  def available_credit
+    @available_credit ||= @order.customer.customer_account_transactions.last&.balance || 0.00
   end
 
   def validate_current_step

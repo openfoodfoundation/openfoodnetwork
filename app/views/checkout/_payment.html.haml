@@ -8,10 +8,17 @@
       .checkout-title
         = t("checkout.step2.payment_method.title")
 
-      - if @order.zero_priced_order?
+      - if @order.zero_priced_order? || @order.outstanding_balance.zero? 
         %h3= t(:no_payment_required)
-        = hidden_field_tag "order[payments_attributes][][amount]", 0
+        - if @order.zero_priced_order?
+          = hidden_field_tag "order[payments_attributes][][amount]", 0
+        - if @paid_with_credit
+          = t(:credit_used, amount: Spree::Money.new(@paid_with_credit))
+
       - else
+        - if @paid_with_credit
+          = t(:credit_used, amount: Spree::Money.new(@paid_with_credit))
+
         - selected_payment_method = @order.payments&.with_state(:checkout)&.first&.payment_method_id
         - selected_payment_method ||= available_payment_methods[0].id if available_payment_methods.length == 1
         - available_payment_methods.each do |payment_method|
