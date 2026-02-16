@@ -307,6 +307,91 @@ RSpec.describe CheckoutController do
             end
           end
         end
+
+        context "with credit availablle" do
+          let(:checkout_params) do
+            {
+              order: {
+                email: user.email,
+                bill_address_attributes: address.to_param,
+                ship_address_attributes: address.to_param
+              },
+              shipping_method_id: order.shipment.shipping_method.id.to_s
+            }
+          end
+
+          let(:credit_payment_method) {
+            order.distributor.payment_methods.customer_credit
+          }
+
+          before do
+            order.customer = create(:customer, enterprise: distributor)
+            order.save!
+          end
+
+          it "adds credit payment" do
+            # Add credit
+            create(
+              :customer_account_transaction,
+              amount: 100.00,
+              customer: order.customer,
+              payment_method: credit_payment_method
+            )
+            put(:update, params:)
+
+            credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+            expect(credit_payment).to be_present
+            expect(credit_payment.amount).to eq(10.00) # order.total is 10.00
+          end
+
+          context "when credit payment already added" do
+            it "doesn't had more credit payment" do
+              create(
+                :customer_account_transaction,
+                amount: 100.00,
+                customer: order.customer,
+                payment_method: credit_payment_method
+              )
+              put(:update, params:)
+
+              credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+              expect(credit_payment).to be_present
+
+              put(:update, params:)
+
+              credit_payments = order.payments.where(payment_method: credit_payment_method)
+              p credit_payments
+              expect(order.payments.where(payment_method: credit_payment_method).count).to eq(1)
+            end
+          end
+
+          context "when no credit available" do
+            it "doesn't add credit payment" do
+              put(:update, params:)
+
+              credit_payment = order.payments.where(payment_method: credit_payment_method)
+              expect(order.payments.where(payment_method: credit_payment_method)).to be_empty
+            end
+          end
+
+          context "when no enough credit available" do
+            it "adds credit payment using all credit" do
+              # Add credit
+              create(
+                :customer_account_transaction,
+                amount: 5.00,
+                customer: order.customer,
+                payment_method: credit_payment_method
+              )
+              put(:update, params:)
+
+              credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+              expect(credit_payment.amount).to eq(5.00)
+            end
+          end
+
+          # TODO cover error scenarios here
+        end
       end
     end
 
@@ -523,6 +608,31 @@ RSpec.describe CheckoutController do
           expect(order.reload.state).to eq "confirmation"
           expect(order.payments.count).to eq 1
           expect(order.payments.first.amount).to eq 0
+        end
+      end
+
+      context "with an order paid with customer credit" do
+        let(:params) do
+          { step: "payment" }
+        end
+        let(:credit_payment_method) {
+          order.distributor.payment_methods.customer_credit
+        }
+
+        before do
+          # Add payment with credit
+          payment = order.payments.create!(
+            amount: order.total, payment_method: credit_payment_method
+          )
+          payment.complete!
+          order.update_totals_and_states
+        end
+
+        it "allows proceeding to confirmation" do
+          put(:update, params:)
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+          expect(order.reload.state).to eq "confirmation"
         end
       end
 
