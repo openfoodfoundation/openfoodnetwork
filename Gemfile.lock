@@ -396,7 +396,8 @@ GEM
       sysexits (~> 1.1)
     hashdiff (1.2.1)
     hashery (2.1.2)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     highline (3.1.2)
       reline
     htmlentities (4.4.2)
@@ -542,7 +543,7 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-rails_csrf_protection (1.0.2)
+    omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     omniauth_openid_connect (0.8.0)
