@@ -127,9 +127,10 @@ class CheckoutController < BaseController
 
     @order.select_shipping_method(params[:shipping_method_id])
 
+    @order.update(order_params)
+
     add_payment_with_credit if credit_available? && details_step?
 
-    @order.update(order_params)
     # We need to update voucher to take into account:
     #  * when moving away from "details" step : potential change in shipping method fees
     #  * when moving away from "payment" step : payment fees
@@ -156,14 +157,27 @@ class CheckoutController < BaseController
   def add_payment_with_credit
     credit_payment_method = @order.distributor.payment_methods.customer_credit
 
+    if credit_payment_method.nil?
+      error_message = "Customer credit payment method is missing, please check configuration"
+      log_error(error_message)
+      return
+    end
+
     return if @order.payments.where(payment_method: credit_payment_method).exists?
 
-    amount = [available_credit, @order.total].min
-
-    ActiveRecord::Base.transaction do
+    # we are already in a transaction because the order is locked, so we force creating a new one
+    # to make sure the rollback works as expected :
+    # https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#module-ActiveRecord::Transactions::ClassMethods-label-Nested+transactions
+    ActiveRecord::Base.transaction(requires_new: true) do
+      amount = [available_credit, @order.total].min
       payment = @order.payments.create!(payment_method: credit_payment_method, amount:)
       payment.internal_purchase!
     end
+  rescue StandardError => e
+    # Even though the transaction rolled back, the order still have a payment in memory,
+    # so we reload the payments so the payment doesn't get saved later on
+    @order.payments.reload
+    log_error(e)
   end
 
   def available_credit
@@ -193,5 +207,10 @@ class CheckoutController < BaseController
     return unless @order.after_delivery_state? && details_step?
 
     @order.back_to_address
+  end
+
+  def log_error(error)
+    Rails.logger.error("CheckoutController: #{error}")
+    Alert.raise(error)
   end
 end

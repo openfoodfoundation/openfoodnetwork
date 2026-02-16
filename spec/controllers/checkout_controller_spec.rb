@@ -308,7 +308,7 @@ RSpec.describe CheckoutController do
           end
         end
 
-        context "with credit availablle" do
+        context "with credit available" do
           let(:checkout_params) do
             {
               order: {
@@ -390,7 +390,57 @@ RSpec.describe CheckoutController do
             end
           end
 
-          # TODO cover error scenarios here
+          context "when payment creation fails" do
+            before do
+              # Add credit
+              create(
+                :customer_account_transaction,
+                amount: 5.00,
+                customer: order.customer,
+                payment_method: credit_payment_method
+              )
+              allow_any_instance_of(Spree::Payment).to receive(:internal_purchase!)
+                .and_raise(Spree::Core::GatewayError)
+            end
+
+            it "logs the error" do
+              expect(Alert).to receive(:raise).with(Spree::Core::GatewayError)
+              put(:update, params:)
+            end
+
+            it "doesn't create a credit payment" do
+              put(:update, params:)
+
+              credit_payment = order.payments.find_by(payment_method: credit_payment_method)
+              expect(credit_payment).to be_nil
+            end
+          end
+
+          context "when credit payment method is missing" do
+            before do
+              # Add credit
+              create(
+                :customer_account_transaction,
+                amount: 5.00,
+                customer: order.customer,
+                payment_method: credit_payment_method
+              )
+              credit_payment_method.destroy!
+            end
+
+            it "logs the error" do
+              expect(Alert).to receive(:raise).with(
+                "Customer credit payment method is missing, please check configuration"
+              )
+              put(:update, params:)
+            end
+
+            it "doesn't create a credit payment" do
+              put(:update, params:)
+
+              expect(order.payments).to be_empty
+            end
+          end
         end
       end
     end
