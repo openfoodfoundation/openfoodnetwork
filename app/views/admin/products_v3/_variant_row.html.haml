@@ -2,6 +2,8 @@
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
 %td.col-image
   -# empty
+  - variant.source_variants.each do |source_variant|
+    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.name, source_id: source_variant.id))
 %td.col-name.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
