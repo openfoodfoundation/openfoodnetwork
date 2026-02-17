@@ -66,10 +66,6 @@ module Spree
       "XXXX-XXXX-XXXX-#{last_digits}"
     end
 
-    def actions
-      %w{capture_and_complete_order void credit resend_authorization_email}
-    end
-
     def can_resend_authorization_email?(payment)
       payment.requires_authorization?
     end
