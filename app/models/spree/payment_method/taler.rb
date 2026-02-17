@@ -22,7 +22,7 @@ module Spree
       preference :api_key, :password
 
       def actions
-        %w{void}
+        %w[credit void]
       end
 
       # Name of the view to display during checkout
@@ -62,6 +62,21 @@ module Spree
         message = I18n.t(status, default: status, scope: "taler.order_status")
 
         ActiveMerchant::Billing::Response.new(success, message)
+      end
+
+      def credit(money, gateway_options)
+        payment = gateway_options[:payment]
+        taler_order = taler_order(id: payment.response_code)
+        status = taler_order.fetch("order_status")
+
+        raise "Unsupported action" if status != "paid"
+
+        amount = "KUDOS:#{money}"
+        taler_order.refund(refund: amount, reason: "credit")
+
+        PaymentMailer.refund_available(payment, taler_order.status_url).deliver_later
+
+        ActiveMerchant::Billing::Response.new(true, "Refund initiated")
       end
 
       def void(response_code, gateway_options)
