@@ -50,6 +50,46 @@ RSpec.describe Spree::PaymentMethod::Taler do
     end
   end
 
+  describe "#credit" do
+    let(:order_endpoint) { "#{backend_url}/private/orders/taler-order-8" }
+    let(:refund_endpoint) { "#{order_endpoint}/refund" }
+    let(:taler_refund_uri) {
+      "taler://refund/backend.demo.taler.net/instances/sandbox/taler-order-8/"
+    }
+
+    it "starts the refund process" do
+      order_status = { order_status: "paid" }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+      stub_request(:post, refund_endpoint).to_return(body: { taler_refund_uri: }.to_json)
+
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        response = taler.credit(100, { payment: order.payments[0] })
+        expect(response.success?).to eq true
+      }.to enqueue_mail(PaymentMailer, :refund_available)
+    end
+
+    it "raises an error if payment hasn't been taken yet" do
+      order_status = { order_status: "claimed" }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        taler.credit(100, { payment: order.payments[0] })
+      }.to raise_error StandardError, "Unsupported action"
+    end
+  end
+
   describe "#void" do
     let(:order_endpoint) { "#{backend_url}/private/orders/taler-order-8" }
     let(:refund_endpoint) { "#{order_endpoint}/refund" }
