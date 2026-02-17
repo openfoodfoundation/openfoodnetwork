@@ -11,6 +11,13 @@ module Spree
 
     localize_number :amount
 
+    # All possible actions offered to shop owners.
+    ACTIONS = %w[
+      capture_and_complete_order
+      void
+      credit
+      resend_authorization_email
+    ].freeze
     IDENTIFIER_CHARS = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
 
     delegate :line_items, to: :order
@@ -144,11 +151,33 @@ module Spree
     end
 
     def actions
-      return [] unless payment_method.respond_to?(:actions)
+      supported = ACTIONS & payment_method.actions.to_a
+      supported.select { public_send("can_#{it}?") }
+    end
 
-      payment_method.actions.select do |action|
-        payment_method.__send__("can_#{action}?", self)
-      end
+    # Indicates whether its possible to capture the payment
+    def can_capture_and_complete_order?
+      return false if requires_authorization?
+
+      pending? || checkout?
+    end
+
+    # Indicates whether its possible to void the payment.
+    def can_void?
+      !void?
+    end
+
+    # Indicates whether its possible to credit the payment. Note that most gateways require that the
+    #   payment be settled first which generally happens within 12-24 hours of the transaction.
+    def can_credit?
+      return false unless completed?
+      return false unless order.payment_state == "credit_owed"
+
+      credit_allowed.positive?
+    end
+
+    def can_resend_authorization_email?
+      requires_authorization?
     end
 
     def resend_authorization_email!
