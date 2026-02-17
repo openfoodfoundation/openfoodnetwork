@@ -7,16 +7,6 @@ module Spree
         %w{capture_and_complete_order void}
       end
 
-      # Indicates whether its possible to capture the payment
-      def can_capture_and_complete_order?(payment)
-        ['checkout', 'pending'].include?(payment.state)
-      end
-
-      # Indicates whether its possible to void the payment.
-      def can_void?(payment)
-        payment.state != 'void'
-      end
-
       def capture(*_args)
         ActiveMerchant::Billing::Response.new(true, "", {}, {})
       end

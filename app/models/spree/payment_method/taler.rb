@@ -25,10 +25,6 @@ module Spree
         %w{void}
       end
 
-      def can_void?(payment)
-        payment.state == "completed"
-      end
-
       # Name of the view to display during checkout
       def method_type
         "check" # empty view
