@@ -147,8 +147,7 @@ module Spree
       return [] unless payment_method.respond_to?(:actions)
 
       payment_method.actions.select do |action|
-        !payment_method.respond_to?("can_#{action}?") ||
-          payment_method.__send__("can_#{action}?", self)
+        payment_method.__send__("can_#{action}?", self)
       end
     end
 
