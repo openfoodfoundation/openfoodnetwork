@@ -13,6 +13,10 @@ module Spree
     preference :server, :string, default: 'live'
     preference :test_mode, :boolean, default: false
 
+    def actions
+      %w{capture_and_complete_order void credit resend_authorization_email}
+    end
+
     def payment_source_class
       CreditCard
     end
