@@ -259,7 +259,7 @@ module OrderManagement
 
       def update_payment
         # Update payment with correct amount
-        @payment.update_attribute :amount, order.total
+        @payment.update_attribute :amount, order.outstanding_balance.amount
       end
 
       def update_payment_adjustment(amount)
