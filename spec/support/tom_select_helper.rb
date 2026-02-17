@@ -36,4 +36,21 @@ module TomSelectHelper
 
     find('.ts-dropdown .ts-dropdown-content .option', text: /#{Regexp.quote(value)}/i).click
   end
+
+  def expect_tomselect_selected_options(from, *options)
+    tomselect_control = page
+      .find("[name='#{from}']")
+      .sibling(".ts-wrapper")
+      .find('.ts-control')
+
+    within(tomselect_control) do
+      # options in case of we want to expect multiselect options
+      options.each do |option|
+        expect(page).to have_css(
+          "div[data-ts-item]",
+          text: option
+        )
+      end
+    end
+  end
 end
