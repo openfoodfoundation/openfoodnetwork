@@ -1098,9 +1098,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_11_055758) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "variant_links", primary_key: ["linked_variant_id", "source_variant_id"], force: :cascade do |t|
+  create_table "variant_links", primary_key: ["target_variant_id", "source_variant_id"], force: :cascade do |t|
     t.integer "source_variant_id", null: false
-    t.integer "linked_variant_id", null: false
+    t.integer "target_variant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["source_variant_id"], name: "index_variant_links_on_source_variant_id"
@@ -1268,8 +1268,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_11_055758) do
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
   add_foreign_key "tag_rules", "enterprises"
-  add_foreign_key "variant_links", "spree_variants", column: "linked_variant_id"
   add_foreign_key "variant_links", "spree_variants", column: "source_variant_id"
+  add_foreign_key "variant_links", "spree_variants", column: "target_variant_id"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
   add_foreign_key "vouchers", "enterprises"
