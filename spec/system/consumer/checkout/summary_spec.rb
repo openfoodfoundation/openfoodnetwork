@@ -453,10 +453,13 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               # actual order total is 10.00
               expect(page).to have_selector("#order_total", text: with_currency(8.00))
             end
+
+            last_payment = order.payments.last
+            expect(last_payment.amount).to eq(8.00) # it is the balance due
           end
 
           context "when completing order" do
-            it "displays part of the order whas paid with credit" do
+            it "displays part of the order that was paid with credit" do
               # Move to ready for confirmation
               order.next!
 
