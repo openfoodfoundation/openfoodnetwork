@@ -118,10 +118,10 @@ module Admin
         variant = source_variant.dup #may need a VariantDuplicator like producs?
         variant.price = source_variant.price
         variant.save!
+        variant.source_variants << source_variant
         variant.on_demand = source_variant.on_demand
         variant.on_hand = source_variant.on_hand
         variant.save!
-          #todo: create link to source
 
         flash.now[:success] = t('.success')
         variant_index = "-#{variant.id}"

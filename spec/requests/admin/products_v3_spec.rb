@@ -97,6 +97,12 @@ RSpec.describe "Admin::ProductsV3" do
           expect(response).to have_http_status(:ok)
           expect(response.body).to match "Original variant" # cloned variant name
         }.to change { variant.product.variants.count }.by(1)
+
+        new_variant = variant.product.variants.last
+        # The new variant is a target of the original. It is a "sourced" variant.
+        expect(variant.target_variants.first).to eq new_variant
+        # The new variant's source is the original
+        expect(new_variant.source_variants.first).to eq variant
       end
     end
   end
