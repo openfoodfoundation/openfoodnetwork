@@ -72,9 +72,14 @@ module Spree
     has_many :semantic_links, as: :subject, dependent: :delete_all
     has_many :supplier_properties, through: :supplier, source: :properties
 
-    has_many :variant_links, dependent: :delete_all
-    has_many :source_variants, through: :variant_links
-    has_many :target_variants, through: :variant_links
+    # Linked variants: I may have one or many sources.
+    has_many :variant_links_as_target, class_name: 'VariantLink', foreign_key: :target_variant_id,
+                                       dependent: :delete_all, inverse_of: :target_variant
+    has_many :source_variants, through: :variant_links_as_target, source: :source_variant
+    # I may also have one more many targets.
+    has_many :variant_links_as_source, class_name: 'VariantLink', foreign_key: :source_variant_id,
+                                       dependent: :delete_all, inverse_of: :source_variant
+    has_many :target_variants, through: :variant_links_as_source, source: :target_variant
 
     localize_number :price, :weight
 
@@ -197,6 +202,10 @@ module Spree
 
     def tax_category
       super || TaxCategory.find_by(is_default: true)
+    end
+
+    def sourced_variant
+      target_variants.first
     end
 
     def price_with_fees(distributor, order_cycle)

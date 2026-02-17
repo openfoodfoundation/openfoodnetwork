@@ -20,6 +20,9 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many(:inventory_items) }
   it { is_expected.to have_many(:supplier_properties).through(:supplier) }
 
+  it { is_expected.to have_many(:source_variants).through(:variant_links_as_target) }
+  it { is_expected.to have_many(:target_variants).through(:variant_links_as_source) }
+
   describe "shipping category" do
     it "sets a shipping category if none provided" do
       variant = build(:variant, shipping_category: nil)
