@@ -704,6 +704,8 @@ en:
         create_sourced_variant: Create sourced variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id})"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop

@@ -334,6 +334,8 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
           within "table.products" do
             # There are now two copies
             expect(all_input_values).to match /My friends box.*My friends box/
+            # One of them is designated as a source variant
+            expect(page).to have_content "🔗"
           end
         end
       end
