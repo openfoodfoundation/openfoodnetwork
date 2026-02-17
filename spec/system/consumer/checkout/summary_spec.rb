@@ -426,7 +426,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             # TODO it should be displaying some kind indication it was paid with credit
             expect(page).to have_content "PAID"
             expect(page).to have_content "Paying via: Customer credit"
-            expect(page).to have_selector("#amount-paid", text: with_currency(10.00))
+            expect(page).to have_selector("#customer-credit", text: with_currency(-10.00))
+            expect(page).to have_selector("#amount-paid", text: with_currency(0.00))
           end
         end
 
@@ -469,9 +470,10 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               expect(page).to have_content "NOT PAID"
               expect(page).to have_content "Paying via: #{payment_method.display_name}"
               within "#line-items" do
-                expect(page).to have_selector("#amount-paid", text: with_currency(2.00))
-                # actual order total is 10.00
+                expect(page).to have_selector("#customer-credit", text: with_currency(-2.00))
+                expect(page).to have_selector("#amount-paid", text: with_currency(0.00))
                 expect(page).to have_content("Balance Due")
+                # actual order total is 10.00
                 expect(page).to have_selector("#balance-due", text: with_currency(8.00))
               end
             end
