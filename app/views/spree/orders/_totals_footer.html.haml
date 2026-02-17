@@ -25,13 +25,21 @@
           = t :order_total_price
       %td.text-right.total
         %h5#order_total= order.display_total.to_html
+    - if @paid_with_credit.present?
+      %tr.total
+        %td.text-right{colspan: "3"}
+          %strong
+            = t :customer_credit
+        %td.text-right.total#customer-credit
+          %strong
+            = Spree::Money.new(-1 * @paid_with_credit).to_html
     %tr.total
       %td.text-right{colspan: "3"}
         %strong
           = t :order_amount_paid
-      %td.text-right.total{id: "amount-paid"}
+      %td.text-right.total#amount-paid
         %strong
-          = order.display_payment_total.to_html
+          = Spree::Money.new(@payment_total).to_html
   - if order.outstanding_balance.positive?
     %tr.total
       %td.text-right{colspan: "3"}
