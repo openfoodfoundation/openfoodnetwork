@@ -503,6 +503,37 @@ RSpec.describe CheckoutController do
           end
         end
 
+        describe "with customer credit" do
+          let(:credit_payment_method) {
+            order.distributor.payment_methods.customer_credit
+          }
+
+          before do
+            order.customer = create(:customer, enterprise: distributor)
+            order.save!
+          end
+
+          it "adds payment to cover the remaining balance" do
+            # Add credit
+            create(
+              :customer_account_transaction,
+              amount: 100.00,
+              customer: order.customer,
+              payment_method: credit_payment_method
+            )
+            # Create credit payment
+            payment = order.payments.create!(payment_method: credit_payment_method, amount: 3.00)
+            payment.internal_purchase!
+
+            put(:update, params:)
+
+            expect(response).to redirect_to checkout_step_path(:summary)
+            last_payment = order.payments.last
+            expect(last_payment.amount).to eq(7.00)
+            expect(last_payment.payment_method.id).to eq(payment_method.id)
+          end
+        end
+
         context "with insufficient stock" do
           it "redirects to details page" do
             allow(order).to receive_message_chain(:insufficient_stock_lines,
