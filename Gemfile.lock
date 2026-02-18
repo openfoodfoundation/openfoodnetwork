@@ -466,7 +466,7 @@ GEM
       activesupport (>= 4.2)
     jwt (2.10.2)
       base64
-    knapsack_pro (8.4.0)
+    knapsack_pro (9.2.2)
       rake
     language_server-protocol (3.17.0.5)
     launchy (3.0.0)
