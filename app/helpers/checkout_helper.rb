@@ -83,31 +83,6 @@ module CheckoutHelper
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end
 
-  def validated_input(name, path, args = {})
-    attributes = {
-      :required => true,
-      :type => :text,
-      :name => path,
-      :id => path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
-    }.merge args
-
-    render "shared/validated_input", name:, path:, attributes:
-  end
-
-  def validated_select(name, path, options, args = {})
-    attributes = {
-      :required => true,
-      :id => path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
-    }.merge args
-
-    render "shared/validated_select", name:, path:, options:,
-                                      attributes:
-  end
-
   def payment_method_price(method, order)
     price = method.compute_amount(order)
     if price == 0
