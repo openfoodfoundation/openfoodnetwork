@@ -850,7 +850,7 @@ GEM
       caxlsx (<= 4.0)
       csv
       rodf
-    spring (4.4.0)
+    spring (4.4.2)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     spring-commands-rubocop (0.4.0)
