@@ -118,7 +118,7 @@ class CheckoutController < BaseController
     @selected_payment_method ||= Checkout::PaymentMethodFetcher.new(@order).call
   end
 
-  def update_order # rubocop:disable Metrics/CyclomaticComplexity
+  def update_order
     return if params[:confirm_order] || @order.errors.any?
 
     # Checking if shipping method updated before @order get updated. We can't use this guard
@@ -128,8 +128,6 @@ class CheckoutController < BaseController
     @order.select_shipping_method(params[:shipping_method_id])
 
     @order.update(order_params)
-
-    add_payment_with_credit if credit_available? && details_step?
 
     # We need to update voucher to take into account:
     #  * when moving away from "details" step : potential change in shipping method fees
@@ -146,42 +144,6 @@ class CheckoutController < BaseController
     return unless shipping_method_updated
 
     VoucherAdjustmentsService.new(@order).update
-  end
-
-  def credit_available?
-    return false if @order.customer.nil?
-
-    available_credit > 0
-  end
-
-  def add_payment_with_credit
-    credit_payment_method = @order.distributor.payment_methods.customer_credit
-
-    if credit_payment_method.nil?
-      error_message = "Customer credit payment method is missing, please check configuration"
-      log_error(error_message)
-      return
-    end
-
-    return if @order.payments.where(payment_method: credit_payment_method).exists?
-
-    # we are already in a transaction because the order is locked, so we force creating a new one
-    # to make sure the rollback works as expected :
-    # https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#module-ActiveRecord::Transactions::ClassMethods-label-Nested+transactions
-    ActiveRecord::Base.transaction(requires_new: true) do
-      amount = [available_credit, @order.total].min
-      payment = @order.payments.create!(payment_method: credit_payment_method, amount:)
-      payment.internal_purchase!
-    end
-  rescue StandardError => e
-    # Even though the transaction rolled back, the order still have a payment in memory,
-    # so we reload the payments so the payment doesn't get saved later on
-    @order.payments.reload
-    log_error(e)
-  end
-
-  def available_credit
-    @available_credit ||= @order.customer.customer_account_transactions.last&.balance || 0.00
   end
 
   def validate_current_step
@@ -207,10 +169,5 @@ class CheckoutController < BaseController
     return unless @order.after_delivery_state? && details_step?
 
     @order.back_to_address
-  end
-
-  def log_error(error)
-    Rails.logger.error("CheckoutController: #{error}")
-    Alert.raise(error)
   end
 end
