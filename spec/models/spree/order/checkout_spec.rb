@@ -53,6 +53,14 @@ RSpec.describe Spree::Order::Checkout do
         order.state = 'delivery'
       end
 
+      it "transitions to payment" do
+        allow(order).to receive(:payment_required?).and_return(true)
+        expect(order).to receive(:apply_customer_credit)
+        order.next!
+
+        expect(order.state).to eq "payment"
+      end
+
       context "with payment required" do
         before do
           allow(order).to receive_messages payment_required?: true

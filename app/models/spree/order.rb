@@ -730,5 +730,9 @@ module Spree
       adjustment.update_adjustment!(force: true)
       update_totals_and_states
     end
+
+    def apply_customer_credit
+      Orders::CustomerCreditService.new(self).apply
+    end
   end
 end
