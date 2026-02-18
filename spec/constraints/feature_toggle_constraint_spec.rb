@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe FeatureToggleConstraint do
   subject { described_class.new("baking") }
   let(:request) { double(env:) }

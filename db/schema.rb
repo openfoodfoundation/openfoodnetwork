@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_27_205335) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -579,6 +579,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_27_205335) do
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
     t.string "unit_presentation"
+    t.string "product_name"
+    t.string "variant_name"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
@@ -1143,6 +1145,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_27_205335) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", default: 0, null: false
+    t.string "webhook_type", limit: 255, null: false
     t.index ["user_id"], name: "index_webhook_endpoints_on_user_id"
   end
 

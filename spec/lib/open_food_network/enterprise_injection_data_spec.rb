@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'open_food_network/enterprise_injection_data'
 
 RSpec.describe OpenFoodNetwork::EnterpriseInjectionData do

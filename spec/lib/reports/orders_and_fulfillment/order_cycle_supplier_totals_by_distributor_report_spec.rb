@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Reporting
   module Reports
     module OrdersAndFulfillment
@@ -34,9 +32,10 @@ module Reporting
           end
 
           it "lists products sorted by name" do
-            order.line_items[0].variant.product.update(name: "Cucumber")
-            order.line_items[1].variant.product.update(name: "Apple")
-            order.line_items[2].variant.product.update(name: "Banane")
+            order.line_items[0].update(product_name: "Cucumber")
+            order.line_items[1].update(product_name: "Apple")
+            order.line_items[2].update(product_name: "Banane")
+
             product_names = report.rows.map(&:product).compact_blank
             expect(product_names).to eq(["Apple", "Banane", "Cucumber"])
           end
@@ -81,9 +80,9 @@ module Reporting
           end
 
           it "lists products sorted by name" do
-            order.line_items[0].variant.product.update(name: "Cucumber")
-            order.line_items[1].variant.product.update(name: "Apple")
-            order.line_items[2].variant.product.update(name: "Banane")
+            order.line_items[0].update(product_name: "Cucumber")
+            order.line_items[1].update(product_name: "Apple")
+            order.line_items[2].update(product_name: "Banane")
             product_names = report.rows.map(&:product).compact_blank
             # only the supplier's variant is displayed
             expect(product_names).to include("Cucumber")

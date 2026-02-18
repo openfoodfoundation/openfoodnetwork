@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::CustomerCancellationService do
   let(:mail_mock) { double(:mailer_mock, deliver_later: true) }
   before do

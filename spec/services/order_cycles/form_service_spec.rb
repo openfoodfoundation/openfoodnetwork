@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::FormService do
   describe "save" do
     describe "creating a new order cycle from params" do

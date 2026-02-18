@@ -25,7 +25,7 @@ module Reporting
             },
             {
               group_by: proc { |line_items, _row| line_items.first.variant },
-              sort_by: proc { |variant| variant.product.name }
+              sort_by: proc { |variant| variant.line_items.first.full_product_name }
             },
             {
               group_by: :hub,

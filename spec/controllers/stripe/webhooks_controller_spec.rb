@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Stripe::WebhooksController do
   describe "#create" do
     let(:params) do

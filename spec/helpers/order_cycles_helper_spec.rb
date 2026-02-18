@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCyclesHelper do
   let(:oc) { double(:order_cycle) }
 

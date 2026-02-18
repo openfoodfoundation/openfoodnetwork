@@ -165,11 +165,7 @@ RSpec.describe "Registration" do
       end
 
       before do
-        address = Spree::Address.create!(firstname: 'John', lastname: 'Doe',
-                                         address1: '1400 Sesame street', zipcode: '3070',
-                                         city: 'Southcote', phone: '12 3456 7890',
-                                         country_id: 1, state_id: 1, company: 'unused')
-        Enterprise.create(name: 'My Awesome Enterprise', address:, owner:)
+        Enterprise.create(name: 'My Awesome Enterprise', address: create(:address), owner:)
       end
 
       it "checks that button after failure is still enabled" do

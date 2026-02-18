@@ -115,27 +115,6 @@ fi:
         blank: "ei voi olla tyhjä"
         too_short: "on liian lyhyt (vähintään %{count} merkkiä)"
   errors:
-    messages:
-      content_type_invalid: "sisältötyyppi on virheellinen"
-      file_size_out_of_range: "koko %{file_size} ei ole vaaditulla välillä"
-      limit_out_of_range: "kokonaismäärä on sallitun alueen ulkopuolella"
-      image_metadata_missing: "ei ole kelvollinen kuva"
-      dimension_min_inclusion: "täytyy olla vähintään %{width} x %{height} pikseliä."
-      dimension_max_inclusion: "täytyy olla enintään %{width} x %{height} pikseliä."
-      dimension_width_inclusion: "leveys ei ole välillä %{min} ja %{max} pikseliä."
-      dimension_height_inclusion: "korkeus ei ole välillä %{min} ja %{max} pikseliä."
-      dimension_width_greater_than_or_equal_to: "leveyden täytyy olla vähintään %{length} pikseliä."
-      dimension_height_greater_than_or_equal_to: "korkeuden täytyy olla vähintään %{length} pikseliä."
-      dimension_width_less_than_or_equal_to: "leveyden täytyy olla enintään %{length} pikseliä."
-      dimension_height_less_than_or_equal_to: "korkeuden täytyy olla enintään %{length} pikseliä."
-      dimension_width_equal_to: "leveyden täytyy olla %{length} pikseliä."
-      dimension_height_equal_to: "korkeuden täytyy olla %{length} pikseliä."
-      aspect_ratio_not_square: "täytyy olla neliömäinen kuva"
-      aspect_ratio_not_portrait: "täytyy olla pystysuuntainen kuva"
-      aspect_ratio_not_landscape: "täytyy olla vaakasuuntainen kuva"
-      aspect_ratio_is_not: "täytyy olla kuvasuhde %{aspect_ratio}"
-      aspect_ratio_unknown: "on tuntematon kuvasuhde"
-      image_not_processable: "ei ole kelvollinen kuva"
     not_found:
       title: "Etsimääsi sivua ei löytynyt (404)"
       message_html: "<b>Yritä uudelleen</b> <p>Tämä voi olla tilapäinen ongelma. Palaa edelliselle sivulle tai <a href='/'>etusivulle</a> ja yritä uudelleen.</p> <b>Ota yhteyttä tukeen</b> <p>Jos ongelma jatkuu tai on kiireellinen, kerro siitä meille. Löydä yhteystiedot globaalilta <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local -sivulta</a>.</p> <p>Autat meitä paljon, jos annat mahdollisimman paljon yksityiskohtia puuttuvasta sivusta.</p>"
@@ -904,6 +883,7 @@ fi:
           label: Kategoriat
         tags:
           label: Tägit
+          none: Ei mitään
         search: Haku
       sort:
         pagination:
@@ -4014,6 +3994,7 @@ fi:
     logourl: "Logourl"
     are_you_sure_delete: "Haluatko varmasti poistaa tämän tietueen?"
     confirm_delete: "Vahvista poisto"
+    voucher: "Alennuskuponki"
     configurations: "Asetukset"
     general_settings: "Yleiset asetukset"
     site_name: "Sivuston nimi"
@@ -4420,9 +4401,7 @@ fi:
         providers:
           provider: "Palveluntarjoaja"
           check: "Käteinen/sähköinen maksu/jne. (maksut, joille ei vaadita automaattista vahvistusta)"
-          pin: "PIN-maksut"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4600,8 +4579,8 @@ fi:
           or_enter_new_card: "Tai anna uuden kortin tiedot:"
           remember_this_card: Muistatko tämän kortin?
     date_picker:
-      flatpickr_date_format: "Vuosi"
-      flatpickr_datetime_format: "Vuosi H:i"
+      flatpickr_date_format: "d.m.Y"
+      flatpickr_datetime_format: "d.m.Y H:i"
       today: "Tänään"
       now: "Nyt"
       close: "Sulje"
@@ -4739,13 +4718,10 @@ fi:
       webhook_endpoints:
         title: Webhook-päätepisteet
         description: Järjestelmän tapahtumat voivat laukaista webhookeja ulkoisiin järjestelmiin.
-        event_types:
-          order_cycle_opened: Tilausjakso avattu
         event_type:
           header: Tapahtuman tyyppi
         url:
           header: Päätepisteen URL-osoite
-          create_placeholder: Anna etäwebhook-päätepisteen URL-osoite
       developer_settings:
         title: Kehittäjäasetukset
       form:

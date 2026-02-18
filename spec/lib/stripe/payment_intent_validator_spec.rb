@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'stripe/payment_intent_validator'
 
 RSpec.describe Stripe::PaymentIntentValidator do

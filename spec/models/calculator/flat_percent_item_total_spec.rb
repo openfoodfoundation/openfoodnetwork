@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Calculator::FlatPercentItemTotal do
   let(:calculator) { Calculator::FlatPercentItemTotal.new }
   let(:line_item) { build_stubbed(:line_item, price: 10, quantity: 1) }

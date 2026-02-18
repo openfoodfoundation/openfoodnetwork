@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20241011071014_update_item_name_to_product_in_od_report'
 
 RSpec.describe UpdateItemNameToProductInOdReport, type: :migration do

@@ -111,6 +111,7 @@ RSpec.describe 'Customers' do
             end
           end
           expect(page).not_to have_selector "tr#c_#{customer2.id}"
+          expect(page).not_to have_content 'You have unsaved changes'
         }.to change{ Customer.count }.by(-1)
       end
 

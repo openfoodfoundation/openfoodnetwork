@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe EnterpriseMailer do
   let(:enterprise) { build(:enterprise, name: "Fred's Farm") }
 

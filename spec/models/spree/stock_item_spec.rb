@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::StockItem do
   subject(:stock_item) { create(:variant, on_hand: 15).stock_item }
 

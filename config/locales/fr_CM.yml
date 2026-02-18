@@ -634,6 +634,7 @@ fr_CM:
           label: Conditions de transport
         tags:
           label: Tags
+          none: Aucun
         search: Rechercher
       sort:
         pagination:
@@ -3784,9 +3785,7 @@ fr_CM:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres "
-          pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
       payments:
         source_forms:

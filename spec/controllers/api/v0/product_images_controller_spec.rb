@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::V0::ProductImagesController do
   include AuthenticationHelper
   include FileHelper
@@ -45,7 +43,8 @@ RSpec.describe Api::V0::ProductImagesController do
       expect(response).to have_http_status :unprocessable_entity
       expect(product_without_image.image).to be_nil
       expect(json_response["id"]).to eq nil
-      expect(json_response["errors"]).to include "Attachment has an invalid content type"
+      expect(json_response["errors"]).to include "Attachment is " \
+                                                 "not identified as a valid media file"
     end
   end
 end

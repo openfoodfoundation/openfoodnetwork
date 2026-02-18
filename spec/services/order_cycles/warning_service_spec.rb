@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::WarningService do
   let(:user) { create(:user) }
   let(:subject) { OrderCycles::WarningService }

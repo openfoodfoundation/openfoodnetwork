@@ -35,10 +35,10 @@ es:
         fee_type: Tipo de Comisión
       spree/order:
         payment_state: Estado del pago
-        shipment_state: Provincia de envío
+        shipment_state: Estado de envío
         completed_at: Completado en
         number: Número
-        state: Provincia
+        state: Estado
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
@@ -115,27 +115,6 @@ es:
         blank: "no puede estar vacío"
         too_short: "es demasiado corto (el mínimo es %{count}caracteres)"
   errors:
-    messages:
-      content_type_invalid: "Tiene un tipo de contenido invalido"
-      file_size_out_of_range: "el tamaño %{file_size} no está en el rango requerido"
-      limit_out_of_range: "El número total está fuera de rango"
-      image_metadata_missing: "no es una imagen valida"
-      dimension_min_inclusion: "debe ser mayor o igual a %{width} x %{height} píxeles."
-      dimension_max_inclusion: "debe ser inferior o igual a %{width} x %{height} píxeles."
-      dimension_width_inclusion: "la anchura no se incluye entre %{min} y %{max} píxel."
-      dimension_height_inclusion: "la altura no se incluye entre %{min} y %{max} píxel."
-      dimension_width_greater_than_or_equal_to: "La anchura debe ser mayor o igual a %{length} píxeles."
-      dimension_height_greater_than_or_equal_to: "La altura debe ser mayor o igual que %{length} píxel."
-      dimension_width_less_than_or_equal_to: "La anchura debe ser menor o igual a %{length} píxeles."
-      dimension_height_less_than_or_equal_to: "La altura debe ser menor o igual a %{length} píxel."
-      dimension_width_equal_to: "La anchura debe ser igual a %{length} píxeles."
-      dimension_height_equal_to: "la altura debe ser igual a %{length} pixel."
-      aspect_ratio_not_square: "la imagen tiene que ser cuadrada"
-      aspect_ratio_not_portrait: "la imagen tiene que ser un retrato"
-      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
-      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
-      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
-      image_not_processable: "no es una imagen valida"
     not_found:
       title: "La página que estas buscando no existe (404)"
       message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
@@ -510,7 +489,7 @@ es:
   none: Ninguno
   notes: Notas
   error: Error
-  voucher: Bono
+  voucher: Cupón
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
   invalid_payment_state: "Estado de pago inválido: %{state}"
@@ -540,12 +519,13 @@ es:
   vine_voucher_validator_service:
     errors:
       vine_api: "Se ha producido un error en la comunicación con la API, inténtelo de nuevo más tarde."
-      invalid_voucher: "El bono no es válido"
-      not_found_voucher: "Lo sentimos, no hemos podido encontrar ese vale, por favor, compruebe el código."
+      invalid_voucher: "El cupón no es válido"
+      expired: "El cupón se ha caducado"
+      not_found_voucher: "Lo sentimos, no hemos podido encontrar ese cupón, por favor, compruebe el código."
   vine_voucher_redeemer_service:
     errors:
       vine_api: "Ha habido un error en la comunicación con el API"
-      redeeming_failed: "Error al canjear el bono"
+      redeeming_failed: "Error al canjear el cupón"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -739,6 +719,7 @@ es:
         enabled_legend: "Aplicaciones conectadas habilitadas"
         connected_apps_enabled:
           discover_regen: Descubrir el Portal Regenerativo
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Ajustes de la aplicación conectada
     customers:
@@ -901,13 +882,14 @@ es:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       sort:
         pagination:
           products_total_html:
             one: "<strong>%{count}producto</strong> encontrado para tus criterios de búsqueda. Mostrando %{from} de %{to}"
             many: "<strong> %{count}productos </strong>encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
-            other: "<strong>%{count}productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
+            other: "<strong>%{count} productos</strong> encontrados para tus criterios de búsqueda. Mostrando %{from} de %{to}"
           per_page:
             show: Mostrar
             per_page: "%{num} por página"
@@ -1098,6 +1080,7 @@ es:
     orders:
       edit:
         order_sure_want_to: ¿Está seguro de que desea %{event} este pedido?
+        voucher_tax_included_in_price: "%{label} (impuestos incluidos en el cupón)"
         tax_on_fees: "Impuesto sobre las tasas"
       invoice_email_sent: 'Se ha enviado correo electrónico con la factura.'
       order_email_resent: 'El correo electrónico del pedido se ha reenviado'
@@ -1367,8 +1350,8 @@ es:
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
-          legend: Bonos
-          voucher_code: Código promocional
+          legend: cupón
+          voucher_code: Código del cupón
           rate: Impuesto
           label: Etiqueta
           purpose: Propósito
@@ -1378,7 +1361,7 @@ es:
           net_value: Valor neto
           active: ¿Activo?
           add_new: Añadir nuevo
-          no_voucher_yet: Todavía no hay bonos
+          no_voucher_yet: Todavía no hay cupones
         white_label:
           legend: "Etiqueta blanca"
           hide_ofn_navigation: "Ocultar la navegación de OFN"
@@ -1400,6 +1383,8 @@ es:
             loading: "Cargando"
             need_to_be_manager: "Sólo los administradores pueden conectar aplicaciones."
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Permitir el canje de cupones de VINE en tu tienda ."
             enable: "Conectar"
             disable: "Desconectar"
             need_to_be_manager: "Sólo los administradores pueden conectar aplicaciones."
@@ -1668,7 +1653,7 @@ es:
           tag_rules: "Reglas de las Etiquetas"
           shop_preferences: "Configuración de la tienda"
           users: "Usuarias"
-          vouchers: Bonos
+          vouchers: Cupones
           white_label: "Etiqueta blanca"
           connected_apps: "Aplicaciones connectadas"
         enterprise_group:
@@ -1879,11 +1864,12 @@ es:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
     vouchers:
       new:
-        legend: Nuevo bono
+        legend: Nuevo cupón
         back: Atrás
         save: Guardar
-        voucher_code: Código promocional
+        voucher_code: Código del cupón
         voucher_amount: Cantidad
+        voucher_type: Tipo de cupón
         percentage_rate: Porcentaje (%)
     controllers:
       enterprises:
@@ -1973,6 +1959,12 @@ es:
       explaination: Puede revisar y confirmar su pedido en el siguiente paso cual incluye costos finales.
       submit: Siguiente - Resumen del pedido
       cancel: Regresar a Su información
+      voucher:
+        voucher: "%{voucher_amount} Cupón"
+        apply_voucher: Utilizar cupón
+        placeholder: Introducir el código del cupón
+        confirm_delete: ¿Está seguro de que desea eliminar este cupón?
+        warning_forfeit_remaining_amount: "Nota: si el total de su pedido es menor que su cupón, es posible que no pueda gastar el valor restante."
     step3:
       delivery_details:
         title: Detalles de entrega
@@ -2004,6 +1996,10 @@ es:
       invalid_email: "Introduce un email válido"
       select_a_shipping_method: Seleccionar método de envío
       select_a_payment_method: Seleccionar método de pago
+      voucher_code_blank: Por favor introduzca un código de cupón válido
+      add_voucher_error: Ha habido un error al agregar el cupón
+      create_voucher_error: "Se ha producido un error al crear el cupón: %{error}"
+      voucher_redeeming_error: Se ha producido un error al intentar canjear su cupón
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -2328,6 +2324,7 @@ es:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(incluye impuestos):"
+  email_order_summary_voucher_label: "Cupón ( %{code} ):"
   email_payment_paid: PAGADO
   email_payment_not_paid: NO PAGADO
   email_payment_description: Descripción de pago de la compra
@@ -3140,8 +3137,8 @@ es:
   report_header_transaction_fee: Comisión por transacción (sin impuestos)
   report_header_total_untaxable_admin: Total de ajustes administrativos no tributables (sin impuestos)
   report_header_total_taxable_admin: Total de ajustes tributarios de administración (impuestos incluidos)
-  report_header_voucher_label: Etiqueta del bono
-  report_header_voucher_amount: "Cantidad del bono (%{currency_symbol})"
+  report_header_voucher_label: Etiqueta del cupón
+  report_header_voucher_amount: "Cantidad del cupón (%{currency_symbol})"
   report_line_cost_of_produce: Coste de los productos agrícolas
   report_header_last_completed_order_date: Fecha del último pedido completado
   initial_invoice_number: "Número de factura inicial"
@@ -3198,6 +3195,7 @@ es:
   product_importer_products_save_error: No se guardó ningún producto con éxito
   product_import_file_not_found_notice: 'Archivo no encontrado o no se pudo abrir'
   product_import_no_data_in_spreadsheet_notice: 'No se encontraron datos en la hoja de cálculo'
+  product_import_inventory_disable: La importación a inventarios no está disponible.
   order_choosing_hub_notice: Tu Grupo se ha seleccionado.
   order_cycle_selecting_notice: Se ha seleccionado el ciclo de pedido.
   adjustments_tax_rate_error: "^Comprueba que los impuestos para este ajuste es correcta."
@@ -3891,6 +3889,7 @@ es:
     logourl: "URL del logo"
     are_you_sure_delete: "¿Está seguro de que desea eliminar este registro?"
     confirm_delete: "Confirmar la eliminación"
+    voucher: "Cupón"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -3980,6 +3979,7 @@ es:
     alt_text: "Texto Alternativo"
     thumbnail: "Miniatura"
     back_to_images_list: "Volver a lista de imágenes "
+    api_key: "API key"
     email: Email
     account_updated: "Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -4288,9 +4288,7 @@ es:
         providers:
           provider: "Proveedor"
           check: "Efectivo / transferencia / etc. (pagos para los que no se requiere validación automática)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4601,8 +4599,6 @@ es:
         title: API key
       webhook_endpoints:
         description: Los eventos del sistema pueden desencadenar webhooks a sistemas externos.
-        event_types:
-          order_cycle_opened: Ciclo de pedidos abierto
       developer_settings:
         title: Configuración de desarrollo
       form:
@@ -4761,6 +4757,9 @@ es:
     add_tag_rule_modal:
       select_rule_type: "Selecciona un tipo de regla:"
       add_rule: "Añadir regla"
+    webhook_endpoint_form:
+      event_types:
+        order_cycle_opened: Ciclo de pedidos abierto
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

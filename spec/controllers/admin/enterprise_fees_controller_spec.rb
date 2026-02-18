@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Admin::EnterpriseFeesController do
   before do
     allow(controller).to receive_messages spree_current_user: super_admin

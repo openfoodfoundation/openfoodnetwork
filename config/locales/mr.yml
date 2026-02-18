@@ -105,27 +105,6 @@ mr:
         blank: "रिक्त असू शकत नाही"
         too_short: "खूप छोटा आहे (किमान %{count} अक्षरे )"
   errors:
-    messages:
-      content_type_invalid: "सामग्री प्रकार अवैध आहे"
-      file_size_out_of_range: "आकार %{file_size} आवश्यक रेंज मध्ये नाही"
-      limit_out_of_range: "एकूण संख्या श्रेणीबाहेर आहे"
-      image_metadata_missing: "वैध इमेज़ नाही"
-      dimension_min_inclusion: "%{width} x %{height} पिक्सेल पेक्षा मोठे किंवा समान असणे आवश्यक आहे."
-      dimension_max_inclusion: "%{width} x %{height} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
-      dimension_width_inclusion: "रुंदी %{min} आणि %{max} पिक्सेल दरम्यान समाविष्ट केलेली नाही."
-      dimension_height_inclusion: "उंची %{min} आणि %{max} पिक्सेल च्या दरम्यान नाही."
-      dimension_width_greater_than_or_equal_to: "रुंदी %{length} पिक्सेलपेक्षा जास्त किंवा समान असणे आवश्यक आहे."
-      dimension_height_greater_than_or_equal_to: "उंची %{length} पिक्सेल पेक्षा जास्त किंवा समान असणे आवश्यक आहे."
-      dimension_width_less_than_or_equal_to: "रुंदी %{length} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
-      dimension_height_less_than_or_equal_to: "उंची %{length} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
-      dimension_width_equal_to: "रुंदी %{length} पिक्सेल इतकी असणे आवश्यक आहे."
-      dimension_height_equal_to: "उंची %{length} पिक्सेल इतकी असणे आवश्यक आहे."
-      aspect_ratio_not_square: "इमेज़ चौरसाकृती असावी"
-      aspect_ratio_not_portrait: "पोर्ट्रेट इमेज़ असणे आवश्यक आहे"
-      aspect_ratio_not_landscape: "लँडस्केप इमेज़ असणे आवश्यक आहे"
-      aspect_ratio_is_not: "%{aspect_ratio}  चा ॲस्पेक्ट रेशो आवश्यक आहे"
-      aspect_ratio_unknown: "ॲस्पेक्ट रेशो अज्ञात आहे"
-      image_not_processable: "वैध इमेज़ नाही"
     not_found:
       title: "आपण शोधत असलेले पृष्ठ अस्तित्वात नाही (404)"
       message_html: "<b>कृपया पुन्हा प्रयत्न करा</b><p> ही तात्पुरती समस्या असू शकते. कृपया मागील स्क्रीनवर परत जाण्यासाठी बॅक बटणावर क्लिक करा किंवा <a href='/'>होम</a> वर परत जा आणि पुन्हा प्रयत्न करा.</p> <b>ग्राहकसेवेशी संपर्क साधा</b><p> समस्या कायम राहिल्यास किंवा तातडीची असल्यास, कृपया आम्हाला त्याबद्दल सांगा. ग्लोबल <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>ओपन फूड नेटवर्क लोकल पेजवरून</a> आमचे संपर्क तपशील शोधा.</p><p> गहाळ पृष्ठ कशाबद्दल आहे याबद्दल आपण शक्य तितके तपशील देऊ शकत असल्यास आम्हाला खूप मदत होईल.</p>"
@@ -764,6 +743,8 @@ mr:
           label: उत्पादक
         categories:
           label: श्रेण्या
+        tags:
+          none: कोणतेही नाही
         search: शोधा
       sort:
         pagination:
@@ -3715,6 +3696,7 @@ mr:
     alt_text: "पर्यायी मजकूर"
     thumbnail: "लघुप्रतिमा"
     back_to_images_list: "प्रतिमा सूचीकडे परत"
+    api_key: "API key"
     email: ईमेल
     account_updated: "खाते अपडेट केले!"
     email_updated: "नवीन ईमेलची पुष्टी झाल्यानंतर खाते अद्यतनित केले जाईल."
@@ -4014,9 +3996,7 @@ mr:
         providers:
           provider: "प्रदाता"
           check: "रोख/EFT/इ. (स्वयंचलित प्रमाणीकरण आवश्यक नसलेली पेमेंट्स)"
-          pin: "पेमेंट्स पिन करा"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4306,13 +4286,10 @@ mr:
       webhook_endpoints:
         title: वेबहुक एंडपॉइंट्स
         description: सिस्टम मधील इव्हेंट्स बाह्य सिस्टम्सवर वेबहुक ट्रिगर करू शकतात.
-        event_types:
-          order_cycle_opened: ऑर्डर सायकल उघडली
         event_type:
           header: कार्यक्रमाचा प्रकार
         url:
           header: एंडपॉइंट URL
-          create_placeholder: रिमोट वेबहुक एंडपॉइंटची URL एंटर करा
       developer_settings:
         title: विकासक सेटिंग्ज
       form:
@@ -4442,3 +4419,6 @@ mr:
       for_customers_tagged: 'टॅग केलेल्या ग्राहकांसाठी:'
       add_new_rule: '+ एक नवीन नियम जोडा'
       no_rules_yet: या टॅगवर अद्याप कोणतेही नियम लागू नाहीत
+    webhook_endpoint_form:
+      url:
+        create_placeholder: रिमोट वेबहुक एंडपॉइंटची URL एंटर करा

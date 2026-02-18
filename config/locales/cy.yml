@@ -115,27 +115,6 @@ cy:
         blank: "ni chaniateir ei adael yn wag"
         too_short: "rhy fyr (o leiaf %{count} cymeriad)"
   errors:
-    messages:
-      content_type_invalid: "math o gynnwys annilys"
-      file_size_out_of_range: "nid yw'r maint %{file_size} rhwng yr ystod ofynnol"
-      limit_out_of_range: "mae'r cyfanswm rhif tu hwnt i'r ystod"
-      image_metadata_missing: "nid yw'n llun dilys"
-      dimension_min_inclusion: "mae'n gorfod bod yn fwy neu'r un faint â %{width} x %{height} picsel."
-      dimension_max_inclusion: "mae'n gorfod bod yn llai neu'r un faint â %{width} x %{height} picsel."
-      dimension_width_inclusion: "nid yw lled yn cael ei gynnwys rhwng %{min} ac %{max} picsel."
-      dimension_height_inclusion: "nid yw uchder yn cael ei gynnwys rhwng %{min} acd %{max} picsel."
-      dimension_width_greater_than_or_equal_to: "mae'r lled yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
-      dimension_height_greater_than_or_equal_to: "mae'r uchder yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
-      dimension_width_less_than_or_equal_to: "mae'r lled yn gorfod bod yn llai neu'r un faint â %{length} picsel."
-      dimension_height_less_than_or_equal_to: "mae'r uchder yn gorfod bod yn llai neu'r un faint â %{length} picsel."
-      dimension_width_equal_to: "mae'r lled yn gorfod bod yr un faint â %{length} picsel."
-      dimension_height_equal_to: "mae'r uchder yn gorfod bod yr un faint â %{length} picsel."
-      aspect_ratio_not_square: "mae'n gorfod bod yn llun sgwâr"
-      aspect_ratio_not_portrait: "mae'n gorfod bod yn llun siâp portread"
-      aspect_ratio_not_landscape: "mae'n gorfod bod yn llun siâp tirlun"
-      aspect_ratio_is_not: "mae'n rhaid cael cymhareb agwedd o %{aspect_ratio}"
-      aspect_ratio_unknown: "yn meddu ar gymhareb agwedd anhysbys"
-      image_not_processable: "nid yw'n llun dilys"
     not_found:
       title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
       message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/'> Hafan </a>, a rhowch gynnig arall </p>. <b> Cysylltwch â’r ddesg</b> <p>Gymorth os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’ <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> y Rhwydwaith Bwyd Agored byd-eang </a>. </p> <p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl am y dudalen sydd ar goll.</p>"
@@ -902,6 +881,7 @@ cy:
           label: Categorïau
         tags:
           label: Tagiau
+          none: Dim
         search: Chwilio
       sort:
         pagination:
@@ -4034,6 +4014,7 @@ cy:
     logourl: "url Logo"
     are_you_sure_delete: "Ydych chi'n siŵr eich bod chi am ddileu'r cofnod hwn?"
     confirm_delete: "Cadarnhau Dileu"
+    voucher: "Taleb"
     configurations: "Cyfluniadau"
     general_settings: "Gosodiadau Cyffredinol"
     site_name: "Enw'r Safle"
@@ -4124,6 +4105,7 @@ cy:
     alt_text: "Testun Amgen"
     thumbnail: "Cryno-lun"
     back_to_images_list: "Yn ôl i'r Rhestr Delweddau"
+    api_key: "Allwedd API"
     email: E-bost
     account_updated: "Diweddarwyd y cyfrif!"
     email_updated: "Bydd y cyfrif yn cael ei ddiweddaru ar ôl cadarnhau'r cyfeiriad e-bost newydd."
@@ -4439,9 +4421,7 @@ cy:
         providers:
           provider: "Darparwr"
           check: "Arian/TRhE/ac ati (taliadau lle nad oes angen dilysu awtomatig)."
-          pin: "Taliadau Pin"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4758,13 +4738,10 @@ cy:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Events in the system may trigger webhooks to external systems.
-        event_types:
-          order_cycle_opened: Order Cycle Opened
         event_type:
           header: Event type
         url:
           header: Endpoint URL
-          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Gosodiadau'r Datblygwr
       form:
@@ -4938,6 +4915,11 @@ cy:
     add_tag_rule_modal:
       select_rule_type: "Dewis math o reol:"
       add_rule: "Ychwanegu Rheol"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Enter the URL of the remote webhook endpoint
+      event_types:
+        order_cycle_opened: Order Cycle Opened
   invisible_captcha:
     sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
     timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "layouts/darkswarm.html.haml" do
   helper InjectionHelper
   helper I18nHelper

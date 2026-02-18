@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IntegerArrayValidator do
   describe "internationalization" do
     it "has translation for NOT_ARRAY_ERROR" do

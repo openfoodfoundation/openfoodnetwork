@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::ShippingMethodSerializer do
   let(:shipping_method) { create(:shipping_method) }
 

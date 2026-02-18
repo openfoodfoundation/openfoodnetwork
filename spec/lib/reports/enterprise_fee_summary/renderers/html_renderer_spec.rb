@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 # describe Reporting::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer do
 #   let(:report_klass) { Reporting::Reports::EnterpriseFeeSummary }
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "spree/admin/orders/edit.html.haml" do
   helper Spree::BaseHelper # required to make pretty_time work
   helper Spree::Admin::NavigationHelper

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Invoice::DataPresenter do
   context "#display_date" do
     let(:invoice) { double(:invoice, date: '2023-08-01') }

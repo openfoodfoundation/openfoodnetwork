@@ -680,6 +680,7 @@ en_US:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:
@@ -3788,9 +3789,7 @@ en_US:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "retired, please use Stripe SCA"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

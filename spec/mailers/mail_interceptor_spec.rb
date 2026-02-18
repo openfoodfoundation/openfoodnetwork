@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # Here we use the OrderMailer as a way to test the mail interceptor.
 RSpec.describe Spree::OrderMailer do
   let(:order) do

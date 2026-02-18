@@ -541,6 +541,7 @@ fil_PH:
           label: mga kategorya
         tags:
           label: tags
+          none: wala
         search: hanapin
       product_variant_row:
         new_variant: bagong uri

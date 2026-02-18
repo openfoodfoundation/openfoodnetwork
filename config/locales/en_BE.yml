@@ -526,6 +526,7 @@ en_BE:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       product_variant_row:
         new_variant: New variant

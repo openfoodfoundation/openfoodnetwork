@@ -7,6 +7,15 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
 
+  # Change recording mode during development:
+  #
+  #   VCR_RECORD=new_episodes ./bin/rspec spec/example_spec.rb
+  #   VCR_RECORD=all          ./bin/rspec spec/example_spec.rb
+  #
+  if ENV.fetch("VCR_RECORD", nil)
+    config.default_cassette_options = { record: ENV.fetch("VCR_RECORD").to_sym }
+  end
+
   # Chrome calls a lot of services and they trip us up.
   config.ignore_hosts(
     "localhost", "127.0.0.1", "0.0.0.0",

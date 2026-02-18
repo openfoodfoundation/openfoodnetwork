@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe CompleteBackorderJob do
   let(:user) { create(:testdfc_user) }
   let(:urls) { FdcUrlBuilder.new(product_link) }

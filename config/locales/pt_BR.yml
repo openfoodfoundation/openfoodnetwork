@@ -68,28 +68,6 @@ pt_BR:
             limited_stock_but_no_count_on_hand: "deve ser especificado porque está forçando o estoque limitado"
       messages:
         blank: "Não pode ser vazio"
-  errors:
-    messages:
-      content_type_invalid: "possui um tipo de conteúdo inválido"
-      file_size_out_of_range: "o tamanho %{file_size}não está entre os limites válidos. "
-      limit_out_of_range: "o valor total está fora dos limites."
-      image_metadata_missing: "não é uma imagem válida"
-      dimension_min_inclusion: "precisa ser maior ou igual a%{width}x%{height} pixel. "
-      dimension_max_inclusion: "precisa ser menor ou igual a %{width} x %{height} pixel."
-      dimension_width_inclusion: "a largura não está inclusa entre %{min} e %{max} pixel. "
-      dimension_height_inclusion: "a altura não está incluisa entre %{min} e %{max} pixel. "
-      dimension_width_greater_than_or_equal_to: "a largura precisa ser maior ou igual a %{length} pixel. "
-      dimension_height_greater_than_or_equal_to: "a altura precisa ser maior ou igual a %{length} pixel. "
-      dimension_width_less_than_or_equal_to: "a largura precisa ser menor ou igual a %{length} pixel. "
-      dimension_height_less_than_or_equal_to: "a altura precisa ser menor ou igual a %{length} pixel."
-      dimension_width_equal_to: "a largura precisa ser igual a %{length} pixel. "
-      dimension_height_equal_to: "a altura precisa ser igual a %{length} pixel. "
-      aspect_ratio_not_square: "precisa ser uma imagem quadrada. "
-      aspect_ratio_not_portrait: "precisa ser uma imagem no formato retrato. "
-      aspect_ratio_not_landscape: "precisa ser uma imagem no formato paisagem. "
-      aspect_ratio_is_not: "precisa ter uma proporção de %{aspect_ratio}"
-      aspect_ratio_unknown: "tem uma proporção desconhecida"
-      image_not_processable: "não é uma imagem válida"
   stripe:
     error_code:
       incorrect_number: "O número do cartão está incorreto."
@@ -634,6 +612,7 @@ pt_BR:
           label: Produtores
         tags:
           label: Tags
+          none: Nenhum
         search: Buscar
       sort:
         pagination:
@@ -3670,9 +3649,7 @@ pt_BR:
         providers:
           provider: "Provedor"
           check: "Dinheiro / Transferência Bancária / Maquininha / etc. (pagamentos para os quais é necessária a validação manual)."
-          pin: "Pagamentos via Pin"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

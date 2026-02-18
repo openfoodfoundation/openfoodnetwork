@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe 'ofn:import:product_images' do
   describe 'task' do
     context "filename is blank" do

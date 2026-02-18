@@ -183,6 +183,7 @@ module Spree
 
         options.merge!({ billing_address: order.bill_address.try(:active_merchant_hash),
                          shipping_address: order.ship_address.try(:active_merchant_hash) })
+        options.merge!(payment: self)
 
         options
       end

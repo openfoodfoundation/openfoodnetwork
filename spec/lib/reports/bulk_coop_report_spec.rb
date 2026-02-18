@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # rubocop:disable Metrics/ModuleLength
 module Reporting
   module Reports

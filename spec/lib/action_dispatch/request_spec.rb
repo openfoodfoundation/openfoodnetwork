@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ActionDispatch::Request do
   it "strips nils from arrays" do
     expect(parse_query_parameters('key[]=value&key[]')).to eq({ "key" => ["value"] })

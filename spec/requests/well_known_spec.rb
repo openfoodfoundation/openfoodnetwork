@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "/.well-known/" do
   describe "dfc/" do
     it "publishes our endpoints" do

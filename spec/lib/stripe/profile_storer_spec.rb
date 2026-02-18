@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Stripe
   RSpec.describe ProfileStorer do
     include StripeStubs

@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders
+    body:
+      encoding: UTF-8
+      string: '{"order":{"amount":"KUDOS:10.0","summary":"Open Food Network order","fulfillment_url":"http://test.host/payment_gateways/taler/61"},"create_token":false}'
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Thu, 22 Jan 2026 04:43:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '42'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "order_id": "2026.022-0284X4GE8WKMJ"
+        }
+  recorded_at: Thu, 22 Jan 2026 04:43:33 GMT
+- request:
+    method: get
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.022-0284X4GE8WKMJ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Thu, 22 Jan 2026 04:43:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '351'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "taler_pay_uri": "taler://pay/backend.demo.taler.net/instances/sandbox/2026.022-0284X4GE8WKMJ/",
+          "order_status_url": "https://backend.demo.taler.net/instances/sandbox/orders/2026.022-0284X4GE8WKMJ",
+          "order_status": "unpaid",
+          "total_amount": "KUDOS:10",
+          "summary": "Open Food Network order",
+          "creation_time": {
+            "t_s": 1769057012
+          }
+        }
+  recorded_at: Thu, 22 Jan 2026 04:43:34 GMT
+recorded_with: VCR 6.3.1

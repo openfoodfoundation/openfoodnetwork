@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Admin::ProductsHelper do
   describe '#unit_value_with_description' do
     let(:variant) {

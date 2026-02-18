@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 class Spree::Gateway::Test < Spree::Gateway
 end
 

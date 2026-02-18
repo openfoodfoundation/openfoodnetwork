@@ -675,6 +675,7 @@ es_US:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       sort:
         pagination:
@@ -3736,9 +3737,7 @@ es_US:
         providers:
           provider: "Proveedor"
           check: "Efectivo / transferencia / etc. (pagos para los que no se requiere validación automática)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

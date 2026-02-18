@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PaymentMailer do
   describe '#payment_mailer' do
     let(:enterprise) { create(:enterprise) }

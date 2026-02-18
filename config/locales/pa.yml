@@ -102,27 +102,6 @@ pa:
         blank: "ਖਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦਾ"
         too_short: "ਬਹੁਤ ਛੋਟਾ (ਨਿਊਨਤਮ %{count} ਅੱਖਰ)"
   errors:
-    messages:
-      content_type_invalid: "ਅਵੈਧ ਸਮੱਗਰੀ ਦੀ ਕਿਸਮ ਸ਼ਾਮਲ ਹੈ"
-      file_size_out_of_range: "ਸਾਈਜ਼ %{file_size} ਲੋੜੀਂਦੀ ਸੀਮਾ ਵਿੱਚਕਾਰ ਨਹੀਂ ਹੈ"
-      limit_out_of_range: "ਕੁੱਲ ਗਿਣਤੀ ਸੀਮਾ ਤੋਂ ਬਾਹਰ ਹੈ"
-      image_metadata_missing: "ਇਹ ਇੱਕ ਵੈਧ ਫੋਟੋ ਨਹੀਂ ਹੈ"
-      dimension_min_inclusion: "%{width} x %{height} ਪਿਕਸਲ ਤੋਂ ਵੱਧ ਜਾਂ ਬਰਾਬਰ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
-      dimension_max_inclusion: "%{width} x %{height} ਪਿਕਸਲ ਤੋਂ ਘੱਟ ਜਾਂ ਬਰਾਬਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
-      dimension_width_inclusion: "ਚੌੜਾਈ %{min} ਅਤੇ %{max} ਪਿਕਸਲਾਂ ਵਿੱਚਕਾਰ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ।"
-      dimension_height_inclusion: "ਲੰਬਾਈ %{min} ਅਤੇ %{max} ਪਿਕਸਲਾਂ ਵਿੱਚਕਾਰ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ।"
-      dimension_width_greater_than_or_equal_to: "ਚੌੜਾਈ %{length} ਪਿਕਸਲ ਤੋਂ ਵੱਧ ਜਾਂ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।"
-      dimension_height_greater_than_or_equal_to: "ਲੰਬਾਈ %{length} ਪਿਕਸਲ ਤੋਂ ਵੱਧ ਜਾਂ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।"
-      dimension_width_less_than_or_equal_to: "ਚੌੜਾਈ %{length} ਪਿਕਸਲ ਤੋਂ ਘੱਟ ਜਾਂ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।"
-      dimension_height_less_than_or_equal_to: "ਲੰਬਾਈ %{length} ਪਿਕਸਲ ਤੋਂ ਘੱਟ ਜਾਂ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।"
-      dimension_width_equal_to: "width must be equal to %{length} pixel."
-      dimension_height_equal_to: "ਲੰਬਾਈ %{length} ਪਿਕਸਲ ਦੇ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।"
-      aspect_ratio_not_square: "ਇੱਕ ਚੌਰਸ ਫੋਟੋ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ"
-      aspect_ratio_not_portrait: "ਇੱਕ ਪੋਰਟਰੇਟ ਫੋਟੋ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ"
-      aspect_ratio_not_landscape: "ਇੱਕ ਲੈਂਡਸਕੇਪ ਫੋਟੋ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ"
-      aspect_ratio_is_not: "ਅਸਪੈਕਟ ਅਨੁਪਾਤ %{aspect ratio} ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
-      aspect_ratio_unknown: "ਇੱਕ ਅਗਿਆਤ ਅਸਪੈਕਟ ਅਨੁਪਾਤ ਹੈ"
-      image_not_processable: "ਇਹ ਇੱਕ ਵੈਧ ਫੋਟੋ ਨਹੀਂ ਹੈ"
     not_found:
       title: "ਜਿਹੜਾ ਪੰਨਾ ਤੁਸੀਂ ਲੱਭ ਰਹੇ ਸੀ ਉਹ ਮੌਜੂਦ ਨਹੀਂ ਹੈ (404)"
       message_html: "<b>ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</b> <p>ਇਹ ਇੱਕ ਅਸਥਾਈ ਸਮੱਸਿਆ ਹੋ ਸਕਦੀ ਹੈ। ਪਿਛਲੀ ਸਕ੍ਰੀਨ ਤੇ ਵਾਪਸ ਜਾਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਬੈਕ ਬਟਨ ਤੇ ਕਲਿੱਕ ਕਰੋ ਜਾਂ <a href='/'>ਹੋਮ</a> ਤੇ ਵਾਪਸ ਜਾਓ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</p> <b>ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</b> <p>ਜੇਕਰ ਸਮੱਸਿਆ ਬਣੀ ਰਹਿੰਦੀ ਹੈ ਜਾਂ ਜ਼ਰੂਰੀ ਹੈ, ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਾਨੂੰ ਇੱਸ ਦੇ ਬਾਰੇ ਵਿੱਚ ਦੱਸੋ। ਗਲੋਬਲ ਓਪਨ ਫੂਡ ਨੈੱਟਵਰਕ ਦੇ ਲੋਕਲ ਪੰਨੇ ਤੋਂ <a href='https://openfoodnetwork org/ofn-local/' target='blank'>ਸਾਡੇ ਸੰਪਰਕ ਵੇਰਵੇ ਪ੍ਰਾਪਤ ਕਰੋ</a>।</p> <p>ਤੁਹਾਡਾ ਸਾਨੂੰ ਗੁੰਮ ਹੋਏ ਪੰਨੇ ਬਾਰੇ ਜਿੰਨਾ ਸੰਭਵ ਹੋ ਸਕੇ ਉਨ੍ਹੇਂ ਜਿਆਦਾ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਕਰਨਾ ਅਸਲ ਵਿੱਚ ਸਾਡੀ ਵਧੇਰੀ ਮਦਦ ਕਰਦਾ ਹੈ।</p>"
@@ -771,6 +750,7 @@ pa:
           label: ਸ਼੍ਰੇਣੀਆਂ
         tags:
           label: ਟੈਗ
+          none: ਕੋਈ ਨਹੀਂ
         search: ਖੋਜੋ
       sort:
         pagination:
@@ -3616,6 +3596,7 @@ pa:
     logourl: "ਲੋਗੋurl"
     are_you_sure_delete: "ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
     confirm_delete: "ਹਟਾਉਣ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
+    voucher: "ਵਾਊਚਰ"
     configurations: "ਕੌਂਫਿਗਰੇਸ਼ਨ"
     general_settings: "ਆਮ ਸੈਟਿੰਗਾਂ"
     site_name: "ਸਾਈਟ ਦਾ ਨਾਂ"
@@ -3704,6 +3685,7 @@ pa:
     alt_text: "ਵੈਕਲਪਿਕ ਟੈਕਸਟ"
     thumbnail: "ਥੰਬਨੇਲ"
     back_to_images_list: "ਫੋਟੋ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+    api_key: "API ਕੁੰਜੀ"
     email: ਈਮੇਲ
     account_updated: "ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ!"
     email_updated: "ਨਵੇਂ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਣ ਤੋਂ ਬਾਅਦ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾਵੇਗਾ।"
@@ -4009,9 +3991,7 @@ pa:
         providers:
           provider: "ਪ੍ਰਦਾਤਾ"
           check: "ਨਕਦ/ਈਐਫਟੀ/ਆਦਿ (ਭੁਗਤਾਨ ਜਿਸ ਲਈ ਸਵੈਚਲਿਤ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ)"
-          pin: "ਪਿੰਨ ਭੁਗਤਾਨ"
           paypalexpress: "ਪੇਪਾਲ ਐਕਸਪ੍ਰੈਸ"
-          stripeconnect: "ਸਟ੍ਰਾਈਪ"
           stripesca: "ਸਟ੍ਰਾਈਪ SCA"
       payments:
         source_forms:
@@ -4305,13 +4285,10 @@ pa:
       webhook_endpoints:
         title: ਵੈਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ
         description: ਸਿਸਟਮ ਵਿੱਚ ਇਵੈਂਟਸ ਵੈਬਹੁੱਕ ਨੂੰ ਬਾਹਰੀ ਸਿਸਟਮਾਂ ਲਈ ਟਰਿੱਗਰ ਕਰ ਸਕਦੇ ਹਨ।
-        event_types:
-          order_cycle_opened: ਆਰਡਰ ਸਾਈਕਲ ਖੋਲ੍ਹਿਆ ਗਿਆ
         event_type:
           header: ਇਵੇੰਟ ਦੀ ਕਿਸਮ
         url:
           header: ਐਂਡਪੁਆਇੰਟ URL
-          create_placeholder: ਰਿਮੋਟ ਵੈਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਦਾ URL ਦਾਖਲ ਕਰੋ
       developer_settings:
         title: ਡਿਵੈਲਪਰ ਸੈਟਿੰਗਜ਼
       form:
@@ -4418,3 +4395,8 @@ pa:
     add_tag_rule_modal:
       select_rule_type: "ਇੱਕ ਨਿਯਮ ਕਿਸਮ ਚੁਣੋ:"
       add_rule: "ਨਿਯਮ ਜੋੜੋ"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: ਰਿਮੋਟ ਵੈਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਦਾ URL ਦਾਖਲ ਕਰੋ
+      event_types:
+        order_cycle_opened: ਆਰਡਰ ਸਾਈਕਲ ਖੋਲ੍ਹਿਆ ਗਿਆ

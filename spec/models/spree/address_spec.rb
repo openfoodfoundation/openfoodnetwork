@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Address do
   describe "clone" do
     it "creates a copy of the address with the exception of the id, " \

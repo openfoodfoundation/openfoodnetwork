@@ -561,6 +561,7 @@ en_AU:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:

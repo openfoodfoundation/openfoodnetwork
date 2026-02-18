@@ -554,6 +554,7 @@ nl_BE:
           label: Categorieën
         tags:
           label: Tags
+          none: Geen enkele
         search: Zoeken
       sort:
         pagination:

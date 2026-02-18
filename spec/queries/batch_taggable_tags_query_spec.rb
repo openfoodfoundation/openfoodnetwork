@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe BatchTaggableTagsQuery do
   it "fetches tags for multiple models in one query" do
     customer_i = create(:customer, tag_list: "member,volunteer")

@@ -579,6 +579,47 @@ paths:
                       dfc-b:URL: https://facebook.com/user
         '404':
           description: not found
+  "/api/dfc/events":
+    post:
+      summary: Create Event
+      parameters: []
+      tags:
+      - Events
+      responses:
+        '400':
+          description: bad request
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    success: false
+                    message: Missing parameter `enterpriseUrlid`
+        '401':
+          description: unauthorised
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    success: false
+                    message: Your client_id is not authorised on this platform.
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    success: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                eventType: refresh
+                enterpriseUrlid: https://api.beta.litefarm.org/dfc/enterprises/
+                scope: ReadEnterprise
   "/api/dfc/enterprises/{enterprise_id}/offers/{id}":
     parameters:
     - name: enterprise_id

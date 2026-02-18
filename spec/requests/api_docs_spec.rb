@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "API documentation" do
   it "shows the OFN API v1" do
     get rswag_ui_path

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe HomeController do
   context "#unauthorized" do
     it "renders the unauthorized template" do
