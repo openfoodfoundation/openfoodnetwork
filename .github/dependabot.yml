@@ -31,9 +31,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # Deactivating for now to see if this blocked security updates even though it shouldn't.
-    # cooldown:
-    #   default-days: 7
+    cooldown:
+      default-days: 7
 
     # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
