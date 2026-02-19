@@ -26,11 +26,11 @@ module PermittedAttributes
 
     def other_permitted_attributes
       [
-        subscription_line_items_attributes: [
-          :id, :quantity, :variant_id, :price_estimate, :_destroy
-        ],
-        bill_address_attributes: PermittedAttributes::Address.attributes,
-        ship_address_attributes: PermittedAttributes::Address.attributes
+        { subscription_line_items_attributes: [
+            :id, :quantity, :variant_id, :price_estimate, :_destroy
+          ],
+          bill_address_attributes: PermittedAttributes::Address.attributes,
+          ship_address_attributes: PermittedAttributes::Address.attributes }
       ]
     end
   end
