@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module WebHelper
-  include TomselectHelper
-
   def have_input(name, opts = {})
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
