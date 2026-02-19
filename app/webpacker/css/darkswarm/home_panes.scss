@@ -71,8 +71,51 @@
     }
   }
 
-  a.text-vbig i {
-    font-size: 75px;
+  #brand-story-text {
+    cursor: pointer;
+    text-align: center;
+    margin-top: 1rem;
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: inline-block;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::marker {
+        display: none;
+      }
+
+      i {
+        font-size: 75px;
+      }
+
+      .ofn-i_005-caret-down {
+        display: inline-block;
+      }
+
+      .ofn-i_006-caret-up {
+        display: none;
+      }
+    }
+
+    &[open] summary {
+      .ofn-i_005-caret-down {
+        display: none;
+      }
+
+      .ofn-i_006-caret-up {
+        display: inline-block;
+      }
+    }
+
+    .brand-story-content {
+      margin-top: 1rem;
+      text-align: left;
+    }
   }
 }
 

@@ -1,5 +1,2 @@
 angular.module('Darkswarm').controller "HomeCtrl", ($scope) ->
-  $scope.brandStoryExpanded = false
-
-  $scope.toggleBrandStory = ->
-    $scope.brandStoryExpanded = !$scope.brandStoryExpanded
+  # Controller kept for potential future use
