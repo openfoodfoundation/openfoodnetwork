@@ -345,24 +345,6 @@ RSpec.describe Spree::Payment do
           allow(payment_method).to receive(:void).and_return(success_response)
         end
 
-        context "when profiles are supported" do
-          it "should call payment_enterprise.void with the payment's response_code" do
-            allow(payment_method).to receive(:payment_profiles_supported) { true }
-            expect(payment_method).to receive(:void).with('123', card,
-                                                          anything).and_return(success_response)
-            payment.void_transaction!
-          end
-        end
-
-        context "when profiles are not supported" do
-          it "should call payment_gateway.void with the payment's response_code" do
-            allow(payment_method).to receive(:payment_profiles_supported) { false }
-            expect(payment_method).to receive(:void).with('123', card,
-                                                          anything).and_return(success_response)
-            payment.void_transaction!
-          end
-        end
-
         it "should log the response" do
           payment.void_transaction!
           expect(payment).to have_received(:record_response)
@@ -437,7 +419,7 @@ RSpec.describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
-            expect(payment_method).to receive(:credit).with(1000, card, '123',
+            expect(payment_method).to receive(:credit).with(1000, '123',
                                                             anything).and_return(success_response)
             payment.credit!
           end
@@ -463,7 +445,7 @@ RSpec.describe Spree::Payment do
 
           it "should call credit on the gateway with the credit amount and response_code" do
             expect(payment_method).to receive(:credit).with(
-              amount_in_cents, card, '123', anything
+              amount_in_cents, '123', anything
             ).and_return(success_response)
             payment.credit!
           end
@@ -476,7 +458,7 @@ RSpec.describe Spree::Payment do
 
           it "should call credit on the gateway with original payment amount and response_code" do
             expect(payment_method).to receive(:credit).with(
-              amount_in_cents.to_f, card, '123', anything
+              amount_in_cents.to_f, '123', anything
             ).and_return(success_response)
             payment.credit!
           end
@@ -658,7 +640,6 @@ RSpec.describe Spree::Payment do
 
       context "when profiles are supported" do
         before do
-          allow(payment_method).to receive(:payment_profiles_supported?) { true }
           allow(payment.source).to receive(:has_payment_profile?) { false }
         end
 
@@ -697,26 +678,6 @@ RSpec.describe Spree::Payment do
               payment_method:
             )
           end
-        end
-      end
-
-      context "when profiles are not supported" do
-        before do
-          allow(payment_method).to receive(:payment_profiles_supported?) { false }
-        end
-
-        it "should not create a payment profile" do
-          payment_method.name = 'Gateway'
-          payment_method.distributors << create(:distributor_enterprise)
-          payment_method.save!
-
-          expect(payment_method).not_to receive :create_profile
-          payment = Spree::Payment.create(
-            amount: 100,
-            order: create(:order),
-            source: card,
-            payment_method:
-          )
         end
       end
 
@@ -874,23 +835,6 @@ RSpec.describe Spree::Payment do
           allow(payment).to receive(:credit_allowed) { 1000 }
           allow(payment).to receive(:order) { double(:order, outstanding_balance: 123) }
           expect(payment.__send__(:calculate_refund_amount)).to eq(123)
-        end
-      end
-
-      describe "performing refunds" do
-        before do
-          allow(payment).to receive(:calculate_refund_amount) { 123 }
-          expect(payment.payment_method).to receive(:refund).and_return(success)
-        end
-
-        it "performs the refund without payment profiles" do
-          allow(payment.payment_method).to receive(:payment_profiles_supported?) { false }
-          payment.refund!
-        end
-
-        it "performs the refund with payment profiles" do
-          allow(payment.payment_method).to receive(:payment_profiles_supported?) { true }
-          payment.refund!
         end
       end
 
