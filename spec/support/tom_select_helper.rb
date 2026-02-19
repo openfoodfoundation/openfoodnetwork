@@ -15,7 +15,7 @@ module TomSelectHelper
     tomselect_wrapper.find(".ts-control").click
     # Use send_keys as setting the value directly doesn't trigger the search
     tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').send_keys(value)
-    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option.active', text: value).click
   end
 
   def tomselect_select(value, options)
