@@ -25,16 +25,6 @@ module TomSelectHelper
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
-  def select_tom_select(value, from:)
-    container = find(:id, from)
-
-    within(container) do
-      find('.ts-control').send_keys(value)
-    end
-
-    find('.ts-dropdown .ts-dropdown-content .option', text: /#{Regexp.quote(value)}/i).click
-  end
-
   def open_tomselect_to_validate!(page, field_name)
     tomselect_wrapper = page.find_field(field_name).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click # open the dropdown
