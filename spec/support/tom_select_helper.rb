@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module TomSelectHelper
-  def tomselect_open(field_name)
-    page.find("##{field_name}-ts-control").click
-  end
-
   def tomselect_multiselect(value, options)
     tomselect_wrapper = page.find_field(options[:from]).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click
