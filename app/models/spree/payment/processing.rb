@@ -144,6 +144,24 @@ module Spree
         end
       end
 
+      def internal_void!
+        return true if void?
+
+        options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
+        response = payment_method.void(
+          (amount * 100).round,
+          nil,
+          options
+        )
+        record_response(response)
+
+        if response.success?
+          void
+        else
+          gateway_error(response)
+        end
+      end
+
       def partial_credit(amount)
         return if amount > credit_allowed
 

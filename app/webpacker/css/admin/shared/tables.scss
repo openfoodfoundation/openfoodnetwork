@@ -86,7 +86,8 @@ table {
         }
       }
       .icon-trash:hover,
-      .icon-void:hover {
+      .icon-void:hover,
+      .icon-internal_void:hover {
         background-color: $color-error;
         color: $white;
       }
