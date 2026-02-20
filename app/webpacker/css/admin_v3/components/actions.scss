@@ -8,7 +8,8 @@ table tbody tr {
     }
 
     &.action-remove td,
-    &.action-void td {
+    &.action-void td,
+    &.action-internal_void td {
       text-decoration: line-through;
 
       &.actions {

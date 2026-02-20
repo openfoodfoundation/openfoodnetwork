@@ -185,7 +185,7 @@ module Spree
       end
 
       def allowed_events
-        %w{capture void_transaction credit refund resend_authorization_email
+        %w{capture void_transaction credit refund internal_void resend_authorization_email
            capture_and_complete_order}
       end
 
