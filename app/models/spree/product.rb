@@ -31,7 +31,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :meta_keywords, :sku, :on_hand, :backorderable_priority
+    searchable_attributes :meta_keywords, :sku, :on_hand, :backorderable_priority,
+                          :backorderable_name
     searchable_associations :properties, :variants
     searchable_scopes :active, :with_properties
 
@@ -250,7 +251,7 @@ module Spree
       transaction do
         ExchangeVariant.
           where(exchange_variants: { variant_id: variants.with_deleted.
-          select(:id) }).destroy_all
+            select(:id) }).destroy_all
 
         yield
       end

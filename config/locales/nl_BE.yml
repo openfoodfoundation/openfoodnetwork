@@ -299,6 +299,7 @@ nl_BE:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
     cancel: "Annuleren"
+    cancel_order: "Annuleren"
     save: "Save"
     edit: "bewerking"
     update: "Update"
@@ -553,6 +554,7 @@ nl_BE:
           label: Categorieën
         tags:
           label: Tags
+          none: Geen enkele
         search: Zoeken
       sort:
         pagination:

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::Admin::CustomerSerializer do
   let(:tag_list) { ["one", "two", "three"] }
   let(:customer) { create(:customer, tag_list:) }

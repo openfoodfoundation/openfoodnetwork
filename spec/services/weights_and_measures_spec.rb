@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe WeightsAndMeasures do
   subject { WeightsAndMeasures.new(variant) }
   let(:variant) { instance_double(Spree::Variant) }

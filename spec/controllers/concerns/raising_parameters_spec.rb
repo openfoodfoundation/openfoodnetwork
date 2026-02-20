@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe RaisingParameters do
   describe "Parameters" do
     let(:params) do

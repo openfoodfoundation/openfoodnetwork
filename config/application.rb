@@ -58,24 +58,21 @@ module Openfoodnetwork
       Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
     end
 
-    # We reload the routes here
-    #   so that the appended/prepended routes are available to the application.
     config.after_initialize do
+      # We reload the routes here
+      #   so that the appended/prepended routes are available to the application.
       Rails.application.routes_reloader.reload!
+
+      # Subscribe to payment transition events
+      ActiveSupport::Notifications.subscribe(
+        "ofn.payment_transition", Payments::StatusChangedListenerService.new
+      )
     end
 
     initializer "spree.environment", before: :load_config_initializers do |app|
       Rails.application.reloader.to_prepare do
         app.config.spree = Spree::Core::Environment.new
         Spree::Config = app.config.spree.preferences # legacy access
-      end
-    end
-
-    initializer "spree.register.payment_methods" do |app|
-      Rails.application.reloader.to_prepare do
-        app.config.spree.payment_methods = [
-          Spree::PaymentMethod::Check
-        ]
       end
     end
 
@@ -123,14 +120,6 @@ module Openfoodnetwork
         app.config.spree.calculators.tax_rates = [
           Calculator::DefaultTax
         ]
-      end
-    end
-
-    # Register Spree payment methods
-    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
-      Rails.application.reloader.to_prepare do
-        app.config.spree.payment_methods << Spree::Gateway::StripeSCA
-        app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
       end
     end
 
@@ -206,7 +195,16 @@ module Openfoodnetwork
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 
-    config.active_storage.service = ENV["S3_BUCKET"].present? ? :amazon : :local
+    config.active_storage.service =
+      if ENV["S3_BUCKET"].present?
+        if ENV["S3_ENDPOINT"].present?
+          :s3_compatible_storage
+        else
+          :amazon
+        end
+      else
+        :local
+      end
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
     config.active_storage.variable_content_types += ["image/svg+xml"]
     config.active_storage.url_options = config.action_controller.default_url_options

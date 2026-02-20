@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::CloneService do
   describe "#create" do
     it "clones the order cycle" do
@@ -17,6 +15,7 @@ RSpec.describe OrderCycles::CloneService do
       occ = OrderCycles::CloneService.new(oc).create
       expect(occ.name).to eq("COPY OF #{oc.name}")
       expect(occ.orders_open_at).to be_nil
+      expect(occ.opened_at).to be_nil
       expect(occ.orders_close_at).to be_nil
       expect(occ.coordinator).not_to be_nil
       expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PaypalItemsBuilder do
   let(:order) { create(:completed_order_with_fees) }
   let(:service) { described_class.new(order) }

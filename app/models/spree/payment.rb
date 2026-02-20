@@ -34,7 +34,7 @@ module Spree
 
     # invalidate previously entered payments
     after_create :invalidate_old_payments
-    after_save :create_payment_profile, if: :profiles_supported?
+    after_save :create_payment_profile
 
     # update the order totals, etc.
     after_save :ensure_correct_adjustment, :update_order
@@ -101,6 +101,24 @@ module Spree
       end
 
       after_transition to: :completed, do: :set_captured_at
+      after_transition do |payment, transition|
+        # Catch any exceptions to prevent any rollback potentially
+        # preventing payment from going through
+        ActiveSupport::Notifications.instrument(
+          "ofn.payment_transition", payment: payment, event: transition.to
+        )
+      rescue StandardError => e
+        Rails.logger.fatal "ActiveSupport::Notification.instrument failed params: " \
+                           "<event_type:ofn.payment_transition> " \
+                           "<payment_id:#{payment.id}> " \
+                           "<event:#{transition.to}>"
+        Alert.raise(
+          e,
+          metadata: {
+            event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
+          }
+        )
+      end
     end
 
     def money
@@ -199,18 +217,13 @@ module Spree
       errors.blank?
     end
 
-    def profiles_supported?
-      payment_method.respond_to?(:payment_profiles_supported?) &&
-        payment_method.payment_profiles_supported?
-    end
-
     def create_payment_profile
       return unless source.is_a?(CreditCard)
       return unless source.try(:save_requested_by_customer?)
       return unless source.number || source.gateway_payment_profile_id
       return unless source.gateway_customer_profile_id.nil?
 
-      payment_method.create_profile(self)
+      payment_method.try(:create_profile, self)
     rescue ActiveMerchant::ConnectionError => e
       gateway_error e
     end

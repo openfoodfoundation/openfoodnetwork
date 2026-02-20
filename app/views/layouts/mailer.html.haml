@@ -5,7 +5,7 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title
       = Spree::Config[:site_name]
-    = stylesheet_link_tag 'mail'
+    = stylesheet_pack_tag "mail", media: "screen"
   %body{:bgcolor => "#FFFFFF" }
     - unless @hide_ofn_navigation
       %table.head-wrap

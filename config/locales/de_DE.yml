@@ -105,27 +105,6 @@ de_DE:
         blank: "darf nicht leer sein."
         too_short: "ist zu kurz (mindestens %{count} Zeichen)"
   errors:
-    messages:
-      content_type_invalid: "hat ein ungültiges Datenformat"
-      file_size_out_of_range: "Dateigröße %{file_size} liegt außerhalb des zulässigen Bereichs"
-      limit_out_of_range: "Gesamtzahl liegt außerhalb des zulässigen Bereichs"
-      image_metadata_missing: "ist kein gültiges Bild"
-      dimension_min_inclusion: "muss größer oder gleich %{width} x %{height} Pixel sein"
-      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
-      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_width_greater_than_or_equal_to: "Breite muss größer oder gleich %{length} Pixel sein"
-      dimension_height_greater_than_or_equal_to: "Höhe muss größer oder gleich %{length} Pixel sein"
-      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
-      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
-      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
-      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
-      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
-      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
-      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
-      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
-      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
-      image_not_processable: "ist kein gültiges Bild"
     not_found:
       title: "Die gesuchte Seite existiert nicht (404). "
       message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/'>Startseite</a> und versuchen Sie es erneut.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben können, worum es auf der fehlenden Seite geht.</p>"
@@ -487,6 +466,7 @@ de_DE:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
+    cancel_order: "Stornieren"
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
@@ -541,9 +521,11 @@ de_DE:
         clone: Duplizieren
         delete: Löschen
         remove: Löschen
+        preview: Vorschau
       image:
         edit: Bearbeiten
       product_preview:
+        product_preview: Produktvorschau
         shop_tab: Produkte
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
@@ -661,6 +643,13 @@ de_DE:
         info_html: "Matomo ist eine Web- und Mobile Analytics-Anwendung. Sie können Matomo entweder lokal hosten oder einen in der Cloud gehosteten Dienst verwenden. Weitere Informationen finden Sie unter <a href='http://matomo.org' target='_blank'>matomo.org</a>."
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
         config_instructions_tag_manager_html: "Durch Festlegen der Matomo Tag Manager URL wird Matomo Tag Manager aktiviert. Mit diesem Tool können Sie Analyseereignisse einrichten. Die Matomo Tag Manager URL wird aus dem Abschnitt Installationscode von Matomo Tag Manager kopiert. Stellen Sie sicher, dass Sie den richtigen Container und die richtige Umgebung auswählen, da diese Optionen die URL ändern."
+    connected_app_settings:
+      edit:
+        title: "Verknüpfte Apps"
+        info_html: "Aktivierte Apps werden in den Unternehmenseinstellungen unter Verknüpfte Apps angezeigt."
+        enabled_legend: "Aktivierte verknüpfte Apps"
+      update:
+        resource: Verknüpfte Apps
     customers:
       index:
         new_customer: "Neuer Kunde"
@@ -758,6 +747,7 @@ de_DE:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
+      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -771,19 +761,36 @@ de_DE:
           title: Produkte verwalten
       content:
         loading: Produkte werden geladen...
+      delete_modal:
+        delete_product_modal:
+          heading: "Produkt löschen"
+          prompt: "Das Produkt wird dauerhaft aus Ihrer Liste entfernt."
+          confirmation_text: "Produkt löschen"
+          cancellation_text: "Produkt beibehalten"
+        delete_variant_modal:
+          heading: "Produktvariante löschen"
+          prompt: "Die Produktvariante wird dauerhaft aus Ihrer Liste entfernt."
+          confirmation_text: "Produktvariante löschen"
+          cancellation_text: "Produktvariante beibehalten"
       filters:
         search_products: Nach Produkten suchen
+        search_for_producers: Produzenten suchen
         all_producers: Alle Produzenten
+        search_for_categories: Kategorie suchen
         all_categories: Alle Kategorien
         producers:
           label: Unsere Produzenten
         categories:
-          label: Lieferkategorien
+          label: Produktkategorie
         tags:
           label: Stichwörter
+          none: Nichts
         search: Suche
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{total} Produkt</strong> für Ihre Suchkriterien gefunden."
+            other: "<strong>%{count} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -809,12 +816,25 @@ de_DE:
         new_variant: Neue Produktvariante
       bulk_update:
         success: Die Änderungen wurden gespeichert.
+      delete_product:
+        success: Das Produkt wurde gelöscht.
+        error: Das Produkt konnte nicht gelöscht werden.
+      delete_variant:
+        success: Die Produktvariante wurde gelöscht.
+        error: Die Produktvariante konnte nicht gelöscht werden.
       variant_row:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
         producer_field_name: "Produzent"
+        select_unit_scale: Einheit auswählen
         add_a_tag: Stichwort hinzufügen
+      clone:
+        success: Das Produkt wurde dupliziert.
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} hat 1 Regel"
+          other: "%{tag} hat %{count} Regeln"
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -856,6 +876,8 @@ de_DE:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        preview: Vorschau
       import:
         review: Überprüfung
         import: Importieren
@@ -1059,6 +1081,7 @@ de_DE:
         images:
           legend: "Bilder"
           logo: Logo
+          logo_size: "300 x 300 Pixel"
         inventory_settings:
           legend: "Katalog"
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
@@ -1191,7 +1214,7 @@ de_DE:
           default_rules:
             by_default: Standardregeln
             no_rules_yet: Es gelten noch keine Standardregeln.
-            add_new_button: 'neue Standardregel +'
+            add_new_button: '+ Neue Standardregel'
           no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden.
           add_new_tag: '+ Neues Stichwort hinzufügen'
           show_hide_variants: 'Produktvarianten im Laden anzeigen?'
@@ -1220,7 +1243,7 @@ de_DE:
         vouchers:
           legend: Gutscheine
           voucher_code: Gutschein-Code
-          rate: Steuersatz
+          rate: Gutscheinwert
           label: Bezeichnung
           purpose: Zweck
           expiry: Gültigkeit
@@ -1228,7 +1251,7 @@ de_DE:
           customers: Kunde
           net_value: Nettowert
           active: Aktiv?
-          add_new: Neuer Gutschein
+          add_new: + Neuer Gutschein
           no_voucher_yet: Noch keine Gutscheine vorhanden.
         white_label:
           legend: "OFN verbergen"
@@ -1262,6 +1285,8 @@ de_DE:
         visible: Sichtbar?
         owner: Inhaber
         producer: Produzent
+        sells_options:
+          unspecified: nicht spezifiziert
       change_type_form:
         producer_profile: Profil
         connect_ofn: Stellen Sie sich und Ihre Produkte vor
@@ -1298,8 +1323,10 @@ de_DE:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
+        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
+        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -1310,6 +1337,8 @@ de_DE:
       invite_manager:
         user_already_exists: "Der Benutzer existiert bereits. Bitte verwenden Sie die Funktion \"vorhandenen Benutzer hinzufügen\"."
         error: "Etwas ist schief gelaufen."
+    tag_rules:
+      confirm_delete: Möchten Sie diese Regel wirklich löschen?
     order_cycles:
       loading_flash:
         loading_order_cycles: BESTELLZYKLEN WERDEN GELADEN ...
@@ -1471,6 +1500,7 @@ de_DE:
     shared:
       attachment_field:
         logo_label: "Logo"
+        logo_hint: 300 x 300 Pixel
         logo_remove: "Bild löschen"
         logo_remove_confirm: "Das Logo wird sofort nach Ihrer Bestätigung gelöscht."
         promo_image_note1: 'BITTE BEACHTEN SIE:'
@@ -1488,6 +1518,8 @@ de_DE:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten."
         has_no_shipping_methods: "%{enterprise} hat keine Lieferoptionen."
         has_no_enterprise_fees: "%{enterprise} erhebt keine Gebühren."
+      flashes:
+        dismiss: Schließen
       side_menu:
         enterprise:
           primary_details: "Unternehmen"
@@ -1524,6 +1556,8 @@ de_DE:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
+      metadata:
+        report_title: Bericht
       deprecated: "Dieser Bericht ist veraltet und wird in einer zukünftigen Version entfernt."
       hidden_field: "< verborgen >"
       unitsize: EINHEIT
@@ -1575,7 +1609,7 @@ de_DE:
       orders_and_fulfillment:
         name: Bestellungs- & Erfüllungsberichte
       customers:
-        name: Kundenberichte
+        name: Kundenbericht
       products_and_inventory:
         name: Produkte und Katalog
       users_and_enterprises:
@@ -1617,9 +1651,10 @@ de_DE:
         generate_report: "Bericht erstellen"
         on_screen: "Auf dem Bildschirm"
         spreadsheet: "Tabellenkalkulation (Excel, OpenOffice, ..)"
-        display: Anzeige
+        display: Darstellung
         summary_row: Zeilen mit Zwischensummen
         header_row: Kopfzeile
+        metadata_rows: Kopfzeile mit Berichtdetails
         raw_data: Rohdaten
         formatted_data: Formatierte Daten
       packing:
@@ -1631,6 +1666,9 @@ de_DE:
         les_communs_link: "Les Communs Open ID-Server"
         link_your_account: "Sie müssen Ihr Benutzerkonto zunächst mit dem von DFC (Les Communs Open ID Connect) verwendeten Autorisierungsanbieter verbinden."
         link_account_button: "Verbinden Sie Ihr Les Communs OIDC-Konto"
+        note_expiry: |
+            Die Tokens für den Zugriff auf verknüpfte Apps sind abgelaufen. Bitte aktualisieren Sie Ihre
+            Kontoverknüpfung, damit alle Integrationen weiterhin funktionieren.
         view_account: "Ihr Benutzerkonto anzeigen:"
     subscriptions:
       index:
@@ -1949,6 +1987,7 @@ de_DE:
   invoice_column_price_per_unit_without_taxes: "Einzelpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
+  invoice_cancel_and_replace_invoice: "ersetzt Rechnung"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
   invoice_shipping_category_delivery: "Lieferoptionen"
@@ -2171,6 +2210,9 @@ de_DE:
   order_back_to_store: Zurück zum Laden
   order_back_to_cart: Zurück zum Warenkorb
   order_back_to_website: 'zur Website '
+  checkout_details_title: Ihre Daten
+  checkout_payment_title: Zahlungsart
+  checkout_summary_title: Bestellabschluss
   bom_tip: "Verwenden Sie diese Seite, um Produktmengen über mehrere Bestellungen hinweg zu ändern. Produkte können bei Bedarf auch komplett aus Bestellungen entfernt werden."
   unsaved_changes_warning: "Sie haben nicht gespeicherte Änderungen, die beim Fortfahren verloren gehen."
   unsaved_changes_error: "Felder mit roten Rahmen enthalten Fehler."
@@ -3021,6 +3063,8 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_header_voucher_label: Gutschein-Code
+  report_header_voucher_amount: "Gutscheinwert"
   report_line_cost_of_produce: Produktkosten
   report_line_line_items: Einzelposten
   report_header_last_completed_order_date: Letzte Bestellung
@@ -3102,6 +3146,7 @@ de_DE:
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren."
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"
+  order_cycle_closed_next_steps: "Der von Ihnen gewählte Bestellzyklus wurde gerade geschlossen. Bitte kontaktieren Sie uns, um Ihre Bestellung mit der Bestellnummer %{order_number} abzuschließen!"
   back_to_orders_list: "Zurück zur Bestellübersicht"
   no_orders_found: "Keine Bestellungen gefunden."
   order_information: "Bestellinformationen"
@@ -3636,7 +3681,7 @@ de_DE:
   spree:
     order_updated: "Bestellung aktualisiert"
     add_country: "Neues Land"
-    add_state: "Neues Bundesland"
+    add_state: "Bundesland hinzufügen"
     adjustment: "Anpassung"
     all: "Alle"
     associated_adjustment_closed: "Zugehörige Anpassung geschlossen"
@@ -3680,6 +3725,7 @@ de_DE:
     resend: "Erneut senden"
     back_to_orders_list: "Zurück zur Bestellübersicht"
     back_to_payments_list: "Zurück zur Zahlungsliste"
+    back_to_states_list: "Zurück zur Bundesländerliste"
     return_authorizations: "Retouren"
     cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde."
     select_stock: "Bestand auswählen"
@@ -3736,6 +3782,7 @@ de_DE:
     logourl: "URL des Logos"
     are_you_sure_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
     confirm_delete: "Löschen bestätigen"
+    voucher: "Gutschein"
     configurations: "Konfiguration"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Name der Website"
@@ -3769,6 +3816,7 @@ de_DE:
     tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
     included_in_price: "Im Preis enthalten"
     show_rate_in_label: "Steuersatz im Namen anzeigen"
+    back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
     new_zone: "Neue Zone"
@@ -3781,6 +3829,7 @@ de_DE:
     iso_name: "ISO-Name"
     states_required: "Staaten/Bundesländer/Regionen erforderlich"
     editing_country: "Land bearbeiten"
+    back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"
     abbreviation: "Abkürzung"
     new_state: "Neues Bundesland"
@@ -3824,6 +3873,7 @@ de_DE:
     alt_text: "Alternativtext"
     thumbnail: "Miniaturansicht"
     back_to_images_list: "Zurück zur Bilderliste"
+    api_key: "API-Schlüssel"
     email: E-Mail-Adresse
     account_updated: "Konto aktualisiert!"
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
@@ -3943,6 +3993,7 @@ de_DE:
           continue: "Weiter"
         new:
           new_return_authorization: "Neue Retour"
+          back_to_return_authorizations_list: "Zurück zur Retourenliste"
           continue: "Weiter"
         edit:
           receive: "erhalten"
@@ -4027,6 +4078,9 @@ de_DE:
           line_item_adjustments: "Anpassungen der Einzelposten"
           order_adjustments: "Bestellanpassungen"
           order_total: "Bestellung insgesamt"
+      invoices:
+        index:
+          order_has_changed: "Die Bestellung hat sich seit Erstellung der letzten Rechnung geändert. Die hier angezeigte Rechnung ist möglicherweise nicht mehr aktuell."
       overview:
         enterprises_header:
           ofn_with_tip: Unternehmen sind Produzenten und/oder Läden und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
@@ -4035,6 +4089,7 @@ de_DE:
           has_no_payment_methods: "hat keine Zahlungsarten"
           has_no_shipping_methods: "hat keine Lieferoptionen"
         products:
+          products_tip: "Die Produkte, die Sie über das Open Food Network verkaufen."
           active_products:
             zero: "Sie haben keine aktiven Produkte."
             one: "Sie haben ein aktives Produkt"
@@ -4129,9 +4184,7 @@ de_DE:
         providers:
           provider: "Anbieter"
           check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
-          pin: "Pin Zahlungen"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4182,11 +4235,14 @@ de_DE:
           product_name: Produktname
         primary_taxon_form:
           product_category: Produktkategorie
+          search_for_categories: "Lieferkategorie suchen"
         group_buy_form:
           group_buy: "Gruppenkauf aktivieren?"
           bulk_unit_size: Erforderliche Gesamtbestellmenge (in Gramm, Liter oder Stück)
         display_as:
           display_as: Anzeigen als
+        clone:
+          success: Produkt wurde dupliziert.
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
@@ -4258,8 +4314,16 @@ de_DE:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Zurück zur Produktkategorienliste"
         index:
           title: "Produktkategorien"
+          new_taxon: 'Neue Produktkategorie'
+        new:
+          title: "Neue Produktkategorie"
+        destroy:
+          delete_taxon:
+            success: "Die Produktkategorie wurde gelöscht."
+            error: "Die Produktkategorie kann aufgrund zugewiesener Produkte nicht gelöscht werden."
         form:
           name: Name
           description: Beschreibung
@@ -4424,13 +4488,10 @@ de_DE:
       webhook_endpoints:
         title: Webhook-Endpunkte
         description: Ereignisse im System können Webhooks zu externen Systemen auslösen.
-        event_types:
-          order_cycle_opened: Bestellzyklus eröffnet
         event_type:
           header: Ereignistyp
         url:
           header: Endpunkt-URL
-          create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
       developer_settings:
         title: Entwicklereinstellungen
       form:
@@ -4578,3 +4639,8 @@ de_DE:
     add_tag_rule_modal:
       select_rule_type: "Wählen Sie einen Regelart aus:"
       add_rule: "Regel hinzufügen"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
+      event_types:
+        order_cycle_opened: Bestellzyklus eröffnet

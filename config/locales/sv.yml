@@ -145,6 +145,7 @@ sv:
   actions:
     create: "Skapa"
     cancel: "Avbryt"
+    cancel_order: "Avbryt"
     edit: "Redigera"
     update: "Uppdatera"
     add: "Tillägga"
@@ -336,6 +337,7 @@ sv:
           label: 'Producenter '
         tags:
           label: Taggar
+          none: Ingen
         search: Sök
       variant_row:
         none_tax_category: Ingen

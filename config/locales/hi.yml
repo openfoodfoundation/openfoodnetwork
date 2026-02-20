@@ -105,27 +105,6 @@ hi:
         blank: "खाली नहीं हो सकता"
         too_short: "बहुत छोटा है (न्यूनतम %{count} वर्ण है)"
   errors:
-    messages:
-      content_type_invalid: "में एक अमान्य कंटेन्ट प्रकार है"
-      file_size_out_of_range: "आकार %{file_size} आवश्यक सीमा के बीच नहीं है"
-      limit_out_of_range: "कुल संख्या सीमा से बाहर है"
-      image_metadata_missing: "मान्य छवि नहीं है"
-      dimension_min_inclusion: "%{width} x %{height} पिक्सेल से बड़ा या बराबर होना चाहिए"
-      dimension_max_inclusion: "%{width} x %{height} पिक्सेल से कम या बराबर होना चाहिए"
-      dimension_width_inclusion: "चौड़ाई %{min} और %{max} पिक्सेल के बीच में शामिल नहीं है"
-      dimension_height_inclusion: "%{min} और %{max} पिक्सल के बीच ऊंचाई शामिल नहीं है।"
-      dimension_width_greater_than_or_equal_to: "चौड़ाई %{length} पिक्सल से ज्यादा या उसके बराबर होनी चाहिए।"
-      dimension_height_greater_than_or_equal_to: "ऊंचाई %{length} पिक्सल से ज्यादा या उसके बराबर होनी चाहिए।"
-      dimension_width_less_than_or_equal_to: "चौड़ाई %{length} पिक्सल से कम या उसके बराबर होनी चाहिए।"
-      dimension_height_less_than_or_equal_to: "ऊंचाई %{length} पिक्सल से कम या उसके बराबर होनी चाहिए।"
-      dimension_width_equal_to: "चौड़ाई %{length} पिक्सल के बराबर होनी चाहिए।"
-      dimension_height_equal_to: "ऊंचाई %{length} पिक्सल के बराबर होनी चाहिए।"
-      aspect_ratio_not_square: "चौकोर इमेज होनी चाहिए"
-      aspect_ratio_not_portrait: "पोर्ट्रेट इमेज होनी चाहिए"
-      aspect_ratio_not_landscape: "लैंडस्केप इमेज होनी चाहिए"
-      aspect_ratio_is_not: "का आस्पेक्ट रेशियो %{aspect_ratio} होना चाहिए"
-      aspect_ratio_unknown: "इसका एक अज्ञात आस्पेक्ट रेशियो है"
-      image_not_processable: "मान्य छवि नहीं है"
     not_found:
       title: "जिस पेज को आप खोज रहे थे वह मौजूद नहीं है (404)"
       message_html: "<b>कृपया फिर से कोशिश करें</b> <p>यह एक अस्थायी समस्या हो सकती है। कृपया पिछली स्क्रीन पर रिटर्न के लिए वापस जाएं बटन पर क्लिक करें या <a href='/'>होम</a> पर वापस जाएं और फिर से कोशिश करें।</p> <b>समर्थन से संपर्क करें</b> <p>यदि समस्या बनी रहती है या अत्यावश्यक है, तो कृपया हमें इसके बारे में बताएं। वैश्विक <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network लोकल पेज</a>से हमारे संपर्क विवरण प्राप्त करें।</p> <p>अगर आप गुम हुए पेज के बारे में जितना संभव हो उतना विवरण दे सकते हैं, तो यह वास्तव में हमारी मदद करता है।</p>"
@@ -487,6 +466,7 @@ hi:
     create_and_add_another: "एक और बनाएं और जोड़ें"
     create: "बनाएं"
     cancel: "रद्द करें"
+    cancel_order: "रद्द करें"
     resume: "फिर शुरू करें"
     save: "सेव करें"
     edit: "एडिट करें"
@@ -778,6 +758,7 @@ hi:
           label: श्रेणियां
         tags:
           label: टैग्स
+          none: कोई नहीं
         search: सर्च
       sort:
         pagination:
@@ -3721,6 +3702,7 @@ hi:
     logourl: "लॉग-आउट करें"
     are_you_sure_delete: "क्या आप वाकई इस रिकॉर्ड को मिटाना चाहते हैं?"
     confirm_delete: "हटाने की पुष्टि करें"
+    voucher: "वाउचर"
     configurations: "कॉन्फ़िगरेशन करें"
     general_settings: "सामान्य सेटिंग"
     site_name: "साइट का नाम"
@@ -3809,6 +3791,7 @@ hi:
     alt_text: "वैकल्पिक टेक्स्ट"
     thumbnail: "थंबनेल"
     back_to_images_list: "छवियों की सूची पर वापस जाएं"
+    api_key: "API कुंजी"
     email: ईमेल
     account_updated: "अकाउंट अपडेट किया गया!"
     email_updated: "नए ईमेल की पुष्टि होने के बाद अकाउंट अपडेट हो जाएगा।"
@@ -4114,9 +4097,7 @@ hi:
         providers:
           provider: "प्रदाता"
           check: "नकद/EFT/आदि (ऐसे भुगतान जिनके लिए ऑटोमैटिक वेरिफिकेशन की आवश्यकता नहीं है)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4410,13 +4391,10 @@ hi:
       webhook_endpoints:
         title: Webhook एंडपॉइंट्स
         description: सिस्टम में होने वाले इवेंट्स webhook को बाहरी सिस्टम में ट्रिगर कर सकती हैं।
-        event_types:
-          order_cycle_opened: ऑर्डर साइकल खोला गया
         event_type:
           header: इवेंट प्रकार
         url:
           header: एंडपॉइंट URL
-          create_placeholder: रिमोट webhook एंडपॉइंट का URL एंटर करें
       developer_settings:
         title: डेवलपर सेटिंग
       form:
@@ -4564,3 +4542,8 @@ hi:
     add_tag_rule_modal:
       select_rule_type: "नियम का प्रकार चुनें:"
       add_rule: "नियम जोड़ें"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: रिमोट webhook एंडपॉइंट का URL एंटर करें
+      event_types:
+        order_cycle_opened: ऑर्डर साइकल खोला गया

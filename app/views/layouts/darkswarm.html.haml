@@ -13,12 +13,12 @@
     - else
       = favicon_link_tag "/favicon-staging.ico"
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
-    %link{href: asset_pack_path("media/fonts/OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
+    %link{href: asset_pack_path("static/OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
     = render "layouts/matomo_tag"
     = language_meta_tags
 
-    = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload"
-    = javascript_pack_tag "application", "data-turbo-track": "reload"
+    = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload", media: "screen"
+    = javascript_pack_tag "application", "data-turbo-track": "reload", defer: false  # do not use defer because our javascript currently depend on order of execution of loaded script.
 
     = render "layouts/shopfront_script" if @shopfront_layout
     = render "layouts/bugsnag_js"

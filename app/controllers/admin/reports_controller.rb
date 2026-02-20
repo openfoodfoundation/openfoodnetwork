@@ -4,6 +4,7 @@ module Admin
   class ReportsController < Spree::Admin::BaseController
     include ActiveStorage::SetCurrent
     include ReportsActions
+    include Reports::AjaxSearch
 
     helper ReportsHelper
 

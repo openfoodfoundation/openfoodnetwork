@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Enterprise do
   describe "sending emails" do
     describe "on creation" do
@@ -58,37 +56,40 @@ RSpec.describe Enterprise do
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
     end
 
-    it "raises a DeleteRestrictionError on destroy if distributed_orders exist" do
+    it "does not destroy distributed_orders upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:order, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributed_orders/)
-        .and change { Spree::Order.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributed orders exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_payment_methods exist" do
+    it "does not destroy distributor_payment_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_payment_method, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributor_payment_methods/)
-        .and change { DistributorPaymentMethod.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributor payment methods exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
-    it "raises an DeleteRestrictionError on destroy if distributor_shipping_methods exist" do
+    it "does not destroy distributor_shipping_methods upon destroy" do
       enterprise = create(:distributor_enterprise)
       create_list(:distributor_shipping_method, 2, distributor: enterprise)
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent distributor_shipping_methods/)
-        .and change { DistributorShippingMethod.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent distributor shipping methods exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     it "does not destroy enterprise_fees upon destroy" do
@@ -97,9 +98,10 @@ RSpec.describe Enterprise do
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent enterprise_fees/)
-        .and change { EnterpriseFee.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent enterprise fees exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     it "does not destroy vouchers upon destroy" do
@@ -110,9 +112,10 @@ RSpec.describe Enterprise do
 
       expect do
         enterprise.destroy
-      end.to raise_error(ActiveRecord::DeleteRestrictionError,
-                         /Cannot delete record because of dependent vouchers/)
-        .and change { Voucher.count }.by(0)
+        expect(enterprise.errors.full_messages).to eq(
+          ["Cannot delete record because dependent vouchers exist"]
+        )
+      end.to change { Spree::Order.count }.by(0)
     end
 
     describe "relationships to other enterprises" do
@@ -386,33 +389,55 @@ RSpec.describe Enterprise do
       end
     end
 
-    describe "white label logo link" do
+    describe "white label logo" do
+      let(:enterprise) { build(:enterprise) }
+      let(:content_type) { 'image/png' }
+
       before do
-        # validate white_label_logo_link only if white_label_logo is present
-        allow_any_instance_of(Enterprise).to receive(:white_label_logo).and_return(true)
+        blob = Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', content_type)
+        enterprise.white_label_logo.attach(blob)
+      end
+
+      context 'when the file attached is a PNG image' do
+        it 'is valid' do
+          expect(enterprise).to be_valid
+        end
+      end
+
+      context 'when the file attached is a BMP image' do
+        let(:content_type) { 'image/bmp' }
+
+        before do
+          blob = Rack::Test::UploadedFile.new('spec/fixtures/files/logo.bmp', content_type)
+          enterprise.white_label_logo.attach(blob)
+        end
+
+        it 'is not valid' do
+          expect(enterprise).not_to be_valid
+        end
       end
 
       it "validates the white_label_logo_link attribute" do
-        e = build(:enterprise, white_label_logo_link: 'http://www.example.com')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = 'http://www.example.com'
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "adds http:// to the white_label_logo_link attribute if it is missing" do
-        e = build(:enterprise, white_label_logo_link: 'www.example.com')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = 'www.example.com'
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "ignores whitespace around the URL form copying and pasting" do
-        e = build(:enterprise, white_label_logo_link: ' www.example.com ')
-        expect(e).to be_valid
-        expect(e.white_label_logo_link).to eq "http://www.example.com"
+        enterprise.white_label_logo_link = ' www.example.com '
+        expect(enterprise).to be_valid
+        expect(enterprise.white_label_logo_link).to eq "http://www.example.com"
       end
 
       it "does not validate if URL is invalid and can't be infered" do
-        e = build(:enterprise, white_label_logo_link: 'with spaces')
-        expect(e).not_to be_valid
+        enterprise.white_label_logo_link = 'with spaces'
+        expect(enterprise).not_to be_valid
       end
     end
 

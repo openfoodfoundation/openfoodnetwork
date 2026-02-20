@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 class Spree::Gateway::Test < Spree::Gateway
 end
 
@@ -131,13 +129,6 @@ RSpec.describe Spree::PaymentMethod do
     pm = Spree::PaymentMethod.new
     pm.save
     expect(pm.errors.to_a).to eq(["Name can't be blank", "At least one hub must be selected"])
-  end
-
-  it "generates a clean name for known Payment Method types" do
-    expect(Spree::PaymentMethod::Check.clean_name)
-      .to eq('Cash/EFT/etc. (payments for which automatic validation is not required)')
-    expect(Spree::Gateway::PayPalExpress.clean_name).to eq('PayPal Express')
-    expect(Spree::Gateway::StripeSCA.clean_name).to eq('Stripe SCA')
   end
 
   it "computes the amount of fees" do

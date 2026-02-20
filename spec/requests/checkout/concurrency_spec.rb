@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # This is the first example of testing concurrency in the Open Food Network.
 # If we want to do this more often, we should look at:
 #

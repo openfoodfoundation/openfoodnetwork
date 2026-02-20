@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::User do
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }
@@ -19,7 +17,7 @@ RSpec.describe Spree::User do
             bill_address_attributes: new_bill_address.dup.attributes.merge(
               'id' => old_bill_address.id
             )
-            .except!('created_at', 'updated_at')
+              .except!('created_at', 'updated_at')
           )
 
           expect(user.bill_address.id).to eq old_bill_address.id

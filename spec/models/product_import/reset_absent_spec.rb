@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module ProductImport
   RSpec.describe ResetAbsent do
     let(:entry_processor) { instance_double(EntryProcessor) }

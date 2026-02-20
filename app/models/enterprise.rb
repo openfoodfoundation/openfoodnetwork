@@ -50,11 +50,11 @@ class Enterprise < ApplicationRecord
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
                                 inverse_of: :distributor,
-                                dependent: :restrict_with_exception
+                                dependent: :restrict_with_error
 
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
-  has_many :enterprise_fees, dependent: :restrict_with_exception
+  has_many :enterprise_fees, dependent: :restrict_with_error
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
@@ -62,21 +62,22 @@ class Enterprise < ApplicationRecord
   has_many :distributor_payment_methods,
            inverse_of: :distributor,
            foreign_key: :distributor_id,
-           dependent: :restrict_with_exception
+           dependent: :restrict_with_error
   has_many :distributor_shipping_methods,
            inverse_of: :distributor,
            foreign_key: :distributor_id,
-           dependent: :restrict_with_exception
+           dependent: :restrict_with_error
   has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers, dependent: :destroy
   has_many :inventory_items, dependent: :destroy
   has_many :tag_rules, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
-  has_many :vouchers, dependent: :restrict_with_exception
+  has_many :vouchers, dependent: :restrict_with_error
   has_many :connected_apps, dependent: :destroy
   has_many :dfc_permissions, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
+  has_one :semantic_link, as: :subject, dependent: :delete
 
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
@@ -110,11 +111,14 @@ class Enterprise < ApplicationRecord
   end
 
   validates :logo,
-            processable_image: true,
-            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
   validates :promo_image,
-            processable_image: true,
-            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
+  validates :white_label_logo,
+            processable_file: true,
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
   validates :terms_and_conditions, content_type: {
     in: "application/pdf",
     message: I18n.t(:enterprise_terms_and_conditions_type_error),

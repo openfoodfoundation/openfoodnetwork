@@ -19,6 +19,5 @@ Rails.application.config.assets.precompile += [
   'web/all.js',
   'darkswarm/all.js',
   'shared/*',
-  'mail.scss',
   '*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg',
 ]

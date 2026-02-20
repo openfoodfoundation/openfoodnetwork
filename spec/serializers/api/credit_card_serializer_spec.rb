@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::CreditCardSerializer do
   let(:card) { create(:credit_card) }
   let(:serializer) { Api::CreditCardSerializer.new card }

@@ -5,6 +5,18 @@ require "active_support/concern"
 module CalculatedAdjustments
   extend ActiveSupport::Concern
 
+  CALCULATORS = %w{
+    Calculator::DefaultTax
+    Calculator::FlatPercentItemTotal
+    Calculator::FlatPercentPerItem
+    Calculator::FlatRate
+    Calculator::FlexiRate
+    Calculator::None
+    Calculator::PerItem
+    Calculator::PriceSack
+    Calculator::Weight
+  }.freeze
+
   included do
     has_one :calculator, as: :calculable, class_name: "Spree::Calculator", dependent: :destroy
     accepts_nested_attributes_for :calculator
@@ -32,7 +44,11 @@ module CalculatedAdjustments
   end
 
   def calculator_type=(calculator_type)
-    klass = calculator_type.constantize if calculator_type
+    return unless calculator_type
+
+    return unless CALCULATORS.include?(calculator_type)
+
+    klass = calculator_type.constantize
     self.calculator = klass.new if klass && !calculator.is_a?(klass)
   end
 

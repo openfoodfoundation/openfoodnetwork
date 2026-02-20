@@ -181,7 +181,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         # product with multiple variants having one on-demand item
         product_d = create(:simple_product, name: "Dates")
-        product_d.variants.first.stock_items.update_all(count_on_hand: 1, backorderable: false)
+        product_d.variants.first.stock_items.update_all(count_on_hand: 100, backorderable: false)
         create(:variant, product: product_d, on_hand: 0, on_demand: true)
 
         within products_table do
@@ -195,7 +195,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           # Sort in descending order
           on_hand_header.click
           expect(page).to have_content("On Hand ▼") # this indicates the re-sorted
-          expect(all_input_values).to match /Dates.*Bananas.*Cherries.*Apples/
+          # For all on-demand products, alphabetical order is also applied
+          expect(all_input_values).to match /Bananas.*Dates.*Cherries.*Apples/
         end
       end
     end
@@ -416,16 +417,49 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     context "with variant tag", feature: :variant_tag do
       before do
         create(:variant, tag_list: "organic")
-        create_products 1
+        create(:variant) # without tags
+        create(:variant)
       end
 
-      it "can search by tag" do
-        visit admin_products_url
-        search_by_tag "organic"
+      shared_examples "tag search" do
+        it description do
+          visit admin_products_url
+          search_by_tag(*search_tags)
 
-        expect(page).to have_select "tags_name_in", selected: "organic"
-        expect(page).to have_content "1 product found for your search criteria. Showing 1 to 1."
-        expect_products_count_to_be 1
+          expect(page).to have_select("tags_name_in", selected: selected_tags)
+          expect(page).to have_content(result_text)
+          expect_products_count_to_be(expected_count)
+        end
+      end
+
+      context "when searching by a single tag" do
+        let(:description)     { "returns variants with that tag" }
+        let(:search_tags)     { ["organic"] }
+        let(:selected_tags)   { "organic" }
+        let(:expected_count)  { 1 }
+        let(:result_text)     { "1 product found for your search criteria. Showing 1 to 1." }
+
+        include_examples "tag search"
+      end
+
+      context "when searching by None tag" do
+        let(:description)     { "returns variants without tags" }
+        let(:search_tags)     { ["None"] }
+        let(:selected_tags)   { "None" }
+        let(:expected_count)  { 2 }
+        let(:result_text)     { "2 products found for your search criteria. Showing 1 to 2." }
+
+        include_examples "tag search"
+      end
+
+      context "when searching by None and another tag" do
+        let(:description)     { "returns variants with either no tags or the given tag" }
+        let(:search_tags)     { ["None", "organic"] }
+        let(:selected_tags)   { ["None", "organic"] }
+        let(:expected_count)  { 3 }
+        let(:result_text)     { "3 products found for your search criteria. Showing 1 to 3." }
+
+        include_examples "tag search"
       end
     end
   end

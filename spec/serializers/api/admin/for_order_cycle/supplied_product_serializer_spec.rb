@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Api::Admin::ForOrderCycle::SuppliedProductSerializer do
   let(:coordinator)         { create(:distributor_enterprise) }
   let(:order_cycle)         { double(:order_cycle, coordinator:) }

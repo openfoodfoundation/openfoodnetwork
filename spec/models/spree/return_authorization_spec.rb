@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ReturnAuthorization do
   let(:order) { create(:shipped_order) }
   let(:variant) { order.shipments.first.inventory_units.first.variant }

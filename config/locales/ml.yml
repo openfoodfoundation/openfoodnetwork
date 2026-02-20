@@ -105,27 +105,6 @@ ml:
         blank: "ശൂന്യമായിരിക്കാൻ കഴിയില്ല"
         too_short: "വളരെ ചെറുതാണ് (കുറഞ്ഞത് %{count} അക്ഷരങ്ങൾ ഉണ്ടാകണം)"
   errors:
-    messages:
-      content_type_invalid: "ഒരു അസാധുവായ ഉള്ളടക്കം ഉണ്ട്"
-      file_size_out_of_range: "%{file_size} വലുപ്പം ആവശ്യമായ ശ്രേണിയ്‌ക്കിടയിലല്ല"
-      limit_out_of_range: "ആകെ എണ്ണം പരിധിക്ക് പുറത്താണ്"
-      image_metadata_missing: "ചിത്രം സാധുതയുള്ളതല്ല"
-      dimension_min_inclusion: "%{width} x %{height} പിക്സലിനു തുല്യമോ വലുതോ ആയിരിക്കണം."
-      dimension_max_inclusion: "%{width} x %{height} പിക്സലിനു തുല്യമോ കുറവോ ആയിരിക്കണം."
-      dimension_width_inclusion: "%{min} പിക്സലിനും %{max} പിക്സലിനും ഇടയിൽ വീതി ഉൾപ്പെടുത്തിയിട്ടില്ല."
-      dimension_height_inclusion: "%{min} പിക്സലിനും %{max} പിക്സലിനും ഇടയിൽ ഉയരം ഉൾപ്പെടുത്തിയിട്ടില്ല."
-      dimension_width_greater_than_or_equal_to: "വീതി %{length} പിക്സലിനു തുല്യമോ വലുതോ ആയിരിക്കണം."
-      dimension_height_greater_than_or_equal_to: "ഉയരം %{length} പിക്സലിനു തുല്യമോ വലുതോ ആയിരിക്കണം."
-      dimension_width_less_than_or_equal_to: "വീതി %{length} പിക്സലിനു തുല്യമോ കുറവോ ആയിരിക്കണം."
-      dimension_height_less_than_or_equal_to: "ഉയരം %{length} പിക്സലിനു തുല്യമോ കുറവോ ആയിരിക്കണം."
-      dimension_width_equal_to: "വീതി %{length} പിക്സലിന് തുല്യമായിരിക്കണം."
-      dimension_height_equal_to: "ഉയരം %{length} പിക്സലിന് തുല്യമായിരിക്കണം."
-      aspect_ratio_not_square: "ഒരു ചതുര ചിത്രം ആയിരിക്കണം"
-      aspect_ratio_not_portrait: "ഒരു  ഛായാചിത്രം ആയിരിക്കണം"
-      aspect_ratio_not_landscape: "ഒരു ഭൂപ്രകൃതി ചിത്രമായിരിക്കണം"
-      aspect_ratio_is_not: "%{aspect_ratio} എന്ന വീക്ഷണാനുപാതം ഉണ്ടായിരിക്കണം"
-      aspect_ratio_unknown: "വീക്ഷണാനുപാതം അജ്ഞാതമാണ് "
-      image_not_processable: "ചിത്രം സാധുതയുള്ളതല്ല"
     not_found:
       title: "നിങ്ങൾ തിരയുന്ന പേജ് നിലവിലില്ല (404)"
       message_html: "<b>ദയവായി വീണ്ടും ശ്രമിക്കുക</b><p> ഇതൊരു താൽക്കാലിക പ്രശ്നമായിരിക്കാം. മുൻപുണ്ടായിരുന്ന സ്‌ക്രീനിലേക്ക് മടങ്ങാൻ ബാക്ക് ബട്ടൺ ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ <a href='/'>ഹോം പേജ്</a> ലേക്ക് തിരികെ പോയി വീണ്ടും ശ്രമിക്കുക.</p> <b>പിന്തുണയ്ക്കായി ബന്ധപ്പെടുക</b><p> പ്രശ്‌നം നിലനിൽക്കുന്നുണ്ടെങ്കിലോ അത്യാവശ്യമോ ആണെങ്കിൽ, അതിനെക്കുറിച്ച് ഞങ്ങളോട് പറയുക. ആഗോള <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് ലോക്കൽ പേജിൽ</a> നിന്ന് ഞങ്ങളുടെ ബന്ധപ്പെടുന്നതിനുള്ള വിശദാംശങ്ങൾ കണ്ടെത്തുക.</p><p>നഷ്‌ടമായ പേജ് എന്തിനെക്കുറിച്ചാണെന്ന് നിങ്ങൾക്ക് കഴിയുന്നത്ര വിശദാംശങ്ങൾ നൽകാൻ കഴിയുമെങ്കിൽ അത് ശരിക്കും ഞങ്ങളെ സഹായിക്കും.</p>"
@@ -487,6 +466,7 @@ ml:
     create_and_add_another: "ഉണ്ടാക്കുക, മറ്റൊന്ന് ചേർക്കുക"
     create: "ഉണ്ടാക്കുക"
     cancel: "റദ്ദാക്കുക"
+    cancel_order: "റദ്ദാക്കുക"
     resume: "പുനരാരംഭിക്കുക"
     save: "സേവ് ചെയ്യുക"
     edit: "എഡിറ്റ് ചെയ്യുക"
@@ -781,6 +761,7 @@ ml:
           label: വിഭാഗങ്ങൾ
         tags:
           label: ടാഗുകൾ
+          none: ഒന്നുമില്ല
         search: തിരയുക
       sort:
         pagination:
@@ -3745,6 +3726,7 @@ ml:
     logourl: "ലോഗോ യുആർഎൽ"
     are_you_sure_delete: "ഈ റെക്കോർഡ് ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?"
     confirm_delete: "ഇല്ലാതാക്കൽ സ്ഥിരീകരിക്കുക"
+    voucher: "വൗച്ചർ"
     configurations: "കോൺഫിഗറേഷനുകൾ"
     general_settings: "പൊതുവായ ക്രമീകരണങ്ങൾ"
     site_name: "സൈറ്റിന്റെ പേര്"
@@ -3833,6 +3815,7 @@ ml:
     alt_text: "ഇതര വാചകം"
     thumbnail: "ലഘുചിത്രം"
     back_to_images_list: "ചിത്രങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
+    api_key: "എപിഐ കീ"
     email: ഇമെയിൽ
     account_updated: "അക്കൗണ്ട് അപ്ഡേറ്റ് ചെയ്തു!"
     email_updated: "പുതിയ ഇമെയിൽ സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ അക്കൗണ്ട് അപ്‌ഡേറ്റ് ചെയ്യും."
@@ -4139,9 +4122,7 @@ ml:
         providers:
           provider: "ദാതാവ്"
           check: "പണം/ഇഎഫ്ടി/ മുതലായവ (ഓട്ടോമാറ്റിക് മൂല്യനിർണ്ണയം ആവശ്യമില്ലാത്ത പേയ്‌മെന്റുകൾ)"
-          pin: "പേയ്‌മെന്റുകൾ പിൻ ചെയ്യുക"
           paypalexpress: "പേപാൽ എക്സ്പ്രസ്"
-          stripeconnect: "സ്‌ട്രൈപ്പ്"
           stripesca: "സ്‌ട്രൈപ്പ് എസ്സിഎ"
       payments:
         source_forms:
@@ -4437,13 +4418,10 @@ ml:
       webhook_endpoints:
         title: വെബ്‌ഹുക്ക് എൻഡ്‌പോയിന്റുകൾ
         description: സിസ്റ്റത്തിലെ ഇവന്റുകൾ ബാഹ്യ സിസ്റ്റങ്ങളിലേക്ക് വെബ്‌ഹുക്കുകളെ ട്രിഗർ ചെയ്‌തേക്കാം.
-        event_types:
-          order_cycle_opened: ഓർഡർ സൈക്കിൾ തുറന്നു
         event_type:
           header: ഇവന്റ് തരം
         url:
           header: എൻഡ്‌പോയിന്റ് യുആർഎൽ
-          create_placeholder: റിമോട്ട് വെബ്ഹുക്ക് എൻഡ് പോയിന്റിന്റെ യുആർഎൽ നൽകുക
       developer_settings:
         title: ഡെവലപ്പർ ക്രമീകരണങ്ങൾ
       form:
@@ -4591,3 +4569,8 @@ ml:
     add_tag_rule_modal:
       select_rule_type: "ഒരു റൂൾ തരം തിരഞ്ഞെടുക്കുക:"
       add_rule: "നിയമം ചേർക്കുക"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: റിമോട്ട് വെബ്ഹുക്ക് എൻഡ് പോയിന്റിന്റെ യുആർഎൽ നൽകുക
+      event_types:
+        order_cycle_opened: ഓർഡർ സൈക്കിൾ തുറന്നു

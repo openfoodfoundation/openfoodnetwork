@@ -4,7 +4,7 @@ module ManagerInvitations
   extend ActiveSupport::Concern
 
   def create_new_manager(email, enterprise)
-    password = Devise.friendly_token
+    password = SecureRandom.base58(64)
     new_user = Spree::User.create(email:, unconfirmed_email: email, password:)
     new_user.reset_password_token = Devise.friendly_token
     # Same time as used in Devise's lib/devise/models/recoverable.rb.

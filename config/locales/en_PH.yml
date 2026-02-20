@@ -290,6 +290,7 @@ en_PH:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     save: "Save"
     edit: "Edit"
     update: "Update"
@@ -540,6 +541,7 @@ en_PH:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       product_variant_row:
         new_variant: New variant

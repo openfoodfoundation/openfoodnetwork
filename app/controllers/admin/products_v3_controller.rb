@@ -7,11 +7,13 @@ module Admin
 
     before_action :init_filters_params
     before_action :init_pagination_params
+    before_action :init_none_tag
 
     def index
       fetch_products
       render "index",
-             locals: { producers:, categories:, tax_category_options:, available_tags:, flash: }
+             locals: { producer_options:, categories:, tax_category_options:, available_tags:,
+                       flash:, allowed_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -32,7 +34,8 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          producers:, categories:, tax_category_options:, available_tags:, flash:
+                          producer_options:, categories:, tax_category_options:, available_tags:,
+                          allowed_producers:, flash:
                         }
       end
     end
@@ -78,27 +81,29 @@ module Admin
     end
 
     def clone
-      @product = Spree::Product.find(params[:id])
-      authorize! :clone, @product
+      product = Spree::Product.find(params[:id])
+      authorize! :clone, product
 
       status = :ok
 
       begin
-        @cloned_product = @product.duplicate
+        cloned_product = product.duplicate
         flash.now[:success] = t('.success')
 
-        @product_index = "-#{@cloned_product.id}"
-        @producer_options = producers
-        @category_options = categories
-        @tax_category_options = tax_category_options
+        product_index = "-#{cloned_product.id}"
       rescue ActiveRecord::ActiveRecordError => e
         flash.now[:error] = clone_error_message(e)
         status = :unprocessable_entity
-        @product_index = "-1" # Create a unique enough index
+        product_index = "-1" # Create a unique enough index
       end
 
       respond_with do |format|
-        format.turbo_stream { render :clone, status: }
+        format.turbo_stream {
+          render :clone, status:,
+                         locals: { product:, cloned_product:, product_index:, producer_options:,
+                                   category_options: categories, tax_category_options:,
+                                   allowed_producers: }
+        }
       end
     end
 
@@ -124,18 +129,31 @@ module Admin
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
 
-      # Transform on_hand sorting to include backorderable_priority (on-demand) for proper ordering
+      # Transform on_hand sorting to properly handle On-Demand products:
+      #   - On-Demand products should ignore on_hand completely and sort alphabetically.
+      #   - Non-On-Demand products should continue sorting by on_hand as usual.
       if @q[:s] == 'on_hand asc'
-        @q[:s] = ['backorderable_priority asc', @q[:s]]
+        @q[:s] = [
+          'backorderable_priority asc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
       elsif @q[:s] == 'on_hand desc'
-        @q[:s] = ['backorderable_priority desc', @q[:s]]
+        @q[:s] = [
+          'backorderable_priority desc',
+          'backorderable_name asc',
+          @q[:s]
+        ]
       end
     end
 
-    def producers
-      producers = OpenFoodNetwork::Permissions.new(spree_current_user)
+    def allowed_producers
+      OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises.is_primary_producer.by_name
-      producers.map { |p| [p.name, p.id] }
+    end
+
+    def producer_options
+      allowed_producers.map { |p| [p.name, p.id] }
     end
 
     def categories
@@ -162,6 +180,8 @@ module Admin
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
         .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
 
+      product_query = apply_tags_filter(product_query)
+
       # Postgres requires ORDER BY expressions to appear in the SELECT list when using DISTINCT.
       # When the current ransack sort uses the computed stock columns, include them in the select
       # so the generated COUNT/DISTINCT query is valid.
@@ -173,6 +193,7 @@ module Admin
         product_query = product_query.select(
           Arel.sql('spree_products.*'),
           Spree::Product.backorderable_priority_sql,
+          Spree::Product.backorderable_name_sql,
           Spree::Product.on_hand_sql
         )
       end
@@ -207,10 +228,49 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
-      query.merge!(variants_tags_name_in: @tags) if @tags.present?
       query.merge!(@q) if @q
 
       query
+    end
+
+    # Apply tags filter with OR logic:
+    # - Products with variants having selected tags
+    # - OR products with variants having no tags (when "None" is selected)
+    #
+    # Note: This cannot be implemented using Ransack because Ransack applies
+    # AND semantics across associations and cannot express OR logic that combines
+    # the presence and absence of the same associated records.
+    def apply_tags_filter(base_query)
+      return base_query if @tags.blank?
+
+      tag_names = Array(@tags).dup
+      has_none_tag = (tag_names.delete(@none_tag_value) == @none_tag_value)
+
+      queries = []
+
+      if tag_names.any?
+        # Products with at least one variant having one of the selected tags
+        tagged_product_ids = Spree::Variant
+          .joins(taggings: :tag)
+          .where(tags: { name: tag_names })
+          .select(:product_id)
+
+        queries << base_query.where(id: tagged_product_ids)
+      end
+
+      if has_none_tag
+        # Products where no variants have any tags
+        tagged_product_ids = Spree::Variant
+          .joins(:taggings)
+          .select(:product_id)
+
+        queries << base_query.where.not(id: tagged_product_ids)
+      end
+
+      return base_query if queries.empty?
+
+      # Combine queries using ActiveRecord's or method
+      queries.reduce { |combined, query| combined.or(query) }
     end
 
     # Optimise by pre-loading required columns
@@ -270,6 +330,10 @@ module Admin
       else
         t('.error')
       end
+    end
+
+    def init_none_tag
+      @none_tag_value = '""'
     end
   end
 end

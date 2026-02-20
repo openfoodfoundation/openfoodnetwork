@@ -116,26 +116,66 @@ en_CA:
         too_short: "is too short (minimum is %{count} characters)"
   errors:
     messages:
-      content_type_invalid: "has an invalid content type"
-      file_size_out_of_range: "size %{file_size} is not within required range"
-      limit_out_of_range: "total number is out of range"
-      image_metadata_missing: "is not a valid image"
-      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixels."
-      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixels."
-      dimension_width_inclusion: "width is not between %{min} and %{max} pixels."
-      dimension_height_inclusion: "height is not between %{min} and %{max} pixels."
-      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels."
-      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels."
-      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixels."
-      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixels."
-      dimension_width_equal_to: "width must be equal to %{length} pixels."
-      dimension_height_equal_to: "height must be equal to %{length} pixels."
-      aspect_ratio_not_square: "must be a square image"
-      aspect_ratio_not_portrait: "must be a portrait image"
-      aspect_ratio_not_landscape: "must be a landscape image"
-      aspect_ratio_is_not: "must have an aspect ration of %{aspect_ratio}"
-      aspect_ratio_unknown: "has an unknown aspect ration"
-      image_not_processable: "is not a valid image"
+      content_type_invalid:
+        one: "has an invalid content type (authorized content type is %{authorized_human_content_types})"
+        other: "has an invalid content type (authorized content types are %{authorized_human_content_types})"
+      content_type_spoofed:
+        one: "has a content type that is not equivalent to the one that is detected through its content (authorized content type is %{authorized_human_content_types})"
+        other: "has a content type that is not equivalent to the one that is detected through its content (authorized content types are %{authorized_human_content_types})"
+      file_size_not_less_than: "file size must be less than %{max} (current size is %{file_size})"
+      file_size_not_less_than_or_equal_to: "file size must be less than or equal to %{max} (current size is %{file_size})"
+      file_size_not_greater_than: "file size must be greater than %{min} (current size is %{file_size})"
+      file_size_not_greater_than_or_equal_to: "file size must be greater than or equal to %{min} (current size is %{file_size})"
+      file_size_not_between: "file size must be between %{min} and %{max} (current size is %{file_size})"
+      file_size_not_equal_to: "file size must be equal to %{exact} (current size is %{file_size})"
+      total_file_size_not_less_than: "total file size must be less than %{max} (current size is %{total_file_size})"
+      total_file_size_not_less_than_or_equal_to: "total file size must be less than or equal to %{max} (current size is %{total_file_size})"
+      total_file_size_not_greater_than: "total file size must be greater than %{min} (current size is %{total_file_size})"
+      total_file_size_not_greater_than_or_equal_to: "total file size must be greater than or equal to %{min} (current size is %{total_file_size})"
+      total_file_size_not_between: "total file size must be between %{min} and %{max} (current size is %{total_file_size})"
+      total_file_size_not_equal_to: "total file size must be equal to %{exact} (current size is %{total_file_size})"
+      duration_not_less_than: "duration must be less than %{max} (current duration is %{duration})"
+      duration_not_less_than_or_equal_to: "duration must be less than or equal to %{max} (current duration is %{duration})"
+      duration_not_greater_than: "duration must be greater than %{min} (current duration is %{duration})"
+      duration_not_greater_than_or_equal_to: "duration must be greater than or equal to %{min} (current duration is %{duration})"
+      duration_not_between: "duration must be between %{min} and %{max} (current duration is %{duration})"
+      duration_not_equal_to: "duration must be equal to %{exact} (current duration is %{duration})"
+      limit_out_of_range:
+        zero: "no files attached (must have between %{min} and %{max} files)"
+        one: "only 1 file attached (must have between %{min} and %{max} files)"
+        other: "total number of files must be between %{min} and %{max} files (there are %{count} files attached)"
+      limit_min_not_reached:
+        zero: "no files attached (must have at least %{min} files)"
+        one: "only 1 file attached (must have at least %{min} files)"
+        other: "%{count} files attached (must have at least %{min} files)"
+      limit_max_exceeded:
+        zero: "no files attached (maximum is %{max} files)"
+        one: "too many files attached (maximum is %{max} files, got %{count})"
+        other: "too many files attached (maximum is %{max} files, got %{count})"
+      attachment_missing: "is missing its attachment"
+      media_metadata_missing: "is not a valid media file"
+      dimension_min_not_included_in: "must be greater than or equal to %{width} x %{height} pixels"
+      dimension_max_not_included_in: "must be less than or equal to %{width} x %{height} pixels"
+      dimension_width_not_included_in: "width is not included between %{min} and %{max} pixels"
+      dimension_height_not_included_in: "height is not included between %{min} and %{max} pixels"
+      dimension_width_not_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels"
+      dimension_height_not_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels"
+      dimension_width_not_less_than_or_equal_to: "width must be less than or equal to %{length} pixels"
+      dimension_height_not_less_than_or_equal_to: "height must be less than or equal to %{length} pixels"
+      dimension_width_not_equal_to: "width must be equal to %{length} pixels"
+      dimension_height_not_equal_to: "height must be equal to %{length} pixels"
+      aspect_ratio_not_square: "must be square (current file is %{width}x%{height}px)"
+      aspect_ratio_not_portrait: "must be portrait (current file is %{width}x%{height}px)"
+      aspect_ratio_not_landscape: "must be landscape (current file is %{width}x%{height}px)"
+      aspect_ratio_not_x_y: "must be %{authorized_aspect_ratios} (current file is %{width}x%{height}px)"
+      aspect_ratio_invalid: "has an invalid aspect ratio (valid aspect ratios are %{authorized_aspect_ratios})"
+      file_not_processable: "is not identified as a valid media file"
+      pages_not_less_than: "page count must be less than %{max} (current page count is %{pages})"
+      pages_not_less_than_or_equal_to: "page count must be less than or equal to %{max} (current page count is %{pages})"
+      pages_not_greater_than: "page count must be greater than %{min} (current page count is %{pages})"
+      pages_not_greater_than_or_equal_to: "page count must be greater than or equal to %{min} (current page count is %{pages})"
+      pages_not_between: "page count must be between %{min} and %{max} (current page count is %{pages})"
+      pages_not_equal_to: "page count must be equal to %{exact} (current page count is %{pages})"
     not_found:
       title: "The page you were looking for doesn't exist (404)"
       message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a>and try again.</p> <b>Contact support <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
@@ -541,6 +581,7 @@ en_CA:
     errors:
       vine_api: "There was an error communicating with the API, please try again later."
       invalid_voucher: "The voucher is not valid"
+      expired: "The voucher has expired"
       not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
   vine_voucher_redeemer_service:
     errors:
@@ -550,6 +591,7 @@ en_CA:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     resume: "Resume"
     save: "Save"
     edit: "Edit"
@@ -905,6 +947,7 @@ en_CA:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:
@@ -3928,6 +3971,8 @@ en_CA:
     destroy:
       success: Webhook endpoint successfully deleted
       error: Webhood endpoint failed to delete
+    test:
+      success: Some test data will be sent to the webhook url
   spree:
     order_updated: "Order Updated"
     cannot_perform_operation: "Can not perform this operation"
@@ -4034,6 +4079,8 @@ en_CA:
     logourl: "Logourl"
     are_you_sure_delete: "Are you sure you want to delete this record?"
     confirm_delete: "Confirm Deletion"
+    tag_rule: "Tag Rule"
+    voucher: "Voucher"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -4124,6 +4171,7 @@ en_CA:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back to Images List"
+    api_key: "API key"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4440,9 +4488,7 @@ en_CA:
         providers:
           provider: "Provider"
           check: "Cash/EFT/Bank Transfer etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments (Only applicable to users in Australia)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe For Deletion"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4759,13 +4805,10 @@ en_CA:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Events in the system may trigger webhooks to external systems.
-        event_types:
-          order_cycle_opened: Order Cycle Opened
         event_type:
           header: Event type
         url:
           header: Endpoint URL
-          create_placeholder: Enter the URL of the remove webhook endpoint
       developer_settings:
         title: Developer Settings
       form:
@@ -4914,6 +4957,13 @@ en_CA:
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Enter the URL of the remove webhook endpoint
+      event_types:
+        order_cycle_opened: Order Cycle Opened
+        payment_status_changed: Post webhook on Payment status change
+      test_endpoint: Test webhook endpoint
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

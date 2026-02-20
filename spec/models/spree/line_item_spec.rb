@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::LineItem do
   let(:order) { create :order_with_line_items, line_items_count: 1 }
   let(:line_item) { order.line_items.first }
@@ -16,7 +14,7 @@ RSpec.describe Spree::LineItem do
     it { is_expected.to have_many(:adjustments) }
   end
 
-  context '#save' do
+  describe '#save' do
     it 'should update inventory, totals, and tax' do
       # Regression check for Spree #1481
       expect(line_item.order).to receive(:create_tax_charge!)
@@ -25,7 +23,7 @@ RSpec.describe Spree::LineItem do
     end
   end
 
-  context '#destroy' do
+  describe '#destroy' do
     # Regression test for Spree #1481
     it "applies tax adjustments" do
       expect(line_item.order).to receive(:create_tax_charge!)
@@ -44,7 +42,7 @@ RSpec.describe Spree::LineItem do
   end
 
   # Test for Spree #3391
-  context '#copy_price' do
+  describe '#copy_price' do
     it "copies over a variant's prices" do
       line_item.price = nil
       line_item.currency = nil
@@ -56,11 +54,33 @@ RSpec.describe Spree::LineItem do
   end
 
   # Test for Spree #3481
-  context '#copy_tax_category' do
+  describe '#copy_tax_category' do
     it "copies over a variant's tax category" do
       line_item.tax_category = nil
       line_item.copy_tax_category
       expect(line_item.tax_category).to eq line_item.variant.tax_category
+    end
+  end
+
+  describe '#full_variant_name' do
+    it "returns variant's full name" do
+      expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
+    end
+
+    it "uses variant.full_name when variant_name is nil" do
+      line_item.variant_name = nil
+      expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
+    end
+  end
+
+  describe '#full_product_name' do
+    it "returns product's full name" do
+      expect(line_item.full_product_name).to eq(line_item.product.name)
+    end
+
+    it "uses product.name when product_name is nil" do
+      line_item.product_name = nil
+      expect(line_item.full_product_name).to eq(line_item.product.name)
     end
   end
 

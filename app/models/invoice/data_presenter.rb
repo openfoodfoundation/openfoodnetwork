@@ -95,8 +95,8 @@ class Invoice
     def display_line_item_tax_rate(item)
       all_tax_adjustments.select { |a|
         a.adjustable.type == 'Spree::LineItem' && a.adjustable.id == item.id
-      }.map(&:originator).map { |tr|
-        number_to_percentage(tr.amount * 100, precision: 1)
+      }.map(&:originator).map(&:amount).sort.map { |amount|
+        number_to_percentage(amount * 100, precision: 1)
       }.join(", ")
     end
 

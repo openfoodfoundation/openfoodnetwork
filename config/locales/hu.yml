@@ -115,27 +115,6 @@ hu:
         blank: "nem lehet üres"
         too_short: "túl rövid (minimum %{count}karakter)"
   errors:
-    messages:
-      content_type_invalid: "érvénytelen tartalom típus"
-      file_size_out_of_range: "a %{file_size} mérete nem esik bele a kívánt tartományba"
-      limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
-      image_metadata_missing: "nem használható kép"
-      dimension_min_inclusion: "legyen nagyobb vagy egyenlő %{width} x %{height} pixel"
-      dimension_max_inclusion: "legyen kisebb vagy egyenlő %{width} x %{height} pixel"
-      dimension_width_inclusion: "a szélesség nincs %{min} és %{max} pixel közt"
-      dimension_height_inclusion: "magasság nincs %{min} és %{max} pixel között"
-      dimension_width_greater_than_or_equal_to: "a szélesség legyen nagyobb vagy egyenlő %{length} pixel"
-      dimension_height_greater_than_or_equal_to: "a magasság legyen nagyobb vagy egyenlő %{length} pixel"
-      dimension_width_less_than_or_equal_to: "a szélesség legyen kisebb vagy egyenlő %{length} pixel"
-      dimension_height_less_than_or_equal_to: "a magasság legyen kisebb vagy egyenlő %{length} pixel"
-      dimension_width_equal_to: "a szélesség legyen egyenlő %{length} pixel"
-      dimension_height_equal_to: "a magasság legyen egyenlő %{length} pixel"
-      aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
-      aspect_ratio_not_portrait: "portré képnek kell lennie"
-      aspect_ratio_not_landscape: "fekvő tájolású kép legyen"
-      aspect_ratio_is_not: "%{aspect_ratio} arányú legyen"
-      aspect_ratio_unknown: "ismeretlen arány"
-      image_not_processable: "nem használható kép"
     not_found:
       title: "A keresett oldal nem található! (404)"
       message_html: "<b>Kérjük, próbáld újra!</b><p>Ez lehet egy átmeneti probléma. Kattints a vissza gombra, hogy visszatérj az előző képernyőre, vagy menj vissza a(z) <a href='/'> Kezdőlapra </a> és próbáld újra.</p> <b> Fordulj az Ügyfélszolgálathoz.</b> <p> Ha a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. Elérhetőségeinket a globális <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> Open Food Network helyi oldalán találod</a>. </p> <p> Nagy segítség, ha minél több részletet meg tudsz adni a nem található oldalról.</p>"
@@ -526,6 +505,7 @@ hu:
     create_and_add_another: "Hozz létre és adj hozzá egy másikat"
     create: "Létrehozás"
     cancel: "Mégsem"
+    cancel_order: "Törlés"
     resume: "Összefoglaló"
     save: "Mentés"
     edit: "Szerkesztés"
@@ -854,12 +834,14 @@ hu:
         search_for_categories: Keresés termékkategóriára
         select_category: Válassz kategóriát
         all_categories: Minden kategória
+        select_tag: Válassz címkét
         producers:
           label: Termelők
         categories:
           label: Kategóriák
         tags:
           label: Címkék
+          none: Egyik sem
         search: Keresés
       sort:
         pagination:
@@ -908,6 +890,10 @@ hu:
       clone:
         success: Sikeresen klónoztad a terméket
         error: A terméket nem sikerült klónozni
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} 1 szabályt tartalmaz"
+          other: "%{tag} címkének %{count} szabálya van érvényben"
     product_import:
       title: Termék importálás
       file_not_found: A fájl nem található, vagy nem nyitható meg
@@ -1442,6 +1428,10 @@ hu:
       invite_manager:
         user_already_exists: "A felhasználó már létezik"
         error: "Valami elromlott"
+    tag_rules:
+      not_supported_type: Címkeszabály típus nem támogatott
+      confirm_delete: Biztosan szeretnéd törölni ezt a szabályt?
+      destroy_error: Hiba történt a címkeszabályok eltávolításakor
     order_cycles:
       loading_flash:
         loading_order_cycles: MEGRENDELÉSI CIKLUSOK BETÖLTÉSE
@@ -1627,7 +1617,7 @@ hu:
         has_no_shipping_methods: "%{enterprise} nem rendelkezik szállítási móddal"
         has_no_enterprise_fees: "A %{enterprise}-nek nincsenek vállalkozási díjai"
       flashes:
-        dismiss: Elutasítás
+        dismiss: Bezárás
       side_menu:
         enterprise:
           primary_details: "Főbb adatok"
@@ -1952,7 +1942,7 @@ hu:
         address1:
           label: Cím (utca + házszám)
         address2:
-          label: További címadatok (nem kötelező)
+          label: Adószám (nem kötelező)
         city:
           label: Város
         state_id:
@@ -2154,7 +2144,7 @@ hu:
   next: Következő
   address: Cím
   address_placeholder: pl. Saláta köz 15.
-  address2: Cím (folyt.)
+  address2: Adószám
   city: Város
   city_placeholder: pl. Kukutyin
   latitude: Szélességi kör
@@ -2450,22 +2440,22 @@ hu:
   hubs_distance: Legközelebb
   hubs_distance_filter: "Mutass átvételi pontokat %{location} közelében"
   shop_changeable_orders_alert_html:
-    one: 'Megrendelésed a következővel: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a> nyitva áll ellenőrzésre. A módosításokat a következő időpontig hajthatod végre: %{oc_close}.'
-    few: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-    many: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-    other: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
-  orders_changeable_orders_alert_html: 'Ez a rendelés meg lett erősítve, de módosíthatod a következő időpontig: <strong>%{oc_close}</strong>.'
+    one: 'Megrendelésed: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a>módosítható a következő időpontig: %{oc_close}.'
+    few: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+    many: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+    other: '<a href=''%{path}'' target=''_blank''>%{count} nyitott rendelésed van a(z) %{shop}</a>-nál jelenleg. Módosításokat a következő időpontig végezhetsz a rendeléseden: %{oc_close}.'
+  orders_changeable_orders_alert_html: 'Ez a rendelés már meg lett erősítve, de módosíthatod a következő időpontig: <strong>%{oc_close}</strong>.'
   products_clear: Mégsem
   products_showing: "Megjelenítve:"
-  products_results_for: "eredmények"
+  products_results_for: "Találatok innen"
   products_or: "vagy"
   products_and: "és"
   products_filters_in: "ban ben"
   products_with: val vel
   products_search: "Keresés..."
-  products_filter_by: "Szűrés"
+  products_filter_by: "Kategóriák"
   products_filter_selected: "kiválasztott"
-  products_filter_heading: "Szűrők"
+  products_filter_heading: "Kategóriák"
   products_filter_clear: "Mégsem"
   products_filter_done: "Kész"
   products_loading: "Termékek betöltése..."
@@ -2631,7 +2621,7 @@ hu:
   failed_to_create_enterprise: "Nem sikerült létrehozni a vállalkozást."
   failed_to_create_enterprise_unknown: "Nem sikerült létrehozni a vállalkozást. Győződj meg arról, hogy minden mezőt hiánytalanul kitöltöttél."
   failed_to_update_enterprise_unknown: "Nem sikerült frissíteni a vállalkozást. Győződj meg arról, hogy minden mezőt hiánytalanul kitöltöttél."
-  enterprise_confirm_delete_message: "Ezzel a vállalkozás által szállított %{product} is törlődik. Biztos, hogy akarod folytatni?"
+  enterprise_confirm_delete_message: "Ezzel a vállalkozás %{product} terméke is törlődik. Biztos, hogy akarod folytatni?"
   order_not_saved_yet: "Megrendelésed még nem lett elmentve. Adj nekünk néhány másodpercet, hogy befejezzük!"
   filter_by: "Szűrés"
   hide_filters: "Szűrők elrejtése"
@@ -2793,7 +2783,7 @@ hu:
         instagram: "Instagram"
         instagram_placeholder: "pl. @instagram_handle"
       limit_reached:
-        headline: "Ó ne!"
+        headline: "Ó, ne!"
         message: "Elérted a korlátot!"
         text: "Elérted a vállalkozások számának korlátját, amelyeknek a tulajdonosa lehetsz"
         action: "Vissza a kezdőlapra"
@@ -2895,7 +2885,7 @@ hu:
   calculator: "Kiszámítási mód"
   calculator_values: "Kiszámítás értékek"
   calculator_settings_warning: "Ha módosítod a kiszámítás típusát, először mentened kell ahhoz, hogy szerkeszthesd a kiszámítás beállításait"
-  calculator_preferred_unit_error: "kg-nak vagy lb-nak kell lennie"
+  calculator_preferred_unit_error: "kg-nak kell lennie"
   calculator_preferred_value_error: "Hibás bemenet. Kérjük, csak számokat használj. Pl.: 10, 5.5, -20"
   flat_percent_per_item: "Egységes százalék (tételenként)"
   flat_rate_per_item: "Átalánydíj (tételenként)"
@@ -2975,7 +2965,7 @@ hu:
   tax_settings: "Adózási Beállítások"
   products_require_tax_category: "a termékek adókategóriát igényelnek"
   admin_shared_address_1: "Cím"
-  admin_shared_address_2: "Cím (folyt.)"
+  admin_shared_address_2: "Adószám"
   admin_share_city: "Város"
   admin_share_zipcode: "Irányítószám"
   admin_share_country: "Ország"
@@ -3276,6 +3266,7 @@ hu:
   order_cycles_no_permission_to_coordinate_error: "Egyik vállalkozásod sem rendelkezik engedéllyel egy rendelési ciklus koordinálására"
   order_cycles_no_permission_to_create_error: "Nincs engedélye az adott vállalkozás által koordinált rendelési ciklus létrehozására"
   order_cycle_closed: "A kiválasztott rendelési ciklus éppen most zárult le. Kérjük, próbáld újra!"
+  order_cycle_closed_next_steps: "A kiválasztott rendelési ciklus lezárult. Kérjük, vedd fel velünk a kapcsolatot a %{order_number} rendelés teljesítéséhez!"
   back_to_orders_list: "Vissza a rendelési listához"
   no_orders_found: "Nem található rendelés"
   order_information: "Rendelési információ"
@@ -3651,7 +3642,7 @@ hu:
       other: "darab"
     bunch:
       one: "csokor"
-      other: "fürt"
+      other: "csokor"
     pack:
       one: "csomag"
       other: "csomag"
@@ -3684,7 +3675,7 @@ hu:
       other: "kosárka"
     packet:
       one: "csomag"
-      other: "tasak"
+      other: "csomag"
     item:
       one: "tétel"
       other: "tétel"
@@ -3893,7 +3884,7 @@ hu:
     first_name: "Keresztnév"
     last_name: "Vezetéknév"
     street_address: "Cím"
-    street_address_2: "Cím (folytatás)"
+    street_address_2: "Adószám"
     city: "Város"
     zip: "Postai irányítószám"
     country: "Ország"
@@ -3919,6 +3910,7 @@ hu:
     logourl: "Logourl"
     are_you_sure_delete: "Biztosan törli ezt a rekordot?"
     confirm_delete: "Törlés megerősítése"
+    voucher: "Kupon"
     configurations: "Konfigurációk"
     general_settings: "Általános beállítások"
     site_name: "Webhely neve"
@@ -4009,6 +4001,7 @@ hu:
     alt_text: "Alternatív szöveg"
     thumbnail: "Miniatűr"
     back_to_images_list: "Vissza a képek listájához"
+    api_key: "API kulcs"
     email: Email
     account_updated: "Fiók frissítve!"
     email_updated: "A fiók az új e-mail-cím megerősítését követően frissül."
@@ -4324,9 +4317,7 @@ hu:
         providers:
           provider: "Szolgáltató"
           check: "Készpénz/EFT/stb. (olyan kifizetések, amelyeknél nincs szükség automatikus érvényesítésre)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4454,7 +4445,7 @@ hu:
           on_hand: "Készlet"
           number: "Szám"
           completed_at: "Elkészült:"
-          state: "Státusz!"
+          state: "Rendelésleadás státusz"
           payment_state: "Fizetési Státusz"
           shipment_state: "Szállítási Státusz"
           email: "Email"
@@ -4643,13 +4634,10 @@ hu:
       webhook_endpoints:
         title: Webhook végpontok
         description: A rendszerben bekövetkező események webhookokat indíthatnak külső rendszerek felé.
-        event_types:
-          order_cycle_opened: Rendelési ciklus megnyitva
         event_type:
           header: Esemény típusa
         url:
           header: Végpont URL
-          create_placeholder: Add meg a távoli webhook végpont URL-címét
       developer_settings:
         title: Fejlesztői beállítások
       form:
@@ -4787,6 +4775,7 @@ hu:
         order_cycle_tagged_bottom: "vannak:"
         inventory_tagged_top: "Leltár változatok felcímkézve"
         inventory_tagged_bottom: "vannak:"
+        variant_tagged_top: "Változat felcímkézve"
         variant_tagged_bottom: "vannak:"
         visible: LÁTHATÓ
         not_visible: NEM LÁTHATÓ
@@ -4797,6 +4786,11 @@ hu:
     add_tag_rule_modal:
       select_rule_type: "Válassz egy szabálytípust:"
       add_rule: "Szabály hozzáadása"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Add meg a távoli webhook végpont URL-címét
+      event_types:
+        order_cycle_opened: Rendelési ciklus megnyitva
   invisible_captcha:
     sentence_for_humans: "Kérjük, hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."

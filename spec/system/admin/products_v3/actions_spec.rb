@@ -27,7 +27,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       # displays buttons to add products with the correct links
       expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
       expect(page).to have_link(class: "button", text: "Import multiple products",
-                                href: "/admin/products/import")
+                                href: admin_product_import_path)
     end
   end
 

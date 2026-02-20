@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::GroupListSerializer do
   let!(:group) { create(:enterprise_group) }
   let!(:producer) { create(:supplier_enterprise) }

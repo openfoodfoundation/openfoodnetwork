@@ -11,10 +11,12 @@ module OrderCycles
         .merge(coordinator_name: order_cycle.coordinator.name)
 
       # Endpoints for coordinator owner
-      webhook_endpoints = order_cycle.coordinator.owner.webhook_endpoints
+      webhook_endpoints = order_cycle.coordinator.owner.webhook_endpoints.order_cycle_opened
 
       # Plus unique endpoints for distributor owners (ignore duplicates)
-      webhook_endpoints |= order_cycle.distributors.map(&:owner).flat_map(&:webhook_endpoints)
+      webhook_endpoints |= order_cycle.distributors.map(&:owner).flat_map { |owner|
+        owner.webhook_endpoints.order_cycle_opened
+      }
 
       webhook_endpoints.each do |endpoint|
         WebhookDeliveryJob.perform_later(endpoint.url, event, webhook_payload, at:)

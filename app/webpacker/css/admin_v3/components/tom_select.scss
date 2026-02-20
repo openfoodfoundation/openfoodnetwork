@@ -99,6 +99,7 @@
   .ts-dropdown {
     // Cover up the control with the input
     top: 0;
+    z-index: $ts-dropdown-z-index;
   }
 
   .dropdown-input-wrap::after {

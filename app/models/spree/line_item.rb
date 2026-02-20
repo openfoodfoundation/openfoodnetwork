@@ -24,6 +24,8 @@ module Spree
     before_validation :copy_price
     before_validation :copy_tax_category
     before_validation :copy_dimensions
+    before_validation :copy_product_name, on: :create
+    before_validation :copy_variant_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -250,6 +252,18 @@ module Spree
       adjustments.enterprise_fee
     end
 
+    def full_variant_name
+      return variant_name if variant_name.present?
+
+      variant.full_name
+    end
+
+    def full_product_name
+      return product_name if product_name.present?
+
+      variant.product.name
+    end
+
     private
 
     def computed_weight_from_variant
@@ -272,6 +286,18 @@ module Spree
 
       # update the order totals, etc.
       order.create_tax_charge!
+    end
+
+    def copy_product_name
+      return if variant.nil? || variant.product.nil?
+
+      self.product_name = variant.product.name
+    end
+
+    def copy_variant_name
+      return if variant.nil?
+
+      self.variant_name = variant.full_name
     end
 
     def update_inventory_before_destroy

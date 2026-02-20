@@ -429,6 +429,7 @@ ar:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
     cancel: "إلغاء"
+    cancel_order: "إلغاء"
     resume: "اكمل"
     save: "حفظ"
     edit: "تعديل"
@@ -715,6 +716,7 @@ ar:
           label: التصنيفات
         tags:
           label: الاوسمة
+          none: لا شيء
         search: بحث
       sort:
         pagination:
@@ -3763,6 +3765,7 @@ ar:
     alt_text: "نص بديل"
     thumbnail: "الباقة"
     back_to_images_list: "العودة إلى قائمة الصور"
+    api_key: "مفتاح API"
     email: البريد الإلكتروني
     account_updated: "تم تحديث الحساب!"
     email_updated: "سيتم تحديث الحساب بمجرد تأكيد البريد الإلكتروني الجديد."
@@ -4063,9 +4066,7 @@ ar:
         providers:
           provider: "مزود"
           check: "النقد / التحويل الإلكتروني / إلخ. (المدفوعات التي لا تتطلب المصادقة التلقائية)"
-          pin: "المدفوعات دبوس"
           paypalexpress: "باي بال اكسبريس"
-          stripeconnect: "Stripe SCA"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4357,13 +4358,10 @@ ar:
       webhook_endpoints:
         title: نقاط نهاية Webhook
         description: قد تؤدي الأحداث في النظام إلى تشغيل webhooks للأنظمة الخارجية.
-        event_types:
-          order_cycle_opened: تم فتح دورة الطلب
         event_type:
           header: نوع الحدث
         url:
           header: عنوان URL لنقطة النهاية
-          create_placeholder: 'أدخل عنوان URL لنقطة نهاية webhook '
       developer_settings:
         title: إعدادات المطور
       form:
@@ -4563,3 +4561,8 @@ ar:
     add_tag_rule_modal:
       select_rule_type: "اختر نوع القاعدة:"
       add_rule: "أضف قاعدة "
+    webhook_endpoint_form:
+      url:
+        create_placeholder: 'أدخل عنوان URL لنقطة نهاية webhook '
+      event_types:
+        order_cycle_opened: تم فتح دورة الطلب

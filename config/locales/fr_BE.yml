@@ -1,5 +1,8 @@
 fr_BE:
   language_name: "Français"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Produit
@@ -50,6 +53,7 @@ fr_BE:
         primary_taxon: "Catégorie de Produit"
         shipping_category_id: "Catégorie de livraison"
         supplier: "Disitributeur·trice"
+        variant_unit: "Unité"
         variant_unit_name: "Nom de la variante"
         unit_value: "Valeur unitaire"
       spree/credit_card:
@@ -68,10 +72,17 @@ fr_BE:
         preferred_first_item: "Premier élément de la calculatrice :"
         preferred_additional_item: "Coût supplémentaire de l'article :"
         preferred_max_items: "Nombre maximum d'éléments de la calculatrice :"
+        preferred_minimal_amount: "Montant minimum"
+        preferred_normal_amount: "Montant normal"
+        preferred_discount_amount: "Montant de la réduction"
+        preferred_unit_from_list: "A l'unité depuis la liste"
+        preferred_per_unit: "A l'unité"
       enterprise:
         white_label_logo_link: "Lien pour le logo utilisé en vitrine"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "L'héritage de la catégorie de taxe nécessite un calculateur par article."
         spree/image:
           attributes:
             attachment:
@@ -96,31 +107,77 @@ fr_BE:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
+        connected_apps:
+          vine:
+            api_request_error: "Une erreur s'est produite lors de la connexion à l'API VINE"
       messages:
         confirmation: "ne correspond pas à %{attribute}"
         blank: "Champ obligatoire"
+        too_short: "est trop court (le minimum est %{count} caractères)"
   errors:
     messages:
-      content_type_invalid: "a un type de contenu non valide"
-      file_size_out_of_range: "la taille %{file_size} n'est pas comprise dans la plage requise"
-      limit_out_of_range: "le nombre total est hors plage"
-      image_metadata_missing: "n'est pas une image valide"
-      dimension_min_inclusion: "doit être supérieur ou égal à %{width} x %{height} pixel."
-      dimension_max_inclusion: "doit être inférieur ou égal à %{width} x %{height} pixel."
-      dimension_width_inclusion: "la largeur n'est pas incluse entre les pixels %{min} et %{max} ."
-      dimension_height_inclusion: "la hauteur n'est pas incluse entre %{min} et %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale au pixel %{length} ."
-      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale au pixel %{length} ."
-      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale au pixel %{length} ."
-      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale au pixel %{length} ."
-      dimension_width_equal_to: "la largeur doit être égale au pixel %{length} ."
-      dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
-      aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image en format portrait"
-      aspect_ratio_not_landscape: "doit être une image en format paysage"
-      aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
-      aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
-      image_not_processable: "n'est pas une image valide"
+      content_type_invalid:
+        one: "a un contenu invalide (le type de contenu autorisé est %{authorized_human_content_types})"
+        many: "a un contenu invalide (les types de contenus autorisés sont  %{authorized_human_content_types})"
+        other: "a un contenu invalide (les types de contenus autorisés sont %{authorized_human_content_types})"
+      content_type_spoofed:
+        one: "a un type de contenu qui ne correspond pas a celui détecté grâce au contenu (type de contenu autorisé %{authorized_human_content_types})"
+        many: "a un type de contenu qui ne correspond pas a celui détecté grâce au contenu (les types de contenus autorisés sont %{authorized_human_content_types})"
+        other: "a un type de contenu qui ne correspond pas a celui détecté grâce au contenu (les types de contenus autorisés sont %{authorized_human_content_types})"
+      file_size_not_less_than: "la taille du fichier doit être inférieure à %{max} (taille actuelle %{file_size})"
+      file_size_not_less_than_or_equal_to: "la taille du fichier doit être inférieure ou égale à %{max} (taille actuelle : %{file_size})"
+      file_size_not_greater_than: "la taille du fichier doit être supérieure à%{min} (taille actuelle : %{file_size})"
+      file_size_not_greater_than_or_equal_to: "la taille du fichier doit être supérieure ou égale à %{min} (taille actuelle : %{file_size})"
+      file_size_not_between: "la taille du fichier doit être comprise entre %{min} et %{max} (taille actuelle : %{file_size})"
+      file_size_not_equal_to: "La taille du fichier doit être égale à %{exact} (la taille actuelle est %{file_size} )"
+      total_file_size_not_less_than: "La taille totale du fichier doit être inférieure à %{max} (taille actuelle : %{total_file_size} )."
+      total_file_size_not_less_than_or_equal_to: "La taille totale du fichier doit être inférieure ou égale à %{max} (taille actuelle : %{total_file_size} )."
+      total_file_size_not_greater_than: "La taille totale du fichier doit être supérieure à %{min} (taille actuelle : %{total_file_size} )."
+      total_file_size_not_greater_than_or_equal_to: "La taille totale du fichier doit être supérieure ou égale à %{min} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_between: "La taille totale du fichier doit être comprise entre %{min} et %{max} (la taille actuelle est %{total_file_size} )."
+      total_file_size_not_equal_to: "La taille totale du fichier doit être égale à %{exact} (la taille actuelle est %{total_file_size} )."
+      duration_not_less_than: "La durée doit être inférieure à %{max} (la durée actuelle est %{duration} )"
+      duration_not_less_than_or_equal_to: "La durée doit être inférieure ou égale à %{max} (la durée actuelle est %{duration} )."
+      duration_not_greater_than: "La durée doit être supérieure à %{min} (la durée actuelle est %{duration} )"
+      duration_not_greater_than_or_equal_to: "La durée doit être supérieure ou égale à %{min} (la durée actuelle est %{duration} )."
+      duration_not_between: "La durée doit être comprise entre %{min} et %{max} (la durée actuelle est %{duration} )."
+      duration_not_equal_to: "La durée doit être égale à %{exact} (la durée actuelle est %{duration} )"
+      limit_out_of_range:
+        zero: "Aucun fichier joint (doit contenir entre %{min} et %{max} fichiers)"
+        one: "Seulement 1 fichier joint (doit contenir entre %{min} et %{max} fichiers)"
+        other: "Le nombre total de fichiers doit être compris entre %{min} et %{max} (il y a %{count} fichiers joints)."
+      limit_min_not_reached:
+        zero: "Aucun fichier joint (doit contenir au moins %{min} fichiers)"
+        one: "Seulement 1 fichier joint (doit contenir au moins %{min} fichiers)"
+        other: "%{count} fichiers joints (doit contenir au moins %{min} fichiers)"
+      limit_max_exceeded:
+        zero: "Aucun fichier joint (au maximum %{max} fichiers)"
+        one: "Trop de fichiers joints (le maximum est %{max} , il y en a %{count} )"
+        other: "Trop de fichiers joints (le maximum est %{max} , il y en a %{count} )"
+      attachment_missing: "une pièce jointe est manquante"
+      media_metadata_missing: "n'est pas un fichier multimédia valide"
+      dimension_min_not_included_in: "doit être plus grand ou égal à %{width} x %{height} pixels"
+      dimension_max_not_included_in: "doit être plus petit ou égal à %{width} x %{height} pixels"
+      dimension_width_not_included_in: "la largeur n'est pas comprise entre %{min} et %{max} pixels"
+      dimension_height_not_included_in: "la hauteur n'est pas comprise entre %{min} et %{max} pixels"
+      dimension_width_not_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixels"
+      dimension_height_not_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixels"
+      dimension_width_not_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixels"
+      dimension_height_not_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixels"
+      dimension_width_not_equal_to: "la largeur doit être égale à %{length} pixels"
+      dimension_height_not_equal_to: "La hauteur doit être égale à %{length} pixels"
+      aspect_ratio_not_square: "doit être carré (le fichier actuel est %{width} x %{height} px)"
+      aspect_ratio_not_portrait: "doit être au format portrait (le fichier actuel mesure %{width} x %{height} px)"
+      aspect_ratio_not_landscape: "doit être au format paysage (le fichier actuel mesure %{width} x %{height} px)"
+      aspect_ratio_not_x_y: "doit être %{authorized_aspect_ratios} (le fichier actuel est %{width} x %{height} px)"
+      aspect_ratio_invalid: "possède un ratio d'image invalide (les ratios d'iimage valides sont %{authorized_aspect_ratios} )"
+      file_not_processable: "n'est pas identifié comme un fichier multimédia valide"
+      pages_not_less_than: "Le nombre de pages doit être inférieur à %{max} (le nombre de pages actuel est %{pages} )"
+      pages_not_less_than_or_equal_to: "Le nombre de pages doit être inférieur ou égal à %{max} (le nombre de pages actuel est %{pages} )."
+      pages_not_greater_than: "Le nombre de pages doit être supérieur à %{min} (le nombre de pages actuel est %{pages} )."
+      pages_not_greater_than_or_equal_to: "Le nombre de pages doit être supérieur ou égal à %{min} (le nombre de pages actuel est %{pages} )."
+      pages_not_between: "Le nombre de pages doit être compris entre %{min} et %{max} (le nombre de pages actuel est %{pages} )."
+      pages_not_equal_to: "Le nombre de pages doit être égal à %{exact} (le nombre de pages actuel est %{pages} )."
     not_found:
       title: "La page que vous cherchiez n'existe pas (404)"
       message_html: "<b>Veuillez réessayer</b><p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l'écran précédent ou revenir à <a href='/'>l'accueil</a> et réessayer.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur le sujet de la page manquante.</p>"
@@ -132,6 +189,10 @@ fr_BE:
       message_html: "<p>Le changement que vous souhaitiez a été rejeté. Peut-être avez-vous essayé de modifier quelque chose auquel vous n'avez pas accès.<br><h3> <a href='/' >Retour au précédent</a></h3></p>"
     general_error:
       message: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
+    unauthorized:
+      message: "Vous n'êtes pas autorisé à effectuer cette action."
+    network_error:
+      message: "Erreur réseau: merci de réessayer plus tard."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -143,6 +204,7 @@ fr_BE:
       incorrect_cvc: "Le code de sécurité de la carte est incorrect."
       incorrect_zip: "Le code postal de la carte n'a pas été validé."
       card_declined: "La carte a été refusée."
+      missing: "Un client qui n'a pas de carte bancaire est entrain d'être facturé. "
       processing_error: "Une erreur s'est produite lors du traitement de la carte."
       rate_limit: "Une erreur s'est produite en raison de requêtes atteignant l'API trop rapidement. Veuillez nous faire savoir si vous rencontrez constamment cette erreur."
       authentication_required: "Le paiement a été refusé car la transaction nécessite une authentification."
@@ -153,8 +215,11 @@ fr_BE:
       currency_not_supported: "La carte ne prend pas en charge la devise spécifiée."
       do_not_honor: "La carte a été refusée pour une raison inconnue."
       do_not_try_again: "La carte a été refusée pour une raison inconnue."
+      duplicate_transaction: "Une transaction avec le même montant et les mêmes informations de carte de crédit a été soumise très récemment."
+      fraudulent: "Le paiement a été refusé car Stripe soupçonne une opération frauduleuse."
       generic_decline: "La carte a été refusée pour une raison inconnue."
       incorrect_pin: "Le code PIN saisi est incorrect. Ce code de refus s'applique uniquement aux paiements effectués avec un lecteur de carte."
+      insufficient_funds: "La carte bancaire n'a pas les fonds suffisants pour effectuer l'achat."
       invalid_account: "La carte ou le compte auquel la carte est connectée n'est pas valide."
       invalid_amount: "Le montant du paiement n'est pas valide ou dépasse le montant autorisé."
       invalid_pin: "Le code PIN saisi est incorrect. Ce code de refus s'applique uniquement aux paiements effectués avec un lecteur de carte."
@@ -166,14 +231,26 @@ fr_BE:
       not_permitted: "Le paiement n'est pas autorisé."
       offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
       online_or_offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
+      pickup_card: "Cette carte ne peut pas être utilisée pour effectuer ce paiement (il est possible qu'elle ait été déclarée perdue ou volée)."
+      pin_try_exceeded: "Vous avez dépassé le nombre d'essai du code PIN."
+      reenter_transaction: "Le paiement ne peut pas être effectué par l'émetteur de la carte bancaire pour une raison inconnue."
+      restricted_card: "Cette carte ne peut pas être utilisée pour effectuer ce paiement (il est possible qu'elle ait été déclarée perdue ou volée)."
       revocation_of_all_authorizations: "La carte a été refusée pour une raison inconnue."
       revocation_of_authorization: "La carte a été refusée pour une raison inconnue."
       security_violation: "La carte a été refusée pour une raison inconnue."
       service_not_allowed: "La carte a été refusée pour une raison inconnue."
+      stolen_card: "Le paiement a été refusé parce que la carte bancaire est considérée comme volée."
       stop_payment_order: "La carte a été refusée pour une raison inconnue."
+      testmode_decline: "Une carte bancaire de test Stripe a été utilisée."
       transaction_not_allowed: "La carte a été refusée pour une raison inconnue."
       try_again_later: "La carte a été refusée pour une raison inconnue."
       withdrawal_count_limit_exceeded: "Le client a dépassé le solde ou la limite de crédit disponible sur sa carte."
+      disconnect_failure: "Échec à la déconnexion de Stripe"
+    success_code:
+      disconnected: "Le compte Stripe a été déconnecté."
+  taler:
+    order_status:
+      claimed: "La demande de paiement a expiré. Veuillez réessayer."
   activemodel:
     errors:
       messages:
@@ -198,7 +275,17 @@ fr_BE:
             shipping_method:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   card_details: "Détails de la carte"
+  card_type: "Type de carte"
+  card_type_is: "Type de carte est"
+  unrecognized_card_type: "Type de carte non reconnu"
+  use_new_cc: "Utilisez une nouvelle carte bancaire"
+  what_is_this: "Qu'est-ce que c'est?"
+  cardholder_name: "Nom du titulaire de la carte"
+  community_forum_url: "Lien vers le forum communautaire"
   customer_instructions: "Précisions pour la personne qui achète"
+  additional_information: "Information complémentaire"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -235,17 +322,36 @@ fr_BE:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passe a été changé avec succès. Vous êtes à présent connecté."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+    oidc:
+      failure: "Impossible de se connecter : %{error}"
+      record_not_unique: "%{uid} est déjà associé à un autre compte"
+  home_page_alert_html: "Alerte HTML de la page d&#39;accueil"
   item_description: "Description de l'article"
+  menu_1_icon_name: "Nom de l'icône du menu 1"
+  menu_2_icon_name: "Nom de l'icône du menu 2"
+  menu_3_icon_name: "Nom de l'icône du menu 3"
+  menu_4_icon_name: "Nom de l'icône du menu 4"
+  menu_5_icon_name: "Nom de l'icône du menu 5"
+  menu_6_icon_name: "Nom de l'icône du menu 6"
+  menu_7_icon_name: "Nom de l'icône du menu 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
     tax_rate:
       included_in_price: "Inclus dans le prix"
   open_street_map_enabled: "Open Street Map activé"
+  open_street_map_default_latitude: "Latitude par défaut Open Street Map"
+  open_street_map_default_longitude: "Longitude par défaut Open Street Map"
+  open_street_map_provider_name: "Nom du fournisseur Open Street Map"
+  open_street_map_provider_options: "Options du fournisseur Open Street Map"
+  producer_signup_pricing_table_html: "Tableau HTML des prix d'inscription des producteurs"
+  producers_social: "Réseau social producteur"
   resume_order: "Reprendre la commande"
   sku: "Référence produit"
   subtotal: "Sous-total"
   tax_rate: "TVA applicable"
+  with_tax_incl: "%{amount} taxe inclue"
+  producer_mail_qty: Qté
   validators:
     date_time_string_validator:
       not_string_error: "doit être une chaîne"
@@ -259,7 +365,34 @@ fr_BE:
         Nous allons examiner la question, mais n'hésitez pas à nous faire savoir si le problème persiste.
   backorder_mailer:
     backorder_failed:
+      subject: "Une commande fournisseur automatique a échoué"
+      headline: "La commande fournisseur a échoué"
+      description: |
+          Nous avons essayé de passer ou mettre à jour une commande fournisseur pour des articles en rupture de stock mais
+          cela n'a pas fonctionné. Il se peut que vous ayez un stock négatif et que vous deviez résoudre
+          le problème pour commander un stock plus important.
+      hints: |
+          Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
+          Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
+          toujours les produits dont vous avez besoin. N'hésitez pas à nous contacter si
+          vous avez des questions.
+      order: "Commande impactée : %{number}"
+      stock: "Stock"
       product: "Produit"
+    backorder_incomplete:
+      subject: "Une commande fournisseur automatique n'a pas pu aboutir"
+      headline: "Votre commande fournisseur n'est pas terminée"
+      description: |
+          Nous avons essayé de passer ou mettre à jour une commande fournisseur pour des articles en rupture de stock mais
+          cela n'a pas fonctionné. Les quantités en attente peuvent être trop élevées si
+          vous avez eu des annulations. De plus, votre commande fournisseur ne sera pas exécutée
+          tant qu'elle est à l'état de projet.
+      hints: |
+          Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
+          Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
+          toujours les produits dont vous avez besoin. N'hésitez pas à nous contacter si
+          vous avez des questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -280,6 +413,7 @@ fr_BE:
       subject: "Rapport de cycle de vente pour %{producer}"
     order_cycle_report:
       order_number: "Numéro de commande "
+  provider_settings: "Paramètres fournisseur"
   report_mailer:
     report_ready:
       subject: "Rapport prêt"
@@ -350,7 +484,10 @@ fr_BE:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
+  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être utilisées."
   invoice: "Facture"
+  invoices: "Factures"
+  file: "Fichier"
   active: "Actif"
   download: "Télécharger"
   cancelled: "Annulée"
@@ -413,6 +550,7 @@ fr_BE:
   voucher: Bon d'achat
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente"
+  invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
   clear_filters: Effacer les filtres
   quantity: Quantité
@@ -434,10 +572,23 @@ fr_BE:
   height: "Taille"
   width: "Largeur"
   depth: "Profondeur"
+  payment_could_not_process: "Le paiement n'a pas pu être traité"
+  payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API, merci de réessayer."
+      invalid_voucher: "Le bon de réduction n'est pas valide."
+      expired: "Le bon de réduction a expiré."
+      not_found_voucher: "Désolé, nous n'avons pas trouvé ce bon de réduction. Merci de vérifier le code qui vous a été transmis."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API"
+      redeeming_failed: "Echec de la prise en compte du bon de réduction"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
     cancel: "Annuler"
+    cancel_order: "Annuler"
     resume: "Reprendre"
     save: "Sauvegarder"
     edit: "Modifier"
@@ -446,6 +597,7 @@ fr_BE:
     add: "Ajouter"
     cut: "Couper"
     paste: "Coller"
+    destroy: "Détruire"
     rename: "Renommer"
   admin:
     products_page:
@@ -553,6 +705,7 @@ fr_BE:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
+    column_save_as_default: Sauvegarder par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -601,6 +754,7 @@ fr_BE:
         status: Statut
         ok: Ok
         instance_secret_key: Clé Secrète de l'Instance
+        instance_publishable_key: Clé publiable de l'instance
         account_id: Identifiant Compte
         business_name: Nom de l'entreprise
         charges_enabled: Frais activés
@@ -616,6 +770,17 @@ fr_BE:
         info_html: "Matomo est un site web est une application mobile analytique . Vous pouvez heberger matomo sur place ou heberger dans le cloud. Voyez <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
         config_instructions_tag_manager_html: "La définition de l'URL de Matomo Tag Manager active la fonctionnalité \"Matomo Tag Manager\". Cet outil vous permet de configurer des événements d'analyse. L'URL de Matomo Tag Manager est copiée à partir de la section \"Code d'installation\" de Matomo Tag Manager. Assurez-vous de sélectionner le bon conteneur et le bon environnement, car ces options modifient l'URL."
+    connected_app_settings:
+      edit:
+        title: "Paramètres de l'application connectée"
+        info_html: "Les applications autorisées apparaitront dans Configuration Entreprise > Applications connectées"
+        enabled_legend: "Applications connectées activées"
+        connected_apps_enabled:
+          discover_regen: Portail Discover Regenerative
+          affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+          vine: Éditeur de bons de réduction (VINE)
+      update:
+        resource: Paramètres de l'application connectée
     customers:
       index:
         new_customer: "Nouvel acheteur"
@@ -637,6 +802,7 @@ fr_BE:
         search_by_email: "Recherche par email/code..."
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
+        balance_due: "Solde dû"
       destroy:
         has_associated_subscriptions: "Échec de la suppression : ce client a des abonnements actifs. Annulez-les d'abord."
     column_preferences:
@@ -656,10 +822,35 @@ fr_BE:
         user_guide: Guide d'utilisation
         map: Carte
     dfc_product_imports:
+      connection_invalid_html: |
+          La connexion avec votre compte OIDC a échoué.
+          Merci de rafraîchir votre connexion OIDC à :  %{oidc_settings_link}
+      absent_variant:
+        reset: "Réinitialiser le stock"
       index:
+        title: "Catalogue produit DFC"
+        catalog_url: "%{count}produits à importer de :  %{catalog_url}"
+        absent_products:
+          one: |
+              Un produit n'est plus dans le catalogue produits.
+              Il sera marqué indisponible en remettant votre stock à zéro.
+          other: |
+              %{count}produits ne sont plus dans votre catalogue produits.
+              Ils seront marqués indisponibles quand vous remettrez votre stock à zéro.
+        enterprise: "Importation vers l'entreprise : %{enterprise_name}"
+        select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour
         new: Nouveau
+        selected:
+          zero: "0 sélectionné"
+          one: "1 sélectionné"
+          other: "%{count} sélectionné"
         import: Importer
+        invalid_url: L'URL de ce catalogue n'est pas valide.
+      import:
+        title: "Import du catalogue produit DFC"
+        imported_products: "Produits importés :  %{count}"
+        reset_products: "Réinitialiser le stock pour les produits absents : %{count}"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -727,18 +918,33 @@ fr_BE:
           title: Gestion du catalogue produits
       content:
         loading: Chargement de vos produits
+      delete_modal:
+        delete_product_modal:
+          heading: "Supprimer produit"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer produit"
+          cancellation_text: "Conserver le produit"
+        delete_variant_modal:
+          heading: "Supprimer la variante"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer la variante"
+          cancellation_text: "Conserver la variante"
       filters:
         search_products: Rechercher des produits
         search_for_producers: Rechercher des producteurs
+        select_producer: Sélectionner producteur
         all_producers: Tous les producteurs
         search_for_categories: Rechercher des catégories
+        select_category: Sélectionner catégorie
         all_categories: Toutes catégories
+        select_tag: Choisir le tag
         producers:
           label: Producteur·trice·s
         categories:
           label: Les catégories
         tags:
           label: Tags
+          none: Aucun
         search: Rechercher
       sort:
         pagination:
@@ -772,13 +978,28 @@ fr_BE:
         new_variant: Nouvelle variante
       bulk_update:
         success: Modifications sauvegardées
+      delete_product:
+        success: Le produit a bien été supprimé
+        error: Le produit n'a pas pu être supprimé
+      delete_variant:
+        success: La variante a bien été supprimée
+        error: La variante n'a pas pu être supprimée
       variant_row:
         none_tax_category: Aucun
         search_for_tax_categories: "Rechercher des catégories de taxes"
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
         producer_field_name: "Producteur·trice"
+        select_unit_scale: Sélectionner l'unité
         add_a_tag: Ajouter un tag
+      clone:
+        success: Le produit a bien été dupliqué
+        error: Impossible de dupliquer le produit
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} comporte 1 règle"
+          many: "%{tag} comporte %{count} règles"
+          other: "%{tag} comporte %{count} règles"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -821,6 +1042,9 @@ fr_BE:
         tax_categories: TVA applicable
         shipping_categories: Condition de transport
       dfc_import_form:
+        title: "Importer depuis le catalogue DFC"
+        enterprise: "Créer les produits pour l'entreprise"
+        catalog_url: "URL du catalogue DFC"
         preview: Aperçu
       import:
         review: Vérifier
@@ -841,6 +1065,7 @@ fr_BE:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise définie
         reset_absent?: Mettre à zéro le produits absents du fichier
+        reset_absent_tip: Mettre le stock à zéro pour tous les produits existants non présents dans le fichier
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -923,6 +1148,7 @@ fr_BE:
       edit:
         order_sure_want_to: Êtes-vous sûr de vouloir %{event} cette commande ?
         voucher_tax_included_in_price: "%{label} (taxes incluses dans le bon)"
+        tax_on_fees: "Taxe sur les frais"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -947,6 +1173,9 @@ fr_BE:
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
         all: "Tous"
       select_variant: "Choisir une variante"
+      note:
+        note_label: "Note :"
+        no_note_present: "Aucune note n'a été ajoutée."
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -976,6 +1205,7 @@ fr_BE:
           display_invoice_logo: Afficher le logo sur la facture
           invoice_text: Ajouter une mention spécifique en bas des factures
           terms_and_conditions: "Termes et conditions"
+          remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "téléchargé à"
           reset_form: "Vider les champs"
           business_address_legend: "Adresse de facturation"
@@ -986,10 +1216,12 @@ fr_BE:
           disabled: Désactiver
         business_address:
           company_legal_name: Nom légal d'entreprise
+          company_placeholder: Exemple Soc.
           address1: Adresse du siège social
           address1_placeholder: 123, rue High.
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
+          phone_placeholder: "98 123 4565"
           select_country: "Choisir le pays"
           select_state: "Choisir la Province"
         contact:
@@ -1002,6 +1234,7 @@ fr_BE:
           phone: n° téléphone
           phone_placeholder: 'ex: +32 (0) 000 00 00 00 '
           whatsapp_phone: Numéro de téléphone Whatsapp
+          whatsapp_phone_placeholder: eg. +32 4 9876 5432
           whatsapp_phone_tip: "Ce numéro sera affiché dans votre profil public pour être ouvert en tant que lien WhatsApp."
           website: Site internet
           website_placeholder: 'ex: www.maferme.org'
@@ -1014,9 +1247,11 @@ fr_BE:
           create_button: Créer une commission
         enterprise_permissions:
           legend: "Permissions Inter-entreprises"
+          enterprise_relationships: Relations inter-entreprises
         images:
           legend: "Images"
           logo: Logo
+          logo_size: "300 x 300 pixels"
         inventory_settings:
           legend: "Catalogue comptoir"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
@@ -1052,11 +1287,15 @@ fr_BE:
           own: Les miens
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
+          external_billing_id: Identifiant Dolibarr
+          external_billing_id_placeholder: 'ex : INV-2024-123456'
+          external_billing_id_tip: "Ceci est l'identifiant utilisé par la plateforme Dolibarr pour identifier cette entreprise."
           visible_in_search: Apparaît sur la plateforme?
           visible_in_search_tip: "Les profils peuvent être 1 1. Visibles publiquement, sur la carte et la liste des comptoirs. 2 2. Invisibles sur la carte et la liste des comptoirs, mais référencées sur les profils des comptoirs et producteurs de leur réseau. 3 3. Complètement invisibles (sauf si on dispose du lien)."
           visible: Visible par tous
           not_visible: Invisible
           hidden: Masquer toutes les références
+          admin_only_legend: Admin seulement
         properties:
           legend: "Labels / propriétés"
         permalink:
@@ -1095,8 +1334,12 @@ fr_BE:
           enable_subscriptions_true: "Activé"
           customer_names_in_reports: "Nom de client dans le rapport"
           customer_names_tip: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport "
+          producers_to_edit_orders: "Possibilité pour les producteurs de modifier les commandes"
+          producers_to_edit_orders_tip: "Permettre à vos fournisseurs de visualiser les commandes comprenant leurs produits et de modifier la quantité et le poids de leurs produits seulement."
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
+          customer_contacts_in_reports: "Coordonnées du client dans les rapports"
+          customer_contacts_tip: "Autoriser vos fournisseurs de voir l'adresse mail et le téléphone des clients dans les rapports"
           customer_contacts_false: "Désactivé"
           customer_contacts_true: "Activé"
           producers_edit_orders_false: "Désactivé"
@@ -1118,6 +1361,7 @@ fr_BE:
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
           display_ordering_in_shopfront: "Ordre d'affichage sur le comptoir :"
+          shopfront_sort_by_product: "Par produit"
           shopfront_sort_by_category: "Par catégorie"
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
@@ -1180,7 +1424,11 @@ fr_BE:
           voucher_code: Code du bon d'achat
           rate: 'Taux '
           label: Étiquette
+          purpose: Raison
+          expiry: Date d'expiration
+          use_limit: Date limite
           customers: Acheteur·euse
+          net_value: Valeur nette
           active: Actif?
           add_new: Ajouter un nouveau
           no_voucher_yet: Pas encore de bons d'achat
@@ -1193,12 +1441,43 @@ fr_BE:
           custom_tab_title: "Titre de l'onglet personnalisé (max. 20 caractères)"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
+          legend: "Applications connectées"
           affiliate_sales_data:
+            title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
             loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            description: "L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en Belgique. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme."
+            link_label_html: "En savoir plus à propos de ce projet de recherche <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
             loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            note: |
+                Votre compte Open Food Network est connecté à Discover Regenerative.
+                Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
+            link_label: "Gérer la liste"
+            description: "Les producteurs admissibles peuvent présenter leurs certifications en matière d'agriculture régénératrice, leurs pratiques agricoles et plus encore grâce à un profil. Cela simplifie la recherche de produits issus de l'agriculture régénératrice et la prise de contact avec les producteurs qui les intéressent."
+            link_label_html: "En savoir plus sur Discover Regenerative  <i class=\"icon-external-link\"></i>"
           vine:
+            title: "Éditeur de bons de réduction (VINE)"
+            tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
             enable: "Se connecter"
+            disable: "Déconnecter"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            vine_api_key: "clé API VINE"
+            description: "Pour autoriser l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et clé secrète"
+            link_label_html: "VINE <i class=\"icon-external-link\"></i>"
+            api_parameters_empty: "Entrez une clé API et un secret"
+            api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
+            connection_error: "Erreur de connexion à l'API. Merci de réessayer."
+            setup_error: "L'API VINE n'est pas configurée. Veuillez contacter l'équipe support de la plateforme."
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1215,6 +1494,11 @@ fr_BE:
         visible: Visible?
         owner: Gestionnaire principal
         producer: Producteur
+        sells_options:
+          unspecified: indéterminé
+          none: aucun
+          own: les miens
+          any: tous
       change_type_form:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via Open Food Network
@@ -1265,6 +1549,10 @@ fr_BE:
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
+    tag_rules:
+      not_supported_type: Type de règle de tag non pris en charge
+      confirm_delete: Etes-vous certain de vouloir supprimer cette règle?
+      destroy_error: Il y a eu un problème à la suppression de cette règle de tag
     order_cycles:
       loading_flash:
         loading_order_cycles: CHARGEMENT DES CYCLES DE VENTES
@@ -1410,6 +1698,8 @@ fr_BE:
         cancel: Annuler
         proceed: Continuer
       status:
+        undated: sans date
+        upcoming: prochainement
         open: ouvert
         closed: fermé
     producer_properties:
@@ -1420,11 +1710,17 @@ fr_BE:
         could_not_cancel_the_order: La commande n'a pas pu être supprimée
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
+    select2:
+      minimal_search_length: Entrez %{count} caractères ou plus
+      searching: Recherche...
+      no_matches: Pas de correspondance trouvée
     shared:
       attachment_field:
         logo_label: "Logo"
+        logo_hint: 300 x 300 pixels
         logo_remove: "Supprimer l'image"
         logo_remove_confirm: "Le logo sera supprimé juste après votre confirmation."
+        promo_image_label: "image promotionnelle"
         promo_image_note1: 'ATTENTION:'
         promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
         promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
@@ -1432,6 +1728,7 @@ fr_BE:
         promo_image_remove: "Supprimer l'image"
         promo_image_remove_confirm: "La bannière sera supprimée juste après votre confirmation."
         white_label_logo_label: "Logo utilisé en vitrine"
+        white_label_logo_hint: 217 x 44 pixels
         white_label_logo_remove: "Supprimer l'image"
         white_label_logo_remove_confirm: "Voulez-vous vraiment supprimer ce logo ?"
       user_guide_link:
@@ -1462,6 +1759,7 @@ fr_BE:
           users: "Gestionnaires"
           vouchers: Bons d'achat
           white_label: "Marque blanche"
+          connected_apps: "Applications connectées"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Gestionnaires"
@@ -1477,12 +1775,18 @@ fr_BE:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise}n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      none: aucun
+      metadata:
+        report_title: Type de rapport
+      deprecated: "Ce rapport est obsolète et sera supprimé dans une prochaine mise à jour."
+      hidden_field: "< Masqué >"
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
       total_by_customer: Total par client
       total_by_supplier: Total par fournisseur
       supplier_totals: Totaux Cycle de Vente par Producteur
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque Comptoir
       totals_by_supplier: Totaux Cycle de Vente par Comptoir pour chaque Producteur
       customer_totals: Totaux Cycle de Vente par Acheteur·euse
@@ -1498,6 +1802,7 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      pay_your_suppliers: Payer vos fournisseurs
       display:
         report_is_big: "Ce rapport est volumineux et peut ralentir votre appareil."
         display_anyway: "Afficher quand même"
@@ -1543,10 +1848,14 @@ fr_BE:
       enterprise_fee_summary:
         name: "Récapitulatif de la commission d'entreprise "
         description: "Récapitulatif des commissions d'entreprise perçues"
+      suppliers:
+        name: Fournisseurs
       enterprise_fees_with_tax_report_by_order: "Frais d'entreprise avec rapport fiscal par commande"
+      enterprise_fees_with_tax_report_by_producer: "Frais d'entreprise avec rapport fiscal par producteur"
       errors:
         no_report_type: "Veuillez spécifier un type de rapport"
         report_not_found: "Rapport introuvable"
+        missing_ransack_params: " Veuillez fournir les paramètres de recherche Ransack dans la requête"
       summary_row:
         total: "Total"
       table:
@@ -1570,14 +1879,30 @@ fr_BE:
         display: Ecran
         summary_row: Ligne TOTAL
         header_row: Ligne titre
+        metadata_rows: Lignes de métadonnées
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
+    oidc_settings:
+      index:
+        title: "Paramètres OIDC"
+        connect: "Se connecter à votre compte"
+        disconnect: "Déconnecter"
+        connected: "Votre compte est relié à %{uid}."
+        les_communs_link: "Serveur OIDC Les Communs"
+        link_your_account: "Vous devez d'abord lier votre compte avec le fournisseur d'autorisation utilisé par DFC (Les Communs Open ID Connect)"
+        link_account_button: "Relier votre compte OIDC Les Communs"
+        note_expiry: |
+            Les approbations permettant d'accéder aux applications connectées ont expiré. Veuillez rafraîchir
+            la connexion à votre compte pour que toutes les intégrations fonctionnent.
+        refresh: "Rafraichir l'autorisation"
+        view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:
         title: "Commandes récurrentes"
         new: "Nouvel abonnement"
+      issue: "Problème"
       new:
         title: "Nouvel abonnement"
       edit:
@@ -1688,9 +2013,19 @@ fr_BE:
         remove_white_label_logo_success: "Logo supprimé avec succès"
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "E-mail de confirmation envoyé pour une commande."
+      many: "E-mail de confirmation envoyé pour %{count} commandes."
+      other: "E-mail de confirmation envoyé pour %{count} commandes."
+    send_invoice_feedback:
+      one: "Email de facturation envoyé pour 1 commande."
+      many: "Emails de facturation envoyés pour les commandes %{count} ."
+      other: "Emails de facturation envoyés pour les commandes %{count} ."
   api:
+    unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été prévenue."
     invalid_api_key: "Clé API invalide (%{key}) spécifiée."
     unauthorized: "Vous n'êtes pas autorisé à effectuer cette action."
+    unpermitted_parameters: "Paramètres non autorisés dans cette requête : %{params}"
     missing_parameter: "Un paramètre nécessaire est manquant ou vide : %{param}"
     invalid_resource: "Ressource non valable. Veuillez corriger les erreurs et réessayer."
     resource_not_found: "La ressource que vous cherchiez n'a pas pu être trouvée."
@@ -1702,6 +2037,10 @@ fr_BE:
       destroy_attachment_does_not_exist: "Le fichier des termes et conditions n'existe pas"
     orders:
       failed_to_update: "Annulation de la mise à jour de la commande"
+    query_param:
+      error:
+        title: Paramètre de la requête invalide
+        extra_fields: "Champs invalides: %{fields}"
   checkout:
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
@@ -1748,6 +2087,7 @@ fr_BE:
       form:
         card_number:
           label: Numéro de carte
+          placeholder: par ex. 4242 4242 4242 4242
         card_verification_value:
           label: CVC
         card_month:
@@ -1756,6 +2096,7 @@ fr_BE:
           label: Année
         stripe:
           use_saved_card: Utiliser la carte enregistrée
+          use_new_card: Entrez les informations de votre carte
           save_card: Enregistrer la carte pour une utilisation ultérieure
           create_new_card: ou entrez les détails de la nouvelle carte ci-dessous
       explaination: Vous pouvez vérifier et confirmer votre commande à l'étape suivante qui comprend les coûts finaux.
@@ -1764,7 +2105,9 @@ fr_BE:
       voucher:
         voucher: "%{voucher_amount} Bon d'achat"
         apply_voucher: Appliquer le bon d'achat
+        apply: Appliquer
         placeholder: Entrer le code du bon d'achat
+        remove_code: Supprimer le code
         confirm_delete: Êtes-vous sûr de vouloir supprimer le bon ?
         warning_forfeit_remaining_amount: "Remarque : si le total de votre commande est inférieur à votre bon, vous ne pourrez peut-être pas dépenser la valeur restante."
     step3:
@@ -1772,9 +2115,11 @@ fr_BE:
         title: Détails de livraison
         edit: Modifier
         address: Adresse de livraison
+        instructions: Instructions
       payment_method:
         title: Mode de paiement
         edit: Modifier
+        instructions: Instructions
       order:
         title: Détails de la commande
         edit: Modifier
@@ -1797,7 +2142,11 @@ fr_BE:
       select_a_shipping_method: Sélectionnez une méthode d'expédition ou de retrait
       select_a_payment_method: Choisissez une méthode de paiement
       no_shipping_methods_available: Le paiement n'est pas possible en raison de l'absence d'options d'expédition. Veuillez contacter le propriétaire du magasin.
+      voucher_code_blank: Veuillez entrer un bon de réduction valide
+      voucher_code_not_found: Invalide. Soit il n'existe pas, soit il a été utilisé en totalité
       add_voucher_error: Une erreur s'est produite lors de l'ajout du bon
+      create_voucher_error: "Il y a eu une erreur lors de la création du bon de réduction : %{error}"
+      voucher_redeeming_error: Il y a eu une erreur lors de la tentative d'utilisation de votre bon de réduction.
   shops:
     hubs:
       show_closed_shops: "Afficher les comptoirs fermés"
@@ -1807,6 +2156,7 @@ fr_BE:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Votre expérience d'achat a été rendue possible par %{open_food_network}."
     menu:
       cart:
         cart: "Panier"
@@ -1868,14 +2218,17 @@ fr_BE:
   invoice_column_unit_price_without_taxes: "Prix unitaire HT"
   invoice_column_price_with_taxes: "Prix total TTC"
   invoice_column_price_without_taxes: "Prix total HT"
+  invoice_column_price_per_unit_without_taxes: "Prix par unité (hors taxe)"
   invoice_column_tax_rate: "TVA applicable"
   invoice_tax_total: "Total TVA :"
+  invoice_cancel_and_replace_invoice: "annule et remplace la facture"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
   invoice_shipping_category_delivery: "Livraison"
   invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
+  total_all_tax: "Taxe totale :"
   abn: "Numéro d'entreprise : "
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
@@ -1922,7 +2275,11 @@ fr_BE:
   address2: Adresse (suite)
   city: Ville
   city_placeholder: 'ex: Wavre'
+  latitude: Latitude
+  latitude_placeholder: par ex. 14.499454
   latitude_longitude_tip: La latitude et la longitude sont nécessaires pour afficher votre profil sur la carte.
+  longitude: Longitude
+  longitude_placeholder: par ex. -14.445561
   use_geocoder: Souhaitez-vous calculer automatiquement la latitude et la longitude depuis l'adresse ?
   state: Province
   postcode: Code postal
@@ -2080,12 +2437,16 @@ fr_BE:
   order_produce: Produit
   order_amount_paid: Montant payé
   order_total_price: Total
+  order_balance_due: Solde dû
   order_includes_tax: (dont TVA)
   order_payment_paypal_successful: Votre paiement via PayPal a été réalisé avec succès.
   order_hub_info: Comptoir Info
   order_back_to_store: Retour au comptoir
   order_back_to_cart: Retour au panier
   order_back_to_website: Retour au site Web
+  checkout_details_title: Détails de la commande
+  checkout_payment_title: Paiement de la commande
+  checkout_summary_title: Résumé de la commande
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."
@@ -2096,8 +2457,15 @@ fr_BE:
   email_confirmed: "Veuillez confirmer votre adresse email."
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact}!"
+  email_confirmation_profile_created: >
+      Un profil pour %{name} a été créé avec succès ! Pour activer votre profil, nous
+      avons besoin de la confirmation de cette adresse mail.
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
+  email_confirmation_help_html: >
+      Après avoir confirmé votre mail, vous pourrez accéder à votre compte administrateur
+      pour l'entreprise concernée. Regardez %{link} pour en savoir plus sur les fonctionnalités
+      de %{sitename}  et pour commencer à utiliser votre profil ou boutique en ligne."
   email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à %{contact}."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -2118,6 +2486,7 @@ fr_BE:
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(dont TVA)"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_description: Description du paiement à la caisse
@@ -2183,6 +2552,7 @@ fr_BE:
   shopping_groups_part_of: "fait partie de:"
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes pour ce cycle"
+  enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
@@ -2362,6 +2732,7 @@ fr_BE:
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande est passée avec succès"
+  thank_you_for_your_order: "Merci pour votre commande"
   products_cart_distributor_choice: "Comptoir pour votre commande:"
   products_cart_distributor_change: "Votre comptoir, pour cette commande, sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
   products_cart_distributor_is: "Votre comptoir pour cette commande est %{name}."
@@ -2395,6 +2766,7 @@ fr_BE:
   confirm_hub_change: "Confirmer? Cette action modifiera le comptoir sélectionné et tous les articles de votre panier seront effacés."
   confirm_oc_change: "Confirmer? Cette action modifiera le cycle de vente sélectionné et tous les articles de votre panier seront effacés."
   location_placeholder: "Saisissez une localisation..."
+  gmap_load_failure: "Impossible de charger la carte. Veuillez vérifier les paramètres de votre navigateur et accepter les cookies tiers pour ce site web."
   error_required: "Champ obligatoire"
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
@@ -2466,8 +2838,11 @@ fr_BE:
         state_field_error: "Veuillez saisir une Province"
         country_field: "Pays:"
         country_field_error: "Veuillez saisir une Pays"
+        map_location: "Emplacement sur la carte"
         locate_address: "Localiser l'adresse sur la carte"
         drag_pin: "Faites glisser et déposez la broche à l'emplacement correct si elle n'est pas précise."
+        confirm_address: "Je confirme que la position indiquée sur la carte est correcte. "
+        drag_map_marker: "En raison de nombreux producteurs opérant dans les zones rurales, la précision des cartes est toujours en cours d'amélioration. Aidez-nous à mieux comprendre où vous vous trouvez en interagissant avec la carte ci-dessus. Déplacez le pointeur en cliquant ou en appuyant dessus pour le maintenir, puis en le faisant glisser vers l'emplacement le plus précis d'après vos connaissances. "
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Qui gère %{enterprise}?"
@@ -2478,6 +2853,7 @@ fr_BE:
         whatsapp_phone_field: "Numéro de téléphone Whatsapp"
         whatsapp_phone_tooltip: "Ce numéro sera affiché dans votre profil public pour être ouvert en tant que lien WhatsApp."
         phone_field_placeholder: "ex : +32 (0) 000 00 00 00  "
+        whatsapp_phone_field_placeholder: "ex. +61 4 1234 5678"
       type:
         title: "Catégorie"
         headline: "Dernière étape pour ajouter %{enterprise} !"
@@ -2576,6 +2952,7 @@ fr_BE:
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
   tax: "Taxe"
+  tax_amount_included: "%{amount} (inclus)"
   remove_tax: "Retirer TVA"
   balance: "Solde"
   transaction: "Transaction"
@@ -2644,6 +3021,7 @@ fr_BE:
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous changez le type de calculatrice, vous devez d'abord enregistrer avant de pouvoir modifier les paramètres de la calculatrice"
   calculator_preferred_unit_error: "doit être en kg ou en lb"
+  calculator_preferred_value_error: "La valeur renseignée n'est pas valide. Veuillez utiliser des nombres uniquement. Par exemple : 10, 5.5, -20"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe (par article)"
   flat_rate_per_order: "Montant fixe (par commande)"
@@ -2683,6 +3061,7 @@ fr_BE:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
+  spree_admin_enterprises_showing: "Montrer %{count} de %{total}"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
   spree_admin_supplier: Fournisseur
@@ -2758,9 +3137,12 @@ fr_BE:
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
   report_filters: Filtres
+  report_print: Imprimer le rapport
   report_render_options: Mise en forme
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Cycle de Vente
+  report_header_order_cycle_start_date: Date d'ouverture du cycle de vente
+  report_header_order_cycle_end_date: Date de fermeture du cycle de vente
   report_header_user: Utilisateur
   report_header_email: Email
   report_header_status: Statut
@@ -2776,9 +3158,13 @@ fr_BE:
   report_header_hub_address: Adresse du comptoir
   report_header_to_hub: Comptoir
   report_header_hub_code: Code du comptoir
+  report_header_hub_id: Numéro d’identification du Hub
+  report_header_hub_business_number: "Numéro d'entreprise du Hub"
+  report_header_hub_external_billing_id: "Identifiant Dolibarr"
   report_header_hub_legal_name: "Nom légal du comptoir"
   report_header_hub_contact_name: "Nom du contact du comptoir"
   report_header_hub_email: "Email public"
+  report_header_hub_contact_email: e-mail de contact de la boutique
   report_header_hub_owner_email: Email gestionnaire principal
   report_header_hub_phone: "Numéro de téléphone"
   report_header_hub_address_line1: "Adresse ligne 1"
@@ -2849,6 +3235,9 @@ fr_BE:
   report_header_producer: Producteur·trice
   report_header_producer_suburb: Ville Producteur·trice
   report_header_producer_tax_status: Statut fiscal du producteur
+  report_header_producer_charges_sales_tax?: Soumis à la TVA / TPS
+  report_header_producer_abn_acn: Numéro de SIRET/SIREN du producteur
+  report_header_producer_address: Adresse du producteur
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -2893,6 +3282,8 @@ fr_BE:
   report_header_item_fees_price: "Coût produits + Marge (%{currency})"
   report_header_admin_handling_fees: "Frais si par commande (%{currency})"
   report_header_ship_price: "Frais de livraison (%{currency})"
+  report_header_producer_charges_gst: Le producteur facture-t-il la TVA ?
+  report_header_total_tax_on_product: "Taxe totale sur produit (%{currency})"
   report_header_pay_fee_price: "Frais de Transaction (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Total Produit (%{currency})"
@@ -2909,7 +3300,11 @@ fr_BE:
   report_header_total_units: Vol. total
   report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total commission fournisseur hors taxe (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total taxe sur les commissions fournisseur (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total hors commission fournisseur et taxe (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
   report_header_shipment_state: "Statut livraison"
   report_header_shipping_method: "Méthode de Livraison"
@@ -2925,8 +3320,12 @@ fr_BE:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
+  report_header_voucher_label: Label du bon d'achat
+  report_header_voucher_amount: "Montant du bon d'achat (%{currency_symbol})"
+  report_line_cost_of_produce: Coût des produits
   report_line_line_items: Ces articles
   report_header_last_completed_order_date: Date de la dernière commande terminée
+  report_xero_configuration: Configuration Xero
   initial_invoice_number: "Numéro de facture initial"
   invoice_date: "Date de facture"
   due_date: "Date d'échéance"
@@ -2960,6 +3359,9 @@ fr_BE:
   payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
   payment_method_not_supported: "Ce mode de paiement n'est pas possible. Veuillez en choisir un autre."
   payment_updated: "Paiement mis à jour "
+  payment_method_taler:
+    order_summary: "Commande Open Food Network"
+  cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Action requise"
   tag_rules: "Règles de tag"
   enterprise_fee_whole_order: Commande totale
@@ -2981,6 +3383,7 @@ fr_BE:
   product_importer_products_save_error: n'a pu sauvegarder aucun produit :-(
   product_import_file_not_found_notice: 'Fichier non trouvé ou impossible à ouvrir'
   product_import_no_data_in_spreadsheet_notice: 'Aucune donnée trouvée dans le tableau'
+  product_import_inventory_disable: L'importation vers les catalogues boutique n'est pas disponible
   order_choosing_hub_notice: Votre comptoir a été sélectionné.
   order_cycle_selecting_notice: Votre cycle de vente a été sélectionné.
   adjustments_tax_rate_error: "^Veuillez vérifier la TVA applicable pour cet ajustement."
@@ -3005,12 +3408,17 @@ fr_BE:
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de commande que vous avez sélectionner vient de fermer. Essayer plus tard."
+  order_cycle_closed_next_steps: "Le cycle de vente que vous avez sélectionné vient de se terminer. Merci de nous contacter pour finaliser votre commande #%{order_number}!"
   back_to_orders_list: "Retour vers la liste des commandes "
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
+  create_or_update_invoice: "Créer ou mettre à jour la facture"
   date_completed: "Date d'opération"
   amount: "Montant"
+  invoice_number: "Numéro de facture"
+  invoice_file: "Fichier"
+  invalid_url: "'%{url}' est une URL non valide"
   state_names:
     ready: Prêt
     pending: En attente
@@ -3019,6 +3427,7 @@ fr_BE:
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'
+    authorising: "Autorisation en cours..."
     save_changes_first: Veuillez d'abord sauvegarder les modifications.
     all_changes_saved: Toutes les modifications ont été sauvegardées.
     unsaved_changes: Des modifications n'ont pas été sauvegardées
@@ -3213,6 +3622,7 @@ fr_BE:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
+          confirmation: "confirmation"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"
@@ -3272,6 +3682,11 @@ fr_BE:
         error_saving: "Erreur pendant la sauvegarde de la commande récurrente"
         new:
           please_select_a_shop: "Veuillez choisir un comptoir"
+      enterprises:
+        form:
+          images:
+            immediate_terms_and_conditions_removal_warning: "Le fichier Conditions Générales sera supprimé après confirmation."
+            removed_terms_and_conditions_successfully: "Le fichier des conditions de ventes a été supprimé avec succès "
     insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible
@@ -3285,7 +3700,10 @@ fr_BE:
       variant:
         add_to_cart: "Ajouter"
         in_cart: "dans le panier"
+        quantity_in_cart: "%{num}article dans le panier"
+        remaining_in_stock: "Seulement %{quantity} produits restants"
       bulk_buy_modal:
+        min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
       unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
@@ -3349,14 +3767,146 @@ fr_BE:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Il a eu un problème lors de la prise en compte de votre carte.
+          Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
+          merci de nous contacter.
     trix:
+      bold: "Gras"
+      bullets: "Puces"
       code: "Code"
+      heading1: "En-tête"
+      hr: "Règle horizontale"
+      indent: "Augmenter d'un niveau"
+      italic: "Italique"
+      link: "Lien"
+      numbers: "Nombres"
+      outdent: "Diminuer d'un niveau"
+      quote: "Citation"
+      redo: "Refaire"
+      strike: "Barré"
+      undo: "Annuler"
+      unlink: "Supprimer le lien"
+      url: "URL"
       urlPlaceholder: "Entrer l'URL pour insérer"
   inflections:
+    each:
+      one: "chacun"
+      many: "chacun"
+      other: "chacun"
+    bunch:
+      one: "botte"
+      many: "bottes"
+      other: "bottes"
+    pack:
+      one: "caisse"
+      many: "caisses"
+      other: "caisses"
+    box:
+      one: "boîte"
+      many: "boîtes"
+      other: "boîtes"
+    bottle:
+      one: "bouteille"
+      many: "bouteilles"
+      other: "bouteilles"
+    jar:
+      one: "bocal"
+      many: "bocaux"
+      other: "bocaux"
+    head:
+      one: "tête"
+      many: "têtes"
+      other: "têtes"
+    bag:
+      one: "sac"
+      many: "sacs"
+      other: "sacs"
+    loaf:
+      one: "pain"
+      many: "pains"
+      other: "pains"
+    single:
+      one: "unité"
+      many: "unités"
+      other: "unités"
+    tub:
+      one: "bac"
+      many: "bacs"
+      other: "bacs"
+    punnet:
+      one: "barquette"
+      many: "barquettes"
+      other: "barquettes"
+    packet:
+      one: "paquet"
+      many: "paquets"
+      other: "paquets"
     item:
       one: "article"
       many: "articles"
       other: "articles"
+    dozen:
+      one: "dizaine"
+      many: "des dizaines"
+      other: "des dizaines"
+    unit:
+      one: "unité"
+      many: "unités"
+      other: "unités"
+    serve:
+      one: "service"
+      many: "services"
+      other: "services"
+    tray:
+      one: "plateau"
+      many: "plateaux"
+      other: "plateaux"
+    piece:
+      one: "pièce"
+      many: "pièces"
+      other: "pièces"
+    pot:
+      one: "pot"
+      many: "pots"
+      other: "pots"
+    flask:
+      one: "flacon"
+      many: "flacons"
+      other: "flacons"
+    basket:
+      one: "panier"
+      many: "paniers"
+      other: "paniers"
+    sack:
+      one: "sachet"
+      many: "sachets"
+      other: "sachets"
+    bucket:
+      one: "seau"
+      many: "seaux"
+      other: "seaux"
+    pail:
+      one: seau
+      many: seaux
+      other: seaux
+    stem:
+      one: "tige"
+      many: "tiges"
+      other: "tiges"
+    plug:
+      one: "bouchon"
+      many: "bouchons"
+      other: "bouchons"
+    bulb:
+      one: "bulbe"
+      many: "bulbes"
+      other: "bulbes"
+    root:
+      one: "racine"
+      many: "racines"
+      other: "racines"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
@@ -3446,15 +3996,27 @@ fr_BE:
   first: "Début"
   previous: "Précédent"
   last: "Fin"
+  webhook_endpoints:
+    create:
+      success: Le webhook a bien été créé.
+      error: Le webhook n'a pas pu être créé.
+    destroy:
+      success: Le webhook a bien été supprimé.
+      error: Le webhook n'a pas pu être supprimé.
+    test:
+      success: Des données de test vont être envoyées à l'URL du webhook
   spree:
     order_updated: "Commande mise à jour"
+    cannot_perform_operation: "Cette opération ne peut pas être réalisée"
     add_country: "Ajouter un pays"
     add_state: "Ajouter une province"
     adjustment: "Ajustement"
     all: "Tous"
+    associated_adjustment_closed: "L'ajustement associé est fermé"
     back_to_adjustments_list: "Retour aux ajustements"
     back_to_users_list: "Retour aux utilisateurs"
     back_to_zones_list: "Retour aux zones"
+    card_code: "Code de la carte"
     card_number: "Numéro de carte"
     category: "Catégorie"
     created_successfully: "Créé avec succès"
@@ -3466,16 +4028,24 @@ fr_BE:
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les articles ne peuvent pas être expédiés"
+    gateway_config_unavailable: "Configuration de la passerelle indisponible"
     gateway_error: "Paiement échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
+    new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente"
     remove: "Supprimer"
     none: "Aucun"
+    not_found: "Non trouvé"
     notice_messages:
       variant_deleted: "Variante supprimée"
+    payment_method_not_supported: "Mode de paiement non pris en charge"
+    resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
+    refund: "Remboursement"
+    server_error: "Erreur serveur"
     start_date: "Date de début"
+    successfully_removed: "Supprimé avec succès"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
@@ -3501,6 +4071,8 @@ fr_BE:
     delete: "Supprimer"
     cannot_set_shipping_method_without_address: "Impossible d'indiquer le mode d'expédition avant de compléter les données client"
     no_tracking_present: "Pas de traçage des données fournies."
+    tracking: "Suivi"
+    tracking_number: "Numéro de suivi"
     order_total: "Total commande "
     customer_details: "Données client·e"
     customer_details_updated: "Détails du client mis à jour"
@@ -3526,6 +4098,7 @@ fr_BE:
     credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
+    capture_and_complete_order: "Capturer et terminer la commande"
     void: "Vide"
     login: "Se connecter"
     password: "Mot de passe"
@@ -3535,6 +4108,10 @@ fr_BE:
     server: "Serveur"
     test_mode: "Mode test"
     logourl: "Url logo"
+    are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
+    confirm_delete: "Confirmer la suppression"
+    tag_rule: "Règle de tag"
+    voucher: "Bon d'achat"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -3550,6 +4127,7 @@ fr_BE:
     display_currency: "Afficher devise "
     choose_currency: "Choisir devise "
     mail_method_settings: "Paramètres du moyen mail"
+    mail_settings_notice_html: "<b>Les modifications apportées ici seront temporaires</b>et peuvent changer à la prochaine mise à jour. <br>  Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant<a href='https://github.com/openfoodfoundation/ofn-install'> ofn-install </a>."
     general: "Généralement"
     enable_mail_delivery: "Possible de livrer le mail"
     send_mails_as: "Envoyer les mails comme "
@@ -3567,6 +4145,7 @@ fr_BE:
     tax_rate_amount_explanation: "Les taux sont décimaux pour faciliter les calculs (par ex. un taux de 5% sera entré en tant que 0.05) "
     included_in_price: "Inclus dans le prix "
     show_rate_in_label: "Montrer le taux sur l'étiquette "
+    back_to_tax_rates_list: "Revenir à la liste des taux de taxe"
     tax_settings: "Paramètres TVA"
     zones: "Zones"
     new_zone: "Nouvelle zone "
@@ -3623,6 +4202,8 @@ fr_BE:
     alt_text: "Texte alternatif"
     thumbnail: "Miniature"
     back_to_images_list: "Retour à la liste d'images"
+    backend_url: "URL du serveur"
+    api_key: "clé API"
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse-mail confirmée"
@@ -3638,10 +4219,12 @@ fr_BE:
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
     please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."
     options: "Options"
+    has_no_shipped_units: "n'a pas d'éléments envoyés"
     successfully_created: '%{resource}est crée avec succès! '
     successfully_updated: '%{resource}a été enregistrée avec succès'
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
+    not_available: "N/A"
     sku: "Référence produit"
     there_are_no_items_for_this_order: "Il n'y a aucun article pour cette commande."
     order_populator:
@@ -3664,6 +4247,7 @@ fr_BE:
         payment_state: "Statut du Paiement"
     errors:
       messages:
+        included_price_validation: "ne peut pas être sélectionné à moins d'avoir une zone de taxe par défaut"
         blank: "Champ obligatoire"
         invalid_instagram_url: "Doit être uniquement le nom d'utilisateur, par exemple. le_prod"
     layouts:
@@ -3671,14 +4255,18 @@ fr_BE:
         login_nav:
           header:
             store: Aperçu
+    validation:
+      must_be_int: "doit être un entier"
     admin:
       images:
         edit:
+          title: Modifier la photo du produit
           close: Retour
           upload: Charger une photo
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:
+          delivery_success: "E-mail de test envoyé."
           error: "Une erreur s'est produite lors de la tentative d'envoi de l'e-mail de test."
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       subscriptions:
@@ -3702,6 +4290,7 @@ fr_BE:
         enterprise_relationships: "Permissions"
         customers: "Acheteur·euse·s"
         groups: "Groupes"
+        oidc_settings: "Paramètres OIDC"
         overview: "Aperçu"
         product_import: "Importer"
         enterprise_roles: "Roles"
@@ -3736,6 +4325,7 @@ fr_BE:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
+          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: "recevoir"
@@ -3761,6 +4351,11 @@ fr_BE:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Impossible d'ajouter un article à une commande annulée"
+          cannot_add_item_to_shipped_order: "Il n'est pas possible d'ajouter des produits sur une commande livrée."
+          include_out_of_stock_variants: "Inclure les variantes sans stock disponible"
+        shipment:
+          mark_as_shipped_message_html: "Cette action marque la commande comme livrée. <br /> Etes-vous certain de vouloir faire ceci? "
+          mark_as_shipped_label_message: "Envoyer une notification de livraison / distribution par e-mail au client"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -3802,10 +4397,15 @@ fr_BE:
           to: "Facture à"
           shipping: "Expédition"
           order_number: "Numéro de commande "
+          invoice_number: "Numéro de facture"
           payments_list:
             date_time: "Date/Temps"
             payment_method: "Mode de paiement"
+            payment_state: "Statut du paiement"
             amount: "Quantité"
+        note:
+          note_label: "Note :"
+          no_note_present: "Aucune note n'a été ajoutée."
         form:
           distribution_fields:
             title: "Distribution"
@@ -3814,6 +4414,9 @@ fr_BE:
           line_item_adjustments: "Ajustements d'élément de ligne"
           order_adjustments: "Ajustement de commandes"
           order_total: "Total commande "
+      invoices:
+        index:
+          order_has_changed: "La commande a changé depuis la dernière mise à jour de la facture. La facture affichée ici risque donc de ne pas être à jour."
       overview:
         enterprises_header:
           ofn_with_tip: Les Entreprises sont des Producteur·trice·s et/ou Comptoirs, et sont donc les organisations de base qui utilisent Open Food Network.
@@ -3822,6 +4425,7 @@ fr_BE:
           has_no_payment_methods: "n'a aucune méthode de paiement"
           has_no_shipping_methods: "n'a aucune méthode de retrait/livraison"
         products:
+          products_tip: "Les produits que vous vendez via Open Food Network."
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "U heeft één aktieve product"
@@ -3838,6 +4442,8 @@ fr_BE:
             many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
+        version:
+          view_all_releases: Voir toutes les mises à jour
       shipping_methods:
         index:
           shipping_methods: "Méthodes de livraison"
@@ -3914,6 +4520,9 @@ fr_BE:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres (sans validation automatique)"
+          paypalexpress: "PayPal Express"
+          stripesca: "Stripe SCA"
+          taler: "Taler"
       payments:
         source_forms:
           stripe:
@@ -3929,6 +4538,8 @@ fr_BE:
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
           supplier_select_placeholder: "Sélectionnez un fournisseur"
+          search_for_suppliers: "Chercher des fournisseurs"
+          search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Nb unités"
@@ -3969,9 +4580,12 @@ fr_BE:
           bulk_unit_size: Quantité totale du lot
         display_as:
           display_as: Unité affichéé
+        clone:
+          success: Produit copié
       reports:
         table:
           select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
+        hidden_customer_details_tip: "Si les noms et/ou contacts des clients sont masqués, vous pouvez demander au gestionnaire de la boutique de modifier les paramètres de sa boutique pour permettre aux fournisseurs de voir les détails des clients dans les rapports"
         products_and_inventory:
           all_products:
             message: "Notez que les niveaux de stock indiqués proviennent uniquement des listes de produits des fournisseurs. Si vous utilisez le \"catalogue magasin\" pour gérer vos stocks, ces valeurs seront ignorées dans ce rapport."
@@ -3990,9 +4604,11 @@ fr_BE:
         form:
           disabled: "Désactivé?"
           email: "Email"
+          admin: "Super admin?"
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmer le mot de passe "
           password: "Mot de passe"
+          locale: "Langue"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
@@ -4040,11 +4656,25 @@ fr_BE:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        back_to_list: "Revenir à la liste des catégories de produits"
         index:
           title: "Catégorie Produit"
+          new_taxon: 'Nouvelle catégorie de produit'
+        new:
+          title: "Nouvelle catégorie de produit"
+        edit:
+          title: "Editer la catégorie de produit"
+        destroy:
+          delete_taxon:
+            success: "Catégorie de produit supprimée avec succès"
+            error: "Impossible de supprimer la catégorie de produit car des produits sont liés à cette catégorie."
         form:
           name: Nom
+          meta_title: Titre de référencement web
+          meta_description: Description de référencement Web
+          meta_keywords: Mot-clés de référencement web
           description: Description
+          dfc_id: URI DFC
       general_settings:
         edit:
           legal_settings: "Configuration légales"
@@ -4069,6 +4699,8 @@ fr_BE:
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
       today: "Aujourd'hui"
       now: "Maintenant"
       close: "Ferme"
@@ -4101,6 +4733,7 @@ fr_BE:
       requires_authorization: "Autorisation nécessaire"
       void: faire un avoir
       invalid: invalide
+      authorise: autorise
     order_mailer:
       cancel_email:
         customer_greeting: "Chère %{name}"
@@ -4124,6 +4757,7 @@ fr_BE:
         invoice_attached_text: 'Veuillez trouver ci-joint la facture pour votre récente commande auprès de '
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Cher client,"
         request_sent_text: |
             Votre demande de nouveau mot de passe a bien été prise en compte.
             Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
@@ -4136,14 +4770,24 @@ fr_BE:
         subject: "Instructions de réinitialisation du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
+    payment_mailer:
+      authorize_payment:
+        subject: "Veuillez autoriser votre paiement à %{distributor} sur OFN."
+        instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
+      authorization_required:
+        subject: "Un paiement nécessite une autorisation de l'acheteur"
+        message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que le paiement soit autorisé."
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Client,"
+        instructions: "Votre commande de %{distributor} : a été expédiée."
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi : %{tracking}"
         track_link: "Lien de suivi : %{url}"
+        picked_up_instructions: "Votre commande de %{distributor} a été réceptionnée"
+        picked_up_subject: "Notification de réception"
     test_mailer:
       test_email:
         greeting: "Félicitation "
@@ -4155,6 +4799,7 @@ fr_BE:
       awaiting_return: attente du retour
       canceled: annulé
       cart: panier
+      confirmation: "confirmation"
       complete: terminer
       confirm: confirmer
       delivery: livraison
@@ -4170,14 +4815,41 @@ fr_BE:
       paused: mis en pause
       canceled: annulé
     paypal:
+      already_refunded: "Ce paiement a été remboursé et aucune autre action ne peut être entreprise à son sujet."
+      no_payment_via_admin_backend: "Vous ne pouvez pas réaliser de paiements via Paypal depuis l'interface d'administration pour le moment."
+      transaction: "Transaction Paypal"
+      payer_id: "Identifiant du payeur"
+      transaction_id: "Identifiant de la transaction"
+      token: "Jeton d'authentification (token)"
+      refund: "Remboursement"
       refund_amount: "Quantité"
+      original_amount: "Montant initial : %{amount}"
+      refund_successful: "Remboursement PayPal réussi"
+      refund_unsuccessful: "Echec du remboursement PayPal"
+      actions:
+        refund: "Remboursement"
+      flash:
+        cancel: "Vous ne voulez pas utiliser PayPal ? Pas de soucis."
+        connection_failed: "Impossible de se connecter à PayPal."
+        generic_error: "PayPal a échoué. %{reasons}"
     users:
       api_keys:
         regenerate_key: "Regénération de clé"
+        title: clé API
+      webhook_endpoints:
+        title: Points de terminaison Webhook
+        description: Les événements dans le système peuvent déclencher des webhooks vers des systèmes externes.
+        event_type:
+          header: Type d'évènement
+        url:
+          header: URL du point de terminaison
+      developer_settings:
+        title: Paramètres développeurs
       form:
         account_settings: Paramètres du Compte
       show:
         tabs:
+          developer_settings: Paramètres développeurs
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
@@ -4189,6 +4861,7 @@ fr_BE:
       transactions:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation requise
+        authorise: Autoriser
       open_orders:
         order: Commander
         shop: Faire mes courses
@@ -4218,6 +4891,8 @@ fr_BE:
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les comptoirs auxquels vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom du comptoir"
+        allow_charges?: "Autoriser les paiements sur la carte par défaut ?"
+        no_default_saved_cards_tooltip: Vous devez sélectionner une carte bancaire par défaut pour autoriser les paiements.
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:
@@ -4236,6 +4911,12 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       toggle_api_key_view: "Afficher la vue de la clé API pour l'utilisateur"
+    activerecord:
+      models:
+        spree/payment:
+          one: Paiement
+          many: Paiements
+          other: Paiements
     unit: unité
     per_unit: Montant par unité
   datetime:
@@ -4256,16 +4937,46 @@ fr_BE:
         one: presque 1 an
         many: presque %{count} ans
         other: presque %{count} an(s)
+      half_a_minute: 30 secondes
+      less_than_x_seconds:
+        one: moins d' 1 seconde
+        many: moins de %{count} secondes
+        other: moins de %{count} secondes
+      less_than_x_minutes:
+        one: moins d&#39;une minute
+        many: moins de %{count} minutes
+        other: moins de %{count} minutes
+      over_x_years:
+        one: plus d'1 an
+        many: plus de %{count} années
+        other: plus de %{count} années
+      x_seconds:
+        one: "1 seconde"
+        many: "%{count} secondes"
+        other: "%{count} secondes"
+      x_minutes:
+        one: "1 minute"
+        many: "%{count} minutes"
+        other: "%{count} minutes"
       x_days:
         one: "Un jour"
         many: "%{count} jours"
         other: "%{count} jour(s)"
+      x_months:
+        one: "1 mois"
+        many: "%{count} mois"
+        other: "%{count} mois"
+      x_years:
+        one: "1 an"
+        many: "%{count} années"
+        other: "%{count} années"
   components:
     multiple_checked_select:
       filter_placeholder: "Options de filtre"
     search_input:
       placeholder: Rechercher
     selector_with_filter:
+      selected_items: "%{count} sélectionné"
       search_placeholder: Rechercher
     pagination:
       next: Suivant
@@ -4282,6 +4993,7 @@ fr_BE:
         order_cycle_tagged_bottom: "sont:"
         inventory_tagged_top: "Variantes d'inventaire marquées"
         inventory_tagged_bottom: "sont:"
+        variant_tagged_top: "Variantes tagguées"
         variant_tagged_bottom: "sont:"
         visible: VISIBLE
         not_visible: INVISIBLE
@@ -4292,6 +5004,13 @@ fr_BE:
     add_tag_rule_modal:
       select_rule_type: "Choisir le type de règle:"
       add_rule: "Ajouter une règle"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Entrez l'URL du point de terminaison du webhook
+      event_types:
+        order_cycle_opened: Cycle de vente ouvert
+        payment_status_changed: Post-webhook lors d'un changement de statut de paiement
+      test_endpoint: Tester le point de terminaison du webhook
   invisible_captcha:
     sentence_for_humans: "Veuillez laisser vide"
     timestamp_error_message: "Veuillez réessayer après 5 secondes."

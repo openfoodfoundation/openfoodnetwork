@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycleClosingJob do
   let(:order_cycle1) {
     create(:order_cycle, automatic_notifications: true, orders_close_at: 1.minute.ago)

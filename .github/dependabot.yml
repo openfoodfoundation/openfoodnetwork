@@ -24,13 +24,15 @@ updates:
     patterns: ["turbo_power"]
     multi-ecosystem-group: "turbo_power"
 
-    # All versions are specified in package.json, so please update them.
-    versioning-strategy: increase
+    # Only specific requirements are specified in package.json, so don't touch it.
+    versioning-strategy: lockfile-only
 
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
 
     # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
@@ -39,6 +41,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
 
-    # All versions are specified in package.json, so please update them.
-    versioning-strategy: increase
+    # Only specific requirements are specified in package.json, so don't touch it.
+    versioning-strategy: lockfile-only

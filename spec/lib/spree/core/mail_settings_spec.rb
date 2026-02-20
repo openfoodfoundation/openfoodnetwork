@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Core::MailSettings do
   context "overrides appplication defaults" do
     context "authentication method is login" do

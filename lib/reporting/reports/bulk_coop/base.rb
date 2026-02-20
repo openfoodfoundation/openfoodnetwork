@@ -85,7 +85,7 @@ module Reporting
         end
 
         def product_name(line_items)
-          line_items.first.product.name
+          line_items.first.full_product_name
         end
 
         def remainder(line_items)
@@ -118,7 +118,7 @@ module Reporting
         end
 
         def variant_product_name(line_items)
-          line_items.first.variant.product.name
+          line_items.first.full_product_name
         end
 
         def weight_from_unit_value(line_items)

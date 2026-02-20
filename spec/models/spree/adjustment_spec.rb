@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Adjustment do
   let(:order) { build(:order) }
   let(:adjustment) { described_class.create(label: "Adjustment", amount: 5) }

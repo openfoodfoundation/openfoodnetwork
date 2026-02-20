@@ -243,7 +243,7 @@ en_US:
       userguide: "Open Food Network User Guide"
       email_admin_html: "You might have already discovered that you can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
-      email_community_html: "Please consider the reality of the costs we face in supporting this software, and the place of fair compensation for everyone in a just food system. We invite and encourage you to pitch in with money when you can at https://donate.openfoodnetwork.net or to contact us to learn about non-monetary ways of contributing. We send super-infrequent email newsletters with useful information, so please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community. We're glad you are here!"
+      email_community_html: "Please consider the reality of the costs we face in supporting this software, and the place of fair compensation for everyone in a just food system. You will receive monthly contribution suggestions based on your sales with a convenient link where you can securely pay by card or bank draft -- you can always pay more than the suggested amount! Donations can also be made at https://donate.openfoodnetwork.net. Contact us to learn about non-monetary ways of contributing. We send super-infrequent email newsletters with useful information, so please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community. We're glad you are here!"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
@@ -403,6 +403,7 @@ en_US:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     resume: "Resume"
     save: "Save"
     edit: "Edit"
@@ -679,6 +680,7 @@ en_US:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:
@@ -3787,9 +3789,7 @@ en_US:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "retired, please use Stripe SCA"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

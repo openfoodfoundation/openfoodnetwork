@@ -49,7 +49,7 @@ module Admin
         errors: @importer.errors.full_messages
       }
 
-      if helpers.feature?(:inventory, *spree_current_user.enterprises)
+      if helpers.inventory_enabled?(spree_current_user.enterprises)
         json[:results][:inventory_created] = @importer.inventory_created_count
         json[:results][:inventory_updated] = @importer.inventory_updated_count
       end
@@ -175,7 +175,7 @@ module Admin
 
     # Return an error if trying to import into inventories when inventory is disable
     def can_import_into_inventories?
-      return true if helpers.feature?(:inventory, *spree_current_user.enterprises) ||
+      return true if helpers.inventory_enabled?(spree_current_user.enterprises) ||
                      params.dig(:settings, "import_into") != 'inventories'
 
       redirect_to admin_product_import_url, notice: I18n.t(:product_import_inventory_disable)

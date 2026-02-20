@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::StripeConnectSettingsController do
   let(:user) { create(:user) }
   let(:admin) { create(:admin_user) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Core::Environment do
   # Our version doesn't add any features we could test.
   # So we just check that our file is loaded correctly.

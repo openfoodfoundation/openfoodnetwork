@@ -291,6 +291,7 @@ en_IN:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     save: "Save"
     edit: "Edit"
     update: "Update"
@@ -544,6 +545,7 @@ en_IN:
           label: Categories
         tags:
           label: Tags
+          none: None
         search: Search
       sort:
         pagination:

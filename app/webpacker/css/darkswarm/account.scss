@@ -9,7 +9,8 @@
     }
   }
 
-  .saved_cards, .no_cards {
+  .saved_cards,
+  .no_cards {
     margin-bottom: 1em;
   }
 
@@ -26,7 +27,7 @@
     }
   }
 
-  .authorised_shops{
+  .authorised_shops {
     table {
       width: 100%;
     }
@@ -39,7 +40,9 @@
   a {
     color: $clr-brick;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       color: $clr-brick-med-bright;
     }
   }
@@ -60,7 +63,8 @@
     }
   }
 
-  i.ofn-i_059-producer, i.ofn-i_060-producer-reversed {
+  i.ofn-i_059-producer,
+  i.ofn-i_060-producer-reversed {
     font-size: 3rem;
     display: inline-block;
     margin-right: 0.25rem;
@@ -92,7 +96,8 @@
     visibility: hidden;
   }
 
-  .transaction-group {}
+  .transaction-group {
+  }
 
   table {
     border-radius: $radius-medium $radius-medium 0 0;
@@ -161,6 +166,15 @@ table {
     //
     // Unfortunately we can't use Scss's interpolation
     // https://sass-lang.com/documentation/interpolation. We're using a too old version perhaps?
-    right: calc(12px + 2*2px + 2*1px);
+    right: calc(12px + 2 * 2px + 2 * 1px);
+  }
+}
+
+// Webhook Endpoints
+td.endpoints-actions {
+  display: flex;
+
+  form {
+    padding-right: $padding-small;
   }
 }

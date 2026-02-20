@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Gateway do
   let(:test_gateway) do
     Class.new(Spree::Gateway) do
@@ -16,8 +14,14 @@ RSpec.describe Spree::Gateway do
   end
 
   it "passes through all arguments on a method_missing call" do
+    expect(Rails.env).to receive(:local?).and_return(false)
     gateway = test_gateway.new
     expect(gateway.provider).to receive(:imaginary_method).with('foo')
     gateway.imaginary_method('foo')
+  end
+
+  it "raises an error in test env" do
+    gateway = test_gateway.new
+    expect { gateway.imaginary_method('foo') }.to raise_error StandardError
   end
 end

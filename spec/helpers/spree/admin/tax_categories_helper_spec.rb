@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Spree::Admin::TaxCategoriesHelper do
   describe '#tax_category_dropdown_options' do
     let!(:default_tax_category) { create(:tax_category, is_default: true) }

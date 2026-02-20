@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe ExchangeProductsRenderer do
   let(:order_cycle) { create(:order_cycle) }
   let(:coordinator) { order_cycle.coordinator }

@@ -24,7 +24,13 @@ if rbenv install --skip-existing; then
   echo "Ruby is installed."
 else
   echo "Upgrading rbenv's ruby-build:"
-  git -C "$(rbenv root)"/plugins/ruby-build pull
+  # If installed with homebrew, use that to update
+  if (command -v brew && brew list --versions ruby-build); then
+    brew update && brew upgrade ruby-build
+  else
+    # Update with git
+    git -C "$(rbenv root)"/plugins/ruby-build pull
+  fi
 
   rbenv install
 fi

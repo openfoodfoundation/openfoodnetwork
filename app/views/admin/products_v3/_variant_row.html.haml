@@ -1,3 +1,4 @@
+-# locals: (variant:, f:, category_options:, tax_category_options:, producer_options:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
 %td.col-image
   -# empty
@@ -8,7 +9,7 @@
 %td.col-sku.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
-%td.col-unir_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
+%td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
   = f.hidden_field :variant_unit
   = f.hidden_field :variant_unit_scale
   = f.select :variant_unit_with_scale,
@@ -78,9 +79,9 @@
       aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
   = error_message_on variant, :tax_category
-- if feature?(:variant_tag, spree_current_user)
+- if variant_tag_enabled?(spree_current_user)
   %td.col-tags.field.naked_inputs
-    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.supplier_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags'))
+    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.supplier_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags')) if feature?(:variant_tag, variant.supplier)
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right

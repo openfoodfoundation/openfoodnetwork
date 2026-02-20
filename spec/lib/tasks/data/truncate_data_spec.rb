@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'tasks/data/truncate_data'
 
 RSpec.describe TruncateData do

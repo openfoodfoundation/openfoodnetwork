@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OpenOrderCycleJob do
   let(:now){ Time.zone.now }
   let(:order_cycle) { create(:simple_order_cycle, orders_open_at: now) }
@@ -72,6 +70,37 @@ RSpec.describe OpenOrderCycleJob do
         .and change { variant.on_hand }.by(0)
         .and change { variant_discontinued.on_hand }.to(0)
         .and query_database 58
+    end
+  end
+
+  context "with cloned order cycle" do
+    subject { OpenOrderCycleJob.perform_now(cloned_order_cycle.id) }
+
+    let!(:cloned_order_cycle) do
+      order_cycle.update!(opened_at: now - 5.minutes)
+
+      coc = OrderCycles::CloneService.new(order_cycle.reload).create
+      coc.update!(orders_open_at: now + 5.minutes)
+      coc.reload
+
+      coc
+    end
+
+    it "marks as open" do
+      expect {
+        subject
+        cloned_order_cycle.reload
+      }
+        .to change { cloned_order_cycle.opened_at }
+
+      expect(cloned_order_cycle.opened_at).to be_within(1).of(now)
+    end
+
+    it "enqueues webhook job" do
+      expect(OrderCycles::WebhookService)
+        .to receive(:create_webhook_job).with(cloned_order_cycle, 'order_cycle.opened', now).once
+
+      subject
     end
   end
 

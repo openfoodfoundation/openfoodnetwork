@@ -4,15 +4,16 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
     type: "@objForUpdate"
     attr: "@attrForUpdate"
   link: (scope, element, attrs) ->
-    scope.savedValue = scope.object()[scope.attr]
+    scope.savedValue = scope.object()[scope.attr] || ""
 
     scope.$watch "object().#{scope.attr}", (value) ->
-      if value == scope.savedValue
+      strValue = value || ""
+      if strValue == scope.savedValue
         pendingChanges.remove(scope.object().id, scope.attr)
         scope.clear()
       else
         scope.pending()
-        addPendingChange(scope.attr, value ? "")
+        addPendingChange(scope.attr, strValue)
 
     scope.reset = (value) ->
       scope.savedValue = value
@@ -37,16 +38,13 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
     # To ensure the customer is still updated, we check on the $destroy event to see if
     # the attribute has changed, if so we queue up the change.
     scope.$on '$destroy', (value) ->
-      # No update
-      return if scope.object()[scope.attr] is scope.savedValue
+      currentValue = scope.object()[scope.attr] || ""
 
-      # For some reason the code attribute is removed from the object when cleared, so we add
-      # an emptyvalue so it gets updated properly
-      if scope.attr is "code" and scope.object()[scope.attr] is undefined
-        scope.object()["code"] = ""
+      # No update
+      return if currentValue is scope.savedValue
 
       # Queuing up change
-      addPendingChange(scope.attr, scope.object()[scope.attr])
+      addPendingChange(scope.attr, currentValue)
 
     # private
 

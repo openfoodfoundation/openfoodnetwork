@@ -152,7 +152,7 @@ RSpec.describe '
     click_link 'Adjustments'
     page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
 
-    expect(page).to have_select2 :adjustment_tax_category_id, selected: []
+    expect(page).to have_select2 :adjustment_tax_category_id, selected: "None"
 
     # When I edit the adjustment, setting a tax rate
     select2_select 'GST', from: :adjustment_tax_category_id

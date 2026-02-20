@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe BaseController do
   let(:oc)    { instance_double(OrderCycle, id: 1) }
   let(:order) { instance_double(Spree::Order) }

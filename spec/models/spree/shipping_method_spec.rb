@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ShippingMethod do
   it "is valid when built from factory" do
     expect(

@@ -340,6 +340,7 @@ tr:
     create_and_add_another: "Oluştur ve Yeni Ekle"
     create: "Oluştur"
     cancel: "İptal Et"
+    cancel_order: "İptal et"
     resume: "Devam Et"
     save: "Kaydet"
     edit: "Düzenle"
@@ -615,6 +616,7 @@ tr:
           label: Kategoriler
         tags:
           label: ETİKETLER
+          none: SATIŞ YAPMIYOR
         search: Ara
       sort:
         pagination:
@@ -3674,9 +3676,7 @@ tr:
         providers:
           provider: "Sağlayıcı"
           check: "Nakit/EFT/vb. (otomatik doğrulamanın gerekli olmadığı ödemeler)"
-          pin: "Pin Ödemeleri"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

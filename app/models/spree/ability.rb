@@ -6,6 +6,11 @@ module Spree
   class Ability
     include CanCan::Ability
 
+    REPORTS_SEARCH_ACTIONS = [
+      :search_enterprise_fees, :search_enterprise_fee_owners, :search_distributors,
+      :search_suppliers, :search_order_cycles, :search_order_customers
+    ].freeze
+
     def initialize(user)
       clear_aliased_actions
 
@@ -196,12 +201,15 @@ module Spree
     def add_product_management_abilities(user)
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
+      # An enterperprise user can change a product if they are supplier of at least
+      # one of the product's associated variants
       can [:admin, :read, :index, :update,
            :seo, :group_buy_options,
            :bulk_update, :clone, :delete,
            :destroy], Spree::Product do |product|
-        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include?(
-          product.variants.first.supplier
+        variant_suppliers = product.variants.map(&:supplier)
+        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.intersect?(
+          variant_suppliers
         )
       end
 
@@ -257,7 +265,8 @@ module Spree
       can [:admin, :index, :import], ::Admin::DfcProductImportsController
 
       # Reports page
-      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS],
+          ::Admin::ReportsController
       can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
            :packing, :enterprise_fee_summary, :bulk_coop, :suppliers], :report
@@ -389,7 +398,7 @@ module Spree
       end
 
       # Reports page
-      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS], ::Admin::ReportsController
       can [:admin, :customers, :group_buys, :sales_tax, :payments,
            :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
            :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report

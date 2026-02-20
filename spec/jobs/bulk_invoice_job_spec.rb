@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe BulkInvoiceJob do
   subject { BulkInvoiceJob.new(order_ids, "/tmp/file/path") }
 

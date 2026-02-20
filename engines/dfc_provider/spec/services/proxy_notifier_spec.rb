@@ -11,12 +11,6 @@ RSpec.describe ProxyNotifier do
   let(:platform) { "cqcm-dev" }
   let(:enterprise_url) { "http://ofn.example.net/api/dfc/enterprises/10000" }
 
-  it "receives an access token", :vcr do
-    token = subject.request_token(platform)
-    expect(token).to be_a String
-    expect(token.length).to be > 20
-  end
-
   it "notifies the proxy", :vcr do
     # The test server is not reachable by the notified server.
     # If you don't have valid credentials, you'll get an unauthorized error.
@@ -24,5 +18,10 @@ RSpec.describe ProxyNotifier do
     expect {
       subject.refresh(platform, enterprise_url)
     }.to raise_error Faraday::ServerError
+  end
+
+  # Requires OIDC client secret for FDC dev realm.
+  it "notifies Market Organic", :vcr do
+    subject.refresh("mo-dev", enterprise_url)
   end
 end

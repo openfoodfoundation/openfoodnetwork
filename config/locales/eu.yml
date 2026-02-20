@@ -111,27 +111,6 @@ eu:
         blank: "ezin da hutsik egon"
         too_short: "laburregia da (gutxienekoa %{count} karaktere da)"
   errors:
-    messages:
-      content_type_invalid: "Eduki-mota baliogabea du"
-      file_size_out_of_range: " %{file_size} tamaina ez dago eskatutako barrutian"
-      limit_out_of_range: "Guztizko kopurua tartetik kanpo dago"
-      image_metadata_missing: "ez da irudi balioduna"
-      dimension_min_inclusion: " %{width} x %{height} pixelen adinakoa edo handiagoa izan behar du."
-      dimension_max_inclusion: " %{width} x %{height} pixelak baino txikiagoa edo berdina izan behar du."
-      dimension_width_inclusion: "zabalera ez da sartzen %{min} eta %{max} pixelen artean."
-      dimension_height_inclusion: "altuera ez da sartzen %{min} eta %{max} pixelen artean."
-      dimension_width_greater_than_or_equal_to: "Zabalerak %{length} pixelekoa edo handiagoa izan behar du."
-      dimension_height_greater_than_or_equal_to: "Altuerak %{length} pixela baino handiagoa edo berdina izan behar du."
-      dimension_width_less_than_or_equal_to: "Zabalerak %{length} pixelekoa edo txikiagoa izan behar du."
-      dimension_height_less_than_or_equal_to: "Altuerak %{length} pixela edo txikiagoa izan behar du."
-      dimension_width_equal_to: "Zabalerak %{length} pixelen berdina izan behar du."
-      dimension_height_equal_to: "altuerak %{length} pixel izan behar du."
-      aspect_ratio_not_square: "irudiak karratua izan behar du"
-      aspect_ratio_not_portrait: "irudiak erretratua izan behar du"
-      aspect_ratio_not_landscape: "paisaiaren irudia izan behar du"
-      aspect_ratio_is_not: " %{aspect_ratio} itxura-erlazioa izan behar du"
-      aspect_ratio_unknown: "itxura ezezaguneko harremana du"
-      image_not_processable: "ez da irudi balioduna"
     not_found:
       title: "Bilatzen ari zaren orrialdea ez da existitzen (404)"
       message_html: "<b>Mesedez, saiatu berriro</b> Hau denbora arazo bat izan daiteke.<p> Egin klik Atzera botoian aurreko pantailara itzultzeko edo itzuli <a href='/'>Hasiera</a> botoira eta saiatu berriro. <b>Jarri harremanetan laguntza-zerbitzuarekin</b> Arazoak jarraitzen badu edo premiazkoa bada, jakinaraz iezaguzu.</p><p> Aurkitu gure harremanetarako datuak <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network-en tokiko orrian</a>.<p>Oso lagungarria izango zaigu falta den orriaren arrazoiari buruzko xehetasun posible guztiak ematea.</p>"
@@ -527,6 +506,7 @@ eu:
     errors:
       vine_api: "Errorea gertatu da HJArekiko komunikazioan, saia zaitez geroago."
       invalid_voucher: "Bonuak ez du balio"
+      expired: "Bonua iraungi da"
       not_found_voucher: "Sentitzen dugu, ezin izan dugu txartel hori aurkitu, mesedez, egiaztatu kodea."
   vine_voucher_redeemer_service:
     errors:
@@ -536,6 +516,7 @@ eu:
     create_and_add_another: "Beste bat sortu eta gehitu"
     create: "Sortu"
     cancel: "Ezeztatu"
+    cancel_order: "Ezeztatu"
     resume: "Jarraitu"
     save: "Gorde"
     edit: "Editatu"
@@ -718,6 +699,8 @@ eu:
       edit:
         title: "Konektatutako aplikazioaren doikuntzak"
         enabled_legend: "Gaitutako aplikazio konektatuak"
+        connected_apps_enabled:
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Konektatutako aplikazioaren doikuntzak
     customers:
@@ -850,6 +833,7 @@ eu:
           label: Kategoriak
         tags:
           label: Tags
+          none: Bat ere ez
         search: Bilatu
       sort:
         pagination:
@@ -1027,6 +1011,7 @@ eu:
     orders:
       edit:
         order_sure_want_to: Ziur al zaude eskaera hau %{event} nahi duzula?
+        voucher_tax_included_in_price: "%{label} (bonuan zerga barne)"
         tax_on_fees: "Tasen gaineko zerga"
       invoice_email_sent: 'Posta elektronikoa bidali da fakturarekin.'
       order_email_resent: 'Eskaeraren posta elektronikoa berriz bidali da'
@@ -1321,6 +1306,8 @@ eu:
             loading: "Kargatzen"
             need_to_be_manager: "Administratzaileek bakarrik konekta ditzakete aplikazioak."
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Utzi VINE bonoen trukea zure dendaren erakusleihoan."
             enable: "Konektatu"
             disable: "Deskonektatu"
             need_to_be_manager: "Administratzaileek bakarrik konekta ditzakete aplikazioak."
@@ -1803,6 +1790,7 @@ eu:
         save: Gorde
         voucher_code: Sustapen-kodea
         voucher_amount: Kopurua
+        voucher_type: Bonu mota
     controllers:
       enterprises:
         stripe_connect_cancelled: "Striperako konexioa bertan behera geratu da"
@@ -1891,6 +1879,12 @@ eu:
       explaination: Zure eskaera berrikusteko eta berresteko aukera duzu hurrengo urratsean, azken kostuak barne.
       submit: Hurrengoa - Eskaeraren laburpena
       cancel: Itzuli Zure informazioa atalera
+      voucher:
+        voucher: "%{voucher_amount} Bonua"
+        apply_voucher: Aplikatu bonoa
+        placeholder: Sartu bonoaren kodea
+        confirm_delete: Ziur zaude bonoa kendu nahi duzula?
+        warning_forfeit_remaining_amount: "Oharra: zure eskaeraren guztizkoa zure bonoa baino txikiagoa bada, baliteke gainerako balioa ezin gastatu ahal izatea."
     step3:
       delivery_details:
         title: Entregaren xehetasunak
@@ -1922,7 +1916,10 @@ eu:
       invalid_email: "Sartu baliozko mezu elektroniko bat"
       select_a_shipping_method: Hautatu bidalketa-metodoa
       select_a_payment_method: Hautatu ordainketa-metodoa
+      voucher_code_blank: Mesedez, sartu bono-kode baliodun bat
       add_voucher_error: Errore bat gertatu da bonoa gehitzean
+      create_voucher_error: "Errore bat gertatu da bonoa sortzerakoan: %{error}"
+      voucher_redeeming_error: Errore bat gertatu da zure bonoa trukatzen saiatzean
   shops:
     hubs:
       show_closed_shops: "Denda itxiak erakutsi"
@@ -2246,6 +2243,7 @@ eu:
   email_order_summary_subtotal: "Subtotala:"
   email_order_summary_total: "Guztira:"
   email_order_summary_includes_tax: "(zergak barne):"
+  email_order_summary_voucher_label: "Bonua ( %{code} ):"
   email_payment_paid: ORDAINDUA
   email_payment_not_paid: ORDAINDU GABE
   email_payment_description: Erosketaren ordainketaren deskribapena
@@ -2347,7 +2345,7 @@ eu:
   products_filters_in: "en"
   products_with: 'honekin:'
   products_search: "Bilatu..."
-  products_filter_by: "Fitratu"
+  products_filter_by: "Iragazi"
   products_filter_selected: "hautatua"
   products_filter_heading: "Iragazkiak"
   products_filter_clear: "Garbitu"
@@ -3686,6 +3684,7 @@ eu:
     logourl: "Logoaren URLa"
     are_you_sure_delete: "Ziur zaude erregistro hau ezabatu nahi duzula?"
     confirm_delete: "Ezeztapena baieztatu"
+    voucher: "Bonoa"
     configurations: "Konfigurazioak"
     general_settings: "Konfigurazio orokorra"
     site_name: "Gunearen izena"
@@ -4076,9 +4075,7 @@ eu:
         providers:
           provider: "Hornitzailea"
           check: "Eskudirua/transferentzia/etab. (automatikoki baliozkotzea eskatzen ez duten ordainketak)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4375,8 +4372,6 @@ eu:
         regenerate_key: "Giltza birsortu"
       webhook_endpoints:
         description: Sistemaren gertaerek webhook-ak eragin diezazkiekete kanpoko sistemei.
-        event_types:
-          order_cycle_opened: Eskaera-ziklo irekia
       developer_settings:
         title: Garapenaren konfigurazioa
       form:
@@ -4447,6 +4442,9 @@ eu:
     per_unit: Unitateko
   datetime:
     distance_in_words:
+      about_x_hours:
+        one: gutxi gorabehera %{count} ordu
+        other: gutxi gorabehera %{count} ordu
       half_a_minute: minutu erdi
   components:
     multiple_checked_select:
@@ -4480,6 +4478,9 @@ eu:
     add_tag_rule_modal:
       select_rule_type: "Hautatu erregela mota bat:"
       add_rule: "Erregela gehitu"
+    webhook_endpoint_form:
+      event_types:
+        order_cycle_opened: Eskaera-ziklo irekia
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

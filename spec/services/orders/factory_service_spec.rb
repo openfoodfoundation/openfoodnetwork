@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::FactoryService do
   let(:variant1) { create(:variant, price: 5.0) }
   let(:variant2) { create(:variant, price: 7.0) }

@@ -72,28 +72,6 @@ es_CR:
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
       messages:
         blank: "no puede estar en blanco"
-  errors:
-    messages:
-      content_type_invalid: "tiene un tipo de contenido no válido"
-      file_size_out_of_range: "el tamaño %{file_size} no está entre el rango requerido"
-      limit_out_of_range: "el número total está fuera de rango"
-      image_metadata_missing: "no es una imagen valida"
-      dimension_min_inclusion: "debe ser mayor o igual a %{width}x %{height} píxel."
-      dimension_max_inclusion: "debe ser menor o igual a %{width} x %{height} píxel."
-      dimension_width_inclusion: "el ancho no está incluido entre %{min} y %{max} píxel."
-      dimension_height_inclusion: "la altura no está incluida entre %{min} y %{max} píxel."
-      dimension_width_greater_than_or_equal_to: "el ancho debe ser mayor o igual al %{length} píxel."
-      dimension_height_greater_than_or_equal_to: "la altura debe ser mayor o igual al %{length} píxel."
-      dimension_width_less_than_or_equal_to: "el ancho debe ser menor o igual al %{length} píxel."
-      dimension_height_less_than_or_equal_to: "la altura debe ser menor o igual al %{length} píxel."
-      dimension_width_equal_to: "el ancho debe ser igual al %{length} píxel."
-      dimension_height_equal_to: "la altura debe ser igual al %{length} píxel."
-      aspect_ratio_not_square: "debe ser una imagen cuadrada"
-      aspect_ratio_not_portrait: "debe ser una imagen de retrato"
-      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
-      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
-      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
-      image_not_processable: "no es una imagen valida"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -423,6 +401,7 @@ es_CR:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    cancel_order: "Cancelar"
     resume: "Continuar"
     save: "Guardar"
     edit: "Editar"
@@ -703,6 +682,7 @@ es_CR:
           label: Categorías
         tags:
           label: Etiquetas
+          none: Ninguno
         search: Buscar
       sort:
         pagination:

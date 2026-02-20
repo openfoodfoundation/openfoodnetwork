@@ -6,6 +6,7 @@ FactoryBot.define do
     price { BigDecimal('10.00') }
     order
     variant
+    product_name { variant.product.name }
   end
 
   factory :line_item_with_shipment, parent: :line_item do

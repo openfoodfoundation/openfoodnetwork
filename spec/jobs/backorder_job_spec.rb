@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe BackorderJob do
   let(:order) { create(:completed_order_with_totals) }
   let(:beans) { order.line_items.first.variant }

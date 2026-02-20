@@ -399,6 +399,7 @@ it_CH:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
     cancel: "Annulla"
+    cancel_order: "Annulla"
     resume: "Continuare"
     save: "Salva"
     edit: "Modifica"
@@ -674,6 +675,7 @@ it_CH:
           label: categorie
         tags:
           label: Etichette
+          none: Nessuno
         search: Cerca
       sort:
         pagination:
@@ -3818,9 +3820,7 @@ it_CH:
         providers:
           provider: "Provider"
           check: "Contanti o altri metodi di pagamento per cui non è richiesta una validazione automatica"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:

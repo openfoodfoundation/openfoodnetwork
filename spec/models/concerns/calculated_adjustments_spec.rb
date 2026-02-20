@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # Its pretty difficult to test this module in isolation b/c it needs to work in conjunction
 #   with an actual class that extends ActiveRecord::Base and has a corresponding table in the DB.
 #   So we'll just test it using Order and ShippingMethod. These classes are including the module.
@@ -64,6 +62,32 @@ RSpec.describe CalculatedAdjustments do
         it "should not create an adjustment" do
           expect(Spree::Adjustment.count).to eq 0
         end
+      end
+    end
+  end
+
+  describe "#calculator_type=" do
+    subject(:tax_rate) { Spree::TaxRate.new }
+
+    it "set the calculator to the given type" do
+      tax_rate.calculator_type = "Calculator::FlatRate"
+
+      expect(tax_rate.calculator).to be_a(Calculator::FlatRate)
+    end
+
+    context "when no argument given" do
+      it "returns nil" do
+        tax_rate.calculator_type = nil
+
+        expect(tax_rate.calculator).to be_nil
+      end
+    end
+
+    context "when not allowed calculator type given" do
+      it "returns nil" do
+        tax_rate.calculator_type = "Calculator::Wrong"
+
+        expect(tax_rate.calculator).to be_nil
       end
     end
   end

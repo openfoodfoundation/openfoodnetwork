@@ -198,7 +198,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                   fill_in "Enter voucher code", with: "KM1891"
                   click_button("Apply")
 
-                  expect(page).to have_content("There was an error while adding the voucher")
+                  expect(page).to have_content("The voucher is not valid")
                   expect(Vouchers::Vine.find_by(code: "KM1891", enterprise: distributor)).to be_nil
                 end
               end
@@ -339,6 +339,35 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             }
 
             it_behaves_like "different payment methods", "Stripe SCA"
+          end
+
+          context "Taler" do
+            let!(:taler) do
+              Spree::PaymentMethod::Taler.create!(
+                name: "Taler",
+                environment: "test",
+                distributors: [distributor]
+              )
+            end
+
+            before do
+              # Shortcut the user interaction and go straight to our
+              # confirmation action.
+              taler_order_id = { "order_id" => "taler-order:123" }
+              expect_any_instance_of(Taler::Client)
+                .to receive(:create_order).and_return(taler_order_id)
+
+              # And fake the payment status to avoid user interaction.
+              allow_any_instance_of(Taler::Client)
+                .to receive(:fetch_order) do
+                  payment = Spree::Payment.last
+                  url = payment_gateways_confirm_taler_path(payment_id: payment.id)
+
+                  { "order_status_url" => url, "order_status" => "paid" }
+              end
+            end
+
+            it_behaves_like "different payment methods", "Taler"
           end
         end
       end

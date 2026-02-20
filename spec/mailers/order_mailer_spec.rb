@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::OrderMailer do
   describe '#confirm_email_for_customer' do
     subject(:email) { described_class.confirm_email_for_customer(order) }
