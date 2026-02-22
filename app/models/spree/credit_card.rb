@@ -28,6 +28,10 @@ module Spree
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
     alias_attribute :brand, :cc_type
 
+    def brand=(type)
+      self.cc_type = type
+    end
+
     def expiry=(expiry)
       self[:month], self[:year] = expiry.split(" / ")
       self[:year] = "20#{self[:year]}"
