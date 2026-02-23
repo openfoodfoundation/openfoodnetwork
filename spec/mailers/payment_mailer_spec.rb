@@ -49,8 +49,8 @@ RSpec.describe PaymentMailer do
       mail = PaymentMailer.refund_available(payment, link)
 
       expect(mail.subject).to eq "Refund from Carrot Castle"
-      expect(mail.body).to match "Your payment to Carrot Castle is being refunded."
-      expect(mail.body).to match link
+      expect(mail.body).to include "Your payment of $45.75 to Carrot Castle is being refunded."
+      expect(mail.body).to include link
     end
   end
 end

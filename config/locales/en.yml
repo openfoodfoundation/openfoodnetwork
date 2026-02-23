@@ -468,7 +468,7 @@ en:
     refund_available:
       subject: "Refund from %{shop}"
       message: |
-        Your payment to %{shop} is being refunded.
+        Your payment of %{amount} to %{shop} is being refunded.
         Accept your refund following the link below.
   producer_mailer:
     order_cycle:
