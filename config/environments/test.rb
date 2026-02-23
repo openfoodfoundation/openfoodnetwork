@@ -74,8 +74,6 @@ Rails.application.configure do
     allowed_warnings = [
       # List strings here to allow matching deprecations.
       #
-      "Passing the class as positional argument",
-
       # Spree::CreditCard model aliases `cc_type` and has a method called `cc_type=` defined. Starting in Rails 7.2 `brand=` will not be calling `cc_type=` anymore. You may want to additionally define `brand=` to preserve the current behavior.
       "model aliases",
 
