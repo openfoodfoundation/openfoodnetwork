@@ -3580,6 +3580,7 @@ en:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  credit_customer: Credit customer
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -4707,6 +4708,8 @@ en:
             submitting_payment: Submitting payment...
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
+        customer_credit_successful: Customer has been successfully credited!
+
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."

@@ -103,6 +103,8 @@ Spree::Core::Engine.routes.draw do
         post :generate
       end
 
+      post "payments/credit_customer", to: "payments#credit_customer"
+
       resources :payments do
         member do
           put :fire
