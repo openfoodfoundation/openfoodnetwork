@@ -41,12 +41,12 @@ RSpec.describe "Admin -> Order -> Payments" do
 
     within row_containing("Taler") do
       expect(page).to have_text "COMPLETED"
-      expect(page).to have_link class: "icon-void"
+      expect(page).to have_link "Void"
 
       click_link class: "icon-void"
 
       expect(page).to have_text "VOID"
-      expect(page).not_to have_link class: "icon-void"
+      expect(page).not_to have_link "Void"
     end
   end
 end
