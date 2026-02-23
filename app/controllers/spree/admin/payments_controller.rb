@@ -95,8 +95,7 @@ module Spree
       private
 
       def load_payment_source
-        if @payment.payment_method.is_a?(Spree::Gateway) &&
-           @payment.payment_method.payment_profiles_supported? &&
+        if @payment.payment_method.is_a?(Gateway::StripeSCA) &&
            params[:card].present? &&
            (params[:card] != 'new')
           @payment.source = CreditCard.find_by(id: params[:card])

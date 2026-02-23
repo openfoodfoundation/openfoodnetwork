@@ -51,8 +51,8 @@ class LineItemSyncer
   def destroy_obsolete_items(order)
     order.line_items.
       where(variant_id: subscription_line_items.
-                        select(&:marked_for_destruction?).
-                        map(&:variant_id)).
+        select(&:marked_for_destruction?).
+        map(&:variant_id)).
       destroy_all
   end
 

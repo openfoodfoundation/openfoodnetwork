@@ -167,8 +167,8 @@ module Spree
     # In Rails 3, merging two scopes on the same column will consider only the last scope.
     def self.in_distributor(distributor)
       where(id: ExchangeVariant.select(:variant_id).
-                joins(:exchange).
-                where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor))
+        joins(:exchange).
+        where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor))
     end
 
     def self.indexed
@@ -179,11 +179,11 @@ module Spree
       # "where(id:" is necessary so that the returned relation has no includes
       # The relation without includes will not be readonly and allow updates on it
       where(spree_variants: { id: joins(:prices).
-                                          where(deleted_at: nil).
-                                          where('spree_prices.currency' =>
+        where(deleted_at: nil).
+        where('spree_prices.currency' =>
                                             currency || CurrentConfig.get(:currency)).
-                                          where.not(spree_prices: { amount: nil }).
-                                          select("spree_variants.id") })
+        where.not(spree_prices: { amount: nil }).
+        select("spree_variants.id") })
     end
 
     def self.linked_to(semantic_id)

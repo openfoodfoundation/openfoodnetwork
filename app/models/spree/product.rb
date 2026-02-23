@@ -251,7 +251,7 @@ module Spree
       transaction do
         ExchangeVariant.
           where(exchange_variants: { variant_id: variants.with_deleted.
-          select(:id) }).destroy_all
+            select(:id) }).destroy_all
 
         yield
       end

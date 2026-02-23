@@ -130,11 +130,10 @@ module Orders
 
     def order_cycle_fees
       return @order_cycle_fees if defined? @order_cycle_fees
+      return [] unless order_cycle && distributor
 
       @order_cycle_fees = begin
         fees = []
-
-        return fees unless order_cycle && distributor
 
         order_cycle.exchanges.supplying_to(distributor).each do |exchange|
           exchange.enterprise_fees.per_item.each do |enterprise_fee|

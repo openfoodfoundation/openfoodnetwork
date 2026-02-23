@@ -44,11 +44,11 @@ module Reporting
               .filter(&method(:filter_enterprise_fee_by_id))
               .filter(&method(:filter_enterprise_fee_by_owner))
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
-              {
-                enterprise_fee_id:,
-                enterprise_fee_adjustment_ids:,
-                order:
-              }
+                {
+                  enterprise_fee_id:,
+                  enterprise_fee_adjustment_ids:,
+                  order:
+                }
             end
           end
         end

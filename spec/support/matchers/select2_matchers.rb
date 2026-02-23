@@ -92,9 +92,7 @@ RSpec::Matchers.define :have_select2 do |id, options = {}|
   end
 
   def selected_option_is(from, text)
-    within find(from) do
-      find("a.select2-choice").text == text
-    end
+    find("#{from} a.select2-choice", text:)
   end
 
   def with_select2_open(from)

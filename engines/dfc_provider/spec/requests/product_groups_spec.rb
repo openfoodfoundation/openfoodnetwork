@@ -35,7 +35,7 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
 
     get "Show ProductGroup" do
       produces "application/json"
-      security [oidc_token: []]
+      security [{ oidc_token: [] }]
 
       response "200", "success" do
         let(:id) { product.id }

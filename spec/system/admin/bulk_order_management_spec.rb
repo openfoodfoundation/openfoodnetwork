@@ -1044,10 +1044,10 @@ RSpec.describe '
           page.driver
             .dismiss_modal :confirm,
                            text: "Unsaved changes exist and will be lost if you continue." do
-            within "tr#li_#{li1.id}" do
-              fill_in "quantity", with: (li1.quantity + 1)
-              find("a.edit-order").click
-            end
+              within "tr#li_#{li1.id}" do
+                fill_in "quantity", with: (li1.quantity + 1)
+                find("a.edit-order").click
+              end
           end
 
           # So we save the changes

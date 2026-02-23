@@ -143,7 +143,7 @@ module Spree
           providers.reject! { |provider| twint_provider?(provider) }
         end
 
-        providers.map(&:constantize)
+        providers
       end
 
       # Show Stripe as an option if enabled, or if the

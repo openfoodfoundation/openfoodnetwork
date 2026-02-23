@@ -144,7 +144,7 @@ module StripeStubs
     customer_id = options[:customer_id] || "cus_A123"
     { status: 200,
       body: JSON.generate(id: customer_id,
-                          sources: { data: [id: customer_id] }) }
+                          sources: { data: [{ id: customer_id }] }) }
   end
 
   def payment_successful_refund_mock

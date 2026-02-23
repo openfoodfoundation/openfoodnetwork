@@ -25,8 +25,8 @@ module PermittedAttributes
     private
 
     def attributes
-      self.class.basic_attributes + [incoming_exchanges: permitted_exchange_attributes,
-                                     outgoing_exchanges: permitted_exchange_attributes]
+      self.class.basic_attributes + [{ incoming_exchanges: permitted_exchange_attributes,
+                                       outgoing_exchanges: permitted_exchange_attributes }]
     end
 
     def permitted_exchange_attributes
