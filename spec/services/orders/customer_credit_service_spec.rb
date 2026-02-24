@@ -103,11 +103,14 @@ RSpec.describe Orders::CustomerCreditService do
     context "when credit payment method is missing" do
       before do
         # Add credit
+        payment_method = order.customer.enterprise.payment_methods.internal.find_by(
+          name: Rails.application.config.api_payment_method[:name]
+        )
         create(
           :customer_account_transaction,
           amount: 5.00,
           customer: order.customer,
-          payment_method: credit_payment_method
+          payment_method:
         )
         credit_payment_method.destroy!
       end
