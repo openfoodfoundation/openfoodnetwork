@@ -29,7 +29,9 @@ module CreditPaymentMethod
     private
 
     def api_payment_method
-      Spree::PaymentMethod.find_by(name: Rails.application.config.api_payment_method[:name])
+      Spree::PaymentMethod.internal.find_by(
+        name: Rails.application.config.api_payment_method[:name]
+      )
     end
 
     def create_api_payment_method
@@ -39,7 +41,8 @@ module CreditPaymentMethod
         description: configured[:description],
         display_on: "back_end",
         environment: Rails.env,
-        distributor_ids: [enterprise.id]
+        distributor_ids: [enterprise.id],
+        internal: true
       )
     end
 
@@ -54,7 +57,8 @@ module CreditPaymentMethod
         description: configured[:description],
         display_on: "both",
         environment: Rails.env,
-        distributor_ids: [enterprise.id]
+        distributor_ids: [enterprise.id],
+        internal: true
       )
     end
   end
