@@ -100,10 +100,10 @@ RSpec.describe '
       end
 
       it "order cycles appear in descending order by close date on orders page" do
-        tomselect_open('q_order_cycle_id_in').click
-
-        expect(find('#q_order_cycle_id_in',
-                    visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+        open_tomselect_to_validate!(page, 'q_order_cycle_id_in') do
+          oc_html = find('#q_order_cycle_id_in', visible: :all)[:innerHTML]
+          expect(oc_html).to have_content(/.*Four.*Three.*Two.*Five/m)
+        end
       end
 
       it "filter by multiple order cycles" do
