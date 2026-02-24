@@ -11,9 +11,11 @@ module Spree
     acts_as_paranoid
 
     DISPLAY = [:both, :back_end].freeze
-    default_scope -> { where(deleted_at: nil) }
+    default_scope -> { where(deleted_at: nil, internal: false) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
+    has_many :customer_account_transactions, dependent: :restrict_with_error
+    has_many :payments, class_name: "Spree::Payment", dependent: :restrict_with_error
 
     validates :name, presence: true
     validate :distributor_validation
@@ -52,8 +54,12 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
+    scope :internal, -> { unscoped.where(internal: true, deleted_at: nil) }
+
+    # It's meant to be use to get the customer credit payment method for a given enterprise ie:
+    # `enterprise.payment_methods.customer_credit`
     def self.customer_credit
-      find_by(name: Rails.application.config.credit_payment_method[:name])
+      internal.find_by(name: Rails.application.config.credit_payment_method[:name])
     end
 
     def configured?

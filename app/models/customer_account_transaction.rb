@@ -8,7 +8,9 @@ class CustomerAccountTransaction < ApplicationRecord
   localize_number :amount
 
   belongs_to :customer
-  belongs_to :payment_method, class_name: "Spree::PaymentMethod"
+  belongs_to :payment_method, -> {
+    internal
+  }, class_name: "Spree::PaymentMethod", inverse_of: :customer_account_transactions
   belongs_to :payment, class_name: "Spree::Payment", optional: true
 
   validates :amount, presence: true
@@ -41,7 +43,7 @@ class CustomerAccountTransaction < ApplicationRecord
 
   # Creates the first transaction with a 0 amount
   def create_initial_transaction
-    api_payment_method = Spree::PaymentMethod.find_by!(
+    api_payment_method = customer.enterprise.payment_methods.internal.find_by!(
       name: Rails.application.config.api_payment_method[:name]
     )
     CustomerAccountTransaction.create!(

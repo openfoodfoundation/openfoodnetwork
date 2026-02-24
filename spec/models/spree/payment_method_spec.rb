@@ -4,6 +4,13 @@ class Spree::Gateway::Test < Spree::Gateway
 end
 
 RSpec.describe Spree::PaymentMethod do
+  describe "validations" do
+    subject { build(:payment_method) }
+
+    it { is_expected.to have_many(:customer_account_transactions) }
+    it { is_expected.to have_many(:payments) }
+  end
+
   describe ".managed_by scope" do
     subject! { create(:payment_method) }
     let(:owner) { subject.distributors.first.owner }
@@ -52,6 +59,28 @@ RSpec.describe Spree::PaymentMethod do
 
     it "should return all methods available to back-end when display_on = :back_end" do
       expect(Spree::PaymentMethod.available(:back_end).size).to eq 2
+    end
+  end
+
+  describe "#internal" do
+    it "returns only internal payment method" do
+      external = create(:payment_method)
+      internal = create(:payment_method, internal: true)
+
+      payment_methods = described_class.internal
+      expect(payment_methods).to include(internal)
+      expect(payment_methods).not_to include(external)
+    end
+  end
+
+  describe "#customer_credit" do
+    it "returns customer credit payment method" do
+      # Creating an enterprise will create the needed internal payment method if needed
+      enterprise = create(:enterprise)
+      payment_method = Spree::PaymentMethod.unscoped.find_by(
+        name: Rails.application.config.credit_payment_method[:name], internal: true
+      )
+      expect(enterprise.payment_methods.customer_credit).to eq(payment_method)
     end
   end
 

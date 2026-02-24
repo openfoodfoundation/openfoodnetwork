@@ -38,6 +38,19 @@ RSpec.describe Orders::AvailablePaymentMethodsService do
     expect(available_payment_methods).to eq [frontend_payment_method]
   end
 
+  it "does not return payment methods which are internal" do
+    distributor = create(:distributor_enterprise)
+    frontend_payment_method = create(:payment_method, distributors: [distributor])
+    internal_payment_method = Spree::PaymentMethod.customer_credit
+
+    order_cycle = create(:sells_own_order_cycle)
+    order = build(:order, distributor:, order_cycle:)
+
+    available_payment_methods = Orders::AvailablePaymentMethodsService.new(order).to_a
+
+    expect(available_payment_methods).to eq [frontend_payment_method]
+  end
+
   context "when no tag rules are in effect" do
     context "sells own order cycle i.e. simple" do
       it "only returns the payment methods which are available on the order cycle
