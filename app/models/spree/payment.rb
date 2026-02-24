@@ -117,7 +117,7 @@ module Spree
         Alert.raise(
           e,
           metadata: {
-            event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
+            event_type: "ofn.payment_transition", payment_id: payment.id, event: transition.to
           }
         )
       end
