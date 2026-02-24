@@ -4674,8 +4674,8 @@ fi:
           or_enter_new_card: "Tai anna uuden kortin tiedot:"
           remember_this_card: Muistatko tämän kortin?
     date_picker:
-      flatpickr_date_format: "Vuosi"
-      flatpickr_datetime_format: "Vuosi H:i"
+      flatpickr_date_format: "d.m.Y"
+      flatpickr_datetime_format: "d.m.Y H:i"
       today: "Tänään"
       now: "Nyt"
       close: "Sulje"
