@@ -18,7 +18,9 @@ module Spree
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
-    belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
+    belongs_to :payment_method, -> {
+      unscope(where: :internal)
+    }, class_name: "Spree::PaymentMethod", inverse_of: :payments
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
              class_name: "Spree::Payment", foreign_key: :source_id,

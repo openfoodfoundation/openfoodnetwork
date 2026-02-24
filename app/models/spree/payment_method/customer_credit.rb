@@ -89,10 +89,6 @@ module Spree
         false
       end
 
-      def internal?
-        true
-      end
-
       private
 
       def payment_method

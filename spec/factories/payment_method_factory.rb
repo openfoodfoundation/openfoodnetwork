@@ -34,7 +34,7 @@ FactoryBot.define do
     name { Rails.application.config.credit_payment_method[:name] }
     description { Rails.application.config.credit_payment_method[:description] }
     environment { 'test' }
-
+    internal { true }
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
   end
 end
