@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Spree::TestMailer do
+  subject(:mail) { described_class.test_email(order) }
   let(:user) { create(:user) }
+  let(:order) { build(:order_with_distributor) }
 
   context ":from not set explicitly" do
     it "falls back to spree config" do
@@ -15,5 +17,9 @@ RSpec.describe Spree::TestMailer do
     expect {
       Spree::TestMailer.test_email(user.id).deliver_now
     }.not_to raise_error
+  end
+
+  context "white labelling" do
+    it_behaves_like 'email with inactive white labelling', :mail
   end
 end

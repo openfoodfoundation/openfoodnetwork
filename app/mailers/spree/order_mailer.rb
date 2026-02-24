@@ -11,6 +11,7 @@ module Spree
 
     def cancel_email(order_or_order_id, resend = false)
       @order = find_order(order_or_order_id)
+      @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
       I18n.with_locale valid_locale(@order.user) do
         mail(to: @order.email,
              subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend),
@@ -51,6 +52,7 @@ module Spree
 
     def invoice_email(order_or_order_id, options = {})
       @order = find_order(order_or_order_id)
+      @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
       current_user = if options[:current_user_id].present?
                        find_user(options[:current_user_id])
                      end
