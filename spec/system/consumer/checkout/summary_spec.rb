@@ -388,6 +388,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
         let(:payment_amount) { 10.00 }
 
         before do
+          create(:payment_method, distributors: [distributor])
           create(
             :customer_account_transaction,
             amount: 100,

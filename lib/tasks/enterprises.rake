@@ -9,6 +9,9 @@ namespace :ofn do
   desc 'remove the specified enterprise'
   task :remove_enterprise, [:enterprise_id] => :environment do |_task, args|
     enterprise = Enterprise.find(args.enterprise_id)
+    # Enterprise have two internal credit payment methods by default, we destroy the link to allow
+    # removing the enterprise
+    enterprise.distributor_payment_methods.destroy_all
     enterprise.destroy
   end
 
