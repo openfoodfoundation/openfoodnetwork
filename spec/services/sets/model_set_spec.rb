@@ -32,6 +32,10 @@ RSpec.describe Sets::ModelSet do
     it "destroys deleted models" do
       e1 = create(:enterprise)
       e2 = create(:enterprise)
+      # Enterprise have 2 internal credit payment method, we need to destroy the link for
+      # the enterprise to be deletable
+      e1.distributor_payment_methods.destroy_all
+      e2.distributor_payment_methods.destroy_all
 
       attributes = { collection_attributes: { '1' => { id: e1.id, name: 'deleteme' },
                                               '2' => { id: e2.id, name: 'e2' } } }

@@ -163,9 +163,13 @@ module Admin
     end
 
     def destroy
-      if @object.destroy
+      @object.transaction do
+        # Destroy linked payment methods so we remove the default customer credit payment methods
+        @object.distributor_payment_methods.destroy_all
+        @object.destroy!
         flash.now[:success] = flash_message_for(@object, :successfully_removed)
-      else
+      rescue StandardError
+        Rails.logger.error @object.errors.full_messages.to_sentence
         flash.now[:error] = @object.errors.full_messages.to_sentence
       end
 
@@ -177,7 +181,7 @@ module Admin
     protected
 
     def delete_custom_tab
-      @object.custom_tab.destroy if @object.custom_tab.present?
+      @object.custom_tab.presence&.destroy
       enterprise_params.delete(:custom_tab_attributes)
     end
 
@@ -240,9 +244,7 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
 
-        if enterprises.present?
-          enterprises.includes(supplied_products: [:variants, :image])
-        end
+        enterprises.presence&.includes(supplied_products: [:variants, :image])
       when :index
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).
