@@ -86,16 +86,12 @@ module OpenFoodNetwork
       managed_and_related_enterprises_granting :manage_products
     end
 
-    def manages_one_enterprise?
-      @user.enterprises.length == 1
+    def enterprises_granting_sourced_variant
+      related_enterprises_granting :create_sourced_variants
     end
 
-    def can_create_sourced_variant?(supplier)
-      @user.enterprises
-        .joins(:relationships_as_child)
-        .merge(
-          EnterpriseRelationship.where(parent: supplier).with_permission(:create_sourced_variants)
-        ).exists?
+    def manages_one_enterprise?
+      @user.enterprises.length == 1
     end
 
     def editable_schedules

@@ -8,6 +8,7 @@ module Admin
     before_action :init_filters_params
     before_action :init_pagination_params
     before_action :init_none_tag
+    before_action :fetch_data, include: [:index, :bulk_update]
 
     def index
       fetch_products
@@ -207,6 +208,11 @@ module Admin
       ActsAsTaggableOn::Tag.joins(:taggings).where(
         taggings: { taggable_type: "Spree::Variant", taggable_id: variants }
       ).distinct.order(:name).pluck(:name)
+    end
+
+    def fetch_data
+      @allowed_source_producers = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .enterprises_granting_sourced_variant
     end
 
     def fetch_products

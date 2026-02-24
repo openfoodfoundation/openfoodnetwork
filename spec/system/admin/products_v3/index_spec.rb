@@ -139,6 +139,32 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       expect(page).to have_select "variant_unit_with_scale", selected: "Items"
       expect(page).to have_field "variant_unit_name", with: "packet"
     end
+
+    context "with sourced variant" do
+      let(:source_producer) { create(:supplier_enterprise) }
+      let(:p3) { create(:product, name: "Product3", supplier_id: source_producer.id) }
+
+      let!(:v3_source) { p3.variants.first }
+      let!(:v3_sourced) {
+        create(:variant, display_name: "Variant3-sourced", product: p3, supplier: source_producer)
+      }
+      let!(:enterprise_relationship) {
+        # Other producer grants me access to manage their variant
+        create(:enterprise_relationship, parent: source_producer, child: producer,
+                                         permissions_list: [:manage_products])
+      }
+
+      before do
+        v3_sourced.source_variants << v3_source
+        visit admin_products_url
+      end
+
+      it "shows sourced variant with indicator" do
+        within row_containing_name("Variant3-sourced") do
+          expect(page).to have_selector 'span[title*="Sourced from"]'
+        end
+      end
+    end
   end
 
   describe "sorting" do

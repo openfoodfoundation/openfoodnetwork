@@ -212,7 +212,8 @@ module Spree
       # Technically I'd call this permission clone_source_variant, but it would be less confusing to
       # use the same name as everywhere else.
       can [:create_sourced_variant], Spree::Variant do |variant|
-        OpenFoodNetwork::Permissions.new(user).can_create_sourced_variant?(variant.supplier)
+        OpenFoodNetwork::Permissions.new(user).
+          enterprises_granting_sourced_variant.include? variant.supplier
       end
 
       can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone,

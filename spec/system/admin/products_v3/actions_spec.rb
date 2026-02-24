@@ -305,15 +305,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
                                          permissions_list: [:manage_products])
       }
 
-      before do
-        visit admin_products_url
-      end
-
       context "with create_sourced_variants permission for my, and other's variants" do
         it "creates a sourced variant" do
           create(:enterprise_relationship, parent: producer, child: producer,
                                            permissions_list: [:create_sourced_variants])
           enterprise_relationship.permissions.create! name: :create_sourced_variants
+
+          visit admin_products_url
 
           # Check my own variant
           within row_containing_name("My box") do
@@ -342,7 +340,8 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
       context "without create_sourced_variants permission" do
         it "does not show the option in the menu" do
-          pending "TODO: hide option if you can't use it."
+          visit admin_products_url
+
           within row_containing_name("My box") do
             click_button "Actions"
             expect(page).not_to have_link "Create sourced variant"
