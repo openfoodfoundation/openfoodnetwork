@@ -38,4 +38,21 @@ module TomSelectHelper
       ".ts-dropdown .ts-dropdown-content .option.active",
     ).click # close the dropdown by selecting the already selected value
   end
+
+  def expect_tomselect_selected_options(from, *options)
+    tomselect_control = page
+      .find("[name='#{from}']")
+      .sibling(".ts-wrapper")
+      .find('.ts-control')
+
+    within(tomselect_control) do
+      # options in case of we want to expect multiselect options
+      options.each do |option|
+        expect(page).to have_css(
+          "div[data-ts-item]",
+          text: option
+        )
+      end
+    end
+  end
 end

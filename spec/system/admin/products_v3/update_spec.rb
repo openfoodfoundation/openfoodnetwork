@@ -731,6 +731,44 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).to have_css row_containing_name("zucchinis")
       end
     end
+
+    context "when filters are applied" do
+      before do
+        variant_b1 # invoke to create the variant
+        variant_a1.tags.create!(name: 'organic')
+        visit admin_products_url
+      end
+      it 'persists the filters after update' do
+        # Ensure all products are shown
+        expect_products_count_to_be 2
+
+        supplier_name = variant_a1.supplier.name
+        category_name = variant_a1.primary_taxon.name
+        tag_name = variant_a1.tags.first.name
+        tomselect_select supplier_name, from: "producer_id"
+        tomselect_select category_name, from: "category_id"
+        tomselect_multiselect tag_name, from: "tags_name_in"
+        click_button "Search"
+
+        # Ensure filters are selected and applied after search
+        expect_tomselect_selected_options("producer_id", supplier_name)
+        expect_tomselect_selected_options("category_id", category_name)
+        expect_tomselect_selected_options("tags_name_in[]", tag_name)
+        expect_products_count_to_be 1
+
+        within row_containing_name("Medium box") do
+          fill_in "Price", with: "10.25"
+        end
+        click_button "Save changes"
+        expect(page).to have_content "Changes saved"
+
+        # Ensure filters still selected and applied even after update
+        expect_tomselect_selected_options("producer_id", supplier_name)
+        expect_tomselect_selected_options("category_id", category_name)
+        expect_tomselect_selected_options("tags_name_in[]", tag_name)
+        expect_products_count_to_be 1
+      end
+    end
   end
 
   describe "edit image" do
