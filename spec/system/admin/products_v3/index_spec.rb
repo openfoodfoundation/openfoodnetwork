@@ -35,11 +35,9 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     let!(:p1) { create(:product, name: "Product1") }
     let!(:p2) { create(:product, name: "Product2") }
 
-    before do
-      visit admin_products_url
-    end
-
     it "displays a list of products" do
+      visit admin_products_path
+
       within ".products" do
         # displays table header
         expect(page).to have_selector "th", text: "Name"
