@@ -354,17 +354,17 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               # Shortcut the user interaction and go straight to our
               # confirmation action.
               taler_order_id = { "order_id" => "taler-order:123" }
-              expect_any_instance_of(Taler::Client)
-                .to receive(:create_order).and_return(taler_order_id)
+              expect_any_instance_of(Taler::Order)
+                .to receive(:create).and_return(taler_order_id)
 
               # And fake the payment status to avoid user interaction.
-              allow_any_instance_of(Taler::Client)
-                .to receive(:fetch_order) do
+              allow_any_instance_of(Taler::Order)
+                .to receive(:status_url) do
                   payment = Spree::Payment.last
-                  url = payment_gateways_confirm_taler_path(payment_id: payment.id)
-
-                  { "order_status_url" => url, "order_status" => "paid" }
+                  payment_gateways_confirm_taler_path(payment_id: payment.id)
               end
+              allow_any_instance_of(Taler::Order)
+                .to receive(:fetch).with("order_status").and_return("paid")
             end
 
             it_behaves_like "different payment methods", "Taler"
