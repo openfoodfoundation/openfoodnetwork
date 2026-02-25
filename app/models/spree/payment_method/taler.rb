@@ -65,16 +65,18 @@ module Spree
       end
 
       def credit(money, gateway_options)
+        amount = money / 100 # called with cents
         payment = gateway_options[:payment]
         taler_order = taler_order(id: payment.response_code)
         status = taler_order.fetch("order_status")
 
         raise "Unsupported action" if status != "paid"
 
-        amount = "KUDOS:#{money}"
-        taler_order.refund(refund: amount, reason: "credit")
+        taler_amount = "KUDOS:#{amount}"
+        taler_order.refund(refund: taler_amount, reason: "credit")
 
-        PaymentMailer.refund_available(payment, taler_order.status_url).deliver_later
+        spree_money = Spree::Money.new(amount, currency: payment.currency).to_s
+        PaymentMailer.refund_available(spree_money, payment, taler_order.status_url).deliver_later
 
         ActiveMerchant::Billing::Response.new(true, "Refund initiated")
       end
@@ -93,7 +95,8 @@ module Spree
         amount = taler_order.fetch("contract_terms")["amount"]
         taler_order.refund(refund: amount, reason: "void")
 
-        PaymentMailer.refund_available(payment, taler_order.status_url).deliver_later
+        spree_money = payment.money.to_s
+        PaymentMailer.refund_available(spree_money, payment, taler_order.status_url).deliver_later
 
         ActiveMerchant::Billing::Response.new(true, "Refund initiated")
       end

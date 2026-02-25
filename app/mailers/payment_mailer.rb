@@ -21,10 +21,10 @@ class PaymentMailer < ApplicationMailer
     end
   end
 
-  def refund_available(payment, taler_order_status_url)
+  def refund_available(amount, payment, taler_order_status_url)
     @order = payment.order
     @shop = @order.distributor.name
-    @amount = payment.display_amount
+    @amount = amount
     @taler_order_status_url = taler_order_status_url
 
     I18n.with_locale valid_locale(@order.user) do
