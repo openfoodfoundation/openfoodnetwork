@@ -30,10 +30,6 @@ module Spree
         .html_safe # rubocop:disable Rails/OutputSafety
     end
 
-    def format(options = {})
-      @money.format(@options.merge!(options))
-    end
-
     def ==(other)
       @money == other.money
     end
