@@ -17,7 +17,7 @@ RSpec.describe Spree::Money do
 
   it "can get cents" do
     money = Spree::Money.new(10)
-    expect(money.cents).to eq(1000)
+    expect(money.money.cents).to eq(1000)
   end
 
   context "with currency" do
