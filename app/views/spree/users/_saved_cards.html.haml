@@ -6,7 +6,7 @@
     %th= t('.default?')
     %th= t('.delete?')
   %tr.card{ id: "card{{ card.id }}", "ng-repeat": "card in savedCreditCards" }
-    %td.brand{ "ng-bind": '::card.brand' }
+    %td.brand{ "ng-bind": '::card.cc_type' }
     %td.number{ "ng-bind": '::card.number' }
     %td.expiry{ "ng-bind": '::card.expiry' }
     %td.is-default

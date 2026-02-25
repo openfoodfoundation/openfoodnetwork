@@ -198,15 +198,6 @@ RSpec.describe Spree::CreditCard do
       end
     end
 
-    context "#brand=" do
-      let(:credit_card) { build(:credit_card) }
-
-      it "delegates to #cc_type= and reformats the card type" do
-        credit_card.brand = 'mastercard'
-        expect(credit_card.cc_type).to eq 'master'
-      end
-    end
-
     context "on save" do
       it "converts the card type format" do
         expect_any_instance_of(described_class).to receive(:reformat_card_type!).
