@@ -11,6 +11,7 @@
     background-color: #fff;
     height: 100%;
     box-shadow: none;
+    border-radius: 4px;
 
     &:has(.changed) {
       border: 1px solid $color-txt-changed-brd;
