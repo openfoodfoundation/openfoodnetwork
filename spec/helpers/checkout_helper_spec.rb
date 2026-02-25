@@ -193,4 +193,25 @@ RSpec.describe CheckoutHelper do
       end
     end
   end
+
+  describe "#stripe_card_options" do
+    let(:year) { Time.zone.now.year + 1 }
+    let(:card) { create(:credit_card, cc_type: 'visa', last_digits: '1111', month: 1, year:) }
+    let(:cards) { [card] }
+
+    it "formats credit cards for Stripe options" do
+      options = helper.stripe_card_options(cards)
+
+      expect(options).to eq([
+                              ["visa 1111 Exp:01/#{year}", card.id]
+                            ])
+    end
+
+    it "zero-pads the month" do
+      card.update(month: 5)
+      options = helper.stripe_card_options(cards)
+
+      expect(options.first.first).to match(%r{05/#{year}})
+    end
+  end
 end
