@@ -40,6 +40,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
+    belongs_to :owner, class_name: 'Enterprise', optional: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
