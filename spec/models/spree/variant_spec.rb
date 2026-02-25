@@ -8,6 +8,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
   it { is_expected.to belong_to(:supplier).required }
+  it { is_expected.to belong_to(:owner).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
   it { is_expected.to have_many(:stock_items) }
