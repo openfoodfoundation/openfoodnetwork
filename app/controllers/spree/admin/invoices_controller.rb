@@ -28,7 +28,7 @@ module Spree
           flash[:error] = t(:must_have_valid_business_number,
                             enterprise_name: @order.distributor.name)
         end
-        redirect_back(fallback_location: spree.admin_dashboard_path)
+        redirect_back_or_to(spree.admin_dashboard_path)
       end
 
       private

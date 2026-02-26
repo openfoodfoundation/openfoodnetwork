@@ -10,7 +10,7 @@ module Spree
       def fire
         @return_authorization.public_send("#{params[:e]}!")
         flash[:success] = Spree.t(:return_authorization_updated)
-        redirect_back fallback_location: spree.admin_dashboard_path
+        redirect_back_or_to(spree.admin_dashboard_path)
       end
 
       protected
