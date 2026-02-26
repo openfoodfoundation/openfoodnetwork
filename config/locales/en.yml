@@ -713,8 +713,11 @@ en:
         delete: Delete
         remove: Remove
         preview: Preview
+        create_sourced_variant: Create sourced variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id})"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -1084,6 +1087,8 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      create_sourced_variant:
+        success: "Successfully created sourced variant"
       tag_rules:
         rules_per_tag:
           one: "%{tag} has 1 rule"
@@ -3874,6 +3879,7 @@ en:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
+      create_sourced_variants: "create sourced variants [BETA]"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:

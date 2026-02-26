@@ -86,6 +86,10 @@ module OpenFoodNetwork
       managed_and_related_enterprises_granting :manage_products
     end
 
+    def enterprises_granting_sourced_variant
+      related_enterprises_granting :create_sourced_variants
+    end
+
     def manages_one_enterprise?
       @user.enterprises.length == 1
     end

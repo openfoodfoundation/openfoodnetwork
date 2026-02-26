@@ -1,7 +1,9 @@
--# locals: (variant:, f:, category_options:, tax_category_options:, producer_options:)
+-# locals: (variant:, f:, product_index: nil, category_options:, tax_category_options:, producer_options:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
 %td.col-image
   -# empty
+  - variant.source_variants.each do |source_variant|
+    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.name, source_id: source_variant.id))
 %td.col-name.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
@@ -88,6 +90,10 @@
   = render(VerticalEllipsisMenuComponent.new) do
     - if variant.persisted?
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
+
+      - if @allowed_source_producers.include?(variant.supplier)
+        = link_to t('admin.products_page.actions.create_sourced_variant'), admin_create_sourced_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
+
       - if variant.product.variants.size > 1
         %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
             "data-modal-link-target-value": "variant-delete-modal", "class": "delete",

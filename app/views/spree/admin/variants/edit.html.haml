@@ -6,6 +6,10 @@
 
 = admin_inject_available_units
 
+- @variant.source_variants.each do |source_variant|
+  🔗
+  = t('admin.products_page.variant_row.sourced_from', source_name: source_variant.name, source_id: source_variant.id)
+
 = form_for [:admin, @product, @variant], :url => admin_product_variant_path(@product, @variant, @url_filters) do |f|
   %fieldset.no-border-top
     %div

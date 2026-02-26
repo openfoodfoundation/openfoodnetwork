@@ -8,6 +8,7 @@ module Admin
     before_action :init_filters_params
     before_action :init_pagination_params
     before_action :init_none_tag
+    before_action :fetch_data, include: [:index, :bulk_update]
 
     def index
       fetch_products
@@ -107,6 +108,39 @@ module Admin
       end
     end
 
+    # Clone a variant, retaining a link to the "source"
+    def create_sourced_variant
+      source_variant = Spree::Variant.find(params[:variant_id])
+      product_index = params[:product_index]
+      authorize! :create_sourced_variant, source_variant
+      status = :ok
+
+      begin
+        variant = source_variant.dup #may need a VariantDuplicator like producs?
+        variant.price = source_variant.price
+        variant.save!
+        variant.source_variants << source_variant
+        variant.on_demand = source_variant.on_demand
+        variant.on_hand = source_variant.on_hand
+        variant.save!
+
+        flash.now[:success] = t('.success')
+        variant_index = "-#{variant.id}"
+      rescue ActiveRecord::RecordInvalid
+        flash.now[:error] = variant.errors.full_messages.to_sentence
+        status = :unprocessable_entity
+        variant_index = "-1" # Create a unique-enough index
+      end
+
+      respond_with do |format|
+        format.turbo_stream {
+          locals = { source_variant:, variant:, product_index:, variant_index:,
+                     producer_options:, category_options: categories, tax_category_options: }
+          render :create_sourced_variant, status:, locals:
+        }
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end
@@ -174,6 +208,11 @@ module Admin
       ActsAsTaggableOn::Tag.joins(:taggings).where(
         taggings: { taggable_type: "Spree::Variant", taggable_id: variants }
       ).distinct.order(:name).pluck(:name)
+    end
+
+    def fetch_data
+      @allowed_source_producers = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .enterprises_granting_sourced_variant
     end
 
     def fetch_products

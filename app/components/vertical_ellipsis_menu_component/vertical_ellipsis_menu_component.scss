@@ -1,13 +1,16 @@
+// Currently styled for products_v3 table
 .vertical-ellipsis-menu {
   position: relative;
 
-  i.fa-ellipsis-v {
-    cursor: pointer;
-    display: block;
-    text-align: center;
-    border-radius: 3px;
-    background-color: white;
-    padding: 9px 14px;
+  // Increase specifity to override other button:not() styles :/
+  .vertical-ellipsis-menu-button.vertical-ellipsis-menu-button {
+    padding: 0 13px;
+
+    &, &:hover {
+      background-color: white;
+      border-color: white;
+      color: $near-black;
+    }
   }
 
   .vertical-ellipsis-menu-content {

@@ -12,7 +12,8 @@ export default class extends Controller {
     window.removeEventListener("click", this.#hideIfClickedOutside);
   }
 
-  toggle() {
+  toggle(event) {
+    event.preventDefault();
     this.contentTarget.classList.toggle("show");
   }
 
