@@ -348,6 +348,13 @@ cy:
       join_community: "Ymunwch â'r gymuned"
     invite_manager:
       subject: "mae %{enterprise} wedi eich gwahodd i fod yn rheolwr"
+  payment_mailer:
+    authorize_payment:
+      subject: "Gofynnir ichi awdurdodi eich taliad i %{distributor} ar y Open Food Network"
+      instructions: "Mae angen dilysu ychwanegol ar gyfer eich taliad o %{amount} i %{distributor} .  Dilynwch yr URL canlynol i awdurdodi eich taliad."
+    authorization_required:
+      subject: "Mae angen i gwsmer awdurdodi taliad."
+      message: "Mae angen awdurdod ychwanegol gan y cwsmer i dalu am archeb %{order_number} Hysbyswyd y cwsmer trwy ebost a bydd y taliad yn ymddangos fel taliad yn yr arfaeth nes ei awdurdodi."
   producer_mailer:
     order_cycle:
       subject: "Adroddiad cylch archebu ar gyfer %{producer}"
@@ -4669,13 +4676,6 @@ cy:
         subject: "Cyfarwyddiadau ailosod cyfrinair"
       confirmation_instructions:
         subject: "Gofynnir ichi gadarnhau eich cyfrif y Open Food Network os gwelwch yn dda"
-    payment_mailer:
-      authorize_payment:
-        subject: "Gofynnir ichi awdurdodi eich taliad i %{distributor} ar y Open Food Network"
-        instructions: "Mae angen dilysu ychwanegol ar gyfer eich taliad o %{amount} i %{distributor} .  Dilynwch yr URL canlynol i awdurdodi eich taliad."
-      authorization_required:
-        subject: "Mae angen i gwsmer awdurdodi taliad."
-        message: "Mae angen awdurdod ychwanegol gan y cwsmer i dalu am archeb %{order_number} Hysbyswyd y cwsmer trwy ebost a bydd y taliad yn ymddangos fel taliad yn yr arfaeth nes ei awdurdodi."
     shipment_mailer:
       shipped_email:
         dear_customer: "Annwyl Gwsmer,"

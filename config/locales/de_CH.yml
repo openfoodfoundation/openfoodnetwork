@@ -273,6 +273,13 @@ de_CH:
       join_community: "Jetzt Teil der Community werden!"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
+  payment_mailer:
+    authorize_payment:
+      subject: "Bitte autorisieren Sie Ihre Zahlung an %{distributor} im Open Food Network"
+      instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Autorisierung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
+    authorization_required:
+      subject: "Eine Zahlung muss durch den Kunden autorisiert werden"
+      message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Autorisierung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
   producer_mailer:
     order_cycle:
       subject: "Bestellzyklusbericht für %{producer}"
@@ -4196,13 +4203,6 @@ de_CH:
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
         subject: "Bitte bestätigen Sie Ihre Registrierung im Open Food Network"
-    payment_mailer:
-      authorize_payment:
-        subject: "Bitte autorisieren Sie Ihre Zahlung an %{distributor} im Open Food Network"
-        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Autorisierung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
-      authorization_required:
-        subject: "Eine Zahlung muss durch den Kunden autorisiert werden"
-        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Autorisierung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"

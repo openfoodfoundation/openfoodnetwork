@@ -297,6 +297,13 @@ hi:
       join_community: "कम्यूनिटी को जॉइन करें"
     invite_manager:
       subject: "%{enterprise} ने आपको प्रबंधक बनने के लिए आमंत्रित किया है"
+  payment_mailer:
+    authorize_payment:
+      subject: "कृपया OFN पर %{distributor} के लिए अपने भुगतान को अधिकृत करें"
+      instructions: "%{amount} से %{distributor} के आपके भुगतान के लिए अतिरिक्त प्रमाणीकरण की आवश्यकता होती है। अपने भुगतान को अधिकृत करने के लिए कृपया निम्नलिखित URL पर जाएं:"
+    authorization_required:
+      subject: "भुगतान के लिए ग्राहक से प्राधिकरण की आवश्यकता होती है"
+      message: "ऑर्डर %{order_number} के लिए भुगतान के लिए ग्राहक से अतिरिक्त प्राधिकरण की आवश्यकता होती है। ग्राहक को ईमेल के माध्यम से सूचित किया गया है और भुगतान अधिकृत होने तक पेंडिंग दिखाई देगा।"
   producer_mailer:
     order_cycle:
       subject: "%{producer} के लिए साइकल रिपोर्ट ऑर्डर करें"
@@ -4322,13 +4329,6 @@ hi:
         subject: "पासवर्ड निर्देश रिसेट करें"
       confirmation_instructions:
         subject: "कृपया अपने OFN अकाउंट की पुष्टि करें"
-    payment_mailer:
-      authorize_payment:
-        subject: "कृपया OFN पर %{distributor} के लिए अपने भुगतान को अधिकृत करें"
-        instructions: "%{amount} से %{distributor} के आपके भुगतान के लिए अतिरिक्त प्रमाणीकरण की आवश्यकता होती है। अपने भुगतान को अधिकृत करने के लिए कृपया निम्नलिखित URL पर जाएं:"
-      authorization_required:
-        subject: "भुगतान के लिए ग्राहक से प्राधिकरण की आवश्यकता होती है"
-        message: "ऑर्डर %{order_number} के लिए भुगतान के लिए ग्राहक से अतिरिक्त प्राधिकरण की आवश्यकता होती है। ग्राहक को ईमेल के माध्यम से सूचित किया गया है और भुगतान अधिकृत होने तक पेंडिंग दिखाई देगा।"
     shipment_mailer:
       shipped_email:
         dear_customer: "प्रिय ग्राहक,"

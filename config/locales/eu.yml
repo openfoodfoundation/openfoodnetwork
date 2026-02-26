@@ -336,6 +336,13 @@ eu:
       join_community: "Komunitatearekin bat egin"
     invite_manager:
       subject: " %{enterprise} administratzaile izatera gonbidatu zaitu"
+  payment_mailer:
+    authorize_payment:
+      subject: "Baimena eman OFNn %{distributor} ri ordaintzeko"
+      instructions: " %{amount} tik %{distributor} ra ordaintzeko autentifikazio gehigarria behar da. Bisitatu URL hau ordainketa baimentzeko: "
+    authorization_required:
+      subject: "Ordainketa batek bezeroaren baimena behar du"
+      message: " %{order_number} eskaera ordaintzeko, bezeroaren baimen gehigarria behar da. Bezeroa posta elektronikoz jakinarazi da, eta ordainketa egiteke agertuko da baimena eman arte. "
   producer_mailer:
     order_cycle:
       subject: "Eskaera-zikloaren txostena %-rako {producer}"
@@ -4306,13 +4313,6 @@ eu:
         subject: "Pasahitza berrezartzeko jarraibideak"
       confirmation_instructions:
         subject: "Mesedez, berretsi zure OFN kontua"
-    payment_mailer:
-      authorize_payment:
-        subject: "Baimena eman OFNn %{distributor} ri ordaintzeko"
-        instructions: " %{amount} tik %{distributor} ra ordaintzeko autentifikazio gehigarria behar da. Bisitatu URL hau ordainketa baimentzeko: "
-      authorization_required:
-        subject: "Ordainketa batek bezeroaren baimena behar du"
-        message: " %{order_number} eskaera ordaintzeko, bezeroaren baimen gehigarria behar da. Bezeroa posta elektronikoz jakinarazi da, eta ordainketa egiteke agertuko da baimena eman arte. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Kontsumitzaile estimatua,"

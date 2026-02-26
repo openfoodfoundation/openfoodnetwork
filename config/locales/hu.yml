@@ -326,6 +326,13 @@ hu:
       join_community: "Csatlakozz a közösséghez"
     invite_manager:
       subject: "%{enterprise} meghívott téged menedzsernek"
+  payment_mailer:
+    authorize_payment:
+      subject: "Kérjük, engedélyezd a fizetést %{distributor} részére az Open Food-on"
+      instructions: "%{amount} összegű befizetésed %{distributor} részére további hitelesítést igényel. Kérjük, keresd fel a következő URL-t a fizetés engedélyezéséhez:"
+    authorization_required:
+      subject: "A fizetéshez az ügyfél engedélye szükséges"
+      message: "A(z) %{order_number} rendelés kifizetéséhez további engedély szükséges az ügyféltől. Az ügyfelet e-mailben értesítették, és a fizetés függőben lévőként jelenik meg az engedélyezésig."
   producer_mailer:
     order_cycle:
       subject: "Rendelési ciklus jelentés a következőhöz: %{producer}"
@@ -4565,13 +4572,6 @@ hu:
         subject: "Jelszó visszaállítási utasítások"
       confirmation_instructions:
         subject: "Kérjük, erősítsd meg Open Food fiókod"
-    payment_mailer:
-      authorize_payment:
-        subject: "Kérjük, engedélyezd a fizetést %{distributor} részére az Open Food-on"
-        instructions: "%{amount} összegű befizetésed %{distributor} részére további hitelesítést igényel. Kérjük, keresd fel a következő URL-t a fizetés engedélyezéséhez:"
-      authorization_required:
-        subject: "A fizetéshez az ügyfél engedélye szükséges"
-        message: "A(z) %{order_number} rendelés kifizetéséhez további engedély szükséges az ügyféltől. Az ügyfelet e-mailben értesítették, és a fizetés függőben lévőként jelenik meg az engedélyezésig."
     shipment_mailer:
       shipped_email:
         dear_customer: "Kedves Ügyfelünk,"

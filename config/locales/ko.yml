@@ -244,6 +244,13 @@ ko:
       join_community: "커뮤니티에 참여하세요"
     invite_manager:
       subject: "%{enterprise}가 당신을 매니저로 초대합니다."
+  payment_mailer:
+    authorize_payment:
+      subject: "OFN으로 %{distributor}에게 지불을 승인하십시오."
+      instructions: "%{distributor}에게 %{amount}를 지불하시려면 추가 인증이 필요합니다. 결제를 승인하려면 다음 URL을 방문하십시오."
+    authorization_required:
+      subject: "결제를 수행하려면 고객의 승인이 필요합니다."
+      message: "주문 %{order_number}에 대한 결제는 고객의 추가 승인이 필요합니다. 고객에게 이메일을 통해 통보되었으며 결제가 승인될 때까지 보류 중인 것으로 표시됩니다."
   producer_mailer:
     order_cycle:
       subject: "%{producer}의 주문 사이클 기록"
@@ -3981,13 +3988,6 @@ ko:
         subject: "비밀번호 지침 초기화"
       confirmation_instructions:
         subject: "OFN 계정을 확인하세요."
-    payment_mailer:
-      authorize_payment:
-        subject: "OFN으로 %{distributor}에게 지불을 승인하십시오."
-        instructions: "%{distributor}에게 %{amount}를 지불하시려면 추가 인증이 필요합니다. 결제를 승인하려면 다음 URL을 방문하십시오."
-      authorization_required:
-        subject: "결제를 수행하려면 고객의 승인이 필요합니다."
-        message: "주문 %{order_number}에 대한 결제는 고객의 추가 승인이 필요합니다. 고객에게 이메일을 통해 통보되었으며 결제가 승인될 때까지 보류 중인 것으로 표시됩니다."
     shipment_mailer:
       shipped_email:
         dear_customer: "고객님 에게,"

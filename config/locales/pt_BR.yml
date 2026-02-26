@@ -186,6 +186,13 @@ pt_BR:
       join_community: "Faça parte da comunidade"
     invite_manager:
       subject: "%{enterprise}convidou você para ser um gerente"
+  payment_mailer:
+    authorize_payment:
+      subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
+      instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
+    authorization_required:
+      subject: "Um pagamento requer autorização do comprador"
+      message: "Um pagamento para o pedido %{order_number}requer uma autorização adicional por parte do comprador. O comprador foi notificado via email e o pagamento irá aparecer como pendente até que seja autorizado. "
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de pedidos para%{producer}"
@@ -3862,13 +3869,6 @@ pt_BR:
         subject: "Instruções para redefinição de senha"
       confirmation_instructions:
         subject: "Confirme sua conta na Ajunta"
-    payment_mailer:
-      authorize_payment:
-        subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
-        instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
-      authorization_required:
-        subject: "Um pagamento requer autorização do comprador"
-        message: "Um pagamento para o pedido %{order_number}requer uma autorização adicional por parte do comprador. O comprador foi notificado via email e o pagamento irá aparecer como pendente até que seja autorizado. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"

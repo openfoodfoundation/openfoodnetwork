@@ -243,6 +243,13 @@ es_US:
       join_community: "Unirse a la comunidad"
     invite_manager:
       subject: "%{enterprise} te ha invitado a ser administrador"
+  payment_mailer:
+    authorize_payment:
+      subject: "Autorice su pago a %{distributor} en OFN"
+      instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
+    authorization_required:
+      subject: "Un pago requiere autorización del cliente"
+      message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
@@ -3952,13 +3959,6 @@ es_US:
         subject: "Instrucciones para restablecer la contraseña"
       confirmation_instructions:
         subject: "Por favor, confirma tu cuenta de OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Autorice su pago a %{distributor} en OFN"
-        instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
-      authorization_required:
-        subject: "Un pago requiere autorización del cliente"
-        message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"

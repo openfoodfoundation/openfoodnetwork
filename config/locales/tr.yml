@@ -185,6 +185,13 @@ tr:
       join_community: "Topluluğa katılın !"
     invite_manager:
       subject: "%{enterprise} sizi yönetici olmaya davet etti"
+  payment_mailer:
+    authorize_payment:
+      subject: "Lütfen ödemenizi AGA'da %{distributor}dağıtımcısına yetkilendirin."
+      instructions: "%{distributor}Dağıtımcısına olan %{amount}ödemeniz detaylandırma gerektiriyor. Lütfen ödemenizi yetkilendirmek için bu URL'ye gidin:"
+    authorization_required:
+      subject: "Ödeme için müşterinin yetkilendirmesi gerekiyor. "
+      message: "%{order_number}siparişinin ödemesi için müşterinin ek yetkilendirmesi gerekiyor. Müşteri maille bilgilendirildi, ödeme yetkilendirilene kadar 'bekliyor' olarak görünecek. "
   producer_mailer:
     order_cycle:
       subject: "%{producer} için sipariş dönemi raporu"
@@ -3892,13 +3899,6 @@ tr:
         subject: "Şifre talimatlarını sıfırla"
       confirmation_instructions:
         subject: "Lütfen AGA hesabınızı onaylayın"
-    payment_mailer:
-      authorize_payment:
-        subject: "Lütfen ödemenizi AGA'da %{distributor}dağıtımcısına yetkilendirin."
-        instructions: "%{distributor}Dağıtımcısına olan %{amount}ödemeniz detaylandırma gerektiriyor. Lütfen ödemenizi yetkilendirmek için bu URL'ye gidin:"
-      authorization_required:
-        subject: "Ödeme için müşterinin yetkilendirmesi gerekiyor. "
-        message: "%{order_number}siparişinin ödemesi için müşterinin ek yetkilendirmesi gerekiyor. Müşteri maille bilgilendirildi, ödeme yetkilendirilene kadar 'bekliyor' olarak görünecek. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Değerli Müşterimiz,"
