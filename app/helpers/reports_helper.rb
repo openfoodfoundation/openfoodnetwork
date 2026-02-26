@@ -63,6 +63,6 @@ module ReportsHelper
   end
 
   def prices_sum(prices_list)
-    prices_list.sum(&:to_f).round(2)
+    prices_list.sum
   end
 end
