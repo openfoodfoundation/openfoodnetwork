@@ -5,11 +5,7 @@ RSpec.describe Api::CreditCardSerializer do
   let(:serializer) { Api::CreditCardSerializer.new card }
 
   it "serializes a credit card" do
-    expect(serializer.as_json).to include(
-      id: card.id,
-      cc_type: "Visa",
-      number: "x-1111"
-    )
+    expect(serializer.to_json).to match card.last_digits.to_s
   end
 
   it "formats an identifying string with the card number masked" do

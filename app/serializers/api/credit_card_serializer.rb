@@ -2,9 +2,9 @@
 
 module Api
   class CreditCardSerializer < ActiveModel::Serializer
-    attributes :id, :cc_type, :number, :expiry, :formatted, :delete_link, :is_default
+    attributes :id, :brand, :number, :expiry, :formatted, :delete_link, :is_default
 
-    def cc_type
+    def brand
       object.cc_type.capitalize
     end
 
@@ -19,7 +19,7 @@ module Api
     end
 
     def formatted
-      "#{cc_type} #{number} #{I18n.t(:card_expiry_abbreviation)}:#{expiry}"
+      "#{brand} #{number} #{I18n.t(:card_expiry_abbreviation)}:#{expiry}"
     end
 
     def delete_link
