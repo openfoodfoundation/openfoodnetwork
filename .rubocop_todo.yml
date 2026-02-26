@@ -335,13 +335,6 @@ Rails/OrderArguments:
     - 'spec/services/orders/generate_invoice_service_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Rails/Presence:
-  Exclude:
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/models/spree/product.rb'
-
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
 Rails/RedirectBackOrTo:
