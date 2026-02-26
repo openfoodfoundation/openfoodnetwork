@@ -335,16 +335,6 @@ Rails/OrderArguments:
     - 'spec/services/orders/generate_invoice_service_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-Rails/RedirectBackOrTo:
-  Exclude:
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/locales_controller.rb'
-    - 'app/controllers/spree/admin/invoices_controller.rb'
-    - 'app/controllers/spree/admin/orders_controller.rb'
-    - 'app/controllers/spree/admin/return_authorizations_controller.rb'
-
 # Offense count: 1
 # Configuration parameters: TransactionMethods.
 Rails/TransactionExitStatement:
