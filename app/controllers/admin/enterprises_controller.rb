@@ -177,7 +177,7 @@ module Admin
     protected
 
     def delete_custom_tab
-      @object.custom_tab.presence&.destroy
+      @object.custom_tab.destroy if @object.custom_tab.present?
       enterprise_params.delete(:custom_tab_attributes)
     end
 
@@ -240,7 +240,9 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
 
-        enterprises.presence&.includes(supplied_products: [:variants, :image])
+        if enterprises.present?
+          enterprises.includes(supplied_products: [:variants, :image])
+        end
       when :index
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).
