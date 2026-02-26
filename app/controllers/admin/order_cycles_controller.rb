@@ -209,7 +209,7 @@ module Admin
       elsif params[:context] == "checkout_options" && params[:save_and_back_to_list]
         redirect_to main_app.admin_order_cycles_path
       else
-        redirect_back_or_to(root_path)
+        redirect_back(fallback_location: root_path)
       end
     end
 

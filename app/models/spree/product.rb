@@ -295,7 +295,7 @@ module Spree
       # The variant is invalid if no supplier is present, but this method can be triggered when
       # importing product. In this scenario the variant has not been updated with the supplier yet
       # hence the check.
-      first_variant.supplier.presence&.touch
+      first_variant.supplier.touch if first_variant.supplier.present?
     end
 
     def validate_image
