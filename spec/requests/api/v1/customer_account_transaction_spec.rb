@@ -129,13 +129,19 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
 
       it "processes one transaction at the time, ensure correct balance calculation" do
         breakpoint.lock
+        breakpoint_reached_counter = 0
+
+        # Set a breakpoint when save is calle. If two requests reach this breakpoint at the
+        # same time, they are in a race condition but the the lock in the before_create callback
+        # should ensure they are excuted one after the other.
         allow_any_instance_of(CustomerAccountTransaction).to receive(:save)
           .and_wrap_original do |method, *args|
+            breakpoint_reached_counter += 1
             breakpoint.synchronize { nil }
             method.call(*args)
           end
 
-        # Create two transactions in parallel
+        # Create two account transactions in parallel
         threads = [
           Thread.new {
             login_as enterprise.owner
@@ -147,14 +153,23 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
           },
         ]
 
-        # Wait for both to transaction creation to pause
-        # This can reveal a race condition.
-        sleep 0.1
+        # Wait for the first thread to reach the breakpoint:
+        Timeout.timeout(1) do
+          sleep 0.1 while breakpoint_reached_counter < 1
+        end
+
+        # Wait for the second thread to reach the breakpoint to confirm we have a race condition
+        Timeout.timeout(1) do
+          sleep 0.1 while breakpoint_reached_counter < 2
+        end
 
         # Resume and complete both transaction creation:
         breakpoint.unlock
         threads.each(&:join)
 
+        # There is no existing transaction, the thread are competing to create the first
+        # transaction. So if the last transaction balance is anything but the sum of the amount
+        # from both request, it means our datase locking is wrong.
         expect(CustomerAccountTransaction.last.balance).to eq(25)
       end
     end
