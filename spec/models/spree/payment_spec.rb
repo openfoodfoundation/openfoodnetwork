@@ -944,6 +944,13 @@ RSpec.describe Spree::Payment do
     end
 
     describe "internal_void!" do
+      let(:payment) do
+        payment = create(:payment, :completed)
+        payment.order = order
+        payment.payment_method = payment_method
+        payment
+      end
+
       let(:order) { create(:order, customer:) }
       let(:customer) { create(:customer) }
       let(:payment_method) {
@@ -1016,6 +1023,17 @@ RSpec.describe Spree::Payment do
           expect(payment_method).not_to receive(:void)
 
           payment.internal_void!
+        end
+      end
+
+      context "when payment not voidable" do
+        it "raises an error" do
+          payment.update(state: "pending")
+          expect(payment_method).not_to receive(:void)
+
+          expect {
+            payment.internal_void!
+          }.to raise_error(Spree::Core::GatewayError, "Payment not voidable")
         end
       end
     end

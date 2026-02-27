@@ -146,6 +146,9 @@ module Spree
 
       def internal_void!
         return true if void?
+        # We should only void complete payment, otherwise we will be refunding credit that was
+        # not used in the first place.
+        return gateway_error(Spree.t(:internal_payment_not_voidable)) if state != "completed"
 
         options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
         response = payment_method.void(
