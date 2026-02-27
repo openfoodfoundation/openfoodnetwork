@@ -93,11 +93,11 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
 
       around do |example|
         # Customer is needed to create a purchase and a customer is linked to an enterprise.
-        # That means FactoryBot will create an enterprise, so we disable the after create callback
+        # That means FactoryBot will create an enterprise, so we disable the after save callback
         # so that credit payment methods are not created.
-        Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
+        Enterprise.skip_callback(:save, :after, :add_credit_payment_method)
         example.run
-        Enterprise.set_callback(:create, :after, :add_credit_payment_method)
+        Enterprise.set_callback(:save, :after, :add_credit_payment_method)
       end
 
       it "returns an error" do
@@ -170,11 +170,11 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
 
       around do |example|
         # Customer is needed to create a purchase and a customer is linked to an enterprise.
-        # That means FactoryBot will create an enterprise, so we disable the after create callback
+        # That means FactoryBot will create an enterprise, so we disable the after save callback
         # so that credit payment methods are not created.
-        Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
+        Enterprise.skip_callback(:save, :after, :add_credit_payment_method)
         example.run
-        Enterprise.set_callback(:create, :after, :add_credit_payment_method)
+        Enterprise.set_callback(:save, :after, :add_credit_payment_method)
       end
 
       it "returns an error" do
