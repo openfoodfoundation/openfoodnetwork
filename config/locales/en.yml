@@ -5201,8 +5201,6 @@ en:
       credit_payment_method_missing: Credit payment method is missing
       no_credit_available: No credit available
       not_enough_credit_available: Not enough credit available 
-  customer_account_transaction:
-    account_creation: Account creation
   orders:
     customer_credit_service:
       no_credit_owed: No credit owed
