@@ -4187,6 +4187,7 @@ en:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
+    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
