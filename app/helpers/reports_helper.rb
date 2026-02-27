@@ -63,6 +63,6 @@ module ReportsHelper
   end
 
   def prices_sum(prices_list)
-    prices_list.sum
+    prices_list.compact.sum
   end
 end
