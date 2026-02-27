@@ -25,37 +25,16 @@ class CustomerAccountTransaction < ApplicationRecord
   end
 
   def update_balance
-    # We are creating the initial transaction, no need to calculate the balance
-    return if initial_transaction?
-
-    first_transaction = CustomerAccountTransaction.where(customer: customer).first
-    if first_transaction.nil?
-      first_transaction = create_initial_transaction
-    end
-
-    # The first transaction will always exists, so we lock it to ensure only one transaction
-    # is processed at the time to ensure the correct balance calculation.
-    first_transaction.with_lock("FOR UPDATE") do
+    # Locking the customer to prevent two transactions from behing created at the same time
+    # resulting in a potentially wrong balance calculation.
+    customer.with_lock(requires_new: true) do
       last_transaction = CustomerAccountTransaction.where(customer: customer).last
-      self.balance = last_transaction.balance + amount
+
+      self.balance = if last_transaction.present?
+                       last_transaction.balance + amount
+                     else
+                       amount
+                     end
     end
-  end
-
-  # Creates the first transaction with a 0 amount
-  def create_initial_transaction
-    api_payment_method = customer.enterprise.payment_methods.internal.find_by!(
-      name: Rails.application.config.api_payment_method[:name]
-    )
-    CustomerAccountTransaction.create!(
-      customer: customer,
-      amount: 0.00,
-      currency: CurrentConfig.get(:currency),
-      description: I18n.t("customer_account_transaction.account_creation"),
-      payment_method: api_payment_method
-    )
-  end
-
-  def initial_transaction?
-    description == I18n.t("customer_account_transaction.account_creation") && amount == 0.00
   end
 end

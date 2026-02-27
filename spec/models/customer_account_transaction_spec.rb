@@ -38,39 +38,11 @@ RSpec.describe CustomerAccountTransaction do
     end
 
     context "when no existing balance" do
-      it "creates an 'account creation' transaction" do
-        customer = create(:customer)
-        transaction = create(:customer_account_transaction, amount: 12.00, customer:)
-
-        first_transaction = CustomerAccountTransaction.where(customer: customer).first
-        expect(first_transaction.amount).to eq(0.00)
-        expect(first_transaction.description).to eq("Account creation")
-      end
-
       it "set the balance to the new transaction's amount" do
         transaction = create(:customer_account_transaction, amount: 12.00)
 
         res = CustomerAccountTransaction.where(customer: transaction.customer).last
         expect(res.balance).to eq(12.00)
-      end
-    end
-
-    context "when the default payment method is missing" do
-      around do |example|
-        # A Customer account transaction is linked to a customer which is linked to an enterprise.
-        # That means FactoryBot will create an enterprise, so we disable the after create callback
-        # so that credit payment are not created.
-        Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
-        example.run
-        Enterprise.set_callback(:create, :after, :add_credit_payment_method)
-      end
-
-      it "raises an error" do
-        expect do
-          create(
-            :customer_account_transaction, amount: 12.00, payment_method: create(:payment_method)
-          )
-        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

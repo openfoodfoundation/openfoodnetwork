@@ -13,14 +13,11 @@ RSpec.describe CustomerAccountTransactions::DataLoaderService do
       customer = create(:customer, email: user.email, enterprise:)
       user.customers << customer
       customer_account_transactions = create_list(:customer_account_transaction, 3, customer:)
-      # This initial transaction created automatically by CustomerAccountTransaction
-      first_transaction = CustomerAccountTransaction.where(customer: customer).first
 
       expect(subject.customer_account_transactions).to eq([
                                                             customer_account_transactions.third,
                                                             customer_account_transactions.second,
                                                             customer_account_transactions.first,
-                                                            first_transaction
                                                           ])
     end
 
