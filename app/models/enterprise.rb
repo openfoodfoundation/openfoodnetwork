@@ -148,7 +148,7 @@ class Enterprise < ApplicationRecord
 
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  after_create :add_credit_payment_method
+  after_save :add_credit_payment_method
 
   after_rollback :restore_permalink
   after_touch :touch_distributors
