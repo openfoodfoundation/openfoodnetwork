@@ -501,7 +501,8 @@ RSpec.describe Enterprise do
 
     describe "add_credit_payment_method" do
       it "links credit payment method to the enterprise" do
-        expect(CreditPaymentMethod::LinkerService).to receive(:link)
+        # Due to various callbacks the enterprise gets updated twice after creation
+        expect(CreditPaymentMethod::LinkerService).to receive(:link).at_least(1)
 
         create(:distributor_enterprise)
       end
@@ -511,6 +512,15 @@ RSpec.describe Enterprise do
           expect(CreditPaymentMethod::LinkerService).not_to receive(:link)
 
           create(:supplier_enterprise)
+        end
+      end
+
+      context "when an enterprise becomes a distributor" do
+        it "links credit payment method to the enterprise" do
+          enterprise = create(:supplier_enterprise)
+
+          expect(CreditPaymentMethod::LinkerService).to receive(:link)
+          enterprise.update(sells: "own")
         end
       end
     end

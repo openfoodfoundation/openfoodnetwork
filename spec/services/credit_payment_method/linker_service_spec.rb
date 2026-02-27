@@ -8,9 +8,9 @@ RSpec.describe CreditPaymentMethod::LinkerService do
   around do |example|
     # after_save call back will call the linker we are testing, we disable it to avoid
     # unintended side effect
-    Enterprise.skip_callback(:create, :after, :add_credit_payment_method)
+    Enterprise.skip_callback(:save, :after, :add_credit_payment_method)
     example.run
-    Enterprise.set_callback(:create, :after, :add_credit_payment_method)
+    Enterprise.set_callback(:save, :after, :add_credit_payment_method)
   end
 
   describe ".link" do
