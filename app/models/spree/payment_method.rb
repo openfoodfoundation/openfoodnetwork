@@ -93,10 +93,6 @@ module Spree
       unscoped { find(*) }
     end
 
-    def payment_profiles_supported?
-      false
-    end
-
     def source_required?
       true
     end
@@ -111,11 +107,6 @@ module Spree
 
     def has_distributor?(distributor)
       distributors.include?(distributor)
-    end
-
-    def self.clean_name
-      scope = "spree.admin.payment_methods.providers"
-      I18n.t(name.demodulize.downcase, scope:)
     end
 
     private

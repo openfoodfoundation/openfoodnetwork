@@ -37,7 +37,7 @@
             - method.distributors.each do |distributor|
               = distributor.name
               %br/
-          %td= method.class.clean_name
+          %td= payment_method_type_name(method.class.name)
           - if spree_current_user.admin?
             %td.align-center= method.environment.to_s.titleize
           %td.align-center= method.display_on.blank? ? t('.both') : t('.' + method.display_on.to_s)

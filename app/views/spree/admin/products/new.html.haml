@@ -29,7 +29,7 @@
       .sixteen.columns.alpha
         .eight.columns.alpha
           = f.field_container :variant_unit do
-            = f.label :variant_unit, t(".units")
+            = f.label :variant_unit_with_scale, t(".units")
             %span.required *
             = f.select 'variant_unit', [],
               { include_blank: true },

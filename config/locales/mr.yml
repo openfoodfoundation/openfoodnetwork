@@ -297,6 +297,12 @@ mr:
       join_community: "समुदायात सामील व्हा"
     invite_manager:
       subject: "%{enterprise} ने तुम्हाला व्यवस्थापक होण्यासाठी आमंत्रित केले आहे"
+  payment_mailer:
+    authorize_payment:
+      instructions: "तुमच्या %{amount} ते %{distributor} च्या पेमेंटसाठी अतिरिक्त प्रमाणीकरण आवश्यक आहे. तुमचे पेमेंट अधिकृत करण्यासाठी कृपया खालील URL ला भेट द्या:"
+    authorization_required:
+      subject: "पेमेंटसाठी ग्राहकाकडून प्रमाणीकरण आवश्यक आहे"
+      message: "ऑर्डर %{order_number} साठी पेमेंटसाठी ग्राहकाकडून अतिरिक्त प्रमाणीकरण आवश्यक आहे. ग्राहकाला ईमेलद्वारे सूचित केले गेले आहे आणि ते अधिकृत होईपर्यंत पेमेंट प्रलंबित म्हणून दिसून येईल."
   producer_mailer:
     order_cycle:
       subject: "%{producer} साठी सायकल अहवाल ऑर्डर करा"
@@ -4217,13 +4223,6 @@ mr:
         subject: "पासवर्ड सूचना रीसेट करा"
       confirmation_instructions:
         subject: "कृपया तुमच्या OFN खात्याची पुष्टी करा"
-    payment_mailer:
-      authorize_payment:
-        subject: "कृपया तुमचे पेमेंट OFN वर %{distributor} वर अधिकृत करा"
-        instructions: "तुमच्या %{amount} ते %{distributor} च्या पेमेंटसाठी अतिरिक्त प्रमाणीकरण आवश्यक आहे. तुमचे पेमेंट अधिकृत करण्यासाठी कृपया खालील URL ला भेट द्या:"
-      authorization_required:
-        subject: "पेमेंटसाठी ग्राहकाकडून प्रमाणीकरण आवश्यक आहे"
-        message: "ऑर्डर %{order_number} साठी पेमेंटसाठी ग्राहकाकडून अतिरिक्त प्रमाणीकरण आवश्यक आहे. ग्राहकाला ईमेलद्वारे सूचित केले गेले आहे आणि ते अधिकृत होईपर्यंत पेमेंट प्रलंबित म्हणून दिसून येईल."
     shipment_mailer:
       shipped_email:
         dear_customer: "प्रिय ग्राहक,"

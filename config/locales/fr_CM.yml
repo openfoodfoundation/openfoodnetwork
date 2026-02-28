@@ -202,6 +202,13 @@ fr_CM:
       join_community: "Accéder au forum"
     invite_manager:
       subject: "%{enterprise} vous a invité comme gestionnaire"
+  payment_mailer:
+    authorize_payment:
+      subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
+      instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
+    authorization_required:
+      subject: "Un paiement nécessite une autorisation de l'acheteur"
+      message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
@@ -4002,13 +4009,6 @@ fr_CM:
         subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
-    payment_mailer:
-      authorize_payment:
-        subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
-        instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
-      authorization_required:
-        subject: "Un paiement nécessite une autorisation de l'acheteur"
-        message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"

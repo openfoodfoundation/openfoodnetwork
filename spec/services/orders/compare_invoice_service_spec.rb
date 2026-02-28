@@ -38,8 +38,8 @@ RSpec.shared_examples "attribute changes - tax total changes" do |boolean, type,
     create(:order_with_taxes, product_price: 110, tax_rate_amount: 0.1,
                               included_in_price: included_boolean)
       .tap do |order|
-      order.create_tax_charge!
-      order.update_shipping_fees!
+        order.create_tax_charge!
+        order.update_shipping_fees!
     end
   end
 

@@ -302,6 +302,13 @@ ru:
       join_community: "Присоединяйтесь к сообществу"
     invite_manager:
       subject: "%{enterprise} пригласил Вас стать менеджером"
+  payment_mailer:
+    authorize_payment:
+      subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
+      instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
+    authorization_required:
+      subject: "Платеж требует согласия клиента"
+      message: "Для оплаты заказа %{order_number} требуется дополнительное согласие со стороны покупателя. Клиент был уведомлен по электронной почте и платеж будет отображаться как ожидающий, пока он не будет подтвержден."
   producer_mailer:
     order_cycle:
       subject: "Отчет по Циклу Заказа для %{producer}"
@@ -4462,13 +4469,6 @@ ru:
         subject: "Инструкции по сбросу пароля"
       confirmation_instructions:
         subject: "Пожалуйста, подтвердите Вашу ОСП учетную запись"
-    payment_mailer:
-      authorize_payment:
-        subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
-        instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
-      authorization_required:
-        subject: "Платеж требует согласия клиента"
-        message: "Для оплаты заказа %{order_number} требуется дополнительное согласие со стороны покупателя. Клиент был уведомлен по электронной почте и платеж будет отображаться как ожидающий, пока он не будет подтвержден."
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"

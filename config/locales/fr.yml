@@ -415,6 +415,13 @@ fr:
       join_community: "Accéder au forum"
     invite_manager:
       subject: "%{enterprise} vous a invité comme gestionnaire"
+  payment_mailer:
+    authorize_payment:
+      subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
+      instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
+    authorization_required:
+      subject: "Un paiement nécessite une autorisation de l'acheteur"
+      message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
@@ -2945,7 +2952,7 @@ fr:
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
   fee_name: "Nom de la marge/commission"
-  fee_owner: "Propriétaire des droits"
+  fee_owner: "Propriétaire de la marge/commission"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -4816,13 +4823,6 @@ fr:
         subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
-    payment_mailer:
-      authorize_payment:
-        subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
-        instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
-      authorization_required:
-        subject: "Un paiement nécessite une autorisation de l'acheteur"
-        message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"

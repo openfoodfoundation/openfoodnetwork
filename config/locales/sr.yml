@@ -4510,13 +4510,6 @@ sr:
         subject: "Ресетујте упутства за лозинку"
       confirmation_instructions:
         subject: "Потврдите свој ОФН налог"
-    payment_mailer:
-      authorize_payment:
-        subject: "Овластите своју уплату на %{distributor} на ОФН-у"
-        instructions: "Ваша уплата %{amount} за %{distributor} захтева додатну аутентификацију. Посетите следећу УРЛ адресу да бисте ауторизовали своју уплату:"
-      authorization_required:
-        subject: "За плаћање је потребно овлашћење купца"
-        message: "За плаћање наруџбе %{order_number} потребно је додатно овлашћење купца. Купац је обавештен путем е-поште и плаћање ће се појавити као на чекању док се не овласти."
     shipment_mailer:
       shipped_email:
         dear_customer: "Драги купац,"

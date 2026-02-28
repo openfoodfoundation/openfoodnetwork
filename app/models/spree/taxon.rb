@@ -35,8 +35,8 @@ module Spree
       taxons
         .pluck('spree_taxons.id, enterprises.id AS enterprise_id')
         .each_with_object({}) do |(taxon_id, enterprise_id), collection|
-        collection[enterprise_id.to_i] ||= Set.new
-        collection[enterprise_id.to_i] << taxon_id
+          collection[enterprise_id.to_i] ||= Set.new
+          collection[enterprise_id.to_i] << taxon_id
       end
     end
 

@@ -28,7 +28,7 @@ module Admin
         flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
         redirect_to [:index,
                      { page: @page, per_page: @per_page, search_term: @search_term,
-                       producer_id: @producer_id, category_id: @category_id }]
+                       producer_id: @producer_id, category_id: @category_id, tags_name_in: @tags }]
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
@@ -120,7 +120,7 @@ module Admin
       @search_term = params[:search_term] || params[:_search_term]
       @producer_id = params[:producer_id] || params[:_producer_id]
       @category_id = params[:category_id] || params[:_category_id]
-      @tags = params[:tags_name_in] || params[:_tags_name_in]
+      @tags = params[:tags_name_in] || []
     end
 
     def init_pagination_params

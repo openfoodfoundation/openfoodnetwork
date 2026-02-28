@@ -138,7 +138,15 @@ Openfoodnetwork::Application.routes.draw do
       put :resume, on: :member, format: :json
     end
 
-    get '/reports', to: 'reports#index', as: :reports
+    scope :reports, as: :reports do
+      get '/', to: 'reports#index'
+      get '/search_enterprise_fees', to: 'reports#search_enterprise_fees', as: :search_enterprise_fees
+      get '/search_enterprise_fee_owners', to: 'reports#search_enterprise_fee_owners', as: :search_enterprise_fee_owners
+      get '/search_distributors', to: 'reports#search_distributors', as: :search_distributors
+      get '/search_suppliers', to: 'reports#search_suppliers', as: :search_suppliers
+      get '/search_order_cycles', to: 'reports#search_order_cycles', as: :search_order_cycles
+      get '/search_order_customers', to: 'reports#search_order_customers', as: :search_order_customers
+    end
     match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: :get, as: :report
     match '/reports/:report_type(/:report_subtype)', to: 'reports#create', via: :post
   end

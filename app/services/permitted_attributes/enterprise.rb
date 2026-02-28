@@ -14,12 +14,12 @@ module PermittedAttributes
 
     def self.attributes
       basic_permitted_attributes + [
-        group_ids: [], user_ids: [],
-        shipping_method_ids: [], payment_method_ids: [],
-        address_attributes: PermittedAttributes::Address.attributes,
-        business_address_attributes: PermittedAttributes::BusinessAddress.attributes,
-        producer_properties_attributes: [:id, :property_name, :value, :_destroy],
-        custom_tab_attributes: PermittedAttributes::CustomTab.attributes,
+        { group_ids: [], user_ids: [],
+          shipping_method_ids: [], payment_method_ids: [],
+          address_attributes: PermittedAttributes::Address.attributes,
+          business_address_attributes: PermittedAttributes::BusinessAddress.attributes,
+          producer_properties_attributes: [:id, :property_name, :value, :_destroy],
+          custom_tab_attributes: PermittedAttributes::CustomTab.attributes },
       ]
     end
 
