@@ -640,8 +640,10 @@ RSpec.describe '
         end
 
         it "shows an error message if the email is invalid" do
+          expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_return(false)
+
           within ".reveal-modal" do
-            tomselect_fill_in "user_invitation[email]", with: "invalid_email"
+            tomselect_fill_in "user_invitation[email]", with: "newuser@example.invaliddomain"
 
             expect do
               click_button "Invite"
