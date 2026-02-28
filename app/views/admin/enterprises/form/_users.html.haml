@@ -43,10 +43,9 @@
             - else
               %a{ class: "icon-trash no-text disabled" }
 
-  .text-right
-    %a.button{ href: "#{new_admin_enterprise_user_invitation_path(@enterprise)}", data: { turbo_stream: true, turbo: true } }
-      %i.icon-plus
-      = t('.invite_manager')
+  %a.button{ href: "#{new_admin_enterprise_user_invitation_path(@enterprise)}", data: { turbo_stream: true, turbo: true } }
+    %i.icon-plus
+    = t('.invite_manager')
   %br
 
 - else
