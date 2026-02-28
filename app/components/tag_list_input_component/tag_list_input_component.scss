@@ -66,8 +66,9 @@
       float: left;
       height: 26px;
       font-size: 14px;
-      &::placeholder { 
-        color: $near-black; 
+
+      &::placeholder {
+        color: $near-black;
       }
     }
   }
