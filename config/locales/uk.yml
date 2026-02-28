@@ -246,6 +246,13 @@ uk:
       join_community: "Приєднуйтесь до спільноти"
     invite_manager:
       subject: "%{enterprise} запросив вас стати менеджером"
+  payment_mailer:
+    authorize_payment:
+      subject: "Авторизуйте свій платіж на %{distributor} на OFN"
+      instructions: "Ваш платіж %{amount} на адресу %{distributor} вимагає додаткової автентифікації. Перейдіть за такою URL-адресою, щоб авторизувати свій платіж:"
+    authorization_required:
+      subject: "Платіж потребує авторизації клієнта"
+      message: "Оплата замовлення %{order_number} потребує додаткової авторизації від клієнта. Клієнта було сповіщено електронною поштою, і платіж відображатиметься як очікуваний, доки його не буде авторизовано."
   producer_mailer:
     order_cycle:
       subject: "Замовити циклічний звіт для %{producer}"
@@ -4106,13 +4113,6 @@ uk:
         subject: "Інструкції щодо скидання пароля"
       confirmation_instructions:
         subject: "Будь ласка, підтвердьте свій обліковий запис OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Авторизуйте свій платіж на %{distributor} на OFN"
-        instructions: "Ваш платіж %{amount} на адресу %{distributor} вимагає додаткової автентифікації. Перейдіть за такою URL-адресою, щоб авторизувати свій платіж:"
-      authorization_required:
-        subject: "Платіж потребує авторизації клієнта"
-        message: "Оплата замовлення %{order_number} потребує додаткової авторизації від клієнта. Клієнта було сповіщено електронною поштою, і платіж відображатиметься як очікуваний, доки його не буде авторизовано."
     shipment_mailer:
       shipped_email:
         dear_customer: "Дорогий клієнт,"

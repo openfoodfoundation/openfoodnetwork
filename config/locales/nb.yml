@@ -350,6 +350,13 @@ nb:
       join_community: "Bli med"
     invite_manager:
       subject: "%{enterprise} har invitert deg til å være en administrator"
+  payment_mailer:
+    authorize_payment:
+      subject: "Vennligst autoriser betalingen din til %{distributor} på OFN"
+      instructions: "Din betaling av %{amount} til %{distributor} krever ytterligere godkjenning. Gå til følgende URL for å godkjenne betalingen din:"
+    authorization_required:
+      subject: "En betaling krever autorisasjon fra kunden"
+      message: "En betaling for bestilling %{order_number} krever ytterligere autorisasjon fra kunden. Kunden har fått beskjed via epost og betalingen vil fremstå som ventende til den er autorisert."
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
@@ -4574,13 +4581,6 @@ nb:
         subject: "Tilbakestill passordinstruksjonene"
       confirmation_instructions:
         subject: "Vennligst bekreft OFN-kontoen din"
-    payment_mailer:
-      authorize_payment:
-        subject: "Vennligst autoriser betalingen din til %{distributor} på OFN"
-        instructions: "Din betaling av %{amount} til %{distributor} krever ytterligere godkjenning. Gå til følgende URL for å godkjenne betalingen din:"
-      authorization_required:
-        subject: "En betaling krever autorisasjon fra kunden"
-        message: "En betaling for bestilling %{order_number} krever ytterligere autorisasjon fra kunden. Kunden har fått beskjed via epost og betalingen vil fremstå som ventende til den er autorisert."
     shipment_mailer:
       shipped_email:
         dear_customer: "Kjære Kunde,"

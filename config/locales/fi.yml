@@ -412,6 +412,13 @@ fi:
       join_community: "Liity yhteisöön"
     invite_manager:
       subject: "%{enterprise} on kutsunut sinut hallinnoijaksi"
+  payment_mailer:
+    authorize_payment:
+      subject: "Valtuuta maksusi käyttäjälle %{distributor} OFN-palvelussa"
+      instructions: "Maksusi summalle %{amount} maksuun %{distributor} vaatii lisätunnistuksen. Valtuuta maksusi seuraavasta URL-osoitteesta:"
+    authorization_required:
+      subject: "Maksu vaatii asiakkaan valtuutuksen"
+      message: "Tilauksen %{order_number} maksu vaatii asiakkaalta lisävaltuutuksen. Asiakkaalle on ilmoitettu sähköpostitse, ja maksu näkyy odottavana, kunnes se on hyväksytty."
   producer_mailer:
     order_cycle:
       subject: "Tilausjakson raportti tuottajalle %{producer}"
@@ -4744,13 +4751,6 @@ fi:
         subject: "Salasanan palauttamisen ohjeet"
       confirmation_instructions:
         subject: "Vahvista OFN-tilisi"
-    payment_mailer:
-      authorize_payment:
-        subject: "Valtuuta maksusi käyttäjälle %{distributor} OFN-palvelussa"
-        instructions: "Maksusi summalle %{amount} maksuun %{distributor} vaatii lisätunnistuksen. Valtuuta maksusi seuraavasta URL-osoitteesta:"
-      authorization_required:
-        subject: "Maksu vaatii asiakkaan valtuutuksen"
-        message: "Tilauksen %{order_number} maksu vaatii asiakkaalta lisävaltuutuksen. Asiakkaalle on ilmoitettu sähköpostitse, ja maksu näkyy odottavana, kunnes se on hyväksytty."
     shipment_mailer:
       shipped_email:
         dear_customer: "Hyvät asiakas ,"

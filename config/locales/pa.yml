@@ -290,6 +290,13 @@ pa:
       join_community: "ਭਾਈਚਾਰੇ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ"
     invite_manager:
       subject: "%{enterprise} ਨੇ ਤੁਹਾਨੂੰ ਪ੍ਰਬੰਧਕ ਬਣਨ ਲਈ ਸੱਦਾ ਦਿੱਤਾ ਹੈ"
+  payment_mailer:
+    authorize_payment:
+      subject: "ਕਿਰਪਾ ਕਰਕੇ OFN ਤੇ %{distributor} ਨੂੰ ਆਪਣਾ ਭੁਗਤਾਨ ਅਧਿਕਾਰਤ ਕਰੋ"
+      instructions: "%{distributor} ਨੂੰ %{amount} ਦੇ ਤੁਹਾਡੇ ਭੁਗਤਾਨ ਲਈ ਵਾਧੂ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਭੁਗਤਾਨ ਨੂੰ ਅਧਿਕਾਰਤ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ URL ਉਤੇ ਜਾਓ:"
+    authorization_required:
+      subject: "ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ"
+      message: "ਆਰਡਰ %{order_number} ਦੇ ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਵਾਧੂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ। ਗਾਹਕ ਨੂੰ ਈਮੇਲ ਰਾਹੀਂ ਸੂਚਿਤ ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਦੋਂ ਤੱਕ ਇਹ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ ਜਾਂਦਾ, ਭੁਗਤਾਨ ਬਕਾਏ ਵਜੋਂ ਵਿਖਾਈ ਦੇਵੇਗਾ।"
   producer_mailer:
     order_cycle:
       subject: "%{producer} ਲਈ ਆਰਡਰ ਸਾਈਕਲ ਰਿਪੋਰਟ"
@@ -4216,13 +4223,6 @@ pa:
         subject: "ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰਨ ਦੀਆਂ ਹਦਾਇਤਾਂ"
       confirmation_instructions:
         subject: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ OFN ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
-    payment_mailer:
-      authorize_payment:
-        subject: "ਕਿਰਪਾ ਕਰਕੇ OFN ਤੇ %{distributor} ਨੂੰ ਆਪਣਾ ਭੁਗਤਾਨ ਅਧਿਕਾਰਤ ਕਰੋ"
-        instructions: "%{distributor} ਨੂੰ %{amount} ਦੇ ਤੁਹਾਡੇ ਭੁਗਤਾਨ ਲਈ ਵਾਧੂ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਭੁਗਤਾਨ ਨੂੰ ਅਧਿਕਾਰਤ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ URL ਉਤੇ ਜਾਓ:"
-      authorization_required:
-        subject: "ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ"
-        message: "ਆਰਡਰ %{order_number} ਦੇ ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਵਾਧੂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ। ਗਾਹਕ ਨੂੰ ਈਮੇਲ ਰਾਹੀਂ ਸੂਚਿਤ ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਦੋਂ ਤੱਕ ਇਹ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ ਜਾਂਦਾ, ਭੁਗਤਾਨ ਬਕਾਏ ਵਜੋਂ ਵਿਖਾਈ ਦੇਵੇਗਾ।"
     shipment_mailer:
       shipped_email:
         dear_customer: "ਪਿਆਰੇ ਗਾਹਕ,"

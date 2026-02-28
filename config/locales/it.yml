@@ -273,6 +273,13 @@ it:
       join_community: "Unisciti alla community"
     invite_manager:
       subject: "%{enterprise} ti a invitato ad essere un referente"
+  payment_mailer:
+    authorize_payment:
+      subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
+      instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
+    authorization_required:
+      subject: "Un pagamento richiede l'autorizzazione del cliente"
+      message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
   producer_mailer:
     order_cycle:
       subject: "Resoconto degli ordini per %{producer}"
@@ -4177,13 +4184,6 @@ it:
         subject: "Istruzioni per il reset della password"
       confirmation_instructions:
         subject: "Per favore conferma il tuo account OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
-        instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
-      authorization_required:
-        subject: "Un pagamento richiede l'autorizzazione del cliente"
-        message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Cliente,"

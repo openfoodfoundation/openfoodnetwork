@@ -273,6 +273,13 @@ ar:
       join_community: "انظم إلى المجتمع"
     invite_manager:
       subject: "تلقيت دعوة من %{enterprise} لتصبح مديرًا"
+  payment_mailer:
+    authorize_payment:
+      subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
+      instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
+    authorization_required:
+      subject: "يتطلب الدفع إذنًا من العميل"
+      message: "يتطلب الدفع للطلب %{order_number} تفويضًا إضافيًا من العميل. تم إخطار العميل عبر البريد الإلكتروني وسيظهر الدفع على أنه معلق حتى يتم التصريح به."
   producer_mailer:
     order_cycle:
       subject: "تقرير دورة الطلبية لـ %{producer}"
@@ -4289,13 +4296,6 @@ ar:
         subject: "تعليمات إعادة تعيين كلمة المرور"
       confirmation_instructions:
         subject: "يرجى تأكيد حسابك OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
-        instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
-      authorization_required:
-        subject: "يتطلب الدفع إذنًا من العميل"
-        message: "يتطلب الدفع للطلب %{order_number} تفويضًا إضافيًا من العميل. تم إخطار العميل عبر البريد الإلكتروني وسيظهر الدفع على أنه معلق حتى يتم التصريح به."
     shipment_mailer:
       shipped_email:
         dear_customer: "عزيزي العميل،"
