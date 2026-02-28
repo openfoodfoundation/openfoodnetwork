@@ -19,7 +19,10 @@ class UserInvitation
 
     user = find_or_create_user!
     enterprise.users << user
-    EnterpriseMailer.manager_invitation(enterprise, user).deliver_later
+
+    if user.previously_new_record?
+      EnterpriseMailer.manager_invitation(enterprise, user).deliver_later
+    end
   end
 
   private

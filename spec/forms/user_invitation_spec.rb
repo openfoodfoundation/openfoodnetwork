@@ -53,13 +53,11 @@ RSpec.describe UserInvitation do
   end
 
   context "inviting a existing user who isn't a user on the enterprise" do
-    it "adds the user to the enterprise and sends them an invitation email" do
+    it "adds the user to the enterprise" do
       existing_user = create(:user)
-      user_invitation = UserInvitation.new(defaults.merge(email: existing_user.email))
 
-      expect do
-        user_invitation.save!
-      end.to have_enqueued_mail(EnterpriseMailer, :manager_invitation)
+      user_invitation = UserInvitation.new(defaults.merge(email: existing_user.email))
+      user_invitation.save!
 
       expect(enterprise.users).to include(existing_user)
     end
