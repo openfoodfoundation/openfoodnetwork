@@ -8,7 +8,7 @@
       %fieldset.no-border-top.no-border-bottom
         .row
           = f.label :email, t(:email)
-          = f.text_field :email, placeholder: t('.eg_email_address'), data: { controller: "select-user" }
+          = f.email_field :email, placeholder: t('.eg_email_address'), data: { controller: "select-user" }, inputmode: "email", autocomplete: "off"
           = f.error_message_on :email
 
       .modal-actions.justify-end.filter-actions
