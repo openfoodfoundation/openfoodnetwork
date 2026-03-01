@@ -25,9 +25,6 @@ module Spree
 
     scope :with_payment_profile, -> { where.not(gateway_customer_profile_id: nil) }
 
-    # needed for some of the ActiveMerchant gateways (eg. SagePay)
-    alias_attribute :brand, :cc_type
-
     def expiry=(expiry)
       self[:month], self[:year] = expiry.split(" / ")
       self[:year] = "20#{self[:year]}"
