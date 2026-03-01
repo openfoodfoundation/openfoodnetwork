@@ -48,6 +48,7 @@
         %input.red{ type: "button", value: t(:save_changes), "ng-click": "submitAll(customers_form)", "ng-disabled": "!hasUnsavedChanges()" }
 
       %table.index#customers{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length > 0' }
+        %col.id{ width: "5%", 'ng-show' => 'columns.id.visible' }
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
         %col.first_name{ width: "20%", 'ng-show' => 'columns.first_name.visible' }
         %col.last_name{ width: "20%", 'ng-show' => 'columns.last_name.visible' }
@@ -61,6 +62,7 @@
           %tr{ "ng-controller": "ColumnsCtrl" }
             -# %th.bulk
               -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+            %th.id{ 'ng-show' => 'columns.id.visible' }=t('admin.customers.index.id')
             %th.email{ 'ng-show' => 'columns.email.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('email')" }=t('admin.email')
             %th.first_name{ 'ng-show' => 'columns.first_name.visible' }
@@ -78,6 +80,8 @@
           %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy: sorting.predicate:sorting.reverse ) | limitTo:customerLimit track by customer.id", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
             -# %td.bulk
               -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
+            %td.id{ 'ng-show' => 'columns.id.visible'}
+              %span{ 'ng-bind' => '::customer.id' }
             %td.email{ 'ng-show' => 'columns.email.visible'}
               %span{ 'ng-bind' => '::customer.email' }
               %span.guest-label{ 'ng-show' => 'customer.user_id == null' }= t('.guest_label')
