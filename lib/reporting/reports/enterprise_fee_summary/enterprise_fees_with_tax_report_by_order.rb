@@ -158,7 +158,7 @@ module Reporting
         end
 
         def enterprise_fees_sum(order)
-          amount = prices_sum(enterprise_fees(order).map(&:amount))
+          amount = enterprise_fees(order).map(&:amount).compact.sum
           apply_voucher_on_amount(order, amount)
         end
 
@@ -183,7 +183,7 @@ module Reporting
           query = query.inclusive if included == true
           query = query.additional if added == true
           amount =
-            prices_sum(query.where(adjustable: enterprise_fees(order)).map(&:amount))
+            query.where(adjustable: enterprise_fees(order)).map(&:amount).compact.sum
           apply_voucher_on_amount(order, amount)
         end
 

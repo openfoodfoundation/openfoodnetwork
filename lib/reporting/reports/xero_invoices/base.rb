@@ -207,29 +207,29 @@ module Reporting
         end
 
         def total_untaxable_products(order)
-          prices_sum(order.line_items.without_tax.map(&:amount))
+          order.line_items.without_tax.map(&:amount).compact.sum
         end
 
         def total_taxable_products(order)
-          prices_sum(order.line_items.with_tax.map(&:amount))
+          order.line_items.with_tax.map(&:amount).compact.sum
         end
 
         def total_untaxable_fees(order)
-          prices_sum(order.all_adjustments.enterprise_fee.where(tax_category: nil)
-            .map(&:amount))
+          order.all_adjustments.enterprise_fee.where(tax_category: nil)
+            .map(&:amount).compact.sum
         end
 
         def total_taxable_fees(order)
-          prices_sum(order.all_adjustments.enterprise_fee.where.not(tax_category: nil)
-            .map(&:amount))
+          order.all_adjustments.enterprise_fee.where.not(tax_category: nil)
+            .map(&:amount).compact.sum
         end
 
         def total_shipping(order)
-          prices_sum(order.all_adjustments.shipping.map(&:amount))
+          order.all_adjustments.shipping.map(&:amount).compact.sum
         end
 
         def total_transaction(order)
-          prices_sum(order.all_adjustments.payment_fee.map(&:amount))
+          order.all_adjustments.payment_fee.map(&:amount).compact.sum
         end
 
         def tax_on_shipping_s(order)
@@ -246,11 +246,11 @@ module Reporting
         end
 
         def total_untaxable_admin_adjustments(order)
-          prices_sum(order.adjustments.admin.where(tax_category: nil).map(&:amount))
+          order.adjustments.admin.where(tax_category: nil).map(&:amount).compact.sum
         end
 
         def total_taxable_admin_adjustments(order)
-          prices_sum(order.adjustments.admin.where.not(tax_category: nil).map(&:amount))
+          order.adjustments.admin.where.not(tax_category: nil).map(&:amount).compact.sum
         end
 
         def detail?

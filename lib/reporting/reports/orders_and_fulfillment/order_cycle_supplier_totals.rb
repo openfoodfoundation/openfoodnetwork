@@ -12,7 +12,7 @@ module Reporting
             quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
             total_units: proc { |line_items| total_units(line_items) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
-            total_cost: proc { |line_items| prices_sum(line_items.map(&:amount)) },
+            total_cost: proc { |line_items| line_items.map(&:amount).compact.sum },
             sku: variant_sku,
             producer_charges_sales_tax?: supplier_charges_sales_tax?,
             product_tax_category:
@@ -34,7 +34,7 @@ module Reporting
                 {
                   quantity: rows.map(&:quantity).sum(&:to_i),
                   total_units: summary_total_units,
-                  total_cost: prices_sum(rows.map(&:total_cost))
+                  total_cost: rows.map(&:total_cost).compact.sum
                 }
               end
             }

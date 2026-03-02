@@ -8,12 +8,12 @@ module Reporting
           {
             payment_state: proc { |orders| payment_state(orders.first) },
             distributor: proc { |orders| orders.first.distributor.name },
-            product_total_price: proc { |orders| prices_sum(orders.map(&:item_total)) },
-            shipping_total_price: proc { |orders| prices_sum(orders.map(&:ship_total)) },
+            product_total_price: proc { |orders| orders.map(&:item_total).compact.sum },
+            shipping_total_price: proc { |orders| orders.map(&:ship_total).compact.sum },
             outstanding_balance_price: proc do |orders|
-              prices_sum(orders.map(&:outstanding_balance).map(&:amount))
+              orders.map(&:outstanding_balance).map(&:amount).compact.sum
             end,
-            total_price: proc { |orders| prices_sum(orders.map(&:total)) }
+            total_price: proc { |orders| orders.map(&:total).compact.sum }
           }
         end
       end

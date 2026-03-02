@@ -73,7 +73,7 @@ module Reporting
           proc do |_key, _items, rows|
             {
               quantity: rows.map(&:quantity).sum(&:to_i),
-              price: prices_sum(rows.map(&:price))
+              price: rows.map(&:price).compact.sum
             }
           end
         end

@@ -23,9 +23,9 @@ module Reporting
             variant: variant_name,
 
             quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
-            item_price: proc { |line_items| prices_sum(line_items.map(&:amount)) },
+            item_price: proc { |line_items| line_items.map(&:amount).compact.sum },
             item_fees_price: proc { |line_items|
-              prices_sum(line_items.map(&:amount_with_adjustments))
+              line_items.map(&:amount_with_adjustments).compact.sum
             },
             admin_handling_fees: proc { |_line_items| "" },
             ship_price: proc { |_line_items| "" },
@@ -129,8 +129,8 @@ module Reporting
           {
             hub: rows.last.hub,
             customer: rows.last.customer,
-            item_price: prices_sum(rows.map(&:item_price)),
-            item_fees_price: prices_sum(rows.map(&:item_fees_price)),
+            item_price: rows.map(&:item_price).compact.sum,
+            item_fees_price: rows.map(&:item_fees_price).compact.sum,
             admin_handling_fees: order.admin_and_handling_total,
             ship_price: order.ship_total,
             pay_fee_price: order.payment_fee,

@@ -88,7 +88,7 @@ module Reporting
     #   summary_row: proc do |group_key, items, rows|
     #     {
     #       quantity: rows.map(&:quantity).sum(&:to_i),
-    #       price: "#{prices_sum(rows.map(&:price))} #{currency_symbol}"
+    #       price: "#{rows.map(&:price).compact.sum} #{currency_symbol}"
     #     }
     #   end,
     #   summary_row_class: "", # by default 'text-bold'

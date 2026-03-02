@@ -77,11 +77,11 @@ module Reporting
               summary_row: proc do |_key, items, _rows|
                 line_items = items.flat_map(&:second).flatten.uniq
                 total_excl_tax =
-                  prices_sum(line_items.map(&:amount)) -
-                  prices_sum(line_items.map(&:included_tax))
-                tax = prices_sum(line_items.map do |line_item|
+                  line_items.map(&:amount).compact.sum -
+                  line_items.map(&:included_tax).compact.sum
+                tax = line_items.map do |line_item|
                   line_item.adjustments.eligible.tax.map(&:amount).sum(&:to_f)
-                end)
+                end.compact.sum
                 {
                   total_excl_tax:,
                   tax:,
@@ -127,19 +127,17 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          prices_sum(line_items(query_result_row).map(&:amount)) -
-            prices_sum(line_items(query_result_row).map(&:included_tax))
+          line_items(query_result_row).map(&:amount).compact.sum -
+            line_items(query_result_row).map(&:included_tax).compact.sum
         end
 
         def tax(query_result_row)
-          prices_sum(
-            line_items(query_result_row).to_a.map do |line_item|
-              line_item.adjustments.eligible.tax
-                .where(originator_id: tax_rate_id(query_result_row))
-                .map(&:amount)
-                .sum(&:to_f)
-            end
-          )
+          line_items(query_result_row).to_a.map do |line_item|
+            line_item.adjustments.eligible.tax
+              .where(originator_id: tax_rate_id(query_result_row))
+              .map(&:amount)
+              .sum(&:to_f)
+          end.compact.sum
         end
 
         def total_incl_tax(query_result_row)

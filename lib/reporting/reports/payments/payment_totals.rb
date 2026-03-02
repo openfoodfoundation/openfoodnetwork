@@ -8,13 +8,13 @@ module Reporting
           {
             payment_state: proc { |orders| payment_state(orders.first) },
             distributor: proc { |orders| orders.first.distributor.name },
-            product_total_price: proc { |orders| prices_sum(orders.map(&:item_total)) },
-            shipping_total_price: proc { |orders| prices_sum(orders.map(&:ship_total)) },
-            total_price: proc { |orders| prices_sum(orders.map(&:total)) },
+            product_total_price: proc { |orders| orders.map(&:item_total).compact.sum },
+            shipping_total_price: proc { |orders| orders.map(&:ship_total).compact.sum },
+            total_price: proc { |orders| orders.map(&:total).compact.sum },
             eft_price: proc { |orders| total_by_payment_method(orders, "EFT") },
             paypal_price: proc { |orders| total_by_payment_method(orders, "PayPal") },
             outstanding_balance_price: proc { |orders|
-              prices_sum(orders.map(&:outstanding_balance).map(&:amount))
+              orders.map(&:outstanding_balance).map(&:amount).compact.sum
             }
           }
         end
@@ -22,9 +22,9 @@ module Reporting
         private
 
         def total_by_payment_method(orders, pay_method)
-          prices_sum(orders.map(&:payments).flatten.select { |payment|
+          orders.map(&:payments).flatten.select { |payment|
             payment.completed? && payment.payment_method&.name.to_s.include?(pay_method)
-          }.map(&:amount))
+          }.map(&:amount).compact.sum
         end
       end
     end

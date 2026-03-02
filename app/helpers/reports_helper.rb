@@ -61,8 +61,4 @@ module ReportsHelper
     datetime = Time.zone.parse(datetime) if datetime.is_a? String
     datetime.strftime('%Y-%m-%d %H:%M')
   end
-
-  def prices_sum(prices_list)
-    prices_list.compact.sum
-  end
 end
