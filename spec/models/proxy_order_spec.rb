@@ -223,7 +223,7 @@ RSpec.describe ProxyOrder do
     context "when the order is not present" do
       let(:order) { nil }
 
-      it "returns 'canceled'" do
+      it "returns 'pending'" do
         expect(proxy_order.state).to eq('pending')
       end
 
@@ -238,7 +238,7 @@ RSpec.describe ProxyOrder do
     context "when the order cycle is not yet open" do
       let(:order_cycle) { build(:order_cycle, orders_open_at: 2.days.from_now) }
 
-      it "returns 'cart'" do
+      it "returns 'pending'" do
         expect(proxy_order.state).to eq('pending')
       end
 
@@ -267,7 +267,7 @@ RSpec.describe ProxyOrder do
       end
 
       context "when the order cycle does not have a closing date" do
-        it "returns 'cart'" do
+        it "returns 'complete'" do
           order_cycle.orders_close_at = nil
           expect(proxy_order.state).to eq('complete')
         end
