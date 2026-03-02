@@ -5,7 +5,7 @@
 # (create the session table with "rails generate session_migration")
 
 domain = if Rails.env.staging? || Rails.env.production?
-           ".#{ENV['SITE_URL'].gsub(/^(www\.)|^(app\.)|^(staging\.)|^(stg\.)/, '')}"
+           ".#{ENV['SITE_URL']}"
          else
            :all
          end
