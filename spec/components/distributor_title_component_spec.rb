@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe DistributorTitleComponent, type: :component do
   it "displays distributor title with its name" do
     render_inline(described_class.new(name: "Freddy's Farm Shop"))

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # This is used to test non implemented methods
 module Vouchers
   class TestVoucher < Voucher; end

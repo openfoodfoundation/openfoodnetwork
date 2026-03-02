@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Admin::OrdersHelper do
   describe "#order_adjustments_for_display" do
     let(:order) { create(:order) }

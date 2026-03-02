@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20240502035220_update_n8n_url'
 
 RSpec.describe UpdateN8nUrl do

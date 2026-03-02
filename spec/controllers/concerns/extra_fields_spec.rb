@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ExtraFields do
   let(:dummy_controller) { Api::V1::BaseController.new.extend ExtraFields }
 

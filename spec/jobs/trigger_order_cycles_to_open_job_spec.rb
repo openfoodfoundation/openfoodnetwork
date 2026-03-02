@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TriggerOrderCyclesToOpenJob do
   let(:oc_opened_before) {
     create(:simple_order_cycle, orders_open_at: 1.hour.ago)

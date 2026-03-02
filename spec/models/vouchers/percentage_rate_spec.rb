@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Vouchers::PercentageRate do
   describe 'validations' do
     subject { build(:voucher_percentage_rate) }

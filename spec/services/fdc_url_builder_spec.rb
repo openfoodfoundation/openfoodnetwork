@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe FdcUrlBuilder do
   subject(:urls) { FdcUrlBuilder.new(product_link) }
   let(:product_link) {

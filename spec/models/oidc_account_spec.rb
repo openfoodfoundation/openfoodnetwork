@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OidcAccount do
   describe "associations and validations" do
     subject {

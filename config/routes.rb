@@ -16,7 +16,6 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/register", to: "registration#index", as: :registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
-  post "/user/registered_email", to: "spree/users#registered_email"
   resources :locales, only: [:show]
 
   # Redirects to global website
@@ -82,6 +81,8 @@ Openfoodnetwork::Application.routes.draw do
 
     get "/stripe/confirm", to: "stripe#confirm", as: :confirm_stripe
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
+
+    get "/taler/:payment_id", to: "taler#confirm", as: :confirm_taler
   end
 
   get '/checkout', to: 'checkout#edit'

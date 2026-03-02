@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ProductImport::Settings do
   let(:settings) { described_class.new(import_settings) }
 

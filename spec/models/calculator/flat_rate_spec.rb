@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Calculator::FlatRate do
   let(:calculator) { Calculator::FlatRate.new }
 

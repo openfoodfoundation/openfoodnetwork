@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::CachedEnterpriseSerializer do
   let(:cached_enterprise_serializer) { described_class.new(enterprise) }
   let(:enterprise) { create(:enterprise) }

@@ -593,6 +593,7 @@ pt:
           label: Categorias
         tags:
           label: Etiquetas
+          none: Nenhum
         search: Procurar
       product_variant_row:
         new_variant: Nova variante

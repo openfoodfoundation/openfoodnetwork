@@ -35,10 +35,6 @@ module Spree
         ActiveMerchant::Billing::StripePaymentIntentsGateway
       end
 
-      def payment_profiles_supported?
-        true
-      end
-
       def stripe_account_id
         StripeAccount.find_by(enterprise_id: preferred_enterprise_id)&.stripe_user_id
       end
@@ -84,7 +80,7 @@ module Spree
       end
 
       # NOTE: this method is required by Spree::Payment::Processing
-      def void(payment_intent_id, _creditcard, gateway_options)
+      def void(payment_intent_id, gateway_options)
         payment_intent_response = Stripe::PaymentIntent.retrieve(
           payment_intent_id, stripe_account: stripe_account_id
         )
@@ -101,7 +97,13 @@ module Spree
       end
 
       # NOTE: this method is required by Spree::Payment::Processing
-      def credit(money, _creditcard, payment_intent_id, gateway_options)
+      def credit(money, payment_intent_id, gateway_options)
+        gateway_options[:stripe_account] = stripe_account_id
+        provider.refund(money, payment_intent_id, gateway_options)
+      end
+
+      # NOTE: this method is required by Spree::Payment::Processing
+      def refund(money, payment_intent_id, gateway_options)
         gateway_options[:stripe_account] = stripe_account_id
         provider.refund(money, payment_intent_id, gateway_options)
       end

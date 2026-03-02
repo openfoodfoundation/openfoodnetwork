@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::CreditCard do
   let(:valid_credit_card_attributes) {
     {

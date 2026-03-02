@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::TestMailer do
   subject(:mail) { described_class.test_email(order) }
   let(:user) { create(:user) }

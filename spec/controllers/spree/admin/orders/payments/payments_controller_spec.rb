@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::PaymentsController do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }

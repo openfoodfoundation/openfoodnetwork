@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe VerticalEllipsisMenuComponent, type: :component do
   it "displays the included links" do
     content = "<a href>Edit</a>"

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::ReportsController do
   # Given two distributors and two suppliers
   let(:bill_address) { create(:address) }

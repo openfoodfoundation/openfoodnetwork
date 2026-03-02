@@ -1,4 +1,4 @@
-#### What? Why?
+## What? Why?
 
 - Closes # <!-- Insert issue number here. -->
 
@@ -7,7 +7,7 @@
 
 
 
-#### What should we test?
+## What should we test?
 <!-- List which features should be tested and how.
      This can be similar to the Steps to Reproduce in the issue.
      Also think of other parts of the app which could be affected
@@ -16,7 +16,7 @@
 - Visit ... page.
 - 
 
-#### Release notes
+## Release notes
 
 <!-- Please select one for your PR and delete the other. -->
 
@@ -33,12 +33,12 @@ Changelog Category (reviewers may add a label for the release notes):
 The title of the pull request will be included in the release notes.
 
 
-#### Dependencies
+## Dependencies
 <!-- Does this PR depend on another one?
      Add the link or remove this section. -->
 
 
 
-#### Documentation updates
+## Documentation updates
 <!-- Are there any wiki pages that need updating after merging this PR?
      List them here or remove this section. -->

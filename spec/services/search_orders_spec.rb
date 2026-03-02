@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe SearchOrders do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:order1) { create(:order_with_line_items, distributor:, line_items_count: 3) }

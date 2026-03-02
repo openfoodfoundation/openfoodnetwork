@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe CartService do
   let(:order) { instance_double(Spree::Order, id: 123) }
   let(:currency) { "EUR" }

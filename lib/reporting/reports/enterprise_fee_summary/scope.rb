@@ -392,9 +392,9 @@ module Reporting
           end
         end
 
-        def filter_scope(*args)
+        def filter_scope(*)
           chain_to_scope do
-            where(*args)
+            where(*)
           end
         end
       end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::UncachedEnterpriseSerializer do
   let(:serializer) {
     described_class.new enterprise, { data: OpenFoodNetwork::EnterpriseInjectionData.new }

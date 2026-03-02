@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe StockSyncJob do
   let(:order) { create(:order_with_totals, distributor:) }
   let(:distributor) { build(:enterprise, owner: user) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Subscriptions::Summary do
   let(:summary) { described_class.new(123) }
 

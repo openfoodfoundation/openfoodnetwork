@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe FilePathSanitizer do
   let(:folder_path){ '/tmp/product_import123' }
   let(:file_path) { "#{folder_path}/import.csv" }

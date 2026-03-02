@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include OpenFoodNetwork::ApiHelper, type: :request

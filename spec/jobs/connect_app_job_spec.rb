@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ConnectAppJob do
   subject { ConnectAppJob.new(app, user.spree_api_key) }
 

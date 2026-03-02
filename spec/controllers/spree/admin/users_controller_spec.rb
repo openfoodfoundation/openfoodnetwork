@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::UsersController do
   describe '#authorize_admin' do
     let(:user) { create(:user) }

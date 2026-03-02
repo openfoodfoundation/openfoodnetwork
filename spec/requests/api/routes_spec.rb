@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # test a single endpoint to make sure the redirects are working as intended.
-require 'spec_helper'
 
 RSpec.describe 'Orders Cycles endpoint' do
   let(:distributor) { create(:distributor_enterprise) }

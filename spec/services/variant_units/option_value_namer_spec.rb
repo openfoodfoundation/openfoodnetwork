@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe VariantUnits::OptionValueNamer do
   describe "generating option value name" do
     subject { described_class.new(v) }

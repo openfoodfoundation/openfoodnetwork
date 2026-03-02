@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Subscriptions::Form do
   describe "creating a new subscription" do
     let!(:shop) { create(:distributor_enterprise) }

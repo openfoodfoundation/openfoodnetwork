@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Address do
   let(:address) { build(:address) }
   let(:enterprise_address) { build(:address, enterprise: build(:enterprise)) }

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'cancan/matchers'
 require 'support/ability_helpers'
 

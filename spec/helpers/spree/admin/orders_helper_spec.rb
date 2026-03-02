@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::OrdersHelper do
   describe "#orders_links" do
     let(:order) { double(:order) }

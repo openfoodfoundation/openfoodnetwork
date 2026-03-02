@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'spree/core/product_duplicator'
 
 RSpec.describe Api::V0::ProductsController do

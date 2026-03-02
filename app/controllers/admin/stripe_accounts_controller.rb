@@ -6,7 +6,7 @@ module Admin
   class StripeAccountsController < Spree::Admin::BaseController
     def connect
       payload = params.permit(:enterprise_id).to_h
-      key = Openfoodnetwork::Application.config.secret_token
+      key = Rails.application.secret_key_base
       url_params = { state: JWT.encode(payload, key, 'HS256'), scope: "read_write" }
       redirect_to Stripe::OAuth.authorize_url(url_params)
     end

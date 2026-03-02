@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TagRule::FilterPaymentMethods do
   let(:tag_rule) {
     build(:filter_payment_methods_tag_rule, preferred_payment_method_tags: payment_method_tags)

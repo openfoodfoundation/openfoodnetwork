@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TaxRateFinder do
   describe "getting the corresponding tax rate" do
     let(:amount) { BigDecimal(120) }

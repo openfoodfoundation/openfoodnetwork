@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe VariantTagRulesFilterer do
   subject(:filterer) { described_class.new(distributor:, customer:, variants_relation:) }
 

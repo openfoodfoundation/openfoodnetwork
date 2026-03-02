@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 require 'open_food_network/order_cycle_form_applicator'
 
 RSpec.describe OpenFoodNetwork::OrderCycleFormApplicator do

@@ -31,7 +31,6 @@ module Spree
     preference :admin_products_per_page, :integer, default: 10
     # Should only be true if you don't need to track inventory
     preference :allow_backorder_shipping, :boolean, default: false
-    preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true
     preference :currency_decimal_mark, :string, default: "."
     preference :currency_symbol_position, :string, default: "before"

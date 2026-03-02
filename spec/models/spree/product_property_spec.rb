@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::ProductProperty do
   context "validations" do
     it "should validate length of value" do

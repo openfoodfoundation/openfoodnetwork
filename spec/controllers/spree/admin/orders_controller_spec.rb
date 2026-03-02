@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::OrdersController do
   describe "#edit" do
     let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Spree::Admin::PaymentsController do
   let(:user) { order.user }
   let(:order) { create(:completed_order_with_fees) }

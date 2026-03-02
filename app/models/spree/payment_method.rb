@@ -52,10 +52,6 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
-    def self.providers
-      Rails.application.config.spree.payment_methods
-    end
-
     def configured?
       !stripe? || stripe_configured?
     end
@@ -93,12 +89,8 @@ module Spree
       type.demodulize.downcase
     end
 
-    def self.find_with_destroyed(*args)
-      unscoped { find(*args) }
-    end
-
-    def payment_profiles_supported?
-      false
+    def self.find_with_destroyed(*)
+      unscoped { find(*) }
     end
 
     def source_required?
@@ -115,11 +107,6 @@ module Spree
 
     def has_distributor?(distributor)
       distributors.include?(distributor)
-    end
-
-    def self.clean_name
-      i18n_key = "spree.admin.payment_methods.providers.#{name.demodulize.downcase}"
-      I18n.t(i18n_key)
     end
 
     private

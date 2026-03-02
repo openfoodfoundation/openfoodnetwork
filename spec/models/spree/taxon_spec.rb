@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Taxon do
   let(:taxon) { described_class.new(name: "Ruby on Rails") }
 

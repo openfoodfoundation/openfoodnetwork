@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::Reports::UsersAndEnterprises::Base do
   describe "query_result" do
     let!(:owners_and_enterprises) { double(:owners_and_enterprises) }

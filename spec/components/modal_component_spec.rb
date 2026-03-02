@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe ModalComponent, type: :component do
   it "renders default 'data-action' and 'data-controller'" do
     render_inline(described_class.new(id: "test-id"))

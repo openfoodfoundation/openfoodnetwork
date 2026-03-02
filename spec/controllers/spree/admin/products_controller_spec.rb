@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::ProductsController do
   context "creating a new product" do
     let(:supplier) { create(:supplier_enterprise) }

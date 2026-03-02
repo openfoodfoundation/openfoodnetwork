@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::OrderContents do
   let!(:order) { create(:order) }
   let!(:variant) { create(:variant) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Api::Admin::OrderCycleSerializer do
   let(:order_cycle) { create(:order_cycle) }
   let(:serializer) {

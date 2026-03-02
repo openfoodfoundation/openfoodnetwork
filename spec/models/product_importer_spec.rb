@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 require 'open_food_network/permissions'
 
 RSpec.describe ProductImport::ProductImporter do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::TaxSettingsController do
   describe "#update" do
     let(:params) { { preferences: { products_require_tax_category: "1" } } }

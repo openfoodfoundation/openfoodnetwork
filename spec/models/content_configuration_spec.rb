@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ContentConfiguration do
   describe "default logos and home_hero" do
     it "sets a default url with existing image" do

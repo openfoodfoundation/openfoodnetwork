@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 # Devise calls OmniauthCallbacksController for OpenID Connect callbacks.
 RSpec.describe '/user/spree_user/auth/openid_connect/callback' do
   include AuthenticationHelper

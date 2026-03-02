@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe BackorderUpdater do
   let(:order) { create(:completed_order_with_totals) }
   let(:order_cycle) { order.order_cycle }

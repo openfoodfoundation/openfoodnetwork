@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module PermittedAttributes
   RSpec.describe OrderCycle do
     let(:oc_permitted_attributes) { PermittedAttributes::OrderCycle.new(params) }

@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 RSpec.describe ShopHelper do
   describe "shop_tabs" do
     context "distributor with groups" do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Calculator::PriceSack do
   let(:calculator) do
     calculator = Calculator::PriceSack.new

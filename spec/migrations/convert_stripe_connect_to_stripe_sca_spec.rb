@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require_relative '../../db/migrate/20220118053107_convert_stripe_connect_to_stripe_sca'
 
 module Spree

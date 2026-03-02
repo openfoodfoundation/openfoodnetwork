@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe AmendBackorderJob do
   let(:order) { create(:completed_order_with_totals) }
   let(:distributor) { order.distributor }

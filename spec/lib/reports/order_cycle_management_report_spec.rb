@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::Reports::OrderCycleManagement::Base do
   context "as a site admin" do
     subject { described_class.new(user, params) }

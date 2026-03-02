@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Orders::SyncService do
   describe "updating the shipping method" do
     let!(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
@@ -440,7 +438,7 @@ RSpec.describe Orders::SyncService do
           expect(order.reload.total.to_f).to eq 59.97
           line_item = order.line_items.find_by(variant_id: sli.variant_id)
           expect(syncer.order_update_issues[order.id])
-            .to include "#{line_item.product.name} - #{line_item.variant.full_name} - " \
+            .to include "#{line_item.product.name} - #{line_item.full_variant_name} - " \
                         "Insufficient stock available"
         end
 
@@ -455,7 +453,7 @@ RSpec.describe Orders::SyncService do
 
           line_item = order.line_items.find_by(variant_id: sli.variant_id)
           expect(syncer.order_update_issues[order.id])
-            .to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
+            .to include "#{line_item.product.name} - #{line_item.full_variant_name} - Out of Stock"
         end
       end
     end
@@ -500,7 +498,7 @@ RSpec.describe Orders::SyncService do
           expect(changed_line_item.reload.quantity).to eq 2
           expect(order.reload.total.to_f).to eq 79.96
           expect(syncer.order_update_issues[order.id])
-            .to include "#{changed_line_item.product.name} - #{changed_line_item.variant.full_name}"
+            .to include "#{changed_line_item.product.name} - #{changed_line_item.full_variant_name}"
         end
       end
     end

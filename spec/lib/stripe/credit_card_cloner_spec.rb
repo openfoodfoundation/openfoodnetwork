@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'stripe/credit_card_cloner'
 
 module Stripe

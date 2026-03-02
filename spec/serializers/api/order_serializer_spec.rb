@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::OrderSerializer do
   let(:serializer) { Api::OrderSerializer.new order }
   let(:order) { create(:completed_order_with_totals) }

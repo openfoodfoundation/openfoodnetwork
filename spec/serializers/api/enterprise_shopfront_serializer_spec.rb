@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::EnterpriseShopfrontSerializer do
   let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:producer) { create(:supplier_enterprise) }

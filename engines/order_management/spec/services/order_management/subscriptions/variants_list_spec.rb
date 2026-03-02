@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe OrderManagement::Subscriptions::VariantsList do
   describe "variant eligibility for subscription" do
     let!(:shop) { create(:distributor_enterprise) }

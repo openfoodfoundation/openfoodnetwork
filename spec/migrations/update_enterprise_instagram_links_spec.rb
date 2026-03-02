@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 require Rails.root.join('db/migrate/20221208150521_update_enterprise_instagram_links.rb')
 
 RSpec.describe UpdateEnterpriseInstagramLinks do

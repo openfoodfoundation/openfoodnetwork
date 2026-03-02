@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::ReportMetadataBuilder do
   let(:from_key) { described_class::DATE_FROM_KEYS.first }
   let(:to_key)   { described_class::DATE_TO_KEYS.first }

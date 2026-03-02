@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderManagement::Subscriptions::ProxyOrderSyncer do
   describe "initialization" do
     let!(:subscription) { create(:subscription) }

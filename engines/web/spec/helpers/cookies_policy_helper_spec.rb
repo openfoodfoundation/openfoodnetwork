@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Web
   RSpec.describe CookiesPolicyHelper do
     # keeps global state unchanged

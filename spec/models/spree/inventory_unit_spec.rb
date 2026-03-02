@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::InventoryUnit do
   let(:variant) { create(:variant) }
   let(:stock_item) { variant.stock_item }

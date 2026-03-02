@@ -87,27 +87,6 @@ it:
       messages:
         blank: "non può essere lasciato vuoto"
   errors:
-    messages:
-      content_type_invalid: "tipo di contenuto non valido"
-      file_size_out_of_range: "la dimensione %{file_size} non rientra nell'intervallo richiesto"
-      limit_out_of_range: "numero totale fuori intervallo"
-      image_metadata_missing: "immagine non valida"
-      dimension_min_inclusion: "deve essere maggiore o uguale a %{width} x %{height} pixel."
-      dimension_max_inclusion: "deve essere minore o uguale a %{width} x %{height} pixel."
-      dimension_width_inclusion: "la larghezza non è inclusa tra %{min} e %{max} pixel."
-      dimension_height_inclusion: "l'altezza non è inclusa tra %{min} e %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la larghezza deve essere maggiore o uguale a %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "l'altezza deve essere maggiore o uguale a %{length} pixel."
-      dimension_width_less_than_or_equal_to: "la larghezza deve essere minore o uguale a %{length} pixel."
-      dimension_height_less_than_or_equal_to: "l'altezza deve essere minore o uguale a %{length} pixel."
-      dimension_width_equal_to: "la larghezza deve essere uguale a %{length} pixel."
-      dimension_height_equal_to: "l'altezza deve essere uguale a %{length} pixel."
-      aspect_ratio_not_square: "deve essere un'immagine quadrata"
-      aspect_ratio_not_portrait: "deve essere un ritratto"
-      aspect_ratio_not_landscape: "deve essere un paesaggio"
-      aspect_ratio_is_not: "deve avere propozioni di %{aspect_ratio}"
-      aspect_ratio_unknown: "ha proporzioni sconosciute"
-      image_not_processable: "immagine non valida"
     not_found:
       title: "La pagina che stai cercando non esiste (404)"
       message_html: "<b>Per favore riprova</b> <p>Questo potrebbe essere un problema temporaneo. Per favore clicca il pulsante \"Indietro\" per tornare alla schermata precedente o alla <a href='/'>Home</a> e prova ancora.</p> <b>Contatta il supporto</b> <p>Se il problema persiste o è urgente, per favore segnalacelo. Trova i nostri dettagli di contatto su <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pagina Open Food Network Locale</a>.</p> <p>Ci aiuterebbe molto se ci fornissi più dettagli possibili circa la pagina mancante.</p>"
@@ -294,6 +273,13 @@ it:
       join_community: "Unisciti alla community"
     invite_manager:
       subject: "%{enterprise} ti a invitato ad essere un referente"
+  payment_mailer:
+    authorize_payment:
+      subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
+      instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
+    authorization_required:
+      subject: "Un pagamento richiede l'autorizzazione del cliente"
+      message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
   producer_mailer:
     order_cycle:
       subject: "Resoconto degli ordini per %{producer}"
@@ -737,6 +723,7 @@ it:
           label: categorie
         tags:
           label: Etichette
+          none: Nessuno
         search: Cerca
       sort:
         pagination:
@@ -3676,6 +3663,7 @@ it:
     alt_text: "Testo alternativo"
     thumbnail: "Thumbnail"
     back_to_images_list: "Torna alla lista Immagini"
+    api_key: "Chiave API"
     email: Email
     account_updated: "Account aggiornato!"
     email_updated: "L'account sarà aggiornato una volta confermata la nuova email"
@@ -3973,9 +3961,7 @@ it:
         providers:
           provider: "Provider"
           check: "Contanti o altri metodi di pagamento per cui non è richiesta una validazione automatica"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
       payments:
         source_forms:
@@ -4198,13 +4184,6 @@ it:
         subject: "Istruzioni per il reset della password"
       confirmation_instructions:
         subject: "Per favore conferma il tuo account OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
-        instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
-      authorization_required:
-        subject: "Un pagamento richiede l'autorizzazione del cliente"
-        message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Cliente,"

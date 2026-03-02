@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::AvailableShippingMethodsService do
   context "when the order has no current_distributor" do
     it "returns an empty array" do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Spree
   RSpec.describe Price do
     let(:variant) { create(:variant) }

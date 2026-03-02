@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::UserMailer do
   let(:user) { build(:user) }
   let(:order) { build(:order_with_totals_and_distribution) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ShopController do
   let!(:pm) { create(:payment_method) }
   let!(:sm) { create(:shipping_method) }

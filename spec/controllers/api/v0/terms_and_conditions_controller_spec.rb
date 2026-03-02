@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 module Api
   RSpec.describe V0::TermsAndConditionsController do
     include AuthenticationHelper

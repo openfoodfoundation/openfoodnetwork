@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module WebHelper
-  include TomselectHelper
-
   def have_input(name, opts = {})
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
@@ -69,8 +67,6 @@ module WebHelper
       .find(:css, '.select2-drop-active .select2-result-label',
             text: options[:select_text] || value)
       .click
-
-    expect(page).to have_select2 options[:from], selected: options[:select_text] || value
   end
 
   def open_select2(selector)

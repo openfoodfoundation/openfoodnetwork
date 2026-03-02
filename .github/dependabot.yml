@@ -31,6 +31,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
 
     # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
@@ -39,6 +41,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
 
     # Only specific requirements are specified in package.json, so don't touch it.
     versioning-strategy: lockfile-only

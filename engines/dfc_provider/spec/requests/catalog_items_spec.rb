@@ -36,7 +36,7 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
 
     get "List CatalogItems" do
       produces "application/json"
-      security [oidc_token: []]
+      security [{ oidc_token: [] }]
 
       response "404", "not found" do
         context "as platform user" do

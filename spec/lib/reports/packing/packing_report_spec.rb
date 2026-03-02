@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "Packing Reports" do
   describe "fetching orders" do
     let(:distributor) { create(:distributor_enterprise) }

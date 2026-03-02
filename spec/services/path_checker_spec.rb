@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe PathChecker do
   describe "#active_path?" do
     let(:view_context) { double("view context") }

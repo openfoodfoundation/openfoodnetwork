@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe StripePaymentStatus, :vcr, :stripe_version do
   subject { StripePaymentStatus.new(payment) }
 

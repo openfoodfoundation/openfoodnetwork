@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Api::V0::OrderCyclesController do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }

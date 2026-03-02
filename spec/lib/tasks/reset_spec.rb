@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe "reset.rake" do
   it "clears job queues" do
     job_class = Class.new do

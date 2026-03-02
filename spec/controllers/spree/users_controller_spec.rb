@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::UsersController do
   routes { Spree::Core::Engine.routes }
 
@@ -52,22 +50,6 @@ RSpec.describe Spree::UsersController do
       expect(outstanding_balance_query).to receive(:call) { Spree::Order.none }
 
       spree_get :show
-    end
-  end
-
-  describe "#registered_email" do
-    routes { Openfoodnetwork::Application.routes }
-
-    let!(:user) { create(:user) }
-
-    it "returns ok (200) if email corresponds to a registered user" do
-      post :registered_email, params: { email: user.email }
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "returns not_found (404) if email does not correspond to a registered user" do
-      post :registered_email, params: { email: 'nonregistereduser@example.com' }
-      expect(response).to have_http_status(:not_found)
     end
   end
 

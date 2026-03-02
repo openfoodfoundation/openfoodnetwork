@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Reporting::Reports::EnterpriseFeeSummary::Authorizer do
   let(:user) { create(:user) }
 

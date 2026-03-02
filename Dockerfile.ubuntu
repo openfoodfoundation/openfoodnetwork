@@ -83,9 +83,6 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
 # Copy code and install app dependencies
 COPY . /usr/src/app/
 
-# Install Bundler
-RUN ./script/install-bundler
-
 # Install front-end dependencies
 RUN yarn install
 

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require_relative '../../db/migrate/20250827205335_migrate_cvv_message_to_redirect_auth_url'
 
 RSpec.describe MigrateCvvMessageToRedirectAuthUrl, type: :migration do

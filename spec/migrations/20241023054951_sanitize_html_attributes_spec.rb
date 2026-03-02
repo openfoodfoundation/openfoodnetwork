@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+
 require_relative '../../db/migrate/20241023054951_sanitize_html_attributes'
 
 RSpec.describe SanitizeHtmlAttributes do

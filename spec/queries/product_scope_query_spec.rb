@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ProductScopeQuery do
   let!(:taxon) { create(:taxon) }
   let(:supplier) { create(:supplier_enterprise) }

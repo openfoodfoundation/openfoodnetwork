@@ -8,4 +8,3 @@
 # Same thing for following files, but they don't have an sh extension
 pre-commit eol=lf
 webpack-dev-server eol=lf
-install-bundler eol=lf

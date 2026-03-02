@@ -68,9 +68,9 @@ RSpec.describe "DFC Permissions", feature: "cqcm-dev", vcr: true do
     end
   end
 
-  def within_platform_list(variant, &block)
+  def within_platform_list(variant, &)
     retry_expectations(on: Ferrum::JavaScriptError) do
-      within(platform_list(variant), &block)
+      within(platform_list(variant), &)
     end
   end
 

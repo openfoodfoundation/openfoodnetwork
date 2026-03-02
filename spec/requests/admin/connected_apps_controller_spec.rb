@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "Admin ConnectedApp" do
   let(:user) { create(:admin_user) }
   let(:enterprise) { create(:enterprise, owner: user) }

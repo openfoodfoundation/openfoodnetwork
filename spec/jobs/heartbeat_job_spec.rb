@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe HeartbeatJob do
   context "with time frozen" do
     let(:run_time) { Time.zone.local(2016, 4, 13, 13, 0, 0) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "/admin/enterprises/:enterprise_id/vouchers" do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }

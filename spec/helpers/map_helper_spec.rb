@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe MapHelper do
   describe "#using_google_maps?" do
     it "returns true when a GOOGLE_MAPS_API_KEY is present" do

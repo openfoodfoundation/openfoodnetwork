@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxReportByProducer do
   let(:current_user) { create(:admin_user) }
 

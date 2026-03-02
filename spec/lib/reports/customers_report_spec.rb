@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Reporting::Reports::Customers::Base do
   context "as a site admin" do
     let(:user) { create(:admin_user) }

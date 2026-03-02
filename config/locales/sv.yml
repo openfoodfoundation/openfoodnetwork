@@ -337,6 +337,7 @@ sv:
           label: 'Producenter '
         tags:
           label: Taggar
+          none: Ingen
         search: Sök
       variant_row:
         none_tax_category: Ingen

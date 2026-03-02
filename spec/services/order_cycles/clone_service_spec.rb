@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OrderCycles::CloneService do
   describe "#create" do
     it "clones the order cycle" do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TagRule::FilterOrderCycles do
   let(:tag_rule) {
     build(:filter_order_cycles_tag_rule, preferred_exchange_tags: order_cycle_tags, enterprise:)

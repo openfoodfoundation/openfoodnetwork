@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 # We extended Spree::PaymentMethod to be taggable. Unfortunately, an inheritance
 # bug prevented the taggable code to be passed on to the descendants of
 # PaymentMethod. We fixed that in config/initializers/spree.rb.

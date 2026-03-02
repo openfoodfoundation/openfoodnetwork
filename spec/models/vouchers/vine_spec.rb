@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Vouchers::Vine do
   describe 'validations' do
     subject { build(:vine_voucher) }

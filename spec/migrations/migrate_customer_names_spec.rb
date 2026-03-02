@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require_relative '../../db/migrate/20211027140313_migrate_customer_names'
 
 RSpec.describe MigrateCustomerNames do

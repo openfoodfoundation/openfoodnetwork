@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe TaxRateUpdater do
   let!(:old_tax_rate) {
     create(:tax_rate, name: "Test Rate", amount: 0.2, calculator: Calculator::DefaultTax.new)

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe ConnectedApps::Vine do
   subject(:connected_app) { ConnectedApps::Vine.new(enterprise: create(:enterprise)) }
 

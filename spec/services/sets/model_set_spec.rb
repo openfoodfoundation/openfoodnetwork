@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Sets::ModelSet do
   describe "updating" do
     it "creates new models" do

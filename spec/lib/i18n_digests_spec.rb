@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe I18nDigests do
   describe "#build_digests" do
     let(:available_locales) { ["en", "es"] }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe InjectionHelper do
   let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 

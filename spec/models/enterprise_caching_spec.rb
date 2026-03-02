@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Enterprise do
   context "key-based caching invalidation" do
     describe "is touched when a(n)" do

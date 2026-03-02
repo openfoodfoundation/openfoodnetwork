@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Admin::VariantsController do
   context "log in as admin user" do
     before { controller_login_as_admin }

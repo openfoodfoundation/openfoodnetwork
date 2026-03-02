@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::OrderInventory do
   let(:order) { create :completed_order_with_totals }
   let(:line_item) { order.line_items.first }

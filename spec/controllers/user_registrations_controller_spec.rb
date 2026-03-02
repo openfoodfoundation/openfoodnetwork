@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe UserRegistrationsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]

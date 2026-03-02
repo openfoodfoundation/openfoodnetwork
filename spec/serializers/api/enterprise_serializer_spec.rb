@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::EnterpriseSerializer do
   let(:serializer) { Api::EnterpriseSerializer.new enterprise, data: }
   let(:enterprise) { create(:distributor_enterprise, is_primary_producer: true) }

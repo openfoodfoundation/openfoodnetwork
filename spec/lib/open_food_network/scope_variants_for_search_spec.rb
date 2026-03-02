@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'open_food_network/scope_variants_for_search'
 
 RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do

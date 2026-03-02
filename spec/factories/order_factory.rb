@@ -141,15 +141,15 @@ FactoryBot.define do
   factory :order_with_totals_and_distribution, parent: :order_with_distributor do
     transient do
       shipping_fee { 3 }
+      variant { create(:simple_product).variants.first }
     end
 
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order, proxy|
-      product = create(:simple_product)
       create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee,
                                        order:,
-                                       product:)
+                                       variant: proxy.variant)
       order.reload
     end
 
@@ -238,6 +238,8 @@ FactoryBot.define do
   factory :completed_order_with_fees, parent: :order_with_distributor do
     transient do
       payment_fee { 5 }
+      payment_calculator { build(:calculator_per_item, preferred_amount: payment_fee) }
+      payment_method { build(:payment_method, calculator: payment_calculator) }
       shipping_fee { 3 }
       shipping_tax_category { nil }
     end
@@ -250,11 +252,9 @@ FactoryBot.define do
       product = create(:simple_product)
       create(:line_item, order:, product:)
 
-      payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
-      payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order:,
                        amount: order.total,
-                       payment_method:,
+                       payment_method: evaluator.payment_method,
                        state: 'checkout')
 
       create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee,

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe OpenOrderCycleJob do
   let(:now){ Time.zone.now }
   let(:order_cycle) { create(:simple_order_cycle, orders_open_at: now) }

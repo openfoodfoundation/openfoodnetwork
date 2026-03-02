@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require_relative '../../db/migrate/20210617203927_migrate_admin_tax_amounts'
 
 RSpec.describe MigrateAdminTaxAmounts do

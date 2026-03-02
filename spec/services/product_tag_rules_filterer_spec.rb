@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe ProductTagRulesFilterer do
   describe "filtering by tag rules" do
     let!(:distributor) { create(:distributor_enterprise) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::HandleFeesService do
   let(:order_cycle) { create(:order_cycle) }
   let(:order) {

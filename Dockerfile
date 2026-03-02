@@ -1,4 +1,4 @@
-FROM ruby:3.2.9-alpine3.19 AS base
+FROM ruby:3.4.8-alpine3.19 AS base
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     TZ=Europe/London \

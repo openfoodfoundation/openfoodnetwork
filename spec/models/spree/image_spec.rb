@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 module Spree
   RSpec.describe Image do
     include FileHelper

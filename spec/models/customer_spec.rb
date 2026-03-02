@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Customer do
   it { is_expected.to belong_to(:enterprise).required }
   it { is_expected.to belong_to(:user).optional }

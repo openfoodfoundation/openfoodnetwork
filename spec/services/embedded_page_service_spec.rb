@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe EmbeddedPageService do
   let(:enterprise_slug) { 'test-enterprise' }
   let(:params) {

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe CompleteVisibleOrdersQuery do
   subject(:result) { described_class.new(order_permissions).call }
 

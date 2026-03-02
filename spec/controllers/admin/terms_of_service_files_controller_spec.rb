@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::TermsOfServiceFilesController do
   context "a non-admin user" do
     let(:user) { create(:user) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe I18nHelper do
   let(:user) { create(:user) }
   let(:cookies) { {} }

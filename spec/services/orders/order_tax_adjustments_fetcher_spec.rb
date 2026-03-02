@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Orders::FetchTaxAdjustmentsService do
   describe "#totals" do
     let(:zone) { create(:zone_with_member) }

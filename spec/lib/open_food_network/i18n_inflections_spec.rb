@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'open_food_network/i18n_inflections'
 
 RSpec.describe OpenFoodNetwork::I18nInflections do

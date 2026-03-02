@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
 RSpec.describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user:) }
@@ -299,13 +297,7 @@ RSpec.describe Spree::Order do
     context "when a payment raises a GatewayError" do
       before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
 
-      it "returns true when configured to allow checkout on gateway failures" do
-        Spree::Config.set allow_checkout_on_gateway_error: true
-        expect(order.process_payments!).to be_truthy
-      end
-
-      it "returns false when not configured to allow checkout on gateway failures" do
-        Spree::Config.set allow_checkout_on_gateway_error: false
+      it "returns false" do
         expect(order.process_payments!).to be_falsy
       end
     end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Api::Admin::IndexEnterpriseSerializer do
   let(:enterprise) { create(:distributor_enterprise) }
   context "when spree_current_user is a manager" do

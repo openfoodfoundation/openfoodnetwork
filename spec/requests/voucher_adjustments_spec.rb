@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe VoucherAdjustmentsController do
   let(:user) { order.user }
   let(:address) { create(:address) }
@@ -161,7 +159,19 @@ RSpec.describe VoucherAdjustmentsController do
             post("/voucher_adjustments", params:)
 
             expect(response).to be_unprocessable
-            expect(flash[:error]).to match "There was an error while adding the voucher"
+            expect(flash[:error]).to match "The voucher is not valid"
+          end
+        end
+
+        context "when voucher has expired" do
+          it "returns 422 and an error message" do
+            mock_vine_voucher_validator(voucher: nil,
+                                        errors: { invalid_voucher: "The voucher has expired" })
+
+            post("/voucher_adjustments", params:)
+
+            expect(response).to be_unprocessable
+            expect(flash[:error]).to match "The voucher has expired"
           end
         end
 
@@ -217,6 +227,20 @@ RSpec.describe VoucherAdjustmentsController do
               "There was an error while creating the voucher: Amount can't be blank and " \
               "Amount is not a number"
             )
+          end
+        end
+
+        context "when voucher has expired" do
+          it "returns 422 and an error message" do
+            vine_voucher = build(:vine_voucher, code: vine_voucher_code,
+                                                enterprise: distributor)
+            mock_vine_voucher_validator(voucher: vine_voucher,
+                                        errors: { invalid_voucher: "The voucher has expired" })
+
+            post("/voucher_adjustments", params:)
+
+            expect(response).to be_unprocessable
+            expect(flash[:error]).to match "The voucher has expired"
           end
         end
       end

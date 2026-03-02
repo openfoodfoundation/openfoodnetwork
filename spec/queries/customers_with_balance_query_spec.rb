@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe CustomersWithBalanceQuery do
   subject(:result) { described_class.new(Customer.where(id: customers)).call }
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe OrderManagement::Subscriptions::Validator do
   let(:owner) { create(:user) }
   let(:shop) { create(:enterprise, name: "Shop", owner:) }

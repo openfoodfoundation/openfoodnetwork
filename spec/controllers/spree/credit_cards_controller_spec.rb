@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::CreditCardsController do
   describe "using VCR", :vcr, :stripe_version do
     let(:user) { create(:user) }

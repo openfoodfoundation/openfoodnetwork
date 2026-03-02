@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Preferences::Preferable do
   a_class = A =
     Class.new do

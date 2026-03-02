@@ -3,7 +3,7 @@ class UpdateItemNameToProductInOdReport < ActiveRecord::Migration[7.0]
     self.belongs_to_required_by_default = false
 
     belongs_to :user, class_name: "Spree::User"
-    serialize :options, Hash, coder: YAML
+    serialize :options, type: Hash, coder: YAML
   end
 
   # OD: Orders and Distributors

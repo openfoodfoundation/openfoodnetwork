@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe "Pay Your Suppliers Report" do
   let(:hub) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:open_order_cycle, distributors: [hub]) }

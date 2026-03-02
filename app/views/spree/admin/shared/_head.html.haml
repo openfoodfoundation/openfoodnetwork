@@ -14,7 +14,7 @@
   = " - OFN #{t(:administration)}"
 
 %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese", :rel => "stylesheet", :type => "text/css"}
-= stylesheet_pack_tag 'admin-style-v3', media: "screen, print"
+= stylesheet_pack_tag 'admin-style', media: "screen, print"
 = render "layouts/bugsnag_js"
 
 - if content_for? :minimal_js
@@ -25,7 +25,7 @@
 = render "spree/admin/shared/translations"
 = render "spree/admin/shared/routes"
 
-= javascript_pack_tag "admin", "data-turbo-track": "reload"
+= javascript_pack_tag "admin", "data-turbo-track": "reload", defer: false # do not use defer because our javascript currently depend on order of execution of loaded script.
 
 %script
   = raw "var AUTH_TOKEN = \"#{form_authenticity_token}\";"

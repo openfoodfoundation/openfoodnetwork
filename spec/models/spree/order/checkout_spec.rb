@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 

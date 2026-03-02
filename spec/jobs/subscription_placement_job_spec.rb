@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe SubscriptionPlacementJob do
   let(:job) { SubscriptionPlacementJob.new }
   let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }

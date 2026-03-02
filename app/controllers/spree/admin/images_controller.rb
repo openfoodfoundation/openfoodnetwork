@@ -68,7 +68,7 @@ module Spree
         destroy_before
 
         if @object.destroy
-          flash[:success] = flash_message_for(@object, :successfully_removed)
+          flash[:success] = Spree.t(:successfully_removed)
         end
 
         redirect_to location_after_save

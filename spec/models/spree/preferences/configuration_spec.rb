@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Spree::Preferences::Configuration do
   let(:config) do
     Class.new(Spree::Preferences::Configuration) do

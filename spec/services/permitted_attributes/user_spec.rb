@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module PermittedAttributes
   RSpec.describe User do
     describe "simple usage" do

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Spree
   RSpec.describe Calculator do
     let(:calculator) { Spree::Calculator.new }

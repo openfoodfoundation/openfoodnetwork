@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Admin::ProductImportController do
   describe "#import" do
     context "when importing into inventory with inventory disabled" do

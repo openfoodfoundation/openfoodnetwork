@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe Orders::FindPaymentService do
   let(:order) { create(:order_with_distributor) }
   let(:finder) { Orders::FindPaymentService.new(order) }
