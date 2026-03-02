@@ -6,6 +6,7 @@ class PaymentMailer < ApplicationMailer
   def authorize_payment(payment)
     @payment = payment
     @order = @payment.order
+    @hide_ofn_navigation = @payment.order.distributor.hide_ofn_navigation
     I18n.with_locale valid_locale(@order.user) do
       mail(to: @order.email,
            subject: default_i18n_subject(distributor: @order.distributor.name),
