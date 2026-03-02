@@ -519,7 +519,7 @@ GEM
     mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.5.12)
+    net-imap (0.6.3)
       date
       net-protocol
     net-pop (0.1.2)
@@ -924,8 +924,8 @@ GEM
     unicode-emoji (4.2.0)
     uniform_notifier (1.18.0)
     uri (1.1.1)
-    valid_email2 (5.2.3)
-      activemodel (>= 3.2)
+    valid_email2 (7.0.13)
+      activemodel (>= 6.0)
       mail (~> 2.5)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
