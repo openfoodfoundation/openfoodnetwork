@@ -294,7 +294,13 @@ class Enterprise < ApplicationRecord
     contact || owner
   end
 
-  def update_contact(user_id)
+  def contact_id
+    contact&.id
+  end
+
+  def contact_id=(user_id)
+    return unless user_id.to_i.positive? && users.confirmed.exists?(user_id.to_i)
+
     enterprise_roles.update_all(["receives_notifications=(user_id=?)", user_id])
   end
 
@@ -576,7 +582,7 @@ class Enterprise < ApplicationRecord
   end
 
   def set_default_contact
-    update_contact owner_id
+    self.contact_id = owner_id
   end
 
   def relate_to_owners_enterprises

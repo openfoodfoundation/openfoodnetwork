@@ -1,0 +1,17 @@
+= turbo_stream.update "remote_modal" do
+  = render ModalComponent.new id: "#modal_new_user_invitation", instant: true, close_button: false, modal_class: :fit do
+    = form_with model: @user_invitation, url: admin_enterprise_user_invitations_path(@enterprise), html: { name: "user_invitation", data: { turbo: true } } do |f|
+      %h2= t ".invite_new_user"
+
+      %p= t ".description"
+
+      %fieldset.no-border-top.no-border-bottom
+        .row
+          = f.label :email, t(:email)
+          = f.email_field :email, placeholder: t('.eg_email_address'), data: { controller: "select-user" }, inputmode: "email", autocomplete: "off"
+          = f.error_message_on :email
+
+      .modal-actions.justify-end.filter-actions
+        %input{ class: "secondary relaxed", type: 'button', value: t('.back'), "data-action": "click->modal#close" }
+        %button.button.primary.relaxed.icon-envelope{ type: "submit" }
+          = t(".invite")

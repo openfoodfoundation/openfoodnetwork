@@ -1,75 +1,54 @@
-- owner_email = @enterprise&.owner&.email || ""
 - full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise&.owner)
 
 .row
-  .three.columns.alpha
-    =f.label :owner_id, t('.owner')
-    - if full_permissions
-      %span.required *
-    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.owner_tip')}
-  .eight.columns.omega
-    - if full_permissions
-      = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner', 'ng-model' => 'Enterprise.owner'
-    - else
-      = owner_email
+  = t '.description'
 
-.row
-  .three.columns.alpha
-    =f.label :user_ids, t('.notifications')
-    - if full_permissions
-      %span.required *
-    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.contact_tip')}
-  .eight.columns.omega
-    - if full_permissions
-      %select.select2.fullwidth{ id: 'receives_notifications_dropdown', name: 'receives_notifications', "ng-model": 'receivesNotifications', "ng-init": "receivesNotifications = '#{@enterprise.contact.id}'" }
-        %option{ value: '{{user.id}}', "ng-repeat": 'user in Enterprise.users', "ng-selected": "user.id == #{@enterprise.contact.id}", "ng-hide": '!user.confirmed' }
-          {{user.email}}
-    - else
-      = @enterprise.contact.email
+- if full_permissions && @enterprise.users.count > 0
+  - enterprise_role_ids_by_user_id = @enterprise.enterprise_roles.pluck(:user_id, :id).to_h
 
-.row
-  .three.columns.alpha
-    =f.label :user_ids, t('.managers')
-    - if full_permissions
-      %span.required *
-    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.managers_tip')}
-  .eight.columns.omega
-    - if full_permissions
-      %table.managers
-        %tr
+  %table.managers
+    %thead
+      %tr
+        %th= t('.manager')
+        %th.center
+          = t('.owner')
+          = render AdminTooltipComponent.new(text: t('.owner_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
+        %th.center
+          = t('.contact')
+          = render AdminTooltipComponent.new(text: t('.contact_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
+    %tbody
+      - @enterprise.users.each do |user|
+        - contact = user.id == @enterprise.contact&.id
+        - owner = user.id == @enterprise.owner&.id
+        %tr{ id: "manager-#{user.id}" }
           %td
-            - # Ignore this input in the submit
-            = hidden_field_tag :ignored, nil, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
+            = user.email
+
+            - if user.confirmed?
+              %i.confirmation.confirmed.fa.fa-check-circle{ "ofn-with-tip": t('.email_confirmed') }
+            - else
+              %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ "ofn-with-tip": t('.email_not_confirmed') }
+
+          %td.center
+            - if user.confirmed?
+              = f.label :owner_id, t(".set_as_owner", email: user.email), class: "sr-only", value: user.id
+              = f.radio_button :owner_id, user.id
+          %td.center
+            - if user.confirmed?
+              = f.label :owner_id, t(".set_as_contact", email: user.email), class: "sr-only", value: user.id
+              = f.radio_button :contact_id, user.id
           %td.actions
-        %tr.animate-repeat{ id: "manager-{{manager.id}}", "ng-repeat": 'manager in Enterprise.users' }
-          %td
-            = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
-            {{ manager.email }}
-            %i.confirmation.confirmed.fa.fa-check-circle{ "ofn-with-tip": t('.email_confirmed'), "ng-show": 'manager.confirmed' }
-            %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ "ofn-with-tip": t('.email_not_confirmed'), "ng-show": '!manager.confirmed' }
-            %i.role.contact.fa.fa-envelope-o{ "ofn-with-tip": t('.contact'), "ng-show": 'manager.id == receivesNotifications' }
-            %i.role.owner.fa.fa-star{ "ofn-with-tip": t('.owner'), "ng-show": 'manager.id == Enterprise.owner.id' }
-          %td.actions
-            %a{ class: "icon-trash no-text", "ng-click": 'removeManager(manager)', "ng-class": "{disabled: manager.id == Enterprise.owner.id || manager.id == receivesNotifications}" }
+            - if !owner && !contact
+              = link_to_delete user, no_text: true, url: admin_enterprise_role_path(id: enterprise_role_ids_by_user_id[user.id])
+            - else
+              %a{ class: "icon-trash no-text disabled" }
 
-    - else
-      - @enterprise.users.each do |manager|
-        = manager.email
-        %br
+  %a.button{ href: "#{new_admin_enterprise_user_invitation_path(@enterprise)}", data: { turbo_stream: true, turbo: true } }
+    %i.icon-plus
+    = t('.invite_manager')
+  %br
 
-- if full_permissions
-  %form
-    .row
-      .three.columns.alpha
-        %label
-          = t('.invite_manager')
-        = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.invite_manager_tip')}
-      .eight.columns.omega
-        .row
-          %a.button{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "invite-manager-modal" }
-            = t('.add_unregistered_user')
-
--# add to admin footer to avoid nesting invitation form inside enterprise form
-- content_for :admin_footer do
-  = render HelpModalComponent.new(id: "invite-manager-modal", close_button: false) do
-    = render partial: 'admin/enterprises/form/add_new_unregistered_manager', locals: { error: nil, success: nil }
+- else
+  - @enterprise.users.each do |manager|
+    = manager.email
+    %br

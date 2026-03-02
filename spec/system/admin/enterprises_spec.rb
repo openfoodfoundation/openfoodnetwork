@@ -118,7 +118,7 @@ RSpec.describe '
     payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
-    user = create(:user)
+    user = create(:user, enterprises: [@enterprise])
 
     admin = login_as_admin
 
@@ -151,8 +151,7 @@ RSpec.describe '
       scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
     end
-    select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).not_to have_selector '.select2-drop-mask' # Ensure select2 has finished
+    choose "Set #{user.email} as owner"
 
     accept_alert do
       click_link "About"
@@ -635,45 +634,46 @@ RSpec.describe '
 
       context "invite user as manager" do
         before do
-          expect(page).to have_selector('a', text: /Add an unregistered user/i)
-          page.find('a', text: /Add an unregistered user/i).click
+          expect(page).to have_selector('a', text: /Invite Manager/i)
+          page.find('a', text: /Invite Manager/i).click
+          expect(page).to have_content "Invite a new user"
         end
 
         it "shows an error message if the email is invalid" do
+          expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_return(false)
+
           within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: "invalid_email"
+            tomselect_fill_in "user_invitation[email]", with: "newuser@example.invaliddomain"
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "Email is invalid"
+              expect(page).to have_content "is invalid"
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
         it "shows an error message if the email is already linked to an existing user" do
           within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: distributor1.owner.email
+            tomselect_search_and_select distributor1.owner.email, from: "user_invitation[email]"
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "User already exists"
+              expect(page).to have_content "is already a manager"
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
         it "finally, can invite unregistered users" do
           within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: "email@email.com"
+            tomselect_fill_in "user_invitation[email]", with: "email@email.com"
 
             expect do
               click_button "Invite"
-              expect(page)
-                .to have_content "email@email.com has been invited to manage this enterprise"
             end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
+
+          expect(page)
+            .to have_content "email@email.com has been invited to manage this enterprise"
         end
       end
     end
