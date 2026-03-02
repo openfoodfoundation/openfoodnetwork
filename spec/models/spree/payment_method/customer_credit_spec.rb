@@ -137,6 +137,25 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       expect(transaction.description).to eq("Refund for order: R023075164")
     end
 
+    context "when user_id provided" do
+      let(:user) { create(:enterprise_user) }
+      let(:options) {
+        {
+          customer_id: customer.id,
+          payment_id: payment.id,
+          order_number: "R023075164",
+          user_id: user.id
+        }
+      }
+
+      it "links the customer account transaction to the user" do
+        expect(response.success?).to be(true)
+
+        transaction = customer.customer_account_transactions.last
+        expect(transaction.created_by).to eq(user)
+      end
+    end
+
     context "when customer doesn't exist" do
       let(:customer) { nil }
       let(:options) {
