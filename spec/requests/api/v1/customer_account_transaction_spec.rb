@@ -48,6 +48,7 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
 
           transaction = CustomerAccountTransaction.find(json_response[:data][:attributes][:id])
           expect(transaction).not_to be_nil
+          expect(transaction.created_by).to eq(enterprise.owner)
         end
       end
 

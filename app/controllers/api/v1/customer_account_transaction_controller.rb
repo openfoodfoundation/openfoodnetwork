@@ -7,7 +7,9 @@ module Api
         authorize! :create, CustomerAccountTransaction
 
         # We only allow using the api customer credit payment method
-        default_params = { currency: CurrentConfig.get(:currency), payment_method_id: }
+        default_params = {
+          currency: CurrentConfig.get(:currency), payment_method_id:, created_by: current_api_user
+        }
         transaction = CustomerAccountTransaction.new(
           default_params.merge(customer_account_transaction_params)
         )

@@ -10,7 +10,7 @@ module Orders
       add_payment_with_credit if credit_available?
     end
 
-    def refund # rubocop:disable Metrics/AbcSize
+    def refund(user: nil) # rubocop:disable Metrics/AbcSize
       if order.payment_state != "credit_owed"
         return Response.new(
           success: false, message: I18n.t(:no_credit_owed, scope: translation_scope)
@@ -29,7 +29,7 @@ module Orders
                                           state: "completed", skip_source_validation: true)
 
         options = { customer_id: order.customer_id, payment_id: payment.id,
-                    order_number: order.number }
+                    order_number: order.number, user_id: user&.id }
         response = credit_payment_method.void((-1 * amount * 100).round, nil, options)
 
         raise response.message if response.failure?

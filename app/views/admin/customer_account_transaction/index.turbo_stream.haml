@@ -11,6 +11,8 @@
               = t(".description")  
             %th.payment-method
               = t(".payment_method")  
+            %th.created-by
+              = t(".created_by")  
             %th.amount
               = t(".amount")  
             %th.running-balance
@@ -25,7 +27,9 @@
                 = transaction.description
               %td.payment-method
                 = transaction.payment_method.display_name
+              %td.created-by
+                = transaction.created_by&.email
               %td.amount
                 = Spree::Money.new(transaction.amount)
-              %td.running_balance
+              %td.running-balance
                 = Spree::Money.new(transaction.balance)

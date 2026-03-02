@@ -8,6 +8,7 @@ RSpec.describe Orders::CustomerCreditService do
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
   let(:credit_payment_method) { order.distributor.payment_methods.customer_credit }
+  let(:user) { create(:enterprise_user) }
 
   describe "#apply" do
     let(:order) {
@@ -142,7 +143,7 @@ RSpec.describe Orders::CustomerCreditService do
     end
 
     it "adds a customer credit payment to the order" do
-      expect { subject.refund }.to change { order.payments.count }.by(1)
+      expect { subject.refund(user: ) }.to change { order.payments.count }.by(1)
 
       last_payment = order.payments.reload.order(:id).last
       expect(last_payment.payment_method).to eq(credit_payment_method)
@@ -153,15 +154,16 @@ RSpec.describe Orders::CustomerCreditService do
     end
 
     it "adds an entry in customer account transaction" do
-      subject.refund
+      subject.refund(user: )
 
       last_transaction = order.customer.customer_account_transactions.last
       expect(last_transaction.payment_method).to eq(credit_payment_method)
       expect(last_transaction.amount).to eq(12.00)
+      expect(last_transaction.created_by).to eq(user)
     end
 
     it "returns sucessful reponse" do
-      response = subject.refund
+      response = subject.refund(user: )
 
       expect(response.success?).to eq(true)
       expect(response.message).to eq("Refund successful!")

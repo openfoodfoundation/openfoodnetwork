@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_02_23_040231) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_01_031845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -98,6 +98,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_23_040231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
+    t.bigint "created_by_id"
+    t.index ["created_by_id"], name: "index_customer_account_transactions_on_created_by_id"
     t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
     t.index ["payment_method_id"], name: "index_customer_account_transactions_on_payment_method_id"
   end
@@ -1174,6 +1176,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_23_040231) do
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
   add_foreign_key "customer_account_transactions", "customers"
   add_foreign_key "customer_account_transactions", "spree_payment_methods", column: "payment_method_id"
+  add_foreign_key "customer_account_transactions", "spree_users", column: "created_by_id"
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "bill_address_id", name: "customers_bill_address_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "ship_address_id", name: "customers_ship_address_id_fk"

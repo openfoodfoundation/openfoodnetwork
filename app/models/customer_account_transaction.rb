@@ -12,6 +12,7 @@ class CustomerAccountTransaction < ApplicationRecord
     internal
   }, class_name: "Spree::PaymentMethod", inverse_of: :customer_account_transactions
   belongs_to :payment, class_name: "Spree::Payment", optional: true
+  belongs_to :created_by, class_name: "Spree::User", optional: true
 
   validates :amount, presence: true
   validates :currency, presence: true

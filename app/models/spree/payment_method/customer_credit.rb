@@ -52,7 +52,7 @@ module Spree
       # Main method called by Spree::Payment::Processing for void
       # - amount is in cents
       # - options: {
-      #     customer_id:, payment_id:, order_number:
+      #     customer_id:, payment_id:, order_number:, user_id: (optional)
       #   }
       def void(amount, _source, options)
         calculated_amount = amount / 100.00
@@ -73,7 +73,8 @@ module Spree
             currency:,
             payment_method:,
             payment_id: options[:payment_id],
-            description:
+            description:,
+            created_by_id: options[:user_id]
           )
         end
 
