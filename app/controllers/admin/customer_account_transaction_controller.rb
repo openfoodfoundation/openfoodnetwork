@@ -3,7 +3,7 @@
 module Admin
   class CustomerAccountTransactionController < Admin::ResourceController
     def index
-      @available_credit = @collection.first.balance
+      @available_credit = @collection.first&.balance || 0.00
 
       respond_with do |format|
         format.turbo_stream {
