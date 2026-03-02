@@ -898,6 +898,7 @@ en:
         description: Description
         payment_method: Payment method 
         amount: Amount
+        created_by: Created by
         running_balance: Running balance
     column_preferences:
       bulk_update:
