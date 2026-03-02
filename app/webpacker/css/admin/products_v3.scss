@@ -1,6 +1,6 @@
 // Customisations for the new Bulk Edit Products page only
 // Scoped to containing div, because Turbo messes with body classes
-@import "../admin_v3/pages/unit_popout";
+@import "pages/unit_popout";
 
 #products_v3_page {
   #content > .row:first-child > .container:first-child {
@@ -59,6 +59,7 @@
         overflow: visible;
         background-color: white;
       }
+
       .form-actions-wrapper2 {
         position: relative;
         // Stretch to cover table side borders
@@ -157,6 +158,7 @@
       tr:first-child td {
         border-top: 4px solid $color-tbl-bg;
       }
+
       tr:last-child td {
         border-bottom: 1px solid $color-tbl-cell-shadow;
       }
@@ -187,6 +189,7 @@
     $columns:
       "image", "name", "sku", "unit_scale", "unit", "price", "on_hand", "producer", "category",
       "tax_category", "tags", "inherits_properties";
+
     @each $col in $columns {
       &.hide-#{$col} {
         .col-#{$col} {
@@ -237,6 +240,7 @@
       align-items: center;
       gap: 10px;
     }
+
     .per-page {
       width: 9em;
     }
@@ -286,6 +290,7 @@
 
       .search-button {
         position: relative;
+
         > input {
           padding-left: 30px;
         }
@@ -295,6 +300,7 @@
 
   // Blurred and non-clickable
   $disabled-blur: 1.5px;
+
   .disabled-section {
     position: relative;
 
@@ -346,6 +352,7 @@
     from {
       transform: scaleY(1);
     }
+
     to {
       transform: scaleY(0);
     }
@@ -360,6 +367,7 @@
     from {
       transform: scaleY(0);
     }
+
     to {
       transform: scaleY(1);
     }
