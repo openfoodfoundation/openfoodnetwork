@@ -46,7 +46,7 @@ RSpec.describe PaymentMailer do
       payment = build(:payment)
       payment.order.distributor = build(:enterprise, name: "Carrot Castle")
       link = "https://taler.example.com/order/1"
-      mail = PaymentMailer.refund_available(payment, link)
+      mail = PaymentMailer.refund_available(payment.money.to_s, payment, link)
 
       expect(mail.subject).to eq "Refund from Carrot Castle"
       expect(mail.body).to include "Your payment of $45.75 to Carrot Castle is being refunded."

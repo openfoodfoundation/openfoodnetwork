@@ -184,14 +184,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           )
           tomselect_search_and_select(producer_to_select, from: "Producer")
 
-          sleep(0.1)
+          sleep(0.2)
           validate_tomselect_with_search!(
             page, "Category",
             categories_search_selector
           )
           tomselect_search_and_select(category_to_select, from: "Category")
 
-          sleep(0.1)
+          sleep(0.2)
           validate_tomselect_with_search!(
             page, "Tax Category",
             tax_categories_search_selector
