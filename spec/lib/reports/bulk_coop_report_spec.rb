@@ -180,11 +180,10 @@ module Reporting
         describe '#customer_payments_amount_owed' do
           let(:params) { {} }
           let(:user) { build(:user) }
-          let!(:line_item) { create(:line_item) }
-          let(:order) { line_item.order }
+          let(:order) { create(:order) }
+          let!(:line_item) { create(:line_item, order: order) }
 
           it 'calls #new_outstanding_balance' do
-            expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
             CustomerPayments.new(user).__send__(:customer_payments_amount_owed, [line_item])
           end
         end

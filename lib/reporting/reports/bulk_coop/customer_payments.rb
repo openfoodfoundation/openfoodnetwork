@@ -21,15 +21,15 @@ module Reporting
         private
 
         def customer_payments_total_cost(line_items)
-          unique_orders(line_items).map(&:total).sum(&:to_f)
+          prices_sum(unique_orders(line_items).map(&:total))
         end
 
         def customer_payments_amount_owed(line_items)
-          unique_orders(line_items).map(&:new_outstanding_balance).sum(&:to_f)
+          prices_sum(unique_orders(line_items).map(&:new_outstanding_balance))
         end
 
         def customer_payments_amount_paid(line_items)
-          unique_orders(line_items).map(&:payment_total).sum(&:to_f)
+          prices_sum(unique_orders(line_items).map(&:payment_total))
         end
 
         def unique_orders(line_items)

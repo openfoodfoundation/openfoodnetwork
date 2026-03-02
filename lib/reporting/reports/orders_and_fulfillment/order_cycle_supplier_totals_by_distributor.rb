@@ -12,7 +12,7 @@ module Reporting
             hub: hub_name,
             quantity: proc { |line_items| line_items.to_a.map(&:quantity).sum(&:to_i) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
-            total_cost: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
+            total_cost: proc { |line_items| prices_sum(line_items.map(&:amount)) },
             shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name }
           }
         end
@@ -32,7 +32,7 @@ module Reporting
               summary_row: proc do |_key, _items, rows|
                 {
                   quantity: rows.map(&:quantity).sum(&:to_i),
-                  total_cost: rows.map(&:total_cost).sum(&:to_f)
+                  total_cost: prices_sum(rows.map(&:total_cost))
                 }
               end,
             }
