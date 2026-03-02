@@ -30,7 +30,8 @@ button[class*="icon-"] {
 }
 
 .icon-cancel:before,
-.icon-void:before {
+.icon-void:before,
+.icon-internal_void:before {
   @extend .icon-remove, :before;
 }
 

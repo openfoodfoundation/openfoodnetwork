@@ -38,6 +38,19 @@ RSpec.describe Orders::AvailablePaymentMethodsService do
     expect(available_payment_methods).to eq [frontend_payment_method]
   end
 
+  it "does not return payment methods which are internal" do
+    distributor = create(:distributor_enterprise)
+    frontend_payment_method = create(:payment_method, distributors: [distributor])
+    internal_payment_method = Spree::PaymentMethod.customer_credit
+
+    order_cycle = create(:sells_own_order_cycle)
+    order = build(:order, distributor:, order_cycle:)
+
+    available_payment_methods = Orders::AvailablePaymentMethodsService.new(order).to_a
+
+    expect(available_payment_methods).to eq [frontend_payment_method]
+  end
+
   context "when no tag rules are in effect" do
     context "sells own order cycle i.e. simple" do
       it "only returns the payment methods which are available on the order cycle
@@ -69,14 +82,14 @@ RSpec.describe Orders::AvailablePaymentMethodsService do
         order_cycle = create(:distributor_order_cycle,
                              distributors: [distributor_i, distributor_ii])
         order_cycle.selected_distributor_payment_methods << [
-          distributor_i.distributor_payment_methods.first,
-          distributor_ii.distributor_payment_methods.first,
+          distributor_i.distributor_payment_methods.last,
+          distributor_ii.distributor_payment_methods.last
         ]
         order = build(:order, distributor: distributor_i, order_cycle:)
 
         available_payment_methods = Orders::AvailablePaymentMethodsService.new(order).to_a
 
-        expect(available_payment_methods).to eq [payment_method_i]
+        expect(available_payment_methods).to eq [payment_method_ii]
       end
     end
   end
@@ -229,14 +242,14 @@ RSpec.describe Orders::AvailablePaymentMethodsService do
         d1.payment_methods << payment_method2
         d2.payment_methods << payment_method
         d2.payment_methods << payment_method2
-        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.first
-        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.second
-        oc.selected_distributor_payment_methods << d2.distributor_payment_methods.first
+        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.second_to_last
+        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.last
+        oc.selected_distributor_payment_methods << d2.distributor_payment_methods.last
       }
       it do
         order = build(:order, distributor: d2, order_cycle: oc)
         order_available_payment_methods = Orders::AvailablePaymentMethodsService.new(order).to_a
-        expect(order_available_payment_methods).to eq([d2.payment_methods.first])
+        expect(order_available_payment_methods).to eq([d2.payment_methods.last])
       end
     end
   end

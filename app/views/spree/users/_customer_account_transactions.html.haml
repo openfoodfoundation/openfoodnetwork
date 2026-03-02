@@ -1,0 +1,45 @@
+%script{ type: "text/ng-template", id: "account/customer_account_transactions.html" }
+  .active_table.orders
+    %h3= t('.title')
+    - @shops.each do |shop|
+      - data_loader = CustomerAccountTransactions::DataLoaderService.new(user: @user, enterprise: shop)
+      %distributor.active_table_node.row.animate-repeat.closed.inactive{ "data-controller": "frontend-toggle-control", "data-frontend-toggle-control-selector-value": "#transaction-list-#{shop.id}", "data-frontend-toggle-control-target": "classUpdate" }
+        .small-12.columns
+          .row.active_table_row.skinny-head.margin-top.closed{ "data-action": "click->frontend-toggle-control#toggleDisplay", "data-frontend-toggle-control-target": "classUpdate" }
+            .columns.small-2
+              - if shop.logo_url(:medium)
+                = image_tag shop.logo_url(:medium), class: "margin-top account-logo"
+              - else
+                %i.ofn-i_059-producer
+            .columns.small-5
+              %h3.margin-top
+                = link_to shop.name, enterprise_url_selector(shop) 
+            .columns.small-4.text-right
+              %h3.margin-top.distributor-balance
+                = t(".credit_available", credit: Spree::Money.new(data_loader.available_credit))
+            .columns.small-1.text-right
+              %h3.margin-top
+                %i.ofn-i_005-caret-down{ "data-frontend-toggle-control-target": "chevron" }
+          .row{ style: "display: none", id: "transaction-list-#{shop.id}" }
+            .columns.small-12.fat
+              %table
+                %tr
+                  %th.order1= t(".transaction_date")
+                  %th.order2= t(".description")
+                  %th.order3= t(".payment_method")
+                  %th.order4= t(".amount")
+                  %th.order5= t(".running_balance")
+                %tbody.transaction-group
+                - data_loader.customer_account_transactions.each do |transaction|
+                  %tr.transaction-row.even
+                    %td.order1
+                      - # TODO move to helper
+                      = transaction.updated_at.strftime("%Y-%m-%d")
+                    %td.order2
+                      = transaction.description
+                    %td.order3
+                      = transaction.payment_method.display_name
+                    %td.order4
+                      = Spree::Money.new(transaction.amount)
+                    %td.order5
+                      = Spree::Money.new(transaction.balance)

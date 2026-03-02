@@ -30,7 +30,7 @@
         - payment_method = last_payment_method(@order)
         %div
           - if payment_method
-            = payment_method.name
+            = payment_method.display_name
             %em.fees
               = payment_or_shipping_price(payment_method, @order)
           - elsif @order.zero_priced_order?
@@ -41,7 +41,7 @@
             .summary-subtitle
               = t("checkout.step3.payment_method.instructions")
             %div
-              = payment_method&.description
+              = payment_method&.display_description
 
 
     .checkout-substep
@@ -56,7 +56,8 @@
   .summary-right{ "data-controller": "sticky", "data-sticky-target": "container" }
     .summary-right-line.total
       .summary-right-line-label= t :order_total_price
-      .summary-right-line-value#order_total= @order.display_total.to_html
+
+      .summary-right-line-value#order_total= @order.display_outstanding_balance.to_html 
 
     .summary-right-line
       .summary-right-line-label= t :order_produce
@@ -77,6 +78,11 @@
       .summary-right-line
         .summary-right-line-label= t :order_includes_tax
         .summary-right-line-value#tax-row= display_checkout_tax_total(@order)
+
+    - if @paid_with_credit.present?
+      .summary-right-line
+        .summary-right-line-label= t :customer_credit
+        .summary-right-line-value#customer-credit= Spree::Money.new(-1 * @paid_with_credit).to_html
 
     .checkout-submit
       - if any_terms_required?(@order.distributor)

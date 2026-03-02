@@ -61,7 +61,7 @@ module Checkout
     def set_payment_amount
       return unless @order_params[:payments_attributes]
 
-      @order_params[:payments_attributes].first[:amount] = order.total
+      @order_params[:payments_attributes].first[:amount] = order.outstanding_balance.amount
     end
 
     def set_existing_card

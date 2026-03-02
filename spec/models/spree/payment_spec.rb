@@ -107,7 +107,7 @@ RSpec.describe Spree::Payment do
         allow(payment).to receive(:create_payment_profile).and_return(true)
       end
 
-      context "#process!" do
+      describe "#process!" do
         it "should call purchase!" do
           payment = build_stubbed(:payment, payment_method:)
           expect(payment).to receive(:purchase!)
@@ -138,6 +138,18 @@ RSpec.describe Spree::Payment do
 
           it "should call purchase" do
             expect(payment).to receive(:purchase!)
+            payment.process!
+          end
+        end
+
+        context "with an internal payment method" do
+          let(:payment_method) {
+            create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
+          }
+
+          it "calls internal_purchase!" do
+            payment = build_stubbed(:payment, payment_method:)
+            expect(payment).to receive(:internal_purchase!)
             payment.process!
           end
         end
@@ -236,7 +248,7 @@ RSpec.describe Spree::Payment do
         end
       end
 
-      context "purchase" do
+      describe "#purchase!" do
         before do
           allow(payment_method).to receive(:purchase).and_return(success_response)
         end
@@ -284,6 +296,65 @@ RSpec.describe Spree::Payment do
             expect(payment).to receive(:failure)
             expect(payment).not_to receive(:pend)
             expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
+          end
+        end
+      end
+
+      describe "internal_purchase!" do
+        let(:order) { create(:order, customer:) }
+        let(:customer) { create(:customer) }
+        let(:payment_method) {
+          create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
+        }
+        let(:success_response) do
+          instance_double(
+            ActiveMerchant::Billing::Response,
+            success?: true,
+            authorization: nil,
+          )
+        end
+        let(:options) {
+          { customer_id: customer.id, payment_id: payment.id, order_number: payment.order.number }
+        }
+
+        before do
+          allow(payment_method).to receive(:purchase).and_return(success_response)
+        end
+
+        it "calls purchase on the internal payment method" do
+          expect(payment_method).to receive(:purchase).with(
+            amount_in_cents, nil, options
+          ).and_return(success_response)
+
+          payment.internal_purchase!
+        end
+
+        it "logs the response" do
+          expect(payment).to receive(:record_response)
+
+          payment.internal_purchase!
+        end
+
+        context "when successful" do
+          before do
+            expect(payment.payment_method).to receive(:purchase).with(
+              amount_in_cents, nil, options
+            ).and_return(success_response)
+          end
+
+          it "makes payment complete" do
+            expect(payment).to receive(:complete!)
+            payment.internal_purchase!
+          end
+        end
+
+        context "when unsuccessful" do
+          it "makes payment failed" do
+            allow(payment_method).to receive(:purchase).and_return(failed_response)
+
+            expect(payment).to receive(:failure)
+            expect(payment).not_to receive(:pend)
+            expect { payment.internal_purchase! }.to raise_error(Spree::Core::GatewayError)
           end
         end
       end
@@ -869,6 +940,101 @@ RSpec.describe Spree::Payment do
         allow(payment).to receive(:record_response)
         expect(payment).to receive(:gateway_error).with(failure)
         payment.refund!
+      end
+    end
+
+    describe "internal_void!" do
+      let(:payment) do
+        payment = create(:payment, :completed)
+        payment.order = order
+        payment.payment_method = payment_method
+        payment
+      end
+
+      let(:order) { create(:order, customer:) }
+      let(:customer) { create(:customer) }
+      let(:payment_method) {
+        create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
+      }
+      let(:success_response) do
+        instance_double(
+          ActiveMerchant::Billing::Response,
+          success?: true,
+          authorization: nil,
+        )
+      end
+      let(:options) {
+        { customer_id: customer.id, payment_id: payment.id, order_number: payment.order.number }
+      }
+
+      before do
+        allow(payment_method).to receive(:void).and_return(success_response)
+      end
+
+      it "calls void on the internal payment method" do
+        expect(payment_method).to receive(:void).with(
+          amount_in_cents, nil, options
+        ).and_return(success_response)
+
+        payment.internal_void!
+      end
+
+      it "logs the response" do
+        expect(payment).to receive(:record_response)
+
+        payment.internal_void!
+      end
+
+      context "when successful" do
+        before do
+          allow(payment.payment_method).to receive(:void).with(
+            amount_in_cents, nil, options
+          ).and_return(success_response)
+        end
+
+        it "voids the payment" do
+          allow(payment).to receive(:record_response)
+
+          expect { payment.internal_void! }.to change { payment.state }.to("void")
+        end
+      end
+
+      context "when unsuccessful" do
+        before do
+          allow(payment_method).to receive(:void).and_return(failed_response)
+        end
+
+        it "does not create void payment" do
+          # Instanciate payment so our count expectation works as expected
+          payment
+          expect { payment.internal_void! }
+            .to raise_error(Spree::Core::GatewayError)
+            .and change { Spree::Payment.count }.by(0)
+        end
+
+        it "raises an error" do
+          expect { payment.internal_void! }.to raise_error(Spree::Core::GatewayError)
+        end
+      end
+
+      context "when payment already voided" do
+        it "does nothing" do
+          payment.void!
+          expect(payment_method).not_to receive(:void)
+
+          payment.internal_void!
+        end
+      end
+
+      context "when payment not voidable" do
+        it "raises an error" do
+          payment.update(state: "pending")
+          expect(payment_method).not_to receive(:void)
+
+          expect {
+            payment.internal_void!
+          }.to raise_error(Spree::Core::GatewayError, "Payment not voidable")
+        end
       end
     end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class PaymentMethod < ApplicationRecord
+  class PaymentMethod < ApplicationRecord # rubocop:disable Metrics/ClassLength
     include CalculatedAdjustments
     include PaymentMethodDistributors
 
@@ -11,9 +11,11 @@ module Spree
     acts_as_paranoid
 
     DISPLAY = [:both, :back_end].freeze
-    default_scope -> { where(deleted_at: nil) }
+    default_scope -> { where(deleted_at: nil, internal: false) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
+    has_many :customer_account_transactions, dependent: :restrict_with_error
+    has_many :payments, class_name: "Spree::Payment", dependent: :restrict_with_error
 
     validates :name, presence: true
     validate :distributor_validation
@@ -51,6 +53,14 @@ module Spree
         .where(display_on: [display_on, "", nil])
         .where(environment: [Rails.env, "", nil])
     }
+
+    scope :internal, -> { unscoped.where(internal: true, deleted_at: nil) }
+
+    # It's meant to be use to get the customer credit payment method for a given enterprise ie:
+    # `enterprise.payment_methods.customer_credit`
+    def self.customer_credit
+      internal.find_by(name: Rails.application.config.credit_payment_method[:name])
+    end
 
     def configured?
       !stripe? || stripe_configured?
@@ -109,6 +119,14 @@ module Spree
       distributors.include?(distributor)
     end
 
+    def display_name
+      try_translating(name)
+    end
+
+    def display_description
+      try_translating(description)
+    end
+
     private
 
     def distributor_validation
@@ -125,6 +143,12 @@ module Spree
         preferred_enterprise_id.present? &&
         preferred_enterprise_id > 0 &&
         stripe_account_id.present?
+    end
+
+    def try_translating(value)
+      return value if value.blank?
+
+      I18n.t(value, default: value)
     end
   end
 end

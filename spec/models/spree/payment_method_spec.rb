@@ -4,6 +4,13 @@ class Spree::Gateway::Test < Spree::Gateway
 end
 
 RSpec.describe Spree::PaymentMethod do
+  describe "validations" do
+    subject { build(:payment_method) }
+
+    it { is_expected.to have_many(:customer_account_transactions) }
+    it { is_expected.to have_many(:payments) }
+  end
+
   describe ".managed_by scope" do
     subject! { create(:payment_method) }
     let(:owner) { subject.distributors.first.owner }
@@ -52,6 +59,28 @@ RSpec.describe Spree::PaymentMethod do
 
     it "should return all methods available to back-end when display_on = :back_end" do
       expect(Spree::PaymentMethod.available(:back_end).size).to eq 2
+    end
+  end
+
+  describe "#internal" do
+    it "returns only internal payment method" do
+      external = create(:payment_method)
+      internal = create(:payment_method, internal: true)
+
+      payment_methods = described_class.internal
+      expect(payment_methods).to include(internal)
+      expect(payment_methods).not_to include(external)
+    end
+  end
+
+  describe "#customer_credit" do
+    it "returns customer credit payment method" do
+      # Creating an enterprise will create the needed internal payment method if needed
+      enterprise = create(:enterprise)
+      payment_method = Spree::PaymentMethod.unscoped.find_by(
+        name: Rails.application.config.credit_payment_method[:name], internal: true
+      )
+      expect(enterprise.payment_methods.customer_credit).to eq(payment_method)
     end
   end
 
@@ -168,6 +197,52 @@ RSpec.describe Spree::PaymentMethod do
         expect(result.length).to eq(2)
         expect(result).to include(payment_method_a)
         expect(result).to include(payment_method_b)
+      end
+    end
+  end
+
+  describe "#display_name" do
+    subject { build(:payment_method, name:) }
+
+    let(:name) { "credit_payment_method.name" }
+
+    it "translate the name" do
+      expect(subject.display_name).to eq("Customer credit")
+    end
+
+    context "when not a tranlatable string" do
+      let(:name) { "customer credit payment" }
+
+      it "falls back to no translation" do
+        expect(subject.display_name).to eq("customer credit payment")
+      end
+    end
+  end
+
+  describe "#display_description" do
+    subject { build(:payment_method, description:) }
+
+    let(:description) { "credit_payment_method.description" }
+
+    it "translate the name" do
+      expect(subject.display_description).to eq("Allow customer to pay with credit")
+    end
+
+    context "when not a tranlatable string" do
+      let(:description) { "Payment method to allow customer to pay with credit" }
+
+      it "falls back to no translation" do
+        expect(subject.display_description).to eq(
+          "Payment method to allow customer to pay with credit"
+        )
+      end
+    end
+
+    context "when description is empty" do
+      let(:description) { "" }
+
+      it "falls back to no translation" do
+        expect(subject.display_description).to eq("")
       end
     end
   end

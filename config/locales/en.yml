@@ -873,6 +873,7 @@ en:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         balance: "Balance"
+        credit: "Available Credit"
         update_address_success: "Address updated successfully."
         update_address_error: "Sorry! Please input all of the required fields!"
         edit_bill_address: "Edit Billing Address"
@@ -887,8 +888,18 @@ en:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        id: Id 
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    customer_account_transaction:
+      index:
+        available_credit: "Available credit: %{available_credit}"
+        transaction_date: Transaction Date
+        description: Description
+        payment_method: Payment method 
+        amount: Amount
+        created_by: Created by
+        running_balance: Running balance
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
@@ -2550,6 +2561,8 @@ en:
   order_total: Total order
   order_payment: "Paying via:"
   no_payment_required: "No payment required"
+  credit_used: "Credit used: %{amount}"
+  customer_credit: Credit
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -3569,6 +3582,7 @@ en:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  credit_customer: Credit customer
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -4175,6 +4189,7 @@ en:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
+    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
@@ -4688,6 +4703,7 @@ en:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
           taler: "Taler"
+          customercredit: "Customer Credit"
       payments:
         source_forms:
           stripe:
@@ -4695,6 +4711,8 @@ en:
             submitting_payment: Submitting payment...
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
+        customer_credit_successful: Customer has been successfully credited!
+
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
@@ -5011,6 +5029,7 @@ en:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
+          customer_account_transactions: Customer Transactions
           settings: Account Settings
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
@@ -5020,6 +5039,14 @@ en:
         transaction_history: Transaction History
         authorisation_required: Authorisation Required
         authorise: Authorize
+      customer_account_transactions:
+        title: Customer Transactions 
+        credit_available: "Credit available: %{credit}"
+        transaction_date: Transaction Date
+        payment_method: Payment method 
+        description: Description
+        amount: Amount
+        running_balance: Running balance
       open_orders:
         order: Order
         shop: Shop
@@ -5161,3 +5188,24 @@ en:
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
+  api_payment_method:
+    name: API customer credit
+    description: Used to credit customer via customer account transactions endpoint
+  credit_payment_method:
+    name: Customer credit
+    description: Allow customer to pay with credit
+    success: Payment with credit was sucessful
+    void_success: Credit void was sucessful
+    order_payment_description: "Payment for order: %{order_number}" 
+    order_void_description: "Refund for order: %{order_number}"
+    errors:
+      customer_not_found: Customer not found 
+      missing_payment: Missing payment
+      credit_payment_method_missing: Credit payment method is missing
+      no_credit_available: No credit available
+      not_enough_credit_available: Not enough credit available 
+  orders:
+    customer_credit_service:
+      no_credit_owed: No credit owed
+      credit_payment_method_missing: Customer credit payment method is missing, please check configuration
+      refund_sucessful: Refund successful!

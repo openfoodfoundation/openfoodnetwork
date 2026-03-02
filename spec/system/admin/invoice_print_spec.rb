@@ -104,9 +104,14 @@ RSpec.describe '
         order.payments << create(:payment, :completed, order:,
                                                        payment_method: payment_method1,
                                                        created_at: 2.days.ago)
-        order.payments << create(:payment, :completed, order:,
-                                                       payment_method: payment_method2,
-                                                       created_at: 1.day.ago)
+        # Use an internal payment method so we also test the name translation
+        order.payments << create(
+          :payment,
+          :completed,
+          order:,
+          payment_method: Spree::PaymentMethod.customer_credit,
+          created_at: 1.day.ago
+        )
         order.save!
       end
 
@@ -115,7 +120,7 @@ RSpec.describe '
         visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
-        expect(page).to have_content 'description2'
+        expect(page).to have_content 'Customer credit'
       end
     end
   end

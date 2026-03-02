@@ -526,6 +526,31 @@ RSpec.describe CheckoutController do
         end
       end
 
+      context "with an order paid with customer credit" do
+        let(:params) do
+          { step: "payment" }
+        end
+        let(:credit_payment_method) {
+          order.distributor.payment_methods.customer_credit
+        }
+
+        before do
+          # Add payment with credit
+          payment = order.payments.create!(
+            amount: order.total, payment_method: credit_payment_method
+          )
+          payment.complete!
+          order.update_totals_and_states
+        end
+
+        it "allows proceeding to confirmation" do
+          put(:update, params:)
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+          expect(order.reload.state).to eq "confirmation"
+        end
+      end
+
       context "with a saved credit card" do
         let!(:saved_card) { create(:stored_credit_card, user:) }
         let(:checkout_params) do

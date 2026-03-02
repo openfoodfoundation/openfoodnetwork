@@ -31,6 +31,8 @@ RSpec.describe Enterprise do
       u.enterprise_roles.build(enterprise: e).save!
 
       role = e.enterprise_roles.first
+      # Delete the default customer credit payment method link
+      e.distributor_payment_methods.destroy_all
       e.destroy
       expect(EnterpriseRole.where(id: role.id)).to be_empty
     end
@@ -51,6 +53,8 @@ RSpec.describe Enterprise do
       er1 = create(:enterprise_relationship, parent: e, child: e_other)
       er2 = create(:enterprise_relationship, child: e, parent: e_other)
 
+      # Delete the default customer credit payment method link
+      e.distributor_payment_methods.destroy_all
       e.destroy
 
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
@@ -85,6 +89,8 @@ RSpec.describe Enterprise do
       create_list(:distributor_shipping_method, 2, distributor: enterprise)
 
       expect do
+        # Delete the default customer credit payment method link
+        enterprise.distributor_payment_methods.destroy_all
         enterprise.destroy
         expect(enterprise.errors.full_messages).to eq(
           ["Cannot delete record because dependent distributor shipping methods exist"]
@@ -111,6 +117,8 @@ RSpec.describe Enterprise do
       end
 
       expect do
+        # Delete the default customer credit payment method link
+        enterprise.distributor_payment_methods.destroy_all
         enterprise.destroy
         expect(enterprise.errors.full_messages).to eq(
           ["Cannot delete record because dependent vouchers exist"]
@@ -488,6 +496,32 @@ RSpec.describe Enterprise do
         expect { enterprise.touch }
           .to change { distributor1.reload.updated_at }
           .and change { distributor2.reload.updated_at }
+      end
+    end
+
+    describe "add_credit_payment_method" do
+      it "links credit payment method to the enterprise" do
+        # Due to various callbacks the enterprise gets updated twice after creation
+        expect(CreditPaymentMethod::LinkerService).to receive(:link).at_least(1)
+
+        create(:distributor_enterprise)
+      end
+
+      context "when not a distributor" do
+        it "doesn't link credit payment method" do
+          expect(CreditPaymentMethod::LinkerService).not_to receive(:link)
+
+          create(:supplier_enterprise)
+        end
+      end
+
+      context "when an enterprise becomes a distributor" do
+        it "links credit payment method to the enterprise" do
+          enterprise = create(:supplier_enterprise)
+
+          expect(CreditPaymentMethod::LinkerService).to receive(:link)
+          enterprise.update(sells: "own")
+        end
       end
     end
   end
