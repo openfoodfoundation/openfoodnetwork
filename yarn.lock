@@ -7064,9 +7064,9 @@ toidentifier@1.0.1, toidentifier@~1.0.1:
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
 
 tom-select@*:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.5.1.tgz#8c8d3f11e5c1780b5f26c9e90f4e650842ff9596"
-  integrity sha512-63D5/Qf6bb6kLSgksEuas/60oawDcuUHrD90jZofeOpF6bkQFYriKrvtpJBQQ4xIA5dUGcjhBbk/yrlfOQsy3g==
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.5.2.tgz#77dd4bc780b1ea72905337b24f04ce19dc6d2ca1"
+  integrity sha512-VAlGj5MBWVLMJje2NwA3XSmxa7CUFpp1tdzFZ8wymCkcLeP0NwF4ARmSuUK4BWbmSN1fETlSazWkMIxEpP4GdQ==
   dependencies:
     "@orchidjs/sifter" "^1.1.0"
     "@orchidjs/unicode-variants" "^1.1.2"
