@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-RSpec.describe 'As an enterprise user, I can manage my products' do
+RSpec.describe 'As an enterprise user, I can perform actions on the products screen' do
   include AdminHelper
   include WebHelper
   include AuthenticationHelper
@@ -18,18 +18,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   let(:producer_search_selector) { 'input[placeholder="Select producer"]' }
   let(:categories_search_selector) { 'input[placeholder="Select category"]' }
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
-
-  describe "with no products" do
-    before { visit admin_products_url }
-    it "can see the new product page" do
-      expect(page).to have_content "Bulk Edit Products"
-      expect(page).to have_text "No products found"
-      # displays buttons to add products with the correct links
-      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
-      expect(page).to have_link(class: "button", text: "Import multiple products",
-                                href: admin_product_import_path)
-    end
-  end
 
   describe "column selector" do
     let!(:product) { create(:simple_product) }
@@ -104,8 +92,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       end
     end
   end
-
-  describe "columns"
 
   describe "Changing producers, category and tax category" do
     let!(:variant_a1) {
@@ -228,13 +214,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
       it "shows an actions menu with an edit link for product and variant" do
         within row_containing_name("Apples") do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
         close_action_menu
 
         within row_containing_name("Medium box") do
-          page.find(".vertical-ellipsis-menu").click
+          click_button "Actions"
           expect(page).to have_link "Edit",
                                     href: spree.edit_admin_product_variant_path(product_a,
                                                                                 variant_a1)
@@ -259,13 +245,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       describe "Actions columns (clone)" do
         it "shows an actions menu with a clone link when clicking on icon for product" do
           within row_containing_name("Apples") do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
           close_action_menu
 
           within row_containing_name("Medium box") do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).not_to have_link "Clone", href: admin_clone_product_path(product_a)
           end
         end
@@ -273,24 +259,15 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
       describe "Cloning product" do
         it "shows the cloned product on page when clicked on the cloned option" do
-          # TODO, variant supplier missing, needs to be copied from variant and not product
-          within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
-
-            # Products does not include the cloned product.
-            expect(input_content).not_to match /COPY OF Apples/
+          within row_containing_name("Apples") do
+            click_button "Actions"
+            click_link "Clone"
           end
-
-          click_product_clone "Apples"
 
           expect(page).to have_content "Successfully cloned the product"
           within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
-
-            # Products include the cloned product.
-            expect(input_content).to match /COPY OF Apples/
+            # Product list includes the cloned product.
+            expect(all_input_values).to match /COPY OF Apples/
           end
         end
       end
@@ -300,7 +277,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         product_a.update_columns(name: "L" * 254)
 
         # The page has not been reloaded so the product's name is still "Apples"
-        click_product_clone "Apples"
+        within row_containing_name("Apples") do
+          click_button "Actions"
+          click_link "Clone"
+        end
 
         expect(page).to have_content "Product Name is too long (maximum is 255 characters)"
 
@@ -328,14 +308,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         it "shows an actions menu with a delete link when clicking on icon for product. " \
            "doesn't show delete link for the single variant" do
           within product_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
           page.find("div#content").click # to close the vertical actions menu
 
           # to select the default variant
           within default_variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).not_to have_css(delete_option_selector)
           end
         end
@@ -351,13 +331,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
           # to select the default variant
           within default_variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
           page.find("div#content").click # to close the vertical actions menu
 
           within variant_selector do
-            page.find(".vertical-ellipsis-menu").click
+            click_button "Actions"
             expect(page).to have_css(delete_option_selector)
           end
         end
@@ -380,7 +360,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
             # Keep Product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -393,7 +373,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
             # Keep Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -412,7 +392,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             visit admin_products_url
             # Delete Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -429,7 +409,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
             # Delete product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -449,7 +429,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
             # Delete Variant
             within variant_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
 
@@ -464,7 +444,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
             # Delete product
             within product_selector do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               page.find(delete_option_selector).click
             end
             within modal_selector do
@@ -487,7 +467,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
               # Delete Variant
               within variant_selector do
-                page.find(".vertical-ellipsis-menu").click
+                click_button "Actions"
                 page.find(delete_option_selector).click
               end
 
@@ -514,7 +494,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         visit admin_products_url
 
         within row_containing_name("Apples") do
-          open_action_menu
+          click_button "Actions"
           click_link "Preview"
         end
 
@@ -538,94 +518,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).not_to have_content("Product preview")
       end
     end
-  end
-
-  context "as an enterprise manager" do
-    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
-    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
-    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
-    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
-    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
-    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
-    let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
-    }
-    let(:product_supplied_inactive) {
-      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
-    }
-
-    let!(:supplier_permitted_relationship) do
-      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
-                                       permissions_list: [:manage_products])
-    end
-
-    before do
-      enterprise_user = create(:user)
-      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
-      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
-      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
-
-      login_as enterprise_user
-    end
-
-    it "shows only products that I supply" do
-      visit spree.admin_products_path
-
-      # displays permitted product list only
-      expect(page).to have_selector row_containing_name(product_supplied.name)
-      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
-      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
-    end
-
-    it "shows only suppliers that I manage or have permission to" do
-      visit spree.admin_products_path
-
-      within row_containing_placeholder(product_supplied.name) do
-        expect(page).to have_select(
-          '_products_0_variants_attributes_0_supplier_id',
-          options: [
-            'Select producer',
-            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
-          ], selected: supplier_managed1.name
-        )
-      end
-
-      within row_containing_placeholder(product_supplied_permitted.name) do
-        expect(page).to have_select(
-          '_products_1_variants_attributes_0_supplier_id',
-          options: [
-            'Select producer',
-            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
-          ], selected: supplier_permitted.name
-        )
-      end
-    end
-
-    it "shows inactive products that I supply" do
-      product_supplied_inactive
-
-      visit spree.admin_products_path
-
-      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
-    end
-
-    it "allows me to update a product" do
-      visit spree.admin_products_path
-
-      within row_containing_name(product_supplied.name) do
-        fill_in "Name", with: "Pommes"
-      end
-      click_button "Save changes"
-
-      expect(page).to have_content "Changes saved"
-      expect(page).to have_selector row_containing_name("Pommes")
-    end
-  end
-
-  def open_action_menu
-    page.find(".vertical-ellipsis-menu").click
   end
 
   def close_action_menu

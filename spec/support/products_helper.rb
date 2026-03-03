@@ -105,11 +105,4 @@ module ProductsHelper
   def all_input_values
     page.find_all('input[type=text]').map(&:value).join
   end
-
-  def click_product_clone(product_name)
-    within row_containing_name(product_name) do
-      page.find(".vertical-ellipsis-menu").click
-      click_link('Clone')
-    end
-  end
 end
