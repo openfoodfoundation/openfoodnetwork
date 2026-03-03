@@ -8,7 +8,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
   include AuthenticationHelper
   include FileHelper
 
-  let(:producer) { create(:supplier_enterprise) }
+  let(:producer) { create(:supplier_enterprise, name: "My Enterprise") }
   let(:user) { create(:user, enterprises: [producer]) }
 
   before do
@@ -146,7 +146,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
       let!(:v3_source) { p3.variants.first }
       let!(:v3_sourced) {
-        create(:variant, display_name: "Variant3-sourced", product: p3, supplier: source_producer)
+        create(:variant, display_name: "Variant3-sourced", product: p3, supplier: source_producer,
+                         owner: producer)
       }
       let!(:enterprise_relationship) {
         # Other producer grants me access to manage their variant
@@ -161,7 +162,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
       it "shows sourced variant with indicator" do
         within row_containing_name("Variant3-sourced") do
-          expect(page).to have_selector 'span[title*="Sourced from"]'
+          expect(page).to have_selector 'span[title*="Sourced from: "]'
+          expect(page).to have_selector 'span[title*="Owned by: My Enterprise"]'
         end
       end
     end

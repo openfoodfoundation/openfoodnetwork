@@ -88,7 +88,7 @@ RSpec.describe "Admin::ProductsV3" do
                permissions_list: [:create_sourced_variants])
       }
 
-      it "creates a clone of the variant, retaining link as source" do
+      it "clones the variant, retaining link as source" do
         params = { variant_id: variant.id, product_index: 1 }
 
         expect {
@@ -103,6 +103,26 @@ RSpec.describe "Admin::ProductsV3" do
         expect(variant.target_variants.first).to eq new_variant
         # The new variant's source is the original
         expect(new_variant.source_variants.first).to eq variant
+      end
+
+      context "and I'm also owner of another enterprise" do
+        let!(:enterprise2) { create(:enterprise) }
+        let(:user) { create(:user, enterprises: [enterprise, enterprise2]) }
+
+        it "clones the variant, owned by my enterprise that has permission" do
+          enterprise2.owner = user
+          params = { variant_id: variant.id, product_index: 1 }
+
+          expect {
+            post(admin_create_sourced_variant_path, as: :turbo_stream, params:)
+
+            expect(response).to have_http_status(:ok)
+          }.to change { variant.product.variants.count }.by(1)
+
+          # The new variant is owned by my enterprise that has permission, not the other one
+          new_variant = variant.product.variants.last
+          expect(new_variant.owner).to eq enterprise
+        end
       end
     end
   end
