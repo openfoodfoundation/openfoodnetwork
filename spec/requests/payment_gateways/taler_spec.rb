@@ -30,4 +30,35 @@ RSpec.describe "/payment_gateways/taler/:id" do
     payment.reload
     expect(payment.state).to eq "completed"
   end
+
+  it "handles all variants going out of stock" do
+    shop = create(:distributor_enterprise)
+    taler = Spree::PaymentMethod::Taler.create!(
+      name: "Taler",
+      environment: "test",
+      distributors: [shop],
+      preferred_backend_url: "https://backend.demo.taler.net/instances/sandbox",
+      preferred_api_key: "sandbox",
+    )
+    order = create(:order_ready_for_confirmation, payment_method: taler)
+    payment = Spree::Payment.last
+    payment.update!(
+      source: taler,
+      payment_method: taler,
+      response_code: "2026.020-03R3ETNZZ0DVA",
+    )
+
+    allow_any_instance_of(Taler::Order)
+      .to receive(:fetch).with("order_status").and_return("paid")
+    order.line_items[0].variant.on_hand = 0
+
+    get payment_gateways_confirm_taler_path(payment_id: payment.id)
+    expect(response).to redirect_to "/checkout/details"
+
+    payment.reload
+    expect(payment.state).to eq "completed"
+
+    order.reload
+    expect(order.state).to eq "confirmation"
+  end
 end
