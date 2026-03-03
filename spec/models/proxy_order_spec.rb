@@ -241,12 +241,6 @@ RSpec.describe ProxyOrder do
       it "returns 'pending'" do
         expect(proxy_order.state).to eq('pending')
       end
-
-      context "when the subscription is not paused" do
-        it "returns 'pending'" do
-          expect(proxy_order.state).to eq('pending')
-        end
-      end
     end
 
     context "when the order is complete" do
