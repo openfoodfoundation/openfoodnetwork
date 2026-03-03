@@ -788,7 +788,8 @@ RSpec.describe Spree::Payment do
 
     describe "available actions" do
       context "for most gateways" do
-        let(:payment) { build_stubbed(:payment, source: build_stubbed(:credit_card)) }
+        let(:payment) { build_stubbed(:payment, payment_method:) }
+        let(:payment_method) { Spree::Gateway::StripeSCA.new }
 
         it "can capture and void" do
           expect(payment.actions).to match_array %w(capture_and_complete_order void)
@@ -803,6 +804,53 @@ RSpec.describe Spree::Payment do
           it "can void and credit" do
             expect(payment.actions).to match_array %w(void credit)
           end
+        end
+      end
+
+      describe "#can_capture_and_complete_order?" do
+        it "should be true if payment is pending" do
+          payment = build_stubbed(:payment, created_at: Time.zone.now)
+          allow(payment).to receive(:pending?) { true }
+          expect(payment.can_capture_and_complete_order?).to be_truthy
+        end
+
+        it "should be true if payment is checkout" do
+          payment = build_stubbed(:payment, created_at: Time.zone.now)
+          allow(payment).to receive_messages pending?: false,
+                                             checkout?: true
+          expect(payment.can_capture_and_complete_order?).to be_truthy
+        end
+      end
+
+      describe "#can_void?" do
+        it "should be true if payment is not void" do
+          payment = build_stubbed(:payment)
+          allow(payment).to receive(:void?) { false }
+          expect(payment.can_void?).to be_truthy
+        end
+      end
+
+      describe "#can_credit?" do
+        it "should be false if payment is not completed" do
+          payment = build_stubbed(:payment)
+          allow(payment).to receive(:completed?) { false }
+          expect(payment.can_credit?).to be_falsy
+        end
+
+        it "should be false when order payment_state is not 'credit_owed'" do
+          payment = build_stubbed(:payment,
+                                  order: create(:order, payment_state: 'paid'))
+          allow(payment).to receive(:completed?) { true }
+          expect(payment.can_credit?).to be_falsy
+        end
+
+        it "should be false when credit_allowed is zero" do
+          payment = build_stubbed(:payment,
+                                  order: create(:order, payment_state: 'credit_owed'))
+          allow(payment).to receive_messages completed?: true,
+                                             credit_allowed: 0
+
+          expect(payment.can_credit?).to be_falsy
         end
       end
     end

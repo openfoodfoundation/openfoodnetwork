@@ -52,7 +52,7 @@ module Spree
       # (we can't use respond_override because Spree no longer uses respond_with)
       def fire
         event = params[:e]
-        return unless event && @payment.payment_source
+        return unless event
 
         # capture_and_complete_order will complete the order, so we want to try to redeem VINE
         # voucher first and exit if it fails

@@ -157,8 +157,6 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "with no payment source" do
       it "redirect to payments page" do
-        allow(payment).to receive(:payment_source).and_return(nil)
-
         put(
           "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/fire?e=void",
           params: {},
