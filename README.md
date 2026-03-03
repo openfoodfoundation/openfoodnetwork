@@ -21,7 +21,7 @@ Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) gu
 
 ### Hacktoberfest :tada:
 
-Are you participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/)? Go check out our [Welcome New Developers project board][welcome-dev]! We have curated all issues we consider to be a good starting point for new members of the community and categorized them by skills and level of complexity. 
+Are you participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/)? Go check out our [Welcome New Developers project board][welcome-dev]! We have curated all issues we consider to be a good starting point for new members of the community and categorized them by skills and level of complexity.
 Have a look and pick the one you would prefer working on!
 
 ## Provisioning
@@ -36,11 +36,9 @@ If you'd like to help out with testing, please introduce yourself on the #testin
 
 We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them!
 
-
 We use [KnapsackPro](https://knapsackpro.com/) for optimal parallelisation of our automated tests. KnapsackPro offers unlimited plans for non-commercial open source projects, like ours - a big thanks to them!
 
 ![image](https://user-images.githubusercontent.com/49817236/201330047-e64147a7-d91c-4c10-bd4d-ca519d8fe945.png)
-
 
 ## Licence
 
