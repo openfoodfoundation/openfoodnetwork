@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Admin::CustomerAccountTransactionController do
-  describe "GET /index" do
+  describe "GET /admin/customer/:customer_id/customer_account_transaction" do
     let(:enterprise_user) { create(:user, enterprises: [enterprise]) }
     let(:enterprise) { create(:enterprise) }
     let(:customer) { create(:customer, enterprise:) }
