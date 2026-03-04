@@ -116,15 +116,7 @@ module Admin
       status = :ok
 
       begin
-        variant = source_variant.dup #may need a VariantDuplicator like producs?
-        variant.price = source_variant.price
-        variant.save!
-        variant.source_variants << source_variant
-        # Owner is my enterprise which has permission to create sourced variants from that supplier
-        variant.owner_id = EnterpriseRelationship.permitted_by(source_variant.supplier).permitting(spree_current_user.enterprises).with_permission(:create_sourced_variants).pluck(:child_id).first
-        variant.on_demand = source_variant.on_demand
-        variant.on_hand = source_variant.on_hand
-        variant.save!
+        variant = source_variant.create_sourced_variant(spree_current_user)
 
         flash.now[:success] = t('.success')
         variant_index = "-#{variant.id}"
