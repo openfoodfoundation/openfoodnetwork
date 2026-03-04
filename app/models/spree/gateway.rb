@@ -52,9 +52,9 @@ module Spree
 
     def supports?(source)
       return true unless provider_class.respond_to? :supports?
-      return false unless source.brand
+      return false unless source.cc_type
 
-      provider_class.supports?(source.brand)
+      provider_class.supports?(source.cc_type)
     end
   end
 end
