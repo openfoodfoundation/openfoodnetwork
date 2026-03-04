@@ -4005,9 +4005,9 @@ hasown@^2.0.2:
     function-bind "^1.1.2"
 
 hotkeys-js@*:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-4.0.1.tgz#d30f61568df248e22be864b6b86d22540438d0f6"
-  integrity sha512-zjh2YxGhTMbddFUxyMOc35Iq0v86N7JnsB62m4hm34fG/CVX1ard7Gp3AJN4PK9lSLFexK14zPMNVwSYgz3tRg==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-4.0.2.tgz#89cb3876fa872240caeef486a1e7b9872bb415fc"
+  integrity sha512-fJNEO88zWwoXEGJuvjSbunKSexaT1VbC1S9wIzMA2BfOZ5KPiQj2wTqxDeXd110/4akiAuQIsE3TSbNvGgCyQg==
 
 hpack.js@^2.1.6:
   version "2.1.6"
