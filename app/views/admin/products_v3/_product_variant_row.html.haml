@@ -11,9 +11,10 @@
 
       -# Filter out variant a user has not permission to update, but keep variant with no supplier
       - next if variant.supplier.present? && !allowed_producers.include?(variant.supplier)
+
       = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
         %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
-          = render partial: 'variant_row', locals: { variant:, f: variant_form, category_options:, tax_category_options:, producer_options: }
+          = render partial: 'variant_row', locals: { variant:, f: variant_form, product_index:, category_options:, tax_category_options:, producer_options: }
 
     = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", prepare_new_variant(product, producer_options)) do |new_variant_form|
       %template{ 'data-nested-form-target': "template" }

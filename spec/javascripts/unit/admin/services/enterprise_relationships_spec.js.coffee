@@ -16,3 +16,4 @@ describe "enterprise relationships", ->
     expect(EnterpriseRelationships.permission_presentation("manage_products")).toEqual "manage products"
     expect(EnterpriseRelationships.permission_presentation("edit_profile")).toEqual "edit profile"
     expect(EnterpriseRelationships.permission_presentation("create_variant_overrides")).toEqual "add products to inventory"
+    expect(EnterpriseRelationships.permission_presentation("create_sourced_variants")).toEqual "create sourced variants [BETA]"
