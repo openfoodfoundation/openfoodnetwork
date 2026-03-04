@@ -273,6 +273,24 @@ module Spree
       @on_hand_desired = ActiveModel::Type::Integer.new.cast(val)
     end
 
+    # Clone this variant, retaining a 'source' link to it
+    def create_sourced_variant(user)
+      # Owner is my enterprise which has permission to create sourced variants from that supplier
+      owner_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
+        .with_permission(:create_sourced_variants)
+        .pick(:child_id)
+
+      dup.tap do |variant|
+        variant.price = price
+        variant.save!
+        variant.source_variants = [self]
+        variant.owner_id = owner_id
+        variant.on_demand = on_demand
+        variant.on_hand = on_hand
+        variant.save!
+      end
+    end
+
     private
 
     def check_currency
