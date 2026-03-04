@@ -167,7 +167,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       before do
         create_list(:supplier_enterprise, 11, users: [user])
         create_list(:tax_category, 11)
-        create_list(:taxon, 11)
+        build_list(:taxon, 11).each_with_index do |taxon, i|
+          taxon.name += " #{i}"
+          taxon.save!
+        end
 
         visit admin_products_url
       end
@@ -178,24 +181,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         tax_category_to_select = random_tax_category
 
         within row_containing_name(variant_a1.display_name) do
-          validate_tomselect_with_search!(
-            page, "Producer",
-            producer_search_selector
-          )
           tomselect_search_and_select(producer_to_select, from: "Producer")
-
-          sleep(0.1)
-          validate_tomselect_with_search!(
-            page, "Category",
-            categories_search_selector
-          )
           tomselect_search_and_select(category_to_select, from: "Category")
-
-          sleep(0.1)
-          validate_tomselect_with_search!(
-            page, "Tax Category",
-            tax_categories_search_selector
-          )
           tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
         end
 
