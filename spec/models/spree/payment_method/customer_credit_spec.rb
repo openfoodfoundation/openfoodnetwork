@@ -100,8 +100,6 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       let!(:credit_payment_method) { nil }
 
       it "returns an error" do
-        Spree::PaymentMethod.customer_credit.destroy
-
         expect(response.success?).to be(false)
         expect(response.message).to eq("Credit payment method is missing")
       end
@@ -189,8 +187,6 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       let!(:credit_payment_method) { nil }
 
       it "returns an error" do
-        Spree::PaymentMethod.customer_credit.destroy
-
         expect(response.success?).to be(false)
         expect(response.message).to eq("Credit payment method is missing")
       end
