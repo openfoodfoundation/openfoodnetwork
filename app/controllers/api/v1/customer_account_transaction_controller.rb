@@ -29,9 +29,7 @@ module Api
       end
 
       def payment_method_id
-        Spree::PaymentMethod.internal.find_by(
-          name: Rails.application.config.api_payment_method[:name]
-        )&.id
+        Spree::PaymentMethod.api_customer_credit&.id
       end
     end
   end

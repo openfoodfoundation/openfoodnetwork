@@ -32,11 +32,9 @@ FactoryBot.define do
 
   factory :customer_credit_payment_method, class: Spree::PaymentMethod::CustomerCredit do
     environment { 'test' }
-    internal { true }
   end
 
   factory :api_customer_credit_payment_method, class: Spree::PaymentMethod::ApiCustomerCredit do
     environment { 'test' }
-    internal { true }
   end
 end

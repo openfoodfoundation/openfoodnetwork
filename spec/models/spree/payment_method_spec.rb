@@ -4,11 +4,30 @@ class Spree::Gateway::Test < Spree::Gateway
 end
 
 RSpec.describe Spree::PaymentMethod do
-  describe "validations" do
+  describe "associations" do
     subject { build(:payment_method) }
 
     it { is_expected.to have_many(:customer_account_transactions) }
     it { is_expected.to have_many(:payments) }
+  end
+
+  describe "validation" do
+    subject { build(:payment_method) }
+
+    it { is_expected.to validate_presence_of(:name) }
+
+    it "requires at least one hub" do
+      pm = Spree::PaymentMethod.new(name: "test")
+      pm.save
+      expect(pm.errors.to_a).to include("At least one hub must be selected")
+    end
+
+    context "with internal payment method" do
+      it "doesn't requires a hub" do
+        pm = build(:customer_credit_payment_method)
+        expect(pm).to be_valid
+      end
+    end
   end
 
   describe ".managed_by scope" do
@@ -65,22 +84,26 @@ RSpec.describe Spree::PaymentMethod do
   describe "#internal" do
     it "returns only internal payment method" do
       external = create(:payment_method)
-      internal = create(:payment_method, internal: true)
+      internal1 = create(:customer_credit_payment_method)
+      internal2 = create(:api_customer_credit_payment_method)
 
       payment_methods = described_class.internal
-      expect(payment_methods).to include(internal)
+      expect(payment_methods).to include(internal1, internal2)
       expect(payment_methods).not_to include(external)
     end
   end
 
   describe "#customer_credit" do
-    it "returns customer credit payment method" do
-      # Creating an enterprise will create the needed internal payment method if needed
-      enterprise = create(:enterprise)
-      payment_method = Spree::PaymentMethod.unscoped.find_by(
-        name: Rails.application.config.credit_payment_method[:name], internal: true
-      )
-      expect(enterprise.payment_methods.customer_credit).to eq(payment_method)
+    it "returns the customer credit payment method" do
+      create(:customer_credit_payment_method)
+      expect(Spree::PaymentMethod.customer_credit).to be_a(Spree::PaymentMethod::CustomerCredit)
+    end
+  end
+
+  describe "#api_customer_credit" do
+    it "returns the api customer credit payment method" do
+      create(:api_customer_credit_payment_method)
+      expect(Spree::PaymentMethod.api_customer_credit).to be_a(Spree::PaymentMethod::ApiCustomerCredit)
     end
   end
 
@@ -152,12 +175,6 @@ RSpec.describe Spree::PaymentMethod do
     pm3 = create(:payment_method, name: 'BB')
 
     expect(Spree::PaymentMethod.by_name).to eq([pm2, pm3, pm1])
-  end
-
-  it "raises errors when required fields are missing" do
-    pm = Spree::PaymentMethod.new
-    pm.save
-    expect(pm.errors.to_a).to eq(["Name can't be blank", "At least one hub must be selected"])
   end
 
   it "computes the amount of fees" do
@@ -243,6 +260,22 @@ RSpec.describe Spree::PaymentMethod do
 
       it "falls back to no translation" do
         expect(subject.display_description).to eq("")
+      end
+    end
+  end
+
+  describe "#internal?" do
+    subject { build(:payment_method) }
+
+    it "returns false" do
+      expect(subject.internal?).to be(false)
+    end
+
+    context "with internal payment method" do
+      subject { build(:customer_credit_payment_method) }
+
+      it "returns false" do
+        expect(subject.internal?).to be(true)
       end
     end
   end
