@@ -5,6 +5,14 @@ require "spec_helper"
 RSpec.describe Spree::PaymentMethod::CustomerCredit do
   subject { build(:customer_credit_payment_method) }
 
+  describe "#name" do
+    it { expect(subject.name).to eq("credit_payment_method.name") }
+  end
+
+  describe "#description" do
+    it { expect(subject.description).to eq("credit_payment_method.description") }
+  end
+
   describe "#purchase" do
     let(:response) { subject.purchase(amount, nil, options) }
 
