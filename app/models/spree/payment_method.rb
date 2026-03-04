@@ -56,10 +56,14 @@ module Spree
 
     scope :internal, -> { unscoped.where(internal: true, deleted_at: nil) }
 
-    # It's meant to be use to get the customer credit payment method for a given enterprise ie:
-    # `enterprise.payment_methods.customer_credit`
+    # These two method are used to get the two internal payment method. They are accessible to all
+    # enterprise, but the accessibility is managed by the code, as opposed to using the database.
     def self.customer_credit
-      internal.find_by(name: Rails.application.config.credit_payment_method[:name])
+      unscoped.find_by(type: "Spree::PaymentMethod::CustomerCredit", deleted_at: nil)
+    end
+
+    def self.api_customer_credit
+      unscoped.find_by(type: "Spree::PaymentMethod::ApiCustomerCredit", deleted_at: nil)
     end
 
     def configured?
