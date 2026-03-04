@@ -148,7 +148,6 @@ class Enterprise < ApplicationRecord
 
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  after_save :add_credit_payment_method
 
   after_rollback :restore_permalink
   after_touch :touch_distributors
@@ -637,9 +636,5 @@ class Enterprise < ApplicationRecord
     Enterprise.distributing_variants(supplied_variants.select(:id)).
       where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
-  end
-
-  def add_credit_payment_method
-    CreditPaymentMethod::LinkerService.link(enterprise: self) if is_distributor
   end
 end

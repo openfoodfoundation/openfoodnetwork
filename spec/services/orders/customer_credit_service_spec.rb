@@ -7,7 +7,7 @@ RSpec.describe Orders::CustomerCreditService do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
-  let(:credit_payment_method) { order.distributor.payment_methods.customer_credit }
+  let!(:credit_payment_method) { create(:customer_credit_payment_method) }
   let(:user) { create(:enterprise_user) }
 
   describe "#apply" do
@@ -104,9 +104,7 @@ RSpec.describe Orders::CustomerCreditService do
     context "when credit payment method is missing" do
       before do
         # Add credit
-        payment_method = order.customer.enterprise.payment_methods.internal.find_by(
-          name: Rails.application.config.api_payment_method[:name]
-        )
+        payment_method = create(:api_customer_credit_payment_method)
         create(
           :customer_account_transaction,
           amount: 5.00,

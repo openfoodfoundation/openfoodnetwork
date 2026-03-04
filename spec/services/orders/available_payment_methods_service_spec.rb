@@ -41,7 +41,7 @@ RSpec.describe Orders::AvailablePaymentMethodsService do
   it "does not return payment methods which are internal" do
     distributor = create(:distributor_enterprise)
     frontend_payment_method = create(:payment_method, distributors: [distributor])
-    internal_payment_method = Spree::PaymentMethod.customer_credit
+    internal_payment_method = create(:customer_credit_payment_method)
 
     order_cycle = create(:sells_own_order_cycle)
     order = build(:order, distributor:, order_cycle:)
