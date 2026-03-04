@@ -3,6 +3,15 @@
 module Spree
   class PaymentMethod
     class CustomerCredit < Spree::PaymentMethod
+      # Name and description are translatable string, to allow instances to customise them
+      def name
+        "credit_payment_method.name"
+      end
+
+      def description
+        "credit_payment_method.description"
+      end
+
       def actions
         %w{internal_void}
       end
