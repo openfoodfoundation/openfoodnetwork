@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_02_040450) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_01_031845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -100,8 +100,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_02_040450) do
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.bigint "created_by_id"
     t.index ["created_by_id"], name: "index_customer_account_transactions_on_created_by_id"
-    t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
     t.index ["payment_id"], name: "index_customer_account_transactions_on_payment_id"
+    t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
     t.index ["payment_method_id"], name: "index_customer_account_transactions_on_payment_method_id"
   end
 
@@ -654,7 +654,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_02_040450) do
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "deleted_at", precision: nil
     t.string "display_on", limit: 255
-    t.boolean "internal", default: false, null: false
   end
 
   create_table "spree_payments", id: :serial, force: :cascade do |t|

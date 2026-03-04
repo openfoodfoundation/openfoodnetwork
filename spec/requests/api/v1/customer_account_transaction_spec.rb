@@ -4,10 +4,7 @@ require "swagger_helper"
 
 RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :api_v1 do
   let!(:enterprise) { create(:enterprise) }
-  # Paymnent method will be created when the enterprise is created
-  let(:payment_method) {
-    Spree::PaymentMethod.internal.find_by(name: Rails.application.config.api_payment_method[:name])
-  }
+  let!(:payment_method) { create(:api_customer_credit_payment_method) }
   let(:customer) { create(:customer) }
 
   before do

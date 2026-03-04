@@ -143,9 +143,7 @@ RSpec.describe Spree::Payment do
         end
 
         context "with an internal payment method" do
-          let(:payment_method) {
-            create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
-          }
+          let(:payment_method) { create(:customer_credit_payment_method) }
 
           it "calls internal_purchase!" do
             payment = build_stubbed(:payment, payment_method:)
@@ -303,9 +301,7 @@ RSpec.describe Spree::Payment do
       describe "internal_purchase!" do
         let(:order) { create(:order, customer:) }
         let(:customer) { create(:customer) }
-        let(:payment_method) {
-          create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
-        }
+        let(:payment_method) { create(:customer_credit_payment_method) }
         let(:success_response) do
           instance_double(
             ActiveMerchant::Billing::Response,
@@ -953,9 +949,7 @@ RSpec.describe Spree::Payment do
 
       let(:order) { create(:order, customer:) }
       let(:customer) { create(:customer) }
-      let(:payment_method) {
-        create(:customer_credit_payment_method, distributors: [create(:distributor_enterprise)])
-      }
+      let(:payment_method) { create(:customer_credit_payment_method) }
       let(:success_response) do
         instance_double(
           ActiveMerchant::Billing::Response,
@@ -1159,6 +1153,15 @@ RSpec.describe Spree::Payment do
           end
         end
       end
+    end
+  end
+
+  describe "#payment_method" do
+    it "returns internal payment method properly" do
+      payment_method = create(:customer_credit_payment_method)
+      payment = create(:payment, payment_method: )
+
+      expect(payment.reload.payment_method).to eq(payment_method)
     end
   end
 
