@@ -362,7 +362,6 @@ RSpec.describe Spree::Admin::PaymentsController do
   end
 
   describe "POST /admin/orders/:order_number/payments/credit_customer" do
-    let(:credit_payment_method) { order.distributor.payment_methods.customer_credit }
     let(:success_response) {
       Orders::CustomerCreditService::Response.new(success: true, message: "Refund successful!")
     }

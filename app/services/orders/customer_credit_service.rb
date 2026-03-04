@@ -83,7 +83,7 @@ module Orders
     end
 
     def credit_payment_method
-      order.distributor.payment_methods.customer_credit
+      Spree::PaymentMethod.customer_credit
     end
 
     def log_error(error)

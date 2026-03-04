@@ -530,9 +530,7 @@ RSpec.describe CheckoutController do
         let(:params) do
           { step: "payment" }
         end
-        let(:credit_payment_method) {
-          order.distributor.payment_methods.customer_credit
-        }
+        let(:credit_payment_method) { create(:customer_credit_payment_method) }
 
         before do
           # Add payment with credit

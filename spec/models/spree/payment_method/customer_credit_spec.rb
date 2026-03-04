@@ -99,16 +99,9 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
     context "when credit payment method is not configured" do
       let!(:credit_payment_method) { nil }
 
-      around do |example|
-        # Customer is needed to create a purchase and a customer is linked to an enterprise.
-        # That means FactoryBot will create an enterprise, so we disable the after save callback
-        # so that credit payment methods are not created.
-        Enterprise.skip_callback(:save, :after, :add_credit_payment_method)
-        example.run
-        Enterprise.set_callback(:save, :after, :add_credit_payment_method)
-      end
-
       it "returns an error" do
+        Spree::PaymentMethod.customer_credit.destroy
+
         expect(response.success?).to be(false)
         expect(response.message).to eq("Credit payment method is missing")
       end
@@ -195,16 +188,9 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
     context "when credit payment method is not configured" do
       let!(:credit_payment_method) { nil }
 
-      around do |example|
-        # Customer is needed to create a purchase and a customer is linked to an enterprise.
-        # That means FactoryBot will create an enterprise, so we disable the after save callback
-        # so that credit payment methods are not created.
-        Enterprise.skip_callback(:save, :after, :add_credit_payment_method)
-        example.run
-        Enterprise.set_callback(:save, :after, :add_credit_payment_method)
-      end
-
       it "returns an error" do
+        Spree::PaymentMethod.customer_credit.destroy
+
         expect(response.success?).to be(false)
         expect(response.message).to eq("Credit payment method is missing")
       end

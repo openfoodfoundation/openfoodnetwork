@@ -352,7 +352,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
         end
 
         context "wiht customer credit" do
-          let(:credit_payment_method) { Spree::PaymentMethod.customer_credit }
+          let(:credit_payment_method) { create(:customer_credit_payment_method) }
           let(:credit_amount) { 100.00 }
           let(:customer) { create(:customer, user:, enterprise: distributor) }
 

@@ -115,8 +115,6 @@ RSpec.describe '
     it "checking a single distributor is checked by default" do
       2.times.each do
         enterprise = Enterprise.last
-        # Delete the default customer credit payment method
-        enterprise.distributor_payment_methods.destroy_all
         enterprise.destroy!
       end
       login_as_admin

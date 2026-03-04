@@ -198,7 +198,7 @@ RSpec.describe "Order Management" do
       end
 
       context "with customer credit" do
-        let(:credit_payment_method) { Spree::PaymentMethod.customer_credit }
+        let(:credit_payment_method) { create(:customer_credit_payment_method) }
 
         it "displays the credit used" do
           create(
