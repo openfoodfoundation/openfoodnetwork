@@ -69,11 +69,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resources :variants do
-        collection do
-          post :update_positions
-        end
-      end
+      resources :variants
     end
 
     get '/variants/search', :to => "variants#search", :as => :search_variants
