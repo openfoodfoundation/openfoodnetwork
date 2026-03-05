@@ -203,6 +203,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
+  gem 'spring-watcher-listen'
   gem 'web-console'
 
   gem 'rack-mini-profiler', '< 3.0.0'

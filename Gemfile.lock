@@ -857,6 +857,9 @@ GEM
       spring (>= 0.9.1)
     spring-commands-rubocop (0.4.0)
       spring (>= 1.0)
+    spring-watcher-listen (2.1.0)
+      listen (>= 2.7, < 4.0)
+      spring (>= 4)
     sprockets (3.7.5)
       base64
       concurrent-ruby (~> 1.0)
@@ -1101,6 +1104,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-commands-rubocop
+  spring-watcher-listen
   sprockets (~> 3.7)
   state_machines-activerecord
   stimulus_reflex
