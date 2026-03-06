@@ -310,9 +310,6 @@ components:
                 currency:
                   type: string
                   example: AUD
-                payment_method_id:
-                  type: integer
-                  example: 100
                 description:
                   type: string
                   nullable: true
@@ -325,7 +322,6 @@ components:
               - customer_id
               - amount
               - currency
-              - payment_method_id
               - description
               - balance
             relationships:
@@ -342,22 +338,6 @@ components:
                         type:
                           type: string
                           example: customer
-                    links:
-                      type: object
-                      properties:
-                        related:
-                          type: string
-                payment_method:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        type:
-                          type: string
-                          example: payment_method
                     links:
                       type: object
                       properties:
