@@ -164,8 +164,6 @@ module Admin
 
     def destroy
       @object.transaction do
-        # Destroy linked payment methods so we remove the default customer credit payment methods
-        @object.distributor_payment_methods.destroy_all
         @object.destroy!
         flash.now[:success] = flash_message_for(@object, :successfully_removed)
       rescue StandardError
