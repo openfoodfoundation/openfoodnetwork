@@ -38,6 +38,8 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :connected_apps, only: [:create, :destroy]
 
+      resources :user_invitations, only: [:new, :create]
+
       resources :producer_properties do
         post :update_positions, on: :collection
       end

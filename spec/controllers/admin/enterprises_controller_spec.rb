@@ -174,18 +174,18 @@ RSpec.describe Admin::EnterprisesController do
         allow(controller).to receive_messages spree_current_user: distributor_manager
         params = {
           id: distributor,
-          receives_notifications: distributor_manager.id,
+          enterprise: { contact_id: distributor_manager.id },
         }
 
         expect { spree_post :update, params }.
           to change { distributor.contact }.to(distributor_manager)
       end
 
-      it "updates the contact for notifications" do
+      it "doesn't update the contact for notifications if the :contact_id parameter is invalid" do
         allow(controller).to receive_messages spree_current_user: distributor_manager
         params = {
           id: distributor,
-          receives_notifications: "? object:null ?",
+          enterprise: { contact_id: "? object:null ?" },
         }
 
         expect { spree_post :update, params }.
