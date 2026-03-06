@@ -116,7 +116,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           create(
             :customer_account_transaction,
             amount: 100, customer: order.customer,
-            payment_method: credit_payment_method
           )
           # Add credit payment
           payment = order.payments.create!(payment_method: credit_payment_method,

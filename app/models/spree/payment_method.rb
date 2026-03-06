@@ -15,7 +15,6 @@ module Spree
     default_scope -> { where(deleted_at: nil).where.not(type: INTERNAL) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
-    has_many :customer_account_transactions, dependent: :restrict_with_error
     has_many :payments, class_name: "Spree::Payment", dependent: :restrict_with_error
 
     validates :name, presence: true

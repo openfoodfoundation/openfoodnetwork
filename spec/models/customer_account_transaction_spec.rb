@@ -9,7 +9,6 @@ RSpec.describe CustomerAccountTransaction do
     it { is_expected.to belong_to(:customer) }
     it { is_expected.to validate_presence_of(:amount) }
     it { is_expected.to validate_presence_of(:currency) }
-    it { is_expected.to belong_to(:payment_method) }
     it { is_expected.to belong_to(:payment).optional }
     it { is_expected.to belong_to(:created_by).optional }
   end

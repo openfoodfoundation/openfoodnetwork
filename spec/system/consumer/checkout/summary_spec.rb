@@ -393,7 +393,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             :customer_account_transaction,
             amount: 100,
             customer: order.customer,
-            payment_method: credit_payment_method
           )
           # Add credit payment
           payment = order.payments.create!(payment_method: credit_payment_method,
@@ -424,7 +423,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             visit checkout_step_path(:summary)
             place_order
 
-            # TODO it should be displaying some kind indication it was paid with credit
             expect(page).to have_content "PAID"
             expect(page).to have_content "Paying via: Customer credit"
             expect(page).to have_selector("#customer-credit", text: with_currency(-10.00))

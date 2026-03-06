@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_01_031845) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -93,16 +93,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_01_031845) do
     t.decimal "amount", precision: 10, scale: 2, null: false
     t.string "currency"
     t.string "description"
-    t.bigint "payment_method_id", null: false
     t.integer "payment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.bigint "created_by_id"
     t.index ["created_by_id"], name: "index_customer_account_transactions_on_created_by_id"
-    t.index ["payment_id"], name: "index_customer_account_transactions_on_payment_id"
     t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
-    t.index ["payment_method_id"], name: "index_customer_account_transactions_on_payment_method_id"
+    t.index ["payment_id"], name: "index_customer_account_transactions_on_payment_id"
   end
 
   create_table "customers", id: :serial, force: :cascade do |t|
@@ -1175,7 +1173,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_01_031845) do
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
   add_foreign_key "customer_account_transactions", "customers"
-  add_foreign_key "customer_account_transactions", "spree_payment_methods", column: "payment_method_id"
   add_foreign_key "customer_account_transactions", "spree_payments", column: "payment_id"
   add_foreign_key "customer_account_transactions", "spree_users", column: "created_by_id"
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"

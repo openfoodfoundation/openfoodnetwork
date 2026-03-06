@@ -352,7 +352,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
         end
 
         context "wiht customer credit" do
-          let(:credit_payment_method) { create(:customer_credit_payment_method) }
+          let!(:credit_payment_method) { create(:customer_credit_payment_method) }
           let(:credit_amount) { 100.00 }
           let(:customer) { create(:customer, user:, enterprise: distributor) }
 
@@ -364,7 +364,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
               :customer_account_transaction,
               amount: credit_amount,
               customer: order.customer,
-              payment_method: credit_payment_method
             )
             visit checkout_step_path(:details)
             fill_out_details

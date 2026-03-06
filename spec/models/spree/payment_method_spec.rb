@@ -7,7 +7,6 @@ RSpec.describe Spree::PaymentMethod do
   describe "associations" do
     subject { build(:payment_method) }
 
-    it { is_expected.to have_many(:customer_account_transactions) }
     it { is_expected.to have_many(:payments) }
   end
 
