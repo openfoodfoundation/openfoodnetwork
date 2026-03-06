@@ -9,8 +9,6 @@
               = t(".transaction_date")  
             %th.description
               = t(".description")  
-            %th.payment-method
-              = t(".payment_method")  
             %th.created-by
               = t(".created_by")  
             %th.amount
@@ -25,8 +23,6 @@
                 = transaction.updated_at.strftime("%Y-%m-%d")
               %td.description
                 = transaction.description
-              %td.payment-method
-                = transaction.payment_method.display_name
               %td.created-by
                 = transaction.created_by&.email
               %td.amount

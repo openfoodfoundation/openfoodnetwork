@@ -20,8 +20,7 @@ RSpec.describe Orders::CustomerCreditService do
       create(
         :customer_account_transaction,
         amount: 100.00,
-        customer: order.customer,
-        payment_method: credit_payment_method
+        customer: order.customer
       )
       subject.apply
 
@@ -45,7 +44,6 @@ RSpec.describe Orders::CustomerCreditService do
           :customer_account_transaction,
           amount: 100.00,
           customer: order.customer,
-          payment_method: credit_payment_method
         )
         subject.apply
 
@@ -66,7 +64,6 @@ RSpec.describe Orders::CustomerCreditService do
           :customer_account_transaction,
           amount: 5.00,
           customer: order.customer,
-          payment_method: credit_payment_method
         )
         subject.apply
 
@@ -82,7 +79,6 @@ RSpec.describe Orders::CustomerCreditService do
           :customer_account_transaction,
           amount: 5.00,
           customer: order.customer,
-          payment_method: credit_payment_method
         )
         allow_any_instance_of(Spree::Payment).to receive(:internal_purchase!)
           .and_raise(Spree::Core::GatewayError)
@@ -104,12 +100,10 @@ RSpec.describe Orders::CustomerCreditService do
     context "when credit payment method is missing" do
       before do
         # Add credit
-        payment_method = create(:api_customer_credit_payment_method)
         create(
           :customer_account_transaction,
           amount: 5.00,
           customer: order.customer,
-          payment_method:
         )
         credit_payment_method.destroy!
       end
@@ -155,7 +149,6 @@ RSpec.describe Orders::CustomerCreditService do
       subject.refund(user: )
 
       last_transaction = order.customer.customer_account_transactions.last
-      expect(last_transaction.payment_method).to eq(credit_payment_method)
       expect(last_transaction.amount).to eq(12.00)
       expect(last_transaction.created_by).to eq(user)
     end

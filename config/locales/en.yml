@@ -896,7 +896,6 @@ en:
         available_credit: "Available credit: %{available_credit}"
         transaction_date: Transaction Date
         description: Description
-        payment_method: Payment method 
         amount: Amount
         created_by: Created by
         running_balance: Running balance
@@ -5043,7 +5042,6 @@ en:
         title: Customer Transactions 
         credit_available: "Credit available: %{credit}"
         transaction_date: Transaction Date
-        payment_method: Payment method 
         description: Description
         amount: Amount
         running_balance: Running balance
