@@ -11,7 +11,6 @@ class CustomerAccountTransactionSchema < JsonApiSchema
       customer_id: { type: :integer, example: 10 },
       amount: { type: :decimal, example: 10.50 },
       currency: { type: :string, example: "AUD" },
-      payment_method_id: { type: :integer, example: 100 },
       description: { type: :string, nullable: true, example: "Payment processed by POS" },
       balance: { type: :decimal, example: 10.50 },
     }
@@ -22,10 +21,10 @@ class CustomerAccountTransactionSchema < JsonApiSchema
   end
 
   def self.writable_attributes
-    attributes.except(:id, :balance, :payment_method_id, :currency)
+    attributes.except(:id, :balance, :currency)
   end
 
   def self.relationships
-    [:customer, :payment_method]
+    [:customer]
   end
 end

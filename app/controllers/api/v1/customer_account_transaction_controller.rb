@@ -6,13 +6,11 @@ module Api
       def create
         authorize! :create, CustomerAccountTransaction
 
-        # We only allow using the api customer credit payment method
         default_params = {
-          currency: CurrentConfig.get(:currency), payment_method_id:, created_by: current_api_user
+          currency: CurrentConfig.get(:currency), created_by: current_api_user
         }
-        transaction = CustomerAccountTransaction.new(
-          default_params.merge(customer_account_transaction_params)
-        )
+        parameters = default_params.merge(customer_account_transaction_params).merge(description: )
+        transaction = CustomerAccountTransaction.new(parameters)
 
         if transaction.save
           render json: Api::V1::CustomerAccountTransactionSerializer.new(transaction),
@@ -28,8 +26,8 @@ module Api
         params.require(:customer_account_transaction).permit(:customer_id, :amount, :description)
       end
 
-      def payment_method_id
-        Spree::PaymentMethod.api_customer_credit&.id
+      def description
+        I18n.t(".api_customer_credit", description: params[:description])
       end
     end
   end

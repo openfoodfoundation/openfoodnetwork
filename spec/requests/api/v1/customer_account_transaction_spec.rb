@@ -4,7 +4,6 @@ require "swagger_helper"
 
 RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :api_v1 do
   let!(:enterprise) { create(:enterprise) }
-  let!(:payment_method) { create(:api_customer_credit_payment_method) }
   let(:customer) { create(:customer) }
 
   before do
@@ -36,10 +35,9 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
         run_test! do
           expect(json_response[:data][:attributes]).to include(
             customer_id: customer.id,
-            payment_method_id: payment_method.id,
             amount: "10.25",
             currency: "AUD",
-            description: "Payment processed by POS",
+            description: "API credit: Payment processed by POS",
             balance: "10.25",
           )
 
