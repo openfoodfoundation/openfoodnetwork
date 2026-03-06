@@ -123,8 +123,8 @@ module Spree
 
     # Allows by passing the default scope on Spree::PaymentMethod. It's needed to link payment
     # to internal payment method.
-    # Using ->{ unscope(where: :internal) } on the association doesn't work presumably because
-    # the default scope is not a simple `where`.
+    # Using ->{ unscoped } on the association doesn't work presumably because the default scope
+    # is not a simple `where`.
     def payment_method
       Spree::PaymentMethod.unscoped { super }
     end

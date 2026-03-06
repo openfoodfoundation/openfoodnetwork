@@ -5196,9 +5196,6 @@ en:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
   api_customer_credit: "API credit: %{description}" 
-  api_payment_method:
-    name: API customer credit
-    description: Used to credit customer via customer account transactions endpoint
   credit_payment_method:
     name: Customer credit
     description: Allow customer to pay with credit

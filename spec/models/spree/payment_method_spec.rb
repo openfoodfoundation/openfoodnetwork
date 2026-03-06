@@ -80,29 +80,10 @@ RSpec.describe Spree::PaymentMethod do
     end
   end
 
-  describe "#internal" do
-    it "returns only internal payment method" do
-      external = create(:payment_method)
-      internal1 = create(:customer_credit_payment_method)
-      internal2 = create(:api_customer_credit_payment_method)
-
-      payment_methods = described_class.internal
-      expect(payment_methods).to include(internal1, internal2)
-      expect(payment_methods).not_to include(external)
-    end
-  end
-
   describe "#customer_credit" do
     it "returns the customer credit payment method" do
       create(:customer_credit_payment_method)
       expect(Spree::PaymentMethod.customer_credit).to be_a(Spree::PaymentMethod::CustomerCredit)
-    end
-  end
-
-  describe "#api_customer_credit" do
-    it "returns the api customer credit payment method" do
-      create(:api_customer_credit_payment_method)
-      expect(Spree::PaymentMethod.api_customer_credit).to be_a(Spree::PaymentMethod::ApiCustomerCredit)
     end
   end
 

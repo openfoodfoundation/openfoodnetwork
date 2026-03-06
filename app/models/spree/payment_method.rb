@@ -11,7 +11,7 @@ module Spree
     acts_as_paranoid
 
     DISPLAY = [:both, :back_end].freeze
-    INTERNAL = %w{Spree::PaymentMethod::CustomerCredit Spree::PaymentMethod::ApiCustomerCredit}.freeze
+    INTERNAL = Spree::PaymentMethod::CustomerCredit.to_s
     default_scope -> { where(deleted_at: nil).where.not(type: INTERNAL) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
@@ -54,16 +54,10 @@ module Spree
         .where(environment: [Rails.env, "", nil])
     }
 
-    scope :internal, -> { unscoped.where(deleted_at: nil, type: INTERNAL) }
-
-    # These two method are used to get the two internal payment method. They are accessible to all
+    # These method is used to get the internal payment method. It is accessible to all
     # enterprise, but the accessibility is managed by the code, as opposed to using the database.
     def self.customer_credit
       unscoped.find_by(type: "Spree::PaymentMethod::CustomerCredit", deleted_at: nil)
-    end
-
-    def self.api_customer_credit
-      unscoped.find_by(type: "Spree::PaymentMethod::ApiCustomerCredit", deleted_at: nil)
     end
 
     def configured?
@@ -132,13 +126,13 @@ module Spree
     end
 
     def internal?
-      type.in?(INTERNAL)
+      type == INTERNAL
     end
 
     private
 
     def distributor_validation
-      return true if type.in?(INTERNAL)
+      return true if internal?
 
       validates_with DistributorsValidator
     end
