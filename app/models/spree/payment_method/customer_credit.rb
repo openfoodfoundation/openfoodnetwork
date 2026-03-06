@@ -33,7 +33,6 @@ module Spree
         customer = Customer.find_by(id: options[:customer_id])
         return error_response("customer_not_found") if customer.nil?
         return error_response("missing_payment") if options[:payment_id].nil?
-        return error_response("credit_payment_method_missing") if payment_method.nil?
 
         available_credit = customer.customer_account_transactions.last&.balance
         return error_response("no_credit_available") if available_credit.nil?
@@ -49,7 +48,6 @@ module Spree
           customer.customer_account_transactions.create(
             amount: -calculated_amount,
             currency:,
-            payment_method:,
             payment_id: options[:payment_id],
             description:
           )
@@ -69,7 +67,6 @@ module Spree
         customer = Customer.find_by(id: options[:customer_id])
         return error_response("customer_not_found") if customer.nil?
         return error_response("missing_payment") if options[:payment_id].nil?
-        return error_response("credit_payment_method_missing") if payment_method.nil?
 
         customer.with_lock do
           description = I18n.t(
@@ -80,7 +77,6 @@ module Spree
           customer.customer_account_transactions.create(
             amount: calculated_amount,
             currency:,
-            payment_method:,
             payment_id: options[:payment_id],
             description:,
             created_by_id: options[:user_id]
@@ -100,10 +96,6 @@ module Spree
       end
 
       private
-
-      def payment_method
-        Spree::PaymentMethod.customer_credit
-      end
 
       def error_response(translation_key)
         message = I18n.t(translation_key, scope: "credit_payment_method.errors")

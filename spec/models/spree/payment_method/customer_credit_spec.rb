@@ -43,9 +43,8 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
 
       transaction = customer.customer_account_transactions.last
       expect(transaction.amount).to eq(-10.00)
-      expect(transaction.payment_method).to be_a(Spree::PaymentMethod::CustomerCredit)
       expect(transaction.payment).to eq(payment)
-      expect(transaction.description).to eq("Payment for order: R023075164")
+      expect(transaction.description).to eq("Customer credit: Payment for order: R023075164")
     end
 
     context "when not enough credit is available" do
@@ -95,15 +94,6 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
         expect(response.message).to eq("Missing payment")
       end
     end
-
-    context "when credit payment method is not configured" do
-      let!(:credit_payment_method) { nil }
-
-      it "returns an error" do
-        expect(response.success?).to be(false)
-        expect(response.message).to eq("Credit payment method is missing")
-      end
-    end
   end
 
   describe "#void" do
@@ -131,9 +121,8 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
 
       transaction = customer.customer_account_transactions.last
       expect(transaction.amount).to eq(15.00)
-      expect(transaction.payment_method).to be_a(Spree::PaymentMethod::CustomerCredit)
       expect(transaction.payment).to eq(payment)
-      expect(transaction.description).to eq("Refund for order: R023075164")
+      expect(transaction.description).to eq("Customer credit: Refund for order: R023075164")
     end
 
     context "when user_id provided" do
@@ -180,15 +169,6 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       it "returns an error" do
         expect(response.success?).to be(false)
         expect(response.message).to eq("Missing payment")
-      end
-    end
-
-    context "when credit payment method is not configured" do
-      let!(:credit_payment_method) { nil }
-
-      it "returns an error" do
-        expect(response.success?).to be(false)
-        expect(response.message).to eq("Credit payment method is missing")
       end
     end
   end
