@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class PaymentMethod < ApplicationRecord
+  class PaymentMethod < ApplicationRecord # rubocop:disable Metrics/ClassLength
     include CalculatedAdjustments
     include PaymentMethodDistributors
 
@@ -11,9 +11,11 @@ module Spree
     acts_as_paranoid
 
     DISPLAY = [:both, :back_end].freeze
-    default_scope -> { where(deleted_at: nil) }
+    INTERNAL = Spree::PaymentMethod::CustomerCredit.to_s
+    default_scope -> { where(deleted_at: nil).where.not(type: INTERNAL) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
+    has_many :payments, class_name: "Spree::Payment", dependent: :restrict_with_error
 
     validates :name, presence: true
     validate :distributor_validation
@@ -51,6 +53,12 @@ module Spree
         .where(display_on: [display_on, "", nil])
         .where(environment: [Rails.env, "", nil])
     }
+
+    # These method is used to get the internal payment method. It is accessible to all
+    # enterprise, but the accessibility is managed by the code, as opposed to using the database.
+    def self.customer_credit
+      unscoped.find_by(type: "Spree::PaymentMethod::CustomerCredit", deleted_at: nil)
+    end
 
     def configured?
       !stripe? || stripe_configured?
@@ -109,9 +117,23 @@ module Spree
       distributors.include?(distributor)
     end
 
+    def display_name
+      try_translating(name)
+    end
+
+    def display_description
+      try_translating(description)
+    end
+
+    def internal?
+      type == INTERNAL
+    end
+
     private
 
     def distributor_validation
+      return true if internal?
+
       validates_with DistributorsValidator
     end
 
@@ -125,6 +147,12 @@ module Spree
         preferred_enterprise_id.present? &&
         preferred_enterprise_id > 0 &&
         stripe_account_id.present?
+    end
+
+    def try_translating(value)
+      return value if value.blank?
+
+      I18n.t(value, default: value)
     end
   end
 end

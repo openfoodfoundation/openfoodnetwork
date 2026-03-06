@@ -61,6 +61,7 @@ module Spree
         add_manage_line_items_abilities user
       end
       add_relationship_management_abilities user if can_manage_relationships? user
+      add_customer_account_transaction_abilities user if can_manage_enterprises? user
     end
 
     # New users have no enterprises.
@@ -456,6 +457,10 @@ module Spree
         user.enterprises.include?(enterprise_relationship.parent) ||
           user.enterprises.include?(enterprise_relationship.child)
       end
+    end
+
+    def add_customer_account_transaction_abilities(_user)
+      can [:admin, :create, :index], CustomerAccountTransaction
     end
   end
 end

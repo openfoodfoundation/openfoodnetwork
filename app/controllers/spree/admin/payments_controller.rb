@@ -5,7 +5,7 @@ module Spree
     class PaymentsController < Spree::Admin::BaseController
       before_action :load_order, except: [:show]
       before_action :load_payment, only: [:fire, :show]
-      before_action :load_data
+      before_action :load_data, except: [:credit_customer]
       before_action :can_transition_to_payment
       # We ensure that items are in stock before all screens if the order is in the Payment state.
       # This way, we don't allow someone to enter credit card details for an order only to be told
@@ -90,6 +90,18 @@ module Spree
             render
           end
         end
+      end
+
+      def credit_customer
+        response = ::Orders::CustomerCreditService.new(@order).refund
+
+        if response.success?
+          flash[:success] = Spree.t(:customer_credit_successful, scope: "admin.payments")
+        else
+          flash[:error] = response.message
+        end
+
+        redirect_to admin_order_payments_path(@order)
       end
 
       private
@@ -185,7 +197,7 @@ module Spree
       end
 
       def allowed_events
-        %w{capture void_transaction credit refund resend_authorization_email
+        %w{capture void_transaction credit refund internal_void resend_authorization_email
            capture_and_complete_order}
       end
 

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 Openfoodnetwork::Application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
   namespace :api do
-
     # Mount DFC API endpoints
     #
     # The DFC prototype is still pointing to the old URL though:
@@ -24,7 +25,7 @@ Openfoodnetwork::Application.routes.draw do
         resources :variants
       end
 
-      resources :variants, :only => [:index]
+      resources :variants, only: [:index]
 
       resources :orders, only: [:index, :show, :update] do
         member do
@@ -32,7 +33,7 @@ Openfoodnetwork::Application.routes.draw do
           put :ship
         end
 
-        resources :shipments, :only => [:create, :update] do
+        resources :shipments, only: [:create, :update] do
           member do
             put :ready
             put :ship
@@ -77,12 +78,12 @@ Openfoodnetwork::Application.routes.draw do
 
       post '/product_images/:product_id', to: 'product_images#update_product_image'
 
-      resources :states, :only => [:index, :show]
+      resources :states, only: [:index, :show]
 
       resources :taxons, except: %i[show edit]
 
       get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
-          constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }
+                                                     constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }
     end
 
     namespace :v1 do
@@ -91,8 +92,11 @@ Openfoodnetwork::Application.routes.draw do
       resources :enterprises do
         resources :customers, only: :index
       end
+
+      resources :customer_account_transaction, only: [:create]
     end
 
-    match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v[0-9]).+/ }
+    match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all,
+                   constraints: { path: /(?!v[0-9]).+/ }
   end
 end

@@ -196,6 +196,25 @@ RSpec.describe "Order Management" do
         expect(page).to have_content 'Cancelled'
         expect(order.reload).to be_canceled
       end
+
+      context "with customer credit" do
+        let(:credit_payment_method) { create(:customer_credit_payment_method) }
+
+        it "displays the credit used" do
+          create(
+            :customer_account_transaction,
+            amount: 100, customer: order.customer,
+          )
+          # Add credit payment
+          payment = order.payments.create!(payment_method: credit_payment_method,
+                                           amount: 2.00)
+          payment.internal_purchase!
+
+          visit order_path(order)
+
+          expect(page).to have_selector("#customer-credit", text: with_currency(-2.00))
+        end
+      end
     end
   end
 

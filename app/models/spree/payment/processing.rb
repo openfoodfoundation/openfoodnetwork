@@ -4,6 +4,8 @@ module Spree
   class Payment < ApplicationRecord
     module Processing
       def process!
+        return internal_purchase! if payment_method.internal?
+
         return unless validate!
 
         purchase!
@@ -18,6 +20,17 @@ module Spree
         else
           charge_offline!
         end
+      end
+
+      def internal_purchase!
+        started_processing!
+        options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
+        response = payment_method.purchase(
+          (amount * 100).round,
+          nil,
+          options
+        )
+        handle_response(response, :complete, :failure)
       end
 
       def authorize!(return_url = nil)
@@ -128,6 +141,27 @@ module Spree
           else
             gateway_error(response)
           end
+        end
+      end
+
+      def internal_void!
+        return true if void?
+        # We should only void complete payment, otherwise we will be refunding credit that was
+        # not used in the first place.
+        return gateway_error(Spree.t(:internal_payment_not_voidable)) if state != "completed"
+
+        options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
+        response = payment_method.void(
+          (amount * 100).round,
+          nil,
+          options
+        )
+        record_response(response)
+
+        if response.success?
+          void
+        else
+          gateway_error(response)
         end
       end
 
@@ -248,6 +282,7 @@ module Spree
                end
         logger.error(Spree.t(:gateway_error))
         logger.error("  #{error.to_yaml}")
+        # TODO why is this not captured ?
         raise Core::GatewayError, text
       end
 

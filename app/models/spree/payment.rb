@@ -18,7 +18,7 @@ module Spree
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
-    belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
+    belongs_to :payment_method, class_name: "Spree::PaymentMethod", inverse_of: :payments
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
              class_name: "Spree::Payment", foreign_key: :source_id,
@@ -115,10 +115,18 @@ module Spree
         Alert.raise(
           e,
           metadata: {
-            event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
+            event_type: "ofn.payment_transition", payment_id: payment.id, event: transition.to
           }
         )
       end
+    end
+
+    # Allows by passing the default scope on Spree::PaymentMethod. It's needed to link payment
+    # to internal payment method.
+    # Using ->{ unscoped } on the association doesn't work presumably because the default scope
+    # is not a simple `where`.
+    def payment_method
+      Spree::PaymentMethod.unscoped { super }
     end
 
     def money

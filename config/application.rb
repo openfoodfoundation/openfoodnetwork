@@ -23,7 +23,7 @@ require_relative "../lib/git_utils"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups(:assets => %w(development test)))
+Bundler.require(*Rails.groups(assets: %w(development test)))
 
 module Openfoodnetwork
   class Application < Rails::Application
@@ -47,15 +47,18 @@ module Openfoodnetwork
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = ENV["TIMEZONE"]
+    config.time_zone = ENV.fetch("TIMEZONE", nil)
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Store a description of the current version
-    config.x.git_version = GitUtils::git_version
+    config.x.git_version = GitUtils.git_version
 
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
-      Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
+      if Rails.env.test?
+        Spree::Core::Engine.routes.default_url_options[:host] =
+          ENV.fetch("SITE_URL", nil)
+      end
     end
 
     config.after_initialize do
@@ -123,13 +126,13 @@ module Openfoodnetwork
       end
     end
 
-    initializer "ofn.reports" do |app|
+    initializer "ofn.reports" do |_app|
       module ::Reporting; end
       Rails.application.reloader.to_prepare do
-        next if defined?(::Reporting) && defined?(::Reporting::Errors)
+        next if defined?(::Reporting::Errors)
 
         loader = Zeitwerk::Loader.new
-        loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
+        loader.push_dir("#{Rails.root.join('lib/reporting')}", namespace: ::Reporting)
         loader.enable_reloading
         loader.setup
         loader.eager_load
@@ -190,8 +193,8 @@ module Openfoodnetwork
 
     config.generators.template_engine = :haml
 
-    Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
-    DfcProvider::Engine.routes.default_url_options[:host] = ENV["SITE_URL"]
+    Rails.application.routes.default_url_options[:host] = ENV.fetch("SITE_URL", nil)
+    DfcProvider::Engine.routes.default_url_options[:host] = ENV.fetch("SITE_URL", nil)
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 
@@ -210,7 +213,7 @@ module Openfoodnetwork
     config.active_storage.url_options = config.action_controller.default_url_options
     config.active_storage.variant_processor = :mini_magick
 
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
 
     config.view_component.generate.sidecar = true # Always generate components in subfolders
 

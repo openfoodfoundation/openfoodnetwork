@@ -7,9 +7,9 @@ module Api
     # columns to instance methods. This way, the `balance_value` alias on that class ends up being
     # `object.balance_value` here.
     class CustomerWithBalanceSerializer < CustomerSerializer
-      attributes :balance, :balance_status
+      attributes :balance, :balance_status, :available_credit, :available_credit_url
 
-      delegate :balance_value, to: :object
+      delegate :balance_value, :credit_value, to: :object
 
       def balance
         Spree::Money.new(balance_value, currency: CurrentConfig.get(:currency)).to_s
@@ -23,6 +23,14 @@ module Api
         else
           ""
         end
+      end
+
+      def available_credit
+        Spree::Money.new(object.credit_value).to_s
+      end
+
+      def available_credit_url
+        admin_customer_customer_account_transaction_index_path(object.id)
       end
     end
   end

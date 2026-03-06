@@ -29,7 +29,13 @@ module Spree
       hide_ofn_navigation(@order.distributor)
     end
 
-    def show; end
+    def show
+      credit_payment_method = @order.distributor.payment_methods.customer_credit
+      credit_payment = @order.payments.find_by(payment_method: credit_payment_method)
+      @paid_with_credit = credit_payment&.amount
+
+      @payment_total = @order.payment_total - @paid_with_credit.to_f
+    end
 
     def empty
       if @order = current_order
