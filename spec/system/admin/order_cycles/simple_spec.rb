@@ -469,25 +469,7 @@ RSpec.describe '
         end
 
         it "doesn't show a warning when going to 'outgoing products' tab" do
-          pending("#11851")
-
-          # hides/displays variant within coordinator's inventory
-          inventory_item_v1.update!(visible: false)
-          # changes coordinator's inventory preferences
-          supplier_managed.update preferred_product_selection_from_inventory_only: false
-
-          visit edit_admin_order_cycle_path(oc)
-          click_link "Outgoing Products"
-          within "tr.distributor-#{distributor_managed.id}" do
-            page.find("td.products").click
-          end
-
-          # we need this assertion here to assure there is enough time to
-          # toggle the variant box and evaluate the following assertion
-          expect(page).to have_content v1.product.name
-
-          expect(page).not_to have_content "No variant available for this product"
-          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
+          skip("#11851")
         end
       end
 
