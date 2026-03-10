@@ -14,31 +14,71 @@ RSpec.describe Orders::CartResetService do
     end
   end
 
-  context "if the order's order cycle is not in the list of visible order cycles" do
-    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-    let(:order_cycle_list) { instance_double(Shop::OrderCyclesList) }
+  describe "#reset_other!" do
+    it "does not reset the user" do
+      new_user = create(:user)
 
-    before do
-      expect(Shop::OrderCyclesList).to receive(:new).and_return(order_cycle_list)
-      order.update_attribute :order_cycle, order_cycle
+      expect do
+        described_class.new(order, distributor.id.to_s).reset_other!(new_user, nil)
+      end.not_to change { order.user }
     end
 
-    it "empties order and makes order cycle nil" do
-      expect(order_cycle_list).to receive(:call).and_return([])
-
-      Orders::CartResetService.new(order, distributor.id.to_s).reset_other!(nil, nil)
-
-      expect(order.line_items).to be_empty
-      expect(order.order_cycle).to be_nil
+    context "when user is missing" do
+      it "does not reset the user" do
+        expect do
+          described_class.new(order, distributor.id.to_s).reset_other!(nil, nil)
+        end.not_to change { order.user }
+      end
     end
 
-    it "selects default Order Cycle if there's one" do
-      other_order_cycle = create(:simple_order_cycle, distributors: [distributor])
-      expect(order_cycle_list).to receive(:call).and_return([other_order_cycle])
+    context "when order email is blank" do
+      it "links the order to the current user" do
+        new_user = create(:user)
+        order.update(email: nil)
 
-      Orders::CartResetService.new(order, distributor.id.to_s).reset_other!(nil, nil)
+        described_class.new(order, distributor.id.to_s).reset_other!(new_user, nil)
 
-      expect(order.order_cycle).to eq other_order_cycle
+        expect(order.user).to eq(new_user)
+      end
+    end
+
+    context "when order user is blank" do
+      it "links the order to the current user" do
+        new_user = create(:user)
+        order.update(user: nil)
+
+        described_class.new(order, distributor.id.to_s).reset_other!(new_user, nil)
+
+        expect(order.user).to eq(new_user)
+      end
+    end
+
+    context "if the order's order cycle is not in the list of visible order cycles" do
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+      let(:order_cycle_list) { instance_double(Shop::OrderCyclesList) }
+
+      before do
+        expect(Shop::OrderCyclesList).to receive(:new).and_return(order_cycle_list)
+        order.update_attribute :order_cycle, order_cycle
+      end
+
+      it "empties order and makes order cycle nil" do
+        expect(order_cycle_list).to receive(:call).and_return([])
+
+        Orders::CartResetService.new(order, distributor.id.to_s).reset_other!(nil, nil)
+
+        expect(order.line_items).to be_empty
+        expect(order.order_cycle).to be_nil
+      end
+
+      it "selects default Order Cycle if there's one" do
+        other_order_cycle = create(:simple_order_cycle, distributors: [distributor])
+        expect(order_cycle_list).to receive(:call).and_return([other_order_cycle])
+
+        Orders::CartResetService.new(order, distributor.id.to_s).reset_other!(nil, nil)
+
+        expect(order.order_cycle).to eq other_order_cycle
+      end
     end
   end
 end
