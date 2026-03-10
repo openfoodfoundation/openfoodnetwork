@@ -282,8 +282,8 @@ module Spree
 
       dup.tap do |variant|
         variant.price = price
-        variant.save!
         variant.source_variants = [self]
+        variant.stock_items << Spree::StockItem.new(variant:)
         variant.owner_id = owner_id
         variant.on_demand = on_demand
         variant.on_hand = on_hand

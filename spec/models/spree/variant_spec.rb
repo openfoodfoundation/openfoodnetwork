@@ -1018,13 +1018,9 @@ RSpec.describe Spree::Variant do
                child: enterprise,
                permissions_list: [:create_sourced_variants])
       }
+      let(:variant) { create(:variant, price: 10.95, on_demand: false, on_hand: 5) }
 
       it "clones the variant, retaining a link to the source" do
-        variant.price = 10.95
-        variant.save!
-        variant.on_demand = false
-        variant.on_hand = 5
-
         sourced_variant = variant.create_sourced_variant(user)
 
         expect(sourced_variant.source_variants).to eq [variant]
