@@ -70,10 +70,10 @@ RSpec.describe Orders::CartResetService do
       end
 
       context "when customer is missing" do
-        it "does not reset the customer" do
+        it "removes the customer" do
           expect do
             described_class.new(order, distributor.id.to_s).reset_other!(nil, nil)
-          end.not_to change { order.customer }
+          end.to change { order.customer }.to(nil)
         end
       end
 

@@ -21,7 +21,7 @@ module Orders
     def reset_other!(current_user, current_customer)
       reset_user(current_user)
       reset_order_cycle(current_customer)
-      order.customer = current_customer if current_customer.present?
+      order.customer = current_customer
       order.save!
     end
 
