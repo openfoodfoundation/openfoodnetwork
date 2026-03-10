@@ -19,8 +19,9 @@ module Orders
     end
 
     def reset_other!(current_user, current_customer)
-      reset_user_and_customer(current_user)
+      reset_user(current_user)
       reset_order_cycle(current_customer)
+      order.customer = current_customer if current_customer.present?
       order.save!
     end
 
@@ -28,7 +29,7 @@ module Orders
 
     attr_reader :order, :distributor, :current_user
 
-    def reset_user_and_customer(current_user)
+    def reset_user(current_user)
       return unless current_user
 
       order.associate_user!(current_user) if order.user.blank? || order.email.blank?

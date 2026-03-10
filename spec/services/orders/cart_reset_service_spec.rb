@@ -53,6 +53,39 @@ RSpec.describe Orders::CartResetService do
       end
     end
 
+    describe "resetting the customer" do
+      let(:customer) { create(:customer) }
+
+      before do
+        order.customer = customer
+        order.save!
+      end
+
+      it "links the customer to the order" do
+        new_customer = create(:customer)
+
+        described_class.new(order, distributor.id.to_s).reset_other!(nil, new_customer)
+
+        expect(order.reload.customer).to eq(new_customer)
+      end
+
+      context "when customer is missing" do
+        it "does not reset the customer" do
+          expect do
+            described_class.new(order, distributor.id.to_s).reset_other!(nil, nil)
+          end.not_to change { order.customer }
+        end
+      end
+
+      context "with the same customer as the order's customer" do
+        it "does not reset the customer" do
+          expect do
+            described_class.new(order, distributor.id.to_s).reset_other!(nil, customer)
+          end.not_to change { order.customer }
+        end
+      end
+    end
+
     context "if the order's order cycle is not in the list of visible order cycles" do
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:order_cycle_list) { instance_double(Shop::OrderCyclesList) }
