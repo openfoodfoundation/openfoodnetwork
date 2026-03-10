@@ -98,7 +98,7 @@ RSpec.describe "Admin::ProductsV3" do
           expect(response.body).to match "Original variant" # cloned variant name
         }.to change { variant.product.variants.count }.by(1)
 
-        new_variant = variant.product.variants.last
+        new_variant = variant.product.variants.order(:id).last
         # The new variant is a target of the original. It is a "sourced" variant.
         expect(variant.target_variants.first).to eq new_variant
         # The new variant's source is the original
@@ -120,7 +120,7 @@ RSpec.describe "Admin::ProductsV3" do
           }.to change { variant.product.variants.count }.by(1)
 
           # The new variant is owned by my enterprise that has permission, not the other one
-          new_variant = variant.product.variants.last
+          new_variant = variant.product.variants.order(:id).last
           expect(new_variant.owner).to eq enterprise
         end
       end
