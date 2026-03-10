@@ -1009,7 +1009,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
     t.bigint "supplier_id"
     t.float "variant_unit_scale"
     t.string "variant_unit_name", limit: 255
-    t.integer "owner_id"
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_spree_variants_on_owner_id"
     t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["shipping_category_id"], name: "index_spree_variants_on_shipping_category_id"

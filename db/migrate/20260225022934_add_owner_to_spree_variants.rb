@@ -2,7 +2,6 @@
 
 class AddOwnerToSpreeVariants < ActiveRecord::Migration[7.1]
   def change
-    add_column :spree_variants, :owner_id, :integer
-    add_foreign_key :spree_variants, :enterprises, column: :owner_id
+    add_reference :spree_variants, :owner, foreign_key: { to_table: :enterprises }
   end
 end
