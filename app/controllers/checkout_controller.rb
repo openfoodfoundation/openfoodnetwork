@@ -31,6 +31,11 @@ class CheckoutController < BaseController
       check_step
     end
 
+    if payment_step? || summary_step?
+      credit_payment_method = @order.distributor.payment_methods.customer_credit
+      @paid_with_credit = @order.payments.find_by(payment_method: credit_payment_method)&.amount
+    end
+
     return if available_shipping_methods.any?
 
     flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')
@@ -121,7 +126,9 @@ class CheckoutController < BaseController
     shipping_method_updated = @order.shipping_method&.id != params[:shipping_method_id].to_i
 
     @order.select_shipping_method(params[:shipping_method_id])
+
     @order.update(order_params)
+
     # We need to update voucher to take into account:
     #  * when moving away from "details" step : potential change in shipping method fees
     #  * when moving away from "payment" step : payment fees

@@ -17,4 +17,4 @@
     %p.callout{style: "margin-top: 40px"}
       %strong
         = t :email_payment_description
-    %p{style: "margin: 5px"}= @order.last_payment_method.description
+    %p{style: "margin: 5px"}= @order.last_payment_method.display_description

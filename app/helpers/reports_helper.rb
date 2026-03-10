@@ -17,7 +17,7 @@ module ReportsHelper
 
       next unless payment_method
 
-      [payment_method.name, payment_method.id]
+      [payment_method.display_name, payment_method.id]
     end.compact.uniq
   end
 
