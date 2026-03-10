@@ -39,6 +39,21 @@ RSpec.describe EnterprisesController do
         expect(controller.current_order.distributor).to eq(distributor)
         expect(controller.current_order.order_cycle).to be_nil
       end
+
+      context "when customer doesn't belong to the order's distributor" do
+        it "sets the order's customer to distributor's customer" do
+          expected_customer = create(:customer, user:, enterprise: distributor)
+
+          # Make sure the order is linked to a customer
+          customer = create(:customer)
+          order.customer = customer
+          order.save!
+
+          expect do
+            get :shop, params: { id: distributor }
+          end.to change { controller.current_order.customer }.to(expected_customer)
+        end
+      end
     end
 
     it "sorts order cycles by the distributor's preferred ordering attr" do
