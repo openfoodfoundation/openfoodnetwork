@@ -892,19 +892,15 @@ fil_PH:
           legend: "mga gumagamit"
           email_confirmation_notice_html: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
           resend: Ipadala muli
-          owner: 'May-ari'
           contact: "Makipag-usap"
+          owner: 'May-ari'
           contact_tip: "ang tagapamahala na makakatanggap ng enterprise emails para sa mga order at mga abiso. kailangang may kumpirmadong email address."
           owner_tip: ang pangunahing gumagamit na responsable sa enterprise na ito.
           notifications: mga abiso
           notifications_tip: ang mga abiso tungkol sa mga order ay ipapadala sa email address na ito.
           notifications_placeholder: hal. gustav@truffles.com
           notifications_note: 'Tandaan: ang bagong email address ay kailangang kumpirmado bago magamit'
-          managers: Tagapamahala
-          managers_tip: ang ibang gagamit na may permisong pamahalaan ang enterprise na ito.
           invite_manager: "Mag-imbita ng Tagapamahala"
-          invite_manager_tip: "mag-imbita ng hindi rehistradong user na mag-sign-up at maging tagapamahala ng enterprise na ito."
-          add_unregistered_user: "magdagdag ng hindi rehistradong user"
           email_confirmed: "ang email ay kumpirmado na"
           email_not_confirmed: "ang email ay hindi pa kumpirmado"
         vouchers:
@@ -978,9 +974,6 @@ fil_PH:
         choose_starting_point: 'pumili ng package:'
         profile: 'profile'
         producer_profile: 'Profile ng Producer'
-      invite_manager:
-        user_already_exists: "ang user ay rehistrado na"
-        error: "may nangyaring mali"
     order_cycles:
       loading_flash:
         loading_order_cycles: NILO-LOAD ANG MGA ORDER CYCLE
@@ -1330,6 +1323,11 @@ fil_PH:
     schedules:
       destroy:
         associated_subscriptions_error: ang iskedyul na ito ay hindi maialis sapagkat ito ay nauugnay sa ibang mga subscription.
+    user_invitations:
+      new:
+        back: bumalik
+        email: Email
+        invite: mag-imbita
     vouchers:
       new:
         back: bumalik

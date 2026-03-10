@@ -954,19 +954,15 @@ pt:
           legend: "Utilizadores"
           email_confirmation_notice_html: "A confirmação do email está pendente. Enviamos um email de confirmação para %{email}."
           resend: Reenviar
-          owner: 'Proprietário'
           contact: "Contacto"
+          owner: 'Proprietário'
           contact_tip: "O gestor que vai receber emails da organização, como encomendas e notificações. Tem de ter um endereço de email confirmado."
           owner_tip: O utilizador principal responsável por esta organização.
           notifications: Notificações
           notifications_tip: Notificações sobre encomendas serão enviadas para este email.
           notifications_placeholder: 'ex: gustavo@trufas.pt'
           notifications_note: 'Nota: um novo endereço de email pode precisar de ser confirmado antes do uso'
-          managers: Gestores
-          managers_tip: Os outros utilizadores com permissão para gerir esta organização.
           invite_manager: "Convidar Gestor/a"
-          invite_manager_tip: "Convidar um/a utilizador/a não-registado/a a inscrever-se e tornar-se gestor/a desta organização."
-          add_unregistered_user: "Adicionar um/a utilizador/a não-registado/a"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
         vouchers:
@@ -1041,9 +1037,6 @@ pt:
         choose_starting_point: 'Escolha o seu pacote:'
         profile: 'Perfil'
         producer_profile: 'Perfil do Produtor'
-      invite_manager:
-        user_already_exists: "O/A utilizador/a já existe"
-        error: "Algo correu mal"
     order_cycles:
       loading_flash:
         loading_order_cycles: A carregar ciclos de encomenda
@@ -1382,6 +1375,11 @@ pt:
     schedules:
       destroy:
         associated_subscriptions_error: Este horário não pode ser eliminado porque tem subscrições associadas
+    user_invitations:
+      new:
+        back: Voltar
+        email: Email
+        invite: Convidar
     vouchers:
       new:
         back: Voltar

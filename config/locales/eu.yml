@@ -1264,19 +1264,15 @@ eu:
           legend: "Erabiltzaileak"
           email_confirmation_notice_html: "Helbide elektronikoa berrestea falta da. Baieztapen-mezu bat bidali dizugu %{email} helbidera. "
           resend: Birbidali
-          owner: 'Jabea'
           contact: "Kontaktua"
+          owner: 'Jabea'
           contact_tip: "Eskaera eta jakinarazpenetarako enpresaren mezu elektronikoak jasoko dituen administratzailea. Helbide elektroniko bat izan behar duzu baieztatuta. "
           owner_tip: Arduradun nagusia erakunde honetarako erabiliko nuke.
           notifications: Jakinarazpenak
           notifications_tip: Eskaerei buruzko jakinarazpenak helbide honetara bidaliko dira.
           notifications_placeholder: ej. gustav@truffles.com
           notifications_note: 'Oharra: Helbide berri bat berretsi behar da.'
-          managers: Kudeatzaileak
-          managers_tip: Erakunde hori kudeatzeko baimena duten beste erabiltzaile batzuk.
           invite_manager: "Gonbidatu administratzailea"
-          invite_manager_tip: "Erregistratu gabeko erabiltzaile bat gonbida ezazu erregistratzera eta erakunde honen administratzaile bihurtzera."
-          add_unregistered_user: "Gehitu erregistratu gabeko erabiltzaile bat"
           email_confirmed: "Posta elektroniko baieztatua"
           email_not_confirmed: "Baieztatu gabeko posta elektronikoa"
         vouchers:
@@ -1381,9 +1377,6 @@ eu:
         choose_starting_point: 'Aukeratu zure profila:'
         profile: 'Profila'
         producer_profile: 'Profil ekoizlea'
-      invite_manager:
-        user_already_exists: "Erabiltzailea existitzen da"
-        error: "Zerbait gaizki atera da"
     order_cycles:
       loading_flash:
         loading_order_cycles: Eskaera-zikloak kargatzen
@@ -1790,6 +1783,11 @@ eu:
     schedules:
       destroy:
         associated_subscriptions_error: Ordutegi hori ezin da ezabatu harpidetza elkartuak dituelako
+    user_invitations:
+      new:
+        back: Atzera
+        email: Emaila
+        invite: Gonbidatu
     vouchers:
       new:
         legend: Bonu berria

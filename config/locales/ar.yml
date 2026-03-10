@@ -1119,19 +1119,15 @@ ar:
           legend: "المستخدمين"
           email_confirmation_notice_html: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{email}."
           resend: إعادة إرسال
-          owner: 'المالك'
           contact: "اتصل"
+          owner: 'المالك'
           contact_tip: "المدير الذي سيتلقى رسائل البريد الإلكتروني للمؤسسة للطلبات والإشعارات. يجب أن يكون لديك عنوان بريد إلكتروني مؤكد."
           owner_tip: المستخدم الرئيسي المسؤول عن هذه الشركة.
           notifications: إشعارات
           notifications_tip: سيتم إرسال إعلامات حول الطلبات إلى عنوان البريد الإلكتروني هذا.
           notifications_placeholder: على سبيل المثال. gustav@truffles.com
           notifications_note: 'ملاحظة: قد يلزم تأكيد عنوان بريد إلكتروني جديد قبل استخدامه'
-          managers: مدراء
-          managers_tip: المستخدمين الآخرين مع إذن لإدارة هذه الشركة.
           invite_manager: "دعوة مدير"
-          invite_manager_tip: "دعوة مستخدم غير مسجل للاشتراك ويصبح مديرًا لهذه الشركة."
-          add_unregistered_user: "إضافة مستخدم غير مسجل"
           email_confirmed: "تأكيد البريد الإلكتروني"
           email_not_confirmed: "البريد الإلكتروني غير مؤكد"
         vouchers:
@@ -1216,9 +1212,6 @@ ar:
         choose_starting_point: 'اختر الحزمة الخاصة بك:'
         profile: 'الملف الشخصي'
         producer_profile: 'الملف الشخصي للمنتج'
-      invite_manager:
-        user_already_exists: "المستخدم موجود اصلا"
-        error: "هناك خطأ ما"
     order_cycles:
       loading_flash:
         loading_order_cycles: تحميل دورات الطلب
@@ -1613,6 +1606,11 @@ ar:
     schedules:
       destroy:
         associated_subscriptions_error: لا يمكن حذف هذا الجدول لأنه يحتوي على اشتراكات مقترنة
+    user_invitations:
+      new:
+        back: عودة
+        email: البريد الإلكتروني
+        invite: ادعو
     vouchers:
       new:
         legend: قسيمة جديدة

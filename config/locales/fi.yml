@@ -1410,19 +1410,15 @@ fi:
           legend: "Käyttäjät"
           email_confirmation_notice_html: "Sähköpostivahvistus odottaa. Olemme lähettäneet vahvistussähköpostin osoitteeseen %{email}."
           resend: Lähete uudelleen
-          owner: 'Omistaja'
           contact: "Yhteystieto"
+          owner: 'Omistaja'
           contact_tip: "Ylläpitäjä, joka vastaanottaa yrityssähköpostiviestejä tilauksista ja ilmoituksista. Täytyy olla vahvistettu sähköpostiosoite."
           owner_tip: Ensisijainen käyttäjä, joka on vastuussa tästä yrityksestä.
           notifications: Ilmoitukset
           notifications_tip: Ilmoitukset tilauksista lähetetään tähän sähköpostiosoitteeseen.
           notifications_placeholder: esim. gustav@truffles.com
           notifications_note: 'Huomautus: Uusi sähköpostiosoite on ehkä vahvistettava ennen käyttöä'
-          managers: 'Ylläpitäjät '
-          managers_tip: Muut käyttäjät, joilla on lupa hallita tätä yritystä.
           invite_manager: "Kutsu ylläpitäjä"
-          invite_manager_tip: "Kutsu rekisteröimätön käyttäjä rekisteröitymään ja ryhtymään tämän yrityksen ylläpitäjäksi."
-          add_unregistered_user: "Lisää rekisteröitymätön käyttäjä"
           email_confirmed: "Sähköposti vahvistettu"
           email_not_confirmed: "Sähköpostia ei vahvistettu"
         vouchers:
@@ -1555,9 +1551,6 @@ fi:
         choose_starting_point: 'Valitse pakettisi:'
         profile: 'Profiili'
         producer_profile: 'tuottaja -profiili'
-      invite_manager:
-        user_already_exists: "Käyttäjä on jo olemassa"
-        error: "Jotain meni pieleen"
     tag_rules:
       not_supported_type: tägi -sääntötyyppiä ei tueta
       confirm_delete: Haluatko varmasti poistaa tämän säännön?
@@ -2003,6 +1996,11 @@ fi:
     schedules:
       destroy:
         associated_subscriptions_error: Tätä aikataulua ei voida poistaa, koska siihen liittyy tilauksia.
+    user_invitations:
+      new:
+        back: Takaisin
+        email: Sähköposti
+        invite: Kutsu
     vouchers:
       new:
         legend: Uusi kuponki

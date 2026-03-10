@@ -1083,19 +1083,15 @@ uk:
           legend: "Користувачі"
           email_confirmation_notice_html: "Очікується підтвердження електронною поштою. Ми надіслали електронний лист із підтвердженням на адресу %{email}."
           resend: Надіслати повторно
-          owner: 'Власник'
           contact: "Контакти"
+          owner: 'Власник'
           contact_tip: "Менеджер, який отримуватиме корпоративні електронні листи для замовлень і повідомлень. Необхідно мати підтверджену електронну адресу."
           owner_tip: Основний користувач, відповідальний за це підприємство.
           notifications: Сповіщення
           notifications_tip: На цю електронну адресу будуть надходити повідомлення про замовлення.
           notifications_placeholder: напр. gustav@truffles.com
           notifications_note: 'Примітка: перед використанням може знадобитися підтвердити нову електронну адресу'
-          managers: Менеджери
-          managers_tip: Інші користувачі з дозволом на керування цим підприємством.
           invite_manager: "Запросити менеджера"
-          invite_manager_tip: "Запросіть незареєстрованого користувача зареєструватися та стати менеджером цього підприємства."
-          add_unregistered_user: "Додайте незареєстрованого користувача"
           email_confirmed: "Електронна адреса підтверджена"
           email_not_confirmed: "Електронна пошта не підтверджена"
         vouchers:
@@ -1170,9 +1166,6 @@ uk:
         choose_starting_point: 'Виберіть свій пакет:'
         profile: 'Профіль'
         producer_profile: 'Профіль виробника'
-      invite_manager:
-        user_already_exists: "Користувач вже існує"
-        error: "Щось пішло не так"
     order_cycles:
       loading_flash:
         loading_order_cycles: ЦИКЛИ ЗАВАНТАЖЕННЯ ЗАМОВЛЕННЯ
@@ -1548,6 +1541,11 @@ uk:
     schedules:
       destroy:
         associated_subscriptions_error: Цей розклад неможливо видалити, оскільки він має пов’язані підписки
+    user_invitations:
+      new:
+        back: Назад
+        email: Email
+        invite: Запросити
     vouchers:
       new:
         back: Назад

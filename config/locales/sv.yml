@@ -558,15 +558,13 @@ sv:
           legend: "Användare"
           email_confirmation_notice_html: "E-post bekräftelse har inte kommit. Vi har sänt en bekräftande e-post till %{email}."
           resend: Återsänd
-          owner: 'Ägare'
           contact: "Kontakt"
+          owner: 'Ägare'
           owner_tip: Den primära användaren är ansvarig för detta företag.
           notifications: Meddelanden
           notifications_tip: Meddelanden om order kommer att sändas till denna e-postadress,
           notifications_placeholder: ex gustav@telia.com
           notifications_note: 'Observera: En ny e-postadress behöver kanske bli bekräftad före användning'
-          managers: Chefer
-          managers_tip: Andra användare med tillstånd att leda detta företag.
         vouchers:
           customers: Kund
         connected_apps:
@@ -831,6 +829,10 @@ sv:
         save: "SPARA"
         saving: "SPARANDE"
         saved: "SPARAD"
+    user_invitations:
+      new:
+        back: Backa
+        email: E-post
     vouchers:
       new:
         back: Backa

@@ -1167,19 +1167,15 @@ mr:
           legend: "वापरकर्ते"
           email_confirmation_notice_html: "ईमेल पुष्टीकरण प्रलंबित आहे. आम्ही %{email} वर पुष्टीकरण ईमेल पाठवला आहे."
           resend: पुन्हा पाठवा
-          owner: 'मालक'
           contact: "संपर्क करा"
+          owner: 'मालक'
           contact_tip: "ज्या मॅनेजरला ऑर्डर आणि सूचनांचे एंटरप्राइझ ईमेल प्राप्त होतील त्याच्याकडे पुष्टीकृत ईमेल पत्ता असणे आवश्यक आहे."
           owner_tip: या एंटरप्राइझसाठी जबाबदार प्राथमिक वापरकर्ता.
           notifications: सूचना
           notifications_tip: ऑर्डरबद्दल सूचना या ईमेल पत्त्यावर पाठवल्या जातील.
           notifications_placeholder: उदा. prakash@tuffles.com
           notifications_note: 'टीप: वापरण्यापूर्वी नवीन ईमेल पत्त्याची पुष्टी करणे आवश्यक असू शकते'
-          managers: मॅनेजर्स
-          managers_tip: हे एंटरप्राइझ मॅनेज करण्याची परवानगी असलेले इतर वापरकर्ते.
           invite_manager: "मॅनेजरला आमंत्रित करा"
-          invite_manager_tip: "नोंदणी न केलेल्या वापरकर्त्यास साइन अप करण्यासाठी आणि या एंटरप्राइझचे मॅनेजर होण्यासाठी आमंत्रित करा."
-          add_unregistered_user: "नोंदणीकृत नसलेला वापरकर्ता जोडा"
           email_confirmed: "ईमेलची पुष्टी झाली"
           email_not_confirmed: "ईमेलची पुष्टी झाली नाही"
         vouchers:
@@ -1267,9 +1263,6 @@ mr:
         choose_starting_point: 'तुमचे पॅकेज निवडा:'
         profile: 'प्रोफाइल'
         producer_profile: 'उत्पादक प्रोफाइल'
-      invite_manager:
-        user_already_exists: "वापरकर्ता आधीपासून अस्तित्वात आहे"
-        error: "काहीतरी चूक झाली"
     order_cycles:
       loading_flash:
         loading_order_cycles: ऑर्डर सायकल लोड करत आहे

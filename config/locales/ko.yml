@@ -1066,19 +1066,15 @@ ko:
           legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
           resend: 재전송
-          owner: '오너'
           contact: "연락처"
+          owner: '오너'
           contact_tip: "주문 및 알림에 대한 회사 이메일을 수신할 관리자입니다. 확인된 이메일 주소가 있어야 합니다."
           owner_tip: 이 회사를 담당하는 기본 사용자입니다.
           notifications: 알림
           notifications_tip: 주문에 대한 알림이 이 이메일 주소로 전송됩니다.
           notifications_placeholder: 예. gustav@truffles.com
           notifications_note: '참고: 사용하기 전에 새 이메일 주소를 확인해야 할 수 있습니다.'
-          managers: 관리자
-          managers_tip: 이 회사를 관리할 수 있는 권한이 있는 다른 사용자.
           invite_manager: "관리자 초대"
-          invite_manager_tip: "등록되지 않은 사용자를 등록하고 이 회사의 관리자가 되도록 초대합니다."
-          add_unregistered_user: "등록되지 않은 사용자 추가"
           email_confirmed: "확인한 이메일"
           email_not_confirmed: "확인안한 이메일"
         vouchers:
@@ -1153,9 +1149,6 @@ ko:
         choose_starting_point: '패키지를 선택하세요 :'
         profile: '프로필'
         producer_profile: '생산자 프로필'
-      invite_manager:
-        user_already_exists: "사용자가 이미 존재합니다."
-        error: "무언가 문제가 생겼습니다"
     order_cycles:
       loading_flash:
         loading_order_cycles: 주문 사이클 로딩 중
@@ -1528,6 +1521,11 @@ ko:
     schedules:
       destroy:
         associated_subscriptions_error: 연결된 구독이 있으므로 이 일정을 삭제할 수 없습니다.
+    user_invitations:
+      new:
+        back: 뒤로
+        email: 이메일
+        invite: 초대하기
     vouchers:
       new:
         back: 뒤로

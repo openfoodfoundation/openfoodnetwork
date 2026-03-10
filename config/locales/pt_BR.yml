@@ -980,19 +980,15 @@ pt_BR:
           legend: "Usuários"
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
-          owner: 'Proprietário'
           contact: "Contato"
+          owner: 'Proprietário'
           contact_tip: "O gerente que receberá e-mails corporativos para pedidos e notificações. Deve ter um endereço de e-mail confirmado."
           owner_tip: O usuário principal é responsável por esta iniciativa.
           notifications: Notificações
           notifications_tip: Notificações sobre pedidos serão enviadas para este endereço de e-mail.
           notifications_placeholder: 'ex: gustavo@trufas.com.br'
           notifications_note: 'Nota: um novo endereço de e-mail pode precisar ser confirmado antes do uso'
-          managers: Administradores
-          managers_tip: Os outros usuários com permissão para gerenciar esta iniciativa.
           invite_manager: "Convidar gerente"
-          invite_manager_tip: "Convide um usuário não registrado para se inscrever e se tornar um gerente desta empresa."
-          add_unregistered_user: "Adicionar um usuário não registrado"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
         vouchers:
@@ -1066,9 +1062,6 @@ pt_BR:
         choose_starting_point: 'Escolha o seu tipo de perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil Simples'
-      invite_manager:
-        user_already_exists: "Usuário já existe"
-        error: "Algo deu errado"
     order_cycles:
       loading_flash:
         loading_order_cycles: CARREGANDO CICLOS DE PEDIDOS
@@ -1419,6 +1412,11 @@ pt_BR:
     schedules:
       destroy:
         associated_subscriptions_error: Esta lista não pode ser excluída porque possui assinaturas associadas.
+    user_invitations:
+      new:
+        back: Voltar
+        email: E-mail
+        invite: Convidar
     vouchers:
       new:
         back: Voltar

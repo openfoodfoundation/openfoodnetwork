@@ -860,19 +860,15 @@ pl:
         users:
           email_confirmation_notice_html: "Oczekuje na potwierdzenie e-mailem. Wysłaliśmy wiadomość e-mail z potwierdzeniem na adres %{email}."
           resend: Wysłać ponownie
-          owner: 'Właściciel'
           contact: "Kontakt"
+          owner: 'Właściciel'
           contact_tip: "Menedżer, który będzie otrzymywał firmowe wiadomości e-mail dotyczące zamówień i powiadomień. Musi mieć potwierdzony adres e-mail."
           owner_tip: Główny użytkownik odpowiedzialny za ten podmiot.
           notifications: Powiadomienia
           notifications_tip: Powiadomienia o zamówieniach będą wysyłane na ten adres e-mail.
           notifications_placeholder: np. jan@sliwa.pl
           notifications_note: 'Uwaga: nowy adres e-mail może wymagać potwierdzenia przed użyciem'
-          managers: Menedżerowie
-          managers_tip: Inni użytkownicy z uprawnieniami do zarządzania tym podmiotem.
           invite_manager: "Zaproś menedżera"
-          invite_manager_tip: "Zaproś niezarejestrowanego użytkownika, aby zarejestrował się i został menedżerem tego podmiotu."
-          add_unregistered_user: "Dodaj niezarejestrowanego użytkownika"
           email_confirmed: "E-mail potwierdzony"
           email_not_confirmed: "Adres e-mail nie został potwierdzony"
         vouchers:
@@ -941,9 +937,6 @@ pl:
         choose_starting_point: 'Wybierz swój pakiet:'
         profile: 'Profil'
         producer_profile: 'Profil producenta'
-      invite_manager:
-        user_already_exists: "Użytkownik już istnieje"
-        error: "Coś poszło nie tak"
     order_cycles:
       loading_flash:
         loading_order_cycles: ŁADOWANIE CYKLI ZAMÓWIEŃ
@@ -1253,6 +1246,10 @@ pl:
     schedules:
       destroy:
         associated_subscriptions_error: Tego harmonogramu nie można usunąć, ponieważ ma powiązane subskrypcje
+    user_invitations:
+      new:
+        back: Wstecz
+        email: E-mail
     vouchers:
       new:
         back: Wstecz

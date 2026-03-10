@@ -1301,19 +1301,15 @@ hu:
           legend: "Felhasználók"
           email_confirmation_notice_html: "Az email megerősítés függőben van. Megerősítő emailt küldtünk a következő címre: %{email}."
           resend: Újraküldés
-          owner: 'Tulajdonos'
           contact: "Kapcsolat"
+          owner: 'Tulajdonos'
           contact_tip: "A menedzser, aki vállalkozási e-maileket kap a rendelésekről és értesítésekről. Megerősített e-mail címmel kell rendelkeznie."
           owner_tip: A vállalkozásért felelős elsődleges felhasználó.
           notifications: Értesítések
           notifications_tip: A megrendelésekről szóló értesítéseket erre az email címre küldjük.
           notifications_placeholder: pl. janika@borso.hu
           notifications_note: 'Megjegyzés: Előfordulhat, hogy használat előtt meg kell erősíteni egy új email címet.'
-          managers: Menedzserek
-          managers_tip: A többi felhasználó, aki jogosult a vállalkozás kezelésére.
           invite_manager: "Menedzser meghívása"
-          invite_manager_tip: "Hívj meg egy nem regisztrált felhasználót, hogy regisztráljon, és legyen a tagja az Open Food hálózatának."
-          add_unregistered_user: "Nem regisztrált felhasználó hozzáadása"
           email_confirmed: "Email megerősítve"
           email_not_confirmed: "Az email cím nincs megerősítve"
         vouchers:
@@ -1432,9 +1428,6 @@ hu:
         choose_starting_point: 'Válaszd ki a profil típusát'
         profile: 'Profilt'
         producer_profile: 'Termelői profil'
-      invite_manager:
-        user_already_exists: "A felhasználó már létezik"
-        error: "Valami elromlott"
     tag_rules:
       not_supported_type: Címkeszabály típus nem támogatott
       confirm_delete: Biztosan szeretnéd törölni ezt a szabályt?
@@ -1876,6 +1869,11 @@ hu:
     schedules:
       destroy:
         associated_subscriptions_error: Ezt az ütemezést nem lehet törölni, mert előfizetései vannak hozzá
+    user_invitations:
+      new:
+        back: Vissza
+        email: Email
+        invite: Meghívás
     vouchers:
       new:
         legend: Új kupon

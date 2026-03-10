@@ -1018,19 +1018,15 @@ fr_CM:
           legend: "Utilisateurs"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
-          owner: 'Gestionnaire principal'
           contact: "Contact"
+          owner: 'Gestionnaire principal'
           contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
           owner_tip: Gestionnaire principal de cette entreprise.
           notifications: Notifications
           notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
-          managers: Gestionnaires
-          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur CoopCircuits pour être sélectionnés.
           invite_manager: "Inviter un gestionnaire"
-          invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme gestionnaire de cette entreprise."
-          add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
@@ -1105,9 +1101,6 @@ fr_CM:
         choose_starting_point: 'Choisir votre type de profil :'
         profile: 'Profil'
         producer_profile: 'Profil simple'
-      invite_manager:
-        user_already_exists: "Le compte existe déjà"
-        error: "Un problème est survenu"
     order_cycles:
       loading_flash:
         loading_order_cycles: Cycles de vente en cours de chargement
@@ -1471,6 +1464,11 @@ fr_CM:
     schedules:
       destroy:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
+    user_invitations:
+      new:
+        back: Retour
+        email: Email
+        invite: Inviter
     vouchers:
       new:
         back: Retour

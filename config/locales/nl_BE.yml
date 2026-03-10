@@ -914,19 +914,15 @@ nl_BE:
           legend: "Gebruikers"
           email_confirmation_notice_html: "E-mailbevestiging is lopende. We hebben een bevestigings-e-mail gestuurd naar %{email}."
           resend: Zend opnieuw
-          owner: 'Eigenaar'
           contact: "Contact"
+          owner: 'Eigenaar'
           contact_tip: "De manager zal een ondernemings-e-mail ontvangen voor bestellingen en notificaties. Een bevestigd e-mailadres is hiervoor noodzakelijk."
           owner_tip: De hoofdgebruiker is verantwoordelijk voor deze onderneming.
           notifications: Notificaties
           notifications_tip: Bestellingsnotificaties zullen verzonden worden naar dit e-mailadres.
           notifications_placeholder: vb. jan@paddenstoel.com
           notifications_note: 'Let op: Het is mogelijk dat een nieuw e-mailadres eerst moet bevestigd worden voor gebruik'
-          managers: Beheerders
-          managers_tip: De andere gebruikers met machtiging om deze onderneming te beheren.
           invite_manager: "Nodig Beheerders uit"
-          invite_manager_tip: "Nodig een ongeregistreerde gebruiker om zich in te schrijven en een beheerder te worden van deze onderneming."
-          add_unregistered_user: "Voeg een ongeregistreerde gebruiker toe"
           email_confirmed: "E-mail bevestigd"
           email_not_confirmed: "E-mail niet bevestigd"
         vouchers:
@@ -1001,9 +997,6 @@ nl_BE:
         choose_starting_point: 'Kies je pakket:'
         profile: 'Profiel'
         producer_profile: 'Producentsprofiel'
-      invite_manager:
-        user_already_exists: "Gebruikersnaam al in gebruik"
-        error: "Er ging iets mis"
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
@@ -1355,6 +1348,11 @@ nl_BE:
     schedules:
       destroy:
         associated_subscriptions_error: Deze planning kan niet verwijderd worden omdat er abonnementen aan verbonden zijn.
+    user_invitations:
+      new:
+        back: achterstevoren
+        email: E-mail
+        invite: 'Uitnodigen '
     vouchers:
       new:
         back: achterstevoren

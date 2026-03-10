@@ -796,7 +796,7 @@ de_DE:
       sort:
         pagination:
           products_total_html:
-            one: "<strong>%{total} Produkt</strong> für Ihre Suchkriterien gefunden."
+            one: "<strong>%{count} Produkt</strong> Produkt für Ihre Suchkriterien gefunden."
             other: "<strong>%{count} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
@@ -1232,19 +1232,15 @@ de_DE:
           legend: "Benutzer"
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
           resend: Erneut senden
-          owner: 'Inhaber'
           contact: "Kontakt"
+          owner: 'Inhaber'
           contact_tip: "Der Manager, der Unternehmens-E-Mails für Bestellungen und Benachrichtigungen erhält. Er muss eine bestätigte E-Mail-Adresse haben."
           owner_tip: Der Hauptbenutzer, der für dieses Unternehmen verantwortlich ist.
           notifications: Benachrichtigungen
           notifications_tip: Benachrichtigungen über Bestellungen werden an diese E-Mail-Adresse gesendet.
           notifications_placeholder: z. B. lisa@maier.de
           notifications_note: 'Hinweis: Eine neue E-Mail-Adresse muss möglicherweise vor der Verwendung bestätigt werden.'
-          managers: Manager
-          managers_tip: Andere Benutzer mit der Berechtigung, dieses Unternehmen zu verwalten.
           invite_manager: "Manager einladen"
-          invite_manager_tip: "Laden Sie einen nicht registrierten Benutzer ein, sich anzumelden und ein Manager dieses Unternehmens zu werden."
-          add_unregistered_user: "Laden Sie einen nicht registrierten Benutzer ein"
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
@@ -1341,9 +1337,6 @@ de_DE:
         choose_starting_point: 'Wählen Sie Ihr Paket:'
         profile: 'Profil'
         producer_profile: 'Profil'
-      invite_manager:
-        user_already_exists: "Der Benutzer existiert bereits. Bitte verwenden Sie die Funktion \"vorhandenen Benutzer hinzufügen\"."
-        error: "Etwas ist schief gelaufen."
     tag_rules:
       confirm_delete: Möchten Sie diese Regel wirklich löschen?
     order_cycles:
@@ -1772,6 +1765,11 @@ de_DE:
     schedules:
       destroy:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
+    user_invitations:
+      new:
+        back: Zurück
+        email: E-Mail-Adresse
+        invite: Einladen
     vouchers:
       new:
         legend: Neuer Gutschein

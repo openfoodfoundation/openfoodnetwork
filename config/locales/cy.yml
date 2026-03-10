@@ -1342,19 +1342,15 @@ cy:
           legend: "Defnyddwyr"
           email_confirmation_notice_html: "Mae cadarnhad e-bost yn yr arfaeth. Anfonwyd cadarnhad e-bost at %{email}."
           resend: Ailanfon
-          owner: 'Perchennog'
           contact: "Cysylltu"
+          owner: 'Perchennog'
           contact_tip: "Y rheolwr sy'n derbyn e-byst y fenter o ran archebion a hysbysiadau. Rhaid cael cyfeiriad e-bost a gadarnhawyd."
           owner_tip: Y prif ddefnyddiwr sy'n gyfrifol am y fenter hon.
           notifications: Hysbysiadau
           notifications_tip: Anfonir hysbysiadau am archebion i'r cyfeiriad e-bost hwn.
           notifications_placeholder: ee. gustav@truffles.com
           notifications_note: 'Noder: Efallai y bydd angen cadarnhau cyfeiriad e-bost newydd cyn ei ddefnyddio'
-          managers: Rheolwyr
-          managers_tip: Y defnyddwyr eraill sydd â chaniatâd i reoli'r fenter hon.
           invite_manager: "Gwahodd Rheolwr"
-          invite_manager_tip: "Gwahodd ddefnyddiwr anghofrestredig i gofrestru a dod yn rheolwr ar y fenter hon."
-          add_unregistered_user: "Ychwanegwch ddefnyddiwr anghofrestredig"
           email_confirmed: "Cadarnhawyd yr e-bost "
           email_not_confirmed: "E-bost heb ei gadarnhau"
         vouchers:
@@ -1484,9 +1480,6 @@ cy:
         choose_starting_point: 'Dewiswch eich pecyn:'
         profile: 'Proffil'
         producer_profile: 'Proffil Cynhyrchydd'
-      invite_manager:
-        user_already_exists: "Defnyddiwr yn bodoli eisoes"
-        error: "Aeth rhywbeth o'i le"
     order_cycles:
       loading_flash:
         loading_order_cycles: YN LLWYTHO CYLCHOEDD ARCHEBU
@@ -1924,6 +1917,11 @@ cy:
     schedules:
       destroy:
         associated_subscriptions_error: Nid yw'n bosib dileu'r amserlen hon oherwydd bod tanysgrifiadau cysylltiedig yn berthnasol
+    user_invitations:
+      new:
+        back: Yn ôl
+        email: E-bost
+        invite: Gwahodd
     vouchers:
       new:
         legend: Taleb newydd

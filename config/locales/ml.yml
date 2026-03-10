@@ -1191,19 +1191,15 @@ ml:
           legend: "ഉപയോക്താക്കൾ"
           email_confirmation_notice_html: "ഇമെയിൽ സ്ഥിരീകരണം തീർച്ചപ്പെടുത്തിയിട്ടില്ല. ഞങ്ങൾ ഒരു സ്ഥിരീകരണ ഇമെയിൽ %{email} ലേക്ക് അയച്ചു."
           resend: വീണ്ടും അയയ്ക്കുക
-          owner: 'ഉടമ'
           contact: "ബന്ധപ്പെടുക"
+          owner: 'ഉടമ'
           contact_tip: "ഓർഡറുകൾക്കും അറിയിപ്പുകൾക്കുമായി എന്റർപ്രൈസ് ഇമെയിലുകൾ സ്വീകരിക്കുന്ന മാനേജർ. സ്ഥിരീകരിച്ച ഇമെയിൽ വിലാസം ഉണ്ടായിരിക്കണം."
           owner_tip: ഈ എന്റർപ്രൈസസിന്റെ ഉത്തരവാദിത്തമുള്ള പ്രാഥമിക ഉപയോക്താവ്.
           notifications: അറിയിപ്പുകൾ
           notifications_tip: ഓർഡറുകൾ സംബന്ധിച്ച അറിയിപ്പുകൾ ഈ ഇമെയിൽ വിലാസത്തിലേക്ക് അയയ്‌ക്കും.
           notifications_placeholder: ഉദാ. gustav@truffles.com
           notifications_note: 'ശ്രദ്ധിക്കുക: ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഒരു പുതിയ ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കേണ്ടതുണ്ട്'
-          managers: മാനേജർമാർ
-          managers_tip: ഈ എന്റർപ്രൈസ് മാനേജ് ചെയ്യാൻ അനുമതിയുള്ള മറ്റ് ഉപയോക്താക്കൾ.
           invite_manager: "മാനേജരെ ക്ഷണിക്കുക"
-          invite_manager_tip: "രജിസ്റ്റർ ചെയ്യാത്ത ഒരു ഉപയോക്താവിനെ സൈൻ അപ്പ് ചെയ്യാനും ഈ എന്റർപ്രൈസിന്റെ മാനേജരാകാനും ക്ഷണിക്കുക."
-          add_unregistered_user: "രജിസ്റ്റർ ചെയ്യാത്ത ഒരു ഉപയോക്താവിനെ ചേർക്കുക"
           email_confirmed: "ഇമെയിൽ സ്ഥിരീകരിച്ചു"
           email_not_confirmed: "ഇമെയിൽ സ്ഥിരീകരിച്ചിട്ടില്ല"
         vouchers:
@@ -1297,9 +1293,6 @@ ml:
         choose_starting_point: 'നിങ്ങളുടെ പാക്കേജ് തിരഞ്ഞെടുക്കുക:'
         profile: 'പ്രൊഫൈൽ'
         producer_profile: 'പ്രൊഡ്യൂസർ പ്രൊഫൈൽ'
-      invite_manager:
-        user_already_exists: "ഉപയോക്താവ് ഇതിനകം നിലവിലുണ്ട്"
-        error: "എന്തോ തകരാറ് സംഭവിച്ചു"
     order_cycles:
       loading_flash:
         loading_order_cycles: ഓർഡർ സൈക്കിളുകൾ ലോഡുചെയ്യുന്നു
@@ -1719,6 +1712,11 @@ ml:
     schedules:
       destroy:
         associated_subscriptions_error: അനുബന്ധ സബ്‌സ്‌ക്രിപ്‌ഷനുകൾ ഉള്ളതിനാൽ ഈ ഷെഡ്യൂൾ ഇല്ലാതാക്കാൻ കഴിയില്ല
+    user_invitations:
+      new:
+        back: തിരികെ
+        email: ഇമെയിൽ
+        invite: ക്ഷണിക്കുക
     vouchers:
       new:
         legend: പുതിയ വൗച്ചർ

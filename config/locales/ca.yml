@@ -1182,19 +1182,15 @@ ca:
           legend: "Usuàries"
           email_confirmation_notice_html: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{email}."
           resend: Reenviar
-          owner: 'Propietària'
           contact: "Contacte"
+          owner: 'Propietària'
           contact_tip: "El gestor que rebrà els missatges de correu electrònic de l'organització per a comandes i notificacions. Ha de tenir una adreça electrònica confirmada."
           owner_tip: La usuària principal responsable d'aquesta organització.
           notifications: Notificacions
           notifications_tip: Les notificacions sobre les comandes s'enviaran a aquesta adreça de correu electrònic.
           notifications_placeholder: 'p. ex: contacte@hortajosepribes.com'
           notifications_note: 'Nota: és possible que hagi de confirmar una nova adreça de correu electrònic abans d''utilitzar-la'
-          managers: Gestors
-          managers_tip: Altres usuàries amb permisos per gestionar aquesta organització
           invite_manager: "Convida un gestor"
-          invite_manager_tip: "Convida un usuari no registrat a registrar-se i convertir-se en gestor d'aquesta organització."
-          add_unregistered_user: "Afegeix un usuari no registrat"
           email_confirmed: "S'ha confirmat el correu electrònic"
           email_not_confirmed: "Correu electrònic no confirmat"
         vouchers:
@@ -1272,9 +1268,6 @@ ca:
         choose_starting_point: 'Escull el teu perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil de productora'
-      invite_manager:
-        user_already_exists: "L'usuari ja existeix"
-        error: "Alguna cosa ha anat malament"
     order_cycles:
       loading_flash:
         loading_order_cycles: CÀRREGUES CICLES DE COMANDA
@@ -1656,6 +1649,11 @@ ca:
     schedules:
       destroy:
         associated_subscriptions_error: Aquesta programació no es pot suprimir perquè té subscripcions associades
+    user_invitations:
+      new:
+        back: Enrere
+        email: Correu electrònic
+        invite: Convida
     vouchers:
       new:
         back: Enrere

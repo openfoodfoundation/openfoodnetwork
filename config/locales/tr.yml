@@ -990,19 +990,15 @@ tr:
           legend: "Kullanıcılar"
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
-          owner: 'Sahip'
           contact: "İLETİŞİM"
+          owner: 'Sahip'
           contact_tip: "İşletme adına sipariş ve bildirim e-postalarını alacak olan yönetici. Onaylanmış bir e-posta adresi olması gerekir."
           owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
           notifications: BİLDİRİMLER
           notifications_tip: Siparişlerle ilgili bildirimler bu e-posta adresine gönderilecektir.
           notifications_placeholder: Örn. toprak@yesiller.com
           notifications_note: 'Not: Kullanmadan önce yeni bir e-posta adresinin onaylanması gerekebilir'
-          managers: YÖNETİCİLER
-          managers_tip: Bu işletmeyi yönetme izni olan diğer kullanıcılar.
           invite_manager: "YÖNETİCİ Davet Et"
-          invite_manager_tip: "Sisteme kayıtlı olmayan bir kullanıcıyı hesap açmaya ve bu işletmenin yöneticisi olmaya davet edin."
-          add_unregistered_user: "Kayıtlı olmayan bir kullanıcı ekle"
           email_confirmed: "E-posta onaylandı"
           email_not_confirmed: "E-posta onaylanmadı"
         vouchers:
@@ -1077,9 +1073,6 @@ tr:
         choose_starting_point: 'Hesap türünü seçin:'
         profile: 'Profil'
         producer_profile: 'ÜRETİCİ PROFİLİ'
-      invite_manager:
-        user_already_exists: "Kullanıcı zaten var"
-        error: "Bir şeyler yanlış gitti"
     order_cycles:
       loading_flash:
         loading_order_cycles: SİPARİŞ DÖNEMLERİ YÜKLENİYOR
@@ -1433,6 +1426,11 @@ tr:
     schedules:
       destroy:
         associated_subscriptions_error: Bağlantılı üyelikler olduğu için bu takvim silinemiyor
+    user_invitations:
+      new:
+        back: Geri
+        email: E-posta
+        invite: Davet et
     vouchers:
       new:
         back: Geri

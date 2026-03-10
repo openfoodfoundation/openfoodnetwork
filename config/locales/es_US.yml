@@ -1061,19 +1061,15 @@ es_US:
           legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
-          owner: 'Propietaria'
           contact: "Contacto"
+          owner: 'Propietaria'
           contact_tip: "El administrador que recibirá los correos electrónicos de la empresa para pedidos y notificaciones. Debe tener una dirección de correo electrónico confirmada."
           owner_tip: La principal usaría responsable para esta organización.
           notifications: Notificaciones
           notifications_tip: Las Notificaciones sobre los pedidos se enviarán a esta dirección de correo.
           notifications_placeholder: ej. gustav@truffles.com
           notifications_note: 'Nota: Una nueva dirección de correo debe ser confirmada. '
-          managers: Gestoras
-          managers_tip: Otras usuarias con permiso para gestionar esta organización.
           invite_manager: "Invitar administrador"
-          invite_manager_tip: "Invite a un usuario no registrado a registrarse y convertirse en administrador de esta organización."
-          add_unregistered_user: "Agregar un usuario no registrado"
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
@@ -1148,9 +1144,6 @@ es_US:
         choose_starting_point: 'Selecciona tu perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil Productora'
-      invite_manager:
-        user_already_exists: "El usuario ya existe"
-        error: "Algo salió mal"
     order_cycles:
       loading_flash:
         loading_order_cycles: Cargando ciclos de pedido
@@ -1514,6 +1507,11 @@ es_US:
     schedules:
       destroy:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
+    user_invitations:
+      new:
+        back: Atrás
+        email: Email
+        invite: Invitar
     vouchers:
       new:
         back: Atrás

@@ -1184,19 +1184,15 @@ hi:
           legend: "यूज़र"
           email_confirmation_notice_html: "ईमेल पुष्टिकरण पेंडिंग है। हमने %{email} को एक पुष्टिकरण ईमेल भेजा है।"
           resend: फिर से भेजें
-          owner: 'मालिक'
           contact: "संपर्क"
+          owner: 'मालिक'
           contact_tip: "वह प्रबंधक जो ऑर्डर्स और नोटिफिकेशन्स के लिए एंटरप्राइज़ ईमेल प्राप्त करेगा। पुष्टि किया हुआ ईमेल पता होना चाहिए।"
           owner_tip: इस एंटरप्राइज़ के लिए ज़िम्मेदार प्राथमिक यूज़र्स।
           notifications: नोटिफिकेशन्स
           notifications_tip: ऑर्डर्स के बारे में नोटिफिकेशन्स इस ईमेल पते पर भेजी जाएंगी।
           notifications_placeholder: उदाहरण gustav@truffles.com
           notifications_note: 'ध्यान दें: उपयोग करने से पहले एक नए ईमेल पते की पुष्टि करने की जरूरत हो सकती है'
-          managers: प्रबंधक
-          managers_tip: इस एंटरप्राइज़ को प्रबंधित करने की अनुमति वाले दूसरे यूज़र्स।
           invite_manager: "प्रबंधक को आमंत्रित करें"
-          invite_manager_tip: "एक अनरजिस्टर्ड यूज़र्स को साइन अप करने और इस एंटरप्राइज़ का प्रबंधक बनने के लिए आमंत्रित करें।"
-          add_unregistered_user: "एक अनरजिस्टर्ड यूज़र जोड़ें"
           email_confirmed: "ईमेल की पुष्टि हो गई है"
           email_not_confirmed: "ईमेल की पुष्टि नहीं हुई है"
         vouchers:
@@ -1288,9 +1284,6 @@ hi:
         choose_starting_point: 'अपना पैकेज चुनें:'
         profile: 'प्रोफ़ाइल'
         producer_profile: 'उत्पादक प्रोफ़ाइल'
-      invite_manager:
-        user_already_exists: "यूज़र्स पहले से मौजूद है"
-        error: "कुछ गलत हुआ"
     order_cycles:
       loading_flash:
         loading_order_cycles: ऑर्डर साइकल लोड हो रहा है
@@ -1707,6 +1700,11 @@ hi:
     schedules:
       destroy:
         associated_subscriptions_error: इस शेड्यूल को हटाया नहीं जा सकता क्योंकि इसमें जुड़े हुए सब्सक्रिप्शन हैं
+    user_invitations:
+      new:
+        back: वापस जाएं
+        email: ईमेल
+        invite: आमंत्रित करें
     vouchers:
       new:
         legend: नया वाउचर

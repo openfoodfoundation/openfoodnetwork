@@ -1168,19 +1168,15 @@ pa:
           legend: "ਉਪਭੋਗਤਾ"
           email_confirmation_notice_html: "ਈਮੇਲ ਪੁਸ਼ਟੀਕਰਨ ਲੰਬਿਤ ਹੈ। ਅਸੀਂ %{email} ਨੂੰ ਇੱਕ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਭੇਜੀ ਹੈ।"
           resend: ਦੁਬਾਰਾ ਭੇਜੋ
-          owner: 'ਮਾਲਕ'''
           contact: "ਸੰਪਰਕ"
+          owner: 'ਮਾਲਕ'''
           contact_tip: "ਪ੍ਰਬੰਧਕ ਜੋ ਆਰਡਰਾਂ ਅਤੇ ਸੂਚਨਾਵਾਂ ਲਈ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਈਮੇਲ ਪ੍ਰਾਪਤ ਕਰੇਗਾ। ਉਦੇ ਕੋਲ ਇੱਕ ਪੁਸ਼ਟੀ ਕੀਤਾ ਈਮੇਲ ਪਤਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
           owner_tip: ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਜ਼ਿੰਮੇਵਾਰ ਪ੍ਰਾਥਮਿਕ ਉਪਭੋਗਤਾ।
           notifications: ਸੂਚਨਾਵਾਂ
           notifications_tip: ਆਰਡਰਾਂ ਬਾਰੇ ਸੂਚਨਾਵਾਂ ਇਸ ਈਮੇਲ ਪਤੇ ਉਤੇ ਭੇਜੀਆਂ ਜਾਣਗੀਆਂ।
           notifications_placeholder: ਜਿਵੇਂ - gustav@truffles.com
           notifications_note: 'ਨੋਟ: ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਇੱਕ ਨਵੇਂ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ'''
-          managers: ਪ੍ਰਬੰਧਕ
-          managers_tip: ਦੂਜੇ ਉਪਭੋਗਤਾ ਜਿਹਨਾਂ ਕੋਲ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਹੈ।
           invite_manager: "ਪ੍ਰਬੰਧਕ ਨੂੰ ਸੱਦਾ ਦਿਓ"
-          invite_manager_tip: "ਕਿਸੇ ਗੈਰ-ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਨੂੰ ਸਾਈਨ ਅੱਪ ਕਰਨ ਅਤੇ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦਾ ਪ੍ਰਬੰਧਕ ਬਣਨ ਲਈ ਸੱਦਾ ਦਿਓ।"
-          add_unregistered_user: "ਇੱਕ ਗੈਰ-ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਜੋੜੋ"
           email_confirmed: "ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਈ"
           email_not_confirmed: "ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਨਹੀਂ ਹੋਈ"
         vouchers:
@@ -1272,9 +1268,6 @@ pa:
         choose_starting_point: 'ਆਪਣਾ ਪੈਕੇਜ ਚੁਣੋ:'''
         profile: 'ਪ੍ਰੋਫਾਈਲ'
         producer_profile: 'ਉਤਪਾਦਕ ਪ੍ਰੋਫਾਈਲ'''
-      invite_manager:
-        user_already_exists: "ਉਪਭੋਗਤਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ"
-        error: "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ"
     order_cycles:
       loading_flash:
         loading_order_cycles: ਆਰਡਰ ਸਾਈਕਲ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ
@@ -1690,6 +1683,11 @@ pa:
     schedules:
       destroy:
         associated_subscriptions_error: ਇਸ ਸ਼ਡਿਊਲ ਨੂੰ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ ਕਿਉਂਕਿ ਇਸ ਵਿੱਚ ਸੰਬੰਧਿਤ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਹਨ
+    user_invitations:
+      new:
+        back: ਵਾਪਸ
+        email: ਈਮੇਲ
+        invite: ਸੱਦਾ ਦਿਓ
     vouchers:
       new:
         legend: ਨਵਾਂ ਵਾਊਚਰ

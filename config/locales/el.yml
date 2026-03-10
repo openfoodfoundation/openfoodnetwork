@@ -1238,19 +1238,15 @@ el:
           legend: "Χρήστες"
           email_confirmation_notice_html: "Η επιβεβαίωση email εκκρεμεί.Σας έχουμε ήδη στείλει επιβεβαίωση email %{email}"
           resend: Ξαναστείλε
-          owner: 'Κάτοχος'
           contact: "επικοινωνία"
+          owner: 'Κάτοχος'
           contact_tip: "Ο διαχειριστής που θα λάβει email επιχειρήσεων για παραγγελίες και ειδοποιήσεις. Πρέπει να έχει επιβεβαιωμένη διεύθυνση ηλεκτρονικού ταχυδρομείου."
           owner_tip: Ο πρωταρχικός χρήστης υπεύθυνος για αυτή την επιχείρηση.
           notifications: Ειδοποίηση
           notifications_tip: Η ενημερώση για τις παραγγελείες θα αποστέλονται σε αυτήν την διεύθυνση
           notifications_placeholder: π.χ. gustav@truffles.com
           notifications_note: 'Σημείωση: Μια νέα διεύθυνση ηλεκτρονικού ταχυδρομείου μπορεί να χρειαστεί να επιβεβαιωθεί πριν από τη χρήση'
-          managers: Διαχειριστές
-          managers_tip: Όρισε κάποιον άλλον να διαχειριστεί αυτή την επιχείρηση.
           invite_manager: "Πρόσκληση διαχειριστή"
-          invite_manager_tip: "Προσκαλέστε έναν νέο χρήστη να εγγραφεί και να γίνει διαχειριστής αυτής της επιχείρησης."
-          add_unregistered_user: "Προσθήκη νέου χρήστη"
           email_confirmed: "Το email επιβεβαιώθηκε"
           email_not_confirmed: "Το email δεν επιβεβαιώθηκε"
         vouchers:
@@ -1358,9 +1354,6 @@ el:
         choose_starting_point: 'Επιλέξτε το πακέτο σας:'
         profile: 'Προφίλ'
         producer_profile: 'Προφίλ Παραγωγού'
-      invite_manager:
-        user_already_exists: "Ο χρήστης υπάρχει ήδη"
-        error: "Κάτι πήγε στραβά"
     order_cycles:
       loading_flash:
         loading_order_cycles: ΚΥΚΛΟΙ ΠΑΡΑΓΓΕΛΙΑΣ ΦΟΡΤΩΣΗΣ
@@ -1785,6 +1778,11 @@ el:
     schedules:
       destroy:
         associated_subscriptions_error: Αυτό το πρόγραμμα δεν μπορεί να διαγραφεί επειδή έχει σχετικές συνδρομές
+    user_invitations:
+      new:
+        back: Πίσω
+        email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
+        invite: Καλώ
     vouchers:
       new:
         legend: Νέο κουπόνι

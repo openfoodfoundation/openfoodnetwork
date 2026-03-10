@@ -1223,19 +1223,15 @@ ru:
           legend: "Пользователи"
           email_confirmation_notice_html: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
           resend: Отправить заново
-          owner: 'Владелец'
           contact: "Контакт"
+          owner: 'Владелец'
           contact_tip: "Менеджер, который будет получать электронные письма предприятия для заказов и уведомлений. Должен иметь подтвержденный адрес электронной почты."
           owner_tip: Основной пользователь, ответственный за это предприятие.
           notifications: Уведомления
           notifications_tip: Уведомления о заказах будут отправлены на этот адрес электронной почты.
           notifications_placeholder: напр. ivanov@example.ru
           notifications_note: 'Примечание: перед использованием, может потребоваться подтверждение нового адреса электронной почты'
-          managers: Менеджеры
-          managers_tip: Другие пользователи с правами управлять этим предприятием.
           invite_manager: "Пригласить Менеджера"
-          invite_manager_tip: "Пригласить незарегистрированного пользователя для регистрации и установить менеджером этого предприятия."
-          add_unregistered_user: "Добавить незарегистрированного пользователя"
           email_confirmed: "Email подтверждён"
           email_not_confirmed: "Email не подтверждён"
         vouchers:
@@ -1339,9 +1335,6 @@ ru:
         choose_starting_point: 'Выберите Ваш пакет:'
         profile: 'Профиль'
         producer_profile: 'Профиль Производителя'
-      invite_manager:
-        user_already_exists: "Пользователь уже существует"
-        error: "Что-то пошло не так"
     order_cycles:
       loading_flash:
         loading_order_cycles: ЗАГРУЗКА ЦИКЛОВ ЗАКАЗОВ
@@ -1769,6 +1762,11 @@ ru:
     schedules:
       destroy:
         associated_subscriptions_error: Это расписание не может быть удалено, потому что оно имеет связанные подписки
+    user_invitations:
+      new:
+        back: Назад
+        email: Email
+        invite: Пригласить
     vouchers:
       new:
         legend: Новый Купон

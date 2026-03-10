@@ -1120,19 +1120,15 @@ it:
           legend: "Utenti"
           email_confirmation_notice_html: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
           resend: Invia di nuovo
-          owner: 'Proprietario'
           contact: "Contatto"
+          owner: 'Proprietario'
           contact_tip: "Il referente che riceverà le mail dell'azienda per le gentili richieste e le notifiche. Deve essere un indirizzo mail confermato."
           owner_tip: L'utente responsabile per questa azienda.
           notifications: Notifiche
           notifications_tip: Le notifiche riguardanti gli ordini saranno inviate a questo indirizzo mail
           notifications_placeholder: es. gustav@gmail.com
           notifications_note: 'Nota: se inserisci un nuovo indirizzo mail, ti sarà richiesto di confermarlo prima dell''uso.'
-          managers: Referenti
-          managers_tip: Altri utenti abilitati a gestire questa azienda.
           invite_manager: "Invita referente"
-          invite_manager_tip: "Invita un utente non registrato a registrarsi e diventare referente per questa azienda."
-          add_unregistered_user: "Aggiungi un utente non registrato"
           email_confirmed: "Email confermata"
           email_not_confirmed: "Email non confermata"
         vouchers:
@@ -1207,9 +1203,6 @@ it:
         choose_starting_point: 'Scegli il tuo "pacchetto" OFN (tipo di profilo):'
         profile: 'Profilo'
         producer_profile: 'Profilo produttore'
-      invite_manager:
-        user_already_exists: "L'Utente esiste già"
-        error: "Qualcosa è andato storto"
     order_cycles:
       loading_flash:
         loading_order_cycles: CARICAMENTO CICLI DI RICHIESTE
@@ -1600,6 +1593,11 @@ it:
     schedules:
       destroy:
         associated_subscriptions_error: Questa programmazione non può essere cancellata perché ha una sottoscrizione associata
+    user_invitations:
+      new:
+        back: Indietro
+        email: Email
+        invite: Invita
     vouchers:
       new:
         back: Indietro

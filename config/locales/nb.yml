@@ -1341,19 +1341,15 @@ nb:
           legend: "Brukere"
           email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
           resend: Send på nytt
-          owner: 'Eier'
           contact: "Kontakt"
+          owner: 'Eier'
           contact_tip: "Administrator som mottar bedriftsepost for bestillinger og varsler. Må ha en bekreftet epostadresse."
           owner_tip: Primærbrukeren ansvarlig for denne bedriften.
           notifications: Varslinger
           notifications_tip: Varslinger om bestillinger vil bli sendt til denne epostadressen.
           notifications_placeholder: f.eks. gustav@truffles.com
           notifications_note: 'Merk: En ny epostadresse må kanskje bekreftes før bruk'
-          managers: Administratorer
-          managers_tip: Andre brukere med tilgang til å administrere denne bedriften.
           invite_manager: "Inviter Administrator"
-          invite_manager_tip: "Inviter en uregistrert bruker til å registrere seg og bli administrator av denne bedriften."
-          add_unregistered_user: "Legg til en uregistrert bruker"
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
         vouchers:
@@ -1473,9 +1469,6 @@ nb:
         choose_starting_point: 'Velg din pakke:'
         profile: 'Profil'
         producer_profile: 'Produsentprofil'
-      invite_manager:
-        user_already_exists: "Brukeren eksisterer allerede"
-        error: "Noe gikk galt"
     order_cycles:
       loading_flash:
         loading_order_cycles: LASTER BESTILLINGSRUNDER
@@ -1907,6 +1900,11 @@ nb:
     schedules:
       destroy:
         associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
+    user_invitations:
+      new:
+        back: Tilbake
+        email: Epost
+        invite: Inviter
     vouchers:
       new:
         legend: Ny Kupong

@@ -285,7 +285,7 @@ fr_CA:
   customer_instructions: "Précisions pour l'acheteur"
   additional_information: "Informations additionnelles"
   connect_app:
-    url: "https://n8n.openfoodnetwork.org/webhook-test/food-justice/connect-enterprise"
+    url: "https://n8n.openfoodnetwork.org/webhook/foodjustice/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -423,6 +423,11 @@ fr_CA:
     authorization_required:
       subject: "Un paiement nécessite une autorisation de l'acheteur"
       message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
+    refund_available:
+      subject: "Remboursement de %{shop}"
+      message: |
+          Votre paiement de  %{amount} à  %{shop} a été remboursé.
+          Acceptez votre remboursement en cliquant sur le lien ci-dessous.
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
@@ -1419,19 +1424,15 @@ fr_CA:
           legend: "Utilisateurs"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
-          owner: 'Manager principal'
           contact: "Contact"
+          owner: 'Manager principal'
           contact_tip: "Le manager qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
           owner_tip: Manager principal de cette entreprise.
           notifications: Notifications
           notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
-          managers: Managers
-          managers_tip: 'Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. '
           invite_manager: "Inviter un manager"
-          invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme manager de cette entreprise."
-          add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
@@ -1564,9 +1565,6 @@ fr_CA:
         choose_starting_point: 'Choisir le type de compte souhaité'
         profile: 'Profil'
         producer_profile: 'Profil producteur'
-      invite_manager:
-        user_already_exists: "Le compte existe déjà"
-        error: "Un problème est survenu"
     tag_rules:
       not_supported_type: Type de règle de balise non pris en charge
       confirm_delete: Êtes-vous sûr de vouloir supprimer cette règle ?
@@ -2012,6 +2010,11 @@ fr_CA:
     schedules:
       destroy:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
+    user_invitations:
+      new:
+        back: Retour
+        email: Email
+        invite: Inviter
     vouchers:
       new:
         legend: Nouveau bon de réduction
