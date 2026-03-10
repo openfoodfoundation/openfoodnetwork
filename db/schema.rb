@@ -1118,7 +1118,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
     t.integer "source_variant_id", null: false
     t.integer "target_variant_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["source_variant_id"], name: "index_variant_links_on_source_variant_id"
   end
 

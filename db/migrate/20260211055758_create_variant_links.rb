@@ -11,7 +11,7 @@ class CreateVariantLinks < ActiveRecord::Migration[7.1]
       t.integer :source_variant_id, null: false, index: true
       t.integer :target_variant_id, null: false
 
-      t.timestamps
+      t.datetime :created_at, null: false
     end
     add_foreign_key :variant_links, :spree_variants, column: :source_variant_id
     add_foreign_key :variant_links, :spree_variants, column: :target_variant_id
