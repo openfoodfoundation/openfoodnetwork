@@ -40,7 +40,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
-    belongs_to :owner, class_name: 'Enterprise', optional: true
+    belongs_to :hub, class_name: 'Enterprise', optional: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -275,8 +275,8 @@ module Spree
 
     # Clone this variant, retaining a 'source' link to it
     def create_linked_variant(user)
-      # Owner is my enterprise which has permission to create variants sourced from that supplier
-      owner_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
+      # Hub owner is my enterprise which has permission to create variant sourced from that supplier
+      hub_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
         .with_permission(:create_linked_variants)
         .pick(:child_id)
 
@@ -284,7 +284,7 @@ module Spree
         variant.price = price
         variant.source_variants = [self]
         variant.stock_items << Spree::StockItem.new(variant:)
-        variant.owner_id = owner_id
+        variant.hub_id = hub_id
         variant.on_demand = on_demand
         variant.on_hand = on_hand
         variant.save!

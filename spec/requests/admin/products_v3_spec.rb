@@ -121,7 +121,7 @@ RSpec.describe "Admin::ProductsV3" do
 
           # The new variant is owned by my enterprise that has permission, not the other one
           new_variant = variant.product.variants.order(:id).last
-          expect(new_variant.owner).to eq enterprise
+          expect(new_variant.hub).to eq enterprise
         end
       end
     end

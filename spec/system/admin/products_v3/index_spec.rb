@@ -147,7 +147,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       let!(:v3_source) { p3.variants.first }
       let!(:v3_sourced) {
         create(:variant, display_name: "Variant3-sourced", product: p3, supplier: source_producer,
-                         owner: producer)
+                         hub: producer)
       }
       let!(:enterprise_relationship) {
         # Other producer grants me access to manage their variant
@@ -163,7 +163,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       it "shows sourced variant with indicator" do
         within row_containing_name("Variant3-sourced") do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
-          expect(page).to have_selector 'span[title*="Owned by: My Enterprise"]'
+          expect(page).to have_selector 'span[title*="Hub: My Enterprise"]'
         end
       end
     end
