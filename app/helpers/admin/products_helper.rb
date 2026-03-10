@@ -50,7 +50,7 @@ module Admin
 
     def allowed_source_producers
       @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .enterprises_granting_sourced_variants
+        .enterprises_granting_linked_variants
     end
   end
 end

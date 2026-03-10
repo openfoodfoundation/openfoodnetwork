@@ -717,7 +717,7 @@ en:
         delete: Delete
         remove: Remove
         preview: Preview
-        create_sourced_variant: Create sourced variant
+        create_linked_variant: Create linked variant
       image:
         edit: Edit
       variant_row:
@@ -1101,8 +1101,8 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
-      create_sourced_variant:
-        success: "Successfully created sourced variant"
+      create_linked_variant:
+        success: "Successfully created linked variant"
       tag_rules:
         rules_per_tag:
           one: "%{tag} has 1 rule"
@@ -3906,7 +3906,7 @@ en:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
-      create_sourced_variants: "create sourced variants [BETA]"
+      create_linked_variants: "create linked variants [BETA]"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:

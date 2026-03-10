@@ -1006,28 +1006,28 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe "#create_sourced_variant" do
+  describe "#create_linked_variant" do
     let(:user) { create(:user, enterprises: [enterprise]) }
     let(:supplier) { variant.supplier }
     let(:enterprise) { create(:enterprise) }
 
-    context "with create_sourced_variants permissions on supplier" do
+    context "with create_linked_variants permissions on supplier" do
       let!(:enterprise_relationship) {
         create(:enterprise_relationship,
                parent: supplier,
                child: enterprise,
-               permissions_list: [:create_sourced_variants])
+               permissions_list: [:create_linked_variants])
       }
       let(:variant) { create(:variant, price: 10.95, on_demand: false, on_hand: 5) }
 
       it "clones the variant, retaining a link to the source" do
-        sourced_variant = variant.create_sourced_variant(user)
+        linked_variant = variant.create_linked_variant(user)
 
-        expect(sourced_variant.source_variants).to eq [variant]
-        expect(sourced_variant.owner).to eq enterprise
-        expect(sourced_variant.price).to eq 10.95
-        expect(sourced_variant.on_demand).to eq false
-        expect(sourced_variant.on_hand).to eq 5
+        expect(linked_variant.source_variants).to eq [variant]
+        expect(linked_variant.owner).to eq enterprise
+        expect(linked_variant.price).to eq 10.95
+        expect(linked_variant.on_demand).to eq false
+        expect(linked_variant.on_hand).to eq 5
       end
     end
   end

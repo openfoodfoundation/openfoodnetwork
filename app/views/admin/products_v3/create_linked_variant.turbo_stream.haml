@@ -1,4 +1,4 @@
--# locals: (variant:, source_variant:, product_index:, variant_index:, producer_options:, category_options:, tax_category_options:)
+-# locals: (variant:, linked_variant:, product_index:, variant_index:, producer_options:, category_options:, tax_category_options:)
 -# Pre-render the form, because you can't do it inside turbo stream block
 - variant_row = nil
 - fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |f|
@@ -8,7 +8,7 @@
                            producer_options:,
                            category_options:,
                            tax_category_options:})
-= turbo_stream.after dom_id(source_variant) do
+= turbo_stream.after dom_id(linked_variant) do
   %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper slide-in" }
     = variant_row
 

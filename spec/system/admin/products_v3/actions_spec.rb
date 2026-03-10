@@ -272,7 +272,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
     end
 
-    describe "Create sourced variant" do
+    describe "Create linked variant" do
       let!(:variant) {
         create(:variant, display_name: "My box", supplier: producer)
       }
@@ -286,11 +286,11 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
                                          permissions_list: [:manage_products])
       }
 
-      context "with create_sourced_variants permission for my, and other's variants" do
-        it "creates a sourced variant" do
+      context "with create_linked_variants permission for my, and other's variants" do
+        it "creates a linked variant" do
           create(:enterprise_relationship, parent: producer, child: producer,
-                                           permissions_list: [:create_sourced_variants])
-          enterprise_relationship.permissions.create! name: :create_sourced_variants
+                                           permissions_list: [:create_linked_variants])
+          enterprise_relationship.permissions.create! name: :create_linked_variants
 
           visit admin_products_url
 
@@ -298,39 +298,39 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
           within row_containing_name("My box") do
             page.find(".vertical-ellipsis-menu").click
 
-            expect(page).to have_link "Create sourced variant"
+            expect(page).to have_link "Create linked variant"
           end
 
-          # Create variant sourced from my friend
+          # Create linked variant sourced from my friend
           within row_containing_name("My friends box") do
             page.find(".vertical-ellipsis-menu").click
 
-            click_link "Create sourced variant"
+            click_link "Create linked variant"
           end
 
-          expect(page).to have_content "Successfully created sourced variant"
+          expect(page).to have_content "Successfully created linked variant"
 
           within "table.products" do
             # There are now two copies
             expect(all_input_values).to match /My friends box.*My friends box/
-            # One of them is designated as a source variant
+            # One of them is designated as a linked variant
             expect(page).to have_content "🔗"
           end
         end
       end
 
-      context "without create_sourced_variants permission" do
+      context "without create_linked_variants permission" do
         it "does not show the option in the menu" do
           visit admin_products_url
 
           within row_containing_name("My box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).not_to have_link "Create sourced variant"
+            expect(page).not_to have_link "Create linked variant"
           end
 
           within row_containing_name("My friends box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).not_to have_link "Create sourced variant"
+            expect(page).not_to have_link "Create linked variant"
           end
         end
       end

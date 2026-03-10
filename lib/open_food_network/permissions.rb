@@ -86,8 +86,8 @@ module OpenFoodNetwork
       managed_and_related_enterprises_granting :manage_products
     end
 
-    def enterprises_granting_sourced_variants
-      related_enterprises_granting :create_sourced_variants
+    def enterprises_granting_linked_variants
+      related_enterprises_granting :create_linked_variants
     end
 
     def manages_one_enterprise?

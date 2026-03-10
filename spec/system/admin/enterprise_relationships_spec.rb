@@ -47,7 +47,7 @@ create(:enterprise)
       uncheck 'to manage products'
       check 'to edit profile'
       check 'to add products to inventory'
-      check 'to create sourced variants'
+      check 'to create linked variants'
       select2_select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
@@ -56,14 +56,14 @@ create(:enterprise)
       # Permissions appear.. in a different order for some reason.
       expect_relationship_with_permissions e1, e2,
                                            ['to add to order cycle',
-                                            'to create sourced variants [BETA]',
+                                            'to create linked variants [BETA]',
                                             'to add products to inventory',
                                             'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       expect(er).to be_present
       expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle', 'edit_profile',
                                                          'create_variant_overrides',
-                                                         'create_sourced_variants']
+                                                         'create_linked_variants']
     end
 
     it "attempting to create a relationship with invalid data" do

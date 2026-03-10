@@ -364,16 +364,16 @@ RSpec.describe Spree::Ability do
                                         for: p2.variants.first)
       end
 
-      describe "create_sourced_variant" do
-        it "should not be able to create sourced variant without permission" do
-          is_expected.not_to have_ability([:create_sourced_variant], for: p_related.variants.first)
+      describe "create_linked_variant" do
+        it "should not be able to create linked variant without permission" do
+          is_expected.not_to have_ability([:create_linked_variant], for: p_related.variants.first)
         end
 
-        it "should be able to create sourced variant when granted permission" do
+        it "should be able to create linked variant when granted permission" do
           create(:enterprise_relationship, parent: s_related, child: s1,
-                                           permissions_list: [:create_sourced_variants])
+                                           permissions_list: [:create_linked_variants])
 
-          is_expected.to have_ability([:create_sourced_variant], for: p_related.variants.first)
+          is_expected.to have_ability([:create_linked_variant], for: p_related.variants.first)
         end
       end
 
@@ -734,16 +734,16 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:for_order_cycle], for: EnterpriseFee)
       end
 
-      describe "create_sourced_variant" do
-        it "should not be able to create sourced variant without permission" do
-          is_expected.not_to have_ability([:create_sourced_variant], for: p_related.variants.first)
+      describe "create_linked_variant" do
+        it "should not be able to create linked variant without permission" do
+          is_expected.not_to have_ability([:create_linked_variant], for: p_related.variants.first)
         end
 
-        it "should be able to create sourced variant when granted permission" do
+        it "should be able to create linked variant when granted permission" do
           create(:enterprise_relationship, parent: s_related, child: d1,
-                                           permissions_list: [:create_sourced_variants])
+                                           permissions_list: [:create_linked_variants])
 
-          is_expected.to have_ability([:create_sourced_variant], for: p_related.variants.first)
+          is_expected.to have_ability([:create_linked_variant], for: p_related.variants.first)
         end
       end
     end
@@ -822,16 +822,16 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :create], for: Voucher)
       end
 
-      describe "create_sourced_variant for own enterprise" do
+      describe "create_linked_variant for own enterprise" do
         it "should not be able to create own sourced variant without permission" do
-          is_expected.not_to have_ability([:create_sourced_variant], for: p1.variants.first)
+          is_expected.not_to have_ability([:create_linked_variant], for: p1.variants.first)
         end
 
         it "should be able to create own sourced variant when granted self permission" do
           create(:enterprise_relationship, parent: s1, child: s1,
-                                           permissions_list: [:create_sourced_variants])
+                                           permissions_list: [:create_linked_variants])
 
-          is_expected.to have_ability([:create_sourced_variant], for: p1.variants.first)
+          is_expected.to have_ability([:create_linked_variant], for: p1.variants.first)
         end
       end
     end

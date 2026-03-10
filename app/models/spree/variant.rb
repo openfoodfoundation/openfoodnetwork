@@ -274,10 +274,10 @@ module Spree
     end
 
     # Clone this variant, retaining a 'source' link to it
-    def create_sourced_variant(user)
-      # Owner is my enterprise which has permission to create sourced variants from that supplier
+    def create_linked_variant(user)
+      # Owner is my enterprise which has permission to create variants sourced from that supplier
       owner_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
-        .with_permission(:create_sourced_variants)
+        .with_permission(:create_linked_variants)
         .pick(:child_id)
 
       dup.tap do |variant|

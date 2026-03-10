@@ -60,7 +60,7 @@ RSpec.describe "Admin::ProductsV3" do
     end
   end
 
-  describe "POST /admin/products/create_sourced_variant" do
+  describe "POST /admin/products/create_linked_variant" do
     let(:enterprise) { create(:supplier_enterprise) }
     let(:user) { create(:user, enterprises: [enterprise]) }
 
@@ -75,24 +75,24 @@ RSpec.describe "Admin::ProductsV3" do
       params = { variant_id: variant.id, product_index: 1 }
 
       expect {
-        post(admin_create_sourced_variant_path, as: :turbo_stream, params:)
+        post(admin_create_linked_variant_path, as: :turbo_stream, params:)
         expect(response).to redirect_to('/unauthorized')
       }.not_to change { variant.product.variants.count }
     end
 
-    context "With create_sourced_variants permissions on supplier" do
+    context "With create_linked_variants permissions on supplier" do
       let!(:enterprise_relationship) {
         create(:enterprise_relationship,
                parent: supplier,
                child: enterprise,
-               permissions_list: [:create_sourced_variants])
+               permissions_list: [:create_linked_variants])
       }
 
       it "clones the variant, retaining link as source" do
         params = { variant_id: variant.id, product_index: 1 }
 
         expect {
-          post(admin_create_sourced_variant_path, as: :turbo_stream, params:)
+          post(admin_create_linked_variant_path, as: :turbo_stream, params:)
 
           expect(response).to have_http_status(:ok)
           expect(response.body).to match "Original variant" # cloned variant name
@@ -114,7 +114,7 @@ RSpec.describe "Admin::ProductsV3" do
           params = { variant_id: variant.id, product_index: 1 }
 
           expect {
-            post(admin_create_sourced_variant_path, as: :turbo_stream, params:)
+            post(admin_create_linked_variant_path, as: :turbo_stream, params:)
 
             expect(response).to have_http_status(:ok)
           }.to change { variant.product.variants.count }.by(1)

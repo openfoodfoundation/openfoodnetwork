@@ -93,7 +93,7 @@
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
 
       - if allowed_source_producers.include?(variant.supplier)
-        = link_to t('admin.products_page.actions.create_sourced_variant'), admin_create_sourced_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
+        = link_to t('admin.products_page.actions.create_linked_variant'), admin_create_linked_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
 
       - if variant.product.variants.size > 1
         %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",

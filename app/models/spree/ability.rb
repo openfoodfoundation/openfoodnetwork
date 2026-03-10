@@ -215,15 +215,15 @@ module Spree
       end
 
       # An enterprise user can clone if they have been granted permission to the source variant.
-      # Technically I'd call this permission clone_source_variant, but it would be less confusing to
+      # Technically I'd call this permission clone_linked_variant, but it would be less confusing to
       # use the same name as everywhere else.
-      can [:create_sourced_variant], Spree::Variant do |variant|
+      can [:create_linked_variant], Spree::Variant do |variant|
         OpenFoodNetwork::Permissions.new(user).
-          enterprises_granting_sourced_variants.include? variant.supplier
+          enterprises_granting_linked_variants.include? variant.supplier
       end
 
       can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone,
-           :create_sourced_variant], :products_v3
+           :create_linked_variant], :products_v3
 
       can [:create], Spree::Variant
       can [:admin, :index, :read, :edit,

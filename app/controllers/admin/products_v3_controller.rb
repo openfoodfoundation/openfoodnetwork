@@ -108,14 +108,14 @@ module Admin
     end
 
     # Clone a variant, retaining a link to the "source"
-    def create_sourced_variant
-      source_variant = Spree::Variant.find(params[:variant_id])
+    def create_linked_variant
+      linked_variant = Spree::Variant.find(params[:variant_id])
       product_index = params[:product_index]
-      authorize! :create_sourced_variant, source_variant
+      authorize! :create_linked_variant, linked_variant
       status = :ok
 
       begin
-        variant = source_variant.create_sourced_variant(spree_current_user)
+        variant = linked_variant.create_linked_variant(spree_current_user)
 
         flash.now[:success] = t('.success')
         variant_index = "-#{variant.id}"
@@ -127,9 +127,9 @@ module Admin
 
       respond_with do |format|
         format.turbo_stream {
-          locals = { source_variant:, variant:, product_index:, variant_index:,
+          locals = { linked_variant:, variant:, product_index:, variant_index:,
                      producer_options:, category_options: categories, tax_category_options: }
-          render :create_sourced_variant, status:, locals:
+          render :create_linked_variant, status:, locals:
         }
       end
     end
