@@ -702,6 +702,10 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
       end
 
+      it "is able to read/write customer account transaction" do
+        is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+      end
+
       context "for a given order_cycle" do
         let!(:order_cycle) { create(:simple_order_cycle, coordinator: d2) }
         let!(:exchange){
