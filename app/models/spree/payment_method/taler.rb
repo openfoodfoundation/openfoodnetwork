@@ -25,6 +25,17 @@ module Spree
         %w[credit void]
       end
 
+      def can_void?(payment)
+        payment.state == "completed"
+      end
+
+      def can_credit?(payment)
+        return false unless payment.completed?
+        return false unless payment.order.payment_state == 'credit_owed'
+
+        payment.credit_allowed.positive?
+      end
+
       # Name of the view to display during checkout
       def method_type
         "check" # empty view
