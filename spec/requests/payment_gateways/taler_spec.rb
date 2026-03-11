@@ -34,6 +34,24 @@ RSpec.describe "/payment_gateways/taler/:id" do
     expect(payment.state).to eq "completed"
   end
 
+  it "redirects when payment invalid" do
+    payment = Spree::Payment.last
+    payment.update!(
+      source: taler,
+      payment_method: taler,
+      state: "processing", # invalid state to start processing again
+    )
+
+    get payment_gateways_confirm_taler_path(payment_id: payment.id)
+    expect(response).to redirect_to "/checkout/payment"
+
+    payment.reload
+    expect(payment.state).to eq "processing"
+
+    order.reload
+    expect(order.state).to eq "confirmation"
+  end
+
   it "redirects when payment failed" do
     payment = Spree::Payment.last
     payment.update!(
