@@ -664,16 +664,16 @@ RSpec.describe '
         end
 
         it "finally, can invite unregistered users" do
-          within ".reveal-modal" do
-            tomselect_fill_in "user_invitation[email]", with: "email@email.com"
+          expect do
+            within ".reveal-modal" do
+              tomselect_fill_in "user_invitation[email]", with: "email@email.com"
 
-            expect do
               click_button "Invite"
-            end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
-          end
+            end
 
-          expect(page)
-            .to have_content "email@email.com has been invited to manage this enterprise"
+            expect(page)
+              .to have_content "email@email.com has been invited to manage this enterprise"
+          end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
         end
       end
     end
