@@ -86,7 +86,7 @@ module StripeStubs
 
   def stub_capture_request(order, response_mock)
     stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
-      .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
+      .with(body: { amount_to_capture: Spree::Money.new(order.total).money.cents },
             headers: { 'Stripe-Account' => 'abc123' })
       .to_return(response_mock)
   end
