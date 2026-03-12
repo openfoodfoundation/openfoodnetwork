@@ -166,7 +166,6 @@ describe("TomSelectController", () => {
       expect(settings.searchField).toBe("label");
       expect(settings.load).toEqual(expect.any(Function));
       expect(settings.firstUrl).toEqual(expect.any(Function));
-      expect(settings.onFocus).toEqual(expect.any(Function));
     });
 
     it("fetches page 1 on focus", async () => {

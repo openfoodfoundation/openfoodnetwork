@@ -9,14 +9,22 @@
   - if producer_options.many?
     .producers
       = label_tag :producer_id, t('.producers.label')
-      = select_tag :producer_id, options_for_select(producer_options, producer_id),
-        include_blank: t('.all_producers'), class: "fullwidth",
-        data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_producers')}
+      = render(SearchableDropdownComponent.new(name: :producer_id,
+        aria_label: t('.producer_field_name'),
+        options: selected_option(producer_id, Enterprise),
+        selected_option: producer_id,
+        remote_url: admin_products_search_producers_url,
+        include_blank: t('.all_producers'),
+        placeholder_value: t('.search_for_producers')))
   .categories
     = label_tag :category_id, t('.categories.label')
-    = select_tag :category_id, options_for_select(category_options, category_id),
-      include_blank: t('.all_categories'), class: "fullwidth",
-      data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_categories')}
+    = render(SearchableDropdownComponent.new(name: :category_id,
+        aria_label: t('.category_field_name'),
+        options: selected_option(category_id, Spree::Taxon),
+        selected_option: category_id,
+        remote_url: admin_products_search_categories_url,
+        include_blank: t('.all_categories'),
+        placeholder_value: t('.search_for_categories')))
   -if variant_tag_enabled?(spree_current_user)
     .tags
       = label_tag :tags_name_in, t('.tags.label')

@@ -214,7 +214,17 @@ module Spree
         )
       end
 
-      can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone], :products_v3
+      can [
+        :admin,
+        :index,
+        :bulk_update,
+        :destroy,
+        :destroy_variant,
+        :clone,
+        :search_producers,
+        :search_categories,
+        :search_tax_categories
+      ], :products_v3
 
       can [:create], Spree::Variant
       can [:admin, :index, :read, :edit,

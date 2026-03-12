@@ -82,6 +82,9 @@ Openfoodnetwork::Application.routes.draw do
     delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
     delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
     post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
+    get 'products_v3/search_producers', to: 'products_v3#search_producers', as: 'products_search_producers'
+    get 'products_v3/search_categories', to: 'products_v3#search_categories', as: 'products_search_categories'
+    get 'products_v3/search_tax_categories', to: 'products_v3#search_tax_categories', as: 'products_search_tax_categories'
     resources :product_preview, only: [:show]
 
     resources :variant_overrides do
