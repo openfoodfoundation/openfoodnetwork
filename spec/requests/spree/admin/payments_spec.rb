@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe Spree::Admin::PaymentsController do
-  let(:user) { order.user }
   let(:order) { create(:completed_order_with_fees) }
+  let(:user) { create(:enterprise_user, enterprises: [order.distributor]) }
 
   before do
-    sign_in create(:admin_user)
+    sign_in user
   end
 
   describe "POST /admin/orders/:order_number/payments.json" do
@@ -369,8 +369,6 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     before do
       allow(customer_credit_service_mock).to receive(:apply)
-      # order setup will call Orders::CustomerCreditService once
-      expect(Orders::CustomerCreditService).to receive(:new).and_call_original
       expect(Orders::CustomerCreditService).to receive(:new).and_return(
         customer_credit_service_mock
       )

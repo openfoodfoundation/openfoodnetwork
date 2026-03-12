@@ -634,6 +634,11 @@ RSpec.describe Spree::Ability do
                                     for: Spree::Payment)
       end
 
+      it "is able to credit a customer" do
+        is_expected.to have_ability([:credit_customer], for: Spree::Order)
+        is_expected.to have_ability([:credit_customer], for: Spree::Payment)
+      end
+
       it "should be able to read/write Shipments on a product" do
         is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
                                     for: Spree::Shipment)
@@ -695,6 +700,10 @@ RSpec.describe Spree::Ability do
 
       it "should be able to access customer actions" do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
+      end
+
+      it "is able to read/write customer account transaction" do
+        is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
       end
 
       context "for a given order_cycle" do
