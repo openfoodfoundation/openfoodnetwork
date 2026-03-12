@@ -40,6 +40,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
+    belongs_to :hub, class_name: 'Enterprise', optional: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -71,6 +72,15 @@ module Spree
     has_many :inventory_items, dependent: :destroy
     has_many :semantic_links, as: :subject, dependent: :delete_all
     has_many :supplier_properties, through: :supplier, source: :properties
+
+    # Linked variants: I may have one or many sources.
+    has_many :variant_links_as_target, class_name: 'VariantLink', foreign_key: :target_variant_id,
+                                       dependent: :delete_all, inverse_of: :target_variant
+    has_many :source_variants, through: :variant_links_as_target, source: :source_variant
+    # I may also have one more many targets.
+    has_many :variant_links_as_source, class_name: 'VariantLink', foreign_key: :source_variant_id,
+                                       dependent: :delete_all, inverse_of: :source_variant
+    has_many :target_variants, through: :variant_links_as_source, source: :target_variant
 
     localize_number :price, :weight
 
@@ -261,6 +271,24 @@ module Spree
 
     def on_hand_desired=(val)
       @on_hand_desired = ActiveModel::Type::Integer.new.cast(val)
+    end
+
+    # Clone this variant, retaining a 'source' link to it
+    def create_linked_variant(user)
+      # Hub owner is my enterprise which has permission to create variant sourced from that supplier
+      hub_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
+        .with_permission(:create_linked_variants)
+        .pick(:child_id)
+
+      dup.tap do |variant|
+        variant.price = price
+        variant.source_variants = [self]
+        variant.stock_items << Spree::StockItem.new(variant:)
+        variant.hub_id = hub_id
+        variant.on_demand = on_demand
+        variant.on_hand = on_hand
+        variant.save!
+      end
     end
 
     private

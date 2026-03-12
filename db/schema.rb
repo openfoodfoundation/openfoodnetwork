@@ -1009,6 +1009,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
     t.bigint "supplier_id"
     t.float "variant_unit_scale"
     t.string "variant_unit_name", limit: 255
+    t.bigint "hub_id"
+    t.index ["hub_id"], name: "index_spree_variants_on_hub_id"
     t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["shipping_category_id"], name: "index_spree_variants_on_shipping_category_id"
@@ -1111,6 +1113,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
   create_table "terms_of_service_files", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "variant_links", primary_key: ["target_variant_id", "source_variant_id"], force: :cascade do |t|
+    t.integer "source_variant_id", null: false
+    t.integer "target_variant_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["source_variant_id"], name: "index_variant_links_on_source_variant_id"
   end
 
   create_table "variant_overrides", id: :serial, force: :cascade do |t|
@@ -1262,6 +1271,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
+  add_foreign_key "spree_variants", "enterprises", column: "hub_id"
   add_foreign_key "spree_variants", "enterprises", column: "supplier_id"
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
   add_foreign_key "spree_variants", "spree_shipping_categories", column: "shipping_category_id"
@@ -1278,6 +1288,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
   add_foreign_key "tag_rules", "enterprises"
+  add_foreign_key "variant_links", "spree_variants", column: "source_variant_id"
+  add_foreign_key "variant_links", "spree_variants", column: "target_variant_id"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
   add_foreign_key "vouchers", "enterprises"
