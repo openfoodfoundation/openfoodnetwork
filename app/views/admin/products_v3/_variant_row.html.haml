@@ -56,27 +56,27 @@
   = render(SearchableDropdownComponent.new(form: f,
       name: :supplier_id,
       aria_label: t('.producer_field_name'),
-      options: producer_options,
+      options: variant.supplier_id ? [[variant.supplier.name, variant.supplier_id]] : [],
       selected_option: variant.supplier_id,
-      include_blank: t('admin.products_v3.filters.select_producer'),
+      remote_url: admin_products_search_producers_url,
       placeholder_value: t('admin.products_v3.filters.select_producer')))
   = error_message_on variant, :supplier
 %td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
-      options: category_options,
+      options: variant.primary_taxon_id ? [[variant.primary_taxon.name, variant.primary_taxon_id]] : [],
       selected_option: variant.primary_taxon_id,
       aria_label: t('.category_field_name'),
-      include_blank: t('admin.products_v3.filters.select_category'),
+      remote_url: admin_products_search_categories_url,
       placeholder_value: t('admin.products_v3.filters.select_category')))
   = error_message_on variant, :primary_taxon
 %td.col-tax_category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :tax_category_id,
-      options: tax_category_options,
+      options: variant.tax_category_id ? [[variant.tax_category.name, variant.tax_category_id]] : [],
       selected_option: variant.tax_category_id,
-      include_blank: t('.none_tax_category'),
       aria_label: t('.tax_category_field_name'),
+      remote_url: admin_products_search_tax_categories_url,
       placeholder_value: t('.search_for_tax_categories')))
   = error_message_on variant, :tax_category
 - if variant_tag_enabled?(spree_current_user)

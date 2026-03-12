@@ -4,6 +4,7 @@
 module Admin
   class ProductsV3Controller < Spree::Admin::BaseController
     helper ProductsHelper
+    include ::Products::AjaxSearch
 
     before_action :init_filters_params
     before_action :init_pagination_params
