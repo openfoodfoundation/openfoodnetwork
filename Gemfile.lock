@@ -613,7 +613,7 @@ GEM
       eventmachine_httpserver
       http_parser.rb (~> 0.8.0)
       multi_json
-    puma (6.5.0)
+    puma (7.2.0)
       nio4r (~> 2.0)
     query_count (1.1.1)
       activerecord (>= 4.2)
