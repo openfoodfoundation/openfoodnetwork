@@ -855,7 +855,8 @@ RSpec.describe Spree::Payment do
 
     describe "available actions" do
       context "for most gateways" do
-        let(:payment) { build_stubbed(:payment, source: build_stubbed(:credit_card)) }
+        let(:payment) { build_stubbed(:payment, payment_method:) }
+        let(:payment_method) { Spree::Gateway::StripeSCA.new }
 
         it "can capture and void" do
           expect(payment.actions).to match_array %w(capture_and_complete_order void)
