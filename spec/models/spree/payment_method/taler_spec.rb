@@ -69,7 +69,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
         response_code: "taler-order-8",
       )
       expect {
-        response = taler.credit(100, { payment: order.payments[0] })
+        response = taler.credit(100, "taler-order-8", { payment: order.payments[0] })
         expect(response.success?).to eq true
       }.to enqueue_mail(PaymentMailer, :refund_available)
     end
@@ -85,7 +85,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
         response_code: "taler-order-8",
       )
       expect {
-        taler.credit(100, { payment: order.payments[0] })
+        taler.credit(100, "taler-order-8", { payment: order.payments[0] })
       }.to raise_error StandardError, "Unsupported action"
     end
   end

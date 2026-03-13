@@ -75,10 +75,10 @@ module Spree
         ActiveMerchant::Billing::Response.new(success, message)
       end
 
-      def credit(money, gateway_options)
+      def credit(money, response_code, gateway_options)
         amount = money / 100 # called with cents
         payment = gateway_options[:payment]
-        taler_order = taler_order(id: payment.response_code)
+        taler_order = taler_order(id: response_code)
         status = taler_order.fetch("order_status")
 
         raise "Unsupported action" if status != "paid"
