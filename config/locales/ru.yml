@@ -680,6 +680,11 @@ ru:
         balance_due: "Задолжность"
       destroy:
         has_associated_subscriptions: "Не удалось удалить: у этого клиента есть активные подписки. Сначала отмените их."
+    customer_account_transaction:
+      index:
+        description: Описание
+        amount: Количество
+        running_balance: Текущий баланс
     contents:
       edit:
         title: Содержание
@@ -2199,6 +2204,7 @@ ru:
   order_total: Весь заказ
   order_payment: "Тип оплаты:"
   no_payment_required: "Оплата не требуется"
+  customer_credit: Кредит
   order_billing_address: Платежный Адрес
   order_delivery_on: Доставка по
   order_delivery_address: Адрес доставки
@@ -2462,7 +2468,6 @@ ru:
   shops_signup_help: Мы готовы помочь.
   shops_signup_help_text: Вам необходима лучшая отдача. Вам нужны новые покупатели и логистические партнеры. Вы должны рассказать свою историю через оптовые и розничные продажи, а также за столом.
   shops_signup_detail: Подробности.
-  orders: "Заказы"
   orders_fees: "Сборы..."
   orders_edit_title: "Корзина"
   orders_edit_headline: "Ваша корзина"
@@ -4552,6 +4557,10 @@ ru:
         transaction_history: История Операций
         authorisation_required: Требуется Согласие
         authorise: Разрешить
+      customer_account_transactions:
+        description: Описание
+        amount: Количество
+        running_balance: Текущий баланс
       open_orders:
         order: Заказ
         shop: Магазин

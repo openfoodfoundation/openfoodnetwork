@@ -750,6 +750,11 @@ cy:
         balance_due: "Balans sy'n ddyledus"
       destroy:
         has_associated_subscriptions: "Wedi methu dileu: Mae gan y cwsmer hwn danysgrifiadau gweithredol. Mae angen eu canslo'n gyntaf."
+    customer_account_transaction:
+      index:
+        description: Disgrifiad
+        amount: Nifer
+        running_balance: Cydbwysedd rhedeg
     column_preferences:
       bulk_update:
         success: "Cadwyd dewisiadau’r colofnau"
@@ -2356,6 +2361,7 @@ cy:
   order_total: Cyfanswm archeb
   order_payment: "Talu trwy:"
   no_payment_required: "Nid oes angen unrhyw daliad"
+  customer_credit: Credyd
   order_billing_address: Cyfeiriad bilio
   order_delivery_on: Dosbarthu ar
   order_delivery_address: Cyfeiriad dosbarthu
@@ -2620,7 +2626,6 @@ cy:
   shops_signup_help: Rydym yn barod i helpu.
   shops_signup_help_text: Mae arnoch angen gwell enillion. Mae arnoch angen prynwyr a phartneriaid logisteg newydd. Mae angen i'ch stori fod ar gael ar draws safleoedd cyfanwerthu, manwerthu a bwrdd y gegin.
   shops_signup_detail: Dyma'r manylion.
-  orders: "Archebion"
   orders_fees: "Ffioedd ..."
   orders_edit_title: "Basged Siopa"
   orders_edit_headline: "Eich basged siopa"
@@ -4759,6 +4764,10 @@ cy:
         transaction_history: Hanes Trafodion
         authorisation_required: Angen Awdurdodi
         authorise: Awdurdodi
+      customer_account_transactions:
+        description: Disgrifiad
+        amount: Nifer
+        running_balance: Cydbwysedd rhedeg
       open_orders:
         order: Archeb
         shop: Siop

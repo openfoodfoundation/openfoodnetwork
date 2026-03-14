@@ -681,6 +681,11 @@ de_DE:
         balance_due: "Offener Betrag"
       destroy:
         has_associated_subscriptions: "Löschen fehlgeschlagen: Dieser Kunde hat aktive Abonnements. Bitte kündigen Sie diese zuerst."
+    customer_account_transaction:
+      index:
+        description: Beschreibung
+        amount: Summe
+        running_balance: Fortlaufender Saldo
     contents:
       edit:
         title: Inhalt
@@ -2198,6 +2203,7 @@ de_DE:
   order_total: 'Gesamtsumme:'
   order_payment: "Zahlungsart:"
   no_payment_required: "Keine Zahlung erforderlich."
+  customer_credit: Guthaben
   order_billing_address: Rechnungsadresse
   order_delivery_on: Lieferung am
   order_delivery_address: Lieferadresse
@@ -2461,7 +2467,6 @@ de_DE:
   shops_signup_help: Wir sind bereit zu helfen.
   shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Großhandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
-  orders: "Bestellungen"
   orders_fees: "Gebühren ..."
   orders_edit_title: "Warenkorb"
   orders_edit_headline: "Ihr Warenkorb"
@@ -4509,6 +4514,10 @@ de_DE:
         transaction_history: Transaktionsverlauf
         authorisation_required: Bestätigung erforderlich
         authorise: Autorisieren
+      customer_account_transactions:
+        description: Beschreibung
+        amount: Summe
+        running_balance: Fortlaufender Saldo
       open_orders:
         order: Bestellung
         shop: Laden

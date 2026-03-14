@@ -753,6 +753,11 @@ nb:
         balance_due: "Til Forfall"
       destroy:
         has_associated_subscriptions: "Sletting mislyktes: Denne kunden har aktive abonnementer. Avbryt dem først."
+    customer_account_transaction:
+      index:
+        description: Beskrivelse
+        amount: Antall
+        running_balance: Løpende balanse
     column_preferences:
       bulk_update:
         success: "Kolonnepreferansene er lagret"
@@ -2333,6 +2338,7 @@ nb:
   order_total: Sum bestilling
   order_payment: "Betaler via:"
   no_payment_required: "Ingen betaling påkrevd"
+  customer_credit: Kreditt
   order_billing_address: Fakturaadresse
   order_delivery_on: Levering på
   order_delivery_address: Leveringsadresse
@@ -2596,7 +2602,6 @@ nb:
   shops_signup_help: Vi er klar til å hjelpe.
   shops_signup_help_text: Du trenger bedre resultater. Du trenger nye kunder og logistikkpartnere. Du trenger å få din historie fortalt hos grossister, i dagligvaren og rundt kjøkkenbordet.
   shops_signup_detail: Detaljene.
-  orders: "Bestillinger"
   orders_fees: "Gebyrer..."
   orders_edit_title: "Handlekurv"
   orders_edit_headline: "Din handlekurv"
@@ -4664,6 +4669,10 @@ nb:
         transaction_history: Transaksjonshistorie
         authorisation_required: Autorisasjon kreves
         authorise: Autorisere
+      customer_account_transactions:
+        description: Beskrivelse
+        amount: Antall
+        running_balance: Løpende balanse
       open_orders:
         order: Bestilling
         shop: Butikk

@@ -669,6 +669,11 @@ hi:
         balance_due: "बैलेंस बकाया"
       destroy:
         has_associated_subscriptions: "हटाने में विफल: इस ग्राहक के पास सक्रिय सब्सक्रिप्शन हैं। पहले उन्हें रद्द करें।"
+    customer_account_transaction:
+      index:
+        description: विवरण
+        amount: राशि
+        running_balance: रनिंग बैलेंस
     contents:
       edit:
         title: कंटेन्ट
@@ -2132,6 +2137,7 @@ hi:
   order_total: कुल ऑर्डर
   order_payment: "के माध्यम से भुगतान करना:"
   no_payment_required: "किसी भुगतान की आवश्यकता नहीं है"
+  customer_credit: क्रेडिट
   order_billing_address: बिलिंग पता
   order_delivery_on: डिलिवरी चालु
   order_delivery_address: डिलीवरी का पता
@@ -2392,7 +2398,6 @@ hi:
   shops_signup_help: हम मदद के लिए तैयार हैं।
   shops_signup_help_text: आपको बेहतर रिटर्न चाहिए। आपको नए खरीदार और लॉजिस्टिक पार्टनर चाहिए। आपको चाहिए की आपकी कहानी थोक, रिटेल और किचन टेबल पर बताई जाए।
   shops_signup_detail: यहां विस्तार से बताया गया है।
-  orders: "ऑर्डर्स"
   orders_fees: "फीस..."
   orders_edit_title: "शॉपिंग कार्ट"
   orders_edit_headline: "आपका शॉपिंग कार्ट"
@@ -4412,6 +4417,10 @@ hi:
         transaction_history: ट्रांजेक्शन इतिहास
         authorisation_required: प्राधिकार आवश्यक
         authorise: अधिकृत करें
+      customer_account_transactions:
+        description: विवरण
+        amount: राशि
+        running_balance: रनिंग बैलेंस
       open_orders:
         order: ऑर्डर
         shop: शॉप

@@ -594,6 +594,11 @@ ko:
         guest_label: "게스트 체크아웃"
         credit_owed: "외상값"
         balance_due: "잔액 만기"
+    customer_account_transaction:
+      index:
+        description: 설명
+        amount: 수량
+        running_balance: 계좌 실행
     contents:
       edit:
         title: 콘텐트
@@ -1919,6 +1924,7 @@ ko:
   order_not_paid: 무료
   order_total: 총 주문
   order_payment: "지불 방법 :"
+  customer_credit: 신용 거래
   order_billing_address: 청구서 발송지
   order_delivery_on: 배달일
   order_delivery_address: 배달 주소
@@ -2179,7 +2185,6 @@ ko:
   shops_signup_help: 우린 도울 준비가 됐습니다.
   shops_signup_help_text: 당신은 더 나은 보상이 필요합니다. 당신은 새로운 구매자와 물류 파트너가 필요합니다. 도매상, 소매상, 식탁에 걸쳐 당신의 이야기를 들려주어야 합나다.
   shops_signup_detail: 자세한 내용은 이렇습니다.
-  orders: "주문"
   orders_fees: "수수료..."
   orders_edit_title: "쇼핑 카트"
   orders_edit_headline: "당신의 쇼핑 카트"
@@ -4058,6 +4063,10 @@ ko:
         transaction_history: 거래 내역
         authorisation_required: 인증 필요
         authorise: 승인
+      customer_account_transactions:
+        description: 설명
+        amount: 수량
+        running_balance: 계좌 실행
       open_orders:
         order: 주문
         shop: 쇼핑

@@ -532,6 +532,11 @@ pt_BR:
         guest_label: "Checkout de convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Devedor"
+    customer_account_transaction:
+      index:
+        description: Descrição
+        amount: Montante
+        running_balance: Balanço corrente
     contents:
       edit:
         title: Conteúdo
@@ -1774,6 +1779,7 @@ pt_BR:
   order_not_paid: NÃO PAGO
   order_total: Total do pedido
   order_payment: "Pagando com:"
+  customer_credit: Crédito
   order_billing_address: Endereço de fatura
   order_delivery_on: Entrega em
   order_delivery_address: Endereço para entrega
@@ -2032,7 +2038,6 @@ pt_BR:
   shops_signup_help: Estamos prontos para ajudar
   shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
   shops_signup_detail: Aqui está o detalhe.
-  orders: "Encomendas"
   orders_fees: "Taxas..."
   orders_edit_title: "Carrinho de compras"
   orders_edit_headline: "seu carrinho de compras"
@@ -3937,6 +3942,10 @@ pt_BR:
         transaction_history: Histórico de transações
         authorisation_required: Requer Autorização
         authorise: Autorizar
+      customer_account_transactions:
+        description: Descrição
+        amount: Montante
+        running_balance: Balanço corrente
       open_orders:
         order: Pedido
         shop: Loja

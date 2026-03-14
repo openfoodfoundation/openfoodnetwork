@@ -691,6 +691,11 @@ el:
         balance_due: "Οφειλόμενο υπόλοιπο"
       destroy:
         has_associated_subscriptions: "Η διαγραφή απέτυχε: Αυτός ο πελάτης έχει ενεργές συνδρομές. Ακυρώστε τις πρώτα."
+    customer_account_transaction:
+      index:
+        description: Περιγραφή
+        amount: Ποσό
+        running_balance: Τρέξιμο ισορροπίας
     column_preferences:
       bulk_update:
         success: "Οι προτιμήσεις στήλης αποθηκεύτηκαν"
@@ -2204,6 +2209,7 @@ el:
   order_total: Συνολική παραγγελία
   order_payment: "Πληρωμή μέσω:"
   no_payment_required: "Δεν προαπαιτείται πληρωμή"
+  customer_credit: Πίστωση
   order_billing_address: Διεύθυνση χρέωσης
   order_delivery_on: Η παράδοση είναι ενεργή
   order_delivery_address: Διεύθυνση παράδοσης
@@ -2467,7 +2473,6 @@ el:
   shops_signup_help: Είμαστε έτοιμοι να βοηθήσουμε.
   shops_signup_help_text: Χρειάζεστε καλύτερη επιστροφή. Χρειάζεστε νέους αγοραστές και συνεργάτες logistics. Χρειάζεστε την ιστορία σας να λέγεται σε χονδρική, λιανική και στο τραπέζι της κουζίνας.
   shops_signup_detail: Εδώ είναι η λεπτομέρεια.
-  orders: "Παραγγελίες"
   orders_fees: "Τέλη..."
   orders_edit_title: "Καλάθι αγορών"
   orders_edit_headline: "Το καλάθι σου"
@@ -4512,6 +4517,10 @@ el:
         transaction_history: Ιστορικό συναλλαγών
         authorisation_required: Απαιτείται εξουσιοδότηση
         authorise: Εξουσιοδοτώ
+      customer_account_transactions:
+        description: Περιγραφή
+        amount: Ποσό
+        running_balance: Τρέξιμο ισορροπίας
       open_orders:
         order: Παραγγελία
         shop: Κατάστημα

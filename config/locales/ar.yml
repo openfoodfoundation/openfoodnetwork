@@ -632,6 +632,11 @@ ar:
         balance_due: "الرصيد المستحق"
       destroy:
         has_associated_subscriptions: "فشل الحذف: هذا العميل لديه اشتراكات نشطة. قم بإلغائها أولاً."
+    customer_account_transaction:
+      index:
+        description: وصف
+        amount: القيمة
+        running_balance: 'الرصيد القائم '
     contents:
       edit:
         title: المحتوى
@@ -2029,6 +2034,7 @@ ar:
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب
   order_payment: "الدفع عن طريق:"
+  customer_credit: اجل
   order_billing_address: عنوان وصول الفواتير
   order_delivery_on: التسليم في
   order_delivery_address: عنوان التسليم
@@ -2289,7 +2295,6 @@ ar:
   shops_signup_help: نحن على استعداد للمساعدة.
   shops_signup_help_text: أنت بحاجة إلى عائد أفضل. تحتاج لمشترين جدد وشركاء لوجستيين. تحتاج إلى سرد قصتك عبر الجملة والتجزئة وطاولة المطبخ.
   shops_signup_detail: هنا التفاصيل.
-  orders: "الطلبات"
   orders_fees: "رسوم ..."
   orders_edit_title: "سلة التسوق"
   orders_edit_headline: "سلة التسوق الخاصة بك"
@@ -4379,6 +4384,10 @@ ar:
         transaction_history: سجل المعاملات
         authorisation_required: التفويض مطلوب
         authorise: Authorize
+      customer_account_transactions:
+        description: وصف
+        amount: القيمة
+        running_balance: 'الرصيد القائم '
       open_orders:
         order: طلب
         shop: متجر

@@ -274,6 +274,10 @@ fr:
               no_default_card: "Pas de carte de paiement par défaut pour cet acheteur"
             shipping_method:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: est déjà gestionnaire !
   card_details: "Détalis de la carte"
   card_type: "Type de carte"
   card_type_is: "Type de carte"
@@ -808,6 +812,7 @@ fr:
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
         balance: "Solde"
+        credit: "Crédit disponible"
         update_address_success: "Adresse mise à jour avec succès."
         update_address_error: "Oups! Veuillez remplir tous les champs obligatoires!"
         edit_bill_address: "Modifier l'adresse de facturation"
@@ -822,8 +827,17 @@ fr:
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
+        id: Id
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+    customer_account_transaction:
+      index:
+        available_credit: "Crédit disponible : %{available_credit}"
+        transaction_date: Date de la transaction
+        description: Description
+        amount: Montant
+        created_by: Créé par
+        running_balance: Solde courant
     column_preferences:
       bulk_update:
         success: "Préférences colonnes sauvegardées"
@@ -1419,10 +1433,12 @@ fr:
           show_hide_payment: 'Afficher ou Masquer les méthodes de paiement lors de la finalisation de commande'
           show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
         users:
+          description: Les utilisateurs autorisés à gérer cette entreprise.
           legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           contact: "Contact"
+          manager: "Gestionnaire"
           owner: 'Gestionnaire principal'
           contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. \nIl faut d'abord l'ajouter comme \"gestionnaire\" dans le champ suivant. Il recevra un email pour confirmer son adresse mail. Vous pourrez ensuite le sélectionner dans \"Notifications\" !"
           owner_tip: Gestionnaire principal de cette entreprise.
@@ -1433,6 +1449,8 @@ fr:
           invite_manager: "Inviter un gestionnaire"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
+          set_as_contact: "Configurer %{email} comme contact"
+          set_as_owner: "Définir %{email} comme propriétaire"
         vouchers:
           legend: Bons de réduction
           voucher_code: Code de réduction
@@ -1781,6 +1799,11 @@ fr:
           images: "Images"
           contact: "Contact"
           web: "Liens web"
+      stimulus_pagination:
+        navigation: Pagination
+        page: "Page %{number}"
+        previous: Page précédente
+        next: Page suivante
     enterprise_issues:
       create_new: Créer Nouveau
       resend_email: Renvoyer l'email
@@ -2012,7 +2035,10 @@ fr:
     user_invitations:
       new:
         back: Retour
+        description: "Invitez un utilisateur à s'inscrire et à devenir gestionnaire de cette entreprise."
+        eg_email_address: 'ex : l''adresse e-mail d''un utilisateur nouveau ou existant'
         email: Email
+        invite_new_user: Inviter un nouvel utilisateur
         invite: Inviter
     vouchers:
       new:
@@ -2448,6 +2474,8 @@ fr:
   order_total: Total commande
   order_payment: "Payer via:"
   no_payment_required: "Pas de paiement requis"
+  credit_used: "Crédit utilisé : %{amount}"
+  customer_credit: Créditer
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -2719,7 +2747,6 @@ fr:
   shops_signup_help: Rejoindre le réseau
   shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
   shops_signup_detail: Les avantages CoopCircuits
-  orders: "Commandes"
   orders_fees: "Frais..."
   orders_edit_title: "Panier"
   orders_edit_headline: "Votre panier"
@@ -3434,6 +3461,7 @@ fr:
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
+  credit_customer: Client à crédit
   create_or_update_invoice: "Créer ou mettre à jour la facture"
   date_completed: "Date d'opération"
   amount: "Montant"
@@ -4085,6 +4113,7 @@ fr:
     items_cannot_be_shipped: "Les produits ne peuvent pas être envoyés"
     gateway_config_unavailable: "Configuration de la passerelle indisponible"
     gateway_error: "Le paiement a échoué"
+    internal_payment_not_voidable: Paiement non annulable
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
@@ -4579,6 +4608,7 @@ fr:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe"
           taler: "Taler"
+          customercredit: "Crédit client"
       payments:
         source_forms:
           stripe:
@@ -4586,6 +4616,7 @@ fr:
             submitting_payment: Envoi du paiement...
           paypal:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
+        customer_credit_successful: Le client a été crédité avec succès !
       products:
         image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         image_not_processable: "L'image n'est pas valide"
@@ -4902,6 +4933,7 @@ fr:
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
+          customer_account_transactions: Transactions des clients
           settings: Paramètres du Compte
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
@@ -4911,6 +4943,13 @@ fr:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation nécessaire
         authorise: Autoriser
+      customer_account_transactions:
+        title: Transactions des clients
+        credit_available: "Crédit disponible : %{credit}"
+        transaction_date: Date de la transaction
+        description: Description
+        amount: Montant
+        running_balance: Solde courant
       open_orders:
         order: Commander
         shop: Faire mes courses
@@ -5063,3 +5102,22 @@ fr:
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."
+  api_customer_credit: "Crédit API : %{description}"
+  credit_payment_method:
+    name: Crédit client
+    description: Autoriser le client à payer par crédit
+    success: Le paiement par crédit a été effectué avec succès.
+    void_success: L'annulation du crédit a réussi.
+    order_payment_description: "Crédit client : Paiement de la commande : %{order_number}"
+    order_void_description: "Crédit client : Remboursement pour la commande : %{order_number}"
+    errors:
+      customer_not_found: Client introuvable
+      missing_payment: Paiement manquant
+      credit_payment_method_missing: Le mode de paiement par crédit est manquant.
+      no_credit_available: Aucun crédit disponible
+      not_enough_credit_available: Crédit disponible insuffisant
+  orders:
+    customer_credit_service:
+      no_credit_owed: Aucun crédit dû
+      credit_payment_method_missing: Le mode de paiement par crédit client est manquant. Veuillez vérifier la configuration.
+      refund_sucessful: Remboursement effectué avec succès !

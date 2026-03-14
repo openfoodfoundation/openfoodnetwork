@@ -816,6 +816,11 @@ fi:
         balance_due: "Erääntynyt saldo"
       destroy:
         has_associated_subscriptions: "Poisto epäonnistui: Tällä asiakkaalla on aktiivisia tilauksia. Peruuta ne ensin."
+    customer_account_transaction:
+      index:
+        description: Kuvaus
+        amount: Määrä
+        running_balance: Juokseva saldo
     column_preferences:
       bulk_update:
         success: "Sarakemääritykset tallennettu"
@@ -2433,6 +2438,7 @@ fi:
   order_total: Kokonaistilaus
   order_payment: "Maksutapa:"
   no_payment_required: "Maksua ei vaadita"
+  customer_credit: Luotto
   order_billing_address: Laskutusosoite
   order_delivery_on: Toimitus
   order_delivery_address: Toimitusosoite
@@ -2706,7 +2712,6 @@ fi:
   shops_signup_help: Olemme valmiita auttamaan.
   shops_signup_help_text: Tarvitset paremman tuoton. Tarvitset uusia ostajia ja logistiikkakumppaneita. Tarinasi täytyy kertoa tukku- ja vähittäiskaupassa sekä ruokapöydässä.
   shops_signup_detail: Tässä yksityiskohta.
-  orders: "tilaukset"
   orders_fees: "Maksut..."
   orders_edit_title: "Ostoskori"
   orders_edit_headline: "Ostoskorisi"
@@ -4834,6 +4839,10 @@ fi:
         transaction_history: Tapahtumahistoria
         authorisation_required: Valtuutus vaaditaan
         authorise: Valtuuta
+      customer_account_transactions:
+        description: Kuvaus
+        amount: Määrä
+        running_balance: Juokseva saldo
       open_orders:
         order: Tilaus
         shop: Kauppa

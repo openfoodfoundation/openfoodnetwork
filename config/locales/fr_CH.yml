@@ -599,6 +599,11 @@ fr_CH:
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
+    customer_account_transaction:
+      index:
+        description: Description
+        amount: Montant
+        running_balance: Solde courant
     contents:
       edit:
         title: Contenu
@@ -1931,6 +1936,7 @@ fr_CH:
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
   order_payment: "Payer via:"
+  customer_credit: Créditer
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -2191,7 +2197,6 @@ fr_CH:
   shops_signup_help: Rejoindre le réseau
   shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
   shops_signup_detail: Les avantages Open Food Suisse
-  orders: "Commandes"
   orders_fees: "Frais..."
   orders_edit_title: "Panier"
   orders_edit_headline: "Votre panier"
@@ -4169,6 +4174,10 @@ fr_CH:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation nécessaire
         authorise: Autoriser
+      customer_account_transactions:
+        description: Description
+        amount: Montant
+        running_balance: Solde courant
       open_orders:
         order: Commander
         shop: Faire mes courses

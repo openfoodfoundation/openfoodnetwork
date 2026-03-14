@@ -632,6 +632,11 @@ it:
         balance_due: "Da pagare"
       destroy:
         has_associated_subscriptions: "Cancellazione fallita: questo cliente ha abbonamenti attivi. Eliminali prima."
+    customer_account_transaction:
+      index:
+        description: Descrizione
+        amount: Quantità
+        running_balance: Bilancio corrente
     contents:
       edit:
         title: Contenuto
@@ -1996,6 +2001,7 @@ it:
   order_not_paid: NON PAGATO
   order_total: Importo totale
   order_payment: "Metodo di Pagamento:"
+  customer_credit: Credito
   order_billing_address: Indirizzo di fatturazione
   order_delivery_on: Consegna il
   order_delivery_address: Indirizzo di consegna
@@ -2256,7 +2262,6 @@ it:
   shops_signup_help: Siamo pronti ad aiutare.
   shops_signup_help_text: Ti serve un ritorno migliore. Ti servono nuovi compratori e partner logistici. Ti serve che la tua storia sia raccontata attraverso l'ingrosso, il dettaglio e la tavola della cucina.
   shops_signup_detail: Ecco il dettaglio.
-  orders: "Gentili richieste"
   orders_fees: "Commissioni..."
   orders_edit_title: "Carrello"
   orders_edit_headline: "Il tuo carrello"
@@ -4260,6 +4265,10 @@ it:
         transaction_history: Storico Transazioni
         authorisation_required: Autorizzazione richiesta
         authorise: Autorizza
+      customer_account_transactions:
+        description: Descrizione
+        amount: Quantità
+        running_balance: Bilancio corrente
       open_orders:
         order: Gentile Richiesta
         shop: Negozio

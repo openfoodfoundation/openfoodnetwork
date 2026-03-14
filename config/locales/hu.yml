@@ -725,6 +725,11 @@ hu:
         balance_due: "Fennálló tartozás"
       destroy:
         has_associated_subscriptions: "A törlés sikertelen. A felhasználónak aktív előjegyzései vannak. Törölje őket előbb."
+    customer_account_transaction:
+      index:
+        description: Leírás
+        amount: Összeg
+        running_balance: Futó egyenleg
     column_preferences:
       bulk_update:
         success: "Oszlop preferenciák mentve"
@@ -2304,6 +2309,7 @@ hu:
   order_total: Fizetendő összeg
   order_payment: "Fizetés:"
   no_payment_required: "Nem igényel fizetést"
+  customer_credit: Hitel
   order_billing_address: Számlázási cím
   order_delivery_on: Készenállás
   order_delivery_address: Szállítási cím
@@ -2568,7 +2574,6 @@ hu:
   shops_signup_help: Gondolkodjunk együtt!
   shops_signup_help_text: Nehezen éred el a fogyasztókat? Partnerekre van szükséged akik segítenek termékeid eljuttatásában a fogyasztókhoz? Elmesélnéd a saját és a termékeid történetét, hogy eljusson a vacsoraasztalokhoz, közösségekhez, más vállalkozásokhoz?
   shops_signup_detail: Részletek
-  orders: "Megrendelések"
   orders_fees: "Díjak..."
   orders_edit_title: "Bevásárlókosár"
   orders_edit_headline: "Kosár"
@@ -4655,6 +4660,10 @@ hu:
         transaction_history: Tranzakciós előzmények
         authorisation_required: Engedély szükséges
         authorise: Engedélyezd
+      customer_account_transactions:
+        description: Leírás
+        amount: Összeg
+        running_balance: Futó egyenleg
       open_orders:
         order: Rendelés
         shop: Átvételi Pont

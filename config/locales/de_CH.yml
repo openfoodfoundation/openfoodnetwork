@@ -640,6 +640,11 @@ de_CH:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
+    customer_account_transaction:
+      index:
+        description: Beschreibung
+        amount: Betrag
+        running_balance: Fortlaufender Saldo
     column_preferences:
       bulk_update:
         success: "Spalteneinstellungen gespeichert"
@@ -2056,6 +2061,7 @@ de_CH:
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
   order_payment: "Zahlungsart:"
+  customer_credit: Guthaben
   order_billing_address: Rechnungsadresse
   order_delivery_on: Lieferung am
   order_delivery_address: Lieferadresse
@@ -2316,7 +2322,6 @@ de_CH:
   shops_signup_help: Wir sind bereit zu helfen.
   shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Grosshandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
-  orders: "Bestellungen"
   orders_fees: "Gebühren ..."
   orders_edit_title: "Warenkorb"
   orders_edit_headline: "Ihr Warenkorb"
@@ -4273,6 +4278,10 @@ de_CH:
         transaction_history: Transaktionsverlauf
         authorisation_required: Bestätigung erforderlich
         authorise: Autorisieren
+      customer_account_transactions:
+        description: Beschreibung
+        amount: Betrag
+        running_balance: Fortlaufender Saldo
       open_orders:
         order: Bestellung
         shop: Laden

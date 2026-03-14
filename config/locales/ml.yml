@@ -672,6 +672,11 @@ ml:
         balance_due: "മിച്ച കടം"
       destroy:
         has_associated_subscriptions: "ഡിലീറ്റ് പരാജയപ്പെട്ടു: ഈ ഉപഭോക്താവിന് സജീവമായ സബ്‌സ്‌ക്രിപ്‌ഷനുകളുണ്ട്. ആദ്യം അവ റദ്ദാക്കുക."
+    customer_account_transaction:
+      index:
+        description: വിവരണം
+        amount: തുക
+        running_balance: റണ്ണിംഗ് ബാലൻസ്
     contents:
       edit:
         title: ഉള്ളടക്കം
@@ -2145,6 +2150,7 @@ ml:
   order_total: ആകെ ഓർഡർ
   order_payment: "ഇതുവഴി പണമടയ്ക്കുന്നു:"
   no_payment_required: "പണം നൽകേണ്ടതില്ല"
+  customer_credit: ക്രെഡിറ്റ്
   order_billing_address: ബില്ലിംഗ് വിലാസം
   order_delivery_on: ഡെലിവറി തീയതി
   order_delivery_address: ഡെലിവറി വിലാസം
@@ -2408,7 +2414,6 @@ ml:
   shops_signup_help: സഹായിക്കാൻ ഞങ്ങൾ തയ്യാറാണ്.
   shops_signup_help_text: നിങ്ങൾക്ക് ഒരു മികച്ച പ്രതിഫലം ആവശ്യമാണ്. നിങ്ങൾക്ക് പുതിയ ഉപഭോക്താക്കളേയും ലോജിസ്റ്റിക്സ് പങ്കാളികളെയും ആവശ്യമുണ്ട്. മൊത്തവ്യാപാരം, ചില്ലറ വിൽപ്പന, ആഹാരം എന്നിവയിലുടനീളം നിങ്ങളുടെ കഥ പറയേണ്ടതുണ്ട്.
   shops_signup_detail: വിശദാംശം ഇതാ.
-  orders: "ഓർഡറുകൾ"
   orders_fees: "ഫീസ്..."
   orders_edit_title: "ഷോപ്പിംഗ് കാർട്ട്"
   orders_edit_headline: "നിങ്ങളുടെ ഷോപ്പിംഗ് കാർട്ട്"
@@ -4439,6 +4444,10 @@ ml:
         transaction_history: ഇടപാട് ചരിത്രം
         authorisation_required: അംഗീകാരം ആവശ്യമാണ്
         authorise: അധികാരപ്പെടുത്തുക
+      customer_account_transactions:
+        description: വിവരണം
+        amount: തുക
+        running_balance: റണ്ണിംഗ് ബാലൻസ്
       open_orders:
         order: ഓർഡർ ചെയ്യുക
         shop: കട

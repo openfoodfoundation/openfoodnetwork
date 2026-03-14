@@ -825,6 +825,11 @@ fr_CA:
         balance_due: "Solde dû"
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+    customer_account_transaction:
+      index:
+        description: Description
+        amount: Montant
+        running_balance: Solde courant
     column_preferences:
       bulk_update:
         success: "Préférences colonnes sauvegardées"
@@ -2449,6 +2454,7 @@ fr_CA:
   order_total: Total commande
   order_payment: "Payer via:"
   no_payment_required: "Pas de paiement requis"
+  customer_credit: Crédit
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -2721,7 +2727,6 @@ fr_CA:
   shops_signup_help: Nous sommes là pour vous aider.
   shops_signup_help_text: Vous avez besoin de pouvoir travailler de manière efficace. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit, que l'acheteur final sache qui se trouve derrière les produits.
   shops_signup_detail: Comment ça marche.
-  orders: "Commandes"
   orders_fees: "Frais..."
   orders_edit_title: "Panier"
   orders_edit_headline: "Votre panier"
@@ -4897,6 +4902,10 @@ fr_CA:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation nécessaire
         authorise: Autorise
+      customer_account_transactions:
+        description: Description
+        amount: Montant
+        running_balance: Solde courant
       open_orders:
         order: Commander
         shop: Faire mes courses

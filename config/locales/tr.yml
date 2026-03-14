@@ -534,6 +534,11 @@ tr:
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
         balance_due: "Ödenmesi Gereken Bakiye"
+    customer_account_transaction:
+      index:
+        description: Açıklama
+        amount: Tutar
+        running_balance: Güncel Bakiye
     contents:
       edit:
         title: İÇERİK
@@ -1806,6 +1811,7 @@ tr:
   order_not_paid: ÖDENMEYEN
   order_total: Sipariş toplamı
   order_payment: "Ödeme yöntemi:"
+  customer_credit: Bakiye
   order_billing_address: Fatura Adresi
   order_delivery_on: Teslimat tarihi
   order_delivery_address: Teslimat adresi
@@ -2064,7 +2070,6 @@ tr:
   shops_signup_help: Yardım etmeye hazırız.
   shops_signup_help_text: Daha yüksek bir iş potansiyeliniz var. Yeni alıcılarla ve ortak hareket edebileceğiniz diğer üretici ve gruplarla iletişime geçin. Birlikte daha güçlüyüz. Hikayeniz, bir ailenin sofrasında anlatılmayı bekliyor.
   shops_signup_detail: İşte detay.
-  orders: "Siparişler"
   orders_fees: "Ücretler ..."
   orders_edit_title: "Alışveriş Sepeti"
   orders_edit_headline: "Alışveriş sepetiniz"
@@ -3969,6 +3974,10 @@ tr:
         transaction_history: İşlem Geçmişi
         authorisation_required: Yetki gerekiyor.
         authorise: Yetki ver
+      customer_account_transactions:
+        description: Açıklama
+        amount: Tutar
+        running_balance: Güncel Bakiye
       open_orders:
         order: Sipariş
         shop: DÜKKAN

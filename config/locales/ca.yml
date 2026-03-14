@@ -657,6 +657,11 @@ ca:
         balance_due: "A pagar"
       destroy:
         has_associated_subscriptions: "No es pot esborrar: aquest client té subscripcions actives. Cancel·leu-les primer."
+    customer_account_transaction:
+      index:
+        description: Descripció
+        amount: Quantitat
+        running_balance: Balanç corrent
     contents:
       edit:
         title: Contingut
@@ -2041,6 +2046,7 @@ ca:
   order_not_paid: NO PAGAT
   order_total: Total de la comanda
   order_payment: "Pagament a través de:"
+  customer_credit: Crèdit
   order_billing_address: Adreça de facturació
   order_delivery_on: Lliurament a
   order_delivery_address: Adreça de lliurament
@@ -2300,7 +2306,6 @@ ca:
   shops_signup_help: Estem preparadess per ajudar.
   shops_signup_help_text: Necessites un millor retorn. Necessites noves compradores i sòcies logístiques. Necessites la teva història explicada a través de majoristes, minoristes i de la taula de la cuina.
   shops_signup_detail: Aquest és el detall.
-  orders: "Comandes"
   orders_fees: "Comissions..."
   orders_edit_title: "Cistella de la compra"
   orders_edit_headline: "El teu cistell de la compra"
@@ -4252,6 +4257,10 @@ ca:
         transaction_history: Historial de transaccions
         authorisation_required: Cal autorització
         authorise: Autoritzar
+      customer_account_transactions:
+        description: Descripció
+        amount: Quantitat
+        running_balance: Balanç corrent
       open_orders:
         order: Comanda
         shop: Botiga

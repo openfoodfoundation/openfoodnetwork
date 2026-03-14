@@ -599,6 +599,11 @@ uk:
         guest_label: "Реєстрація гостя"
         credit_owed: "Кредитна заборгованість"
         balance_due: "Баланс через"
+    customer_account_transaction:
+      index:
+        description: Опис
+        amount: Кількість
+        running_balance: Поточний баланс
     contents:
       edit:
         title: Контент
@@ -1939,6 +1944,7 @@ uk:
   order_not_paid: НЕ ОПЛАЧЕНО
   order_total: Замовлено всього
   order_payment: "Оплата через:"
+  customer_credit: Кредит
   order_billing_address: Платіжна адреса
   order_delivery_on: Доставка на
   order_delivery_address: Адреса доставки
@@ -2199,7 +2205,6 @@ uk:
   shops_signup_help: Ми готові допомогти.
   shops_signup_help_text: Вам потрібна краща віддача. Вам потрібні нові покупці та партнери з логістики. Ваша історія потрібна оптом, у роздріб і на кухні.
   shops_signup_detail: Ось деталі.
-  orders: "Замовлення"
   orders_fees: "Збори..."
   orders_edit_title: "Кошик"
   orders_edit_headline: "Ваш кошик для покупок"
@@ -4183,6 +4188,10 @@ uk:
         transaction_history: Історія транзакцій
         authorisation_required: Потрібна авторизація
         authorise: Авторизувати
+      customer_account_transactions:
+        description: Опис
+        amount: Кількість
+        running_balance: Поточний баланс
       open_orders:
         order: Порядок
         shop: Магазин

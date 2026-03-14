@@ -265,6 +265,11 @@ sv:
         update_address: "Uppdatera adress"
         confirm_delete: "Vill du verkligen radera?"
         search_by_email: "Sök via e-post/kod..."
+    customer_account_transaction:
+      index:
+        description: Beskrivning
+        amount: Belopp
+        running_balance: Saldo
     contents:
       edit:
         title: Innehåll
@@ -1064,6 +1069,7 @@ sv:
   order_not_paid: INTE BETALD
   order_total: Total order
   order_payment: "Betalar via:"
+  customer_credit: Kredit
   order_billing_address: 'Faktureringsadress '
   order_delivery_on: Leverans på
   order_delivery_address: 'Leveransadress '
@@ -2425,6 +2431,10 @@ sv:
         open_orders: Öppna beställningar
       transactions:
         transaction_history: Transaktionshistorik
+      customer_account_transactions:
+        description: Beskrivning
+        amount: Belopp
+        running_balance: Saldo
       open_orders:
         order: Beställningar
         shop: 'Butik '

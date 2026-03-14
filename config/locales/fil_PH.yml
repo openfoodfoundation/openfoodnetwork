@@ -452,6 +452,11 @@ fil_PH:
         confirm_delete: "siguradong tatanggalin na?"
         search_by_email: "hanapin gamit ang email/code..."
         guest_label: "Guest checkout"
+    customer_account_transaction:
+      index:
+        description: paglalarawan
+        amount: Halaga
+        running_balance: tumatakbong balanse
     contents:
       edit:
         title: nilalaman
@@ -1652,6 +1657,7 @@ fil_PH:
   order_not_paid: HINDI PA BAYAD
   order_total: kabuuang order
   order_payment: "magbabayad sa pamamagitan ng:"
+  customer_credit: utang
   order_billing_address: Billing address
   order_delivery_on: petsa ng delivery
   order_delivery_address: address kung saan ide-deliver
@@ -1898,7 +1904,6 @@ fil_PH:
   shops_signup_help: handa kaming tumulong.
   shops_signup_help_text: kailangan mo ng mas malaking kita. kailangan mo ng bagong mga mamimili at mga katulong sa operasyon. kailangang malaman ng lahat ang tungkol sa iyong produkto.
   shops_signup_detail: 'ito ang mga detalye:'
-  orders: "mga order"
   orders_fees: "Mga bayarin..."
   orders_edit_title: "Cart para sa pamimili"
   orders_edit_headline: "ang iyong cart sa pamimili"
@@ -3609,6 +3614,10 @@ fil_PH:
         past_orders: mga nakaraang order
       transactions:
         transaction_history: kasaysayan ng mga transaksyon
+      customer_account_transactions:
+        description: paglalarawan
+        amount: Halaga
+        running_balance: tumatakbong balanse
       open_orders:
         order: order
         shop: Shop

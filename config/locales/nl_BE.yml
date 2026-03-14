@@ -465,6 +465,11 @@ nl_BE:
         search_by_email: "Zoeken per e-mail/code..."
         guest_label: "Gasten afrekenen"
         credit_owed: "Krediet tegoed"
+    customer_account_transaction:
+      index:
+        description: Beschrijving
+        amount: Bedrag
+        running_balance: Lopend saldo
     contents:
       edit:
         title: Gelukkig
@@ -1692,6 +1697,7 @@ nl_BE:
   order_not_paid: NIET BETAALD
   order_total: Totale bestelling
   order_payment: "Betalingswijze:"
+  customer_credit: Krediet
   order_billing_address: 'Facturatie-adres:'
   order_delivery_on: Levering op
   order_delivery_address: Leveringsadres
@@ -1945,7 +1951,6 @@ nl_BE:
   shops_signup_help: We zijn klaar om te helpen.
   shops_signup_help_text: Je hebt een betere winst nodig. Je hebt nood aan kopers en logistieke partners. Je moet een verhaal verkocht krijgen aan groothandelaren, retail en aan de keukentafel.
   shops_signup_detail: Hier is het plaatje gedetailleerder.
-  orders: "Bestellingen"
   orders_fees: "Kosten..."
   orders_edit_title: "Winkelwagentje"
   orders_edit_headline: "Je winkelwagentje"
@@ -3636,6 +3641,10 @@ nl_BE:
         past_orders: Vorige bestellingen
       transactions:
         transaction_history: 'Historiek van de transacties '
+      customer_account_transactions:
+        description: Beschrijving
+        amount: Bedrag
+        running_balance: Lopend saldo
       open_orders:
         order: Bestelling
         shop: winkel

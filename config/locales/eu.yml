@@ -732,6 +732,11 @@ eu:
         guest_label: "Gonbidatu gisa eskaera egitea"
         credit_owed: "Zor den kreditua"
         balance_due: "Zor den saldoa"
+    customer_account_transaction:
+      index:
+        description: Deskribapena
+        amount: Kopurua
+        running_balance: Egungo saldoa
     contents:
       edit:
         title: Edukia
@@ -2198,6 +2203,7 @@ eu:
   order_total: Eskaera, guztira
   order_payment: "Honekin ordainduz:"
   no_payment_required: "Ez da ordainketarik behar"
+  customer_credit: Kreditua
   order_billing_address: Kobratzeko helbidea
   order_delivery_on: 'Entregatu hemen:'
   order_delivery_address: Entregatzeko helbidea
@@ -2460,7 +2466,6 @@ eu:
   shops_signup_help: Laguntzeko prest gaude.
   shops_signup_help_text: Itzulera hobea behar duzu. Erosle eta logistikako bazkide berriak behar dituzu. Zure istorioa handizkako salmenten bidez kontatzea behar duzu, xehetasunez eta sukaldeko mahaian.
   shops_signup_detail: Hemen dago xehetasuna.
-  orders: "Eskaerak"
   orders_fees: "Komisioak..."
   orders_edit_title: "Erosketa-orga"
   orders_edit_headline: "Zure erosketa-orgatxoa"
@@ -4389,6 +4394,10 @@ eu:
         transaction_history: Transakzioen historia
         authorisation_required: Eskatutako baimena
         authorise: Baimendu
+      customer_account_transactions:
+        description: Deskribapena
+        amount: Kopurua
+        running_balance: Egungo saldoa
       open_orders:
         order: Eskaera
         shop: Denda

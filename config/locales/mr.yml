@@ -661,6 +661,9 @@ mr:
         balance_due: "शिल्लक देय"
       destroy:
         has_associated_subscriptions: "हटवणे अयशस्वी: या ग्राहकाकडे सक्रिय सबस्क्रिप्शन्स आहेत. त्यांना आधी रद्द करा."
+    customer_account_transaction:
+      index:
+        amount: रक्कम
     contents:
       edit:
         title: सामग्री
@@ -2298,7 +2301,6 @@ mr:
   shops_signup_help: आम्ही मदत करण्यास तयार आहोत.
   shops_signup_help_text: 'तुम्हाला चांगल्या रिटर्नची गरज आहे. तुम्हाला नवीन खरेदीदार आणि लॉजिस्टिक भागीदारांची आवश्यकता आहे. तुम्हाला तुमचे उत्पादन घाऊक, किरकोळ आणि घरगुती स्तरावर पोहोचायला हवे आहे. '
   shops_signup_detail: येथे तपशील दिला आहे.
-  orders: "आदेश"
   orders_fees: "फीज्..."
   orders_edit_title: "शॉपिंग कार्ट"
   orders_edit_headline: "तुमची शॉपिंग कार्ट"
@@ -4301,6 +4303,8 @@ mr:
         transaction_history: व्यवहार इतिहास
         authorisation_required: अधिकृतता आवश्यक
         authorise: अधिकृत करा
+      customer_account_transactions:
+        amount: रक्कम
       open_orders:
         order: ऑर्डर करा
         shop: शॉप

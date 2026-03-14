@@ -661,6 +661,11 @@ pa:
         balance_due: "ਬਕਾਇਆ ਰਕਮ"
       destroy:
         has_associated_subscriptions: "ਹਟਾਉਣਾ ਅਸਫਲ ਰਿਹਾ: ਇਸ ਗਾਹਕ ਕੋਲ ਕਿਰਿਆਸ਼ੀਲ ਗਾਹਕੀਆਂ ਹਨ। ਪਹਿਲਾਂ ਉਹਨਾਂ ਨੂੰ ਰੱਦ ਕਰੋ।"
+    customer_account_transaction:
+      index:
+        description: ਵਰਣਨ
+        amount: ਰਕਮ
+        running_balance: ਚਲ ਰਹੀ ਬਕਾਇਆ ਰਕਮ
     contents:
       edit:
         title: ਕੰਟੇਂਟ
@@ -2105,6 +2110,7 @@ pa:
   order_total: ਕੁੱਲ ਆਰਡਰ
   order_payment: "ਇਸ ਰਾਹੀਂ ਭੁਗਤਾਨ:"
   no_payment_required: "ਕਿਸੇ ਭੁਗਤਾਨ ਦੀ ਲੋੜ ਨਹੀਂ"
+  customer_credit: ਕ੍ਰੈਡਿਟ
   order_billing_address: ਬਿਲਿੰਗ ਪਤਾ
   order_delivery_on: ਡਿਲਿਵਰੀ ਦਾ ਦਿਨ
   order_delivery_address: ਡਿਲਿਵਰੀ ਪਤਾ
@@ -2364,7 +2370,6 @@ pa:
   shops_signup_help: ਅਸੀਂ ਮਦਦ ਕਰਨ ਲਈ ਤਿਆਰ ਹਾਂ।
   shops_signup_help_text: ਤੁਹਾਨੂੰ ਇੱਕ ਬਿਹਤਰ ਰਿਟਰਨ ਦੀ ਲੋੜ ਹੈ। ਤੁਹਾਨੂੰ ਨਵੇਂ ਖਰੀਦਦਾਰਾਂ ਅਤੇ ਲੌਜਿਸਟਿਕ ਭਾਈਵਾਲਾਂ ਦੀ ਲੋੜ ਹੈ। ਤੁਹਾਨੂੰ ਆਪਣੀ ਕਹਾਣੀ ਥੋਕ, ਖੁਦਰਾ ਅਤੇ ਰਸੋਈ ਦੇ ਮੇਜ਼ ਉਤੇ ਦੱਸੇ ਜਾਣੀ ਚਾਹੀਦੀ ਹੈ।
   shops_signup_detail: ਇੱਥੇ ਵੇਰਵਾ ਹੈ.
-  orders: "ਆਰਡਰ"
   orders_fees: "ਫ਼ੀਸ..."
   orders_edit_title: "ਖਰੀਦਦਾਰੀ ਕਾਰਟ"
   orders_edit_headline: "ਤੁਹਾਡਾ ਸ਼ਾਪਿੰਗ ਕਾਰਟ"
@@ -4306,6 +4311,10 @@ pa:
         transaction_history: ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ
         authorisation_required: ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ
         authorise: ਅਧਿਕਾਰਤ ਕਰੋ
+      customer_account_transactions:
+        description: ਵਰਣਨ
+        amount: ਰਕਮ
+        running_balance: ਚਲ ਰਹੀ ਬਕਾਇਆ ਰਕਮ
       open_orders:
         order: ਆਰਡਰ
         shop: ਸ਼ਾਪ

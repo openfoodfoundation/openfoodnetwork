@@ -457,6 +457,11 @@ pl:
         confirm_delete: "Na pewno chcesz usunąć?"
         search_by_email: "Szukaj według adresu e-mail / kodu ..."
         guest_label: "Kasa dla gości"
+    customer_account_transaction:
+      index:
+        description: Opis
+        amount: Kwota
+        running_balance: Narastająco
     contents:
       edit:
         title: Zawartość
@@ -1806,7 +1811,6 @@ pl:
   shops_signup_help: Jesteśmy gotowi do pomocy.
   shops_signup_help_text: Potrzebujesz lepszego zwrotu. Potrzebujesz nowych kupujących i partnerów logistycznych. Potrzebujesz swojej historii opowiedzianej w sprzedaży hurtowej, detalicznej i na stole kuchennym.
   shops_signup_detail: Oto szczegóły.
-  orders: "Zamówienia"
   orders_fees: "Opłaty ..."
   orders_edit_title: "Koszyk"
   orders_edit_headline: "Twój Koszyk"
@@ -3573,6 +3577,10 @@ pl:
         past_orders: Wcześniejsze zamówienia
       transactions:
         transaction_history: Historia transakcji
+      customer_account_transactions:
+        description: Opis
+        amount: Kwota
+        running_balance: Narastająco
       open_orders:
         order: Zamówienie
         shop: Sklep

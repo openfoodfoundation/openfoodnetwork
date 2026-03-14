@@ -504,6 +504,11 @@ pt:
         guest_label: "Finalizar compra como convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Pendente"
+    customer_account_transaction:
+      index:
+        description: Descrição
+        amount: Quantia
+        running_balance: Saldo corrente
     contents:
       edit:
         title: Conteúdo
@@ -1708,6 +1713,7 @@ pt:
   order_not_paid: NÃO PAGO
   order_total: Total da encomenda
   order_payment: "Pagando com:"
+  customer_credit: Crédito
   order_billing_address: Morada de faturação
   order_delivery_on: Entrega em
   order_delivery_address: Morada de entrega
@@ -1956,7 +1962,6 @@ pt:
   shops_signup_help: Estamos prontos para ajudar.
   shops_signup_help_text: Você está a precisar de melhor retorno, de novos clientes e parceiros de logística. Está a precisar que a sua história seja contada em grupos de consumo, em retalho e à mesa de jantar.
   shops_signup_detail: Aqui está o detalhe.
-  orders: "Encomendas"
   orders_fees: "Taxas..."
   orders_edit_title: "Carrinho de Compras"
   orders_edit_headline: "O seu carrinho de compras"
@@ -3609,6 +3614,10 @@ pt:
         past_orders: Encomendas Passadas
       transactions:
         transaction_history: Histórico de Transações
+      customer_account_transactions:
+        description: Descrição
+        amount: Quantia
+        running_balance: Saldo corrente
       open_orders:
         order: Encomenda
         shop: Loja
