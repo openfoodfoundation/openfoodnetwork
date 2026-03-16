@@ -26,7 +26,9 @@ module Spree
       end
 
       def can_void?(payment)
-        payment.state == "completed"
+        # The source can be another payment. Then this is an offset payment
+        # like a credit record. We can't void a refund.
+        payment.source == self && payment.state == "completed"
       end
 
       def can_credit?(payment)

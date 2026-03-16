@@ -76,8 +76,7 @@ RSpec.describe "Admin -> Order -> Payments" do
 
     # Our payment system creates a new payment to show the credit.
     within row_containing("$-9.75") do
-      # TODO: don't offer to void a credited amount.
-      expect(page).to have_link "Void"
+      expect(page).not_to have_link "Void"
     end
   end
 end
