@@ -252,6 +252,18 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
           within "table.products" do
             # Product list includes the cloned product.
             expect(all_input_values).to match /COPY OF Apples/
+
+            # And I can perform actions on the new product
+            within row_containing_name "COPY OF Apples" do
+              page.find(".vertical-ellipsis-menu").click
+              expect(page).to have_link "Edit"
+              expect(page).to have_link "Clone"
+              # expect(page).to have_link "Delete" # it's not a proper link :/
+
+              fill_in "Name", with: "My copy of Apples"
+            end
+
+            click_button "Save changes"
           end
         end
       end
@@ -315,6 +327,24 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             expect(all_input_values).to match /My friends box.*My friends box/
             # One of them is designated as a linked variant
             expect(page).to have_content "🔗"
+
+            last_box = page.all(row_containing_name("My friends box")).last
+            # Close action menu (shouldn't need this, it should close itself)
+            last_box.click
+
+            # And I can perform actions on the new product
+            within last_box do
+              page.find(".vertical-ellipsis-menu").click
+              expect(page).to have_link "Edit"
+              # expect(page).to have_link "Clone" # tofix: menu is partially obscured
+              # expect(page).to have_link "Delete" # it's not a proper link
+
+              fill_in "Name", with: "My copy of Apples"
+            end
+            click_button "Save changes"
+
+            # initially obscured by the previous message, then disappears before capybara sees it.
+            # expect(page).to have_content "Changes saved"
           end
         end
       end

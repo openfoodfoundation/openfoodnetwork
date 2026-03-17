@@ -4,6 +4,8 @@ import OptionValueNamer from "js/services/option_value_namer";
 // Dynamically update related variant fields
 //
 export default class VariantController extends Controller {
+  static outlets = ["bulk-form"];
+
   connect() {
     // idea: create a helper that includes a nice getter/setter for Rails model attr values, just pass it the attribute name.
     // It could automatically find (and cache a ref to) each dom element and get/set the values.
@@ -40,6 +42,11 @@ export default class VariantController extends Controller {
     // on display_as changed; update unit_to_display
     // TODO: optimise to avoid unnecessary OptionValueNamer calc
     this.displayAs.addEventListener("input", this.#updateUnitDisplay.bind(this), { passive: true });
+
+    // Register with bulk products form to listen for changes. Used when dynamically appending variants.
+    if (this.hasBulkFormOutlet) {
+      this.bulkFormOutlet.registerElements();
+    }
   }
 
   disconnect() {
