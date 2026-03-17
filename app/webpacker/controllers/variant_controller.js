@@ -45,7 +45,8 @@ export default class VariantController extends Controller {
 
     // Register with bulk products form to listen for changes. Used when dynamically appending variants.
     if (this.hasBulkFormOutlet) {
-      this.bulkFormOutlet.registerElements();
+      const formElements = this.element.querySelectorAll("input, select, textarea, button");
+      this.bulkFormOutlet.registerElements(formElements);
     }
   }
 
