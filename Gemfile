@@ -113,7 +113,7 @@ gem "turbo-rails"
 
 gem 'combine_pdf'
 gem 'wicked_pdf', github: "openfoodfoundation/wicked_pdf", branch: "master"
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', source: 'https://rubygems.org' # due to https://github.com/gem-coop/gem.coop/issues/36
 
 gem 'immigrant'
 gem 'roo' # read spreadsheets
