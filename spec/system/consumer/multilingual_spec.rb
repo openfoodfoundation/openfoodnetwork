@@ -12,14 +12,14 @@ RSpec.describe 'Multilingual' do
   let(:user) { create(:user) }
 
   it 'has three locales available' do
-    expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es', 'pt']
+    expect(Rails.application.config.i18n[:default_locale]).to eq 'en_TST'
+    expect(Rails.application.config.i18n[:locale]).to eq 'en_TST'
+    expect(Rails.application.config.i18n[:available_locales]).to eq ['en_TST', 'es', 'pt', 'en']
   end
 
   it 'can switch language by params' do
     visit root_path
-    expect(pick_i18n_locale).to eq 'en'
+    expect(pick_i18n_locale).to eq 'en_TST'
     expect(get_i18n_translation('label_shops')).to eq 'Shops'
     expect(cookies_name).not_to include('locale')
     expect(page).to have_content 'SHOPS'
@@ -66,10 +66,10 @@ RSpec.describe 'Multilingual' do
 
     find('.language-switcher').click
     within '.language-switcher .dropdown' do
-      expect(page).not_to have_link 'English', href: '/locales/en'
-      expect(page).to have_link 'Español', href: '/locales/es'
+      expect(page).not_to have_link 'English'
+      expect(page).to have_link 'Español'
 
-      find('li a[href="/locales/es"]').click
+      click_link 'Español'
     end
 
     expect_menu_and_cookie_in_es

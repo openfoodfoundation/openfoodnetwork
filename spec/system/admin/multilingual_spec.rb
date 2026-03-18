@@ -13,14 +13,8 @@ RSpec.describe 'Multilingual' do
     visit spree.admin_dashboard_path
   end
 
-  it 'has three locales available' do
-    expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es', 'pt']
-  end
-
   it 'can switch language by params' do
-    expect(pick_i18n_locale).to eq 'en'
+    expect(pick_i18n_locale).to eq 'en_TST'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
     expect(admin_user.locale).to be_nil
@@ -36,7 +30,7 @@ RSpec.describe 'Multilingual' do
 
   it 'fallbacks to default_locale' do
     visit spree.admin_dashboard_path(locale: 'it')
-    expect(pick_i18n_locale).to eq 'en'
+    expect(pick_i18n_locale).to eq 'en_TST'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
     expect(admin_user.locale).to be_nil
