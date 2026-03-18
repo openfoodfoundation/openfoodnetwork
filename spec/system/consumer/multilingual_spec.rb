@@ -5,8 +5,6 @@ require 'system_helper'
 RSpec.describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
-  include ShopWorkflow
-  include UIComponentHelper
   include CookieHelper
 
   let(:user) { create(:user) }
