@@ -8,7 +8,7 @@ module Spree
 
     searchable_attributes :email
 
-    devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
+    devise :database_authenticatable, :registerable, :recoverable,
            :rememberable, :trackable, :validatable, :omniauthable,
            :encryptable, :confirmable,
            encryptor: 'authlogic_sha512', reconfirmable: true,
