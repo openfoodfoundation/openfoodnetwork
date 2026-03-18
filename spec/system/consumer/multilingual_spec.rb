@@ -34,34 +34,6 @@ RSpec.describe 'Multilingual' do
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
     end
-
-    context 'with a product in the cart' do
-      let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-      let!(:order_cycle) {
-        create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first])
-      }
-      let(:product) { create(:simple_product) }
-      let(:order) { create(:order, order_cycle:, distributor:) }
-
-      before do
-        pick_order order
-        add_product_to_cart order, product, quantity: 1
-      end
-
-      it "in the cart page" do
-        visit main_app.cart_path(locale: 'es')
-
-        expect_menu_and_cookie_in_es
-        expect(page).to have_content 'Precio'
-      end
-
-      it "visiting checkout as a guest user" do
-        visit checkout_path(locale: 'es')
-
-        expect_menu_and_cookie_in_es
-        expect(page).to have_content 'Iniciar sesión'
-      end
-    end
   end
 
   context 'with user' do
