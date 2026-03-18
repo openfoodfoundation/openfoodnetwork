@@ -42,6 +42,7 @@ RSpec.describe Payments::WebhookPayload do
           }
         },
         order: {
+          number: order.number,
           total: order.total,
           currency: order.currency,
           line_items: line_items
@@ -72,6 +73,7 @@ RSpec.describe Payments::WebhookPayload do
           }
         },
         order: {
+          number: "R555555555",
           total: 0.00,
           currency: "AUD",
           line_items: [
