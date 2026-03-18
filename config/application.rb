@@ -161,11 +161,8 @@ module Openfoodnetwork
     # The default locale is set in the environment.
     config.i18n.default_locale = OpenFoodNetwork::I18nConfig.default_locale
     config.i18n.available_locales = OpenFoodNetwork::I18nConfig.available_locales
+    config.i18n.fallbacks = OpenFoodNetwork::I18nConfig.fallbacks
     I18n.locale = config.i18n.locale = config.i18n.default_locale
-
-    # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-    # the I18n.default_locale when a translation can not be found)
-    config.i18n.fallbacks = [:en]
 
     # Calculate digests for locale files so we can know when they change
     I18nDigests.build_digests config.i18n.available_locales
