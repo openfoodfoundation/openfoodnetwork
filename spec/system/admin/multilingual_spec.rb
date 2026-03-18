@@ -34,6 +34,6 @@ RSpec.describe 'Multilingual' do
     expect(pick_i18n_locale).to eq 'en_TST'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
-    expect(admin_user.locale).to be_nil
+    expect(admin_user.reload.locale).to be_nil
   end
 end
