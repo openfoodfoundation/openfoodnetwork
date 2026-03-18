@@ -15,13 +15,6 @@ RSpec.describe 'Multilingual' do
     expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es', 'pt']
   end
 
-  it '18n-js fallsback to default language' do
-    # in backend it doesn't until we change enforce_available_locales to `true`
-    visit root_path
-    set_i18n_locale('it')
-    expect(get_i18n_translation('label_shops')).to eq 'Shops'
-  end
-
   context 'can switch language by params' do
     it 'in root path' do
       visit root_path

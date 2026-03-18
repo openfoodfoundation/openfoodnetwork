@@ -27,10 +27,6 @@ module WebHelper
     yield
   end
 
-  def set_i18n_locale(locale = 'en')
-    page.execute_script("I18n.locale = '#{locale}'")
-  end
-
   def pick_i18n_locale
     page.evaluate_script("I18n.locale;")
   end
