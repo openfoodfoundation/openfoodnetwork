@@ -10,10 +10,11 @@ RSpec.describe 'Multilingual' do
 
   before do
     login_as admin_user
-    visit spree.admin_dashboard_path
   end
 
   it 'can switch language by params' do
+    visit spree.admin_dashboard_path
+
     expect(pick_i18n_locale).to eq 'en_TST'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
