@@ -4,14 +4,7 @@
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 
-domain = if Rails.env.staging? || Rails.env.production?
-           ENV['SITE_URL']
-         else
-           :all
-         end
-
 Openfoodnetwork::Application.config.session_store(
   :active_record_store,
-  key: "_ofn_session_id",
-  domain: domain
+  key: "_ofn_session_id"
 )
