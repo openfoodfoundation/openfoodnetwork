@@ -293,8 +293,6 @@ GEM
     devise-i18n (1.15.0)
       devise (>= 4.9.0)
       rails-i18n
-    devise-token_authenticatable (1.1.0)
-      devise (>= 4.0.0, < 5.0.0)
     diff-lcs (1.6.2)
     digest (3.2.1)
     docile (1.4.1)
@@ -1018,7 +1016,6 @@ DEPENDENCIES
   devise
   devise-encryptable
   devise-i18n
-  devise-token_authenticatable
   dfc_provider!
   digest
   dotenv

@@ -5,6 +5,7 @@ module Spree
     include SetUnusedAddressFields
 
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:authentication_token]
 
     searchable_attributes :email
 
