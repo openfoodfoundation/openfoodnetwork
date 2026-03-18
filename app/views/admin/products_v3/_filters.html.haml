@@ -10,7 +10,7 @@
     .producers
       = label_tag :producer_id, t('.producers.label')
       = render(SearchableDropdownComponent.new(name: :producer_id,
-        aria_label: t('.producer_field_name'),
+        aria_label: t('.producers.label'),
         options: selected_option(producer_id, Enterprise),
         selected_option: producer_id,
         remote_url: admin_products_search_producers_url,
@@ -19,7 +19,7 @@
   .categories
     = label_tag :category_id, t('.categories.label')
     = render(SearchableDropdownComponent.new(name: :category_id,
-        aria_label: t('.category_field_name'),
+        aria_label: t('.categories.label'),
         options: selected_option(category_id, Spree::Taxon),
         selected_option: category_id,
         remote_url: admin_products_search_categories_url,
