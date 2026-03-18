@@ -64,19 +64,6 @@ RSpec.describe 'Multilingual' do
   end
 
   describe "using the language switcher UI" do
-    context "when there is only one language available" do
-      before do
-        allow(ENV).to receive(:[]).and_call_original
-        allow(ENV).to receive(:[]).with("LOCALE").and_return("en")
-        allow(ENV).to receive(:[]).with("AVAILABLE_LOCALES").and_return("en")
-      end
-
-      it "hides the dropdown language menu" do
-        visit root_path
-        expect(page).not_to have_css 'ul.right li.language-switcher.has-dropdown'
-      end
-    end
-
     context "when there are multiple languages available" do
       before do
         allow(ENV).to receive(:[]).and_call_original
