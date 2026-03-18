@@ -65,12 +65,6 @@ RSpec.describe 'Multilingual' do
 
   describe "using the language switcher UI" do
     context "when there are multiple languages available" do
-      before do
-        allow(ENV).to receive(:[]).and_call_original
-        allow(ENV).to receive(:[]).with("LOCALE").and_return("en")
-        allow(ENV).to receive(:[]).with("AVAILABLE_LOCALES").and_return("en,es")
-      end
-
       it "allows switching language via the main navigation" do
         visit root_path
 
