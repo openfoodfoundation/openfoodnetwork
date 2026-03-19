@@ -5,8 +5,10 @@ require "system_helper"
 RSpec.describe "Managing users" do
   include AuthenticationHelper
 
+  let(:admin_user) { create(:admin_user) }
+
   before do
-    login_as_admin
+    login_as admin_user
   end
 
   context "from the index page" do
@@ -35,6 +37,18 @@ RSpec.describe "Managing users" do
         click_button "Update"
 
         expect(page).to have_content("Account updated")
+        expect(current_path).to eq spree.edit_admin_user_path(user_a)
+      end
+
+      it "allows to change your own password without logging you out" do
+        visit spree.edit_admin_user_path(admin_user)
+
+        fill_in "user_password", with: "welcome"
+        fill_in "user_password_confirmation", with: "welcome"
+        click_button "Update"
+
+        expect(page).to have_content("Account updated")
+        expect(current_path).to eq spree.edit_admin_user_path(admin_user)
       end
 
       it "should let me edit the user email" do
