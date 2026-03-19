@@ -10,16 +10,13 @@ RSpec.describe "Managing users" do
   end
 
   context "from the index page" do
-    before do
-      create(:user, email: "a@example.com")
-      create(:user, email: "b@example.com")
-
-      visit spree.admin_dashboard_path
-      click_link "Users"
-    end
+    let!(:user_a) { create(:user, email: "a@example.com") }
+    let!(:user_b) { create(:user, email: "b@example.com") }
 
     context "searching users" do
       it "should display the correct results for a user search" do
+        visit spree.admin_dashboard_path
+        click_link "Users"
         fill_in "q_email_cont", with: "a@example"
         click_button "Search"
         within("table#listing_users") do
@@ -30,11 +27,9 @@ RSpec.describe "Managing users" do
     end
 
     context "editing users" do
-      before(:each) do
-        click_link("a@example.com")
-      end
-
       it "should allow editing the user password" do
+        visit spree.admin_users_path
+        click_link("a@example.com")
         fill_in "user_password", with: "welcome"
         fill_in "user_password_confirmation", with: "welcome"
         click_button "Update"
@@ -43,6 +38,8 @@ RSpec.describe "Managing users" do
       end
 
       it "should let me edit the user email" do
+        visit spree.edit_admin_user_path(user_a)
+
         fill_in "Email", with: "newemail@example.org"
         click_button "Update"
 
@@ -51,15 +48,16 @@ RSpec.describe "Managing users" do
       end
 
       it "should allow to generate, regenarate and clear the user api key" do
-        user = Spree::User.find_by(email: "a@example.com")
+        visit spree.edit_admin_user_path(user_a)
+
         expect(page).to have_content "NO KEY"
 
         click_button "Generate API key"
-        first_user_api_key = user.reload.spree_api_key
+        first_user_api_key = user_a.reload.spree_api_key
         expect(page).to have_content first_user_api_key
 
         click_button "Regenerate Key"
-        second_user_api_key = user.reload.spree_api_key
+        second_user_api_key = user_a.reload.spree_api_key
         expect(page).to have_content second_user_api_key
         expect(second_user_api_key).not_to eq first_user_api_key
 
@@ -68,6 +66,8 @@ RSpec.describe "Managing users" do
       end
 
       it "should allow to disable the user and to enable it" do
+        visit spree.edit_admin_user_path(user_a)
+
         expect(page).to have_unchecked_field "Disabled"
         check "Disabled"
         click_button "Update"
@@ -82,13 +82,13 @@ RSpec.describe "Managing users" do
       end
 
       it "should toggle the api key generation view" do
-        user = Spree::User.find_by(email: "a@example.com")
+        visit spree.edit_admin_user_path(user_a)
 
         expect(page).to have_content "NO KEY"
         expect {
           click_button("Generate API key")
           expect(page).to have_content("Key generated")
-        }.to change { user.reload.spree_api_key }.from(nil)
+        }.to change { user_a.reload.spree_api_key }.from(nil)
 
         expect(page).to have_unchecked_field "Show API key view for user"
 
@@ -96,13 +96,13 @@ RSpec.describe "Managing users" do
           check "Show API key view for user"
           expect(page).to have_content("Show API key view has been changed!")
           expect(page).to have_checked_field "Show API key view for user"
-        }.to change { user.reload.show_api_key_view }.from(false).to(true)
+        }.to change { user_a.reload.show_api_key_view }.from(false).to(true)
 
         expect {
           uncheck "Show API key view for user"
           expect(page).to have_content("Show API key view has been changed!")
           expect(page).to have_unchecked_field "Show API key view for user"
-        }.to change { user.reload.show_api_key_view }.to(false)
+        }.to change { user_a.reload.show_api_key_view }.to(false)
       end
     end
 
@@ -113,6 +113,7 @@ RSpec.describe "Managing users" do
         expect(Spree::User.count).to eq 11
         visit spree.admin_users_path
       end
+
       it "displays pagination" do
         # table displays 10 entries
         within('tbody') do
