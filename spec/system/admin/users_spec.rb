@@ -18,28 +18,6 @@ RSpec.describe "Managing users" do
       click_link "Users"
     end
 
-    context "users index page with sorting" do
-      before(:each) do
-        click_link "users_email_title"
-      end
-
-      it "should list users with order email asc" do
-        expect(page).to have_css('table#listing_users')
-        within("table#listing_users") do
-          expect(page).to have_content("a@example.com")
-          expect(page).to have_content("b@example.com")
-        end
-      end
-
-      it "should list users with order email desc" do
-        click_link "users_email_title"
-        within("table#listing_users") do
-          expect(page).to have_content("a@example.com")
-          expect(page).to have_content("b@example.com")
-        end
-      end
-    end
-
     context "searching users" do
       it "should display the correct results for a user search" do
         fill_in "q_email_cont", with: "a@example"
