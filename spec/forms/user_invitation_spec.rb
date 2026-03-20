@@ -57,8 +57,8 @@ RSpec.describe UserInvitation do
       existing_user = create(:user)
 
       user_invitation = UserInvitation.new(defaults.merge(email: existing_user.email))
-      user_invitation.save!
 
+      expect(user_invitation.save!).to eq true
       expect(enterprise.users).to include(existing_user)
     end
   end
