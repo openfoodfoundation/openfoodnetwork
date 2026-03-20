@@ -6,7 +6,7 @@
       %p= t ".description"
 
       %fieldset.no-border-top.no-border-bottom
-        .row
+        .row.field
           = f.label :email, t(:email)
           = f.email_field :email, placeholder: t('.eg_email_address'), data: { controller: "select-user" }, inputmode: "email", autocomplete: "off"
           = f.error_message_on :email
