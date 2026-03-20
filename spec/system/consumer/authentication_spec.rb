@@ -273,7 +273,7 @@ RSpec.describe "Authentication" do
           expect_logged_in
 
           expect(page).to have_content 'SHOP NOW'
-          expect(user.reload.locale).to eq "en"
+          expect(user.reload.locale).to eq "en_TST"
         end
       end
 

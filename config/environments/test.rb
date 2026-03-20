@@ -89,12 +89,6 @@ Rails.application.configure do
   # Raises error for missing translations.
   config.i18n.raise_on_missing_translations = true
 
-  # Tests assume English text on the site.
-  config.i18n.default_locale = "en"
-  config.i18n.available_locales = ['en', 'es', 'pt']
-  config.i18n.fallbacks = [:en]
-  I18n.locale = config.i18n.locale = config.i18n.default_locale
-
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 

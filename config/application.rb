@@ -158,10 +158,10 @@ module Openfoodnetwork
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # The default locale is set in the environment.
     config.i18n.default_locale = OpenFoodNetwork::I18nConfig.default_locale
     config.i18n.available_locales = OpenFoodNetwork::I18nConfig.available_locales
+    config.i18n.fallbacks = OpenFoodNetwork::I18nConfig.fallbacks
     I18n.locale = config.i18n.locale = config.i18n.default_locale
 
     # Calculate digests for locale files so we can know when they change

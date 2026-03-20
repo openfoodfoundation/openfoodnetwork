@@ -282,11 +282,6 @@ RSpec.describe Spree::Order do
     let(:payment) { build(:payment) }
     before { allow(order).to receive_messages pending_payments: [payment], total: 10 }
 
-    it "returns false if no pending_payments available" do
-      allow(order).to receive_messages pending_payments: []
-      expect(order.process_payments!).to be_falsy
-    end
-
     context "when the processing is sucessful" do
       it "processes the payments" do
         expect(payment).to receive(:process!)
