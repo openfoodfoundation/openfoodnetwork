@@ -549,7 +549,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Örökölje a tulajdonságokat?"
+        inherits_properties: "Tulajdonságok öröklése?"
         import_date: "Importálás dátuma"
         actions: Műveletek
         tags: Címkék
@@ -562,7 +562,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Örökölje a tulajdonságokat?"
+        inherits_properties: "Tulajdonságok öröklése?"
         import_date: "Importálás dátuma"
       actions:
         edit: Szerkesztés
@@ -798,7 +798,7 @@ hu:
         display_as: Megjelenítés mint
         category: Kategória
         tax_category: Adókategória
-        inherits_properties?: Örökölje a tulajdonságokat?
+        inherits_properties?: Tulajdonságok öröklése?
         av_on: "Av. On"
         import_date: Importált
         upload_an_image: Tölts fel egy képet
@@ -1877,7 +1877,9 @@ hu:
     user_invitations:
       new:
         back: Vissza
+        description: "Hívj meg egy felhasználót, hogy regisztráljon és a vállalkozás menedzsere legyen."
         email: Email
+        invite_new_user: Új felhasználó meghívása
         invite: Meghívás
     vouchers:
       new:
@@ -4371,7 +4373,7 @@ hu:
             display_as: Megjelenítés mint
             category: Kategória
             tax_category: Adókategória
-            inherits_properties?: Örökölje a tulajdonságokat?
+            inherits_properties?: Tulajdonságok öröklése?
             av_on: "Av. On"
             import_date: "Importálás dátuma"
           products_variant:

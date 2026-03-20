@@ -272,6 +272,10 @@ en_GB:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: is already a manager
   card_details: "Card details"
   card_type: "Card type"
   card_type_is: "Card type is"
@@ -421,6 +425,11 @@ en_GB:
     authorization_required:
       subject: "A payment requires authorisation from the customer"
       message: "A payment for order %{order_number} requires additional authorisation from the customer. The customer has been notified via email and the payment will appear as pending until it is authorised."
+    refund_available:
+      subject: "Refund from %{shop}"
+      message: |
+          Your payment of %{amount} to %{shop} is being refunded
+          Accept your refund following the link below.
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -802,6 +811,7 @@ en_GB:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         balance: "Balance"
+        credit: "Available Credit"
         update_address_success: "Address updated successfully."
         update_address_error: "Sorry! Please input all of the required fields!"
         edit_bill_address: "Edit Billing Address"
@@ -816,12 +826,16 @@ en_GB:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        id: Id
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
     customer_account_transaction:
       index:
+        available_credit: "Available credit: %{available_credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
+        created_by: Created by
         running_balance: Running balance
     column_preferences:
       bulk_update:
@@ -1414,10 +1428,12 @@ en_GB:
           show_hide_payment: 'Show or Hide payment methods at checkout'
           show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
+          description: The users with permission to manage this enterprise.
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           contact: "Contact"
+          manager: "Manager"
           owner: 'Owner'
           contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
@@ -1428,6 +1444,8 @@ en_GB:
           invite_manager: "Invite Manager"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+          set_as_contact: "Set %{email} as contact"
+          set_as_owner: "Set %{email} as owner"
         vouchers:
           legend: Vouchers
           voucher_code: Voucher Code
@@ -1776,6 +1794,11 @@ en_GB:
           images: "Images"
           contact: "Contact"
           web: "Web Resources"
+      stimulus_pagination:
+        navigation: Pagination
+        page: "Page %{number}"
+        previous: Previous page
+        next: Next page
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -2005,7 +2028,10 @@ en_GB:
     user_invitations:
       new:
         back: Back
+        description: "Invite a user to sign up and become a manager of this enterprise."
+        eg_email_address: e.g. email address of a new or existing user
         email: Email
+        invite_new_user: Invite a new user
         invite: Invite
     vouchers:
       new:
@@ -2405,7 +2431,7 @@ en_GB:
   system_step3_text: "Set up payment methods and add your collection and delivery options."
   cta_headline: "The sustainable food network of our future."
   cta_label: "Start shopping"
-  stats_headline: "Join over 18k shoppers and producers in creating a new food system"
+  stats_headline: "Join over 21k shoppers and producers in creating a new food system"
   stats_producers: "food producers"
   stats_shops: "food shops"
   stats_shoppers: "food shoppers"
@@ -2439,6 +2465,7 @@ en_GB:
   order_total: Total order
   order_payment: "Paying via:"
   no_payment_required: "No payment required"
+  credit_used: "Credit used: %{amount}"
   customer_credit: Credit
   order_billing_address: Billing address
   order_delivery_on: Delivery on
@@ -3423,6 +3450,7 @@ en_GB:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  credit_customer: Credit customer
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -4020,6 +4048,7 @@ en_GB:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
+    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
@@ -4514,6 +4543,7 @@ en_GB:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA "
           taler: "Taler"
+          customercredit: "Customer Credit"
       payments:
         source_forms:
           stripe:
@@ -4521,6 +4551,7 @@ en_GB:
             submitting_payment: Submitting payment...
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
+        customer_credit_successful: Customer has been successfully credited!
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
@@ -4836,6 +4867,7 @@ en_GB:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
+          customer_account_transactions: Customer Transactions
           settings: Account Settings
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
@@ -4846,6 +4878,9 @@ en_GB:
         authorisation_required: Authorisation Required
         authorise: Authorise
       customer_account_transactions:
+        title: Customer Transactions
+        credit_available: "Credit available: %{credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
         running_balance: Running balance
@@ -4988,3 +5023,22 @@ en_GB:
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
+  api_customer_credit: "API credit: %{description}"
+  credit_payment_method:
+    name: Customer credit
+    description: Allow customer to pay with credit
+    success: Payment with credit was sucessful
+    void_success: Credit void was sucessful
+    order_payment_description: "Customer credit: Payment for order: %{order_number}"
+    order_void_description: "Customer credit: Refund for order: %{order_number}"
+    errors:
+      customer_not_found: Customer not found
+      missing_payment: Missing payment
+      credit_payment_method_missing: Credit payment method is missing
+      no_credit_available: No credit available
+      not_enough_credit_available: Not enough credit available
+  orders:
+    customer_credit_service:
+      no_credit_owed: No credit owed
+      credit_payment_method_missing: Customer credit payment method is missing, please check configuration
+      refund_sucessful: Refund successful!
