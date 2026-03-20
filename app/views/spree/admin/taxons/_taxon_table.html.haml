@@ -12,7 +12,7 @@
         %td= taxon.name
         %td= taxon_path taxon
         %td.actions
-          = link_to_delete taxon, url: remove_admin_product_taxon_url(@product, taxon), name: icon('delete') + ' ' + t("spree.remove")
+          = deprecated_link_to_delete taxon, url: remove_admin_product_taxon_url(@product, taxon), name: icon('delete') + ' ' + t("spree.remove")
     - if taxons.empty?
       %tr
         %td{colspan: "3"}

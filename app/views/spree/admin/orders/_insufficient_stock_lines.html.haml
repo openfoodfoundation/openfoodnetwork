@@ -36,4 +36,4 @@
         %td.align-center
           = line_item.money.to_html
         %td.actions
-          = link_to_delete line_item, { url: main_app.admin_bulk_line_item_path(line_item), no_text: true }
+          = deprecated_link_to_delete line_item, { url: main_app.admin_bulk_line_item_path(line_item), no_text: true }

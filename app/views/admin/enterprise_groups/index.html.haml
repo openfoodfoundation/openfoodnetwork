@@ -29,7 +29,7 @@
         %td= enterprise_group.enterprises.map(&:name).join ', '
         %td.actions
           = link_to '', main_app.edit_admin_enterprise_group_path(enterprise_group), class: 'edit-enterprise-group icon-edit no-text'
-          = link_to_delete enterprise_group, no_text: true
+          = deprecated_link_to_delete enterprise_group, no_text: true
 
           - if spree_current_user.admin?
             - if enterprise_group.last?

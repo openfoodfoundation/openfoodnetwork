@@ -35,6 +35,6 @@
           %td.align-center= shipping_method.display_on.blank? ? t('.both') : t(".#{shipping_method.display_on}")
           %td.actions
             = link_to_edit shipping_method, no_text: true
-            = link_to_delete shipping_method, no_text: true
+            = deprecated_link_to_delete shipping_method, no_text: true
 - else
   .alpha.twelve.columns.no-objects-found= t('.no_shipping_methods_found')

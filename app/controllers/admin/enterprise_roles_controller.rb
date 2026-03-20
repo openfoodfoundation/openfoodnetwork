@@ -22,7 +22,10 @@ module Admin
     def destroy
       @enterprise_role = EnterpriseRole.find params[:id]
       @enterprise_role.destroy
-      render body: nil
+      respond_with do |format|
+        format.turbo_stream { render :destroy }
+        format.html { render body: nil }
+      end
     end
 
     private
