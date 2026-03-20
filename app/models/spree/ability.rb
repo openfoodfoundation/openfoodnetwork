@@ -197,6 +197,10 @@ module Spree
       can [:admin, :index, :destroy], :oidc_setting
 
       can [:admin, :create], Voucher
+
+      can [:admin, :destroy], EnterpriseRole do |enterprise_role|
+        enterprise_role.enterprise.owner_id == user.id
+      end
     end
 
     def add_product_management_abilities(user)
