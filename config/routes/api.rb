@@ -95,8 +95,5 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :customer_account_transaction, only: [:create]
     end
-
-    match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all,
-                   constraints: { path: /(?!v[0-9]).+/ }
   end
 end
