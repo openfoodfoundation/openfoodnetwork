@@ -44,12 +44,17 @@ export default class BulkFormController extends Controller {
   }
 
   // Register any new elements (may be called by another controller after dynamically adding fields)
-  registerElements() {
-    const registeredElements = Object.values(this.recordElements).flat();
-    // Select only elements that haven't been registered yet
-    const newElements = Array.from(this.form.elements).filter(
-      (n) => !registeredElements.includes(n),
-    );
+  // May be called with array of elements to register, otherwise finds all un-registered elements.
+  registerElements(eventOrElements = null) {
+    let newElements;
+
+    if (Array.isArray(eventOrElements)) {
+      newElements = eventOrElements;
+    } else {
+      const registeredElements = Object.values(this.recordElements).flat();
+      // Select only elements that haven't been registered yet
+      newElements = Array.from(this.form.elements).filter((n) => !registeredElements.includes(n));
+    }
 
     this.#registerElements(newElements);
   }

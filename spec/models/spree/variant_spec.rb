@@ -8,6 +8,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
   it { is_expected.to belong_to(:supplier).required }
+  it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
   it { is_expected.to have_many(:stock_items) }
@@ -19,6 +20,9 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many(:variant_overrides) }
   it { is_expected.to have_many(:inventory_items) }
   it { is_expected.to have_many(:supplier_properties).through(:supplier) }
+
+  it { is_expected.to have_many(:source_variants).through(:variant_links_as_target) }
+  it { is_expected.to have_many(:target_variants).through(:variant_links_as_source) }
 
   describe "shipping category" do
     it "sets a shipping category if none provided" do
@@ -999,6 +1003,32 @@ RSpec.describe Spree::Variant do
       variant.update(display_as: 'My display')
 
       expect(variant.unit_presentation).to eq "My display"
+    end
+  end
+
+  describe "#create_linked_variant" do
+    let(:user) { create(:user, enterprises: [enterprise]) }
+    let(:supplier) { variant.supplier }
+    let(:enterprise) { create(:enterprise) }
+
+    context "with create_linked_variants permissions on supplier" do
+      let!(:enterprise_relationship) {
+        create(:enterprise_relationship,
+               parent: supplier,
+               child: enterprise,
+               permissions_list: [:create_linked_variants])
+      }
+      let(:variant) { create(:variant, price: 10.95, on_demand: false, on_hand: 5) }
+
+      it "clones the variant, retaining a link to the source" do
+        linked_variant = variant.create_linked_variant(user)
+
+        expect(linked_variant.source_variants).to eq [variant]
+        expect(linked_variant.hub).to eq enterprise
+        expect(linked_variant.price).to eq 10.95
+        expect(linked_variant.on_demand).to eq false
+        expect(linked_variant.on_hand).to eq 5
+      end
     end
   end
 end
