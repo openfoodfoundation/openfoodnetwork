@@ -9,4 +9,4 @@
   %td.total.align-center
     = f.object.display_amount
   %td.actions
-    = link_to_delete f.object, {url: admin_order_line_item_url(@order.number, f.object), no_text: true}
+    = deprecated_link_to_delete f.object, {url: admin_order_line_item_url(@order.number, f.object), no_text: true}

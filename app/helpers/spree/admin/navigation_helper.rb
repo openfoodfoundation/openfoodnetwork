@@ -83,6 +83,14 @@ module Spree
       def link_to_delete(resource, options = {})
         url = options[:url] || object_url(resource)
         name = options[:name] || I18n.t(:delete)
+        options[:data] = { confirm: I18n.t(:are_you_sure), turbo: true, turbo_method: :delete }
+        link_to_with_icon 'icon-trash', name, url, options
+      end
+
+      # Old method using jQuery, deprecated in favour of :link_to_delete which uses turbo.
+      def deprecated_link_to_delete(resource, options = {})
+        url = options[:url] || object_url(resource)
+        name = options[:name] || I18n.t(:delete)
         options[:class] = "delete-resource"
         options[:data] = { confirm: I18n.t(:are_you_sure), action: 'remove' }
         link_to_with_icon 'icon-trash', name, url, options
