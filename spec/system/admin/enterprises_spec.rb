@@ -885,6 +885,47 @@ RSpec.describe '
         end
       end
     end
+
+    describe "removing enterprise managers" do
+      let(:existing_user) { create(:user) }
+
+      before do
+        distributor1.users << existing_user
+        login_as logged_in_user
+        visit edit_admin_enterprise_path(distributor1)
+        scroll_to(:bottom)
+        within ".side_menu" do
+          find(:link, "Users").trigger("click")
+        end
+      end
+
+      context "as the enterprise owner" do
+        let(:logged_in_user) { distributor1.owner }
+
+        it 'removes the manager as enterprise owner' do
+          expect(page).to have_content existing_user.email
+
+          within "#manager-#{existing_user.id}" do
+            accept_confirm do
+              page.find("a.icon-trash").click
+            end
+          end
+
+          expect(page).not_to have_content existing_user.email
+        end
+      end
+
+      context "as the enterprise manager" do
+        let(:logged_in_user) { existing_user }
+
+        it "is unable delete any other manager" do
+          expect(page).to have_content existing_user.email
+          within('.edit_enterprise') do
+            expect(page).not_to have_selector('a.icon-trash')
+          end
+        end
+      end
+    end
   end
 
   context "changing package" do
