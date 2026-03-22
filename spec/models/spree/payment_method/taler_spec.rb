@@ -10,16 +10,18 @@ RSpec.describe Spree::PaymentMethod::Taler do
     )
   }
   let(:backend_url) { "https://backend.demo.taler.net/instances/sandbox" }
+  let(:token_url) { "#{backend_url}/private/token" }
 
   describe "#external_payment_url", vcr: true do
     it "creates an order reference and retrieves a URL to pay at" do
       order = create(:order_ready_for_confirmation, payment_method: taler)
 
       url = subject.external_payment_url(order:)
-      expect(url).to eq "#{backend_url}/orders/2026.022-0284X4GE8WKMJ"
+      expect(url).to start_with "#{backend_url}/orders/"
+      expect(url).to match "orders/20...[0-9A-Z-]{17}$"
 
       payment = order.payments.last.reload
-      expect(payment.response_code).to match "2026.022-0284X4GE8WKMJ"
+      expect(payment.response_code).to match "20...[0-9A-Z-]{17}$"
     end
   end
 
@@ -28,6 +30,10 @@ RSpec.describe Spree::PaymentMethod::Taler do
     let(:source) { taler }
     let(:payment) { build(:payment, response_code: "taler-order-7") }
     let(:order_url) { "#{backend_url}/private/orders/taler-order-7" }
+
+    before do
+      stub_request(:post, token_url).to_return(body: { token: "12345" }.to_json)
+    end
 
     it "returns an ActiveMerchant response" do
       order_status = "paid"
@@ -56,6 +62,10 @@ RSpec.describe Spree::PaymentMethod::Taler do
     let(:taler_refund_uri) {
       "taler://refund/backend.demo.taler.net/instances/sandbox/taler-order-8/"
     }
+
+    before do
+      stub_request(:post, token_url).to_return(body: { token: "12345" }.to_json)
+    end
 
     it "starts the refund process" do
       order_status = {

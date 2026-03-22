@@ -1,55 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://backend.demo.taler.net/instances/sandbox/private/orders
-    body:
-      encoding: UTF-8
-      string: '{"order":{"amount":"KUDOS:10.0","summary":"Open Food Network order","fulfillment_url":"http://test.host/payment_gateways/taler/61"},"create_token":false}'
-    headers:
-      Authorization:
-      - "<HIDDEN-AUTHORIZATION-HEADER>"
-      Accept:
-      - application/json
-      User-Agent:
-      - Taler Ruby
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.26.3
-      Date:
-      - Thu, 22 Jan 2026 04:43:32 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '42'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      Cache-Control:
-      - no-store
-      Via:
-      - 1.1 Caddy
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubDomains; preload
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "order_id": "2026.022-0284X4GE8WKMJ"
-        }
-  recorded_at: Thu, 22 Jan 2026 04:43:33 GMT
-- request:
     method: get
     uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.022-0284X4GE8WKMJ
     body:
@@ -103,4 +54,108 @@ http_interactions:
           }
         }
   recorded_at: Thu, 22 Jan 2026 04:43:34 GMT
-recorded_with: VCR 6.3.1
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Fri, 20 Mar 2026 04:31:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:J38S28NEJ6T07H1WP60F3T6PPWQYNKMR251TEZEX3CXP3SH54210",
+          "token": "secret-token:J38S28NEJ6T07H1WP60F3T6PPWQYNKMR251TEZEX3CXP3SH54210",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1774067507
+          }
+        }
+  recorded_at: Fri, 20 Mar 2026 04:31:48 GMT
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders
+    body:
+      encoding: UTF-8
+      string: '{"order":{"amount":"KUDOS:10.0","summary":"Open Food Network order","fulfillment_url":"http://test.host/payment_gateways/taler/198"},"create_token":false}'
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Fri, 20 Mar 2026 04:31:48 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '42'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "order_id": "2026.079-0189PJNWMX6JA"
+        }
+  recorded_at: Fri, 20 Mar 2026 04:31:48 GMT
+recorded_with: VCR 6.4.0

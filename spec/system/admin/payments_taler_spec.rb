@@ -32,8 +32,10 @@ RSpec.describe "Admin -> Order -> Payments" do
         amount: "KUDOS:2",
       }
     }
+    token_endpoint = "https://taler.example.com/private/token"
     order_endpoint = "https://taler.example.com/private/orders/taler-id-1"
     refund_endpoint = "https://taler.example.com/private/orders/taler-id-1/refund"
+    stub_request(:post, token_endpoint).to_return(body: { token: "abc" }.to_json)
     stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
     stub_request(:post, refund_endpoint).to_return(body: "{}")
 
