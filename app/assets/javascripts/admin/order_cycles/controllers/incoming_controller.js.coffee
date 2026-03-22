@@ -9,7 +9,7 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
   # We want to make sure to load the filtered EnterpriseFee when any previous request is finished
   # otherwise the enterprise_fees migh get overriden by non filtered ones.
   $scope.$watch(( -> EnterpriseFee.loading), (isLoading) =>
-    $scope.enterprise_fees ||= $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true) unless isLoading
+    $scope.enterprise_fees ||= EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true) unless isLoading
   )
 
   $scope.exchangeTotalVariants = (exchange) ->
