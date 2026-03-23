@@ -25,7 +25,7 @@ RSpec.describe "Admin -> Order -> Payments" do
     login_as distributor.owner
   end
 
-  it "allows to refund a Taler payment" do
+  it "allows to void a Taler payment" do
     order_status = {
       order_status: "paid",
       contract_terms: {
@@ -48,6 +48,36 @@ RSpec.describe "Admin -> Order -> Payments" do
       click_link class: "icon-void"
 
       expect(page).to have_text "VOID"
+      expect(page).not_to have_link "Void"
+    end
+  end
+
+  it "allows to credit a Taler payment" do
+    order_status = {
+      order_status: "paid",
+      contract_terms: {
+        amount: "KUDOS:2",
+      }
+    }
+    order_endpoint = "https://taler.example.com/private/orders/taler-id-1"
+    refund_endpoint = "https://taler.example.com/private/orders/taler-id-1/refund"
+    stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+    stub_request(:post, refund_endpoint).to_return(body: "{}")
+
+    visit spree.admin_order_payments_path(order.number)
+
+    within row_containing("Taler") do
+      expect(page).to have_text "COMPLETED"
+      expect(page).to have_link "Credit"
+
+      click_link class: "icon-credit"
+
+      expect(page).to have_text "COMPLETED"
+      expect(page).not_to have_link "Credit"
+    end
+
+    # Our payment system creates a new payment to show the credit.
+    within row_containing("$-9.75") do
       expect(page).not_to have_link "Void"
     end
   end

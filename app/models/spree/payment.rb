@@ -152,11 +152,10 @@ module Spree
     end
 
     def actions
-      return [] unless payment_source.respond_to?(:actions)
+      return [] unless payment_method.respond_to?(:actions)
 
-      payment_source.actions.select do |action|
-        !payment_source.respond_to?("can_#{action}?") ||
-          payment_source.__send__("can_#{action}?", self)
+      payment_method.actions.select do |action|
+        payment_method.__send__("can_#{action}?", self)
       end
     end
 
@@ -164,11 +163,6 @@ module Spree
       return unless requires_authorization?
 
       PaymentMailer.authorize_payment(self).deliver_later
-    end
-
-    def payment_source
-      res = source.is_a?(Payment) ? source.source : source
-      res || payment_method
     end
 
     def ensure_correct_adjustment

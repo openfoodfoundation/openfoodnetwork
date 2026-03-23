@@ -22,11 +22,20 @@ module Spree
       preference :api_key, :password
 
       def actions
-        %w{void}
+        %w[credit void]
       end
 
       def can_void?(payment)
-        payment.state == "completed"
+        # The source can be another payment. Then this is an offset payment
+        # like a credit record. We can't void a refund.
+        payment.source == self && payment.state == "completed"
+      end
+
+      def can_credit?(payment)
+        return false unless payment.completed?
+        return false unless payment.order.payment_state == 'credit_owed'
+
+        payment.credit_allowed.positive?
       end
 
       # Name of the view to display during checkout
@@ -68,6 +77,23 @@ module Spree
         ActiveMerchant::Billing::Response.new(success, message)
       end
 
+      def credit(money, response_code, gateway_options)
+        amount = money / 100 # called with cents
+        payment = gateway_options[:payment]
+        taler_order = taler_order(id: response_code)
+        status = taler_order.fetch("order_status")
+
+        raise "Unsupported action" if status != "paid"
+
+        taler_amount = "KUDOS:#{amount}"
+        taler_order.refund(refund: taler_amount, reason: "credit")
+
+        spree_money = Spree::Money.new(amount, currency: payment.currency).to_s
+        PaymentMailer.refund_available(spree_money, payment, taler_order.status_url).deliver_later
+
+        ActiveMerchant::Billing::Response.new(true, "Refund initiated")
+      end
+
       def void(response_code, gateway_options)
         payment = gateway_options[:payment]
         taler_order = taler_order(id: response_code)
@@ -82,7 +108,8 @@ module Spree
         amount = taler_order.fetch("contract_terms")["amount"]
         taler_order.refund(refund: amount, reason: "void")
 
-        PaymentMailer.refund_available(payment, taler_order.status_url).deliver_later
+        spree_money = payment.money.to_s
+        PaymentMailer.refund_available(spree_money, payment, taler_order.status_url).deliver_later
 
         ActiveMerchant::Billing::Response.new(true, "Refund initiated")
       end
