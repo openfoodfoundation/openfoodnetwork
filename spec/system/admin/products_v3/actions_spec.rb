@@ -73,9 +73,11 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
 
       def save_preferences
-        # Preference saved
         click_on "Save as default"
-        expect(page).to have_content "Column preferences saved"
+        # Flash appears at top level with success styling (not error), fixes #13966
+        within "#flashes" do
+          expect(page).to have_css ".flash.success", text: "Column preferences saved"
+        end
         refresh
       end
     end
