@@ -6,6 +6,9 @@ export default class extends Controller {
   connect() {
     super.connect();
     window.addEventListener("click", this.#hideIfClickedOutside);
+
+    // Close menu when making a selection
+    this.contentTarget.addEventListener("click", this.#selected.bind(this));
   }
 
   disconnect() {
@@ -13,17 +16,22 @@ export default class extends Controller {
   }
 
   toggle() {
-    this.contentTarget.classList.toggle("show");
+    this.#toggleShow();
   }
+
+  #selected() {
+    this.contentTarget.classList.add("selected");
+  };
 
   #hideIfClickedOutside = (event) => {
     if (this.element.contains(event.target)) {
       return;
     }
-    this.#hide();
+    this.#toggleShow(false);
   };
 
-  #hide() {
-    this.contentTarget.classList.remove("show");
+  #toggleShow(force = undefined) {
+    this.contentTarget.classList.toggle("show", force);
+    this.contentTarget.classList.remove("selected");
   }
 }

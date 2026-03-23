@@ -29,6 +29,15 @@
       display: block;
     }
 
+    // Fade out so user can see which option was selected
+    &.selected {
+      transition:
+        opacity 0.2s linear,
+        visibility 0.2s linear;
+      opacity: 0;
+      visibility: hidden;
+    }
+
     & > a {
       display: block;
       padding: 5px 10px;
