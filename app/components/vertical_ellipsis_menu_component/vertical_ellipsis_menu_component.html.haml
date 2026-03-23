@@ -1,4 +1,4 @@
 .vertical-ellipsis-menu{ "data-controller": "vertical-ellipsis-menu" }
-  %button.vertical-ellipsis-menu-button.fa.fa-ellipsis-v{ "data-action": "click->vertical-ellipsis-menu#toggle", 'aria-label': t('admin.products_page.columns.actions') }
-  .vertical-ellipsis-menu-content{ "data-vertical-ellipsis-menu-target": "content" }
+  %button.vertical-ellipsis-menu-button.fa.fa-ellipsis-v{ popovertarget: id, "data-action": "vertical-ellipsis-menu#toggle", 'aria-label': t('admin.products_page.columns.actions') }
+  .vertical-ellipsis-menu-content{ id:, "data-vertical-ellipsis-menu-target": "content", popover: true }
     = content

@@ -3,28 +3,28 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["content"];
 
-  connect() {
-    super.connect();
-    window.addEventListener("click", this.#hideIfClickedOutside);
-  }
+  // connect() {
+  //   super.connect();
+  //   window.addEventListener("click", this.#hideIfClickedOutside);
+  // }
 
-  disconnect() {
-    window.removeEventListener("click", this.#hideIfClickedOutside);
-  }
+  // disconnect() {
+  //   window.removeEventListener("click", this.#hideIfClickedOutside);
+  // }
 
   toggle(event) {
     event.preventDefault();
-    this.contentTarget.classList.toggle("show");
+    this.contentTarget.togglePopover({ source: event.target });
   }
 
-  #hideIfClickedOutside = (event) => {
-    if (this.element.contains(event.target)) {
-      return;
-    }
-    this.#hide();
-  };
+  // #hideIfClickedOutside = (event) => {
+  //   if (this.element.contains(event.target)) {
+  //     return;
+  //   }
+  //   this.#hide();
+  // };
 
-  #hide() {
-    this.contentTarget.classList.remove("show");
-  }
+  // #hide() {
+  //   this.contentTarget.classList.remove("show");
+  // }
 }

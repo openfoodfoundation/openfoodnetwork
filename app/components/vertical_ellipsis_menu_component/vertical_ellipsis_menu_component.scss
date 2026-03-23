@@ -14,21 +14,26 @@
   }
 
   .vertical-ellipsis-menu-content {
-    position: absolute;
-    top: 0;
-    right: 0;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    position: fixed;
+    position-anchor: auto;
+    position-area: self-end;
+    left: -80px;
+    top: -40px;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: white;
     box-shadow: $box-shadow;
     border-radius: 3px;
     min-width: 80px;
-    display: none;
+    // display: none;
     z-index: 100;
 
-    &.show {
-      display: block;
-    }
+    // &.show {
+    //   display: block;
+    // }
 
     & > a {
       display: block;
