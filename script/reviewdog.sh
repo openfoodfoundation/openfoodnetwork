@@ -6,7 +6,7 @@
 
 set -o pipefail
 
-echo "::group:: Running prettier with reviewdog 🐶 ..."
+echo -e "\nRunning prettier with reviewdog 🐶 ..."
 
 "$(npm root)/.bin/prettier" --check . 2>&1 | sed --regexp-extended 's/(\[warn\].*)$/\1 File is not properly formatted./' \
   | reviewdog \
@@ -25,7 +25,7 @@ echo "::group:: Running prettier with reviewdog 🐶 ..."
 
 prettier=$?
 
-echo "::group:: Running rubocop with reviewdog 🐶 ..."
+echo -e "\nRunning rubocop with reviewdog 🐶 ..."
 
 bundle exec rubocop \
   --fail-level info \
@@ -39,7 +39,7 @@ bundle exec rubocop \
 
 rubocop=$?
 
-echo "::group:: Running haml-lint with reviewdog 🐶 ..."
+echo -e "\nRunning haml-lint with reviewdog 🐶 ..."
 
 bundle exec haml-lint \
   --fail-level warning \

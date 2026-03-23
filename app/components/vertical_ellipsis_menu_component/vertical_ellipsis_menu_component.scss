@@ -19,12 +19,23 @@
     background-color: white;
     box-shadow: $box-shadow;
     border-radius: 3px;
+    width: max-content;
     min-width: 80px;
+    max-width: 110px;
     display: none;
     z-index: 100;
 
     &.show {
       display: block;
+    }
+
+    // Fade out so user can see which option was selected
+    &.selected {
+      transition:
+        opacity 0.2s linear,
+        visibility 0.2s linear;
+      opacity: 0;
+      visibility: hidden;
     }
 
     & > a {
