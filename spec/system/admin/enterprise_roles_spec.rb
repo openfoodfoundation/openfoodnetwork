@@ -142,6 +142,49 @@ create(:enterprise)
     end
   end
 
+  context "as an enterprise manager (not the owner)" do
+    let!(:owner) { create(:user, email: 'owner@example.com') }
+    let!(:manager) { create(:user, email: 'manager@example.com') }
+    let!(:other_manager) { create(:user, email: 'other@example.com') }
+    let!(:enterprise) { create(:enterprise, name: 'Managed Enterprise', owner:) }
+    let!(:manager_role) {
+      create(:enterprise_role, user: manager, enterprise:)
+    }
+    let!(:other_manager_role) {
+      create(:enterprise_role, user: other_manager, enterprise:)
+    }
+
+    before do
+      login_as manager
+      visit edit_admin_enterprise_path(enterprise)
+      navigate_to_enterprise_users
+    end
+
+    it "sees the full manager table and invite button" do
+      expect(page).to have_selector "table.managers"
+      expect(page).to have_link "Invite Manager"
+    end
+
+    it "does not see owner radio buttons (only owners can change the owner)" do
+      expect(page).not_to have_field "Set #{owner.email} as owner"
+      expect(page).not_to have_field "Set #{manager.email} as owner"
+    end
+
+    it "can see the contact radio buttons" do
+      within "tr#manager-#{other_manager.id}" do
+        expect(page).to have_field "Set #{other_manager.email} as contact"
+      end
+    end
+
+    it "can remove another manager" do
+      within "tr#manager-#{other_manager.id}" do
+        accept_alert { find("a.delete-resource").click }
+      end
+      expect(page).not_to have_content other_manager.email
+      expect(EnterpriseRole.find_by(id: other_manager_role.id)).to be_nil
+    end
+  end
+
   private
 
   def navigate_to_enterprise_users

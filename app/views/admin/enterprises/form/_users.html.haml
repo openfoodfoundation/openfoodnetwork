@@ -1,4 +1,6 @@
-- full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise&.owner)
+- is_manager = @enterprise&.users&.include?(spree_current_user)
+- full_permissions = spree_current_user.admin? || is_manager
+- owner_permissions = spree_current_user.admin? || spree_current_user == @enterprise&.owner
 
 .row
   = t '.description'
@@ -30,12 +32,12 @@
               %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ "ofn-with-tip": t('.email_not_confirmed') }
 
           %td.center
-            - if user.confirmed?
+            - if user.confirmed? && owner_permissions
               = f.label :owner_id, t(".set_as_owner", email: user.email), class: "sr-only", value: user.id
               = f.radio_button :owner_id, user.id
           %td.center
             - if user.confirmed?
-              = f.label :owner_id, t(".set_as_contact", email: user.email), class: "sr-only", value: user.id
+              = f.label :contact_id, t(".set_as_contact", email: user.email), class: "sr-only", value: user.id
               = f.radio_button :contact_id, user.id
           %td.actions
             - if !owner && !contact

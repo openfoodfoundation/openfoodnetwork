@@ -199,7 +199,7 @@ module Spree
       can [:admin, :create], Voucher
 
       can [:admin, :destroy], EnterpriseRole do |enterprise_role|
-        enterprise_role.enterprise.owner_id == user.id
+        enterprise_role.enterprise.users.include?(user)
       end
     end
 
