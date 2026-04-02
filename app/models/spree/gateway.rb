@@ -13,6 +13,35 @@ module Spree
     preference :server, :string, default: 'live'
     preference :test_mode, :boolean, default: false
 
+    def actions
+      %w{capture_and_complete_order void credit resend_authorization_email}
+    end
+
+    # Indicates whether its possible to capture the payment
+    def can_capture_and_complete_order?(payment)
+      return false if payment.requires_authorization?
+
+      payment.pending? || payment.checkout?
+    end
+
+    # Indicates whether its possible to void the payment.
+    def can_void?(payment)
+      !payment.void?
+    end
+
+    # Indicates whether its possible to credit the payment. Note that most gateways require that the
+    #   payment be settled first which generally happens within 12-24 hours of the transaction.
+    def can_credit?(payment)
+      return false unless payment.completed?
+      return false unless payment.order.payment_state == 'credit_owed'
+
+      payment.credit_allowed.positive?
+    end
+
+    def can_resend_authorization_email?(payment)
+      payment.requires_authorization?
+    end
+
     def payment_source_class
       CreditCard
     end
@@ -52,9 +81,9 @@ module Spree
 
     def supports?(source)
       return true unless provider_class.respond_to? :supports?
-      return false unless source.brand
+      return false unless source.cc_type
 
-      provider_class.supports?(source.brand)
+      provider_class.supports?(source.cc_type)
     end
   end
 end

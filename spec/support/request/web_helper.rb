@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module WebHelper
-  include TomselectHelper
-
   def have_input(name, opts = {})
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
@@ -27,10 +25,6 @@ module WebHelper
   def handle_js_confirm(accept = true)
     page.execute_script "window.confirm = function(msg) { return #{!!accept}; }"
     yield
-  end
-
-  def set_i18n_locale(locale = 'en')
-    page.execute_script("I18n.locale = '#{locale}'")
   end
 
   def pick_i18n_locale

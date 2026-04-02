@@ -8,10 +8,17 @@
       .checkout-title
         = t("checkout.step2.payment_method.title")
 
-      - if @order.zero_priced_order?
+      - if @order.zero_priced_order? || @order.outstanding_balance.zero? 
         %h3= t(:no_payment_required)
-        = hidden_field_tag "order[payments_attributes][][amount]", 0
+        - if @order.zero_priced_order?
+          = hidden_field_tag "order[payments_attributes][][amount]", 0
+        - if @paid_with_credit
+          = t(:credit_used, amount: Spree::Money.new(@paid_with_credit))
+
       - else
+        - if @paid_with_credit
+          = t(:credit_used, amount: Spree::Money.new(@paid_with_credit))
+
         - selected_payment_method = @order.payments&.with_state(:checkout)&.first&.payment_method_id
         - selected_payment_method ||= available_payment_methods[0].id if available_payment_methods.length == 1
         - available_payment_methods.each do |payment_method|
@@ -23,13 +30,13 @@
               "data-action": "paymentmethod#selectPaymentMethod",
               "data-paymentmethod-id": "#{payment_method.id}",
               "data-paymentmethod-target": "input"
-            = f.label :payment_method_id, "#{payment_method.name}", for: "payment_method_#{payment_method.id}"
+            = f.label :payment_method_id, "#{payment_method.display_name}", for: "payment_method_#{payment_method.id}"
             %em.fees=payment_or_shipping_price(payment_method, @order)
 
           .paymentmethod-container{"data-paymentmethod-id": "#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
             - if payment_method.description && !payment_method.description.empty?
               .paymentmethod-description.panel
-                = simple_format(html_escape(payment_method.description))
+                = simple_format(html_escape(payment_method.display_description))
             .paymentmethod-form
               = render partial: "checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
 

@@ -152,7 +152,7 @@ RSpec.configure do |config|
 
   # Reset locale for all specs.
   config.around(:each) do |example|
-    locale = ENV.fetch('LOCALE', 'en_TST')
+    locale = OpenFoodNetwork::I18nConfig.default_locale
     I18n.with_locale(locale) { example.run }
   end
 

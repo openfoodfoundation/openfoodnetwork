@@ -297,6 +297,13 @@ hi:
       join_community: "कम्यूनिटी को जॉइन करें"
     invite_manager:
       subject: "%{enterprise} ने आपको प्रबंधक बनने के लिए आमंत्रित किया है"
+  payment_mailer:
+    authorize_payment:
+      subject: "कृपया OFN पर %{distributor} के लिए अपने भुगतान को अधिकृत करें"
+      instructions: "%{amount} से %{distributor} के आपके भुगतान के लिए अतिरिक्त प्रमाणीकरण की आवश्यकता होती है। अपने भुगतान को अधिकृत करने के लिए कृपया निम्नलिखित URL पर जाएं:"
+    authorization_required:
+      subject: "भुगतान के लिए ग्राहक से प्राधिकरण की आवश्यकता होती है"
+      message: "ऑर्डर %{order_number} के लिए भुगतान के लिए ग्राहक से अतिरिक्त प्राधिकरण की आवश्यकता होती है। ग्राहक को ईमेल के माध्यम से सूचित किया गया है और भुगतान अधिकृत होने तक पेंडिंग दिखाई देगा।"
   producer_mailer:
     order_cycle:
       subject: "%{producer} के लिए साइकल रिपोर्ट ऑर्डर करें"
@@ -662,6 +669,11 @@ hi:
         balance_due: "बैलेंस बकाया"
       destroy:
         has_associated_subscriptions: "हटाने में विफल: इस ग्राहक के पास सक्रिय सब्सक्रिप्शन हैं। पहले उन्हें रद्द करें।"
+    customer_account_transaction:
+      index:
+        description: विवरण
+        amount: राशि
+        running_balance: रनिंग बैलेंस
     contents:
       edit:
         title: कंटेन्ट
@@ -1177,19 +1189,15 @@ hi:
           legend: "यूज़र"
           email_confirmation_notice_html: "ईमेल पुष्टिकरण पेंडिंग है। हमने %{email} को एक पुष्टिकरण ईमेल भेजा है।"
           resend: फिर से भेजें
-          owner: 'मालिक'
           contact: "संपर्क"
+          owner: 'मालिक'
           contact_tip: "वह प्रबंधक जो ऑर्डर्स और नोटिफिकेशन्स के लिए एंटरप्राइज़ ईमेल प्राप्त करेगा। पुष्टि किया हुआ ईमेल पता होना चाहिए।"
           owner_tip: इस एंटरप्राइज़ के लिए ज़िम्मेदार प्राथमिक यूज़र्स।
           notifications: नोटिफिकेशन्स
           notifications_tip: ऑर्डर्स के बारे में नोटिफिकेशन्स इस ईमेल पते पर भेजी जाएंगी।
           notifications_placeholder: उदाहरण gustav@truffles.com
           notifications_note: 'ध्यान दें: उपयोग करने से पहले एक नए ईमेल पते की पुष्टि करने की जरूरत हो सकती है'
-          managers: प्रबंधक
-          managers_tip: इस एंटरप्राइज़ को प्रबंधित करने की अनुमति वाले दूसरे यूज़र्स।
           invite_manager: "प्रबंधक को आमंत्रित करें"
-          invite_manager_tip: "एक अनरजिस्टर्ड यूज़र्स को साइन अप करने और इस एंटरप्राइज़ का प्रबंधक बनने के लिए आमंत्रित करें।"
-          add_unregistered_user: "एक अनरजिस्टर्ड यूज़र जोड़ें"
           email_confirmed: "ईमेल की पुष्टि हो गई है"
           email_not_confirmed: "ईमेल की पुष्टि नहीं हुई है"
         vouchers:
@@ -1281,9 +1289,6 @@ hi:
         choose_starting_point: 'अपना पैकेज चुनें:'
         profile: 'प्रोफ़ाइल'
         producer_profile: 'उत्पादक प्रोफ़ाइल'
-      invite_manager:
-        user_already_exists: "यूज़र्स पहले से मौजूद है"
-        error: "कुछ गलत हुआ"
     order_cycles:
       loading_flash:
         loading_order_cycles: ऑर्डर साइकल लोड हो रहा है
@@ -1700,6 +1705,11 @@ hi:
     schedules:
       destroy:
         associated_subscriptions_error: इस शेड्यूल को हटाया नहीं जा सकता क्योंकि इसमें जुड़े हुए सब्सक्रिप्शन हैं
+    user_invitations:
+      new:
+        back: वापस जाएं
+        email: ईमेल
+        invite: आमंत्रित करें
     vouchers:
       new:
         legend: नया वाउचर
@@ -2127,6 +2137,7 @@ hi:
   order_total: कुल ऑर्डर
   order_payment: "के माध्यम से भुगतान करना:"
   no_payment_required: "किसी भुगतान की आवश्यकता नहीं है"
+  customer_credit: क्रेडिट
   order_billing_address: बिलिंग पता
   order_delivery_on: डिलिवरी चालु
   order_delivery_address: डिलीवरी का पता
@@ -2387,7 +2398,6 @@ hi:
   shops_signup_help: हम मदद के लिए तैयार हैं।
   shops_signup_help_text: आपको बेहतर रिटर्न चाहिए। आपको नए खरीदार और लॉजिस्टिक पार्टनर चाहिए। आपको चाहिए की आपकी कहानी थोक, रिटेल और किचन टेबल पर बताई जाए।
   shops_signup_detail: यहां विस्तार से बताया गया है।
-  orders: "ऑर्डर्स"
   orders_fees: "फीस..."
   orders_edit_title: "शॉपिंग कार्ट"
   orders_edit_headline: "आपका शॉपिंग कार्ट"
@@ -4322,13 +4332,6 @@ hi:
         subject: "पासवर्ड निर्देश रिसेट करें"
       confirmation_instructions:
         subject: "कृपया अपने OFN अकाउंट की पुष्टि करें"
-    payment_mailer:
-      authorize_payment:
-        subject: "कृपया OFN पर %{distributor} के लिए अपने भुगतान को अधिकृत करें"
-        instructions: "%{amount} से %{distributor} के आपके भुगतान के लिए अतिरिक्त प्रमाणीकरण की आवश्यकता होती है। अपने भुगतान को अधिकृत करने के लिए कृपया निम्नलिखित URL पर जाएं:"
-      authorization_required:
-        subject: "भुगतान के लिए ग्राहक से प्राधिकरण की आवश्यकता होती है"
-        message: "ऑर्डर %{order_number} के लिए भुगतान के लिए ग्राहक से अतिरिक्त प्राधिकरण की आवश्यकता होती है। ग्राहक को ईमेल के माध्यम से सूचित किया गया है और भुगतान अधिकृत होने तक पेंडिंग दिखाई देगा।"
     shipment_mailer:
       shipped_email:
         dear_customer: "प्रिय ग्राहक,"
@@ -4414,6 +4417,10 @@ hi:
         transaction_history: ट्रांजेक्शन इतिहास
         authorisation_required: प्राधिकार आवश्यक
         authorise: अधिकृत करें
+      customer_account_transactions:
+        description: विवरण
+        amount: राशि
+        running_balance: रनिंग बैलेंस
       open_orders:
         order: ऑर्डर
         shop: शॉप

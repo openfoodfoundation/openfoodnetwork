@@ -10,16 +10,38 @@ RSpec.describe Spree::PaymentMethod::Taler do
     )
   }
   let(:backend_url) { "https://backend.demo.taler.net/instances/sandbox" }
+  let(:token_url) { "#{backend_url}/private/token" }
 
-  describe "#external_payment_url", vcr: true do
-    it "retrieves a URL to pay at and stores it on the payment record" do
+  describe "#external_payment_url" do
+    it "creates an order reference and retrieves a URL to pay at", vcr: true do
       order = create(:order_ready_for_confirmation, payment_method: taler)
+
       url = subject.external_payment_url(order:)
-      expect(url).to start_with backend_url
+      expect(url).to start_with "#{backend_url}/orders/"
+      expect(url).to match "orders/20...[0-9A-Z-]{17}$"
 
       payment = order.payments.last.reload
-      expect(payment.response_code).to match "2026.022-0284X4GE8WKMJ"
-      expect(payment.redirect_auth_url).to eq url
+      expect(payment.response_code).to match "20...[0-9A-Z-]{17}$"
+    end
+
+    it "creates the Taler order with the right currency" do
+      order = create(:order_ready_for_confirmation, payment_method: taler)
+
+      backend_url = "https://taler.example.com"
+      token_url = "https://taler.example.com/private/token"
+      order_url = "https://taler.example.com/private/orders"
+      taler = Spree::PaymentMethod::Taler.new(
+        preferred_backend_url: "https://taler.example.com",
+        preferred_api_key: "sandbox",
+      )
+
+      stub_request(:post, token_url).to_return(body: { token: "1234" }.to_json)
+      stub_request(:post, order_url)
+        .with(body: /"amount":"AUD:10.0"/)
+        .to_return(body: { order_id: "one" }.to_json)
+
+      url = taler.external_payment_url(order:)
+      expect(url).to eq "#{backend_url}/orders/one"
     end
   end
 
@@ -28,6 +50,10 @@ RSpec.describe Spree::PaymentMethod::Taler do
     let(:source) { taler }
     let(:payment) { build(:payment, response_code: "taler-order-7") }
     let(:order_url) { "#{backend_url}/private/orders/taler-order-7" }
+
+    before do
+      stub_request(:post, token_url).to_return(body: { token: "12345" }.to_json)
+    end
 
     it "returns an ActiveMerchant response" do
       order_status = "paid"
@@ -47,6 +73,100 @@ RSpec.describe Spree::PaymentMethod::Taler do
 
       expect(response.success?).to eq false
       expect(response.message).to eq "The payment request expired. Please try again."
+    end
+  end
+
+  describe "#credit" do
+    let(:order_endpoint) { "#{backend_url}/private/orders/taler-order-8" }
+    let(:refund_endpoint) { "#{order_endpoint}/refund" }
+    let(:taler_refund_uri) {
+      "taler://refund/backend.demo.taler.net/instances/sandbox/taler-order-8/"
+    }
+
+    before do
+      stub_request(:post, token_url).to_return(body: { token: "12345" }.to_json)
+    end
+
+    it "starts the refund process" do
+      order_status = { order_status: "paid" }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+      stub_request(:post, refund_endpoint).to_return(body: { taler_refund_uri: }.to_json)
+
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        response = taler.credit(100, "taler-order-8", { payment: order.payments[0] })
+        expect(response.success?).to eq true
+      }.to enqueue_mail(PaymentMailer, :refund_available)
+    end
+
+    it "raises an error if payment hasn't been taken yet" do
+      order_status = { order_status: "claimed" }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        taler.credit(100, "taler-order-8", { payment: order.payments[0] })
+      }.to raise_error StandardError, "Unsupported action"
+    end
+  end
+
+  describe "#void" do
+    let(:order_endpoint) { "#{backend_url}/private/orders/taler-order-8" }
+    let(:refund_endpoint) { "#{order_endpoint}/refund" }
+    let(:taler_refund_uri) {
+      "taler://refund/backend.demo.taler.net/instances/sandbox/taler-order-8/"
+    }
+
+    before do
+      stub_request(:post, token_url).to_return(body: { token: "12345" }.to_json)
+    end
+
+    it "starts the refund process" do
+      order_status = {
+        order_status: "paid",
+        contract_terms: {
+          amount: "KUDOS:2",
+        }
+      }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+      stub_request(:post, refund_endpoint).to_return(body: { taler_refund_uri: }.to_json)
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        response = taler.void("taler-order-8", { payment: order.payments[0] })
+        expect(response.success?).to eq true
+      }.to enqueue_mail(PaymentMailer, :refund_available)
+    end
+
+    it "returns early if payment already void" do
+      order_status = {
+        order_status: "claimed",
+      }
+      stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
+      order = create(:completed_order_with_totals)
+      order.payments.create(
+        amount: order.total, state: :completed,
+        payment_method: taler,
+        response_code: "taler-order-8",
+      )
+      expect {
+        response = taler.void("taler-order-8", { payment: order.payments[0] })
+        expect(response.success?).to eq true
+      }.not_to enqueue_mail
     end
   end
 end

@@ -1,0 +1,80 @@
+.pagination {
+  text-align: center;
+  margin: 0 0 1em;
+  padding: 20px 0 28px 0;
+  background-color: $color-7;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  .pagelist {
+    display: flex;
+    gap: inherit;
+    list-style-type: none;
+  }
+
+  .page {
+    width: $btn-relaxed-height;
+    line-height: $btn-relaxed-height;
+    height: $btn-relaxed-height;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+    text-align: center;
+    background-color: $color-1;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    border: none;
+    color: $color-8;
+    font-weight: 600;
+
+    &.current,
+    &.gap {
+      cursor: default;
+    }
+
+    &.current {
+      background-color: $color-5;
+      color: $white;
+    }
+
+    &.disabled {
+      display: none;
+    }
+
+    &.prev {
+      margin-right: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 2px;
+      }
+    }
+
+    &.next {
+      margin-left: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 6px;
+      }
+    }
+
+    &:hover:not(.gap):not(.disabled),
+    &[href]:hover {
+      background-color: $color-5;
+      color: $white;
+      border: none;
+    }
+
+    &.gap {
+      background-color: transparent;
+      box-shadow: none;
+      width: auto;
+    }
+
+    &:active {
+      border: none;
+      color: $white;
+      background-color: $red;
+      cursor: default;
+    }
+  }
+}

@@ -29,6 +29,19 @@ RSpec.describe EnterprisesController do
       expect(controller.current_order.order_cycle).to be_nil
     end
 
+    context "when the order is linked to a customer" do
+      it "removes the customer" do
+        # Make sure the order is linked to a customer
+        customer = create(:customer)
+        order.customer = customer
+        order.save!
+
+        expect do
+          get :shop, params: { id: distributor }
+        end.to change { controller.current_order.customer }.to(nil)
+      end
+    end
+
     context "when user is logged in" do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
@@ -38,6 +51,21 @@ RSpec.describe EnterprisesController do
         expect(controller.current_distributor).to eq(distributor)
         expect(controller.current_order.distributor).to eq(distributor)
         expect(controller.current_order.order_cycle).to be_nil
+      end
+
+      context "when customer doesn't belong to the order's distributor" do
+        it "sets the order's customer to distributor's customer" do
+          expected_customer = create(:customer, user:, enterprise: distributor)
+
+          # Make sure the order is linked to a customer
+          customer = create(:customer)
+          order.customer = customer
+          order.save!
+
+          expect do
+            get :shop, params: { id: distributor }
+          end.to change { controller.current_order.customer }.to(expected_customer)
+        end
       end
     end
 

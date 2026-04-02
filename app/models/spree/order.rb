@@ -674,8 +674,6 @@ module Spree
     end
 
     def process_each_payment
-      raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
-
       pending_payments.each do |payment|
         if payment.amount.zero? && zero_priced_order?
           payment.update_columns(state: "completed", captured_at: Time.zone.now)
@@ -729,6 +727,10 @@ module Spree
 
       adjustment.update_adjustment!(force: true)
       update_totals_and_states
+    end
+
+    def apply_customer_credit
+      Orders::CustomerCreditService.new(self).apply
     end
   end
 end

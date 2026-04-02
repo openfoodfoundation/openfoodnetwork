@@ -290,6 +290,13 @@ pa:
       join_community: "ਭਾਈਚਾਰੇ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ"
     invite_manager:
       subject: "%{enterprise} ਨੇ ਤੁਹਾਨੂੰ ਪ੍ਰਬੰਧਕ ਬਣਨ ਲਈ ਸੱਦਾ ਦਿੱਤਾ ਹੈ"
+  payment_mailer:
+    authorize_payment:
+      subject: "ਕਿਰਪਾ ਕਰਕੇ OFN ਤੇ %{distributor} ਨੂੰ ਆਪਣਾ ਭੁਗਤਾਨ ਅਧਿਕਾਰਤ ਕਰੋ"
+      instructions: "%{distributor} ਨੂੰ %{amount} ਦੇ ਤੁਹਾਡੇ ਭੁਗਤਾਨ ਲਈ ਵਾਧੂ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਭੁਗਤਾਨ ਨੂੰ ਅਧਿਕਾਰਤ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ URL ਉਤੇ ਜਾਓ:"
+    authorization_required:
+      subject: "ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ"
+      message: "ਆਰਡਰ %{order_number} ਦੇ ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਵਾਧੂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ। ਗਾਹਕ ਨੂੰ ਈਮੇਲ ਰਾਹੀਂ ਸੂਚਿਤ ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਦੋਂ ਤੱਕ ਇਹ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ ਜਾਂਦਾ, ਭੁਗਤਾਨ ਬਕਾਏ ਵਜੋਂ ਵਿਖਾਈ ਦੇਵੇਗਾ।"
   producer_mailer:
     order_cycle:
       subject: "%{producer} ਲਈ ਆਰਡਰ ਸਾਈਕਲ ਰਿਪੋਰਟ"
@@ -654,6 +661,11 @@ pa:
         balance_due: "ਬਕਾਇਆ ਰਕਮ"
       destroy:
         has_associated_subscriptions: "ਹਟਾਉਣਾ ਅਸਫਲ ਰਿਹਾ: ਇਸ ਗਾਹਕ ਕੋਲ ਕਿਰਿਆਸ਼ੀਲ ਗਾਹਕੀਆਂ ਹਨ। ਪਹਿਲਾਂ ਉਹਨਾਂ ਨੂੰ ਰੱਦ ਕਰੋ।"
+    customer_account_transaction:
+      index:
+        description: ਵਰਣਨ
+        amount: ਰਕਮ
+        running_balance: ਚਲ ਰਹੀ ਬਕਾਇਆ ਰਕਮ
     contents:
       edit:
         title: ਕੰਟੇਂਟ
@@ -1161,19 +1173,15 @@ pa:
           legend: "ਉਪਭੋਗਤਾ"
           email_confirmation_notice_html: "ਈਮੇਲ ਪੁਸ਼ਟੀਕਰਨ ਲੰਬਿਤ ਹੈ। ਅਸੀਂ %{email} ਨੂੰ ਇੱਕ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਭੇਜੀ ਹੈ।"
           resend: ਦੁਬਾਰਾ ਭੇਜੋ
-          owner: 'ਮਾਲਕ'''
           contact: "ਸੰਪਰਕ"
+          owner: 'ਮਾਲਕ'''
           contact_tip: "ਪ੍ਰਬੰਧਕ ਜੋ ਆਰਡਰਾਂ ਅਤੇ ਸੂਚਨਾਵਾਂ ਲਈ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਈਮੇਲ ਪ੍ਰਾਪਤ ਕਰੇਗਾ। ਉਦੇ ਕੋਲ ਇੱਕ ਪੁਸ਼ਟੀ ਕੀਤਾ ਈਮੇਲ ਪਤਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
           owner_tip: ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਜ਼ਿੰਮੇਵਾਰ ਪ੍ਰਾਥਮਿਕ ਉਪਭੋਗਤਾ।
           notifications: ਸੂਚਨਾਵਾਂ
           notifications_tip: ਆਰਡਰਾਂ ਬਾਰੇ ਸੂਚਨਾਵਾਂ ਇਸ ਈਮੇਲ ਪਤੇ ਉਤੇ ਭੇਜੀਆਂ ਜਾਣਗੀਆਂ।
           notifications_placeholder: ਜਿਵੇਂ - gustav@truffles.com
           notifications_note: 'ਨੋਟ: ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਇੱਕ ਨਵੇਂ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ'''
-          managers: ਪ੍ਰਬੰਧਕ
-          managers_tip: ਦੂਜੇ ਉਪਭੋਗਤਾ ਜਿਹਨਾਂ ਕੋਲ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਹੈ।
           invite_manager: "ਪ੍ਰਬੰਧਕ ਨੂੰ ਸੱਦਾ ਦਿਓ"
-          invite_manager_tip: "ਕਿਸੇ ਗੈਰ-ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਨੂੰ ਸਾਈਨ ਅੱਪ ਕਰਨ ਅਤੇ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦਾ ਪ੍ਰਬੰਧਕ ਬਣਨ ਲਈ ਸੱਦਾ ਦਿਓ।"
-          add_unregistered_user: "ਇੱਕ ਗੈਰ-ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਜੋੜੋ"
           email_confirmed: "ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਈ"
           email_not_confirmed: "ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਨਹੀਂ ਹੋਈ"
         vouchers:
@@ -1265,9 +1273,6 @@ pa:
         choose_starting_point: 'ਆਪਣਾ ਪੈਕੇਜ ਚੁਣੋ:'''
         profile: 'ਪ੍ਰੋਫਾਈਲ'
         producer_profile: 'ਉਤਪਾਦਕ ਪ੍ਰੋਫਾਈਲ'''
-      invite_manager:
-        user_already_exists: "ਉਪਭੋਗਤਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ"
-        error: "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ"
     order_cycles:
       loading_flash:
         loading_order_cycles: ਆਰਡਰ ਸਾਈਕਲ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ
@@ -1683,6 +1688,11 @@ pa:
     schedules:
       destroy:
         associated_subscriptions_error: ਇਸ ਸ਼ਡਿਊਲ ਨੂੰ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ ਕਿਉਂਕਿ ਇਸ ਵਿੱਚ ਸੰਬੰਧਿਤ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਹਨ
+    user_invitations:
+      new:
+        back: ਵਾਪਸ
+        email: ਈਮੇਲ
+        invite: ਸੱਦਾ ਦਿਓ
     vouchers:
       new:
         legend: ਨਵਾਂ ਵਾਊਚਰ
@@ -2100,6 +2110,7 @@ pa:
   order_total: ਕੁੱਲ ਆਰਡਰ
   order_payment: "ਇਸ ਰਾਹੀਂ ਭੁਗਤਾਨ:"
   no_payment_required: "ਕਿਸੇ ਭੁਗਤਾਨ ਦੀ ਲੋੜ ਨਹੀਂ"
+  customer_credit: ਕ੍ਰੈਡਿਟ
   order_billing_address: ਬਿਲਿੰਗ ਪਤਾ
   order_delivery_on: ਡਿਲਿਵਰੀ ਦਾ ਦਿਨ
   order_delivery_address: ਡਿਲਿਵਰੀ ਪਤਾ
@@ -2359,7 +2370,6 @@ pa:
   shops_signup_help: ਅਸੀਂ ਮਦਦ ਕਰਨ ਲਈ ਤਿਆਰ ਹਾਂ।
   shops_signup_help_text: ਤੁਹਾਨੂੰ ਇੱਕ ਬਿਹਤਰ ਰਿਟਰਨ ਦੀ ਲੋੜ ਹੈ। ਤੁਹਾਨੂੰ ਨਵੇਂ ਖਰੀਦਦਾਰਾਂ ਅਤੇ ਲੌਜਿਸਟਿਕ ਭਾਈਵਾਲਾਂ ਦੀ ਲੋੜ ਹੈ। ਤੁਹਾਨੂੰ ਆਪਣੀ ਕਹਾਣੀ ਥੋਕ, ਖੁਦਰਾ ਅਤੇ ਰਸੋਈ ਦੇ ਮੇਜ਼ ਉਤੇ ਦੱਸੇ ਜਾਣੀ ਚਾਹੀਦੀ ਹੈ।
   shops_signup_detail: ਇੱਥੇ ਵੇਰਵਾ ਹੈ.
-  orders: "ਆਰਡਰ"
   orders_fees: "ਫ਼ੀਸ..."
   orders_edit_title: "ਖਰੀਦਦਾਰੀ ਕਾਰਟ"
   orders_edit_headline: "ਤੁਹਾਡਾ ਸ਼ਾਪਿੰਗ ਕਾਰਟ"
@@ -4216,13 +4226,6 @@ pa:
         subject: "ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰਨ ਦੀਆਂ ਹਦਾਇਤਾਂ"
       confirmation_instructions:
         subject: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ OFN ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
-    payment_mailer:
-      authorize_payment:
-        subject: "ਕਿਰਪਾ ਕਰਕੇ OFN ਤੇ %{distributor} ਨੂੰ ਆਪਣਾ ਭੁਗਤਾਨ ਅਧਿਕਾਰਤ ਕਰੋ"
-        instructions: "%{distributor} ਨੂੰ %{amount} ਦੇ ਤੁਹਾਡੇ ਭੁਗਤਾਨ ਲਈ ਵਾਧੂ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਭੁਗਤਾਨ ਨੂੰ ਅਧਿਕਾਰਤ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ URL ਉਤੇ ਜਾਓ:"
-      authorization_required:
-        subject: "ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ"
-        message: "ਆਰਡਰ %{order_number} ਦੇ ਭੁਗਤਾਨ ਲਈ ਗਾਹਕ ਤੋਂ ਵਾਧੂ ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ। ਗਾਹਕ ਨੂੰ ਈਮੇਲ ਰਾਹੀਂ ਸੂਚਿਤ ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਦੋਂ ਤੱਕ ਇਹ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ ਜਾਂਦਾ, ਭੁਗਤਾਨ ਬਕਾਏ ਵਜੋਂ ਵਿਖਾਈ ਦੇਵੇਗਾ।"
     shipment_mailer:
       shipped_email:
         dear_customer: "ਪਿਆਰੇ ਗਾਹਕ,"
@@ -4308,6 +4311,10 @@ pa:
         transaction_history: ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ
         authorisation_required: ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ
         authorise: ਅਧਿਕਾਰਤ ਕਰੋ
+      customer_account_transactions:
+        description: ਵਰਣਨ
+        amount: ਰਕਮ
+        running_balance: ਚਲ ਰਹੀ ਬਕਾਇਆ ਰਕਮ
       open_orders:
         order: ਆਰਡਰ
         shop: ਸ਼ਾਪ

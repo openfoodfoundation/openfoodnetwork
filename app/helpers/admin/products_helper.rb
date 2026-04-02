@@ -47,5 +47,20 @@ module Admin
     def variant_tag_enabled?(user)
       feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
     end
+
+    def allowed_source_producers
+      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
+        .enterprises_granting_linked_variants
+    end
+
+    # Query only name of the model to avoid loading the whole record
+    def selected_option(id, model)
+      return [] unless id
+
+      name = model.where(id: id).pick(:name)
+      return [] unless name
+
+      [[name, id]]
+    end
   end
 end

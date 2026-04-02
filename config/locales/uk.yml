@@ -246,6 +246,13 @@ uk:
       join_community: "Приєднуйтесь до спільноти"
     invite_manager:
       subject: "%{enterprise} запросив вас стати менеджером"
+  payment_mailer:
+    authorize_payment:
+      subject: "Авторизуйте свій платіж на %{distributor} на OFN"
+      instructions: "Ваш платіж %{amount} на адресу %{distributor} вимагає додаткової автентифікації. Перейдіть за такою URL-адресою, щоб авторизувати свій платіж:"
+    authorization_required:
+      subject: "Платіж потребує авторизації клієнта"
+      message: "Оплата замовлення %{order_number} потребує додаткової авторизації від клієнта. Клієнта було сповіщено електронною поштою, і платіж відображатиметься як очікуваний, доки його не буде авторизовано."
   producer_mailer:
     order_cycle:
       subject: "Замовити циклічний звіт для %{producer}"
@@ -592,6 +599,11 @@ uk:
         guest_label: "Реєстрація гостя"
         credit_owed: "Кредитна заборгованість"
         balance_due: "Баланс через"
+    customer_account_transaction:
+      index:
+        description: Опис
+        amount: Кількість
+        running_balance: Поточний баланс
     contents:
       edit:
         title: Контент
@@ -1076,19 +1088,15 @@ uk:
           legend: "Користувачі"
           email_confirmation_notice_html: "Очікується підтвердження електронною поштою. Ми надіслали електронний лист із підтвердженням на адресу %{email}."
           resend: Надіслати повторно
-          owner: 'Власник'
           contact: "Контакти"
+          owner: 'Власник'
           contact_tip: "Менеджер, який отримуватиме корпоративні електронні листи для замовлень і повідомлень. Необхідно мати підтверджену електронну адресу."
           owner_tip: Основний користувач, відповідальний за це підприємство.
           notifications: Сповіщення
           notifications_tip: На цю електронну адресу будуть надходити повідомлення про замовлення.
           notifications_placeholder: напр. gustav@truffles.com
           notifications_note: 'Примітка: перед використанням може знадобитися підтвердити нову електронну адресу'
-          managers: Менеджери
-          managers_tip: Інші користувачі з дозволом на керування цим підприємством.
           invite_manager: "Запросити менеджера"
-          invite_manager_tip: "Запросіть незареєстрованого користувача зареєструватися та стати менеджером цього підприємства."
-          add_unregistered_user: "Додайте незареєстрованого користувача"
           email_confirmed: "Електронна адреса підтверджена"
           email_not_confirmed: "Електронна пошта не підтверджена"
         vouchers:
@@ -1163,9 +1171,6 @@ uk:
         choose_starting_point: 'Виберіть свій пакет:'
         profile: 'Профіль'
         producer_profile: 'Профіль виробника'
-      invite_manager:
-        user_already_exists: "Користувач вже існує"
-        error: "Щось пішло не так"
     order_cycles:
       loading_flash:
         loading_order_cycles: ЦИКЛИ ЗАВАНТАЖЕННЯ ЗАМОВЛЕННЯ
@@ -1541,6 +1546,11 @@ uk:
     schedules:
       destroy:
         associated_subscriptions_error: Цей розклад неможливо видалити, оскільки він має пов’язані підписки
+    user_invitations:
+      new:
+        back: Назад
+        email: Email
+        invite: Запросити
     vouchers:
       new:
         back: Назад
@@ -1934,6 +1944,7 @@ uk:
   order_not_paid: НЕ ОПЛАЧЕНО
   order_total: Замовлено всього
   order_payment: "Оплата через:"
+  customer_credit: Кредит
   order_billing_address: Платіжна адреса
   order_delivery_on: Доставка на
   order_delivery_address: Адреса доставки
@@ -2194,7 +2205,6 @@ uk:
   shops_signup_help: Ми готові допомогти.
   shops_signup_help_text: Вам потрібна краща віддача. Вам потрібні нові покупці та партнери з логістики. Ваша історія потрібна оптом, у роздріб і на кухні.
   shops_signup_detail: Ось деталі.
-  orders: "Замовлення"
   orders_fees: "Збори..."
   orders_edit_title: "Кошик"
   orders_edit_headline: "Ваш кошик для покупок"
@@ -4106,13 +4116,6 @@ uk:
         subject: "Інструкції щодо скидання пароля"
       confirmation_instructions:
         subject: "Будь ласка, підтвердьте свій обліковий запис OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Авторизуйте свій платіж на %{distributor} на OFN"
-        instructions: "Ваш платіж %{amount} на адресу %{distributor} вимагає додаткової автентифікації. Перейдіть за такою URL-адресою, щоб авторизувати свій платіж:"
-      authorization_required:
-        subject: "Платіж потребує авторизації клієнта"
-        message: "Оплата замовлення %{order_number} потребує додаткової авторизації від клієнта. Клієнта було сповіщено електронною поштою, і платіж відображатиметься як очікуваний, доки його не буде авторизовано."
     shipment_mailer:
       shipped_email:
         dear_customer: "Дорогий клієнт,"
@@ -4185,6 +4188,10 @@ uk:
         transaction_history: Історія транзакцій
         authorisation_required: Потрібна авторизація
         authorise: Авторизувати
+      customer_account_transactions:
+        description: Опис
+        amount: Кількість
+        running_balance: Поточний баланс
       open_orders:
         order: Порядок
         shop: Магазин

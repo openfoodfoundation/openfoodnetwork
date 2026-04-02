@@ -350,6 +350,13 @@ es:
       join_community: "Unirse a la comunidad"
     invite_manager:
       subject: "%{enterprise} te ha invitado a ser administrador"
+  payment_mailer:
+    authorize_payment:
+      subject: "Autorice su pago a %{distributor} en OFN"
+      instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
+    authorization_required:
+      subject: "Un pago requiere autorización del cliente"
+      message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
@@ -746,6 +753,11 @@ es:
         balance_due: "Saldo adeudado"
       destroy:
         has_associated_subscriptions: "Eliminación fallida: este consumidor tiene suscripciones activas. Cancélelas primero."
+    customer_account_transaction:
+      index:
+        description: Descripción
+        amount: Cantidad
+        running_balance: Saldo actual
     column_preferences:
       bulk_update:
         success: "Preferencias de columna guardadas"
@@ -1334,19 +1346,15 @@ es:
           legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
-          owner: 'Propietaria'
           contact: "Contacto"
+          owner: 'Propietaria'
           contact_tip: "El administrador que recibirá los correos electrónicos de la empresa para pedidos y notificaciones. Debe tener una dirección de correo electrónico confirmada."
           owner_tip: La principal usaría responsable para esta organización.
           notifications: Notificaciones
           notifications_tip: Las Notificaciones sobre los pedidos se enviarán a esta dirección de correo.
           notifications_placeholder: ej. gustav@truffles.com
           notifications_note: 'Nota: Una nueva dirección de correo debe ser confirmada. '
-          managers: Gestoras
-          managers_tip: Otras usuarias con permiso para gestionar esta organización.
           invite_manager: "Invitar administrador"
-          invite_manager_tip: "Invite a un usuario no registrado a registrarse y convertirse en administrador de esta organización."
-          add_unregistered_user: "Agregar un usuario no registrado"
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
@@ -1451,9 +1459,6 @@ es:
         choose_starting_point: 'Selecciona tu perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil Productora'
-      invite_manager:
-        user_already_exists: "El usuario ya existe"
-        error: "Algo salió mal"
     order_cycles:
       loading_flash:
         loading_order_cycles: Cargando ciclos de pedido
@@ -1862,6 +1867,11 @@ es:
     schedules:
       destroy:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
+    user_invitations:
+      new:
+        back: Atrás
+        email: Email
+        invite: Invitar
     vouchers:
       new:
         legend: Nuevo cupón
@@ -2274,6 +2284,7 @@ es:
   order_not_paid: NO PAGADO
   order_total: Pedido total
   order_payment: "Pagando con:"
+  customer_credit: Crédito
   order_billing_address: Dirección de cobro
   order_delivery_on: Entregar en
   order_delivery_address: Dirección de entrega
@@ -2536,7 +2547,6 @@ es:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: "Pedidos"
   orders_fees: "Comisiones..."
   orders_edit_title: "Carrito de compras"
   orders_edit_headline: "Su carrito de compras"
@@ -4531,13 +4541,6 @@ es:
         subject: "Instrucciones para restablecer la contraseña"
       confirmation_instructions:
         subject: "Por favor, confirma tu cuenta de OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Autorice su pago a %{distributor} en OFN"
-        instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
-      authorization_required:
-        subject: "Un pago requiere autorización del cliente"
-        message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"
@@ -4618,6 +4621,10 @@ es:
         transaction_history: Historial de transacciones
         authorisation_required: Autorización requerida
         authorise: Autorizar
+      customer_account_transactions:
+        description: Descripción
+        amount: Cantidad
+        running_balance: Saldo actual
       open_orders:
         order: Pedido
         shop: Tienda

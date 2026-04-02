@@ -15,7 +15,7 @@ RSpec.describe I18nHelper do
 
     it "sets the default locale" do
       helper.set_locale
-      expect(I18n.locale).to eq :en
+      expect(I18n.locale).to eq :en_TST
     end
 
     it "sets the chosen locale" do
@@ -36,11 +36,11 @@ RSpec.describe I18nHelper do
     it "ignores unavailable locales" do
       allow(helper).to receive(:params) { { locale: "xx" } }
       helper.set_locale
-      expect(I18n.locale).to eq :en
+      expect(I18n.locale).to eq :en_TST
     end
 
     it "remembers the last chosen locale" do
-      allow(helper).to receive(:params) { { locale: "en" } }
+      allow(helper).to receive(:params) { { locale: "en_TST" } }
       helper.set_locale
 
       allow(helper).to receive(:params) { { locale: "es" } }
@@ -71,7 +71,7 @@ RSpec.describe I18nHelper do
 
       allow(helper).to receive(:params) { {} }
       helper.set_locale
-      expect(I18n.locale).to eq :en
+      expect(I18n.locale).to eq :en_TST
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe I18nHelper do
 
     it "sets the default locale" do
       helper.set_locale
-      expect(I18n.locale).to eq :en
+      expect(I18n.locale).to eq :en_TST
     end
 
     it "sets the chosen locale" do
@@ -102,7 +102,7 @@ RSpec.describe I18nHelper do
     end
 
     it "remembers the last chosen locale" do
-      allow(helper).to receive(:params) { { locale: "en" } }
+      allow(helper).to receive(:params) { { locale: "en_TST" } }
       helper.set_locale
 
       allow(helper).to receive(:params) { { locale: "es" } }

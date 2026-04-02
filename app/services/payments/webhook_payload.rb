@@ -13,7 +13,7 @@ module Payments
         payment: @payment.slice(:updated_at, :amount, :state),
         enterprise: @enterprise.slice(:abn, :acn, :name)
           .merge(address: @enterprise.address.slice(:address1, :address2, :city, :zipcode)),
-        order: @order.slice(:total, :currency).merge(line_items: line_items)
+        order: @order.slice(:number, :total, :currency).merge(line_items: line_items)
       }.with_indifferent_access
     end
 
@@ -31,6 +31,7 @@ module Payments
 
     def self.test_order
       order = Spree::Order.new(
+        number: "R555555555",
         total: 0.00,
         currency: "AUD",
       )

@@ -12,7 +12,8 @@ class CustomersWithBalanceQuery
       joins(left_join_complete_orders).
       group("customers.id").
       select("customers.*").
-      select("#{outstanding_balance_sum} AS balance_value")
+      select("#{outstanding_balance_sum} AS balance_value").
+      select("#{available_credit} AS credit_value")
   end
 
   private
@@ -33,5 +34,22 @@ class CustomersWithBalanceQuery
 
   def outstanding_balance_sum
     "SUM(#{OutstandingBalanceQuery.new.statement})::float"
+  end
+
+  def available_credit
+    <<~SQL.squish
+      CASE WHEN EXISTS (#{available_credit_subquery}) THEN (#{available_credit_subquery})#{' '}
+      ELSE 0.00 END
+    SQL
+  end
+
+  def available_credit_subquery
+    <<~SQL.squish
+      SELECT balance
+      FROM customer_account_transactions
+      WHERE customer_account_transactions.customer_id = customers.id
+      ORDER BY id desc
+      LIMIT 1
+    SQL
   end
 end

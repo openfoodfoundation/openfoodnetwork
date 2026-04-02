@@ -326,6 +326,13 @@ hu:
       join_community: "Csatlakozz a közösséghez"
     invite_manager:
       subject: "%{enterprise} meghívott téged menedzsernek"
+  payment_mailer:
+    authorize_payment:
+      subject: "Kérjük, engedélyezd a fizetést %{distributor} részére az Open Food-on"
+      instructions: "%{amount} összegű befizetésed %{distributor} részére további hitelesítést igényel. Kérjük, keresd fel a következő URL-t a fizetés engedélyezéséhez:"
+    authorization_required:
+      subject: "A fizetéshez az ügyfél engedélye szükséges"
+      message: "A(z) %{order_number} rendelés kifizetéséhez további engedély szükséges az ügyféltől. Az ügyfelet e-mailben értesítették, és a fizetés függőben lévőként jelenik meg az engedélyezésig."
   producer_mailer:
     order_cycle:
       subject: "Rendelési ciklus jelentés a következőhöz: %{producer}"
@@ -542,7 +549,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Örökölje a tulajdonságokat?"
+        inherits_properties: "Tulajdonságok öröklése?"
         import_date: "Importálás dátuma"
         actions: Műveletek
         tags: Címkék
@@ -555,7 +562,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Örökölje a tulajdonságokat?"
+        inherits_properties: "Tulajdonságok öröklése?"
         import_date: "Importálás dátuma"
       actions:
         edit: Szerkesztés
@@ -718,6 +725,11 @@ hu:
         balance_due: "Fennálló tartozás"
       destroy:
         has_associated_subscriptions: "A törlés sikertelen. A felhasználónak aktív előjegyzései vannak. Törölje őket előbb."
+    customer_account_transaction:
+      index:
+        description: Leírás
+        amount: Összeg
+        running_balance: Futó egyenleg
     column_preferences:
       bulk_update:
         success: "Oszlop preferenciák mentve"
@@ -786,7 +798,7 @@ hu:
         display_as: Megjelenítés mint
         category: Kategória
         tax_category: Adókategória
-        inherits_properties?: Örökölje a tulajdonságokat?
+        inherits_properties?: Tulajdonságok öröklése?
         av_on: "Av. On"
         import_date: Importált
         upload_an_image: Tölts fel egy képet
@@ -1286,27 +1298,23 @@ hu:
             add_new_button: '+ Új alapértelmezett szabály hozzáadása'
           no_tags_yet: Ehhez a vállalkozáshoz még nem tartozik címke
           add_new_tag: '+ Új címke hozzáadása'
-          show_hide_variants: 'Változatok megjelenítése vagy elrejtése a kirakatomban'
+          show_hide_variants: 'Termékváltozatok megjelenítése vagy elrejtése a kínálatomban'
           show_hide_shipping: 'Áruátadási módok megjelenítése vagy elrejtése fizetéskor'
-          show_hide_payment: 'Fizetési módok megjelenítése vagy elrejtése a pénztárnál'
-          show_hide_order_cycles: 'Rendelési ciklusok megjelenítése vagy elrejtése az online kirakatban'
+          show_hide_payment: 'Fizetési módok megjelenítése vagy elrejtése rendelés leadásakor'
+          show_hide_order_cycles: 'Rendelési ciklusok megjelenítése vagy elrejtése a kínálatomban'
         users:
           legend: "Felhasználók"
           email_confirmation_notice_html: "Az email megerősítés függőben van. Megerősítő emailt küldtünk a következő címre: %{email}."
           resend: Újraküldés
-          owner: 'Tulajdonos'
           contact: "Kapcsolat"
+          owner: 'Tulajdonos'
           contact_tip: "A menedzser, aki vállalkozási e-maileket kap a rendelésekről és értesítésekről. Megerősített e-mail címmel kell rendelkeznie."
           owner_tip: A vállalkozásért felelős elsődleges felhasználó.
           notifications: Értesítések
           notifications_tip: A megrendelésekről szóló értesítéseket erre az email címre küldjük.
           notifications_placeholder: pl. janika@borso.hu
           notifications_note: 'Megjegyzés: Előfordulhat, hogy használat előtt meg kell erősíteni egy új email címet.'
-          managers: Menedzserek
-          managers_tip: A többi felhasználó, aki jogosult a vállalkozás kezelésére.
           invite_manager: "Menedzser meghívása"
-          invite_manager_tip: "Hívj meg egy nem regisztrált felhasználót, hogy regisztráljon, és legyen a tagja az Open Food hálózatának."
-          add_unregistered_user: "Nem regisztrált felhasználó hozzáadása"
           email_confirmed: "Email megerősítve"
           email_not_confirmed: "Az email cím nincs megerősítve"
         vouchers:
@@ -1425,9 +1433,6 @@ hu:
         choose_starting_point: 'Válaszd ki a profil típusát'
         profile: 'Profilt'
         producer_profile: 'Termelői profil'
-      invite_manager:
-        user_already_exists: "A felhasználó már létezik"
-        error: "Valami elromlott"
     tag_rules:
       not_supported_type: Címkeszabály típus nem támogatott
       confirm_delete: Biztosan szeretnéd törölni ezt a szabályt?
@@ -1869,6 +1874,14 @@ hu:
     schedules:
       destroy:
         associated_subscriptions_error: Ezt az ütemezést nem lehet törölni, mert előfizetései vannak hozzá
+    user_invitations:
+      new:
+        back: Vissza
+        description: "Hívj meg egy felhasználót, hogy regisztráljon és a vállalkozás menedzsere legyen."
+        eg_email_address: írd be egy új vagy meglévő felhasználó e-mail címét
+        email: Email
+        invite_new_user: Új felhasználó meghívása
+        invite: Meghívás
     vouchers:
       new:
         legend: Új kupon
@@ -2299,6 +2312,7 @@ hu:
   order_total: Fizetendő összeg
   order_payment: "Fizetés:"
   no_payment_required: "Nem igényel fizetést"
+  customer_credit: Hitel
   order_billing_address: Számlázási cím
   order_delivery_on: Készenállás
   order_delivery_address: Szállítási cím
@@ -2563,7 +2577,6 @@ hu:
   shops_signup_help: Gondolkodjunk együtt!
   shops_signup_help_text: Nehezen éred el a fogyasztókat? Partnerekre van szükséged akik segítenek termékeid eljuttatásában a fogyasztókhoz? Elmesélnéd a saját és a termékeid történetét, hogy eljusson a vacsoraasztalokhoz, közösségekhez, más vállalkozásokhoz?
   shops_signup_detail: Részletek
-  orders: "Megrendelések"
   orders_fees: "Díjak..."
   orders_edit_title: "Bevásárlókosár"
   orders_edit_headline: "Kosár"
@@ -4361,7 +4374,7 @@ hu:
             display_as: Megjelenítés mint
             category: Kategória
             tax_category: Adókategória
-            inherits_properties?: Örökölje a tulajdonságokat?
+            inherits_properties?: Tulajdonságok öröklése?
             av_on: "Av. On"
             import_date: "Importálás dátuma"
           products_variant:
@@ -4565,13 +4578,6 @@ hu:
         subject: "Jelszó visszaállítási utasítások"
       confirmation_instructions:
         subject: "Kérjük, erősítsd meg Open Food fiókod"
-    payment_mailer:
-      authorize_payment:
-        subject: "Kérjük, engedélyezd a fizetést %{distributor} részére az Open Food-on"
-        instructions: "%{amount} összegű befizetésed %{distributor} részére további hitelesítést igényel. Kérjük, keresd fel a következő URL-t a fizetés engedélyezéséhez:"
-      authorization_required:
-        subject: "A fizetéshez az ügyfél engedélye szükséges"
-        message: "A(z) %{order_number} rendelés kifizetéséhez további engedély szükséges az ügyféltől. Az ügyfelet e-mailben értesítették, és a fizetés függőben lévőként jelenik meg az engedélyezésig."
     shipment_mailer:
       shipped_email:
         dear_customer: "Kedves Ügyfelünk,"
@@ -4657,6 +4663,10 @@ hu:
         transaction_history: Tranzakciós előzmények
         authorisation_required: Engedély szükséges
         authorise: Engedélyezd
+      customer_account_transactions:
+        description: Leírás
+        amount: Összeg
+        running_balance: Futó egyenleg
       open_orders:
         order: Rendelés
         shop: Átvételi Pont
@@ -4767,16 +4777,16 @@ hu:
       default_placeholder: Adj hozzá egy címkét
     tag_rule_form:
       tag_rules:
-        shipping_method_tagged_top: "Áruátadási módok felcímkézve"
-        shipping_method_tagged_bottom: "vannak:"
-        payment_method_tagged_top: "Fizetési módok felcímkézve"
-        payment_method_tagged_bottom: "vannak:"
-        order_cycle_tagged_top: "Rendelési ciklusok felcímkézve"
-        order_cycle_tagged_bottom: "vannak:"
-        inventory_tagged_top: "Leltár változatok felcímkézve"
-        inventory_tagged_bottom: "vannak:"
-        variant_tagged_top: "Változat felcímkézve"
-        variant_tagged_bottom: "vannak:"
+        shipping_method_tagged_top: "Ezen címkéjű áruátadási módok:"
+        shipping_method_tagged_bottom: "hatása:"
+        payment_method_tagged_top: "Ezen címkéjű fizetési módok:"
+        payment_method_tagged_bottom: "hatása:"
+        order_cycle_tagged_top: "Ezen címkéjű rendelési ciklusok:"
+        order_cycle_tagged_bottom: "hatása:"
+        inventory_tagged_top: "Ezen címkéjű termékváltozatok:"
+        inventory_tagged_bottom: "hatása:"
+        variant_tagged_top: "Ezen címkéjű termékváltozatok:"
+        variant_tagged_bottom: "hatása:"
         visible: LÁTHATÓ
         not_visible: NEM LÁTHATÓ
     tag_rule_group_form:

@@ -27,7 +27,13 @@ assignees: ''
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
 - [ ] Test build: [Deploy to Staging] with release tag.
-- [ ] Notify a deployer to deploy it
+    - [ ] Map is displayed correctly. Address changes are reflected in the map.
+    - [ ] Stripe with no authentication card: `4242424242424242` as shopper and as Admin. Order confirmation displays order as "Paid".
+    - [ ] Stripe with Authentication required card: `4000002760003184` as shopper and as Admin. As admin, check authorization through customer account `/account#/transactions` and email.
+    - [ ] Pay with Paypal.
+    - [ ] Order on mobile.
+    - [ ] Explore a bit the platform to see if there is nothing unusual (15 min. max)
+- [ ] Comment on the issue: if it's all good, move to ready to go. If there are issues, don't forget to mention your Desktop/Browser version and number and ping @ reviewers so someone available can have a look
 
 ## 3. Deployment at beginning of week
 

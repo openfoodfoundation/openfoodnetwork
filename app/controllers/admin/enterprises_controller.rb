@@ -67,7 +67,6 @@ module Admin
     def update
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
-      update_enterprise_notifications
       update_vouchers
 
       delete_custom_tab if params[:custom_tab] == 'false'
@@ -163,9 +162,11 @@ module Admin
     end
 
     def destroy
-      if @object.destroy
+      @object.transaction do
+        @object.destroy!
         flash.now[:success] = flash_message_for(@object, :successfully_removed)
-      else
+      rescue StandardError
+        Rails.logger.error @object.errors.full_messages.to_sentence
         flash.now[:error] = @object.errors.full_messages.to_sentence
       end
 
@@ -177,7 +178,7 @@ module Admin
     protected
 
     def delete_custom_tab
-      @object.custom_tab.destroy if @object.custom_tab.present?
+      @object.custom_tab.presence&.destroy
       enterprise_params.delete(:custom_tab_attributes)
     end
 
@@ -240,9 +241,7 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
 
-        if enterprises.present?
-          enterprises.includes(supplied_products: [:variants, :image])
-        end
+        enterprises.presence&.includes(supplied_products: [:variants, :image])
       when :index
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).
@@ -312,14 +311,6 @@ module Admin
           rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end
       end
-    end
-
-    def update_enterprise_notifications
-      user_id = params[:receives_notifications].to_i
-
-      return unless user_id.positive? && @enterprise.user_ids.include?(user_id)
-
-      @enterprise.update_contact(user_id)
     end
 
     def update_vouchers

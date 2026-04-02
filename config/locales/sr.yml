@@ -1264,19 +1264,15 @@ sr:
           legend: "Корисници"
           email_confirmation_notice_html: "Потврда имејлом је на чекању. Послали смо е-поруку са потврдом на %{email} ."
           resend: Поново послати
-          owner: 'Власник'
           contact: "Контакт"
+          owner: 'Власник'
           contact_tip: "Менаџер који ће примати е-поруке предузећа за поруџбине и обавештења. Мора имати потврђену адресу е-поште."
           owner_tip: Примарни корисник одговоран за ово предузеће.
           notifications: Обавештења
           notifications_tip: Обавештења о поруџбинама биће послата на ову адресу е-поште.
           notifications_placeholder: на пример. густав@труффлес.цом
           notifications_note: 'Напомена: Можда ћете морати да потврдите нову адресу е-поште пре употребе'
-          managers: Менаџери
-          managers_tip: Остали корисници са дозволом да управљају овим предузећем.
           invite_manager: "Инвите Манагер"
-          invite_manager_tip: "Позовите нерегистрованог корисника да се региструје и постане менаџер овог предузећа."
-          add_unregistered_user: "Додајте нерегистрованог корисника"
           email_confirmed: "Имејл је потврђен"
           email_not_confirmed: "Имејл није потврђен"
         vouchers:
@@ -1394,9 +1390,6 @@ sr:
         choose_starting_point: 'Изаберите свој пакет:'
         profile: 'Профил'
         producer_profile: 'Профил произвођача'
-      invite_manager:
-        user_already_exists: "Корисник већ постоји"
-        error: "Нешто није у реду"
     order_cycles:
       loading_flash:
         loading_order_cycles: ЦИКЛУСНИ НАРУЏБЕНИЦИ
@@ -2502,7 +2495,6 @@ sr:
   shops_signup_help: Спремни смо да помогнемо.
   shops_signup_help_text: Треба вам бољи повратак. Потребни су вам нови купци и логистички партнери. Потребна вам је прича испричана преко велепродаје, малопродаје и кухињског стола.
   shops_signup_detail: Ево детаља.
-  orders: "Наређења"
   orders_fees: "Накнаде..."
   orders_edit_title: "Колица за куповину"
   orders_edit_headline: "Ваша корпа"
@@ -4510,13 +4502,6 @@ sr:
         subject: "Ресетујте упутства за лозинку"
       confirmation_instructions:
         subject: "Потврдите свој ОФН налог"
-    payment_mailer:
-      authorize_payment:
-        subject: "Овластите своју уплату на %{distributor} на ОФН-у"
-        instructions: "Ваша уплата %{amount} за %{distributor} захтева додатну аутентификацију. Посетите следећу УРЛ адресу да бисте ауторизовали своју уплату:"
-      authorization_required:
-        subject: "За плаћање је потребно овлашћење купца"
-        message: "За плаћање наруџбе %{order_number} потребно је додатно овлашћење купца. Купац је обавештен путем е-поште и плаћање ће се појавити као на чекању док се не овласти."
     shipment_mailer:
       shipped_email:
         dear_customer: "Драги купац,"

@@ -4,6 +4,31 @@ class Spree::Gateway::Test < Spree::Gateway
 end
 
 RSpec.describe Spree::PaymentMethod do
+  describe "associations" do
+    subject { build(:payment_method) }
+
+    it { is_expected.to have_many(:payments) }
+  end
+
+  describe "validation" do
+    subject { build(:payment_method) }
+
+    it { is_expected.to validate_presence_of(:name) }
+
+    it "requires at least one hub" do
+      pm = Spree::PaymentMethod.new(name: "test")
+      pm.save
+      expect(pm.errors.to_a).to include("At least one hub must be selected")
+    end
+
+    context "with internal payment method" do
+      it "doesn't requires a hub" do
+        pm = build(:customer_credit_payment_method)
+        expect(pm).to be_valid
+      end
+    end
+  end
+
   describe ".managed_by scope" do
     subject! { create(:payment_method) }
     let(:owner) { subject.distributors.first.owner }
@@ -52,6 +77,13 @@ RSpec.describe Spree::PaymentMethod do
 
     it "should return all methods available to back-end when display_on = :back_end" do
       expect(Spree::PaymentMethod.available(:back_end).size).to eq 2
+    end
+  end
+
+  describe "#customer_credit" do
+    it "returns the customer credit payment method" do
+      create(:customer_credit_payment_method)
+      expect(Spree::PaymentMethod.customer_credit).to be_a(Spree::PaymentMethod::CustomerCredit)
     end
   end
 
@@ -125,12 +157,6 @@ RSpec.describe Spree::PaymentMethod do
     expect(Spree::PaymentMethod.by_name).to eq([pm2, pm3, pm1])
   end
 
-  it "raises errors when required fields are missing" do
-    pm = Spree::PaymentMethod.new
-    pm.save
-    expect(pm.errors.to_a).to eq(["Name can't be blank", "At least one hub must be selected"])
-  end
-
   it "computes the amount of fees" do
     order = create(:order)
 
@@ -168,6 +194,68 @@ RSpec.describe Spree::PaymentMethod do
         expect(result.length).to eq(2)
         expect(result).to include(payment_method_a)
         expect(result).to include(payment_method_b)
+      end
+    end
+  end
+
+  describe "#display_name" do
+    subject { build(:payment_method, name:) }
+
+    let(:name) { "credit_payment_method.name" }
+
+    it "translate the name" do
+      expect(subject.display_name).to eq("Customer credit")
+    end
+
+    context "when not a tranlatable string" do
+      let(:name) { "customer credit payment" }
+
+      it "falls back to no translation" do
+        expect(subject.display_name).to eq("customer credit payment")
+      end
+    end
+  end
+
+  describe "#display_description" do
+    subject { build(:payment_method, description:) }
+
+    let(:description) { "credit_payment_method.description" }
+
+    it "translate the name" do
+      expect(subject.display_description).to eq("Allow customer to pay with credit")
+    end
+
+    context "when not a tranlatable string" do
+      let(:description) { "Payment method to allow customer to pay with credit" }
+
+      it "falls back to no translation" do
+        expect(subject.display_description).to eq(
+          "Payment method to allow customer to pay with credit"
+        )
+      end
+    end
+
+    context "when description is empty" do
+      let(:description) { "" }
+
+      it "falls back to no translation" do
+        expect(subject.display_description).to eq("")
+      end
+    end
+  end
+
+  describe "#internal?" do
+    subject { build(:payment_method) }
+
+    it "returns false" do
+      expect(subject.internal?).to be(false)
+    end
+
+    context "with internal payment method" do
+      subject { build(:customer_credit_payment_method) }
+
+      it "returns false" do
+        expect(subject.internal?).to be(true)
       end
     end
   end

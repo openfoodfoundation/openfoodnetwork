@@ -336,6 +336,13 @@ eu:
       join_community: "Komunitatearekin bat egin"
     invite_manager:
       subject: " %{enterprise} administratzaile izatera gonbidatu zaitu"
+  payment_mailer:
+    authorize_payment:
+      subject: "Baimena eman OFNn %{distributor} ri ordaintzeko"
+      instructions: " %{amount} tik %{distributor} ra ordaintzeko autentifikazio gehigarria behar da. Bisitatu URL hau ordainketa baimentzeko: "
+    authorization_required:
+      subject: "Ordainketa batek bezeroaren baimena behar du"
+      message: " %{order_number} eskaera ordaintzeko, bezeroaren baimen gehigarria behar da. Bezeroa posta elektronikoz jakinarazi da, eta ordainketa egiteke agertuko da baimena eman arte. "
   producer_mailer:
     order_cycle:
       subject: "Eskaera-zikloaren txostena %-rako {producer}"
@@ -725,6 +732,11 @@ eu:
         guest_label: "Gonbidatu gisa eskaera egitea"
         credit_owed: "Zor den kreditua"
         balance_due: "Zor den saldoa"
+    customer_account_transaction:
+      index:
+        description: Deskribapena
+        amount: Kopurua
+        running_balance: Egungo saldoa
     contents:
       edit:
         title: Edukia
@@ -1257,19 +1269,15 @@ eu:
           legend: "Erabiltzaileak"
           email_confirmation_notice_html: "Helbide elektronikoa berrestea falta da. Baieztapen-mezu bat bidali dizugu %{email} helbidera. "
           resend: Birbidali
-          owner: 'Jabea'
           contact: "Kontaktua"
+          owner: 'Jabea'
           contact_tip: "Eskaera eta jakinarazpenetarako enpresaren mezu elektronikoak jasoko dituen administratzailea. Helbide elektroniko bat izan behar duzu baieztatuta. "
           owner_tip: Arduradun nagusia erakunde honetarako erabiliko nuke.
           notifications: Jakinarazpenak
           notifications_tip: Eskaerei buruzko jakinarazpenak helbide honetara bidaliko dira.
           notifications_placeholder: ej. gustav@truffles.com
           notifications_note: 'Oharra: Helbide berri bat berretsi behar da.'
-          managers: Kudeatzaileak
-          managers_tip: Erakunde hori kudeatzeko baimena duten beste erabiltzaile batzuk.
           invite_manager: "Gonbidatu administratzailea"
-          invite_manager_tip: "Erregistratu gabeko erabiltzaile bat gonbida ezazu erregistratzera eta erakunde honen administratzaile bihurtzera."
-          add_unregistered_user: "Gehitu erregistratu gabeko erabiltzaile bat"
           email_confirmed: "Posta elektroniko baieztatua"
           email_not_confirmed: "Baieztatu gabeko posta elektronikoa"
         vouchers:
@@ -1374,9 +1382,6 @@ eu:
         choose_starting_point: 'Aukeratu zure profila:'
         profile: 'Profila'
         producer_profile: 'Profil ekoizlea'
-      invite_manager:
-        user_already_exists: "Erabiltzailea existitzen da"
-        error: "Zerbait gaizki atera da"
     order_cycles:
       loading_flash:
         loading_order_cycles: Eskaera-zikloak kargatzen
@@ -1783,6 +1788,11 @@ eu:
     schedules:
       destroy:
         associated_subscriptions_error: Ordutegi hori ezin da ezabatu harpidetza elkartuak dituelako
+    user_invitations:
+      new:
+        back: Atzera
+        email: Emaila
+        invite: Gonbidatu
     vouchers:
       new:
         legend: Bonu berria
@@ -2193,6 +2203,7 @@ eu:
   order_total: Eskaera, guztira
   order_payment: "Honekin ordainduz:"
   no_payment_required: "Ez da ordainketarik behar"
+  customer_credit: Kreditua
   order_billing_address: Kobratzeko helbidea
   order_delivery_on: 'Entregatu hemen:'
   order_delivery_address: Entregatzeko helbidea
@@ -2455,7 +2466,6 @@ eu:
   shops_signup_help: Laguntzeko prest gaude.
   shops_signup_help_text: Itzulera hobea behar duzu. Erosle eta logistikako bazkide berriak behar dituzu. Zure istorioa handizkako salmenten bidez kontatzea behar duzu, xehetasunez eta sukaldeko mahaian.
   shops_signup_detail: Hemen dago xehetasuna.
-  orders: "Eskaerak"
   orders_fees: "Komisioak..."
   orders_edit_title: "Erosketa-orga"
   orders_edit_headline: "Zure erosketa-orgatxoa"
@@ -4306,13 +4316,6 @@ eu:
         subject: "Pasahitza berrezartzeko jarraibideak"
       confirmation_instructions:
         subject: "Mesedez, berretsi zure OFN kontua"
-    payment_mailer:
-      authorize_payment:
-        subject: "Baimena eman OFNn %{distributor} ri ordaintzeko"
-        instructions: " %{amount} tik %{distributor} ra ordaintzeko autentifikazio gehigarria behar da. Bisitatu URL hau ordainketa baimentzeko: "
-      authorization_required:
-        subject: "Ordainketa batek bezeroaren baimena behar du"
-        message: " %{order_number} eskaera ordaintzeko, bezeroaren baimen gehigarria behar da. Bezeroa posta elektronikoz jakinarazi da, eta ordainketa egiteke agertuko da baimena eman arte. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Kontsumitzaile estimatua,"
@@ -4391,6 +4394,10 @@ eu:
         transaction_history: Transakzioen historia
         authorisation_required: Eskatutako baimena
         authorise: Baimendu
+      customer_account_transactions:
+        description: Deskribapena
+        amount: Kopurua
+        running_balance: Egungo saldoa
       open_orders:
         order: Eskaera
         shop: Denda

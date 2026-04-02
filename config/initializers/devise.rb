@@ -138,11 +138,6 @@ Devise.setup do |config|
   config.case_insensitive_keys = [:email]
 end
 
-Devise::TokenAuthenticatable.setup do |config|
-  # Defines name of the authentication token params key
-  config.token_authentication_key = :auth_token
-end
-
 if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
   Devise.setup do |config|
     site = if Rails.env.development?

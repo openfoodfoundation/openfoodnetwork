@@ -1072,6 +1072,40 @@ RSpec.describe Enterprise do
       end
     end
   end
+
+  describe "#contact_id" do
+    it "returns the ID of the enterprise's contact" do
+      enterprise = build(:enterprise)
+      expect(enterprise.contact_id).to eq(enterprise.contact.id)
+    end
+  end
+
+  describe "#contact_id=" do
+    let(:enterprise) { create(:enterprise) }
+
+    it "accepts confirmed users that belongs to the enterprise" do
+      user = create(:user, confirmed_at: Time.now.utc)
+      enterprise.enterprise_roles.create!(user: user)
+      enterprise.contact_id = user.id
+
+      expect(enterprise.contact).to eq(user)
+    end
+
+    it "rejects users that don't belong to the enterprise" do
+      user = create(:user, confirmed_at: Time.now.utc)
+      enterprise.contact_id = user.id
+
+      expect(enterprise.contact).not_to eq(user)
+    end
+
+    it "rejects unconfirmed users" do
+      user = create(:user, confirmed_at: nil)
+      enterprise.enterprise_roles.create!(user: user)
+      enterprise.contact_id = user.id
+
+      expect(enterprise.contact).not_to eq(user)
+    end
+  end
 end
 
 def enterprise_name_error(owner_email)

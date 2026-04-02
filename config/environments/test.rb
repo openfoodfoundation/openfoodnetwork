@@ -74,8 +74,6 @@ Rails.application.configure do
     allowed_warnings = [
       # List strings here to allow matching deprecations.
       #
-      "Passing the class as positional argument",
-
       # Spree::CreditCard model aliases `cc_type` and has a method called `cc_type=` defined. Starting in Rails 7.2 `brand=` will not be calling `cc_type=` anymore. You may want to additionally define `brand=` to preserve the current behavior.
       "model aliases",
 
@@ -90,12 +88,6 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   config.i18n.raise_on_missing_translations = true
-
-  # Tests assume English text on the site.
-  config.i18n.default_locale = "en"
-  config.i18n.available_locales = ['en', 'es', 'pt']
-  config.i18n.fallbacks = [:en]
-  I18n.locale = config.i18n.locale = config.i18n.default_locale
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true

@@ -456,6 +456,11 @@ en_IN:
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
         guest_label: "Guest checkout"
+    customer_account_transaction:
+      index:
+        description: Description
+        amount: Amount
+        running_balance: Running balance
     contents:
       edit:
         title: Content
@@ -900,19 +905,15 @@ en_IN:
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
-          owner: 'Owner'
           contact: "Contact"
+          owner: 'Owner'
           contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
           notifications_placeholder: eg. gustav@truffles.com
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
-          managers: Managers
-          managers_tip: The other users with permission to manage this enterprise.
           invite_manager: "Invite Manager"
-          invite_manager_tip: "Invite an unregistered user to sign up and become a manager of this enterprise."
-          add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
@@ -987,9 +988,6 @@ en_IN:
         choose_starting_point: 'Choose your package:'
         profile: 'Profile'
         producer_profile: 'Producer Profile'
-      invite_manager:
-        user_already_exists: "User already exists"
-        error: "Something went wrong"
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
@@ -1341,6 +1339,11 @@ en_IN:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    user_invitations:
+      new:
+        back: Back
+        email: Email
+        invite: Invite
     vouchers:
       new:
         back: Back
@@ -1673,6 +1676,7 @@ en_IN:
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  customer_credit: Credit
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -1926,7 +1930,6 @@ en_IN:
   shops_signup_help: We're ready to help.
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
-  orders: "Orders"
   orders_fees: "Fees..."
   orders_edit_title: "Shopping cart"
   orders_edit_headline: "Your shopping cart"
@@ -3675,6 +3678,10 @@ en_IN:
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+      customer_account_transactions:
+        description: Description
+        amount: Amount
+        running_balance: Running balance
       open_orders:
         order: Order
         shop: Shop

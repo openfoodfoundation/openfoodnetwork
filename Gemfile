@@ -63,7 +63,6 @@ gem "taler"
 gem 'devise'
 gem 'devise-encryptable'
 gem 'devise-i18n'
-gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
@@ -113,13 +112,11 @@ gem "turbo-rails"
 
 gem 'combine_pdf'
 gem 'wicked_pdf', github: "openfoodfoundation/wicked_pdf", branch: "master"
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', source: 'https://rubygems.org' # due to https://github.com/gem-coop/gem.coop/issues/36
 
 gem 'immigrant'
 gem 'roo' # read spreadsheets
 gem 'spreadsheet_architect' # write spreadsheets
-
-gem 'whenever', require: false
 
 gem 'coffee-rails', '~> 5.0.0'
 
@@ -203,6 +200,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
+  gem 'spring-watcher-listen'
   gem 'web-console'
 
   gem 'rack-mini-profiler', '< 3.0.0'

@@ -412,6 +412,13 @@ fi:
       join_community: "Liity yhteisöön"
     invite_manager:
       subject: "%{enterprise} on kutsunut sinut hallinnoijaksi"
+  payment_mailer:
+    authorize_payment:
+      subject: "Valtuuta maksusi käyttäjälle %{distributor} OFN-palvelussa"
+      instructions: "Maksusi summalle %{amount} maksuun %{distributor} vaatii lisätunnistuksen. Valtuuta maksusi seuraavasta URL-osoitteesta:"
+    authorization_required:
+      subject: "Maksu vaatii asiakkaan valtuutuksen"
+      message: "Tilauksen %{order_number} maksu vaatii asiakkaalta lisävaltuutuksen. Asiakkaalle on ilmoitettu sähköpostitse, ja maksu näkyy odottavana, kunnes se on hyväksytty."
   producer_mailer:
     order_cycle:
       subject: "Tilausjakson raportti tuottajalle %{producer}"
@@ -809,6 +816,11 @@ fi:
         balance_due: "Erääntynyt saldo"
       destroy:
         has_associated_subscriptions: "Poisto epäonnistui: Tällä asiakkaalla on aktiivisia tilauksia. Peruuta ne ensin."
+    customer_account_transaction:
+      index:
+        description: Kuvaus
+        amount: Määrä
+        running_balance: Juokseva saldo
     column_preferences:
       bulk_update:
         success: "Sarakemääritykset tallennettu"
@@ -1403,19 +1415,15 @@ fi:
           legend: "Käyttäjät"
           email_confirmation_notice_html: "Sähköpostivahvistus odottaa. Olemme lähettäneet vahvistussähköpostin osoitteeseen %{email}."
           resend: Lähete uudelleen
-          owner: 'Omistaja'
           contact: "Yhteystieto"
+          owner: 'Omistaja'
           contact_tip: "Ylläpitäjä, joka vastaanottaa yrityssähköpostiviestejä tilauksista ja ilmoituksista. Täytyy olla vahvistettu sähköpostiosoite."
           owner_tip: Ensisijainen käyttäjä, joka on vastuussa tästä yrityksestä.
           notifications: Ilmoitukset
           notifications_tip: Ilmoitukset tilauksista lähetetään tähän sähköpostiosoitteeseen.
           notifications_placeholder: esim. gustav@truffles.com
           notifications_note: 'Huomautus: Uusi sähköpostiosoite on ehkä vahvistettava ennen käyttöä'
-          managers: 'Ylläpitäjät '
-          managers_tip: Muut käyttäjät, joilla on lupa hallita tätä yritystä.
           invite_manager: "Kutsu ylläpitäjä"
-          invite_manager_tip: "Kutsu rekisteröimätön käyttäjä rekisteröitymään ja ryhtymään tämän yrityksen ylläpitäjäksi."
-          add_unregistered_user: "Lisää rekisteröitymätön käyttäjä"
           email_confirmed: "Sähköposti vahvistettu"
           email_not_confirmed: "Sähköpostia ei vahvistettu"
         vouchers:
@@ -1548,9 +1556,6 @@ fi:
         choose_starting_point: 'Valitse pakettisi:'
         profile: 'Profiili'
         producer_profile: 'tuottaja -profiili'
-      invite_manager:
-        user_already_exists: "Käyttäjä on jo olemassa"
-        error: "Jotain meni pieleen"
     tag_rules:
       not_supported_type: tägi -sääntötyyppiä ei tueta
       confirm_delete: Haluatko varmasti poistaa tämän säännön?
@@ -1996,6 +2001,11 @@ fi:
     schedules:
       destroy:
         associated_subscriptions_error: Tätä aikataulua ei voida poistaa, koska siihen liittyy tilauksia.
+    user_invitations:
+      new:
+        back: Takaisin
+        email: Sähköposti
+        invite: Kutsu
     vouchers:
       new:
         legend: Uusi kuponki
@@ -2428,6 +2438,7 @@ fi:
   order_total: Kokonaistilaus
   order_payment: "Maksutapa:"
   no_payment_required: "Maksua ei vaadita"
+  customer_credit: Luotto
   order_billing_address: Laskutusosoite
   order_delivery_on: Toimitus
   order_delivery_address: Toimitusosoite
@@ -2701,7 +2712,6 @@ fi:
   shops_signup_help: Olemme valmiita auttamaan.
   shops_signup_help_text: Tarvitset paremman tuoton. Tarvitset uusia ostajia ja logistiikkakumppaneita. Tarinasi täytyy kertoa tukku- ja vähittäiskaupassa sekä ruokapöydässä.
   shops_signup_detail: Tässä yksityiskohta.
-  orders: "tilaukset"
   orders_fees: "Maksut..."
   orders_edit_title: "Ostoskori"
   orders_edit_headline: "Ostoskorisi"
@@ -4674,8 +4684,8 @@ fi:
           or_enter_new_card: "Tai anna uuden kortin tiedot:"
           remember_this_card: Muistatko tämän kortin?
     date_picker:
-      flatpickr_date_format: "Vuosi"
-      flatpickr_datetime_format: "Vuosi H:i"
+      flatpickr_date_format: "d.m.Y"
+      flatpickr_datetime_format: "d.m.Y H:i"
       today: "Tänään"
       now: "Nyt"
       close: "Sulje"
@@ -4744,13 +4754,6 @@ fi:
         subject: "Salasanan palauttamisen ohjeet"
       confirmation_instructions:
         subject: "Vahvista OFN-tilisi"
-    payment_mailer:
-      authorize_payment:
-        subject: "Valtuuta maksusi käyttäjälle %{distributor} OFN-palvelussa"
-        instructions: "Maksusi summalle %{amount} maksuun %{distributor} vaatii lisätunnistuksen. Valtuuta maksusi seuraavasta URL-osoitteesta:"
-      authorization_required:
-        subject: "Maksu vaatii asiakkaan valtuutuksen"
-        message: "Tilauksen %{order_number} maksu vaatii asiakkaalta lisävaltuutuksen. Asiakkaalle on ilmoitettu sähköpostitse, ja maksu näkyy odottavana, kunnes se on hyväksytty."
     shipment_mailer:
       shipped_email:
         dear_customer: "Hyvät asiakas ,"
@@ -4836,6 +4839,10 @@ fi:
         transaction_history: Tapahtumahistoria
         authorisation_required: Valtuutus vaaditaan
         authorise: Valtuuta
+      customer_account_transactions:
+        description: Kuvaus
+        amount: Määrä
+        running_balance: Juokseva saldo
       open_orders:
         order: Tilaus
         shop: Kauppa

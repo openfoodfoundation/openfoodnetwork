@@ -3,7 +3,7 @@
 class Invoice
   class DataPresenter
     class PaymentMethod < Invoice::DataPresenter::Base
-      attributes :id, :name, :description
+      attributes :id, :display_name, :display_description
       invoice_generation_attributes :id
     end
   end

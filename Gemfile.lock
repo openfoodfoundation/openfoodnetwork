@@ -112,7 +112,7 @@ GEM
       rails-html-sanitizer (~> 1.6)
     active_model_serializers (0.8.4)
       activemodel (>= 3.0)
-    active_storage_validations (3.0.3)
+    active_storage_validations (3.0.4)
       activejob (>= 6.1.4)
       activemodel (>= 6.1.4)
       activestorage (>= 6.1.4)
@@ -167,10 +167,10 @@ GEM
       zeitwerk (>= 2.4, < 3.0)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
-    addressable (2.8.8)
+    addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
-    afm (0.2.2)
+    afm (1.0.0)
     angular-rails-templates (1.4.0)
       railties (>= 5.0, < 8.2)
       sprockets (>= 3.0, < 5)
@@ -185,8 +185,8 @@ GEM
     ast (2.4.3)
     attr_required (1.0.2)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1196.0)
-    aws-sdk-core (3.240.0)
+    aws-partitions (1.1233.0)
+    aws-sdk-core (3.244.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -194,25 +194,25 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.118.0)
-      aws-sdk-core (~> 3, >= 3.239.1)
+    aws-sdk-kms (1.123.0)
+      aws-sdk-core (~> 3, >= 3.244.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.208.0)
-      aws-sdk-core (~> 3, >= 3.234.0)
+    aws-sdk-s3 (1.217.0)
+      aws-sdk-core (~> 3, >= 3.244.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcp47_spec (0.2.1)
-    bcrypt (3.1.20)
+    bcrypt (3.1.22)
     benchmark (0.5.0)
     bigdecimal (3.3.1)
     bindata (2.5.1)
     bindex (0.8.1)
-    bootsnap (1.22.0)
+    bootsnap (1.23.0)
       msgpack (~> 1.2)
-    bugsnag (6.28.0)
+    bugsnag (6.29.0)
       concurrent-ruby (~> 1.0)
     builder (3.3.0)
     bullet (8.1.0)
@@ -245,7 +245,6 @@ GEM
     cgi (0.5.1)
     childprocess (5.0.0)
     choice (0.2.0)
-    chronic (0.10.2)
     coderay (1.1.3)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -267,9 +266,9 @@ GEM
     css_parser (1.21.1)
       addressable
     csv (3.3.5)
-    cuprite (0.15)
+    cuprite (0.17)
       capybara (~> 3.0)
-      ferrum (~> 0.14.0)
+      ferrum (~> 0.17.0)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.2)
@@ -279,22 +278,20 @@ GEM
     datafoodconsortium-connector (1.2.0)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
     date (3.5.1)
-    debug (1.11.0)
+    debug (1.11.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    devise (4.9.4)
+    devise (5.0.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
+      railties (>= 7.0)
       responders
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-i18n (1.15.0)
-      devise (>= 4.9.0)
+    devise-i18n (1.16.0)
+      devise (>= 5.0.0)
       rails-i18n
-    devise-token_authenticatable (1.1.0)
-      devise (>= 4.0.0, < 5.0.0)
     diff-lcs (1.6.2)
     digest (3.2.1)
     docile (1.4.1)
@@ -313,7 +310,7 @@ GEM
       eventmachine (>= 1.0.0.beta.1)
     email_validator (2.2.4)
       activemodel
-    erb (6.0.1)
+    erb (6.0.2)
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
@@ -334,21 +331,22 @@ GEM
       faraday (>= 1, < 3)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    ferrum (0.14)
+    ferrum (0.17.1)
       addressable (~> 2.5)
+      base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
-      websocket-driver (>= 0.6, < 0.8)
+      websocket-driver (~> 0.7)
     ffaker (2.25.0)
     ffi (1.17.3)
-    flipper (1.3.6)
+    flipper (1.4.0)
       concurrent-ruby (< 2)
-    flipper-active_record (1.3.6)
+    flipper-active_record (1.4.0)
       activerecord (>= 4.2, < 9)
-      flipper (~> 1.3.6)
-    flipper-ui (1.3.6)
+      flipper (~> 1.4.0)
+    flipper-ui (1.4.0)
       erubi (>= 1.0.0, < 2.0.0)
-      flipper (~> 1.3.6)
+      flipper (~> 1.4.0)
       rack (>= 1.4, < 4)
       rack-protection (>= 1.5.3, < 5.0.0)
       rack-session (>= 1.0.2, < 3.0.0)
@@ -386,11 +384,11 @@ GEM
     good_migrations (0.3.1)
       activerecord (>= 3.1)
       railties (>= 3.1)
-    haml (6.3.0)
+    haml (7.2.0)
       temple (>= 0.8.2)
       thor
       tilt
-    haml_lint (0.68.0)
+    haml_lint (0.72.0)
       haml (>= 5.0)
       parallel (~> 1.10)
       rainbow
@@ -403,18 +401,19 @@ GEM
     highline (3.1.2)
       reline
     htmlentities (4.4.2)
-    http_parser.rb (0.8.0)
-    i18n (1.14.7)
+    http_parser.rb (0.8.1)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     i18n-js (3.9.2)
       i18n (>= 0.6.6)
-    i18n-tasks (1.0.15)
+    i18n-tasks (1.1.2)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       erubi
-      highline (>= 2.0.0)
+      highline (>= 3.0.0)
       i18n
       parser (>= 3.2.2.1)
+      prism
       rails-i18n
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.8, >= 1.8.1)
@@ -442,7 +441,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (2.18.1)
+    json (2.19.2)
     json-canonicalization (1.0.0)
     json-jwt (1.17.0)
       activesupport (>= 4.2)
@@ -468,7 +467,8 @@ GEM
       activesupport (>= 4.2)
     jwt (2.10.2)
       base64
-    knapsack_pro (9.2.2)
+    knapsack_pro (9.2.3)
+      logger
       rake
     language_server-protocol (3.17.0.5)
     launchy (3.0.0)
@@ -483,7 +483,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    loofah (2.25.0)
+    loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.9.0)
@@ -505,20 +505,21 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.6)
-    minitest (6.0.1)
+    mini_portile2 (2.8.9)
+    minitest (6.0.2)
+      drb (~> 2.0)
       prism (~> 1.5)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
       i18n (>= 0.6.4, <= 2)
     msgpack (1.8.0)
-    multi_json (1.17.0)
+    multi_json (1.19.1)
     multi_xml (0.6.0)
     mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.5.12)
+    net-imap (0.6.3)
       date
       net-protocol
     net-pop (0.1.2)
@@ -529,7 +530,7 @@ GEM
       net-protocol
     newrelic_rpm (9.24.0)
     nio4r (2.7.5)
-    nokogiri (1.19.0)
+    nokogiri (1.19.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nokogiri-html5-inference (0.3.0)
@@ -583,18 +584,18 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
-    pdf-reader (2.15.0)
+    pdf-reader (2.15.1)
       Ascii85 (>= 1.0, < 3.0, != 2.0.0)
       afm (>= 0.2.1, < 2)
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (1.6.2)
+    pg (1.6.3)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
-    private_address_check (0.5.0)
+    private_address_check (0.6.0)
     pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -602,16 +603,17 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.0)
-    puffing-billy (4.0.2)
+    public_suffix (7.0.5)
+    puffing-billy (4.0.4)
       addressable (~> 2.5)
+      cgi
       em-http-request (~> 1.1, >= 1.1.0)
       em-synchrony
       eventmachine (~> 1.2)
       eventmachine_httpserver
       http_parser.rb (~> 0.8.0)
       multi_json
-    puma (6.5.0)
+    puma (7.2.0)
       nio4r (~> 2.0)
     query_count (1.1.1)
       activerecord (>= 4.2)
@@ -669,8 +671,8 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.6.2)
-      loofah (~> 2.21)
+    rails-html-sanitizer (1.7.0)
+      loofah (~> 2.25)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rails-i18n (7.0.10)
       i18n (>= 0.7, < 2)
@@ -856,6 +858,9 @@ GEM
       spring (>= 0.9.1)
     spring-commands-rubocop (0.4.0)
       spring (>= 1.0)
+    spring-watcher-listen (2.1.0)
+      listen (>= 2.7, < 4.0)
+      spring (>= 4)
     sprockets (3.7.5)
       base64
       concurrent-ruby (~> 1.0)
@@ -892,25 +897,25 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     sysexits (1.2.0)
-    taler (0.1.0)
+    taler (0.3.0)
     temple (0.10.4)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.5.0)
     thread-local (1.1.0)
     tilt (2.7.0)
-    timeout (0.6.0)
+    timeout (0.6.1)
     tsort (0.2.0)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
-    turbo-rails (2.0.20)
+    turbo-rails (2.0.23)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
     turbo_power (0.7.0)
       turbo-rails (>= 1.3.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    undercover (0.8.3)
+    undercover (0.8.4)
       base64
       bigdecimal
       imagen (>= 0.2.0)
@@ -923,19 +928,18 @@ GEM
     unicode-emoji (4.2.0)
     uniform_notifier (1.18.0)
     uri (1.1.1)
-    valid_email2 (5.2.3)
-      activemodel (>= 3.2)
+    valid_email2 (7.0.15)
+      activemodel (>= 6.0)
       mail (~> 2.5)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
     validates_lengths_from_database (0.8.0)
       activerecord (>= 4)
-    vcr (6.3.1)
-      base64
-    view_component (4.1.1)
-      actionview (>= 7.1.0, < 8.2)
-      activesupport (>= 7.1.0, < 8.2)
+    vcr (6.4.0)
+    view_component (4.5.0)
+      actionview (>= 7.1.0)
+      activesupport (>= 7.1.0)
       concurrent-ruby (~> 1)
     view_component_reflex (3.1.14.pre9)
       rails (>= 5.2, < 8.0)
@@ -954,22 +958,24 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.26.1)
+    webmock (3.26.2)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.2)
-    websocket-driver (0.7.7)
+    websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    whenever (1.1.0)
-      chronic (>= 0.6.3)
-    wkhtmltopdf-binary (0.12.6.10)
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.4)
+    zeitwerk (2.7.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    wkhtmltopdf-binary (0.12.6.10)
 
 PLATFORMS
   ruby
@@ -1009,7 +1015,6 @@ DEPENDENCIES
   devise
   devise-encryptable
   devise-i18n
-  devise-token_authenticatable
   dfc_provider!
   digest
   dotenv
@@ -1100,6 +1105,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-commands-rubocop
+  spring-watcher-listen
   sprockets (~> 3.7)
   state_machines-activerecord
   stimulus_reflex
@@ -1118,9 +1124,8 @@ DEPENDENCIES
   web!
   web-console
   webmock
-  whenever
   wicked_pdf!
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary!
 
 RUBY VERSION
   ruby 3.4.8p72

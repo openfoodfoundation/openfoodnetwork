@@ -185,6 +185,13 @@ tr:
       join_community: "Topluluğa katılın !"
     invite_manager:
       subject: "%{enterprise} sizi yönetici olmaya davet etti"
+  payment_mailer:
+    authorize_payment:
+      subject: "Lütfen ödemenizi AGA'da %{distributor}dağıtımcısına yetkilendirin."
+      instructions: "%{distributor}Dağıtımcısına olan %{amount}ödemeniz detaylandırma gerektiriyor. Lütfen ödemenizi yetkilendirmek için bu URL'ye gidin:"
+    authorization_required:
+      subject: "Ödeme için müşterinin yetkilendirmesi gerekiyor. "
+      message: "%{order_number}siparişinin ödemesi için müşterinin ek yetkilendirmesi gerekiyor. Müşteri maille bilgilendirildi, ödeme yetkilendirilene kadar 'bekliyor' olarak görünecek. "
   producer_mailer:
     order_cycle:
       subject: "%{producer} için sipariş dönemi raporu"
@@ -527,6 +534,11 @@ tr:
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
         balance_due: "Ödenmesi Gereken Bakiye"
+    customer_account_transaction:
+      index:
+        description: Açıklama
+        amount: Tutar
+        running_balance: Güncel Bakiye
     contents:
       edit:
         title: İÇERİK
@@ -983,19 +995,15 @@ tr:
           legend: "Kullanıcılar"
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
-          owner: 'Sahip'
           contact: "İLETİŞİM"
+          owner: 'Sahip'
           contact_tip: "İşletme adına sipariş ve bildirim e-postalarını alacak olan yönetici. Onaylanmış bir e-posta adresi olması gerekir."
           owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
           notifications: BİLDİRİMLER
           notifications_tip: Siparişlerle ilgili bildirimler bu e-posta adresine gönderilecektir.
           notifications_placeholder: Örn. toprak@yesiller.com
           notifications_note: 'Not: Kullanmadan önce yeni bir e-posta adresinin onaylanması gerekebilir'
-          managers: YÖNETİCİLER
-          managers_tip: Bu işletmeyi yönetme izni olan diğer kullanıcılar.
           invite_manager: "YÖNETİCİ Davet Et"
-          invite_manager_tip: "Sisteme kayıtlı olmayan bir kullanıcıyı hesap açmaya ve bu işletmenin yöneticisi olmaya davet edin."
-          add_unregistered_user: "Kayıtlı olmayan bir kullanıcı ekle"
           email_confirmed: "E-posta onaylandı"
           email_not_confirmed: "E-posta onaylanmadı"
         vouchers:
@@ -1070,9 +1078,6 @@ tr:
         choose_starting_point: 'Hesap türünü seçin:'
         profile: 'Profil'
         producer_profile: 'ÜRETİCİ PROFİLİ'
-      invite_manager:
-        user_already_exists: "Kullanıcı zaten var"
-        error: "Bir şeyler yanlış gitti"
     order_cycles:
       loading_flash:
         loading_order_cycles: SİPARİŞ DÖNEMLERİ YÜKLENİYOR
@@ -1426,6 +1431,11 @@ tr:
     schedules:
       destroy:
         associated_subscriptions_error: Bağlantılı üyelikler olduğu için bu takvim silinemiyor
+    user_invitations:
+      new:
+        back: Geri
+        email: E-posta
+        invite: Davet et
     vouchers:
       new:
         back: Geri
@@ -1801,6 +1811,7 @@ tr:
   order_not_paid: ÖDENMEYEN
   order_total: Sipariş toplamı
   order_payment: "Ödeme yöntemi:"
+  customer_credit: Bakiye
   order_billing_address: Fatura Adresi
   order_delivery_on: Teslimat tarihi
   order_delivery_address: Teslimat adresi
@@ -2059,7 +2070,6 @@ tr:
   shops_signup_help: Yardım etmeye hazırız.
   shops_signup_help_text: Daha yüksek bir iş potansiyeliniz var. Yeni alıcılarla ve ortak hareket edebileceğiniz diğer üretici ve gruplarla iletişime geçin. Birlikte daha güçlüyüz. Hikayeniz, bir ailenin sofrasında anlatılmayı bekliyor.
   shops_signup_detail: İşte detay.
-  orders: "Siparişler"
   orders_fees: "Ücretler ..."
   orders_edit_title: "Alışveriş Sepeti"
   orders_edit_headline: "Alışveriş sepetiniz"
@@ -3892,13 +3902,6 @@ tr:
         subject: "Şifre talimatlarını sıfırla"
       confirmation_instructions:
         subject: "Lütfen AGA hesabınızı onaylayın"
-    payment_mailer:
-      authorize_payment:
-        subject: "Lütfen ödemenizi AGA'da %{distributor}dağıtımcısına yetkilendirin."
-        instructions: "%{distributor}Dağıtımcısına olan %{amount}ödemeniz detaylandırma gerektiriyor. Lütfen ödemenizi yetkilendirmek için bu URL'ye gidin:"
-      authorization_required:
-        subject: "Ödeme için müşterinin yetkilendirmesi gerekiyor. "
-        message: "%{order_number}siparişinin ödemesi için müşterinin ek yetkilendirmesi gerekiyor. Müşteri maille bilgilendirildi, ödeme yetkilendirilene kadar 'bekliyor' olarak görünecek. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Değerli Müşterimiz,"
@@ -3971,6 +3974,10 @@ tr:
         transaction_history: İşlem Geçmişi
         authorisation_required: Yetki gerekiyor.
         authorise: Yetki ver
+      customer_account_transactions:
+        description: Açıklama
+        amount: Tutar
+        running_balance: Güncel Bakiye
       open_orders:
         order: Sipariş
         shop: DÜKKAN

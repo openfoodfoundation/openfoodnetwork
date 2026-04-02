@@ -28,7 +28,7 @@ module Admin
         flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
         redirect_to [:index,
                      { page: @page, per_page: @per_page, search_term: @search_term,
-                       producer_id: @producer_id, category_id: @category_id }]
+                       producer_id: @producer_id, category_id: @category_id, tags_name_in: @tags }]
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
@@ -107,6 +107,33 @@ module Admin
       end
     end
 
+    # Clone a variant, retaining a link to the "source"
+    def create_linked_variant
+      linked_variant = Spree::Variant.find(params[:variant_id])
+      product_index = params[:product_index]
+      authorize! :create_linked_variant, linked_variant
+      status = :ok
+
+      begin
+        variant = linked_variant.create_linked_variant(spree_current_user)
+
+        flash.now[:success] = t('.success')
+        variant_index = "-#{variant.id}"
+      rescue ActiveRecord::RecordInvalid
+        flash.now[:error] = variant.errors.full_messages.to_sentence
+        status = :unprocessable_entity
+        variant_index = "-1" # Create a unique-enough index
+      end
+
+      respond_with do |format|
+        format.turbo_stream {
+          locals = { linked_variant:, variant:, product_index:, variant_index:,
+                     producer_options:, category_options: categories, tax_category_options: }
+          render :create_linked_variant, status:, locals:
+        }
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end
@@ -120,7 +147,7 @@ module Admin
       @search_term = params[:search_term] || params[:_search_term]
       @producer_id = params[:producer_id] || params[:_producer_id]
       @category_id = params[:category_id] || params[:_category_id]
-      @tags = params[:tags_name_in] || params[:_tags_name_in]
+      @tags = params[:tags_name_in] || []
     end
 
     def init_pagination_params

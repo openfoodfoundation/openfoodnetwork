@@ -25,9 +25,6 @@ module Spree
 
     scope :with_payment_profile, -> { where.not(gateway_customer_profile_id: nil) }
 
-    # needed for some of the ActiveMerchant gateways (eg. SagePay)
-    alias_attribute :brand, :cc_type
-
     def expiry=(expiry)
       self[:month], self[:year] = expiry.split(" / ")
       self[:year] = "20#{self[:year]}"
@@ -64,35 +61,6 @@ module Spree
     # Show the card number, with all but last 4 numbers replace with "X". (XXXX-XXXX-XXXX-4338)
     def display_number
       "XXXX-XXXX-XXXX-#{last_digits}"
-    end
-
-    def actions
-      %w{capture_and_complete_order void credit resend_authorization_email}
-    end
-
-    def can_resend_authorization_email?(payment)
-      payment.requires_authorization?
-    end
-
-    # Indicates whether its possible to capture the payment
-    def can_capture_and_complete_order?(payment)
-      return false if payment.requires_authorization?
-
-      payment.pending? || payment.checkout?
-    end
-
-    # Indicates whether its possible to void the payment.
-    def can_void?(payment)
-      !payment.void?
-    end
-
-    # Indicates whether its possible to credit the payment. Note that most gateways require that the
-    #   payment be settled first which generally happens within 12-24 hours of the transaction.
-    def can_credit?(payment)
-      return false unless payment.completed?
-      return false unless payment.order.payment_state == 'credit_owed'
-
-      payment.credit_allowed.positive?
     end
 
     # Allows us to use a gateway_payment_profile_id to store Stripe Tokens

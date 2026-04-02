@@ -244,6 +244,13 @@ ko:
       join_community: "커뮤니티에 참여하세요"
     invite_manager:
       subject: "%{enterprise}가 당신을 매니저로 초대합니다."
+  payment_mailer:
+    authorize_payment:
+      subject: "OFN으로 %{distributor}에게 지불을 승인하십시오."
+      instructions: "%{distributor}에게 %{amount}를 지불하시려면 추가 인증이 필요합니다. 결제를 승인하려면 다음 URL을 방문하십시오."
+    authorization_required:
+      subject: "결제를 수행하려면 고객의 승인이 필요합니다."
+      message: "주문 %{order_number}에 대한 결제는 고객의 추가 승인이 필요합니다. 고객에게 이메일을 통해 통보되었으며 결제가 승인될 때까지 보류 중인 것으로 표시됩니다."
   producer_mailer:
     order_cycle:
       subject: "%{producer}의 주문 사이클 기록"
@@ -587,6 +594,11 @@ ko:
         guest_label: "게스트 체크아웃"
         credit_owed: "외상값"
         balance_due: "잔액 만기"
+    customer_account_transaction:
+      index:
+        description: 설명
+        amount: 수량
+        running_balance: 계좌 실행
     contents:
       edit:
         title: 콘텐트
@@ -1059,19 +1071,15 @@ ko:
           legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
           resend: 재전송
-          owner: '오너'
           contact: "연락처"
+          owner: '오너'
           contact_tip: "주문 및 알림에 대한 회사 이메일을 수신할 관리자입니다. 확인된 이메일 주소가 있어야 합니다."
           owner_tip: 이 회사를 담당하는 기본 사용자입니다.
           notifications: 알림
           notifications_tip: 주문에 대한 알림이 이 이메일 주소로 전송됩니다.
           notifications_placeholder: 예. gustav@truffles.com
           notifications_note: '참고: 사용하기 전에 새 이메일 주소를 확인해야 할 수 있습니다.'
-          managers: 관리자
-          managers_tip: 이 회사를 관리할 수 있는 권한이 있는 다른 사용자.
           invite_manager: "관리자 초대"
-          invite_manager_tip: "등록되지 않은 사용자를 등록하고 이 회사의 관리자가 되도록 초대합니다."
-          add_unregistered_user: "등록되지 않은 사용자 추가"
           email_confirmed: "확인한 이메일"
           email_not_confirmed: "확인안한 이메일"
         vouchers:
@@ -1146,9 +1154,6 @@ ko:
         choose_starting_point: '패키지를 선택하세요 :'
         profile: '프로필'
         producer_profile: '생산자 프로필'
-      invite_manager:
-        user_already_exists: "사용자가 이미 존재합니다."
-        error: "무언가 문제가 생겼습니다"
     order_cycles:
       loading_flash:
         loading_order_cycles: 주문 사이클 로딩 중
@@ -1521,6 +1526,11 @@ ko:
     schedules:
       destroy:
         associated_subscriptions_error: 연결된 구독이 있으므로 이 일정을 삭제할 수 없습니다.
+    user_invitations:
+      new:
+        back: 뒤로
+        email: 이메일
+        invite: 초대하기
     vouchers:
       new:
         back: 뒤로
@@ -1914,6 +1924,7 @@ ko:
   order_not_paid: 무료
   order_total: 총 주문
   order_payment: "지불 방법 :"
+  customer_credit: 신용 거래
   order_billing_address: 청구서 발송지
   order_delivery_on: 배달일
   order_delivery_address: 배달 주소
@@ -2174,7 +2185,6 @@ ko:
   shops_signup_help: 우린 도울 준비가 됐습니다.
   shops_signup_help_text: 당신은 더 나은 보상이 필요합니다. 당신은 새로운 구매자와 물류 파트너가 필요합니다. 도매상, 소매상, 식탁에 걸쳐 당신의 이야기를 들려주어야 합나다.
   shops_signup_detail: 자세한 내용은 이렇습니다.
-  orders: "주문"
   orders_fees: "수수료..."
   orders_edit_title: "쇼핑 카트"
   orders_edit_headline: "당신의 쇼핑 카트"
@@ -3981,13 +3991,6 @@ ko:
         subject: "비밀번호 지침 초기화"
       confirmation_instructions:
         subject: "OFN 계정을 확인하세요."
-    payment_mailer:
-      authorize_payment:
-        subject: "OFN으로 %{distributor}에게 지불을 승인하십시오."
-        instructions: "%{distributor}에게 %{amount}를 지불하시려면 추가 인증이 필요합니다. 결제를 승인하려면 다음 URL을 방문하십시오."
-      authorization_required:
-        subject: "결제를 수행하려면 고객의 승인이 필요합니다."
-        message: "주문 %{order_number}에 대한 결제는 고객의 추가 승인이 필요합니다. 고객에게 이메일을 통해 통보되었으며 결제가 승인될 때까지 보류 중인 것으로 표시됩니다."
     shipment_mailer:
       shipped_email:
         dear_customer: "고객님 에게,"
@@ -4060,6 +4063,10 @@ ko:
         transaction_history: 거래 내역
         authorisation_required: 인증 필요
         authorise: 승인
+      customer_account_transactions:
+        description: 설명
+        amount: 수량
+        running_balance: 계좌 실행
       open_orders:
         order: 주문
         shop: 쇼핑

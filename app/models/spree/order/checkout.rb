@@ -78,6 +78,8 @@ module Spree
 
               before_transition to: :delivery, do: :create_proposed_shipments
               before_transition to: :delivery, do: :ensure_available_shipping_rates
+              before_transition to: :payment, do: :apply_customer_credit
+
               before_transition to: :confirmation, do: :validate_payment_method!
 
               after_transition to: :payment do |order|

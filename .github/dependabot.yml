@@ -9,32 +9,30 @@ multi-ecosystem-groups:
   turbo_power:
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
 
 updates:
+  # turbo_power: ensure gem and package are updated together
   - package-ecosystem: "bundler"
     directory: "/"
     patterns: ["turbo_power"]
     multi-ecosystem-group: "turbo_power"
-
-    # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
-
   - package-ecosystem: "npm"
     directory: "/"
     patterns: ["turbo_power"]
     multi-ecosystem-group: "turbo_power"
-
-    # Only specific requirements are specified in package.json, so don't touch it.
     versioning-strategy: lockfile-only
 
+  # All others
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
     cooldown:
       default-days: 7
-
-    # Only specific requirements are specified in Gemfile, so don't touch it.
+    # Only specific requirements are specified in Gemfile, so don't let Dependabot touch it.
     versioning-strategy: lockfile-only
 
   - package-ecosystem: "npm"
@@ -43,6 +41,5 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 7
-
-    # Only specific requirements are specified in package.json, so don't touch it.
+    # Only specific requirements are specified in package.json, so don't let Dependabot touch it.
     versioning-strategy: lockfile-only

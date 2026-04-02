@@ -48,6 +48,61 @@ http_interactions:
         }
   recorded_at: Sat, 24 Jan 2026 00:51:31 GMT
 - request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Fri, 20 Mar 2026 04:52:23 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:176N5XTVVSR98FE6V4QR2Y35HKS61ZW5CK1BC7YEZYHX9M41N5GG",
+          "token": "secret-token:176N5XTVVSR98FE6V4QR2Y35HKS61ZW5CK1BC7YEZYHX9M41N5GG",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1774068743
+          }
+        }
+  recorded_at: Fri, 20 Mar 2026 04:52:23 GMT
+- request:
     method: get
     uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.020-03R3ETNZZ0DVA
     body:
@@ -70,7 +125,7 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Sat, 24 Jan 2026 00:55:33 GMT
+      - Fri, 20 Mar 2026 04:52:24 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -205,5 +260,5 @@ http_interactions:
           "refund_details": [],
           "order_status_url": "https://backend.demo.taler.net/instances/sandbox/orders/2026.020-03R3ETNZZ0DVA"
         }
-  recorded_at: Sat, 24 Jan 2026 00:55:32 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 20 Mar 2026 04:52:24 GMT
+recorded_with: VCR 6.4.0

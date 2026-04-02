@@ -302,6 +302,13 @@ ru:
       join_community: "Присоединяйтесь к сообществу"
     invite_manager:
       subject: "%{enterprise} пригласил Вас стать менеджером"
+  payment_mailer:
+    authorize_payment:
+      subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
+      instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
+    authorization_required:
+      subject: "Платеж требует согласия клиента"
+      message: "Для оплаты заказа %{order_number} требуется дополнительное согласие со стороны покупателя. Клиент был уведомлен по электронной почте и платеж будет отображаться как ожидающий, пока он не будет подтвержден."
   producer_mailer:
     order_cycle:
       subject: "Отчет по Циклу Заказа для %{producer}"
@@ -673,6 +680,11 @@ ru:
         balance_due: "Задолжность"
       destroy:
         has_associated_subscriptions: "Не удалось удалить: у этого клиента есть активные подписки. Сначала отмените их."
+    customer_account_transaction:
+      index:
+        description: Описание
+        amount: Количество
+        running_balance: Текущий баланс
     contents:
       edit:
         title: Содержание
@@ -1216,19 +1228,15 @@ ru:
           legend: "Пользователи"
           email_confirmation_notice_html: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
           resend: Отправить заново
-          owner: 'Владелец'
           contact: "Контакт"
+          owner: 'Владелец'
           contact_tip: "Менеджер, который будет получать электронные письма предприятия для заказов и уведомлений. Должен иметь подтвержденный адрес электронной почты."
           owner_tip: Основной пользователь, ответственный за это предприятие.
           notifications: Уведомления
           notifications_tip: Уведомления о заказах будут отправлены на этот адрес электронной почты.
           notifications_placeholder: напр. ivanov@example.ru
           notifications_note: 'Примечание: перед использованием, может потребоваться подтверждение нового адреса электронной почты'
-          managers: Менеджеры
-          managers_tip: Другие пользователи с правами управлять этим предприятием.
           invite_manager: "Пригласить Менеджера"
-          invite_manager_tip: "Пригласить незарегистрированного пользователя для регистрации и установить менеджером этого предприятия."
-          add_unregistered_user: "Добавить незарегистрированного пользователя"
           email_confirmed: "Email подтверждён"
           email_not_confirmed: "Email не подтверждён"
         vouchers:
@@ -1332,9 +1340,6 @@ ru:
         choose_starting_point: 'Выберите Ваш пакет:'
         profile: 'Профиль'
         producer_profile: 'Профиль Производителя'
-      invite_manager:
-        user_already_exists: "Пользователь уже существует"
-        error: "Что-то пошло не так"
     order_cycles:
       loading_flash:
         loading_order_cycles: ЗАГРУЗКА ЦИКЛОВ ЗАКАЗОВ
@@ -1762,6 +1767,11 @@ ru:
     schedules:
       destroy:
         associated_subscriptions_error: Это расписание не может быть удалено, потому что оно имеет связанные подписки
+    user_invitations:
+      new:
+        back: Назад
+        email: Email
+        invite: Пригласить
     vouchers:
       new:
         legend: Новый Купон
@@ -2194,6 +2204,7 @@ ru:
   order_total: Весь заказ
   order_payment: "Тип оплаты:"
   no_payment_required: "Оплата не требуется"
+  customer_credit: Кредит
   order_billing_address: Платежный Адрес
   order_delivery_on: Доставка по
   order_delivery_address: Адрес доставки
@@ -2457,7 +2468,6 @@ ru:
   shops_signup_help: Мы готовы помочь.
   shops_signup_help_text: Вам необходима лучшая отдача. Вам нужны новые покупатели и логистические партнеры. Вы должны рассказать свою историю через оптовые и розничные продажи, а также за столом.
   shops_signup_detail: Подробности.
-  orders: "Заказы"
   orders_fees: "Сборы..."
   orders_edit_title: "Корзина"
   orders_edit_headline: "Ваша корзина"
@@ -4462,13 +4472,6 @@ ru:
         subject: "Инструкции по сбросу пароля"
       confirmation_instructions:
         subject: "Пожалуйста, подтвердите Вашу ОСП учетную запись"
-    payment_mailer:
-      authorize_payment:
-        subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
-        instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
-      authorization_required:
-        subject: "Платеж требует согласия клиента"
-        message: "Для оплаты заказа %{order_number} требуется дополнительное согласие со стороны покупателя. Клиент был уведомлен по электронной почте и платеж будет отображаться как ожидающий, пока он не будет подтвержден."
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"
@@ -4554,6 +4557,10 @@ ru:
         transaction_history: История Операций
         authorisation_required: Требуется Согласие
         authorise: Разрешить
+      customer_account_transactions:
+        description: Описание
+        amount: Количество
+        running_balance: Текущий баланс
       open_orders:
         order: Заказ
         shop: Магазин

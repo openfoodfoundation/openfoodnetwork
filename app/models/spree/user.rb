@@ -5,10 +5,11 @@ module Spree
     include SetUnusedAddressFields
 
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:authentication_token]
 
     searchable_attributes :email
 
-    devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
+    devise :database_authenticatable, :registerable, :recoverable,
            :rememberable, :trackable, :validatable, :omniauthable,
            :encryptable, :confirmable,
            encryptor: 'authlogic_sha512', reconfirmable: true,
@@ -23,6 +24,7 @@ module Spree
     before_destroy :check_completed_orders
 
     scope :admin, -> { where(admin: true) }
+    scope :confirmed, -> { where.not(confirmed_at: nil) }
 
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles

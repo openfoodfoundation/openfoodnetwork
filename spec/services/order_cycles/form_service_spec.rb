@@ -223,8 +223,10 @@ RSpec.describe OrderCycles::FormService do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:payment_method){ create(:payment_method, distributors: [distributor]) }
         let!(:payment_method2){ create(:payment_method, distributors: [distributor]) }
-        let!(:distributor_payment_method){ distributor.distributor_payment_methods.first.id }
-        let!(:distributor_payment_method2){ distributor.distributor_payment_methods.second.id }
+        let!(:distributor_payment_method){
+          distributor.distributor_payment_methods.second_to_last.id
+        }
+        let!(:distributor_payment_method2){ distributor.distributor_payment_methods.last.id }
         let!(:supplier){ create(:supplier_enterprise) }
 
         context "the submitter is a coordinator" do

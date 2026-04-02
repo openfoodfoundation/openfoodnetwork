@@ -61,6 +61,7 @@ module Spree
         add_manage_line_items_abilities user
       end
       add_relationship_management_abilities user if can_manage_relationships? user
+      add_customer_account_transaction_abilities user if can_manage_enterprises? user
     end
 
     # New users have no enterprises.
@@ -191,17 +192,21 @@ module Spree
         user.enterprises.include? stripe_account.enterprise
       end
 
-      can [:admin, :create], :manager_invitation
+      can [:admin, :create], UserInvitation
 
       can [:admin, :index, :destroy], :oidc_setting
 
       can [:admin, :create], Voucher
+
+      can [:admin, :destroy], EnterpriseRole do |enterprise_role|
+        enterprise_role.enterprise.owner_id == user.id
+      end
     end
 
     def add_product_management_abilities(user)
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
-      # An enterperprise user can change a product if they are supplier of at least
+      # An enterprise user can change a product if they are supplier of at least
       # one of the product's associated variants
       can [:admin, :read, :index, :update,
            :seo, :group_buy_options,
@@ -213,7 +218,24 @@ module Spree
         )
       end
 
-      can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone], :products_v3
+      # An enterprise user can clone if they have been granted permission to the source variant.
+      # Technically I'd call this permission clone_linked_variant, but it would be less confusing to
+      # use the same name as everywhere else.
+      can [:create_linked_variant], Spree::Variant do |variant|
+        OpenFoodNetwork::Permissions.new(user).
+          enterprises_granting_linked_variants.include? variant.supplier
+      end
+      can [
+        :admin,
+        :index,
+        :bulk_update,
+        :destroy,
+        :destroy_variant,
+        :clone,
+        :create_linked_variant
+      ], :products_v3
+
+      can [:admin, :producers, :categories, :tax_categories], :ajax_search
 
       can [:create], Spree::Variant
       can [:admin, :index, :read, :edit,
@@ -314,7 +336,8 @@ module Spree
 
       can [:create], Spree::Order
 
-      can [:read, :update], Spree::Order do |order|
+      # Spree::Admin::PaymentController need to load the order to credit_customer
+      can [:read, :update, :credit_customer], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
@@ -366,7 +389,7 @@ module Spree
           can_edit_as_producer(shipment.order, user)
       end
 
-      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
+      can [:admin, :index, :read, :create, :edit, :update, :fire, :credit_customer], Spree::Payment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
       can [:destroy], Spree::Adjustment do |adjustment|
@@ -456,6 +479,10 @@ module Spree
         user.enterprises.include?(enterprise_relationship.parent) ||
           user.enterprises.include?(enterprise_relationship.child)
       end
+    end
+
+    def add_customer_account_transaction_abilities(_user)
+      can [:admin, :create, :index], CustomerAccountTransaction
     end
   end
 end

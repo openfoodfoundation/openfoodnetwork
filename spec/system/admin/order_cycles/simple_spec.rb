@@ -248,6 +248,7 @@ RSpec.describe '
         expect(page).to have_selector 'td.shops', text: distributor_unmanaged.name
       end
 
+      # TODO
       it "creating a new order cycle" do
         distributor_managed.update_attribute(:enable_subscriptions, true)
         visit admin_order_cycles_path
@@ -923,9 +924,13 @@ RSpec.describe '
   private
 
   def expect_payment_methods_to_be_checked_for(distributor)
-    distributor.distributor_payment_method_ids.each do |distributor_payment_method_id|
+    # Exclude internal payment method
+    distributor_payment_methods = distributor.distributor_payment_methods.reject { |dpm|
+      dpm.payment_method.nil?
+    }
+    distributor_payment_methods.each do |distributor_payment_method|
       expect(page).to have_checked_field(
-        "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
+        "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}"
       )
     end
   end

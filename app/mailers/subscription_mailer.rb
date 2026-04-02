@@ -19,6 +19,7 @@ class SubscriptionMailer < ApplicationMailer
     @type = 'empty'
     @changes = changes
     @order = order
+    @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
     send_mail(order)
   end
 
@@ -26,11 +27,13 @@ class SubscriptionMailer < ApplicationMailer
     @type = 'placement'
     @changes = changes
     @order = order
+    @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
     send_mail(order)
   end
 
   def failed_payment_email(order)
     @order = order
+    @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
     send_mail(order)
   end
 

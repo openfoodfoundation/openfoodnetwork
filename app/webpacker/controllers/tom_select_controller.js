@@ -83,6 +83,9 @@ export default class extends Controller {
   }
 
   #addRemoteOptions(options) {
+    // by default, for dropdown_input plugin, it's true. Otherwise for multi-select it's false
+    // it should always be true so to invoke the onDropdownOpen to fetch options
+    options.shouldOpen = true;
     this.openedByClick = false;
 
     options.firstUrl = (query) => {
@@ -91,12 +94,9 @@ export default class extends Controller {
 
     options.load = this.#fetchOptions.bind(this);
 
-    options.onFocus = function () {
-      this.control.load("", () => {});
-    }.bind(this);
-
     options.onDropdownOpen = function () {
       this.openedByClick = true;
+      this.control.load("", () => {});
     }.bind(this);
 
     options.onType = function () {

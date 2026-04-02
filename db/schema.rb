@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -86,6 +86,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.datetime "updated_at", null: false
     t.bigint "enterprise_id"
     t.index ["enterprise_id"], name: "index_custom_tabs_on_enterprise_id"
+  end
+
+  create_table "customer_account_transactions", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "currency"
+    t.string "description"
+    t.integer "payment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
+    t.bigint "created_by_id"
+    t.index ["created_by_id"], name: "index_customer_account_transactions_on_created_by_id"
+    t.index ["customer_id"], name: "index_customer_account_transactions_on_customer_id"
+    t.index ["payment_id"], name: "index_customer_account_transactions_on_payment_id"
   end
 
   create_table "customers", id: :serial, force: :cascade do |t|
@@ -994,6 +1009,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.bigint "supplier_id"
     t.float "variant_unit_scale"
     t.string "variant_unit_name", limit: 255
+    t.bigint "hub_id"
+    t.index ["hub_id"], name: "index_spree_variants_on_hub_id"
     t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["shipping_category_id"], name: "index_spree_variants_on_shipping_category_id"
@@ -1098,6 +1115,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "variant_links", primary_key: ["target_variant_id", "source_variant_id"], force: :cascade do |t|
+    t.integer "source_variant_id", null: false
+    t.integer "target_variant_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["source_variant_id"], name: "index_variant_links_on_source_variant_id"
+  end
+
   create_table "variant_overrides", id: :serial, force: :cascade do |t|
     t.integer "variant_id", null: false
     t.integer "hub_id", null: false
@@ -1157,6 +1181,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
+  add_foreign_key "customer_account_transactions", "customers"
+  add_foreign_key "customer_account_transactions", "spree_payments", column: "payment_id"
+  add_foreign_key "customer_account_transactions", "spree_users", column: "created_by_id"
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "bill_address_id", name: "customers_bill_address_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "ship_address_id", name: "customers_ship_address_id_fk"
@@ -1244,6 +1271,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
+  add_foreign_key "spree_variants", "enterprises", column: "hub_id"
   add_foreign_key "spree_variants", "enterprises", column: "supplier_id"
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
   add_foreign_key "spree_variants", "spree_shipping_categories", column: "shipping_category_id"
@@ -1260,6 +1288,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_26_005628) do
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
   add_foreign_key "tag_rules", "enterprises"
+  add_foreign_key "variant_links", "spree_variants", column: "source_variant_id"
+  add_foreign_key "variant_links", "spree_variants", column: "target_variant_id"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
   add_foreign_key "vouchers", "enterprises"

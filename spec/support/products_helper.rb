@@ -79,12 +79,6 @@ module ProductsHelper
     end
   end
 
-  def validate_tomselect_with_search!(page, field_name, search_selector)
-    open_tomselect_to_validate!(page, field_name) do
-      expect(page).to have_selector(search_selector)
-    end
-  end
-
   def random_producer(product)
     Enterprise.is_primary_producer
       .where.not(id: product.supplier.id)

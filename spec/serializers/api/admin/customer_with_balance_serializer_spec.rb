@@ -16,6 +16,19 @@ RSpec.describe Api::Admin::CustomerWithBalanceSerializer do
     end
   end
 
+  describe '#available_credit' do
+    let(:customer) { double(Customer, credit_value: 5.3) }
+    let(:money) { instance_double(Spree::Money, to_s: "$5.30") }
+
+    before do
+      allow(Spree::Money).to receive(:new).with(5.3) { money }
+    end
+
+    it 'returns the available_credit as a money amount' do
+      expect(serialized_customer.available_credit).to eq("$5.30")
+    end
+  end
+
   describe '#balance_status' do
     context 'when the balance_value is positive' do
       let(:customer) { double(Customer, balance_value: 1) }

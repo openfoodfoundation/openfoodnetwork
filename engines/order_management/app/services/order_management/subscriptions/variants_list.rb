@@ -30,17 +30,19 @@ module OrderManagement
         other_permitted_producer_ids = EnterpriseRelationship.joins(:parent)
           .permitting(distributor.id).with_permission(:add_to_order_cycle)
           .merge(Enterprise.is_primary_producer)
-          .pluck(:parent_id)
+          .select(:parent_id)
 
-        # Append to the potentially gigantic array instead of using union, which creates a new array
-        # The db IN statement won't care if there's a duplicate.
-        other_permitted_producer_ids << distributor.id
+        Enterprise.where(id: distributor.id)
+          .select(:id)
+          .or(Enterprise.where(id: other_permitted_producer_ids))
       end
 
       def self.outgoing_exchange_variant_ids(distributor)
-        ExchangeVariant.select("DISTINCT exchange_variants.variant_id").joins(:exchange)
+        # DISTINCT is not required here since this subquery is used within an IN clause,
+        # where duplicate values do not impact the result.
+        ExchangeVariant.joins(:exchange)
           .where(exchanges: { incoming: false, receiver_id: distributor.id })
-          .pluck(:variant_id)
+          .select(:variant_id)
       end
     end
   end

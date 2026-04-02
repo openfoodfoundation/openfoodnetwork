@@ -23,7 +23,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "New Product"
       fill_in 'product_name', with: 'Big Bag Of Apples'
       tomselect_select supplier.name, from: 'product[supplier_id]'
-      select_tom_select 'Weight (g)', from: 'product_variant_unit_field'
+      tomselect_search_and_select 'Weight (g)', from: "product_variant_unit_with_scale"
       fill_in 'product_unit_value', with: '100'
       fill_in 'product_price', with: '10.00'
       # TODO dropdowns below are still using select2:
@@ -86,14 +86,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           find('button[aria-label="On Hand"]').click
           find('input[id$="_price"]').fill_in with: "11.1"
 
-          select supplier.name, from: 'Producer'
-          select taxon.name, from: 'Category'
-
           if stock == "on_hand"
             find('input[id$="_on_hand_desired"]').fill_in with: "66"
           elsif stock == "on_demand"
             find('input[id$="_on_demand_desired"]').check
           end
+
+          tomselect_select supplier.name, from: 'Producer'
+          tomselect_select taxon.name, from: 'Category'
         end
 
         expect(page).to have_content "1 product modified."

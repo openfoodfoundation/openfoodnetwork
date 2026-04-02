@@ -297,6 +297,13 @@ de_DE:
       join_community: "Jetzt Teil der Community werden!"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
+  payment_mailer:
+    authorize_payment:
+      subject: "Bitte autorisieren Sie Ihre Zahlung an %{distributor} im Open Food Network"
+      instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Autorisierung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
+    authorization_required:
+      subject: "Eine Zahlung muss durch den Kunden autorisiert werden"
+      message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Autorisierung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
   producer_mailer:
     order_cycle:
       subject: "Bestellzyklusbericht für %{producer}"
@@ -674,6 +681,11 @@ de_DE:
         balance_due: "Offener Betrag"
       destroy:
         has_associated_subscriptions: "Löschen fehlgeschlagen: Dieser Kunde hat aktive Abonnements. Bitte kündigen Sie diese zuerst."
+    customer_account_transaction:
+      index:
+        description: Beschreibung
+        amount: Summe
+        running_balance: Fortlaufender Saldo
     contents:
       edit:
         title: Inhalt
@@ -789,7 +801,7 @@ de_DE:
       sort:
         pagination:
           products_total_html:
-            one: "<strong>%{total} Produkt</strong> für Ihre Suchkriterien gefunden."
+            one: "<strong>%{count} Produkt</strong> Produkt für Ihre Suchkriterien gefunden."
             other: "<strong>%{count} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
@@ -1225,19 +1237,15 @@ de_DE:
           legend: "Benutzer"
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
           resend: Erneut senden
-          owner: 'Inhaber'
           contact: "Kontakt"
+          owner: 'Inhaber'
           contact_tip: "Der Manager, der Unternehmens-E-Mails für Bestellungen und Benachrichtigungen erhält. Er muss eine bestätigte E-Mail-Adresse haben."
           owner_tip: Der Hauptbenutzer, der für dieses Unternehmen verantwortlich ist.
           notifications: Benachrichtigungen
           notifications_tip: Benachrichtigungen über Bestellungen werden an diese E-Mail-Adresse gesendet.
           notifications_placeholder: z. B. lisa@maier.de
           notifications_note: 'Hinweis: Eine neue E-Mail-Adresse muss möglicherweise vor der Verwendung bestätigt werden.'
-          managers: Manager
-          managers_tip: Andere Benutzer mit der Berechtigung, dieses Unternehmen zu verwalten.
           invite_manager: "Manager einladen"
-          invite_manager_tip: "Laden Sie einen nicht registrierten Benutzer ein, sich anzumelden und ein Manager dieses Unternehmens zu werden."
-          add_unregistered_user: "Laden Sie einen nicht registrierten Benutzer ein"
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
@@ -1334,9 +1342,6 @@ de_DE:
         choose_starting_point: 'Wählen Sie Ihr Paket:'
         profile: 'Profil'
         producer_profile: 'Profil'
-      invite_manager:
-        user_already_exists: "Der Benutzer existiert bereits. Bitte verwenden Sie die Funktion \"vorhandenen Benutzer hinzufügen\"."
-        error: "Etwas ist schief gelaufen."
     tag_rules:
       confirm_delete: Möchten Sie diese Regel wirklich löschen?
     order_cycles:
@@ -1765,6 +1770,11 @@ de_DE:
     schedules:
       destroy:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
+    user_invitations:
+      new:
+        back: Zurück
+        email: E-Mail-Adresse
+        invite: Einladen
     vouchers:
       new:
         legend: Neuer Gutschein
@@ -2193,6 +2203,7 @@ de_DE:
   order_total: 'Gesamtsumme:'
   order_payment: "Zahlungsart:"
   no_payment_required: "Keine Zahlung erforderlich."
+  customer_credit: Guthaben
   order_billing_address: Rechnungsadresse
   order_delivery_on: Lieferung am
   order_delivery_address: Lieferadresse
@@ -2456,7 +2467,6 @@ de_DE:
   shops_signup_help: Wir sind bereit zu helfen.
   shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Großhandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
-  orders: "Bestellungen"
   orders_fees: "Gebühren ..."
   orders_edit_title: "Warenkorb"
   orders_edit_headline: "Ihr Warenkorb"
@@ -4419,13 +4429,6 @@ de_DE:
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
         subject: "Bitte bestätigen Sie Ihre Registrierung im Open Food Network"
-    payment_mailer:
-      authorize_payment:
-        subject: "Bitte autorisieren Sie Ihre Zahlung an %{distributor} im Open Food Network"
-        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Autorisierung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
-      authorization_required:
-        subject: "Eine Zahlung muss durch den Kunden autorisiert werden"
-        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Autorisierung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
@@ -4511,6 +4514,10 @@ de_DE:
         transaction_history: Transaktionsverlauf
         authorisation_required: Bestätigung erforderlich
         authorise: Autorisieren
+      customer_account_transactions:
+        description: Beschreibung
+        amount: Summe
+        running_balance: Fortlaufender Saldo
       open_orders:
         order: Bestellung
         shop: Laden

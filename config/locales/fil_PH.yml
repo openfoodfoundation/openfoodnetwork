@@ -452,6 +452,11 @@ fil_PH:
         confirm_delete: "siguradong tatanggalin na?"
         search_by_email: "hanapin gamit ang email/code..."
         guest_label: "Guest checkout"
+    customer_account_transaction:
+      index:
+        description: paglalarawan
+        amount: Halaga
+        running_balance: tumatakbong balanse
     contents:
       edit:
         title: nilalaman
@@ -892,19 +897,15 @@ fil_PH:
           legend: "mga gumagamit"
           email_confirmation_notice_html: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
           resend: Ipadala muli
-          owner: 'May-ari'
           contact: "Makipag-usap"
+          owner: 'May-ari'
           contact_tip: "ang tagapamahala na makakatanggap ng enterprise emails para sa mga order at mga abiso. kailangang may kumpirmadong email address."
           owner_tip: ang pangunahing gumagamit na responsable sa enterprise na ito.
           notifications: mga abiso
           notifications_tip: ang mga abiso tungkol sa mga order ay ipapadala sa email address na ito.
           notifications_placeholder: hal. gustav@truffles.com
           notifications_note: 'Tandaan: ang bagong email address ay kailangang kumpirmado bago magamit'
-          managers: Tagapamahala
-          managers_tip: ang ibang gagamit na may permisong pamahalaan ang enterprise na ito.
           invite_manager: "Mag-imbita ng Tagapamahala"
-          invite_manager_tip: "mag-imbita ng hindi rehistradong user na mag-sign-up at maging tagapamahala ng enterprise na ito."
-          add_unregistered_user: "magdagdag ng hindi rehistradong user"
           email_confirmed: "ang email ay kumpirmado na"
           email_not_confirmed: "ang email ay hindi pa kumpirmado"
         vouchers:
@@ -978,9 +979,6 @@ fil_PH:
         choose_starting_point: 'pumili ng package:'
         profile: 'profile'
         producer_profile: 'Profile ng Producer'
-      invite_manager:
-        user_already_exists: "ang user ay rehistrado na"
-        error: "may nangyaring mali"
     order_cycles:
       loading_flash:
         loading_order_cycles: NILO-LOAD ANG MGA ORDER CYCLE
@@ -1330,6 +1328,11 @@ fil_PH:
     schedules:
       destroy:
         associated_subscriptions_error: ang iskedyul na ito ay hindi maialis sapagkat ito ay nauugnay sa ibang mga subscription.
+    user_invitations:
+      new:
+        back: bumalik
+        email: Email
+        invite: mag-imbita
     vouchers:
       new:
         back: bumalik
@@ -1654,6 +1657,7 @@ fil_PH:
   order_not_paid: HINDI PA BAYAD
   order_total: kabuuang order
   order_payment: "magbabayad sa pamamagitan ng:"
+  customer_credit: utang
   order_billing_address: Billing address
   order_delivery_on: petsa ng delivery
   order_delivery_address: address kung saan ide-deliver
@@ -1900,7 +1904,6 @@ fil_PH:
   shops_signup_help: handa kaming tumulong.
   shops_signup_help_text: kailangan mo ng mas malaking kita. kailangan mo ng bagong mga mamimili at mga katulong sa operasyon. kailangang malaman ng lahat ang tungkol sa iyong produkto.
   shops_signup_detail: 'ito ang mga detalye:'
-  orders: "mga order"
   orders_fees: "Mga bayarin..."
   orders_edit_title: "Cart para sa pamimili"
   orders_edit_headline: "ang iyong cart sa pamimili"
@@ -3611,6 +3614,10 @@ fil_PH:
         past_orders: mga nakaraang order
       transactions:
         transaction_history: kasaysayan ng mga transaksyon
+      customer_account_transactions:
+        description: paglalarawan
+        amount: Halaga
+        running_balance: tumatakbong balanse
       open_orders:
         order: order
         shop: Shop

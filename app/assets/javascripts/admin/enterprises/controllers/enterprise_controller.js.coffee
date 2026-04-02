@@ -4,15 +4,11 @@ angular.module("admin.enterprises")
     $scope.Enterprises = Enterprises
     $scope.navClear = NavigationCheck.clear
     $scope.menu = SideMenu
-    $scope.newManager = { id: null, email: (t('add_manager')) }
     $scope.StatusMessage = StatusMessage
     $scope.RequestMonitor = RequestMonitor
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
       StatusMessage.display 'notice', t('admin.unsaved_changes') if newValue
-
-    $scope.$watch 'newManager', (newValue) ->
-      $scope.addManager($scope.newManager) if newValue
 
     $scope.setFormDirty = ->
       $scope.$apply ->
@@ -34,26 +30,6 @@ angular.module("admin.enterprises")
 
     # Register the NavigationCheck callback
     NavigationCheck.register(enterpriseNavCallback)
-
-    $scope.removeManager = (manager) ->
-      if manager.id?
-        if manager.id == $scope.Enterprise.owner.id or manager.id == parseInt($scope.receivesNotifications)
-          return
-        for i, user of $scope.Enterprise.users when user.id == manager.id
-          $scope.Enterprise.users.splice i, 1
-          $scope.enterprise_form?.$setDirty()
-
-    $scope.addManager = (manager) ->
-      if manager.id? and angular.isNumber(manager.id) and manager.email?
-        manager =
-          id: manager.id
-          email: manager.email
-          confirmed: manager.confirmed
-        if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
-          $scope.Enterprise.users.unshift(manager)
-          $scope.enterprise_form?.$setDirty()
-        else
-          alert ("#{manager.email}" + " " + t("is_already_manager"))
 
     $scope.performEnterpriseAction = (enterpriseActionName, warning_message_key, success_message_key) ->
       return unless confirm($scope.translation(warning_message_key))

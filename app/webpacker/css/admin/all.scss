@@ -1,0 +1,135 @@
+// Admin v3 styles
+// While in feature-toggle, we inherit all files from old admin design.
+// Individual files may be copied in order to replace the old files.
+
+@import "assets/stylesheets/normalize";
+@import "assets/stylesheets/responsive-tables";
+@import "assets/stylesheets/jquery.powertip";
+@import "jquery-ui/themes/base/core";
+@import "jquery-ui/themes/base/button";
+@import "jquery-ui/themes/base/resizable";
+@import "assets/stylesheets/jquery-ui-theme";
+@import "jquery-ui/themes/base/dialog";
+@import "../shared/ng-tags-input.min";
+@import "assets/stylesheets/select2";
+@import "flatpickr/dist/flatpickr";
+@import "flatpickr/dist/themes/material_blue";
+@import "shortcut-buttons-flatpickr/dist/themes/light";
+
+@import "globals/functions";
+@import "globals/palette"; // admin_v3
+@import "globals/variables"; // admin_v3
+@import "globals/mixins";
+@import "mixins"; // admin_v3
+
+@import "plugins/font-awesome";
+
+@import "../shared/variables/layout";
+@import "../shared/variables/variables";
+@import "../shared/utilities";
+@import "shared/typography"; // admin_v3
+@import "shared/tables"; // admin_v3
+@import "shared/icons"; // admin_v3
+@import "shared/forms"; // admin_v3
+@import "shared/layout"; // admin_v3
+@import "shared/scroll_bar";
+
+@import "../shared/trix";
+
+@import "plugins/flatpickr-customization"; // admin_v3
+@import "plugins/powertip"; // admin_v3
+
+@import "sections/orders"; // admin_v3
+@import "sections/products";
+
+@import "hacks/mozilla";
+@import "hacks/opera";
+@import "hacks/ie";
+
+@import "components/actions"; // admin_v3
+@import "components/alert-box";
+@import "components/alert_row";
+@import "components/buttons"; // admin_v3
+@import "components/date-picker"; // admin_v3
+@import "components/dialogs";
+@import "components/input";
+@import "components/jquery_dialog";
+@import "components/messages"; // admin_v3
+@import "components/navigation"; // admin_v3
+@import "components/ng-cloak";
+@import "components/page_actions";
+@import "components/pagination"; // admin_v3
+@import "components/per_page_controls";
+@import "components/product_autocomplete";
+@import "components/progress";
+@import "components/save_bar";
+@import "components/sidebar"; // admin_v3
+@import "components/simple_modal";
+@import "components/states";
+@import "components/stripe_connect_button";
+@import "components/subscriptions_states";
+@import "components/table-filter";
+@import "components/table_loading";
+@import "components/timepicker";
+@import "components/todo";
+@import "components/tooltip";
+@import "components/wizard_progress";
+
+@import "pages/enterprise_form";
+@import "pages/subscription_form";
+@import "pages/subscription_line_items";
+@import "pages/subscription_review";
+
+@import "advanced_settings";
+@import "alert";
+@import "animations";
+@import "pages/change_type_form"; // admin_v3
+@import "connected_apps";
+@import "customers";
+@import "dashboard/dashboard_item"; // admin_v3
+@import "pages/dashboard-single-ent"; // admin_v3
+@import "dialog";
+@import "disabled";
+@import "components/dropdown"; // admin_v3
+@import "pages/edit_variant"; // admin_v3
+@import "pages/enterprise_index_panels"; // admin_v3
+@import "enterprises";
+@import "filters_and_controls";
+@import "grid";
+@import "icons";
+@import "index_panel_buttons";
+@import "index_panels";
+@import "modals";
+@import "offsets";
+@import "openfoodnetwork";
+@import "order_cycles";
+@import "orders";
+@import "pages/product_import"; // admin_v3
+@import "products";
+@import "products_v3";
+@import "question-mark-tooltip";
+@import "relationships";
+@import "reports";
+@import "components/select2"; // admin_v3
+@import "components/sidebar-item"; // admin_v3
+@import "side_menu";
+@import "tables";
+@import "tag_rules";
+@import "terms_of_service_files";
+@import "validation";
+@import "variant_overrides";
+@import "welcome";
+
+@import "shared/question-mark-icon";
+@import "~tom-select/src/scss/tom-select.default";
+@import "components/tom_select"; // admin_v3
+
+@import "modal_component/modal_component";
+@import "vertical_ellipsis_menu_component/vertical_ellipsis_menu_component"; // admin_v3 and only V3
+@import "tag_list_input_component/tag_list_input_component";
+@import "trix";
+
+@import "terms_of_service_banner"; // admin_v3
+
+@import "pages/product_preview"; // admin_v3
+@import "pages/dfc_product_imports"; // admin_v3

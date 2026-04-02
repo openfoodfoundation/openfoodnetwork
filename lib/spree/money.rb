@@ -6,8 +6,6 @@ module Spree
   class Money
     attr_reader :money
 
-    delegate :cents, to: :money
-
     def initialize(amount, options = {})
       @money = ::Monetize.parse([amount, options[:currency] || CurrentConfig.get(:currency)].join)
 
@@ -30,10 +28,6 @@ module Spree
     def to_html(options = { html_wrap: true })
       "<span style='white-space: nowrap;'>#{@money.format(@options.merge(options))}</span>"
         .html_safe # rubocop:disable Rails/OutputSafety
-    end
-
-    def format(options = {})
-      @money.format(@options.merge!(options))
     end
 
     def ==(other)

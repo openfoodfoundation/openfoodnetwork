@@ -350,6 +350,13 @@ nb:
       join_community: "Bli med"
     invite_manager:
       subject: "%{enterprise} har invitert deg til å være en administrator"
+  payment_mailer:
+    authorize_payment:
+      subject: "Vennligst autoriser betalingen din til %{distributor} på OFN"
+      instructions: "Din betaling av %{amount} til %{distributor} krever ytterligere godkjenning. Gå til følgende URL for å godkjenne betalingen din:"
+    authorization_required:
+      subject: "En betaling krever autorisasjon fra kunden"
+      message: "En betaling for bestilling %{order_number} krever ytterligere autorisasjon fra kunden. Kunden har fått beskjed via epost og betalingen vil fremstå som ventende til den er autorisert."
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
@@ -746,6 +753,11 @@ nb:
         balance_due: "Til Forfall"
       destroy:
         has_associated_subscriptions: "Sletting mislyktes: Denne kunden har aktive abonnementer. Avbryt dem først."
+    customer_account_transaction:
+      index:
+        description: Beskrivelse
+        amount: Antall
+        running_balance: Løpende balanse
     column_preferences:
       bulk_update:
         success: "Kolonnepreferansene er lagret"
@@ -1334,19 +1346,15 @@ nb:
           legend: "Brukere"
           email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
           resend: Send på nytt
-          owner: 'Eier'
           contact: "Kontakt"
+          owner: 'Eier'
           contact_tip: "Administrator som mottar bedriftsepost for bestillinger og varsler. Må ha en bekreftet epostadresse."
           owner_tip: Primærbrukeren ansvarlig for denne bedriften.
           notifications: Varslinger
           notifications_tip: Varslinger om bestillinger vil bli sendt til denne epostadressen.
           notifications_placeholder: f.eks. gustav@truffles.com
           notifications_note: 'Merk: En ny epostadresse må kanskje bekreftes før bruk'
-          managers: Administratorer
-          managers_tip: Andre brukere med tilgang til å administrere denne bedriften.
           invite_manager: "Inviter Administrator"
-          invite_manager_tip: "Inviter en uregistrert bruker til å registrere seg og bli administrator av denne bedriften."
-          add_unregistered_user: "Legg til en uregistrert bruker"
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
         vouchers:
@@ -1466,9 +1474,6 @@ nb:
         choose_starting_point: 'Velg din pakke:'
         profile: 'Profil'
         producer_profile: 'Produsentprofil'
-      invite_manager:
-        user_already_exists: "Brukeren eksisterer allerede"
-        error: "Noe gikk galt"
     order_cycles:
       loading_flash:
         loading_order_cycles: LASTER BESTILLINGSRUNDER
@@ -1900,6 +1905,11 @@ nb:
     schedules:
       destroy:
         associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
+    user_invitations:
+      new:
+        back: Tilbake
+        email: Epost
+        invite: Inviter
     vouchers:
       new:
         legend: Ny Kupong
@@ -2328,6 +2338,7 @@ nb:
   order_total: Sum bestilling
   order_payment: "Betaler via:"
   no_payment_required: "Ingen betaling påkrevd"
+  customer_credit: Kreditt
   order_billing_address: Fakturaadresse
   order_delivery_on: Levering på
   order_delivery_address: Leveringsadresse
@@ -2591,7 +2602,6 @@ nb:
   shops_signup_help: Vi er klar til å hjelpe.
   shops_signup_help_text: Du trenger bedre resultater. Du trenger nye kunder og logistikkpartnere. Du trenger å få din historie fortalt hos grossister, i dagligvaren og rundt kjøkkenbordet.
   shops_signup_detail: Detaljene.
-  orders: "Bestillinger"
   orders_fees: "Gebyrer..."
   orders_edit_title: "Handlekurv"
   orders_edit_headline: "Din handlekurv"
@@ -4574,13 +4584,6 @@ nb:
         subject: "Tilbakestill passordinstruksjonene"
       confirmation_instructions:
         subject: "Vennligst bekreft OFN-kontoen din"
-    payment_mailer:
-      authorize_payment:
-        subject: "Vennligst autoriser betalingen din til %{distributor} på OFN"
-        instructions: "Din betaling av %{amount} til %{distributor} krever ytterligere godkjenning. Gå til følgende URL for å godkjenne betalingen din:"
-      authorization_required:
-        subject: "En betaling krever autorisasjon fra kunden"
-        message: "En betaling for bestilling %{order_number} krever ytterligere autorisasjon fra kunden. Kunden har fått beskjed via epost og betalingen vil fremstå som ventende til den er autorisert."
     shipment_mailer:
       shipped_email:
         dear_customer: "Kjære Kunde,"
@@ -4666,6 +4669,10 @@ nb:
         transaction_history: Transaksjonshistorie
         authorisation_required: Autorisasjon kreves
         authorise: Autorisere
+      customer_account_transactions:
+        description: Beskrivelse
+        amount: Antall
+        running_balance: Løpende balanse
       open_orders:
         order: Bestilling
         shop: Butikk

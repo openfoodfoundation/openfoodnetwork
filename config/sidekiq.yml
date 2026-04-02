@@ -7,15 +7,8 @@
   - default
   - mailers
 
-:scheduler:
-  :schedule:
-    HeartbeatJob:
-      every: ["5m", first_in: "0s"]
-    SubscriptionPlacementJob:
-      every: "5m"
-    SubscriptionConfirmJob:
-      every: "5m"
-    TriggerOrderCyclesToOpenJob:
-      every: "5m"
-    OrderCycleClosingJob:
-      every: "5m"
+# This config is loaded by sidekiq before dotenv is loading our server config.
+# Therefore we load the schedule later. See:
+#
+# - config/initializers/sidekiq.rb
+# - config/sidekiq_scheduler.yml

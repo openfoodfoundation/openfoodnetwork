@@ -102,7 +102,7 @@ module Spree
       def sign_in_if_change_own_password
         return unless spree_current_user == @user && @user.password.present?
 
-        sign_in(@user, event: :authentication, bypass: true)
+        bypass_sign_in(@user)
       end
 
       def new_email_unconfirmed?

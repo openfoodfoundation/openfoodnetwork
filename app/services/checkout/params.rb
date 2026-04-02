@@ -14,7 +14,6 @@ module Checkout
       apply_strong_parameters
       set_pickup_address
       set_address_details
-      set_payment_amount
       set_existing_card
 
       @order_params
@@ -56,12 +55,6 @@ module Checkout
       else
         set_basic_details
       end
-    end
-
-    def set_payment_amount
-      return unless @order_params[:payments_attributes]
-
-      @order_params[:payments_attributes].first[:amount] = order.total
     end
 
     def set_existing_card

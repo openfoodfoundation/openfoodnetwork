@@ -38,6 +38,8 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :connected_apps, only: [:create, :destroy]
 
+      resources :user_invitations, only: [:new, :create]
+
       resources :producer_properties do
         post :update_positions, on: :collection
       end
@@ -80,6 +82,14 @@ Openfoodnetwork::Application.routes.draw do
     delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
     delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
     post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
+    post 'products/create_linked_variant', to: 'products_v3#create_linked_variant', as: 'create_linked_variant'
+
+    scope :ajax_search, as: :ajax_search, controller: :ajax_search do
+      get :producers
+      get :categories
+      get :tax_categories
+    end
+
     resources :product_preview, only: [:show]
 
     resources :variant_overrides do
@@ -89,7 +99,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :create, :update, :destroy, :show]
+    resources :customers, only: [:index, :create, :update, :destroy, :show] do
+      resources :customer_account_transaction, only: [:index]
+    end
 
     resources :tag_rules, only: [] do
       get :map_by_tag, on: :collection, format: :json

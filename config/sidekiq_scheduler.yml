@@ -1,0 +1,36 @@
+# Configure sidekiq-scheduler to run jobs.
+#
+# - https://github.com/sidekiq-scheduler/sidekiq-scheduler
+#
+# > Note that every and interval count from when the Sidekiq process (re)starts.
+# > So every: '48h' will never run if the Sidekiq process is restarted daily,
+# > for example. You can do every: ['48h', first_in: '0s'] to make the job run
+# > immediately after a restart, and then have the worker check when it was
+# > last run.
+#
+# Therefore, we use `cron` for jobs that should run at certain times like backups.
+HeartbeatJob:
+  every: ["5m", first_in: "0s"]
+SubscriptionPlacementJob:
+  every: "5m"
+SubscriptionConfirmJob:
+  every: "5m"
+TriggerOrderCyclesToOpenJob:
+  every: "5m"
+OrderCycleClosingJob:
+  every: "5m"
+
+backup:
+  class: "RakeJob"
+  args: ["db2fog:backup"]
+  cron: "0 */4 * * *" # every 4 hours
+  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false) && true %>
+backup_clean:
+  class: "RakeJob"
+  args: ["db2fog:clean"]
+  cron: "45 2 * * *" # every day at 2:45am
+  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false) && true %>
+ofn_clean:
+  class: "RakeJob"
+  args: ["ofn:data:remove_transient_data"]
+  cron: "30 4 1 * *" # every month on the first at 4:30am

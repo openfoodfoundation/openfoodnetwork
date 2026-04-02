@@ -48,8 +48,16 @@
             %h5
               = t :orders_form_total
           %td.text-right
-            %h5.order-total.grand-total= @order.display_total
+            %h5.order-total.grand-total= @order.display_total.to_html
           %td
+
+        - if @paid_with_credit.present?
+          %tr
+            %td.text-right{colspan: "3"}
+              %strong
+                = t :customer_credit
+            %td.text-right#customer-credit
+              %span.order-total= Spree::Money.new(-1 * @paid_with_credit).to_html
 
         - if @order.total_tax > 0
           %tr

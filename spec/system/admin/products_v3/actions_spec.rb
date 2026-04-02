@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-RSpec.describe 'As an enterprise user, I can manage my products' do
+RSpec.describe 'As an enterprise user, I can perform actions on the products screen' do
   include AdminHelper
   include WebHelper
   include AuthenticationHelper
@@ -13,22 +13,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
   before do
     login_as user
-  end
-
-  let(:producer_search_selector) { 'input[placeholder="Select producer"]' }
-  let(:categories_search_selector) { 'input[placeholder="Select category"]' }
-  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
-
-  describe "with no products" do
-    before { visit admin_products_url }
-    it "can see the new product page" do
-      expect(page).to have_content "Bulk Edit Products"
-      expect(page).to have_text "No products found"
-      # displays buttons to add products with the correct links
-      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
-      expect(page).to have_link(class: "button", text: "Import multiple products",
-                                href: admin_product_import_path)
-    end
   end
 
   describe "column selector" do
@@ -105,8 +89,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     end
   end
 
-  describe "columns"
-
   describe "Changing producers, category and tax category" do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
@@ -116,58 +98,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
-    context "when they are under 11" do
-      before do
-        create_list(:supplier_enterprise, 9, users: [user])
-        create_list(:tax_category, 9)
-        create_list(:taxon, 2)
-
-        visit admin_products_url
-      end
-
-      it "should not display search input, change the producers, category and tax category" do
-        producer_to_select = random_producer(variant_a1)
-        category_to_select = random_category(variant_a1)
-        tax_category_to_select = random_tax_category
-
-        within row_containing_name(variant_a1.display_name) do
-          validate_tomselect_without_search!(
-            page, "Producer",
-            producer_search_selector
-          )
-          tomselect_select(producer_to_select, from: "Producer")
-        end
-
-        within row_containing_name(variant_a1.display_name) do
-          validate_tomselect_without_search!(
-            page, "Category",
-            categories_search_selector
-          )
-          tomselect_select(category_to_select, from: "Category")
-
-          validate_tomselect_without_search!(
-            page, "Tax Category",
-            tax_categories_search_selector
-          )
-          tomselect_select(tax_category_to_select, from: "Tax Category")
-        end
-
-        click_button "Save changes"
-
-        expect(page).to have_content "Changes saved"
-
-        variant_a1.reload
-        expect(variant_a1.supplier.name).to eq(producer_to_select)
-        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
-        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
-      end
-    end
-
-    context "when they are over 11" do
+    context "when there are products" do
       before do
         create_list(:supplier_enterprise, 11, users: [user])
         create_list(:tax_category, 11)
-        create_list(:taxon, 11)
+        build_list(:taxon, 11).each_with_index do |taxon, i|
+          taxon.name += " #{i}"
+          taxon.save!
+        end
 
         visit admin_products_url
       end
@@ -178,25 +116,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         tax_category_to_select = random_tax_category
 
         within row_containing_name(variant_a1.display_name) do
-          validate_tomselect_with_search!(
-            page, "Producer",
-            producer_search_selector
+          tomselect_search_and_select(producer_to_select, from: "Producer", remote_search: true)
+          tomselect_search_and_select(category_to_select, from: "Category", remote_search: true)
+          tomselect_search_and_select(
+            tax_category_to_select,
+            from: "Tax Category",
+            remote_search: true
           )
-          tomselect_search_and_select(producer_to_select, from: "Producer")
-
-          sleep(0.1)
-          validate_tomselect_with_search!(
-            page, "Category",
-            categories_search_selector
-          )
-          tomselect_search_and_select(category_to_select, from: "Category")
-
-          sleep(0.1)
-          validate_tomselect_with_search!(
-            page, "Tax Category",
-            tax_categories_search_selector
-          )
-          tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
         end
 
         click_button "Save changes"
@@ -273,24 +199,24 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
       describe "Cloning product" do
         it "shows the cloned product on page when clicked on the cloned option" do
-          # TODO, variant supplier missing, needs to be copied from variant and not product
-          within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
-
-            # Products does not include the cloned product.
-            expect(input_content).not_to match /COPY OF Apples/
-          end
-
           click_product_clone "Apples"
 
           expect(page).to have_content "Successfully cloned the product"
           within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
+            # Product list includes the cloned product.
+            expect(all_input_values).to match /COPY OF Apples/
 
-            # Products include the cloned product.
-            expect(input_content).to match /COPY OF Apples/
+            # And I can perform actions on the new product
+            within row_containing_name "COPY OF Apples" do
+              page.find(".vertical-ellipsis-menu").click
+              expect(page).to have_link "Edit"
+              expect(page).to have_link "Clone"
+              # expect(page).to have_link "Delete" # it's not a proper link :/
+
+              fill_in "Name", with: "My copy of Apples"
+            end
+
+            click_button "Save changes"
           end
         end
       end
@@ -307,6 +233,88 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         within "table.products" do
           # Products does not include the cloned product.
           expect(all_input_values).not_to match /COPY OF #{'L' * 254}/
+        end
+      end
+    end
+
+    describe "Create linked variant" do
+      let!(:variant) {
+        create(:variant, display_name: "My box", supplier: producer)
+      }
+      let!(:other_producer) { create(:supplier_enterprise) }
+      let!(:other_variant) {
+        create(:variant, display_name: "My friends box", supplier: other_producer)
+      }
+      let!(:enterprise_relationship) {
+        # Other producer grants me access to manage their variant
+        create(:enterprise_relationship, parent: other_producer, child: producer,
+                                         permissions_list: [:manage_products])
+      }
+
+      context "with create_linked_variants permission for my, and other's variants" do
+        it "creates a linked variant" do
+          create(:enterprise_relationship, parent: producer, child: producer,
+                                           permissions_list: [:create_linked_variants])
+          enterprise_relationship.permissions.create! name: :create_linked_variants
+
+          visit admin_products_url
+
+          # Check my own variant
+          within row_containing_name("My box") do
+            page.find(".vertical-ellipsis-menu").click
+
+            expect(page).to have_link "Create linked variant"
+          end
+
+          # Create linked variant sourced from my friend
+          within row_containing_name("My friends box") do
+            page.find(".vertical-ellipsis-menu").click
+
+            click_link "Create linked variant"
+          end
+
+          expect(page).to have_content "Successfully created linked variant"
+
+          within "table.products" do
+            # There are now two copies
+            expect(all_input_values).to match /My friends box.*My friends box/
+            # One of them is designated as a linked variant
+            expect(page).to have_content "🔗"
+
+            last_box = page.all(row_containing_name("My friends box")).last
+            # Close action menu (shouldn't need this, it should close itself)
+            last_box.click
+
+            # And I can perform actions on the new product
+            within last_box do
+              page.find(".vertical-ellipsis-menu").click
+              expect(page).to have_link "Edit"
+              # expect(page).to have_link "Clone" # tofix: menu is partially obscured
+              # expect(page).to have_link "Delete" # it's not a proper link
+
+              fill_in "Name", with: "My copy of Apples"
+            end
+            click_button "Save changes"
+
+            # initially obscured by the previous message, then disappears before capybara sees it.
+            # expect(page).to have_content "Changes saved"
+          end
+        end
+      end
+
+      context "without create_linked_variants permission" do
+        it "does not show the option in the menu" do
+          visit admin_products_url
+
+          within row_containing_name("My box") do
+            page.find(".vertical-ellipsis-menu").click
+            expect(page).not_to have_link "Create linked variant"
+          end
+
+          within row_containing_name("My friends box") do
+            page.find(".vertical-ellipsis-menu").click
+            expect(page).not_to have_link "Create linked variant"
+          end
         end
       end
     end
@@ -537,90 +545,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         expect(page).not_to have_content("Product preview")
       end
-    end
-  end
-
-  context "as an enterprise manager" do
-    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
-    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
-    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
-    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
-    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
-    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
-    let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
-    }
-    let(:product_supplied_inactive) {
-      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
-    }
-
-    let!(:supplier_permitted_relationship) do
-      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
-                                       permissions_list: [:manage_products])
-    end
-
-    before do
-      enterprise_user = create(:user)
-      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
-      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
-      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
-
-      login_as enterprise_user
-    end
-
-    it "shows only products that I supply" do
-      visit spree.admin_products_path
-
-      # displays permitted product list only
-      expect(page).to have_selector row_containing_name(product_supplied.name)
-      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
-      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
-    end
-
-    it "shows only suppliers that I manage or have permission to" do
-      visit spree.admin_products_path
-
-      within row_containing_placeholder(product_supplied.name) do
-        expect(page).to have_select(
-          '_products_0_variants_attributes_0_supplier_id',
-          options: [
-            'Select producer',
-            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
-          ], selected: supplier_managed1.name
-        )
-      end
-
-      within row_containing_placeholder(product_supplied_permitted.name) do
-        expect(page).to have_select(
-          '_products_1_variants_attributes_0_supplier_id',
-          options: [
-            'Select producer',
-            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
-          ], selected: supplier_permitted.name
-        )
-      end
-    end
-
-    it "shows inactive products that I supply" do
-      product_supplied_inactive
-
-      visit spree.admin_products_path
-
-      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
-    end
-
-    it "allows me to update a product" do
-      visit spree.admin_products_path
-
-      within row_containing_name(product_supplied.name) do
-        fill_in "Name", with: "Pommes"
-      end
-      click_button "Save changes"
-
-      expect(page).to have_content "Changes saved"
-      expect(page).to have_selector row_containing_name("Pommes")
     end
   end
 

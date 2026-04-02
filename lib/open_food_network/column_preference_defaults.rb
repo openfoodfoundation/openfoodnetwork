@@ -29,6 +29,7 @@ module OpenFoodNetwork
     def customers_index_columns
       node = 'admin.customers.index'
       {
+        id: { name: I18n.t("#{node}.id"), visible: false },
         email: { name: I18n.t("admin.email"), visible: true },
         first_name: { name: I18n.t("admin.first_name"), visible: true },
         last_name: { name: I18n.t("admin.last_name"), visible: true },
@@ -36,7 +37,8 @@ module OpenFoodNetwork
         tags: { name: I18n.t("admin.tags"), visible: true },
         bill_address: { name: I18n.t("#{node}.bill_address"), visible: true },
         ship_address: { name: I18n.t("#{node}.ship_address"), visible: true },
-        balance: { name: I18n.t("#{node}.balance"), visible: true }
+        balance: { name: I18n.t("#{node}.balance"), visible: true },
+        credit: { name: I18n.t("#{node}.credit"), visible: true }
       }
     end
 

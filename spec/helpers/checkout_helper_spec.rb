@@ -1,18 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe CheckoutHelper do
-  it "generates html for validated inputs" do
-    expect(helper).to receive(:render).with(
-      "shared/validated_input",
-      name: "test",
-      path: "foo",
-      attributes: { :required => true, :type => :email, :name => "foo", :id => "foo",
-                    "ng-model" => "foo", "ng-class" => "{error: !fieldValid('foo')}" }
-    )
-
-    helper.validated_input("test", "foo", type: :email)
-  end
-
   describe "#display_checkout_tax_total" do
     subject(:display_checkout_tax_total) { helper.display_checkout_tax_total(order) }
 
@@ -191,6 +179,27 @@ RSpec.describe CheckoutHelper do
 
         expect(adjustments).to include return_adjustment
       end
+    end
+  end
+
+  describe "#stripe_card_options" do
+    let(:year) { Time.zone.now.year + 1 }
+    let(:card) { create(:credit_card, cc_type: 'visa', last_digits: '1111', month: 1, year:) }
+    let(:cards) { [card] }
+
+    it "formats credit cards for Stripe options" do
+      options = helper.stripe_card_options(cards)
+
+      expect(options).to eq([
+                              ["visa 1111 Exp:01/#{year}", card.id]
+                            ])
+    end
+
+    it "zero-pads the month" do
+      card.update(month: 5)
+      options = helper.stripe_card_options(cards)
+
+      expect(options.first.first).to match(%r{05/#{year}})
     end
   end
 end

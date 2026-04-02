@@ -210,5 +210,23 @@ RSpec.describe CustomersWithBalanceQuery do
         expect(customer.balance_value).to eq(0)
       end
     end
+
+    context "with customer payments" do
+      it 'returns the customer available credit' do
+        create(:customer_account_transaction, customer:, amount: 10.00)
+        create(:customer_account_transaction, customer:, amount: -2.00)
+        create(:customer_account_transaction, customer:, amount: 5.00)
+
+        customer_result = result.first
+        expect(customer_result.credit_value).to eq(13.00)
+      end
+    end
+
+    context "with no customer payments" do
+      it 'returns 0 for the customer available credit' do
+        customer_result = result.first
+        expect(customer_result.credit_value).to eq(0.00)
+      end
+    end
   end
 end

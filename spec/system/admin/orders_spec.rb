@@ -100,10 +100,10 @@ RSpec.describe '
       end
 
       it "order cycles appear in descending order by close date on orders page" do
-        tomselect_open('q_order_cycle_id_in').click
-
-        expect(find('#q_order_cycle_id_in',
-                    visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+        open_tomselect_to_validate!(page, 'q_order_cycle_id_in') do
+          oc_html = find('#q_order_cycle_id_in', visible: :all)[:innerHTML]
+          expect(oc_html).to have_content(/.*Four.*Three.*Two.*Five/m)
+        end
       end
 
       it "filter by multiple order cycles" do
@@ -524,8 +524,8 @@ RSpec.describe '
 
       it "changes pagination and displays entries" do
         within ".pagination" do
-          expect(page).not_to have_css('button.page.prev')
-          expect(page).to have_css('button.page.next')
+          expect(page).not_to have_css('a.page.prev')
+          expect(page).to have_css('a.page.next')
           click_on "2"
         end
         # table displays 4 entries
@@ -534,8 +534,8 @@ RSpec.describe '
         end
         expect(page).to have_content "19 Results found. Viewing 16 to 19."
         within ".pagination" do
-          expect(page).to have_css('button.page.prev')
-          expect(page).not_to have_css('button.page.next')
+          expect(page).to have_css('a.page.prev')
+          expect(page).not_to have_css('a.page.next')
         end
       end
     end

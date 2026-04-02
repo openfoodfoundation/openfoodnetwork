@@ -83,31 +83,6 @@ module CheckoutHelper
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end
 
-  def validated_input(name, path, args = {})
-    attributes = {
-      :required => true,
-      :type => :text,
-      :name => path,
-      :id => path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
-    }.merge args
-
-    render "shared/validated_input", name:, path:, attributes:
-  end
-
-  def validated_select(name, path, options, args = {})
-    attributes = {
-      :required => true,
-      :id => path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
-    }.merge args
-
-    render "shared/validated_select", name:, path:, options:,
-                                      attributes:
-  end
-
   def payment_method_price(method, order)
     price = method.compute_amount(order)
     if price == 0
@@ -139,7 +114,7 @@ module CheckoutHelper
   def stripe_card_options(cards)
     cards.map do |cc|
       [
-        "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:" \
+        "#{cc.cc_type} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:" \
         "#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id
       ]
     end

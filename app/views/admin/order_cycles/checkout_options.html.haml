@@ -68,11 +68,11 @@
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
                           data: ({ "checked-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
-                      = distributor_payment_method.payment_method.name
+                      = distributor_payment_method.payment_method.display_name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled
                     = check_box_tag nil, nil, false, disabled: true
-                    = payment_method.name
+                    = payment_method.display_name
                     = "(#{t('.back_end')})"
                 - if distributor.payment_methods.available.none?
                   %p

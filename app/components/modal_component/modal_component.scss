@@ -9,6 +9,11 @@
     padding: 1.2rem;
   }
 
+  &.big {
+    max-height: 50em;
+    overflow: auto;
+  }
+
   h1,
   h2,
   h3,

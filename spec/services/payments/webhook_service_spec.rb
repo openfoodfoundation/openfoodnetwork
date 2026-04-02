@@ -56,6 +56,7 @@ RSpec.describe Payments::WebhookService do
             }
           },
           order: {
+            number: order.number,
             total: order.total,
             currency: order.currency,
             line_items: line_items

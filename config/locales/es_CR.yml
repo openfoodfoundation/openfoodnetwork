@@ -593,6 +593,11 @@ es_CR:
         balance_due: "Saldo adeudado"
       destroy:
         has_associated_subscriptions: "Error al eliminar: este cliente tiene suscripciones activas. Cancelarlos primero."
+    customer_account_transaction:
+      index:
+        description: Descripción
+        amount: Cantidad
+        running_balance: Saldo actual
     contents:
       edit:
         title: Contenido
@@ -1078,19 +1083,15 @@ es_CR:
           legend: "Usuarios"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
-          owner: 'Propietaria'
           contact: "Contacto"
+          owner: 'Propietaria'
           contact_tip: "El administrador que recibirá los correos electrónicos de la empresa para pedidos y notificaciones. Debe tener una dirección de correo electrónico confirmada."
           owner_tip: La principal usaría responsable para esta organización.
           notifications: Notificaciones
           notifications_tip: Las Notificaciones sobre los pedidos se enviarán a esta dirección de correo.
           notifications_placeholder: ej. gustav@truffles.com
           notifications_note: 'Nota: Una nueva dirección de correo debe ser confirmada. '
-          managers: Gestoras
-          managers_tip: Otras usuarias con permiso para gestionar esta organización.
           invite_manager: "Invitar administrador"
-          invite_manager_tip: "Invite a un usuario no registrado a registrarse y convertirse en administrador de esta organización."
-          add_unregistered_user: "Agregar un usuario no registrado"
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
@@ -1165,9 +1166,6 @@ es_CR:
         choose_starting_point: 'Seleccione su perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil de Productor'
-      invite_manager:
-        user_already_exists: "El usuario ya existe"
-        error: "Algo salió mal"
     order_cycles:
       loading_flash:
         loading_order_cycles: Cargando ciclos de pedido
@@ -1542,6 +1540,11 @@ es_CR:
     schedules:
       destroy:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
+    user_invitations:
+      new:
+        back: Atrás
+        email: Correo electrónico
+        invite: Invitar
     vouchers:
       new:
         back: Atrás
@@ -1935,6 +1938,7 @@ es_CR:
   order_not_paid: NO PAGADO
   order_total: Pedido total
   order_payment: "Pagando con:"
+  customer_credit: Crédito
   order_billing_address: Dirección de cobro
   order_delivery_on: Entregar en
   order_delivery_address: Dirección de entrega
@@ -2195,7 +2199,6 @@ es_CR:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: "Pedidos"
   orders_fees: "Comisiones..."
   orders_edit_title: "Carrito de compras"
   orders_edit_headline: "Su carrito de compras"
@@ -4044,6 +4047,10 @@ es_CR:
         past_orders: Pedidos anteriores
       transactions:
         transaction_history: Historial de transacciones
+      customer_account_transactions:
+        description: Descripción
+        amount: Cantidad
+        running_balance: Saldo actual
       open_orders:
         order: Pedido
         shop: Tienda

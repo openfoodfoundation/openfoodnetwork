@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe Spree::Admin::PaymentsController do
-  let(:user) { order.user }
   let(:order) { create(:completed_order_with_fees) }
+  let(:user) { create(:enterprise_user, enterprises: [order.distributor]) }
 
   before do
-    sign_in create(:admin_user)
+    sign_in user
   end
 
   describe "POST /admin/orders/:order_number/payments.json" do
@@ -157,8 +157,6 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "with no payment source" do
       it "redirect to payments page" do
-        allow(payment).to receive(:payment_source).and_return(nil)
-
         put(
           "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/fire?e=void",
           params: {},
@@ -169,6 +167,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       end
     end
 
+    # TODO with internal_void event
     context "with 'void' event" do
       before do
         allow(Spree::Payment).to receive(:find).and_return(payment)
@@ -356,6 +355,50 @@ RSpec.describe Spree::Admin::PaymentsController do
         )
 
         expect(response).to redirect_to(spree.admin_order_payments_url(order))
+      end
+    end
+  end
+
+  describe "POST /admin/orders/:order_number/payments/credit_customer" do
+    let(:success_response) {
+      Orders::CustomerCreditService::Response.new(success: true, message: "Refund successful!")
+    }
+    let(:customer_credit_service_mock) { instance_double(Orders::CustomerCreditService) }
+
+    before do
+      allow(customer_credit_service_mock).to receive(:apply)
+      expect(Orders::CustomerCreditService).to receive(:new).and_return(
+        customer_credit_service_mock
+      )
+    end
+
+    it "creates a customer credit payment" do
+      expect(customer_credit_service_mock).to receive(:refund).and_return(success_response)
+
+      post("/admin/orders/#{order.number}/payments/credit_customer")
+    end
+
+    it "redirect to payments page" do
+      expect(customer_credit_service_mock).to receive(:refund).and_return(success_response)
+
+      post("/admin/orders/#{order.number}/payments/credit_customer")
+
+      expect(response).to redirect_to(spree.admin_order_payments_path(order))
+      expect(flash[:success]).to eq "Customer has been successfully credited!"
+    end
+
+    context "when failing to create payment" do
+      let(:failure_response) {
+        Orders::CustomerCreditService::Response.new(success: false, message: "Some error")
+      }
+
+      it "redirects to payments page" do
+        expect(customer_credit_service_mock).to receive(:refund).and_return(failure_response)
+
+        post("/admin/orders/#{order.number}/payments/credit_customer")
+
+        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(flash[:error]).to eq "Some error"
       end
     end
   end

@@ -364,6 +364,19 @@ RSpec.describe Spree::Ability do
                                         for: p2.variants.first)
       end
 
+      describe "create_linked_variant" do
+        it "should not be able to create linked variant without permission" do
+          is_expected.not_to have_ability([:create_linked_variant], for: p_related.variants.first)
+        end
+
+        it "should be able to create linked variant when granted permission" do
+          create(:enterprise_relationship, parent: s_related, child: s1,
+                                           permissions_list: [:create_linked_variants])
+
+          is_expected.to have_ability([:create_linked_variant], for: p_related.variants.first)
+        end
+      end
+
       it "should not be able to access admin actions on orders" do
         is_expected.not_to have_ability([:admin], for: Spree::Order)
       end
@@ -634,6 +647,11 @@ RSpec.describe Spree::Ability do
                                     for: Spree::Payment)
       end
 
+      it "is able to credit a customer" do
+        is_expected.to have_ability([:credit_customer], for: Spree::Order)
+        is_expected.to have_ability([:credit_customer], for: Spree::Payment)
+      end
+
       it "should be able to read/write Shipments on a product" do
         is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
                                     for: Spree::Shipment)
@@ -697,6 +715,10 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
       end
 
+      it "is able to read/write customer account transaction" do
+        is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+      end
+
       context "for a given order_cycle" do
         let!(:order_cycle) { create(:simple_order_cycle, coordinator: d2) }
         let!(:exchange){
@@ -719,6 +741,19 @@ RSpec.describe Spree::Ability do
 
       it "can request permitted enterprise fees for an order cycle" do
         is_expected.to have_ability([:for_order_cycle], for: EnterpriseFee)
+      end
+
+      describe "create_linked_variant" do
+        it "should not be able to create linked variant without permission" do
+          is_expected.not_to have_ability([:create_linked_variant], for: p_related.variants.first)
+        end
+
+        it "should be able to create linked variant when granted permission" do
+          create(:enterprise_relationship, parent: s_related, child: d1,
+                                           permissions_list: [:create_linked_variants])
+
+          is_expected.to have_ability([:create_linked_variant], for: p_related.variants.first)
+        end
       end
     end
 
@@ -794,6 +829,19 @@ RSpec.describe Spree::Ability do
 
       it "has the ability to manage vouchers" do
         is_expected.to have_ability([:admin, :create], for: Voucher)
+      end
+
+      describe "create_linked_variant for own enterprise" do
+        it "should not be able to create own sourced variant without permission" do
+          is_expected.not_to have_ability([:create_linked_variant], for: p1.variants.first)
+        end
+
+        it "should be able to create own sourced variant when granted self permission" do
+          create(:enterprise_relationship, parent: s1, child: s1,
+                                           permissions_list: [:create_linked_variants])
+
+          is_expected.to have_ability([:create_linked_variant], for: p1.variants.first)
+        end
       end
     end
 

@@ -20,6 +20,10 @@ module OpenFoodNetwork
       (selectable_locales + [default_locale, source_locale]).uniq
     end
 
+    def self.fallbacks
+      [default_locale, source_locale].uniq
+    end
+
     # The default locale that is used when the user doesn't have a preference.
     def self.default_locale
       ENV["LOCALE"] || ENV["I18N_LOCALE"] || source_locale

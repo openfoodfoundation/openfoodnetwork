@@ -186,6 +186,13 @@ pt_BR:
       join_community: "Faça parte da comunidade"
     invite_manager:
       subject: "%{enterprise}convidou você para ser um gerente"
+  payment_mailer:
+    authorize_payment:
+      subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
+      instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
+    authorization_required:
+      subject: "Um pagamento requer autorização do comprador"
+      message: "Um pagamento para o pedido %{order_number}requer uma autorização adicional por parte do comprador. O comprador foi notificado via email e o pagamento irá aparecer como pendente até que seja autorizado. "
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de pedidos para%{producer}"
@@ -525,6 +532,11 @@ pt_BR:
         guest_label: "Checkout de convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Devedor"
+    customer_account_transaction:
+      index:
+        description: Descrição
+        amount: Montante
+        running_balance: Balanço corrente
     contents:
       edit:
         title: Conteúdo
@@ -973,19 +985,15 @@ pt_BR:
           legend: "Usuários"
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
-          owner: 'Proprietário'
           contact: "Contato"
+          owner: 'Proprietário'
           contact_tip: "O gerente que receberá e-mails corporativos para pedidos e notificações. Deve ter um endereço de e-mail confirmado."
           owner_tip: O usuário principal é responsável por esta iniciativa.
           notifications: Notificações
           notifications_tip: Notificações sobre pedidos serão enviadas para este endereço de e-mail.
           notifications_placeholder: 'ex: gustavo@trufas.com.br'
           notifications_note: 'Nota: um novo endereço de e-mail pode precisar ser confirmado antes do uso'
-          managers: Administradores
-          managers_tip: Os outros usuários com permissão para gerenciar esta iniciativa.
           invite_manager: "Convidar gerente"
-          invite_manager_tip: "Convide um usuário não registrado para se inscrever e se tornar um gerente desta empresa."
-          add_unregistered_user: "Adicionar um usuário não registrado"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
         vouchers:
@@ -1059,9 +1067,6 @@ pt_BR:
         choose_starting_point: 'Escolha o seu tipo de perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil Simples'
-      invite_manager:
-        user_already_exists: "Usuário já existe"
-        error: "Algo deu errado"
     order_cycles:
       loading_flash:
         loading_order_cycles: CARREGANDO CICLOS DE PEDIDOS
@@ -1412,6 +1417,11 @@ pt_BR:
     schedules:
       destroy:
         associated_subscriptions_error: Esta lista não pode ser excluída porque possui assinaturas associadas.
+    user_invitations:
+      new:
+        back: Voltar
+        email: E-mail
+        invite: Convidar
     vouchers:
       new:
         back: Voltar
@@ -1769,6 +1779,7 @@ pt_BR:
   order_not_paid: NÃO PAGO
   order_total: Total do pedido
   order_payment: "Pagando com:"
+  customer_credit: Crédito
   order_billing_address: Endereço de fatura
   order_delivery_on: Entrega em
   order_delivery_address: Endereço para entrega
@@ -2027,7 +2038,6 @@ pt_BR:
   shops_signup_help: Estamos prontos para ajudar
   shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
   shops_signup_detail: Aqui está o detalhe.
-  orders: "Encomendas"
   orders_fees: "Taxas..."
   orders_edit_title: "Carrinho de compras"
   orders_edit_headline: "seu carrinho de compras"
@@ -3862,13 +3872,6 @@ pt_BR:
         subject: "Instruções para redefinição de senha"
       confirmation_instructions:
         subject: "Confirme sua conta na Ajunta"
-    payment_mailer:
-      authorize_payment:
-        subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
-        instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
-      authorization_required:
-        subject: "Um pagamento requer autorização do comprador"
-        message: "Um pagamento para o pedido %{order_number}requer uma autorização adicional por parte do comprador. O comprador foi notificado via email e o pagamento irá aparecer como pendente até que seja autorizado. "
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"
@@ -3939,6 +3942,10 @@ pt_BR:
         transaction_history: Histórico de transações
         authorisation_required: Requer Autorização
         authorise: Autorizar
+      customer_account_transactions:
+        description: Descrição
+        amount: Montante
+        running_balance: Balanço corrente
       open_orders:
         order: Pedido
         shop: Loja

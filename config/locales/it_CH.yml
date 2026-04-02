@@ -243,6 +243,13 @@ it_CH:
       join_community: "Unisciti alla community"
     invite_manager:
       subject: "%{enterprise} ti a invitato ad essere un referente"
+  payment_mailer:
+    authorize_payment:
+      subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
+      instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
+    authorization_required:
+      subject: "Un pagamento richiede l'autorizzazione del cliente"
+      message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
   producer_mailer:
     order_cycle:
       subject: "Resoconto degli ordini per %{producer}"
@@ -586,6 +593,11 @@ it_CH:
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
         balance_due: "Da pagare"
+    customer_account_transaction:
+      index:
+        description: Descrizione
+        amount: Quantità
+        running_balance: Bilancio corrente
     contents:
       edit:
         title: Contenuto
@@ -1061,19 +1073,15 @@ it_CH:
           legend: "Utenti"
           email_confirmation_notice_html: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
           resend: Invia di nuovo
-          owner: 'Proprietario'
           contact: "Contatto"
+          owner: 'Proprietario'
           contact_tip: "Il referente che riceverà le mail dell'azienda per le gentili richieste e le notifiche. Deve essere un indirizzo mail confermato."
           owner_tip: L'utente responsabile per questa azienda.
           notifications: Notifiche
           notifications_tip: Le notifiche riguardanti gli ordini saranno inviate a questo indirizzo mail
           notifications_placeholder: es. gustav@gmail.com
           notifications_note: 'Nota: se inserisci un nuovo indirizzo mail, ti sarà richiesto di confermarlo prima dell''uso.'
-          managers: Referenti
-          managers_tip: Altri utenti abilitati a gestire questa azienda.
           invite_manager: "Invita referente"
-          invite_manager_tip: "Invita un utente non registrato a registrarsi e diventare referente per questa azienda."
-          add_unregistered_user: "Aggiungi un utente non registrato"
           email_confirmed: "Email confermata"
           email_not_confirmed: "Email non confermata"
         vouchers:
@@ -1148,9 +1156,6 @@ it_CH:
         choose_starting_point: 'Scegli il tuo "pacchetto" OFN (tipo di profilo):'
         profile: 'Profilo'
         producer_profile: 'Profilo produttore'
-      invite_manager:
-        user_already_exists: "L'Utente esiste già"
-        error: "Qualcosa è andato storto"
     order_cycles:
       loading_flash:
         loading_order_cycles: CARICAMENTO CICLI DI RICHIESTE
@@ -1514,6 +1519,11 @@ it_CH:
     schedules:
       destroy:
         associated_subscriptions_error: Questa programmazione non può essere cancellata perché ha una sottoscrizione associata
+    user_invitations:
+      new:
+        back: Indietro
+        email: Email
+        invite: Invita
     vouchers:
       new:
         back: Indietro
@@ -1907,6 +1917,7 @@ it_CH:
   order_not_paid: NON PAGATO
   order_total: Importo totale
   order_payment: "Metodo di Pagamento:"
+  customer_credit: Credito
   order_billing_address: Indirizzo di fatturazione
   order_delivery_on: Consegna il
   order_delivery_address: Indirizzo di consegna
@@ -2166,7 +2177,6 @@ it_CH:
   shops_signup_help: Siamo pronti ad aiutare.
   shops_signup_help_text: Ti serve un ritorno migliore. Ti servono nuovi compratori e partner logistici. Ti serve che la tua storia sia raccontata attraverso l'ingrosso, il dettaglio e la tavola della cucina.
   shops_signup_detail: Ecco il dettaglio.
-  orders: "Gentili richieste"
   orders_fees: "Commissioni..."
   orders_edit_title: "Carrello"
   orders_edit_headline: "Il tuo carrello"
@@ -4036,13 +4046,6 @@ it_CH:
         subject: "Istruzioni per il reset della password"
       confirmation_instructions:
         subject: "Per favore conferma il tuo account OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Per favore autorizza il tuo pagamento a %{distributor} su OFN"
-        instructions: "Il tuo pagamento di %{amount} a %{distributor} richiede ulteriore autentificazione. Per favore visita il seguente URL per autorizzare il tuo pagamento:  "
-      authorization_required:
-        subject: "Un pagamento richiede l'autorizzazione del cliente"
-        message: "Un pagamento per l'ordine %{order_number} richiede una ulteriore autorizzazione da parte del cliente. Il cliente è stato avvisato tramite e-mail e il pagamento apparirà come in sospeso fino a quando non sarà autorizzato."
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Cliente,"
@@ -4115,6 +4118,10 @@ it_CH:
         transaction_history: Storico Transazioni
         authorisation_required: Autorizzazione richiesta
         authorise: Autorizza
+      customer_account_transactions:
+        description: Descrizione
+        amount: Quantità
+        running_balance: Bilancio corrente
       open_orders:
         order: Gentile Richiesta
         shop: Negozio

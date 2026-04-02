@@ -273,6 +273,13 @@ ar:
       join_community: "انظم إلى المجتمع"
     invite_manager:
       subject: "تلقيت دعوة من %{enterprise} لتصبح مديرًا"
+  payment_mailer:
+    authorize_payment:
+      subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
+      instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
+    authorization_required:
+      subject: "يتطلب الدفع إذنًا من العميل"
+      message: "يتطلب الدفع للطلب %{order_number} تفويضًا إضافيًا من العميل. تم إخطار العميل عبر البريد الإلكتروني وسيظهر الدفع على أنه معلق حتى يتم التصريح به."
   producer_mailer:
     order_cycle:
       subject: "تقرير دورة الطلبية لـ %{producer}"
@@ -625,6 +632,11 @@ ar:
         balance_due: "الرصيد المستحق"
       destroy:
         has_associated_subscriptions: "فشل الحذف: هذا العميل لديه اشتراكات نشطة. قم بإلغائها أولاً."
+    customer_account_transaction:
+      index:
+        description: وصف
+        amount: القيمة
+        running_balance: 'الرصيد القائم '
     contents:
       edit:
         title: المحتوى
@@ -1112,19 +1124,15 @@ ar:
           legend: "المستخدمين"
           email_confirmation_notice_html: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{email}."
           resend: إعادة إرسال
-          owner: 'المالك'
           contact: "اتصل"
+          owner: 'المالك'
           contact_tip: "المدير الذي سيتلقى رسائل البريد الإلكتروني للمؤسسة للطلبات والإشعارات. يجب أن يكون لديك عنوان بريد إلكتروني مؤكد."
           owner_tip: المستخدم الرئيسي المسؤول عن هذه الشركة.
           notifications: إشعارات
           notifications_tip: سيتم إرسال إعلامات حول الطلبات إلى عنوان البريد الإلكتروني هذا.
           notifications_placeholder: على سبيل المثال. gustav@truffles.com
           notifications_note: 'ملاحظة: قد يلزم تأكيد عنوان بريد إلكتروني جديد قبل استخدامه'
-          managers: مدراء
-          managers_tip: المستخدمين الآخرين مع إذن لإدارة هذه الشركة.
           invite_manager: "دعوة مدير"
-          invite_manager_tip: "دعوة مستخدم غير مسجل للاشتراك ويصبح مديرًا لهذه الشركة."
-          add_unregistered_user: "إضافة مستخدم غير مسجل"
           email_confirmed: "تأكيد البريد الإلكتروني"
           email_not_confirmed: "البريد الإلكتروني غير مؤكد"
         vouchers:
@@ -1209,9 +1217,6 @@ ar:
         choose_starting_point: 'اختر الحزمة الخاصة بك:'
         profile: 'الملف الشخصي'
         producer_profile: 'الملف الشخصي للمنتج'
-      invite_manager:
-        user_already_exists: "المستخدم موجود اصلا"
-        error: "هناك خطأ ما"
     order_cycles:
       loading_flash:
         loading_order_cycles: تحميل دورات الطلب
@@ -1606,6 +1611,11 @@ ar:
     schedules:
       destroy:
         associated_subscriptions_error: لا يمكن حذف هذا الجدول لأنه يحتوي على اشتراكات مقترنة
+    user_invitations:
+      new:
+        back: عودة
+        email: البريد الإلكتروني
+        invite: ادعو
     vouchers:
       new:
         legend: قسيمة جديدة
@@ -2024,6 +2034,7 @@ ar:
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب
   order_payment: "الدفع عن طريق:"
+  customer_credit: اجل
   order_billing_address: عنوان وصول الفواتير
   order_delivery_on: التسليم في
   order_delivery_address: عنوان التسليم
@@ -2284,7 +2295,6 @@ ar:
   shops_signup_help: نحن على استعداد للمساعدة.
   shops_signup_help_text: أنت بحاجة إلى عائد أفضل. تحتاج لمشترين جدد وشركاء لوجستيين. تحتاج إلى سرد قصتك عبر الجملة والتجزئة وطاولة المطبخ.
   shops_signup_detail: هنا التفاصيل.
-  orders: "الطلبات"
   orders_fees: "رسوم ..."
   orders_edit_title: "سلة التسوق"
   orders_edit_headline: "سلة التسوق الخاصة بك"
@@ -4289,13 +4299,6 @@ ar:
         subject: "تعليمات إعادة تعيين كلمة المرور"
       confirmation_instructions:
         subject: "يرجى تأكيد حسابك OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
-        instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
-      authorization_required:
-        subject: "يتطلب الدفع إذنًا من العميل"
-        message: "يتطلب الدفع للطلب %{order_number} تفويضًا إضافيًا من العميل. تم إخطار العميل عبر البريد الإلكتروني وسيظهر الدفع على أنه معلق حتى يتم التصريح به."
     shipment_mailer:
       shipped_email:
         dear_customer: "عزيزي العميل،"
@@ -4381,6 +4384,10 @@ ar:
         transaction_history: سجل المعاملات
         authorisation_required: التفويض مطلوب
         authorise: Authorize
+      customer_account_transactions:
+        description: وصف
+        amount: القيمة
+        running_balance: 'الرصيد القائم '
       open_orders:
         order: طلب
         shop: متجر

@@ -4,6 +4,7 @@ module Spree
   class ShipmentMailer < ApplicationMailer
     def shipped_email(shipment, delivery:)
       @shipment = shipment.respond_to?(:id) ? shipment : Spree::Shipment.find(shipment)
+      @hide_ofn_navigation = @shipment.order.distributor.hide_ofn_navigation
       @delivery = delivery
       @order = @shipment.order
       subject = base_subject

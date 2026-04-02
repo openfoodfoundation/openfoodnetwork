@@ -297,6 +297,12 @@ mr:
       join_community: "समुदायात सामील व्हा"
     invite_manager:
       subject: "%{enterprise} ने तुम्हाला व्यवस्थापक होण्यासाठी आमंत्रित केले आहे"
+  payment_mailer:
+    authorize_payment:
+      instructions: "तुमच्या %{amount} ते %{distributor} च्या पेमेंटसाठी अतिरिक्त प्रमाणीकरण आवश्यक आहे. तुमचे पेमेंट अधिकृत करण्यासाठी कृपया खालील URL ला भेट द्या:"
+    authorization_required:
+      subject: "पेमेंटसाठी ग्राहकाकडून प्रमाणीकरण आवश्यक आहे"
+      message: "ऑर्डर %{order_number} साठी पेमेंटसाठी ग्राहकाकडून अतिरिक्त प्रमाणीकरण आवश्यक आहे. ग्राहकाला ईमेलद्वारे सूचित केले गेले आहे आणि ते अधिकृत होईपर्यंत पेमेंट प्रलंबित म्हणून दिसून येईल."
   producer_mailer:
     order_cycle:
       subject: "%{producer} साठी सायकल अहवाल ऑर्डर करा"
@@ -655,6 +661,9 @@ mr:
         balance_due: "शिल्लक देय"
       destroy:
         has_associated_subscriptions: "हटवणे अयशस्वी: या ग्राहकाकडे सक्रिय सबस्क्रिप्शन्स आहेत. त्यांना आधी रद्द करा."
+    customer_account_transaction:
+      index:
+        amount: रक्कम
     contents:
       edit:
         title: सामग्री
@@ -1161,19 +1170,15 @@ mr:
           legend: "वापरकर्ते"
           email_confirmation_notice_html: "ईमेल पुष्टीकरण प्रलंबित आहे. आम्ही %{email} वर पुष्टीकरण ईमेल पाठवला आहे."
           resend: पुन्हा पाठवा
-          owner: 'मालक'
           contact: "संपर्क करा"
+          owner: 'मालक'
           contact_tip: "ज्या मॅनेजरला ऑर्डर आणि सूचनांचे एंटरप्राइझ ईमेल प्राप्त होतील त्याच्याकडे पुष्टीकृत ईमेल पत्ता असणे आवश्यक आहे."
           owner_tip: या एंटरप्राइझसाठी जबाबदार प्राथमिक वापरकर्ता.
           notifications: सूचना
           notifications_tip: ऑर्डरबद्दल सूचना या ईमेल पत्त्यावर पाठवल्या जातील.
           notifications_placeholder: उदा. prakash@tuffles.com
           notifications_note: 'टीप: वापरण्यापूर्वी नवीन ईमेल पत्त्याची पुष्टी करणे आवश्यक असू शकते'
-          managers: मॅनेजर्स
-          managers_tip: हे एंटरप्राइझ मॅनेज करण्याची परवानगी असलेले इतर वापरकर्ते.
           invite_manager: "मॅनेजरला आमंत्रित करा"
-          invite_manager_tip: "नोंदणी न केलेल्या वापरकर्त्यास साइन अप करण्यासाठी आणि या एंटरप्राइझचे मॅनेजर होण्यासाठी आमंत्रित करा."
-          add_unregistered_user: "नोंदणीकृत नसलेला वापरकर्ता जोडा"
           email_confirmed: "ईमेलची पुष्टी झाली"
           email_not_confirmed: "ईमेलची पुष्टी झाली नाही"
         vouchers:
@@ -1261,9 +1266,6 @@ mr:
         choose_starting_point: 'तुमचे पॅकेज निवडा:'
         profile: 'प्रोफाइल'
         producer_profile: 'उत्पादक प्रोफाइल'
-      invite_manager:
-        user_already_exists: "वापरकर्ता आधीपासून अस्तित्वात आहे"
-        error: "काहीतरी चूक झाली"
     order_cycles:
       loading_flash:
         loading_order_cycles: ऑर्डर सायकल लोड करत आहे
@@ -2299,7 +2301,6 @@ mr:
   shops_signup_help: आम्ही मदत करण्यास तयार आहोत.
   shops_signup_help_text: 'तुम्हाला चांगल्या रिटर्नची गरज आहे. तुम्हाला नवीन खरेदीदार आणि लॉजिस्टिक भागीदारांची आवश्यकता आहे. तुम्हाला तुमचे उत्पादन घाऊक, किरकोळ आणि घरगुती स्तरावर पोहोचायला हवे आहे. '
   shops_signup_detail: येथे तपशील दिला आहे.
-  orders: "आदेश"
   orders_fees: "फीज्..."
   orders_edit_title: "शॉपिंग कार्ट"
   orders_edit_headline: "तुमची शॉपिंग कार्ट"
@@ -4217,13 +4218,6 @@ mr:
         subject: "पासवर्ड सूचना रीसेट करा"
       confirmation_instructions:
         subject: "कृपया तुमच्या OFN खात्याची पुष्टी करा"
-    payment_mailer:
-      authorize_payment:
-        subject: "कृपया तुमचे पेमेंट OFN वर %{distributor} वर अधिकृत करा"
-        instructions: "तुमच्या %{amount} ते %{distributor} च्या पेमेंटसाठी अतिरिक्त प्रमाणीकरण आवश्यक आहे. तुमचे पेमेंट अधिकृत करण्यासाठी कृपया खालील URL ला भेट द्या:"
-      authorization_required:
-        subject: "पेमेंटसाठी ग्राहकाकडून प्रमाणीकरण आवश्यक आहे"
-        message: "ऑर्डर %{order_number} साठी पेमेंटसाठी ग्राहकाकडून अतिरिक्त प्रमाणीकरण आवश्यक आहे. ग्राहकाला ईमेलद्वारे सूचित केले गेले आहे आणि ते अधिकृत होईपर्यंत पेमेंट प्रलंबित म्हणून दिसून येईल."
     shipment_mailer:
       shipped_email:
         dear_customer: "प्रिय ग्राहक,"
@@ -4309,6 +4303,8 @@ mr:
         transaction_history: व्यवहार इतिहास
         authorisation_required: अधिकृतता आवश्यक
         authorise: अधिकृत करा
+      customer_account_transactions:
+        amount: रक्कम
       open_orders:
         order: ऑर्डर करा
         shop: शॉप

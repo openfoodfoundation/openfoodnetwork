@@ -155,17 +155,26 @@ RSpec.describe OrderManagement::Order::Updater do
       end
 
       context "with pending payments" do
+        let(:order) { create(:order_with_totals, state: "payment") }
         let!(:payment) { create(:payment, order:, amount: order.total) }
 
         context "with order in payment state" do
-          let(:order) { create(:order_with_totals, state: "payment") }
-
           it "updates pending payments" do
             # update order so the order total will change
             update_order_quantity(order)
             order.payments.reload
 
             expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+          end
+
+          context "with mutiple payments" do
+            it "updates pending payments" do
+              create(:payment, order:, amount: 5.00, state: "completed")
+              last_payment = create(:payment, order:, amount: 10.00)
+              order.payments.reload
+
+              expect { updater.update }.to change { last_payment.reload.amount }.from(10).to(5)
+            end
           end
         end
 

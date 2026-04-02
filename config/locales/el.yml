@@ -307,6 +307,13 @@ el:
       join_community: "Συμμετοχή στην κοινότητα"
     invite_manager:
       subject: "%{enterprise}σας έχει προσκαλέσει με τον ρόλο του manager."
+  payment_mailer:
+    authorize_payment:
+      subject: "Εξουσιοδοτήστε την πληρωμή σας στο %{distributor} στο OFN"
+      instructions: "Η πληρωμή σας από %{amount} σε %{distributor} απαιτεί επιπλέον έλεγχο ταυτότητας. Επισκεφτείτε την ακόλουθη διεύθυνση URL για να εξουσιοδοτήσετε την πληρωμή σας:"
+    authorization_required:
+      subject: "Μια πληρωμή απαιτεί εξουσιοδότηση από τον πελάτη"
+      message: "Για την πληρωμή της παραγγελίας %{order_number} απαιτείται επιπλέον εξουσιοδότηση από τον πελάτη. Ο πελάτης έχει ειδοποιηθεί μέσω ηλεκτρονικού ταχυδρομείου και η πληρωμή θα εμφανιστεί σε εκκρεμότητα έως ότου εξουσιοδοτηθεί."
   producer_mailer:
     order_cycle:
       subject: "Καταγραφή κύκλων παραγγελιών για %{producer}"
@@ -684,6 +691,11 @@ el:
         balance_due: "Οφειλόμενο υπόλοιπο"
       destroy:
         has_associated_subscriptions: "Η διαγραφή απέτυχε: Αυτός ο πελάτης έχει ενεργές συνδρομές. Ακυρώστε τις πρώτα."
+    customer_account_transaction:
+      index:
+        description: Περιγραφή
+        amount: Ποσό
+        running_balance: Τρέξιμο ισορροπίας
     column_preferences:
       bulk_update:
         success: "Οι προτιμήσεις στήλης αποθηκεύτηκαν"
@@ -1231,19 +1243,15 @@ el:
           legend: "Χρήστες"
           email_confirmation_notice_html: "Η επιβεβαίωση email εκκρεμεί.Σας έχουμε ήδη στείλει επιβεβαίωση email %{email}"
           resend: Ξαναστείλε
-          owner: 'Κάτοχος'
           contact: "επικοινωνία"
+          owner: 'Κάτοχος'
           contact_tip: "Ο διαχειριστής που θα λάβει email επιχειρήσεων για παραγγελίες και ειδοποιήσεις. Πρέπει να έχει επιβεβαιωμένη διεύθυνση ηλεκτρονικού ταχυδρομείου."
           owner_tip: Ο πρωταρχικός χρήστης υπεύθυνος για αυτή την επιχείρηση.
           notifications: Ειδοποίηση
           notifications_tip: Η ενημερώση για τις παραγγελείες θα αποστέλονται σε αυτήν την διεύθυνση
           notifications_placeholder: π.χ. gustav@truffles.com
           notifications_note: 'Σημείωση: Μια νέα διεύθυνση ηλεκτρονικού ταχυδρομείου μπορεί να χρειαστεί να επιβεβαιωθεί πριν από τη χρήση'
-          managers: Διαχειριστές
-          managers_tip: Όρισε κάποιον άλλον να διαχειριστεί αυτή την επιχείρηση.
           invite_manager: "Πρόσκληση διαχειριστή"
-          invite_manager_tip: "Προσκαλέστε έναν νέο χρήστη να εγγραφεί και να γίνει διαχειριστής αυτής της επιχείρησης."
-          add_unregistered_user: "Προσθήκη νέου χρήστη"
           email_confirmed: "Το email επιβεβαιώθηκε"
           email_not_confirmed: "Το email δεν επιβεβαιώθηκε"
         vouchers:
@@ -1351,9 +1359,6 @@ el:
         choose_starting_point: 'Επιλέξτε το πακέτο σας:'
         profile: 'Προφίλ'
         producer_profile: 'Προφίλ Παραγωγού'
-      invite_manager:
-        user_already_exists: "Ο χρήστης υπάρχει ήδη"
-        error: "Κάτι πήγε στραβά"
     order_cycles:
       loading_flash:
         loading_order_cycles: ΚΥΚΛΟΙ ΠΑΡΑΓΓΕΛΙΑΣ ΦΟΡΤΩΣΗΣ
@@ -1778,6 +1783,11 @@ el:
     schedules:
       destroy:
         associated_subscriptions_error: Αυτό το πρόγραμμα δεν μπορεί να διαγραφεί επειδή έχει σχετικές συνδρομές
+    user_invitations:
+      new:
+        back: Πίσω
+        email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
+        invite: Καλώ
     vouchers:
       new:
         legend: Νέο κουπόνι
@@ -2199,6 +2209,7 @@ el:
   order_total: Συνολική παραγγελία
   order_payment: "Πληρωμή μέσω:"
   no_payment_required: "Δεν προαπαιτείται πληρωμή"
+  customer_credit: Πίστωση
   order_billing_address: Διεύθυνση χρέωσης
   order_delivery_on: Η παράδοση είναι ενεργή
   order_delivery_address: Διεύθυνση παράδοσης
@@ -2462,7 +2473,6 @@ el:
   shops_signup_help: Είμαστε έτοιμοι να βοηθήσουμε.
   shops_signup_help_text: Χρειάζεστε καλύτερη επιστροφή. Χρειάζεστε νέους αγοραστές και συνεργάτες logistics. Χρειάζεστε την ιστορία σας να λέγεται σε χονδρική, λιανική και στο τραπέζι της κουζίνας.
   shops_signup_detail: Εδώ είναι η λεπτομέρεια.
-  orders: "Παραγγελίες"
   orders_fees: "Τέλη..."
   orders_edit_title: "Καλάθι αγορών"
   orders_edit_headline: "Το καλάθι σου"
@@ -4424,13 +4434,6 @@ el:
         subject: "Επαναφορά οδηγιών κωδικού πρόσβασης"
       confirmation_instructions:
         subject: "Επιβεβαιώστε τον λογαριασμό σας OFN"
-    payment_mailer:
-      authorize_payment:
-        subject: "Εξουσιοδοτήστε την πληρωμή σας στο %{distributor} στο OFN"
-        instructions: "Η πληρωμή σας από %{amount} σε %{distributor} απαιτεί επιπλέον έλεγχο ταυτότητας. Επισκεφτείτε την ακόλουθη διεύθυνση URL για να εξουσιοδοτήσετε την πληρωμή σας:"
-      authorization_required:
-        subject: "Μια πληρωμή απαιτεί εξουσιοδότηση από τον πελάτη"
-        message: "Για την πληρωμή της παραγγελίας %{order_number} απαιτείται επιπλέον εξουσιοδότηση από τον πελάτη. Ο πελάτης έχει ειδοποιηθεί μέσω ηλεκτρονικού ταχυδρομείου και η πληρωμή θα εμφανιστεί σε εκκρεμότητα έως ότου εξουσιοδοτηθεί."
     shipment_mailer:
       shipped_email:
         dear_customer: "Αγαπητέ Πελάτη,"
@@ -4514,6 +4517,10 @@ el:
         transaction_history: Ιστορικό συναλλαγών
         authorisation_required: Απαιτείται εξουσιοδότηση
         authorise: Εξουσιοδοτώ
+      customer_account_transactions:
+        description: Περιγραφή
+        amount: Ποσό
+        running_balance: Τρέξιμο ισορροπίας
       open_orders:
         order: Παραγγελία
         shop: Κατάστημα

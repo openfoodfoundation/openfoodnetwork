@@ -297,6 +297,13 @@ ml:
       join_community: "കമ്മ്യൂണിറ്റിയിൽ ചേരുക"
     invite_manager:
       subject: "%{enterprise} നിങ്ങളെ മാനേജരാകാൻ ക്ഷണിച്ചു"
+  payment_mailer:
+    authorize_payment:
+      subject: "ഓഎഫ്എൻ-ൽ %{distributor} -ലേക്കുള്ള നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുക"
+      instructions: "%{distributor} -ക്കുള്ള നിങ്ങളുടെ %{amount}പേയ്‌മെന്റിന് അധിക പ്രാമാണീകരണം ആവശ്യമാണ്. നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുന്നതിന് ഇനിപ്പറയുന്ന യുആർഎൽ സന്ദർശിക്കുക:"
+    authorization_required:
+      subject: "ഒരു പേയ്‌മെന്റിന് ഉപഭോക്താവിന്റെ അനുമതി ആവശ്യമാണ്"
+      message: "%{order_number} എന്ന ഓർഡറിന്റെ പേയ്‌മെന്റിന് ഉപഭോക്താവിൽ നിന്ന് അധിക അനുമതി ആവശ്യമാണ്. ഉപഭോക്താവിന് ഇമെയിൽ വഴി അറിയിപ്പ് ലഭിച്ചു, അത് അംഗീകരിക്കപ്പെടുന്നതുവരെ പേയ്‌മെന്റ് തീർച്ചപ്പെടുത്തിയിട്ടില്ലെന്ന് ദൃശ്യമാകും."
   producer_mailer:
     order_cycle:
       subject: "%{producer}-നുള്ള ഓർഡർ സൈക്കിൾ റിപ്പോർട്ട് "
@@ -665,6 +672,11 @@ ml:
         balance_due: "മിച്ച കടം"
       destroy:
         has_associated_subscriptions: "ഡിലീറ്റ് പരാജയപ്പെട്ടു: ഈ ഉപഭോക്താവിന് സജീവമായ സബ്‌സ്‌ക്രിപ്‌ഷനുകളുണ്ട്. ആദ്യം അവ റദ്ദാക്കുക."
+    customer_account_transaction:
+      index:
+        description: വിവരണം
+        amount: തുക
+        running_balance: റണ്ണിംഗ് ബാലൻസ്
     contents:
       edit:
         title: ഉള്ളടക്കം
@@ -1184,19 +1196,15 @@ ml:
           legend: "ഉപയോക്താക്കൾ"
           email_confirmation_notice_html: "ഇമെയിൽ സ്ഥിരീകരണം തീർച്ചപ്പെടുത്തിയിട്ടില്ല. ഞങ്ങൾ ഒരു സ്ഥിരീകരണ ഇമെയിൽ %{email} ലേക്ക് അയച്ചു."
           resend: വീണ്ടും അയയ്ക്കുക
-          owner: 'ഉടമ'
           contact: "ബന്ധപ്പെടുക"
+          owner: 'ഉടമ'
           contact_tip: "ഓർഡറുകൾക്കും അറിയിപ്പുകൾക്കുമായി എന്റർപ്രൈസ് ഇമെയിലുകൾ സ്വീകരിക്കുന്ന മാനേജർ. സ്ഥിരീകരിച്ച ഇമെയിൽ വിലാസം ഉണ്ടായിരിക്കണം."
           owner_tip: ഈ എന്റർപ്രൈസസിന്റെ ഉത്തരവാദിത്തമുള്ള പ്രാഥമിക ഉപയോക്താവ്.
           notifications: അറിയിപ്പുകൾ
           notifications_tip: ഓർഡറുകൾ സംബന്ധിച്ച അറിയിപ്പുകൾ ഈ ഇമെയിൽ വിലാസത്തിലേക്ക് അയയ്‌ക്കും.
           notifications_placeholder: ഉദാ. gustav@truffles.com
           notifications_note: 'ശ്രദ്ധിക്കുക: ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഒരു പുതിയ ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കേണ്ടതുണ്ട്'
-          managers: മാനേജർമാർ
-          managers_tip: ഈ എന്റർപ്രൈസ് മാനേജ് ചെയ്യാൻ അനുമതിയുള്ള മറ്റ് ഉപയോക്താക്കൾ.
           invite_manager: "മാനേജരെ ക്ഷണിക്കുക"
-          invite_manager_tip: "രജിസ്റ്റർ ചെയ്യാത്ത ഒരു ഉപയോക്താവിനെ സൈൻ അപ്പ് ചെയ്യാനും ഈ എന്റർപ്രൈസിന്റെ മാനേജരാകാനും ക്ഷണിക്കുക."
-          add_unregistered_user: "രജിസ്റ്റർ ചെയ്യാത്ത ഒരു ഉപയോക്താവിനെ ചേർക്കുക"
           email_confirmed: "ഇമെയിൽ സ്ഥിരീകരിച്ചു"
           email_not_confirmed: "ഇമെയിൽ സ്ഥിരീകരിച്ചിട്ടില്ല"
         vouchers:
@@ -1290,9 +1298,6 @@ ml:
         choose_starting_point: 'നിങ്ങളുടെ പാക്കേജ് തിരഞ്ഞെടുക്കുക:'
         profile: 'പ്രൊഫൈൽ'
         producer_profile: 'പ്രൊഡ്യൂസർ പ്രൊഫൈൽ'
-      invite_manager:
-        user_already_exists: "ഉപയോക്താവ് ഇതിനകം നിലവിലുണ്ട്"
-        error: "എന്തോ തകരാറ് സംഭവിച്ചു"
     order_cycles:
       loading_flash:
         loading_order_cycles: ഓർഡർ സൈക്കിളുകൾ ലോഡുചെയ്യുന്നു
@@ -1712,6 +1717,11 @@ ml:
     schedules:
       destroy:
         associated_subscriptions_error: അനുബന്ധ സബ്‌സ്‌ക്രിപ്‌ഷനുകൾ ഉള്ളതിനാൽ ഈ ഷെഡ്യൂൾ ഇല്ലാതാക്കാൻ കഴിയില്ല
+    user_invitations:
+      new:
+        back: തിരികെ
+        email: ഇമെയിൽ
+        invite: ക്ഷണിക്കുക
     vouchers:
       new:
         legend: പുതിയ വൗച്ചർ
@@ -2140,6 +2150,7 @@ ml:
   order_total: ആകെ ഓർഡർ
   order_payment: "ഇതുവഴി പണമടയ്ക്കുന്നു:"
   no_payment_required: "പണം നൽകേണ്ടതില്ല"
+  customer_credit: ക്രെഡിറ്റ്
   order_billing_address: ബില്ലിംഗ് വിലാസം
   order_delivery_on: ഡെലിവറി തീയതി
   order_delivery_address: ഡെലിവറി വിലാസം
@@ -2403,7 +2414,6 @@ ml:
   shops_signup_help: സഹായിക്കാൻ ഞങ്ങൾ തയ്യാറാണ്.
   shops_signup_help_text: നിങ്ങൾക്ക് ഒരു മികച്ച പ്രതിഫലം ആവശ്യമാണ്. നിങ്ങൾക്ക് പുതിയ ഉപഭോക്താക്കളേയും ലോജിസ്റ്റിക്സ് പങ്കാളികളെയും ആവശ്യമുണ്ട്. മൊത്തവ്യാപാരം, ചില്ലറ വിൽപ്പന, ആഹാരം എന്നിവയിലുടനീളം നിങ്ങളുടെ കഥ പറയേണ്ടതുണ്ട്.
   shops_signup_detail: വിശദാംശം ഇതാ.
-  orders: "ഓർഡറുകൾ"
   orders_fees: "ഫീസ്..."
   orders_edit_title: "ഷോപ്പിംഗ് കാർട്ട്"
   orders_edit_headline: "നിങ്ങളുടെ ഷോപ്പിംഗ് കാർട്ട്"
@@ -4349,13 +4359,6 @@ ml:
         subject: "പാസ്‌വേഡ് പുനഃസജ്ജമാക്കുന്നതിനുള്ള നിർദ്ദേശങ്ങൾ "
       confirmation_instructions:
         subject: "നിങ്ങളുടെ ഓഎഫ്എൻ അക്കൗണ്ട് സ്ഥിരീകരിക്കുക"
-    payment_mailer:
-      authorize_payment:
-        subject: "ഓഎഫ്എൻ-ൽ %{distributor} -ലേക്കുള്ള നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുക"
-        instructions: "%{distributor} -ക്കുള്ള നിങ്ങളുടെ %{amount}പേയ്‌മെന്റിന് അധിക പ്രാമാണീകരണം ആവശ്യമാണ്. നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുന്നതിന് ഇനിപ്പറയുന്ന യുആർഎൽ സന്ദർശിക്കുക:"
-      authorization_required:
-        subject: "ഒരു പേയ്‌മെന്റിന് ഉപഭോക്താവിന്റെ അനുമതി ആവശ്യമാണ്"
-        message: "%{order_number} എന്ന ഓർഡറിന്റെ പേയ്‌മെന്റിന് ഉപഭോക്താവിൽ നിന്ന് അധിക അനുമതി ആവശ്യമാണ്. ഉപഭോക്താവിന് ഇമെയിൽ വഴി അറിയിപ്പ് ലഭിച്ചു, അത് അംഗീകരിക്കപ്പെടുന്നതുവരെ പേയ്‌മെന്റ് തീർച്ചപ്പെടുത്തിയിട്ടില്ലെന്ന് ദൃശ്യമാകും."
     shipment_mailer:
       shipped_email:
         dear_customer: "പ്രിയ ഉപഭോക്താവേ,"
@@ -4441,6 +4444,10 @@ ml:
         transaction_history: ഇടപാട് ചരിത്രം
         authorisation_required: അംഗീകാരം ആവശ്യമാണ്
         authorise: അധികാരപ്പെടുത്തുക
+      customer_account_transactions:
+        description: വിവരണം
+        amount: തുക
+        running_balance: റണ്ണിംഗ് ബാലൻസ്
       open_orders:
         order: ഓർഡർ ചെയ്യുക
         shop: കട

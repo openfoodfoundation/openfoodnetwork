@@ -7,6 +7,15 @@ redis_connection_settings = {
 
 Sidekiq.configure_server do |config|
   config.redis = redis_connection_settings
+  config.on(:startup) do
+    # Load schedule file similar to sidekiq/cli.rb loading the main config.
+    path = File.expand_path("../sidekiq_scheduler.yml", __dir__)
+    erb = ERB.new(File.read(path), trim_mode: "-")
+
+    Sidekiq.schedule =
+      YAML.safe_load(erb.result, permitted_classes: [Symbol], aliases: true)
+    SidekiqScheduler::Scheduler.instance.reload_schedule!
+  end
 end
 
 Sidekiq.configure_client do |config|

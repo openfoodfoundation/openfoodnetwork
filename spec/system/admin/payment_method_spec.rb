@@ -113,7 +113,10 @@ RSpec.describe '
     end
 
     it "checking a single distributor is checked by default" do
-      2.times.each { Enterprise.last.destroy }
+      2.times.each do
+        enterprise = Enterprise.last
+        enterprise.destroy!
+      end
       login_as_admin
       visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",

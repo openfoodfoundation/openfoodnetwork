@@ -118,7 +118,7 @@ RSpec.describe '
     payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
-    user = create(:user)
+    user = create(:user, enterprises: [@enterprise])
 
     admin = login_as_admin
 
@@ -151,8 +151,7 @@ RSpec.describe '
       scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
     end
-    select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).not_to have_selector '.select2-drop-mask' # Ensure select2 has finished
+    choose "Set #{user.email} as owner"
 
     accept_alert do
       click_link "About"
@@ -635,45 +634,46 @@ RSpec.describe '
 
       context "invite user as manager" do
         before do
-          expect(page).to have_selector('a', text: /Add an unregistered user/i)
-          page.find('a', text: /Add an unregistered user/i).click
+          expect(page).to have_selector('a', text: /Invite Manager/i)
+          page.find('a', text: /Invite Manager/i).click
+          expect(page).to have_content "Invite a new user"
         end
 
         it "shows an error message if the email is invalid" do
+          expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_return(false)
+
           within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: "invalid_email"
+            tomselect_fill_in "user_invitation[email]", with: "newuser@example.invaliddomain"
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "Email is invalid"
+              expect(page).to have_content "is invalid"
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
         it "shows an error message if the email is already linked to an existing user" do
           within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: distributor1.owner.email
+            tomselect_search_and_select distributor1.owner.email, from: "user_invitation[email]"
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "User already exists"
+              expect(page).to have_content "is already a manager"
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
         it "finally, can invite unregistered users" do
-          within ".reveal-modal" do
-            expect(page).to have_content "Invite an unregistered user"
-            fill_in "email", with: "email@email.com"
+          expect do
+            within ".reveal-modal" do
+              tomselect_fill_in "user_invitation[email]", with: "email@email.com"
 
-            expect do
               click_button "Invite"
-              expect(page)
-                .to have_content "email@email.com has been invited to manage this enterprise"
-            end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
-          end
+            end
+
+            expect(page)
+              .to have_content "email@email.com has been invited to manage this enterprise"
+          end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
         end
       end
     end
@@ -881,6 +881,47 @@ RSpec.describe '
                 .to eq('Enterprise "First Distributor" has been successfully updated!')
               expect(distributor1.reload.custom_tab).to be_nil
             end
+          end
+        end
+      end
+    end
+
+    describe "removing enterprise managers" do
+      let(:existing_user) { create(:user) }
+
+      before do
+        distributor1.users << existing_user
+        login_as logged_in_user
+        visit edit_admin_enterprise_path(distributor1)
+        scroll_to(:bottom)
+        within ".side_menu" do
+          find(:link, "Users").trigger("click")
+        end
+      end
+
+      context "as the enterprise owner" do
+        let(:logged_in_user) { distributor1.owner }
+
+        it 'removes the manager as enterprise owner' do
+          expect(page).to have_content existing_user.email
+
+          within "#manager-#{existing_user.id}" do
+            accept_confirm do
+              page.find("a.icon-trash").click
+            end
+          end
+
+          expect(page).not_to have_content existing_user.email
+        end
+      end
+
+      context "as the enterprise manager" do
+        let(:logged_in_user) { existing_user }
+
+        it "is unable delete any other manager" do
+          expect(page).to have_content existing_user.email
+          within('.edit_enterprise') do
+            expect(page).not_to have_selector('a.icon-trash')
           end
         end
       end
