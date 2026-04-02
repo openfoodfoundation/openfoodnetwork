@@ -321,7 +321,7 @@ RSpec.describe '
 
             products_page_url = current_url
             within row_containing_name('a product') do
-              page.find(".vertical-ellipsis-menu").click
+              click_button "Actions"
               click_link('Edit', href: spree.edit_admin_product_path(product))
             end
 
