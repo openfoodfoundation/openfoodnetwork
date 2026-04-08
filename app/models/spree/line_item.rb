@@ -264,7 +264,8 @@ module Spree
       variant.product.name
     end
 
-    # added this function to override the shared one. reference the full product name added in previous bug fix
+    # added this function to override the shared one. 
+    # reference the full product name added in previous bug fix
     def name_to_display
       return full_product_name if display_name.blank?
 

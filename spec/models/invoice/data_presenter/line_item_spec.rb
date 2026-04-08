@@ -139,4 +139,26 @@ RSpec.describe Invoice::DataPresenter::LineItem do
       end
     end
   end
+
+  describe "#full_product_name" do
+    let(:data) do
+      {
+        variant: {
+          id: 1,
+          display_name: '',
+          options_text: '',
+          product: { name: 'Pasta!' }
+        },
+        price_with_adjustments: 10.0,
+        quantity: 2,
+        included_tax: 0.0,
+        enterprise_fee_included_tax: nil,
+        currency: 'AUD'
+      }
+    end
+
+    it "returns the variant product name" do
+      expect(presenter.full_product_name).to eq('Pasta!')
+    end
+  end
 end
