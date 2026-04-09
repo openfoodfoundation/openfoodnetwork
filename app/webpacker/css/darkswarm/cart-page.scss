@@ -11,6 +11,8 @@
 
 #cart-detail {
   width: 100%;
+  overflow-x: auto; //ADDED THIS
+  -webkit-overflow-scrolling: touch;  // add this for smooth scrolling on iOS
 
   .cart-item-delete,
   .bought-item-delete {
