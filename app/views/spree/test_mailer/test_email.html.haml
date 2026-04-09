@@ -1,6 +1,6 @@
-%h3
-  = t('.greeting')
-%p
-  = t('.message')
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(".greeting"),
+                   intro: t(".message"),
+                   enterprise_for_logo: nil }
 
 = render 'shared/mailers/signoff'
