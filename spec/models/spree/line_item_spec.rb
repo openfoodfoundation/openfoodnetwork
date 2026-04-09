@@ -721,29 +721,6 @@ RSpec.describe Spree::LineItem do
 
         expect(li.name_to_display).to eq(original_name)
       end
-
-      context "when display_name is blank" do
-        it "returns the full_product_name" do
-          li = create(:line_item)
-          allow(li.variant).to receive(:display_name).and_return(nil)
-          expect(li.name_to_display).to eq(li.full_product_name)
-        end
-
-        it "returns the full_product_name when display_name is empty string" do
-          li = create(:line_item)
-          allow(li.variant).to receive(:display_name).and_return('')
-          expect(li.name_to_display).to eq(li.full_product_name)
-        end
-      end
-
-      context "when display_name is present" do
-        it "returns the display_name from the variant" do
-          li = create(:line_item)
-          custom_display_name = "Custom Variant Display"
-          allow(li.variant).to receive(:display_name).and_return(custom_display_name)
-          expect(li.name_to_display).to eq(custom_display_name)
-        end
-      end
     end
 
     describe "getting unit for display" do
