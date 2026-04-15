@@ -70,6 +70,15 @@ module OpenFoodNetwork
           expect(applicator.__send__(:line_item_adjustment_label)).
             to eq("Bananas - packing name fee by distributor Ballantyne")
         end
+
+        context "when the label would exceed the database column limit" do
+          let(:variant) { double(:variant, product: double(:product, name: "A" * 255)) }
+
+          it "truncates the label to fit within 255 characters" do
+            label = applicator.__send__(:line_item_adjustment_label)
+            expect(label.length).to be <= 255
+          end
+        end
       end
 
       describe "#order_adjustment_label" do
