@@ -261,7 +261,7 @@ module Spree
     def full_product_name
       return product_name if product_name.present?
 
-      variant.product.name
+      product.name
     end
 
     def name_to_display
