@@ -271,10 +271,10 @@ module Spree
     end
 
     def product_and_full_name
-      return full_product_name if full_variant_name.blank?
-      return "#{full_product_name} - #{full_variant_name}" unless full_variant_name.start_with?(full_product_name)
+      return full_product_name if full_name.blank?
+      return "#{full_product_name} - #{full_name}" unless full_name.start_with?(full_product_name)
 
-      full_variant_name
+      full_name
     end
 
     private
