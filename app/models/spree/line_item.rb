@@ -264,6 +264,12 @@ module Spree
       variant.product.name
     end
 
+    def name_to_display
+      return full_product_name if display_name.blank?
+
+      display_name
+    end
+
     private
 
     def computed_weight_from_variant
