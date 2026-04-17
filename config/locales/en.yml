@@ -476,10 +476,12 @@ en:
   payment_mailer:
     authorize_payment:
       subject: "Please authorize your payment to %{distributor} on OFN"
-      instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+      intro_html: "Your payment of <strong>%{amount}</strong> to <strong>%{distributor}</strong> requires additional authentication."
+      instructions: "Please visit the following URL to authorize your payment:"
     authorization_required:
       subject: "A payment requires authorization from the customer"
-      message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+      intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
+      instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
     refund_available:
       subject: "Refund from %{shop}"
       message: |
