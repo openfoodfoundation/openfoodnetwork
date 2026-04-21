@@ -32,6 +32,17 @@ module OpenFoodNetwork
         expect(metadata.fee_type).to eq(enterprise_fee.fee_type)
         expect(metadata.enterprise_role).to eq('role')
       end
+
+      context "when the label would exceed the database column limit" do
+        before { target_variant.product.update!(name: "A" * 255) }
+
+        it "truncates the label to fit within the column limit" do
+          adjustment = applicator.create_line_item_adjustment(line_item)
+
+          label_limit = Spree::Adjustment.columns_hash['label'].limit
+          expect(adjustment.label.length).to be <= label_limit
+        end
+      end
     end
 
     describe "#create_order_adjustment" do
@@ -69,15 +80,6 @@ module OpenFoodNetwork
         it "makes an adjustment label for a line item" do
           expect(applicator.__send__(:line_item_adjustment_label)).
             to eq("Bananas - packing name fee by distributor Ballantyne")
-        end
-
-        context "when the label would exceed the database column limit" do
-          let(:variant) { double(:variant, product: double(:product, name: "A" * 255)) }
-
-          it "truncates the label to fit within 255 characters" do
-            label = applicator.__send__(:line_item_adjustment_label)
-            expect(label.length).to be <= 255
-          end
         end
       end
 
