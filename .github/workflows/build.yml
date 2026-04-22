@@ -184,15 +184,6 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-      - name: Archive any log files
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failed-system_${{ matrix.ci_node_index }}-tests-logs
-          path: log/*
-          retention-days: 7
-          if-no-files-found: ignore
-
   engines:
     runs-on: ubuntu-22.04
     services:
