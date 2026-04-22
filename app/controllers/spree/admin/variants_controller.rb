@@ -21,6 +21,7 @@ module Spree
       end
 
       def edit
+        puts "VariantsController#edit @variant=#{@variant}"
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 

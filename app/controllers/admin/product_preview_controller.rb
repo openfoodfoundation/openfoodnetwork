@@ -6,6 +6,8 @@ module Admin
       @product = Spree::Product.find(params[:id])
       authorize! :show, @product
 
+      puts "ProductPreviewController#show @product=#{@product}"
+
       respond_with do |format|
         format.turbo_stream {
           render "admin/products_v3/product_preview", status: :ok
