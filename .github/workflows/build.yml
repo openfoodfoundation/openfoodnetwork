@@ -110,6 +110,8 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+          RAILS_LOG_LEVEL: debug
+          SPEC_OPTS: "--format documentation"
     strategy:
       fail-fast: false
       matrix:
@@ -179,6 +181,15 @@ jobs:
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
           path: tmp/capybara/screenshots/*.png
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Archive any log files
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-system_${{ matrix.ci_node_index }}-tests-logs
+          path: log/*
           retention-days: 7
           if-no-files-found: ignore
 
