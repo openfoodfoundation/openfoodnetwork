@@ -150,6 +150,11 @@ RSpec.configure do |config|
     metadata[:type] = :rake
   end
 
+  config.before(:all) do
+    puts "RAILS_LOG_LEVEL=#{ENV["RAILS_LOG_LEVEL"]}"
+    puts "log_level = #{Rails.application.config.log_level}"
+  end
+
   # Reset locale for all specs.
   config.around(:each) do |example|
     locale = OpenFoodNetwork::I18nConfig.default_locale
