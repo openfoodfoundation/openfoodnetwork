@@ -5,7 +5,7 @@ default: &default
   public_root_path: public
   public_output_path: packs
   cache_path: tmp/cache/webpacker
-  webpack_compile_output: true
+  webpack_compile_output: false
   additional_paths: &1
   - vendor
   - app/webpacker/css
