@@ -26,6 +26,7 @@ module Spree
     before_validation :copy_dimensions
     before_validation :copy_product_name, on: :create
     before_validation :copy_variant_name, on: :create
+    before_validation :copy_product_and_full_name, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -264,17 +265,15 @@ module Spree
       product.name
     end
 
-    def name_to_display
-      return full_product_name if display_name.blank?
-
-      display_name
-    end
-
     def product_and_full_name
-      return full_product_name if full_name.blank?
-      return "#{full_product_name} - #{full_name}" unless full_name.start_with?(full_product_name)
+      return self[:product_and_full_name] if self[:product_and_full_name].present?
 
-      full_name
+      # Fallback for records created before this snapshot was added
+      fn = full_name
+      return full_product_name if fn.blank?
+      return "#{full_product_name} - #{fn}" unless fn.start_with?(full_product_name)
+
+      fn
     end
 
     private
@@ -311,6 +310,12 @@ module Spree
       return if variant.nil?
 
       self.variant_name = variant.full_name
+    end
+
+    def copy_product_and_full_name
+      return if variant.nil?
+
+      self[:product_and_full_name] = variant.product_and_full_name
     end
 
     def update_inventory_before_destroy

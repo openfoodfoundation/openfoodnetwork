@@ -1,6 +1,6 @@
 %h5.inline-header
   = "#{line_item.full_product_name}"
-  - unless line_item.full_product_name.include? line_item.name_to_display
-    %span= "- #{line_item.name_to_display}"
+  - if line_item.display_name.present? && !line_item.full_product_name.include?(line_item.display_name)
+    %span= "- #{line_item.display_name}"
 - if line_item.unit_to_display
   = "(#{line_item.unit_to_display})"
