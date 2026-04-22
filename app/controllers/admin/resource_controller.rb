@@ -151,6 +151,7 @@ module Admin
     end
 
     def find_resource
+      puts "#{controller_name}Controller##{params[:action]} find #{params[:id]}"
       if parent_data.present?
         parent.public_send(controller_name).find(params[:id])
       else
