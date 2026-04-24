@@ -423,6 +423,7 @@ en:
 # E-Mails
 #
   mailers_shared:
+    customer_greeting: "Dear %{name},"
     general_greeting: "Hello!"
   backorder_mailer:
     backorder_failed:
@@ -494,15 +495,6 @@ en:
       intro: |
         The link below will expire after one week.
       link_label: "%{name}"
-  shipment_mailer:
-    shipped_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
-      shipment_summary: "Shipment Summary"
-      subject: "Shipment Notification"
-      thanks: "Thank you for your business."
-      track_information: "Tracking Information: %{tracking}"
-      track_link: "Tracking Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: A summary of recently placed subscription orders
@@ -4974,14 +4966,13 @@ en:
         welcome: "Welcome to %{sitename}!"
     shipment_mailer:
       shipped_email:
-        dear_customer: "Dear Customer,"
-        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
+        shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
+        picked_up_intro_html: "Your order from <strong>%{distributor}</strong> has been picked-up."
         thanks: "Thank you for your business."
         track_information: ! "Tracking Information: %{tracking}"
         track_link: ! "Tracking Link: %{url}"
-        picked_up_instructions: "Your order from %{distributor} has been picked-up"
         picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
