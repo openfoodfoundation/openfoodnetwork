@@ -39,4 +39,28 @@ RSpec.describe MailerHelper do
       end
     end
   end
+
+  describe "#enterprise_greeting" do
+    context "when contact name of enterprise is present" do
+      it "returns greeting with name" do
+        allow(I18n).to receive(:t).with("mailers_shared.enterprise_greeting", name: "Fred Farmer")
+          .and_return("Dear Fred Farmer,")
+
+        result = helper.enterprise_greeting("Fred Farmer")
+
+        expect(result).to eq("Dear Fred Farmer,")
+      end
+    end
+
+    context "when contact name of enterprise is blank" do
+      it "returns general greeting" do
+        allow(I18n).to receive(:t).with("mailers_shared.general_greeting")
+          .and_return("Hello!")
+
+        result = helper.enterprise_greeting(nil)
+
+        expect(result).to eq("Hello!")
+      end
+    end
+  end
 end
