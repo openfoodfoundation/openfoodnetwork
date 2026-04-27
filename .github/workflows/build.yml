@@ -165,7 +165,8 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb,spec/system/consumer/**/*_spec.rb}"
 
         run: |
-          bin/rails assets:precompile knapsack_pro:queue:rspec
+          RAILS_LOG_LEVEL=fatal bin/rails assets:precompile # force log level to disable verbose "writing" messages
+          bin/rails knapsack_pro:queue:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
