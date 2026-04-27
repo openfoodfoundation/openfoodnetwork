@@ -155,6 +155,12 @@ RSpec.configure do |config|
     puts "log_level = #{Rails.application.config.log_level}"
   end
 
+  # Add reference to help navigate debug logs
+  config.before(:each) do |example|
+    Rails.logger.debug(example.full_description)
+    Rails.logger.debug(example.location)
+  end
+
   # Reset locale for all specs.
   config.around(:each) do |example|
     locale = OpenFoodNetwork::I18nConfig.default_locale
