@@ -149,7 +149,7 @@ jobs:
 
         env:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
-          RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', '') }}
+          RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
