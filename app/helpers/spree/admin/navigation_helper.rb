@@ -98,8 +98,11 @@ module Spree
 
       def link_to_with_icon(icon_name, text, url, options = {})
         options[:class] = (options[:class].to_s + " icon_link with-tip #{icon_name}").strip
-        options[:class] += ' no-text' if options[:no_text]
-        options[:title] = text if options[:no_text]
+        if options[:no_text]
+          options[:class] += ' no-text'
+          options[:title] = text
+          options['aria-label'] = text
+        end
         # rubocop:disable Rails/OutputSafety
         text = options[:no_text] ? '' : raw("<span class='text'>#{text}</span>")
         # rubocop:enable Rails/OutputSafety

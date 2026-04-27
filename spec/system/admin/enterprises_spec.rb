@@ -686,7 +686,7 @@ RSpec.describe '
 
           within "#manager-#{existing_user.id}" do
             handle_js_confirm do
-              page.find("a.icon-trash").click
+              click_link "Delete"
             end
           end
 
