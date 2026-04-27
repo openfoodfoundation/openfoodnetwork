@@ -11,6 +11,7 @@ RSpec.describe '
   include ShopWorkflow
   include UIComponentHelper
   include FileHelper
+  include TableHelper
 
   it "viewing an enterprise" do
     e = create(:enterprise)
@@ -684,7 +685,7 @@ RSpec.describe '
         it do
           expect(page).to have_content existing_user.email
 
-          within "#manager-#{existing_user.id}" do
+          within row_containing(existing_user.email) do
             handle_js_confirm do
               click_link "Delete"
             end
