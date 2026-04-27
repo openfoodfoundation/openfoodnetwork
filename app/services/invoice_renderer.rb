@@ -1,29 +1,45 @@
 # frozen_string_literal: true
 
 class InvoiceRenderer
-  def initialize(renderer = ApplicationController.new, user = nil)
+  def initialize(renderer = ApplicationController.new, user = nil, pdf_renderer = PdfRenderer.new)
     @renderer = renderer
     @user = user
+    @pdf_renderer = pdf_renderer
   end
 
   def render_to_string(order, user = @user)
     renderer.instance_variable_set(:@order, order)
-    renderer.render_to_string_with_wicked_pdf(args(order, user))
+    html = renderer.render_to_string(args(user))
+
+    pdf_renderer.render(html, display_url:)
   end
 
-  def args(order, user = @user)
+  def args(user = @user)
     @user = user
     {
-      pdf: "invoice-#{order.number}.pdf",
       template: invoice_template,
       formats: [:html],
-      encoding: "UTF-8"
+      encoding: "UTF-8",
+      layout: false
     }
+  end
+
+  def filename(order)
+    "invoice-#{order.number}.pdf"
   end
 
   private
 
-  attr_reader :renderer
+  attr_reader :renderer, :pdf_renderer
+
+  def display_url
+    return unless renderer.respond_to?(:request)
+
+    request = renderer.request
+    request.original_url if request.respond_to?(:original_url)
+  rescue StandardError
+    nil
+  end
 
   def invoice_template
     if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, @user)
