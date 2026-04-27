@@ -104,7 +104,7 @@ export default class extends Autocomplete {
 
   // Override original to add tag filtering
   replaceResults(html) {
-    const filteredHtml = this.#filterResults(html);
+    const filteredHtml = this.#filterResults(this.#addPageTagsToHtml(html));
 
     if (filteredHtml.length == 0) {
       this.hideAndRemoveOptions();
@@ -129,6 +129,38 @@ export default class extends Autocomplete {
   };
 
   //private
+
+  #collectPageTags() {
+    const tags = new Set();
+    for (const el of document.querySelectorAll('[data-tag-list-input-target="tagList"]')) {
+      if (el === this.tagListTarget || !el.value) continue;
+      for (const tag of el.value.split(",")) {
+        if (tag.trim()) tags.add(tag.trim());
+      }
+    }
+    return tags;
+  }
+
+  #addPageTagsToHtml(serverHtml) {
+    const pageTags = this.#collectPageTags();
+    if (pageTags.size === 0) return serverHtml;
+
+    const query = this.inputTarget.value.trim().toLowerCase();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(serverHtml, "text/html");
+    const existingValues = new Set(
+      [...doc.getElementsByTagName("li")].map(li => li.dataset.autocompleteValue)
+    );
+
+    let extra = "";
+    for (const tag of pageTags) {
+      if (!existingValues.has(tag) && tag.toLowerCase().includes(query)) {
+        extra += `<li class="suggestion-item" role="option" data-autocomplete-value="${tag}" data-autocomplete-label="${tag}">${tag}</li>`;
+      }
+    }
+
+    return extra + serverHtml;
+  }
 
   #filterResults(html) {
     const existingTags = this.tagListTarget.value.split(",");

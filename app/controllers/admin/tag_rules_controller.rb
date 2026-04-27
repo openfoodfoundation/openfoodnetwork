@@ -60,7 +60,7 @@ module Admin
       variant_tags = ActsAsTaggableOn::Tag
         .joins(:taggings)
         .where(taggings: { taggable_type: "Spree::Variant", taggable_id: variant_ids })
-        .group("acts_as_taggable_on_tags.id, acts_as_taggable_on_tags.name")
+        .group("tags.id, tags.name")
         .order("MAX(taggings.created_at) DESC")
         .pluck(:name)
 
