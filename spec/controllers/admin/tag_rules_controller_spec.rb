@@ -72,47 +72,79 @@ RSpec.describe Admin::TagRulesController do
     render_views
 
     let(:enterprise) { create(:distributor_enterprise) }
+    let(:product) { create(:product, supplier: enterprise) }
+    let!(:variant1) { create(:variant, product:, supplier: enterprise, tag_list: "organic,local") }
+    let!(:rule) {
+      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "vip",
+                                        preferred_variant_tags: "premium")
+    }
     let(:q) { "" }
-    let!(:rule1) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "Tag-1",
-                                        preferred_variant_tags: "variant-tag-1" )
-    }
-    let!(:rule2) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "Tag-1",
-                                        preferred_variant_tags: "variant2-tag-1" )
-    }
-    let!(:rule3) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "organic",
-                                        preferred_variant_tags: "variant-organic" )
-    }
-    let!(:rule4) {
-      create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "organic",
-                                        preferred_variant_tags: "variant-tag-1" )
-    }
 
     before do
       controller_login_as_enterprise_user [enterprise]
     end
 
-    it "returns a list of tag rules and number of assiciated rules" do
+    it "returns tags from variant tag lists" do
       spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
 
       expect(response).to render_template :variant_tag_rules
-      expect(response.body).to include "variant-tag-1 has 2 rules"
-      expect(response.body).to include "variant2-tag-1 has 1 rule"
-      expect(response.body).to include "variant-organic has 1 rule"
+      expect(response.body).to include "organic"
+      expect(response.body).to include "local"
+    end
+
+    it "returns variant tags from FilterVariants tag rules" do
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(response.body).to include "premium"
+    end
+
+    it "does not return customer tags from tag rules" do
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(response.body).not_to include "vip"
+    end
+
+    it "does not return tags from non-FilterVariants tag rules" do
+      create(:filter_order_cycles_tag_rule, enterprise:, preferred_customer_tags: "wholesale",
+                                            preferred_exchange_tags: "oc-tag")
+
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(response.body).not_to include "wholesale"
+      expect(response.body).not_to include "oc-tag"
+    end
+
+    it "returns tags most recently applied to a variant first" do
+      variant2 = create(:variant, product:, supplier: enterprise, tag_list: "newer-tag")
+      # Ensure variant1's taggings are older
+      ActsAsTaggableOn::Tagging.where(taggable: variant2).update_all(created_at: 1.hour.from_now)
+
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(assigns(:tags).index("newer-tag")).to be < assigns(:tags).index("organic")
+    end
+
+    it "does not return tags from another enterprise" do
+      other_enterprise = create(:distributor_enterprise)
+      other_product = create(:product, supplier: other_enterprise)
+      create(:variant, product: other_product, supplier: other_enterprise, tag_list: "other-tag")
+
+      spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
+
+      expect(response.body).not_to include "other-tag"
     end
 
     context "with search string" do
       let(:q) { "org" }
 
-      it "returns a list of tag rules matching the string" do
+      it "returns only tags matching the search string" do
         spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
 
         expect(response).to render_template :variant_tag_rules
-        expect(response.body).not_to include "variant-tag-1 has 2 rules"
-        expect(response.body).not_to include "variant2-tag-1 has 1 rule"
-        expect(response.body).to include "variant-organic has 1 rule"
+        expect(response.body).to include "organic"
+        expect(response.body).not_to include "local"
+        expect(response.body).not_to include "vip"
+        expect(response.body).not_to include "premium"
       end
     end
   end

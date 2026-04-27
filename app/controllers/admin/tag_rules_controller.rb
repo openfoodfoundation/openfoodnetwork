@@ -51,20 +51,27 @@ module Admin
       end
     end
 
-    # Use to populate autocomplete with available rule for the given tag/enterprise
+    # Used by the tag input autocomplete to suggest existing variant tags
     def variant_tag_rules
-      tag_rules =
-        TagRule.matching_variant_tag_rules_by_enterprises(params[:enterprise_id], params[:q])
+      enterprise_ids = enterprises.pluck(:id)
 
-      @formatted_tag_rules = tag_rules.each_with_object({}) do |rule, mapping|
-        rule.preferred_variant_tags.split(",").each do |tag|
-          if mapping[tag]
-            mapping[tag][:rules] += 1
-          else
-            mapping[tag] = { tag:, rules: 1 }
-          end
-        end
-      end.values
+      # Tags already applied to variants, most recently used first
+      variant_ids = Spree::Variant.where(supplier_id: enterprise_ids).select(:id)
+      variant_tags = ActsAsTaggableOn::Tag
+        .joins(:taggings)
+        .where(taggings: { taggable_type: "Spree::Variant", taggable_id: variant_ids })
+        .group("acts_as_taggable_on_tags.id, acts_as_taggable_on_tags.name")
+        .order("MAX(taggings.created_at) DESC")
+        .pluck(:name)
+
+      # Tags from FilterVariants tag rules saved for this enterprise, most recently modified first
+      rule_tags = TagRule::FilterVariants.for(enterprise_ids).order(updated_at: :desc).flat_map do |rule|
+        rule.tags.split(",").map(&:strip)
+      end
+
+      query = params[:q].to_s
+      all_tags = (variant_tags + rule_tags).uniq.reject(&:empty?)
+      @tags = query.present? ? all_tags.select { |t| t.downcase.include?(query.downcase) } : all_tags
 
       respond_with do |format|
         format.html { render :variant_tag_rules, layout: false }

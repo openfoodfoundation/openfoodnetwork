@@ -10,25 +10,23 @@ import tag_list_input_controller from "tag_list_input_component/tag_list_input_c
 // Mock jest to return an autocomplete list
 global.fetch = jest.fn(() => {
   const html = `
-    <li 
-      data-testid="item" 
+    <li
+      data-testid="item"
       class="suggestion-item"
       data-autocomplete-label="tag-1"
       data-autocomplete-value="tag-1"
       role="option"
-      id="stimulus-autocomplete-option-4"
     >
-      tag-1 has 1 rule
+      tag-1
     </li>
-    <li 
+    <li
       data-testid="item"
       class="suggestion-item"
-      data-autocomplete-label="rule-2"
-      data-autocomplete-value="rule-2"
+      data-autocomplete-label="some-other-tag"
+      data-autocomplete-value="some-other-tag"
       role="option"
-      id="stimulus-autocomplete-option-5"
     >
-      rule-2 has 2 rules
+      some-other-tag
     </li>`;
 
   return Promise.resolve({
@@ -425,23 +423,21 @@ describe("TagListInputController", () => {
                 >
               </div>
               <ul class="suggestion-list" data-tag-list-input-target="results">
-                <li 
-                  class="suggestion-item" 
-                  data-autocomplete-label="rule-1" 
-                  data-autocomplete-value="rule-1" 
-                  role="option" 
-                  id="stimulus-autocomplete-option-4"
+                <li
+                  class="suggestion-item"
+                  data-autocomplete-label="some-tag"
+                  data-autocomplete-value="some-tag"
+                  role="option"
                 >
-                  rule-1 has 1 rule
+                  some-tag
                 </li>
-                <li 
-                  class="suggestion-item" 
-                  data-autocomplete-label="rule-2" 
-                  data-autocomplete-value="rule-2" 
-                  role="option" 
-                  id="stimulus-autocomplete-option-5"
-                 >
-                  rule-2 has 2 rules
+                <li
+                  class="suggestion-item"
+                  data-autocomplete-label="some-other-tag"
+                  data-autocomplete-value="some-other-tag"
+                  role="option"
+                >
+                  some-other-tag
                 </li>
               </ul>
             </div>
@@ -471,7 +467,30 @@ describe("TagListInputController", () => {
       // the dom has been updated with the autocomplete data
       const items = await screen.findAllByTestId("item");
       expect(items.length).toBe(1);
-      expect(items[0].textContent.trim()).toBe("rule-2 has 2 rules");
+      expect(items[0].textContent.trim()).toBe("some-other-tag");
+    });
+
+    it("hides the dropdown when all returned tags are already in the list", async () => {
+      fetch.mockImplementationOnce(() => {
+        const html = `
+          <li
+            data-testid="item"
+            class="suggestion-item"
+            data-autocomplete-label="tag-1"
+            data-autocomplete-value="tag-1"
+            role="option"
+          >
+            tag-1
+          </li>`;
+        return Promise.resolve({ ok: true, text: () => Promise.resolve(html) });
+      });
+
+      variant_add_tag.dispatchEvent(new FocusEvent("focus"));
+      jest.runAllTimers();
+      await screen.findByTestId("suggestion-list");
+
+      const suggestionList = screen.getByTestId("suggestion-list");
+      expect(suggestionList.childElementCount).toBe(0);
     });
   });
 });

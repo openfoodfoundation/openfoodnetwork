@@ -106,8 +106,10 @@ export default class extends Autocomplete {
   replaceResults(html) {
     const filteredHtml = this.#filterResults(html);
 
-    // Don't show result if we don't have anything to show
-    if (filteredHtml.length == 0) return;
+    if (filteredHtml.length == 0) {
+      this.hideAndRemoveOptions();
+      return;
+    }
 
     super.replaceResults(filteredHtml);
   }
