@@ -31,9 +31,10 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      # Redis settings shared with all jobs
-      redis: &redis
+      # Separate redis container for each node
+      redis${{ matrix.ci_node_index }}: &redis
         image: redis # ofn-install uses latest stable version
+        ports: ["6379:6379"]
         # Set health checks to wait until redis has started
         options: >-
           --health-cmd "redis-cli ping"
@@ -126,7 +127,8 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      redis: *redis
+      # Separate redis container for each node
+      redis${{ matrix.ci_node_index }}: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -222,7 +224,8 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      redis: *redis
+      # Separate redis container for each node
+      redis${{ matrix.ci_node_index }}: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -309,7 +312,8 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      redis: *redis
+      # Separate redis container for each node
+      redis${{ matrix.ci_node_index }}: *redis
     strategy:
       fail-fast: false
       matrix:
