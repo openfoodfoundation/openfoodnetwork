@@ -12,6 +12,10 @@ env:
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
+  OFN_REDIS_TEST_URL: "redis://localhost:6379/0"
+  OFN_REDIS_CABLE_URL: "redis://localhost:6379/1"
+  OFN_REDIS_JOBS_URL: "redis://localhost:6379/2"
+
 permissions:
   contents: read
 
@@ -31,8 +35,8 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      # Separate redis container for each node
-      redis${{ matrix.ci_node_index }}: &redis
+      # Redis settings shared with all jobs
+      redis: &redis
         image: redis # ofn-install uses latest stable version
         ports: ["6379:6379"]
         # Set health checks to wait until redis has started
@@ -127,8 +131,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      # Separate redis container for each node
-      redis${{ matrix.ci_node_index }}: *redis
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -224,8 +227,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      # Separate redis container for each node
-      redis${{ matrix.ci_node_index }}: *redis
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -312,8 +314,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
-      # Separate redis container for each node
-      redis${{ matrix.ci_node_index }}: *redis
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
