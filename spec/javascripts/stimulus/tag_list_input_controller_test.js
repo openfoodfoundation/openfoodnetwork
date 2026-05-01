@@ -540,11 +540,11 @@ describe("TagListInputController", () => {
 
         const suggestionList = screen.getByTestId("suggestion-list");
         const options = [...suggestionList.querySelectorAll("li[role='option']")];
-        const values = options.map(li => li.dataset.autocompleteValue);
+        const values = options.map((li) => li.dataset.autocompleteValue);
 
-        expect(values[0]).toBe("page-only-tag");     // unsaved page tags appear first
+        expect(values[0]).toBe("page-only-tag"); // unsaved page tags appear first
         expect(values).toContain("some-other-tag"); // from server
-        expect(values).not.toContain("tag-1");      // filtered out — already on this variant
+        expect(values).not.toContain("tag-1"); // filtered out — already on this variant
       });
     });
 
