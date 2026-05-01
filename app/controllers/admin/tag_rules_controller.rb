@@ -65,13 +65,13 @@ module Admin
         .pluck(:name)
 
       # Tags from FilterVariants tag rules saved for this enterprise, most recently modified first
-      rule_tags = TagRule::FilterVariants.for(enterprise_ids).order(updated_at: :desc).flat_map do |rule|
+      rule_tags = TagRule::FilterVariants.for(enterprise_ids).order(updated_at: :desc)
+        .flat_map do |rule|
         rule.tags.split(",").map(&:strip)
       end
 
-      query = params[:q].to_s
       all_tags = (variant_tags + rule_tags).uniq.reject(&:empty?)
-      @tags = query.present? ? all_tags.select { |t| t.downcase.include?(query.downcase) } : all_tags
+      @tags = filter_tags(all_tags, params[:q].to_s)
 
       respond_with do |format|
         format.html { render :variant_tag_rules, layout: false }
@@ -79,6 +79,12 @@ module Admin
     end
 
     private
+
+    def filter_tags(tags, query)
+      return tags if query.blank?
+
+      tags.select { |t| t.downcase.include?(query.downcase) }
+    end
 
     def collection_actions
       [:index, :map_by_tag]
