@@ -149,7 +149,7 @@ export default class extends Autocomplete {
     const parser = new DOMParser();
     const doc = parser.parseFromString(serverHtml, "text/html");
     const existingValues = new Set(
-      [...doc.getElementsByTagName("li")].map(li => li.dataset.autocompleteValue)
+      [...doc.getElementsByTagName("li")].map((li) => li.dataset.autocompleteValue),
     );
 
     let extra = "";
