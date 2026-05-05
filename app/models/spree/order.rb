@@ -136,7 +136,7 @@ module Spree
       else
         # Find orders that are distributed by the user or have variants supplied by the user
         # WARNING: This only filters orders, not line items.
-        with_line_items_variants_and_products_outer.
+        with_line_items_variants_outer.
           where('spree_orders.distributor_id IN (?) OR spree_variants.supplier_id IN (?)',
                 user.enterprises.select(&:id),
                 user.enterprises.select(&:id)).
@@ -171,8 +171,8 @@ module Spree
         .order("spree_addresses.lastname DESC, spree_addresses.firstname DESC")
     }
 
-    scope :with_line_items_variants_and_products_outer, lambda {
-      left_outer_joins(line_items: { variant: :product })
+    scope :with_line_items_variants_outer, lambda {
+      left_outer_joins(line_items: :variant)
     }
 
     # All the states an order can be in after completing the checkout
