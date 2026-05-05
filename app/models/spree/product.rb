@@ -26,7 +26,7 @@ module Spree
     # because they are declared as attr_accessor below, declaring them as ignored columns has no
     # effect
     self.ignored_columns += [
-      :supplier_id, :primary_taxon_id, :variant_unit, :variant_unit_scale, :variant_unit_name
+      :primary_taxon_id, :variant_unit, :variant_unit_scale, :variant_unit_name
     ]
 
     acts_as_paranoid
