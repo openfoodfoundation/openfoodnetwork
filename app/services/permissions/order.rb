@@ -15,7 +15,7 @@ module Permissions
     # needed for queries showing line items per producer.
     def visible_orders
       orders = Spree::Order.
-        with_line_items_variants_and_products_outer.
+        with_line_items_variants_outer.
         where(visible_orders_where_values)
 
       filtered_orders(orders)
@@ -107,14 +107,14 @@ module Permissions
     end
 
     def produced_orders
-      Spree::Order.with_line_items_variants_and_products_outer.
+      Spree::Order.with_line_items_variants_outer.
         where(
           spree_variants: { supplier_id: @permissions.managed_enterprises.select("enterprises.id") }
         )
     end
 
     def produced_orders_where_values
-      Spree::Order.with_line_items_variants_and_products_outer.
+      Spree::Order.with_line_items_variants_outer.
         where(
           distributor_id: granted_distributor_ids,
           spree_variants: { supplier_id: enterprises_with_associated_orders }
