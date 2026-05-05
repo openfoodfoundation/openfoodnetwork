@@ -989,6 +989,54 @@ RSpec.describe Spree::Order do
         expect(Spree::Order.not_empty).not_to include order_without_line_items
       end
     end
+
+    describe "managed_by" do
+      let!(:o1) { create(:order, :with_line_item, distributor: d1) }
+      let!(:o2) { create(:order, :with_line_item, distributor: d1) }
+      let(:d1) { create(:enterprise) }
+      let(:user) { create(:user) }
+      subject { described_class.managed_by user }
+
+      context "supplied by me" do
+        let(:s1) { create(:enterprise) }
+        let(:s2) { create(:enterprise) }
+        let(:v1) { create(:variant, supplier: s1) }
+        let(:v2) { create(:variant, supplier: s2) }
+        let!(:o1) { create(:order, :with_line_item, variant: v1, distributor: d1) }
+        let!(:o2) { create(:order, :with_line_item, variant: v2, distributor: d1) }
+
+        it "shows only orders supplied by user" do
+          pending
+          s1.enterprise_roles.build(user:).save
+
+          expect(subject.count).to eq(1)
+          expect(subject).to include o1
+        end
+      end
+
+      context "distributed by me" do
+        let(:d2) { create(:enterprise) }
+        let!(:o1) { create(:order, :with_line_item, distributor: d1) }
+        let!(:o2) { create(:order, :with_line_item, distributor: d2) }
+
+        it "shows only orders distributed by user" do
+          d1.enterprise_roles.build(user:).save
+
+          expect(subject.count).to eq(1)
+          expect(subject).to include o1
+        end
+      end
+
+      context "admin user" do
+        let(:user) { create(:admin_user) }
+
+        it "shows all orders for admin user" do
+          expect(subject.count).to eq(2)
+          expect(subject).to include o1
+          expect(subject).to include o2
+        end
+      end
+    end
   end
 
   describe "sending confirmation emails" do
