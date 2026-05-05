@@ -146,6 +146,8 @@ RSpec.describe Spree::Core::ProductDuplicator do
           "Enterprise Update",
           "Enterprise Update All",
           "Spree::Taxon Update",
+          "Enterprise Update",
+          "Enterprise Update All",
           "TRANSACTION"
         ]
       end
