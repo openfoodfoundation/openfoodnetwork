@@ -8,6 +8,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
   it { is_expected.to belong_to(:supplier).required }
+  it { is_expected.to belong_to(:owner).optional }
   it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
@@ -1029,6 +1030,16 @@ RSpec.describe Spree::Variant do
         expect(linked_variant.on_demand).to eq false
         expect(linked_variant.on_hand).to eq 5
       end
+    end
+  end
+
+  describe "updating supplier/owner" do
+    it "during transition period, updates owner when updating supplier" do
+      new_supplier = create(:supplier_enterprise)
+      variant.supplier = new_supplier
+      variant.save!
+
+      expect(variant.reload.owner).to eq new_supplier
     end
   end
 end
