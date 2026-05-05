@@ -730,16 +730,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015300) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "group_buy"
     t.float "group_buy_unit_size"
-    t.string "variant_unit", limit: 255
-    t.float "variant_unit_scale"
-    t.string "variant_unit_name", limit: 255
     t.text "notes"
-    t.integer "primary_taxon_id"
     t.boolean "inherits_properties", default: true, null: false
     t.string "sku", limit: 255, default: "", null: false
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["name"], name: "index_products_on_name"
-    t.index ["primary_taxon_id"], name: "index_spree_products_on_primary_taxon_id"
   end
 
   create_table "spree_properties", id: :serial, force: :cascade do |t|
@@ -1250,7 +1245,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015300) do
   add_foreign_key "spree_product_properties", "spree_properties", column: "property_id", name: "spree_product_properties_property_id_fk"
   add_foreign_key "spree_products", "spree_shipping_categories", column: "shipping_category_id", name: "spree_products_shipping_category_id_fk"
   add_foreign_key "spree_products", "spree_tax_categories", column: "tax_category_id", name: "spree_products_tax_category_id_fk"
-  add_foreign_key "spree_products", "spree_taxons", column: "primary_taxon_id", name: "spree_products_primary_taxon_id_fk"
   add_foreign_key "spree_return_authorizations", "spree_orders", column: "order_id", name: "spree_return_authorizations_order_id_fk"
   add_foreign_key "spree_roles_users", "spree_roles", column: "role_id", name: "spree_roles_users_role_id_fk"
   add_foreign_key "spree_roles_users", "spree_users", column: "user_id", name: "spree_roles_users_user_id_fk"
