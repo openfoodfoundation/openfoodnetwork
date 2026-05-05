@@ -115,7 +115,6 @@ RSpec.describe "Payments Reports" do
         "Total ($)"
       ].join(" "))
 
-      pending
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,

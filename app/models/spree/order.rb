@@ -134,10 +134,10 @@ module Spree
       if user.admin?
         where(nil)
       else
-        # Find orders that are distributed by the user or have products supplied by the user
+        # Find orders that are distributed by the user or have variants supplied by the user
         # WARNING: This only filters orders, not line items.
         with_line_items_variants_and_products_outer.
-          where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
+          where('spree_orders.distributor_id IN (?) OR spree_variants.supplier_id IN (?)',
                 user.enterprises.select(&:id),
                 user.enterprises.select(&:id)).
           select('DISTINCT spree_orders.*')
