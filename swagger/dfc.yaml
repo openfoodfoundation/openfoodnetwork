@@ -675,6 +675,24 @@ paths:
                 "@type": dfc-b:Offer
                 dfc-b:hasPrice: 9.99
                 dfc-b:stockLimitation: 7
+  "/api/dfc/organizations":
+    get:
+      summary: List organizations
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/organizations
+                    "@type": ldp:Container
+                    ldp:contains:
+                    - http://test.host/api/dfc/enterprises/10000
   "/api/dfc/persons/{id}":
     get:
       summary: Show person

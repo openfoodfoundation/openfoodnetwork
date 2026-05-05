@@ -6,6 +6,11 @@ module AuthorizationHelper
     { "Authorization" => "JWT #{token}" }
   end
 
+  def auth_header_token_for(user)
+    token = allow_token_for(email: user.email)
+    "JWT #{token}"
+  end
+
   def allow_token_for(payload)
     private_key = OpenSSL::PKey::RSA.generate 2048
     allow(AuthorizationControl).to receive(:public_key).
