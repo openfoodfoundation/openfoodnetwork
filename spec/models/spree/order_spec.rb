@@ -1006,7 +1006,6 @@ RSpec.describe Spree::Order do
         let!(:o2) { create(:order, :with_line_item, variant: v2, distributor: d1) }
 
         it "shows only orders supplied by user" do
-          pending
           s1.enterprise_roles.build(user:).save
 
           expect(subject.count).to eq(1)
