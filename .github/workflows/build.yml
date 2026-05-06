@@ -42,7 +42,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1, 2, 3]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -55,7 +55,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates containing image urls
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .node-version
           cache: yarn
@@ -133,7 +133,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -145,7 +145,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .node-version
           cache: yarn
@@ -233,7 +233,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -246,7 +246,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .node-version
           cache: yarn
@@ -337,7 +337,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .node-version
           cache: yarn
@@ -404,7 +404,7 @@ jobs:
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Rails is required for the Karma rake script
       - name: Set up Ruby
@@ -412,7 +412,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .node-version
           cache: yarn
@@ -434,7 +434,7 @@ jobs:
       - system
       - test_the_rest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -442,7 +442,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Download individual results from individual runners
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           pattern: simplecov-chunk-*
           path: tmp/simplecov
