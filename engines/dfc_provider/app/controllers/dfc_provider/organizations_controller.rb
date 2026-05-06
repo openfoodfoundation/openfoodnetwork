@@ -26,7 +26,7 @@ module DfcProvider
         "@type" => "ldp:Container",
         "ldp:contains" => members.map(&:semanticId),
       }
-      render json: container
+      render json: container, content_type: "application/ld+json"
     end
   end
 end

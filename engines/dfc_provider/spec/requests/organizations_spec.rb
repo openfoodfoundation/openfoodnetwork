@@ -28,7 +28,7 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
 
   path "/api/dfc/organizations" do
     get "List organizations" do
-      produces "application/json"
+      produces "application/ld+json"
 
       response "200", "successful" do
         context "as user owning an enterprise" do
