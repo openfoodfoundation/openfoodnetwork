@@ -42,7 +42,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1, 2, 3]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -55,7 +55,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates containing image urls
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: yarn
@@ -90,7 +90,7 @@ jobs:
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -100,7 +100,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -133,7 +133,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -145,7 +145,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: yarn
@@ -181,7 +181,7 @@ jobs:
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-system-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -191,7 +191,7 @@ jobs:
 
       - name: Archive failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
           path: tmp/capybara/screenshots/*.png
@@ -200,7 +200,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -233,7 +233,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -246,7 +246,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: yarn
@@ -281,7 +281,7 @@ jobs:
           bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -291,7 +291,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -324,7 +324,7 @@ jobs:
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
         ci_node_index: [0, 1, 2]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Setup redis
         uses: supercharge/redis-github-action@1.8.1
@@ -337,7 +337,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: yarn
@@ -371,7 +371,7 @@ jobs:
           bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -381,7 +381,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -404,7 +404,7 @@ jobs:
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # Rails is required for the Karma rake script
       - name: Set up Ruby
@@ -412,7 +412,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: yarn
@@ -434,7 +434,7 @@ jobs:
       - system
       - test_the_rest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -442,7 +442,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Download individual results from individual runners
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           pattern: simplecov-chunk-*
           path: tmp/simplecov
@@ -451,7 +451,7 @@ jobs:
         run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
 
       - name: Upload collated results
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: combined-simplecov-report
           path: coverage/**/*.*
