@@ -90,7 +90,7 @@ jobs:
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -100,7 +100,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -181,7 +181,7 @@ jobs:
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: simplecov-chunk-system-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -191,7 +191,7 @@ jobs:
 
       - name: Archive failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
           path: tmp/capybara/screenshots/*.png
@@ -200,7 +200,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -281,7 +281,7 @@ jobs:
           bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -291,7 +291,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -371,7 +371,7 @@ jobs:
           bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -381,7 +381,7 @@ jobs:
 
       - name: Archive debug log files
         if: runner.debug
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-logs
           path: log/*
@@ -451,7 +451,7 @@ jobs:
         run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
 
       - name: Upload collated results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: combined-simplecov-report
           path: coverage/**/*.*
