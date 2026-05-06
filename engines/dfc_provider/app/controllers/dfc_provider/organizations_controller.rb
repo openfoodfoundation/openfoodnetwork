@@ -14,19 +14,17 @@ module DfcProvider
         EnterpriseBuilder.enterprise(enterprise)
       end
 
-      render_container(enterprises)
+      organizations = DfcV2Migration.up(enterprises)
+
+      render_container(organizations)
     end
 
     # The DFC v2 requires containers.
-    # TODO: Add DFC Connector class for containers.
     def render_container(members)
-      container = {
-        "@context" => "https://www.datafoodconsortium.org",
-        "@id" => organizations_url,
-        "@type" => "ldp:Container",
-        "ldp:contains" => members.map(&:semanticId),
-      }
-      render json: container, content_type: "application/ld+json"
+      container = Container.new(organizations_url, members:)
+
+      connector = DataFoodConsortium::Connector::Connector.instance
+      render json: connector.export(container, *members), content_type: "application/ld+json"
     end
   end
 end

@@ -40,9 +40,7 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
             # DFC v2 requires containers. We can't just list objects in a graph.
             expect(response.body).to include '"@type":"ldp:Container"'
 
-            # The container links to resources for now. But we will want the
-            # actual Organizations included in the response, I think.
-            # Pending discussion with the DFC team.
+            # The container contains the enterprise.
             #
             # I also kept the semantic id the same, still referring to
             # enterprise. Technically, it doesn't matter. But since DFC v2
@@ -54,9 +52,7 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
             # wants to upgrade to DFC v2 then they need to update their
             # database to change all the stored ids of enterprises.
             expect(response.body).to include "host/api/dfc/enterprises/10000"
-
-            # We don't include the Organization content for now. See above.
-            expect(response.body).not_to include "Fred's Farm"
+            expect(response.body).to include "Fred's Farm"
           end
         end
       end
