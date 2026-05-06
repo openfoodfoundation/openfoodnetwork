@@ -42,16 +42,35 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
 
             # The container contains the enterprise.
             #
-            # I also kept the semantic id the same, still referring to
-            # enterprise. Technically, it doesn't matter. But since DFC v2
-            # includes breaking changes, I want to rename this as well and add
-            # a `show` action to the OrganizationsController.
-            #
-            # This means that the ids of resources will change. If another
+            # The semantic ids of the enterprises changed. If another
             # platform like Discover Regenerative has the old ids stored and
             # wants to upgrade to DFC v2 then they need to update their
             # database to change all the stored ids of enterprises.
-            expect(response.body).to include "host/api/dfc/enterprises/10000"
+            expect(response.body).to include "host/api/dfc/organizations/10000"
+            expect(response.body).to include "Fred's Farm"
+          end
+        end
+      end
+    end
+  end
+
+  path "/api/dfc/organizations/{id}" do # TODO
+    get "Show organization" do
+      parameter name: :id, in: :path, type: :string
+      produces "application/ld+json"
+
+      response "200", "successful" do
+        context "as user owning an enterprise" do
+          let(:id) { 10_000 }
+
+          before { enterprise }
+
+          run_test! do
+            # There's no container here:
+            expect(response.body).not_to include '"@type":"ldp:Container"'
+
+            expect(response.body).to include '"@type":"dfc-b:Organization"'
+            expect(response.body).to include "host/api/dfc/organizations/10000"
             expect(response.body).to include "Fred's Farm"
           end
         end

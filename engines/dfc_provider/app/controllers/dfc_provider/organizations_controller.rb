@@ -19,6 +19,21 @@ module DfcProvider
       render_container(organizations)
     end
 
+    def show
+      enterprise = current_user.enterprises.find(params[:id])
+      dfc_enterprise = EnterpriseBuilder.enterprise(enterprise)
+      organization = DfcV2Migration.up([dfc_enterprise]).first
+
+      render_dfc(
+        organization,
+        organization.mainContact,
+        *organization.localizations,
+        *organization.socialMedias,
+      )
+    end
+
+    private
+
     # The DFC v2 requires containers.
     def render_container(members)
       container = Container.new(organizations_url, members:)
