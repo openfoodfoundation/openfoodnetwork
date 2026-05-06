@@ -23,8 +23,12 @@ module DfcProvider
     def render_container(members)
       container = Container.new(organizations_url, members:)
 
+      render_dfc(container, *members)
+    end
+
+    def render_dfc(*)
       connector = DataFoodConsortium::Connector::Connector.instance
-      render json: connector.export(container, *members), content_type: "application/ld+json"
+      render json: connector.export(*), content_type: "application/ld+json"
     end
   end
 end
