@@ -55,7 +55,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates containing image urls
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: yarn
@@ -145,7 +145,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: yarn
@@ -246,7 +246,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: yarn
@@ -337,7 +337,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: yarn
@@ -412,7 +412,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: yarn
