@@ -118,6 +118,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_032848) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.boolean "created_manually", default: false
+    t.string "customer_type", default: "individual", null: false
+    t.string "enterprise_name"
+    t.string "enterprise_acn"
+    t.boolean "enterprise_charges_sales_tax", default: false, null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["created_manually"], name: "index_customers_on_created_manually"
     t.index ["email", "enterprise_id"], name: "index_customers_on_email_and_enterprise_id", unique: true
