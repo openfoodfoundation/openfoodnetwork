@@ -38,12 +38,22 @@ class Customer < ApplicationRecord
   alias_method :shipping_address=, :ship_address=
   accepts_nested_attributes_for :ship_address
 
+  enum :customer_type, {
+    individual: "individual",
+    enterprise: "enterprise"
+  }, default: "individual"
+
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
                     uniqueness: {
                       scope: :enterprise_id,
                       message: I18n.t('validation_msg_is_associated_with_an_exising_customer')
                     }
+  validates :customer_type,
+            presence: true,
+            inclusion: { in: customer_types.keys }
+  validates :enterprise_name, presence: true, if: :enterprise?
+  validates :enterprise_acn, presence: true, if: :enterprise?
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :managed_by, ->(user) {
