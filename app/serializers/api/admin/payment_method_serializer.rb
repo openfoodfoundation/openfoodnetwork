@@ -8,6 +8,8 @@ module Api
       def method_serializer
         if object.type == 'Spree::Gateway::StripeSCA'
           Api::Admin::PaymentMethod::StripeSerializer.new(object, options)
+        elsif object.type == 'Spree::Gateway::Twint'
+          Api::Admin::PaymentMethod::TwintSerializer.new(object, options)
         else
           Api::Admin::PaymentMethod::BaseSerializer.new(object, options)
         end

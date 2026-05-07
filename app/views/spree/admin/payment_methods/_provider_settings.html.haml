@@ -1,5 +1,5 @@
 - case @payment_method
-- when Spree::Gateway::StripeSCA
+- when Spree::Gateway::StripeSCA, Spree::Gateway::Twint
   = render 'stripe_connect'
 - else
   - if @payment_method.preferences.present?

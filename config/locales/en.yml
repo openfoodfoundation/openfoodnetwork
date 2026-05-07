@@ -4717,6 +4717,7 @@ en:
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
+          twint: "Twint"
           taler: "Taler"
           customercredit: "Customer Credit"
       payments:
