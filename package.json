@@ -8,7 +8,6 @@
   "license": "AGPL-3.0",
   "packageManager": "yarn@1.22.2",
   "dependencies": {
-    "@babel/core": "^7.28.5",
     "@floating-ui/dom": "*",
     "@hotwired/stimulus": "*",
     "@hotwired/turbo": "*",
