@@ -12,11 +12,11 @@
     "@hotwired/stimulus": "*",
     "@hotwired/turbo": "*",
     "@stimulus-components/rails-nested-form": "*",
-    "@swc/core": "^1.15.24",
+    "@swc/core": "*",
     "cable_ready": "5.0.6",
-    "compression-webpack-plugin": "^12.0.0",
-    "css-loader": "^7.1.2",
-    "css-minimizer-webpack-plugin": "^8.0.0",
+    "compression-webpack-plugin": "*",
+    "css-loader": "*",
+    "css-minimizer-webpack-plugin": "*",
     "flatpickr": "*",
     "foundation-sites": "5.5.3",
     "hotkeys-js": "*",
@@ -36,7 +36,7 @@
     "postcss-preset-env": "^10.5.0",
     "regenerator-transform": "^0.15.2",
     "sass-embedded": "^1.96.0",
-    "sass-loader": "^16.0.6",
+    "sass-loader": "*",
     "select2": "*",
     "shakapacker": "~9.7.0",
     "shortcut-buttons-flatpickr": "*",
@@ -45,15 +45,15 @@
     "stimulus-flatpickr": "*",
     "stimulus_reflex": "3.5.5",
     "style-loader": "^4.0.0",
-    "swc-loader": "^0.2.7",
-    "terser-webpack-plugin": "^5.3.16",
+    "swc-loader": "*",
+    "terser-webpack-plugin": "*",
     "tom-select": "*",
     "trix": "*",
     "turbo_power": "*",
-    "webpack": "^5.104.0",
-    "webpack-assets-manifest": "^6.0.0",
-    "webpack-cli": "^7.0.0",
-    "webpack-merge": "^6.0.0",
+    "webpack": "*",
+    "webpack-assets-manifest": "*",
+    "webpack-cli": "*",
+    "webpack-merge": "*",
     "webpack-sources": "^3.3.3"
   },
   "browserslist": [
@@ -61,7 +61,7 @@
     "not IE 11"
   ],
   "devDependencies": {
-    "@swc/jest": "^0.2.39",
+    "@swc/jest": "*",
     "@testing-library/dom": "<11.0.0",
     "jasmine-core": "~5.12.1",
     "jest": "*",
@@ -71,6 +71,6 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "prettier": "*",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "*"
   }
 }
