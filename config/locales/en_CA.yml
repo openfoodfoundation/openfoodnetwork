@@ -4216,6 +4216,7 @@ en_CA:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back to Images List"
+    instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4840,6 +4841,7 @@ en_CA:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
+        no_payment_found: "No pending Paypal payment found"
     users:
       api_keys:
         regenerate_key: "Regenerate Key"

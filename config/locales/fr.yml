@@ -817,7 +817,7 @@ fr:
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
         balance: "Solde"
-        credit: "Crédit disponible"
+        credit: "Avoir disponible"
         update_address_success: "Adresse mise à jour avec succès."
         update_address_error: "Oups! Veuillez remplir tous les champs obligatoires!"
         edit_bill_address: "Modifier l'adresse de facturation"
@@ -837,12 +837,12 @@ fr:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
     customer_account_transaction:
       index:
-        available_credit: "Crédit disponible : %{available_credit}"
+        available_credit: "Avoir disponible : %{available_credit}"
         transaction_date: Date de la transaction
         description: Description
         amount: Montant
         created_by: Créé par
-        running_balance: Solde courant
+        running_balance: Avoir disponible
     column_preferences:
       bulk_update:
         success: "Préférences colonnes sauvegardées"
@@ -2473,8 +2473,8 @@ fr:
   order_total: Total commande
   order_payment: "Payer via:"
   no_payment_required: "Pas de paiement requis"
-  credit_used: "Crédit utilisé : %{amount}"
-  customer_credit: Créditer
+  credit_used: "Avoir utilisé : %{amount}"
+  customer_credit: Avoir
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -3461,7 +3461,7 @@ fr:
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
-  credit_customer: Créditer le client
+  credit_customer: Créditer le client (avoir)
   create_or_update_invoice: "Créer ou mettre à jour la facture"
   date_completed: "Date d'opération"
   amount: "Montant"
@@ -4463,7 +4463,7 @@ fr:
           resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
           send_invoice: "Envoyer les factures"
           send_invoice_confirm_html: "Vous allez envoyer les factures clients pour toutes les commandes sélectionnées. <br>Souhaitez-vous continuer ?"
-          credit_orders: Créditer les commandes
+          credit_orders: Créer des avoirs
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -4611,7 +4611,7 @@ fr:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe"
           taler: "Taler"
-          customercredit: "Crédit client"
+          customercredit: "Avoir"
       payments:
         source_forms:
           stripe:
@@ -4948,11 +4948,11 @@ fr:
         authorise: Autoriser
       customer_account_transactions:
         title: Transactions des clients
-        credit_available: "Crédit disponible : %{credit}"
+        credit_available: "Avoir disponible : %{credit}"
         transaction_date: Date de la transaction
         description: Description
         amount: Montant
-        running_balance: Solde courant
+        running_balance: Avoir disponible
       open_orders:
         order: Commander
         shop: Faire mes courses
@@ -5105,21 +5105,21 @@ fr:
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."
-  api_customer_credit: "Crédit API : %{description}"
+  api_customer_credit: "Crédit API (avoir) : %{description}"
   credit_payment_method:
-    name: Crédit client
-    description: Autoriser le client à payer par crédit
-    success: Le paiement par crédit a été effectué avec succès.
-    void_success: L'annulation du crédit a réussi.
-    order_payment_description: "Crédit client : Paiement de la commande : %{order_number}"
-    order_void_description: "Crédit client : Remboursement pour la commande : %{order_number}"
+    name: Avoir
+    description: Autoriser le client à utiliser son avoir
+    success: Le paiement par avoir a été effectué avec succès.
+    void_success: L'annulation de l'avoir a réussi.
+    order_payment_description: "Avoir client : Paiement de la commande : %{order_number}"
+    order_void_description: "Avoir client : Remboursement pour la commande : %{order_number}"
     errors:
       customer_not_found: Client introuvable
       missing_payment: Paiement manquant
-      credit_payment_method_missing: Le mode de paiement par crédit est manquant.
-      no_credit_available: Aucun crédit disponible
-      not_enough_credit_available: Crédit disponible insuffisant
+      credit_payment_method_missing: Le mode de paiement par avoir est manquant.
+      no_credit_available: Aucun avoir disponible
+      not_enough_credit_available: Avoir insuffisant
   customer_credit_service:
-    no_credit_owed: Aucun crédit dû
-    credit_payment_method_missing: Le mode de paiement par crédit client est manquant. Veuillez vérifier la configuration.
+    no_credit_owed: Aucun avoir dû
+    credit_payment_method_missing: Le mode de paiement par avoir client est manquant. Veuillez vérifier la configuration.
     refund_sucessful: Remboursement effectué avec succès !

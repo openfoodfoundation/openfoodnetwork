@@ -42,7 +42,7 @@ es:
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
-        state: Provincia
+        state: Estado
         source: Fuente
       spree/product:
         name: "nombre del producto"
@@ -83,6 +83,8 @@ es:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Heredar la categoría fiscal requiere una calculadora por artículo."
+        enterprise_relationship:
+          inventory_vs_linked_variants: "No se pueden otorgar permisos tanto al inventario como a variantes vinculadas."
         spree/image:
           attributes:
             attachment:
@@ -118,6 +120,10 @@ es:
     messages:
       attachment_missing: "Falta el adjunto"
       media_metadata_missing: "No es formato media valido"
+      dimension_height_not_less_than_or_equal_to: "La altura debe ser menor o igual a %{length} píxeles"
+      dimension_width_not_equal_to: "El ancho debe ser igual a %{length} píxeles"
+      dimension_height_not_equal_to: "La altura debe ser igual a %{length} píxeles"
+      file_not_processable: "no se identifica como un archivo multimedia válido"
     not_found:
       title: "La página que estas buscando no existe (404)"
       message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
@@ -602,6 +608,7 @@ es:
         delete: Borrar
         remove: Eliminar
         preview: Vista previa
+        create_linked_variant: Crear variante vinculada
       image:
         edit: Editar
       product_preview:
@@ -639,7 +646,7 @@ es:
     shipping_method: Método de envío
     shop: Tienda
     sku: número de referencia
-    status_state: Provincia
+    status_state: Estado
     tags: Etiquetas
     variant: Variedad
     weight: Peso
@@ -765,8 +772,10 @@ es:
     customer_account_transaction:
       index:
         available_credit: "Saldo disponible: %{available_credit}"
+        transaction_date: Fecha de la transacción
         description: Descripción
         amount: Cantidad
+        created_by: Creado por
         running_balance: Saldo actual
     column_preferences:
       bulk_update:
@@ -1353,10 +1362,12 @@ es:
           show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
           show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
         users:
+          description: Los usuarios con permiso para administrar esta organización .
           legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
           contact: "Contacto"
+          manager: "Administradora"
           owner: 'Propietaria'
           contact_tip: "El administrador que recibirá los correos electrónicos de la empresa para pedidos y notificaciones. Debe tener una dirección de correo electrónico confirmada."
           owner_tip: La principal usaría responsable para esta organización.
@@ -1422,6 +1433,11 @@ es:
         visible: ¿Visible?
         owner: Propietaria
         producer: Productora
+        sells_options:
+          unspecified: Sin especificar
+          none: Ninguno
+          own: Propio
+          any: Cualquiera
       change_type_form:
         producer_profile: Perfil Productora
         connect_ofn: Conectar a través de OFN
@@ -1633,6 +1649,7 @@ es:
         logo_hint: 300 x 300 pixeles
         logo_remove: "Eliminar la imagen"
         logo_remove_confirm: "El logotipo se eliminará inmediatamente después de confirmar."
+        promo_image_label: "Imagen promocional"
         promo_image_note1: 'ATENCIÓN:'
         promo_image_note2: La imagen será recortada a  1200 x 260.
         promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
@@ -1640,6 +1657,7 @@ es:
         promo_image_remove: "Eliminar la imagen"
         promo_image_remove_confirm: "La imagen promocional se eliminará inmediatamente después de confirmar."
         white_label_logo_label: "Logo que se utilizará en el escaparate"
+        white_label_logo_hint: 217 x 44 píxeles
         white_label_logo_remove: "Eliminar la imagen"
         white_label_logo_remove_confirm: "¿Está seguro de que desea eliminar este logo?"
       user_guide_link:
@@ -1678,6 +1696,10 @@ es:
           images: "Imágenes"
           contact: "Contacto"
           web: "Recursos Web"
+      stimulus_pagination:
+        navigation: Paginación
+        previous: Página anterior
+        next: Página siguiente
     enterprise_issues:
       create_new: Crear nuevo
       resend_email: Reenviar email
@@ -1686,6 +1708,10 @@ es:
       email_confirmation: "La confirmación de correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{email}."
       not_visible: "%{enterprise} no es visible y no se puede encontrar en el mapa o en búsquedas"
     reports:
+      none: ninguno
+      metadata:
+        report_title: Título del informe
+      deprecated: "Este informe está obsoleto y se eliminará en una versión futura."
       hidden_field: "< Escondido >"
       unitsize: UNIDAD DE MEDIDA
       total: TOTAL
@@ -1701,6 +1727,8 @@ es:
       lettuce_share: LettuceShare
       payment_methods: Informe de los métodos de pago
       delivery: Informe de entrega
+      sales_tax_totals_by_producer: Totales de impuestos sobre las ventas por productor
+      sales_tax_totals_by_order: Totales de impuestos sobre las ventas por pedido
       tax_types: Tipos de impuestos
       tax_rates: '% Impuestos'
       pack_by_customer: Pack por Consumidor
@@ -1715,6 +1743,7 @@ es:
       show:
         report_link_label: Descargar informe (si está disponible)
       revenues_by_hub:
+        name: Ingresos por Grupo
         description: Ingresos por grupo
       orders_and_distributors:
         name: Pedidos y Distribuidores
@@ -1746,6 +1775,8 @@ es:
         description: "Resumen de las comisiones de la organización recolectadas"
       suppliers:
         name: Proveedoras
+      enterprise_fees_with_tax_report_by_order: "Tarifas organización con informe de impuestos por pedido"
+      enterprise_fees_with_tax_report_by_producer: "Honorarios organización con informe de impuestos por productor"
       errors:
         no_report_type: "Por favor especifique un tipo de reporte"
         report_not_found: "El reporte no fue encontrado"
@@ -1781,6 +1812,7 @@ es:
       index:
         connect: "Conecta tu cuenta"
         disconnect: "Desconectar"
+        refresh: "Actualizar autorización"
         view_account: "Para ver tu cuenta, ver:"
     subscriptions:
       index:
@@ -1881,6 +1913,7 @@ es:
       new:
         back: Atrás
         email: Email
+        invite_new_user: Invitar a un nuevo usuario
         invite: Invitar
     vouchers:
       new:
@@ -1902,6 +1935,7 @@ es:
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
+    unknown_error: "Algo salió mal. Nuestro equipo ya ha sido notificado."
     invalid_api_key: "La llave de API especificada (%{key}) es inválida."
     unauthorized: "No tiene autorización para realizar esta acción."
     invalid_resource: "Recurso inválido. Por favor corrija los errores e intente nuevamente."
@@ -1949,7 +1983,7 @@ es:
         city:
           label: Ciudad
         state_id:
-          label: Estado
+          label: Provincia
         zipcode:
           label: Código Postal
         country_id:
@@ -1983,6 +2017,7 @@ es:
         voucher: "%{voucher_amount} Cupón"
         apply_voucher: Utilizar cupón
         placeholder: Introducir el código del cupón
+        remove_code: Eliminar código
         confirm_delete: ¿Está seguro de que desea eliminar este cupón?
         warning_forfeit_remaining_amount: "Nota: si el total de su pedido es menor que su cupón, es posible que no pueda gastar el valor restante."
     step3:
@@ -2091,6 +2126,7 @@ es:
   invoice_column_price_without_taxes: "Precio total (Sin Impuestos)"
   invoice_column_tax_rate: "% Impuestos"
   invoice_tax_total: "IVA Total:"
+  invoice_cancel_and_replace_invoice: "cancela y reemplaza la factura"
   tax_invoice: "FACTURA DE IMPUESTOS"
   tax_total: "Total impuestos (%{rate}):"
   invoice_shipping_category_delivery: "Entrega"
@@ -2149,7 +2185,7 @@ es:
   longitude: Longitud
   longitude_placeholder: p.ej. 144.7851531
   use_geocoder: ¿Calcular la latitud y la longitud automáticamente desde la dirección?
-  state: Estado
+  state: Provincia
   postcode: Código postal
   postcode_placeholder: ej. 08025
   suburb: Barrio
@@ -3023,7 +3059,7 @@ es:
   report_header_ship_street_2: Calle de envío 2
   report_header_ship_city: Ciudad de envío
   report_header_ship_postcode: Código postal de envío
-  report_header_ship_state: Provincia de envío
+  report_header_ship_state: Provincia de entrega
   report_header_billing_street: Calle de facturación
   report_header_billing_street_2: Calle de facturación 2
   report_header_billing_street_3: Calle de facturación 3
@@ -3137,7 +3173,7 @@ es:
   report_header_total_excl_vat: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_vat: "Total Impuestos incl. (%{currency_symbol})"
   report_header_temp_controlled: ¿Control de Temperatura?
-  report_header_shipment_state: "Provincia de envío"
+  report_header_shipment_state: "Estado del envío"
   report_header_shipping_method: "Método de envío"
   report_header_is_producer: ¿Productora?
   report_header_not_confirmed: No confirmado
@@ -4161,12 +4197,13 @@ es:
           cancel_orders: "Cancelar pedidos"
           resend_confirmation: "Reenviar confirmación"
           send_invoice: "Enviar facturas"
+          credit_orders: Pedidos a saldo
           selected:
             zero: "Ningún pedido seleccionado"
             one: "1 pedido seleccionado"
         sortable_header:
           payment_state: "Estado del pago"
-          shipment_state: "Provincia de envío"
+          shipment_state: "Estado del envío"
           completed_at: "Completado en"
           number: "Número"
           state: "Estado"
@@ -4432,9 +4469,9 @@ es:
           on_hand: "Disponibles"
           number: "Número"
           completed_at: "Completado en"
-          state: "Provincia"
+          state: "Estado"
           payment_state: "Estado del pago"
-          shipment_state: "Provincia de envío"
+          shipment_state: "Estado del envío"
           email: "Email"
           total: "Total"
           billing_address_name: "Nombre"
@@ -4796,3 +4833,4 @@ es:
   customer_credit_service:
     no_credit_owed: No hay saldo pendiente
     credit_payment_method_missing: Falta el método de pago con saldo, por favor revisa la configuración
+    refund_sucessful: ¡Reembolso realizado con éxito!
