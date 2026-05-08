@@ -12,7 +12,7 @@ FactoryBot:
 
 # Enabled rules
 
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   Enabled: true
   EnforcedStyle: not_to
 
