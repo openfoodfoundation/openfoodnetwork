@@ -692,6 +692,7 @@ RSpec.describe '
           end
 
           expect(page).not_to have_content existing_user.email
+          expect(distributor1.reload.users).not_to include existing_user
         end
       end
     end
