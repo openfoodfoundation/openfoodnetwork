@@ -41,7 +41,7 @@ module Openfoodnetwork
     config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol, Time,
                                                           ActiveSupport::TimeWithZone,
                                                           ActiveSupport::TimeZone]
-    config.active_support.cache_format_version = 7.0
+    config.active_support.cache_format_version = 7.1
 
     # this used to migrate cookie from :mashal serializer to :json serializer,
     # default in rails 7 is :json
