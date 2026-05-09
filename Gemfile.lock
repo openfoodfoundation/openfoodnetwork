@@ -508,7 +508,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.5)
+    minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
     monetize (1.13.0)
@@ -945,7 +945,7 @@ GEM
     validates_lengths_from_database (0.8.0)
       activerecord (>= 4)
     vcr (6.4.0)
-    view_component (4.8.0)
+    view_component (4.9.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
       concurrent-ruby (~> 1)
@@ -1307,7 +1307,7 @@ CHECKSUMS
   mini_magick (5.3.1) sha256=29395dfd76badcabb6403ee5aff6f681e867074f8f28ce08d78661e9e4a351c4
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   mini_portile2 (2.8.9) sha256=0cd7c7f824e010c072e33f68bc02d85a00aeb6fce05bb4819c03dfd3c140c289
-  minitest (6.0.5) sha256=f007d7246bf4feea549502842cd7c6aba8851cdc9c90ba06de9c476c0d01155c
+  minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
   monetize (1.13.0) sha256=0c1f8ae28aa21bbf1a6d014138d9bb0a5ce756c1a99b8b7f7d409c258b01d3b3
   money (6.16.0) sha256=cf476f5f19188e247ec20f6509cff64dc35d395ee018bad799b1a9ea8bd4754a
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
@@ -1467,7 +1467,7 @@ CHECKSUMS
   validate_url (1.0.15) sha256=72fe164c0713d63a9970bd6700bea948babbfbdcec392f2342b6704042f57451
   validates_lengths_from_database (0.8.0) sha256=a4cfbbd49673da331c4f098ade90893dde531cae7ca37da41b8f79e15bc0538b
   vcr (6.4.0) sha256=077ac92cc16efc5904eb90492a18153b5e6ca5398046d8a249a7c96a9ea24ae6
-  view_component (4.8.0) sha256=0a1b716cce87f8f6799d7aefb57911ef6eee5ef8214466a7ca22c421853f7309
+  view_component (4.9.0) sha256=f599f0831ed0148bb19625f914c43cc982746a2252b6ebe8492bd4eea0d7dbaf
   view_component_reflex (3.1.14.pre9) sha256=d1f9e61fdeb2f949fe292aba263b4c05a81e531b0ce2cd58297ad55353bbbaa7
   virtual_assembly-semantizer (1.1.1) sha256=a8ce46cd525ce7875a07da7f513c7045cb9c2ee6c32980f7245ffd0d718ba94f
   warden (1.2.9) sha256=46684f885d35a69dbb883deabf85a222c8e427a957804719e143005df7a1efd0
