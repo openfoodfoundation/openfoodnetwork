@@ -5,6 +5,7 @@ FerrumPdf.configure do |config|
   config.window_size = [1280, 800]
 
   config.pdf_options.format = Rails.env.test? ? :A3 : :A4
+  config.pdf_options.scale = 0.85 # Scale down the content to fit better on the page, matching the wicked_pdf scale
   config.pdf_options.print_background = true
 
   next unless ENV["CI"] || ENV["DOCKER"]
