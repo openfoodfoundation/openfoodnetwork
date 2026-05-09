@@ -49,4 +49,17 @@ RSpec.describe InvoiceRenderer do
       expect(result).to match /^%PDF/
     end
   end
+
+  describe '#display_url (via render_to_string)' do
+    it 'returns nil when renderer.request raises a StandardError' do
+      renderer = instance_double(ApplicationController)
+      allow(renderer).to receive(:respond_to?).with(:request).and_return(true)
+      allow(renderer).to receive(:request).and_raise(StandardError, "broken request")
+      allow(renderer).to receive(:render_to_string).and_return("<html></html>")
+      allow(renderer).to receive(:instance_variable_set)
+
+      expect(pdf_renderer).to receive(:render).with("<html></html>", display_url: nil)
+      described_class.new(renderer, nil, pdf_renderer).render_to_string(order)
+    end
+  end
 end
