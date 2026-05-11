@@ -25,7 +25,7 @@
         %td.user_email= link_to user.email, edit_object_url(user)
         %td.user_enterprise_limit= user.enterprise_limit
         %td.actions
-          = link_to_delete user, no_text: true
+          = deprecated_link_to_delete user, no_text: true
 
 - _with_routes Spree::Core::Engine.routes do
   = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }

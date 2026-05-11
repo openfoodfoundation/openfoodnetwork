@@ -20,7 +20,7 @@ class UserInvitation
     user = find_or_create_user!
     enterprise.users << user
 
-    return unless user.previously_new_record?
+    return true unless user.previously_new_record?
 
     EnterpriseMailer.manager_invitation(enterprise, user).deliver_later
   end

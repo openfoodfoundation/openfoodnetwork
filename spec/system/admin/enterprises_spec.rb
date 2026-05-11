@@ -11,6 +11,7 @@ RSpec.describe '
   include ShopWorkflow
   include UIComponentHelper
   include FileHelper
+  include TableHelper
 
   it "viewing an enterprise" do
     e = create(:enterprise)
@@ -623,7 +624,10 @@ RSpec.describe '
     end
 
     describe "check users tab" do
+      let(:existing_user) { create(:user, confirmed_at: Time.now.utc) }
+
       before do
+        distributor1.users << existing_user
         login_as_admin
         visit edit_admin_enterprise_path(distributor1)
         scroll_to(:bottom)
@@ -674,6 +678,21 @@ RSpec.describe '
             expect(page)
               .to have_content "email@email.com has been invited to manage this enterprise"
           end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+        end
+      end
+
+      context "removing a user" do
+        it do
+          expect(page).to have_content existing_user.email
+
+          within row_containing(existing_user.email) do
+            handle_js_confirm do
+              click_link "Delete"
+            end
+          end
+
+          expect(page).not_to have_content existing_user.email
+          expect(distributor1.reload.users).not_to include existing_user
         end
       end
     end

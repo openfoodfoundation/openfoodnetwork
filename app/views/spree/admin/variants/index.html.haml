@@ -24,7 +24,7 @@
         %td.align-center= variant.sku
         %td.actions
           = link_to_with_icon('icon-edit', Spree.t(:edit), edit_object_url(variant, @url_filters), no_text: true) unless variant.deleted?
-          = link_to_delete(variant, { url: object_url(variant, @url_filters), no_text: true }) unless variant.deleted?
+          = deprecated_link_to_delete(variant, { url: object_url(variant, @url_filters), no_text: true }) unless variant.deleted?
 
 - content_for :page_actions do
   %ul.inline-menu

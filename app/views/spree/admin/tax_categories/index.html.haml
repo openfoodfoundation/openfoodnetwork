@@ -32,7 +32,7 @@
         %td.align-center= tax_category.is_default.to_s.titleize
         %td.actions
           = link_to_edit tax_category, no_text: true
-          = link_to_delete tax_category, no_text: true
+          = deprecated_link_to_delete tax_category, no_text: true
     - if @tax_categories.empty?
       %tr
         %td{colspan: "4"}= t("spree.none")
