@@ -65,7 +65,7 @@ Rails.application.config.action_controller.allow_deprecated_parameters_hash_equa
 # state which matches what was committed to the database, typically the last
 # instance to save.
 #++
-# Rails.application.config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
+Rails.application.config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
 
 ###
 # Configures SQLite with a strict strings mode, which disables double-quoted string literals.
