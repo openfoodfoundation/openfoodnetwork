@@ -7,6 +7,9 @@ info:
     Internal API inherited from Spree. Used by the OFN frontend and third-party integrations.
     Not officially versioned — endpoints may change without notice.
 
+    And this documentation has not been verified.
+    Generated with AI on 2026-05-05.
+
     ## Authentication
 
     All write endpoints (POST, PUT, DELETE) require authentication. Some read endpoints
