@@ -136,10 +136,9 @@ module Spree
       else
         # Find orders that are distributed by the user or have variants supplied by the user
         # WARNING: This only filters orders, not line items.
-        enterprise_ids = user.enterprises.select(&:id)
         with_line_items_variants_outer.
-          where(distributor_id: enterprise_ids).or(
-            where(spree_variants: { supplier_id: enterprise_ids })
+          where(distributor_id: user.enterprises).or(
+            where(spree_variants: { supplier_id: user.enterprises })
           ).
           select('DISTINCT spree_orders.*')
       end
