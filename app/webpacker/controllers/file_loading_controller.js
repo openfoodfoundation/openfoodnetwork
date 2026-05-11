@@ -21,7 +21,9 @@ export default class extends Controller {
 
     const response = fetch(this.linkTarget.href).then((response) => {
       if (response.status == 200) {
-        this.loadingTarget.classList.add(HIDE_CLASS);
+        if (this.hasLoadingTarget) {
+          this.loadingTarget.classList.add(HIDE_CLASS);
+        }
         this.loadedTarget.classList.remove(HIDE_CLASS);
       } else {
         this.setTimeout();
