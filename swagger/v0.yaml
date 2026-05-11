@@ -1,0 +1,3803 @@
+---
+openapi: 3.0.1
+info:
+  title: OFN API V0
+  version: v0
+  description: |
+    Internal API inherited from Spree. Used by the OFN frontend and third-party integrations.
+    Not officially versioned — endpoints may change without notice.
+
+    And this documentation has not been verified.
+    Generated with AI on 2026-05-05.
+
+    ## Authentication
+
+    All write endpoints (POST, PUT, DELETE) require authentication. Some read endpoints
+    are publicly accessible (e.g. shops, order cycle taxons/properties).
+
+    Authenticate by passing your API key either as the `X-Spree-Token` request header
+    or as a `token` query parameter. API keys are found in the OFN user profile page.
+
+servers:
+  - url: /api/v0
+
+components:
+  securitySchemes:
+    spree_api_key_header:
+      type: apiKey
+      in: header
+      name: X-Spree-Token
+      description: API key from the OFN user profile page
+    spree_api_key_param:
+      type: apiKey
+      in: query
+      name: token
+      description: API key passed as a query parameter
+
+  schemas:
+
+    # ── Pagination ────────────────────────────────────────────────────────────
+    pagination:
+      type: object
+      properties:
+        results:
+          type: integer
+          example: 42
+          description: Total number of matching records
+        pages:
+          type: integer
+          example: 3
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 15
+
+    # ── Error ─────────────────────────────────────────────────────────────────
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          example: You are not authorized to perform that action.
+        errors:
+          type: object
+          description: Field-level validation errors (key = field name, value = array of messages)
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            name:
+              - "can't be blank"
+
+    # ── Address ───────────────────────────────────────────────────────────────
+    address:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstname:
+          type: string
+          example: Alice
+        lastname:
+          type: string
+          example: Springs
+        address1:
+          type: string
+          example: 10 Lovely Street
+        address2:
+          type: string
+          nullable: true
+          example: null
+        city:
+          type: string
+          example: Melbourne
+        zipcode:
+          type: string
+          example: "3000"
+        phone:
+          type: string
+          example: "0412345678"
+        state_id:
+          type: integer
+          example: 1
+        state_name:
+          type: string
+          description: State abbreviation
+          example: VIC
+        country_id:
+          type: integer
+          example: 1
+        country_name:
+          type: string
+          example: Australia
+
+    # ── State ─────────────────────────────────────────────────────────────────
+    state:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Victoria
+        abbr:
+          type: string
+          example: VIC
+        country_id:
+          type: integer
+          example: 1
+
+    # ── Taxon ─────────────────────────────────────────────────────────────────
+    taxon:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Vegetables
+        permalink:
+          type: string
+          example: vegetables
+        position:
+          type: integer
+          example: 1
+
+    # ── Property ──────────────────────────────────────────────────────────────
+    property:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          description: Same as presentation (client-facing label)
+          example: Organic
+        presentation:
+          type: string
+          example: Organic
+
+    # ── Image ─────────────────────────────────────────────────────────────────
+    image:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        alt:
+          type: string
+          nullable: true
+          example: null
+        thumb_url:
+          type: string
+          example: https://example.com/images/mini/product.jpg
+        small_url:
+          type: string
+          example: https://example.com/images/small/product.jpg
+        image_url:
+          type: string
+          example: https://example.com/images/product/product.jpg
+        large_url:
+          type: string
+          example: https://example.com/images/large/product.jpg
+
+    # ── Variant (shop-facing) ─────────────────────────────────────────────────
+    variant:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        product_name:
+          type: string
+          example: Tomatoes
+        sku:
+          type: string
+          example: TOM-1KG
+        options_text:
+          type: string
+          example: 1 kg
+        unit_value:
+          type: number
+          nullable: true
+          example: 1000
+        unit_description:
+          type: string
+          nullable: true
+          example: null
+        unit_to_display:
+          type: string
+          example: 1 kg
+        display_as:
+          type: string
+          nullable: true
+          example: null
+        display_name:
+          type: string
+          nullable: true
+          example: null
+        name_to_display:
+          type: string
+          example: Tomatoes - 1 kg
+        price:
+          type: number
+          format: float
+          example: 4.50
+        on_demand:
+          type: boolean
+          example: false
+        on_hand:
+          type: integer
+          example: 20
+        fees:
+          type: object
+          description: Fees indexed by type (enterprise_fee, tax, etc.)
+        fees_name:
+          type: object
+          description: Fee names indexed by type
+        price_with_fees:
+          type: number
+          format: float
+          example: 5.00
+        tag_list:
+          type: array
+          items:
+            type: string
+          example: ["local", "seasonal"]
+        thumb_url:
+          type: string
+          example: https://example.com/images/mini/tomato.jpg
+        unit_price_price:
+          type: number
+          format: float
+          example: 4.50
+        unit_price_unit:
+          type: string
+          example: kg
+        supplier:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 3
+
+    # ── Variant (admin) ───────────────────────────────────────────────────────
+    admin_variant:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: Tomatoes - 1 kg
+        producer_name:
+          type: string
+          example: Green Farm
+        image:
+          type: string
+          nullable: true
+          example: https://example.com/images/mini/tomato.jpg
+        sku:
+          type: string
+          example: TOM-1KG
+        import_date:
+          type: string
+          format: date
+          nullable: true
+          example: null
+        tax_category_id:
+          type: integer
+          nullable: true
+          example: 1
+        options_text:
+          type: string
+          example: 1 kg
+        unit_value:
+          type: number
+          nullable: true
+          example: 1000
+        unit_description:
+          type: string
+          nullable: true
+          example: null
+        unit_to_display:
+          type: string
+          example: 1 kg
+        display_as:
+          type: string
+          nullable: true
+          example: null
+        display_name:
+          type: string
+          nullable: true
+          example: null
+        name_to_display:
+          type: string
+          example: Tomatoes - 1 kg
+        variant_overrides_count:
+          type: integer
+          example: 0
+        price:
+          type: number
+          format: float
+          example: 4.50
+        on_demand:
+          type: boolean
+          example: false
+        on_hand:
+          type: integer
+          example: 20
+        in_stock:
+          type: boolean
+          example: true
+        variant_unit:
+          type: string
+          enum: [weight, volume, items]
+          example: weight
+        variant_unit_scale:
+          type: number
+          nullable: true
+          example: 1000
+        variant_unit_name:
+          type: string
+          nullable: true
+          example: null
+        variant_unit_with_scale:
+          type: string
+          example: weight_1000
+        category_id:
+          type: integer
+          nullable: true
+          description: Primary taxon ID
+          example: 2
+        producer_id:
+          type: integer
+          description: Supplier enterprise ID
+          example: 3
+
+    # ── Product ───────────────────────────────────────────────────────────────
+    product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Tomatoes
+        sku:
+          type: string
+          example: TOM
+        inherits_properties:
+          type: boolean
+          example: true
+        price:
+          type: string
+          description: Master variant price as string decimal
+          example: "4.50"
+        import_date:
+          type: string
+          format: date
+          nullable: true
+          example: null
+        image_url:
+          type: string
+          example: https://example.com/images/product/tomato.jpg
+        thumb_url:
+          type: string
+          example: https://example.com/images/mini/tomato.jpg
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/admin_variant'
+
+    # ── Product (simple) ──────────────────────────────────────────────────────
+    product_simple:
+      type: object
+      description: Minimal product representation used in overridable endpoint
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Tomatoes
+        variants:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 10
+              name:
+                type: string
+                example: Tomatoes - 1 kg
+
+    # ── Payment ───────────────────────────────────────────────────────────────
+    payment:
+      type: object
+      properties:
+        amount:
+          type: string
+          example: "10.00"
+        updated_at:
+          type: string
+          example: "Jan 01, 2024 10:00"
+        payment_method:
+          type: string
+          nullable: true
+          example: Credit Card
+        state:
+          type: string
+          enum: [completed, pending, void, failed, invalid, checkout]
+          example: completed
+        redirect_auth_url:
+          type: string
+          nullable: true
+          example: null
+
+    # ── Adjustment ────────────────────────────────────────────────────────────
+    adjustment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        amount:
+          type: string
+          example: "2.00"
+        label:
+          type: string
+          example: Shipping
+        eligible:
+          type: boolean
+          example: true
+        adjustable_type:
+          type: string
+          example: Spree::Order
+        adjustable_id:
+          type: integer
+          example: 1
+        originator_type:
+          type: string
+          example: Spree::ShippingMethod
+        originator_id:
+          type: integer
+          nullable: true
+          example: 1
+        tax_category_id:
+          type: integer
+          nullable: true
+          example: null
+
+    # ── ShippingMethod ────────────────────────────────────────────────────────
+    shipping_method:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Standard Shipping
+        description:
+          type: string
+          nullable: true
+          example: Delivered within 3–5 business days
+        require_ship_address:
+          type: boolean
+          example: true
+        price:
+          type: number
+          format: float
+          example: 5.00
+
+    # ── LineItem ──────────────────────────────────────────────────────────────
+    line_item:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        quantity:
+          type: integer
+          example: 2
+        max_quantity:
+          type: integer
+          nullable: true
+          example: null
+        price:
+          type: string
+          example: "4.50"
+        order_id:
+          type: integer
+          example: 1
+        tax_category_id:
+          type: integer
+          nullable: true
+          example: 1
+        variant:
+          $ref: '#/components/schemas/variant'
+
+    # ── Shipment ──────────────────────────────────────────────────────────────
+    shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        number:
+          type: string
+          example: H12345678901
+        tracking:
+          type: string
+          nullable: true
+          example: TRACK123
+        order_id:
+          type: string
+          description: Parent order number
+          example: R123456789
+        cost:
+          type: string
+          example: "5.00"
+        shipped_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+        state:
+          type: string
+          enum: [pending, ready, shipped, canceled]
+          example: ready
+
+    # ── Order (list item) ─────────────────────────────────────────────────────
+    order:
+      type: object
+      description: Order summary as returned in the index response
+      properties:
+        id:
+          type: integer
+          example: 1
+        number:
+          type: string
+          example: R123456789
+        user_id:
+          type: integer
+          nullable: true
+          example: 5
+        full_name:
+          type: string
+          example: Alice Springs
+        full_name_for_sorting:
+          type: string
+          example: "Springs, Alice"
+        email:
+          type: string
+          example: alice@example.com
+        phone:
+          type: string
+          example: "0412345678"
+        completed_at:
+          type: string
+          example: "Jan 01, 2024 10:00"
+        completed_at_utc_iso8601:
+          type: string
+          format: date-time
+          example: "2024-01-01T10:00:00Z"
+        display_total:
+          type: string
+          example: "$42.00"
+        edit_path:
+          type: string
+          example: /admin/orders/R123456789/edit
+        state:
+          type: string
+          enum: [cart, address, delivery, payment, complete, canceled, resumed, awaiting_return, returned]
+          example: complete
+        payment_state:
+          type: string
+          nullable: true
+          enum: [balance_due, credit_owed, failed, paid, void, null]
+          example: paid
+        shipment_state:
+          type: string
+          nullable: true
+          enum: [backorder, canceled, partial, pending, ready, shipped, null]
+          example: ready
+        payments_path:
+          type: string
+          example: /admin/orders/R123456789/payments
+        ready_to_ship:
+          type: boolean
+          example: true
+        ready_to_capture:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          example: "January 01, 2024"
+        distributor_name:
+          type: string
+          example: Green Hub
+        special_instructions:
+          type: string
+          nullable: true
+          example: null
+        display_outstanding_balance:
+          type: string
+          example: ""
+        item_total:
+          type: string
+          example: "36.00"
+        adjustment_total:
+          type: string
+          example: "6.00"
+        payment_total:
+          type: string
+          example: "42.00"
+        total:
+          type: string
+          example: "42.00"
+        item_count:
+          type: integer
+          example: 4
+        distributor:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 3
+        order_cycle:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 2
+
+    # ── Order (detailed) ──────────────────────────────────────────────────────
+    order_detailed:
+      allOf:
+        - $ref: '#/components/schemas/order'
+        - type: object
+          properties:
+            customer_id:
+              type: integer
+              nullable: true
+              example: 7
+            shipping_method:
+              $ref: '#/components/schemas/shipping_method'
+            ship_address:
+              $ref: '#/components/schemas/address'
+              nullable: true
+            bill_address:
+              $ref: '#/components/schemas/address'
+              nullable: true
+            line_items:
+              type: array
+              items:
+                $ref: '#/components/schemas/line_item'
+            payments:
+              type: array
+              items:
+                $ref: '#/components/schemas/payment'
+            adjustments:
+              type: array
+              items:
+                $ref: '#/components/schemas/adjustment'
+
+    # ── Customer ──────────────────────────────────────────────────────────────
+    customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        enterprise_id:
+          type: integer
+          example: 3
+        first_name:
+          type: string
+          nullable: true
+          example: Alice
+        last_name:
+          type: string
+          nullable: true
+          example: Springs
+        code:
+          type: string
+          nullable: true
+          example: CUST001
+        email:
+          type: string
+          example: alice@example.com
+        allow_charges:
+          type: boolean
+          example: false
+        gateway_recurring_payment_client_secret:
+          type: string
+          nullable: true
+          description: Present only when recurring payments are being set up
+          example: null
+        gateway_shop_id:
+          type: string
+          nullable: true
+          example: null
+
+    # ── Enterprise (admin) ────────────────────────────────────────────────────
+    enterprise:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        name:
+          type: string
+          example: Green Farm
+        permalink:
+          type: string
+          example: green-farm
+        is_primary_producer:
+          type: boolean
+          example: true
+        is_distributor:
+          type: boolean
+          example: false
+        sells:
+          type: string
+          enum: [unspecified, none, own, any]
+          example: own
+        category:
+          type: string
+          enum: [hub, hub_profile, producer_hub, producer_shop, producer]
+          example: producer
+        visible:
+          type: string
+          enum: [only_through_links, public, hidden]
+          example: public
+        producer_profile_only:
+          type: boolean
+          example: false
+        long_description:
+          type: string
+          nullable: true
+          example: We grow seasonal vegetables on our family farm.
+        payment_method_ids:
+          type: array
+          items:
+            type: integer
+          example: [1, 2]
+        shipping_method_ids:
+          type: array
+          items:
+            type: integer
+          example: [1]
+        preferred_product_selection_from_inventory_only:
+          type: boolean
+          example: false
+        preferred_shopfront_message:
+          type: string
+          nullable: true
+          example: null
+        preferred_shopfront_closed_message:
+          type: string
+          nullable: true
+          example: null
+        preferred_shopfront_taxon_order:
+          type: string
+          nullable: true
+          example: null
+        preferred_shopfront_producer_order:
+          type: string
+          nullable: true
+          example: null
+        preferred_shopfront_order_cycle_order:
+          type: string
+          nullable: true
+          example: null
+        show_customer_names_to_suppliers:
+          type: boolean
+          example: false
+        show_customer_contacts_to_suppliers:
+          type: boolean
+          example: false
+        preferred_shopfront_product_sorting_method:
+          type: string
+          nullable: true
+          example: null
+        require_login:
+          type: boolean
+          example: false
+        allow_guest_orders:
+          type: boolean
+          example: true
+        allow_order_changes:
+          type: boolean
+          example: false
+        preferred_invoice_order_by_supplier:
+          type: boolean
+          example: false
+        preferred_product_low_stock_display:
+          type: boolean
+          example: false
+        hide_ofn_navigation:
+          type: boolean
+          example: false
+        external_billing_id:
+          type: string
+          nullable: true
+          example: null
+        logo:
+          type: object
+          nullable: true
+          description: "Image URLs keyed by size variant (e.g. thumb, small, medium)"
+          example:
+            thumb: https://example.com/logo/thumb.jpg
+            small: https://example.com/logo/small.jpg
+            medium: https://example.com/logo/medium.jpg
+        promo_image:
+          type: object
+          nullable: true
+          description: "Image URLs keyed by size variant"
+          example:
+            medium: https://example.com/promo/medium.jpg
+            large: https://example.com/promo/large.jpg
+        white_label_logo:
+          type: object
+          nullable: true
+          example: null
+        white_label_logo_link:
+          type: string
+          nullable: true
+          example: null
+        terms_and_conditions:
+          type: string
+          nullable: true
+          description: URL to the uploaded PDF file
+          example: null
+        terms_and_conditions_file_name:
+          type: string
+          nullable: true
+          example: null
+        terms_and_conditions_updated_at:
+          type: string
+          nullable: true
+          example: null
+        owner:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            email:
+              type: string
+              example: owner@example.com
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              email:
+                type: string
+        address:
+          $ref: '#/components/schemas/address'
+        business_address:
+          $ref: '#/components/schemas/address'
+          nullable: true
+
+    # ── Enterprise (shopfront) ────────────────────────────────────────────────
+    enterprise_shopfront:
+      type: object
+      description: Enterprise data for shopfront listing
+      properties:
+        id:
+          type: integer
+          example: 3
+        name:
+          type: string
+          example: Green Farm
+        description:
+          type: string
+          nullable: true
+          example: Seasonal vegetables
+        latitude:
+          type: number
+          nullable: true
+          example: -37.8173751
+        longitude:
+          type: number
+          nullable: true
+          example: 144.9648032
+        long_description:
+          type: string
+          nullable: true
+          example: null
+        website:
+          type: string
+          nullable: true
+          example: https://greenfarm.example.com
+        instagram:
+          type: string
+          nullable: true
+          example: null
+        linkedin:
+          type: string
+          nullable: true
+          example: null
+        twitter:
+          type: string
+          nullable: true
+          example: null
+        facebook:
+          type: string
+          nullable: true
+          example: null
+        is_primary_producer:
+          type: boolean
+          example: true
+        is_distributor:
+          type: boolean
+          example: false
+        phone:
+          type: string
+          nullable: true
+          example: "0412345678"
+        whatsapp_phone:
+          type: string
+          nullable: true
+          example: null
+        whatsapp_url:
+          type: string
+          nullable: true
+          example: null
+        visible:
+          type: string
+          example: public
+        email_address:
+          type: string
+          description: Reversed email string (privacy obfuscation on client side)
+          example: "ua.elpmaxe@mraf"
+        hash:
+          type: string
+          description: Permalink (to_param)
+          example: green-farm
+        logo:
+          type: string
+          nullable: true
+          example: https://example.com/logo/medium.jpg
+        promo_image:
+          type: string
+          nullable: true
+          example: https://example.com/promo/large.jpg
+        path:
+          type: string
+          example: /green-farm/shop
+        category:
+          type: string
+          example: producer
+        active:
+          type: boolean
+          example: true
+        orders_close_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-06-30T23:59:59Z"
+        pickup:
+          type: boolean
+          example: true
+        delivery:
+          type: boolean
+          example: false
+        preferred_product_low_stock_display:
+          type: boolean
+          example: false
+        hide_ofn_navigation:
+          type: boolean
+          example: false
+        white_label_logo:
+          type: string
+          nullable: true
+          example: null
+        white_label_logo_link:
+          type: string
+          nullable: true
+          example: null
+        address:
+          $ref: '#/components/schemas/address'
+        producers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        hubs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        taxons:
+          type: array
+          items:
+            $ref: '#/components/schemas/taxon'
+        supplied_taxons:
+          type: array
+          items:
+            $ref: '#/components/schemas/taxon'
+        supplied_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        distributed_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+
+    # ── Exchange (within order cycle) ────────────────────────────────────────
+    exchange:
+      type: object
+      description: An incoming or outgoing exchange within an order cycle
+      properties:
+        id:
+          type: integer
+          example: 1
+        sender_id:
+          type: integer
+          description: Sending enterprise ID
+          example: 3
+        receiver_id:
+          type: integer
+          description: Receiving enterprise ID
+          example: 5
+        incoming:
+          type: boolean
+          description: True if this is an incoming (producer → coordinator) exchange
+          example: true
+        variants:
+          type: object
+          description: Map of variant ID (string) to boolean — variants included in this exchange
+          additionalProperties:
+            type: boolean
+          example:
+            "10": true
+            "11": true
+        receival_instructions:
+          type: string
+          nullable: true
+          example: null
+        pickup_time:
+          type: string
+          nullable: true
+          example: null
+        pickup_instructions:
+          type: string
+          nullable: true
+          example: null
+        tag_list:
+          type: string
+          description: Comma-separated tags
+          example: ""
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              text:
+                type: string
+          example: []
+        enterprise_fees:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              fee_type:
+                type: string
+
+    # ── Order Cycle (index) ───────────────────────────────────────────────────
+    order_cycle_summary:
+      type: object
+      description: Order cycle as returned in the index list
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Weekly Box — June 2024
+        orders_open_at:
+          type: string
+          description: ISO 8601 datetime string
+          nullable: true
+          example: "2024-06-01 00:00:00 +1000"
+        orders_close_at:
+          type: string
+          description: ISO 8601 datetime string
+          nullable: true
+          example: "2024-06-30 23:59:59 +1000"
+        status:
+          type: string
+          enum: [open, upcoming, closed]
+          example: open
+        variant_count:
+          type: integer
+          example: 12
+        deletable:
+          type: boolean
+          example: true
+        viewing_as_coordinator:
+          type: boolean
+          example: true
+        subscriptions_count:
+          type: integer
+          example: 3
+        edit_path:
+          type: string
+          example: /admin/order_cycles/2/edit
+        clone_path:
+          type: string
+          example: /admin/order_cycles/2/clone
+        delete_path:
+          type: string
+          example: /admin/order_cycles/2
+        coordinator:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 3
+            name:
+              type: string
+              example: Green Hub
+        producers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+          example:
+            - id: 1
+              name: Green Farm
+        shops:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+          example:
+            - id: 3
+              name: Green Hub
+        schedules:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+
+    # ── Order Cycle (detail) ──────────────────────────────────────────────────
+    order_cycle:
+      type: object
+      description: Full order cycle detail including exchanges and variant permissions
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Weekly Box — June 2024
+        orders_open_at:
+          type: string
+          nullable: true
+          example: "2024-06-01 00:00:00 +1000"
+        orders_close_at:
+          type: string
+          nullable: true
+          example: "2024-06-30 23:59:59 +1000"
+        coordinator_id:
+          type: integer
+          example: 3
+        viewing_as_coordinator:
+          type: boolean
+          example: true
+        subscriptions_count:
+          type: integer
+          example: 3
+        schedule_ids:
+          type: array
+          items:
+            type: integer
+          example: [1]
+        coordinator_fees:
+          type: array
+          description: Array of coordinator fee IDs
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        exchanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/exchange'
+        editable_variants_for_incoming_exchanges:
+          type: object
+          description: Map of supplier enterprise ID to array of editable variant IDs
+          additionalProperties:
+            type: array
+            items:
+              type: integer
+          example:
+            "1": [10, 11]
+        editable_variants_for_outgoing_exchanges:
+          type: object
+          description: Map of distributor enterprise ID to array of editable variant IDs
+          additionalProperties:
+            type: array
+            items:
+              type: integer
+        visible_variants_for_outgoing_exchanges:
+          type: object
+          description: Map of distributor enterprise ID to array of visible variant IDs
+          additionalProperties:
+            type: array
+            items:
+              type: integer
+
+    # ── Exchange Product ──────────────────────────────────────────────────────
+    exchange_product:
+      type: object
+      description: Product available to be added to an exchange (ForOrderCycle::SuppliedProductSerializer)
+      properties:
+        name:
+          type: string
+          example: Tomatoes
+        supplier_name:
+          type: string
+          example: Green Farm
+        image_url:
+          type: string
+          nullable: true
+          example: https://example.com/images/mini/tomato.jpg
+        variants:
+          type: array
+          description: Minimal variant list — id and display label
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 10
+              label:
+                type: string
+                description: Full variant display name (e.g. "1 kg")
+                example: 1 kg
+
+security:
+  - spree_api_key_header: []
+  - spree_api_key_param: []
+
+paths:
+
+  # ============================================================
+  # PRODUCTS
+  # ============================================================
+
+  /products:
+    post:
+      summary: Create product
+      tags:
+        - Products
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - product
+              properties:
+                product:
+                  type: object
+                  required:
+                    - name
+                    - price
+                    - supplier_id
+                    - variant_unit
+                  properties:
+                    name:
+                      type: string
+                      example: Tomatoes
+                    sku:
+                      type: string
+                      example: TOM
+                    price:
+                      type: number
+                      example: 4.50
+                    description:
+                      type: string
+                      example: Fresh seasonal tomatoes
+                    meta_keywords:
+                      type: string
+                    tax_category_id:
+                      type: integer
+                      nullable: true
+                    shipping_category_id:
+                      type: integer
+                    supplier_id:
+                      type: integer
+                      example: 3
+                    primary_taxon_id:
+                      type: integer
+                      nullable: true
+                    inherits_properties:
+                      type: boolean
+                      example: true
+                    variant_unit:
+                      type: string
+                      enum: [weight, volume, items]
+                      example: weight
+                    variant_unit_scale:
+                      type: number
+                      nullable: true
+                      example: 1000
+                    variant_unit_name:
+                      type: string
+                      nullable: true
+                    unit_value:
+                      type: number
+                      nullable: true
+                      example: 1000
+                    unit_description:
+                      type: string
+                      nullable: true
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /products/bulk_products:
+    get:
+      summary: Bulk list products (admin)
+      description: |
+        Returns a paginated list of all products with full admin detail.
+        Publicly accessible — no authentication required.
+        Supports Ransack filtering via `q` params.
+      tags:
+        - Products
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 15
+        - name: q[name_cont]
+          in: query
+          schema:
+            type: string
+        - name: q[supplier_id_eq]
+          in: query
+          description: Filter by producer enterprise ID
+          schema:
+            type: integer
+        - name: q[primary_taxon_id_eq]
+          in: query
+          schema:
+            type: integer
+        - name: q[import_date_not_null]
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/product'
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+
+  /products/overridable:
+    get:
+      summary: List products overridable by current user's hubs
+      description: |
+        Returns products supplied by producers that have a relationship with
+        the current user's hubs, allowing variant overrides to be set.
+        No authentication required for reading.
+      tags:
+        - Products
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 15
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/product_simple'
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+
+  /products/{id}:
+    get:
+      summary: Show product
+      description: Publicly accessible — no authentication required.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+    put:
+      summary: Update product
+      tags:
+        - Products
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - product
+              properties:
+                product:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    sku:
+                      type: string
+                    price:
+                      type: number
+                    description:
+                      type: string
+                    tax_category_id:
+                      type: integer
+                      nullable: true
+                    supplier_id:
+                      type: integer
+                    primary_taxon_id:
+                      type: integer
+                      nullable: true
+                    inherits_properties:
+                      type: boolean
+                    variant_unit:
+                      type: string
+                      enum: [weight, volume, items]
+                    variant_unit_scale:
+                      type: number
+                      nullable: true
+                    variant_unit_name:
+                      type: string
+                      nullable: true
+                    unit_value:
+                      type: number
+                      nullable: true
+                    unit_description:
+                      type: string
+                      nullable: true
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+    delete:
+      summary: Delete product
+      tags:
+        - Products
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+
+  /products/{id}/clone:
+    post:
+      summary: Clone product
+      description: Creates a duplicate of the specified product including all its variants.
+      tags:
+        - Products
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '401':
+          description: unauthorized
+
+  # ============================================================
+  # VARIANTS
+  # ============================================================
+
+  /products/{product_id}/variants:
+    get:
+      summary: List variants for a product
+      description: |
+        No authentication required. Supports Ransack filtering.
+        Deleted variants are included only for admins when `show_deleted=true`.
+      tags:
+        - Variants
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: show_deleted
+          in: query
+          description: Include soft-deleted variants (admin only)
+          schema:
+            type: boolean
+        - name: q[sku_cont]
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/variant'
+              examples:
+                example:
+                  value:
+                    - id: 10
+                      product_name: Tomatoes
+                      sku: TOM-1KG
+                      options_text: 1 kg
+                      unit_value: 1000
+                      unit_description: null
+                      unit_to_display: 1 kg
+                      display_as: null
+                      display_name: null
+                      name_to_display: Tomatoes - 1 kg
+                      price: 4.5
+                      on_demand: false
+                      on_hand: 20
+                      fees: {}
+                      fees_name: {}
+                      price_with_fees: 4.5
+                      tag_list: []
+                      thumb_url: https://example.com/images/mini/tomato.jpg
+                      unit_price_price: 4.5
+                      unit_price_unit: kg
+                      supplier:
+                        id: 3
+
+    post:
+      summary: Create variant
+      tags:
+        - Variants
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - variant
+              properties:
+                variant:
+                  type: object
+                  properties:
+                    price:
+                      type: number
+                      example: 4.50
+                    sku:
+                      type: string
+                      example: TOM-1KG
+                    on_demand:
+                      type: boolean
+                      example: false
+                    on_hand:
+                      type: integer
+                      example: 20
+                    unit_value:
+                      type: number
+                      nullable: true
+                      example: 1000
+                    unit_description:
+                      type: string
+                      nullable: true
+                    display_as:
+                      type: string
+                      nullable: true
+                    display_name:
+                      type: string
+                      nullable: true
+                    tax_category_id:
+                      type: integer
+                      nullable: true
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /products/{product_id}/variants/{id}:
+    get:
+      summary: Show variant
+      description: No authentication required.
+      tags:
+        - Variants
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '404':
+          description: not found
+
+    put:
+      summary: Update variant
+      tags:
+        - Variants
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - variant
+              properties:
+                variant:
+                  type: object
+                  properties:
+                    price:
+                      type: number
+                    sku:
+                      type: string
+                    on_demand:
+                      type: boolean
+                    on_hand:
+                      type: integer
+                    unit_value:
+                      type: number
+                      nullable: true
+                    unit_description:
+                      type: string
+                      nullable: true
+                    display_as:
+                      type: string
+                      nullable: true
+                    display_name:
+                      type: string
+                      nullable: true
+                    tax_category_id:
+                      type: integer
+                      nullable: true
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '422':
+          description: invalid resource
+
+    delete:
+      summary: Delete variant
+      tags:
+        - Variants
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+
+  # ============================================================
+  # ORDERS
+  # ============================================================
+
+  /orders:
+    get:
+      summary: List orders
+      description: |
+        Returns a paginated list of orders. Requires admin or distributor permissions.
+        Supports Ransack filtering and optional pagination.
+      tags:
+        - Orders
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 50
+        - name: q[completed_at_gt]
+          in: query
+          description: Filter by completion date (after)
+          schema:
+            type: string
+            format: date-time
+        - name: q[completed_at_lt]
+          in: query
+          description: Filter by completion date (before)
+          schema:
+            type: string
+            format: date-time
+        - name: q[state_eq]
+          in: query
+          description: Filter by order state
+          schema:
+            type: string
+            enum: [cart, address, delivery, payment, complete, canceled]
+        - name: q[number_cont]
+          in: query
+          description: Filter by order number (contains)
+          schema:
+            type: string
+        - name: q[distributor_id_eq]
+          in: query
+          description: Filter by distributor enterprise ID
+          schema:
+            type: integer
+        - name: q[order_cycle_id_eq]
+          in: query
+          description: Filter by order cycle ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/order'
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+              examples:
+                example:
+                  value:
+                    orders:
+                      - id: 1
+                        number: R123456789
+                        user_id: 5
+                        full_name: Alice Springs
+                        full_name_for_sorting: "Springs, Alice"
+                        email: alice@example.com
+                        phone: "0412345678"
+                        completed_at: "Jan 01, 2024 10:00"
+                        completed_at_utc_iso8601: "2024-01-01T10:00:00Z"
+                        display_total: "$42.00"
+                        edit_path: /admin/orders/R123456789/edit
+                        state: complete
+                        payment_state: paid
+                        shipment_state: ready
+                        payments_path: /admin/orders/R123456789/payments
+                        ready_to_ship: true
+                        ready_to_capture: false
+                        created_at: "January 01, 2024"
+                        distributor_name: Green Hub
+                        special_instructions: null
+                        display_outstanding_balance: ""
+                        item_total: "36.00"
+                        adjustment_total: "6.00"
+                        payment_total: "42.00"
+                        total: "42.00"
+                        item_count: 4
+                        distributor:
+                          id: 3
+                        order_cycle:
+                          id: 2
+                    pagination:
+                      results: 1
+                      pages: 1
+                      page: 1
+                      per_page: 50
+        '401':
+          description: unauthorized
+
+  /orders/{id}:
+    get:
+      summary: Show order (detailed)
+      description: Returns full order detail including line items, adjustments and payments.
+      tags:
+        - Orders
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Order number (e.g. R123456789)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order_detailed'
+              examples:
+                example:
+                  value:
+                    id: 1
+                    number: R123456789
+                    state: complete
+                    payment_state: paid
+                    shipment_state: ready
+                    customer_id: 7
+                    completed_at: "Jan 01, 2024 10:00"
+                    completed_at_utc_iso8601: "2024-01-01T10:00:00Z"
+                    total: "42.00"
+                    item_total: "36.00"
+                    adjustment_total: "6.00"
+                    payment_total: "42.00"
+                    display_total: "$42.00"
+                    display_outstanding_balance: ""
+                    item_count: 4
+                    bill_address:
+                      id: 1
+                      firstname: Alice
+                      lastname: Springs
+                      address1: 10 Lovely Street
+                      address2: null
+                      city: Melbourne
+                      zipcode: "3000"
+                      phone: "0412345678"
+                      state_id: 1
+                      state_name: VIC
+                      country_id: 1
+                      country_name: Australia
+                    ship_address:
+                      id: 2
+                      firstname: Alice
+                      lastname: Springs
+                      address1: 10 Lovely Street
+                      address2: null
+                      city: Melbourne
+                      zipcode: "3000"
+                      phone: "0412345678"
+                      state_id: 1
+                      state_name: VIC
+                      country_id: 1
+                      country_name: Australia
+                    shipping_method:
+                      id: 1
+                      name: Standard Delivery
+                      description: null
+                      require_ship_address: true
+                      price: 5.0
+                    line_items:
+                      - id: 1
+                        quantity: 2
+                        max_quantity: null
+                        price: "4.50"
+                        order_id: 1
+                        tax_category_id: null
+                        variant:
+                          id: 10
+                          product_name: Tomatoes
+                          sku: TOM-1KG
+                          price: 4.5
+                          on_demand: false
+                          on_hand: 20
+                    payments:
+                      - amount: "42.00"
+                        updated_at: "Jan 01, 2024 10:00"
+                        payment_method: Credit Card
+                        state: completed
+                        redirect_auth_url: null
+                    adjustments:
+                      - id: 1
+                        amount: "5.00"
+                        label: Shipping
+                        eligible: true
+                        adjustable_type: Spree::Order
+                        adjustable_id: 1
+                        originator_type: Spree::ShippingMethod
+                        originator_id: 1
+                        tax_category_id: null
+        '404':
+          description: not found
+
+    put:
+      summary: Update order
+      description: Updates permitted order attributes. Currently only `note` is accepted.
+      tags:
+        - Orders
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Order number (e.g. R123456789)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+                  example: Please leave at the door
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order_detailed'
+
+  /orders/{id}/capture:
+    put:
+      summary: Capture payment for order
+      description: Triggers payment capture for all pending, non-authorization-required payments on the order.
+      tags:
+        - Orders
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Order number
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+        '422':
+          description: payment capture failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /orders/{id}/ship:
+    put:
+      summary: Mark order as shipped
+      tags:
+        - Orders
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Order number
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+        '422':
+          description: failed to update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  # ============================================================
+  # SHIPMENTS
+  # ============================================================
+
+  /orders/{order_id}/shipments:
+    post:
+      summary: Add item to shipment (or create shipment)
+      description: |
+        Adds a variant to the order's shipment. Creates the shipment if it doesn't exist.
+        Advances the order to payment state when line items are present.
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          description: Order number
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - variant_id
+                - quantity
+              properties:
+                variant_id:
+                  type: integer
+                  example: 10
+                quantity:
+                  type: integer
+                  example: 2
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+              examples:
+                example:
+                  value:
+                    id: 1
+                    number: H12345678901
+                    tracking: null
+                    order_id: R123456789
+                    cost: "5.00"
+                    shipped_at: null
+                    state: pending
+
+  /orders/{order_id}/shipments/{id}:
+    put:
+      summary: Update shipment
+      description: Updates shipment tracking number or selected shipping rate.
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          description: Order number
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Shipment number
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shipment:
+                  type: object
+                  properties:
+                    tracking:
+                      type: string
+                      example: TRACK123
+                    selected_shipping_rate_id:
+                      type: integer
+                      example: 1
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+
+  /orders/{order_id}/shipments/{id}/ready:
+    put:
+      summary: Mark shipment as ready
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Shipment number
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '422':
+          description: shipment cannot be readied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /orders/{order_id}/shipments/{id}/ship:
+    put:
+      summary: Mark shipment as shipped
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Shipment number
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+
+  /orders/{order_id}/shipments/{id}/add:
+    put:
+      summary: Add variant to shipment
+      description: Adds more quantity of a variant to an existing shipment.
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Shipment number
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - variant_id
+                - quantity
+              properties:
+                variant_id:
+                  type: integer
+                  example: 10
+                quantity:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '422':
+          description: order is cancelled
+
+  /orders/{order_id}/shipments/{id}/remove:
+    put:
+      summary: Remove variant from shipment
+      tags:
+        - Shipments
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Shipment number
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - variant_id
+                - quantity
+              properties:
+                variant_id:
+                  type: integer
+                  example: 10
+                quantity:
+                  type: integer
+                  example: 1
+                restock_item:
+                  type: string
+                  enum: ["true", "false"]
+                  default: "true"
+                  description: Whether to restock the removed item
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '422':
+          description: order is cancelled
+
+  # ============================================================
+  # ENTERPRISES
+  # ============================================================
+
+  /enterprises:
+    post:
+      summary: Create enterprise
+      description: |
+        Creates a new enterprise. The `owner_id` is automatically set to the authenticated user.
+        The `sells` field is set based on whether the user already owns a hub.
+        The `visible` field is forced to `only_through_links` on creation.
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - enterprise
+              properties:
+                enterprise:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      example: Green Farm
+                    is_primary_producer:
+                      type: boolean
+                      example: true
+                    description:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string
+                    website:
+                      type: string
+                    instagram:
+                      type: string
+                    facebook:
+                      type: string
+                    twitter:
+                      type: string
+                    linkedin:
+                      type: string
+                    address_attributes:
+                      type: object
+                      properties:
+                        address1:
+                          type: string
+                        city:
+                          type: string
+                        zipcode:
+                          type: string
+                        state_id:
+                          type: integer
+                        country_id:
+                          type: integer
+      responses:
+        '201':
+          description: created — returns the new enterprise ID
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 10
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /enterprises/{id}:
+    put:
+      summary: Update enterprise
+      description: |
+        Updates an enterprise. Non-admin users cannot change the `type` field.
+        `owner_id` is always set to the current user.
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Enterprise ID or permalink
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - enterprise
+              properties:
+                enterprise:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    long_description:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string
+                    website:
+                      type: string
+                    instagram:
+                      type: string
+                    facebook:
+                      type: string
+                    twitter:
+                      type: string
+                    linkedin:
+                      type: string
+                    visible:
+                      type: string
+                      enum: [only_through_links, public, hidden]
+                    require_login:
+                      type: boolean
+                    allow_guest_orders:
+                      type: boolean
+                    allow_order_changes:
+                      type: boolean
+                    show_customer_names_to_suppliers:
+                      type: boolean
+                    show_customer_contacts_to_suppliers:
+                      type: boolean
+                    preferred_shopfront_message:
+                      type: string
+                    preferred_shopfront_closed_message:
+                      type: string
+                    address_attributes:
+                      type: object
+                      properties:
+                        address1:
+                          type: string
+                        city:
+                          type: string
+                        zipcode:
+                          type: string
+                        state_id:
+                          type: integer
+                        country_id:
+                          type: integer
+      responses:
+        '200':
+          description: successful — returns the enterprise ID
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 10
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /enterprises/{id}/update_image:
+    post:
+      summary: Upload enterprise logo or promo image
+      description: |
+        Uploads a logo (`logo` field) or promo image (`promo` field) for the enterprise.
+        Returns the URL of the uploaded image at medium size.
+        Request must be sent as `multipart/form-data`.
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Enterprise ID or permalink
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                logo:
+                  type: string
+                  format: binary
+                  description: Logo image file (send either logo or promo, not both)
+                promo:
+                  type: string
+                  format: binary
+                  description: Promo image file (send either logo or promo, not both)
+      responses:
+        '200':
+          description: successful — returns the image URL as HTML
+          content:
+            text/html:
+              example: https://example.com/enterprises/logo/medium/image.jpg
+        '422':
+          description: invalid resource
+
+  /enterprises/{enterprise_id}/logo:
+    delete:
+      summary: Remove enterprise logo
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: enterprise_id
+          in: path
+          description: Enterprise permalink
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful — returns updated enterprise object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterprise'
+        '409':
+          description: no logo attached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          description: unauthorized
+
+  /enterprises/{enterprise_id}/promo_image:
+    delete:
+      summary: Remove enterprise promo image
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: enterprise_id
+          in: path
+          description: Enterprise permalink
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful — returns updated enterprise object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterprise'
+        '409':
+          description: no promo image attached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /enterprises/{enterprise_id}/terms_and_conditions:
+    delete:
+      summary: Remove enterprise terms and conditions PDF
+      tags:
+        - Enterprises
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: enterprise_id
+          in: path
+          description: Enterprise permalink
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful — returns updated enterprise object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterprise'
+        '409':
+          description: no terms and conditions file attached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  # ============================================================
+  # SHOPS
+  # ============================================================
+
+  /shops/{id}:
+    get:
+      summary: Show shop (enterprise shopfront detail)
+      description: |
+        Returns full shopfront data for an enterprise including producers, taxons,
+        properties, active status and delivery/pickup options.
+        No authentication required.
+      tags:
+        - Shops
+      parameters:
+        - name: id
+          in: path
+          description: Enterprise ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterprise_shopfront'
+              examples:
+                example:
+                  value:
+                    id: 3
+                    name: Green Hub
+                    description: Fresh local produce
+                    latitude: -37.817
+                    longitude: 144.965
+                    long_description: null
+                    website: https://greenhub.example.com
+                    instagram: null
+                    linkedin: null
+                    twitter: null
+                    facebook: null
+                    is_primary_producer: false
+                    is_distributor: true
+                    phone: "0412345678"
+                    whatsapp_phone: null
+                    whatsapp_url: null
+                    visible: public
+                    email_address: "ua.elpmaxe@buhneerg"
+                    hash: green-hub
+                    logo: https://example.com/logo/medium.jpg
+                    promo_image: https://example.com/promo/large.jpg
+                    path: /green-hub/shop
+                    category: hub
+                    active: true
+                    orders_close_at: "2024-06-30T23:59:59Z"
+                    pickup: true
+                    delivery: false
+                    preferred_product_low_stock_display: false
+                    hide_ofn_navigation: false
+                    white_label_logo: null
+                    white_label_logo_link: null
+                    address:
+                      id: 1
+                      firstname: null
+                      lastname: null
+                      address1: 10 Market Street
+                      address2: null
+                      city: Melbourne
+                      zipcode: "3000"
+                      state_name: VIC
+                      state_id: 1
+                      country_id: 1
+                      country_name: Australia
+                    producers:
+                      - id: 1
+                        name: Green Farm
+                    hubs: []
+                    taxons:
+                      - id: 1
+                        name: Vegetables
+                        permalink: vegetables
+                        position: 1
+                    supplied_taxons: []
+                    supplied_properties: []
+                    distributed_properties: []
+
+  /shops/closed_shops:
+    get:
+      summary: List closed shops
+      description: |
+        Returns enterprises that are set up as distributors but currently have
+        no open order cycles. No authentication required.
+      tags:
+        - Shops
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/enterprise_shopfront'
+
+  # ============================================================
+  # ORDER CYCLES
+  # ============================================================
+
+  /order_cycles/{id}/products:
+    get:
+      summary: List products available in an order cycle
+      description: |
+        Returns paginated JSON of products distributed in this order cycle,
+        scoped to the given distributor. Supports full text search via Ransack `q` params.
+        The distributor context is required.
+      tags:
+        - Order Cycles
+      parameters:
+        - name: id
+          in: path
+          description: Order cycle ID
+          required: true
+          schema:
+            type: integer
+        - name: distributor
+          in: query
+          description: Distributor enterprise ID (required)
+          required: true
+          schema:
+            type: integer
+        - name: q
+          in: query
+          description: Ransack search string for product/variant name
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: successful — raw JSON string of products array
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  description: Product with variants, scoped to distributor pricing
+        '404':
+          description: order cycle not open or not found
+
+  /order_cycles/{id}/taxons:
+    get:
+      summary: List taxons distributed in an order cycle
+      description: |
+        Returns all taxons associated with products in this order cycle.
+        No authentication required. Response is cached.
+      tags:
+        - Order Cycles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: distributor
+          in: query
+          description: Distributor enterprise ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/taxon'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      name: Vegetables
+                      permalink: vegetables
+                      position: 1
+                    - id: 2
+                      name: Fruit
+                      permalink: fruit
+                      position: 2
+
+  /order_cycles/{id}/properties:
+    get:
+      summary: List product properties distributed in an order cycle
+      description: |
+        Returns all product properties (e.g. "Organic", "Biodynamic") for products
+        distributed in this order cycle. No authentication required. Response is cached.
+      tags:
+        - Order Cycles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: distributor
+          in: query
+          description: Distributor enterprise ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/property'
+
+  /order_cycles/{id}/producer_properties:
+    get:
+      summary: List producer properties distributed in an order cycle
+      description: |
+        Returns all producer-level properties for enterprises that supply products
+        in this order cycle. No authentication required. Response is cached.
+      tags:
+        - Order Cycles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: distributor
+          in: query
+          description: Distributor enterprise ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/property'
+
+  # ============================================================
+  # EXCHANGE PRODUCTS
+  # ============================================================
+
+  /exchanges/{id}/products:
+    get:
+      summary: List products available for an exchange
+      description: |
+        Lists products that can be added to the given exchange.
+        Supports two query modes:
+
+        **Mode 1 — by exchange ID** (pass `exchange_id` in query or use the path `id`):
+        Returns all products the exchange sender can supply.
+
+        **Mode 2 — by parameters** (omit `exchange_id`): Requires `enterprise_id`, `incoming`,
+        and for outgoing exchanges, `order_cycle_id`.
+
+        Supports optional pagination.
+      tags:
+        - Exchanges
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          description: Exchange ID
+          required: true
+          schema:
+            type: integer
+        - name: enterprise_id
+          in: query
+          description: Supplier enterprise ID (used when not looking up by exchange_id)
+          schema:
+            type: integer
+        - name: order_cycle_id
+          in: query
+          description: Order cycle ID (required for outgoing exchanges in mode 2)
+          schema:
+            type: integer
+        - name: incoming
+          in: query
+          description: Whether this is an incoming exchange
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/exchange_product'
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+              examples:
+                example:
+                  value:
+                    products:
+                      - name: Tomatoes
+                        supplier_name: Green Farm
+                        image_url: https://example.com/images/mini/tomato.jpg
+                        variants:
+                          - id: 10
+                            label: 1 kg
+                          - id: 11
+                            label: 500 g
+                    pagination:
+                      results: 1
+                      pages: 1
+                      page: 1
+                      per_page: 100
+
+  # ============================================================
+  # CUSTOMERS
+  # ============================================================
+
+  /customers:
+    get:
+      summary: List customers for current user's enterprises
+      description: |
+        Returns all visible customers belonging to enterprises managed by the authenticated user.
+        No authorization check — relies on session/token identification.
+      tags:
+        - Customers
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/customer'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      enterprise_id: 3
+                      first_name: Alice
+                      last_name: Springs
+                      code: CUST001
+                      email: alice@example.com
+                      allow_charges: false
+
+  /customers/{id}:
+    put:
+      summary: Update customer
+      tags:
+        - Customers
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      example: CUST001
+                    email:
+                      type: string
+                      example: alice@example.com
+                    enterprise_id:
+                      type: integer
+                      example: 3
+                    allow_charges:
+                      type: boolean
+                      description: |
+                        When set to true, triggers Stripe recurring payment setup and returns
+                        `gateway_recurring_payment_client_secret` in the response.
+                      example: false
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  # ============================================================
+  # ENTERPRISE FEES
+  # ============================================================
+
+  /enterprise_fees/{id}:
+    delete:
+      summary: Delete enterprise fee
+      tags:
+        - Enterprise Fees
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: forbidden — fee could not be deleted
+          content:
+            text/plain:
+              example: Enterprise fee is in use and cannot be deleted.
+        '401':
+          description: unauthorized
+
+  # ============================================================
+  # PRODUCT IMAGES
+  # ============================================================
+
+  /product_images/{product_id}:
+    post:
+      summary: Upload or replace product image
+      description: |
+        Uploads an image for the specified product. If the product already has an image,
+        it is replaced. Returns the serialized image object.
+        Request must be sent as `multipart/form-data`.
+      tags:
+        - Product Images
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image file (JPEG, PNG, GIF, WebP)
+      responses:
+        '200':
+          description: image updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+              examples:
+                example:
+                  value:
+                    id: 1
+                    alt: null
+                    thumb_url: https://example.com/images/mini/tomato.jpg
+                    small_url: https://example.com/images/small/tomato.jpg
+                    image_url: https://example.com/images/product/tomato.jpg
+                    large_url: https://example.com/images/large/tomato.jpg
+        '201':
+          description: image created (first upload for this product)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  # ============================================================
+  # STATES
+  # ============================================================
+
+  /states:
+    get:
+      summary: List states / provinces
+      description: |
+        Returns states ordered by name. Can be filtered by country.
+        No authentication required.
+      tags:
+        - States
+      parameters:
+        - name: country_id
+          in: query
+          description: Filter states by country ID
+          schema:
+            type: integer
+        - name: q[name_cont]
+          in: query
+          description: Filter by name (Ransack contains)
+          schema:
+            type: string
+        - name: q[abbr_eq]
+          in: query
+          description: Filter by abbreviation
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/state'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      name: Victoria
+                      abbr: VIC
+                      country_id: 1
+                    - id: 2
+                      name: New South Wales
+                      abbr: NSW
+                      country_id: 1
+
+  /states/{id}:
+    get:
+      summary: Show state
+      description: No authentication required.
+      tags:
+        - States
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/state'
+        '404':
+          description: not found
+
+  # ============================================================
+  # TAXONS
+  # ============================================================
+
+  /taxons:
+    get:
+      summary: List taxons
+      description: |
+        Returns taxons. Can be filtered by IDs or via Ransack.
+        No authentication required.
+      tags:
+        - Taxons
+      parameters:
+        - name: ids
+          in: query
+          description: Comma-separated list of taxon IDs to fetch
+          schema:
+            type: string
+          example: "1,2,5"
+        - name: q[name_cont]
+          in: query
+          description: Filter by name (Ransack contains)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/taxon'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      name: Vegetables
+                      permalink: vegetables
+                      position: 1
+                    - id: 2
+                      name: Fruit
+                      permalink: fruit
+                      position: 2
+
+    post:
+      summary: Create taxon
+      tags:
+        - Taxons
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taxon
+              properties:
+                taxon:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      example: Vegetables
+                    position:
+                      type: integer
+                      example: 1
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxon'
+        '422':
+          description: invalid resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /taxons/{id}:
+    put:
+      summary: Update taxon
+      tags:
+        - Taxons
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taxon
+              properties:
+                taxon:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    position:
+                      type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxon'
+        '422':
+          description: invalid resource
+
+    delete:
+      summary: Delete taxon
+      tags:
+        - Taxons
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+
+  # ============================================================
+  # REPORTS
+  # ============================================================
+
+  /reports/{report_type}:
+    get:
+      summary: Fetch report data (no subtype)
+      description: |
+        Returns report data as JSON for report types that have **no subtype**.
+
+        **Feature flag required** — this route only exists when the `api_reports` feature
+        flag is enabled on the OFN instance. When disabled the route is not registered
+        and the request falls through to a 404. Contact your instance administrator.
+
+        **Authentication** — requires an admin or manager API token. Regular user tokens
+        are rejected with 403.
+
+        **Mandatory query params** — `q[completed_at_gt]` and `q[completed_at_lt]` must
+        both be present; omitting them returns 422. Use a narrow date window (≤ 30 days)
+        to avoid timeouts on large datasets.
+
+        ### Report types with no subtype
+
+        | `report_type` | Description |
+        |---|---|
+        | `orders_and_distributors` | Orders grouped by distributor |
+        | `customers` | Customer list with contact details |
+        | `users_and_enterprises` | Users and their associated enterprises |
+        | `revenues_by_hub` | Revenue breakdown per hub |
+
+        Report types that **require a subtype** must use
+        `GET /reports/{report_type}/{report_subtype}` instead.
+      tags:
+        - Reports
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: report_type
+          in: path
+          required: true
+          description: Report type slug (no-subtype reports only)
+          schema:
+            type: string
+            enum:
+              - orders_and_distributors
+              - customers
+              - users_and_enterprises
+              - revenues_by_hub
+          example: orders_and_distributors
+        - name: q[completed_at_gt]
+          in: query
+          required: true
+          description: Filter — orders completed after this datetime (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-01T00:00:00Z"
+        - name: q[completed_at_lt]
+          in: query
+          required: true
+          description: Filter — orders completed before this datetime (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-30T23:59:59Z"
+        - name: q[distributor_id_in][]
+          in: query
+          description: Filter by distributor enterprise IDs
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: q[order_cycle_id_in][]
+          in: query
+          description: Filter by order cycle IDs
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: Array of report row objects. Structure depends on report_type.
+                    items:
+                      type: object
+              examples:
+                example:
+                  value:
+                    data:
+                      - order_number: R123456789
+                        order_date: "2024-06-15"
+                        distributor: Green Hub
+                        customer: alice@example.com
+                        total: "42.00"
+        '404':
+          description: |
+            Route not registered — the `api_reports` feature flag is disabled on this
+            instance, or the `report_type` slug is not recognised.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: |
+            `q[completed_at_gt]` and/or `q[completed_at_lt]` are missing, or the
+            report type is not found in the report registry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  /reports/{report_type}/{report_subtype}:
+    get:
+      summary: Fetch report data (with subtype)
+      description: |
+        Returns report data as JSON for report types that require a **subtype** selector.
+
+        Subject to the same **feature flag**, **authentication**, and **mandatory
+        `q` params** requirements as `GET /reports/{report_type}`.
+
+        ### Report types and their valid subtypes
+
+        | `report_type` | `report_subtype` values |
+        |---|---|
+        | `bulk_coop` | `supplier_report`, `allocation`, `packing_sheets`, `customer_payments` |
+        | `payments` | `payments_by_payment_type`, `itemised_payment_totals`, `payment_totals` |
+        | `orders_and_fulfillment` | `order_cycle_supplier_totals`, `order_cycle_supplier_totals_by_distributor`, `order_cycle_distributor_totals_by_supplier`, `order_cycle_customer_totals` |
+        | `products_and_inventory` | `all_products`, `inventory` *(deprecated)*, `lettuce_share` |
+        | `enterprise_fee_summary` | `fee_summary`, `enterprise_fees_with_tax_report_by_order` ⚠️, `enterprise_fees_with_tax_report_by_producer` |
+        | `order_cycle_management` | `payment_methods`, `delivery` |
+        | `sales_tax` | `tax_types`, `tax_rates`, `sales_tax_totals_by_producer`, `sales_tax_totals_by_order` |
+        | `xero_invoices` | `summary`, `detailed` |
+        | `packing` | `customer` ⚠️, `supplier` ⚠️, `product` ⚠️ |
+        | `suppliers` | `pay_your_suppliers` |
+
+        > **⚠️ Known server bugs** — the following subtypes return `422` due to Ruby exceptions
+        > in the report query layer (not missing parameters):
+        > - `packing/customer`, `packing/supplier`, `packing/product` — Arel nil-type crash
+        >   in `joins_selected_shipping_methods` (`shipping_rate_table[:selected].eq(true)`)
+        > - `enterprise_fee_summary/enterprise_fees_with_tax_report_by_order` — `nil.compact_blank`
+      tags:
+        - Reports
+      security:
+        - spree_api_key_header: []
+        - spree_api_key_param: []
+      parameters:
+        - name: report_type
+          in: path
+          required: true
+          description: Report type slug (subtype-based reports only)
+          schema:
+            type: string
+            enum:
+              - bulk_coop
+              - payments
+              - orders_and_fulfillment
+              - products_and_inventory
+              - enterprise_fee_summary
+              - order_cycle_management
+              - sales_tax
+              - xero_invoices
+              - packing
+              - suppliers
+          example: bulk_coop
+        - name: report_subtype
+          in: path
+          required: true
+          description: Report subtype slug — see table above for valid values per report_type
+          schema:
+            type: string
+            enum:
+              - supplier_report
+              - allocation
+              - packing_sheets
+              - customer_payments
+              - payments_by_payment_type
+              - itemised_payment_totals
+              - payment_totals
+              - order_cycle_supplier_totals
+              - order_cycle_supplier_totals_by_distributor
+              - order_cycle_distributor_totals_by_supplier
+              - order_cycle_customer_totals
+              - all_products
+              - inventory
+              - lettuce_share
+              - fee_summary
+              - enterprise_fees_with_tax_report_by_order
+              - enterprise_fees_with_tax_report_by_producer
+              - payment_methods
+              - delivery
+              - tax_types
+              - tax_rates
+              - sales_tax_totals_by_producer
+              - sales_tax_totals_by_order
+              - summary
+              - detailed
+              - customer
+              - supplier
+              - product
+              - pay_your_suppliers
+          example: supplier_report
+        - name: q[completed_at_gt]
+          in: query
+          required: true
+          description: Filter — orders completed after this datetime (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-01T00:00:00Z"
+        - name: q[completed_at_lt]
+          in: query
+          required: true
+          description: Filter — orders completed before this datetime (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-30T23:59:59Z"
+        - name: q[distributor_id_in][]
+          in: query
+          description: Filter by distributor enterprise IDs
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: q[order_cycle_id_in][]
+          in: query
+          description: Filter by order cycle IDs
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: Array of report row objects. Structure depends on report_type/subtype.
+                    items:
+                      type: object
+        '404':
+          description: |
+            Route not registered — the `api_reports` feature flag is disabled on this
+            instance, or the `report_type` / `report_subtype` slug is not recognised.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: |
+            Missing required `q` params, invalid report type/subtype, or a known
+            server-side Ruby exception in the report query layer. Affected subtypes:
+            `packing/customer`, `packing/supplier`, `packing/product` (Arel nil-type crash),
+            `enterprise_fee_summary/enterprise_fees_with_tax_report_by_order` (nil.compact_blank).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+
+  # ============================================================
+  # STATUS
+  # ============================================================
+
+  /status/job_queue:
+    get:
+      summary: Check job queue health
+      description: |
+        Returns whether the background job queue is alive, based on the last
+        heartbeat timestamp. Returns `alive: false` if no heartbeat has been
+        recorded in the last 6 minutes.
+        No authentication required.
+      tags:
+        - Status
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alive:
+                    type: boolean
+                    example: true
+              examples:
+                alive:
+                  value:
+                    alive: true
+                dead:
+                  value:
+                    alive: false
