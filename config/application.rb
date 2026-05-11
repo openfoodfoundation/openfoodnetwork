@@ -31,9 +31,7 @@ Bundler.require(*Rails.groups(assets: %w(development test)))
 module Openfoodnetwork
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
-    config.add_autoload_paths_to_load_path = false
+    config.load_defaults 7.1
 
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
