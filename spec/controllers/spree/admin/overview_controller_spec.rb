@@ -12,7 +12,7 @@ RSpec.describe Spree::Admin::OverviewController do
 
       context "when the referer is not an admin page" do
         before do
-          @request.env['HTTP_REFERER'] = 'http://test.com/not_admin_path'
+          @request.env['HTTP_REFERER'] = 'http://test.host/not_admin_path'
         end
 
         context "and the enterprise has sells='unspecified'" do
@@ -36,7 +36,7 @@ RSpec.describe Spree::Admin::OverviewController do
       end
 
       context "when the refer is an admin page" do
-        before { @request.env['HTTP_REFERER'] = 'http://test.com/admin' }
+        before { @request.env['HTTP_REFERER'] = 'http://test.host/admin' }
 
         it "renders the single enterprise dashboard" do
           spree_get :index
@@ -53,7 +53,7 @@ RSpec.describe Spree::Admin::OverviewController do
 
       context "when the referer is not an admin page" do
         before do
-          @request.env['HTTP_REFERER'] = 'http://test.com/not_admin_path'
+          @request.env['HTTP_REFERER'] = 'http://test.host/not_admin_path'
         end
 
         context "and at least one owned enterprise has sells='unspecified'" do
@@ -76,7 +76,7 @@ RSpec.describe Spree::Admin::OverviewController do
       end
 
       context "when the refer is an admin page" do
-        before { @request.env['HTTP_REFERER'] = 'http://test.com/admin' }
+        before { @request.env['HTTP_REFERER'] = 'http://test.host/admin' }
 
         it "renders the multiple enterprise dashboard" do
           spree_get :index

@@ -31,7 +31,7 @@ Bundler.require(*Rails.groups(assets: %w(development test)))
 module Openfoodnetwork
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
@@ -39,6 +39,11 @@ module Openfoodnetwork
                                                           ActiveSupport::TimeWithZone,
                                                           ActiveSupport::TimeZone]
     config.active_support.cache_format_version = 7.0
+
+    # this used to migrate cookie from :mashal serializer to :json serializer,
+    # default in rails 7 is :json
+    # TODO to remove once we are sure all cookies have been migrated
+    config.action_dispatch.cookies_serializer = :hybrid
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

@@ -9,7 +9,7 @@ class PaymentsController < BaseController
     @payment = Spree::Payment.find(params[:id])
     authorize! :show, @payment.order
 
-    redirect_to(@payment.redirect_auth_url || order_url(@payment.order))
+    redirect_to(@payment.redirect_auth_url || order_url(@payment.order), allow_other_host: true)
   end
 
   private

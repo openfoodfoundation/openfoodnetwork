@@ -8,7 +8,7 @@ module Admin
       payload = params.permit(:enterprise_id).to_h
       key = Rails.application.secret_key_base
       url_params = { state: JWT.encode(payload, key, 'HS256'), scope: "read_write" }
-      redirect_to Stripe::OAuth.authorize_url(url_params)
+      redirect_to Stripe::OAuth.authorize_url(url_params), allow_other_host: true
     end
 
     def destroy

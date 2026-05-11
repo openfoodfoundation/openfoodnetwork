@@ -18,7 +18,7 @@ RSpec.describe Admin::EnterprisesController do
     { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id }
   }
 
-  before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
+  before { @request.env['HTTP_REFERER'] = 'http://test.host/' }
 
   describe "creating an enterprise" do
     let(:enterprise_params) {

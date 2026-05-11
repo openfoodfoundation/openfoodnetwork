@@ -19,13 +19,13 @@ RSpec.describe Spree::UserSessionsController do
       end
 
       context "when referer is '/checkout'" do
-        before { @request.env['HTTP_REFERER'] = 'http://test.com/checkout' }
+        before { @request.env['HTTP_REFERER'] = 'http://test.host/checkout' }
 
         it "redirects to checkout" do
           spree_post :create, spree_user: { email: user.email, password: user.password }
 
           expect(response).to have_http_status(:found)
-          expect(response.location).to eq checkout_url
+          expect(response).to redirect_to(checkout_url)
         end
       end
     end

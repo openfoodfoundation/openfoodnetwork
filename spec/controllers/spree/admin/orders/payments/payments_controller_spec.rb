@@ -156,7 +156,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
 
       before do
-        request.env["HTTP_REFERER"] = "http://foo.com"
+        request.env["HTTP_REFERER"] = "http://test.host"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 
@@ -167,7 +167,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         spree_put :fire, params
 
         expect(flash[:error]).to eq('error message')
-        expect(response).to redirect_to('http://foo.com')
+        expect(response).to redirect_to('http://test.host')
       end
 
       it 'handles validation errors' do
@@ -176,7 +176,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         spree_put :fire, params
 
         expect(flash[:error]).to eq('validation error')
-        expect(response).to redirect_to('http://foo.com')
+        expect(response).to redirect_to("http://test.host")
       end
 
       it 'displays a success message and redirects to the referer' do
@@ -192,7 +192,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       let(:params) { { e: 'refund', order_id: order.number, id: payment.id } }
 
       before do
-        request.env["HTTP_REFERER"] = "http://foo.com"
+        request.env["HTTP_REFERER"] = "http://test.host"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 
@@ -203,7 +203,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         spree_put :fire, params
 
         expect(flash[:error]).to eq('error message')
-        expect(response).to redirect_to('http://foo.com')
+        expect(response).to redirect_to('http://test.host')
       end
 
       it 'handles validation errors' do
@@ -212,7 +212,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         spree_put :fire, params
 
         expect(flash[:error]).to eq('validation error')
-        expect(response).to redirect_to('http://foo.com')
+        expect(response).to redirect_to('http://test.host')
       end
 
       it 'displays a success message and redirects to the referer' do
@@ -230,7 +230,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       before do
         allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
-        request.env["HTTP_REFERER"] = "http://foo.com"
+        request.env["HTTP_REFERER"] = "http://test.host"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
         allow(payment).to receive(:redirect_auth_url).and_return("https://www.stripe.com/authorize")
         allow(payment).to receive(:requires_authorization?) { true }
@@ -249,7 +249,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       let(:params) { { e: 'unrecognized_event', order_id: order.number, id: payment.id } }
 
       before do
-        request.env["HTTP_REFERER"] = "http://foo.com"
+        request.env["HTTP_REFERER"] = "http://test.host"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 

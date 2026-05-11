@@ -18,12 +18,12 @@ RSpec.describe "/payments/:id/authorize" do
 
     context "has redirect auth url" do
       before do
-        allow_any_instance_of(Spree::Payment).to receive(:redirect_auth_url).and_return('http://example.com')
+        allow_any_instance_of(Spree::Payment).to receive(:redirect_auth_url).and_return('http://payment-example.com/auth')
       end
 
       it "redirects to the 3D-Auth url" do
         get authorize_payment_path(payment)
-        expect(response).to redirect_to('http://example.com')
+        expect(response).to redirect_to('http://payment-example.com/auth')
       end
     end
 

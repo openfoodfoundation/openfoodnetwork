@@ -168,7 +168,7 @@ RSpec.describe PaymentGateways::PaypalController do
   describe "#express" do
     let(:order) { create(:order_with_totals_and_distribution) }
     let(:response) { true }
-    let(:provider_success_url) { "https://test.com/success" }
+    let(:provider_success_url) { "https://test.host/success" }
     let(:response_mock) { double(:response, success?: response, errors: [] ) }
     let(:provider_mock) {
       double(:provider, set_express_checkout: response_mock,
