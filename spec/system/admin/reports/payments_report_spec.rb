@@ -25,12 +25,13 @@ RSpec.describe "Payments Reports" do
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:product) { create(:product, supplier_id: supplier.id) }
   let(:supplier) { create(:supplier_enterprise) }
+  let(:user) { order.distributor.owner }
 
   before do
     create(:line_item_with_shipment, order:, product:)
     create(:line_item_with_shipment, order: other_order, product:)
 
-    login_as_admin
+    login_as user
     visit admin_reports_path
   end
 
@@ -95,6 +96,34 @@ RSpec.describe "Payments Reports" do
         paypal_payment.amount.to_f,
         order.outstanding_balance + other_order.outstanding_balance,
       ].join(" "))
+    end
+  end
+
+  context "as supplier" do
+    let(:user) { supplier.owner }
+
+    it "shows orders with payment state, their balance and totals" do
+      click_link "Itemised Payment Totals"
+      run_report
+
+      expect(page.find("table.report__table thead tr").text).to have_content([
+        "Payment State",
+        "Distributor",
+        "Product Total ($)",
+        "Shipping Total ($)",
+        "Outstanding Balance ($)",
+        "Total ($)"
+      ].join(" "))
+
+      pending
+      expect(page.find("table.report__table tbody tr").text).to have_content([
+        order.payment_state,
+        order.distributor.name,
+        order.item_total.to_f + other_order.item_total.to_f,
+        order.ship_total.to_f + other_order.ship_total.to_f,
+        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
+        order.total.to_f + other_order.total.to_f
+      ].compact.join(" "))
     end
   end
 end
