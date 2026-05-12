@@ -558,8 +558,8 @@ GEM
       activerecord (>= 7.1)
       request_store (~> 1.4)
     parallel (2.1.0)
-    paranoia (2.6.4)
-      activerecord (>= 5.1, < 7.2)
+    paranoia (3.1.0)
+      activerecord (>= 7, < 8.2)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
@@ -1044,7 +1044,7 @@ DEPENDENCIES
   order_management!
   pagy (~> 9)
   paper_trail
-  paranoia (~> 2.4)
+  paranoia
   paypal-sdk-merchant
   pdf-reader
   pg
@@ -1307,7 +1307,7 @@ CHECKSUMS
   pagy (9.4.0) sha256=db3f2e043f684155f18f78be62a81e8d033e39b9f97b1e1a8d12ad38d7bce738
   paper_trail (17.0.0) sha256=1c2842061d3874ca7015908e821e2aa14f9b982af2acb2a7974713bf79021c85
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
-  paranoia (2.6.4) sha256=9d88a6589b2418eaa136ec491e5995f4f31061d7301acec14f4f0f1827b86250
+  paranoia (3.1.0) sha256=36574a46e8df663d0da7d9008e987b72a6a9eccee13c058b7094acc810e39f52
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
   paypal-sdk-core (0.3.6) sha256=ffc8c247b926b0d083d9a91f515df710ebf6b55663c8654a6691f755bcab30a0
   paypal-sdk-merchant (1.117.4) sha256=61d9992fad90a22251d116d27b01aabec6ae1a48cf5cf6d125251c3280eb58de

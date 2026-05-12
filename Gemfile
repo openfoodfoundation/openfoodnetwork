@@ -53,7 +53,7 @@ gem 'ffaker'
 gem 'highline'
 gem 'json'
 gem 'monetize', '~> 1.11'
-gem 'paranoia', '~> 2.4'
+gem 'paranoia'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
