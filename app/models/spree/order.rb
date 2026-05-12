@@ -134,13 +134,13 @@ module Spree
       if user.admin?
         where(nil)
       else
-        # Find orders that are distributed by the user or have products supplied by the user
-        # WARNING: This only filters orders,
-        #   you'll need to filter line items separately using LineItem.managed_by
-        with_line_items_variants_and_products_outer.
-          where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
-                user.enterprises.select(&:id),
-                user.enterprises.select(&:id)).
+        # Find orders that are distributed by the user or have variants supplied by the user
+        # WARNING: This only filters orders, not line items.
+        enterprise_ids = user.enterprises.select(&:id)
+        with_line_items_variants_outer.
+          where(distributor_id: enterprise_ids).or(
+            where(spree_variants: { supplier_id: enterprise_ids })
+          ).
           select('DISTINCT spree_orders.*')
       end
     }
@@ -172,8 +172,8 @@ module Spree
         .order("spree_addresses.lastname DESC, spree_addresses.firstname DESC")
     }
 
-    scope :with_line_items_variants_and_products_outer, lambda {
-      left_outer_joins(line_items: { variant: :product })
+    scope :with_line_items_variants_outer, lambda {
+      left_outer_joins(line_items: :variant)
     }
 
     # All the states an order can be in after completing the checkout

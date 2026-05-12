@@ -56,19 +56,6 @@ module Spree
     attribute :restock_item, type: :boolean, default: true
 
     # -- Scopes
-    scope :managed_by, lambda { |user|
-      if user.admin?
-        where(nil)
-      else
-        # Find line items that are from orders distributed by the user or supplied by the user
-        joins(variant: :product).
-          joins(:order).
-          where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
-                user.enterprises, user.enterprises).
-          select('spree_line_items.*')
-      end
-    }
-
     scope :in_orders, lambda { |orders|
       where(order_id: orders)
     }
