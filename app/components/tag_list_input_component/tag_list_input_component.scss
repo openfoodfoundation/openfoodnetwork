@@ -76,32 +76,33 @@
   }
 
   ul.suggestion-list {
-    margin-top: 5px;
-    padding: 5px 0;
+    margin-top: 4px;
+    padding: 0;
     z-index: $tag-drop-down-z-index;
     width: fit-content;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: $near-black;
+    background-color: $color-body-bg;
+    @include border-radius($border-radius);
     box-shadow: $shadow-dropdown;
     list-style-type: none;
-    max-height: 280px;
+    max-height: 21em;
     overflow-y: auto;
     position: relative;
 
     li.suggestion-item {
-      padding: 5px 10px;
+      padding: 8px;
+      border-left: 3px solid transparent;
       cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: #000;
-      background-color: #fff;
-      width: stretch;
+      line-height: 20px;
 
       &.active,
       &:hover {
-        color: #fff;
-        background-color: $color-link-visited;
+        border-left-color: $orient;
+        background-color: $lighter-grey;
+        color: $near-black;
       }
     }
   }

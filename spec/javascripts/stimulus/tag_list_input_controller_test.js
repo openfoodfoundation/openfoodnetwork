@@ -10,25 +10,23 @@ import tag_list_input_controller from "tag_list_input_component/tag_list_input_c
 // Mock jest to return an autocomplete list
 global.fetch = jest.fn(() => {
   const html = `
-    <li 
-      data-testid="item" 
+    <li
+      data-testid="item"
       class="suggestion-item"
       data-autocomplete-label="tag-1"
       data-autocomplete-value="tag-1"
       role="option"
-      id="stimulus-autocomplete-option-4"
     >
-      tag-1 has 1 rule
+      tag-1
     </li>
-    <li 
+    <li
       data-testid="item"
       class="suggestion-item"
-      data-autocomplete-label="rule-2"
-      data-autocomplete-value="rule-2"
+      data-autocomplete-label="some-other-tag"
+      data-autocomplete-value="some-other-tag"
       role="option"
-      id="stimulus-autocomplete-option-5"
     >
-      rule-2 has 2 rules
+      some-other-tag
     </li>`;
 
   return Promise.resolve({
@@ -425,23 +423,21 @@ describe("TagListInputController", () => {
                 >
               </div>
               <ul class="suggestion-list" data-tag-list-input-target="results">
-                <li 
-                  class="suggestion-item" 
-                  data-autocomplete-label="rule-1" 
-                  data-autocomplete-value="rule-1" 
-                  role="option" 
-                  id="stimulus-autocomplete-option-4"
+                <li
+                  class="suggestion-item"
+                  data-autocomplete-label="some-tag"
+                  data-autocomplete-value="some-tag"
+                  role="option"
                 >
-                  rule-1 has 1 rule
+                  some-tag
                 </li>
-                <li 
-                  class="suggestion-item" 
-                  data-autocomplete-label="rule-2" 
-                  data-autocomplete-value="rule-2" 
-                  role="option" 
-                  id="stimulus-autocomplete-option-5"
-                 >
-                  rule-2 has 2 rules
+                <li
+                  class="suggestion-item"
+                  data-autocomplete-label="some-other-tag"
+                  data-autocomplete-value="some-other-tag"
+                  role="option"
+                >
+                  some-other-tag
                 </li>
               </ul>
             </div>
@@ -471,7 +467,108 @@ describe("TagListInputController", () => {
       // the dom has been updated with the autocomplete data
       const items = await screen.findAllByTestId("item");
       expect(items.length).toBe(1);
-      expect(items[0].textContent.trim()).toBe("rule-2 has 2 rules");
+      expect(items[0].textContent.trim()).toBe("some-other-tag");
+    });
+
+    describe("when other tag inputs on the page have unsaved tags", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <div
+            data-controller="tag-list-input"
+            data-action="autocomplete.change->tag-list-input#addTag"
+            data-tag-list-input-url-value="/admin/tag_rules/variant_tag_rules?enterprise_id=3"
+           >
+            <input
+              value="tag-1,tag-2,tag-3"
+              data-tag-list-input-target="tagList"
+              type="hidden"
+              name="variant_tag_list"
+              id="variant_tag_list"
+            >
+            <div class="tags-input"><div class="tags">
+              <ul class="tag-list" data-tag-list-input-target="list">
+                <template data-tag-list-input-target="template">
+                  <li class="tag-item"><div class="tag-template"><span></span></div></li>
+                </template>
+              </ul>
+              <input
+                type="text"
+                name="variant_add_tag"
+                id="variant_add_tag"
+                data-action="keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange"
+                data-tag-list-input-target="input"
+                style="display: block;"
+              >
+            </div></div>
+            <ul data-testid="suggestion-list" class="suggestion-list" data-tag-list-input-target="results" hidden></ul>
+          </div>
+          <div
+            data-controller="tag-list-input"
+            data-action="autocomplete.change->tag-list-input#addTag"
+            data-tag-list-input-url-value="/admin/tag_rules/variant_tag_rules?enterprise_id=3"
+           >
+            <input
+              value="page-only-tag,tag-1"
+              data-tag-list-input-target="tagList"
+              type="hidden"
+              name="variant_tag_list_2"
+            >
+            <div class="tags-input"><div class="tags">
+              <ul class="tag-list" data-tag-list-input-target="list">
+                <template data-tag-list-input-target="template">
+                  <li class="tag-item"><div class="tag-template"><span></span></div></li>
+                </template>
+              </ul>
+              <input
+                type="text"
+                name="variant_add_tag_2"
+                data-action="keydown.enter->tag-list-input#keyboardAddTag keyup->tag-list-input#filterInput blur->tag-list-input#onBlur focus->tag-list-input#onInputChange"
+                data-tag-list-input-target="input"
+                style="display: block;"
+              >
+            </div></div>
+            <ul class="suggestion-list" data-tag-list-input-target="results" hidden></ul>
+          </div>`;
+      });
+
+      it("includes unsaved page tags in autocomplete suggestions", async () => {
+        variant_add_tag.dispatchEvent(new FocusEvent("focus"));
+        jest.runAllTimers();
+
+        // Wait for the async fetch to resolve and populate suggestions
+        await screen.findByText("some-other-tag");
+
+        const suggestionList = screen.getByTestId("suggestion-list");
+        const options = [...suggestionList.querySelectorAll("li[role='option']")];
+        const values = options.map((li) => li.dataset.autocompleteValue);
+
+        expect(values[0]).toBe("page-only-tag"); // unsaved page tags appear first
+        expect(values).toContain("some-other-tag"); // from server
+        expect(values).not.toContain("tag-1"); // filtered out — already on this variant
+      });
+    });
+
+    it("hides the dropdown when all returned tags are already in the list", async () => {
+      fetch.mockImplementationOnce(() => {
+        const html = `
+          <li
+            data-testid="item"
+            class="suggestion-item"
+            data-autocomplete-label="tag-1"
+            data-autocomplete-value="tag-1"
+            role="option"
+          >
+            tag-1
+          </li>`;
+        return Promise.resolve({ ok: true, text: () => Promise.resolve(html) });
+      });
+
+      variant_add_tag.dispatchEvent(new FocusEvent("focus"));
+      jest.runAllTimers();
+      await screen.findByTestId("suggestion-list");
+
+      const suggestionList = screen.getByTestId("suggestion-list");
+      expect(suggestionList.childElementCount).toBe(0);
     });
   });
 });

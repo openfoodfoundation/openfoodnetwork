@@ -22,14 +22,6 @@ class TagRule < ApplicationRecord
     end
   end
 
-  def self.matching_variant_tag_rules_by_enterprises(enterprise_id, tag)
-    rules = where(type: "TagRule::FilterVariants").for(enterprise_id)
-
-    return [] if rules.empty?
-
-    rules.select { |r| r.preferred_variant_tags =~ /#{tag}/ }
-  end
-
   # The following method must be overriden in a concrete tagRule
   def tags
     raise NotImplementedError, 'please use concrete TagRule'
