@@ -597,7 +597,7 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
-    private_address_check (0.6.0)
+    private_address_check (0.7.0)
     pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -1345,7 +1345,7 @@ CHECKSUMS
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
-  private_address_check (0.6.0) sha256=94ac6edefb857f7e2288695498b463aac342fb9701dad326f6555375b0c8dbef
+  private_address_check (0.7.0) sha256=449e42cd602133bdb70ff6ffd92724f51140f567ebff1e2cb06cff473ef0bd74
   pry (0.16.0) sha256=d76c69065698ed1f85e717bd33d7942c38a50868f6b0673c636192b3d1b6054e
   psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
