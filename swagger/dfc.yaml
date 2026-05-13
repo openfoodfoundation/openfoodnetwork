@@ -1216,5 +1216,32 @@ paths:
                       dfc-t:supportedProtocolVersion: 2.0.0
                       dfc-t:supportedOntologyVersion: 1.16.0
                       dfc-t:hasIdentityService: https://login.lescommuns.org/auth/realms/data-food-consortium
+  "/api/dfc/persons/{id}/webid":
+    get:
+      summary: Show user WebID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webids
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/webid
+                      "@type": foaf:PersonalProfileDocument
+                      foaf:maker: http://test.host/api/dfc/persons/9000/webid#me
+                      foaf:primaryTopic: http://test.host/api/dfc/persons/9000/webid#me
+                    - "@id": http://test.host/api/dfc/persons/9000/webid#me
+                      "@type": foaf:Agent
+                      pim:preferencesFile: TBC
 servers:
 - url: "/"
