@@ -469,9 +469,9 @@ GEM
       activesupport (>= 4.2)
     jwt (2.10.2)
       base64
-    knapsack_pro (9.2.3)
-      logger
+    knapsack_pro (10.0.0)
       rake
+      thor (~> 1.4)
     language_server-protocol (3.17.0.5)
     launchy (3.0.0)
       addressable (~> 2.8)
@@ -1186,6 +1186,7 @@ CHECKSUMS
   bugsnag (6.30.0) sha256=c496cfceb4a9811ce718b0d2ff66c5a35d158804b79e60c3d2ba12d9084ff19e
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bullet (8.1.1) sha256=3ddecdf3787c64a3f1e5b316256840bc034d60c1070b1b16d3fe5b5932d42b87
+  bundler (4.0.11) sha256=5bcec0fb78302e48d02ee46f10ee6e6942be647ba5b44a6d1ddfda9a240ce785
   cable_ready (5.0.6) sha256=de1c94beab04b15a47c8794507a0b5d0ce9c0f25edb1b60a7542adc5413ea894
   cancancan (1.15.0) sha256=05f540c62143fde51f7ceaba8584f8dc0e34c93e43ab7a6c1a832b4553216b16
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
@@ -1288,7 +1289,7 @@ CHECKSUMS
   json_spec (1.1.5) sha256=7a77b97a92c787e2aa3fbc4a1239afc3342c781151dc98cfb81461b3b7cad10f
   jsonapi-serializer (2.2.0) sha256=f8141ac6f0c1e17e8513df68f8341afe2d7bffc285841d7090bc07f07efb0029
   jwt (2.10.2) sha256=31e1ee46f7359883d5e622446969fe9c118c3da87a0b1dca765ce269c3a0c4f4
-  knapsack_pro (9.2.3) sha256=354b402cb08709b98f9ffa32d69e989f3bdd829a6c989649d60a9a0256421eed
+  knapsack_pro (10.0.0) sha256=9ab3d071ef3a067e97691f883fbbcd8546ff20da37d394f5a127f82b53dfc611
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   launchy (3.0.0) sha256=4abcdab659689550ceca6ec0630cd9efd9940b51dc14cb4ebceee8f7aedc791b
   letter_opener (1.10.0) sha256=2ff33f2e3b5c3c26d1959be54b395c086ca6d44826e8bf41a14ff96fdf1bdbb2
