@@ -16,7 +16,7 @@ gem "image_processing"
 
 gem 'activemerchant'
 gem 'angular-rails-templates'
-gem 'ransack', '~> 4.1.0'
+gem 'ransack'
 gem 'responders'
 gem 'shakapacker', '~> 9.7'
 
