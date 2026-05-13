@@ -18,5 +18,7 @@ DfcProvider::Engine.routes.draw do
   resources :supplied_products, only: [:index]
   resources :product_groups, only: [:show]
 
+  resource :webid, only: [:show]
+
   resource :affiliate_sales_data, only: [:show]
 end

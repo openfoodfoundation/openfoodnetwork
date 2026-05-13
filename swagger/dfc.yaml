@@ -1190,5 +1190,31 @@ paths:
                 dfc-b:hasPhysicalCharacteristic: []
                 dfc-b:hasNutrientCharacteristic: []
                 dfc-b:hasAllergenCharacteristic: []
+  "/api/dfc/webid":
+    get:
+      summary: Show platform WebID
+      tags:
+      - Webids
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/webid
+                      "@type": foaf:PersonalProfileDocument
+                      foaf:maker: http://test.host/api/dfc/webid#me
+                      foaf:primaryTopic: http://test.host/api/dfc/webid#me
+                    - "@id": http://test.host/api/dfc/webid#me
+                      "@type":
+                      - dfc-t:Platform
+                      - foaf:Agent
+                      foaf:name: Open Food Network
+                      dfc-t:supportedProtocolVersion: 2.0.0
+                      dfc-t:supportedOntologyVersion: 1.16.0
+                      dfc-t:hasIdentityService: https://login.lescommuns.org/auth/realms/data-food-consortium
 servers:
 - url: "/"
