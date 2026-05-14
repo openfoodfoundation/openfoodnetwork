@@ -783,6 +783,30 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
+  "/api/dfc/persons/{person_id}/prefs":
+    get:
+      summary: Show private preferences
+      parameters:
+      - name: person_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Persons
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/prefs
+                      "@type": pim:ConfigurationFile
+                    - "@id": http://test.host/api/dfc/persons/9000/webid#me
+                      solid:privateTypeIndex: TBC
   "/api/dfc/enterprises/{enterprise_id}/platforms":
     parameters:
     - name: enterprise_id
@@ -1242,6 +1266,6 @@ paths:
                       foaf:primaryTopic: http://test.host/api/dfc/persons/9000/webid#me
                     - "@id": http://test.host/api/dfc/persons/9000/webid#me
                       "@type": foaf:Agent
-                      pim:preferencesFile: TBC
+                      pim:preferencesFile: http://test.host/api/dfc/persons/9000/prefs
 servers:
 - url: "/"

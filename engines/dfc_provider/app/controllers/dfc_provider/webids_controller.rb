@@ -38,6 +38,7 @@ module DfcProvider
     # Publicly show a user WebID
     def user_webid
       id = person_webid_url(params[:person_id])
+      prefs_id = person_prefs_url(params[:person_id])
       webid = {
         '@graph': [
           {
@@ -49,7 +50,7 @@ module DfcProvider
           {
             '@id': "#{id}#me",
             '@type': "foaf:Agent",
-            'pim:preferencesFile': "TBC"
+            'pim:preferencesFile': prefs_id
           }
         ]
       }

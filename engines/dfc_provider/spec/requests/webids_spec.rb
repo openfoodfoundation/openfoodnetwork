@@ -37,7 +37,7 @@ RSpec.describe "Webids", swagger_doc: "dfc.yaml" do
           graph = subject["@graph"]
           expect(graph[0]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/webid"))
           expect(graph[0]["@type"]).to(eq("foaf:PersonalProfileDocument"))
-          expect(graph[1]["pim:preferencesFile"]).to(eq("TBC"))
+          expect(graph[1]["pim:preferencesFile"]).to(eq("http://test.host/api/dfc/persons/9000/prefs"))
         end
       end
     end
