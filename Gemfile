@@ -66,7 +66,7 @@ gem 'devise-i18n'
 gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
-gem 'datafoodconsortium-connector', '2.0.0.pre.beta3'
+gem 'datafoodconsortium-connector'
 gem 'datafoodconsortium-connector-v1'
 gem 'jsonapi-serializer'
 gem 'pagy', '~> 9'
