@@ -64,6 +64,8 @@ class Customer < ApplicationRecord
 
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
 
+  attribute :enterprise_charges_sales_tax, :boolean, default: false
+
   def full_name
     "#{first_name} #{last_name}".strip
   end
