@@ -54,6 +54,10 @@
       %table.index#customers{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length > 0' }
         %col.id{ width: "5%", 'ng-show' => 'columns.id.visible' }
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
+        %col.customer_type{ width: "10%", 'ng-show' => 'columns.customer_type.visible' }
+        %col.enterprise_name{ width: "10%", 'ng-show' => 'columns.enterprise_name.visible' }
+        %col.enterprise_acn{ width: "10%", 'ng-show' => 'columns.enterprise_acn.visible' }
+        %col.enterprise_charges_sales_tax{ width: "5%", 'ng-show' => 'columns.enterprise_charges_sales_tax.visible' }
         %col.first_name{ width: "20%", 'ng-show' => 'columns.first_name.visible' }
         %col.last_name{ width: "20%", 'ng-show' => 'columns.last_name.visible' }
         %col.code{ width: "10%", 'ng-show' => 'columns.code.visible' }
@@ -69,6 +73,14 @@
             %th.id{ 'ng-show' => 'columns.id.visible' }=t('admin.customers.index.id')
             %th.email{ 'ng-show' => 'columns.email.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('email')" }=t('admin.email')
+            %th.customer_type{ 'ng-show' => 'columns.customer_type.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('customer_type')" }=t('admin.customers.index.customer_type')
+            %th.enterprise_name{ 'ng-show' => 'columns.enterprise_name.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_name')" }=t('admin.customers.index.enterprise_name')
+            %th.enterprise_acn{ 'ng-show' => 'columns.enterprise_acn.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_acn')" }=t('admin.customers.index.enterprise_acn')
+            %th.enterprise_charges_sales_tax{ 'ng-show' => 'columns.enterprise_charges_sales_tax.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_charges_sales_tax')" }=t('admin.customers.index.enterprise_charges_sales_tax')
             %th.first_name{ 'ng-show' => 'columns.first_name.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('first_name')" }=t('admin.first_name')
             %th.last_name{ 'ng-show' => 'columns.last_name.visible' }
@@ -90,6 +102,15 @@
             %td.email{ 'ng-show' => 'columns.email.visible'}
               %span{ 'ng-bind' => '::customer.email' }
               %span.guest-label{ 'ng-show' => 'customer.user_id == null' }= t('.guest_label')
+            %td.customer_type{ 'ng-show' => 'columns.customer_type.visible'}
+              %ofn-select{ id: angular_id(:customer_type), data: [{ name: t('admin.customers.index.individual'), id: 'individual' }, { name: t('admin.customers.index.enterprise'), id: 'enterprise' }], "ng-model": 'customer.customer_type' }
+              %input{ type: "hidden", name: angular_name(:customer_type), "obj-for-update": "customer", "attr-for-update": "customer_type" }
+            %td.enterprise_name{ 'ng-show' => 'columns.enterprise_name.visible'}
+              %input{ type: 'text', name: 'enterprise_name', "obj-for-update": 'customer', "attr-for-update": 'enterprise_name', "ng-model": 'customer.enterprise_name' }
+            %td.enterprise_acn{ 'ng-show' => 'columns.enterprise_acn.visible'}
+              %input{ type: 'text', name: 'enterprise_acn', "obj-for-update": 'customer', "attr-for-update": 'enterprise_acn', "ng-model": 'customer.enterprise_acn' }
+            %td.enterprise_charges_sales_tax{ 'ng-show' => 'columns.enterprise_charges_sales_tax.visible'}
+              %input{ type: 'checkbox', name: 'enterprise_charges_sales_tax', "obj-for-update": 'customer', "attr-for-update": 'enterprise_charges_sales_tax', "ng-model": 'customer.enterprise_charges_sales_tax' }
             %td.first_name{ 'ng-show' => 'columns.first_name.visible'}
               %input{ type: 'text', name: 'first_name', "obj-for-update": 'customer', "attr-for-update": 'first_name', "ng-model": 'customer.first_name' }
             %td.last_name{ 'ng-show' => 'columns.last_name.visible'}
