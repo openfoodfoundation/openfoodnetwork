@@ -596,6 +596,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
     t.string "unit_presentation"
     t.string "product_name"
     t.string "variant_name"
+    t.string "product_and_full_name"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
