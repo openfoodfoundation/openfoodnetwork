@@ -11,6 +11,7 @@ en_US:
         address1: "Shipping address (House number + Street)"
         address2: "Shipping address line 2"
         city: "Shipping address city"
+        country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
@@ -19,6 +20,7 @@ en_US:
         address1: "Billing address (House number & Street)"
         zipcode: "Billing address zip code"
         city: "Billing address City"
+        country: "Billing address country"
         firstname: "Billing address first name"
         lastname: "Billing address last name"
         phone: Customer phone
@@ -48,6 +50,7 @@ en_US:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"

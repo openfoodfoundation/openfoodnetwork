@@ -1525,7 +1525,7 @@ de_CH:
         pickup_time_tip: Datum und Uhrzeit, ab wann Bestellungen dieses Bestellzylus für den Kunden bereit sind.
         pickup_instructions_placeholder: "Informationen zur Abholung"
         pickup_instructions_tip: Diese Informationen werden Kunden nach Abschluss einer Bestellung angezeigt.
-        pickup_time_placeholder: "Fertig am (d. h. Datum/Uhrzeit)"
+        pickup_time_placeholder: "Fertig am (d.h. Datum/Uhrzeit)"
         receival_instructions_placeholder: "Informationen zur Lieferung"
         add_fee: 'Gebühr hinzufügen'
         remove: 'Löschen'
@@ -1577,7 +1577,7 @@ de_CH:
         distributors: Verteilstellen
         variants: Produktvarianten
       simple_form:
-        ready_for: Bereit am
+        ready_for: Bereit am (d.h. Datum/Uhrzeit)
         ready_for_placeholder: Datum/Uhrzeit
         customer_instructions: Informationen für Kunden
         customer_instructions_placeholder: Abhol-/Lieferinformationen
@@ -2070,7 +2070,7 @@ de_CH:
       mobile_menu:
         cart: "Warenkorb/Kasse"
     register_call:
-      selling_on_ofn: "Sie möchten selbst im Open Food Schweiz verkaufen?"
+      selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier registrieren!"
     footer:
       footer_secure: "Sicher und vertrauenswürdig."
@@ -2353,20 +2353,20 @@ de_CH:
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich im Open Food Network angemeldet haben oder von einer Person dazu eingeladen wurden. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
-  email_signoff: "Viele Grüsse,"
+  email_signoff: "Frische Grüsse,"
   email_signature: "das Team des Open Food Network"
   email_confirm_customer_greeting: "Hallo %{name},"
-  email_confirm_customer_intro_html: "vielen Dank für Ihren Einkauf bei <strong>%{distributor}</strong>!"
+  email_confirm_customer_intro_html: "Vielen Dank für ihren Einkauf bei <strong>%{distributor}</strong>."
   email_confirm_customer_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
   email_confirm_customer_details_html: "Nachfolgend finden Sie Ihre <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
-  email_confirm_customer_signoff: "Viele Grüsse,"
+  email_confirm_customer_signoff: "Frische Grüsse,"
   email_confirm_shop_greeting: "Hallo %{name},"
   email_confirm_shop_order_html: "gut gemacht! <strong>%{distributor}</strong> hat eine neue Bestellung erhalten!"
   email_confirm_shop_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Menge"
   email_order_summary_sku: "Artikelnummer"
-  email_order_summary_price: "Preis"
+  email_order_summary_price: "Produktpreis"
   email_order_summary_subtotal: "Zwischensumme:"
   email_order_summary_total: "Gesamt:"
   email_order_summary_includes_tax: "(inkl. Steuern):"
@@ -2413,12 +2413,12 @@ de_CH:
     confirm_your_email: "Sie sollten eine E-Mail mit einem Bestätigungslink erhalten haben oder in Kürze erhalten. Sie können nicht auf das Profil von %{enterprise} zugreifen, bis Sie Ihre E-Mail-Adresse bestätigt haben."
     set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
     mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen."
-  producer_mail_greeting: "Liebe/r"
-  producer_mail_text_before: "wir informieren über den Stand des Bestellzyklus, bereit am:"
-  producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
+  producer_mail_greeting: "Hallo"
+  producer_mail_text_before: "Wir informieren über den Stand des folgenden Bestellzyklus:"
+  producer_mail_order_text: "Hier ist eine Zusammenfassung der Bestellungen deiner Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
-  producer_mail_signoff: "Viele Grüsse,"
-  producer_mail_order_customer_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen, gruppiert nach Kunden:"
+  producer_mail_signoff: "Frische Grüsse,"
+  producer_mail_order_customer_text: "Hier findest du eine Zusammenfassung der Bestellungen, gruppiert nach Kunden:"
   shopping_oc_closed: Bestellzyklen sind derzeit geschlossen!
   shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Bestellzyklus öffnet (oder kontaktieren Sie uns direkt, um zu erfahren, ob wir verspätete Bestellungen annehmen können)."
   shopping_oc_last_closed: "Der letzte Bestellzyklus wurde vor %{distance_of_time} geschlossen."
@@ -2743,7 +2743,7 @@ de_CH:
         headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
         question: "Ist das Unternehmen ein Produzent?"
         yes_producer: "Ja, ich bin ein Produzent."
-        no_producer: "Nein, es ist kein Produzent."
+        no_producer: "Nein, ich bin kein Produzent."
         producer_field_error: "Bitte wählen Sie: Ist das Unternehmen ein Produzent?"
         yes_producer_help: "Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
         no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Food Hub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Grosshändler oder Vergleichbares sein."
@@ -4500,7 +4500,7 @@ de_CH:
         credit_order: "Ihre Bestellung war bereits bezahlt, sodass der Betrag Ihrem Konto gutgeschrieben wurde."
         subject: "Stornierung der Bestellung"
       cancel_email_for_shop:
-        greeting: "Liebe/r %{name},"
+        greeting: "Hallo %{name},"
         subject: "Stornierung der Bestellung"
         intro: "Ein Kunde hat seine Bestellung #%{number} storniert."
         view_cancelled_order: "Stornierte Bestellung anzeigen"
@@ -4597,6 +4597,7 @@ de_CH:
         authorise: Autorisieren
       customer_account_transactions:
         title: Kundentransaktionen
+        credit_available: "Verfügbares Guthaben: %{credit}"
         description: Beschreibung
         amount: Betrag
         running_balance: Fortlaufender Saldo
@@ -4723,3 +4724,7 @@ de_CH:
     add_tag_rule_modal:
       select_rule_type: "Wählen Sie einen Regelart aus:"
       add_rule: "Regel hinzufügen"
+  credit_payment_method:
+    errors:
+      no_credit_available: Kein Guthaben verfügbar
+      not_enough_credit_available: Nicht genügend Guthaben verfügbar
