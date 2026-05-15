@@ -806,7 +806,35 @@ paths:
                     - "@id": http://test.host/api/dfc/persons/9000/prefs
                       "@type": pim:ConfigurationFile
                     - "@id": http://test.host/api/dfc/persons/9000/webid#me
-                      solid:privateTypeIndex: TBC
+                      solid:privateTypeIndex: http://test.host/api/dfc/persons/9000/private_type_index
+  "/api/dfc/persons/{person_id}/private_type_index":
+    get:
+      summary: Show private preferences
+      parameters:
+      - name: person_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Persons
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/private_type_index
+                      "@type":
+                      - solid:TypeIndex
+                      - solid:ListedDocument
+                    - "@id": http://test.host/api/dfc/persons/9000/private_type_index#reg1
+                      "@type": solid:TypeRegistration
+                      solid:forClass: dfc-b:Organization
+                      solid:instanceContainer: http://test.host/api/dfc/organizations
   "/api/dfc/enterprises/{enterprise_id}/platforms":
     parameters:
     - name: enterprise_id

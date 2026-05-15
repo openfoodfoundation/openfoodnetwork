@@ -17,6 +17,7 @@ DfcProvider::Engine.routes.draw do
   resources :persons, only: [:show] do
     get :webid, to: "webids#user_webid"
     get :prefs
+    get :private_type_index
   end
   resources :supplied_products, only: [:index]
   resources :product_groups, only: [:show]

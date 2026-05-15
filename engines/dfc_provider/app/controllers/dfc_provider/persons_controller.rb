@@ -16,6 +16,7 @@ module DfcProvider
 
       id = person_prefs_url(params[:person_id])
       webid = person_webid_url(params[:person_id])
+      type_index = person_private_type_index_url(params[:person_id])
       prefs = {
         '@graph': [
           {
@@ -24,12 +25,35 @@ module DfcProvider
           },
           {
             '@id': "#{webid}#me",
-            'solid:privateTypeIndex': "TBC"
+            'solid:privateTypeIndex': type_index
           }
         ]
       }
 
       render(json: prefs, content_type: "application/ld+json")
+    end
+
+    def private_type_index
+      # You can only see your own for now.
+      return not_found if current_user.id != params[:person_id].to_i
+
+      id = person_private_type_index_url(params[:person_id])
+      index = {
+        '@graph': [
+          {
+            '@id': id,
+            '@type': ["solid:TypeIndex", "solid:ListedDocument"]
+          },
+          {
+            '@id': "#{id}#reg1",
+            '@type': "solid:TypeRegistration",
+            'solid:forClass': "dfc-b:Organization",
+            'solid:instanceContainer': organizations_url
+          }
+        ]
+      }
+
+      render(json: index, content_type: "application/ld+json")
     end
 
     private
