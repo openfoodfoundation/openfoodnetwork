@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class PdfRenderer
-  def render(html, display_url: default_display_url)
-    display_url ||= default_display_url
-
+  def render(html)
     FerrumPdf.render_pdf(html: html_document(html), display_url:)
   end
 
@@ -26,7 +24,7 @@ class PdfRenderer
     HTML
   end
 
-  def default_display_url
+  def display_url
     options = Rails.application.routes.default_url_options.symbolize_keys
     host = options.fetch(:host)
     protocol = options[:protocol].presence || "http"

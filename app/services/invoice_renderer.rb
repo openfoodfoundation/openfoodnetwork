@@ -11,7 +11,7 @@ class InvoiceRenderer
     renderer.instance_variable_set(:@order, order)
     html = renderer.render_to_string(args(user))
 
-    pdf_renderer.render(html, display_url:)
+    pdf_renderer.render(html)
   end
 
   def args(user = @user)
@@ -31,15 +31,6 @@ class InvoiceRenderer
   private
 
   attr_reader :renderer, :pdf_renderer
-
-  def display_url
-    return unless renderer.respond_to?(:request)
-
-    request = renderer.request
-    request.original_url if request.respond_to?(:original_url)
-  rescue StandardError
-    nil
-  end
 
   def invoice_template
     if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, @user)

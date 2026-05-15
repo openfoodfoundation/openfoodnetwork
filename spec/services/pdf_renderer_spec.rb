@@ -9,7 +9,7 @@ RSpec.describe PdfRenderer do
           display_url: "http://test.host/"
         )
 
-      described_class.new.render("<h1>Invoice</h1>", display_url: "http://test.host/")
+      described_class.new.render("<h1>Invoice</h1>")
     end
 
     it "passes complete HTML documents through unchanged" do
@@ -18,7 +18,7 @@ RSpec.describe PdfRenderer do
       expect(FerrumPdf).to receive(:render_pdf)
         .with(html:, display_url: "http://test.host/")
 
-      described_class.new.render(html, display_url: "http://test.host/")
+      described_class.new.render(html)
     end
   end
 end
