@@ -18,7 +18,7 @@ gem 'activemerchant'
 gem 'angular-rails-templates'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
-gem 'shakapacker', '~> 9.7'
+gem 'shakapacker'
 
 # Indirect dependency but we access it directly in JS specs.
 # It turns out to be hard to upgrade but please do if you can.
