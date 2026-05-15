@@ -31,7 +31,7 @@ Bundler.require(*Rails.groups(assets: %w(development test)))
 module Openfoodnetwork
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     # Your secret key for verifying the integrity of signed cookies.
     # If you change this key, all old signed cookies will become invalid!
