@@ -44,7 +44,7 @@
     "stimulus-autocomplete": "*",
     "stimulus-flatpickr": "*",
     "stimulus_reflex": "3.5.5",
-    "style-loader": "^4.0.0",
+    "style-loader": "*",
     "swc-loader": "*",
     "terser-webpack-plugin": "*",
     "tom-select": "*",
