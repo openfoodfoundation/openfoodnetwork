@@ -13,6 +13,7 @@ SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/config/' # to include engine config
   add_filter '/script'
+  add_filter 'lib/tasks/test_emails/'
 
   formatter SimpleCov::Formatter::SimpleFormatter
 end
