@@ -15,6 +15,7 @@ SimpleCov.configure do
   skip "/bin/"
   skip "/config/" # to also skip engine config
   skip "/script"
+  skip "lib/tasks/test_emails/"
 
   formatter SimpleCov::Formatter::SimpleFormatter
 end
