@@ -343,7 +343,9 @@ module Admin
     def normalized_products_bulk_params
       submitted_products = products_bulk_params[:products] || {}
 
-      submitted_products.each_with_object({}.with_indifferent_access) do |(key, product), normalized|
+      submitted_products.each_with_object({}.with_indifferent_access) do |
+        (key, product), normalized
+      |
         next if product.blank?
 
         product = product.with_indifferent_access
