@@ -1,5 +1,9 @@
 # Docker Scripts
 
+> [!WARNING]
+> **Docker is NOT the recommended way to set up the development environment.**
+> While Docker provides a quick way to get the app running, several test suites (especially system/browser specs) are known to fail in this environment. For a full development experience and reliable test results, please follow the [native installation guide](../GETTING_STARTED.md).
+
 Docker is intended to provide a common virtual environment available to all developers. Please note that it is not commonly used by developers at this time.
 
 ## Limitations

@@ -43,7 +43,7 @@ The following guides will provide OS-specific step-by-step instructions to get t
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
 
-Another way to make it work locally would be using Docker. See the [Docker setup guide](docker/README.md). 
+Another way to get things running quickly is using Docker, but **be aware that it's not the recommended way for full development as some tests (system/browser specs) will fail**. See the [Docker setup guide](docker/README.md).
 
 ### Get it running
 
