@@ -83,7 +83,7 @@ module Spree
         expect(attachment.attached?).to eq true
 
         url = Rails.application.routes.url_helpers.url_for(attachment)
-        expect(url).to match %r|^http://test\.host/rails/active_storage/blobs/redirect/[[:alnum:]-]+/logo-black\.png$|
+        expect(url).to match %r|^http://test\.host/rails/active_storage/blobs/redirect/[[:alnum:]=-]+/logo-black\.png$|
       end
     end
 
@@ -101,7 +101,7 @@ module Spree
 
         expect(subject.attachment).to be_attached
         expect(Rails.application.routes.url_helpers.url_for(subject.attachment)).
-          to match %r"^http://test\.host/rails/active_storage/blobs/redirect/[[:alnum:]-]+/logo-black\.png"
+          to match %r"^http://test\.host/rails/active_storage/blobs/redirect/[[:alnum:]=-]+/logo-black\.png"
       end
     end
   end
