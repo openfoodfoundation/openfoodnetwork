@@ -19,8 +19,9 @@ jobs:
   controllers_and_models:
     runs-on: ubuntu-22.04
     services:
-      postgres:
-        image: postgres:10
+      # Postgres settings shared with all jobs
+      postgres: &postgres
+        image: postgres:14
         ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
@@ -110,18 +111,7 @@ jobs:
   system:
     runs-on: ubuntu-22.04
     services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
+      postgres: *postgres
     strategy:
       fail-fast: false
       matrix:
@@ -210,18 +200,7 @@ jobs:
   engines:
     runs-on: ubuntu-22.04
     services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
+      postgres: *postgres
     strategy:
       fail-fast: false
       matrix:
@@ -301,18 +280,7 @@ jobs:
   test_the_rest:
     runs-on: ubuntu-22.04
     services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
+      postgres: *postgres
     strategy:
       fail-fast: false
       matrix:
@@ -391,18 +359,7 @@ jobs:
   non_knapsack_jest_karma:
     runs-on: ubuntu-22.04
     services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
+      postgres: *postgres
     steps:
       - uses: actions/checkout@v6
 
