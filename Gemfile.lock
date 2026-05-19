@@ -346,9 +346,9 @@ GEM
     flipper-active_record (1.4.2)
       activerecord (>= 4.2, < 9)
       flipper (~> 1.4.2)
-    flipper-ui (1.4.1)
+    flipper-ui (1.4.2)
       erubi (>= 1.0.0, < 2.0.0)
-      flipper (~> 1.4.1)
+      flipper (~> 1.4.2)
       rack (>= 1.4, < 4)
       rack-protection (>= 1.5.3, < 5.0.0)
       rack-session (>= 1.0.2, < 3.0.0)
@@ -1243,7 +1243,7 @@ CHECKSUMS
   ffi (1.17.3) sha256=0e9f39f7bb3934f77ad6feab49662be77e87eedcdeb2a3f5c0234c2938563d4c
   flipper (1.4.2) sha256=dca7d65b5ec660b525b6c599e727219ac4994073c855b41b6656b2d91a9cb304
   flipper-active_record (1.4.2) sha256=ab70aeb78a44d59c690b5538fc269b08d1c2918abb720fe82832ac77fb1dfcd1
-  flipper-ui (1.4.1) sha256=b78e5237d52fdd82fbbcb6bfb04a1d2cab6d5861b1e4d1c3b0746ac3de7e0a99
+  flipper-ui (1.4.2) sha256=d7b2fd886e922ba5e0c8240cbabd27163125b011a6c42e6dba509a1715540dee
   fog-aws (2.0.1) sha256=e3c5fa9cbff08115f5c0bee527f7f0c171604f4980d7ffee33f863b8df5a5303
   fog-core (1.45.0) sha256=e3c225fc8f5e7886e790afbc2cf7f459affb91df02d4af7b4ff28f2ee04c8408
   fog-json (1.2.0) sha256=dd4f5ab362dbc72b687240bba9d2dd841d5dfe888a285797533f85c03ea548fe
