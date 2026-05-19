@@ -17,9 +17,7 @@ module PaymentGateways
     def express
       return redirect_to order_failed_route if @any_out_of_stock == true
 
-      pp_request = provider.build_set_express_checkout(
-        express_checkout_request_details(@order)
-      )
+      pp_request = provider.build_set_express_checkout(express_checkout_request_details(@order))
 
       begin
         pp_response = provider.set_express_checkout(pp_request)
@@ -27,7 +25,9 @@ module PaymentGateways
           # At this point Paypal has *provisionally* accepted that the payment can now be placed,
           # and the user will be redirected to a Paypal payment page. On completion, the user is
           # sent back and the response is handled in the #confirm action in this controller.
-          redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
+          redirect_to(
+            provider.express_checkout_url(pp_response, useraction: 'commit'), allow_other_host: true
+          )
         else
           Rails.logger.error(
             "PaypalController#express: #{pp_response.errors.map(&:long_message).join(' ')}"
