@@ -31,4 +31,61 @@ RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
       end
     end
   end
+
+  path("/api/dfc/persons/{person_id}/prefs") do
+    subject(:ld) {
+      JSON.parse(response.body, object_class: ActiveSupport::HashWithIndifferentAccess)
+    }
+    let(:graph) { ld["@graph"] }
+    let(:user) { create(:oidc_user, id: 9_000) }
+
+    get("Show private preferences") do
+      parameter(name: :person_id, in: :path, type: :string)
+
+      produces("application/ld+json")
+
+      response("200", "successful") do
+        let(:Authorization) { auth_header_token_for(user) }
+        let(:person_id) { user.id }
+
+        run_test! do
+          graph = subject["@graph"]
+
+          expect(graph[0]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/prefs"))
+          expect(graph[0]["@type"]).to(eq("pim:ConfigurationFile"))
+
+          expect(graph[1]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/webid#me"))
+          expect(graph[1]["solid:privateTypeIndex"]).to(eq("http://test.host/api/dfc/persons/9000/private_type_index"))
+        end
+      end
+    end
+  end
+
+  path("/api/dfc/persons/{person_id}/private_type_index") do
+    subject(:ld) {
+      JSON.parse(response.body, object_class: ActiveSupport::HashWithIndifferentAccess)
+    }
+    let(:graph) { ld["@graph"] }
+    let(:user) { create(:oidc_user, id: 9_000) }
+
+    get("Show private preferences") do
+      parameter(name: :person_id, in: :path, type: :string)
+
+      produces("application/ld+json")
+
+      response("200", "successful") do
+        let(:Authorization) { auth_header_token_for(user) }
+        let(:person_id) { user.id }
+
+        run_test! do
+          graph = subject["@graph"]
+
+          expect(graph[0]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/private_type_index"))
+          expect(graph[0]["@type"]).to(eq(["solid:TypeIndex", "solid:ListedDocument"]))
+
+          expect(graph[1]["solid:instanceContainer"]).to(eq("http://test.host/api/dfc/organizations"))
+        end
+      end
+    end
+  end
 end

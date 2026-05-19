@@ -783,6 +783,58 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
+  "/api/dfc/persons/{person_id}/prefs":
+    get:
+      summary: Show private preferences
+      parameters:
+      - name: person_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Persons
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/prefs
+                      "@type": pim:ConfigurationFile
+                    - "@id": http://test.host/api/dfc/persons/9000/webid#me
+                      solid:privateTypeIndex: http://test.host/api/dfc/persons/9000/private_type_index
+  "/api/dfc/persons/{person_id}/private_type_index":
+    get:
+      summary: Show private preferences
+      parameters:
+      - name: person_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Persons
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/private_type_index
+                      "@type":
+                      - solid:TypeIndex
+                      - solid:ListedDocument
+                    - "@id": http://test.host/api/dfc/persons/9000/private_type_index#reg1
+                      "@type": solid:TypeRegistration
+                      solid:forClass: dfc-b:Organization
+                      solid:instanceContainer: http://test.host/api/dfc/organizations
   "/api/dfc/enterprises/{enterprise_id}/platforms":
     parameters:
     - name: enterprise_id
@@ -1190,5 +1242,58 @@ paths:
                 dfc-b:hasPhysicalCharacteristic: []
                 dfc-b:hasNutrientCharacteristic: []
                 dfc-b:hasAllergenCharacteristic: []
+  "/api/dfc/webid":
+    get:
+      summary: Show platform WebID
+      tags:
+      - Webids
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/webid
+                      "@type": foaf:PersonalProfileDocument
+                      foaf:maker: http://test.host/api/dfc/webid#me
+                      foaf:primaryTopic: http://test.host/api/dfc/webid#me
+                    - "@id": http://test.host/api/dfc/webid#me
+                      "@type":
+                      - dfc-t:Platform
+                      - foaf:Agent
+                      foaf:name: Open Food Network
+                      dfc-t:supportedProtocolVersion: 2.0.0
+                      dfc-t:supportedOntologyVersion: 1.16.0
+                      dfc-t:hasIdentityService: https://login.lescommuns.org/auth/realms/data-food-consortium
+  "/api/dfc/persons/{id}/webid":
+    get:
+      summary: Show user WebID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webids
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/9000/webid
+                      "@type": foaf:PersonalProfileDocument
+                      foaf:maker: http://test.host/api/dfc/persons/9000/webid#me
+                      foaf:primaryTopic: http://test.host/api/dfc/persons/9000/webid#me
+                    - "@id": http://test.host/api/dfc/persons/9000/webid#me
+                      "@type": foaf:Agent
+                      pim:preferencesFile: http://test.host/api/dfc/persons/9000/prefs
 servers:
 - url: "/"
