@@ -3,7 +3,8 @@
 RSpec.describe InvoiceRenderer do
   include Spree::PaymentMethodsHelper
 
-  let(:service) { described_class.new }
+  let(:pdf_renderer) { instance_double(PdfRenderer, render: "%PDF invoice") }
+  let(:service) { described_class.new(ApplicationController.new, nil, pdf_renderer) }
   let(:order) do
     order = create(:completed_order_with_fees)
     order.bill_address = order.ship_address
@@ -17,10 +18,11 @@ RSpec.describe InvoiceRenderer do
     it 'uses the invoice2 template' do
       renderer = instance_double(ApplicationController)
       expect(renderer)
-        .to receive(:render_to_string_with_wicked_pdf)
+        .to receive(:render_to_string)
         .with(include(template: 'spree/admin/orders/invoice2'))
+        .and_return("<html>invoice</html>")
 
-      described_class.new(renderer).render_to_string(order)
+      described_class.new(renderer, nil, pdf_renderer).render_to_string(order)
     end
 
     it 'creates a PDF invoice' do
@@ -35,10 +37,11 @@ RSpec.describe InvoiceRenderer do
     it 'uses the invoice template' do
       renderer = instance_double(ApplicationController)
       expect(renderer)
-        .to receive(:render_to_string_with_wicked_pdf)
+        .to receive(:render_to_string)
         .with(include(template: 'spree/admin/orders/invoice'))
+        .and_return("<html>invoice</html>")
 
-      described_class.new(renderer).render_to_string(order)
+      described_class.new(renderer, nil, pdf_renderer).render_to_string(order)
     end
 
     it 'creates a PDF invoice' do
