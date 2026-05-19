@@ -12,6 +12,10 @@ env:
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
+  OFN_REDIS_TEST_URL: "redis://localhost:6379/0"
+  OFN_REDIS_CABLE_URL: "redis://localhost:6379/1"
+  OFN_REDIS_JOBS_URL: "redis://localhost:6379/2"
+
 permissions:
   contents: read
 
@@ -31,6 +35,16 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+      # Redis settings shared with all jobs
+      redis: &redis
+        image: redis # ofn-install uses latest stable version
+        ports: ["6379:6379"]
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -43,11 +57,6 @@ jobs:
         ci_node_index: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -122,6 +131,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -134,11 +144,6 @@ jobs:
         ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -222,6 +227,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -234,11 +240,6 @@ jobs:
         ci_node_index: [0, 1]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -313,6 +314,7 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -325,11 +327,6 @@ jobs:
         ci_node_index: [0, 1, 2]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
