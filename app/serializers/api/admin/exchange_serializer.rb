@@ -17,7 +17,8 @@ module Api
       private
 
       def visible_incoming_variants
-        if object.order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+        if inventory_enabled? &&
+           object.order_cycle.prefers_product_selection_from_coordinator_inventory_only?
           permitted_incoming_variants.visible_for(object.order_cycle.coordinator)
         else
           permitted_incoming_variants
@@ -25,7 +26,7 @@ module Api
       end
 
       def visible_outgoing_variants
-        if object.receiver.prefers_product_selection_from_inventory_only?
+        if inventory_enabled? && object.receiver.prefers_product_selection_from_inventory_only?
           permitted_outgoing_variants.visible_for(object.receiver)
         else
           permitted_outgoing_variants.not_hidden_for(object.receiver)
@@ -54,6 +55,10 @@ module Api
 
       def tags
         preloaded_tag_list.map { |tag| { text: tag } }
+      end
+
+      def inventory_enabled?
+        options[:inventory_enabled]
       end
     end
   end

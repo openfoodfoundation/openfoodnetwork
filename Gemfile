@@ -161,7 +161,6 @@ group :test, :development do
   gem 'debug', '>= 1.0.0'
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
-  gem 'json_spec', '~> 1.1.4'
   gem 'knapsack_pro'
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"

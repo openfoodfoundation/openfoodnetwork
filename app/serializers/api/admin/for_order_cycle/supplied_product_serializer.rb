@@ -16,6 +16,7 @@ module Api
 
         def variants
           variants = if order_cycle.present? &&
+                        inventory_enabled? &&
                         order_cycle.prefers_product_selection_from_coordinator_inventory_only?
                        object.variants.visible_for(order_cycle.coordinator)
                      else
@@ -28,6 +29,10 @@ module Api
 
         def order_cycle
           options[:order_cycle]
+        end
+
+        def inventory_enabled?
+          options[:inventory_enabled]
         end
       end
     end

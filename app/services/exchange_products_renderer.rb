@@ -3,9 +3,10 @@
 require 'open_food_network/order_cycle_permissions'
 
 class ExchangeProductsRenderer
-  def initialize(order_cycle, user)
+  def initialize(order_cycle, user, **options)
     @order_cycle = order_cycle
     @user = user
+    @options = options
   end
 
   def exchange_products(incoming, enterprise)
@@ -25,6 +26,8 @@ class ExchangeProductsRenderer
 
   private
 
+  attr_reader :options
+
   def products_for_incoming_exchange(enterprise)
     supplied_products(enterprise.id)
   end
@@ -37,6 +40,7 @@ class ExchangeProductsRenderer
 
   def filter_visible(relation)
     if @order_cycle.present? &&
+       options[:inventory_enabled] &&
        @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
       relation = relation.visible_for(@order_cycle.coordinator)
     end
@@ -75,7 +79,8 @@ class ExchangeProductsRenderer
   def visible_incoming_variants(incoming_exchange_sender)
     variants_relation = permitted_incoming_variants(incoming_exchange_sender)
 
-    if @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+    if options[:inventory_enabled] &&
+       @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
       variants_relation = variants_relation.visible_for(@order_cycle.coordinator)
     end
 

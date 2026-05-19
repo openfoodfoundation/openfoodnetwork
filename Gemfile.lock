@@ -462,9 +462,6 @@ GEM
       rexml (~> 3.2)
     json-schema (4.1.1)
       addressable (>= 2.8)
-    json_spec (1.1.5)
-      multi_json (~> 1.0)
-      rspec (>= 2.0, < 4.0)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.10.2)
@@ -1052,7 +1049,6 @@ DEPENDENCIES
   jquery-rails (= 4.4.0)
   jquery-ui-rails (~> 4.2)
   json
-  json_spec (~> 1.1.4)
   jsonapi-serializer
   jwt (~> 2.3)
   knapsack_pro
@@ -1286,7 +1282,6 @@ CHECKSUMS
   json-jwt (1.17.0) sha256=6ff99026b4c54281a9431179f76ceb81faa14772d710ef6169785199caadc4cc
   json-ld (3.3.2) sha256=b9531893bf5bdc01db428e96953845a23adb1097125ce918ae0f97c4a6e1ab27
   json-schema (4.1.1) sha256=89a8399745a710c2c7be3ff9564f67a0ae982c82f7590a95ab9cebe374fa2d49
-  json_spec (1.1.5) sha256=7a77b97a92c787e2aa3fbc4a1239afc3342c781151dc98cfb81461b3b7cad10f
   jsonapi-serializer (2.2.0) sha256=f8141ac6f0c1e17e8513df68f8341afe2d7bffc285841d7090bc07f07efb0029
   jwt (2.10.2) sha256=31e1ee46f7359883d5e622446969fe9c118c3da87a0b1dca765ce269c3a0c4f4
   knapsack_pro (10.0.0) sha256=9ab3d071ef3a067e97691f883fbbcd8546ff20da37d394f5a127f82b53dfc611

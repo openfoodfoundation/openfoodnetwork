@@ -32,7 +32,8 @@ module Admin
           redirect_to edit_admin_order_cycle_path(@order_cycle)
         end
         format.json do
-          render_as_json @order_cycle, current_user: spree_current_user
+          render_as_json @order_cycle, current_user: spree_current_user,
+                                       inventory_enabled: inventory_enabled?(@order_cycle)
         end
       end
     end
@@ -41,7 +42,8 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render_as_json @order_cycle, current_user: spree_current_user
+          render_as_json @order_cycle, current_user: spree_current_user,
+                                       inventory_enabled: inventory_enabled?(@order_cycle)
         end
       end
     end
@@ -311,6 +313,11 @@ module Admin
                           error_class: DateTimeChangeError }
                       ), spree_current_user
       )
+    end
+
+    def inventory_enabled?(order_cycle)
+      OpenFoodNetwork::FeatureToggle.enabled?(:inventory, order_cycle.coordinator) &&
+        !OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, order_cycle.coordinator)
     end
   end
 end

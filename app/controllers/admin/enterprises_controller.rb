@@ -128,13 +128,17 @@ module Admin
     end
 
     def for_order_cycle
+      inventory_enabled = helpers.feature?(:inventory, @order_cycle&.coordinator) &&
+                          !helpers.feature?(:variant_tag, @order_cycle&.coordinator)
+
       respond_to do |format|
         format.json do
           render(
             json: @collection,
             each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer,
             order_cycle: @order_cycle,
-            spree_current_user:
+            spree_current_user:,
+            inventory_enabled:
           )
         end
       end

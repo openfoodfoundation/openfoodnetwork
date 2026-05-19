@@ -34,9 +34,9 @@ module Api
 
         def products_scope
           products_relation = object.supplied_products
-          if order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-            products_relation = products_relation.
-              visible_for(order_cycle.coordinator)
+          if inventory_enabled? &&
+             order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+            products_relation = products_relation.visible_for(order_cycle.coordinator)
           end
           products_relation
         end
@@ -47,6 +47,10 @@ module Api
 
         def order_cycle
           options[:order_cycle]
+        end
+
+        def inventory_enabled?
+          options[:inventory_enabled]
         end
       end
     end

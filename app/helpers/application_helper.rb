@@ -23,7 +23,7 @@ module ApplicationHelper
     end
   end
 
-  # Checks weather a feature is enabled for any of the given actors.
+  # Checks whether a feature is enabled for any of the given actors.
   def feature?(feature, *actors)
     OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
   end
