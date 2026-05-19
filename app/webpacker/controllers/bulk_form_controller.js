@@ -209,9 +209,9 @@ export default class BulkFormController extends Controller {
   }
 
   #recordIdentityFields(recordContainer) {
-    return Array.from(recordContainer.querySelectorAll('input[type="hidden"][name$="[id]"]')).filter(
-      (element) => !element.closest("[id^='spree_variant_'], [data-new-record]"),
-    );
+    return Array.from(
+      recordContainer.querySelectorAll('input[type="hidden"][name$="[id]"]'),
+    ).filter((element) => !element.closest("[id^='spree_variant_'], [data-new-record]"));
   }
 
   #variantIdentityFields(variantRow) {
