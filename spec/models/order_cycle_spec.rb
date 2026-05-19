@@ -227,38 +227,55 @@ RSpec.describe OrderCycle do
       expect(oc.products).to match_array [p0, p1, p2]
     end
 
-    context "listing variant distributed by a particular distributor" do
-      context "when default settings are in play" do
-        it "returns an empty list when no distributor is given" do
-          expect(oc.variants_distributed_by(nil)).to eq([])
-        end
+    describe "#variants_distributed_by" do
+      it "returns an empty list when no distributor is given" do
+        expect(oc.variants_distributed_by(nil)).to eq([])
+      end
 
-        it "returns all variants in the outgoing exchange for the distributor provided" do
-          expect(oc.variants_distributed_by(d2)).to include p1.variants.first, p1_v_visible
-          expect(oc.variants_distributed_by(d2)).not_to include p1_v_hidden, p1_v_deleted
-          expect(oc.variants_distributed_by(d1)).to include p2_v
-        end
+      it "returns all variants in the outgoing exchange for the distributor provided" do
+        expect(oc.variants_distributed_by(d2)).to include p1.variants.first, p1_v_visible,
+                                                          p1_v_hidden
+        expect(oc.variants_distributed_by(d2)).not_to include p1_v_deleted
+        expect(oc.variants_distributed_by(d1)).to include p2_v
+      end
 
-        context "with soft-deleted variants" do
-          it "does not consider soft-deleted variants to be currently distributed in the oc" do
-            p2_v.delete
+      context "with soft-deleted variants" do
+        it "does not consider soft-deleted variants to be currently distributed in the oc" do
+          p2_v.delete
 
-            expect(oc.variants_distributed_by(d1)).not_to include p2_v
-          end
+          expect(oc.variants_distributed_by(d1)).not_to include p2_v
         end
       end
 
-      context "when hub prefers product selection from inventory only" do
-        before do
-          allow(d1).to receive(:prefers_product_selection_from_inventory_only?) { true }
+      context "when inventory is enabled", feature: :inventory do
+        context "when default settings are in play" do
+          it "returns all variants in the outgoing exchange for the distributor provided" do
+            expect(oc.variants_distributed_by(d2)).to include p1.variants.first, p1_v_visible
+            expect(oc.variants_distributed_by(d2)).not_to include p1_v_hidden, p1_v_deleted
+            expect(oc.variants_distributed_by(d1)).to include p2_v
+          end
+
+          context "with soft-deleted variants" do
+            it "does not consider soft-deleted variants to be currently distributed in the oc" do
+              p2_v.delete
+
+              expect(oc.variants_distributed_by(d1)).not_to include p2_v
+            end
+          end
         end
 
-        it "returns an empty list when no distributor is given" do
-          expect(oc.variants_distributed_by(nil)).to eq([])
-        end
+        context "when hub prefers product selection from inventory only" do
+          before do
+            allow(d1).to receive(:prefers_product_selection_from_inventory_only?) { true }
+          end
 
-        it "returns only variants in the exchange that are also in the distributor's inventory" do
-          expect(oc.variants_distributed_by(d1)).not_to include p2_v
+          it "returns an empty list when no distributor is given" do
+            expect(oc.variants_distributed_by(nil)).to eq([])
+          end
+
+          it "returns only variants in the exchange that are also in the distributor's inventory" do
+            expect(oc.variants_distributed_by(d1)).not_to include p2_v
+          end
         end
       end
     end

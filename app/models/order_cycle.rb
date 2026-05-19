@@ -201,12 +201,13 @@ class OrderCycle < ApplicationRecord
   def variants_distributed_by(distributor)
     return Spree::Variant.where("1=0") if distributor.blank?
 
-    Spree::Variant.
-      joins(:exchanges).
-      merge(distributor.inventory_variants).
-      merge(Exchange.in_order_cycle(self)).
-      merge(Exchange.outgoing).
-      merge(Exchange.to_enterprise(distributor))
+    query = Spree::Variant.joins(:exchanges)
+
+    query = query.merge(distributor.inventory_variants) if inventory_enabled?(distributor)
+
+    query.merge(Exchange.in_order_cycle(self))
+      .merge(Exchange.outgoing)
+      .merge(Exchange.to_enterprise(distributor))
   end
 
   def products_distributed_by(distributor)
@@ -369,5 +370,10 @@ class OrderCycle < ApplicationRecord
 
     self.processed_at = nil
     self.mails_sent = false
+  end
+
+  def inventory_enabled?(distributor)
+    OpenFoodNetwork::FeatureToggle.enabled?(:inventory, distributor) &&
+      !OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, distributor)
   end
 end
