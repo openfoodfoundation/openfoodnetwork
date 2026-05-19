@@ -112,6 +112,7 @@ export default class BulkFormController extends Controller {
 
   #registerSubmit() {
     this.submitting = true;
+    this.#filterSubmittedFields();
   }
 
   #registerElements(elements) {
@@ -146,6 +147,75 @@ export default class BulkFormController extends Controller {
           Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable)),
         );
     });
+  }
+
+  #filterSubmittedFields() {
+    const recordContainers = this.form.querySelectorAll("[data-record-id]");
+
+    recordContainers.forEach((container) => {
+      const elements = Array.from(container.querySelectorAll("input, select, textarea, button"));
+      const changedElements = elements.filter((element) => this.#isChanged(element));
+
+      elements.forEach((element) => {
+        if (element.type !== "submit") {
+          element.disabled = true;
+        }
+      });
+
+      if (changedElements.length === 0) return;
+
+      this.#enableElementsForSubmit(changedElements);
+      this.#enableRecordIdentityFields(container);
+    });
+  }
+
+  #enableElementsForSubmit(changedElements) {
+    changedElements.forEach((element) => {
+      this.#enableElement(element);
+      this.#enableSiblingHiddenFields(element);
+    });
+  }
+
+  #enableRecordIdentityFields(recordContainer) {
+    const changedVariantRows = new Set(
+      this.recordElements[recordContainer.dataset.recordId]
+        .filter((element) => this.#isChanged(element))
+        .map((element) => element.closest("[id^='spree_variant_'], [data-new-record]"))
+        .filter((container) => container),
+    );
+
+    this.#recordIdentityFields(recordContainer).forEach((field) => this.#enableElement(field));
+
+    changedVariantRows.forEach((variantRow) => {
+      this.#variantIdentityFields(variantRow).forEach((field) => this.#enableElement(field));
+    });
+  }
+
+  #enableSiblingHiddenFields(element) {
+    const fieldContainer = element.closest(".field");
+    const tableCell = element.closest("td");
+    const relatedContainer = fieldContainer || tableCell;
+    if (!relatedContainer) return;
+
+    relatedContainer
+      .querySelectorAll('input[type="hidden"], input[type="checkbox"], select, textarea')
+      .forEach((relatedElement) => this.#enableElement(relatedElement));
+  }
+
+  #enableElement(element) {
+    if (element) {
+      element.disabled = false;
+    }
+  }
+
+  #recordIdentityFields(recordContainer) {
+    return Array.from(
+      recordContainer.querySelectorAll('input[type="hidden"][name$="[id]"]'),
+    ).filter((element) => !element.closest("[id^='spree_variant_'], [data-new-record]"));
+  }
+
+  #variantIdentityFields(variantRow) {
+    return Array.from(variantRow.querySelectorAll('input[type="hidden"][name$="[id]"]'));
   }
 
   // Check if changed, and mark with class if it is.

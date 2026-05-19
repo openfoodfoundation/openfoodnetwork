@@ -320,18 +320,40 @@ module Admin
       #         }
       #       }
       #     }
-      collection_hash = products_bulk_params[:products]
-        .transform_values { |product|
-          # Convert variants_attributes form hash to an array if present
-          product[:variants_attributes] &&= product[:variants_attributes].values
-          product
-        }.with_indifferent_access
+      collection_hash = normalized_products_bulk_params
       Sets::ProductSet.new(collection_attributes: collection_hash)
     end
 
     def products_bulk_params
       params.permit(products: ::PermittedAttributes::Product.attributes)
         .to_h.with_indifferent_access
+    end
+
+    def normalized_products_bulk_params
+      submitted_products = products_bulk_params[:products] || {}
+
+      submitted_products.each_with_object({}.with_indifferent_access) do |
+        (key, product), normalized
+      |
+        next if product.blank?
+
+        product = product.with_indifferent_access
+
+        # Convert variants_attributes form hash to an array if present
+        product[:variants_attributes] = product[:variants_attributes]&.values
+        product[:id] ||= infer_product_id_from_variants(product[:variants_attributes])
+
+        next if product[:id].blank?
+
+        normalized[key] = product
+      end
+    end
+
+    def infer_product_id_from_variants(variants_attributes)
+      variant_ids = Array(variants_attributes).filter_map { |variant| variant[:id].presence }
+      return if variant_ids.empty?
+
+      Spree::Variant.where(id: variant_ids).pick(:product_id)
     end
 
     def clone_error_message(error)
