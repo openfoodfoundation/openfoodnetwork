@@ -163,6 +163,54 @@ RSpec.describe Sets::ProductSet do
         expect(product_set.saved_count).to eq 1
       end
 
+      context "when only variant_unit_scale changes" do
+        let(:variant_attributes) { { variant_unit_scale: 1000 } }
+
+        before do
+          variant.update!(variant_unit: "weight", variant_unit_scale: 1, unit_value: 1)
+        end
+
+        it "converts unit_value to the new scale" do
+          expect {
+            product_set.save
+            variant.reload
+          }.to change { variant.variant_unit_scale }.to(1000)
+            .and change { variant.unit_value }.to(1000)
+        end
+      end
+
+      context "when variant_unit_scale changes and unchanged unit_value is submitted" do
+        let(:variant_attributes) { { variant_unit_scale: 1000, unit_value: 1 } }
+
+        before do
+          variant.update!(variant_unit: "weight", variant_unit_scale: 1, unit_value: 1)
+        end
+
+        it "converts unit_value to the new scale" do
+          expect {
+            product_set.save
+            variant.reload
+          }.to change { variant.variant_unit_scale }.to(1000)
+            .and change { variant.unit_value }.to(1000)
+        end
+      end
+
+      context "when variant_unit_scale and unit_value both change" do
+        let(:variant_attributes) { { variant_unit_scale: 1000, unit_value: 2000 } }
+
+        before do
+          variant.update!(variant_unit: "weight", variant_unit_scale: 1, unit_value: 1)
+        end
+
+        it "keeps submitted unit_value" do
+          expect {
+            product_set.save
+            variant.reload
+          }.to change { variant.variant_unit_scale }.to(1000)
+            .and change { variant.unit_value }.to(2000)
+        end
+      end
+
       shared_examples "nothing saved" do
         it "doesn't update product" do
           expect {
