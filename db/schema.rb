@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_06_155303) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -118,6 +118,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_06_015040) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.boolean "created_manually", default: false
+    t.string "customer_type", limit: 32, default: "individual", null: false
+    t.string "enterprise_name", limit: 128
+    t.string "enterprise_acn", limit: 64
+    t.boolean "enterprise_charges_sales_tax", default: false, null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["created_manually"], name: "index_customers_on_created_manually"
     t.index ["email", "enterprise_id"], name: "index_customers_on_email_and_enterprise_id", unique: true

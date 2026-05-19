@@ -7,5 +7,6 @@ FactoryBot.define do
     code { SecureRandom.base64(150) }
     user
     bill_address { create(:address) }
+    customer_type { "individual" }
   end
 end
