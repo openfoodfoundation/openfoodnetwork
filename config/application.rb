@@ -31,7 +31,18 @@ Bundler.require(*Rails.groups(assets: %w(development test)))
 module Openfoodnetwork
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
+
+    # Your secret key for verifying the integrity of signed cookies.
+    # If you change this key, all old signed cookies will become invalid!
+    # Make sure the secret is at least 30 characters and all random,
+    # no regular words or you'll be exposed to dictionary attacks.
+    #
+    # We don't use Rails Credentials for secret_key_base and we are using the historical
+    # env variable name, so we set it up directly from the env variable.
+    # It will also bypass rails automatically generating a secret_key_base in a temp file for test
+    # and development environment, make sure we have a consistent secret_key_base
+    config.secret_key_base = ENV.fetch("SECRET_TOKEN")
 
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
@@ -55,7 +66,7 @@ module Openfoodnetwork
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    # config.autoload_lib(ignore: %w(assets tasks))
+    # config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
