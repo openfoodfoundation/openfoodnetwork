@@ -59,7 +59,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                in DFC v1 format:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/addresses/40000
@@ -71,7 +71,7 @@ paths:
                     dfc-b:region: Victoria
             application/ld+json; profile="dfc-v2"; charset=utf-8:
               examples:
-                test_example:
+                in DFC v2 format:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/addresses/40000
@@ -103,7 +103,12 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                with date filters:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/affiliate_sales_data
+                    "@type": dfc-b:Person
+                not filtered:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/affiliate_sales_data
@@ -165,7 +170,133 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                as platform user:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: Beautiful
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: AR
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 0
+                with a second enterprise:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: Beautiful
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: AR
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 0
+                with default enterprise id:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: Beautiful
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: AR
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 0
+                with given enterprise id:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -231,7 +362,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                success:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -379,7 +510,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -408,7 +539,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -436,7 +567,146 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                with access to one enterprise:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
+                      dfc-b:email: hello@example.org
+                      dfc-b:websitePage: https://openfoodnetwork.org
+                      dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      dfc-b:logo: http://test.host/rails/active_storage/url/logo.png
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: This is an awesome enterprise
+                      dfc-b:VATnumber: 123 456
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                      ofn:contact_name: Fred Farmer
+                      ofn:logo_url: http://test.host/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://test.host/rails/active_storage/url/promo.png
+                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                      "@type": dfc-b:Person
+                      dfc-b:firstName: Fred
+                      dfc-b:familyName: Farmer
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
+                      dfc-b:region: Victoria
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Round
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: APP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      "@type": dfc-b:SocialMedia
+                      dfc-b:name: facebook
+                      dfc-b:URL: https://facebook.com/user
+                with access to two enterprises:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10001
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40001
+                      dfc-b:name: Fred's Icecream
+                      dfc-b:hasDescription: We use our strawberries to make icecream.
+                      dfc-b:VATnumber: 123 457
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10001#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
+                      dfc-b:email: hello@example.org
+                      dfc-b:websitePage: https://openfoodnetwork.org
+                      dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      dfc-b:logo: http://test.host/rails/active_storage/url/logo.png
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: This is an awesome enterprise
+                      dfc-b:VATnumber: 123 456
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                      ofn:contact_name: Fred Farmer
+                      ofn:logo_url: http://test.host/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://test.host/rails/active_storage/url/promo.png
+                    - "@id": http://test.host/api/dfc/enterprises/10001#mainContact
+                      "@type": dfc-b:Person
+                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                      "@type": dfc-b:Person
+                      dfc-b:firstName: Fred
+                      dfc-b:familyName: Farmer
+                    - "@id": http://test.host/api/dfc/addresses/40001
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                      dfc-b:region: Victoria
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
+                      dfc-b:region: Victoria
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Round
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: APP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      "@type": dfc-b:SocialMedia
+                      dfc-b:name: facebook
+                      dfc-b:URL: https://facebook.com/user
+                as user owning two enterprises:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -531,7 +801,131 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                as platform user:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
+                      dfc-b:email: hello@example.org
+                      dfc-b:websitePage: https://openfoodnetwork.org
+                      dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      dfc-b:logo: http://test.host/rails/active_storage/url/logo.png
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: This is an awesome enterprise
+                      dfc-b:VATnumber: 123 456
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                      ofn:contact_name: Fred Farmer
+                      ofn:logo_url: http://test.host/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://test.host/rails/active_storage/url/promo.png
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
+                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                      "@type": dfc-b:Person
+                      dfc-b:firstName: Fred
+                      dfc-b:familyName: Farmer
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
+                      dfc-b:region: Victoria
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Round
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: APP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      "@type": dfc-b:SocialMedia
+                      dfc-b:name: facebook
+                      dfc-b:URL: https://facebook.com/user
+                without enterprise id:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasPhoneNumber:
+                        "@type": dfc-b:PhoneNumber
+                        dfc-b:phoneNumber: 0404 444 000 200
+                      dfc-b:email: hello@example.org
+                      dfc-b:websitePage: https://openfoodnetwork.org
+                      dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      dfc-b:logo: http://test.host/rails/active_storage/url/logo.png
+                      dfc-b:name: Fred's Farm
+                      dfc-b:hasDescription: This is an awesome enterprise
+                      dfc-b:VATnumber: 123 456
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
+                      ofn:contact_name: Fred Farmer
+                      ofn:logo_url: http://test.host/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://test.host/rails/active_storage/url/promo.png
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
+                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                      "@type": dfc-b:Person
+                      dfc-b:firstName: Fred
+                      dfc-b:familyName: Farmer
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                      dfc-b:latitude: -25.345376
+                      dfc-b:longitude: 131.0312006
+                      dfc-b:region: Victoria
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Round
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: APP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
+                      "@type": dfc-b:SocialMedia
+                      dfc-b:name: facebook
+                      dfc-b:URL: https://facebook.com/user
+                given an enterprise id:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -607,7 +1001,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                with missing parameter:
                   value:
                     success: false
                     message: Missing parameter `enterpriseUrlid`
@@ -616,7 +1010,11 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                as normal user:
+                  value:
+                    success: false
+                    message: You need to authenticate as authorised platform (client_id).
+                as other platform:
                   value:
                     success: false
                     message: Your client_id is not authorised on this platform.
@@ -625,7 +1023,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                when some records fail:
                   value:
                     success: true
                     messages:
@@ -633,6 +1031,9 @@ paths:
                       be blank, Address city can''t be blank, Address zipcode can''t
                       be blank, Name can''t be blank, Address is invalid, Permalink
                       can''t be blank'
+                importing an empty list:
+                  value:
+                    success: true
       requestBody:
         content:
           application/json:
@@ -663,7 +1064,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                success:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
@@ -702,7 +1103,7 @@ paths:
           content:
             application/ld+json; profile="dfc-v2"; charset=utf-8:
               examples:
-                test_example:
+                as user owning an enterprise:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
@@ -740,7 +1141,7 @@ paths:
           content:
             application/ld+json; profile="dfc-v2"; charset=utf-8:
               examples:
-                test_example:
+                as user owning an enterprise:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
@@ -792,7 +1193,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/persons/10000
@@ -816,7 +1217,7 @@ paths:
           content:
             application/ld+json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@graph":
                     - "@id": http://test.host/api/dfc/persons/9000/prefs
@@ -840,7 +1241,7 @@ paths:
           content:
             application/ld+json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@graph":
                     - "@id": http://test.host/api/dfc/persons/9000/private_type_index
@@ -868,7 +1269,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@context": https://cdn.startinblox.com/owl/context-bis.jsonld
                     "@id": http://test.host/api/dfc/enterprises/10000/platforms
@@ -897,7 +1298,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@type": dfc-t:Platform
                     "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
@@ -916,7 +1317,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@type": dfc-t:Platform
                     "@id": https://api.proxy-dev.cqcm.startinblox.com/profile
@@ -982,7 +1383,14 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/product_groups/90000
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: Pesto
+                    dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                as platform user:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/product_groups/90000
@@ -1011,7 +1419,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/enterprises/10000/social_medias/facebook
@@ -1031,7 +1439,43 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                with access to products:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: BP
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Pesto - 1g
+                      dfc-b:description: Basil Pesto
+                      dfc-b:hasType: dfc-pt:processed-vegetable
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
+                    - "@id": http://test.host/api/dfc/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Pesto
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 5
+                as user owning two enterprises:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@graph":
@@ -1087,7 +1531,22 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: Apple (6g)
+                    dfc-b:description: A delicious heritage apple
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasQuantity:
+                      "@type": dfc-b:QuantitativeValue
+                      dfc-b:hasUnit: dfc-m:Gram
+                      dfc-b:value: 6.0
+                    dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/6990
+                    ofn:spree_product_id: 90000
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=6990
+                when supplying spree_product_uri matching the host:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -1099,10 +1558,10 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
-                    dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     ofn:image: http://test.host/rails/active_storage/url/logo-white.png
       requestBody:
         content:
@@ -1147,7 +1606,7 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                test_example:
+                success:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -1269,7 +1728,7 @@ paths:
           content:
             application/ld+json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@graph":
                     - "@id": http://test.host/api/dfc/webid
@@ -1301,7 +1760,7 @@ paths:
           content:
             application/ld+json; charset=utf-8:
               examples:
-                test_example:
+                successful:
                   value:
                     "@graph":
                     - "@id": http://test.host/api/dfc/persons/9000/webid

@@ -92,7 +92,7 @@ RSpec.configure do |config|
       {
         response.headers["Content-Type"] => {
           examples: {
-            test_example: {
+            self.class.description => {
               value: JSON.parse(response.body, symbolize_names: true)
             }
           }
