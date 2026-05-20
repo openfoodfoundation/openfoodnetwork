@@ -53,7 +53,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -85,7 +85,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -147,7 +147,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -213,7 +213,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -361,7 +361,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -390,7 +390,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -418,7 +418,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -513,7 +513,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -589,7 +589,7 @@ paths:
         '400':
           description: bad request
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -598,7 +598,7 @@ paths:
         '401':
           description: unauthorised
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -607,7 +607,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -645,7 +645,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -684,7 +684,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; profile="dfc-v2"; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -722,7 +722,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; profile="dfc-v2"; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -774,7 +774,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -798,7 +798,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -822,7 +822,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -850,7 +850,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -879,7 +879,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -898,7 +898,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -964,7 +964,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -993,7 +993,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -1013,7 +1013,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -1069,7 +1069,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -1129,7 +1129,7 @@ paths:
         '200':
           description: success
           content:
-            application/json:
+            application/json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -1251,7 +1251,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; charset=utf-8:
               examples:
                 test_example:
                   value:
@@ -1283,7 +1283,7 @@ paths:
         '200':
           description: successful
           content:
-            application/json:
+            application/ld+json; charset=utf-8:
               examples:
                 test_example:
                   value:

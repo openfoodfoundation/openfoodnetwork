@@ -90,7 +90,7 @@ RSpec.configure do |config|
     example.metadata[:response][:content] ||= {}
     example.metadata[:response][:content].deep_merge!(
       {
-        "application/json" => {
+        response.headers["Content-Type"] => {
           examples: {
             test_example: {
               value: JSON.parse(response.body, symbolize_names: true)
