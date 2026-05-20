@@ -47,6 +47,10 @@ paths:
         required: true
         schema:
           type: string
+      - name: Accept
+        in: header
+        schema:
+          type: string
       tags:
       - Addresses
       responses:
@@ -58,6 +62,18 @@ paths:
                 test_example:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/addresses/40000
+                    "@type": dfc-b:Address
+                    dfc-b:hasStreet: 10 Lovely Street
+                    dfc-b:hasPostalCode: '20170'
+                    dfc-b:hasCity: Herndon
+                    dfc-b:hasCountry: http://publications.europa.eu/resource/authority/country/AUS
+                    dfc-b:region: Victoria
+            application/ld+json; profile="dfc-v2"; charset=utf-8:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/addresses/40000
                     "@type": dfc-b:Address
                     dfc-b:hasStreet: 10 Lovely Street
