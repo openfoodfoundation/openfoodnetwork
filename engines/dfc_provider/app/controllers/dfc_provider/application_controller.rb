@@ -70,6 +70,10 @@ module DfcProvider
       @current_ability ||= Spree::Ability.new(current_user)
     end
 
+    def profile
+      request.headers["Accept"][/\bprofile="?([^";,\s]+)"?/, 1]
+    end
+
     def import
       DfcIo.import(request.body)
     end
@@ -77,6 +81,19 @@ module DfcProvider
     # Checks weather a feature is enabled for any of the given actors.
     def feature?(feature, *actors)
       OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
+    end
+
+    def render_dfc(*)
+      if profile == "dfc-v2"
+        render_v2(*)
+      else
+        render json: DfcIo.export(*)
+      end
+    end
+
+    def render_v2(*)
+      connector = DataFoodConsortium::Connector::Connector.instance
+      render json: connector.export(*), content_type: 'application/ld+json; profile="dfc-v2"'
     end
   end
 end

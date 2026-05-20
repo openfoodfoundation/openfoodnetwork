@@ -33,10 +33,6 @@ RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
   end
 
   path("/api/dfc/persons/{person_id}/prefs") do
-    subject(:ld) {
-      JSON.parse(response.body, object_class: ActiveSupport::HashWithIndifferentAccess)
-    }
-    let(:graph) { ld["@graph"] }
     let(:user) { create(:oidc_user, id: 9_000) }
 
     get("Show private preferences") do
@@ -49,8 +45,6 @@ RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
         let(:person_id) { user.id }
 
         run_test! do
-          graph = subject["@graph"]
-
           expect(graph[0]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/prefs"))
           expect(graph[0]["@type"]).to(eq("pim:ConfigurationFile"))
 
@@ -62,10 +56,6 @@ RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
   end
 
   path("/api/dfc/persons/{person_id}/private_type_index") do
-    subject(:ld) {
-      JSON.parse(response.body, object_class: ActiveSupport::HashWithIndifferentAccess)
-    }
-    let(:graph) { ld["@graph"] }
     let(:user) { create(:oidc_user, id: 9_000) }
 
     get("Show private preferences") do
@@ -78,8 +68,6 @@ RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
         let(:person_id) { user.id }
 
         run_test! do
-          graph = subject["@graph"]
-
           expect(graph[0]["@id"]).to(eq("http://test.host/api/dfc/persons/9000/private_type_index"))
           expect(graph[0]["@type"]).to(eq(["solid:TypeIndex", "solid:ListedDocument"]))
 
