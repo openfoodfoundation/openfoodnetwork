@@ -40,7 +40,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
-    belongs_to :owner, class_name: 'Enterprise', optional: true, touch: true # todo: required
+    belongs_to :owner, class_name: 'Enterprise', optional: false, touch: true
     belongs_to :hub, class_name: 'Enterprise', optional: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
@@ -111,8 +111,8 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value
     before_validation :convert_variant_weight_to_decimal
+    before_validation :copy_supplier_to_owner, if: :supplier_id_changed?
 
-    before_save :copy_supplier_to_owner, if: :supplier_id_changed?
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
     }
