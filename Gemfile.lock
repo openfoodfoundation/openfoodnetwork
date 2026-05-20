@@ -210,7 +210,7 @@ GEM
     bigdecimal (3.3.1)
     bindata (2.5.1)
     bindex (0.8.1)
-    bootsnap (1.24.3)
+    bootsnap (1.24.4)
       msgpack (~> 1.2)
     bugsnag (6.30.0)
       concurrent-ruby (~> 1.0)
@@ -1178,11 +1178,11 @@ CHECKSUMS
   bigdecimal (3.3.1) sha256=eaa01e228be54c4f9f53bf3cc34fe3d5e845c31963e7fcc5bedb05a4e7d52218
   bindata (2.5.1) sha256=53186a1ec2da943d4cb413583d680644eb810aacbf8902497aac8f191fad9e58
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
-  bootsnap (1.24.3) sha256=f7fa3d20597e2f0aa52b0a1aba83fb54d4f79e9c2e210ec4fa1e8895514dcad8
+  bootsnap (1.24.4) sha256=a4d939fc2cc5242a83d3a7cb4fb97743ac58475afe91e0600479a3df6f117541
   bugsnag (6.30.0) sha256=c496cfceb4a9811ce718b0d2ff66c5a35d158804b79e60c3d2ba12d9084ff19e
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bullet (8.1.1) sha256=3ddecdf3787c64a3f1e5b316256840bc034d60c1070b1b16d3fe5b5932d42b87
-  bundler (4.0.11) sha256=5bcec0fb78302e48d02ee46f10ee6e6942be647ba5b44a6d1ddfda9a240ce785
+  bundler (4.0.12) sha256=7f8b757d28dfb636e7b24fba2344ac6dd13b5b24f4b46d62573d483f211825ac
   cable_ready (5.0.6) sha256=de1c94beab04b15a47c8794507a0b5d0ce9c0f25edb1b60a7542adc5413ea894
   cancancan (1.15.0) sha256=05f540c62143fde51f7ceaba8584f8dc0e34c93e43ab7a6c1a832b4553216b16
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
