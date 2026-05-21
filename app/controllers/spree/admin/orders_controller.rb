@@ -112,7 +112,13 @@ module Spree
                    end
         end
 
-        render_with_wicked_pdf InvoiceRenderer.new.args(@order, spree_current_user)
+        renderer = InvoiceRenderer.new
+        send_data(
+          renderer.render_to_string(@order, spree_current_user),
+          filename: renderer.filename(@order),
+          type: "application/pdf",
+          disposition: "inline"
+        )
       end
 
       def bulk_credit

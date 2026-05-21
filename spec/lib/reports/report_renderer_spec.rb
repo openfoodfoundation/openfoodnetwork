@@ -35,6 +35,15 @@ RSpec.describe Reporting::ReportRenderer do
     end
   end
 
+  describe "#to_pdf" do
+    it "renders the report as a real PDF" do
+      result = subject.to_pdf
+
+      # Verify result is a valid PDF
+      expect(result).to start_with("%PDF")
+    end
+  end
+
   # metadata headers
 
   describe '#metadata_headers' do

@@ -84,7 +84,7 @@ module Reporting
 
     def to_pdf
       html = to_html(layout: "pdf")
-      WickedPdf.new.pdf_from_string(html)
+      PdfRenderer.new.render(html)
     end
 
     private
