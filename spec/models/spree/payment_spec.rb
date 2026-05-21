@@ -142,6 +142,15 @@ RSpec.describe Spree::Payment do
           expect(payment.state).to eq('invalid')
         end
 
+        context "no payment_method" do
+          let(:payment_method) { nil }
+
+          it "should invalidate if payment method isn't set" do
+            expect(payment).not_to receive(:purchase!)
+            expect { payment.process! }.not_to change { payment.state }
+          end
+        end
+
         context "the payment is already authorized" do
           before do
             allow(payment).to receive(:response_code) { "pi_123" }

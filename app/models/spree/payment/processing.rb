@@ -4,7 +4,7 @@ module Spree
   class Payment < ApplicationRecord
     module Processing
       def process!
-        return internal_purchase! if payment_method.internal?
+        return internal_purchase! if payment_method&.internal?
 
         return unless validate!
 
