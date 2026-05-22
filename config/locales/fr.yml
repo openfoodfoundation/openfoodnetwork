@@ -830,7 +830,7 @@ fr:
         confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
         guest_label: "Commande en mode invité"
-        credit_owed: "Crédit dû"
+        credit_owed: "Avoir:"
         balance_due: "Solde dû"
         id: Id
       destroy:
@@ -3009,7 +3009,7 @@ fr:
   shipping_state: "Statut de la livraison"
   value: "Quantité"
   balance_due: "Montant dû"
-  credit: "Créditer"
+  credit: "Avoir:"
   Paid: "Payé"
   Ready: "Prêt"
   not_visible: invisible
@@ -3697,7 +3697,7 @@ fr:
           balance_due: "solde dû"
           completed: "effectué"
           checkout: "solde dû"
-          credit_owed: "crédit acheteur"
+          credit_owed: "avoir"
           failed: "échec"
           paid: "payé"
           pending: "en attente"
@@ -4055,7 +4055,7 @@ fr:
   adjustments: "Ajustements"
   payments: "Paiements"
   return_authorizations: "Autorisations de retours"
-  credit_owed: "Crédit dû"
+  credit_owed: "Avoir :"
   new_adjustment: "Nouvel ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
@@ -4104,7 +4104,7 @@ fr:
     card_number: "Numéro de la carte"
     category: "Catégorie"
     created_successfully: "Créé avec succès"
-    credit: "Créditer"
+    credit: "Avoir :"
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
@@ -4814,7 +4814,7 @@ fr:
       balance_due: solde dû
       completed: effectué
       checkout: solde dû
-      credit_owed: crédit acheteur
+      credit_owed: avoir.
       failed: échec
       paid: payé
       pending: en attente
