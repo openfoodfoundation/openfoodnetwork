@@ -22,7 +22,7 @@ module Spree
     self.used_translations ||= []
     [*args.first].each do |translation_key|
       key = ([*options[:scope]] << translation_key).join('.')
-      self.used_translations << key
+      used_translations << key
     end
     normal_t(*original_args)
   end
