@@ -99,4 +99,35 @@ RSpec.describe InjectionHelper do
     expect(injected_cards).to match "1234"
     expect(injected_cards).not_to match "4321"
   end
+
+  describe "#inject_feature_flag" do
+    subject(:feature_flag) { helper.inject_feature_flag }
+
+    let(:user) { create(:user) }
+
+    it "injects the produt grid feature flag" do
+      allow(helper).to receive(:spree_current_user).and_return user
+
+      expect(feature_flag).to match "productGridViewFeature"
+      expect(feature_flag).to match '"enabled":false'
+    end
+
+    context "with no user" do
+      it "injects a disabled product grid feature flag" do
+        allow(helper).to receive(:spree_current_user).and_return nil
+
+        expect(feature_flag).to match "productGridViewFeature"
+        expect(feature_flag).to match '"enabled":false'
+      end
+    end
+
+    context "with product grid feature enabled", feature: :product_grid_view do
+      it "injects an enabled product grid feature flag" do
+        allow(helper).to receive(:spree_current_user).and_return user
+
+        expect(feature_flag).to match "productGridViewFeature"
+        expect(feature_flag).to match '"enabled":true'
+      end
+    end
+  end
 end
