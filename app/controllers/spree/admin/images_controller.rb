@@ -81,7 +81,7 @@ module Spree
       end
 
       def find_resource
-        parent.image
+        parent.images.find(params[:id])
       end
 
       def build_resource

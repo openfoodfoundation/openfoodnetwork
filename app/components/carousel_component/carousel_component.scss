@@ -1,0 +1,83 @@
+%ofn-carousel-container {
+  position: relative;
+}
+
+%ofn-carousel-image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+%ofn-carousel-caption {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.15);
+  color: $white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+%ofn-carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: $white;
+  cursor: pointer;
+}
+
+%ofn-carousel-button-prev {
+  left: 0.5rem;
+}
+
+%ofn-carousel-button-next {
+  right: 0.5rem;
+}
+
+%ofn-carousel-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.5rem;
+  z-index: 2;
+  text-align: center;
+}
+
+.ofn-carousel {
+  @extend %ofn-carousel-container;
+
+  .swiper-slide {
+    position: relative;
+  }
+
+  .ofn-carousel__image {
+    @extend %ofn-carousel-image;
+  }
+
+  .ofn-carousel__caption {
+    @extend %ofn-carousel-caption;
+  }
+
+  .ofn-carousel__button {
+    @extend %ofn-carousel-button;
+  }
+
+  .ofn-carousel__button--prev {
+    @extend %ofn-carousel-button-prev;
+  }
+
+  .ofn-carousel__button--next {
+    @extend %ofn-carousel-button-next;
+  }
+
+  .ofn-carousel__pagination {
+    @extend %ofn-carousel-pagination;
+  }
+}

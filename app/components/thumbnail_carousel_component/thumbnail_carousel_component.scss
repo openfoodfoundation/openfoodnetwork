@@ -1,0 +1,70 @@
+.ofn-thumbnail-carousel {
+  @extend %ofn-carousel-container;
+  overflow: hidden;
+
+  .swiper-wrapper {
+    display: flex;
+  }
+
+  .swiper-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .ofn-thumbnail-carousel__image {
+    @extend %ofn-carousel-image;
+    min-height: 260px;
+    max-height: 380px;
+    object-fit: contain;
+    background: #f3f3f3;
+  }
+
+  .ofn-thumbnail-carousel__caption {
+    @extend %ofn-carousel-caption;
+    z-index: 2;
+  }
+
+  .ofn-thumbnail-carousel__button {
+    @extend %ofn-carousel-button;
+  }
+
+  .ofn-thumbnail-carousel__button--prev {
+    @extend %ofn-carousel-button-prev;
+  }
+
+  .ofn-thumbnail-carousel__button--next {
+    @extend %ofn-carousel-button-next;
+  }
+
+  .ofn-thumbnail-carousel__pagination {
+    @extend %ofn-carousel-pagination;
+  }
+
+  .ofn-thumbnail-carousel__thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .ofn-thumbnail-carousel__thumb {
+    border: 2px solid transparent;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    flex: 0 0 64px;
+
+    &.is-active {
+      border-color: #0096ad;
+    }
+  }
+
+  .ofn-thumbnail-carousel__thumb-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+  }
+}
