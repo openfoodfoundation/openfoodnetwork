@@ -6,13 +6,13 @@
 
     .field-block.alpha.four.columns
       .date-range-filter.field
-        = label_tag nil, t(:date_range)
+        = label_tag "orders_date_range", t(:date_range)
         .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range" } }
-          = text_field_tag nil, nil, class: "datepicker", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
+          = text_field_tag nil, nil, id: "orders_date_range", class: "datepicker", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
           = text_field_tag "q[completed_at_gteq]", nil, "ng-model": "q.completed_at_gteq", data: { "flatpickr-target": "start" }, style: "display: none"
           = text_field_tag "q[completed_at_lteq]", nil, "ng-model": "q.completed_at_lteq", data: { "flatpickr-target": "end" }, style: "display: none"
       .field
-        = label_tag nil, t(:status)
+        = label_tag "q_state_eq", t(:status)
         = select_tag("q[state_eq]",
             options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
             { include_blank: true, class: "primary", "data-controller": "tom-select" })
@@ -36,17 +36,17 @@
           = check_box_tag "q[completed_at_not_null]", 1, true
           = t(:show_only_complete_orders)
       .field
-        = label_tag nil, t(:shipping_method)
+        = label_tag "shipping_method_id", t(:shipping_method)
         = select_tag(:shipping_method_id,
           options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).map {|s| [s.name, s.id]}),
           { include_blank: true, class: "primary", "data-controller": "tom-select" })
     .field-block.alpha.eight.columns
-      = label_tag nil, t(:distributors)
+      = label_tag "q_distributor_id_in", t(:distributors)
       = select_tag("q[distributor_id_in]",
           options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
           { class: "fullwidth", multiple: true, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }})
     .field-block.omega.eight.columns
-      = label_tag nil, t(:order_cycles)
+      = label_tag "q_order_cycle_id_in", t(:order_cycles)
       = select_tag("q[order_cycle_id_in]",
         options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
         { class: "fullwidth", multiple: true, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }})

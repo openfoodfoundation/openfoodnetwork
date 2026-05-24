@@ -8,10 +8,10 @@
 - end_date = datepicker_time(query[end_field].presence || Time.zone.tomorrow.beginning_of_day)
 
 .row.date-range-filter
-  .alpha.two.columns= label_tag nil, t(:date_range)
+  .alpha.two.columns= label_tag "report_date_range_#{field}", t(:date_range)
   .omega.fourteen.columns
     .field-block.omega.four.columns
       .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-enable-time-value": true , "flatpickr-default-hour": 0, "flatpickr-default-date": [start_date, end_date] } }
-        = text_field_tag nil, nil, class: "datepicker fullwidth", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
+        = text_field_tag nil, nil, id: "report_date_range_#{field}", class: "datepicker fullwidth", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
         = text_field_tag "q[#{start_field}]", nil, data: { "flatpickr-target": "start" }, style: "display: none", value: start_date
         = text_field_tag "q[#{end_field}]", nil, data: { "flatpickr-target": "end" }, style: "display: none", value: end_date

@@ -8,18 +8,18 @@
   .field.align-center
     = hidden_field_tag 'preferences[enable_invoices?]', '0'
     = check_box_tag 'preferences[enable_invoices?]', '1',  Spree::Config[:enable_invoices?]
-    = label_tag nil, t('.enable_invoices?')
+    = label_tag 'preferences_enable_invoices_', t('.enable_invoices?')
 
   - if ! OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
     .field.align-center
       = hidden_field_tag 'preferences[invoice_style2?]', '0'
       = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
-      = label_tag nil, t('.invoice_style2?')
+      = label_tag 'preferences_invoice_style2_', t('.invoice_style2?')
 
   .field.align-center
     = hidden_field_tag 'preferences[enterprise_number_required_on_invoices?]', '0'
     = check_box_tag 'preferences[enterprise_number_required_on_invoices?]', '1',  Spree::Config[:enterprise_number_required_on_invoices?]
-    = label_tag nil, t('.enterprise_number_required_on_invoices?')
+    = label_tag 'preferences_enterprise_number_required_on_invoices_', t('.enterprise_number_required_on_invoices?')
 
   .form-buttons
     = button t(:update), 'icon-refresh'
