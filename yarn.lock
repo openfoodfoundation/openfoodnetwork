@@ -1588,6 +1588,13 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
+"@stimulus-components/carousel@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@stimulus-components/carousel/-/carousel-6.0.0.tgz#8ee0c5b78da38322c21133cbd580c0412eedca13"
+  integrity sha512-Jj7lwJI9B13+Wyt6Q27G5b45w5wyjVC79RB6eIuWt9ZYMRbjPWsV2kDofpiM1wUZi7h1+xk+vAZorPPnvGd4dA==
+  dependencies:
+    swiper "^11.0.6"
+
 "@stimulus-components/rails-nested-form@*":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@stimulus-components/rails-nested-form/-/rails-nested-form-5.0.0.tgz#b443ad8ba5220328cfd704ca956ebf95ab8c4848"
@@ -6675,6 +6682,11 @@ swc-loader@*:
   integrity sha512-nwYWw3Fh9ame3Rtm7StS9SBLpHRRnYcK7bnpF3UKZmesAK0gw2/ADvlURFAINmPvKtDLzp+GBiP9yLoEjg6S9w==
   dependencies:
     "@swc/counter" "^0.1.3"
+
+swiper@^11.0.6:
+  version "11.2.10"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.2.10.tgz#ed0b17286b56f7fe8d4b46ed61e6e0bd8daaccad"
+  integrity sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==
 
 symbol-tree@^3.2.4:
   version "3.2.4"

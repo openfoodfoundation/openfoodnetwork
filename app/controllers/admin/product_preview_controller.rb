@@ -2,6 +2,8 @@
 
 module Admin
   class ProductPreviewController < Spree::Admin::BaseController
+    helper Admin::ProductsHelper
+
     def show
       @product = Spree::Product.find(params[:id])
       authorize! :show, @product

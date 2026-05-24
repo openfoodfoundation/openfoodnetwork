@@ -173,4 +173,71 @@
   .columns {
     margin-left: 0;
   }
+
+  .product-img {
+    .ofn-thumbnail-carousel {
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+      }
+
+      .ofn-thumbnail-carousel__image {
+        max-height: 360px;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      button.ofn-thumbnail-carousel__button {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        width: 2rem;
+        height: 2rem;
+        line-height: 1;
+        border-radius: 9999px;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+        color: $white;
+      }
+
+      button.ofn-thumbnail-carousel__button i.fa {
+        font-style: normal;
+        line-height: 1;
+        width: 1em;
+        text-align: center;
+      }
+
+      button.ofn-thumbnail-carousel__button--prev {
+        left: 0.75rem;
+      }
+
+      button.ofn-thumbnail-carousel__button--next {
+        right: 0.75rem;
+      }
+
+      .ofn-thumbnail-carousel__thumbs {
+        justify-content: center;
+      }
+
+      button.ofn-thumbnail-carousel__thumb {
+        margin: 0;
+        padding: 0;
+        width: 64px;
+        height: 64px;
+        border: 2px solid transparent;
+        background: transparent;
+        overflow: hidden;
+
+        &.is-active {
+          border-color: #0096ad;
+        }
+      }
+    }
+  }
 }
