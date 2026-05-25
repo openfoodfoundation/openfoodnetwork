@@ -596,20 +596,20 @@ RSpec.describe Spree::Variant do
     end
 
     describe ".with_properties" do
-      let!(:variant_without_wanted_property_on_supplier) {
-        create(:variant, supplier: supplier_without_wanted_property)
+      let!(:variant_from_ipm_supplier) {
+        create(:variant, supplier: ipm_supplier)
       }
-      let!(:variant_with_wanted_property_on_supplier) {
-        create(:variant, supplier: supplier_with_wanted_property)
+      let!(:variant_from_organic_supplier) {
+        create(:variant, supplier: organic_supplier)
       }
-      let(:supplier_with_wanted_property) {
-        create(:supplier_enterprise, properties: [wanted_property])
+      let(:organic_supplier) {
+        create(:supplier_enterprise, properties: [organic])
       }
-      let(:supplier_without_wanted_property) {
-        create(:supplier_enterprise, properties: [unwanted_property])
+      let(:ipm_supplier) {
+        create(:supplier_enterprise, properties: [ipm])
       }
-      let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
-      let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
+      let(:organic) { create(:property, presentation: 'Certified Organic') }
+      let(:ipm) { create(:property, presentation: 'Integrated Pest Management') }
 
       it "returns no products without a property id" do
         expect(Spree::Variant.with_properties([])).to eq []
@@ -617,8 +617,8 @@ RSpec.describe Spree::Variant do
 
       it "returns only variants with the wanted property set on supplier" do
         expect(
-          Spree::Variant.with_properties([wanted_property.id])
-        ).to match_array [variant_with_wanted_property_on_supplier]
+          Spree::Variant.with_properties([organic.id])
+        ).to match_array [variant_from_organic_supplier]
       end
     end
   end
