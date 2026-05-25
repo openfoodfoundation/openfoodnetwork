@@ -252,10 +252,12 @@ FactoryBot.define do
       create(:line_item, order:)
       create(:line_item, order:, product: evaluator.product)
 
-      create(:payment, order:,
-                       amount: order.total,
-                       payment_method: evaluator.payment_method,
-                       state: 'checkout')
+      if order.payments.empty?
+        create(:payment, order:,
+                         amount: order.total,
+                         payment_method: evaluator.payment_method,
+                         state: 'checkout')
+      end
 
       create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee,
                                                    distributors: [order.distributor],
