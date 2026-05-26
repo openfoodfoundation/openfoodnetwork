@@ -1,3 +1,8 @@
 = turbo_frame_tag "shop-products" do
-  TODO Render products grid for order cycle 
-  = @order_cycle_id
+  .products-container
+    - @products.each do |product|
+      .product-item
+        - image = product.image&.url(:small) || Spree::Image.default_image_url(:small)
+        %p
+          = image_tag(image)
+          = product.name
