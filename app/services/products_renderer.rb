@@ -27,10 +27,6 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
-  private
-
-  attr_reader :order_cycle, :distributor, :customer, :args, :options
-
   def products
     return unless order_cycle
 
@@ -52,6 +48,10 @@ class ProductsRenderer
       paginated_products
     end
   end
+
+  private
+
+  attr_reader :order_cycle, :distributor, :customer, :args, :options
 
   def product_scoper
     @product_scoper ||= OpenFoodNetwork::ScopeProductToHub.new(distributor)
