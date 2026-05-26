@@ -33,7 +33,7 @@
   .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Show a composite field for unit_value and unit_description
-      = f.hidden_field :unit_value
+      = f.text_field :unit_value, style: "display:none"
       = f.hidden_field :unit_description
       = f.text_field :unit_value_with_description,
           value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true

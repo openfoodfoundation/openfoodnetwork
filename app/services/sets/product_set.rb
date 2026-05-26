@@ -111,11 +111,11 @@ module Sets
         }
 
         variant.assign_attributes(variant_attributes.except(:id))
-        normalize_unit_value_for_scale_change(
-          variant,
-          variant_attributes,
-          previous_state
-        )
+        # normalize_unit_value_for_scale_change(
+        #   variant,
+        #   variant_attributes,
+        #   previous_state
+        # )
         variant.save if variant.changed?
 
         ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_enterprise_id?
