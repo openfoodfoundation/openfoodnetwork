@@ -240,6 +240,7 @@ FactoryBot.define do
       payment_fee { 5 }
       payment_calculator { build(:calculator_per_item, preferred_amount: payment_fee) }
       payment_method { build(:payment_method, calculator: payment_calculator) }
+      product { create(:simple_product) }
       shipping_fee { 3 }
       shipping_tax_category { nil }
     end
@@ -249,13 +250,14 @@ FactoryBot.define do
 
     after(:create) do |order, evaluator|
       create(:line_item, order:)
-      product = create(:simple_product)
-      create(:line_item, order:, product:)
+      create(:line_item, order:, product: evaluator.product)
 
-      create(:payment, order:,
-                       amount: order.total,
-                       payment_method: evaluator.payment_method,
-                       state: 'checkout')
+      if order.payments.empty?
+        create(:payment, order:,
+                         amount: order.total,
+                         payment_method: evaluator.payment_method,
+                         state: 'checkout')
+      end
 
       create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee,
                                                    distributors: [order.distributor],

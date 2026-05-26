@@ -7,9 +7,10 @@ RSpec.describe "Admin -> Order -> Payments" do
   include TableHelper
 
   let(:distributor) { build(:distributor_enterprise) }
-  let(:order) { create(:completed_order_with_fees, distributor:, payments: [payment]) }
+  let(:order) { create(:completed_order_with_fees, distributor:, payments: [payment]) } # total: $26
   let(:payment) {
-    build(:payment, :completed, payment_method: taler, source: taler, response_code: "taler-id-1")
+    build(:payment, :completed, payment_method: taler, source: taler, response_code: "taler-id-1",
+                                amount: 45.75) # overpaid $19.75
   }
   let(:taler) {
     Spree::PaymentMethod::Taler.new(
@@ -68,7 +69,10 @@ RSpec.describe "Admin -> Order -> Payments" do
 
     visit spree.admin_order_payments_path(order.number)
 
+    expect(page).to have_content "CREDIT OWED : $-19.75"
+
     within row_containing("Taler") do
+      expect(page).to have_text "$45.75"
       expect(page).to have_text "COMPLETED"
       expect(page).to have_link "Credit"
 
@@ -79,7 +83,8 @@ RSpec.describe "Admin -> Order -> Payments" do
     end
 
     # Our payment system creates a new payment to show the credit.
-    within row_containing("$-9.75") do
+    within row_containing("$-19.75") do
+      expect(page).to have_text "COMPLETED"
       expect(page).not_to have_link "Void"
     end
   end
