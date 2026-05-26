@@ -9,7 +9,7 @@ module DfcProvider
       return not_found unless authorized(address)
 
       dfc_address = AddressBuilder.address(address)
-      render json: DfcIo.export(dfc_address)
+      render_dfc(dfc_address)
     end
 
     private
