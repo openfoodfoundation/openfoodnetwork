@@ -20,8 +20,8 @@ module Spree
 
     acts_as_taggable
 
-    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
-    searchable_associations :product, :default_price, :primary_taxon, :supplier, :tags
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :enterprise_id
+    searchable_associations :product, :default_price, :primary_taxon, :enterprise, :tags
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -30,7 +30,7 @@ module Spree
                        meta_keywords
                        variants_display_as
                        variants_display_name
-                       variants_supplier_name).join('_or_')}_cont".freeze
+                       variants_enterprise_name).join('_or_')}_cont".freeze
 
     belongs_to :product, -> {
                            with_deleted
