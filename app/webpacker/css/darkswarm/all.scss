@@ -1,3 +1,6 @@
+// @import is deprecated: https://sass-lang.com/documentation/breaking-changes/import/,
+// moving to using @use rules. @use rule must be written before any other rules.
+@use 'product-grid';
 
 @import 'assets/stylesheets/autocomplete';
 @import 'assets/stylesheets/leaflet';
