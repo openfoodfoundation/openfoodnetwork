@@ -53,6 +53,16 @@
     inset-inline-start: calc(var(--line-offset) * -1);
   }
 
+  // override usual link colors
+  a {
+    color: black;
+
+    &:hover {
+      text-decoration: underline;
+      color: inherit;
+    }
+  }
+
   p {
     padding: $padding-tbl-cell;
     font-weight: bold;
