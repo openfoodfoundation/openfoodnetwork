@@ -1,7 +1,18 @@
-// product grid view layout
 @use "modern-variables" as *;
 @use "branding" as b;
+@use "shop_partials/spinner";
 
+.loading {
+  .spinner-summary {
+    @include spinner.summary;
+  }
+
+  .spinner {
+    @include spinner.product-spinner;
+  }
+}
+
+// product grid view layout
 .products-container {
    // Locally scoped variables
   --gap: 2px;
@@ -66,4 +77,9 @@
     border-radius: $radius-image; // 8px
     margin-bottom: $padding-tbl-cell;
   }
+}
+
+// There is an hidden class in layout.css but it's not available when rendering the product grid template
+.product-hidden {
+  display: none;
 }

@@ -1,5 +1,8 @@
 = turbo_frame_tag "shop-products" do
-  .products-container
+  .loading.product-hidden{ "data-product-grid-view-target": "loading" }
+    = render partial: "shop/products/product_spinner"
+
+  .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       .product-item
         %a{ href:"#", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "product-modal-#{product.id}" }
