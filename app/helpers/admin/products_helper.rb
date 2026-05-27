@@ -40,11 +40,11 @@ module Admin
 
       return [default_carousel_image(size, product)] if images.empty?
 
-      images.map do |image|
+      images.map.with_index do |image, index|
         {
           url: image.url(size),
           alt: product_image_alt_text(image, product),
-          caption: image.alt.presence
+          caption: "#{product.name} - #{index + 1}"
         }
       end
     end

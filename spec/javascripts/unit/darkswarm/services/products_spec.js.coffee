@@ -121,6 +121,19 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Products.products[0].largeImage).toEqual("foo.png")
 
+  it "builds carouselImages from images", ->
+    productWithImage.images = [
+      { large_url: 'foo-1.png', small_url: 'foo-1-small.png', alt: 'first' },
+      { large_url: 'foo-2.png', small_url: 'foo-2-small.png', alt: 'second' }
+    ]
+
+    $httpBackend.expectGET(endpoint).respond([productWithImage])
+    $httpBackend.flush()
+
+    expect(Products.products[0].carouselImages.length).toEqual(2)
+    expect(Products.products[0].carouselImages[0].url).toEqual('foo-1.png')
+    expect(Products.products[0].carouselImages[1].url).toEqual('foo-2.png')
+
   describe "determining the price to display for a product", ->
     it "displays the product price when the product does not have variants", ->
       $httpBackend.expectGET(endpoint).respond([product])

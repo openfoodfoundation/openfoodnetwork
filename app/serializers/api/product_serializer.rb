@@ -8,6 +8,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
+  has_many :images, serializer: Api::ImageSerializer
 
   has_one :image, serializer: Api::ImageSerializer
 
