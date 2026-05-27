@@ -2,7 +2,13 @@
   .products-container
     - @products.each do |product|
       .product-item
-        - image = product.image&.url(:small) || Spree::Image.default_image_url(:small)
-        %p
-          = image_tag(image)
-          = product.name
+        %a{ href:"#", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "product-modal-#{product.id}" }
+          %p
+            - if product.image
+              = image_tag(product.image.url(:small))
+            - else
+              = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
+            = product.name
+
+        = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
+          = render partial: "shared/product/product_details", locals: { product: }
