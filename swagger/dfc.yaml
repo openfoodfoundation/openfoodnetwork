@@ -1159,6 +1159,7 @@ paths:
                       dfc-b:hasDescription: This is an awesome enterprise
                       dfc-b:VATnumber: 123 456
                       dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
+                      dfc-b:isCertifiedBy: "#certification-30000"
                     - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
                       "@type": dfc-b:Person
                       dfc-b:firstName: Fred
@@ -1176,6 +1177,9 @@ paths:
                       "@type": dfc-b:SocialMedia
                       dfc-b:name: facebook
                       dfc-b:URL: https://facebook.com/user
+                    - "@id": "#certification-30000"
+                      "@type": dfc-b:Certfication
+                      dfc-b:name: Organic
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
