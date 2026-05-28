@@ -16,8 +16,7 @@
         - product.properties_including_inherited.each do |property|
           %li
             - if property[:value].present?
-              - #TODO review tooltip
-              = render AdminTooltipComponent.new(text: property[:value], link_text: property[:name], placement: "bottom")
+              = render AdminTooltipComponent.new(text: property[:value], link_text: property[:name], placement: "bottom-start")
             - else
               %a
                 %span

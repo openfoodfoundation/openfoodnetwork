@@ -1,6 +1,7 @@
 @use "modern-variables" as *;
 @use "branding" as b;
 @use "shop_partials/spinner";
+@use "foundation-sites/scss/foundation/components/tooltips" as f-tooltips;
 
 .loading {
   .spinner-summary {
@@ -82,4 +83,13 @@
 // There is an hidden class in layout.css but it's not available when rendering the product grid template
 .product-hidden {
   display: none;
+}
+
+// The tooltip component reuses the foundation tooltip styling but it doesn't provide styling for the arrow
+.arrow {
+  background-color: f-tooltips.$oil;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
 }
