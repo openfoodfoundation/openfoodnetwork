@@ -13,6 +13,7 @@ describe 'Products service', ->
   properties = null
   taxons = null
   endpoint = "/api/v0/order_cycles/1/products.json?distributor=1"
+  productGridViewFeature = null
 
   beforeEach ->
     product =
@@ -45,6 +46,8 @@ describe 'Products service', ->
     OrderCycle =
       order_cycle:
         order_cycle_id: 1
+    productGridViewFeature =
+      { enabled: false}
 
     module 'Darkswarm'
     module ($provide)->
@@ -55,6 +58,7 @@ describe 'Products service', ->
       $provide.value "properties", properties
       $provide.value "OrderCycle", OrderCycle
       $provide.value "railsFlash", null
+      $provide.value "productGridViewFeature", productGridViewFeature
       null
 
     inject ($injector, _$httpBackend_, _RailsFlashLoader_)->
