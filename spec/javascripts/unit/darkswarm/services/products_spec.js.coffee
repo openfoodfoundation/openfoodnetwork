@@ -3,7 +3,6 @@ describe 'Products service', ->
   Products = null
   OrderCycle = {}
   Shopfront = null
-  RailsFlashLoader = null
   Variants = null
   Cart = null
   shopfront = null
@@ -13,7 +12,6 @@ describe 'Products service', ->
   productWithImage = null
   properties = null
   taxons = null
-  GmapsGeo = {}
   endpoint = "/api/v0/order_cycles/1/products.json?distributor=1"
 
   beforeEach ->
@@ -47,8 +45,6 @@ describe 'Products service', ->
     OrderCycle =
       order_cycle:
         order_cycle_id: 1
-    RailsFlashLoader =
-      loadFlash: (arg) ->
 
     module 'Darkswarm'
     module ($provide)->
@@ -57,7 +53,6 @@ describe 'Products service', ->
       $provide.value "currentHub", currentHub
       $provide.value "taxons", taxons
       $provide.value "properties", properties
-      $provide.value "GmapsGeo", GmapsGeo
       $provide.value "OrderCycle", OrderCycle
       $provide.value "railsFlash", null
       null
@@ -66,7 +61,6 @@ describe 'Products service', ->
       Products = $injector.get("Products")
       Shopfront = $injector.get("Shopfront")
       Properties = $injector.get("Properties")
-      RailsFlashLoader = _RailsFlashLoader_
       Variants = $injector.get("Variants")
       Cart = $injector.get("Cart")
       $httpBackend = _$httpBackend_
