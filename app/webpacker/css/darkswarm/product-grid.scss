@@ -15,7 +15,7 @@
 
 // product grid view layout
 .products-container {
-   // Locally scoped variables
+  // Locally scoped variables
   --gap: 2px;
   --line-offset: calc(var(--gap) / 2);
   --line-thickness: 1px;
@@ -31,12 +31,13 @@
   width: 100%;
   position: relative;
 
-  &:before, &:after {
-    content: '';
+  &:before,
+  &:after {
+    content: "";
     position: absolute;
     background-color: b.$light-grey;
     z-index: 1;
-  } 
+  }
 
   // Row Borders
   &:after {
