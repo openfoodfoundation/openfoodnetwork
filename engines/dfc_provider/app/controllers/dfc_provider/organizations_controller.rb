@@ -23,7 +23,7 @@ module DfcProvider
       enterprise = current_user.enterprises.find(params[:id])
       dfc_enterprise = EnterpriseBuilder.enterprise(enterprise)
       organization = DfcV2Migration.up([dfc_enterprise]).first
-      add_certifications(enterprise, organization)
+      organization.certifications = certifications(enterprise)
 
       render_v2(
         organization,
@@ -46,12 +46,9 @@ module DfcProvider
     # This logic should live in a builder class but the current builders still
     # work on DFC v1. This method will do for now until we have upgraded our
     # builders.
-    def add_certifications(enterprise, organization)
-      enterprise.properties.each do |property|
-        organization.certifications << DataFoodConsortium::Connector::Certification.new(
-          "#certification-#{property.id}",
-          name: property.name,
-        )
+    def certifications(enterprise)
+      enterprise.properties.map do |property|
+        CertificationBuilder.certification(property)
       end
     end
 
