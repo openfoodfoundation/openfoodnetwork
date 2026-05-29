@@ -23,7 +23,6 @@ module DfcProvider
       enterprise = current_user.enterprises.find(params[:id])
       dfc_enterprise = EnterpriseBuilder.enterprise(enterprise)
       organization = DfcV2Migration.up([dfc_enterprise]).first
-      organization.certifications = certifications(enterprise)
 
       render_v2(
         organization,
@@ -35,22 +34,6 @@ module DfcProvider
     end
 
     private
-
-    # We don't have certification data but we do have some self-declared
-    # properties. Examples of properties are:
-    #
-    # - Free Range
-    # - Organic - Certified
-    # - Vegetarian
-    #
-    # This logic should live in a builder class but the current builders still
-    # work on DFC v1. This method will do for now until we have upgraded our
-    # builders.
-    def certifications(enterprise)
-      enterprise.properties.map do |property|
-        CertificationBuilder.certification(property)
-      end
-    end
 
     # The DFC v2 requires containers.
     def render_container(members)

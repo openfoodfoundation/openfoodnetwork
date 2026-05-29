@@ -10,7 +10,7 @@ class EnterpriseBuilder < DfcBuilder
     supplied_products = catalog_items.map(&:product)
     address = AddressBuilder.address(enterprise.address)
 
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       urls.enterprise_url(enterprise.id),
       name: enterprise.name,
       description: enterprise.description,
@@ -23,6 +23,7 @@ class EnterpriseBuilder < DfcBuilder
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       logo: enterprise.logo_url(:small),
       mainContact: contact(enterprise),
+      certifications: certifications(enterprise),
 
       # The model strips the protocol and we need to add it:
       websites: [enterprise.website].compact_blank.map { |url| "https://#{url}" },
@@ -81,5 +82,11 @@ class EnterpriseBuilder < DfcBuilder
     )
 
     [number]
+  end
+
+  def self.certifications(enterprise)
+    enterprise.properties.map do |property|
+      CertificationBuilder.certification(property)
+    end
   end
 end

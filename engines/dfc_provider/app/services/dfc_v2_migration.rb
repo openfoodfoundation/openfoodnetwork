@@ -27,6 +27,7 @@ module DfcV2Migration
         logo: enterprise.logo,
         mainContact: enterprise.mainContact,
         websites: enterprise.websites,
+        certifications: enterprise.certifications,
       )
     end
   end

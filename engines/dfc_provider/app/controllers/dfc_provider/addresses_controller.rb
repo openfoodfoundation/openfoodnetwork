@@ -57,7 +57,7 @@ module DfcProvider
     end
 
     def public_enterprise_address(address)
-      Enterprise.activated.visible.is_distributor.where(address:)
+      ::Enterprise.activated.visible.is_distributor.where(address:)
     end
 
     def managed_enterprise_address(address)
