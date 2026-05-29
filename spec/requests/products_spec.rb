@@ -8,7 +8,13 @@ RSpec.describe ProductsController do
       create(:distributor_enterprise, preferred_shopfront_product_sorting_method: "by_producer")
     }
     let(:order_cycle) {
-      create(:simple_order_cycle, distributors: [distributor], variants: create_list(:variant, 5))
+      create(:simple_order_cycle, distributors: [distributor], variants: )
+    }
+    let(:variants) {
+      create_list(:variant, 5) do |variant, i|
+        product = variant.product
+        product.update!(name: "Grid product ##{i}")
+      end
     }
     let(:order) { create(:order, distributor:, order_cycle:) }
 
@@ -19,10 +25,13 @@ RSpec.describe ProductsController do
       get order_cycle_products_path(order_cycle.id)
 
       expect(response).to have_http_status :ok
+
       expect(response.body).to include 'turbo-frame id="shop-products"'
-      order_cycle.variants.map(&:product).each do |product|
-        expect(response.body).to include product.name
-      end
+      expect(response.body).to include "Grid product #0"
+      expect(response.body).to include "Grid product #1"
+      expect(response.body).to include "Grid product #2"
+      expect(response.body).to include "Grid product #3"
+      expect(response.body).to include "Grid product #4"
     end
   end
 end
