@@ -1,5 +1,6 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
-= cache_with_locale(current_order_cycle&.id) do
+- cache_key = feature?(:product_grid_view, @current_user) ? [current_order_cycle&.id, true] : false
+= cache_with_locale cache_key do
   %form{action: main_app.cart_path}
     %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
@@ -19,7 +20,9 @@
 
                 - else
                   = turbo_frame_tag("shop-products", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts", "data-product-grid-view-hidden-class": "product-hidden") do
-                    &nbsp;
+                    .loading{ "data-product-grid-view-target": "loading" }
+                      = render partial: "shop/products/product_spinner"
+
               - else
                 .pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading', "infinite-scroll-immediate-check": "false" }
                   %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
