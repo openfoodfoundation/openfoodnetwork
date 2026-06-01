@@ -8,8 +8,8 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
   it { is_expected.to belong_to(:supplier).required }
-  # it's currently effectively optional because it gets added before_validation
-  it { pending "removal of supplier"; is_expected.to belong_to(:owner).required }
+  # it's currently optional until data migration has completed, just in case.
+  it { pending "removal of supplier"; is_expected.to belong_to(:enterprise).required }
   it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
@@ -1034,24 +1034,24 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe "updating supplier/owner during transition period" do
-    it "updates owner when updating supplier" do
+  describe "updating supplier/enterprise during transition period" do
+    it "updates enterprise when updating supplier" do
       new_supplier = create(:supplier_enterprise)
       variant.supplier = new_supplier
       variant.save!
 
-      expect(variant.reload.owner).to eq new_supplier
+      expect(variant.reload.enterprise).to eq new_supplier
     end
 
-    context "variant doesn't have owner yet" do
-      let(:variant) { create(:variant).tap{ |v| v.update_columns owner_id: nil } }
+    context "variant doesn't have enterprise set yet" do
+      let(:variant) { create(:variant).tap{ |v| v.update_columns enterprise_id: nil } }
 
-      it "updates owner on validation, if not yet set" do
+      it "updates enterprise on validation, if not yet set" do
         variant.display_name = "updated"
         expect(variant).to be_valid
 
         variant.save!
-        expect(variant.reload.owner).to eq variant.supplier
+        expect(variant.reload.enterprise).to eq variant.supplier
       end
     end
   end

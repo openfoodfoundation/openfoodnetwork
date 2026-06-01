@@ -19,7 +19,6 @@ FactoryBot.define do
 
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
-    owner { supplier }
 
     # creating a product here  will end up creating an extra variant, as creating product will
     # create a "standard variant" by default. We could try to pass the variant instance we
