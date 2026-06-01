@@ -9,6 +9,7 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include VariantStock
 
+    self.ignored_columns += ['owner']
     self.belongs_to_required_by_default = false
 
     # 2 not to be persisted attributes to store preferences.
