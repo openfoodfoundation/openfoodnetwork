@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_11_053830) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_01_031443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1004,6 +1004,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_053830) do
     t.string "variant_unit_name", limit: 255
     t.bigint "hub_id"
     t.bigint "owner_id"
+    t.bigint "enterprise_id"
+    t.index ["enterprise_id"], name: "index_spree_variants_on_enterprise_id"
     t.index ["hub_id"], name: "index_spree_variants_on_hub_id"
     t.index ["owner_id"], name: "index_spree_variants_on_owner_id"
     t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
@@ -1264,6 +1266,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_053830) do
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
+  add_foreign_key "spree_variants", "enterprises"
   add_foreign_key "spree_variants", "enterprises", column: "hub_id"
   add_foreign_key "spree_variants", "enterprises", column: "owner_id"
   add_foreign_key "spree_variants", "enterprises", column: "supplier_id"
