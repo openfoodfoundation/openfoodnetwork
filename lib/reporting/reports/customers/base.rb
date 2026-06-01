@@ -35,12 +35,23 @@ module Reporting
             total_orders: proc { |orders| orders.count },
             total_incl_tax: proc { |orders| orders.map(&:total).compact.sum },
             last_completed_order_date: proc { |orders| last_completed_order_date(orders) },
+            balance_due: proc { |orders|
+              total = orders.sum { |o| o.outstanding_balance.to_f }
+              total.positive? ? total : 0
+            },
+            credit_due: proc { |orders|
+              orders.first.customer&.credit_balance || 0
+            },
           }
         end
         # rubocop:enable Metrics/AbcSize
 
+        def columns_format
+          { balance_due: :currency, credit_due: :currency }
+        end
+
         def filter(orders)
-          filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
+         filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
         end
 
         def skip_duplicate_rows?
