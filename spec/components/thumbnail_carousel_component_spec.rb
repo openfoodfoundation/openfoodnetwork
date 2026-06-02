@@ -11,7 +11,9 @@ RSpec.describe ThumbnailCarouselComponent, type: :component do
   it "renders carousel slides and thumbnails" do
     render_inline(described_class.new(images:))
 
-    expect(page).to have_selector ".ofn-thumbnail-carousel.swiper[data-controller='thumbnail-carousel']"
+    expect(page).to have_selector(
+      ".ofn-thumbnail-carousel.swiper[data-controller='thumbnail-carousel']"
+    )
     expect(page).to have_selector ".swiper-slide", count: 2
     expect(page).to have_selector ".ofn-thumbnail-carousel__thumb", count: 2
   end
