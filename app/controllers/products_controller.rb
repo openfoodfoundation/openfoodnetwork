@@ -19,7 +19,7 @@ class ProductsController < BaseController
   end
 
   def order_cycle
-    @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id])
+    OrderCycle.find_by(id: params[:order_cycle_id])
   end
 
   def customer
