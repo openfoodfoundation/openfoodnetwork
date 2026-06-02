@@ -81,11 +81,6 @@
   }
 }
 
-// There is an hidden class in layout.css but it's not available when rendering the product grid template
-.product-hidden {
-  display: none;
-}
-
 // The tooltip component reuses the foundation tooltip styling but it doesn't provide styling for the arrow
 .arrow {
   background-color: f-tooltips.$oil;

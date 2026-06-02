@@ -1,5 +1,5 @@
 = turbo_frame_tag "shop-products" do
-  .loading.product-hidden{ "data-product-grid-view-target": "loading" }
+  .loading{ style: "display: none;", "data-product-grid-view-target": "loading" }
     = render partial: "shop/products/product_spinner"
 
   .products-container{ "data-product-grid-view-target": "products" }

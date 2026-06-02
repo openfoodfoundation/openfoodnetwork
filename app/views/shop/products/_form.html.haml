@@ -14,12 +14,12 @@
 
               - if feature?(:product_grid_view, @current_user)
                 - if current_order_cycle.present?
-                  = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts", "data-product-grid-view-hidden-class": "product-hidden") do
+                  = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
                     .loading{ "data-product-grid-view-target": "loading" }
                       = render partial: "shop/products/product_spinner"
 
                 - else
-                  = turbo_frame_tag("shop-products", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts", "data-product-grid-view-hidden-class": "product-hidden") do
+                  = turbo_frame_tag("shop-products", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
                     .loading{ "data-product-grid-view-target": "loading" }
                       = render partial: "shop/products/product_spinner"
 
