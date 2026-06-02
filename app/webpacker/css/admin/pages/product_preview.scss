@@ -194,15 +194,15 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 3;
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         line-height: 1;
         border-radius: 9999px;
         border: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgb(255 255 255);
         color: $white;
       }
 
@@ -215,14 +215,16 @@
 
       button.ofn-thumbnail-carousel__button--prev {
         left: 0.75rem;
+        color: #444;
+        font-weight: 400;
+        padding: 0 2px 2px 1px;
       }
 
       button.ofn-thumbnail-carousel__button--next {
         right: 0.75rem;
-      }
-
-      .ofn-thumbnail-carousel__thumbs {
-        justify-content: center;
+        color: #444;
+        font-weight: 400;
+        padding: 0 0px 2px 1px;
       }
 
       button.ofn-thumbnail-carousel__thumb {

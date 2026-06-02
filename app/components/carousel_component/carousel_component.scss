@@ -11,12 +11,18 @@
 %ofn-carousel-caption {
   margin: 0;
   padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgb(255 255 255);
   color: $white;
   position: absolute;
   left: 0;
-  right: 0;
   bottom: 0;
+  margin-left: 16px;
+  border-radius: 8px 8px 0px 0px;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 12px 4px 12px;
+  color: #444;
 }
 
 %ofn-carousel-button {
@@ -24,21 +30,27 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 9999px;
   border: none;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgb(255 255 255);
   color: $white;
   cursor: pointer;
 }
 
 %ofn-carousel-button-prev {
   left: 0.5rem;
+  color: #444;
+  font-weight: 400;
+  padding: 0 2px 2px 1px;
 }
 
 %ofn-carousel-button-next {
   right: 0.5rem;
+  color: #444;
+  font-weight: 400;
+  padding: 0 0px 2px 1px;
 }
 
 %ofn-carousel-pagination {
