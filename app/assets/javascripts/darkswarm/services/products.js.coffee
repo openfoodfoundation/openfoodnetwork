@@ -41,7 +41,7 @@ angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle,
         product.carouselImages = images.map (image, index) ->
           return null unless image
 
-          caption = if showCaption then "#{product.name} - #{index + 1}" else nil
+          caption = if showCaption then "#{product.name} - #{index + 1}" else null
           {
             url: image.large_url || image.image_url || image.small_url || image.thumb_url
             thumb_url: image.thumb_url || image.small_url || image.large_url || image.image_url
