@@ -29,6 +29,7 @@ module DfcProvider
         organization.mainContact,
         *organization.localizations,
         *organization.socialMedias,
+        *organization.certifications,
       )
     end
 

@@ -184,8 +184,16 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
             "supplied_products/10001"
           )
             .gsub!(
+              "product_groups/#{spree_product_id}",
+              "product_groups/90000"
+            )
+            .gsub!(
               "\"ofn:spree_product_id\":#{spree_product_id}",
               '"ofn:spree_product_id":90000'
+            )
+            .gsub!(
+              "\"ofn:spree_product_uri\":\"http://test.host/api/dfc/enterprises/10000?spree_product_id=#{spree_product_id}\"",
+              "\"ofn:spree_product_uri\":\"http://test.host/api/dfc/enterprises/10000?spree_product_id=90000\""
             )
         end
 

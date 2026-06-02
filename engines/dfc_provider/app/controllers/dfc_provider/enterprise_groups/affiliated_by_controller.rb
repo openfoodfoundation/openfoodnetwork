@@ -13,7 +13,7 @@ module DfcProvider
         return head :bad_request unless enterprise_uri.valid?
 
         enterprise_id = ofn_id_from_uri(enterprise_uri)
-        enterprise = Enterprise.find(enterprise_id)
+        enterprise = ::Enterprise.find(enterprise_id)
 
         group.enterprises << enterprise
 

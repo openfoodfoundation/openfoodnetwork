@@ -63,7 +63,13 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
         context "as user owning an enterprise" do
           let(:id) { 10_000 }
 
-          before { enterprise }
+          before {
+            enterprise.properties.create!(
+              id: 30_000,
+              name: "Organic",
+              presentation: "Organic",
+            )
+          }
 
           run_test! do
             # There's no container here:
@@ -72,6 +78,8 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
             expect(response.body).to include '"@type":"dfc-b:Organization"'
             expect(response.body).to include "host/api/dfc/organizations/10000"
             expect(response.body).to include "Fred's Farm"
+            expect(response.body).to include "#certification-30000"
+            expect(response.body).to include "Organic"
           end
         end
       end
