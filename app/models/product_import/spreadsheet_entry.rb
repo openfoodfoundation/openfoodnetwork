@@ -85,7 +85,9 @@ module ProductImport
     end
 
     def match_variant?(variant)
-      match_display_name?(variant) && variant.unit_value.to_d == unit_value.to_d
+      match_display_name?(variant) &&
+        variant.unit_value.to_d == unit_value.to_d &&
+        (variant_unit.nil? || variant.variant_unit == variant_unit)
     end
 
     private
