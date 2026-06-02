@@ -1,4 +1,4 @@
-angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants, productGridViewFeature) ->
+angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()
@@ -8,10 +8,6 @@ angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle,
     loading: true
 
     update: (params = {}, load_more = false) =>
-      if productGridViewFeature["enabled"] is true
-        console.warn "Products.update disabled..."
-        return
-
       @loading = true
       order_cycle_id = OrderCycle.order_cycle.order_cycle_id
 
