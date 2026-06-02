@@ -111,7 +111,9 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value
     before_validation :convert_variant_weight_to_decimal
-    before_validation :copy_supplier_to_owner, if: :supplier_id_changed?
+    before_validation :copy_supplier_to_owner, if: ->(variant) {
+      variant.supplier_id_changed? || variant.owner_id.blank?
+    }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?

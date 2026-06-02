@@ -1034,13 +1034,25 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe "updating supplier/owner" do
-    it "during transition period, updates owner when updating supplier" do
+  describe "updating supplier/owner during transition period" do
+    it "updates owner when updating supplier" do
       new_supplier = create(:supplier_enterprise)
       variant.supplier = new_supplier
       variant.save!
 
       expect(variant.reload.owner).to eq new_supplier
+    end
+
+    context "variant doesn't have owner yet" do
+      let(:variant) { create(:variant).tap{ |v| v.update_columns owner_id: nil } }
+
+      it "updates owner on validation, if not yet set" do
+        variant.display_name = "updated"
+        expect(variant).to be_valid
+
+        variant.save!
+        expect(variant.reload.owner).to eq variant.supplier
+      end
     end
   end
 end
