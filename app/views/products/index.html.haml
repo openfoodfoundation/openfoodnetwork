@@ -13,5 +13,26 @@
               = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
             = product.name
 
+        - variant = product.variants.first
+        .variants.row
+          .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
+            .variant-quantity-inputs{ "data-controller": "update-cart" }
+              %button.add-variant{ type: "button", "data-action": "update-cart#add", "data-update-cart-variant-param": "#{variant.id}"  }
+                = t("js.shopfront.variant.add_to_cart")
+
+            .variant-quantity-inputs
+              %button.variant-quantity{ type: "button" }>
+                -# U+FF0D Fullwidth Hyphen-Minus
+                －
+              %input.variant-quantity{ type: "number", min: "0" }>
+              %button.variant-quantity{ type: "button" }
+                -# U+FF0B Fullwidth Plus Sign
+                ＋
+            /.variant-remaining-stock
+            /  = t("js.shopfront.variant.remaining_in_stock", quantity: 0)
+            .variant-quantity-display
+              = t("js.shopfront.variant.quantity_in_cart", quantity: 0)
+            %input{ type: :hidden, name: "variant-#{variant.id}" }
+
         = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
           = render partial: "shared/product/product_details", locals: { product: }
