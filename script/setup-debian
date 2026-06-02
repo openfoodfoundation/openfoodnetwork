@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+# Set up system requirements for the Rails app.
+
+set -e
+
+sudo apt update
+sudo apt upgrade --yes
+sudo apt install --yes\
+     build-essential cmake pkg-config\
+     git\
+     libyaml-dev\
+     libffi-dev\
+     libgit2-dev\
+     libpq-dev\
+     libzstd-dev\
+     zlib1g-dev\
+     chromium\
+     imagemagick\
+     nginx\
+     postgresql\
+     redis\
+
+sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
+
+if ! command -v rbenv > /dev/null; then
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  ~/.rbenv/bin/rbenv init
+  . ~/.bash_profile
+fi
+
+if ! command -v nodenv > /dev/null; then
+  git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+  git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build
+  ~/.nodenv/bin/nodenv init
+  . ~/.bash_profile
+fi
+
+./script/setup
