@@ -45,7 +45,9 @@ export default class extends CarouselController {
       return 0;
     }
 
-    return Number.isInteger(this.swiper.realIndex) ? this.swiper.realIndex : this.swiper.activeIndex;
+    return Number.isInteger(this.swiper.realIndex)
+      ? this.swiper.realIndex
+      : this.swiper.activeIndex;
   }
 
   #setActiveThumbnail(activeIndex) {
