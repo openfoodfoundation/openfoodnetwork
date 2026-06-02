@@ -19,10 +19,10 @@
   --gap: 2px;
   --line-offset: calc(var(--gap) / 2);
   --line-thickness: 1px;
-  --collumn-width: 200px;
+  --column-width: 200px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--collumn-width), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--column-width), 1fr));
   overflow: hidden;
   margin-top: $padding-tbl-cell; // 12px
 }
