@@ -6,7 +6,7 @@ module DfcProvider
     def show
       spree_product = permissions.visible_products.find(params[:id])
       product = ProductGroupBuilder.product_group(spree_product)
-      render json: DfcIo.export(product)
+      render_dfc(product)
     end
 
     private

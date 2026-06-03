@@ -12,7 +12,7 @@ module DfcProvider
       enterprise = EnterpriseBuilder.enterprise(current_enterprise)
       catalog_items = enterprise.catalogItems
 
-      render json: DfcIo.export(
+      render_dfc(
         enterprise,
         *catalog_items,
         *catalog_items.map(&:product),
@@ -24,7 +24,7 @@ module DfcProvider
     def show
       catalog_item = CatalogItemBuilder.catalog_item(variant)
       offers = catalog_item.offers
-      render json: DfcIo.export(catalog_item, *offers)
+      render_dfc(catalog_item, *offers)
     end
 
     def update

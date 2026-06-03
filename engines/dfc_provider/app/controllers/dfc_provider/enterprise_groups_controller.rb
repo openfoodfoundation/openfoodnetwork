@@ -10,7 +10,7 @@ module DfcProvider
         EnterpriseBuilder.enterprise_group(group)
       end
       person.affiliatedOrganizations = enterprises
-      render json: DfcIo.export(person, *enterprises)
+      render_dfc(person, *enterprises)
     end
 
     def show
@@ -18,7 +18,7 @@ module DfcProvider
       address = AddressBuilder.address(group.address)
       enterprise = EnterpriseBuilder.enterprise_group(group)
       enterprise.localizations = [address]
-      render json: DfcIo.export(enterprise, address)
+      render_dfc(enterprise, address)
     end
   end
 end
