@@ -1,3 +1,5 @@
+@use "property-selector-base" as base;
+
 @mixin filter-selector($base-clr, $border-clr, $hover-clr) {
   &.inline-block,
   ul.inline-block {
@@ -23,16 +25,7 @@
 
     a,
     a.button {
-      display: block;
-
-      @include border-radius(0.5em);
-
-      border: 1px solid $border-clr;
-      padding: 0.5em 0.625em;
-      color: $base-clr;
-      font-size: 0.75em;
-      background: white;
-      margin: 0;
+      @include base.property-selector($base-clr, $border-clr);
 
       i {
         padding-left: 0.25rem;
@@ -78,7 +71,7 @@
 
   // Shopfront properties
   &.property-selectors {
-    @include filter-selector(#666, #ccc, #777);
+    @include filter-selector($grey-650, $grey-300, $grey-600);
   }
 
   ul {

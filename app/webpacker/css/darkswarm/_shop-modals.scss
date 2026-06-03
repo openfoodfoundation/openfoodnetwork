@@ -1,3 +1,5 @@
+@use "shop_partials/property-selector-base" as base;
+
 .product-header {
   padding-left: 1.5rem;
 
@@ -28,14 +30,8 @@
     margin: 0 0.25rem 0.25rem 0;
     padding: 0.4rem 0 0;
 
-    a {
-      border: 1px solid $grey-300;
-      font-weight: normal;
-      padding: 0.15rem 0.5rem;
-    }
-
     span {
-      color: $grey-600;
+      @include base.property-selector($grey-650, $grey-300);
     }
   }
 }
