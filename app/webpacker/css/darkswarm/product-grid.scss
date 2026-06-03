@@ -19,7 +19,7 @@
   --gap: 2px;
   --line-offset: calc(var(--gap) / 2);
   --line-thickness: 1px;
-  --column-width: 200px;
+  --column-width: 170px;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--column-width), 1fr));
