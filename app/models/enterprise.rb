@@ -44,7 +44,7 @@ class Enterprise < ApplicationRecord
                                  dependent: :destroy
   has_many :properties, through: :producer_properties
   has_many :variants, class_name: 'Spree::Variant', dependent: :destroy
-  has_many :supplied_products, through: :variants, source: :product
+  has_many :products, through: :variants, source: :product
 
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',

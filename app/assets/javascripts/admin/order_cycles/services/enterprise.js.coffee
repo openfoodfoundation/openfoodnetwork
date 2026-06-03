@@ -27,7 +27,7 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     	this.enterprises
 
     suppliedVariants: (enterprise_id) ->
-      vs = (this.variantsOf(product) for product in this.enterprises[enterprise_id].supplied_products)
+      vs = (this.variantsOf(product) for product in this.enterprises[enterprise_id].products)
       [].concat vs...
 
     variantsOf: (product) ->

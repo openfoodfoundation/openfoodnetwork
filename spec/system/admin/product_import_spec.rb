@@ -910,9 +910,9 @@ RSpec.describe "Product Import" do
         expect_import_completed
 
         # Check that all rows are saved.
-        expect(producer.supplied_products.find_by(name: "Imported Product 10")).to be_present
-        expect(producer.supplied_products.find_by(name: "Imported Product 60")).to be_present
-        expect(producer.supplied_products.find_by(name: "Imported Product 110")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 10")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 60")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 110")).to be_present
       end
     end
   end

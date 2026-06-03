@@ -101,7 +101,7 @@ module OpenFoodNetwork
           product_ids = Spree::Product.joins(:variants).
             where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
-          producers_active_ids = Enterprise.joins(:supplied_products).
+          producers_active_ids = Enterprise.joins(:products).
             where(spree_products: { id: product_ids }).pluck(:id).uniq
         end
 
@@ -305,7 +305,7 @@ module OpenFoodNetwork
       product_ids = Spree::Product.joins(:variants).
         where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
-      producer_ids = Enterprise.joins(:supplied_products).
+      producer_ids = Enterprise.joins(:products).
         where(spree_products: { id: product_ids }).pluck(:id).uniq
 
       active_exchange_ids = @order_cycle.exchanges.incoming.where(sender_id: producer_ids).pluck :id

@@ -61,7 +61,7 @@ RSpec.describe OpenOrderCycleJob do
         variant_discontinued.reload
         order_cycle.reload
       }.to change { order_cycle.opened_at }
-        .and change { enterprise.supplied_products.count }.by(0) # It shouldn't add, only update
+        .and change { enterprise.products.count }.by(0) # It shouldn't add, only update
         .and change { variant.display_name }
         .and change { variant.unit_value }
         # 18.85 wholesale variant price divided by 12 cans in the slab.

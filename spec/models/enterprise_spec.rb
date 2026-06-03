@@ -18,7 +18,7 @@ RSpec.describe Enterprise do
 
   describe "associations" do
     it { is_expected.to belong_to(:owner).required }
-    it { is_expected.to have_many(:supplied_products) }
+    it { is_expected.to have_many(:products) }
     it { is_expected.to have_many(:variants) }
     it { is_expected.to have_many(:distributed_orders) }
     it { is_expected.to belong_to(:address).required }

@@ -50,7 +50,7 @@ namespace :ofn do
             .where(spree_variants: { id: exchange.variants })
             .pluck(:id)
             .uniq
-          producers = Enterprise.joins(:supplied_products)
+          producers = Enterprise.joins(:products)
             .where(spree_products: { id: products })
             .distinct
           producers.each do |producer|

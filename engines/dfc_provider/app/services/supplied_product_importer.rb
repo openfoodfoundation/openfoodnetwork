@@ -65,7 +65,7 @@ class SuppliedProductImporter < DfcBuilder
         next
       end
 
-      supplier.supplied_products.find_by(id:)
+      supplier.products.find_by(id:)
     end.compact.first
   end
 
@@ -73,7 +73,7 @@ class SuppliedProductImporter < DfcBuilder
     semantic_ids = supplied_product.isVariantOf.map do |id_or_object|
       id_or_object.try(:semanticId) || id_or_object
     end
-    supplier.supplied_products.includes(:semantic_link)
+    supplier.products.includes(:semantic_link)
       .where(semantic_link: { semantic_id: semantic_ids })
       .first
   end
@@ -88,12 +88,12 @@ class SuppliedProductImporter < DfcBuilder
     # Check that the given URI points to us:
     return unless uri == urls.enterprise_url(route.merge(params))
 
-    supplier.supplied_products.find_by(id: params["spree_product_id"])
+    supplier.products.find_by(id: params["spree_product_id"])
   end
 
   def self.spree_product_from_id(supplied_product, supplier)
     id = supplied_product.spree_product_id
-    supplier.supplied_products.find_by(id:) if id.present?
+    supplier.products.find_by(id:) if id.present?
   end
 
   def self.import_product(supplied_product, supplier)

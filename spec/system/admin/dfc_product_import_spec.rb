@@ -98,7 +98,7 @@ RSpec.describe "DFC Product Import" do
       expect(page).to have_content "Stock reset for absent products: 1"
       linked_variant.reload
       unlinked_variant.reload
-    }.to change { enterprise.supplied_products.count }.by(2) # 1 updated, 2 new, 1 reset
+    }.to change { enterprise.products.count }.by(2) # 1 updated, 2 new, 1 reset
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
       # 18.85 wholesale variant price divided by 12 cans in the slab.
