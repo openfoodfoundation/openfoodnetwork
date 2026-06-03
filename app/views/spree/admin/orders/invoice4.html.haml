@@ -80,6 +80,9 @@
         - if @order&.customer&.email.present?
           %br
           = @order.customer.email
+        - if @order&.customer&.enterprise_acn.present?
+          %br
+          = @order.customer.enterprise_acn
 
 = render 'spree/admin/orders/invoice_table4'
 
