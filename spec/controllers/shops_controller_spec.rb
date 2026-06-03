@@ -53,7 +53,7 @@ RSpec.describe ShopsController do
 
     product = create(:product, properties: [property])
 
-    producer.supplied_variants << product.variants.first
+    producer.variants << product.variants.first
 
     create(
       :simple_order_cycle,

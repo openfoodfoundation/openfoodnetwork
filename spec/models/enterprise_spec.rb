@@ -19,7 +19,7 @@ RSpec.describe Enterprise do
   describe "associations" do
     it { is_expected.to belong_to(:owner).required }
     it { is_expected.to have_many(:supplied_products) }
-    it { is_expected.to have_many(:supplied_variants) }
+    it { is_expected.to have_many(:variants) }
     it { is_expected.to have_many(:distributed_orders) }
     it { is_expected.to belong_to(:address).required }
     it { is_expected.to belong_to(:business_address).optional }
@@ -476,7 +476,7 @@ RSpec.describe Enterprise do
       it "touches supplied variant distributors" do
         enterprise = create(:enterprise)
         variant = create(:variant)
-        enterprise.supplied_variants << variant
+        enterprise.variants << variant
 
         updated_at = 1.hour.ago
         distributor1 = create(:distributor_enterprise, updated_at:)

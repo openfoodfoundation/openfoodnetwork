@@ -889,8 +889,8 @@ RSpec.describe Spree::Variant do
     let(:variant1) { create(:variant) }
     let(:variant2) { create(:variant) }
     let!(:order_cycle) do
-      enterprise1.supplied_variants << variant1
-      enterprise2.supplied_variants << variant2
+      enterprise1.variants << variant1
+      enterprise2.variants << variant2
       create(
         :simple_order_cycle,
         coordinator: enterprise1,
