@@ -8,7 +8,7 @@
         %a{ href:"#", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "product-modal-#{product.id}" }
           %p
             - if product.image
-              = image_tag(product.image.url(:small))
+              = image_tag(product.image.url(:small), alt: product.image.alt, title: product.image.alt)
             - else
               = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
             = product.name
