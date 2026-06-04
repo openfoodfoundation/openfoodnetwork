@@ -466,8 +466,8 @@ RSpec.describe "Product Import" do
 
           expect(page).to have_selector '.item-count', text: "2"
           expect(page).not_to have_selector '.invalid-count'
-          expect(page).to have_selector '.inv-create-count', text: '1'
-          expect(page).to have_selector '.inv-update-count', text: '1'
+          expect(page).to have_selector '.inv-create-count', text: '2'
+          expect(page).not_to have_selector '.inv-update-count'
         end
 
         it "invalidates units value if 0 or non-numeric" do
