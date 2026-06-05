@@ -4,31 +4,29 @@ require_relative '../../db/migrate/20260602222924_ensure_single_product_image'
 
 RSpec.describe EnsureSingleProductImage, type: :migration do
   let(:migration) { described_class.new }
+  let(:attachment) { Rack::Test::UploadedFile.new(Rails.root.join('app/webpacker/images/logo-white.png'), "image/png") }
 
   describe '#up' do
     let(:product) { create(:product) }
 
     it 'keeps the first image and removes additional images for a product' do
-      first_image = described_class::SpreeImage.create!(
-        viewable_type: 'Spree::Product',
-        viewable_id: product.id,
-        type: 'Spree::Image'
-      )
-      second_image = described_class::SpreeImage.create!(
-        viewable_type: 'Spree::Product',
-        viewable_id: product.id,
-        type: 'Spree::Image'
-      )
+      first_image = Spree::Image.create(attachment:,
+                                        viewable_id: product.id,
+                                        viewable_type: 'Spree::Product')
+
+      second_image = Spree::Image.create(attachment:,
+                                         viewable_id: product.id,
+                                         viewable_type: 'Spree::Product')
 
       expect do
         migration.up
       end.to change {
-        described_class::SpreeImage.where(
+        Spree::Image.where(
           viewable_type: 'Spree::Product', viewable_id: product.id
         ).count
       }.from(2).to(1)
 
-      remaining_ids = described_class::SpreeImage.where(
+      remaining_ids = Spree::Image.where(
         viewable_type: 'Spree::Product',
         viewable_id: product.id
       ).pluck(:id)
@@ -38,40 +36,34 @@ RSpec.describe EnsureSingleProductImage, type: :migration do
     end
 
     it 'does not remove an image when a product already has a single image' do
-      image = described_class::SpreeImage.create!(
-        viewable_type: 'Spree::Product',
-        viewable_id: product.id,
-        type: 'Spree::Image'
-      )
+      image = Spree::Image.create(attachment:,
+                                  viewable_id: product.id,
+                                  viewable_type: 'Spree::Product')
 
       expect do
         migration.up
       end.not_to change {
-        described_class::SpreeImage.where(
+        Spree::Image.where(
           viewable_type: 'Spree::Product', viewable_id: product.id
         ).count
       }
 
-      expect(described_class::SpreeImage.exists?(image.id)).to be(true)
+      expect(Spree::Image.exists?(image.id)).to be(true)
     end
 
     it 'does not remove assets for non-product viewables' do
       variant = create(:variant)
-      described_class::SpreeImage.create!(
-        viewable_type: 'Spree::Variant',
-        viewable_id: variant.id,
-        type: 'Spree::Image'
-      )
-      described_class::SpreeImage.create!(
-        viewable_type: 'Spree::Variant',
-        viewable_id: variant.id,
-        type: 'Spree::Image'
-      )
+      Spree::Image.create!(attachment:,
+                           viewable_id: variant.id,
+                           viewable_type: 'Spree::Variant')
+      Spree::Image.create!(attachment:,
+                           viewable_id: variant.id,
+                           viewable_type: 'Spree::Variant')
 
       expect do
         migration.up
       end.not_to change {
-        described_class::SpreeImage.where(
+        Spree::Image.where(
           viewable_type: 'Spree::Variant', viewable_id: variant.id
         ).count
       }
