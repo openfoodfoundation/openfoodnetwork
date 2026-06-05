@@ -1,6 +1,6 @@
 %div{"data-controller": "tooltip", "data-tooltip-placement-value": @placement }
   - if @no_link_element
-    %span{"data-tooltip-target": "element", href: @link, class: @link_class}
+    %span{"data-tooltip-target": "element", class: @link_class}
       = @link_text 
   - else
     %a{"data-tooltip-target": "element", href: @link, class: @link_class}
