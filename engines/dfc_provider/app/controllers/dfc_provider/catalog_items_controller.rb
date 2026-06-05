@@ -13,8 +13,7 @@ module DfcProvider
       catalog_items = enterprise.catalogItems
 
       render_dfc(
-        enterprise,
-        *catalog_items,
+        catalog_items,
         *catalog_items.map(&:product),
         *catalog_items.map(&:product).flat_map(&:isVariantOf),
         *catalog_items.flat_map(&:offers),
