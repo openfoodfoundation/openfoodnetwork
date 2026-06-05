@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
+  let(:Accept) { "application/json" }
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
   let!(:product) {
@@ -71,8 +72,18 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
         end
 
         context "as user owning two enterprises" do
-          run_test! do
-            expect(response.body).to include "Pesto"
+          context "in DFC v1 format" do
+            run_test! do
+              expect(response.body).to include "Pesto"
+            end
+          end
+
+          context "in DFC v2 format" do
+            let(:Accept) { 'application/ld+json; profile="dfc-v2"' }
+
+            run_test! do
+              expect(response.body).to include "Pesto"
+            end
           end
         end
       end
