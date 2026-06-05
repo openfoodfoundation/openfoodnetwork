@@ -10,6 +10,8 @@ class ProductsController < BaseController
       inventory_enabled: inventory_enabled?,
       variant_tag_enabled: variant_tag_enabled?
     ).products
+
+    @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
   end
 
   private

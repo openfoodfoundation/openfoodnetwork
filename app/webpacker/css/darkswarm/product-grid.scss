@@ -53,19 +53,22 @@
     inset-inline-start: calc(var(--line-offset) * -1);
   }
 
-  p {
-    padding: $padding-tbl-cell;
-    font-weight: bold;
+  .product-content {
     width: var(--collumn-width);
     margin-left: auto;
     margin-right: auto;
-  }
 
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: $radius-image; // 8px
-    margin-bottom: $padding-tbl-cell;
+    p {
+      padding: $padding-tbl-cell;
+      font-weight: bold;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: $radius-image; // 8px
+      margin-bottom: $padding-tbl-cell;
+    }
   }
 }

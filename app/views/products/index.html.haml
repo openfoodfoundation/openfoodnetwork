@@ -5,34 +5,35 @@
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       .product-item
-        %a{ href:"#", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "product-modal-#{product.id}" }
-          %p
-            - if product.image
-              = image_tag(product.image.url(:small), alt: product.image.alt, title: product.image.alt)
-            - else
-              = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
-            = product.name
+        .product-content
+          %a{ href:"#", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "product-modal-#{product.id}" }
+            %p
+              - if product.image
+                = image_tag(product.image.url(:small), alt: product.image.alt, title: product.image.alt)
+              - else
+                = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
+              = product.name
 
-        - variant = product.variants.first
-        .variants.row
-          .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
-            .variant-quantity-inputs{ "data-controller": "update-cart" }
-              %button.add-variant{ type: "button", "data-action": "update-cart#add", "data-update-cart-variant-param": "#{variant.id}"  }
-                = t("js.shopfront.variant.add_to_cart")
+          / TODO if multiple variant don't show button
+          - variant = product.variants.first
+          .variant
+            .small-5.medium-3.large-3.columns.variant-quantity-column.text-right{ "data-controller": "update-cart", "data-update-cart-variant-id-value": "#{variant.id}" }
+              .variant-quantity-inputs{ "data-update-cart-target": "addButton" }
+                = button_tag t("js.shopfront.variant.add_to_cart"), type: "button", class: "add-variant", "data-action": "update-cart#addEmpty" 
+              .variant-quantity-inputs{ style: "display: none;", "data-update-cart-target": "quantityButton" }
+                %button.variant-quantity{ type: "button", "data-action": "update-cart#remove", "data-update-cart-target": "minusButton" }
+                  -# U+FF0D Fullwidth Hyphen-Minus
+                  －
+                %input.variant-quantity{ type: "number", min: "0" , value: @variants_in_cart[variant.id],  "data-update-cart-target": "quantity", "data-action": "keyup->update-cart#manual" }
+                %button.variant-quantity{ type: "button", "data-action": "update-cart#add" }
+                  -# U+FF0B Fullwidth Plus Sign
+                  ＋
+              / TODO show quantity in stock when stock and add stock limit
+              .variant-remaining-stock{ style: "display: none;" }
+                = t("js.shopfront.variant.remaining_in_stock", quantity: 0)
+              / TODO show how many in cart
+              .variant-quantity-display
+                = t("js.shopfront.variant.quantity_in_cart", quantity: 0)
 
-            .variant-quantity-inputs
-              %button.variant-quantity{ type: "button" }>
-                -# U+FF0D Fullwidth Hyphen-Minus
-                －
-              %input.variant-quantity{ type: "number", min: "0" }>
-              %button.variant-quantity{ type: "button" }
-                -# U+FF0B Fullwidth Plus Sign
-                ＋
-            /.variant-remaining-stock
-            /  = t("js.shopfront.variant.remaining_in_stock", quantity: 0)
-            .variant-quantity-display
-              = t("js.shopfront.variant.quantity_in_cart", quantity: 0)
-            %input{ type: :hidden, name: "variant-#{variant.id}" }
-
-        = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
-          = render partial: "shared/product/product_details", locals: { product: }
+          = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
+            = render partial: "shared/product/product_details", locals: { product: }
