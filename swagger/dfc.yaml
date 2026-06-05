@@ -520,18 +520,32 @@ paths:
           content:
             application/json; charset=utf-8:
               examples:
-                successful:
+                in DFC v1 format:
                   value:
                     "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprise_groups/60000
+                    "@type": dfc-b:Enterprise
+                    dfc-b:name: Sustainable Farmers
+                    dfc-b:hasDescription: this is a group
+                    dfc-b:affiliatedBy:
+                    - http://test.host/api/dfc/enterprises/10001
+                    - http://test.host/api/dfc/enterprises/10002
+            application/ld+json; profile="dfc-v2"; charset=utf-8:
+              examples:
+                in DFC v2 format:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
                     "@graph":
-                    - "@id": http://test.host/api/dfc/persons/12345
-                      "@type": dfc-b:Person
-                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
+                    - "@id": http://test.host/api/dfc/enterprise_groups
+                      "@type": ldp:Container
+                      ldp:contains: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/enterprise_groups/60000
                       "@type": dfc-b:Enterprise
                       dfc-b:name: Sustainable Farmers
                       dfc-b:hasDescription: this is a group
-                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:affiliatedBy:
+                      - http://test.host/api/dfc/enterprises/10001
+                      - http://test.host/api/dfc/enterprises/10002
   "/api/dfc/enterprise_groups/{id}":
     get:
       summary: Show groups
@@ -558,7 +572,9 @@ paths:
                       dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
                       dfc-b:name: Sustainable Farmers
                       dfc-b:hasDescription: this is a group
-                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:affiliatedBy:
+                      - http://test.host/api/dfc/enterprises/10001
+                      - http://test.host/api/dfc/enterprises/10002
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 8 Acres Drive

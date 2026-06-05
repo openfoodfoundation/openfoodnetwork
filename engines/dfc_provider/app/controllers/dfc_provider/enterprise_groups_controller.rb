@@ -10,7 +10,8 @@ module DfcProvider
         EnterpriseBuilder.enterprise_group(group)
       end
       person.affiliatedOrganizations = enterprises
-      render_dfc(person, *enterprises)
+
+      render_dfc(enterprises)
     end
 
     def show
