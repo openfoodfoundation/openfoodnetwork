@@ -53,32 +53,26 @@
     inset-inline-start: calc(var(--line-offset) * -1);
   }
 
-  // override usual link colors
-  a {
-    color: black;
-
-    &:hover {
-      text-decoration: underline;
-      color: inherit;
-    }
-  }
-
-  p {
-    padding: $padding-tbl-cell;
-    font-weight: bold;
+  .product-content {
     width: var(--collumn-width);
     margin-left: auto;
     margin-right: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-  }
 
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: $radius-image; // 8px
-    margin-bottom: $padding-tbl-cell;
+    p {
+      padding: $padding-tbl-cell;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: $radius-image; // 8px
+      margin-bottom: $padding-tbl-cell;
+    }
   }
 }
