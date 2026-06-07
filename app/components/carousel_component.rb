@@ -30,10 +30,17 @@ class CarouselComponent < ViewComponent::Base
   def root_attributes
     attributes = @html_options.deep_dup
     data = attributes.delete(:data) || {}
+    data = default_data_attributes.merge(data)
+
+    if multiple_images?
+      attributes[:tabindex] ||= 0
+      data[:action] =
+        [data[:action], "keydown->#{controller_identifier}#handleKeydown"].compact.join(" ")
+    end
 
     {
       class: [root_css_class, "swiper", attributes.delete(:class)].compact.join(" "),
-      data: default_data_attributes.merge(data)
+      data: data
     }.merge(attributes)
   end
 

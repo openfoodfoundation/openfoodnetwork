@@ -8,6 +8,9 @@ export default class extends Carousel {
       ...super.defaultOptions,
       navigation: this.navigationOptions(),
       pagination: this.paginationOptions(),
+      keyboard: {
+        enabled: true,
+      },
       a11y: {
         enabled: true,
       },
@@ -34,5 +37,33 @@ export default class extends Carousel {
       el: this.paginationTarget,
       clickable: true,
     };
+  }
+
+  previous() {
+    if (!this.swiper) {
+      return;
+    }
+
+    this.swiper.slidePrev();
+  }
+
+  next() {
+    if (!this.swiper) {
+      return;
+    }
+
+    this.swiper.slideNext();
+  }
+
+  handleKeydown(event) {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      this.previous();
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      this.next();
+    }
   }
 }

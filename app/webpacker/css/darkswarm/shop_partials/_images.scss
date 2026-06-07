@@ -19,6 +19,8 @@
   }
 
   .ofn-thumbnail-carousel {
+    touch-action: pan-y;
+
     .swiper-wrapper {
       display: flex;
     }
