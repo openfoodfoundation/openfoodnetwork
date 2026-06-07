@@ -10,6 +10,7 @@
 
 %ofn-carousel-caption {
   margin: 0;
+  margin-bottom: -1px;
   padding: 0.75rem 1rem;
   background: rgb(255 255 255);
   color: $white;
@@ -30,27 +31,39 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 9999px;
-  border: none;
-  background: rgb(255 255 255);
-  color: $white;
+  border: 1px solid rgb(0 0 0 / 18%);
+  background: rgb(255 255 255 / 95%);
+  box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
+  color: #111;
   cursor: pointer;
+  transition: background-color 160ms ease, box-shadow 160ms ease;
+
+  &:hover {
+    background: rgb(255 255 255);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 26%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0096ad;
+    outline-offset: 2px;
+  }
 }
 
 %ofn-carousel-button-prev {
   left: 0.5rem;
   color: #444;
   font-weight: 400;
-  padding: 0 2px 2px 1px;
+  // padding: 0 2px 2px 1px;
 }
 
 %ofn-carousel-button-next {
   right: 0.5rem;
   color: #444;
   font-weight: 400;
-  padding: 0 0px 2px 1px;
+  // padding: 0 0px 2px 1px;
 }
 
 %ofn-carousel-pagination {

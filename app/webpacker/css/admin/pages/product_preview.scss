@@ -194,37 +194,54 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 3;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.8rem;
+        height: 1.8rem;
         line-height: 1;
         border-radius: 9999px;
-        border: none;
+        border: 1px solid rgb(0 0 0 / 18%);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgb(255 255 255);
-        color: $white;
+        background: rgb(255 255 255 / 95%);
+        box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
+        color: #111;
+        transition: background-color 160ms ease, box-shadow 160ms ease;
+
+        &:hover {
+          background: rgb(255 255 255);
+          box-shadow: 0 4px 10px rgb(0 0 0 / 26%);
+        }
+
+        &:focus-visible {
+          outline: 2px solid #0096ad;
+          outline-offset: 2px;
+        }
       }
 
-      button.ofn-thumbnail-carousel__button i.fa {
-        font-style: normal;
-        line-height: 1;
-        width: 1em;
-        text-align: center;
+      .ofn-thumbnail-carousel__button-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          display: block;
+          width: 16px;
+          height: 16px;
+        }
       }
 
       button.ofn-thumbnail-carousel__button--prev {
         left: 0.75rem;
         color: #444;
         font-weight: 400;
-        padding: 0 2px 2px 1px;
+        // padding: 0 2px 2px 1px;
       }
 
       button.ofn-thumbnail-carousel__button--next {
         right: 0.75rem;
         color: #444;
         font-weight: 400;
-        padding: 0 0px 2px 1px;
+        // padding: 0 0px 2px 1px;
       }
 
       button.ofn-thumbnail-carousel__thumb {

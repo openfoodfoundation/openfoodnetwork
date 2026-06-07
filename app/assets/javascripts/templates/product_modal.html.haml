@@ -21,24 +21,28 @@
           %img.ofn-thumbnail-carousel__image{"ng-src" => "{{image.url}}", "ng-attr-alt" => "{{image.alt}}"}
           %p.ofn-thumbnail-carousel__caption{"ng-if" => "image.caption", "ng-bind" => "image.caption"}
 
+          %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--prev{
+            type: "button",
+            "ng-if" => "productCarouselImages().length > 1",
+            "ng-click" => "previousProductImage()",
+            "aria-label" => "Previous slide"
+          }
+            %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden" => "true" }
+              %svg{ xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 -960 960 960", width: "24px", fill: "#000" }
+                %path{ d: "M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" }
+
+          %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--next{
+            type: "button",
+            "ng-if" => "productCarouselImages().length > 1",
+            "ng-click" => "nextProductImage()",
+            "aria-label" => "Next slide"
+          }
+            %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden" => "true" }
+              %svg{ xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 -960 960 960", width: "24px", fill: "#000" }
+                %path{ d: "M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" }
+
         .swiper-slide{"ng-if" => "productCarouselImages().length === 0"}
           %img.ofn-thumbnail-carousel__image.placeholder{ src: Spree::Image.default_image_url(:large), "alt" => "Product image placeholder" }
-
-      %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--prev{
-        type: "button",
-        "ng-if" => "productCarouselImages().length > 1",
-        "ng-click" => "previousProductImage()",
-        "aria-label" => "Previous slide"
-      }
-        %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden" => "true" } &#10094;
-
-      %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--next{
-        type: "button",
-        "ng-if" => "productCarouselImages().length > 1",
-        "ng-click" => "nextProductImage()",
-        "aria-label" => "Next slide"
-      }
-        %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden" => "true" } &#10095;
 
       .ofn-thumbnail-carousel__thumbs{"ng-if" => "productCarouselImages().length > 1"}
         %button.ofn-thumbnail-carousel__thumb{
