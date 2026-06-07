@@ -39,7 +39,9 @@
   box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
   color: #111;
   cursor: pointer;
-  transition: background-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 
   &:hover {
     background: rgb(255 255 255);
