@@ -32,12 +32,21 @@ describe("UpdateCartController", () => {
         <div class="variant-remaining-stock" style="display: none;">
           Only 0 left
         </div>
-        <div class="variant-quantity-display">
+        <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
           0 in cart
         </div>
       </div>`;
 
+    const mockedT = jest.fn();
+    mockedT.mockImplementation((string, opts) => string + ", " + JSON.stringify(opts));
+
+    global.I18n = { t: mockedT };
+
     dispatchEventSpy = jest.spyOn(window, "dispatchEvent");
+  });
+
+  afterAll(() => {
+    delete global.I18n;
   });
 
   describe("#addEmpty", () => {
@@ -68,6 +77,16 @@ describe("UpdateCartController", () => {
       const quantity = document.getElementById("quantity");
       expect(quantity.value).toEqual("1");
     });
+
+    it("shows one item in the cart", () => {
+      const add_button = document.getElementById("add");
+      const itemInCart = document.getElementById("item-in-cart");
+
+      add_button.click();
+
+      expect(itemInCart.style.visibility).toBe("visible");
+      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":1}');
+    });
   });
 
   describe("#add", () => {
@@ -84,6 +103,18 @@ describe("UpdateCartController", () => {
       const detail = lastCall.detail;
       expect(detail.quantity).toEqual(6);
       expect(quantity.value).toEqual("6");
+    });
+
+    it("updates the number of item in the cart", () => {
+      const plus_button = document.getElementById("plus");
+      const itemInCart = document.getElementById("item-in-cart");
+      const quantity = document.getElementById("quantity");
+      quantity.value = 5;
+
+      plus_button.click();
+
+      expect(itemInCart.style.visibility).toBe("visible");
+      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":6}');
     });
   });
 
@@ -103,22 +134,52 @@ describe("UpdateCartController", () => {
       expect(quantity.value).toEqual("4");
     });
 
-    it("toggles to the add button when quantity reach 0", () => {
-      const add_container = document.getElementById("add_container");
-      const add_button = document.getElementById("add");
-      const quantity_buttons = document.getElementById("quantity_buttons");
+    it("updates the number of item in the cart", () => {
       const minus_button = document.getElementById("minus");
-
-      // TODO should be able to remove this when we set button state base on quantity
-      add_button.click();
-
-      expect(quantity_buttons.style.display).toBe("block");
-      expect(add_container.style.display).toBe("none");
+      const itemInCart = document.getElementById("item-in-cart");
+      const quantity = document.getElementById("quantity");
+      quantity.value = 5;
 
       minus_button.click();
 
-      expect(quantity_buttons.style.display).toBe("none");
-      expect(add_container.style.display).toBe("block");
+      expect(itemInCart.style.visibility).toBe("visible");
+      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":4}');
+    });
+
+    describe("when quantity becomes 0", () => {
+      it("toggles to the add button", () => {
+        const add_container = document.getElementById("add_container");
+        const add_button = document.getElementById("add");
+        const quantity_buttons = document.getElementById("quantity_buttons");
+        const minus_button = document.getElementById("minus");
+
+        // Set the button state
+        add_button.click();
+
+        expect(quantity_buttons.style.display).toBe("block");
+        expect(add_container.style.display).toBe("none");
+
+        minus_button.click();
+
+        expect(quantity_buttons.style.display).toBe("none");
+        expect(add_container.style.display).toBe("block");
+      });
+
+      it("hides the number of item in cart", () => {
+        const add_button = document.getElementById("add");
+        const minus_button = document.getElementById("minus");
+        const itemInCart = document.getElementById("item-in-cart");
+
+        // Set the button state
+        add_button.click();
+
+        minus_button.click();
+
+        expect(itemInCart.style.visibility).toBe("hidden");
+        expect(itemInCart.textContent).toBe(
+          'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
+        );
+      });
     });
   });
 
@@ -137,6 +198,21 @@ describe("UpdateCartController", () => {
       const detail = lastCall.detail;
       expect(detail.quantity).toEqual(3);
       expect(quantity.value).toEqual("3");
+    });
+
+    it("updates the number of item in the cart", () => {
+      // Set button state
+      const add_button = document.getElementById("add");
+      add_button.click();
+
+      const itemInCart = document.getElementById("item-in-cart");
+
+      const quantity = document.getElementById("quantity");
+      quantity.value = 3;
+      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "3" }));
+
+      expect(itemInCart.style.visibility).toBe("visible");
+      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":3}');
     });
 
     it("does nothing if quantity is not a valid number", () => {
@@ -167,22 +243,41 @@ describe("UpdateCartController", () => {
       expect(dispatchEventSpy).toHaveBeenCalledTimes(preTestCallsNb);
     });
 
-    it("toggles to the add button if quantity is 0", () => {
-      const add_container = document.getElementById("add_container");
-      const quantity_buttons = document.getElementById("quantity_buttons");
+    describe("when quantity becomes 0", () => {
+      it("toggles to the add button if quantity is 0", () => {
+        const add_container = document.getElementById("add_container");
+        const quantity_buttons = document.getElementById("quantity_buttons");
 
-      // Set button state
-      const add_button = document.getElementById("add");
-      add_button.click();
+        // Set button state
+        const add_button = document.getElementById("add");
+        add_button.click();
 
-      const quantity = document.getElementById("quantity");
-      quantity.value = "0";
-      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
+        const quantity = document.getElementById("quantity");
+        quantity.value = "0";
+        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
 
-      const lastCall = getLastMockCall();
-      expect(lastCall.type).toEqual("updateCart");
-      expect(quantity_buttons.style.display).toBe("none");
-      expect(add_container.style.display).toBe("block");
+        const lastCall = getLastMockCall();
+        expect(lastCall.type).toEqual("updateCart");
+        expect(quantity_buttons.style.display).toBe("none");
+        expect(add_container.style.display).toBe("block");
+      });
+
+      it("hides the number of item in cart", () => {
+        // Set button state
+        const add_button = document.getElementById("add");
+        add_button.click();
+
+        const itemInCart = document.getElementById("item-in-cart");
+
+        const quantity = document.getElementById("quantity");
+        quantity.value = "0";
+        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
+
+        expect(itemInCart.style.visibility).toBe("hidden");
+        expect(itemInCart.textContent).toBe(
+          'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
+        );
+      });
     });
   });
 
@@ -206,8 +301,8 @@ describe("UpdateCartController", () => {
             <div class="variant-remaining-stock" style="display: none;">
               Only 0 left
             </div>
-            <div class="variant-quantity-display">
-              0 in cart
+            <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
+              5 in cart
             </div>
           </div>`;
       });
@@ -218,6 +313,13 @@ describe("UpdateCartController", () => {
 
         expect(quantity_buttons.style.display).toBe("block");
         expect(add_container.style.display).toBe("none");
+      });
+
+      it("shows the number of items in the cart", () => {
+        const itemInCart = document.getElementById("item-in-cart");
+
+        expect(itemInCart.style.visibility).toBe("visible");
+        expect(itemInCart.textContent.trim()).toBe("5 in cart");
       });
     });
 
@@ -240,7 +342,7 @@ describe("UpdateCartController", () => {
             <div class="variant-remaining-stock" style="display: none;">
               Only 0 left
             </div>
-            <div class="variant-quantity-display">
+            <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
               0 in cart
             </div>
           </div>`;
