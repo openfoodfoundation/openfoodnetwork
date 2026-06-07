@@ -1,15 +1,15 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["addButton", "quantityButton", "quantity", "minusButton"];
+  static targets = ["addButton", "quantityButton", "quantity", "minusButton", "nbItemInCart"];
   static values = { variantId: Number };
 
-  // TODO display number in cart
   connect() {
     let quantity = parseInt(this.quantityTarget.value);
 
     if (quantity > 0) {
       this.#showQuantityButtons();
+      this.#showItemInCart();
     }
   }
 
@@ -18,6 +18,8 @@ export default class extends Controller {
 
     this.#showQuantityButtons();
     this.quantityTarget.value = 1;
+
+    this.#showAndUpdateItemInCart(1);
   }
 
   add() {
@@ -26,6 +28,8 @@ export default class extends Controller {
     this.quantityTarget.value = quantity;
 
     this.#dispatchCartUpdate(quantity);
+
+    this.#showAndUpdateItemInCart(quantity);
   }
 
   remove() {
@@ -35,8 +39,11 @@ export default class extends Controller {
 
     this.#dispatchCartUpdate(quantity);
 
+    this.#showAndUpdateItemInCart(quantity);
+
     if (quantity === 0) {
       this.#hideQuantityButtons();
+      this.#hideItemInCart();
     }
   }
 
@@ -49,9 +56,11 @@ export default class extends Controller {
     }
 
     this.#dispatchCartUpdate(quantity);
+    this.#showAndUpdateItemInCart(quantity);
 
     if (quantity === 0) {
       this.#hideQuantityButtons();
+      this.nbItemInCartTarget.style.visibility = "hidden";
     }
   }
 
@@ -72,5 +81,19 @@ export default class extends Controller {
       detail: { variant: { id: this.variantIdValue }, quantity: quantity },
     });
     window.dispatchEvent(ev);
+  }
+
+  #showAndUpdateItemInCart(quantity = 0) {
+    this.nbItemInCartTarget.textContent = I18n.t("js.shopfront.variant.quantity_in_cart", {
+      quantity: quantity,
+    });
+    this.#showItemInCart();
+  }
+
+  #showItemInCart() {
+    this.nbItemInCartTarget.style.visibility = "visible";
+  }
+  #hideItemInCart() {
+    this.nbItemInCartTarget.style.visibility = "hidden";
   }
 }

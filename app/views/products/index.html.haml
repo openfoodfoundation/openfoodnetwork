@@ -31,9 +31,8 @@
               / TODO show quantity in stock when stock and add stock limit
               .variant-remaining-stock{ style: "display: none;" }
                 = t("js.shopfront.variant.remaining_in_stock", quantity: 0)
-              / TODO show how many in cart
-              .variant-quantity-display
-                = t("js.shopfront.variant.quantity_in_cart", quantity: 0)
+              .variant-quantity-display{ "data-update-cart-target": "nbItemInCart" }
+                = t("js.shopfront.variant.quantity_in_cart", quantity: @variants_in_cart[variant.id])
 
           = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
             = render partial: "shared/product/product_details", locals: { product: }
