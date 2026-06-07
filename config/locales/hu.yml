@@ -1470,7 +1470,7 @@ hu:
         cancel: "Mégsem"
         back_to_list: "Vissza a listához"
         save_and_back_to_list: "Mentés és Vissza a listához"
-        choose_products_from: "Válasszon termékeket a következők közül:"
+        choose_products_from: "Válassz termékeket a következők közül:"
         re_notify_producers: Értesítse újra a termelőket
         notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
       date_time_warning_modal_content:
@@ -2281,7 +2281,6 @@ hu:
   brandstory_part6: "Csatlakozz te is!"
   system_headline: "A vásárlás lépései"
   system_step1_html: "1. Keresés"
-  system_step1_text_html: "Böngészhetsz közvetlenül a gazdák, vagy az átvételi Pontok kínálatában. Kereshetsz a lakhelyed, a termelő, élelmiszertípus, és termesztési mód szerint."
   system_step2_html: "2. Vásárlás"
   system_step2_text_html: "Alakítsd át a fogyasztási szokásaidat! Pakold meg a bevásárlókosarad helyi termelőktől származó termékekkel. Vásárolj olyan élelmiszert, amelynek ismered az eredetét, és tudod, hogyan állították elő."
   system_step3_html: "3. Átvétel / kiszállítás"
@@ -2926,7 +2925,7 @@ hu:
   new_order_cycles: "Új rendelési ciklusok"
   new_order_cycle: "Új rendelési ciklus"
   new_order_cycle_tooltip: "Nyisd meg az üzletet egy bizonyos intervallumra"
-  select_a_coordinator_for_your_order_cycle: "Válasszon koordinátort a rendelési ciklushoz"
+  select_a_coordinator_for_your_order_cycle: "Válassz koordinátort a rendelési ciklushoz"
   notify_producers: 'Értesítse a termelőket'
   edit_order_cycle: "Rendelési Ciklus Szerkesztése"
   roles: "Szerepek"
@@ -3315,7 +3314,7 @@ hu:
   business_name: Vállalkozás neve
   js:
     saving: 'Mentés...'
-    changes_saved: 'Változtatások elmentve.'''
+    changes_saved: 'Változtatások elmentve.'
     authorising: "Engedélyezés..."
     save_changes_first: Először mentsd a változtatásokat.
     all_changes_saved: Minden változtatás mentve
@@ -3909,7 +3908,7 @@ hu:
     customer_details: "Vásárló adatai"
     customer_details_updated: "Ügyféladatok frissítve"
     customer_search: "Ügyfélkeresés"
-    choose_a_customer: "Válasszon vásárlót"
+    choose_a_customer: "Válassz vásárlót"
     account: "Fiók"
     billing_address: "Számlázási cím"
     shipping_address: "Szállítási cím"
@@ -3956,7 +3955,7 @@ hu:
     currency_thousands_separator: "Pénznem ezres elválasztó"
     hide_cents: "Fillérek elrejtése"
     display_currency: "Megjelenítési pénznem"
-    choose_currency: "Válasszon pénznemet"
+    choose_currency: "Válassz pénznemet"
     mail_method_settings: "Levelezési mód beállításai"
     mail_settings_notice_html: "<b>Az itt végrehajtott módosítások csak ideiglenesek, </b> hibakeresés céljából történnek, és a jövőben visszaállíthatók. <br>A végleges változtatásokat a biztonsági adatok frissítésével és az <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a>segítségével történő telepítéssel lehet elvégezni. További részletekért fordulj az OFN globális csapatához."
     general: "Általános"
@@ -4513,7 +4512,7 @@ hu:
     checkout:
       payment:
         stripe:
-          choose_one: Válasszon
+          choose_one: Válassz
           enter_new_card: Add meg az új kártya adatait
           used_saved_card: "Mentett kártya használata:"
           or_enter_new_card: "Vagy add meg az új kártya adatait:"

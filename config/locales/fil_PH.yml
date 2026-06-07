@@ -1609,7 +1609,6 @@ fil_PH:
   brandstory_part6: "lahat tayo ay mahilig kumain. ngayon ay maaari narin nating mahalin ang sistema ng pagkain."
   system_headline: "Pamimili - ganito ang paraan."
   system_step1_html: "1. humanap"
-  system_step1_text_html: "humanap sa iba't ibang mga shop ng lokal na napapanahong pagkain. humanap sa pamamagitan ng malapit na lokasyon o kategorya ng pagkain, o kung mas nais mo ang pick-up kesa sa delivery."
   system_step2_html: "2. Mamili"
   system_step2_text_html: "baguhin ang paraan ng pakikipagtransaksyon sa pagbili ng mga lokal ng pagkain mula sa iba't ibang producer at hubs. malaman ang mga kwento sa likod ng mga pagkain at sa mga gumagawa nito."
   system_step3_html: "3. Pick-up / Delivery"

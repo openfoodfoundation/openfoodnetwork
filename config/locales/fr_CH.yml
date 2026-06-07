@@ -87,6 +87,9 @@ fr_CH:
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
         blank: "Champ obligatoire"
+  errors:
+    general_error:
+      message: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte bancaire est incorrect."
@@ -139,6 +142,9 @@ fr_CH:
       transaction_not_allowed: "La carte a été refusée pour une raison inconnue."
       try_again_later: "La carte a été refusée pour une raison inconnue."
       withdrawal_count_limit_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
+      disconnect_failure: "Échec de la déconnexion de Stripe."
+    success_code:
+      disconnected: "Le compte Stripe a été déconnecté."
   activemodel:
     errors:
       messages:
@@ -1630,7 +1636,7 @@ fr_CH:
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       contact_information:
-        title: Coordonnées
+        title: Informations de contact
         email:
           label: Email
         phone:
@@ -1935,7 +1941,6 @@ fr_CH:
   brandstory_part6: " "
   system_headline: "Commander en ligne - comment ça marche?"
   system_step1_html: "1. Recherche"
-  system_step1_text_html: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
   system_step2_html: "2. Achat"
   system_step2_text_html: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné, et découvrez les producteurs qui se cachent derrière les produits."
   system_step3_html: "3. Retrait / Livraison"
