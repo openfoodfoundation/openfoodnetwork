@@ -40,22 +40,6 @@ export default class extends CarouselController {
     this.#setActiveThumbnail(index);
   }
 
-  previous() {
-    if (!this.swiper) {
-      return;
-    }
-
-    this.swiper.slidePrev();
-  }
-
-  next() {
-    if (!this.swiper) {
-      return;
-    }
-
-    this.swiper.slideNext();
-  }
-
   #onSlideChange = () => {
     this.#setActiveThumbnail(this.#currentIndex());
   };

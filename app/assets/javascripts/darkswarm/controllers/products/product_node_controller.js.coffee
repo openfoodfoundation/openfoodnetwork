@@ -1,4 +1,4 @@
-angular.module('Darkswarm').controller "ProductNodeCtrl", ($scope, $modal, FilterSelectorsService) ->
+angular.module('Darkswarm').controller "ProductNodeCtrl", ($scope, $document, $modal, $timeout, FilterSelectorsService) ->
   $scope.enterprise = $scope.product.supplier # For the modal, so it's consistent
   $scope.productPropertySelectors = FilterSelectorsService.createSelectors()
 
@@ -51,7 +51,38 @@ angular.module('Darkswarm').controller "ProductNodeCtrl", ($scope, $modal, Filte
   $scope.nextProductImage = ->
     $scope.selectProductImage($scope.currentProductImageIndex + 1)
 
+  $scope.handleProductCarouselKeydown = (event) ->
+    key = event.key || event.which
+
+    if key == 'ArrowLeft' || key == 37
+      event.preventDefault()
+      $scope.previousProductImage()
+    else if key == 'ArrowRight' || key == 39
+      event.preventDefault()
+      $scope.nextProductImage()
+
+  bindModalCarouselKeyboard = ->
+    handler = (event) ->
+      $scope.$applyAsync ->
+        $scope.handleProductCarouselKeydown(event)
+
+    $document.on 'keydown', handler
+
+    ->
+      $document.off 'keydown', handler
+
   $scope.triggerProductModal = ->
     $scope._productCarouselImages = null
     $scope.currentProductImageIndex = 0
-    $modal.open(templateUrl: "product_modal.html", scope: $scope)
+    modal = $modal.open(templateUrl: "product_modal.html", scope: $scope)
+    unbindKeyboard = bindModalCarouselKeyboard()
+
+    modal.opened.then ->
+      $timeout ->
+        carousel = document.querySelector('.reveal-modal .ofn-thumbnail-carousel[tabindex="0"]')
+        carousel?.focus()
+
+    modal.result.finally ->
+      unbindKeyboard()
+
+    modal
