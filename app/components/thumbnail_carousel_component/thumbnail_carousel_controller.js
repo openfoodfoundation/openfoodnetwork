@@ -3,6 +3,10 @@ import CarouselController from "../carousel_component/carousel_controller";
 export default class extends CarouselController {
   static targets = ["thumbnail", ...CarouselController.targets];
 
+  navigationOptions() {
+    return false;
+  }
+
   connect() {
     super.connect();
     this.#setActiveThumbnail(this.#currentIndex());
@@ -34,6 +38,22 @@ export default class extends CarouselController {
     }
 
     this.#setActiveThumbnail(index);
+  }
+
+  previous() {
+    if (!this.swiper) {
+      return;
+    }
+
+    this.swiper.slidePrev();
+  }
+
+  next() {
+    if (!this.swiper) {
+      return;
+    }
+
+    this.swiper.slideNext();
   }
 
   #onSlideChange = () => {

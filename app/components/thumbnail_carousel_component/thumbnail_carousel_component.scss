@@ -12,6 +12,18 @@
     position: relative;
   }
 
+  &.swiper {
+    .swiper-slide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .swiper-slide.swiper-slide-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
   .ofn-thumbnail-carousel__image {
     @extend %ofn-carousel-image;
     min-height: 260px;
@@ -32,10 +44,24 @@
 
   .ofn-thumbnail-carousel__button--prev {
     @extend %ofn-carousel-button-prev;
+    // padding: 0 2px 2px 1px;
   }
 
   .ofn-thumbnail-carousel__button--next {
     @extend %ofn-carousel-button-next;
+    // padding: 0 0px 2px 1px;
+  }
+
+  .ofn-thumbnail-carousel__button-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
   }
 
   .ofn-thumbnail-carousel__pagination {
@@ -44,8 +70,10 @@
 
   .ofn-thumbnail-carousel__thumbs {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.75rem;
+    margin-bottom: 1rem;
     overflow-x: auto;
   }
 
@@ -55,9 +83,11 @@
     background: transparent;
     cursor: pointer;
     flex: 0 0 64px;
+    opacity: 0.5;
 
     &.is-active {
       border-color: #0096ad;
+      opacity: 1;
     }
   }
 
