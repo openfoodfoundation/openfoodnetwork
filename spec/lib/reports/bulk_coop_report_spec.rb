@@ -30,13 +30,13 @@ module Reporting
                 expect(subject.table_items).to eq([li1])
               end
 
-              it 'shows canceled orders' do
+              it 'excludes canceled orders' do
                 o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
                                     distributor: d1)
                 line_item = build(:line_item_with_shipment,
                                   variant: group_buy_product.variants.first)
                 o2.line_items << line_item
-                expect(subject.table_items).to include(line_item)
+                expect(subject.table_items).not_to include(line_item)
               end
             end
 
@@ -49,13 +49,13 @@ module Reporting
                 expect(subject.table_items).to eq([li1])
               end
 
-              it 'shows canceled orders' do
+              it 'excludes canceled orders' do
                 o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
                                     distributor: d1)
                 line_item = build(:line_item_with_shipment,
                                   variant: group_buy_product.variants.first)
                 o2.line_items << line_item
-                expect(subject.table_items).to include(line_item)
+                expect(subject.table_items).not_to include(line_item)
               end
             end
           end
@@ -87,6 +87,17 @@ module Reporting
                 result = subject.query_result.flatten
                 expect(result).to include(li1)
               end
+            end
+          end
+
+          context "filtering by order state" do
+            it 'excludes cancelled orders' do
+              o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
+                                  distributor: d1)
+              cancelled_li = build(:line_item_with_shipment)
+              o2.line_items << cancelled_li
+
+              expect(subject.table_items).not_to include(cancelled_li)
             end
           end
 
