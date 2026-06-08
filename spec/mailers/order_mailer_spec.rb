@@ -229,6 +229,22 @@ RSpec.describe Spree::OrderMailer do
 
         expect(mail.body.encoded).to include "https://www.openfoodnetwork.org"
       end
+
+      context "when the order has a note" do
+        before { order.update!(note: "We substituted the apples with pears.") }
+
+        it "includes the note in the customer email" do
+          mail = Spree::OrderMailer.confirm_email_for_customer(order.id)
+          expect(mail.body.encoded).to include "We substituted the apples with pears."
+        end
+      end
+
+      context "when the order has no note" do
+        it "does not include a note section in the customer email" do
+          mail = Spree::OrderMailer.confirm_email_for_customer(order.id)
+          expect(mail.body.encoded).not_to include "Note:"
+        end
+      end
     end
 
     describe "for shops" do
@@ -243,6 +259,15 @@ RSpec.describe Spree::OrderMailer do
         ContentConfig.footer_email = "email@example.com"
         Spree::OrderMailer.confirm_email_for_shop(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.count).to eq(1)
+      end
+
+      context "when the order has a note" do
+        before { order.update!(note: "We substituted the apples with pears.") }
+
+        it "includes the note in the shop email" do
+          mail = Spree::OrderMailer.confirm_email_for_shop(order.id)
+          expect(mail.body.encoded).to include "We substituted the apples with pears."
+        end
       end
     end
   end
