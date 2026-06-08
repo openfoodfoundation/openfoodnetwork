@@ -105,7 +105,7 @@ RSpec.describe "Product Import" do
       expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
     end
 
-    it "displays info about invalid entries" do
+    it "displays info about invalid entries and no save button if any items are invalid" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, shipping_category_id
         Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
@@ -128,6 +128,8 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.invalid-count', text: "2"
       expect(page).to have_selector ".create-count", text: "2"
       expect(page).not_to have_selector '.update-count'
+
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
     it "allows variants of the same product to have different variant unit names" do
