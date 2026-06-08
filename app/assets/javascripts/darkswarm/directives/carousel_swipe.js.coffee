@@ -4,7 +4,14 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
     startPoint = null
     currentPoint = null
     isSwiping = false
+    startedOnInteractiveElement = false
     swipeThreshold = 40
+    swipeActivationThreshold = 10
+
+    isInteractiveElement = (target) ->
+      return false unless target?.closest?
+
+      Boolean(target.closest('button, a, input, select, textarea, label'))
 
     readPoint = (event, key = null) ->
       source = event.originalEvent || event
@@ -31,6 +38,9 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       }
 
     onStart = (event) ->
+      startedOnInteractiveElement = isInteractiveElement(event.target)
+      return if startedOnInteractiveElement
+
       point = readPoint(event, 'touches') || readPoint(event)
       return unless point
 
@@ -39,23 +49,34 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       isSwiping = false
 
     onMove = (event) ->
+      return if startedOnInteractiveElement
+
       point = readPoint(event, 'touches') || readPoint(event)
       return unless point && startPoint?
 
       currentPoint = point
       deltaX = currentPoint.x - startPoint.x
       deltaY = currentPoint.y - startPoint.y
+      absDeltaX = Math.abs(deltaX)
+      absDeltaY = Math.abs(deltaY)
 
-      if Math.abs(deltaX) > Math.abs(deltaY)
+      return if absDeltaX < swipeActivationThreshold
+
+      if absDeltaX > absDeltaY
         isSwiping = true
         event.preventDefault?()
 
     onEnd = (event) ->
+      return onCancel() if startedOnInteractiveElement
+
       point = readPoint(event, 'changedTouches') || readPoint(event) || currentPoint
       return unless point && startPoint?
 
       deltaX = point.x - startPoint.x
       deltaY = point.y - startPoint.y
+
+      unless isSwiping
+        return onCancel()
 
       if Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)
         event.preventDefault?()
@@ -73,6 +94,7 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       startPoint = null
       currentPoint = null
       isSwiping = false
+      startedOnInteractiveElement = false
 
     element.bind 'touchstart', onStart
     element.bind 'touchmove', onMove
