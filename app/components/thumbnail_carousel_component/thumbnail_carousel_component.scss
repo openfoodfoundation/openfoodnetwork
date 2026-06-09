@@ -1,9 +1,21 @@
 .ofn-thumbnail-carousel {
   @extend %ofn-carousel-container;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
 
   .swiper-wrapper {
     display: flex;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .ofn-thumbnail-carousel__controls {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .swiper-slide {
@@ -40,6 +52,7 @@
 
   .ofn-thumbnail-carousel__button {
     @extend %ofn-carousel-button;
+    pointer-events: auto;
   }
 
   .ofn-thumbnail-carousel__button--prev {
@@ -57,16 +70,20 @@
 
     svg {
       display: block;
-      width: 16px;
-      height: 16px;
+      width: 24px;
+      height: 24px;
     }
   }
 
   .ofn-thumbnail-carousel__pagination {
     @extend %ofn-carousel-pagination;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .ofn-thumbnail-carousel__thumbs {
+    grid-column: 1;
+    grid-row: 2;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
