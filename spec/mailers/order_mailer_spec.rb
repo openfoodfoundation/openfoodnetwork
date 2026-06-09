@@ -269,6 +269,31 @@ RSpec.describe Spree::OrderMailer do
           expect(mail.body.encoded).to include "We substituted the apples with pears."
         end
       end
+
+      context "when the order has no note" do
+        it "does not include a note section in the shop email" do
+          mail = Spree::OrderMailer.confirm_email_for_shop(order.id)
+          expect(mail.body.encoded).not_to include "Note:"
+        end
+      end
+    end
+
+    context "when the order note is updated" do
+      before { order.update!(note: "Original note.") }
+
+      it "reflects the updated note in the customer email" do
+        order.update!(note: "Updated note after substitution.")
+        mail = Spree::OrderMailer.confirm_email_for_customer(order.id)
+        expect(mail.body.encoded).to include "Updated note after substitution."
+        expect(mail.body.encoded).not_to include "Original note."
+      end
+
+      it "reflects the updated note in the shop email" do
+        order.update!(note: "Updated note after substitution.")
+        mail = Spree::OrderMailer.confirm_email_for_shop(order.id)
+        expect(mail.body.encoded).to include "Updated note after substitution."
+        expect(mail.body.encoded).not_to include "Original note."
+      end
     end
   end
 
