@@ -82,6 +82,10 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
             let(:Accept) { 'application/ld+json; profile="dfc-v2"' }
 
             run_test! do
+              expect(graph[0]).to include(
+                "@id" => "http://test.host/api/dfc/supplied_products",
+                "@type" => "ldp:Container",
+              )
               expect(response.body).to include "Pesto"
             end
           end
