@@ -20,9 +20,21 @@
 
   .ofn-thumbnail-carousel {
     touch-action: pan-y;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
 
     .swiper-wrapper {
       display: flex;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .ofn-thumbnail-carousel__controls {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      z-index: 3;
+      pointer-events: none;
     }
 
     // Apply CSS transition only for the AngularJS-driven carousel (not Swiper-managed instances).
@@ -62,7 +74,7 @@
       width: 1.8rem;
       height: 1.8rem;
       border-radius: 9999px;
-      border: 1px solid rgb(0 0 0 / 18%);
+      border: none;
       background: rgb(255 255 255 / 95%);
       box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
       display: inline-flex;
@@ -73,6 +85,7 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 3;
+      pointer-events: auto;
       transition: background-color 160ms ease, box-shadow 160ms ease;
 
       &:hover {
@@ -101,9 +114,14 @@
 
       svg {
         display: block;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
       }
+    }
+
+    .ofn-thumbnail-carousel__thumbs {
+      grid-column: 1;
+      grid-row: 2;
     }
 
     .ofn-thumbnail-carousel__thumb {
