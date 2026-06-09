@@ -11,7 +11,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                                              "Email", "Phone", "Hub", "Hub Address",
                                              "Shipping Method", "Total Number of Orders",
                                              "Total incl. tax ($)",
-                                             "Last completed order date"])
+                                             "Last completed order date",
+                                             "Balance Due ($)", "Available Credit ($)"])
       end
 
       it "builds a table from a list of variants" do
@@ -27,7 +28,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                                            o.email, a.phone, d.name,
                                            [d.address.address1, d.address.address2,
                                             d.address.city].join(" "),
-                                           o.shipping_method.name, 1, o.total, "none"
+                                           o.shipping_method.name, 1, o.total, "none",
+                                           "$0.00", "$0.00"
                                          ]])
       end
 
@@ -65,7 +67,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                      [a.address1, a.address2, a.city].join(" "),
                      o1.email, a.phone, d.name,
                      [d.address.address1, d.address.address2, d.address.city].join(" "),
-                     o1.shipping_method.name, 2, o1.total + o2.total, "2023-01-02"
+                     o1.shipping_method.name, 2, o1.total + o2.total, "2023-01-02",
+                     "$26.00", "$0.00"
                    ]])
         end
 
@@ -87,13 +90,15 @@ RSpec.describe Reporting::Reports::Customers::Base do
                        [a.address1, a.address2, a.city].join(" "),
                        o1.email, a.phone, d.name,
                        [d.address.address1, d.address.address2, d.address.city].join(" "),
-                       o1.shipping_method.name, 1, o1.total, "2023-01-01"
+                       o1.shipping_method.name, 1, o1.total, "2023-01-01",
+                       "$13.00", "$0.00"
                      ], [
                        a.firstname, a.lastname,
                        [a.address1, a.address2, a.city].join(" "),
                        o2.email, a.phone, d2.name,
                        [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                       o2.shipping_method.name, 1, o2.total, "2023-01-02"
+                       o2.shipping_method.name, 1, o2.total, "2023-01-02",
+                       "$13.00", "$0.00"
                      ]])
           end
         end
@@ -112,7 +117,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
           context "when the shipping method column is being included" do
             let(:fields_to_show) do
               [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
-               :shipping_method, :total_orders, :total_incl_tax, :last_completed_order_date]
+               :shipping_method, :total_orders, :total_incl_tax, :last_completed_order_date,
+               :balance_due, :credit_due]
             end
             subject { described_class.new(user, { fields_to_show: }) }
 
@@ -129,7 +135,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                     a.phone,
                     d.name,
                     [d.address.address1, d.address.address2, d.address.city].join(" "),
-                    o1.shipping_method.name, 1, o1.total, o1.completed_at.strftime("%Y-%m-%d")
+                    o1.shipping_method.name, 1, o1.total, o1.completed_at.strftime("%Y-%m-%d"),
+                    "$13.00", "$0.00"
                   ],
                   [
                     a.firstname,
@@ -139,7 +146,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                     a.phone,
                     d.name,
                     [d.address.address1, d.address.address2, d.address.city].join(" "),
-                    sm2.name, 1, o2.total, o2.completed_at.strftime("%Y-%m-%d")
+                    sm2.name, 1, o2.total, o2.completed_at.strftime("%Y-%m-%d"),
+                    "$13.00", "$0.00"
                   ]
                 ]
               )
