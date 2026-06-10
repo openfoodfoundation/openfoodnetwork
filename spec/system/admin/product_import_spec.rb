@@ -105,7 +105,7 @@ RSpec.describe "Product Import" do
       expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
     end
 
-    it "displays info about invalid entries but no save button if all items are invalid" do
+    it "displays info about invalid entries and no save button if any items are invalid" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, shipping_category_id
         Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
@@ -125,14 +125,14 @@ RSpec.describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "4"
-      expect(page).to have_selector '.invalid-count', text: "3"
-      expect(page).to have_selector ".create-count", text: "1"
+      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector ".create-count", text: "2"
       expect(page).not_to have_selector '.update-count'
 
       expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
-    it "displays info about inconsistent variant unit names, within the same product" do
+    it "allows variants of the same product to have different variant unit names" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, variant_unit_name, \
           shipping_category_id
@@ -148,12 +148,14 @@ RSpec.describe "Product Import" do
       click_button 'Upload'
 
       proceed_to_validation
-      find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "Variant_unit_name must be the same for products " \
-                                   "with the same name"
-      expect(page).to have_content "Imported file contains invalid entries"
 
-      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).not_to have_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "2"
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '2'
     end
 
     it "handles saving of named tax and shipping categories" do
@@ -449,7 +451,7 @@ RSpec.describe "Product Import" do
           )
         end
 
-        it "displays the appropriate error message, when variant unit names are inconsistent" do
+        it "allows variants of the same product to have different variant unit names" do
           csv_data = <<~CSV
             name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
               variant_unit_name
@@ -464,15 +466,10 @@ RSpec.describe "Product Import" do
           click_button 'Upload'
           proceed_to_validation
 
-          find('div.header-description', text: 'Items contain errors').click
-          expect(page).to have_content "Variant_unit_name must be the same for products " \
-                                       "with the same name"
-          expect(page).to have_content "Imported file contains invalid entries"
-          expect(page).not_to have_selector 'input[type=submit][value="Save"]'
-
-          visit main_app.admin_inventory_path
-
-          expect(page).not_to have_content "Aubergine"
+          expect(page).to have_selector '.item-count', text: "2"
+          expect(page).not_to have_selector '.invalid-count'
+          expect(page).to have_selector '.inv-create-count', text: '2'
+          expect(page).not_to have_selector '.inv-update-count'
         end
 
         it "invalidates units value if 0 or non-numeric" do

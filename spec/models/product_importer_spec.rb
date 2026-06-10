@@ -494,17 +494,17 @@ RSpec.describe ProductImport::ProductImporter do
       importer.validate_entries
       entries = JSON.parse(importer.entries_json)
 
-      expect(filter('valid', entries)).to eq 3
-      expect(filter('invalid', entries)).to eq 2
-      expect(filter('create_product', entries)).to eq 3
+      expect(filter('valid', entries)).to eq 4
+      expect(filter('invalid', entries)).to eq 1
+      expect(filter('create_product', entries)).to eq 4
     end
 
     it "saves and updates" do
       importer.save_entries
 
-      expect(importer.products_created_count).to eq 3
+      expect(importer.products_created_count).to eq 4
       expect(importer.updated_ids).to be_a(Array)
-      expect(importer.updated_ids.count).to eq 3
+      expect(importer.updated_ids.count).to eq 4
 
       small_bag = Spree::Variant.find_by(display_name: 'Small Bag')
       expect(small_bag.product.name).to eq 'Potatoes'
@@ -512,7 +512,10 @@ RSpec.describe ProductImport::ProductImporter do
       expect(small_bag.on_hand).to eq 5
 
       big_bag = Spree::Variant.find_by(display_name: "Big Bag")
-      expect(big_bag).to be_blank
+      expect(big_bag.product.name).to eq 'Potatoes'
+      expect(big_bag.price).to eq 5.50
+      expect(big_bag.on_hand).to eq 6
+      expect(big_bag.product.id).to eq small_bag.product.id
 
       small_sack = Spree::Variant.find_by(display_name: "Small Sack")
       expect(small_sack.product.name).to eq "Potatoes"
@@ -566,7 +569,7 @@ RSpec.describe ProductImport::ProductImporter do
     end
   end
 
-  describe "updating non-updatable fields on existing variants" do
+  describe "importing item-type variants for a product with existing weight variants" do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "variant_unit_name",
@@ -579,17 +582,13 @@ RSpec.describe ProductImport::ProductImporter do
     }
     let(:importer) { import_data csv_data }
 
-    it "does not allow updating" do
+    it "creates new variants rather than updating the existing weight variants" do
       importer.validate_entries
       entries = JSON.parse(importer.entries_json)
 
-      expect(filter('valid', entries)).to eq 0
-      expect(filter('invalid', entries)).to eq 2
-
-      importer.entries.each do |entry|
-        expect(entry.errors.messages.values)
-          .to include ['cannot be updated on existing products via product import']
-      end
+      expect(filter('valid', entries)).to eq 2
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 2
     end
   end
 
