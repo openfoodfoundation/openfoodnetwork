@@ -13,10 +13,13 @@ describe("UpdateCartController", () => {
   });
 
   let dispatchEventSpy;
-
-  beforeEach(() => {
-    document.body.innerHTML = `
-      <div data-controller="update-cart" data-update-cart-variant-id-value="10">
+  const htmlTemplate = (quantity = 0, onHand = 10) => `
+      <div 
+        data-controller="update-cart" 
+        data-update-cart-variant-id-value="10"
+        data-update-cart-variant-on-hand-value="${onHand}"
+        data-update-cart-low-stock-display-value="true"
+      >
         <div id="add_container" class="variant-quantity-inputs" data-update-cart-target="addButton">
           <button id="add" name="button" type="button" class="add-variant" data-action="update-cart#addEmpty">Add</button>
         </div>
@@ -24,18 +27,21 @@ describe("UpdateCartController", () => {
           <button id="minus" class="variant-quantity" data-action="update-cart#remove" type="button">
             - 
           </button>
-          <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="0">
+          <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="${quantity}">
           <button id="plus" class="variant-quantity" data-action="update-cart#add" type="button">
             + 
           </button>
         </div>
-        <div class="variant-remaining-stock" style="display: none;">
-          Only 0 left
+        <div id="remaining_stock" class="variant-remaining-stock" style="display: none;" data-update-cart-target="stock">
+          Only ${onHand} left
         </div>
         <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
-          0 in cart
+          ${quantity} in cart
         </div>
       </div>`;
+
+  beforeEach(() => {
+    document.body.innerHTML = htmlTemplate();
 
     const mockedT = jest.fn();
     mockedT.mockImplementation((string, opts) => string + ", " + JSON.stringify(opts));
@@ -86,6 +92,23 @@ describe("UpdateCartController", () => {
 
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":1}');
+    });
+
+    describe("when low stock is displayed", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(0, 2);
+      });
+
+      it("hides low stock", () => {
+        const add_button = document.getElementById("add");
+        const remaining_stock = document.getElementById("remaining_stock");
+
+        expect(remaining_stock.style.display).toBe("block");
+
+        add_button.click();
+
+        expect(remaining_stock.style.display).toBe("none");
+      });
     });
   });
 
@@ -147,14 +170,14 @@ describe("UpdateCartController", () => {
     });
 
     describe("when quantity becomes 0", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(1);
+      });
+
       it("toggles to the add button", () => {
         const add_container = document.getElementById("add_container");
-        const add_button = document.getElementById("add");
         const quantity_buttons = document.getElementById("quantity_buttons");
         const minus_button = document.getElementById("minus");
-
-        // Set the button state
-        add_button.click();
 
         expect(quantity_buttons.style.display).toBe("block");
         expect(add_container.style.display).toBe("none");
@@ -166,12 +189,8 @@ describe("UpdateCartController", () => {
       });
 
       it("hides the number of item in cart", () => {
-        const add_button = document.getElementById("add");
         const minus_button = document.getElementById("minus");
         const itemInCart = document.getElementById("item-in-cart");
-
-        // Set the button state
-        add_button.click();
 
         minus_button.click();
 
@@ -180,15 +199,33 @@ describe("UpdateCartController", () => {
           'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
         );
       });
+
+      describe("when low stock", () => {
+        beforeEach(() => {
+          document.body.innerHTML = htmlTemplate(1, 2);
+        });
+
+        it("shows low stock", () => {
+          const add_button = document.getElementById("add");
+          const minus_button = document.getElementById("minus");
+          const remaining_stock = document.getElementById("remaining_stock");
+
+          expect(remaining_stock.style.display).toBe("none");
+
+          minus_button.click();
+
+          expect(remaining_stock.style.display).toBe("block");
+        });
+      });
     });
   });
 
   describe("quantity input", () => {
-    it("update quantity in cart by the given number", () => {
-      // Set button state
-      const add_button = document.getElementById("add");
-      add_button.click();
+    beforeEach(() => {
+      document.body.innerHTML = htmlTemplate(1);
+    });
 
+    it("update quantity in cart by the given number", () => {
       const quantity = document.getElementById("quantity");
       quantity.value = 3;
       quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "3" }));
@@ -201,10 +238,6 @@ describe("UpdateCartController", () => {
     });
 
     it("updates the number of item in the cart", () => {
-      // Set button state
-      const add_button = document.getElementById("add");
-      add_button.click();
-
       const itemInCart = document.getElementById("item-in-cart");
 
       const quantity = document.getElementById("quantity");
@@ -216,10 +249,6 @@ describe("UpdateCartController", () => {
     });
 
     it("does nothing if quantity is not a valid number", () => {
-      // Set button state
-      const add_button = document.getElementById("add");
-      add_button.click();
-
       const preTestCallsNb = dispatchEventSpy.mock.calls.length;
 
       const quantity = document.getElementById("quantity");
@@ -230,10 +259,6 @@ describe("UpdateCartController", () => {
     });
 
     it("does nothing if quantity is negative", () => {
-      // Set button state
-      const add_button = document.getElementById("add");
-      add_button.click();
-
       const preTestCallsNb = dispatchEventSpy.mock.calls.length;
 
       const quantity = document.getElementById("quantity");
@@ -248,10 +273,6 @@ describe("UpdateCartController", () => {
         const add_container = document.getElementById("add_container");
         const quantity_buttons = document.getElementById("quantity_buttons");
 
-        // Set button state
-        const add_button = document.getElementById("add");
-        add_button.click();
-
         const quantity = document.getElementById("quantity");
         quantity.value = "0";
         quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
@@ -263,10 +284,6 @@ describe("UpdateCartController", () => {
       });
 
       it("hides the number of item in cart", () => {
-        // Set button state
-        const add_button = document.getElementById("add");
-        add_button.click();
-
         const itemInCart = document.getElementById("item-in-cart");
 
         const quantity = document.getElementById("quantity");
@@ -278,33 +295,31 @@ describe("UpdateCartController", () => {
           'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
         );
       });
+
+      describe("when low stock", () => {
+        beforeEach(() => {
+          document.body.innerHTML = htmlTemplate(1, 2);
+        });
+
+        it("shows low stock", () => {
+          const remaining_stock = document.getElementById("remaining_stock");
+          const quantity = document.getElementById("quantity");
+
+          expect(remaining_stock.style.display).toBe("none");
+
+          quantity.value = "0";
+          quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
+
+          expect(remaining_stock.style.display).toBe("block");
+        });
+      });
     });
   });
 
   describe("connect", () => {
     describe("when quantity is positive", () => {
       beforeEach(() => {
-        document.body.innerHTML = `
-          <div data-controller="update-cart" data-update-cart-variant-id-value="10">
-            <div id="add_container" class="variant-quantity-inputs" data-update-cart-target="addButton">
-              <button id="add" name="button" type="button" class="add-variant" data-action="update-cart#addEmpty">Add</button>
-            </div>
-            <div id="quantity_buttons" class="variant-quantity-inputs" data-update-cart-target="quantityButton" style="display: none;">
-              <button id="minus" class="variant-quantity" data-action="update-cart#remove" type="button">
-                - 
-              </button>
-              <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="5">
-              <button id="plus" class="variant-quantity" data-action="update-cart#add" type="button">
-                + 
-              </button>
-            </div>
-            <div class="variant-remaining-stock" style="display: none;">
-              Only 0 left
-            </div>
-            <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
-              5 in cart
-            </div>
-          </div>`;
+        document.body.innerHTML = htmlTemplate(5);
       });
 
       it("displays the minus/plus button and quantity", () => {
@@ -325,27 +340,7 @@ describe("UpdateCartController", () => {
 
     describe("when quantity is not positive", () => {
       beforeEach(() => {
-        document.body.innerHTML = `
-          <div data-controller="update-cart" data-update-cart-variant-id-value="10">
-            <div id="add_container" class="variant-quantity-inputs" data-update-cart-target="addButton">
-              <button id="add" name="button" type="button" class="add-variant" data-action="update-cart#addEmpty">Add</button>
-            </div>
-            <div id="quantity_buttons" class="variant-quantity-inputs" data-update-cart-target="quantityButton" style="display: none;">
-              <button id="minus" class="variant-quantity" data-action="update-cart#remove" type="button">
-                - 
-              </button>
-              <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="-2">
-              <button id="plus" class="variant-quantity" data-action="update-cart#add" type="button">
-                + 
-              </button>
-            </div>
-            <div class="variant-remaining-stock" style="display: none;">
-              Only 0 left
-            </div>
-            <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
-              0 in cart
-            </div>
-          </div>`;
+        document.body.innerHTML = htmlTemplate(-2);
       });
 
       it("displays the add button", () => {
@@ -354,6 +349,30 @@ describe("UpdateCartController", () => {
 
         expect(quantity_buttons.style.display).toBe("none");
         expect(add_container.style.display).toBe("");
+      });
+    });
+
+    describe("when display low stock is enabled", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(0, 4);
+      });
+
+      it("doesn't show low stock warning", () => {
+        const remaining_stock = document.getElementById("remaining_stock");
+
+        expect(remaining_stock.style.display).toBe("none");
+      });
+
+      describe("when remaining stock below 4", () => {
+        beforeEach(() => {
+          document.body.innerHTML = htmlTemplate(0, 2);
+        });
+
+        it("shows low stock warning", () => {
+          const remaining_stock = document.getElementById("remaining_stock");
+
+          expect(remaining_stock.style.display).toBe("block");
+        });
       });
     });
   });
