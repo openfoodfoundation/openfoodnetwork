@@ -72,6 +72,14 @@ RSpec.describe Reporting::Reports::Customers::Base do
                    ]])
         end
 
+        context "when the customer has a credit balance" do
+          before { create(:customer_account_transaction, customer:, amount: 25.00) }
+
+          it "reflects the credit balance in the credit_due column" do
+            expect(subject.table_rows.first.last).to eq("$25.00")
+          end
+        end
+
         context "orders from different hubs" do
           let!(:d2) { create(:distributor_enterprise) }
           let!(:sm2) { create(:shipping_method, distributors: [d2]) }

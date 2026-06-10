@@ -60,7 +60,7 @@ module Reporting
         end
 
         def filter(orders)
-         filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
+          filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
         end
 
         def skip_duplicate_rows?
