@@ -28,7 +28,7 @@ describe("UpdateCartController", () => {
             - 
           </button>
           <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="${quantity}">
-          <button id="plus" class="variant-quantity" data-action="update-cart#add" type="button">
+          <button id="plus" class="variant-quantity" data-action="update-cart#add" data-update-cart-target="plusButton" type="button">
             + 
           </button>
         </div>
@@ -139,6 +139,20 @@ describe("UpdateCartController", () => {
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":6}');
     });
+
+    describe("when quantity equal available stock", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(4, 5);
+      });
+
+      it("disables the add button", () => {
+        const plus_button = document.getElementById("plus");
+
+        plus_button.click();
+
+        expect(plus_button.disabled).toBe(true);
+      });
+    });
   });
 
   describe("#remove", () => {
@@ -206,7 +220,6 @@ describe("UpdateCartController", () => {
         });
 
         it("shows low stock", () => {
-          const add_button = document.getElementById("add");
           const minus_button = document.getElementById("minus");
           const remaining_stock = document.getElementById("remaining_stock");
 
@@ -216,6 +229,21 @@ describe("UpdateCartController", () => {
 
           expect(remaining_stock.style.display).toBe("block");
         });
+      });
+    });
+
+    describe("when quantity below available stock", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(5, 5);
+      });
+
+      it("enables the add button", () => {
+        const minus_button = document.getElementById("minus");
+        const plus_button = document.getElementById("plus");
+
+        minus_button.click();
+
+        expect(plus_button.disabled).toBe(false);
       });
     });
   });
@@ -314,6 +342,55 @@ describe("UpdateCartController", () => {
         });
       });
     });
+
+    describe("when quantity equal available stock", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(2, 5);
+      });
+
+      it("disables the add button", () => {
+        const plus_button = document.getElementById("plus");
+
+        quantity.value = "5";
+        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "5" }));
+
+        expect(plus_button.disabled).toBe(true);
+      });
+    });
+
+    describe("when quantity is more than available stock", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(2, 5);
+      });
+
+      it("sets quantity to availabe stock and disables the add button", () => {
+        const plus_button = document.getElementById("plus");
+
+        // TODO helper function
+        quantity.value = "8";
+        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "8" }));
+
+        expect(plus_button.disabled).toBe(true);
+        expect(quantity.value).toBe("5");
+      });
+    });
+
+    describe("when plus button disabled", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(5, 5);
+      });
+
+      it("enables plus button when quantity below available stock", () => {
+        const plus_button = document.getElementById("plus");
+
+        expect(plus_button.disabled).toBe(true);
+
+        quantity.value = "2";
+        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "2" }));
+
+        expect(plus_button.disabled).toBe(false);
+      });
+    });
   });
 
   describe("connect", () => {
@@ -373,6 +450,17 @@ describe("UpdateCartController", () => {
 
           expect(remaining_stock.style.display).toBe("block");
         });
+      });
+    });
+
+    describe("when quantity equal available stock", () => {
+      beforeEach(() => {
+        document.body.innerHTML = htmlTemplate(5, 5);
+      });
+
+      it("disables the plus button", () => {
+        const plus_button = document.getElementById("plus");
+        expect(plus_button.disabled).toBe(true);
       });
     });
   });

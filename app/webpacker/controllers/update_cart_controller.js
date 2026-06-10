@@ -5,7 +5,7 @@ export default class extends Controller {
     "addButton",
     "quantityButton",
     "quantity",
-    "minusButton",
+    "plusButton",
     "nbItemInCart",
     "stock",
   ];
@@ -16,7 +16,9 @@ export default class extends Controller {
   };
 
   connect() {
-    let quantity = parseInt(this.quantityTarget.value);
+    const quantity = parseInt(this.quantityTarget.value);
+
+    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
 
     if (quantity > 0) {
       this.#showQuantityButtons();
@@ -43,6 +45,9 @@ export default class extends Controller {
     this.#dispatchCartUpdate(quantity);
 
     this.#showAndUpdateItemInCart(quantity);
+
+    // disable button if reach max on hand
+    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
   }
 
   remove() {
@@ -54,6 +59,8 @@ export default class extends Controller {
 
     this.#showAndUpdateItemInCart(quantity);
 
+    if (quantity < this.variantOnHandValue) this.plusButtonTarget.disabled = false;
+
     if (quantity === 0) {
       this.#hideQuantityButtons();
       this.#hideItemInCart();
@@ -62,15 +69,22 @@ export default class extends Controller {
   }
 
   manual(e) {
-    const quantity = parseInt(this.quantityTarget.value);
+    let quantity = parseInt(this.quantityTarget.value);
 
     // check it's a number or a negative value
     if (isNaN(quantity) || quantity < 0) {
       return;
     }
 
+    quantity = Math.min(this.variantOnHandValue, quantity);
+    this.quantityTarget.value = quantity;
+
     this.#dispatchCartUpdate(quantity);
     this.#showAndUpdateItemInCart(quantity);
+
+    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
+
+    if (quantity < this.variantOnHandValue) this.plusButtonTarget.disabled = false;
 
     if (quantity === 0) {
       this.#hideQuantityButtons();
