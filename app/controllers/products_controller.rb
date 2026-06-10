@@ -12,6 +12,7 @@ class ProductsController < BaseController
     ).products
 
     @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
+    @low_stock_display = distributor.preferred_product_low_stock_display
   end
 
   private

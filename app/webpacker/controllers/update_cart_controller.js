@@ -1,8 +1,19 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["addButton", "quantityButton", "quantity", "minusButton", "nbItemInCart"];
-  static values = { variantId: Number };
+  static targets = [
+    "addButton",
+    "quantityButton",
+    "quantity",
+    "minusButton",
+    "nbItemInCart",
+    "stock",
+  ];
+  static values = {
+    variantId: Number,
+    variantOnHand: Number,
+    lowStockDisplay: Boolean,
+  };
 
   connect() {
     let quantity = parseInt(this.quantityTarget.value);
@@ -10,6 +21,8 @@ export default class extends Controller {
     if (quantity > 0) {
       this.#showQuantityButtons();
       this.#showItemInCart();
+    } else {
+      this.#showStock();
     }
   }
 
@@ -44,6 +57,7 @@ export default class extends Controller {
     if (quantity === 0) {
       this.#hideQuantityButtons();
       this.#hideItemInCart();
+      this.#showStock();
     }
   }
 
@@ -61,6 +75,7 @@ export default class extends Controller {
     if (quantity === 0) {
       this.#hideQuantityButtons();
       this.nbItemInCartTarget.style.visibility = "hidden";
+      this.#showStock();
     }
   }
 
@@ -88,12 +103,25 @@ export default class extends Controller {
       quantity: quantity,
     });
     this.#showItemInCart();
+    this.#hideStock();
   }
 
   #showItemInCart() {
     this.nbItemInCartTarget.style.visibility = "visible";
   }
+
   #hideItemInCart() {
     this.nbItemInCartTarget.style.visibility = "hidden";
+  }
+
+  #hideStock() {
+    this.stockTarget.style.display = "none";
+  }
+
+  // display low stock if enabled and stock less than 3
+  #showStock() {
+    if (this.lowStockDisplayValue === true && this.variantOnHandValue <= 3) {
+      this.stockTarget.style.display = "block";
+    }
   }
 }
