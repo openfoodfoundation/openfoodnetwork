@@ -17,7 +17,7 @@ module Reporting
           end.values
         end
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
         def columns
           {
             first_name: proc { |orders| last_completed_order(orders).billing_address.firstname },
@@ -53,7 +53,7 @@ module Reporting
             },
           }
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
         def columns_format
           { balance_due: :currency, credit_due: :currency }
