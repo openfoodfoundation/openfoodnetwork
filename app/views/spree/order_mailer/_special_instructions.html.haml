@@ -6,3 +6,11 @@
         = t :email_special_instructions
       %br
       #{@order.special_instructions}
+- if @order.note.present?
+  %br
+  %p
+    %small
+      %strong
+        = t :email_order_note
+      %br
+      #{@order.note}
