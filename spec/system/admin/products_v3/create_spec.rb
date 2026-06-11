@@ -48,15 +48,19 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "New variant"
     end
 
-    it "has the empty unit value for the new variant display_as by default" do
+    it "pre-fills the unit from the last variant on a new variant row" do
       new_variant_button.click
 
       within new_variant_row do
         unit_button = find('button[aria-label="Unit"]')
-        expect(unit_button.text.strip).to eq('')
-
         unit_button.click
-        expect(page).to have_field "Display unit as", placeholder: ""
+
+        # The new variant inherits the unit from the existing variant (1g):
+        # the unit value is pre-filled so the user doesn't get a "can't be blank"
+        # error on save. The display_as field itself stays empty (the inherited
+        # unit shows as its placeholder) so the user can still override it.
+        expect(page).to have_field "Unit value", with: "1"
+        expect(page).to have_field "Display unit as", with: "", placeholder: "1g"
       end
     end
 

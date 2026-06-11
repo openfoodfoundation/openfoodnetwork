@@ -2,7 +2,7 @@
 = form.fields_for("products", product, index: product_index) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
-                          action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' },
+                          action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:add->bulk-form#toggleFormChanged rails-nested-form:remove->bulk-form#toggleFormChanged' },
                   class: (defined?(should_slide_in) && should_slide_in) ? 'slide-in' : '' }
     %tr
       - if allowed_source_producers.include?(product.variants.first.enterprise) && !spree_current_user.admin?

@@ -72,7 +72,15 @@ export default class BulkFormController extends Controller {
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
       elements.some(this.#checkIsChanged.bind(this)),
     ).length;
-    this.formChanged = changedRecordCount > 0 || this.errorValue;
+
+    // New (unsaved) variants have an empty hidden id field (no value attribute, or value="").
+    // Their pre-filled values look "unchanged" to #isChanged because Rails bakes the defaults
+    // into the HTML, so we detect them separately and treat their presence as a pending change.
+    const hasNewVariants = Array.from(
+      this.form.querySelectorAll('input[type="hidden"][name*="variants_attributes"][name$="[id]"]'),
+    ).some((el) => !el.value);
+
+    this.formChanged = changedRecordCount > 0 || this.errorValue || hasNewVariants;
 
     // Show actions
     this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !this.formChanged);
@@ -103,6 +111,12 @@ export default class BulkFormController extends Controller {
     this.variantUnits = this.element.querySelectorAll("button.popout__button");
     this.variantUnits.forEach((element) => {
       if (element.textContent == "") {
+        // If the row already has a unit type set (e.g. from pre-filled defaults or a prior
+        // TomSelect choice), skip the popout — the unit type is known, and the unit value
+        // will be caught by server-side validation with a clear error message.
+        const row = element.closest("tr");
+        const variantUnitField = row?.querySelector('input[type="hidden"][name$="[variant_unit]"]');
+        if (variantUnitField?.value) return;
         element.click();
       }
     });
