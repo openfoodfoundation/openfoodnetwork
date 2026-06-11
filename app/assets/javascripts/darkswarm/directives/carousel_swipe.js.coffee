@@ -4,9 +4,11 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
     startPoint = null
     currentPoint = null
     isSwiping = false
+    swipeAxis = null
     startedOnInteractiveElement = false
     swipeThreshold = 40
     swipeActivationThreshold = 10
+    horizontalDominanceRatio = 1.5
 
     isInteractiveElement = (target) ->
       return false unless target?.closest?
@@ -47,6 +49,7 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       startPoint = point
       currentPoint = point
       isSwiping = false
+      swipeAxis = null
 
     onMove = (event) ->
       return if startedOnInteractiveElement
@@ -60,10 +63,16 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       absDeltaX = Math.abs(deltaX)
       absDeltaY = Math.abs(deltaY)
 
-      return if absDeltaX < swipeActivationThreshold
+      return if !swipeAxis && absDeltaX < swipeActivationThreshold && absDeltaY < swipeActivationThreshold
 
-      if absDeltaX > absDeltaY
-        isSwiping = true
+      if !swipeAxis
+        if absDeltaX >= swipeActivationThreshold && absDeltaX > (absDeltaY * horizontalDominanceRatio)
+          swipeAxis = 'horizontal'
+          isSwiping = true
+        else if absDeltaY >= swipeActivationThreshold
+          swipeAxis = 'vertical'
+
+      if swipeAxis == 'horizontal'
         event.preventDefault?()
 
     onEnd = (event) ->
@@ -89,11 +98,13 @@ angular.module('Darkswarm').directive "ofnCarouselSwipe", () ->
       startPoint = null
       currentPoint = null
       isSwiping = false
+      swipeAxis = null
 
     onCancel = ->
       startPoint = null
       currentPoint = null
       isSwiping = false
+      swipeAxis = null
       startedOnInteractiveElement = false
 
     element.bind 'touchstart', onStart
