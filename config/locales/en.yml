@@ -894,6 +894,7 @@ en:
         update_address: "Update Address"
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
+        filter_by_tag: "Filter by tag"
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"

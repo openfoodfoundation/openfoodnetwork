@@ -25,7 +25,11 @@
         %label{ for: 'hub_id', "ng-bind": "shop_id ? '#{t('admin.shop')}' : '#{t('admin.variant_overrides.index.select_a_shop')}'" }
         %br
         %input.ofn-select2.fullwidth#shop_id{ "ng-model": 'shop_id', name: 'shop_id', data: 'shops', "on-selecting": 'confirmRefresh' }
-      .seven.columns.omega &nbsp;
+      .filter_select.four.columns
+        %label{ for: 'tag_filter', "ng-class": '{disabled: !shop_id}' }=t('admin.tags')
+        %br
+        %input.fullwidth{ type: "text", id: 'tag_filter', placeholder: t('.filter_by_tag'), "ng-model": 'tagFilter', "ng-disabled": '!shop_id' }
+      .three.columns.omega &nbsp;
 
   %hr.divider{ "ng-show": "!RequestMonitor.loading && filteredCustomers.length > 0" }
 
@@ -71,13 +75,14 @@
               %a{ :href => '', 'ng-click' => "sorting.toggle('last_name')" }=t('admin.last_name')
             %th.code{ 'ng-show' => 'columns.code.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('code')" }=t('admin.customers.index.code')
-            %th.tags{ 'ng-show' => 'columns.tags.visible' }=t('admin.tags')
+            %th.tags{ 'ng-show' => 'columns.tags.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('tag_list')", 'data-turbo' => 'false' }=t('admin.tags')
             %th.bill_address{ 'ng-show' => 'columns.bill_address.visible' }=t('admin.customers.index.bill_address')
             %th.ship_address{ 'ng-show' => 'columns.ship_address.visible' }=t('admin.customers.index.ship_address')
             %th.balance{ 'ng-show' => 'columns.balance.visible' }=t('admin.customers.index.balance')
             %th.credit{ 'ng-show' => 'columns.credit.visible' }=t('admin.customers.index.credit')
         %tbody
-          %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy: sorting.predicate:sorting.reverse ) | limitTo:customerLimit track by customer.id", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
+          %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | filter:{tag_list: tagFilter} | orderBy: sorting.predicate:sorting.reverse ) | limitTo:customerLimit track by customer.id", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
             -# %td.bulk
               -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
             %td.id{ 'ng-show' => 'columns.id.visible'}
