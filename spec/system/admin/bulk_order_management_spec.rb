@@ -163,13 +163,16 @@ RSpec.describe '
 
     context "searching" do
       let!(:a1) { create(:address, phone: "1234567890", firstname: "Willy", lastname: "Wonka") }
+      let!(:d1) { create(:distributor_enterprise, name: "Distributor Alpha") }
+      let!(:d2) { create(:distributor_enterprise, name: "Distributor Beta") }
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now, bill_address: a1)
+                                        completed_at: Time.zone.now, bill_address: a1,
+                                        distributor: d1)
       }
       let!(:o2) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.now, distributor: d2)
       }
       let!(:s1) { create(:supplier_enterprise) }
       let!(:s2) { create(:supplier_enterprise) }
