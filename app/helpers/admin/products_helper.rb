@@ -10,10 +10,26 @@ module Admin
       end
     end
 
+    NEW_VARIANT_TEMPLATE_FIELDS = %i[
+      tax_category_id
+      primary_taxon_id
+      supplier_id
+      variant_unit
+      variant_unit_scale
+      variant_unit_name
+      unit_value
+      price
+    ].freeze
+
     def prepare_new_variant(product, producer_id = nil)
       product.variants.build do |new_variant|
-        new_variant.supplier_id = producer_id
-        new_variant.tax_category_id = product.variants.first.tax_category_id
+        template = product.variants.reject(&:new_record?).last
+        copy_template_fields(template, new_variant) if template
+        new_variant.on_hand_desired = 0
+        # Integer producer_id explicitly overrides the template's supplier_id.
+        # The view passes an AR relation (allowed_producers), not an ID, so this
+        # guard ensures only a real ID overrides the copied value.
+        new_variant.supplier_id = producer_id if producer_id.is_a?(Integer)
       end
     end
 
@@ -55,6 +71,16 @@ module Admin
     def managed_product_enterprises
       @managed_product_enterprises ||= OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises
+    end
+
+    private
+
+    def copy_template_fields(template, new_variant)
+      NEW_VARIANT_TEMPLATE_FIELDS.each do |field|
+        next unless template.respond_to?(field) && new_variant.respond_to?(:"#{field}=")
+
+        new_variant.public_send(:"#{field}=", template.public_send(field))
+      end
     end
 
     # Query only name of the model to avoid loading the whole record

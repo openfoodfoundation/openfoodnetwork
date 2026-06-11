@@ -47,15 +47,74 @@ RSpec.describe Admin::ProductsHelper do
 
   describe '#prepare_new_variant' do
     let(:zone) { create(:zone_with_member) }
+    let(:taxon) { create(:taxon) }
+    let(:supplier) { create(:supplier_enterprise) }
     let(:product) {
       create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0,
                              included_in_price: true)
     }
 
-    context 'when tax category is present for first varient' do
-      it 'sets tax category for new variant' do
-        first_variant_tax_id = product.variants.first.tax_category_id
-        expect(helper.prepare_new_variant(product, []).tax_category_id).to eq(first_variant_tax_id)
+    before do
+      product.variants.last.update!(
+        primary_taxon: taxon,
+        supplier:,
+        variant_unit: "weight",
+        variant_unit_scale: 1000.0,
+        unit_value: 1000.0,
+        price: 9.99,
+      )
+    end
+
+    it 'copies tax category from the last variant' do
+      expect(helper.prepare_new_variant(product).tax_category_id)
+        .to eq(product.variants.last.tax_category_id)
+    end
+
+    it 'copies category (primary taxon) from the last variant' do
+      expect(helper.prepare_new_variant(product).primary_taxon_id).to eq(taxon.id)
+    end
+
+    it 'copies unit type from the last variant' do
+      new_variant = helper.prepare_new_variant(product)
+      expect(new_variant.variant_unit).to eq("weight")
+      expect(new_variant.variant_unit_scale).to eq(1000.0)
+    end
+
+    it 'copies unit value from the last variant so the unit field renders non-empty' do
+      expect(helper.prepare_new_variant(product).unit_value).to eq(1000.0)
+    end
+
+    it 'copies price from the last variant' do
+      expect(helper.prepare_new_variant(product).price).to eq(9.99)
+    end
+
+    it 'copies producer (supplier) from the last variant' do
+      expect(helper.prepare_new_variant(product).supplier_id).to eq(supplier.id)
+    end
+
+    it 'sets on_hand_desired to 0' do
+      expect(helper.prepare_new_variant(product).on_hand_desired).to eq(0)
+    end
+
+    it 'does not copy on_demand, so new variants default to out of stock' do
+      expect(helper.prepare_new_variant(product).on_demand_desired).to be_falsey
+    end
+
+    it 'overrides producer with an explicit integer producer_id' do
+      other_supplier = create(:supplier_enterprise)
+      expect(helper.prepare_new_variant(product, other_supplier.id).supplier_id)
+        .to eq(other_supplier.id)
+    end
+
+    context 'when the product has no existing variants' do
+      let(:product) { create(:product) }
+
+      before { product.variants.destroy_all }
+
+      it 'returns a variant with only supplier_id set' do
+        new_variant = helper.prepare_new_variant(product, supplier.id)
+        expect(new_variant.supplier_id).to eq(supplier.id)
+        expect(new_variant.primary_taxon_id).to be_nil
       end
     end
   end
