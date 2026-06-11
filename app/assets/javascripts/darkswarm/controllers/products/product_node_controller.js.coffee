@@ -77,11 +77,6 @@ angular.module('Darkswarm').controller "ProductNodeCtrl", ($scope, $document, $m
     modal = $modal.open(templateUrl: "product_modal.html", scope: $scope)
     unbindKeyboard = bindModalCarouselKeyboard()
 
-    modal.opened.then ->
-      $timeout ->
-        carousel = document.querySelector('.reveal-modal .ofn-thumbnail-carousel[tabindex="0"]')
-        carousel?.focus()
-
     modal.result.finally ->
       unbindKeyboard()
 
