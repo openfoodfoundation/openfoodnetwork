@@ -1509,7 +1509,7 @@ hu:
         distributor: "Elosztó"
         no_payment_methods: Ebben a rendelési ciklusban minden elosztónak szüksége van legalább egy fizetési módra.
         no_shipping_methods: Ebben a rendelési ciklusban minden elosztónak legalább egy szállítási mód beállítása szükséges.
-        payment_methods: "fizetési módok"
+        payment_methods: "Fizetési módok"
         save: "Mentés"
         save_and_back_to_list: "Mentés és Vissza a listához"
         select_all: "Mindet kiválaszt"
@@ -1644,7 +1644,7 @@ hu:
           images: "Képek"
           properties: "Tulajdonságok"
           shipping_methods: "áruátadási módok"
-          payment_methods: "fizetési módok"
+          payment_methods: "Fizetési módok"
           enterprise_fees: "Vállalkozási díjak"
           enterprise_permissions: "Vállalkozási engedélyek"
           inventory_settings: "Leltár beállítások"
