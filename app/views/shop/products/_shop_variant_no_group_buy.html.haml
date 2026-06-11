@@ -15,7 +15,7 @@
         -# U+FF0B Fullwidth Plus Sign
         ＋
     .variant-remaining-stock{ "ng-if": "displayRemainingInStock()" }
-      {{ "js.shopfront.variant.remaining_in_stock" | t:{quantity: available()} }}
+      {{ "js.shopfront.variant.remaining_in_stock" | t:{count: available()} }}
     .variant-quantity-display{ "ng-class": "{visible: variant.line_item.quantity}" }
       {{ "js.shopfront.variant.quantity_in_cart" | t:{quantity: variant.line_item.quantity || 0} }}
     %input{ type: :hidden, name: "variants[{{::variant.id}}]", "ng-model": "variant.line_item.quantity" }
