@@ -12,10 +12,10 @@
         %th= t('.manager')
         %th.center
           = t('.owner')
-          = render AdminTooltipComponent.new(text: t('.owner_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
+          = render AdminTooltipComponent.new(text: t('.owner_tip'), element_text: %[<i class="fa fa-question-circle"></i>].html_safe)
         %th.center
           = t('.contact')
-          = render AdminTooltipComponent.new(text: t('.contact_tip'), link_text: %[<i class="fa fa-question-circle"></i>].html_safe, link: nil)
+          = render AdminTooltipComponent.new(text: t('.contact_tip'), element_text: %[<i class="fa fa-question-circle"></i>].html_safe)
     %tbody
       - @enterprise.users.each do |user|
         - contact = user.id == @enterprise.contact&.id
@@ -25,9 +25,9 @@
             = user.email
 
             - if user.confirmed?
-              %i.confirmation.confirmed.fa.fa-check-circle{ "ofn-with-tip": t('.email_confirmed') }
+              = render AdminTooltipComponent.new(text: t('.email_confirm'), element_text: %[<i class="confirmation confirmed fa fa-check-circle"></i>].html_safe)
             - else
-              %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ "ofn-with-tip": t('.email_not_confirmed') }
+              = render AdminTooltipComponent.new(text: t('.email_not_confirmed'), element_text: %[<i class="confirmation unconfirmed fa fa-exclamation-triangle"></i>].html_safe)
 
           %td.center
             - if user.confirmed?
