@@ -310,7 +310,7 @@ describe("BulkFormController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
         <form id="form" data-controller="bulk-form"
-              data-action="custom-event->bulk-form#toggleFormChanged">
+              data-action="rails-nested-form:add->bulk-form#toggleFormChanged">
           <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
           <table class="products">
             <div data-record-id="1">
@@ -328,7 +328,7 @@ describe("BulkFormController", () => {
         '<input id="new_variant_id" type="hidden" name="form[products][0][variants_attributes][1][id]">',
       );
 
-      form.dispatchEvent(new Event("custom-event"));
+      form.dispatchEvent(new Event("rails-nested-form:add"));
 
       expect(actions.classList).not.toContain("hidden");
     });
@@ -339,7 +339,7 @@ describe("BulkFormController", () => {
         '<input id="existing_variant_id" type="hidden" name="form[products][0][variants_attributes][0][id]" value="42">',
       );
 
-      form.dispatchEvent(new Event("custom-event"));
+      form.dispatchEvent(new Event("rails-nested-form:add"));
 
       expect(actions.classList).toContain("hidden");
     });
