@@ -8,8 +8,8 @@ info:
     Not officially versioned — endpoints may change without notice.
 
     And this documentation has not been verified.
-    Generated with AI on 2026-05-05.
-
+    Generated with AI on 2026-05-26.
+    
     ## Authentication
 
     All write endpoints (POST, PUT, DELETE) require authentication. Some read endpoints
@@ -3638,14 +3638,14 @@ paths:
         | `order_cycle_management` | `payment_methods`, `delivery` |
         | `sales_tax` | `tax_types`, `tax_rates`, `sales_tax_totals_by_producer`, `sales_tax_totals_by_order` |
         | `xero_invoices` | `summary`, `detailed` |
-        | `packing` | `customer` ⚠️, `supplier` ⚠️, `product` ⚠️ |
+        | `packing` | `customer`, `supplier`, `product` |
         | `suppliers` | `pay_your_suppliers` |
 
-        > **⚠️ Known server bugs** — the following subtypes return `422` due to Ruby exceptions
-        > in the report query layer (not missing parameters):
-        > - `packing/customer`, `packing/supplier`, `packing/product` — Arel nil-type crash
-        >   in `joins_selected_shipping_methods` (`shipping_rate_table[:selected].eq(true)`)
-        > - `enterprise_fee_summary/enterprise_fees_with_tax_report_by_order` — `nil.compact_blank`
+        > **⚠️ Packing report — special date filter params** — unlike all other reports
+        > (which are `Spree::Order`-based), packing subtypes are `Spree::LineItem`-based.
+        > Ransack must traverse the `order` association to filter by date:
+        > - ❌ `q[completed_at_gt]` — looks for `completed_at` on `LineItem` → 422
+        > - ✅ `q[order_completed_at_gt]` / `q[order_completed_at_lt]` — correct params for packing
       tags:
         - Reports
       security:
@@ -3723,6 +3723,24 @@ paths:
             type: string
             format: date-time
           example: "2024-06-30T23:59:59Z"
+        - name: q[order_completed_at_gt]
+          in: query
+          description: |
+            **Packing report only.** Filter — line items whose order completed after this date.
+            Use instead of `q[completed_at_gt]` for `packing` subtypes.
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-01T00:00:00Z"
+        - name: q[order_completed_at_lt]
+          in: query
+          description: |
+            **Packing report only.** Filter — line items whose order completed before this date.
+            Use instead of `q[completed_at_lt]` for `packing` subtypes.
+          schema:
+            type: string
+            format: date-time
+          example: "2024-06-30T23:59:59Z"
         - name: q[distributor_id_in][]
           in: query
           description: Filter by distributor enterprise IDs
@@ -3759,11 +3777,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_response'
         '422':
-          description: |
-            Missing required `q` params, invalid report type/subtype, or a known
-            server-side Ruby exception in the report query layer. Affected subtypes:
-            `packing/customer`, `packing/supplier`, `packing/product` (Arel nil-type crash),
-            `enterprise_fee_summary/enterprise_fees_with_tax_report_by_order` (nil.compact_blank).
+          description: Missing required `q` params, or invalid report type/subtype.
           content:
             application/json:
               schema:
