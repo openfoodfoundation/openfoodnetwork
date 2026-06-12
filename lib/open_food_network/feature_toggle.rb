@@ -33,9 +33,6 @@ module OpenFoodNetwork
         An API endpoint for reports at
         <code>/api/v0/reports/:report_type(/:report_subtype)</code>
       DESC
-      "api_v1" => <<~DESC,
-        Enable the new API at <code>/api/v1</code>
-      DESC
       "match_shipping_categories" => <<~DESC,
         During checkout, show only shipping methods that support <em>all</em>
         shipping categories. Activating this feature for an enterprise owner

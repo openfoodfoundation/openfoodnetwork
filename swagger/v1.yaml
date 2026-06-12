@@ -77,7 +77,7 @@ components:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true
@@ -190,7 +190,7 @@ components:
                   billing_address:
                     type: object
                     nullable: true
-                    example: 
+                    example:
                   shipping_address:
                     type: object
                     nullable: true
@@ -481,7 +481,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true
@@ -574,7 +574,7 @@ paths:
                           billing_address:
                             type: object
                             nullable: true
-                            example: 
+                            example:
                           shipping_address:
                             type: object
                             nullable: true
@@ -704,7 +704,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true
