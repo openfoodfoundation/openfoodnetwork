@@ -433,7 +433,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (2.19.7)
+    json (2.19.8)
     json-canonicalization (1.0.0)
     json-jwt (1.17.1)
       activesupport (>= 4.2)
@@ -1250,7 +1250,7 @@ CHECKSUMS
   jmespath (1.6.2) sha256=238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1
   jquery-rails (4.4.0) sha256=b1048e5bf181b94dcac82d28a4696cd79c6200167a024a07f57607ab28aa7036
   jquery-ui-rails (4.2.1) sha256=5b349e7066150b16d7a784183f040c083d51af3357937b8564aa0cc8b1cd59bd
-  json (2.19.7) sha256=fe432c8639f6efff69f9d73b518a3705d9581ab93156f981ea72806e1e5bcc3e
+  json (2.19.8) sha256=6354310fd76ef69b87d5bd1f38b40d730613baf90b6803d2d0a48f618d32dfaa
   json-canonicalization (1.0.0) sha256=d4848a8cca7534455c6721f2d9fc9e5e9adca49486864a898810024f67d59446
   json-jwt (1.17.1) sha256=5e1ced0f7b206b4c567efee19e6503c1426a819749132926cda579ec013d1f46
   json-ld (3.3.2) sha256=b9531893bf5bdc01db428e96953845a23adb1097125ce918ae0f97c4a6e1ab27
