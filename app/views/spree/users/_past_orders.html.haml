@@ -9,7 +9,7 @@
         %th.order5.text-right= t('.total')
         %th.order6.text-right.show-for-large-up= t('.paid?')
         %th.order7.text-right= t('.status')
-        %th.order8.text-right.show-for-large-up= t('.print')
+        %th.order8.text-right.show-for-large-up{style: "white-space: nowrap"}= t('.print')
       %tbody.transaction-group{"ng-repeat" => "order in Orders.all | filter:{changes_allowed:false} as pastOrders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
           %td.order1{"ng-bind" => "::order.number"}
@@ -23,4 +23,4 @@
               %a{ "ng-switch-when" => "complete", "ng-href" => "{{::order.path}}" }= t('.completed')
               %span{ "ng-switch-when" => "canceled" }= t('.cancelled')
           %td.order8.text-right.show-for-large-up
-            %a{"ng-href" => "/orders/{{::order.number}}/print", target: "_blank"}= t('.print')
+            %a{"ng-href" => "/orders/{{::order.number}}/print", target: "_blank", style: "white-space: nowrap"}= t('.print')
