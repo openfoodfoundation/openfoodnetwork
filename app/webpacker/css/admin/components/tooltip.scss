@@ -3,6 +3,11 @@
   white-space: normal;
 }
 
+.tooltip-element {
+  cursor: pointer;
+  color: $color-3;
+}
+
 .tooltip {
   display: none;
   position: absolute;

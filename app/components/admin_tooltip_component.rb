@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class AdminTooltipComponent < ViewComponent::Base
-  def initialize(text:, link_text:, placement: "top", link: "", link_class: "",
-                 no_link_element: false )
+  def initialize(text:, element_text:, placement: "top", link: "", element_class: "")
     @text = text
-    @link_text = link_text
+    @element_text = element_text
     @placement = placement
     @link = link
-    @link_class = link_class
-    @no_link_element = no_link_element
+    @element_class = "tooltip-element #{element_class}"
   end
 end
