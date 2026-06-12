@@ -1,5 +1,6 @@
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
+@import "../../darkswarm/shop_partials/property-selector-base";
 
 #product-preview {
   // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
@@ -151,6 +152,16 @@
   @import "../../darkswarm/shop_partials/shop-product-rows";
   @import "../../darkswarm/shop_partials/shop-inputs";
   @import "../../shared/question-mark-icon";
+
+  // Fix styling for shopfront tooltip
+  .filter-shopfront {
+    .tooltip-element {
+      @include property-selector($grey-650, $grey-300);
+
+      padding: 0.1em 0.625em;
+      cursor: text;
+    }
+  }
 
   button.add-variant {
     opacity: 0.5;
