@@ -123,8 +123,6 @@ module Admin
 
     def copy_template_fields(template, new_variant)
       NEW_VARIANT_TEMPLATE_FIELDS.each do |field|
-        next unless template.respond_to?(field) && new_variant.respond_to?(:"#{field}=")
-
         new_variant.public_send(:"#{field}=", template.public_send(field))
       end
     end
