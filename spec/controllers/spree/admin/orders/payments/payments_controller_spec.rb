@@ -293,6 +293,28 @@ RSpec.describe Spree::Admin::PaymentsController do
       end
     end
 
+    context "order is awaiting_return" do
+      let!(:payment_method) { create(:payment_method, distributors: [shop]) }
+      let!(:order) { create(:order, distributor: shop, state: "awaiting_return") }
+      let!(:payment) { create(:payment, order:, payment_method:, amount: order.total) }
+
+      it "renders the payments tab" do
+        spree_get :index, order_id: order.number
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context "order is returned" do
+      let!(:payment_method) { create(:payment_method, distributors: [shop]) }
+      let!(:order) { create(:order, distributor: shop, state: "returned") }
+      let!(:payment) { create(:payment, order:, payment_method:, amount: order.total) }
+
+      it "renders the payments tab" do
+        spree_get :index, order_id: order.number
+        expect(response).to have_http_status :ok
+      end
+    end
+
     context "the order contains an item that is out of stock" do
       let!(:order) { create(:order_with_totals, distributor: shop, state: 'payment') }
 
