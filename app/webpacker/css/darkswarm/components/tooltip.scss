@@ -1,0 +1,12 @@
+@use "foundation-sites/scss/foundation/components/tooltips" as f-tooltips;
+
+// The tooltip component reuses the foundation tooltip styling but it doesn't provide styling for the arrow
+.tooltip-container {
+  .arrow {
+    background-color: f-tooltips.$oil;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+  }
+}

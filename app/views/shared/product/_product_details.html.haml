@@ -16,7 +16,7 @@
         - product.properties_including_inherited.each do |property|
           %li
             - if property[:value].present?
-              = render AdminTooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom-start")
+              = render TooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom-start")
             - else
               %span= property[:name] 
 

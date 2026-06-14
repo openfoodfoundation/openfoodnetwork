@@ -44,7 +44,7 @@
                       - @product.properties_including_inherited.each do |property|
                         %li
                           - if property[:value].present?
-                            = render AdminTooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom")
+                            = render TooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom")
                           - else
                             %a
                               %span
@@ -61,7 +61,7 @@
                   .small-4.medium-3.columns.variant-price
                     = Spree::Money.new(variant.price)
                     .unit-price.variant-unit-price
-                      = render AdminTooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), element_text: "", placement: "top", element_class: "question-mark-icon")
+                      = render TooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), element_text: "", placement: "top", element_class: "question-mark-icon")
                       - # TODO use an helper
                       - unit_price = UnitPrice.new(variant)
                       - price_per_unit = variant.price / (unit_price.denominator || 1)
