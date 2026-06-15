@@ -264,11 +264,18 @@ ofnDeleteLineItemsAlert = function(callback, count) {
 }
 
 ofnConfirm = function(callback) {
+  var variantDeleted = $(event.target).closest('a').data('variant-deleted');
+  var tooltip = variantDeleted ? t("js.admin.orders.restock_item_deleted_tooltip") : "";
+  var restockCheckbox = variantDeleted
+    ? `<input type="checkbox" name="restock_items" id="restock_items" disabled title="${tooltip}" />`
+    : `<input type="checkbox" name="restock_items" id="restock_items" checked="checked" />`;
+  var labelStyle = variantDeleted ? 'style="color: grey;" ' : '';
+
   $('#custom-confirm .message').html(
       ` ${t("are_you_sure")}
     <div class="form">
-      <input type="checkbox" name="restock_items"  id="restock_items" checked="checked"/>
-      <label for="restock_items">${t("js.admin.orders.restock_item")}</label>
+      ${restockCheckbox}
+      <label for="restock_items" ${labelStyle}title="${tooltip}">${t("js.admin.orders.restock_item")}</label>
     </div>`);
   $('#custom-confirm').data($(event.target).data());
   $('#custom-confirm button.confirm').click(() => {
