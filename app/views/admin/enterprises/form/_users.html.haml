@@ -25,7 +25,7 @@
             = user.email
 
             - if user.confirmed?
-              = render TooltipComponent.new(text: t('.email_confirm'), element_text: %[<i class="confirmation confirmed fa fa-check-circle"></i>].html_safe)
+              = render TooltipComponent.new(text: t('.email_confirmed'), element_text: %[<i class="confirmation confirmed fa fa-check-circle"></i>].html_safe)
             - else
               = render TooltipComponent.new(text: t('.email_not_confirmed'), element_text: %[<i class="confirmation unconfirmed fa fa-exclamation-triangle"></i>].html_safe)
 
