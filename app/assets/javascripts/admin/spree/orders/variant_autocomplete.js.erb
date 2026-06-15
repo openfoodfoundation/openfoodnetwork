@@ -80,7 +80,7 @@ $(document).ready(function() {
          if (inventory_units.length !== shipment.inventory_units.length) {
              ofnConfirm((reStockItem) => {
                  handle_delete_click('#custom-confirm', reStockItem);
-             });
+             }, event);
          } else {
              adjustItems(shipment_number, variant_id, 0);
          }
@@ -263,7 +263,7 @@ ofnDeleteLineItemsAlert = function(callback, count) {
   $('#custom-confirm').show();
 }
 
-ofnConfirm = function(callback) {
+ofnConfirm = function(callback, event) {
   var variantDeleted = $(event.target).closest('a').data('variant-deleted');
   var tooltip = variantDeleted ? t("js.admin.orders.restock_item_deleted_tooltip") : "";
   var restockCheckbox = variantDeleted
