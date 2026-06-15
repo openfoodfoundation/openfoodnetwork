@@ -456,7 +456,7 @@ GEM
       activesupport (>= 4.2)
     jwt (3.2.0)
       base64
-    knapsack_pro (10.0.0)
+    knapsack_pro (10.0.1)
       rake
       thor (~> 1.4)
     language_server-protocol (3.17.0.5)
@@ -1257,7 +1257,7 @@ CHECKSUMS
   json-schema (4.1.1) sha256=89a8399745a710c2c7be3ff9564f67a0ae982c82f7590a95ab9cebe374fa2d49
   jsonapi-serializer (2.2.0) sha256=f8141ac6f0c1e17e8513df68f8341afe2d7bffc285841d7090bc07f07efb0029
   jwt (3.2.0) sha256=5419b1fe37b1da0982bd07051f573a8b8789ab724c2aa7e785e4784a3ed217d7
-  knapsack_pro (10.0.0) sha256=9ab3d071ef3a067e97691f883fbbcd8546ff20da37d394f5a127f82b53dfc611
+  knapsack_pro (10.0.1) sha256=505cddf74adb6061c55b36dc33e4f06959dfa1be6c65d40b4e4248c03a8aea0c
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   launchy (3.0.0) sha256=4abcdab659689550ceca6ec0630cd9efd9940b51dc14cb4ebceee8f7aedc791b
   letter_opener (1.10.0) sha256=2ff33f2e3b5c3c26d1959be54b395c086ca6d44826e8bf41a14ff96fdf1bdbb2
