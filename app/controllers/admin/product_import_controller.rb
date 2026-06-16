@@ -6,7 +6,7 @@ module Admin
   class ProductImportController < Spree::Admin::BaseController
     TMPDIR_PREFIX = "product_import-"
 
-    before_action :validate_upload_presence, except: %i[index guide validate_data]
+    before_action :validate_upload_presence, except: [:index, :validate_data]
 
     def index
       @product_categories = Spree::Taxon.order('name ASC').pluck(:name).uniq

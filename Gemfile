@@ -17,7 +17,7 @@ gem "mini_magick" # required by image_processing
 
 gem 'activemerchant'
 gem 'angular-rails-templates'
-gem 'ransack', '~> 4.1.0'
+gem 'ransack'
 gem 'responders'
 gem 'shakapacker'
 
@@ -53,7 +53,7 @@ gem 'ffaker'
 gem 'highline'
 gem 'json'
 gem 'monetize', '~> 1.11'
-gem 'paranoia', '~> 2.4'
+gem 'paranoia'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
