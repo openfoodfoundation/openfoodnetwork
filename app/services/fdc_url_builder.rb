@@ -5,12 +5,14 @@
 class FdcUrlBuilder
   attr_reader :catalog_url, :orders_url, :sale_session_url
 
-  # At the moment, we start with a product link like this:
-  #
-  # https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635
+  # Known product link formats:
+  # * https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635
+  # * http://test.host/api/dfc/enterprises/10000/supplied_products/10001 (OFN)
   def initialize(semantic_id)
-    @catalog_url, _slash, _id = semantic_id.rpartition("/")
-    @orders_url = @catalog_url.sub("/SuppliedProducts", "/Orders")
-    @sale_session_url = @catalog_url.sub("/SuppliedProducts", "/SalesSession/#")
+    base_url, _slash, _id = semantic_id.rpartition("/")
+    @catalog_url = base_url.sub("/supplied_products", "/catalog_items")
+    @orders_url = base_url.sub("/SuppliedProducts", "/Orders")
+      .sub("/supplied_products", "/orders")
+    @sale_session_url = base_url.sub("/SuppliedProducts", "/SalesSession/#")
   end
 end
