@@ -97,7 +97,7 @@ export default class extends Controller {
 
   #showQuantityButtons() {
     this.addButtonTarget.style.display = "none";
-    this.quantityButtonTarget.style.display = "block";
+    this.quantityButtonTarget.style.display = "flex";
   }
 
   #hideQuantityButtons() {
