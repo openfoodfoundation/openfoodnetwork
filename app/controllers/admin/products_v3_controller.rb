@@ -294,7 +294,7 @@ module Admin
           :product,
           :stock_items,
           :tax_category,
-          :supplier,
+          :enterprise,
           :taggings,
         ] },
       ]

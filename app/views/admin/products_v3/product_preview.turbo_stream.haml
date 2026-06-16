@@ -31,13 +31,13 @@
                     - # description is sanitized in Spree::Product#description method
                     = @product.description.html_safe
 
-                - if @product.variants.first.supplier.visible
+                - if @product.variants.first.enterprise.visible
                   %div
                     .product-producer
                       = t :products_from
                       %span
                         %a 
-                          = @product.variants.first.supplier.name
+                          = @product.variants.first.enterprise.name
                 .product-properties.filter-shopfront.property-selectors
                   .filter-shopfront.property-selectors.inline-block
                     %ul
@@ -90,7 +90,7 @@
                   %em 
                     = t("products_from")
                   %span
-                    = @product.variants.first.supplier.name
+                    = @product.variants.first.enterprise.name
 
                 %br
 

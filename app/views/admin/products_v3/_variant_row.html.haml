@@ -58,16 +58,16 @@
 %td.col-producer.field.naked_inputs
   - if variant.hub_id.blank?
     = render(SearchableDropdownComponent.new(form: f,
-        name: :supplier_id,
+        name: :enterprise_id,
         aria_label: t('.producer_field_name'),
-        options: variant.supplier_id ? [[variant.supplier.name, variant.supplier_id]] : [],
-        selected_option: variant.supplier_id,
+        options: variant.enterprise_id ? [[variant.enterprise.name, variant.enterprise_id]] : [],
+        selected_option: variant.enterprise_id,
         remote_url: admin_ajax_search_producers_url,
         placeholder_value: t('admin.products_v3.filters.select_producer')))
-    = error_message_on variant, :supplier
+    = error_message_on variant, :enterprise
   - else
     .content
-      = variant.supplier.name
+      = variant.enterprise.name
 %td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
@@ -89,7 +89,7 @@
   = error_message_on variant, :tax_category
 - if variant_tag_enabled?(spree_current_user)
   %td.col-tags.field.naked_inputs
-    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.supplier_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags')) if feature?(:variant_tag, variant.supplier)
+    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.enterprise_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags')) if feature?(:variant_tag, variant.enterprise)
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
@@ -97,7 +97,7 @@
     - if variant.persisted?
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
 
-      - if variant.source_variants.empty? && allowed_source_producers.include?(variant.supplier)
+      - if variant.source_variants.empty? && allowed_source_producers.include?(variant.enterprise)
         = link_to t('admin.products_page.actions.create_linked_variant'), admin_create_linked_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
 
       - if variant.product.variants.size > 1
