@@ -32,10 +32,10 @@ describe("AddToCartController", () => {
             + 
           </button>
         </div>
-        <div id="remaining_stock" class="variant-remaining-stock" style="display: none;" data-add-to-cart-target="stock">
+        <div id="remainingStock" class="variant-remaining-stock" style="display: none;" data-add-to-cart-target="stock">
           Only ${onHand} left
         </div>
-        <div id="item-in-cart" class="variant-quantity-display" data-add-to-cart-target="nbItemInCart">
+        <div id="itemInCart" class="variant-quantity-display" data-add-to-cart-target="nbItemInCart">
           ${quantity} in cart
         </div>
       </div>`;
@@ -57,9 +57,7 @@ describe("AddToCartController", () => {
 
   describe("#addEmpty", () => {
     it("add 1 item to the cart", () => {
-      const add_button = document.getElementById("add");
-
-      add_button.click();
+      add.click();
 
       const lastCall = getLastMockCall();
       expect(lastCall.type).toEqual("updateCart");
@@ -70,25 +68,17 @@ describe("AddToCartController", () => {
     });
 
     it("toggles to minus/plus button and quantity input", () => {
-      const add_button = document.getElementById("add");
-      const add_container = document.getElementById("add_container");
-      const quantity_buttons = document.getElementById("quantity_buttons");
-
       expect(quantity_buttons.style.display).toBe("none");
 
-      add_button.click();
+      add.click();
 
       expect(quantity_buttons.style.display).toBe("flex");
       expect(add_container.style.display).toBe("none");
-      const quantity = document.getElementById("quantity");
       expect(quantity.value).toEqual("1");
     });
 
     it("shows one item in the cart", () => {
-      const add_button = document.getElementById("add");
-      const itemInCart = document.getElementById("item-in-cart");
-
-      add_button.click();
+      add.click();
 
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":1}');
@@ -100,25 +90,20 @@ describe("AddToCartController", () => {
       });
 
       it("hides low stock", () => {
-        const add_button = document.getElementById("add");
-        const remaining_stock = document.getElementById("remaining_stock");
+        expect(remainingStock.style.display).toBe("block");
 
-        expect(remaining_stock.style.display).toBe("block");
+        add.click();
 
-        add_button.click();
-
-        expect(remaining_stock.style.display).toBe("none");
+        expect(remainingStock.style.display).toBe("none");
       });
     });
   });
 
   describe("#add", () => {
     it("increase quantity by one", () => {
-      const plus_button = document.getElementById("plus");
-      const quantity = document.getElementById("quantity");
       quantity.value = 5;
 
-      plus_button.click();
+      plus.click();
 
       const lastCall = getLastMockCall();
       expect(lastCall.type).toEqual("updateCart");
@@ -129,12 +114,9 @@ describe("AddToCartController", () => {
     });
 
     it("updates the number of item in the cart", () => {
-      const plus_button = document.getElementById("plus");
-      const itemInCart = document.getElementById("item-in-cart");
-      const quantity = document.getElementById("quantity");
       quantity.value = 5;
 
-      plus_button.click();
+      plus.click();
 
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":6}');
@@ -146,22 +128,18 @@ describe("AddToCartController", () => {
       });
 
       it("disables the add button", () => {
-        const plus_button = document.getElementById("plus");
+        plus.click();
 
-        plus_button.click();
-
-        expect(plus_button.disabled).toBe(true);
+        expect(plus.disabled).toBe(true);
       });
     });
   });
 
   describe("#remove", () => {
     it("decrease quantity by one", () => {
-      const minus_button = document.getElementById("minus");
-      const quantity = document.getElementById("quantity");
       quantity.value = 5;
 
-      minus_button.click();
+      minus.click();
 
       const lastCall = getLastMockCall();
       expect(lastCall.type).toEqual("updateCart");
@@ -172,12 +150,9 @@ describe("AddToCartController", () => {
     });
 
     it("updates the number of item in the cart", () => {
-      const minus_button = document.getElementById("minus");
-      const itemInCart = document.getElementById("item-in-cart");
-      const quantity = document.getElementById("quantity");
       quantity.value = 5;
 
-      minus_button.click();
+      minus.click();
 
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":4}');
@@ -189,28 +164,21 @@ describe("AddToCartController", () => {
       });
 
       it("toggles to the add button", () => {
-        const add_container = document.getElementById("add_container");
-        const quantity_buttons = document.getElementById("quantity_buttons");
-        const minus_button = document.getElementById("minus");
-
         expect(quantity_buttons.style.display).toBe("flex");
         expect(add_container.style.display).toBe("none");
 
-        minus_button.click();
+        minus.click();
 
         expect(quantity_buttons.style.display).toBe("none");
         expect(add_container.style.display).toBe("block");
       });
 
       it("hides the number of item in cart", () => {
-        const minus_button = document.getElementById("minus");
-        const itemInCart = document.getElementById("item-in-cart");
-
-        minus_button.click();
+        minus.click();
 
         expect(itemInCart.style.visibility).toBe("hidden");
         expect(itemInCart.textContent).toBe(
-          'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
+          'js.shopfront.variant.quantity_in_cart, {"quantity":0}',
         );
       });
 
@@ -220,14 +188,11 @@ describe("AddToCartController", () => {
         });
 
         it("shows low stock", () => {
-          const minus_button = document.getElementById("minus");
-          const remaining_stock = document.getElementById("remaining_stock");
+          expect(remainingStock.style.display).toBe("none");
 
-          expect(remaining_stock.style.display).toBe("none");
+          minus.click();
 
-          minus_button.click();
-
-          expect(remaining_stock.style.display).toBe("block");
+          expect(remainingStock.style.display).toBe("block");
         });
       });
     });
@@ -238,12 +203,9 @@ describe("AddToCartController", () => {
       });
 
       it("enables the add button", () => {
-        const minus_button = document.getElementById("minus");
-        const plus_button = document.getElementById("plus");
+        minus.click();
 
-        minus_button.click();
-
-        expect(plus_button.disabled).toBe(false);
+        expect(plus.disabled).toBe(false);
       });
     });
   });
@@ -254,9 +216,7 @@ describe("AddToCartController", () => {
     });
 
     it("update quantity in cart by the given number", () => {
-      const quantity = document.getElementById("quantity");
-      quantity.value = 3;
-      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "3" }));
+      dispatchKeyboardEvent("3");
 
       const lastCall = getLastMockCall();
       expect(lastCall.type).toEqual("updateCart");
@@ -266,11 +226,7 @@ describe("AddToCartController", () => {
     });
 
     it("updates the number of item in the cart", () => {
-      const itemInCart = document.getElementById("item-in-cart");
-
-      const quantity = document.getElementById("quantity");
-      quantity.value = 3;
-      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "3" }));
+      dispatchKeyboardEvent("3");
 
       expect(itemInCart.style.visibility).toBe("visible");
       expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":3}');
@@ -279,9 +235,7 @@ describe("AddToCartController", () => {
     it("does nothing if quantity is not a valid number", () => {
       const preTestCallsNb = dispatchEventSpy.mock.calls.length;
 
-      const quantity = document.getElementById("quantity");
-      quantity.value = "b";
-      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "b" }));
+      dispatchKeyboardEvent("b");
 
       expect(dispatchEventSpy).toHaveBeenCalledTimes(preTestCallsNb);
     });
@@ -289,21 +243,14 @@ describe("AddToCartController", () => {
     it("does nothing if quantity is negative", () => {
       const preTestCallsNb = dispatchEventSpy.mock.calls.length;
 
-      const quantity = document.getElementById("quantity");
-      quantity.value = "-2";
-      quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "2" }));
+      dispatchKeyboardEvent("-2");
 
       expect(dispatchEventSpy).toHaveBeenCalledTimes(preTestCallsNb);
     });
 
     describe("when quantity becomes 0", () => {
       it("toggles to the add button if quantity is 0", () => {
-        const add_container = document.getElementById("add_container");
-        const quantity_buttons = document.getElementById("quantity_buttons");
-
-        const quantity = document.getElementById("quantity");
-        quantity.value = "0";
-        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
+        dispatchKeyboardEvent("0");
 
         const lastCall = getLastMockCall();
         expect(lastCall.type).toEqual("updateCart");
@@ -312,15 +259,11 @@ describe("AddToCartController", () => {
       });
 
       it("hides the number of item in cart", () => {
-        const itemInCart = document.getElementById("item-in-cart");
-
-        const quantity = document.getElementById("quantity");
-        quantity.value = "0";
-        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
+        dispatchKeyboardEvent("0");
 
         expect(itemInCart.style.visibility).toBe("hidden");
         expect(itemInCart.textContent).toBe(
-          'js.shopfront.variant.quantity_in_cart, {"quantity":0}'
+          'js.shopfront.variant.quantity_in_cart, {"quantity":0}',
         );
       });
 
@@ -330,15 +273,11 @@ describe("AddToCartController", () => {
         });
 
         it("shows low stock", () => {
-          const remaining_stock = document.getElementById("remaining_stock");
-          const quantity = document.getElementById("quantity");
+          expect(remainingStock.style.display).toBe("none");
 
-          expect(remaining_stock.style.display).toBe("none");
+          dispatchKeyboardEvent("0");
 
-          quantity.value = "0";
-          quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "0" }));
-
-          expect(remaining_stock.style.display).toBe("block");
+          expect(remainingStock.style.display).toBe("block");
         });
       });
     });
@@ -349,12 +288,9 @@ describe("AddToCartController", () => {
       });
 
       it("disables the add button", () => {
-        const plus_button = document.getElementById("plus");
+        dispatchKeyboardEvent("5");
 
-        quantity.value = "5";
-        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "5" }));
-
-        expect(plus_button.disabled).toBe(true);
+        expect(plus.disabled).toBe(true);
       });
     });
 
@@ -364,13 +300,9 @@ describe("AddToCartController", () => {
       });
 
       it("sets quantity to availabe stock and disables the add button", () => {
-        const plus_button = document.getElementById("plus");
+        dispatchKeyboardEvent("8");
 
-        // TODO helper function
-        quantity.value = "8";
-        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "8" }));
-
-        expect(plus_button.disabled).toBe(true);
+        expect(plus.disabled).toBe(true);
         expect(quantity.value).toBe("5");
       });
     });
@@ -381,14 +313,11 @@ describe("AddToCartController", () => {
       });
 
       it("enables plus button when quantity below available stock", () => {
-        const plus_button = document.getElementById("plus");
+        expect(plus.disabled).toBe(true);
 
-        expect(plus_button.disabled).toBe(true);
+        dispatchKeyboardEvent("2");
 
-        quantity.value = "2";
-        quantity.dispatchEvent(new KeyboardEvent("keyup", { key: "2" }));
-
-        expect(plus_button.disabled).toBe(false);
+        expect(plus.disabled).toBe(false);
       });
     });
   });
@@ -400,17 +329,11 @@ describe("AddToCartController", () => {
       });
 
       it("displays the minus/plus button and quantity", () => {
-        // TODO should be able to remove getElementById
-        //const add_container = document.getElementById("add_container");
-        //const quantity_buttons = document.getElementById("quantity_buttons");
-
         expect(quantity_buttons.style.display).toBe("flex");
         expect(add_container.style.display).toBe("none");
       });
 
       it("shows the number of items in the cart", () => {
-        const itemInCart = document.getElementById("item-in-cart");
-
         expect(itemInCart.style.visibility).toBe("visible");
         expect(itemInCart.textContent.trim()).toBe("5 in cart");
       });
@@ -422,9 +345,6 @@ describe("AddToCartController", () => {
       });
 
       it("displays the add button", () => {
-        const add_container = document.getElementById("add_container");
-        const quantity_buttons = document.getElementById("quantity_buttons");
-
         expect(quantity_buttons.style.display).toBe("none");
         expect(add_container.style.display).toBe("");
       });
@@ -436,9 +356,7 @@ describe("AddToCartController", () => {
       });
 
       it("doesn't show low stock warning", () => {
-        const remaining_stock = document.getElementById("remaining_stock");
-
-        expect(remaining_stock.style.display).toBe("none");
+        expect(remainingStock.style.display).toBe("none");
       });
 
       describe("when remaining stock below 4", () => {
@@ -447,9 +365,7 @@ describe("AddToCartController", () => {
         });
 
         it("shows low stock warning", () => {
-          const remaining_stock = document.getElementById("remaining_stock");
-
-          expect(remaining_stock.style.display).toBe("block");
+          expect(remainingStock.style.display).toBe("block");
         });
       });
     });
@@ -460,13 +376,17 @@ describe("AddToCartController", () => {
       });
 
       it("disables the plus button", () => {
-        const plus_button = document.getElementById("plus");
-        expect(plus_button.disabled).toBe(true);
+        expect(plus.disabled).toBe(true);
       });
     });
   });
 
   const getLastMockCall = () => {
     return dispatchEventSpy.mock.calls.at(-1)[0];
+  };
+
+  const dispatchKeyboardEvent = (key) => {
+    quantity.value = key;
+    quantity.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
   };
 });
