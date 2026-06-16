@@ -111,7 +111,7 @@ RSpec.describe Api::V0::OrderCyclesController do
 
         it "filter out the product that don't inherits from supplier properties" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { with_variants_supplier_properties: [supplier_property.id] }
+                             q: { with_variants_enterprise_properties: [supplier_property.id] }
 
           expect(response).to have_http_status :ok
           expect(product_ids).to match_array [product1.id, product2.id]

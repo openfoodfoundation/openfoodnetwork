@@ -21,7 +21,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many(:exchanges).through(:exchange_variants) }
   it { is_expected.to have_many(:variant_overrides) }
   it { is_expected.to have_many(:inventory_items) }
-  it { is_expected.to have_many(:supplier_properties).through(:supplier) }
+  it { is_expected.to have_many(:enterprise_properties).through(:enterprise) }
 
   it { is_expected.to have_many(:source_variants).through(:variant_links_as_target) }
   it { is_expected.to have_many(:target_variants).through(:variant_links_as_source) }
@@ -39,12 +39,12 @@ RSpec.describe Spree::Variant do
     subject { create(:variant) }
 
     it "has no supplier properties to start with" do
-      expect(subject.supplier_properties).to eq []
+      expect(subject.enterprise_properties).to eq []
     end
 
     it "includes the supplier's properties" do
       subject.supplier.set_producer_property("certified", "yes")
-      expect(subject.supplier_properties.map(&:presentation)).to eq ["certified"]
+      expect(subject.enterprise_properties.map(&:presentation)).to eq ["certified"]
     end
   end
 

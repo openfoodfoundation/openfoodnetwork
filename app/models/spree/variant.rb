@@ -72,7 +72,7 @@ module Spree
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
     has_many :semantic_links, as: :subject, dependent: :delete_all
-    has_many :supplier_properties, through: :supplier, source: :properties
+    has_many :enterprise_properties, through: :enterprise, source: :properties
 
     # Linked variants: I may have one or many sources.
     has_many :variant_links_as_target, class_name: 'VariantLink', foreign_key: :target_variant_id,
@@ -173,7 +173,7 @@ module Spree
     }
 
     scope :with_properties, lambda { |property_ids|
-      left_outer_joins(:supplier_properties).
+      left_outer_joins(:enterprise_properties).
         where(producer_properties: { property_id: property_ids })
     }
 

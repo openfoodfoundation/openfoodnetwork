@@ -74,7 +74,7 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)
@@ -89,7 +89,7 @@ RSpec.describe ProductsRenderer do
 
           search_param = { q:
             {
-              "with_variants_supplier_properties" => [property_organic.id],
+              "with_variants_enterprise_properties" => [property_organic.id],
               "with_properties" => [property_conventional.id]
             } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
@@ -110,7 +110,7 @@ RSpec.describe ProductsRenderer do
 
           search_param = { q:
             {
-              "with_variants_supplier_properties" => [property_organic.id],
+              "with_variants_enterprise_properties" => [property_organic.id],
               "variants_primary_taxon_id_in_any" => [stone_fruit.id],
             } }
 
@@ -127,7 +127,7 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)
@@ -160,7 +160,7 @@ RSpec.describe ProductsRenderer do
           }
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)

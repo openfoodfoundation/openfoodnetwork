@@ -16,7 +16,7 @@ module OrderCycles
       relation_by_sorting.order(Arel.sql(order))
     end
 
-    def products_relation_incl_supplier_properties
+    def products_relation_incl_enterprise_properties
       query = relation_by_sorting
 
       query = supplier_property_join(query)
