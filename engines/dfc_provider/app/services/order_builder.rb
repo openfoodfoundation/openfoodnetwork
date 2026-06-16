@@ -25,16 +25,34 @@ class OrderBuilder < DfcBuilder
   def self.apply(ofn_order, dfc_order)
     ofn_order.state = "complete" if dfc_order.orderStatus == order_states.HELD
 
-    dfc_order.lines.each do |order_line|
-      variant_id = order_line.offer.offeredItem.split('/supplied_products/').last
-
-      ofn_order.line_items.build(
-        variant_id:,
-        quantity: order_line.quantity
-      )
+    if dfc_order.orderStatus == order_states.COMPLETE
+      ofn_order.completed_at ||= Time.zone.now
     end
 
-    ofn_order.save
+    ofn_order.update(
+      line_items_attributes: line_item_attributes(ofn_order, dfc_order)
+    )
+  end
+
+  def self.line_item_attributes(ofn_order, dfc_order)
+    incoming = dfc_order.lines.each_with_object({}) do |line, hash|
+      next if line.quantity.nil? || line.quantity <= 0
+
+      vid = line.offer.offeredItem.split('/supplied_products/').last
+      hash[vid.to_i] = line.quantity
+    end
+
+    ofn_order.line_items.each_with_object([]) do |li, arr|
+      arr << if incoming.key?(li.variant_id)
+               { id: li.id, quantity: incoming.delete(li.variant_id) }
+             else
+               { id: li.id, _destroy: true }
+             end
+    end.tap do |attrs|
+      incoming.each do |variant_id, quantity|
+        attrs << { variant_id:, quantity: }
+      end
+    end
   end
 
   def self.order_states

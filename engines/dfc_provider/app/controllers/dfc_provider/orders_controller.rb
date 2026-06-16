@@ -36,6 +36,32 @@ module DfcProvider
       end
     end
 
+    def update
+      graph = import
+      dfc_order = select_type(graph, "dfc-b:Order").first if graph
+
+      return head :bad_request unless dfc_order
+
+      if OrderBuilder.apply(order, dfc_order)
+        order.recreate_all_fees!
+        render_dfc(OrderBuilder.build(order))
+      else
+        render json: { error: order.errors.full_messages.to_sentence },
+               status: :unprocessable_entity
+      end
+    end
+
+    def destroy
+      if order.allow_cancel?
+        order.send_cancellation_email = false
+        order.cancel!
+        head :no_content
+      else
+        render json: { error: "Cannot cancel order in state '#{order.state}'" },
+               status: :unprocessable_entity
+      end
+    end
+
     private
 
     def order
