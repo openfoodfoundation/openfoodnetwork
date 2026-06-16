@@ -48,7 +48,7 @@ module DfcProvider
 
     def build_sale_session(order)
       SaleSessionBuilder.build(order.order_cycle).tap do |session|
-        session.semanticId = "/api/dfc/SalesSession/#"
+        session.semanticId = enterprise_supplied_products_url(current_enterprise.id)
       end
     end
   end
