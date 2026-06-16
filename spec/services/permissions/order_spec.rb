@@ -91,7 +91,7 @@ RSpec.describe Permissions::Order do
 
         context "which contains my products" do
           before do
-            line_item.variant.supplier = producer
+            line_item.supplier = producer
             line_item.variant.save
           end
 
@@ -168,7 +168,7 @@ RSpec.describe Permissions::Order do
           create(:enterprise_relationship, parent: producer, child: distributor,
                                            permissions_list: [:add_to_order_cycle])
 
-          line_item1.variant.supplier = producer
+          line_item1.supplier = producer
           line_item1.variant.save
         end
 

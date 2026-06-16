@@ -236,7 +236,7 @@ RSpec.describe Spree::Admin::OrdersController do
         }
 
         before do
-          line_item.variant.supplier = distributor
+          line_item.supplier = distributor
           order.shipments << shipment
           order.line_items << line_item
           distributor.shipping_methods << shipment.shipping_method
