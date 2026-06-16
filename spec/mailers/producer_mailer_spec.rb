@@ -292,4 +292,28 @@ RSpec.describe ProducerMailer do
       end
     end
   end
+
+  context "when product price is modified in another order" do
+    let!(:order_with_modified_price) do
+      order = create(:order, distributor: d1, order_cycle:, state: 'complete')
+      order.line_items << create(:line_item, quantity: 2, variant: p1.variants.first, price: 16.50)
+      order.finalize!
+      order.save
+      order
+    end
+
+    it "checks whether quantity multiplied by price is equivalent to subtotal" do
+      row = parsed_email.all('table.order-summary.line-items tbody tr:not(.total-row)').find do |tr|
+        tr.text.include?('Zebra')
+      end
+
+      expect(row).not_to be_nil
+
+      cells = row.all('td').map { |td| td.text.strip }
+      quantity = cells[2].to_i
+      price = BigDecimal(cells[3].delete('$,'), 10)
+      subtotal = BigDecimal(cells[4].delete('$,'), 10)
+      expect(price * quantity).to eq(subtotal)
+    end
+  end
 end
