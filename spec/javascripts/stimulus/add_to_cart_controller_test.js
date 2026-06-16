@@ -4,38 +4,38 @@
  */
 
 import { Application } from "stimulus";
-import update_cart_controller from "controllers/update_cart_controller";
+import add_to_cart_controller from "add_to_cart_component/add_to_cart_controller";
 
-describe("UpdateCartController", () => {
+describe("AddToCartController", () => {
   beforeAll(() => {
     const application = Application.start();
-    application.register("update-cart", update_cart_controller);
+    application.register("add-to-cart", add_to_cart_controller);
   });
 
   let dispatchEventSpy;
   const htmlTemplate = (quantity = 0, onHand = 10) => `
       <div 
-        data-controller="update-cart" 
-        data-update-cart-variant-id-value="10"
-        data-update-cart-variant-on-hand-value="${onHand}"
-        data-update-cart-low-stock-display-value="true"
+        data-controller="add-to-cart" 
+        data-add-to-cart-variant-id-value="10"
+        data-add-to-cart-variant-on-hand-value="${onHand}"
+        data-add-to-cart-low-stock-display-value="true"
       >
-        <div id="add_container" class="variant-quantity-inputs" data-update-cart-target="addButton">
-          <button id="add" name="button" type="button" class="add-variant" data-action="update-cart#addEmpty">Add</button>
+        <div id="add_container" class="variant-quantity-inputs" data-add-to-cart-target="addButton">
+          <button id="add" name="button" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
         </div>
-        <div id="quantity_buttons" class="variant-quantity-inputs" data-update-cart-target="quantityButton" style="display: none;">
-          <button id="minus" class="variant-quantity" data-action="update-cart#remove" type="button">
+        <div id="quantity_buttons" class="variant-quantity-inputs" data-add-to-cart-target="quantityButton" style="display: none;">
+          <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">
             - 
           </button>
-          <input id="quantity" class="variant-quantity" data-update-cart-target="quantity" data-action="keyup->update-cart#manual" min="0" type="number" value="${quantity}">
-          <button id="plus" class="variant-quantity" data-action="update-cart#add" data-update-cart-target="plusButton" type="button">
+          <input id="quantity" class="variant-quantity" data-add-to-cart-target="quantity" data-action="keyup->add-to-cart#manual" min="0" type="number" value="${quantity}">
+          <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">
             + 
           </button>
         </div>
-        <div id="remaining_stock" class="variant-remaining-stock" style="display: none;" data-update-cart-target="stock">
+        <div id="remaining_stock" class="variant-remaining-stock" style="display: none;" data-add-to-cart-target="stock">
           Only ${onHand} left
         </div>
-        <div id="item-in-cart" class="variant-quantity-display" data-update-cart-target="nbItemInCart">
+        <div id="item-in-cart" class="variant-quantity-display" data-add-to-cart-target="nbItemInCart">
           ${quantity} in cart
         </div>
       </div>`;
@@ -400,8 +400,9 @@ describe("UpdateCartController", () => {
       });
 
       it("displays the minus/plus button and quantity", () => {
-        const add_container = document.getElementById("add_container");
-        const quantity_buttons = document.getElementById("quantity_buttons");
+        // TODO should be able to remove getElementById
+        //const add_container = document.getElementById("add_container");
+        //const quantity_buttons = document.getElementById("quantity_buttons");
 
         expect(quantity_buttons.style.display).toBe("flex");
         expect(add_container.style.display).toBe("none");
