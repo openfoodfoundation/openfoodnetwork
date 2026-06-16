@@ -88,6 +88,187 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
         end
       end
     end
+
+    put "Update Order" do
+      produces "application/json"
+      consumes "application/json"
+
+      parameter name: :order_id, in: :path
+      parameter name: :body, in: :body, schema: {
+        example: Rails.root.join('spec/fixtures/files/fdc-update-backorder.json').read
+      }
+
+      let(:body) {
+        Rails.root.join('spec/fixtures/files/fdc-update-backorder.json').read
+      }
+
+      let(:order) {
+        variant.save
+        variant.update! on_hand: 10
+        create(:completed_order_with_totals, :with_line_item, id: 11_000,
+                                                              distributor: enterprise, variant:)
+      }
+
+      response "200", "success" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        run_test! {
+          ofn_order = enterprise.distributed_orders.find(order.id)
+          target_line = ofn_order.line_items.find_by!(variant_id: variant.id)
+          expect(target_line.quantity).to eq 5
+        }
+      end
+
+      response "200", "order completed" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+        let(:body) {
+          json = JSON.parse(
+            Rails.root.join('spec/fixtures/files/fdc-update-backorder.json').read
+          )
+          json["@graph"].find { |n|
+            n["@type"] == "dfc-b:Order"
+          }["dfc-b:hasOrderStatus"] = "dfc-v:Complete"
+          json.to_json
+        }
+
+        run_test! {
+          ofn_order = enterprise.distributed_orders.find(order.id)
+          expect(ofn_order.completed_at).to be_present
+        }
+      end
+
+      response "400", "bad request" do
+        context "with empty request body" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order_id) { order.id }
+          let(:body) { nil }
+
+          run_test! {
+            expect(response).to have_http_status :bad_request
+          }
+        end
+      end
+
+      response "401", "unauthorized" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        before { login_as nil }
+
+        run_test! {
+          expect(response).to have_http_status :unauthorized
+        }
+      end
+
+      response "404", "not found" do
+        context "without order" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order_id) { "blah" }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+
+        context "without enterprise" do
+          let(:enterprise_id) { "blah" }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+
+        context "with unrelated enterprise" do
+          let(:enterprise_id) { create(:enterprise).id }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+      end
+
+      response "422", "unprocessable entity" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+        let(:body) {
+          json = JSON.parse(
+            Rails.root.join('spec/fixtures/files/fdc-update-backorder.json').read
+          )
+          offer = json["@graph"].find { |n| n["@type"] == "dfc-b:Offer" }
+          offer["dfc-b:offeredItem"] =
+            "http://test.host/api/dfc/enterprises/10000/supplied_products/99999"
+          json.to_json
+        }
+
+        run_test! {
+          expect(response.body).to include "Line items variant must exist"
+        }
+      end
+    end
+
+    delete "Cancel Order" do
+      parameter name: :order_id, in: :path, type: :string
+
+      let(:order) {
+        variant.save
+        variant.update! on_hand: 1
+        create(:completed_order_with_totals, :with_line_item, id: 11_000,
+                                                              distributor: enterprise, variant:)
+      }
+
+      response "204", "no content" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        run_test! {
+          expect(order.reload.state).to eq "canceled"
+        }
+      end
+
+      response "401", "unauthorized" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order_id) { order.id }
+
+        before { login_as nil }
+
+        run_test! {
+          expect(response).to have_http_status :unauthorized
+        }
+      end
+
+      response "404", "not found" do
+        context "without order" do
+          let(:enterprise_id) { enterprise.id }
+          let(:order_id) { "blah" }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+
+        context "without enterprise" do
+          let(:enterprise_id) { "blah" }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+
+        context "with unrelated enterprise" do
+          let(:enterprise_id) { create(:enterprise).id }
+          let(:order_id) { order.id }
+
+          run_test! {
+            expect(response).to have_http_status :not_found
+          }
+        end
+      end
+    end
   end
 
   path "/api/dfc/enterprises/{enterprise_id}/orders" do

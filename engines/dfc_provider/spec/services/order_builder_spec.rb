@@ -49,24 +49,33 @@ RSpec.describe OrderBuilder do
 
     context "with OrderLines" do
       let!(:variant) { create(:variant, id: 10_000) }
+      let!(:variant2) { create(:variant, id: 10_001) }
 
       before do
-        offer = DataFoodConsortium::ConnectorV1::Offer.new(
+        offer1 = DataFoodConsortium::ConnectorV1::Offer.new(
           nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/10000"
         )
-        order_line = DataFoodConsortium::ConnectorV1::OrderLine.new(
-          nil, offer:, quantity: 3
+        offer2 = DataFoodConsortium::ConnectorV1::Offer.new(
+          nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/10001"
+        )
+        order_line1 = DataFoodConsortium::ConnectorV1::OrderLine.new(
+          nil, offer: offer1, quantity: 3
+        )
+        order_line2 = DataFoodConsortium::ConnectorV1::OrderLine.new(
+          nil, offer: offer2, quantity: 5
         )
 
-        dfc_order.lines = [order_line, order_line]
+        dfc_order.lines = [order_line1, order_line2]
       end
 
       it "creates line items" do
         expect(subject).to be true
 
         expect(ofn_order.line_items.count).to eq 2
-        expect(ofn_order.line_items.first.variant).to eq variant
-        expect(ofn_order.line_items.first.quantity).to eq 3
+        li1 = ofn_order.line_items.find_by!(variant:)
+        expect(li1.quantity).to eq 3
+        li2 = ofn_order.line_items.find_by!(variant: variant2)
+        expect(li2.quantity).to eq 5
       end
     end
   end
