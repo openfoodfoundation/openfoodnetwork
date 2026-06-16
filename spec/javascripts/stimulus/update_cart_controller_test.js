@@ -78,7 +78,7 @@ describe("UpdateCartController", () => {
 
       add_button.click();
 
-      expect(quantity_buttons.style.display).toBe("block");
+      expect(quantity_buttons.style.display).toBe("flex");
       expect(add_container.style.display).toBe("none");
       const quantity = document.getElementById("quantity");
       expect(quantity.value).toEqual("1");
@@ -193,7 +193,7 @@ describe("UpdateCartController", () => {
         const quantity_buttons = document.getElementById("quantity_buttons");
         const minus_button = document.getElementById("minus");
 
-        expect(quantity_buttons.style.display).toBe("block");
+        expect(quantity_buttons.style.display).toBe("flex");
         expect(add_container.style.display).toBe("none");
 
         minus_button.click();
@@ -403,7 +403,7 @@ describe("UpdateCartController", () => {
         const add_container = document.getElementById("add_container");
         const quantity_buttons = document.getElementById("quantity_buttons");
 
-        expect(quantity_buttons.style.display).toBe("block");
+        expect(quantity_buttons.style.display).toBe("flex");
         expect(add_container.style.display).toBe("none");
       });
 
