@@ -38,9 +38,9 @@ RSpec.describe ProductsRenderer do
 
     context "filtering" do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
-         "variants_display_name_or_variants_supplier_name_cont" do
+         "variants_display_name_or_variants_enterprise_name_cont" do
         params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
-                  :variants_supplier_name]
+                  :variants_enterprise_name]
         ransack_param = "#{params.join('_or_')}_cont"
         products_renderer = ProductsRenderer.new(
           distributor,

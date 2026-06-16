@@ -298,7 +298,7 @@ RSpec.describe Api::V0::ProductsController do
 
       it "filters results by supplier" do
         api_get :bulk_products,
-                { page: 1, per_page: 15, q: { variants_supplier_id_eq: supplier.id } },
+                { page: 1, per_page: 15, q: { variants_enterprise_id_eq: supplier.id } },
                 format: :json
         expect(returned_product_ids).to eq [product2.id, other_product.id, product.id]
       end

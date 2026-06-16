@@ -49,7 +49,7 @@ RSpec.describe Api::V0::OrderCyclesController do
 
     it "returns products that were searched for" do
       ransack_param = "name_or_meta_keywords_or_variants_display_as_or_" \
-                      "variants_display_name_or_variants_supplier_name_cont"
+                      "variants_display_name_or_variants_enterprise_name_cont"
       api_get :products, id: order_cycle.id, distributor: distributor.id,
                          q: { ransack_param => "Kangaroo" }
 
