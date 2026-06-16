@@ -70,17 +70,5 @@
       border-radius: $radius-image; // 8px
       margin-bottom: $padding-tbl-cell;
     }
-
-    // override existing border radius
-    button.add-variant, button.variant-quantity {
-      &:nth-of-type(1) {
-        border-bottom-left-radius: $radius-button;
-        border-top-left-radius: $radius-button;
-      }
-      &:nth-last-of-type(1) {
-        border-top-right-radius: $radius-image;
-        border-bottom-right-radius: $radius-button;
-      }
-    }
   }
 }
