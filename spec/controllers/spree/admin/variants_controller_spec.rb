@@ -52,19 +52,19 @@ RSpec.describe Spree::Admin::VariantsController do
           .and change { variant.sku }.to(456.to_s)
       end
 
-      context "when updating supplier" do
+      context "when updating enterprise" do
         let(:new_producer) { create(:enterprise) }
 
-        it "updates the supplier" do
+        it "updates the enterprise" do
           expect {
             spree_put(
               :update,
               id: variant.id,
               product_id: variant.product.id,
-              variant: { supplier_id: new_producer.id }
+              variant: { enterprise_id: new_producer.id }
             )
             variant.reload
-          }.to change { variant.supplier_id }.to(new_producer.id)
+          }.to change { variant.enterprise_id }.to(new_producer.id)
         end
 
         it "removes associated product from existing Order Cycles" do
@@ -80,7 +80,7 @@ RSpec.describe Spree::Admin::VariantsController do
             :update,
             id: variant.id,
             product_id: variant.product.id,
-            variant: { supplier_id: new_producer.id }
+            variant: { enterprise_id: new_producer.id }
           )
 
           expect(order_cycle.reload.distributed_variants).not_to include variant
