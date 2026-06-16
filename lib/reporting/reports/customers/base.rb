@@ -55,10 +55,6 @@ module Reporting
         end
         # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
-        def columns_format
-          { balance_due: :currency, credit_due: :currency }
-        end
-
         def filter(orders)
           filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
         end
