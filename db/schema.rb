@@ -15,6 +15,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_032848) do
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "customer_types", ["individual", "enterprise"]
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -118,7 +122,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_032848) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.boolean "created_manually", default: false
-    t.string "customer_type", default: "individual", null: false
+    t.enum "customer_type", default: "individual", null: false, enum_type: "customer_types"
     t.string "enterprise_name"
     t.string "enterprise_acn"
     t.boolean "enterprise_charges_sales_tax", default: false, null: false

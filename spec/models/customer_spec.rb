@@ -10,7 +10,7 @@ RSpec.describe Customer do
     is_expected.to define_enum_for(:customer_type)
       .with_values(individual: "individual", enterprise: "enterprise")
       .with_default("individual")
-      .backed_by_column_of_type(:string)
+      .backed_by_column_of_type(:enum)
   }
 
   context "for an enterprise customer" do
