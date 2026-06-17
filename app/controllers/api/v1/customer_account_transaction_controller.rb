@@ -27,7 +27,8 @@ module Api
       end
 
       def description
-        I18n.t(".api_customer_credit", description: params[:description])
+        raw_description = customer_account_transaction_params[:description]
+        I18n.t(".api_customer_credit", description: raw_description)
       end
     end
   end

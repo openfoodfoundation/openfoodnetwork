@@ -102,6 +102,26 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :
       end
     end
 
+    describe "with a wrapped request body" do
+      let(:params) do
+        {
+          customer_account_transaction: {
+            customer_id: customer.id.to_s,
+            amount: "10.25",
+            description: "Payment processed by POS",
+          }
+        }
+      end
+
+      it "preserves the description nested in the wrapped body" do
+        post "/api/v1/customer_account_transaction", params: params
+
+        expect(response).to have_http_status(:created)
+        expect(CustomerAccountTransaction.last.description)
+          .to eq("API credit: Payment processed by POS")
+      end
+    end
+
     describe "concurrency", concurrency: true do
       let(:breakpoint) { Mutex.new }
       let(:params) do
