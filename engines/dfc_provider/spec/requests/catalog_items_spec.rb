@@ -3,6 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
+  let(:Accept) { "application/json" }
   let(:Authorization) { nil }
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:enterprise) {
@@ -108,6 +109,17 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
         end
 
         context "with given enterprise id" do
+          let(:enterprise_id) { 10_000 }
+
+          run_test! do
+            expect(response.body).to include "Apple"
+            expect(response.body).to include "AR"
+            expect(response.body).to include "offers/10001"
+          end
+        end
+
+        context "in DFC v2 format" do
+          let(:Accept) { 'application/ld+json; profile="dfc-v2"' }
           let(:enterprise_id) { 10_000 }
 
           run_test! do

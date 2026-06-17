@@ -10,7 +10,7 @@ module DfcProvider
 
       return not_found unless social_media
 
-      render json: DfcIo.export(social_media)
+      render_dfc(social_media)
     end
   end
 end
