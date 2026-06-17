@@ -304,7 +304,7 @@ RSpec.describe ProducerMailer do
 
     let(:zebra_rows) do
       parsed_email.all('table.order-summary.line-items tbody tr:not(.total-row)').select do |tr|
-          tr.text.include?(p1.name)
+        tr.text.include?(p1.name)
       end
     end
 
