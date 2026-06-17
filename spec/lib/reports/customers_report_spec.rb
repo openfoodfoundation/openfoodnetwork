@@ -28,8 +28,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                                            o.email, a.phone, d.name,
                                            [d.address.address1, d.address.address2,
                                             d.address.city].join(" "),
-                                            o.shipping_method.name, 1, o.total, "none",
-                                            0, 0
+                                           o.shipping_method.name, 1, o.total, "none",
+                                           0, 0
                                          ]])
       end
 
@@ -67,15 +67,15 @@ RSpec.describe Reporting::Reports::Customers::Base do
                      [a.address1, a.address2, a.city].join(" "),
                      o1.email, a.phone, d.name,
                      [d.address.address1, d.address.address2, d.address.city].join(" "),
-                      o1.shipping_method.name, 2, o1.total + o2.total, "2023-01-02",
-                      26.0, 0.0
+                     o1.shipping_method.name, 2, o1.total + o2.total, "2023-01-02",
+                     26.0, 0.0
                    ]])
         end
 
         context "when the customer has a credit balance" do
           before { create(:customer_account_transaction, customer:, amount: 25.00) }
 
-            it "reflects the credit balance in the credit_due column" do
+          it "reflects the credit balance in the credit_due column" do
             expect(subject.table_rows.first.last).to eq(25.0)
           end
         end
@@ -98,15 +98,15 @@ RSpec.describe Reporting::Reports::Customers::Base do
                        [a.address1, a.address2, a.city].join(" "),
                        o1.email, a.phone, d.name,
                        [d.address.address1, d.address.address2, d.address.city].join(" "),
-                        o1.shipping_method.name, 1, o1.total, "2023-01-01",
-                        13.0, 0.0
+                       o1.shipping_method.name, 1, o1.total, "2023-01-01",
+                       13.0, 0.0
                      ], [
                        a.firstname, a.lastname,
-                        [a.address1, a.address2, a.city].join(" "),
-                        o1.email, a.phone, d2.name,
-                        [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                        o2.shipping_method.name, 1, o2.total, "2023-01-02",
-                        13.0, 0.0
+                       [a.address1, a.address2, a.city].join(" "),
+                       o1.email, a.phone, d2.name,
+                       [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
+                       o2.shipping_method.name, 1, o2.total, "2023-01-02",
+                       13.0, 0.0
                      ]])
           end
         end
