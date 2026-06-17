@@ -100,8 +100,8 @@ RSpec.describe Reporting::Reports::Customers::Base do
                        [d.address.address1, d.address.address2, d.address.city].join(" "),
                         o1.shipping_method.name, 1, o1.total, "2023-01-01",
                         13.0, 0.0
-                      ], [
-                        a.firstname, a.lastname,
+                     ], [
+                       a.firstname, a.lastname,
                         [a.address1, a.address2, a.city].join(" "),
                         o1.email, a.phone, d2.name,
                         [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
