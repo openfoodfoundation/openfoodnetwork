@@ -23,7 +23,7 @@ class EnsureSingleProductImage < ActiveRecord::Migration[7.1]
 
       image_to_keep = images.first
 
-      images.where.not(id: image_to_keep.id).delete_all
+      images.where.not(id: image_to_keep.id).update_all(deleted_at: Time.current)
     end
   end
 

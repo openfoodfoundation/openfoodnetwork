@@ -9,14 +9,17 @@ module Api
         product = Spree::Product.find(params[:product_id])
         authorize! :update, product
 
-        image = product.image || Spree::Image.new(
+        previous_image = product.image
+        image = Spree::Image.new(
           viewable_id: product.id,
           viewable_type: 'Spree::Product'
         )
+        image.attachment.attach(params[:file])
 
-        success_status = image.persisted? ? :ok : :created
+        success_status = previous_image.present? ? :ok : :created
 
-        if image.update(attachment: params[:file])
+        if image.save
+          previous_image&.destroy!
           render json: image, serializer: ImageSerializer, status: success_status
         else
           error_json = { errors: image.errors.full_messages }
