@@ -41,7 +41,9 @@ class Customer < ApplicationRecord
   enum :customer_type, {
     individual: "individual",
     enterprise: "enterprise"
-  }, default: "individual"
+  },
+       default: "individual",
+       validate: true
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
@@ -49,9 +51,7 @@ class Customer < ApplicationRecord
                       scope: :enterprise_id,
                       message: I18n.t('validation_msg_is_associated_with_an_exising_customer')
                     }
-  validates :customer_type,
-            presence: true,
-            inclusion: { in: customer_types.keys }
+  validates :customer_type, presence: true
   validates :enterprise_name, presence: true, if: :enterprise?
   validates :enterprise_acn, presence: true, if: :enterprise?
 
