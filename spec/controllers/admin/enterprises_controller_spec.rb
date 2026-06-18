@@ -736,6 +736,50 @@ RSpec.describe Admin::EnterprisesController do
           expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
         end
       end
+
+      describe "ransack filtering" do
+        let!(:search_user) { create(:user, email: "searchy@example.com") }
+        let!(:filter_enterprise1) {
+          create(:enterprise, name: "Alpha Foods", owner: search_user)
+        }
+        let!(:filter_enterprise2) {
+          create(:enterprise, name: "Beta Bakery", owner: search_user)
+        }
+
+        it "filters by name (case-insensitive)" do
+          get :index, params: { q: { name_i_cont: "alpha" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1
+          expect(assigns(:collection)).not_to include filter_enterprise2
+        end
+
+        it "filters by owner email" do
+          get :index, params: { q: { owner_email_i_cont: "searchy" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1, filter_enterprise2
+          expect(assigns(:collection)).not_to include enterprise3
+        end
+
+        it "filters by member email" do
+          manager = create(:user, email: "manager@example.com")
+          create(:enterprise_role, user: manager, enterprise: filter_enterprise1)
+
+          get :index, params: { q: { users_email_i_cont: "manager" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1
+          expect(assigns(:collection)).not_to include filter_enterprise2
+        end
+
+        it "combines multiple filter fields" do
+          get :index, params: {
+            q: { name_i_cont: "beta", owner_email_i_cont: "searchy" }
+          }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise2
+          expect(assigns(:collection)).not_to include filter_enterprise1
+        end
+
+        it "returns all enterprises when no filter params given" do
+          get :index, format: :html
+          expect(assigns(:collection).size).to be >= 5
+        end
+      end
     end
 
     context "as an enterprise user" do

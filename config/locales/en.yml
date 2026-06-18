@@ -1597,12 +1597,17 @@ en:
         enterprise_fees: Enterprise Fees
         enterprise_fees_tip: This enterprise has no fees
       admin_index:
+        search_legend: Search Enterprises
         name: Name
         role: Role
         sells: Sells
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
+        owner_email: Owner Email
+        member_email: Member Email
         sells_options:
           unspecified: unspecified
           none: none
