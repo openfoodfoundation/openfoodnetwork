@@ -39,8 +39,7 @@ module OpenFoodNetwork
         it "truncates the label to fit within the column limit" do
           adjustment = applicator.create_line_item_adjustment(line_item)
 
-          label_limit = Spree::Adjustment.columns_hash['label'].limit
-          expect(adjustment.label.length).to be <= label_limit
+          expect(adjustment.label.length).to eq(255)
         end
       end
     end
