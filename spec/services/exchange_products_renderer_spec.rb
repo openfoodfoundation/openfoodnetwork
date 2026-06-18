@@ -12,7 +12,7 @@ RSpec.describe ExchangeProductsRenderer do
 
       it "loads products in order" do
         products = renderer.exchange_products(true, exchange.sender)
-        expected_products = Spree::Product.in_supplier(exchange.sender).map(&:name)
+        expected_products = Spree::Product.in_enterprise(exchange.sender).map(&:name)
 
         expect(products.map(&:name)).to eq(expected_products)
       end
@@ -35,7 +35,7 @@ RSpec.describe ExchangeProductsRenderer do
           exchange.variants.first.inventory_items = [create(:inventory_item,
                                                             enterprise: order_cycle.coordinator)]
           products = renderer.exchange_products(true, exchange.sender)
-          expected_products = Spree::Product.in_supplier(exchange.sender).map(&:name)
+          expected_products = Spree::Product.in_enterprise(exchange.sender).map(&:name)
 
           expect(products.map(&:name)).to eq expected_products
         end

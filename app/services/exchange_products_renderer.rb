@@ -33,7 +33,7 @@ class ExchangeProductsRenderer
   end
 
   def supplied_products(enterprises_query_matcher)
-    products_relation = Spree::Product.in_supplier(enterprises_query_matcher).order(:name)
+    products_relation = Spree::Product.in_enterprise(enterprises_query_matcher).order(:name)
 
     filter_visible(products_relation)
   end
@@ -100,7 +100,7 @@ class ExchangeProductsRenderer
     return enterprises if enterprises.empty?
 
     enterprises.includes(
-      products: [{ variants: :supplier }, :image]
+      products: [{ variants: :enterprise }, :image]
     )
   end
 end

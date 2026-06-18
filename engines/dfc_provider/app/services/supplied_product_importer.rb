@@ -101,7 +101,7 @@ class SuppliedProductImporter < DfcBuilder
       name: supplied_product.name,
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
-      supplier_id: supplier.id,
+      enterprise_id: supplier.id,
       primary_taxon_id: taxon(supplied_product).id,
       image: ImageBuilder.import(supplied_product.image),
       semantic_link: semantic_link(supplied_product),

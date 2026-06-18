@@ -4,12 +4,13 @@ FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier_id do
-      Enterprise.is_primary_producer.first&.id || FactoryBot.create(:supplier_enterprise).id
+    enterprise_id do |object|
+      object.supplier_id || Enterprise.is_primary_producer.first&.id || FactoryBot.create(:supplier_enterprise).id
     end
 
     transient do
       primary_taxon { nil }
+      supplier_id { nil } # temp attribute until specs are updated in future commit
     end
 
     primary_taxon_id { |p| (p.primary_taxon || Spree::Taxon.first || create(:taxon)).id }

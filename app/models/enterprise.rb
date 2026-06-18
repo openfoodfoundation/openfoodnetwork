@@ -456,7 +456,7 @@ class Enterprise < ApplicationRecord
   def supplied_taxons
     Spree::Taxon.
       joins(:products).
-      where(spree_products: { id: Spree::Product.in_supplier(self).select(&:id) }).
+      where(spree_products: { id: Spree::Product.in_enterprise(self).select(&:id) }).
       select('DISTINCT spree_taxons.*')
   end
 

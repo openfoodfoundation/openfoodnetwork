@@ -9,7 +9,7 @@ RSpec.describe Spree::Admin::ProductsController do
     let(:product_attrs) {
       attributes_for(:product).merge(
         shipping_category_id: shipping_category.id,
-        supplier_id: supplier.id,
+        enterprise_id: supplier.id,
         primary_taxon_id: taxon.id
       )
     }
@@ -50,7 +50,7 @@ RSpec.describe Spree::Admin::ProductsController do
     describe "when variant attributes are missing" do
       it 'renders form with errors' do
         spree_post :create, product: product_attrs.merge!(
-          { supplier_id: nil, primary_taxon_id: nil }
+          { enterprise_id: nil, primary_taxon_id: nil }
         ),
                             button: 'create'
         expect(response).to have_http_status :ok
@@ -61,7 +61,7 @@ RSpec.describe Spree::Admin::ProductsController do
 
   describe "updating a product" do
     let(:producer) { create(:enterprise) }
-    let!(:product) { create(:simple_product, supplier_id: producer.id) }
+    let!(:product) { create(:simple_product, enterprise_id: producer.id) }
 
     before do
       controller_login_as_enterprise_user [producer]
