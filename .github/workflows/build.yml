@@ -197,63 +197,6 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-  # TEMPORARY: stress-test the formerly-flaky simple order cycle spec.
-  # Runs the spec 10 times on each of 10 workers (100 runs total) to check it
-  # no longer fails intermittently. Revert this job once we have the results.
-  flaky_check:
-    runs-on: ubuntu-22.04
-    services:
-      postgres: *postgres
-    strategy:
-      fail-fast: false
-      matrix:
-        worker: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .node-version
-          cache: yarn
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up database
-        run: |
-          bin/rails db:create db:schema:load
-
-      - name: Run the spec 10 times
-        env:
-          DISABLE_KNAPSACK_PRO: true
-        run: |
-          bin/rails assets:precompile 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
-          for i in $(seq 1 10); do
-            echo "::group::Worker ${{ matrix.worker }} - run $i/10"
-            bundle exec rspec spec/system/admin/order_cycles/simple_spec.rb \
-              -e "creating a new order cycle" || exit 1
-            echo "::endgroup::"
-          done
-
-      - name: Archive failed tests screenshots
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: flaky-check-screenshots-${{ matrix.worker }}
-          path: tmp/capybara/screenshots/*.png
-          retention-days: 7
-          if-no-files-found: ignore
-
   engines:
     runs-on: ubuntu-22.04
     services:
