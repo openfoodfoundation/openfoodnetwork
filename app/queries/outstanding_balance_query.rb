@@ -11,6 +11,12 @@
 #
 # Note this query object and `app/models/concerns/balance.rb` should implement the same behavior
 # until we find a better way. If you change one, please, change the other too.
+#
+# KNOWN DIVERGENCE: Balance#new_outstanding_balance deducts incomplete customer credit payments
+# (payments.incomplete.customer_credit.sum(:amount)) from the balance, but this SQL query has no
+# join to the payments table and cannot do the same. As a result, orders where customer credit has
+# been applied but not yet captured are counted as fully unpaid here, causing the dashboard
+# customers tab to overstate what the customer owes compared to the Customers report.
 class OutstandingBalanceQuery
   # All the states of a finished order but that shouldn't count towards the balance (the customer
   # didn't get the order for whatever reason). Note it does not include complete
