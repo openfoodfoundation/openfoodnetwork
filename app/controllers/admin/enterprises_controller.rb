@@ -250,6 +250,8 @@ module Admin
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).
             editable_enterprises.
+            ransack(params[:q]).result.
+            distinct.
             order('is_primary_producer ASC, name')
         elsif json_request?
           OpenFoodNetwork::Permissions.new(spree_current_user)

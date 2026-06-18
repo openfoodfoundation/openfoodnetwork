@@ -1,3 +1,21 @@
+%fieldset.no-border
+  %legend= t('.search_legend')
+  = form_tag admin_enterprises_path, method: :get, class: "row" do
+    .alpha.five.columns
+      = label_tag :q_name_i_cont, t('.name')
+      = text_field_tag 'q[name_i_cont]', params.dig(:q, :name_i_cont), class: "fullwidth"
+    .five.columns
+      = label_tag :q_owner_email_i_cont, t('.owner_email')
+      = text_field_tag 'q[owner_email_i_cont]', params.dig(:q, :owner_email_i_cont), class: "fullwidth"
+    .five.columns
+      = label_tag :q_users_email_i_cont, t('.member_email')
+      = text_field_tag 'q[users_email_i_cont]', params.dig(:q, :users_email_i_cont), class: "fullwidth"
+    .omega.one.columns
+      = button t('.search'), 'icon-search', class: "small"
+    .row
+      .omega.sixteen.columns
+        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary"
+
 = form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   %table#listing_enterprises.index
     %colgroup
