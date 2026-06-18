@@ -12,6 +12,10 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
     $scope.enterprise_fees ||= EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true) unless isLoading
   )
 
+  $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
+    enterprise_id = parseInt(enterprise_id)
+    enterprise_fee for enterprise_fee in ($scope.enterprise_fees || []) when enterprise_fee.enterprise_id == enterprise_id
+
   $scope.exchangeTotalVariants = (exchange) ->
     return unless $scope.enterprises? && $scope.enterprises[exchange.enterprise_id]?
 

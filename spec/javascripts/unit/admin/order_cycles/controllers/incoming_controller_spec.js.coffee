@@ -18,6 +18,7 @@ describe 'AdminOrderCycleIncomingCtrl', ->
     OrderCycle =
       addSupplier: jasmine.createSpy('addSupplier')
     EnterpriseFee =
+      loading: false
       index: jasmine.createSpy('index').and.returnValue('enterprise fees list')
     ocInstance = {}
 
@@ -32,3 +33,11 @@ describe 'AdminOrderCycleIncomingCtrl', ->
 
     expect(event.preventDefault).toHaveBeenCalled()
     expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id')
+
+  it 'lists only incoming fees from the loaded incoming fee list', ->
+    scope.enterprise_fees = [
+      { enterprise_id: 1, name: 'fee 1' }
+      { enterprise_id: 2, name: 'fee 2' }
+    ]
+
+    expect(scope.enterpriseFeesForEnterprise(1)).toEqual [{ enterprise_id: 1, name: 'fee 1' }]
