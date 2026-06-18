@@ -11,7 +11,7 @@ FerrumPdf.configure do |config|
   config.pdf_options.scale = 0.85 # Scale down the content to fit better on the page, matching the wicked_pdf scale
   config.pdf_options.print_background = true
 
-  next unless ENV["CI"] || ENV["DOCKER"]
+  next unless ENV["CI"] || Process.uid.zero?
 
   config.browser_options = {
     "no-sandbox" => nil,
