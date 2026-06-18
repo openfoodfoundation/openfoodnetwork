@@ -10,6 +10,7 @@ describe 'AdminOrderCycleIncomingCtrl', ->
   beforeEach ->
     scope =
       $watch: jasmine.createSpy('$watch')
+      order_cycle_id: 27
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
@@ -18,13 +19,20 @@ describe 'AdminOrderCycleIncomingCtrl', ->
     OrderCycle =
       addSupplier: jasmine.createSpy('addSupplier')
     EnterpriseFee =
-      loading: false
-      index: jasmine.createSpy('index').and.returnValue('enterprise fees list')
+      EnterpriseFee:
+        index: jasmine.createSpy('index').and.callFake (params, callback) ->
+          callback('enterprise fees list')
     ocInstance = {}
 
     module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminOrderCycleIncomingCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
+
+  it 'loads only per item enterprise fees for incoming exchanges', ->
+    expect(EnterpriseFee.EnterpriseFee.index).toHaveBeenCalledWith(
+      {order_cycle_id: 27, per_item: true},
+      jasmine.any(Function)
+    )
 
   it 'adds order cycle suppliers', ->
     scope.new_supplier_id = 'new supplier id'

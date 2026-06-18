@@ -3,13 +3,9 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
 
   $scope.view = 'incoming'
   # NB: weirdly at this next line $scope.order_cycle.id comes out undefined so we use $scope.order_cycle_id instead
-  $scope.enterprise_fees = null
-  $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true) unless EnterpriseFee.loading
-
-  # We want to make sure to load the filtered EnterpriseFee when any previous request is finished
-  # otherwise the enterprise_fees migh get overriden by non filtered ones.
-  $scope.$watch(( -> EnterpriseFee.loading), (isLoading) =>
-    $scope.enterprise_fees ||= EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true) unless isLoading
+  $scope.enterprise_fees = []
+  EnterpriseFee.EnterpriseFee.index({order_cycle_id: $scope.order_cycle_id, per_item: true}, (enterprise_fees) ->
+    $scope.enterprise_fees = enterprise_fees
   )
 
   $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
