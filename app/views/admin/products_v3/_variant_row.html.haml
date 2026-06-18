@@ -64,7 +64,7 @@
         selected_option: variant.supplier_id,
         remote_url: admin_ajax_search_producers_url,
         placeholder_value: t('admin.products_v3.filters.select_producer')))
-    = error_message_on variant, :supplier
+    = error_message_on(variant, :supplier).presence || error_message_on(variant, :supplier_id)
   - else
     .content
       = variant.supplier.name

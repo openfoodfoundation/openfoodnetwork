@@ -58,6 +58,45 @@ RSpec.describe "Admin::ProductsV3" do
 
       expect(response).to redirect_to('/unauthorized')
     end
+
+    context "when a new variant is invalid" do
+      let(:producer) { create(:supplier_enterprise) }
+      let(:producer2) { create(:supplier_enterprise) }
+      let(:user) { create(:user, enterprises: [producer, producer2]) }
+      let(:product) { create(:simple_product, supplier_id: producer.id) }
+
+      it "renders the producer and category validation errors on the invalid row" do
+        invalid_name = "N" * 256
+
+        params = {
+          products: {
+            '0': {
+              id: product.id,
+              variants_attributes: {
+                '0': {
+                  display_name: invalid_name,
+                  sku: "n" * 256,
+                  price: "10.25",
+                  variant_unit: "weight",
+                  variant_unit_scale: "1000",
+                  unit_value: "200",
+                }
+              }
+            }
+          }
+        }
+
+        post(admin_products_bulk_update_path, params:)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to match(
+          /value="#{invalid_name}".*?<td class="col-producer field naked_inputs">.*?must exist/m
+        )
+        expect(response.body).to match(
+          /value="#{invalid_name}".*?<td class="col-category field naked_inputs">.*?must exist/m
+        )
+      end
+    end
   end
 
   describe "POST /admin/products/create_linked_variant" do
