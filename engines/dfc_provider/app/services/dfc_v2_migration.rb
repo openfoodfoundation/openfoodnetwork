@@ -48,15 +48,10 @@ module DfcV2Migration
 
   def self.up_person(person)
     id = person.semanticId.sub("/api/dfc/enterprises/", "/api/dfc/organizations/")
-
-    DataFoodConsortium::Connector::Person.new(
-      id,
-      firstName: person.firstName,
-      lastName: person.lastName,
-    )
+    up_generic(person, id)
   end
 
-  def self.up_generic(object)
+  def self.up_generic(object, id = object.semanticId, **)
     v1_class = object.class.ancestors.find do |ancestor|
       ancestor.module_parent == DataFoodConsortium::ConnectorV1
     end
@@ -67,8 +62,10 @@ module DfcV2Migration
     class_name = v1_class.name.demodulize
     v2_class = DataFoodConsortium::Connector.const_get(class_name)
 
-    v2_class.new(object.semanticId).tap do |o|
+    v2_class.new(id, **).tap do |o|
       o.semanticProperties.each do |property|
+        next if property.value.present?
+
         property.value = object.semanticPropertyValue(property.name)
       end
     end

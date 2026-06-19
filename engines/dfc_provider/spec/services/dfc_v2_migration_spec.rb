@@ -22,11 +22,40 @@ RSpec.describe DfcV2Migration do
       expect(result.semanticId).to eq "#p1"
     end
 
-    it "returns everything else unchanged" do
-      address = DataFoodConsortium::ConnectorV1::Address.new("#a1")
-      result = DfcV2Migration.up(address).first
-      expect(result).to be_a DataFoodConsortium::ConnectorV1::Address
-      expect(result).to eq address
+    it "returns unknown objects unchanged" do
+      objects = [
+        1, 2, "skip a few", # ♪ ♪ ♫ ♪
+        [], {}, Object.new,
+      ]
+
+      result = DfcV2Migration.up(*objects)
+
+      expect(result).to eq objects
+    end
+  end
+
+  describe ".up_generic" do
+    it "copies all available attributes" do
+      person = DataFoodConsortium::ConnectorV1::Person.new(
+        "#p1",
+        firstName: "Jane",
+      )
+      result = DfcV2Migration.up_generic(person)
+      expect(result.semanticId).to eq "#p1"
+      expect(result.firstName).to eq "Jane"
+      expect(result.lastName).to eq nil
+    end
+
+    it "allows to define attributes" do
+      person = DataFoodConsortium::ConnectorV1::Person.new(
+        "#p1",
+        firstName: "Jane",
+        lastName: "Jackson",
+      )
+      result = DfcV2Migration.up_generic(person, "#jac", firstName: "J")
+      expect(result.semanticId).to eq "#jac"
+      expect(result.firstName).to eq "J"
+      expect(result.lastName).to eq "Jackson"
     end
   end
 end
