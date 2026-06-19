@@ -38,7 +38,7 @@ RSpec.describe "Orders And Fulfillment" do
     }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
     let(:product) { create(:simple_product, name: "Baked Beans", supplier_id: supplier.id ) }
-    let(:variant1) { create(:variant, product:, unit_description: "Big", supplier:) }
+    let(:variant1) { create(:variant, product:, unit_description: "Big", enterprise: supplier) }
     let(:variant2) { create(:variant, product:, unit_description: "Small", supplier: ) }
 
     before do

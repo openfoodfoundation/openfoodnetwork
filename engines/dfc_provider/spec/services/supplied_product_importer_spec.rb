@@ -7,7 +7,7 @@ RSpec.describe SuppliedProductImporter do
 
   subject(:importer) { described_class }
   let(:variant) {
-    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, supplier:)
+    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, enterprise: supplier)
   }
   let(:spree_product) {
     create(:product, id: 6)

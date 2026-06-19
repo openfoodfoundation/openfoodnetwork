@@ -215,7 +215,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                                 meta_keywords: "Wild Fresh")
       }
       let(:variant3) {
-        create(:variant, product: product2, supplier:, price: 40, display_name: "Ferrets")
+        create(:variant, product: product2, enterprise: supplier, price: 40,
+                         display_name: "Ferrets")
       }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 

@@ -100,7 +100,7 @@ RSpec.describe Api::V0::VariantsController do
     end
 
     context "with more than one variants" do
-      let(:variant_to_delete) { create(:variant, product:, supplier:) }
+      let(:variant_to_delete) { create(:variant, product:, enterprise: supplier) }
 
       it "deletes a variant" do
         api_delete :destroy, id: variant_to_delete.id

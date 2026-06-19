@@ -38,7 +38,7 @@ RSpec.describe Enterprise do
     it "destroys supplied variants upon destroy" do
       pending "Variant are soft deletable, see: https://github.com/openfoodfoundation/openfoodnetwork/issues/2971"
       supplier = create(:supplier_enterprise)
-      variant = create(:variant, supplier:)
+      variant = create(:variant, enterprise: supplier)
 
       supplier.destroy
 
@@ -642,7 +642,7 @@ RSpec.describe Enterprise do
     describe ".supplying_variant_in" do
       it "finds producers by supply of variant" do
         supplier = create(:supplier_enterprise)
-        variant = create(:variant, supplier:)
+        variant = create(:variant, enterprise: supplier)
 
         expect(Enterprise.supplying_variant_in([variant])).to eq([supplier])
       end
@@ -659,8 +659,8 @@ RSpec.describe Enterprise do
 
       it "does not return duplicates" do
         supplier = create(:supplier_enterprise)
-        variant1 = create(:variant, supplier:)
-        variant2 = create(:variant, supplier:)
+        variant1 = create(:variant, enterprise: supplier)
+        variant2 = create(:variant, enterprise: supplier)
 
         expect(Enterprise.supplying_variant_in([variant1, variant2])).to eq([supplier])
       end

@@ -331,7 +331,7 @@ RSpec.describe '
     }
     let(:variant1) { product1.variants.first }
     let(:variant2) {
-      create(:variant, product: product1, price: 80.0, primary_taxon: taxon, supplier:)
+      create(:variant, product: product1, price: 80.0, primary_taxon: taxon, enterprise: supplier)
     }
     let(:variant3) { product2.variants.first }
 

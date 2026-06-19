@@ -45,7 +45,7 @@ RSpec.describe "Enterprise Summary Fee with Tax Report By Producer" do
   }
   let!(:product){ create(:simple_product) }
   let!(:product2){ create(:simple_product) }
-  let!(:variant){ create(:variant, product_id: product.id, tax_category:, supplier:) }
+  let!(:variant){ create(:variant, product_id: product.id, tax_category:, enterprise: supplier) }
   let!(:variant2){ create(:variant, product_id: product2.id, tax_category:, supplier: supplier2) }
   let!(:distributor_owner) { create(:user, enterprise_limit: 1) }
   let!(:distributor){

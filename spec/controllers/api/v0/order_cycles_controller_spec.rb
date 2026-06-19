@@ -103,10 +103,10 @@ RSpec.describe Api::V0::OrderCyclesController do
         let!(:supplier) { create(:supplier_enterprise, properties: [supplier_property]) }
 
         before do
-          product1.variants.first.update!(supplier:)
-          product2.variants.first.update!(supplier:)
+          product1.variants.first.update!(enterprise: supplier)
+          product2.variants.first.update!(enterprise: supplier)
           product3.update!(inherits_properties: false)
-          product3.variants.first.update!(supplier:)
+          product3.variants.first.update!(enterprise: supplier)
         end
 
         it "filter out the product that don't inherits from supplier properties" do
