@@ -28,7 +28,7 @@ RSpec.describe "CatalogItems", swagger_doc: "dfc.yaml" do
       dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
     )
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", supplier: enterprise) }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", enterprise:) }
 
   before { login_as user }
 

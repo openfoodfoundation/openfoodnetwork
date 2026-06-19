@@ -73,7 +73,7 @@ RSpec.describe Admin::TagRulesController do
 
     let(:enterprise) { create(:distributor_enterprise) }
     let(:product) { create(:product, supplier_id: enterprise.id) }
-    let!(:variant1) { create(:variant, product:, supplier: enterprise, tag_list: "organic,local") }
+    let!(:variant1) { create(:variant, product:, enterprise:, tag_list: "organic,local") }
     let!(:rule) {
       create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "vip",
                                         preferred_variant_tags: "premium")
@@ -115,7 +115,7 @@ RSpec.describe Admin::TagRulesController do
     end
 
     it "returns tags most recently applied to a variant first" do
-      variant2 = create(:variant, product:, supplier: enterprise, tag_list: "newer-tag")
+      variant2 = create(:variant, product:, enterprise:, tag_list: "newer-tag")
       # Ensure variant1's taggings are older
       ActsAsTaggableOn::Tagging.where(taggable: variant2).update_all(created_at: 1.hour.from_now)
 

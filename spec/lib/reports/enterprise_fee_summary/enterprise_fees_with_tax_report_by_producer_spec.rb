@@ -24,7 +24,7 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxRe
       outgoing.exchange_variants.create(variant:)
     end
   }
-  let(:variant) { create(:variant, supplier: enterprise) }
+  let(:variant) { create(:variant, enterprise:) }
   let(:order) {
     create(
       :order, :with_line_item,

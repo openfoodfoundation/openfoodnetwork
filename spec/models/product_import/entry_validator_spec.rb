@@ -66,7 +66,7 @@ RSpec.describe ProductImport::EntryValidator do
         unit_value: 1000,
         variant_unit_scale: 1000,
         variant_unit: 'weight',
-        variants: [create(:variant, supplier: enterprise)]
+        variants: [create(:variant, enterprise:)]
       )
     }
 

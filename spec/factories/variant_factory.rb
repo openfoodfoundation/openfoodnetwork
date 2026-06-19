@@ -18,7 +18,7 @@ FactoryBot.define do
     variant_unit_name { '' }
 
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
-    supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
+    enterprise { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
 
     # creating a product here  will end up creating an extra variant, as creating product will
     # create a "standard variant" by default. We could try to pass the variant instance we
@@ -43,7 +43,7 @@ FactoryBot.define do
       trait :with_order_cycle do
         transient do
           order_cycle { create(:order_cycle) }
-          producer { supplier }
+          producer { enterprise }
           coordinator { create(:distributor_enterprise) }
           distributor { create(:distributor_enterprise) }
           incoming_exchange_fees { [] }

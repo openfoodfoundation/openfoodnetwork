@@ -56,7 +56,7 @@ RSpec.describe Enterprise do
         let(:supplier) { variant.supplier }
         let(:property) { product.product_properties.last }
         let(:producer_property) { supplier.producer_properties.last }
-        let(:variant) { create(:variant, product:, supplier: enterprise) }
+        let(:variant) { create(:variant, product:, enterprise:) }
 
         before do
           product.variants = []
