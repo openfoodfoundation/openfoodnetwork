@@ -2117,6 +2117,7 @@ ca:
   email_shipping_collection_time: "Llest per a la recollida:"
   email_shipping_collection_instructions: "Instruccions de recollida:"
   email_special_instructions: "Les teves notes: "
+  email_order_note: "Nota:"
   email_signup_greeting: Hola!
   email_signup_welcome: "Benvinguda a %{sitename}!"
   email_signup_confirmed_email: "Gràcies per confirmar el teu correu electrònic."

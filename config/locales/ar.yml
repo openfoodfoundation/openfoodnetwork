@@ -2105,6 +2105,7 @@ ar:
   email_shipping_collection_time: "جاهز للتحصيل:"
   email_shipping_collection_instructions: "تعليمات المجموعة:"
   email_special_instructions: "ملاحظاتك:"
+  email_order_note: "ملحوظة:"
   email_signup_greeting: مرحبا!
   email_signup_welcome: "مرحبا بكم في %{sitename}!"
   email_signup_confirmed_email: "شكرا لتأكيد بريدك الالكتروني"

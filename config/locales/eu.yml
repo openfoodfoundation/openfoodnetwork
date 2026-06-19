@@ -2276,6 +2276,7 @@ eu:
   email_shipping_collection_time: "Biltzeko prest:"
   email_shipping_collection_instructions: "Biltzeko jarraibideak:"
   email_special_instructions: "Bere oharrak:"
+  email_order_note: "Oharra:"
   email_signup_greeting: Kaixo!
   email_signup_welcome: "Ongi etorri %{sitename}!"
   email_signup_confirmed_email: "Eskerrik asko zure emaila berresteagatik."

@@ -2566,6 +2566,7 @@ fr_CA:
   email_shipping_collection_time: "Prêt pour retrait:"
   email_shipping_collection_instructions: "Instructions de retrait:"
   email_special_instructions: "Vos commentaires:"
+  email_order_note: "Note :"
   email_signup_greeting: Bonjour!
   email_signup_welcome: "Bienvenue sur %{sitename}!"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."

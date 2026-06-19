@@ -2009,6 +2009,7 @@ es_CR:
   email_shipping_collection_time: "Listo para la recolección:"
   email_shipping_collection_instructions: "Instrucciones de recolección:"
   email_special_instructions: "Sus notas:"
+  email_order_note: "Nota:"
   email_signup_greeting: ¡Hola!
   email_signup_welcome: "¡Bienvenido a %{sitename}!"
   email_signup_confirmed_email: "Gracias por confirmar su correo electrónico."

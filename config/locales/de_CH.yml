@@ -2400,6 +2400,7 @@ de_CH:
   email_shipping_collection_time: "Bereit zur Abholung am:"
   email_shipping_collection_instructions: "Informationen zur Abholung:"
   email_special_instructions: "Ihre Notizen:"
+  email_order_note: "Anmerkung:"
   email_signup_greeting: Hallo!
   email_signup_welcome: "Willkommen im Open Food Network!"
   email_signup_confirmed_email: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."

@@ -2412,6 +2412,7 @@ nb:
   email_shipping_collection_time: "Klar for henting:"
   email_shipping_collection_instructions: "Henteinstruksjoner:"
   email_special_instructions: "Dine kommentarer:"
+  email_order_note: "Merk:"
   email_signup_greeting: Hei!
   email_signup_welcome: "Velkommen til %{sitename}!"
   email_signup_confirmed_email: "Takk for at du bekreftet eposten din."

@@ -822,6 +822,7 @@ fr_BE:
         update_address: "Mettre à jour l'adresse"
         confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
+        filter_by_tag: "Filtrer par étiquette"
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
         balance_due: "Solde dû"
@@ -2422,6 +2423,7 @@ fr_BE:
   brandstory_part6: "Nous pouvons toutes et tous participer à la construction d’un système alimentaire plus juste, respectueux de l’Homme qui préserve la planète."
   system_headline: "Faire mes courses - comment ça marche?"
   system_step1_html: "1. Recherche"
+  system_step1_text_html: <a href="/shops">Découvrez</a> nos commerces indépendants et variés de produits locaux et de saison. Filtrez par localisation et catégorie de produits, ou indiquez si vous préférez la livraison ou le retrait sur place.
   system_step2_html: "2. Achat"
   system_step2_text_html: "Transformez vos achats en choisissant des produits abordables, proposés par les divers producteurs et comptoirs. Découvrez les histoires et les personnes qui se cachent derrière les produits!"
   system_step3_html: "3. Retrait / Livraison"
@@ -2554,6 +2556,7 @@ fr_BE:
   email_shipping_collection_time: "Prêt pour retrait:"
   email_shipping_collection_instructions: "Instructions de retrait:"
   email_special_instructions: "Vos commentaires:"
+  email_order_note: "Note :"
   email_signup_greeting: Bonjour!
   email_signup_welcome: "Bienvenue sur %{sitename}!"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
