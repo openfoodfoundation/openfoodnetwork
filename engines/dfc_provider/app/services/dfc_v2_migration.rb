@@ -9,9 +9,10 @@ module DfcV2Migration
         up_enterprise(object)
       when DataFoodConsortium::ConnectorV1::Person
         up_person(object)
+      when VirtualAssembly::Semantizer::SemanticObject
+        up_generic(object)
       else
-        # Many classes didn't change in content at all, address for example.
-        # We can just return the v1 class as it's the same.
+        # Not sure what this is but we can't migrate it and leave it as is.
         object
       end
     end
@@ -53,5 +54,23 @@ module DfcV2Migration
       firstName: person.firstName,
       lastName: person.lastName,
     )
+  end
+
+  def self.up_generic(object)
+    v1_class = object.class.ancestors.find do |ancestor|
+      ancestor.module_parent == DataFoodConsortium::ConnectorV1
+    end
+
+    # It may be DfcV2 already, or something unknown.
+    return object if v1_class.nil?
+
+    class_name = v1_class.name.demodulize
+    v2_class = DataFoodConsortium::Connector.const_get(class_name)
+
+    v2_class.new(object.semanticId).tap do |o|
+      o.semanticProperties.each do |property|
+        property.value = object.semanticPropertyValue(property.name)
+      end
+    end
   end
 end
