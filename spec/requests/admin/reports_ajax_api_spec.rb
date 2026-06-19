@@ -10,9 +10,9 @@ RSpec.describe "Admin Reports AJAX Search API" do
   let(:supplier3) { create(:supplier_enterprise) }
   let(:distributor1) { create(:distributor_enterprise) }
   let(:distributor2) { create(:distributor_enterprise) }
-  let(:product1) { create(:product, price: 12.34, supplier_id: supplier1.id) }
-  let(:product2) { create(:product, price: 23.45, supplier_id: supplier2.id) }
-  let(:product3) { create(:product, price: 34.56, supplier_id: supplier3.id) }
+  let(:product1) { create(:product, price: 12.34, enterprise_id: supplier1.id) }
+  let(:product2) { create(:product, price: 23.45, enterprise_id: supplier2.id) }
+  let(:product3) { create(:product, price: 34.56, enterprise_id: supplier3.id) }
 
   let(:enterprise_fee1) { create(:enterprise_fee, name: "Delivery Fee", enterprise: distributor1) }
   let(:enterprise_fee2) { create(:enterprise_fee, name: "Admin Fee", enterprise: distributor2) }

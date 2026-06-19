@@ -24,25 +24,27 @@ RSpec.describe "Product Import" do
   let!(:tax_category2) { create(:tax_category) }
   let!(:shipping_category) { create(:shipping_category) }
 
-  let!(:product) { create(:simple_product, supplier_id: enterprise2.id, name: 'Hypothetical Cake') }
+  let!(:product) {
+    create(:simple_product, enterprise_id: enterprise2.id, name: 'Hypothetical Cake')
+  }
   let!(:variant) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500',
                      display_name: 'Preexisting Banana', supplier: enterprise2)
   }
   let!(:product2) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Beans',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Beans',
                             unit_value: '500', description: '', primary_taxon_id: category.id)
   }
   let!(:product3) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Sprouts',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Sprouts',
                             unit_value: '500')
   }
   let!(:product4) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Cabbage',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Cabbage',
                             unit_value: '500')
   }
   let!(:product5) {
-    create(:simple_product, supplier_id: enterprise2.id, on_hand: 100, name: 'Lettuce',
+    create(:simple_product, enterprise_id: enterprise2.id, on_hand: 100, name: 'Lettuce',
                             unit_value: '500')
   }
   let!(:variant_override) {
@@ -373,7 +375,7 @@ RSpec.describe "Product Import" do
       end
 
       it "handles a unit of kg for inventory import" do
-        product = create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Beets',
+        product = create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Beets',
                                           unit_value: '1000', variant_unit_scale: 1000)
         csv_data = <<~CSV
           name, distributor, producer, category, on_hand, price, unit_type, units, on_demand
@@ -412,7 +414,7 @@ RSpec.describe "Product Import" do
 
     describe "Item type products" do
       let!(:product) {
-        create(:simple_product, supplier_id: enterprise.id, on_hand: nil, name: 'Aubergine',
+        create(:simple_product, enterprise_id: enterprise.id, on_hand: nil, name: 'Aubergine',
                                 unit_value: '1', variant_unit_scale: nil, variant_unit: "items",
                                 variant_unit_name: "Bag")
       }

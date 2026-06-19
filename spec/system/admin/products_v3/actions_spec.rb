@@ -240,13 +240,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
     end
 
     describe "Create linked variant" do
-      let!(:variant) { create(:variant, display_name: "My box", supplier: producer) }
+      let!(:variant) { create(:variant, display_name: "My box", enterprise: producer) }
       let!(:linked_variant) {
         variant.create_linked_variant(user).tap{ |v| v.update! display_name: "My linked variant" }
       }
       let!(:other_producer) { create(:supplier_enterprise) }
       let!(:other_variant) {
-        create(:variant, display_name: "My friends box", supplier: other_producer)
+        create(:variant, display_name: "My friends box", enterprise: other_producer)
       }
       let!(:enterprise_relationship) {
         # Other producer grants me access to manage their variant

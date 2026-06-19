@@ -7,10 +7,10 @@ RSpec.describe Api::V0::ProductsController do
 
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
-  let!(:product) { create(:product, supplier_id: supplier.id) }
-  let!(:other_product) { create(:product, supplier_id: supplier.id) }
-  let(:product_other_supplier) { create(:product, supplier_id: supplier2.id) }
-  let(:product_with_image) { create(:product_with_image, supplier_id: supplier.id) }
+  let!(:product) { create(:product, enterprise_id: supplier.id) }
+  let!(:other_product) { create(:product, enterprise_id: supplier.id) }
+  let(:product_other_supplier) { create(:product, enterprise_id: supplier2.id) }
+  let(:product_with_image) { create(:product_with_image, enterprise_id: supplier.id) }
   let(:all_attributes) { ["id", "name", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
@@ -263,9 +263,9 @@ RSpec.describe Api::V0::ProductsController do
   describe '#bulk_products' do
     context "as an enterprise user" do
       let!(:taxon) { create(:taxon) }
-      let!(:product2) { create(:product, supplier_id: supplier.id, primary_taxon: taxon) }
-      let!(:product3) { create(:product, supplier_id: supplier2.id, primary_taxon: taxon) }
-      let!(:product4) { create(:product, supplier_id: supplier2.id) }
+      let!(:product2) { create(:product, enterprise_id: supplier.id, primary_taxon: taxon) }
+      let!(:product3) { create(:product, enterprise_id: supplier2.id, primary_taxon: taxon) }
+      let!(:product4) { create(:product, enterprise_id: supplier2.id) }
       let(:current_api_user) { supplier_enterprise_user(supplier) }
 
       before { current_api_user.enterprise_roles.create(enterprise: supplier2) }

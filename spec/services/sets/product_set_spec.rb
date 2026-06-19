@@ -142,7 +142,7 @@ RSpec.describe Sets::ProductSet do
     end
 
     describe "updating a product's variants" do
-      let(:product) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+      let(:product) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id) }
       let(:variant) { product.variants.first }
       let(:product_attributes) { {} }
       let(:variant_attributes) { { sku: "var_sku" } }
@@ -233,7 +233,7 @@ RSpec.describe Sets::ProductSet do
 
         context 'when supplier is updated' do
           let(:producer) { create(:supplier_enterprise) }
-          let(:variant_attributes) { { supplier_id: producer.id } }
+          let(:variant_attributes) { { enterprise_id: producer.id } }
 
           it 'updates the variant and removes the variant from order cycles' do
             expect {
@@ -308,7 +308,7 @@ RSpec.describe Sets::ProductSet do
             # omit ID for new variant
             {
               sku: "new sku", price: "5.00", unit_value: "5", variant_unit: "weight",
-              variant_unit_scale: 1, supplier_id: supplier.id, primary_taxon_id: create(:taxon).id
+              variant_unit_scale: 1, enterprise_id: supplier.id, primary_taxon_id: create(:taxon).id
             },
           ]
         }

@@ -485,10 +485,10 @@ RSpec.describe "Orders And Fulfillment" do
       context "for an OC supplied by two suppliers" do
         let(:supplier2) { create(:supplier_enterprise, name: "Another Supplier Name") }
         let(:product2) {
-          create(:simple_product, name: "Salted Peanuts", supplier_id: supplier2.id )
+          create(:simple_product, name: "Salted Peanuts", enterprise_id: supplier2.id )
         }
         let(:variant3) {
-          create(:variant, product: product2, unit_description: "Bag", supplier: supplier2)
+          create(:variant, product: product2, unit_description: "Bag", enterprise: supplier2)
         }
         let(:order4) {
           create(:completed_order_with_totals, line_items_count: 0, distributor:,

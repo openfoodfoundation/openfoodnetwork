@@ -136,8 +136,8 @@ RSpec.describe Admin::VariantOverridesController do
       let(:hub) { create(:distributor_enterprise) }
       let(:producer) { create(:supplier_enterprise) }
       let(:product) { create(:product) }
-      let(:variant1) { create(:variant, product:, supplier: producer) }
-      let(:variant2) { create(:variant, product:, supplier: producer) }
+      let(:variant1) { create(:variant, product:, enterprise: producer) }
+      let(:variant2) { create(:variant, product:, enterprise: producer) }
       let!(:variant_override1) {
         create(:variant_override, hub:, variant: variant1, count_on_hand: 5, default_stock: 7,
                                   resettable: true)
@@ -202,7 +202,7 @@ RSpec.describe Admin::VariantOverridesController do
             before { hub.owner.update_attribute(:enterprise_limit, 2) }
             let(:hub2) { create(:distributor_enterprise, owner: hub.owner) }
             let(:product) { create(:product) }
-            let(:variant3) { create(:variant, product:, supplier: producer) }
+            let(:variant3) { create(:variant, product:, enterprise: producer) }
             let!(:variant_override3) {
               create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1,
                                         default_stock: 13, resettable: true)

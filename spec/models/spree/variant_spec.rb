@@ -597,10 +597,10 @@ RSpec.describe Spree::Variant do
 
     describe ".with_properties" do
       let!(:variant_from_ipm_supplier) {
-        create(:variant, supplier: ipm_supplier)
+        create(:variant, enterprise: ipm_supplier)
       }
       let!(:variant_from_organic_supplier) {
-        create(:variant, supplier: organic_supplier)
+        create(:variant, enterprise: organic_supplier)
       }
       let(:organic_supplier) {
         create(:supplier_enterprise, properties: [organic])

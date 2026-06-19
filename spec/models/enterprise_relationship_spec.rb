@@ -205,21 +205,21 @@ RSpec.describe EnterpriseRelationship do
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: producer)
+            variant: create(:variant, product: create(:product), enterprise: producer)
           )
         }
         let!(:vo2) {
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: producer)
+            variant: create(:variant, product: create(:product), enterprise: producer)
           )
         }
         let!(:vo3) {
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: some_other_producer)
+            variant: create(:variant, product: create(:product), enterprise: some_other_producer)
           )
         }
 
@@ -274,7 +274,7 @@ RSpec.describe EnterpriseRelationship do
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: producer),
+            variant: create(:variant, product: create(:product), enterprise: producer),
             permission_revoked_at: Time.now.in_time_zone
           )
         }
@@ -282,7 +282,7 @@ RSpec.describe EnterpriseRelationship do
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: producer),
+            variant: create(:variant, product: create(:product), enterprise: producer),
             permission_revoked_at: Time.now.in_time_zone
           )
         }
@@ -290,7 +290,7 @@ RSpec.describe EnterpriseRelationship do
           create(
             :variant_override,
             hub:,
-            variant: create(:variant, product: create(:product), supplier: some_other_producer),
+            variant: create(:variant, product: create(:product), enterprise: some_other_producer),
             permission_revoked_at: Time.now.in_time_zone
           )
         }

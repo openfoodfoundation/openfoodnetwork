@@ -8,10 +8,10 @@ RSpec.describe OrderManagement::Subscriptions::Form do
     let!(:product2) { create(:product) }
     let!(:product3) { create(:product) }
     let!(:variant1) {
-      create(:variant, product: product1, unit_value: '100', price: 12.00, supplier: shop)
+      create(:variant, product: product1, unit_value: '100', price: 12.00, enterprise: shop)
     }
     let!(:variant2) {
-      create(:variant, product: product2, unit_value: '1000', price: 6.00, supplier: shop)
+      create(:variant, product: product2, unit_value: '1000', price: 6.00, enterprise: shop)
     }
     let!(:variant3) {
       create(:variant, product: product2, unit_value: '1000',

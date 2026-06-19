@@ -306,7 +306,7 @@ RSpec.describe '
     end
 
     describe "editing page" do
-      let!(:product) { create(:simple_product, name: 'a product', supplier_id: supplier2.id) }
+      let!(:product) { create(:simple_product, name: 'a product', enterprise_id: supplier2.id) }
 
       describe "'Back To Products List' and 'Cancel' buttons" do
         context "navigates to edit from the bulk product update page with searched results" do
@@ -455,7 +455,7 @@ RSpec.describe '
     describe "product properties" do
       # Given a product with a property
       let!(:product) {
-        create(:simple_product, supplier_id: supplier2.id).tap do |product|
+        create(:simple_product, enterprise_id: supplier2.id).tap do |product|
           product.set_property('fooprop', 'fooval')
         end
       }
@@ -512,7 +512,7 @@ RSpec.describe '
     end
 
     describe "image page" do
-      let!(:product) { create(:simple_product, supplier_id: supplier2.id) }
+      let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
 
       it "loading new product image page" do
         visit spree.admin_product_images_path(product)
@@ -592,7 +592,7 @@ RSpec.describe '
 
       it "checks error when creating product image with unsupported format" do
         unsupported_image_file_path = Rails.root.join("README.md").to_s
-        product = create(:simple_product, supplier_id: supplier2.id)
+        product = create(:simple_product, enterprise_id: supplier2.id)
 
         image = white_logo_file
         Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',

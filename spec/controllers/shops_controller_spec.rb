@@ -29,7 +29,7 @@ RSpec.describe ShopsController do
   it 'renders distributed producer properties' do
     producer_property = create(:property, presentation: 'certified')
     producer = create(:supplier_enterprise, properties: [producer_property])
-    product = create(:product, supplier_id: producer.id)
+    product = create(:product, enterprise_id: producer.id)
 
     create(
       :simple_order_cycle,

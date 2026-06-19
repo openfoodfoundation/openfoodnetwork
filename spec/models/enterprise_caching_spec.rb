@@ -10,7 +10,7 @@ RSpec.describe Enterprise do
 
       describe "with a supplied product" do
         let(:product) {
-          create(:simple_product, primary_taxon_id: taxon.id, supplier_id: enterprise.id)
+          create(:simple_product, primary_taxon_id: taxon.id, enterprise_id: enterprise.id)
         }
         let(:property) { product.product_properties.last }
         let(:producer_property) { enterprise.producer_properties.last }
@@ -41,7 +41,7 @@ RSpec.describe Enterprise do
 
         it "touches enterprise when the supplier of a product changes" do
           expect {
-            later { variant.update!(supplier: supplier2) }
+            later { variant.update!(enterprise: supplier2) }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -89,7 +89,7 @@ RSpec.describe Enterprise do
 
           it "touches enterprise when the supplier of a variant changes" do
             expect {
-              later { variant.update!(supplier: supplier2) }
+              later { variant.update!(enterprise: supplier2) }
             }.to change { enterprise.reload.updated_at }
           end
 

@@ -19,8 +19,8 @@ RSpec.describe OrderCycles::DistributedProductsService do
 
     it "returns de duplicated result" do
       supplier = create(:supplier_enterprise)
-      variant.update(supplier: )
-      create(:variant, product:, supplier: )
+      variant.update(enterprise: )
+      create(:variant, product:, enterprise: )
       expect(products_relation).to eq([product])
     end
 

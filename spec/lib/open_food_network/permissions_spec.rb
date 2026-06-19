@@ -188,8 +188,8 @@ RSpec.describe OpenFoodNetwork::Permissions do
   end
 
   describe "#editable_products" do
-    let!(:p1) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
+    let!(:p1) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
 
     before do
       allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where('1=0') }
@@ -224,9 +224,9 @@ RSpec.describe OpenFoodNetwork::Permissions do
   end
 
   describe "finding visible products" do
-    let!(:p1) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p3) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
+    let!(:p1) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p3) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
 
     before do
       allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where("1=0") }

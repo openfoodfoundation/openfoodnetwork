@@ -22,7 +22,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                                   coordinator: create(:distributor_enterprise),
                                   orders_close_at: 3.days.from_now)
     }
-    let(:product) { create(:simple_product, supplier_id: supplier.id, meta_keywords: "Domestic") }
+    let(:product) { create(:simple_product, enterprise_id: supplier.id, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor:) }
 
@@ -175,7 +175,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           context "one having 20 products" do
             before do
               20.times do
-                product = create(:simple_product, supplier_id: supplier.id)
+                product = create(:simple_product, enterprise_id: supplier.id)
                 add_variant_to_order_cycle(exchange1, product.variants.first)
               end
             end
@@ -190,7 +190,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           context "another having 5 products" do
             before do
               5.times do
-                product = create(:simple_product, supplier_id: supplier.id)
+                product = create(:simple_product, enterprise_id: supplier.id)
                 add_variant_to_order_cycle(exchange2, product.variants.first)
               end
             end
@@ -211,7 +211,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                          display_as: 'displayedunderthename')
       end
       let(:product2) {
-        create(:simple_product, supplier_id: supplier.id, name: "Meercats",
+        create(:simple_product, enterprise_id: supplier.id, name: "Meercats",
                                 meta_keywords: "Wild Fresh")
       }
       let(:variant3) {
@@ -306,7 +306,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
       context "when supplier uses property" do
         let(:product3) {
-          create(:simple_product, supplier_id: supplier.id, inherits_properties: false)
+          create(:simple_product, enterprise_id: supplier.id, inherits_properties: false)
         }
 
         before do

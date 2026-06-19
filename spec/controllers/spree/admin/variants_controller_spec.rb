@@ -90,8 +90,8 @@ RSpec.describe Spree::Admin::VariantsController do
 
     describe "#search" do
       let(:supplier) { create(:supplier_enterprise) }
-      let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier.id) }
-      let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier.id) }
+      let!(:p1) { create(:simple_product, name: 'Product 1', enterprise_id: supplier.id) }
+      let!(:p2) { create(:simple_product, name: 'Product 2', enterprise_id: supplier.id) }
       let!(:v1) { p1.variants.first }
       let!(:v2) { p2.variants.first }
       let!(:vo) { create(:variant_override, variant: v1, hub: d, count_on_hand: 44) }
@@ -162,8 +162,8 @@ RSpec.describe Spree::Admin::VariantsController do
   context "log in as supplier and distributor enable_producers_to_edit_orders" do
     let(:supplier1) { create(:supplier_enterprise) }
     let(:supplier2) { create(:supplier_enterprise) }
-    let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier1.id) }
-    let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier2.id) }
+    let!(:p1) { create(:simple_product, name: 'Product 1', enterprise_id: supplier1.id) }
+    let!(:p2) { create(:simple_product, name: 'Product 2', enterprise_id: supplier2.id) }
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:d)  { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }

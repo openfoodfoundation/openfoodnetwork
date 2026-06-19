@@ -30,9 +30,9 @@ RSpec.describe OpenOrderCycleJob do
     let!(:user) { create(:testdfc_user, owned_enterprises: [enterprise]) }
 
     let(:enterprise) { create(:supplier_enterprise) }
-    let!(:variant) { create(:variant, name: "Sauce", supplier_id: enterprise.id) }
+    let!(:variant) { create(:variant, name: "Sauce", enterprise_id: enterprise.id) }
     let!(:variant_discontinued) {
-      create(:variant, name: "Shiraz 1971", supplier_id: enterprise.id)
+      create(:variant, name: "Shiraz 1971", enterprise_id: enterprise.id)
     }
     let!(:order_cycle) {
       create(

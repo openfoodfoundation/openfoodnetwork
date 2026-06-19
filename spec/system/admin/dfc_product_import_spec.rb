@@ -8,8 +8,8 @@ RSpec.describe "DFC Product Import" do
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
   let(:enterprise) { create(:supplier_enterprise, name: "Saucy preserves") }
-  let(:source_product) { create(:product, name: "Sauce", supplier_id: enterprise.id) }
-  let(:old_product) { create(:product, name: "Best Sauce of 1995", supplier_id: enterprise.id) }
+  let(:source_product) { create(:product, name: "Sauce", enterprise_id: enterprise.id) }
+  let(:old_product) { create(:product, name: "Best Sauce of 1995", enterprise_id: enterprise.id) }
 
   before do
     login_as user

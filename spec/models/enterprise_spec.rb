@@ -650,8 +650,8 @@ RSpec.describe Enterprise do
       it "returns multiple enterprises when given multiple variants" do
         supplier1 = create(:supplier_enterprise)
         supplier2 = create(:supplier_enterprise)
-        variant1 = create(:variant, supplier: supplier1)
-        variant2 = create(:variant, supplier: supplier2)
+        variant1 = create(:variant, enterprise: supplier1)
+        variant2 = create(:variant, enterprise: supplier2)
 
         expect(Enterprise.supplying_variant_in([variant1, variant2]))
           .to match_array([supplier1, supplier2])

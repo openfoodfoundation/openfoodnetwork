@@ -178,8 +178,8 @@ RSpec.describe '
       create(:payment_method,
              distributors: [distributor_managed, distributor_unmanaged, distributor_permitted])
     }
-    let!(:variant_managed) { create(:variant, supplier: supplier_managed) }
-    let!(:variant_permitted) { create(:variant, supplier: supplier_permitted) }
+    let!(:variant_managed) { create(:variant, enterprise: supplier_managed) }
+    let!(:variant_permitted) { create(:variant, enterprise: supplier_permitted) }
     let!(:schedule) {
       create(:schedule, name: 'Schedule1',
                         order_cycles: [
@@ -424,7 +424,7 @@ RSpec.describe '
                                       distributors: [distributor_managed],
                                       name: 'Order Cycle 1' )
         end
-        let(:v1) { create(:variant, supplier: supplier_managed) }
+        let(:v1) { create(:variant, enterprise: supplier_managed) }
         let(:inventory_item_v1) {
           create(:inventory_item, enterprise: distributor_managed, variant: v1, visible: false)
         }
@@ -519,8 +519,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, supplier: supplier_managed)
-        v2 = create(:variant, supplier: supplier_managed)
+        v1 = create(:variant, enterprise: supplier_managed)
+        v2 = create(:variant, enterprise: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -610,8 +610,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, supplier: supplier_managed)
-        v2 = create(:variant, supplier: supplier_managed)
+        v1 = create(:variant, enterprise: supplier_managed)
+        v2 = create(:variant, enterprise: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -676,9 +676,9 @@ RSpec.describe '
   describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
-    let!(:p1) { create(:product, supplier_id: enterprise.id) }
-    let!(:p2) { create(:product, supplier_id: enterprise.id) }
-    let!(:p3) { create(:product, supplier_id: enterprise.id) }
+    let!(:p1) { create(:product, enterprise_id: enterprise.id) }
+    let!(:p2) { create(:product, enterprise_id: enterprise.id) }
+    let!(:p3) { create(:product, enterprise_id: enterprise.id) }
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:v3) { p3.variants.first }

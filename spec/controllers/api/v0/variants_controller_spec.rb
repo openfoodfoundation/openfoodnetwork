@@ -86,9 +86,9 @@ RSpec.describe Api::V0::VariantsController do
   context "as an enterprise user" do
     let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
-    let!(:product) { create(:product, supplier_id: supplier.id) }
+    let!(:product) { create(:product, enterprise_id: supplier.id) }
     let(:variant) { product.variants.first }
-    let(:product_other) { create(:product, supplier_id: supplier_other.id) }
+    let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
     let(:variant_other) { product_other.variants.first }
 
     context "with a single remaining variant" do
@@ -123,7 +123,7 @@ RSpec.describe Api::V0::VariantsController do
   context "as an administrator" do
     let(:current_api_user) { create(:admin_user) }
 
-    let(:product) { create(:product, supplier_id: create(:supplier_enterprise).id) }
+    let(:product) { create(:product, enterprise_id: create(:supplier_enterprise).id) }
     let(:variant) { product.variants.first }
     let(:taxon) { create(:taxon) }
     let!(:variant2) { create(:variant, product:) }

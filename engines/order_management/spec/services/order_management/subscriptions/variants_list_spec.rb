@@ -4,7 +4,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
   describe "variant eligibility for subscription" do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:variant) { create(:variant, supplier: producer) }
+    let!(:variant) { create(:variant, enterprise: producer) }
 
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:subscription) { create(:subscription, shop:, schedule:) }

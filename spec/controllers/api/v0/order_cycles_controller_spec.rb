@@ -200,9 +200,9 @@ RSpec.describe Api::V0::OrderCyclesController do
     end
 
     context "when variant tag rules apply", feature: :variant_tag do
-      let!(:variant1) { product1.variants.first.tap { |v| v.update(supplier: distributor) } }
-      let!(:variant2) { product2.variants.first.tap { |v| v.update(supplier: distributor) } }
-      let!(:variant3) { product3.variants.first.tap { |v| v.update(supplier: distributor) } }
+      let!(:variant1) { product1.variants.first.tap { |v| v.update(enterprise: distributor) } }
+      let!(:variant2) { product2.variants.first.tap { |v| v.update(enterprise: distributor) } }
+      let!(:variant3) { product3.variants.first.tap { |v| v.update(enterprise: distributor) } }
       let(:default_hide_rule) {
         create(:filter_variants_tag_rule,
                enterprise: distributor,
@@ -301,7 +301,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       create(:producer_property, producer_id: supplier.id, property: property4)
     }
 
-    before { product1.variants.first.update(supplier: ) }
+    before { product1.variants.first.update(enterprise: ) }
 
     it "loads producer properties for distributed products in the order cycle" do
       api_get :producer_properties, id: order_cycle.id, distributor: distributor.id

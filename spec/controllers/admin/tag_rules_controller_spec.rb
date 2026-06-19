@@ -72,7 +72,7 @@ RSpec.describe Admin::TagRulesController do
     render_views
 
     let(:enterprise) { create(:distributor_enterprise) }
-    let(:product) { create(:product, supplier_id: enterprise.id) }
+    let(:product) { create(:product, enterprise_id: enterprise.id) }
     let!(:variant1) { create(:variant, product:, enterprise:, tag_list: "organic,local") }
     let!(:rule) {
       create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "vip",
@@ -126,8 +126,8 @@ RSpec.describe Admin::TagRulesController do
 
     it "does not return tags from another enterprise" do
       other_enterprise = create(:distributor_enterprise)
-      other_product = create(:product, supplier_id: other_enterprise.id)
-      create(:variant, product: other_product, supplier: other_enterprise, tag_list: "other-tag")
+      other_product = create(:product, enterprise_id: other_enterprise.id)
+      create(:variant, product: other_product, enterprise: other_enterprise, tag_list: "other-tag")
 
       spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
 
