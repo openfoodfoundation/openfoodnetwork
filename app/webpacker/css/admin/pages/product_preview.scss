@@ -178,110 +178,42 @@
     margin-left: 0;
   }
 
+  // Carousel overrides: base styles come from the shared carousel component
+  // (imported in admin/all.scss). Only admin-preview-specific overrides live here.
   .product-img {
     .ofn-thumbnail-carousel {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-
-      .swiper-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .ofn-thumbnail-carousel__controls {
-        grid-column: 1;
-        grid-row: 1;
-        position: relative;
-        z-index: 3;
-        pointer-events: none;
-      }
-
+      // Center images within each slide
       .swiper-slide {
         display: flex;
         justify-content: center;
       }
 
+      // Slightly tighter image height than the default component value
       .ofn-thumbnail-carousel__image {
-        max-height: 360px;
-        width: 100%;
-        object-fit: contain;
+        max-height: $carousel-thumbnail-image-height;
       }
 
-      button.ofn-thumbnail-carousel__button {
+      // Foundation's button reset adds `margin: 0 0 1.25rem` to every <button>.
+      // Undo that and fix line-height inside the product preview context.
+      .ofn-thumbnail-carousel__button {
         margin: 0;
         padding: 0;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 3;
-        pointer-events: auto;
-        width: 1.8rem;
-        height: 1.8rem;
-        line-height: 1;
-        border-radius: 9999px;
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: rgb(255 255 255 / 95%);
-        box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
-        color: #111;
-        transition:
-          background-color 160ms ease,
-          box-shadow 160ms ease;
-
-        &:hover {
-          background: rgb(255 255 255);
-          box-shadow: 0 4px 10px rgb(0 0 0 / 26%);
-        }
-
-        &:focus-visible {
-          outline: 2px solid #0096ad;
-          outline-offset: 2px;
-        }
+        line-height: $carousel-button-line-height;
       }
 
-      .ofn-thumbnail-carousel__button-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-          display: block;
-          width: 24px;
-          height: 24px;
-        }
+      // Slightly wider offset than the component default (0.5rem) to account
+      // for the wider product preview image container.
+      .ofn-thumbnail-carousel__button--prev {
+        left: $carousel-button-offset-wide;
       }
 
-      button.ofn-thumbnail-carousel__button--prev {
-        left: 0.75rem;
-        color: #444;
-        font-weight: 400;
+      .ofn-thumbnail-carousel__button--next {
+        right: $carousel-button-offset-wide;
       }
 
-      button.ofn-thumbnail-carousel__button--next {
-        right: 0.75rem;
-        color: #444;
-        font-weight: 400;
-      }
-
-      button.ofn-thumbnail-carousel__thumb {
-        margin: 0;
-        padding: 0;
-        width: 64px;
-        height: 64px;
-        border: 2px solid transparent;
-        background: transparent;
+      // Clip any image that overflows the fixed thumb dimensions
+      .ofn-thumbnail-carousel__thumb {
         overflow: hidden;
-
-        &.is-active {
-          border-color: #0096ad;
-        }
-      }
-
-      .ofn-thumbnail-carousel__thumbs {
-        grid-column: 1;
-        grid-row: 2;
       }
     }
   }

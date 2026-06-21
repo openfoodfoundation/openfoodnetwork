@@ -21,7 +21,7 @@
   .ofn-thumbnail-carousel {
     touch-action: pan-y;
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: $carousel-thumbnail-grid-template-columns;
 
     .swiper-wrapper {
       display: flex;
@@ -33,7 +33,7 @@
       grid-column: 1;
       grid-row: 1;
       position: relative;
-      z-index: 3;
+      z-index: $carousel-controls-z-index;
       pointer-events: none;
     }
 
@@ -41,7 +41,7 @@
     // Swiper adds `swiper-initialized` when active and manages transitions itself via JS;
     // adding a CSS transition there causes double transitionend events that lock the navigation.
     &:not(.swiper-initialized) .swiper-wrapper {
-      transition: transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: transform $carousel-thumbnail-motion-duration $carousel-thumbnail-motion-easing;
       will-change: transform;
 
       @media (prefers-reduced-motion: reduce) {
@@ -54,57 +54,57 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 360px;
+      min-height: $carousel-thumbnail-slide-min-height;
       position: relative;
-      padding: 1px;
+      padding: $carousel-thumbnail-slide-padding;
     }
 
     .ofn-thumbnail-carousel__image {
       width: 100%;
-      height: 360px;
-      max-height: 360px;
+      height: $carousel-thumbnail-image-height;
+      max-height: $carousel-thumbnail-image-height;
       object-fit: contain;
-      padding: 0;
-      margin: 0;
+      padding: $carousel-thumbnail-image-padding;
+      margin: $carousel-thumbnail-image-margin;
     }
 
     .ofn-thumbnail-carousel__button {
       margin: 0;
       padding: 0;
-      width: 1.8rem;
-      height: 1.8rem;
+      width: $carousel-button-size;
+      height: $carousel-button-size;
       border-radius: 9999px;
       border: none;
-      background: rgb(255 255 255 / 95%);
-      box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
+      background: $carousel-button-background;
+      box-shadow: $carousel-button-shadow;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      line-height: 1;
+      line-height: $carousel-button-line-height;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 3;
+      z-index: $carousel-controls-z-index;
       pointer-events: auto;
-      transition: background-color 160ms ease, box-shadow 160ms ease;
+      transition: $carousel-button-transition;
 
       &:hover {
-        background: rgb(255 255 255);
-        box-shadow: 0 4px 10px rgb(0 0 0 / 26%);
+        background: $carousel-button-hover-background;
+        box-shadow: $carousel-button-hover-shadow;
       }
 
       &:focus-visible {
-        outline: 2px solid #0096ad;
+        outline: 2px solid $carousel-button-focus-color;
         outline-offset: 2px;
       }
     }
 
     .ofn-thumbnail-carousel__button--prev {
-      left: 0.75rem;
+      left: $carousel-button-offset-wide;
     }
 
     .ofn-thumbnail-carousel__button--next {
-      right: 0.75rem;
+      right: $carousel-button-offset-wide;
     }
 
     .ofn-thumbnail-carousel__button-icon {
@@ -114,8 +114,8 @@
 
       svg {
         display: block;
-        width: 24px;
-        height: 24px;
+        width: $carousel-button-icon-size;
+        height: $carousel-button-icon-size;
       }
     }
 
@@ -125,21 +125,21 @@
     }
 
     .ofn-thumbnail-carousel__thumb {
-      width: 64px;
-      height: 64px;
+      width: $carousel-thumbnail-thumb-size;
+      height: $carousel-thumbnail-thumb-size;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      opacity: 0.5;
+      opacity: $carousel-thumbnail-thumb-opacity;
 
       &.is-active {
-        opacity: 1;
+        opacity: $carousel-thumbnail-thumb-active-opacity;
       }
     }
 
     .ofn-thumbnail-carousel__thumb-image {
-      padding: 0;
-      margin: 0;
+      padding: $carousel-thumbnail-image-padding;
+      margin: $carousel-thumbnail-image-margin;
     }
   }
 }
