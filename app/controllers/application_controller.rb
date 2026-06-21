@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
   before_action :check_disabled_user, if: :spree_user_signed_in?
+  before_action :check_session_expiry, if: :spree_user_signed_in?
   before_action :set_after_login_url
 
   include RawParams
@@ -104,6 +105,16 @@ class ApplicationController < ActionController::Base
 
   def set_after_login_url
     store_location_for(:spree_user, params[:after_login]) if params[:after_login]
+  end
+
+  def check_session_expiry
+    if session[:last_seen_at].present? && session[:last_seen_at] < 1.month.ago
+      sign_out :spree_user
+      session.delete(:last_seen_at)
+      unauthorized
+      return
+    end
+    session[:last_seen_at] = Time.current
   end
 
   def shopfront_redirect
