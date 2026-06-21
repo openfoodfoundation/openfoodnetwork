@@ -2,7 +2,7 @@
   @extend %ofn-carousel-container;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: $carousel-thumbnail-grid-template-columns;
 
   .swiper-wrapper {
     display: flex;
@@ -14,7 +14,7 @@
     grid-column: 1;
     grid-row: 1;
     position: relative;
-    z-index: 3;
+    z-index: $carousel-controls-z-index;
     pointer-events: none;
   }
 
@@ -41,13 +41,13 @@
     min-height: 260px;
     max-height: 380px;
     object-fit: contain;
-    background: #fff;
-    border-radius: 8px;
+    background: $carousel-thumbnail-image-background;
+    border-radius: $carousel-thumbnail-image-border-radius;
   }
 
   .ofn-thumbnail-carousel__caption {
     @extend %ofn-carousel-caption;
-    z-index: 2;
+    z-index: $carousel-caption-z-index;
   }
 
   .ofn-thumbnail-carousel__button {
@@ -70,8 +70,8 @@
 
     svg {
       display: block;
-      width: 24px;
-      height: 24px;
+      width: $carousel-button-icon-size;
+      height: $carousel-button-icon-size;
     }
   }
 
@@ -86,9 +86,9 @@
     grid-row: 2;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-    margin-bottom: 1rem;
+    gap: $carousel-thumbnail-thumbs-gap;
+    margin-top: $carousel-thumbnail-thumbs-margin-top;
+    margin-bottom: $carousel-thumbnail-thumbs-margin-bottom;
     overflow-x: auto;
   }
 
@@ -97,12 +97,12 @@
     padding: 0;
     background: transparent;
     cursor: pointer;
-    flex: 0 0 64px;
-    opacity: 0.5;
+    flex: 0 0 $carousel-thumbnail-thumb-size;
+    opacity: $carousel-thumbnail-thumb-opacity;
 
     &.is-active {
-      border-color: #0096ad;
-      opacity: 1;
+      border-color: $carousel-thumbnail-active-color;
+      opacity: $carousel-thumbnail-thumb-active-opacity;
     }
   }
 

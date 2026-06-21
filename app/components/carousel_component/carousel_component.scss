@@ -11,58 +11,57 @@
 %ofn-carousel-caption {
   margin: 0;
   margin-bottom: -1px;
-  padding: 0.75rem 1rem;
-  background: rgb(255 255 255);
-  color: $white;
+  padding: $carousel-caption-padding;
+  background: $carousel-caption-background;
   position: absolute;
   left: 0;
   bottom: 0;
-  margin-left: 16px;
-  border-radius: 8px 8px 0px 0px;
+  margin-left: $carousel-caption-offset-left;
+  border-radius: $carousel-caption-border-radius;
   font-family: Roboto, Arial, sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
-  padding: 8px 12px 4px 12px;
-  color: #444;
+  font-size: $carousel-caption-font-size;
+  color: $carousel-caption-text-color;
 }
 
 %ofn-carousel-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
-  width: 1.8rem;
-  height: 1.8rem;
+  z-index: $carousel-z-index;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $carousel-button-size;
+  height: $carousel-button-size;
   border-radius: 9999px;
   border: none;
-  background: rgb(255 255 255 / 95%);
-  box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
-  color: #111;
+  background: $carousel-button-background;
+  box-shadow: $carousel-button-shadow;
+  color: $carousel-button-color;
   cursor: pointer;
-  transition:
-    background-color 160ms ease,
-    box-shadow 160ms ease;
+  transition: $carousel-button-transition;
 
   &:hover {
-    background: rgb(255 255 255);
-    box-shadow: 0 4px 10px rgb(0 0 0 / 26%);
+    background: $carousel-button-hover-background;
+    box-shadow: $carousel-button-hover-shadow;
   }
 
   &:focus-visible {
-    outline: 2px solid #0096ad;
+    outline: 2px solid $carousel-button-focus-color;
     outline-offset: 2px;
   }
 }
 
 %ofn-carousel-button-prev {
-  left: 0.5rem;
-  color: #444;
+  left: $carousel-button-offset-default;
+  color: $carousel-button-muted-color;
   font-weight: 400;
 }
 
 %ofn-carousel-button-next {
-  right: 0.5rem;
-  color: #444;
+  right: $carousel-button-offset-default;
+  color: $carousel-button-muted-color;
   font-weight: 400;
 }
 
@@ -70,8 +69,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.5rem;
-  z-index: 2;
+  bottom: $carousel-pagination-bottom;
+  z-index: $carousel-z-index;
   text-align: center;
 }
 
