@@ -269,6 +269,20 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
             expect(assigns(:payment_method)).not_to eq payment_method
             expect(response).to render_template partial: '_provider_settings'
           end
+
+          it "does not persist the type change to the database" do
+            spree_get :show_provider_preferences,
+                      pm_id: payment_method.id,
+                      provider_type: "Spree::Gateway::PayPalExpress"
+            expect(payment_method.reload.type).to eq "Spree::PaymentMethod::Check"
+          end
+
+          it "assigns a new instance whose preferences are present for rendering" do
+            spree_get :show_provider_preferences,
+                      pm_id: payment_method.id,
+                      provider_type: "Spree::Gateway::PayPalExpress"
+            expect(assigns(:payment_method).preferences).to be_present
+          end
         end
       end
 
