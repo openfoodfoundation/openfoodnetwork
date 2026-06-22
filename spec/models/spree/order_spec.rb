@@ -276,6 +276,26 @@ RSpec.describe Spree::Order do
       expect(order.updater).to receive(:shipping_address_from_distributor)
       order.finalize!
     end
+
+    context "when a payment is still due" do
+      let(:order) { create(:order_ready_for_confirmation) }
+
+      it "notifies the order.payment_due webhook" do
+        expect(Orders::WebhookService).to receive(:create_payment_due_job).with(order:)
+        order.finalize!
+      end
+    end
+
+    context "when the order is paid in full" do
+      let(:order) { create(:order_ready_for_confirmation) }
+
+      it "does not notify the order.payment_due webhook" do
+        order.payments.first.capture!
+
+        expect(Orders::WebhookService).not_to receive(:create_payment_due_job)
+        order.finalize!
+      end
+    end
   end
 
   describe "#process_payments!" do
