@@ -14,10 +14,11 @@
                 = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
               = product.name
 
-          / TODO if multiple variant don't show button
-          - variant = product.variants.first
-          .variant
-            = render AddToCartComponent.new(variant: variant, quantity: @variants_in_cart[variant.id], low_stock_display: @low_stock_display)
+          - # Use length here instead of count to only have on query instead of one for count and one query to load variants on the line below
+          - if product.variants.length == 1
+            - variant = product.variants.first
+            .variant
+              = render AddToCartComponent.new(variant: variant, quantity: @variants_in_cart[variant.id], low_stock_display: @low_stock_display)
 
           = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
             = render partial: "shared/product/product_details", locals: { product: }
