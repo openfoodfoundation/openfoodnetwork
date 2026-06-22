@@ -55,7 +55,11 @@ module UIComponentHelper
   end
 
   def open_product_modal(product)
-    page.find("a", text: product.name).click
+    page.find("#product-#{product.id} [data-controller~='shop-product-modal']",
+              match: :first).click
+    expect(page).to have_selector(
+      "#shop-product-modal-container .reveal-modal", visible: :visible
+    )
   end
 
   def open_enterprise_modal(enterprise)
@@ -68,8 +72,10 @@ module UIComponentHelper
     end
   end
 
-  def close_modal
-    find("a.close-reveal-modal").click
+  def close_modal(within_selector: ".product-bulk-modal")
+    within within_selector do
+      find(".close-reveal-modal", visible: :all).click
+    end
   end
 
   def have_reset_password

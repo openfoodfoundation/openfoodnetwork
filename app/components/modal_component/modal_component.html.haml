@@ -1,6 +1,10 @@
 %div{ id: @id, "data-controller": @data_controller, "data-action": @data_action, "data-modal-instant-value": @instant, **@options }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
   .reveal-modal.fade.modal-component{ "data-modal-target": "modal", class: @modal_class }
+    - if close_x_button?
+      %a.close-reveal-modal{ "data-action": "click->modal#close" }
+        %i.ofn-i_009-close
+
     = content
 
     - if close_button?

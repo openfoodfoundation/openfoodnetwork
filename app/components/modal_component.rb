@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class ModalComponent < ViewComponent::Base
-  def initialize(id:, close_button: true, instant: false, modal_class: :small, **options)
+  def initialize(id:, close_button: true, close_x_button: false, instant: false,
+                 modal_class: :small, **options)
     @id = id
     @close_button = close_button
+    @close_x_button = close_x_button
     @instant = instant
     @modal_class = modal_class
     @options = options
@@ -24,6 +26,10 @@ class ModalComponent < ViewComponent::Base
 
   def close_button?
     !!@close_button
+  end
+
+  def close_x_button?
+    !!@close_x_button
   end
 
   def namespace
