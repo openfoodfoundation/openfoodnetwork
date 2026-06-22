@@ -89,11 +89,10 @@ module Spree
           authorize! :show_provider_preferences, @payment_method
           payment_method_type = params[:provider_type]
           if @payment_method['type'].to_s != payment_method_type
-            @payment_method.update_columns(
-              type: payment_method_type,
-              updated_at: Time.zone.now
-            )
-            @payment_method = PaymentMethod.find(params[:pm_id])
+            # Use .new (not .becomes) so the preference form shows the new type's
+            # defaults rather than carrying over the old type's serialized prefs.
+            @payment_method = payment_method_type.constantize.new
+            @payment_method.id = params[:pm_id].to_i
           end
         else
           @payment_method = PaymentMethod.new(type: params[:provider_type])
