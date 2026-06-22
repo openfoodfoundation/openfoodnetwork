@@ -5,10 +5,15 @@ RSpec.describe Spree::OrderMailer do
     subject(:mail) { described_class.confirm_email_for_customer(order) }
 
     let(:order) { build(:order_with_totals_and_distribution) }
+    let(:enterprise) { order.distributor }
 
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :enterprise
     end
 
     it 'renders the shared/_payment.html.haml partial' do
@@ -53,10 +58,20 @@ RSpec.describe Spree::OrderMailer do
     subject(:mail) { described_class.confirm_email_for_shop(order) }
 
     let(:order) { build(:order_with_totals_and_distribution) }
+    let(:enterprise) { order.distributor }
 
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :enterprise
+    end
+
+    context "enterprise greeting" do
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
     end
 
     it 'renders the shared/_payment.html.haml partial' do
@@ -150,6 +165,16 @@ RSpec.describe Spree::OrderMailer do
       it_behaves_like 'non-customer facing email with active white labelling', :mail
     end
 
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :distributor
+    end
+
+    context "enterprise greeting" do
+      let(:enterprise) { distributor }
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
+    end
+
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
     end
@@ -171,6 +196,10 @@ RSpec.describe Spree::OrderMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :distributor
     end
 
     it "displays the order number" do
@@ -300,6 +329,7 @@ RSpec.describe Spree::OrderMailer do
   describe "#invoice_email" do
     subject(:mail) { described_class.invoice_email(order) }
     let(:order) { create(:completed_order_with_totals) }
+    let(:distributor) { order.distributor }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:invoice){
       create(:invoice, order:,
@@ -336,6 +366,16 @@ RSpec.describe Spree::OrderMailer do
         expect(renderer).to receive(:render_to_string).with(invoice.presenter, nil)
         mail.deliver_now
       end
+    end
+
+    context "enterprise logo" do
+      before do
+        renderer = instance_double(InvoiceRenderer)
+        allow(InvoiceRenderer).to receive(:new).and_return(renderer)
+        allow(renderer).to receive(:render_to_string).and_return("invoice")
+      end
+
+      it_behaves_like "enterprise logo rendering", :mail, :distributor
     end
   end
 

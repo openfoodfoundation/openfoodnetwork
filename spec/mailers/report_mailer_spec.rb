@@ -18,7 +18,7 @@ RSpec.describe ReportMailer do
 
     it "notifies about a report" do
       expect(mail.subject).to eq "Report ready"
-      expect(mail.body).to have_content "Report ready for download"
+      expect(mail.body).to have_content "Your report is ready for download."
     end
 
     it "notifies the user" do
