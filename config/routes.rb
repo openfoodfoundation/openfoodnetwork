@@ -39,6 +39,7 @@ Openfoodnetwork::Application.routes.draw do
     post :order_cycle
     get :order_cycle
     get :changeable_orders_alert
+    get :product_modal
   end
 
   resources :producers, only: [:index] do

@@ -68,9 +68,32 @@ module ShopHelper
     "with-darker-background"
   end
 
+  def product_carousel_images_data(product, size: :large)
+    images = product.images.to_a
+    show_caption = images.many?
+
+    return [default_carousel_image(size, product)] if images.empty?
+
+    images.map.with_index do |image, index|
+      {
+        url: image.url(size),
+        alt: image.alt.presence || product.name,
+        caption: show_caption ? "#{product.name} - #{index + 1}" : nil
+      }
+    end
+  end
+
   private
 
   def show_groups_tabs?
     !current_distributor.hide_groups_tab? && current_distributor.groups.any?
+  end
+
+  def default_carousel_image(size, product)
+    {
+      url: Spree::Image.default_image_url(size),
+      alt: product.name,
+      caption: nil
+    }
   end
 end
