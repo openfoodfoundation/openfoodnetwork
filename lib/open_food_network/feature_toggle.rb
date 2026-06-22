@@ -73,6 +73,11 @@ module OpenFoodNetwork
       "product_grid_view" => <<~DESC,
         Display shop products as a grid.
       DESC
+      "bulk_coop_filters" => <<~DESC,
+        Filter non-bulk products from bulk co-op reports.
+        When enabled for an enterprise, only products with 'group buy' enabled
+        appear in bulk co-op reports for that enterprise.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
