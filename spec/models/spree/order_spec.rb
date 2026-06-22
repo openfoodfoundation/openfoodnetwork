@@ -1336,7 +1336,8 @@ RSpec.describe Spree::Order do
       end
 
       it "returns previous items" do
-        expect(order.finalised_line_items.length).to eq 11
+        expect(order.finalised_line_items.length)
+          .to eq(prev_order.line_items.length + prev_order2.line_items.length)
         expect(order.finalised_line_items)
           .to match_array(prev_order.line_items + prev_order2.line_items)
       end

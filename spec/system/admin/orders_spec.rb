@@ -73,17 +73,19 @@ RSpec.describe '
     end
 
     let!(:order2) {
-      create(:order_ready_to_ship, user: customer2, distributor: distributor2,
+      create(:order_ready_to_ship, line_items_count: 5, user: customer2, distributor: distributor2,
                                    order_cycle: order_cycle2, completed_at: 2.days.ago,
                                    bill_address_id: billing_address2.id)
     }
     let!(:order3) {
-      create(:order_with_credit_payment, user: customer3, distributor: distributor3,
+      create(:order_with_credit_payment, line_items_count: 5, user: customer3,
+                                         distributor: distributor3,
                                          order_cycle: order_cycle3,
                                          bill_address_id: billing_address3.id)
     }
     let!(:order4) {
-      create(:order_with_credit_payment, user: customer4, distributor: distributor4,
+      create(:order_with_credit_payment, line_items_count: 5, user: customer4,
+                                         distributor: distributor4,
                                          order_cycle: order_cycle4,
                                          bill_address_id: billing_address4.id)
     }

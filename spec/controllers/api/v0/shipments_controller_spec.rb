@@ -246,7 +246,7 @@ RSpec.describe Api::V0::ShipmentsController do
       }
       let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
       let!(:order) {
-        create(:completed_order_with_totals, order_cycle:, distributor:)
+        create(:completed_order_with_totals, line_items_count: 5, order_cycle:, distributor:)
       }
       let(:new_shipping_rate) {
         order.shipment.shipping_rates.select{ |sr| sr.shipping_method == shipping_method2 }.first
