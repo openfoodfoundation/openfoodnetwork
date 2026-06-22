@@ -533,7 +533,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
     describe "order confirmation page" do
       let(:completed_order) {
-        create(:order_ready_to_ship, distributor:,
+        create(:order_ready_to_ship, line_items_count: 5, distributor:,
                                      order_cycle:, user_id: user.id)
       }
       let(:payment) { completed_order.payments.first }
