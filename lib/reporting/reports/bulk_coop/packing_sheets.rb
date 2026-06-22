@@ -5,7 +5,7 @@ module Reporting
     module BulkCoop
       class PackingSheets < Base
         def query_result
-          table_items.group_by do |item|
+          bulk_coop_filter(table_items).group_by do |item|
             [item.order.customer, item.variant]
           end.values
         end
