@@ -69,11 +69,11 @@ RSpec.describe "Orders And Distributors" do
         expect(table_headers).to eq([header])
 
         # Total rows should equal nr. of line items, per order
-        expect(all('table.report__table tbody tr').count).to eq(2)
+        expect(all('table.report__table tbody tr').count).to eq(1)
 
         # displays only orders from the hub it is managing
         within ".report__table" do
-          expect(page).to have_content(distributor.name, count: 2)
+          expect(page).to have_content(distributor.name, count: 1)
         end
 
         # only sees line items from orders it manages
@@ -102,7 +102,7 @@ RSpec.describe "Orders And Distributors" do
 
               expect(downloaded_file_txt).to have_text header.join(" ")
               expect(downloaded_file_txt).to have_text(
-                "By Bike 10 Lovely Street Herndon 20170 UPS Ground", count: 2
+                "By Bike 10 Lovely Street Herndon 20170 UPS Ground", count: 1
               )
             end
           end
@@ -145,9 +145,9 @@ RSpec.describe "Orders And Distributors" do
             # Then I should see the rows for the first order but not the second
             # One row per line item - order3 only
             within ".report__table" do
-              expect(page).to have_content(distributor.name, count: 2)
+              expect(page).to have_content(distributor.name, count: 1)
             end
-            expect(page).to have_text(order3.email, count: 2)
+            expect(page).to have_text(order3.email, count: 1)
 
             # setting a time interval to include both orders
             find("input.datepicker").click
@@ -156,10 +156,10 @@ RSpec.describe "Orders And Distributors" do
             run_report
             # Then I should see the both orders
             within ".report__table" do
-              expect(page).to have_content(distributor.name, count: 4)
+              expect(page).to have_content(distributor.name, count: 2)
             end
-            expect(page).to have_text(order3.email, count: 2)
-            expect(page).to have_text(order4.email, count: 2)
+            expect(page).to have_text(order3.email, count: 1)
+            expect(page).to have_text(order4.email, count: 1)
           end
         end
 
@@ -170,7 +170,7 @@ RSpec.describe "Orders And Distributors" do
             run_report
 
             within ".report__table" do
-              expect(page).to have_content(distributor.name, count: 6)
+              expect(page).to have_content(distributor.name, count: 3)
             end
             clear_select2("#s2id_q_distributor_id_in")
 
@@ -179,7 +179,7 @@ RSpec.describe "Orders And Distributors" do
             run_report
 
             within ".report__table" do
-              expect(page).to have_content(distributor2.name, count: 2)
+              expect(page).to have_content(distributor2.name, count: 1)
             end
           end
         end

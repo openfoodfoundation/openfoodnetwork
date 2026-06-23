@@ -497,8 +497,9 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                                               order_cycle:, user_id: user.id)
       }
       let!(:prev_order) {
-        create(:completed_order_with_totals,
-               order_cycle:, distributor:, user_id: order.user_id)
+        # At least two line items so the "additional items" message is pluralised.
+        create(:completed_order_with_totals, line_items_count: 2,
+                                             order_cycle:, distributor:, user_id: order.user_id)
       }
 
       context "when distributor allows order changes" do

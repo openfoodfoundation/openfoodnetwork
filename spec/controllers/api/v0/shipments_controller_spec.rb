@@ -324,7 +324,9 @@ RSpec.describe Api::V0::ShipmentsController do
     end
 
     context 'for a completed order with shipment' do
-      let(:order) { create :completed_order_with_totals }
+      # At least two line items so that #remove can delete one without emptying
+      # the order (and destroying its shipment).
+      let(:order) { create :completed_order_with_totals, line_items_count: 2 }
 
       before { params[:id] = order.shipments.first.to_param }
 

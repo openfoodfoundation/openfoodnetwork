@@ -58,7 +58,7 @@ FactoryBot.define do
       ship_address
 
       transient do
-        line_items_count { 2 }
+        line_items_count { 1 }
       end
 
       after(:create) do |order, evaluator|
