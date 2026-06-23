@@ -196,6 +196,9 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
                               Enterprise.where("1=0").select(:id)
                             }
+      allow(permissions).to receive(:related_enterprises_granting).with(:create_linked_variants) {
+                              Enterprise.where("1=0").select(:id)
+                            }
     end
 
     it "returns products produced by managed enterprises" do
@@ -212,6 +215,38 @@ RSpec.describe OpenFoodNetwork::Permissions do
         with(:manage_products) { Enterprise.where(id: p2.variants.first.supplier) }
 
       expect(permissions.editable_products).to eq([p2])
+    end
+
+    context "with create_linked_variants permission" do
+      it "returns product produced by enterprise permitting linked_variants" do
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [] }
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:manage_products) { Enterprise.where("1=0").select(:id) }
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:create_linked_variants) {
+            Enterprise.where(id: p1.variants.first.supplier).select(:id)
+          }
+
+        expect(permissions.editable_products).to eq([p1])
+      end
+
+      it "returns product produced by enteprise permitting linked variants and " \
+         "permitting manage products" do
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [] }
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:manage_products) {
+            Enterprise.where(id: [p1.variants.first.supplier,
+                                  p2.variants.first.supplier]).select(:id)
+          }
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:create_linked_variants) {
+            Enterprise.where(id: p1.variants.first.supplier).select(:id)
+          }
+
+        expect(permissions.editable_products).to match_array([p1, p2])
+      end
     end
 
     context "as superadmin" do
@@ -282,6 +317,50 @@ RSpec.describe OpenFoodNetwork::Permissions do
         and_return([e])
 
       expect(permissions.managed_product_enterprises).to eq([e])
+    end
+  end
+
+  describe "#managed_product_enterprises_and_enterprises_granting_linked_variants" do
+    it "returns enterprises granting manage products" do
+      enterprise = create(:enterprise)
+      expect(permissions).to receive(:managed_and_related_enterprises_granting)
+        .with(:manage_products)
+        .and_return(Enterprise.where(id: enterprise))
+      expect(permissions).to receive(:related_enterprises_granting)
+        .with(:create_linked_variants)
+        .and_return(Enterprise.where("1=0").select(:id))
+
+      expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
+        .to eq([enterprise])
+    end
+
+    it "returns enterprises granting create linked variants" do
+      enterprise = create(:enterprise)
+      expect(permissions).to receive(:managed_and_related_enterprises_granting)
+        .with(:manage_products)
+        .and_return(Enterprise.where("1=0"))
+      expect(permissions).to receive(:related_enterprises_granting)
+        .with(:create_linked_variants)
+        .and_return(Enterprise.where(id: enterprise).select(:id))
+
+      expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
+        .to eq([enterprise])
+    end
+
+    context "with both enterprises granting manage products and granting create linked variants" do
+      it "returns enterprises granting manage products or create linked variants" do
+        enterprise_manage_products = create(:enterprise)
+        enterprise_create_linked_variants = create(:enterprise)
+        expect(permissions).to receive(:managed_and_related_enterprises_granting)
+          .with(:manage_products)
+          .and_return(Enterprise.where(id: enterprise_manage_products))
+        expect(permissions).to receive(:related_enterprises_granting)
+          .with(:create_linked_variants)
+          .and_return(Enterprise.where(id: enterprise_create_linked_variants).select(:id))
+
+        expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
+          .to eq([enterprise_manage_products, enterprise_create_linked_variants])
+      end
     end
   end
 

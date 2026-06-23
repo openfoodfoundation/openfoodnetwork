@@ -64,7 +64,10 @@ module OpenFoodNetwork
 
       product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(
         product_with_variants.where(
-          spree_variants: { supplier_id: related_enterprises_granting(:manage_products) }
+          spree_variants: {
+            supplier_id: related_enterprises_granting(:manage_products) |
+              related_enterprises_granting(:create_linked_variants)
+          }
         )
       )
     end
@@ -88,6 +91,10 @@ module OpenFoodNetwork
 
     def enterprises_granting_linked_variants
       related_enterprises_granting :create_linked_variants
+    end
+
+    def managed_product_enterprises_and_enterprises_granting_linked_variants
+      managed_product_enterprises.or(Enterprise.where(id: enterprises_granting_linked_variants))
     end
 
     def manages_one_enterprise?
