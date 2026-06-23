@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe BackorderJob do
-  let(:order) { create(:completed_order_with_totals) }
+  let(:order) { create(:completed_order_with_totals, line_items_count: 2) }
   let(:beans) { order.line_items.first.variant }
   let(:chia_seed) { chia_item.variant }
   let(:chia_item) { order.line_items.second }

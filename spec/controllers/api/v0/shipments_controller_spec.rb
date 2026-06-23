@@ -246,7 +246,7 @@ RSpec.describe Api::V0::ShipmentsController do
       }
       let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
       let!(:order) {
-        create(:completed_order_with_totals, order_cycle:, distributor:)
+        create(:completed_order_with_totals, line_items_count: 5, order_cycle:, distributor:)
       }
       let(:new_shipping_rate) {
         order.shipment.shipping_rates.select{ |sr| sr.shipping_method == shipping_method2 }.first
@@ -324,7 +324,9 @@ RSpec.describe Api::V0::ShipmentsController do
     end
 
     context 'for a completed order with shipment' do
-      let(:order) { create :completed_order_with_totals }
+      # At least two line items so that #remove can delete one without emptying
+      # the order (and destroying its shipment).
+      let(:order) { create :completed_order_with_totals, line_items_count: 2 }
 
       before { params[:id] = order.shipments.first.to_param }
 

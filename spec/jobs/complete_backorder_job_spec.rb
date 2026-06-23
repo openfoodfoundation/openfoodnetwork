@@ -28,7 +28,7 @@ RSpec.describe CompleteBackorderJob do
       exchange.semantic_links.create!(semantic_id: o.semanticId)
     end
   }
-  let(:ofn_order) { create(:completed_order_with_totals) }
+  let(:ofn_order) { create(:completed_order_with_totals, line_items_count: 2) }
   let(:distributor) { ofn_order.distributor }
   let(:order_cycle) { ofn_order.order_cycle }
   let(:exchange) { order_cycle.exchanges.outgoing.first }
