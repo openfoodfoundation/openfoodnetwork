@@ -10,3 +10,11 @@
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
   language_name: "English" # Localised name of this language
+
+en_TST:
+  js:
+    shopfront:
+      variant:
+        remaining_in_stock:
+          one: "Only %{count} item remaining"
+          other: "Only %{count} items remaining"
