@@ -1,4 +1,4 @@
--# locals: (form:, product:, product_index:, allowed_producers:, should_slide_in: false)
+-# locals: (form:, product:, product_index:, allowed_producers:, linked_variants_producers:, should_slide_in: false)
 = form.fields_for("products", product, index: product_index) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
@@ -14,9 +14,51 @@
       -# Filter out other hub's variants that are linked to mine
       - next if variant.hub.present? && !managed_product_enterprises.include?(variant.hub)
 
-      = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
-        %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
-          = render partial: 'variant_row', locals: { variant:, f: variant_form, product_index: }
+      - #TODO skip if super admin
+      - #TODO hub can edit linked variant
+      - # if variant.hub_id.blank? <- linked variant
+      - if linked_variants_producers.include?(variant.supplier) 
+        -# Read only variants
+        %tr.condensed.nested-form-wrapper{ id: dom_id(variant) }
+          %td.col-image
+            -# empty
+            - variant.source_variants.each do |source_variant|
+              = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.full_name, source_id: source_variant.id, hub_name: variant.hub&.name))
+          %td.col-name
+            .content= variant.display_name 
+          %td.col-sku
+            .content= variant.sku
+          %td.col-unit_scale
+            .content= variant.variant_unit.capitalize
+          %td.col-unit
+            .content= variant.unit_presentation
+          %td.col-price
+            .content= number_to_currency(variant.price, unit: '')
+          %td.col-on_hand
+            .content= variant.on_demand_desired_or_current ? t(:on_demand) : variant.on_hand_desired_or_current
+          %td.col-producer
+            .content= variant.supplier.name
+          %td.col-category
+            .content= variant.primary_taxon.name
+          %td.col-tax_category
+            .content= variant.tax_category.name
+          - # Tags associated with the source variant are not relevant to the current user
+          - if variant_tag_enabled?(spree_current_user)
+            %td.col-tags.field.naked_inputs
+            -# empty
+          %td.col-inherits_properties.align-left
+            -# empty
+          %td.align-right
+            - # TODO review menu, should only allow linked variant
+            = render(VerticalEllipsisMenuComponent.new) do
+              - if variant.persisted?
+                - if variant.source_variants.empty? && allowed_source_producers.include?(variant.supplier)
+                  = link_to t('admin.products_page.actions.create_linked_variant'), admin_create_linked_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
+
+      - else
+        = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
+          %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
+            = render partial: 'variant_row', locals: { variant:, f: variant_form, product_index: }
 
     = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", prepare_new_variant(product, allowed_producers)) do |new_variant_form|
       %template{ 'data-nested-form-target': "template" }

@@ -1,4 +1,4 @@
--# locals: (product:, cloned_product:, product_index:, allowed_producers:)
+-# locals: (product:, cloned_product:, product_index:, allowed_producers:, linked_variants_producers:)
 - unless flash[:error]
     - product_body = nil
     - form_with do |form|
@@ -7,6 +7,7 @@
             product: cloned_product,
             product_index:,
             allowed_producers:,
+            linked_variants_producers:, 
             should_slide_in: true },
             formats: :html)
     = turbo_stream.after dom_id(product) do
