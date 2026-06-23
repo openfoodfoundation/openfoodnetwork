@@ -7,11 +7,11 @@ require 'spec_helper'
 RSpec.describe "js.shopfront.variant.remaining_in_stock i18n key" do
   context "in English" do
     it "returns the correct string when count is 1 (singular)" do
-      expect(I18n.t("js.shopfront.variant.remaining_in_stock", count: 1)).to eq("Only 1 left")
+      expect(I18n.t("js.shopfront.variant.remaining_in_stock", count: 1, locale: :en)).to eq("Only 1 left")
     end
 
     it "returns the correct string when count is 2 (plural)" do
-      expect(I18n.t("js.shopfront.variant.remaining_in_stock", count: 2)).to eq("Only 2 left")
+      expect(I18n.t("js.shopfront.variant.remaining_in_stock", count: 2, locale: :en)).to eq("Only 2 left")
     end
   end
 
