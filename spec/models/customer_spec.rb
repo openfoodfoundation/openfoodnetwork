@@ -193,6 +193,14 @@ RSpec.describe Customer do
           I18n.t("admin.customers.destroy.has_associated_subscriptions")
         )
       end
+
+      it "returns false when associated subscription destroy fails" do
+        create(:subscription, customer:, canceled_at: Time.zone.now)
+
+        allow_any_instance_of(Subscription).to receive(:destroy).and_return(false)
+
+        expect(customer.destroy).to be false
+      end
     end
   end
 end
