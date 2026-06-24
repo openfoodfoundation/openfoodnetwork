@@ -172,7 +172,16 @@ export default class BulkFormController extends Controller {
   #enableElementsForSubmit(changedElements) {
     changedElements.forEach((element) => {
       this.#enableElement(element);
-      this.#enableSiblingHiddenFields(element);
+      // Rails check_box helper generates a hidden+checkbox pair sharing the
+      // same name. When only the checkbox is re-enabled, unchecking it
+      // submits nothing (unchecked checkboxes don't submit). Enable the
+      // hidden sibling so the "0" value is sent on uncheck.
+      if (element.type === "checkbox") {
+        const hiddenSibling = element.previousElementSibling;
+        if (hiddenSibling?.type === "hidden" && hiddenSibling.name === element.name) {
+          this.#enableElement(hiddenSibling);
+        }
+      }
     });
   }
 
@@ -189,17 +198,6 @@ export default class BulkFormController extends Controller {
     changedVariantRows.forEach((variantRow) => {
       this.#variantIdentityFields(variantRow).forEach((field) => this.#enableElement(field));
     });
-  }
-
-  #enableSiblingHiddenFields(element) {
-    const fieldContainer = element.closest(".field");
-    const tableCell = element.closest("td");
-    const relatedContainer = fieldContainer || tableCell;
-    if (!relatedContainer) return;
-
-    relatedContainer
-      .querySelectorAll('input[type="hidden"], input[type="checkbox"], select, textarea')
-      .forEach((relatedElement) => this.#enableElement(relatedElement));
   }
 
   #enableElement(element) {
