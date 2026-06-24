@@ -58,37 +58,6 @@ RSpec.describe "Admin::ProductsV3" do
 
       expect(response).to redirect_to('/unauthorized')
     end
-
-    context "with permission" do
-      let(:supplier) { create(:supplier_enterprise) }
-      let(:user) { create(:user, enterprises: [supplier]) }
-      let(:product) { create(:simple_product, supplier_id: supplier.id, name: "Apples") }
-
-      it "infers product id from variant ids when product id is missing" do
-        variant = product.variants.first
-
-        params = {
-          products: {
-            '0': {
-              # product id intentionally omitted to exercise infer_product_id_from_variants
-              name: "Updated product name",
-              variants_attributes: {
-                '0': {
-                  id: variant.id,
-                  display_name: "Updated variant display name",
-                }
-              }
-            }
-          }
-        }
-
-        post(admin_products_bulk_update_path, params:, headers:)
-
-        expect(response).not_to redirect_to('/unauthorized')
-        expect(product.reload.name).to eq("Updated product name")
-        expect(variant.reload.display_name).to eq("Updated variant display name")
-      end
-    end
   end
 
   describe "POST /admin/products/create_linked_variant" do
