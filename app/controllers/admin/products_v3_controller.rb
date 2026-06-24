@@ -341,19 +341,11 @@ module Admin
 
         # Convert variants_attributes form hash to an array if present
         product[:variants_attributes] = product[:variants_attributes]&.values
-        product[:id] ||= infer_product_id_from_variants(product[:variants_attributes])
 
         next if product[:id].blank?
 
         normalized[key] = product
       end
-    end
-
-    def infer_product_id_from_variants(variants_attributes)
-      variant_ids = Array(variants_attributes).filter_map { |variant| variant[:id].presence }
-      return if variant_ids.empty?
-
-      Spree::Variant.where(id: variant_ids).pick(:product_id)
     end
 
     def clone_error_message(error)
