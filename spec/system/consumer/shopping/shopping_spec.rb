@@ -115,7 +115,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         visit shop_path
 
         within_variant(variant) do
-          expect(page).to have_content I18n.t("js.shopfront.variant.remaining_in_stock", count: 2)
+          expect(page).to have_content "Only 2 items remaining"
         end
       end
 

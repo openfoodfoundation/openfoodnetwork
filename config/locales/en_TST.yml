@@ -7,11 +7,8 @@
 # Using this test locale reflects that setup more realistically and means that
 # we include fallback translations in our tests.
 #
-en:
-  # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
-  language_name: "English" # Localised name of this language
-
 en_TST:
+  language_name: "English" # Localised name of this language
   js:
     shopfront:
       variant:
