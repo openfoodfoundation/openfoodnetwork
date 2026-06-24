@@ -5,7 +5,36 @@
                           action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' },
                   class: (defined?(should_slide_in) && should_slide_in) ? 'slide-in' : '' }
     %tr
-      = render partial: 'product_row', locals: { f: product_form, product:, product_index: }
+      - if linked_variants_producers.include?(product.variants.first.supplier) 
+        -# Read only product
+        %td.col-image.with-image{ id: "image-#{product.id}" }
+          = render partial: "product_image", locals: { product:, readonly: true }
+        %td.col-name.field.align-left.header.naked_inputs
+          .content= product.name
+        %td.col-sku.field.naked_inputs
+        %td.col-unit_scale.align-right
+          -# empty
+        %td.col-unit.align-right
+          -# empty
+        %td.col-price.align-right
+          -# empty
+        %td.col-on_hand.align-right
+          -# empty
+        %td.col-producer.align-right
+          -# empty
+        %td.col-category.align-left
+          -# empty
+        %td.col-tax_category.align-left
+        - if variant_tag_enabled?(spree_current_user)
+          %td.col-tags.align-left
+            -# empty
+        %td.col-inherits_properties.align-left
+          .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
+        %td.align-right
+          -# empty
+
+      - else
+        = render partial: 'product_row', locals: { f: product_form, product: }
 
     - product.variants.each_with_index do |variant, variant_index|
 
@@ -66,10 +95,12 @@
           = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form}
 
     %tr{ 'data-nested-form-target': "target" }
-    %tr.condensed
-      %td
-      - colspan = variant_tag_enabled?(spree_current_user) ? 12 : 11
-      %td{ colspan: "#{colspan}" }
-        %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
-                                                      'aria-label': t('.new_variant') }
-          =t('.new_variant')
+
+    - unless linked_variants_producers.include?(product.variants.first.supplier)
+      %tr.condensed
+        %td
+        - colspan = variant_tag_enabled?(spree_current_user) ? 12 : 11
+        %td{ colspan: "#{colspan}" }
+          %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
+                                                        'aria-label': t('.new_variant') }
+            =t('.new_variant')
