@@ -14,6 +14,9 @@ RSpec.describe "Session expiry" do
       expect(response).not_to redirect_to(%r|#/login$|)
 
       travel_to(1.month.from_now + 1.second) do
+        # Simulate the daily trim_sessions job removing expired sessions
+        ActiveRecord::SessionStore::Session.where(updated_at: ...30.days.ago).delete_all
+
         get "/admin/orders"
         expect(response).to redirect_to(%r|#/login$|)
       end
