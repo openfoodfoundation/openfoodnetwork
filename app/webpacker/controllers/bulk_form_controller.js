@@ -233,13 +233,16 @@ export default class BulkFormController extends Controller {
       //   If a select field has include_blank option selected (its value will be ''),
       //   its respective option doesn't have the selected attribute
       //   but selectedOptions have that option present
-      const defaultSelected = Array.from(element.options).find((opt) =>
-        opt.hasAttribute("selected"),
+      // Compare by value instead of DOM element reference.
+      // Tom Select can create duplicate <option> DOM elements during remote
+      // search, so reference comparison (===) fails after revert.
+      const defaultOption = Array.from(element.options).find((opt) =>
+        opt.defaultSelected,
       );
-      const selectedOption = element.selectedOptions[0];
-      const areBothBlank = selectedOption.value === "" && defaultSelected === undefined;
+      const defaultValue = defaultOption?.value ?? "";
+      const noDefaultSelected = defaultOption === undefined && element.value === "";
 
-      return !areBothBlank && selectedOption !== defaultSelected;
+      return !noDefaultSelected && element.value !== defaultValue;
     } else {
       // This doesn't work with hidden field
       //   Workaround: use a text field with "display:none;"
