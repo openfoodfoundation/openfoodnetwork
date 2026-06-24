@@ -103,19 +103,7 @@ module Sets
     def create_or_update_variant(product, variant_attributes)
       variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
-        # Capture persisted values before assignment so we can compare old vs new scale.
-        previous_state = {
-          variant_unit: variant.variant_unit,
-          unit_scale: variant.variant_unit_scale,
-          unit_value: variant.unit_value,
-        }
-
         variant.assign_attributes(variant_attributes.except(:id))
-        # normalize_unit_value_for_scale_change(
-        #   variant,
-        #   variant_attributes,
-        #   previous_state
-        # )
         variant.save if variant.changed?
 
         ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_supplier_id?
@@ -129,62 +117,6 @@ module Sets
         product.errors.add(:"variant_#{error.attribute}", error.message)
       end
       variant&.errors.blank?
-    end
-
-    def normalize_unit_value_for_scale_change(
-      variant,
-      variant_attributes,
-      previous_state
-    )
-      attributes = variant_attributes.with_indifferent_access
-
-      # Rule: when unit scale changes (eg g -> kg), keep the visible quantity stable.
-      # Example: 1g displayed value switched to kg should persist as 1000 base units.
-      return unless scale_change_conversion_applicable?(variant, previous_state)
-
-      # If a different unit_value was explicitly submitted, respect user input.
-      # Otherwise (missing or unchanged), auto-convert from previous persisted value.
-      return unless should_convert_unit_value?(attributes, previous_state[:unit_value])
-
-      variant.unit_value = converted_unit_value(
-        previous_state[:unit_value],
-        previous_state[:unit_scale],
-        variant.variant_unit_scale
-      )
-    end
-
-    def scale_change_conversion_applicable?(variant, previous_state)
-      # Conversion applies only when staying in the same measurable unit family.
-      return false unless previous_state[:variant_unit] == variant.variant_unit
-      return false unless %w(weight volume).include?(variant.variant_unit)
-
-      # Need both scales and previous value to compute a safe conversion.
-      return false unless previous_state[:unit_scale].present? &&
-                          variant.variant_unit_scale.present?
-      return false if previous_state[:unit_scale].to_d.zero?
-      return false if previous_state[:unit_value].blank?
-
-      previous_state[:unit_scale].to_d != variant.variant_unit_scale.to_d
-    end
-
-    def should_convert_unit_value?(attributes, previous_unit_value)
-      return true unless attributes.key?(:unit_value)
-
-      same_numeric_value?(attributes[:unit_value], previous_unit_value)
-    end
-
-    def converted_unit_value(previous_unit_value, previous_scale, new_scale)
-      # Convert persisted base value from old display scale to new display scale.
-      # Example: 1g shown as kg means 1 * 1000 / 1 = 1000 (stored base units).
-      previous_unit_value.to_d * new_scale.to_d / previous_scale.to_d
-    end
-
-    def same_numeric_value?(submitted_value, persisted_value)
-      return false if submitted_value.blank? || persisted_value.blank?
-
-      BigDecimal(submitted_value.to_s) == persisted_value.to_d
-    rescue ArgumentError
-      false
     end
 
     def create_variant(product, variant_attributes)
