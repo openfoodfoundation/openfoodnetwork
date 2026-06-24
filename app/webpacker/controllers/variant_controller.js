@@ -75,8 +75,12 @@ export default class VariantController extends Controller {
 
       // Preserve original formatting when computed value matches default,
       // to avoid false positives from number format differences (e.g. "100" vs "100.0")
-      if (unit_value !== null && !isNaN(unit_value) && !isNaN(parseFloat(this.unitValue.defaultValue))
-          && parseFloat(this.unitValue.defaultValue) === unit_value) {
+      if (
+        unit_value !== null &&
+        !isNaN(unit_value) &&
+        !isNaN(parseFloat(this.unitValue.defaultValue)) &&
+        parseFloat(this.unitValue.defaultValue) === unit_value
+      ) {
         this.unitValue.value = this.unitValue.defaultValue;
       } else {
         this.unitValue.value = unit_value;

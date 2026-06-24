@@ -236,9 +236,7 @@ export default class BulkFormController extends Controller {
       // Compare by value instead of DOM element reference.
       // Tom Select can create duplicate <option> DOM elements during remote
       // search, so reference comparison (===) fails after revert.
-      const defaultOption = Array.from(element.options).find((opt) =>
-        opt.defaultSelected,
-      );
+      const defaultOption = Array.from(element.options).find((opt) => opt.defaultSelected);
       const defaultValue = defaultOption?.value ?? "";
       const noDefaultSelected = defaultOption === undefined && element.value === "";
 
