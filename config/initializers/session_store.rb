@@ -9,10 +9,11 @@
 # Cookie domain is not set, to ensure it is "host-only". This avoids conflicting cookies between the
 # root domain and subdomains (staging vs prod).
 
-# Sessions older than 30 days are also removed server-side by the trim_sessions scheduled job
+# Sessions older than 30 days are removed server-side by the trim_sessions scheduled job
 # in config/sidekiq_scheduler.yml (configurable via SESSION_DAYS_TRIM_THRESHOLD env var).
+# Note: ActiveRecord::SessionStore does not enforce expire_after server-side (it only sets the
+# cookie's Expires header), so the trim job is what actually expires inactive sessions.
 Openfoodnetwork::Application.config.session_store(
   :active_record_store,
-  key: "_h-ofn_session_id",
-  expire_after: 1.month
+  key: "_h-ofn_session_id"
 )

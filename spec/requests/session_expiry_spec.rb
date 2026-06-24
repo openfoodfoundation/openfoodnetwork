@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe "Session expiry" do
-  it "is configured to expire sessions after one month" do
-    expect(Rails.application.config.session_options[:expire_after]).to eq(1.month)
-  end
-
   describe "an authenticated session" do
     let(:user) { create(:admin_user) }
 
