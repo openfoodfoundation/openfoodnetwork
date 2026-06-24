@@ -74,7 +74,9 @@ export default class VariantController extends Controller {
       unit_value *= this.variantUnitScale.value ? this.variantUnitScale.value : 1; // Normalise to default scale
 
       this.unitValue.value = unit_value;
+      this.unitValue.dispatchEvent(new Event("input", { bubbles: true }));
       this.unitDescription.value = match[3];
+      this.unitDescription.dispatchEvent(new Event("input", { bubbles: true }));
     }
   }
 
@@ -111,6 +113,8 @@ export default class VariantController extends Controller {
       this.variantUnitScale.value = "";
     }
     this.variantUnit.dispatchEvent(new Event("change"));
+    this.variantUnit.dispatchEvent(new Event("input", { bubbles: true }));
     this.variantUnitScale.dispatchEvent(new Event("change"));
+    this.variantUnitScale.dispatchEvent(new Event("input", { bubbles: true }));
   }
 }

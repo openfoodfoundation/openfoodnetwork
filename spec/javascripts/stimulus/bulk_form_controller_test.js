@@ -237,7 +237,7 @@ describe("BulkFormController", () => {
                 <tr id="spree_variant_11">
                   <td class="field">
                     <input id="variant_11_id" type="hidden" name="products[0][variants_attributes][0][id]" value="11">
-                    <input id="variant_11_unit_value" type="hidden" name="products[0][variants_attributes][0][unit_value]" value="100">
+                    <input id="variant_11_unit_value" type="text" style="display:none" name="products[0][variants_attributes][0][unit_value]" value="100">
                     <input id="variant_11_display_name" type="text" name="products[0][variants_attributes][0][display_name]" value="Small">
                   </td>
                 </tr>
@@ -266,9 +266,9 @@ describe("BulkFormController", () => {
         variant_11_display_name.value = "Small bag";
         variant_11_display_name.dispatchEvent(new Event("input"));
 
-        // Simulate a derived hidden field changing alongside the visible input.
+        // Simulate variant_controller updating unit_value and firing input event.
         variant_11_unit_value.value = "200";
-        variant_11_unit_value.dispatchEvent(new Event("change"));
+        variant_11_unit_value.dispatchEvent(new Event("input", { bubbles: true }));
 
         document.querySelector("form").dispatchEvent(new Event("submit"));
 
