@@ -50,12 +50,15 @@ RSpec.describe "EnterpriseGroups", swagger_doc: "dfc.yaml" do
             )
             expect(graph[1]).to include(
               "@id" => "http://test.host/api/dfc/enterprise_groups/60000",
-              "@type" => "dfc-b:Enterprise",
+              "@type" => "dfc-b:Organization",
               "dfc-b:name" => "Sustainable Farmers",
-              "dfc-b:affiliatedBy" => [
-                "http://test.host/api/dfc/enterprises/10001",
-                "http://test.host/api/dfc/enterprises/10002",
-              ],
+
+              # The DFC Connector is still missing this attribute.
+              # So it's not support for DFC v2 yet.
+              # "dfc-b:affiliatedBy" => [
+              #   "http://test.host/api/dfc/enterprises/10001",
+              #   "http://test.host/api/dfc/enterprises/10002",
+              # ],
             )
           end
         end

@@ -542,12 +542,9 @@ paths:
                       "@type": ldp:Container
                       ldp:contains: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/enterprise_groups/60000
-                      "@type": dfc-b:Enterprise
+                      "@type": dfc-b:Organization
                       dfc-b:name: Sustainable Farmers
                       dfc-b:hasDescription: this is a group
-                      dfc-b:affiliatedBy:
-                      - http://test.host/api/dfc/enterprises/10001
-                      - http://test.host/api/dfc/enterprises/10002
   "/api/dfc/enterprise_groups/{id}":
     get:
       summary: Show groups
@@ -1188,7 +1185,7 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
                       dfc-b:isCertifiedBy: "#certification-30000"
-                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                    - "@id": http://test.host/api/dfc/organizations/10000#mainContact
                       "@type": dfc-b:Person
                       dfc-b:firstName: Fred
                       dfc-b:familyName: Farmer
