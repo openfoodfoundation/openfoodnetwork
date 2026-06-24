@@ -20,7 +20,7 @@ module Admin
     def bulk_update
       product_set = product_set_from_params
 
-      product_set.collection.each { |p| authorize! :update, p }
+      product_set.collection.each { |p| authorize! :bulk_product_variant_update, p }
       @products = product_set.collection # use instance variable mainly for testing
 
       if product_set.save
@@ -172,7 +172,7 @@ module Admin
 
     def allowed_producers
       OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises_and_enterprises_granting_linked_variants
+        .managed_product_enterprises
         .is_primary_producer
         .by_name
     end

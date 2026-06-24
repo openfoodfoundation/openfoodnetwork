@@ -9,9 +9,10 @@
         -# Read only product
         %td.col-image.with-image{ id: "image-#{product.id}" }
           = render partial: "product_image", locals: { product:, readonly: true }
-        %td.col-name.field.align-left.header.naked_inputs
+        %td.col-name.field.align-left.header
+          = product_form.hidden_field :id
           .content= product.name
-        %td.col-sku.field.naked_inputs
+        %td.col-sku.field
         %td.col-unit_scale.align-right
           -# empty
         %td.col-unit.align-right
@@ -29,7 +30,7 @@
           %td.col-tags.align-left
             -# empty
         %td.col-inherits_properties.align-left
-          .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
+          .content= product.inherits_properties ? 'YES' : 'NO' 
         %td.align-right
           -# empty
 
@@ -39,20 +40,17 @@
     - product.variants.each_with_index do |variant, variant_index|
 
       -# Filter out variant a user has not permission to update, but keep variant with no supplier
-      - next if variant.supplier.present? && !allowed_producers.include?(variant.supplier)
+      - next if variant.supplier.present? && !(allowed_producers.include?(variant.supplier) || linked_variants_producers.include?(variant.supplier))
       -# Filter out other hub's variants that are linked to mine
       - next if variant.hub.present? && !managed_product_enterprises.include?(variant.hub)
 
-      - #TODO skip if super admin
-      - #TODO hub can edit linked variant
-      - # if variant.hub_id.blank? <- linked variant
-      - if linked_variants_producers.include?(variant.supplier) 
+      - #TODO skip if super admin, move to a helper
+      - # Read only if variant comes from supplier givin "create_linked_variants" permission and isn't a variant we can manage
+      - if !allowed_producers.include?(variant.supplier) && linked_variants_producers.include?(variant.supplier) && variant.hub_id.blank?
         -# Read only variants
         %tr.condensed.nested-form-wrapper{ id: dom_id(variant) }
           %td.col-image
             -# empty
-            - variant.source_variants.each do |source_variant|
-              = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.full_name, source_id: source_variant.id, hub_name: variant.hub&.name))
           %td.col-name
             .content= variant.display_name 
           %td.col-sku
@@ -70,7 +68,7 @@
           %td.col-category
             .content= variant.primary_taxon.name
           %td.col-tax_category
-            .content= variant.tax_category.name
+            .content= variant.tax_category&.name
           - # Tags associated with the source variant are not relevant to the current user
           - if variant_tag_enabled?(spree_current_user)
             %td.col-tags.field.naked_inputs
@@ -78,7 +76,6 @@
           %td.col-inherits_properties.align-left
             -# empty
           %td.align-right
-            - # TODO review menu, should only allow linked variant
             = render(VerticalEllipsisMenuComponent.new) do
               - if variant.persisted?
                 - if variant.source_variants.empty? && allowed_source_producers.include?(variant.supplier)
