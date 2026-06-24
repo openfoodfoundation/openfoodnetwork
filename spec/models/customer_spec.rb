@@ -5,7 +5,7 @@ RSpec.describe Customer do
   it { is_expected.to belong_to(:user).optional }
   it { is_expected.to belong_to(:bill_address).optional }
   it { is_expected.to belong_to(:ship_address).optional }
-  it { is_expected.to have_many(:customer_account_transactions).dependent(:restrict_with_error) }
+  it { is_expected.to have_many(:customer_account_transactions) }
 
   describe 'an existing customer' do
     let(:customer) { create(:customer) }
@@ -149,6 +149,49 @@ RSpec.describe Customer do
     context "when no existing customer account transaction" do
       it "returns 0" do
         expect(customer.credit_balance).to eq(0.00)
+      end
+    end
+  end
+
+  describe "#destroy" do
+    let(:customer) { create(:customer) }
+
+    context "when customer has no credit transactions" do
+      it "destroys the customer" do
+        expect(customer.destroy).to be_truthy
+      end
+    end
+
+    context "when customer has credit transactions" do
+      it "destroys the customer and cleans up transactions if balance is zero" do
+        create(:customer_account_transaction, customer:, amount: 10.00)
+        create(:customer_account_transaction, customer:, amount: -10.00)
+        expect { customer.destroy }.to change { CustomerAccountTransaction.count }.by(-2)
+        expect(customer).to be_destroyed
+      end
+
+      it "does not destroy the customer if there is outstanding credit" do
+        create(:customer_account_transaction, customer:, amount: 10.00)
+        expect(customer.destroy).to be false
+        expect(customer.errors[:base]).to include(
+          I18n.t("admin.customers.destroy.has_outstanding_credit")
+        )
+      end
+    end
+
+    context "when customer has subscriptions" do
+      it "destroys the customer and cleans up canceled subscriptions" do
+        create(:subscription, customer:, canceled_at: Time.zone.now)
+        expect { customer.destroy }.to change { Subscription.count }.by(-1)
+        expect(customer).to be_destroyed
+      end
+
+      it "does not destroy the customer if there are active subscriptions" do
+        create(:subscription, customer:)
+        expect(customer.destroy).to be false
+        expect(customer.errors[:base]).to include(
+          I18n.t("admin.customers.destroy.has_associated_subscriptions")
+        )
       end
     end
   end
