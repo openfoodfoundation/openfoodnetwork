@@ -28,22 +28,9 @@ module DfcV2Migration
     # internally stored ids for enterprises.
     id = enterprise.semanticId.sub("/api/dfc/enterprises/", "/api/dfc/organizations/")
 
-    DataFoodConsortium::Connector::Organization.new(
-      id,
-      name: enterprise.name,
-      description: enterprise.description,
-      vatNumber: enterprise.vatNumber,
-      suppliedProducts: enterprise.suppliedProducts,
-      catalogItems: enterprise.catalogItems,
-      emails: enterprise.emails,
-      localizations: enterprise.localizations,
-      phoneNumbers: enterprise.phoneNumbers,
-      socialMedias: enterprise.socialMedias,
-      logo: enterprise.logo,
-      mainContact: enterprise.mainContact,
-      websites: enterprise.websites,
-      certifications: enterprise.certifications,
-    )
+    DataFoodConsortium::Connector::Organization.new(id).tap do |org|
+      copy_property_values(enterprise, org)
+    end
   end
 
   def self.up_person(person)
@@ -63,11 +50,19 @@ module DfcV2Migration
     v2_class = DataFoodConsortium::Connector.const_get(class_name)
 
     v2_class.new(id, **).tap do |o|
-      o.semanticProperties.each do |property|
-        next if property.value.present?
+      copy_property_values(object, o)
+    end
+  end
 
-        property.value = object.semanticPropertyValue(property.name)
-      end
+  def self.copy_property_values(from, to)
+    to.semanticProperties.each do |property|
+      next if property.value.present?
+
+      value = from.semanticPropertyValue(property.name)
+
+      next if value.blank?
+
+      property.value = value
     end
   end
 end
