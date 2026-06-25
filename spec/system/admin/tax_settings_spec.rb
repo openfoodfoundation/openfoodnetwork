@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe 'Account and Billing Settings', :request_scoped_login do
+RSpec.describe 'Account and Billing Settings' do
   include AuthenticationHelper
   include WebHelper
 

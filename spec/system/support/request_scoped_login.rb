@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# PROTOTYPE — opt in per example with `:request_scoped_login` metadata.
-#
 # Binds Warden's test login to the specific request the example makes, instead of
 # "the next request to reach Warden".
 #
@@ -18,6 +16,9 @@
 # retro-add a header (`Network.setExtraHTTPHeaders`) to an already-dispatched request — so
 # it can no longer steal the login. One-shot semantics are preserved: the login is applied
 # exactly once, then the session cookie carries it, so logout / forbidden-redirect still work.
+#
+# Applied to every system spec; the Warden hook is header-gated, so examples that never call
+# `login_as` are unaffected (no header is set, the holder stays empty, the hook no-ops).
 module RequestScopedLogin
   HEADER = "X-Warden-Test-Login"
   ENV_KEY = "HTTP_X_WARDEN_TEST_LOGIN"
@@ -52,6 +53,6 @@ end
 RequestScopedLogin.install_warden_hook!
 
 RSpec.configure do |config|
-  config.prepend RequestScopedLogin, request_scoped_login: true
-  config.after(:each, request_scoped_login: true) { RequestScopedLogin.pending.clear }
+  config.prepend RequestScopedLogin, type: :system
+  config.after(:each, type: :system) { RequestScopedLogin.pending.clear }
 end
