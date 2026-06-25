@@ -175,7 +175,11 @@
       {
         "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#certification-organic",
         "@type": "dfc-b:Certfication",
-        "dfc-b:name": "Organic"
+        "dfc-b:name": "Organic",
+        "dfc-b:description": null,
+        "dfc-b:certiferReference": "Ecocert",
+        "dfc-b:certificationScore": "56",
+        "dfc-b:operatorId": "asds2334fd"
       }
     ]
   },
