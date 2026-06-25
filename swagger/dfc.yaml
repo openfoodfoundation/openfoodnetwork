@@ -83,7 +83,7 @@ paths:
               examples:
                 in DFC v2 format:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@id": http://test.host/api/dfc/addresses/40000
                     "@type": dfc-b:Address
                     dfc-b:hasStreet: 10 Lovely Street
@@ -316,7 +316,7 @@ paths:
               examples:
                 in DFC v2 format:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@graph":
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items
                       "@type": ldp:Container
@@ -536,7 +536,7 @@ paths:
               examples:
                 in DFC v2 format:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@graph":
                     - "@id": http://test.host/api/dfc/enterprise_groups
                       "@type": ldp:Container
@@ -1133,7 +1133,7 @@ paths:
               examples:
                 as user owning an enterprise:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@graph":
                     - "@id": http://test.host/api/dfc/organizations
                       "@type": ldp:Container
@@ -1171,7 +1171,7 @@ paths:
               examples:
                 as user owning an enterprise:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@graph":
                     - "@id": http://test.host/api/dfc/organizations/10000
                       "@type": dfc-b:Organization
@@ -1547,7 +1547,7 @@ paths:
               examples:
                 in DFC v2 format:
                   value:
-                    "@context": https://www.datafoodconsortium.org
+                    "@context": https://w3id.org/dfc/ontology/context/context_2.0.0.json
                     "@graph":
                     - "@id": http://test.host/api/dfc/supplied_products
                       "@type": ldp:Container
@@ -1563,7 +1563,7 @@ paths:
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Pesto - 1g
                       dfc-b:description: Basil Pesto
-                      dfc-b:hasType: dfc-pt:processed-vegetable
+                      dfc-b:hasType: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#processed-vegetable
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram

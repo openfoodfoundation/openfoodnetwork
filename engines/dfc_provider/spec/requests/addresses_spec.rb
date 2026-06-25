@@ -32,7 +32,7 @@ RSpec.describe "Addresses", swagger_doc: "dfc.yaml" do
           let(:Accept) { 'application/ld+json; profile="dfc-v2"' }
 
           run_test! do
-            expect(subject["@context"]).to eq "https://www.datafoodconsortium.org"
+            expect(subject["@context"]).to eq "https://w3id.org/dfc/ontology/context/context_2.0.0.json"
             expect(subject["@id"]).to eq "http://test.host/api/dfc/addresses/40000"
             expect(subject["@type"]).to eq "dfc-b:Address"
           end
