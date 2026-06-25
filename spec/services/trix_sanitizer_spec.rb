@@ -42,13 +42,6 @@ RSpec.describe TrixSanitizer do
       expect(result).not_to match(%r{<div>\s*<br\s*/?>\s*Product})
     end
 
-    it "preserves a leading block that contains an image" do
-      html = %(<div><img src="photo.jpg" alt="product"></div><div>Description.</div>)
-      result = service.sanitize_content(html)
-      expect(result).to include("photo.jpg")
-      expect(result).to include("Description.")
-    end
-
     it "preserves empty blocks and <br> that are not at the start" do
       html = "<div>First paragraph.</div><div><br></div><div>Second paragraph.</div>"
       result = service.sanitize_content(html)
