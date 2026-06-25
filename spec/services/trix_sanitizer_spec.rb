@@ -14,7 +14,7 @@ RSpec.describe TrixSanitizer do
       expect(service.sanitize_content(html)).to include("Real product description.")
     end
 
-    it "strips a single leading empty block" do
+    it "strips a leading empty block" do
       html = "<div><br></div><div>Real product description.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("Real product description.")
@@ -25,7 +25,21 @@ RSpec.describe TrixSanitizer do
       html = "<div><br></div><div><br></div><div>Real product description.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("Real product description.")
-      expect(result).not_to include("<br>")
+      expect(result).not_to start_with("<div><br>")
+    end
+
+    it "strips a leading <br> before text inside an inline element" do
+      html = "<div><em><br>Helianthus tuberosus</em> is a plant.</div>"
+      result = service.sanitize_content(html)
+      expect(result).to include("Helianthus tuberosus")
+      expect(result).not_to match(/<em>\s*<br\s*\/?>\s*Helianthus/)
+    end
+
+    it "strips a leading <br> directly before text in a block" do
+      html = "<div><br>Product description text.</div>"
+      result = service.sanitize_content(html)
+      expect(result).to include("Product description text.")
+      expect(result).not_to match(/<div>\s*<br\s*\/?>\s*Product/)
     end
 
     it "preserves a leading block that contains an image" do
@@ -35,7 +49,7 @@ RSpec.describe TrixSanitizer do
       expect(result).to include("Description.")
     end
 
-    it "preserves empty blocks that are not at the start" do
+    it "preserves empty blocks and <br> that are not at the start" do
       html = "<div>First paragraph.</div><div><br></div><div>Second paragraph.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("First paragraph.")
