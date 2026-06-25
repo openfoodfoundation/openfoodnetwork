@@ -23,7 +23,7 @@ RSpec.describe '
     end
 
     it "display all attributes when submitting with error: no name" do
-      select supplier.name, from: 'product_supplier_id'
+      select supplier.name, from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: "5.00 g"
       assert_selector(:field, placeholder: "5kg g")
@@ -38,7 +38,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(page).to have_content "Name can't be blank"
-      expect(page).to have_field 'product_supplier_id', with: supplier.id
+      expect(page).to have_field "Enterprise", with: supplier.id
       expect(page).to have_field 'product_unit_value', with: "5.00 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
@@ -52,7 +52,7 @@ RSpec.describe '
     end
 
     it "display all attributes when submitting with error: Unit Value must be grater than 0" do
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       fill_in 'product_name', with: "new product name"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: "0.00 g"
@@ -68,7 +68,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(page).to have_field 'product_name', with: "new product name"
-      expect(page).to have_field 'product_supplier_id', with: supplier.id
+      expect(page).to have_field "Enterprise", with: supplier.id
       expect(page).to have_field 'product_unit_value', with: "0 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
@@ -94,7 +94,7 @@ RSpec.describe '
     it "assigning important attributes" do
       expect(find_field('product_shipping_category_id').text).to eq(shipping_category.name)
 
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 5
@@ -131,7 +131,7 @@ RSpec.describe '
 
     it "creating an on-demand product" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 1
       select taxon.name, from: "product_primary_taxon_id"
@@ -153,7 +153,7 @@ RSpec.describe '
 
     it "creating product with empty unit value" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in "product_unit_value", with: ""
       select taxon.name, from: "product_primary_taxon_id"
@@ -171,7 +171,7 @@ RSpec.describe '
 
     it "creating product with empty product category fails" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in "product_unit_value", with: '1'
       fill_in 'product_price', with: '1.99'
@@ -212,7 +212,7 @@ RSpec.describe '
 
           it "and price is #{price}" do
             fill_in 'product_name', with: 'Priceless Mangoes'
-            select 'New supplier', from: 'product_supplier_id'
+            select 'New supplier', from: "Enterprise"
             select "Weight (kg)", from: 'product_variant_unit_with_scale'
             fill_in "product_unit_value", with: 1
             select taxon.name, from: "product_primary_taxon_id"
@@ -283,17 +283,17 @@ RSpec.describe '
         fill_in 'product_name', with: 'A new product !!!'
         fill_in 'product_price', with: '19.99'
 
-        expect(page).to have_selector('#product_supplier_id')
-        select 'Another Supplier', from: 'product_supplier_id'
+        expect(page).to have_select "Enterprise"
+        select 'Another Supplier', from: "Enterprise"
         select 'Weight (g)', from: 'product_variant_unit_with_scale'
         fill_in 'product_unit_value', with: '500'
         select taxon.name, from: "product_primary_taxon_id"
         select 'None', from: "product_tax_category_id"
 
         # Should only have suppliers listed which the user can manage
-        expect(page).to have_select 'product_supplier_id',
+        expect(page).to have_select "Enterprise",
                                     with_options: [supplier2.name, supplier_permitted.name]
-        expect(page).not_to have_select 'product_supplier_id', with_options: [supplier.name]
+        expect(page).not_to have_select "Enterprise", with_options: [supplier.name]
 
         click_button 'Create'
 
