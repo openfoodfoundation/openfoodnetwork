@@ -57,6 +57,8 @@ RSpec.describe DfcImporter do
     expect(enterprise.name).to eq "DFC Test Farm Beta (All Supplied Fields)"
     expect(enterprise.email_address).to eq "dfcshop@example.com"
     expect(enterprise.visible).to eq "public"
+    expect(enterprise.properties.count).to eq 1
+    expect(enterprise.properties.first.name).to eq "Organic"
 
     expect(subject.errors.count).to eq 1
     expect(subject.errors.first.record.semantic_link.semantic_id)
