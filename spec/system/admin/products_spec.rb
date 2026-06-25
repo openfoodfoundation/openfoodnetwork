@@ -200,7 +200,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Supplier can't be blank"
+      expect(page).to have_content "Enterprise can't be blank"
     end
 
     describe "localization settings" do
