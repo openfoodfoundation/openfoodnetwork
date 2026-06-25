@@ -17,7 +17,7 @@ class TrixSanitizer
 
     # Remove empty leading block elements (e.g. <div><br></div>)
     empties = fragment.children.take_while do |node|
-      node.element? && node.text.strip.empty? && node.css('img').empty?
+      node.element? && node.text.strip.empty?
     end
     empties.each(&:remove)
 
