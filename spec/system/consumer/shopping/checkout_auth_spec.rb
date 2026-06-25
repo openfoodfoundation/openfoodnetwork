@@ -22,8 +22,6 @@ RSpec.describe "As a consumer I want to check out my cart" do
     let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
     let(:user) { create(:user, bill_address: address, ship_address: address) }
 
-    after { Warden.test_reset! }
-
     before do
       pick_order order
       add_product_to_cart order, product
