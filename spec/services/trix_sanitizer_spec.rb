@@ -18,7 +18,7 @@ RSpec.describe TrixSanitizer do
       html = "<div><br></div><div>Real product description.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("Real product description.")
-      expect(result).not_to match(/<div>\s*<br\s*\/?>\s*<\/div>\s*<div>/)
+      expect(result).not_to match(%r{<div>\s*<br\s*/?>\s*</div>\s*<div>})
     end
 
     it "strips multiple leading empty blocks" do
@@ -32,14 +32,14 @@ RSpec.describe TrixSanitizer do
       html = "<div><em><br>Helianthus tuberosus</em> is a plant.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("Helianthus tuberosus")
-      expect(result).not_to match(/<em>\s*<br\s*\/?>\s*Helianthus/)
+      expect(result).not_to match(%r{<em>\s*<br\s*/?>\s*Helianthus})
     end
 
     it "strips a leading <br> directly before text in a block" do
       html = "<div><br>Product description text.</div>"
       result = service.sanitize_content(html)
       expect(result).to include("Product description text.")
-      expect(result).not_to match(/<div>\s*<br\s*\/?>\s*Product/)
+      expect(result).not_to match(%r{<div>\s*<br\s*/?>\s*Product})
     end
 
     it "preserves a leading block that contains an image" do
