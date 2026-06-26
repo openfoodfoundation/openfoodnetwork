@@ -62,7 +62,7 @@ module OpenFoodNetwork
     def editable_products
       return Spree::Product.all if admin?
 
-      product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(
+      product_with_variants.where(spree_variants: { enterprise_id: @user.enterprises }).or(
         product_with_variants.where(
           spree_variants: { supplier_id: related_enterprises_granting(:manage_products) }
         )
@@ -72,7 +72,7 @@ module OpenFoodNetwork
     def visible_products
       return Spree::Product.all if admin?
 
-      product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(
+      product_with_variants.where(spree_variants: { enterprise_id: @user.enterprises }).or(
         product_with_variants.where(
           spree_variants: {
             supplier_id: related_enterprises_granting(:manage_products) |

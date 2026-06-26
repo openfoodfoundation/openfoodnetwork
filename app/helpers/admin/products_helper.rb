@@ -12,7 +12,7 @@ module Admin
 
     def prepare_new_variant(product, producer_id = nil)
       product.variants.build do |new_variant|
-        new_variant.supplier_id = producer_id
+        new_variant.enterprise_id = producer_id
         new_variant.tax_category_id = product.variants.first.tax_category_id
       end
     end

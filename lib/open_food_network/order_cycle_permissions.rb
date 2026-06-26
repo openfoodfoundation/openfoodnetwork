@@ -151,7 +151,7 @@ module OpenFoodNetwork
     end
 
     def all_variants_supplied_by(producer)
-      Spree::Variant.where(supplier: producer)
+      Spree::Variant.where(enterprise: producer)
     end
 
     def no_variants
@@ -235,7 +235,7 @@ module OpenFoodNetwork
     end
 
     def variants_from_suppliers(supplier_ids)
-      Spree::Variant.where(supplier_id: supplier_ids)
+      Spree::Variant.where(supplier_id: enterprise_ids)
     end
 
     def active_outgoing_variants(hub)
