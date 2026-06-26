@@ -27,8 +27,8 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
                                  full_name: "Variant Name",
                                  count_on_hand: 10,
                                  price: 100)
-      allow(variant).to receive_message_chain(:supplier, :name).and_return("Supplier")
-      allow(variant).to receive_message_chain(:supplier, :address, :city).and_return("A city")
+      allow(variant).to receive_message_chain(:enterprise, :name).and_return("Supplier")
+      allow(variant).to receive_message_chain(:enterprise, :address, :city).and_return("A city")
       allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
       allow(variant).to receive_message_chain(:product, :properties)
         .and_return [double(name: "property1"), double(name: "property2")]

@@ -22,15 +22,15 @@ class SuppliedProductImporter < DfcBuilder
     variant
   end
 
-  def self.import_variant(supplied_product, supplier)
-    product = referenced_spree_product(supplied_product, supplier)
+  def self.import_variant(supplied_product, enterprise)
+    product = referenced_spree_product(supplied_product, enterprise)
 
     if product
-      Spree::Variant.new( product:, supplier:, price: 0,).tap do |variant|
+      Spree::Variant.new(product:, enterprise:, price: 0,).tap do |variant|
         apply(supplied_product, variant)
       end
     else
-      product = import_product(supplied_product, supplier)
+      product = import_product(supplied_product, enterprise)
       product.variants.first.tap { |variant| apply(supplied_product, variant) }
     end.tap do |variant|
       link = supplied_product.semanticId

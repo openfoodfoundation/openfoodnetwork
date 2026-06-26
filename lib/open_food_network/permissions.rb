@@ -64,7 +64,7 @@ module OpenFoodNetwork
 
       product_with_variants.where(spree_variants: { enterprise_id: @user.enterprises }).or(
         product_with_variants.where(
-          spree_variants: { supplier_id: related_enterprises_granting(:manage_products) }
+          spree_variants: { enterprise_id: related_enterprises_granting(:manage_products) }
         )
       )
     end

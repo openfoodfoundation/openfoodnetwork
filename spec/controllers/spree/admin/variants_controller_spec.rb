@@ -171,7 +171,7 @@ RSpec.describe Spree::Admin::VariantsController do
 
     before do
       order = create(:order_with_line_items, distributor: d, line_items_count: 1)
-      order.line_items.take.variant.update_attribute(:supplier_id, supplier1.id)
+      order.line_items.take.variant.update_attribute(:enterprise_id, supplier1.id)
       controller_login_as_enterprise_user([supplier1])
     end
 

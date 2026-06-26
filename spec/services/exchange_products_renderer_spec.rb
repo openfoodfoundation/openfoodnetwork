@@ -48,7 +48,7 @@ RSpec.describe ExchangeProductsRenderer do
       it "loads products from the exchange suppliers" do
         products = renderer.exchange_products(false, exchange.receiver)
 
-        expected_suppliers = exchange.variants.map{ |v| v.supplier.name }
+        expected_suppliers = exchange.variants.map{ |v| v.enterprise.name }
         expect(products.map{ |p| p.variants.first.enterprise.name }).to eq(expected_suppliers)
       end
 

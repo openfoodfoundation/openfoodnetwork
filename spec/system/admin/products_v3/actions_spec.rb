@@ -132,7 +132,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).to have_content "Changes saved"
 
         variant_a1.reload
-        expect(variant_a1.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.enterprise.name).to eq(producer_to_select)
         expect(variant_a1.primary_taxon.name).to eq(category_to_select)
         expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end

@@ -163,7 +163,7 @@ module OpenFoodNetwork
         user_manages_coordinator_or(enterprise)
       end.map(&:id)
 
-      Spree::Variant.includes(:supplier).
+      Spree::Variant.includes(:enterprise).
         select(:id, :product_id, :supplier_id).
         where(supplier_id: valid_suppliers)
     end
@@ -234,8 +234,8 @@ module OpenFoodNetwork
       Spree::Variant.where(id: available_variants | active_variants)
     end
 
-    def variants_from_suppliers(supplier_ids)
-      Spree::Variant.where(supplier_id: enterprise_ids)
+    def variants_from_suppliers(enterprise_ids)
+      Spree::Variant.where(enterprise_id: enterprise_ids)
     end
 
     def active_outgoing_variants(hub)
