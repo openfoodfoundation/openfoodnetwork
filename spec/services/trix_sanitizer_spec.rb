@@ -35,6 +35,13 @@ RSpec.describe TrixSanitizer do
       expect(result).not_to match(%r{<em>\s*<br\s*/?>\s*Helianthus})
     end
 
+    it "strips a leading <br> inside an inline wrapper that precedes text" do
+      html = "<div><em><br></em>Real text.</div>"
+      result = service.sanitize_content(html)
+      expect(result).to include("Real text.")
+      expect(result).not_to match(%r{<br\s*/?>})
+    end
+
     it "strips a leading <br> directly before text in a block" do
       html = "<div><br>Product description text.</div>"
       result = service.sanitize_content(html)
