@@ -42,7 +42,7 @@ module Reporting
         end
 
         def line_item_includes
-          [{ variant: [:supplier, :product] }]
+          [{ variant: [:enterprise, :product] }]
         end
 
         def query_result
