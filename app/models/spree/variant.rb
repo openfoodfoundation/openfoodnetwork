@@ -39,7 +39,6 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
-    belongs_to :supplier, class_name: 'Enterprise', optional: true, touch: true
     belongs_to :enterprise, optional: false, touch: true
     belongs_to :hub, class_name: 'Enterprise', optional: true
 
@@ -111,13 +110,6 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value
     before_validation :convert_variant_weight_to_decimal
-    # Temporary code for migration from supplier to enteprise
-    before_validation :copy_supplier_to_enterprise, if: ->(variant) {
-      variant.enterprise_id_changed? || variant.enterprise_id.blank?
-    }
-    before_validation :copy_enterprise_to_supplier, if: ->(variant) {
-      variant.enterprise_id_changed? || variant.enterprise_id.blank?
-    }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
@@ -353,13 +345,6 @@ module Spree
 
     def ensure_shipping_category
       self.shipping_category ||= DefaultShippingCategory.find_or_create
-    end
-
-    def copy_supplier_to_enterprise
-      self.enterprise_id = supplier_id
-    end
-    def copy_enterprise_to_supplier
-      self.supplier_id = enterprise_id
     end
 
     def convert_variant_weight_to_decimal
