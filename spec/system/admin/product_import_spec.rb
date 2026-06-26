@@ -94,7 +94,7 @@ RSpec.describe "Product Import" do
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       potatoes = Spree::Product.find_by(name: 'Potatoes')
-      expect(potatoes.variants.first.supplier).to eq enterprise
+      expect(potatoes.variants.first.enterprise).to eq enterprise
       expect(potatoes.variants.first.on_hand).to eq 6
       expect(potatoes.variants.first.price).to eq 6.50
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
