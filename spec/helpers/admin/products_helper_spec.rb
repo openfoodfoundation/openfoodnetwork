@@ -59,4 +59,76 @@ RSpec.describe Admin::ProductsHelper do
       end
     end
   end
+
+  describe "#variant_displayable?" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:variant) { create(:variant, supplier: ) }
+    let(:allowed_producers) { [supplier] }
+    let(:allowed_source_producers) { [] }
+    let(:managed_product_enterprises) { [] }
+
+    before do
+      allow(helper).to receive(:managed_product_enterprises).and_return(managed_product_enterprises)
+    end
+
+    it "returns true" do
+      expect(helper.variant_displayable?(variant, allowed_producers,
+                                         allowed_source_producers)).to eq(true)
+    end
+
+    context "with linked variant" do
+      context "with the user's linked variant" do
+        let(:hub) { create(:distributor_enterprise) }
+        let(:source_supplier) { create(:supplier_enterprise) }
+        let(:variant) { create(:variant, supplier: source_supplier, hub: hub) }
+        let(:allowed_source_producers) { [source_supplier] }
+        let(:managed_product_enterprises) { [supplier, hub] }
+
+        it "returns true" do
+          expect(helper.variant_displayable?(variant, allowed_producers,
+                                             allowed_source_producers)).to eq(true)
+        end
+      end
+
+      context "wiht someone else's linked variant" do
+        let(:other_enterprise) { create(:supplier_enterprise) }
+        let(:variant) { create(:variant, supplier:, hub: other_enterprise) }
+
+        it "returns false" do
+          expect(helper.variant_displayable?(variant, allowed_producers,
+                                             allowed_source_producers)).to eq(false)
+        end
+      end
+    end
+
+    context "with a variant the user has permission to manage" do
+      let(:friend_supplier) { create(:supplier_enterprise) }
+      let(:variant) { create(:variant, supplier: friend_supplier) }
+      let(:allowed_producers) { [supplier, friend_supplier] }
+
+      it "returns true" do
+        expect(helper.variant_displayable?(variant, allowed_producers,
+                                           allowed_source_producers)).to eq(true)
+      end
+    end
+
+    context "with a variant the user doesn't have permission manage" do
+      let(:other_supplier) { create(:supplier_enterprise) }
+      let(:variant) { create(:variant, supplier: other_supplier) }
+
+      it "returns false" do
+        expect(helper.variant_displayable?(variant, allowed_producers,
+                                           allowed_source_producers)).to eq(false)
+      end
+    end
+
+    context "with a variant with no supplier" do
+      let(:variant) { build(:variant, supplier: nil) }
+
+      it "returns true" do
+        expect(helper.variant_displayable?(variant, allowed_producers,
+                                           allowed_source_producers)).to eq(true)
+      end
+    end
+  end
 end

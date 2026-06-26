@@ -61,5 +61,18 @@ module Admin
 
       [[name, id]]
     end
+
+    def variant_displayable?(variant, allowed_producers, allowed_source_producers)
+      # Filter out variant a user has not permission to update, but keep variant with no supplier
+      return false if variant.supplier.present? &&
+                      !(allowed_producers.include?(variant.supplier) ||
+                        allowed_source_producers.include?(variant.supplier)
+                       )
+
+      # Filter out other hub's variants that are linked to mine
+      return false if variant.hub.present? && managed_product_enterprises.exclude?(variant.hub)
+
+      true
+    end
   end
 end

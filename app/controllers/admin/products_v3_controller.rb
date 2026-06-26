@@ -124,7 +124,8 @@ module Admin
 
       respond_with do |format|
         format.turbo_stream {
-          locals = { linked_variant:, variant:, product_index:, variant_index: }
+          locals = { linked_variant:, variant:, product_index:, variant_index:,
+                     allowed_source_producers: }
           render :create_linked_variant, status:, locals:
         }
       end
