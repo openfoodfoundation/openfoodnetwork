@@ -162,7 +162,9 @@ module Spree
         where.not(order_cycles: { id: nil })
     }
 
+    # note that this doesn't check variant links (yet)
     scope :by_producer, -> { joins(variants: :enterprise).order('enterprises.name') }
+
     scope :by_name, -> { order('spree_products.name') }
 
     scope :managed_by, lambda { |user|
