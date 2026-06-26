@@ -347,6 +347,94 @@ RSpec.describe Spree::Product do
           described_class.with_properties([wanted_property.id, 99_999])
         ).to match_array [product_with_wanted_property]
       end
+
+      context "when the property is inherited from the producer" do
+        let(:supplier) { create(:supplier_enterprise) }
+        let!(:inheriting_product) {
+          create(:product, supplier_id: supplier.id, inherits_properties: true)
+        }
+
+        before do
+          supplier.producer_properties.create!(property_id: wanted_property.id,
+                                               value: '1', position: 1)
+        end
+
+        it "matches products that inherit the property from their producer" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(inheriting_product)
+        end
+
+        it "does not match when the product does not inherit properties" do
+          inheriting_product.update!(inherits_properties: false)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .not_to include(inheriting_product)
+        end
+      end
+
+      context "when invoked through Ransack (the shopfront filter path)" do
+        # Ransack sanitises scope args against its boolean TRUE/FALSE_VALUES, so filtering by
+        # property id "1" reaches the scope as `true` (and "0" as `false`) rather than the id.
+        # The scope must coerce these back to integers, otherwise the raw SQL binds a boolean and
+        # Postgres raises on the integer property_id column (regression: shopfront returned 422).
+        it "coerces the boolean true Ransack sends for property id 1 to an integer" do
+          expect { described_class.with_properties(true).to_a }.not_to raise_error
+          expect(described_class.with_properties(true).to_sql)
+            .to eq(described_class.with_properties(1).to_sql)
+        end
+
+        it "does not raise when filtering through Ransack" do
+          expect {
+            described_class.ransack("with_properties" => [wanted_property.id.to_s]).result.to_a
+          }.not_to raise_error
+        end
+      end
+
+      context "when the property is set directly but inheritance is disabled" do
+        let!(:direct_product) {
+          create(:product, properties: [wanted_property], inherits_properties: false)
+        }
+
+        it "matches the product (direct properties don't require inheritance)" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(direct_product)
+        end
+      end
+
+      context "when a product has variants from multiple suppliers" do
+        # Inherited properties resolve through the first variant's supplier, mirroring
+        # #properties_including_inherited, so the filter result and the displayed property
+        # tags always agree.
+        let(:first_supplier) { create(:supplier_enterprise) }
+        let(:second_supplier) { create(:supplier_enterprise) }
+        let!(:multi_supplier_product) {
+          create(:product, supplier_id: first_supplier.id, inherits_properties: true)
+        }
+
+        before do
+          create(:variant, product: multi_supplier_product, supplier: second_supplier)
+        end
+
+        it "matches and displays the property when the first variant's supplier has it" do
+          first_supplier.producer_properties.create!(property_id: wanted_property.id,
+                                                     value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(multi_supplier_product)
+          expect(multi_supplier_product.reload.properties_including_inherited.pluck(:id))
+            .to include(wanted_property.id)
+        end
+
+        it "is excluded when only a later variant's supplier has the property" do
+          second_supplier.producer_properties.create!(property_id: wanted_property.id,
+                                                      value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .not_to include(multi_supplier_product)
+          expect(multi_supplier_product.reload.properties_including_inherited.pluck(:id))
+            .not_to include(wanted_property.id)
+        end
+      end
     end
 
     describe "in_supplier" do

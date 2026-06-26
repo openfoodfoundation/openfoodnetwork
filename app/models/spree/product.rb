@@ -87,10 +87,41 @@ module Spree
     after_touch :touch_supplier
 
     # -- Scopes
+    # Matches products carrying any of the given properties, whether the property is set directly
+    # on the product or inherited from its producer (when inherits_properties is true).
+    #
+    # Inherited properties are resolved through the product's first variant supplier, mirroring
+    # #properties_including_inherited (which the serializer uses to render the property tags), so
+    # the filter and the displayed properties always agree. "First variant" means the lowest-id
+    # non-deleted variant, matching the `variants` association order (spree_variants.id ASC).
+    #
+    # Ransack sanitises scope arguments against its boolean TRUE/FALSE_VALUES, so a property id of
+    # "1" arrives here as `true` (and "0" as `false`). We cast every value to an integer the way
+    # ActiveRecord would, which turns true/"1" into 1 and leaves real ids untouched. Without this
+    # the raw SQL binds `true` directly and Postgres raises on the integer property_id column.
     scope :with_properties, ->(*property_ids) {
-      left_outer_joins(:product_properties).
-        where(inherits_properties: true).
-        where(spree_product_properties: { property_id: property_ids })
+      ids = property_ids.flatten.map { |id| ActiveRecord::Type::Integer.new.cast(id) }.compact
+      where(
+        "EXISTS (
+           SELECT 1 FROM spree_product_properties
+           WHERE spree_product_properties.product_id = spree_products.id
+             AND spree_product_properties.property_id IN (?)
+         )
+         OR (
+           spree_products.inherits_properties = TRUE AND EXISTS (
+             SELECT 1 FROM producer_properties
+             WHERE producer_properties.producer_id = (
+               SELECT spree_variants.supplier_id FROM spree_variants
+               WHERE spree_variants.product_id = spree_products.id
+                 AND spree_variants.deleted_at IS NULL
+               ORDER BY spree_variants.id ASC
+               LIMIT 1
+             )
+             AND producer_properties.property_id IN (?)
+           )
+         )",
+        ids, ids
+      )
     }
 
     scope :with_order_cycles_outer, lambda {
