@@ -47,11 +47,6 @@ module Admin
       feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
     end
 
-    def allowed_source_producers
-      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .enterprises_granting_linked_variants
-    end
-
     def managed_product_enterprises
       @managed_product_enterprises ||= OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises

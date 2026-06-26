@@ -1,4 +1,4 @@
--# locals: (available_tags:, flash:, allowed_producers:, linked_variants_producers:)
+-# locals: (available_tags:, flash:, allowed_producers:, allowed_source_producers:)
 - content_for :page_title do
   = t('.header.title')
 - content_for :page_actions do
@@ -21,7 +21,7 @@
                                 flashes: flash,
                                 display_search_filter: (@products.any? || @search_term.present? || @category_id.present?),
                                 allowed_producers:,
-                                linked_variants_producers:}
+                                allowed_source_producers:}
 
   - %w[product variant].each do |object_type|
     = render partial: 'delete_modal', locals: { object_type: }

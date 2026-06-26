@@ -12,7 +12,7 @@ module Admin
     def index
       fetch_products
       render "index",
-             locals: { available_tags:, flash:, allowed_producers:, linked_variants_producers: }
+             locals: { available_tags:, flash:, allowed_producers:, allowed_source_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -33,7 +33,7 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          available_tags:, allowed_producers:, linked_variants_producers:, flash:
+                          available_tags:, allowed_producers:, allowed_source_producers:, flash:
                         }
       end
     end
@@ -99,7 +99,7 @@ module Admin
         format.turbo_stream {
           render :clone, status:,
                          locals: { product:, cloned_product:, product_index:,
-                                   allowed_producers:, linked_variants_producers: }
+                                   allowed_producers:, allowed_source_producers: }
         }
       end
     end
@@ -177,8 +177,8 @@ module Admin
         .by_name
     end
 
-    def linked_variants_producers
-      OpenFoodNetwork::Permissions.new(spree_current_user)
+    def allowed_source_producers
+      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
         .enterprises_granting_linked_variants.is_primary_producer.by_name
     end
 
