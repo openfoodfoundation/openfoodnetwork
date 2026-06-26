@@ -42,8 +42,7 @@
       - next unless variant_displayable?(variant, allowed_producers, allowed_source_producers)
 
       - #TODO skip if super admin, move to a helper
-      - # Read only if variant comes from supplier givin "create_linked_variants" permission and isn't a variant we can manage
-      - if !allowed_producers.include?(variant.supplier) && allowed_source_producers.include?(variant.supplier) && variant.hub_id.blank?
+      - if variant_readonly?(variant, allowed_producers, allowed_source_producers) 
         -# Read only variants
         %tr.condensed.nested-form-wrapper{ id: dom_id(variant) }
           %td.col-image

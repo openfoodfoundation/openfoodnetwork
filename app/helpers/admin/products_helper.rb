@@ -74,5 +74,14 @@ module Admin
 
       true
     end
+
+    # Read only if variant comes from supplier giving "create_linked_variants" permission and
+    # isn't a variant we can manage
+    def variant_readonly?(variant, allowed_producers, allowed_source_producers)
+      return true if allowed_producers.exclude?(variant.supplier) &&
+                     allowed_source_producers.include?(variant.supplier) && variant.hub_id.blank?
+
+      false
+    end
   end
 end

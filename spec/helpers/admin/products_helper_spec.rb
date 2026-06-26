@@ -131,4 +131,37 @@ RSpec.describe Admin::ProductsHelper do
       end
     end
   end
+
+  describe "#variant_readonly?" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:variant) { create(:variant, supplier: ) }
+    let(:allowed_producers) { [supplier] }
+    let(:allowed_source_producers) { [] }
+    let(:friend_supplier) { create(:supplier_enterprise) }
+
+    it "returns false" do
+      expect(helper.variant_readonly?(variant, allowed_producers,
+                                      allowed_source_producers)).to eq(false)
+    end
+
+    context "with linked variant" do
+      let(:variant) { create(:variant, supplier: friend_supplier, hub: supplier) }
+      let(:allowed_source_producers) { [friend_supplier] }
+
+      it "returns false" do
+        expect(helper.variant_readonly?(variant, allowed_producers,
+                                        allowed_source_producers)).to eq(false)
+      end
+    end
+
+    context "with variant the user has permission to create linked variants" do
+      let(:variant) { create(:variant, supplier: friend_supplier) }
+      let(:allowed_source_producers) { [friend_supplier] }
+
+      it "returns true" do
+        expect(helper.variant_readonly?(variant, allowed_producers,
+                                        allowed_source_producers)).to eq(true)
+      end
+    end
+  end
 end
