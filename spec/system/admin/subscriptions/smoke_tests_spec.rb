@@ -163,7 +163,7 @@ RSpec.describe 'Subscriptions' do
       let!(:permitted_supplier_product) { create(:product, enterprise_id: permitted_supplier.id) }
       let!(:permitted_supplier_variant) {
         create(:variant, product: permitted_supplier_product, unit_value: "2000",
-                         supplier: permitted_supplier)
+                         enterprise: permitted_supplier)
       }
       let!(:incoming_exchange_product) { create(:product) }
       let!(:incoming_exchange_variant) do

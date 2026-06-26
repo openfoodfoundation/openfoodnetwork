@@ -36,16 +36,16 @@ RSpec.describe ProductImport::ProductImporter do
 
   let!(:product) {
     create(:simple_product, name: 'Hypothetical Cake', description: nil,
-                            primary_taxon_id: category2.id, supplier_id: enterprise2.id,
+                            primary_taxon_id: category2.id, enterprise_id: enterprise2.id,
                             variants: [])
   }
   let!(:variant) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Preexisting Banana', supplier: enterprise2)
+                     display_name: 'Preexisting Banana', enterprise: enterprise2)
   }
   let!(:variant_with_empty_display_name) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
-                     display_name: '', supplier: enterprise2)
+                     display_name: '', enterprise: enterprise2)
   }
   let!(:product2) {
     create(:simple_product, on_hand: '100', name: 'Beans', unit_value: '500',
@@ -53,29 +53,29 @@ RSpec.describe ProductImport::ProductImporter do
   }
   let!(:product3) {
     create(:simple_product, on_hand: '100', name: 'Sprouts', unit_value: '500',
-                            primary_taxon_id: category.id, supplier_id: enterprise.id)
+                            primary_taxon_id: category.id, enterprise_id: enterprise.id)
   }
   let!(:product4) {
     create(:simple_product, on_hand: '100', name: 'Cabbage', unit_value: '1',
                             variant_unit_scale: nil, variant_unit: "items",
                             variant_unit_name: "Whole", primary_taxon_id: category.id,
-                            supplier_id: enterprise.id)
+                            enterprise_id: enterprise.id)
   }
   let!(:product5) {
     create(:simple_product, on_hand: '100', name: 'Lettuce', unit_value: '500',
-                            primary_taxon_id: category.id, supplier_id: enterprise2.id)
+                            primary_taxon_id: category.id, enterprise_id: enterprise2.id)
   }
   let!(:product6) {
     create(:simple_product, on_hand: '100', name: 'Beetroot',
                             unit_value: '500', on_demand: true, variant_unit_scale: 1,
                             variant_unit: 'weight', primary_taxon_id: category.id, description: nil,
-                            supplier_id: enterprise3.id)
+                            enterprise_id: enterprise3.id)
   }
   let!(:product7) {
     create(:simple_product, on_hand: '100', name: 'Tomato', unit_value: '500',
                             variant_unit_scale: 1, variant_unit: 'weight',
                             primary_taxon_id: category.id, description: nil,
-                            supplier_id: enterprise3.id)
+                            enterprise_id: enterprise3.id)
   }
 
   let!(:product8) {
@@ -90,15 +90,15 @@ RSpec.describe ProductImport::ProductImporter do
   }
   let!(:variant2) {
     create(:variant, product_id: product8.id, price: '4.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Porridge Oats', supplier: enterprise)
+                     display_name: 'Porridge Oats', enterprise: enterprise)
   }
   let!(:variant3) {
     create(:variant, product_id: product8.id, price: '5.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Rolled Oats', supplier: enterprise)
+                     display_name: 'Rolled Oats', enterprise: enterprise)
   }
   let!(:variant4) {
     create(:variant, product_id: product9.id, price: '6.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Flaked Oats', supplier: enterprise)
+                     display_name: 'Flaked Oats', enterprise: enterprise)
   }
 
   let!(:variant_override) {

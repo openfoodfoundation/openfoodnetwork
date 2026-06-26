@@ -24,7 +24,7 @@ RSpec.describe AffiliateSalesDataBuilder do
         product = create(
           :product,
           name: "Pomme",
-          supplier_id: supplier.id,
+          enterprise_id: supplier.id,
           variant_unit: "items",
           variant_unit_name: "bag",
         )

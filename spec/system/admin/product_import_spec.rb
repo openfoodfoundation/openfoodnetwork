@@ -29,7 +29,7 @@ RSpec.describe "Product Import" do
   }
   let!(:variant) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500',
-                     display_name: 'Preexisting Banana', supplier: enterprise2)
+                     display_name: 'Preexisting Banana', enterprise: enterprise2)
   }
   let!(:product2) {
     create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Beans',

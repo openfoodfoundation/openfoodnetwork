@@ -35,7 +35,8 @@ RSpec.describe Api::V0::ProductsController do
     it "gets a single product" do
       product.create_image!(attachment:)
       product.variants.create!(unit_value: "1", variant_unit: "weight", variant_unit_scale: 1,
-                               unit_description: "thing", price: 1, primary_taxon: taxon, supplier:)
+                               unit_description: "thing", price: 1, primary_taxon: taxon,
+                               enterprise: supplier)
       product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
 

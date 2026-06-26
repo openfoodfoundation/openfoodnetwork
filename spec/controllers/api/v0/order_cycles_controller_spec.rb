@@ -317,19 +317,19 @@ RSpec.describe Api::V0::OrderCyclesController do
     let!(:supplier) { create(:supplier_enterprise) }
     let!(:product5) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product6) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product7) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product8) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
 
     before do

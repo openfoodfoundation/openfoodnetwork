@@ -13,7 +13,7 @@ RSpec.describe Sets::ProductSet do
           0 => {
             name: 'a product',
             price: 2.0,
-            supplier_id: create(:enterprise).id,
+            enterprise_id: create(:enterprise).id,
             primary_taxon_id: create(:taxon).id,
             unit_description: 'description',
             variant_unit: 'items',
@@ -333,7 +333,7 @@ RSpec.describe Sets::ProductSet do
             [
               { id: product.variants.first.id.to_s }, # default variant unchanged
               # price missing, unit_value should be number
-              { sku: "new sku", unit_value: "blah", supplier_id: supplier.id },
+              { sku: "new sku", unit_value: "blah", enterprise_id: supplier.id },
             ]
           }
 

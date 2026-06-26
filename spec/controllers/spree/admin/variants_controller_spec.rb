@@ -10,7 +10,7 @@ RSpec.describe Spree::Admin::VariantsController do
         let(:deleted_variant) do
           deleted_variant = product.variants.create(
             unit_value: "2", variant_unit: "weight", variant_unit_scale: 1, price: 1,
-            primary_taxon: create(:taxon), supplier: create(:supplier_enterprise)
+            primary_taxon: create(:taxon), enterprise: create(:supplier_enterprise)
           )
           deleted_variant.delete
           deleted_variant
@@ -34,7 +34,7 @@ RSpec.describe Spree::Admin::VariantsController do
           :variant,
           display_name: "Tomatoes",
           sku: 123,
-          supplier: producer
+          enterprise: producer
         )
       }
       let(:producer) { create(:enterprise) }

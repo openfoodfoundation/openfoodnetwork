@@ -36,11 +36,11 @@ RSpec.describe "shopping with variant overrides defined", feature: :inventory do
   }
   let(:product3_variant1) {
     create(:variant, product: product3, price: 55.55, unit_value: 5, on_demand: true,
-                     supplier: producer)
+                     enterprise: producer)
   }
   let(:product3_variant2) {
     create(:variant, product: product3, price: 66.66, unit_value: 6, on_demand: true,
-                     supplier: producer)
+                     enterprise: producer)
   }
   let(:product4_variant1) {
     create(:variant, product: product4, price: 77.77, unit_value: 7, enterprise: producer)

@@ -106,7 +106,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
         variant1 = create(:variant, enterprise: )
         variant2 = create(:variant, enterprise: supplier2)
 
-        allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
+        allow(subject).to receive(:params).and_return(enterprise_id: supplier.id)
         expect(subject.filter(variants)).to eq([variant1])
       end
 
@@ -210,7 +210,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
         subject = Reporting::Reports::ProductsAndInventory::Inventory.new enterprise_user
         allow(subject).to receive(:params).and_return(
           order_cycle_id: order_cycle.id,
-          supplier_id: supplier.id,
+          enterprise_id: supplier.id,
           distributor_id: distributor.id
         )
 

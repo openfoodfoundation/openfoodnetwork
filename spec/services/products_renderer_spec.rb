@@ -14,19 +14,19 @@ RSpec.describe ProductsRenderer do
     let(:cakes_supplier) { create(:supplier_enterprise) }
     let!(:product_apples) {
       create(:product, name: "apples", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id, inherits_properties: true)
+                       enterprise_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
       create(:product, name: "banana bread", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id, inherits_properties: true)
+                       enterprise_id: cakes_supplier.id, inherits_properties: true)
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id, inherits_properties: true)
+                       enterprise_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id, inherits_properties: true)
+                       enterprise_id: cakes_supplier.id, inherits_properties: true)
     }
 
     before do
@@ -102,7 +102,7 @@ RSpec.describe ProductsRenderer do
           stone_fruit = create(:taxon, name: "Stone fruit")
           product_peach =
             create(:product, name: "peach", primary_taxon_id: stone_fruit.id,
-                             supplier_id: fruits_supplier.id, inherits_properties: true)
+                             enterprise_id: fruits_supplier.id, inherits_properties: true)
 
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })

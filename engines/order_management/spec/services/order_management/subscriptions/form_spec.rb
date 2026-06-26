@@ -15,7 +15,7 @@ RSpec.describe OrderManagement::Subscriptions::Form do
     }
     let!(:variant3) {
       create(:variant, product: product2, unit_value: '1000',
-                       price: 2.50, on_hand: 1, supplier: shop)
+                       price: 2.50, on_hand: 1, enterprise: shop)
     }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
     let!(:order_cycle1) {
