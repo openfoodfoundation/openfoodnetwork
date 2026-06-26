@@ -195,7 +195,7 @@ RSpec.describe '
       end
 
       it "by supplier name" do
-        fill_in "quick_filter", with: li1.variant.supplier.name
+        fill_in "quick_filter", with: li1.variant.enterprise.name
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items li1, excluding: [li2, li3]

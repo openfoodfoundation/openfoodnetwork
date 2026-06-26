@@ -126,7 +126,7 @@ RSpec.describe '
       expect(variant.tax_category_id).to eq(tax_category.id)
       expect(variant.shipping_category).to eq(shipping_category)
       expect(variant.unit_presentation).to eq("5kg")
-      expect(variant.supplier).to eq(supplier)
+      expect(variant.enterprise).to eq(supplier)
     end
 
     it "creating an on-demand product" do

@@ -63,7 +63,7 @@ RSpec.describe Api::V0::ReportsController do
     {
       "hub" => order.distributor.name,
       "customer_code" => order.customer&.code,
-      "supplier" => variant.supplier.name,
+      "supplier" => variant.enterprise.name,
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,

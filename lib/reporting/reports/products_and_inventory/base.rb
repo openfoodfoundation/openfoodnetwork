@@ -13,8 +13,8 @@ module Reporting
         # rubocop:disable Metrics/AbcSize
         def columns
           {
-            supplier: proc { |variant| variant.supplier.name },
-            producer_suburb: proc { |variant| variant.supplier.address.city },
+            supplier: proc { |variant| variant.enterprise.name },
+            producer_suburb: proc { |variant| variant.enterprise.address.city },
             product: proc { |variant| variant.product.name },
             product_properties: proc { |v| v.product.properties.map(&:name).join(", ") },
             taxons: proc { |variant| variant.primary_taxon.name },

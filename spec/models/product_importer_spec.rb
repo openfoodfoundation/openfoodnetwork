@@ -158,7 +158,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       carrots_variant = find_variant("Carrots")
 
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.unit_value).to eq 500
       expect(carrots_variant.variant_unit).to eq 'weight'
@@ -169,7 +169,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       potatoes_variant = find_variant("Potatoes")
 
-      expect(potatoes_variant.supplier).to eq enterprise
+      expect(potatoes_variant.enterprise).to eq enterprise
       expect(potatoes_variant.price).to eq 6.50
       expect(potatoes_variant.unit_value).to eq 2000
       expect(potatoes_variant.variant_unit).to eq 'weight'
@@ -180,7 +180,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       pea_soup_variant = find_variant("Pea Soup")
 
-      expect(pea_soup_variant.supplier).to eq enterprise
+      expect(pea_soup_variant.enterprise).to eq enterprise
       expect(pea_soup_variant.price).to eq 5.50
       expect(pea_soup_variant.unit_value).to eq 0.75
       expect(pea_soup_variant.variant_unit).to eq 'volume'
@@ -191,7 +191,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       salad_variant = find_variant("Salad")
 
-      expect(salad_variant.supplier).to eq enterprise
+      expect(salad_variant.enterprise).to eq enterprise
       expect(salad_variant.price).to eq 4.50
       expect(salad_variant.unit_value).to eq 1
       expect(salad_variant.variant_unit).to eq 'items'
@@ -202,7 +202,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       buns_variant = find_variant("Hot Cross Buns")
 
-      expect(buns_variant.supplier).to eq enterprise
+      expect(buns_variant.enterprise).to eq enterprise
       expect(buns_variant.price).to eq 3.50
       expect(buns_variant.unit_value).to eq 1
       expect(buns_variant.variant_unit).to eq 'items'
@@ -244,7 +244,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       carrots_variant = find_variant("Good Carrots")
       expect(carrots_variant.on_hand).to eq 5
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.import_date).to be_within(1.minute).of Time.zone.now
 
@@ -292,7 +292,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       expect(carrots_variant.on_hand).to eq 5
       expect(carrots_variant.primary_taxon.name).to eq "Vegetables"
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.shipping_category).to eq shipping_category
       expect(carrots_variant.unit_presentation).to eq "500g"

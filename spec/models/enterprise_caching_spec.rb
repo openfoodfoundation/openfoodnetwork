@@ -53,7 +53,7 @@ RSpec.describe Enterprise do
           create(:simple_order_cycle, distributors: [enterprise],
                                       variants: [product.variants.first])
         }
-        let(:supplier) { variant.supplier }
+        let(:supplier) { variant.enterprise }
         let(:property) { product.product_properties.last }
         let(:producer_property) { supplier.producer_properties.last }
         let(:variant) { create(:variant, product:, enterprise:) }

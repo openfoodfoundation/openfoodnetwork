@@ -74,15 +74,15 @@ RSpec.describe Admin::VariantOverridesController do
 
         context "and the producer has granted VO permission" do
           before do
-            create(:enterprise_relationship, parent: variant.supplier, child: hub,
+            create(:enterprise_relationship, parent: variant.enterprise, child: hub,
                                              permissions_list: [:create_variant_overrides])
           end
 
           it "loads data" do
             put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
             expect(assigns[:hubs]).to eq [hub]
-            expect(assigns[:producers]).to eq [variant.supplier]
-            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.supplier.id] })
+            expect(assigns[:producers]).to eq [variant.enterprise]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.enterprise.id] })
             expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 

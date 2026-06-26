@@ -185,7 +185,7 @@ RSpec.describe ProductImport::EntryProcessor do
       it "returns the total of existing variant override for the given enterprises" do
         products.each do |p|
           variant = p.variants.first
-          create(:variant_override, variant:, hub: variant.supplier)
+          create(:variant_override, variant:, hub: variant.enterprise)
         end
 
         entry_processor.count_existing_items

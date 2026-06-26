@@ -113,10 +113,10 @@ module Spree
     before_validation :convert_variant_weight_to_decimal
     # Temporary code for migration from supplier to enteprise
     before_validation :copy_supplier_to_enterprise, if: ->(variant) {
-      variant.supplier_id_changed? || variant.enterprise_id.blank?
+      variant.enterprise_id_changed? || variant.enterprise_id.blank?
     }
     before_validation :copy_enterprise_to_supplier, if: ->(variant) {
-      variant.enterprise_id_changed? || variant.supplier_id.blank?
+      variant.enterprise_id_changed? || variant.enterprise_id.blank?
     }
 
     before_save :assign_units, if: ->(variant) {

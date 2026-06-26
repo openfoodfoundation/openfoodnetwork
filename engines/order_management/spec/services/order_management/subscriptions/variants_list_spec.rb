@@ -40,7 +40,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
     context "if the supplier is permitted for the shop" do
       let!(:enterprise_relationship) {
         create(:enterprise_relationship, child: shop,
-                                         parent: variant.supplier,
+                                         parent: variant.enterprise,
                                          permissions_list: [:add_to_order_cycle])
       }
 
@@ -55,7 +55,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
 
       context "if it is an incoming exchange where the shop is the receiver" do
         let!(:incoming_exchange) {
-          order_cycle.exchanges.create(sender: variant.supplier,
+          order_cycle.exchanges.create(sender: variant.enterprise,
                                        receiver: shop,
                                        incoming: true, variants: [variant])
         }
@@ -67,7 +67,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
 
       context "if it is an outgoing exchange where the shop is the receiver" do
         let!(:outgoing_exchange) {
-          order_cycle.exchanges.create(sender: variant.supplier,
+          order_cycle.exchanges.create(sender: variant.enterprise,
                                        receiver: shop,
                                        incoming: false,
                                        variants: [variant])
@@ -118,7 +118,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
 
       context "if it is an incoming exchange where the shop is the receiver" do
         let!(:incoming_exchange) {
-          order_cycle.exchanges.create(sender: variant.supplier,
+          order_cycle.exchanges.create(sender: variant.enterprise,
                                        receiver: shop,
                                        incoming: true,
                                        variants: [variant])
@@ -133,7 +133,7 @@ RSpec.describe OrderManagement::Subscriptions::VariantsList do
 
       context "if it is an outgoing exchange where the shop is the receiver" do
         let!(:outgoing_exchange) {
-          order_cycle.exchanges.create(sender: variant.supplier,
+          order_cycle.exchanges.create(sender: variant.enterprise,
                                        receiver: shop,
                                        incoming: false,
                                        variants: [variant])

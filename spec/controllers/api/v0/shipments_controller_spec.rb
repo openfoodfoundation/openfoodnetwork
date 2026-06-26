@@ -38,8 +38,8 @@ RSpec.describe Api::V0::ShipmentsController do
 
     before do
       order.update_attribute :ship_address_id, order_ship_address.id
-      order.update_attribute :distributor, variant.supplier
-      shipment.shipping_method.distributors << variant.supplier
+      order.update_attribute :distributor, variant.enterprise
+      shipment.shipping_method.distributors << variant.enterprise
     end
 
     context '#create' do
@@ -360,7 +360,7 @@ RSpec.describe Api::V0::ShipmentsController do
 
         context "when line items have fees" do
           let(:fee_order) {
-            instance_double(Spree::Order, number: "123", distributor: variant.supplier)
+            instance_double(Spree::Order, number: "123", distributor: variant.enterprise)
           }
           let(:contents) { instance_double(Spree::OrderContents) }
           let(:fee_order_shipment) {
