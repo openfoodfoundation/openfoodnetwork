@@ -109,7 +109,7 @@ module Permissions
     def produced_orders
       Spree::Order.with_line_items_variants_outer.
         where(
-          spree_variants: { supplier_id: @permissions.managed_enterprises.select("enterprises.id") }
+          spree_variants: { enterprise: @permissions.managed_enterprises.select("enterprises.id") }
         )
     end
 
@@ -117,7 +117,7 @@ module Permissions
       Spree::Order.with_line_items_variants_outer.
         where(
           distributor_id: granted_distributor_ids,
-          spree_variants: { supplier_id: enterprises_with_associated_orders }
+          spree_variants: { enterprise: enterprises_with_associated_orders }
         ).
         where_clause.__send__(:predicates).
         reduce(:and)
