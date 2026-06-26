@@ -5,7 +5,7 @@
                           action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' },
                   class: (defined?(should_slide_in) && should_slide_in) ? 'slide-in' : '' }
     %tr
-      - if allowed_source_producers.include?(product.variants.first.supplier) 
+      - if allowed_source_producers.include?(product.variants.first.supplier) && !spree_current_user.admin?
         -# Read only product
         %td.col-image.with-image{ id: "image-#{product.id}" }
           = render partial: "product_image", locals: { product:, readonly: true }
