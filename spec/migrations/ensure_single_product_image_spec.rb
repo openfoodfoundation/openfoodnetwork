@@ -10,13 +10,15 @@ RSpec.describe EnsureSingleProductImage, type: :migration do
     let(:product) { create(:product) }
 
     it 'keeps the first image and soft deletes additional images for a product' do
-      first_image = Spree::Image.create(attachment:,
-                                        viewable_id: product.id,
-                                        viewable_type: 'Spree::Product')
+      Spree::Image.create(attachment:,
+                          viewable_id: product.id,
+                          viewable_type: 'Spree::Product')
 
-      second_image = Spree::Image.create(attachment:,
-                                         viewable_id: product.id,
-                                         viewable_type: 'Spree::Product')
+      Spree::Image.create(attachment:,
+                          viewable_id: product.id,
+                          viewable_type: 'Spree::Product')
+
+      expect(Spree::Image.count).to eq(2)
 
       expect do
         migration.up
@@ -31,11 +33,11 @@ RSpec.describe EnsureSingleProductImage, type: :migration do
         viewable_id: product.id
       ).pluck(:id)
 
-      expect(remaining_ids).to contain_exactly(first_image.id)
-      expect(remaining_ids).not_to include(second_image.id)
+      preserved_image_id = product.reload.image.id
+      expect(remaining_ids).to contain_exactly(preserved_image_id)
 
       # Verify second image is soft deleted, not hard deleted
-      soft_deleted_image = Spree::Image.unscoped.find(second_image.id)
+      soft_deleted_image = Spree::Image.unscoped.where.not(id: preserved_image_id).first
       expect(soft_deleted_image.deleted_at).not_to be_nil
       expect(soft_deleted_image.attachment_blob).not_to be_nil
     end
