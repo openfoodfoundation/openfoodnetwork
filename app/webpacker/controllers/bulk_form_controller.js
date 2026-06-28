@@ -164,7 +164,12 @@ export default class BulkFormController extends Controller {
 
       if (changedElements.length === 0) return;
 
-      this.#enableElementsForSubmit(changedElements);
+      // When re-submitting after validation errors, submit all fields in the
+      // record container so previously-valid field values aren't dropped just because
+      // they match the server-rendered defaults from the error recovery page
+      const elementsToSubmit = this.errorValue ? elements : changedElements;
+
+      this.#enableElementsForSubmit(elementsToSubmit);
       this.#enableRecordIdentityFields(container);
     });
   }
