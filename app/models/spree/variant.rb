@@ -277,7 +277,7 @@ module Spree
     # Clone this variant, retaining a 'source' link to it
     def create_linked_variant(user)
       # Hub owner is my enterprise which has permission to create variant sourced from that supplier
-      hub_id = EnterpriseRelationship.permitted_by(supplier).permitting(user.enterprises)
+      hub_id = EnterpriseRelationship.permitted_by(enterprise).permitting(user.enterprises)
         .with_permission(:create_linked_variants)
         .pick(:child_id)
 

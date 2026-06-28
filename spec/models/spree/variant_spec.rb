@@ -34,15 +34,15 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe "supplier properties" do
+  describe "enterprise properties" do
     subject { create(:variant) }
 
-    it "has no supplier properties to start with" do
+    it "has no enterprise properties to start with" do
       expect(subject.enterprise_properties).to eq []
     end
 
-    it "includes the supplier's properties" do
-      subject.supplier.set_producer_property("certified", "yes")
+    it "includes the enterprise's properties" do
+      subject.enterprise.set_producer_property("certified", "yes")
       expect(subject.enterprise_properties.map(&:presentation)).to eq ["certified"]
     end
   end
