@@ -3870,7 +3870,9 @@ en:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"

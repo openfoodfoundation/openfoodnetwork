@@ -79,7 +79,7 @@
                     - # TODO can't check the shop preferrence here, display by default ?
                     - if !variant.on_demand && variant.on_hand <= 3
                       .variant-remaining-stock
-                        = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand)
+                        = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand, count: variant.on_hand)
 
           %div{ data: { "tabs-target": "content" } }
             .row
