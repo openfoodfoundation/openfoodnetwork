@@ -164,8 +164,8 @@ module OpenFoodNetwork
       end.map(&:id)
 
       Spree::Variant.includes(:enterprise).
-        select(:id, :product_id, :supplier_id).
-        where(supplier_id: valid_suppliers)
+        select(:id, :product_id, :enterprise_id).
+        where(enterprise_id: valid_suppliers)
     end
 
     # Find the variants that a user is permitted see within outgoing exchanges
@@ -188,7 +188,7 @@ module OpenFoodNetwork
         #   so things don't break.
         # TODO: Remove this when all P-OC are sorted out
         active_variants = Spree::Variant.joins(:exchanges).
-          where(exchanges: { receiver: hub, incoming: false }, supplier_id: managed_producer_ids)
+          where(exchanges: { receiver: hub, incoming: false }, enterprise_id: managed_producer_ids)
 
         Spree::Variant.where(id: permitted_variants | active_variants)
       end
