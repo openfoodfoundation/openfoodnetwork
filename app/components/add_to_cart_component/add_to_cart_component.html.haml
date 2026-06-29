@@ -3,13 +3,11 @@
     .variant-quantity-inputs{ "data-add-to-cart-target": "addButton" }
       = button_tag t("js.shopfront.variant.add_to_cart"), type: "button", class: "add-variant", "data-action": "add-to-cart#addEmpty" 
     .variant-quantity-inputs{ style: "display: none;", "data-add-to-cart-target": "quantityButton" }
-      %button.variant-quantity.material-icons{ type: "button", "data-action": "add-to-cart#remove"}
-        %span.material-symbols-outlined
-          remove
+      %button.variant-quantity{ type: "button", "data-action": "add-to-cart#remove"}
+        = helpers.image_pack_tag "material-icons/remove.svg", class: "material-icons"
       %input.variant-quantity{ type: "number", min: "0", value: quantity, "data-add-to-cart-target": "quantity", "data-action": "keyup->add-to-cart#manual" }
-      %button.variant-quantity.material-icons{ type: "button", "data-action": "add-to-cart#add" , "data-add-to-cart-target": "plusButton" }
-        %span.material-symbols-outlined
-          add
+      %button.variant-quantity{ type: "button", "data-action": "add-to-cart#add" , "data-add-to-cart-target": "plusButton" }
+        = helpers.image_pack_tag "material-icons/add.svg", class: "material-icons"
     .variant-remaining-stock{ style: "display: none;", "data-add-to-cart-target": "stock" }
       = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand)
     .variant-quantity-display{ "data-add-to-cart-target": "nbItemInCart" }
