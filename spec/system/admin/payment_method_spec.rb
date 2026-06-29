@@ -174,6 +174,20 @@ RSpec.describe '
     end
   end
 
+  it "does not persist a provider type change until Update is clicked" do
+    payment_method = create(:payment_method, distributors: [@distributors[0]],
+                                             calculator: build(:calculator_flat_rate))
+    login_as_admin
+    visit spree.edit_admin_payment_method_path payment_method
+
+    select2_select "PayPal Express", from: "payment_method_type"
+    expect(page).to have_field 'Login'
+
+    click_link 'Back To Payment Methods List'
+
+    expect(payment_method.reload.type).to eq "Spree::PaymentMethod::Check"
+  end
+
   it "updating a payment method" do
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
