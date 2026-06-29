@@ -23,8 +23,8 @@ module DfcProvider
       end
       catalog_items = enterprises.flat_map(&:catalogItems)
 
-      render json: DfcIo.export(
-        *catalog_items,
+      render_dfc(
+        catalog_items,
         *catalog_items.map(&:product),
         *catalog_items.map(&:product).flat_map(&:isVariantOf),
         *catalog_items.flat_map(&:offers),
@@ -33,7 +33,7 @@ module DfcProvider
 
     def show
       product = SuppliedProductBuilder.supplied_product(variant)
-      render json: DfcIo.export(product)
+      render_dfc(product)
     end
 
     def create
@@ -47,7 +47,7 @@ module DfcProvider
       )
 
       supplied_product = SuppliedProductBuilder.supplied_product(variant)
-      render json: DfcIo.export(supplied_product)
+      render_dfc(supplied_product)
     end
 
     def update

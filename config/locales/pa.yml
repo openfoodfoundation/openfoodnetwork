@@ -2181,6 +2181,7 @@ pa:
   email_shipping_collection_time: "ਕਲੇਕਟ ਕਰਨ ਲਈ ਤਿਆਰ"
   email_shipping_collection_instructions: "ਕਲੇਕਸ਼ਨ ਦੇ ਨਿਰਦੇਸ਼"
   email_special_instructions: "ਤੁਹਾਡੇ ਨੋਟ:"
+  email_order_note: "ਨੋਟ:"
   email_signup_greeting: ਸਤ ਸ੍ਰੀ ਅਕਾਲ!
   email_signup_welcome: "%{sitename} ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ!"
   email_signup_confirmed_email: "ਤੁਹਾਡੀ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਧੰਨਵਾਦ।"

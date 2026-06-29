@@ -8,38 +8,28 @@
 # See the EnterprisesController for the backwards-compatible DFC v1 endpoint.
 module DfcProvider
   class OrganizationsController < DfcProvider::ApplicationController
+    before_action { @profile = "dfc-v2" }
+
     # List OFN enterprises as DFC Organizations.
     def index
       enterprises = current_user.enterprises.map do |enterprise|
         EnterpriseBuilder.enterprise(enterprise)
       end
 
-      organizations = DfcV2Migration.up(enterprises)
-
-      render_container(organizations)
+      render_dfc(enterprises)
     end
 
     def show
       enterprise = current_user.enterprises.find(params[:id])
       dfc_enterprise = EnterpriseBuilder.enterprise(enterprise)
-      organization = DfcV2Migration.up([dfc_enterprise]).first
 
-      render_v2(
-        organization,
-        organization.mainContact,
-        *organization.localizations,
-        *organization.socialMedias,
-        *organization.certifications,
+      render_dfc(
+        dfc_enterprise,
+        dfc_enterprise.mainContact,
+        *dfc_enterprise.localizations,
+        *dfc_enterprise.socialMedias,
+        *dfc_enterprise.certifications,
       )
-    end
-
-    private
-
-    # The DFC v2 requires containers.
-    def render_container(members)
-      container = Container.new(organizations_url, members:)
-
-      render_v2(container, *members)
     end
   end
 end

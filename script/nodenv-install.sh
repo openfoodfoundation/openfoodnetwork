@@ -33,3 +33,8 @@ else
 
   nodenv install
 fi
+
+if ! command -v yarn > /dev/null; then
+  npm install -g yarn
+  nodenv rehash
+fi

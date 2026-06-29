@@ -2520,6 +2520,7 @@ fi:
   email_shipping_collection_time: "Noutovalmiina:"
   email_shipping_collection_instructions: "Keräysohjeet:"
   email_special_instructions: "Muistiinpanosi:"
+  email_order_note: "Huomautus:"
   email_signup_greeting: Hei!
   email_signup_welcome: "Tervetuloa %{sitename} :een!"
   email_signup_confirmed_email: "Kiitos sähköpostiosoitteesi vahvistamisesta."

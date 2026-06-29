@@ -71,22 +71,57 @@ RSpec.describe Api::V0::ProductsController do
   context "as an enterprise user" do
     let(:current_api_user) { supplier_enterprise_user(supplier) }
 
-    it "can delete my product" do
-      expect(product.deleted_at).to be_nil
-      api_delete :destroy, id: product.to_param
+    describe "#update" do
+      it "can update my own product" do
+        api_put :update, id: product.to_param, product: { name: "My lovely product" }
 
-      expect(response).to have_http_status(:no_content)
-      expect { product.reload }.not_to raise_error
-      expect(product.deleted_at).not_to be_nil
+        expect(response).to have_http_status(:ok)
+        expect(json_response["name"]).to eq("My lovely product")
+        expect(product.reload.name).to eq("My lovely product")
+      end
+
+      it "cannot update a product I don't own" do
+        api_put :update, id: product_other_supplier.to_param,
+                         product: { name: "I hacked your store!" }
+
+        assert_unauthorized!
+      end
+
+      context "with permission 'create linked variants'" do
+        let(:friend_supplier) { create(:supplier_enterprise) }
+        let(:read_only_product) { create(:product, supplier_id: friend_supplier.id) }
+        let!(:create_linked_variants) {
+          # Other producer grants me ability to create linked variant
+          create(:enterprise_relationship, parent: friend_supplier, child: supplier,
+                                           permissions_list: [:create_linked_variants])
+        }
+
+        it "cannot update a product I have permission to 'create linked variants'" do
+          api_put :update, id: read_only_product.to_param, product: { name: "I hacked your store!" }
+
+          assert_unauthorized!
+        end
+      end
     end
 
-    it "is denied access to deleting another enterprises' product" do
-      expect(product_other_supplier.deleted_at).to be_nil
-      api_delete :destroy, id: product_other_supplier.to_param
+    describe "#destroy" do
+      it "can delete my product" do
+        expect(product.deleted_at).to be_nil
+        api_delete :destroy, id: product.to_param
 
-      assert_unauthorized!
-      expect { product_other_supplier.reload }.not_to raise_error
-      expect(product_other_supplier.deleted_at).to be_nil
+        expect(response).to have_http_status(:no_content)
+        expect { product.reload }.not_to raise_error
+        expect(product.deleted_at).not_to be_nil
+      end
+
+      it "is denied access to deleting another enterprises' product" do
+        expect(product_other_supplier.deleted_at).to be_nil
+        api_delete :destroy, id: product_other_supplier.to_param
+
+        assert_unauthorized!
+        expect { product_other_supplier.reload }.not_to raise_error
+        expect(product_other_supplier.deleted_at).to be_nil
+      end
     end
   end
 

@@ -2072,6 +2072,7 @@ it:
   email_shipping_collection_time: "Pronto per:"
   email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
+  email_order_note: "Note:"
   email_signup_greeting: Ciao!
   email_signup_welcome: "Benvenuto su %{sitename}!"
   email_signup_confirmed_email: "Grazie di aver confermato la tua mail."

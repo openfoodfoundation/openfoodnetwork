@@ -332,6 +332,12 @@ fr_BE:
       failure: "Impossible de se connecter : %{error}"
       record_not_unique: "%{uid} est déjà associé à un autre compte"
   home_page_alert_html: "Alerte HTML de la page d&#39;accueil"
+  hub_signup_case_studies_html: "HTML page cas d'études hub"
+  hub_signup_detail_html: "HTML page inscription hub"
+  hub_signup_pricing_table_html: "HTML table de prix page inscription hub"
+  group_signup_case_studies_html: "HTML page inscription groupe"
+  group_signup_detail_html: "HTML détail inscription groupe"
+  group_signup_pricing_table_html: "HTML table de prix page inscription groupe"
   item_description: "Description de l'article"
   menu_1_icon_name: "Nom de l'icône du menu 1"
   menu_2_icon_name: "Nom de l'icône du menu 2"
@@ -350,6 +356,8 @@ fr_BE:
   open_street_map_default_longitude: "Longitude par défaut Open Street Map"
   open_street_map_provider_name: "Nom du fournisseur Open Street Map"
   open_street_map_provider_options: "Options du fournisseur Open Street Map"
+  producer_signup_case_studies_html: "HTML études de cas producteur"
+  producer_signup_detail_html: "HTML inscription producteur"
   producer_signup_pricing_table_html: "Tableau HTML des prix d'inscription des producteurs"
   producers_social: "Réseau social producteur"
   resume_order: "Reprendre la commande"
@@ -822,6 +830,7 @@ fr_BE:
         update_address: "Mettre à jour l'adresse"
         confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
+        filter_by_tag: "Filtrer par étiquette"
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
         balance_due: "Solde dû"
@@ -1505,6 +1514,7 @@ fr_BE:
             disable: "Déconnecter"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             vine_api_key: "clé API VINE"
+            vine_secret: "VINE secret"
             description: "Pour autoriser l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et clé secrète"
             link_label_html: "VINE <i class=\"icon-external-link\"></i>"
             link_url: "https://vine.openfoodnetwork.org.au"
@@ -2422,6 +2432,7 @@ fr_BE:
   brandstory_part6: "Nous pouvons toutes et tous participer à la construction d’un système alimentaire plus juste, respectueux de l’Homme qui préserve la planète."
   system_headline: "Faire mes courses - comment ça marche?"
   system_step1_html: "1. Recherche"
+  system_step1_text_html: <a href="/shops">Découvrez</a> nos commerces indépendants et variés de produits locaux et de saison. Filtrez par localisation et catégorie de produits, ou indiquez si vous préférez la livraison ou le retrait sur place.
   system_step2_html: "2. Achat"
   system_step2_text_html: "Transformez vos achats en choisissant des produits abordables, proposés par les divers producteurs et comptoirs. Découvrez les histoires et les personnes qui se cachent derrière les produits!"
   system_step3_html: "3. Retrait / Livraison"
@@ -2554,6 +2565,7 @@ fr_BE:
   email_shipping_collection_time: "Prêt pour retrait:"
   email_shipping_collection_instructions: "Instructions de retrait:"
   email_special_instructions: "Vos commentaires:"
+  email_order_note: "Note :"
   email_signup_greeting: Bonjour!
   email_signup_welcome: "Bienvenue sur %{sitename}!"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
@@ -3362,6 +3374,8 @@ fr_BE:
   report_line_cost_of_produce: Coût des produits
   report_line_line_items: Ces articles
   report_header_last_completed_order_date: Date de la dernière commande terminée
+  report_header_balance_due: "Solde dû ( %{currency_symbol} )"
+  report_header_credit_due: "Crédit disponible ( %{currency_symbol} )"
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "Numéro de facture initial"
   invoice_date: "Date de facture"
@@ -3938,6 +3952,14 @@ fr_BE:
       one: "bouchon"
       many: "bouchons"
       other: "bouchons"
+    plant:
+      one: "plant"
+      many: "plants"
+      other: "plants"
+    bundle:
+      one: "botte"
+      many: "bottes"
+      other: "bottes"
     bulb:
       one: "bulbe"
       many: "bulbes"
@@ -3946,6 +3968,18 @@ fr_BE:
       one: "racine"
       many: "racines"
       other: "racines"
+    tuber:
+      one: "tubercule"
+      many: "tubercules"
+      other: "tubercules"
+    corm:
+      one: "bulbe"
+      many: "bulbes"
+      other: "bulbes"
+    crate:
+      one: "cagette"
+      many: "cagettes"
+      other: "cagettes"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
@@ -4082,6 +4116,7 @@ fr_BE:
       variant_deleted: "Variante supprimée"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
+    rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
     start_date: "Date de début"

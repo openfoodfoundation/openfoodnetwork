@@ -2224,6 +2224,7 @@ ml:
   email_shipping_collection_time: "ശേഖരണത്തിന് തയ്യാറാണ്:"
   email_shipping_collection_instructions: "ശേഖരണ നിർദ്ദേശങ്ങൾ:"
   email_special_instructions: "നിങ്ങളുടെ കുറിപ്പുകൾ:"
+  email_order_note: "കുറിപ്പ്:"
   email_signup_greeting: ഹലോ!
   email_signup_welcome: "%{sitename} -ലേക്ക് സ്വാഗതം!"
   email_signup_confirmed_email: "നിങ്ങളുടെ ഇമെയിൽ സ്ഥിരീകരിച്ചതിന് നന്ദി."

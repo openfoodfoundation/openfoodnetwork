@@ -901,6 +901,7 @@ en:
         id: Id 
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
         available_credit: "Available credit: %{available_credit}"
@@ -3510,6 +3511,8 @@ en:
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
+  report_header_balance_due: "Balance Due (%{currency_symbol})"
+  report_header_credit_due: "Available Credit (%{currency_symbol})"
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3868,7 +3871,9 @@ en:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"

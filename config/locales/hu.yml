@@ -2281,6 +2281,7 @@ hu:
   brandstory_part6: "Csatlakozz te is!"
   system_headline: "A vásárlás lépései"
   system_step1_html: "1. Keresés"
+  system_step1_text_html: <a href="/shops">Találd meg</a> a környéked termelőit és közösségi élelmiszer-rendszereit! Böngéssz termékek, kategóriák vagy helyszínek szerint, és válaszd a számodra legkényelmesebb átvételi módot.
   system_step2_html: "2. Vásárlás"
   system_step2_text_html: "Alakítsd át a fogyasztási szokásaidat! Pakold meg a bevásárlókosarad helyi termelőktől származó termékekkel. Vásárolj olyan élelmiszert, amelynek ismered az eredetét, és tudod, hogyan állították elő."
   system_step3_html: "3. Átvétel / kiszállítás"
@@ -2326,7 +2327,7 @@ hu:
   order_delivery_on: Készenállás
   order_delivery_address: Szállítási cím
   order_delivery_time: Megrendelés készen áll
-  order_special_instructions: "Megjegyzés:"
+  order_special_instructions: "Megjegyzésed:"
   order_pickup_time: Átvétel időpontja
   order_pickup_instructions: Átvételi információk
   order_produce: Termékek
@@ -2411,7 +2412,8 @@ hu:
   email_shipping_collection_details: Gyűjtemény részletei
   email_shipping_collection_time: "Átvétel időpontja:"
   email_shipping_collection_instructions: "Átvételi információk:"
-  email_special_instructions: "Megjegyzés:"
+  email_special_instructions: "Megjegyzésed:"
+  email_order_note: "Megjegyzés:"
   email_signup_greeting: Üdv!
   email_signup_welcome: "Köszöntünk az %{sitename} oldalon!"
   email_signup_confirmed_email: "Köszönjük, hogy megerősítetted az e-mail címed."
@@ -3055,6 +3057,7 @@ hu:
   report_header_hub_code: Átvételi Pont kód
   report_header_hub_id: Átvételi Pont ID
   report_header_hub_business_number: "Átvételi Pont cégjegyzékszáma"
+  report_header_hub_external_billing_id: "Átvételi Pont külső számlázási azonosítója"
   report_header_hub_legal_name: "Átvételi Pont hivatalos neve"
   report_header_hub_contact_name: "Átvételi Pont kapcsolattartó neve"
   report_header_hub_email: "Átvételi Pont nyilvános email"

@@ -282,10 +282,8 @@ RSpec.describe '
         expect(page).not_to have_select 'new_supplier_id', with_options: [
           "Unmanaged supplier",
         ]
-        select 'Managed supplier', from: 'new_supplier_id'
-        click_button 'Add supplier'
-        select 'Permitted supplier', from: 'new_supplier_id'
-        click_button 'Add supplier'
+        add_supplier 'Managed supplier', supplier_managed
+        add_supplier 'Permitted supplier', supplier_permitted
         expect(page).to have_content "Permitted supplier"
 
         within("tr.supplier-#{supplier_permitted.id}") { click_button 'Add fee' }
@@ -309,10 +307,8 @@ RSpec.describe '
         expect(page).to have_select 'new_distributor_id'
         expect(page).not_to have_select 'new_distributor_id',
                                         with_options: [distributor_unmanaged.name]
-        select 'Managed distributor', from: 'new_distributor_id'
-        click_button 'Add distributor'
-        select 'Permitted distributor', from: 'new_distributor_id'
-        click_button 'Add distributor'
+        add_distributor 'Managed distributor', distributor_managed
+        add_distributor 'Permitted distributor', distributor_permitted
         expect(page).to have_content "Permitted distributor"
 
         within("tr.distributor-#{distributor_permitted.id}") { click_button 'Add fee' }
@@ -945,6 +941,37 @@ RSpec.describe '
 
   def wait_for_edit_form_to_load_order_cycle(order_cycle)
     expect(page).to have_field "order_cycle_name", with: order_cycle.name
+  end
+
+  # Adding an enterprise to an order cycle is handled by AngularJS. We wait for
+  # the form to finish loading (see wait_until_order_cycle_loaded), then for the
+  # "Add" button to become enabled (it is ng-disabled until a novel enterprise
+  # is selected, which confirms Angular registered the selection), and finally
+  # for the new row to confirm the add actually landed.
+  def add_supplier(name, supplier)
+    wait_until_order_cycle_loaded
+    select name, from: 'new_supplier_id'
+    expect(page).to have_button 'Add supplier', disabled: false
+    click_button 'Add supplier'
+    expect(page).to have_selector "tr.supplier-#{supplier.id}"
+  end
+
+  def add_distributor(name, distributor)
+    wait_until_order_cycle_loaded
+    select name, from: 'new_distributor_id'
+    expect(page).to have_button 'Add distributor', disabled: false
+    click_button 'Add distributor'
+    expect(page).to have_selector "tr.distributor-#{distributor.id}"
+  end
+
+  # The order cycle form is rendered by AngularJS and loads enterprises and
+  # enterprise fees asynchronously. While those requests are in flight the
+  # supplier/distributor dropdown keeps rebuilding its options, which silently
+  # discards a selection made too early (and the following "Add" then adds
+  # nothing). The form shows a "Loading..." indicator until everything has
+  # loaded (`loaded()`), so wait for that to disappear before interacting.
+  def wait_until_order_cycle_loaded
+    expect(page).not_to have_content "Loading..."
   end
 
   def select_incoming_variant(supplier, exchange_no, variant)

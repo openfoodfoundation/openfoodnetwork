@@ -2283,6 +2283,7 @@ el:
   email_shipping_collection_time: "Ετοιμο για παραλαβή:"
   email_shipping_collection_instructions: "Οδηγίες συλλογής:"
   email_special_instructions: "Οι σημειώσεις σας:"
+  email_order_note: "Σημείωση:"
   email_signup_greeting: Γειά σου!
   email_signup_welcome: "Καλώς ορίσατε στο %{sitename}!"
   email_signup_confirmed_email: "Ευχαριστούμε που επιβεβαιώσατε το email σας."

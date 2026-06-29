@@ -2278,6 +2278,7 @@ ru:
   email_shipping_collection_time: "Готов для выдачи:"
   email_shipping_collection_instructions: "Инструкции по получению:"
   email_special_instructions: "Ваши заметки:"
+  email_order_note: "Примечание:"
   email_signup_greeting: Добрый день!
   email_signup_welcome: "Добро пожаловать в %{sitename}!"
   email_signup_confirmed_email: "Спасибо за подтверждение Вашего email."

@@ -2110,6 +2110,7 @@ mr:
   email_shipping_collection_time: "संकलनासाठी तयार:"
   email_shipping_collection_instructions: "संकलन सूचना:"
   email_special_instructions: "तुमच्या नोट्स:"
+  email_order_note: "टीप:"
   email_signup_greeting: नमस्कार!
   email_signup_welcome: "%{sitename} मध्ये आपले स्वागत आहे!"
   email_signup_confirmed_email: "तुमच्या ईमेलची पुष्टी केल्याबद्दल धन्यवाद."

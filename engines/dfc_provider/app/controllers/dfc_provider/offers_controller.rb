@@ -6,7 +6,7 @@ module DfcProvider
 
     def show
       subject = OfferBuilder.build(variant)
-      render json: DfcIo.export(subject)
+      render_dfc(subject)
     end
 
     def update

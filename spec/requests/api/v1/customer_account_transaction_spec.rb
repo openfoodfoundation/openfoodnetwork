@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml", feature: :api_v1 do
+RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
   let!(:enterprise) { create(:enterprise) }
   let(:customer) { create(:customer) }
 

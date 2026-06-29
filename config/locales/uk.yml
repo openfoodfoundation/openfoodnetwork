@@ -2015,6 +2015,7 @@ uk:
   email_shipping_collection_time: "Готовий до збору:"
   email_shipping_collection_instructions: "Інструкції зі збору:"
   email_special_instructions: "Ваші примітки:"
+  email_order_note: "Примітка:"
   email_signup_greeting: Привіт!
   email_signup_welcome: "Ласкаво просимо до %{sitename}!"
   email_signup_confirmed_email: "Дякуємо за підтвердження електронної пошти."

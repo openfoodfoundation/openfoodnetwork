@@ -2208,6 +2208,7 @@ hi:
   email_shipping_collection_time: "कलेक्शन के लिए तैयार:"
   email_shipping_collection_instructions: "कलेक्शन के निर्देश:"
   email_special_instructions: "आपके नोट्स:"
+  email_order_note: "नोट:"
   email_signup_greeting: नमस्कार!
   email_signup_welcome: "%{sitename} में आपका स्वागत है!"
   email_signup_confirmed_email: "आपके ईमेल की पुष्टि करने के लिए धन्यवाद।"

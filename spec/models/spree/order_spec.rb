@@ -35,7 +35,7 @@ RSpec.describe Spree::Order do
     end
 
     it "can find a line item matching a given variant" do
-      expect(order.find_line_item_by_variant(order.line_items.third.variant)).not_to be_nil
+      expect(order.find_line_item_by_variant(order.line_items.last.variant)).not_to be_nil
       expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
@@ -1336,7 +1336,7 @@ RSpec.describe Spree::Order do
       end
 
       it "returns previous items" do
-        expect(order.finalised_line_items.length).to eq 11
+        expect(order.finalised_line_items.length).to eq 3
         expect(order.finalised_line_items)
           .to match_array(prev_order.line_items + prev_order2.line_items)
       end

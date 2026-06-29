@@ -7,7 +7,10 @@ headless = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HEADLESS", true))
 browser_options = {
   "ignore-certificate-errors" => nil,
 }
-browser_options["no-sandbox"] = nil if ENV['CI'] || ENV['DOCKER']
+
+# Chromium refuses to run as root unless sandboxing is disabled.
+# This is the case in CI and in containers, where we often run as root.
+browser_options["no-sandbox"] = nil if ENV["CI"] || Process.uid.zero?
 
 Capybara.register_driver(:cuprite_ofn) do |app|
   Capybara::Cuprite::Driver.new(

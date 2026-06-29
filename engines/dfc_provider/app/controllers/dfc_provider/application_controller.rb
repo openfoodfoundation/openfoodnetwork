@@ -71,7 +71,7 @@ module DfcProvider
     end
 
     def profile
-      request.headers["Accept"][/\bprofile="?([^";,\s]+)"?/, 1]
+      @profile ||= request.headers["Accept"][/\bprofile="?([^";,\s]+)"?/, 1]
     end
 
     def import
@@ -83,17 +83,26 @@ module DfcProvider
       OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
     end
 
-    def render_dfc(*)
-      if profile == "dfc-v2"
-        render_v2(*)
-      else
-        render json: DfcIo.export(*)
-      end
+    def render_dfc(subject = nil, *)
+      return render_v1(*subject, *) if profile != "dfc-v2"
+      return render_v2(subject, *) unless subject.is_a?(Array)
+
+      # DFCv2 requires containers for listing resources in an index action.
+      members = DfcV2Migration.up(*subject)
+      container = Container.new(url_for, members:)
+      render_v2(container, *subject, *)
+    end
+
+    def render_v1(*)
+      render json: DfcIo.export(*)
     end
 
     def render_v2(*)
+      objects = DfcV2Migration.up(*)
+
       connector = DataFoodConsortium::Connector::Connector.instance
-      render json: connector.export(*), content_type: 'application/ld+json; profile="dfc-v2"'
+      render json: connector.export(*objects),
+             content_type: 'application/ld+json; profile="dfc-v2"'
     end
   end
 end

@@ -115,6 +115,61 @@ cy:
         blank: "ni chaniateir ei adael yn wag"
         too_short: "rhy fyr (o leiaf %{count} cymeriad)"
   errors:
+    messages:
+      file_size_not_less_than: "rhaid i faint y ffeil fod yn llai na %{max} (y maint presennol yw %{file_size})"
+      file_size_not_less_than_or_equal_to: "rhaid i faint y ffeil fod yn llai neu yn hafal i %{max} (maint presennol yw %{file_size})"
+      file_size_not_greater_than: "rhaid i faint y ffeil fod yn fwy na %{min} (maint presennol yw %{file_size})"
+      file_size_not_greater_than_or_equal_to: "rhaid i faint y ffeil fod yn llai neu yn hafal i %{min} (maint presennol yw %{file_size})"
+      file_size_not_between: "rhaid i faint y ffeil fod rhwng %{min} a %{max} (maint presennol yw %{file_size})"
+      file_size_not_equal_to: "rhaid i faint y ffeil fod yn hafal i %{exact} (maint presennol yw %{file_size})"
+      total_file_size_not_less_than: "rhaid i gyfanswm maint y ffeil fod yn llai na %{max} (maint presennol yw %{total_file_size})"
+      total_file_size_not_less_than_or_equal_to: "rhaid i gyfanswm maint y ffeil fod yn llai neu yn hafal i %{max} (maint presennol yw %{total_file_size})"
+      total_file_size_not_greater_than: "rhaid i gyfanswm maint y ffeil fod yn mwy na %{min} (maint presennol yw %{total_file_size})"
+      total_file_size_not_greater_than_or_equal_to: "rhaid i gyfanswm maint y ffeil fod yn mwy neu yn hafal i %{min} (maint presennol yw %{total_file_size})"
+      total_file_size_not_between: "rhaid i gyfanswm maint y ffeil fod rhwng %{min} a %{max} (maint presennol yw %{total_file_size})"
+      total_file_size_not_equal_to: "rhaid i gyfanswm maint y ffeil fod yn hafal i %{exact} (maint presennol yw %{total_file_size})"
+      duration_not_less_than: "rhaid i'r hyd fod yn llai na %{max} (yr hyd presennol yw %{duration})"
+      duration_not_less_than_or_equal_to: "rhaid i'r hyd fod yn llai na neu yn hafal i %{max} (yr hyd presennol yw %{duration})"
+      duration_not_greater_than: "rhaid i'r hyd fod yn fwy na %{min} (yr hyd presennol yw %{duration})"
+      duration_not_greater_than_or_equal_to: "rhaid i'r hyd fod yn fwy na neu yn hafal i %{min} (yr hyd presennol yw %{duration})"
+      duration_not_between: "rhaid i'r hyd fod rhwng %{min} a %{max} (yr hyd presennol yw %{duration})"
+      duration_not_equal_to: "rhaid i'r hyd fod yn hafal i %{exact} (yr hyd presennol yw %{duration})"
+      limit_out_of_range:
+        zero: "dim ffeil ynghlwm (rhaid cael rhwng %{min} a %{max} o ffeiliau)"
+        one: "dim ond 1 ffeil ynghlwm (rhaid cael rhwng %{min} a %{max} o ffeiliau)"
+        other: "rhaid i gyfanswm y ffeiliau fod rhwng %{min} a %{max} ffeiliau (mae ffeiliau %{count} ynghlwm)"
+      limit_min_not_reached:
+        zero: "dim ffeiliau ynghlwm (rhaid cynnwys o leiaf %{min} ffeiliau)"
+        one: "dim ond 1 ffeil ynghlwm (rhaid cynnwys o leiaf %{min} ffeiliau)"
+        other: "%{count} ffeiliau ynghlwm (rhaid cynnwys o leiaf %{min} ffeiliau)"
+      limit_max_exceeded:
+        zero: "dim ffeiliau ynghlwm (uchafswm yw %{max} ffeiliau,)"
+        one: "gormod o ffeiliau ynghlwm (uchafswm yw %{max} o ffeiliau, efo %{count})"
+        other: "gormod o ffeiliau ynghlwm (uchafswm yw %{max} o ffeiliau, efo %{count})"
+      attachment_missing: "wedi colli ei atodiad"
+      media_metadata_missing: "nid yw'n ffeil gyfryngau ddilys"
+      dimension_min_not_included_in: "rhaid fod yn fwy na neu yn hafal i %{width} x %{height} picseli"
+      dimension_max_not_included_in: "rhaid fod yn llai na neu yn hafal i %{width} x %{height} picseli"
+      dimension_width_not_included_in: "nid yw lled wedi'i gynnwys rhwng %{min} a %{max} picseli"
+      dimension_height_not_included_in: "nid yw uchder wedi'i gynnwys rhwng %{min} a %{max} picseli"
+      dimension_width_not_greater_than_or_equal_to: "rhaid i led fod yn fwy neu yn hafal i %{length} picseli"
+      dimension_height_not_greater_than_or_equal_to: "rhaid i uchder fod yn mwy neu yn hafal i %{length} picseli"
+      dimension_width_not_less_than_or_equal_to: "rhaid i led fod yn llai neu yn hafal i %{length} picseli"
+      dimension_height_not_less_than_or_equal_to: "rhaid i uchder fod yn llai neu yn hafal i %{length} picseli"
+      dimension_width_not_equal_to: "rhaid i led fod yn hafal i %{length} picseli"
+      dimension_height_not_equal_to: "rhaid i uchder fod yn hafal i %{length} picseli"
+      aspect_ratio_not_square: "rhaid iddo fod yn sgwâr (ffeil presennol yn %{width} x %{height} picseli)"
+      aspect_ratio_not_portrait: "rhaid iddo fod yn portread (ffeil presennol yn %{width} x %{height} picseli)"
+      aspect_ratio_not_landscape: "rhaid iddo fod yn dirwedd (ffeil presennol yn %{width} x %{height} picseli)"
+      aspect_ratio_not_x_y: "rhaid fod yn %{authorized_aspect_ratios} (ffeil presennol yn %{width} x %{height} picseli)"
+      aspect_ratio_invalid: "mae ganddo gymhareb agwedd annilys (cymhareb agwedd ddilys yw %{authorized_aspect_ratios})"
+      file_not_processable: "heb ei adnabod fel ffeil gyfryngau ddilys"
+      pages_not_less_than: "rhaid i gyfrif y tudalennau fod yn llai na %{max} (cyfrif y tudalennau presennol yw %{pages} )"
+      pages_not_less_than_or_equal_to: "rhaid i gyfrif y tudalennau fod yn llai na neu'n hafal i %{max} (cyfrif y tudalennau presennol yw %{pages})"
+      pages_not_greater_than: "rhaid i gyfrif y tudalennau fod yn fwy na %{min} (cyfrif y tudalennau presennol yw %{pages})"
+      pages_not_greater_than_or_equal_to: "rhaid i gyfrif y tudalennau fod yn fwy na neu'n hafal i %{min} (cyfrif y tudalennau presennol yw %{pages})"
+      pages_not_between: "rhaid i gyfrif y tudalennau fod rhwng %{min} a %{max} (cyfrif y tudalennau presennol yw %{pages})"
+      pages_not_equal_to: "rhaid i gyfrif y tudalennau fod yn hafal i %{exact} (cyfrif y tudalennau presennol yw %{pages})"
     not_found:
       title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
       message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/'> Hafan </a>, a rhowch gynnig arall </p>. <b> Cysylltwch â’r ddesg</b> <p>Gymorth os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’ <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> y Rhwydwaith Bwyd Agored byd-eang </a>. </p> <p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl am y dudalen sydd ar goll.</p>"
@@ -185,6 +240,9 @@ cy:
       disconnect_failure: "Methwyd â datgysylltu Stripe."
     success_code:
       disconnected: "Datgysylltwyd y cyfrif Stripe."
+  taler:
+    order_status:
+      claimed: "Mae'r cais am daliad wedi dod i ben. triwch eto os gwelwch yn dda."
   activemodel:
     errors:
       messages:
@@ -208,6 +266,10 @@ cy:
               no_default_card: "^ Nid oes cerdyn diofyn ar gael i'r cwsmer hwn"
             shipping_method:
               not_available_to_shop: "ddim ar gael i %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: yn rheolwr yn barod
   card_details: "Manylion y cerdyn."
   card_type: "Math o gerdyn."
   card_type_is: "Math y cerdyn yw"
@@ -355,6 +417,12 @@ cy:
     authorization_required:
       subject: "Mae angen i gwsmer awdurdodi taliad."
       message: "Mae angen awdurdod ychwanegol gan y cwsmer i dalu am archeb %{order_number} Hysbyswyd y cwsmer trwy ebost a bydd y taliad yn ymddangos fel taliad yn yr arfaeth nes ei awdurdodi."
+    refund_available:
+      subject: "Ffurflen ad-daliad %{shop}"
+      message: |+
+          mae eich taliad o %{amount} i %{shop} yn cael ei ad-dalu.
+          Derbyniwch eich ad-daliad drwy ddilyn y linc isod.
+
   producer_mailer:
     order_cycle:
       subject: "Adroddiad cylch archebu ar gyfer %{producer}"
@@ -525,6 +593,7 @@ cy:
     errors:
       vine_api: "Roedd nam wrth gyfathrebu gyda'r API, rhowch gynnig arall nes ymlaen os gwelwch yn dda."
       invalid_voucher: "Nid yw'r daleb yn ddilys"
+      expired: "mae'r daleb wedi dod i ben"
       not_found_voucher: "Ymddiheuriadau, ni chafwyd hyd i'r daleb honno; dylech wirio'r cod."
   vine_voucher_redeemer_service:
     errors:
@@ -597,6 +666,7 @@ cy:
       product_preview:
         product_preview: Rhagolwg o gynnyrch
         shop_tab: Siop
+        product_details_tab: Manylion cynnyrch
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am
@@ -734,6 +804,7 @@ cy:
         bill_address: "Cyfeiriad bilio"
         ship_address: "Cyfeiriad Cludo"
         balance: "Balans"
+        credit: "Credyd ar gael "
         update_address_success: "Llwyddwyd i ddiweddaru'r cyfeiriad."
         update_address_error: "Sori! Llenwch yr holl feysydd gofynnol!"
         edit_bill_address: "Golygu'r cyfeiriad bilio"
@@ -748,12 +819,16 @@ cy:
         guest_label: "Talu fel gwestai"
         credit_owed: "Credyd yn ddyledus"
         balance_due: "Balans sy'n ddyledus"
+        id: Id
       destroy:
         has_associated_subscriptions: "Wedi methu dileu: Mae gan y cwsmer hwn danysgrifiadau gweithredol. Mae angen eu canslo'n gyntaf."
     customer_account_transaction:
       index:
+        available_credit: "Credyd ar gael: %{available_credit}"
+        transaction_date: Dyddiad trafodiad
         description: Disgrifiad
         amount: Nifer
+        created_by: Wedi ei creu gan
         running_balance: Cydbwysedd rhedeg
     column_preferences:
       bulk_update:
@@ -887,6 +962,7 @@ cy:
         search_for_categories: Chwilio am gategorïau
         select_category: Dewis categori
         all_categories: Pob categori
+        select_tag: Dewiswch tag
         producers:
           label: Prynu bwyd
         categories:
@@ -1017,6 +1093,7 @@ cy:
         no_name: Dim enw
         blank_enterprise: 'ni ddiffiniwyd menter ar gyfer rhai eitemau cynnyrch '
         reset_absent?: Ailosod cynnyrch absennol
+        reset_absent_tip: Gosod stoc i sero ar gyfer pob cynnyrch presennol nad ydynt yn bresennol yn y ffeil
         overwrite_all: Trosysgrifio popeth
         overwrite_empty: Trosysgrifiwch os yw'n wag
         default_stock: Gosod lefel stoc
@@ -1350,10 +1427,12 @@ cy:
           show_hide_payment: 'Dangos neu Guddio dulliau talu wrth y ddesg dalu'
           show_hide_order_cycles: 'Dangos neu Guddio cylchoedd archebu yn fy ffrynt siop'
         users:
+          description: Y defnyddwyr sydd â chaniatâd i reoli'r fenter hon.
           legend: "Defnyddwyr"
           email_confirmation_notice_html: "Mae cadarnhad e-bost yn yr arfaeth. Anfonwyd cadarnhad e-bost at %{email}."
           resend: Ailanfon
           contact: "Cysylltu"
+          manager: "Rheolwr"
           owner: 'Perchennog'
           contact_tip: "Y rheolwr sy'n derbyn e-byst y fenter o ran archebion a hysbysiadau. Rhaid cael cyfeiriad e-bost a gadarnhawyd."
           owner_tip: Y prif ddefnyddiwr sy'n gyfrifol am y fenter hon.
@@ -1364,6 +1443,8 @@ cy:
           invite_manager: "Gwahodd Rheolwr"
           email_confirmed: "Cadarnhawyd yr e-bost "
           email_not_confirmed: "E-bost heb ei gadarnhau"
+          set_as_contact: "gosod %{email} fel cyswllt"
+          set_as_owner: "gosod %{email} fel perchennog"
         vouchers:
           legend: Talebau
           voucher_code: Cod taleb(au)
@@ -1443,7 +1524,10 @@ cy:
         owner: Perchennog
         producer: Cynhyrchydd
         sells_options:
+          unspecified: amhenodol
           none: dim
+          own: berchen
+          any: unrhyw
       change_type_form:
         producer_profile: Proffil Cynhyrchydd
         connect_ofn: Cysylltu trwy'r Open Food Network
@@ -1491,6 +1575,10 @@ cy:
         choose_starting_point: 'Dewiswch eich pecyn:'
         profile: 'Proffil'
         producer_profile: 'Proffil Cynhyrchydd'
+    tag_rules:
+      not_supported_type: Ni chefnogir math o reol tag
+      confirm_delete: Ydych chi'n siŵr eich bod chi eisiau dileu'r rheol hon?
+      destroy_error: Roedd problem wrth gael gwared ar y rheol Tag
     order_cycles:
       loading_flash:
         loading_order_cycles: YN LLWYTHO CYLCHOEDD ARCHEBU
@@ -1658,6 +1746,7 @@ cy:
         logo_hint: 300 x 300 picsel
         logo_remove: "Dileu Delwedd"
         logo_remove_confirm: "Bydd y logo yn cael ei ddileu yn syth ar ôl i chi gadarnhau."
+        promo_image_label: "delwedd hyrwyddo"
         promo_image_note1: 'NODER:'
         promo_image_note2: Bydd unrhyw ddelwedd hyrwyddo a lanlwythir yma'n cael ei thocio i 1200 x 260.
         promo_image_note3: Mae'r ddelwedd hyrwyddo'n cael ei harddangos ar frig tudalen proffil a hysbysebion naid y fenter.
@@ -1704,6 +1793,11 @@ cy:
           images: "Delweddau"
           contact: "Cysylltu"
           web: "Adnoddau ar y We"
+      stimulus_pagination:
+        navigation: Tudaleniad
+        page: "Tudalen %{number}"
+        previous: Dudalen flaenorol
+        next: Tudalen nesaf
     enterprise_issues:
       create_new: Creu un newydd
       resend_email: Ailanfon E-bost
@@ -1713,6 +1807,8 @@ cy:
       not_visible: "nid yw %{enterprise} yn weladwy ac felly ni ellir ei ddarganfod ar y map nac mewn chwiliadau"
     reports:
       none: dim
+      metadata:
+        report_title: Reportio'r teitl
       deprecated: "Anghymeradwywyd yr adroddiad hwn a chaiff ei ddileu mewn datganiad yn y dyfodol"
       hidden_field: "< Cudd >"
       unitsize: MAINT UNEDAU
@@ -1815,6 +1911,7 @@ cy:
         display: Arddangos
         summary_row: Rhes – Crynodeb
         header_row: Rhes – Pennawd
+        metadata_rows: Rhesi metadata
         raw_data: Data Craidd
         formatted_data: Data wedi’i Fformatio
       packing:
@@ -1931,7 +2028,10 @@ cy:
     user_invitations:
       new:
         back: Yn ôl
+        description: "Gwahodd defnyddiwr i gofrestru a dod yn rheolwr y fenter hon."
+        eg_email_address: e.e. cyfeiriad ebost o defnyddiwr newydd neu presennol
         email: E-bost
+        invite_new_user: Gwahodd defnyddiwr newydd
         invite: Gwahodd
     vouchers:
       new:
@@ -2084,6 +2184,8 @@ cy:
       select_a_shipping_method: Dewiswch ddull cludo
       select_a_payment_method: Dewiswch ddull talu
       no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
+      voucher_code_blank: Rhowch god taleb dilys os gwelwch yn dda
+      voucher_code_not_found: Annilys. Naill ai nid yw'n bodoli neu mae wedi'i adbrynu'n llawn
       add_voucher_error: Roedd gwall wrth ychwanegu’r daleb
       create_voucher_error: "Roedd nam wrth greu'r daleb: %{error}"
       voucher_redeeming_error: Roedd nam wrth geisio defnyddio eich taleb
@@ -2358,6 +2460,7 @@ cy:
   order_total: Cyfanswm archeb
   order_payment: "Talu trwy:"
   no_payment_required: "Nid oes angen unrhyw daliad"
+  credit_used: "Credyd wedi ei ddefnyddio: %{amount}"
   customer_credit: Credyd
   order_billing_address: Cyfeiriad bilio
   order_delivery_on: Dosbarthu ar
@@ -2389,8 +2492,15 @@ cy:
   email_confirmed: "Diolch am gadarnhau eich cyfeiriad e-bost."
   email_confirmation_activate_account: "Cyn y gallwn actifadu eich cyfrif newydd, mae angen i ni gadarnhau eich cyfeiriad e-bost."
   email_confirmation_greeting: "Helo, %{contact}!"
+  email_confirmation_profile_created: >
+      Mae proffil wedi'i greu'n llwyddiannus ar gyfer %{name}! I ddechrau Proffil
+      mae angen i ni gadarnhau'r cyfeiriad e-bost.
   email_confirmation_click_link: "Cliciwch ar y ddolen isod i gadarnhau eich e-bost ac i barhau i sefydlu'ch proffil."
   email_confirmation_link_label: "Cadarnhau'r cyfeiriad e-bost hwn »"
+  email_confirmation_help_html: >
+      Ar ôl cadarnhau eich e-bost gallwch gael mynediad i'ch cyfrif gweinyddu ar gyfer
+      y fenter hon. Gweler y %{link} i ddysgu mwy am %{sitename}'s nodweddion ac i
+      ddechrau defnyddio'ch proffil neu'ch siop ar-lein.
   email_confirmation_notice_unexpected: "Rydych wedi derbyn y neges hon oherwydd i chi gofrestru ar %{sitename}, neu ar ôl cael eich gwahodd i gofrestru gan rywun rydych chi'n ei adnabod mae'n debyg. Os nad ydych yn deall pam eich bod yn derbyn yr e-bost hwn, ysgrifennwch at %{contact}."
   email_social: "Cysylltu â Ni:"
   email_contact: "Anfon ebost atom:"
@@ -2442,6 +2552,7 @@ cy:
   email_shipping_collection_time: "Yn barod i'w gasglu:"
   email_shipping_collection_instructions: "Cyfarwyddiadau casglu:"
   email_special_instructions: "Eich nodiadau:"
+  email_order_note: "Noder:"
   email_signup_greeting: Helo!
   email_signup_welcome: "Croeso i %{sitename}!"
   email_signup_confirmed_email: "Diolch am gadarnhau eich e-bost."
@@ -3161,6 +3272,7 @@ cy:
   report_header_producer_suburb: Maestref y Cynhyrchydd
   report_header_producer_tax_status: Statws Treth y Cynhyrchwr
   report_header_producer_charges_sales_tax?: Cofrestrwyd ar gyfer GST/TAW
+  report_header_producer_abn_acn: Cynhyrchydd ABN/ACN
   report_header_producer_address: Cyfeiriad y cynhyrchydd
   report_header_unit: Uned
   report_header_group_buy_unit_quantity: Nifer Unedau Grŵp Prynu
@@ -3206,6 +3318,7 @@ cy:
   report_header_item_fees_price: "Eitem + Ffioedd  (%{currency})"
   report_header_admin_handling_fees: "Gweinyddiaeth a Thrin (%{currency})"
   report_header_ship_price: "Anfon(%{currency})"
+  report_header_producer_charges_gst: Taliadau cynhyrchydd GST?
   report_header_total_tax_on_product: "Cyfanswm treth ar y cynnyrch (%{currency})"
   report_header_pay_fee_price: "Talu Ffi (%{currency})"
   report_header_total_price: "Cyfanswm (%{currency})"
@@ -3248,6 +3361,7 @@ cy:
   report_line_cost_of_produce: Cost y cynnyrch
   report_line_line_items: eitemau llinell
   report_header_last_completed_order_date: Dyddiad yr archeb ddiweddaraf a gwblhawyd
+  report_header_credit_due: "Credyd ar gael (%{currency_symbol})"
   report_xero_configuration: Dim ffurfweddiad
   initial_invoice_number: "Rhif anfoneb cychwynnol"
   invoice_date: "Dyddiad yr anfoneb"
@@ -3282,6 +3396,8 @@ cy:
   payment_processing_failed: "Nid oedd yn bosib prosesu'r taliad, gwiriwch y manylion a nodwyd "
   payment_method_not_supported: "Ni chefnogir y dull talu hwnnw.  Dewiswch ddull arall."
   payment_updated: "Diweddarwyd y Taliad"
+  payment_method_taler:
+    order_summary: "Open Food Network gorchymyn"
   cannot_perform_operation: "Nid oedd yn bosib diweddaru'r taliad."
   action_required: "Mae angen gewithredu"
   tag_rules: "Rheolau Tag"
@@ -3304,6 +3420,7 @@ cy:
   product_importer_products_save_error: ni lwyddwyd i gadw unrhyw gynnyrch
   product_import_file_not_found_notice: 'Ni ddaethpwyd o hyd i ffeil neu nid oedd yn bosib ei hagor'
   product_import_no_data_in_spreadsheet_notice: 'Ni ddarganfuwyd unrhyw ddata yn y daenlen'
+  product_import_inventory_disable: Nid yw mewnforio i rhestr eiddo ar gael
   order_choosing_hub_notice: Dewiswyd eich hwb.
   order_cycle_selecting_notice: Dewiswyd eich cylch archebu.
   adjustments_tax_rate_error: "^ Gwiriwch fod y gyfradd dreth ar gyfer yr addasiad hwn yn gywir."
@@ -3326,10 +3443,12 @@ cy:
   order_cycles_no_permission_to_coordinate_error: "Nid oes gan unrhyw un o'ch mentrau ganiatâd i gydlynu cylch archebu"
   order_cycles_no_permission_to_create_error: "Nid oes gennych ganiatâd i greu cylch archebu a gydlynwyd gan y fenter honno"
   order_cycle_closed: "Mae'r cylch archebu a ddewiswyd newydd gau.  Rhowch gynnig arall!"
+  order_cycle_closed_next_steps: "Mae'r cylch archebu rydych chi wedi'i ddewis newydd gau. Cysylltwch â ni i gwblhau eich archeb #%{order_number}!"
   back_to_orders_list: "Yn ôl i'r Rhestr Archebion"
   no_orders_found: "Ni ddaethpwyd o hyd i archebion"
   order_information: "Gwybodaeth Archebu"
   new_payment: "Taliad Newydd"
+  credit_customer: Credyd cwsmer
   create_or_update_invoice: "Creu neu Ddiweddaru Anfoneb"
   date_completed: "Dyddiad Cwblhau"
   amount: "Swm"
@@ -3815,6 +3934,21 @@ cy:
       two: "sachau"
       many: "sachau"
       other: "sachau"
+    bucket:
+      one: "bwced"
+      two: "bwcedi"
+      many: "bwcedi"
+      other: "bwcedi"
+    pail:
+      one: cunnog
+      two: cunnog
+      many: cunnog
+      other: cunnog
+    plant:
+      one: "planhigyn"
+      two: "planhigion"
+      many: "planhigion"
+      other: "planhigion"
     bundle:
       one: "bwndel"
       two: "bwndeli"
@@ -3916,6 +4050,8 @@ cy:
     destroy:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
+    test:
+      success: Bydd rhywfaint o ddata prawf yn cael ei anfon at url y webhook
   spree:
     order_updated: "Diweddarwyd yr archeb"
     cannot_perform_operation: "Methu â chyflawni'r weithred hon"
@@ -3941,6 +4077,7 @@ cy:
     items_cannot_be_shipped: "Nid yw'n bosib anfon eitemau"
     gateway_config_unavailable: "Nid yw'r cyfluniad porth ar gael"
     gateway_error: "Taliad wedi methu"
+    internal_payment_not_voidable: Ni ellir marcio'r taliad fel un annilys
     more: "Mwy"
     new_adjustment: "Addasiad newydd"
     new_tax_category: "Categori treth newydd"
@@ -4022,6 +4159,7 @@ cy:
     logourl: "url Logo"
     are_you_sure_delete: "Ydych chi'n siŵr eich bod chi am ddileu'r cofnod hwn?"
     confirm_delete: "Cadarnhau Dileu"
+    tag_rule: "Tagiwch y reol"
     voucher: "Taleb"
     configurations: "Cyfluniadau"
     general_settings: "Gosodiadau Cyffredinol"
@@ -4260,6 +4398,7 @@ cy:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Nid yw'n bosib ychwanegu'r eitem i archeb a ganslwyd."
+          cannot_add_item_to_shipped_order: "Ni ellir ychwanegu eitem at archeb a gludwyd"
           include_out_of_stock_variants: "Cynnwys amrywolion lle does dim stoc ar gael."
         shipment:
           mark_as_shipped_message_html: "Bydd hyn yn dangos y Dosbarthwyd yr archeb. <br />Ydych chi’n siŵr eich bod chi am barhau?"
@@ -4430,6 +4569,7 @@ cy:
           check: "Arian/TRhE/ac ati (taliadau lle nad oes angen dilysu awtomatig)."
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
+          customercredit: "Credyd cwsmer "
       payments:
         source_forms:
           stripe:
@@ -4437,6 +4577,7 @@ cy:
             submitting_payment: Yn cyflwyno'r taliad ...
           paypal:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
+        customer_credit_successful: Mae'r cwsmer wedi cael credyd yn llwyddiannus!
       products:
         image_upload_error: "Dylid defnyddio fformat JPG, ONG, GIF, SVG neu WEBP i lanlwytho'r llun."
         image_not_processable: "Nid yw’r ddelwedd yn yr atodiad yn ddilys."
@@ -4751,6 +4892,7 @@ cy:
           orders: Archebion
           cards: Cardiau Credyd
           transactions: Trafodion
+          customer_account_transactions: 'Trafodiad cwsmer '
           settings: Gosodiadau Cyfrif
         unconfirmed_email: "Yn aros am gadarnhad e-bost ar gyfer: %{unconfirmed_email}. Bydd eich cyfeiriad e-bost yn cael ei ddiweddaru ar ôl cadarnhau'r e-bost newydd."
       orders:
@@ -4761,6 +4903,9 @@ cy:
         authorisation_required: Angen Awdurdodi
         authorise: Awdurdodi
       customer_account_transactions:
+        title: 'Trafodiad cwsmer '
+        credit_available: "Credyd ar gael:  %{credit}"
+        transaction_date: Dyddiad trafodiad
         description: Disgrifiad
         amount: Nifer
         running_balance: Cydbwysedd rhedeg
@@ -4908,6 +5053,7 @@ cy:
         order_cycle_tagged_bottom: "yw:"
         inventory_tagged_top: "Tagiwyd amrywolion stocrestr"
         inventory_tagged_bottom: "yw:"
+        variant_tagged_top: "Amrywiadau wedi'u tagio"
         variant_tagged_bottom: "yw:"
         visible: GWELEDOL
         not_visible: DDIM YN WELEDOL
@@ -4923,6 +5069,26 @@ cy:
         create_placeholder: Enter the URL of the remote webhook endpoint
       event_types:
         order_cycle_opened: Order Cycle Opened
+        payment_status_changed: Postio webhook ar newid statws Taliad
+      test_endpoint: Profi pwynt gorffen y webhook
   invisible_captcha:
     sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
     timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."
+  api_customer_credit: "Credyd API: %{description}"
+  credit_payment_method:
+    name: 'Credyd cwsmer '
+    description: Caniatáu i'r cwsmer dalu gyda chredyd
+    success: Taliad gyda chredyd yn llwyddiannus!
+    void_success: Wedi marcio'r credyd un annilys yn llwyddiannus!
+    order_payment_description: "Credyd Cwsmer: Taliad ar gyfer yr archeb: %{order_number}"
+    order_void_description: "Credyd Cwsmer: ad-daliad ar gyfer yr archeb: %{order_number}"
+    errors:
+      customer_not_found: Heb wedi dod o hyd i'r cwsmer
+      missing_payment: Taliad ar goll
+      credit_payment_method_missing: Ffurf talu gyda credyd ar goll
+      no_credit_available: 'Dim credyd ar gael '
+      not_enough_credit_available: 'Dim digon credyd ar gael '
+  customer_credit_service:
+    no_credit_owed: Dim credyd dyledus
+    credit_payment_method_missing: Mae dull talu gyda credyd cwsmer ar goll, gwiriwch y ffurfweddiad
+    refund_sucessful: 'Ad-daliad llwyddannus! '

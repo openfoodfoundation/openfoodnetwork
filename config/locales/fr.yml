@@ -829,12 +829,13 @@ fr:
         update_address: "Mettre à jour l'adresse"
         confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
+        filter_by_tag: "Filtrer par étiquette"
         guest_label: "Commande en mode invité"
-        credit_owed: "Avoir:"
+        credit_owed: "Avoir"
         balance_due: "Solde dû"
         id: Id
       destroy:
-        has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+        has_associated_subscriptions: "La suppression a échoué : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
     customer_account_transaction:
       index:
         available_credit: "Avoir disponible : %{available_credit}"
@@ -2432,6 +2433,7 @@ fr:
   brandstory_part6: " "
   system_headline: "Commander en ligne - comment ça marche?"
   system_step1_html: "1. Recherche"
+  system_step1_text_html: <a href="/shops">Découvrez</a> nos commerces indépendants et variés de produits locaux et de saison. Filtrez par localisation et catégorie de produits, ou indiquez si vous préférez la livraison ou le retrait sur place.
   system_step2_html: "2. Achat"
   system_step2_text_html: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné, et découvrez les producteurs qui se cachent derrière les produits."
   system_step3_html: "3. Retrait / Livraison"
@@ -2564,6 +2566,7 @@ fr:
   email_shipping_collection_time: "Prêt pour retrait:"
   email_shipping_collection_instructions: "Instructions de retrait:"
   email_special_instructions: "Vos commentaires:"
+  email_order_note: "Note :"
   email_signup_greeting: Bonjour,
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
@@ -2577,7 +2580,7 @@ fr:
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
-  producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
+  producer_mail_text_before: "Vous trouverez ci-dessous la mise à jour des informations pour le cycle de vente prévu pour :"
   producer_mail_order_text: "Les produits et quantités à livrer :"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
@@ -3372,6 +3375,8 @@ fr:
   report_line_cost_of_produce: 'Coût des produits hors '
   report_line_line_items: produits
   report_header_last_completed_order_date: Date dernière commande
+  report_header_balance_due: "Solde dû ( %{currency_symbol} )"
+  report_header_credit_due: "Crédit disponible ( %{currency_symbol} )"
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "N° de facture initial :"
   invoice_date: "Date de facture :"
@@ -4813,7 +4818,7 @@ fr:
       balance_due: solde dû
       completed: effectué
       checkout: solde dû
-      credit_owed: avoir.
+      credit_owed: avoir
       failed: échec
       paid: payé
       pending: en attente

@@ -271,11 +271,11 @@ RSpec.describe "full-page cart" do
       let(:address) { create(:address) }
       let(:user) { create(:user, bill_address: address, ship_address: address) }
       let!(:prev_order1) {
-        create(:completed_order_with_totals, order_cycle:, distributor:,
+        create(:completed_order_with_totals, line_items_count: 2, order_cycle:, distributor:,
                                              user:)
       }
       let!(:prev_order2) {
-        create(:completed_order_with_totals, order_cycle:, distributor:,
+        create(:completed_order_with_totals, line_items_count: 2, order_cycle:, distributor:,
                                              user:)
       }
 
