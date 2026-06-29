@@ -187,7 +187,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
-  describe "#editable_products" do
+  describe "#editable_and_read_only_products" do
     let!(:p1) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
     let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
 
@@ -205,7 +205,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(user).to receive(:admin?) { false }
       allow(user).to receive(:enterprises) { [p1.variants.first.supplier] }
 
-      expect(permissions.editable_products).to eq([p1])
+      expect(permissions.editable_and_read_only_products).to eq([p1])
     end
 
     it "returns products produced by permitted enterprises" do
@@ -214,7 +214,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(permissions).to receive(:related_enterprises_granting).
         with(:manage_products) { Enterprise.where(id: p2.variants.first.supplier) }
 
-      expect(permissions.editable_products).to eq([p2])
+      expect(permissions.editable_and_read_only_products).to eq([p2])
     end
 
     context "with create_linked_variants permission" do
@@ -228,7 +228,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
             Enterprise.where(id: p1.variants.first.supplier).select(:id)
           }
 
-        expect(permissions.editable_products).to eq([p1])
+        expect(permissions.editable_and_read_only_products).to eq([p1])
       end
 
       it "returns product produced by enteprise permitting linked variants and " \
@@ -245,7 +245,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
             Enterprise.where(id: p1.variants.first.supplier).select(:id)
           }
 
-        expect(permissions.editable_products).to match_array([p1, p2])
+        expect(permissions.editable_and_read_only_products).to match_array([p1, p2])
       end
     end
 
@@ -253,7 +253,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       it "returns all products" do
         allow(user).to receive(:admin?) { true }
 
-        expect(permissions.editable_products).to include p1, p2
+        expect(permissions.editable_and_read_only_products).to include p1, p2
       end
     end
   end

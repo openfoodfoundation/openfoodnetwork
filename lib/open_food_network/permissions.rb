@@ -59,7 +59,7 @@ module OpenFoodNetwork
       permissions
     end
 
-    def editable_products
+    def editable_and_read_only_products
       return Spree::Product.all if admin?
 
       product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(

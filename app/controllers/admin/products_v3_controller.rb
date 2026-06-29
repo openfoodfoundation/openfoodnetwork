@@ -186,7 +186,7 @@ module Admin
     def available_tags
       variants = Spree::Variant.where(
         product: OpenFoodNetwork::Permissions.new(spree_current_user)
-          .editable_products
+          .editable_and_read_only_products
           .merge(product_scope)
       )
 
@@ -197,7 +197,10 @@ module Admin
 
     def fetch_products
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
+        .editable_and_read_only_products
+        .merge(product_scope_with_includes)
+        .ransack(ransack_query)
+        .result
 
       product_query = apply_tags_filter(product_query)
 

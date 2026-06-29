@@ -9,7 +9,7 @@ class ProductScopeQuery
   def bulk_products
     product_query = OpenFoodNetwork::Permissions.
       new(@user).
-      editable_products.
+      editable_and_read_only_products.
       merge(product_scope)
 
     if @params[:import_date].present?
