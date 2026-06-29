@@ -103,7 +103,7 @@
               %span{ 'ng-bind' => '::customer.email' }
               %span.guest-label{ 'ng-show' => 'customer.user_id == null' }= t('.guest_label')
             %td.customer_type{ 'ng-show' => 'columns.customer_type.visible'}
-              %ofn-select{ id: angular_id(:customer_type), data: [{ name: t('admin.customers.index.individual'), id: 'individual' }, { name: t('admin.customers.index.enterprise'), id: 'enterprise' }], "ng-model": 'customer.customer_type' }
+              %ofn-select{ id: angular_id(:customer_type), data: [{ name: t('admin.customers.index.individual'), id: 'individual' }, { name: t('admin.customers.index.enterprise'), id: 'enterprise' }], "ng-model": 'customer.customer_type', "ng-change": 'clearEnterpriseFields(customer)' }
               %input{ type: "hidden", name: angular_name(:customer_type), "obj-for-update": "customer", "attr-for-update": "customer_type" }
             %td.enterprise_name{ 'ng-show' => 'columns.enterprise_name.visible'}
               %input{ type: 'text', name: 'enterprise_name', "obj-for-update": 'customer', "attr-for-update": 'enterprise_name', "ng-model": 'customer.enterprise_name' }
