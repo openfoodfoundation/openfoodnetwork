@@ -50,7 +50,7 @@ class EnterpriseBuilder < DfcBuilder
       urls.enterprise_url(member.id)
     end
 
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       urls.enterprise_group_url(group.id),
       name: group.name,
       description: group.description,

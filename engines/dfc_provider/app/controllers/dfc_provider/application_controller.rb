@@ -88,7 +88,8 @@ module DfcProvider
       return render_v2(subject, *) unless subject.is_a?(Array)
 
       # DFCv2 requires containers for listing resources in an index action.
-      container = Container.new(url_for, members: subject)
+      members = DfcV2Migration.up(*subject)
+      container = Container.new(url_for, members:)
       render_v2(container, *subject, *)
     end
 
@@ -97,8 +98,11 @@ module DfcProvider
     end
 
     def render_v2(*)
+      objects = DfcV2Migration.up(*)
+
       connector = DataFoodConsortium::Connector::Connector.instance
-      render json: connector.export(*), content_type: 'application/ld+json; profile="dfc-v2"'
+      render json: connector.export(*objects),
+             content_type: 'application/ld+json; profile="dfc-v2"'
     end
   end
 end

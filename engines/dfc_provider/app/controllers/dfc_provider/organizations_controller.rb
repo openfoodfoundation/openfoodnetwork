@@ -16,22 +16,19 @@ module DfcProvider
         EnterpriseBuilder.enterprise(enterprise)
       end
 
-      organizations = DfcV2Migration.up(enterprises)
-
-      render_dfc(organizations)
+      render_dfc(enterprises)
     end
 
     def show
       enterprise = current_user.enterprises.find(params[:id])
       dfc_enterprise = EnterpriseBuilder.enterprise(enterprise)
-      organization = DfcV2Migration.up([dfc_enterprise]).first
 
       render_dfc(
-        organization,
-        organization.mainContact,
-        *organization.localizations,
-        *organization.socialMedias,
-        *organization.certifications,
+        dfc_enterprise,
+        dfc_enterprise.mainContact,
+        *dfc_enterprise.localizations,
+        *dfc_enterprise.socialMedias,
+        *dfc_enterprise.certifications,
       )
     end
   end

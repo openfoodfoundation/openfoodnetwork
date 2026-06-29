@@ -327,7 +327,6 @@ paths:
                       dfc-b:sku: AR
                       dfc-b:stockLimitation: 0
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
-                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple - 1g
@@ -336,9 +335,6 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
-                      ofn:spree_product_id: 90000
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     - "@id": http://test.host/api/dfc/product_groups/90000
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
@@ -542,12 +538,9 @@ paths:
                       "@type": ldp:Container
                       ldp:contains: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/enterprise_groups/60000
-                      "@type": dfc-b:Enterprise
+                      "@type": dfc-b:Organization
                       dfc-b:name: Sustainable Farmers
                       dfc-b:hasDescription: this is a group
-                      dfc-b:affiliatedBy:
-                      - http://test.host/api/dfc/enterprises/10001
-                      - http://test.host/api/dfc/enterprises/10002
   "/api/dfc/enterprise_groups/{id}":
     get:
       summary: Show groups
@@ -1188,7 +1181,7 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:hasMainContact: http://test.host/api/dfc/enterprises/10000#mainContact
                       dfc-b:isCertifiedBy: "#certification-30000"
-                    - "@id": http://test.host/api/dfc/enterprises/10000#mainContact
+                    - "@id": http://test.host/api/dfc/organizations/10000#mainContact
                       "@type": dfc-b:Person
                       dfc-b:firstName: Fred
                       dfc-b:familyName: Farmer
@@ -1558,7 +1551,6 @@ paths:
                       dfc-b:sku: BP
                       dfc-b:stockLimitation: 5
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
-                      dfc-b:managedBy: http://test.host/api/dfc/enterprises/10000
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Pesto - 1g
@@ -1569,10 +1561,6 @@ paths:
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
-                      ofn:spree_product_id: 90000
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
-                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
                     - "@id": http://test.host/api/dfc/product_groups/90000
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Pesto
