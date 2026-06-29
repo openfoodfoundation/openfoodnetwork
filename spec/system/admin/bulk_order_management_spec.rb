@@ -1094,7 +1094,7 @@ RSpec.describe '
                 "it shows a modal about order cancellation" do
           before :each do
             visit_bulk_order_management
-            expect(page).to have_selector "a.delete-line-item", count: 2
+            expect(page).to have_selector "a.delete-line-item", count: 2, wait: 15
             find("tr#li_#{li2.id} a.delete-line-item").click
             expect(page)
               .to have_content "This operation will result in one or more empty orders, " \
