@@ -81,7 +81,7 @@ module ProductsHelper
 
   def random_producer(product)
     Enterprise.is_primary_producer
-      .where.not(id: product.supplier.id)
+      .where.not(id: product.enterprise.id)
       .pluck(:name).sample
   end
 
