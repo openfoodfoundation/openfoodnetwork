@@ -832,7 +832,7 @@ RSpec.describe Enterprise do
     end
 
     it "gets all taxons of all supplied products" do
-      allow(Spree::Product).to receive(:in_supplier).and_return [product1, product2]
+      allow(Spree::Product).to receive(:in_enterprise).and_return [product1, product2]
       expect(supplier.supplied_taxons).to match_array [taxon1, taxon2]
     end
   end

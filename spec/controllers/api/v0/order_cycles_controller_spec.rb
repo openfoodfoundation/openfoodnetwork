@@ -301,7 +301,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       create(:producer_property, producer_id: supplier.id, property: property4)
     }
 
-    before { product1.variants.first.update(enterprise: ) }
+    before { product1.variants.first.update(enterprise: supplier) }
 
     it "loads producer properties for distributed products in the order cycle" do
       api_get :producer_properties, id: order_cycle.id, distributor: distributor.id

@@ -36,10 +36,10 @@ RSpec.describe "Orders And Fulfillment" do
                                            bill_address: bill_address2,
                                            order_cycle_id: order_cycle.id)
     }
-    let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
-    let(:product) { create(:simple_product, name: "Baked Beans", supplier_id: supplier.id ) }
-    let(:variant1) { create(:variant, product:, unit_description: "Big", enterprise: supplier) }
-    let(:variant2) { create(:variant, product:, unit_description: "Small", supplier: ) }
+    let(:enterprise) { create(:supplier_enterprise, name: "Supplier Name") }
+    let(:product) { create(:simple_product, name: "Baked Beans", enterprise_id: enterprise.id ) }
+    let(:variant1) { create(:variant, product:, unit_description: "Big", enterprise:) }
+    let(:variant2) { create(:variant, product:, unit_description: "Small", enterprise: ) }
 
     before do
       # order1 has two line items / variants
@@ -104,7 +104,7 @@ RSpec.describe "Orders And Fulfillment" do
                               name: "My Order Cycle")
         end
 
-        it "correclty renders the report" do
+        it "correctly renders the report" do
           run_report
           expect(page).to have_content "My Order Cycle"
         end
@@ -425,10 +425,10 @@ RSpec.describe "Orders And Fulfillment" do
           end
 
           context "as the supplier granting P-OC to distributor" do
-            let(:current_user) { supplier.owner }
+            let(:current_user) { enterprise.owner }
 
             before do
-              create(:enterprise_relationship, parent: supplier, child: distributor,
+              create(:enterprise_relationship, parent: enterprise, child: distributor,
                                                permissions_list: [:add_to_order_cycle])
 
               login_as(current_user)

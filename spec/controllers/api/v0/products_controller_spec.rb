@@ -135,7 +135,7 @@ RSpec.describe Api::V0::ProductsController do
       api_post :create, product: { name: "The Other Product",
                                    price: 123.45,
                                    shipping_category_id: create(:shipping_category).id,
-                                   supplier_id: supplier.id,
+                                   enterprise_id: supplier.id,
                                    primary_taxon_id: FactoryBot.create(:taxon).id,
                                    variant_unit: "items",
                                    variant_unit_name: "things",
@@ -154,7 +154,7 @@ RSpec.describe Api::V0::ProductsController do
       errors = json_response["errors"]
       expect(errors.keys).to match_array([
                                            "name", "price", "primary_taxon_id",
-                                           "supplier_id", "variant_unit"
+                                           "enterprise_id", "variant_unit"
                                          ])
     end
 

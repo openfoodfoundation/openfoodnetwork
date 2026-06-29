@@ -8,8 +8,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
   it { pending "removal of supplier"; is_expected.to belong_to(:supplier) }
-  # it's currently optional until data migration has completed, just in case.
-  it { pending "removal of supplier"; is_expected.to belong_to(:enterprise).required }
+  it { is_expected.to belong_to(:enterprise).required }
   it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }

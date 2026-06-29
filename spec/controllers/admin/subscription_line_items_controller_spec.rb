@@ -67,7 +67,7 @@ RSpec.describe Admin::SubscriptionLineItemsController do
 
           context "and the shop has permission to sell the product in question" do
             before do
-              product.update_attribute(:supplier_id, shop.id)
+              product.update_attribute(:enterprise_id, shop.id)
             end
 
             context "but no schedule_id is provided" do
