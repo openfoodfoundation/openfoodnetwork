@@ -110,7 +110,7 @@
             %td.enterprise_acn{ 'ng-show' => 'columns.enterprise_acn.visible'}
               %input{ type: 'text', name: 'enterprise_acn', "obj-for-update": 'customer', "attr-for-update": 'enterprise_acn', "ng-model": 'customer.enterprise_acn' }
             %td.enterprise_charges_sales_tax{ 'ng-show' => 'columns.enterprise_charges_sales_tax.visible'}
-              %input{ type: 'checkbox', name: 'enterprise_charges_sales_tax', "obj-for-update": 'customer', "attr-for-update": 'enterprise_charges_sales_tax', "ng-model": 'customer.enterprise_charges_sales_tax' }
+              %input{ type: 'checkbox', name: 'enterprise_charges_sales_tax', "obj-for-update": 'customer', "attr-for-update": 'enterprise_charges_sales_tax', "ng-model": 'customer.enterprise_charges_sales_tax', "ng-true-value": "'true'", "ng-false-value": "'false'" }
             %td.first_name{ 'ng-show' => 'columns.first_name.visible'}
               %input{ type: 'text', name: 'first_name', "obj-for-update": 'customer', "attr-for-update": 'first_name', "ng-model": 'customer.first_name' }
             %td.last_name{ 'ng-show' => 'columns.last_name.visible'}
