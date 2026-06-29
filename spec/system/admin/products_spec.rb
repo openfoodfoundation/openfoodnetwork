@@ -301,7 +301,7 @@ RSpec.describe '
         product = Spree::Product.find_by(name: 'A new product !!!')
         variant = product.variants.first
         expect(variant.tax_category).to be_nil
-        expect(variant.supplier).to eq(supplier2)
+        expect(variant.enterprise).to eq(supplier2)
       end
     end
 
