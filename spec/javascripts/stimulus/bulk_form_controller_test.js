@@ -306,6 +306,91 @@ describe("BulkFormController", () => {
     });
   });
 
+  describe("New unsaved variant detection", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form"
+              data-action="rails-nested-form:add->bulk-form#toggleFormChanged">
+          <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
+          <table class="products">
+            <div data-record-id="1">
+              <input id="input1" type="text" value="initial">
+            </div>
+          </table>
+        </form>
+      `;
+    });
+
+    it("shows save button when a new (unsaved) variant id field is present (no value attribute)", () => {
+      // Rails renders new-record hidden id fields with no value attribute
+      input1.insertAdjacentHTML(
+        "afterend",
+        '<input id="new_variant_id" type="hidden" name="form[products][0][variants_attributes][1][id]">',
+      );
+
+      form.dispatchEvent(new Event("rails-nested-form:add"));
+
+      expect(actions.classList).not.toContain("hidden");
+    });
+
+    it("does not show save button when all variant ids are present (existing variants)", () => {
+      input1.insertAdjacentHTML(
+        "afterend",
+        '<input id="existing_variant_id" type="hidden" name="form[products][0][variants_attributes][0][id]" value="42">',
+      );
+
+      form.dispatchEvent(new Event("rails-nested-form:add"));
+
+      expect(actions.classList).toContain("hidden");
+    });
+  });
+
+  describe("popoutEmptyVariantUnit", () => {
+    // Trigger the action via a custom event wired to popoutEmptyVariantUnit, the same
+    // pattern used by the rest of this test file to invoke controller actions.
+    const triggerPopout = () => form.dispatchEvent(new Event("trigger-popout"));
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form"
+              data-action="trigger-popout->bulk-form#popoutEmptyVariantUnit">
+          <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
+          <table class="products">
+            <tr>
+              <td class="col-unit_scale">
+                <input id="variant_unit_field" type="hidden"
+                       name="form[products][0][variants_attributes][0][variant_unit]" value="">
+              </td>
+              <td class="col-unit">
+                <button id="unit_popout_button" class="popout__button"></button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      `;
+    });
+
+    it("clicks the button when its text is empty and variant_unit is not set", () => {
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).toHaveBeenCalled();
+    });
+
+    it("does not click the button when variant_unit is already set (pre-filled variant)", () => {
+      variant_unit_field.value = "weight";
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).not.toHaveBeenCalled();
+    });
+
+    it("does not click the button when its text is not empty", () => {
+      unit_popout_button.textContent = "100 g";
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).not.toHaveBeenCalled();
+    });
+  });
+
   // unable to test disconnect at this stage
   // describe("disconnect()", () => {
   //   it("resets other elements", () => {
