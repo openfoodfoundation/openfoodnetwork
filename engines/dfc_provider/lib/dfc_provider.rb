@@ -19,6 +19,8 @@ require "dfc_provider/enterprise"
 require "semantic_object_inspect"
 
 module DfcProvider
+  DataFoodConsortium::Connector::Importer.register_type(Container)
+
   DataFoodConsortium::ConnectorV1::Importer.register_type(Enterprise)
   DataFoodConsortium::ConnectorV1::Importer.register_type(SuppliedProduct)
 end
