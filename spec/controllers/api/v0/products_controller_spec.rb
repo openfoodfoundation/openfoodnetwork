@@ -72,7 +72,7 @@ RSpec.describe Api::V0::ProductsController do
     let(:current_api_user) { supplier_enterprise_user(supplier) }
 
     describe "#update" do
-      it "cant update my own product" do
+      it "can update my own product" do
         api_put :update, id: product.to_param, product: { name: "My lovely product" }
 
         expect(response).to have_http_status(:ok)
