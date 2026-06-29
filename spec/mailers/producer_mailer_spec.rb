@@ -292,4 +292,43 @@ RSpec.describe ProducerMailer do
       end
     end
   end
+
+  context "when product price is modified in another order" do
+    let!(:order_with_modified_price) do
+      order = create(:order, distributor: d1, order_cycle:, state: 'complete')
+      order.line_items << create(:line_item, quantity: 2, variant: p1.variants.first, price: 16.50)
+      order.finalize!
+      order.save
+      order
+    end
+
+    let(:zebra_rows) do
+      parsed_email.all('table.order-summary.line-items tbody tr:not(.total-row)').select do |tr|
+        tr.text.include?(p1.name)
+      end
+    end
+
+    it "shows product on separate rows for the different prices" do
+      expect(zebra_rows.size).to eq(2)
+
+      quantities = zebra_rows.map { |tr| tr.all('td')[2].text.strip }
+      expect(quantities).to contain_exactly('3', '2')
+
+      prices = zebra_rows.map { |tr| tr.all('td')[3].text.strip }
+      expect(prices).to contain_exactly('$10.00', '$16.50')
+
+      subtotals = zebra_rows.map { |tr| tr.all('td')[4].text.strip }
+      expect(subtotals).to contain_exactly('$30.00', '$33.00')
+    end
+
+    it "validates subtotal to be equal to quantity multiplied by price for each row" do
+      zebra_rows.each do |row|
+        cells = row.all('td').map { |td| td.text.strip }
+        quantity = cells[2].to_i
+        price = BigDecimal(cells[3].delete('$,'), 10)
+        subtotal = BigDecimal(cells[4].delete('$,'), 10)
+        expect(price * quantity).to eq(subtotal)
+      end
+    end
+  end
 end
