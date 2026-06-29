@@ -2,6 +2,18 @@
 
 RSpec.describe "simplecov.rake" do
   describe "simplecov:collate_results" do
+    context "when there are no reports to merge" do
+      it "exits gracefully without raising an error" do
+        Dir.mktmpdir do |tmp_dir|
+          task_name = "simplecov:collate_results[#{tmp_dir}]"
+
+          expect {
+            invoke_task(task_name)
+          }.not_to raise_error
+        end
+      end
+    end
+
     context "when there are reports to merge" do
       let(:input_dir) { Rails.root.join("spec/fixtures/simplecov") }
 

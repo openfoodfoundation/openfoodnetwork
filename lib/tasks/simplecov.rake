@@ -13,12 +13,18 @@ namespace :simplecov do
     path_to_results = args[:path_to_results].presence || "tmp/simplecov"
     output_path = args[:coverage_dir].presence || "coverage"
 
-    SimpleCov.collate Dir[File.join(path_to_results, "**", ".resultset.json")], "rails" do
+    result_files = Dir[File.join(path_to_results, "**", ".resultset.json")]
+    if result_files.empty?
+      puts "No SimpleCov results found in #{path_to_results}. Skipping collation."
+      next
+    end
+
+    SimpleCov.collate result_files, "rails" do
       formatter(SimpleCov::Formatter::HTMLFormatter)
       coverage_dir(output_path)
     end
 
-    SimpleCov.collate Dir[File.join(path_to_results, "**", ".resultset.json")], "rails" do
+    SimpleCov.collate result_files, "rails" do
       formatter(SimpleCov::Formatter::Undercover)
       coverage_dir(output_path)
     end
