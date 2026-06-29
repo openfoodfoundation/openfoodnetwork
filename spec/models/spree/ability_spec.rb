@@ -370,7 +370,7 @@ RSpec.describe Spree::Ability do
           is_expected.to have_ability([:bulk_product_variant_update], for: p_related)
         end
 
-        it "should be able to upcate linked variant product with " \
+        it "should be able to update linked variant product with " \
            "create linked variant permission" do
           create(:enterprise_relationship, parent: s_related, child: s1,
                                            permissions_list: [:create_linked_variants])
