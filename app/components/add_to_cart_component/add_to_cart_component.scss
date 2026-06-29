@@ -1,4 +1,5 @@
 @use "../../webpacker/css/darkswarm/modern-variables" as *;
+@use "../../app/webpacker/css/darkswarm/branding.scss" as b;
 
 // The component relies on existing CSS with minimal overide. Existing CSS is defined in :
 //  - app/webpacker/css/darkswarm/_shop-inputs.scss
@@ -16,5 +17,16 @@
       border-top-right-radius: $radius-image;
       border-bottom-right-radius: $radius-button;
     }
+
+    &:nth-of-type(1):not(.bulk-buy):not(.bulk-buy-add) {
+      border-right: none;
+    }
+  }
+
+  [type="number"].variant-quantity {
+    // override existing border so we can define only top and bottom border
+    border: none;
+    border-top: 0.1em solid b.$grey-200;
+    border-bottom: 0.1em solid b.$grey-200;
   }
 }
