@@ -840,13 +840,13 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    state_machines (0.100.4)
-    state_machines-activemodel (0.31.0)
-      activemodel (>= 7.1)
-      state_machines (>= 0.31.0)
-    state_machines-activerecord (0.31.0)
-      activerecord (>= 7.1)
-      state_machines-activemodel (>= 0.10.0)
+    state_machines (0.201.0)
+    state_machines-activemodel (0.200.0)
+      activemodel (>= 7.2)
+      state_machines (>= 0.200.0)
+    state_machines-activerecord (0.200.0)
+      activerecord (>= 7.2)
+      state_machines-activemodel (>= 0.200.0)
     stimulus_reflex (3.5.5)
       actioncable (>= 5.2)
       actionpack (>= 5.2)
@@ -1391,9 +1391,9 @@ CHECKSUMS
   spring-watcher-listen (2.1.0) sha256=e958bcd956d1026eb95d16b2ef0e241d1ca35a754628bd45040e3d9954a61949
   sprockets (3.7.5) sha256=72c20f256548f8a37fe7db41d96be86c3262fddaf4ebe9d69ec8317394fed383
   sprockets-rails (3.5.2) sha256=a9e88e6ce9f8c912d349aa5401509165ec42326baf9e942a85de4b76dbc4119e
-  state_machines (0.100.4) sha256=dd4e555ebb061569dd8fe18a5f39b51d10be6306b89a0c315a9697671d752565
-  state_machines-activemodel (0.31.0) sha256=82465856736fa6e3ddd76b8dba9e17c82d0823027ec1fbc18432f47817be4500
-  state_machines-activerecord (0.31.0) sha256=c8cc334ba4ea202a2feaaa42aaa43d360e5e111c1aff1e2fa156fe232ca31181
+  state_machines (0.201.0) sha256=807bafdd5d7dbfb3e23d77897edfe38e505b6e0738a2b7259dab566f46b9d319
+  state_machines-activemodel (0.200.0) sha256=c0216f5730b00ee240a6370d59138e8d5d966752089a749ae015410185ec953e
+  state_machines-activerecord (0.200.0) sha256=a53a1c09b478f05be9385af59e09a7a84a818c6a66651e432bfa4650d5917d85
   stimulus_reflex (3.5.5) sha256=cf08eddccc75c4b8f61446da73972b8bd9304f173f4881f500202d5c3f70e3c9
   stimulus_reflex_testing (0.3.1)
   stringex (2.8.6) sha256=c7b382d2b2a47a1e1646f256df201c48d487d6296fbb289d76802f67f5e929c4
