@@ -23,7 +23,7 @@ module OpenFoodNetwork
       indexed_enterprise_fees_for(variant).each_with_object({}) do |enterprise_fee, fees|
         fees[enterprise_fee.fee_type.to_sym] ||= 0
         fees[enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, enterprise_fee
-      end.select { |_fee_type, amount| amount > 0 }
+      end.reject { |_fee_type, amount| amount.zero? }
     end
 
     def fees_for(variant)
@@ -37,7 +37,7 @@ module OpenFoodNetwork
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
         fees[applicator.enterprise_fee.fee_type.to_sym] +=
           calculate_fee_for variant, applicator.enterprise_fee
-      end.select { |_fee_type, amount| amount > 0 }
+      end.reject { |_fee_type, amount| amount.zero? }
     end
 
     def fees_name_by_type_for(variant)
