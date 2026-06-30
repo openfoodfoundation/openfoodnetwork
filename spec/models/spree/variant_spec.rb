@@ -1036,7 +1036,7 @@ RSpec.describe Spree::Variant do
   describe "updating supplier/enterprise during transition period" do
     it "updates enterprise when updating supplier" do
       new_supplier = create(:supplier_enterprise)
-      variant.enterprise = new_supplier
+      variant.supplier = new_supplier
       variant.save!
 
       expect(variant.reload.enterprise).to eq new_supplier
@@ -1050,7 +1050,7 @@ RSpec.describe Spree::Variant do
         expect(variant).to be_valid
 
         variant.save!
-        expect(variant.reload.enterprise).to eq variant.enterprise
+        expect(variant.reload.enterprise).to eq variant.supplier
       end
     end
   end
