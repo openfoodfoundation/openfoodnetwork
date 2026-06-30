@@ -15,7 +15,7 @@ module Spree
 
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     has_one :product, through: :variant
-    has_one :supplier, through: :variant
+    has_one :supplier, through: :variant, source: :enterprise
     belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
@@ -77,7 +77,7 @@ module Spree
     # Here we are simply joining the line item to its variant
     # We dont use joins here to avoid the default scopes, and with that, include deleted variants
     scope :supplied_by_any, lambda { |enterprises|
-      variant_ids = Spree::Variant.unscoped.where(supplier: enterprises).select(:id)
+      variant_ids = Spree::Variant.unscoped.where(enterprise: enterprises).select(:id)
       where(variant_id: variant_ids)
     }
 
@@ -98,9 +98,9 @@ module Spree
     }
 
     scope :editable_by_producers, ->(enterprises_ids) {
-      joins(variant: :supplier, order: :distributor).where(
+      joins(variant: :enterprise, order: :distributor).where(
         distributor: { enable_producers_to_edit_orders: true },
-        spree_variants: { supplier_id: enterprises_ids }
+        spree_variants: { enterprise_id: enterprises_ids }
       )
     }
 

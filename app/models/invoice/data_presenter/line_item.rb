@@ -6,7 +6,7 @@ class Invoice
       attributes :id, :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
                  :variant_id, :unit_price, :unit_presentation,
                  :enterprise_fee_additional_tax, :enterprise_fee_included_tax
-      attributes_with_presenter :variant
+      attributes_with_presenter :variant, :supplier
       invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
                                     :quantity, :variant_id
 

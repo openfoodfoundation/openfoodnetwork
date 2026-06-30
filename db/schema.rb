@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_01_031443) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_01_032848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1003,11 +1003,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_031443) do
     t.float "variant_unit_scale"
     t.string "variant_unit_name", limit: 255
     t.bigint "hub_id"
-    t.bigint "owner_id"
     t.bigint "enterprise_id"
     t.index ["enterprise_id"], name: "index_spree_variants_on_enterprise_id"
     t.index ["hub_id"], name: "index_spree_variants_on_hub_id"
-    t.index ["owner_id"], name: "index_spree_variants_on_owner_id"
     t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["shipping_category_id"], name: "index_spree_variants_on_shipping_category_id"
@@ -1268,7 +1266,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_031443) do
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
   add_foreign_key "spree_variants", "enterprises"
   add_foreign_key "spree_variants", "enterprises", column: "hub_id"
-  add_foreign_key "spree_variants", "enterprises", column: "owner_id"
   add_foreign_key "spree_variants", "enterprises", column: "supplier_id"
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
   add_foreign_key "spree_variants", "spree_shipping_categories", column: "shipping_category_id"

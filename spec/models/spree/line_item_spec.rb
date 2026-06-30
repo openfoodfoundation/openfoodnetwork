@@ -856,7 +856,7 @@ RSpec.describe "searching with ransack" do
   end
 
   context "searching by supplier" do
-    let(:query) { { supplier_id_eq: line_item1.variant.supplier_id } }
+    let(:query) { { supplier_id_eq: line_item1.supplier_id } }
 
     it "filters results" do
       expect(search_result.to_a).to eq [line_item1]

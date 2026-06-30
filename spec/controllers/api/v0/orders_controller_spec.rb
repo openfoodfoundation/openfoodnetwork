@@ -247,7 +247,7 @@ RSpec.describe Api::V0::OrdersController do
 
       it "returns unauthorized, as the order product's supplier owner" do
         allow(controller).to receive(:spree_current_user) {
-                               order.line_items.first.variant.supplier.owner
+                               order.line_items.first.supplier.owner
                              }
         get :show, params: { id: order.number }
         assert_unauthorized!

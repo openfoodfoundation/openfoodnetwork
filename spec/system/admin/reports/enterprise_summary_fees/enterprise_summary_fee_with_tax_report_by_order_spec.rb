@@ -91,11 +91,6 @@ RSpec.describe "Enterprise Summary Fee with Tax Report By Order" do
 
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
-
-    product.update!({
-                      tax_category_id: tax_category.id,
-                      supplier_id: supplier.id
-                    })
   end
 
   context 'added tax' do

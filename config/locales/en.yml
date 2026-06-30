@@ -4742,9 +4742,8 @@ en:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
-          supplier_select_placeholder: "Select a supplier"
-          search_for_suppliers: "Search for suppliers"
+          enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

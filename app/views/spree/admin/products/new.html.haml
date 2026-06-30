@@ -9,15 +9,15 @@
       .sixteen.columns.alpha
         .eight.columns.alpha
           = f.field_container :supplier_id do
-            = f.label :supplier_id, t(".supplier")
+            = f.label :supplier_id, t(".enterprise")
             %span.required *
             = render(SearchableDropdownComponent.new(form: f,
                 name: :supplier_id,
-                aria_label: t('.supplier'),
+                aria_label: t('.enterprise'),
                 options: @producers.select(:name, :id).order(:name).pluck(:name, :id),
                 selected_option: @product.supplier_id,
                 include_blank: true,
-                placeholder_value: t('.search_for_suppliers')))
+                placeholder_value: t('.search_for_enterprises')))
             = f.error_message_on :supplier_id
         .eight.columns.omega
           = f.field_container :name do
