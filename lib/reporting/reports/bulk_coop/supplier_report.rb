@@ -45,7 +45,7 @@ module Reporting
         private
 
         def variant_supplier_name(line_items)
-          line_items.first.variant.supplier.name
+          line_items.first.supplier.name
         end
       end
     end

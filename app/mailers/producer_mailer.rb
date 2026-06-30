@@ -87,7 +87,7 @@ class ProducerMailer < ApplicationMailer
 
       {
         sku: line_item.variant.sku,
-        supplier_name: line_item.variant.supplier.name,
+        supplier_name: line_item.supplier.name,
         product_and_full_name: line_item.product_and_full_name,
         quantity: line_item.quantity,
         first_name: order.billing_address.first_name,

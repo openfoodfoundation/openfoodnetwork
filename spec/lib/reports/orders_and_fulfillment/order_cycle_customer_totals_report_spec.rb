@@ -27,7 +27,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
         distributor:,
         completed_at: order_date,
       ).tap do |order|
-        order.line_items[0].variant.supplier.update(name: "Apple Farmer")
+        order.line_items[0].supplier.update(name: "Apple Farmer")
         order.line_items[0].update(product_name: "Apples")
         order.line_items[0].variant.update(sku: "APP")
       end
