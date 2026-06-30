@@ -1043,14 +1043,19 @@ RSpec.describe Spree::Variant do
     end
 
     context "variant doesn't have enterprise set yet" do
-      let(:variant) { create(:variant).tap{ |v| v.update_columns enterprise_id: nil } }
+      let(:variant) {
+        create(:variant).tap{ |v|
+          v.update_columns(enterprise_id: nil, supplier_id: enterprise.id)
+        }
+      }
+      let(:enterprise) { create(:supplier_enterprise) }
 
       it "updates enterprise on validation, if not yet set" do
         variant.display_name = "updated"
         expect(variant).to be_valid
 
         variant.save!
-        expect(variant.reload.enterprise).to eq variant.supplier
+        expect(variant.reload.enterprise).to eq enterprise
       end
     end
   end
