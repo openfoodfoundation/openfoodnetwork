@@ -63,6 +63,10 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  resources :order_cycles, only: [] do
+    resources :products, only: [:index]
+  end
+
   namespace :stripe do
     resources :callbacks, only: [:index]
     resources :webhooks, only: [:create]

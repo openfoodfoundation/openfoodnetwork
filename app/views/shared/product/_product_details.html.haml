@@ -1,0 +1,34 @@
+-# locals: (product:)
+.row
+  .columns.small-12.medium-6.large-6.product-header
+    %h3
+      = product.name
+    %span
+      %em 
+        = t("products_from")
+      %span
+        = product.variants.first.supplier.name
+
+    %br
+
+    .filter-shopfront.property-selectors.inline-block
+      %ul
+        - product.properties_including_inherited.each do |property|
+          %li
+            - if property[:value].present?
+              = render TooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom-start")
+            - else
+              %span= property[:name] 
+
+
+    - if product.description
+      .product-description{ 'data-controller': "add-blank-to-link" }
+        %p.text-small
+          - # description is sanitized in Spree::Product#description method
+          = product.description.html_safe
+
+  .columns.small-12.medium-6.large-6.product-img
+    - if product.image
+      = image_tag(product.image.url(:large), alt: product.image.alt, title: product.image.alt)
+    - else
+      = image_tag(Spree::Image.default_image_url(:large), class: "placeholder")

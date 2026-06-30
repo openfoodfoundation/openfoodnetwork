@@ -1,0 +1,26 @@
+@use "../modern-variables" as var;
+@use "../mixins";
+
+// Product loading spinner
+@mixin product-spinner {
+  width: var.$product-spinner-width;
+  margin-bottom: 20px;
+}
+
+@mixin summary {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1.25em;
+  background: #fff;
+
+  .columns {
+    padding-top: 1em !important; 
+    padding-bottom: 1em !important;
+    line-height: 1 !important;
+
+    @include mixins.breakpoint(tablet) {
+      padding-top: 0.65rem !important;
+      padding-bottom: 0.65rem !important;
+    }
+  }
+}

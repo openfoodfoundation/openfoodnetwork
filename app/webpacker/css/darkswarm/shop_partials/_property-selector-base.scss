@@ -1,0 +1,12 @@
+// Base style for property selector
+
+@mixin property-selector($base-clr, $border-clr) {
+  display: block;
+  border-radius: 0.5em;
+  border: 1px solid $border-clr;
+  padding: 0.5em 0.625em;
+  color: $base-clr;
+  font-size: 0.75em;
+  background: white;
+  margin: 0;
+}
