@@ -221,6 +221,84 @@ describe("BulkFormController", () => {
         expect(disable2_element.disabled).toBe(false);
       });
     });
+
+    describe("submitting only changed fields", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form data-controller="bulk-form">
+            <table class="products">
+              <tbody data-record-id="1">
+                <tr>
+                  <td>
+                    <input id="product_1_id" type="hidden" name="products[0][id]" value="1">
+                    <input id="product_1_name" type="text" name="products[0][name]" value="Apples">
+                  </td>
+                </tr>
+                <tr id="spree_variant_11">
+                  <td class="field">
+                    <input id="variant_11_id" type="hidden" name="products[0][variants_attributes][0][id]" value="11">
+                    <input id="variant_11_unit_value" type="text" style="display:none" name="products[0][variants_attributes][0][unit_value]" value="100">
+                    <input id="variant_11_display_name" type="text" name="products[0][variants_attributes][0][display_name]" value="Small">
+                  </td>
+                </tr>
+                <tr id="spree_variant_12">
+                  <td class="field">
+                    <input id="variant_12_id" type="hidden" name="products[0][variants_attributes][1][id]" value="12">
+                    <input id="variant_12_display_name" type="text" name="products[0][variants_attributes][1][display_name]" value="Large">
+                  </td>
+                </tr>
+              </tbody>
+              <tbody data-record-id="2">
+                <tr>
+                  <td>
+                    <input id="product_2_id" type="hidden" name="products[1][id]" value="2">
+                    <input id="product_2_name" type="text" name="products[1][name]" value="Oranges">
+                  </td>
+                </tr>
+              </tbody>
+              <input id="submit_button" type="submit">
+            </table>
+          </form>
+        `;
+      });
+
+      it("keeps only changed fields and required ids enabled", () => {
+        variant_11_display_name.value = "Small bag";
+        variant_11_display_name.dispatchEvent(new Event("input"));
+
+        // Simulate variant_controller updating unit_value and firing input event.
+        variant_11_unit_value.value = "200";
+        variant_11_unit_value.dispatchEvent(new Event("input", { bubbles: true }));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        expect(product_1_id.disabled).toBe(false);
+        expect(variant_11_id.disabled).toBe(false);
+        expect(variant_11_display_name.disabled).toBe(false);
+        expect(variant_11_unit_value.disabled).toBe(false);
+
+        expect(product_1_name.disabled).toBe(true);
+        expect(variant_12_id.disabled).toBe(true);
+        expect(variant_12_display_name.disabled).toBe(true);
+        expect(product_2_id.disabled).toBe(true);
+        expect(product_2_name.disabled).toBe(true);
+        expect(submit_button.disabled).toBe(false);
+      });
+
+      it("keeps the product id in submitted form data for a variant-only change", () => {
+        variant_11_display_name.value = "Small bag";
+        variant_11_display_name.dispatchEvent(new Event("input"));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        expect(formData.get("products[0][id]")).toBe("1");
+        expect(formData.get("products[0][variants_attributes][0][id]")).toBe("11");
+        expect(formData.get("products[0][variants_attributes][0][display_name]")).toBe("Small bag");
+        expect(formData.has("products[1][id]")).toBe(false);
+      });
+    });
   });
 
   describe("When there are errors", () => {
