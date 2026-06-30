@@ -58,16 +58,15 @@ module Api
       private
 
       def sort_taxons(taxons)
-        if distributor&.preferred_shopfront_product_sorting_method == "by_category" &&
-           distributor.preferred_shopfront_taxon_order.present?
-          ordered_ids = distributor.preferred_shopfront_taxon_order.split(',').map(&:to_i)
-          taxons.sort_by do |taxon|
-            idx = ordered_ids.index(taxon.id)
-            [idx || ordered_ids.length, taxon.name]
-          end
-        else
-          taxons.sort_by(&:name)
-        end
+        return taxons.sort_by(&:name) unless preferred_taxon_order?
+
+        ordered_ids = distributor.preferred_shopfront_taxon_order.split(',').map(&:to_i)
+        taxons.sort_by { |taxon| [ordered_ids.index(taxon.id) || ordered_ids.length, taxon.name] }
+      end
+
+      def preferred_taxon_order?
+        distributor&.preferred_shopfront_product_sorting_method == "by_category" &&
+          distributor.preferred_shopfront_taxon_order.present?
       end
 
       def render_no_products

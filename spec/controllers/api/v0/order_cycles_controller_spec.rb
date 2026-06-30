@@ -314,7 +314,7 @@ RSpec.describe Api::V0::OrderCyclesController do
 
         api_get :taxons, id: order_cycle.id, distributor: distributor.id
 
-        expect(json_response.pluck(:name).first).to eq taxon2.name
+        expect(json_response.pick(:name)).to eq taxon2.name
         expect(json_response.pluck(:name)).to include taxon1.name
       end
     end
