@@ -39,7 +39,7 @@ module Api
           select('DISTINCT spree_taxons.*')
 
         render plain: ActiveModel::ArraySerializer.new(
-          taxons, each_serializer: Api::TaxonSerializer
+          sort_taxons(taxons), each_serializer: Api::TaxonSerializer
         ).to_json
       end
 
@@ -56,6 +56,19 @@ module Api
       end
 
       private
+
+      def sort_taxons(taxons)
+        if distributor&.preferred_shopfront_product_sorting_method == "by_category" &&
+           distributor.preferred_shopfront_taxon_order.present?
+          ordered_ids = distributor.preferred_shopfront_taxon_order.split(',').map(&:to_i)
+          taxons.sort_by do |taxon|
+            idx = ordered_ids.index(taxon.id)
+            [idx || ordered_ids.length, taxon.name]
+          end
+        else
+          taxons.sort_by(&:name)
+        end
+      end
 
       def render_no_products
         render status: :not_found, json: {}
