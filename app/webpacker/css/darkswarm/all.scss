@@ -3,6 +3,7 @@
 @import 'assets/stylesheets/leaflet';
 @import 'variables';
 @import '../shared/variables/layout';
+@import '../shared/variables/variables';
 @import '../shared/utilities';
 @import 'foundation-sites/scss/foundation';
 
@@ -78,3 +79,5 @@ ofn-modal {
 @import '../admin/shared/scroll_bar';
 
 @import 'modal_component/modal_component';
+@import 'carousel_component/carousel_component';
+@import 'thumbnail_carousel_component/thumbnail_carousel_component';

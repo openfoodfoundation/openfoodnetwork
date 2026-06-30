@@ -1,0 +1,25 @@
+%div{ **root_attributes }
+  .swiper-wrapper
+    - images.each do |image|
+      .swiper-slide
+        = image_tag image[:url], alt: image[:alt], class: "ofn-carousel__image"
+        - if show_captions? && image[:caption].present?
+          %p.ofn-carousel__caption= image[:caption]
+
+  - if show_navigation?
+    %button.ofn-carousel__button.ofn-carousel__button--prev{
+      type: "button",
+      **target_attribute("prevButton"),
+      "aria-label": "Previous slide"
+    }
+      %i.fa.fa-chevron-left{ "aria-hidden": "true" }
+
+    %button.ofn-carousel__button.ofn-carousel__button--next{
+      type: "button",
+      **target_attribute("nextButton"),
+      "aria-label": "Next slide"
+    }
+      %i.fa.fa-chevron-right{ "aria-hidden": "true" }
+
+  - if show_pagination?
+    .ofn-carousel__pagination{ **target_attribute("pagination") }

@@ -1,0 +1,43 @@
+%div{ **root_attributes }
+  .swiper-wrapper
+    - images.each do |image|
+      .swiper-slide
+        = image_tag image[:url], alt: image[:alt], class: "ofn-thumbnail-carousel__image"
+        - if show_captions? && image[:caption].present?
+          %p.ofn-thumbnail-carousel__caption= image[:caption]
+
+  - if show_navigation?
+    .ofn-thumbnail-carousel__controls
+      %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--prev{
+        type: "button",
+        "data-action": "thumbnail-carousel#previous",
+        "aria-label": "Previous slide"
+      }
+        %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden": "true" }
+          %svg{ xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 -960 960 960", width: "24px", fill: "#000" }
+            %path{ d: "M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" }
+
+      %button.ofn-thumbnail-carousel__button.ofn-thumbnail-carousel__button--next{
+        type: "button",
+        "data-action": "thumbnail-carousel#next",
+        "aria-label": "Next slide"
+      }
+        %span.ofn-thumbnail-carousel__button-icon{ "aria-hidden": "true" }
+          %svg{ xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 -960 960 960", width: "24px", fill: "#000" }
+            %path{ d: "M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" }
+
+  - if show_pagination?
+    .ofn-thumbnail-carousel__pagination{ **target_attribute("pagination") }
+
+  - if multiple_images?
+    .ofn-thumbnail-carousel__thumbs
+      - images.each_with_index do |image, index|
+        %button.ofn-thumbnail-carousel__thumb{
+          type: "button",
+          **target_attribute("thumbnail"),
+          "data-action": "thumbnail-carousel#goTo",
+          "data-slide-index": index,
+          "aria-label": "Go to slide #{index + 1}",
+          "aria-pressed": "false"
+        }
+          = image_tag image[:url], alt: image[:alt], class: "ofn-thumbnail-carousel__thumb-image"

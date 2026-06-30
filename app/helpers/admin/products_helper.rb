@@ -35,6 +35,21 @@ module Admin
       session[:products_return_to_url] || admin_products_url
     end
 
+    def product_carousel_images_data(product, size: :large)
+      images = product.images.to_a
+      show_caption = images.many?
+
+      return [default_carousel_image(size, product)] if images.empty?
+
+      images.map.with_index do |image, index|
+        {
+          url: image.url(size),
+          alt: product_image_alt_text(image, product),
+          caption: show_caption ? "#{product.name} - #{index + 1}" : nil
+        }
+      end
+    end
+
     # if user hasn't saved any preferences on products page and there's only one producer;
     # we need to hide producer column
     def hide_producer_column?(allowed_producers)
@@ -65,6 +80,20 @@ module Admin
       return [] unless name
 
       [[name, id]]
+    end
+
+    private
+
+    def product_image_alt_text(image, product)
+      image.alt.presence || product.name
+    end
+
+    def default_carousel_image(size, product)
+      {
+        url: Spree::Image.default_image_url(size),
+        alt: product.name,
+        caption: nil
+      }
     end
   end
 end
