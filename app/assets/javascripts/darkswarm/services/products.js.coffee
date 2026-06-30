@@ -39,7 +39,7 @@ angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle,
 
     dereference: ->
       for product in @fetched_products
-        product.enterprise = Shopfront.producers_by_id[product.variants[0].enterprise.id]
+        product.producer = Shopfront.producers_by_id[product.variants[0].producer.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
 
         product.properties = angular.copy(product.properties_with_values)

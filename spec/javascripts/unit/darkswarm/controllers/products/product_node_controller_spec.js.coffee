@@ -5,7 +5,7 @@ describe "ProductNodeCtrl", ->
     id: 99
     price: 10.00
     variants: []
-    enterprise: {}
+    producer: { }
 
   beforeEach ->
     module('Darkswarm')
@@ -14,5 +14,5 @@ describe "ProductNodeCtrl", ->
         product: product
       ctrl = $controller 'ProductNodeCtrl', {$scope: scope}
 
-  it "puts a reference to enterprise in the scope", ->
-    expect(scope.enterprise).toBe product.enterprise
+  it "puts a reference to producer in the scope", ->
+    expect(scope.enterprise).toBe product.producer
