@@ -74,7 +74,7 @@ class ProductsRenderer
       # see:
       #   OrderCycleDistributedProducts#products_relation
       enterprise_properties_results = query.
-        where(producer_properties: { property_id: supplier_property_ids }).
+        where(producer_properties: { property_id: enterprise_property_ids }).
         where(inherits_properties: true)
     end
 
@@ -95,7 +95,7 @@ class ProductsRenderer
     args[:q]&.slice("with_variants_enterprise_properties")
   end
 
-  def supplier_property_ids
+  def enterprise_property_ids
     enterprise_properties["with_variants_enterprise_properties"]
   end
 
