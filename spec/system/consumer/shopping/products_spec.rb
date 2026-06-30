@@ -121,6 +121,52 @@ RSpec.describe "As a consumer I want to view products" do
         visit shop_path
         expect(find_link('external site')[:target]).to eq('_blank')
       end
+
+      context "product grid view", feature: :product_grid_view do
+        let(:product3) {
+          create(:simple_product, supplier_id: supplier.id, name: "Tomatoes")
+        }
+        let(:variant3) {
+          product3.variants.first
+        }
+        let(:variant4) {
+          create(:variant, product: product3)
+        }
+
+        before do
+          exchange1.update_attribute :pickup_time, "monday"
+          add_variant_to_order_cycle(exchange1, variant)
+          add_variant_to_order_cycle(exchange1, variant2)
+          add_variant_to_order_cycle(exchange1, variant3)
+          add_variant_to_order_cycle(exchange1, variant4)
+        end
+
+        it "displays products in a grid, with button for single variant product" do
+          product.description = "<script>alert('Dangerous!');</script><p>Safe</p>"
+          product.save!
+
+          visit shop_path
+
+          expect(page).to have_selector(".product-item", count: 3)
+
+          # Add button is only displayed for single varint product
+          expect(page).to have_selector(".add-variant", count: 2)
+
+          # Product modal
+          click_link product.name
+          within(".reveal-modal") do
+            expect(page).to have_content product.name
+
+            # No insecure HTML
+            expect(html).to include "<p>Safe</p>"
+            expect(html).not_to include "<script>alert('Dangerous!');</script>"
+            expect(page).to have_content "alert('Dangerous!'); Safe"
+
+            # Product properties
+            expect(page).to have_selector("span", text: "Fresh and Fine")
+          end
+        end
+      end
     end
 
     describe "filtering" do

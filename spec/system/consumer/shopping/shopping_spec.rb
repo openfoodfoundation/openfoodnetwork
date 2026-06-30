@@ -80,10 +80,11 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         add_variant_to_order_cycle(exchange, variant)
         add_variant_to_order_cycle(exchange, variant2)
         set_order_cycle(order, oc1)
-        visit shop_path
       end
 
       it "lets us add and remove products from our cart" do
+        visit shop_path
+
         click_add_to_cart variant
         expect(page).to have_in_cart product.name
         li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
@@ -133,6 +134,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
       describe "when a product goes out of stock just before it's added to the cart" do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
+          visit shop_path
+
           expect(page).to have_content "Product"
 
           variant.update! on_hand: 0
@@ -163,6 +166,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         end
 
         it 'does not show out of stock modal if product is on_demand' do
+          visit shop_path
+
           expect(page).to have_content "Product"
 
           variant.update! on_hand: 0, on_demand: true
@@ -176,6 +181,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           let(:product) { create(:simple_product, group_buy: true) }
 
           it "does the same" do
+            visit shop_path
+
             # -- Place in cart so we can set max_quantity, then make out of stock
             click_add_bulk_to_cart variant
             variant.update! on_hand: 0
@@ -209,6 +216,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
         context "when the update is for another product" do
           it "updates quantity" do
+            visit shop_path
+
             click_add_to_cart variant, 2
 
             variant.update! on_hand: 1
@@ -227,6 +236,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             let(:product) { create(:simple_product, group_buy: true) }
 
             it "does not update max_quantity" do
+              visit shop_path
+
               click_add_bulk_to_cart variant, 2
               click_add_bulk_max_to_cart 1
               close_modal
@@ -254,7 +265,9 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       context "when a variant is soft-deleted" do
         describe "adding the soft-deleted variant to the cart" do
           it "handles it as if the variant has gone out of stock" do
-            sleep(2)
+            visit shop_path
+            expect(page).to have_selector("#variant-#{variant.id}")
+
             variant.delete
 
             click_add_to_cart variant
@@ -270,13 +283,99 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             }
 
             it "handles it as if the variant has gone out of stock" do
-              sleep(2)
+              visit shop_path
+              expect(page).to have_selector("#variant-#{variant.id}")
+
               variant.delete
 
               click_add_to_cart variant
 
               expect_out_of_stock_behavior
             end
+          end
+        end
+      end
+
+      # Move down one indentation to have clean test setup
+      context "product grid view", feature: :product_grid_view do
+        let(:single_variant_product) { create(:simple_product) }
+        let(:single_variant) { single_variant_product.variants.first }
+
+        before do
+          add_variant_to_order_cycle(exchange, single_variant)
+        end
+
+        it "lets us add and remove products from our cart" do
+          visit shop_path
+
+          # Other product is displayed but no add button because it has more than one variant
+          expect(page).to have_content product.name
+          expect(page).not_to have_selector "#variant-#{variant.id}"
+          expect(page).not_to have_selector "#variant-#{variant2.id}"
+
+          # Add to cart
+          component_add(single_variant)
+
+          expect(page).to have_in_cart product.name
+          toggle_cart
+
+          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          expect(li.quantity).to eq(1)
+
+          # Add more
+          component_add_to_cart(single_variant)
+
+          expect(page).to have_in_cart "2 item in your cart"
+          toggle_cart
+
+          expect(li.reload.quantity).to eq(2)
+
+          # Manually enter quantity
+          component_manual_add_to_cart(single_variant, quantity: 5)
+
+          expect(page).to have_in_cart "5 item in your cart"
+          toggle_cart
+
+          # Display quantity in cart
+          within_variant(single_variant) do
+            expect(page).to have_content("5 in cart")
+          end
+          expect(li.reload.quantity).to eq(5)
+
+          component_manual_add_to_cart(single_variant, quantity: 1)
+          expect(page).to have_in_cart "1 item in your cart"
+          toggle_cart
+
+          # Remove
+          component_remove_from_cart(single_variant)
+
+          toggle_cart
+          within('.cart-sidebar') { expect(page).to have_content "Your cart is empty" }
+
+          expect(Spree::LineItem.where(id: li)).to be_empty
+        end
+
+        it "lets us add a quantity greater than on_hand value if product is on_demand" do
+          single_variant.update on_hand: 5, on_demand: true
+          visit shop_path
+
+          # Add to cart
+          component_add(single_variant)
+          component_manual_add_to_cart(single_variant, quantity: 10)
+
+          within_variant(single_variant) do
+            expect(page).to have_content "10 in cart"
+          end
+        end
+
+        it "shows quantity of remaining stock for products with quantity less < 3 when " \
+           "product_stock_display is true" do
+          distributor.set_preference(:product_low_stock_display, true)
+          single_variant.update on_hand: 2, on_demand: false
+          visit shop_path
+
+          within_variant(single_variant) do
+            expect(page).to have_content "Only 2 left"
           end
         end
       end
