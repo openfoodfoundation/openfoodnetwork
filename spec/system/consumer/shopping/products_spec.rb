@@ -81,7 +81,6 @@ RSpec.describe "As a consumer I want to view products" do
 
         it "shows source enterprise name" do
           visit shop_path
-          pending "source producer not yet implemented"
           expect(page).to have_content "from Test Farm"
           page.find("span", text: "Test Farm").click
           assert_selector ".reveal-modal"
