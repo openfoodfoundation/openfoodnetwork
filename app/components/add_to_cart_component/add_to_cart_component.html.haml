@@ -1,7 +1,7 @@
-.add-to-cart-component
+.add-to-cart-component{ id: "variant-#{variant.id}" }
   .variant-quantity-column{ "data-controller": "add-to-cart", "data-add-to-cart-variant-id-value": variant.id, "data-add-to-cart-variant-on-hand-value": on_hand, "data-add-to-cart-low-stock-display-value": "#{low_stock_display}" }
     .variant-quantity-inputs{ "data-add-to-cart-target": "addButton" }
-      = button_tag t("js.shopfront.variant.add_to_cart"), type: "button", class: "add-variant", "data-action": "add-to-cart#addEmpty" 
+      = button_tag t("js.shopfront.variant.add_to_cart"), type: "button", class: "add-variant", "data-action": "add-to-cart#addEmpty"
     .variant-quantity-inputs{ style: "display: none;", "data-add-to-cart-target": "quantityButton" }
       %button.variant-quantity{ type: "button", "data-action": "add-to-cart#remove"}
         = helpers.image_pack_tag "material-icons/remove.svg", class: "material-icons"
