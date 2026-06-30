@@ -66,6 +66,28 @@ RSpec.describe "As a consumer I want to view products" do
         assert_no_selector ".reveal-modal"
         expect(page).not_to have_content "Long Dsc"
       end
+
+      context "with linked variant" do
+        let(:source_variant) { create(:variant, enterprise: supplier) }
+        let!(:variant) {
+          source_variant.create_linked_variant(user).tap{ |v| v.update! enterprise: distributor }
+        }
+
+        before do
+          # Producer grants distributor ability to create linked variant
+          create(:enterprise_relationship, parent: supplier, child: distributor,
+                                           permissions_list: [:create_linked_variants])
+        end
+
+        it "shows source enterprise name" do
+          visit shop_path
+          pending "source producer not yet implemented"
+          expect(page).to have_content "from Test Farm"
+          page.find("span", text: "Test Farm").click
+          assert_selector ".reveal-modal"
+          expect(page).to have_content "Long Dsc"
+        end
+      end
     end
 
     describe "viewing HTML product descriptions" do
