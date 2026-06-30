@@ -16,9 +16,9 @@ RSpec.describe "As a consumer I want to view products" do
     let(:user) { create(:user, enterprise_limit: 1) }
     let(:distributor) {
       create(:distributor_enterprise, with_payment_and_shipping: true, owner: user,
-                                      name: "Testing Farm")
+                                      name: "Testing Distributor")
     }
-    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier) { create(:supplier_enterprise, name: "Test Farm", long_description: "Long Dsc") }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
@@ -41,27 +41,30 @@ RSpec.describe "As a consumer I want to view products" do
       pick_order order
     end
 
-    describe "supplier's name is displayed" do
+    describe "producer name is displayed" do
       before do
         exchange1.update_attribute :pickup_time, "monday"
         add_variant_to_order_cycle(exchange1, variant)
       end
 
-      it "shows supplier's name" do
+      it "shows enterprise name" do
         visit shop_path
-        expect(page).to have_content supplier.name
-        page.find("span", text: supplier.name).click
+        expect(page).to have_content "from Test Farm"
+        page.find("span", text: "Test Farm").click
         assert_selector ".reveal-modal"
+        expect(page).to have_content "ABOUT"
+        expect(page).to have_content "Long Dsc"
       end
 
-      it "shows supplier's name even when supplier's visibility is hidden" do
+      it "shows enterprise name even when visibility is hidden" do
         supplier.visible = 'hidden'
         supplier.save
         visit shop_path
-        expect(page).to have_content supplier.name
+        expect(page).to have_content "from Test Farm"
         # Does not open the modal though
-        page.find("span", text: supplier.name).click
+        page.find("span", text: "Test Farm").click
         assert_no_selector ".reveal-modal"
+        expect(page).not_to have_content "Long Dsc"
       end
     end
 
