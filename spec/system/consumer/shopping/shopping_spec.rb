@@ -80,10 +80,11 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         add_variant_to_order_cycle(exchange, variant)
         add_variant_to_order_cycle(exchange, variant2)
         set_order_cycle(order, oc1)
-        visit shop_path
       end
 
       it "lets us add and remove products from our cart" do
+        visit shop_path
+
         click_add_to_cart variant
         expect(page).to have_in_cart product.name
         li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
@@ -133,6 +134,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
       describe "when a product goes out of stock just before it's added to the cart" do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
+          visit shop_path
+
           expect(page).to have_content "Product"
 
           variant.update! on_hand: 0
@@ -163,6 +166,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         end
 
         it 'does not show out of stock modal if product is on_demand' do
+          visit shop_path
+
           expect(page).to have_content "Product"
 
           variant.update! on_hand: 0, on_demand: true
@@ -176,6 +181,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           let(:product) { create(:simple_product, group_buy: true) }
 
           it "does the same" do
+            visit shop_path
+
             # -- Place in cart so we can set max_quantity, then make out of stock
             click_add_bulk_to_cart variant
             variant.update! on_hand: 0
@@ -209,6 +216,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
         context "when the update is for another product" do
           it "updates quantity" do
+            visit shop_path
+
             click_add_to_cart variant, 2
 
             variant.update! on_hand: 1
@@ -227,6 +236,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             let(:product) { create(:simple_product, group_buy: true) }
 
             it "does not update max_quantity" do
+              visit shop_path
+
               click_add_bulk_to_cart variant, 2
               click_add_bulk_max_to_cart 1
               close_modal
@@ -254,7 +265,9 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       context "when a variant is soft-deleted" do
         describe "adding the soft-deleted variant to the cart" do
           it "handles it as if the variant has gone out of stock" do
-            sleep(2)
+            visit shop_path
+            expect(page).to have_selector("#variant-#{variant.id}")
+
             variant.delete
 
             click_add_to_cart variant
@@ -270,7 +283,9 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             }
 
             it "handles it as if the variant has gone out of stock" do
-              sleep(2)
+              visit shop_path
+              expect(page).to have_selector("#variant-#{variant.id}")
+
               variant.delete
 
               click_add_to_cart variant
