@@ -90,7 +90,7 @@ RSpec.describe Api::V0::ProductsController do
 
       context "with permission 'create linked variants'" do
         let(:friend_supplier) { create(:supplier_enterprise) }
-        let(:read_only_product) { create(:product, supplier_id: friend_supplier.id) }
+        let(:read_only_product) { create(:product, enterprise_id: friend_supplier.id) }
         let!(:create_linked_variants) {
           # Other producer grants me ability to create linked variant
           create(:enterprise_relationship, parent: friend_supplier, child: supplier,
