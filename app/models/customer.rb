@@ -38,12 +38,22 @@ class Customer < ApplicationRecord
   alias_method :shipping_address=, :ship_address=
   accepts_nested_attributes_for :ship_address
 
+  enum :customer_type, {
+    individual: "individual",
+    enterprise: "enterprise"
+  },
+       default: "individual",
+       validate: true
+
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
                     uniqueness: {
                       scope: :enterprise_id,
                       message: I18n.t('validation_msg_is_associated_with_an_exising_customer')
                     }
+  validates :customer_type, presence: true
+  validates :enterprise_name, presence: true, if: :enterprise?
+  validates :enterprise_acn, presence: true, if: :enterprise?
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :managed_by, ->(user) {
@@ -53,6 +63,8 @@ class Customer < ApplicationRecord
   scope :visible, -> { where(id: Spree::Order.complete.select(:customer_id)).or(created_manually) }
 
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
+
+  attribute :enterprise_charges_sales_tax, :boolean, default: false
 
   def full_name
     "#{first_name} #{last_name}".strip

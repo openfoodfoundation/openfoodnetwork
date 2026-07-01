@@ -6,6 +6,19 @@ RSpec.describe Customer do
   it { is_expected.to belong_to(:bill_address).optional }
   it { is_expected.to belong_to(:ship_address).optional }
   it { is_expected.to have_many(:customer_account_transactions) }
+  it {
+    is_expected.to define_enum_for(:customer_type)
+      .with_values(individual: "individual", enterprise: "enterprise")
+      .with_default("individual")
+      .backed_by_column_of_type(:enum)
+  }
+
+  context "for an enterprise customer" do
+    before { allow(subject).to receive(:enterprise?).and_return(true) }
+
+    it { is_expected.to validate_presence_of(:enterprise_name).on(:create) }
+    it { is_expected.to validate_presence_of(:enterprise_acn).on(:create) }
+  end
 
   describe 'an existing customer' do
     let(:customer) { create(:customer) }

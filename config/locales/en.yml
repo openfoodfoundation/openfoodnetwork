@@ -898,7 +898,13 @@ en:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
-        id: Id 
+        id: Id
+        customer_type: "Type"
+        individual: "Individual"
+        enterprise: "Enterprise"
+        enterprise_name: "Enterprise name"
+        enterprise_acn: "ACN number"
+        enterprise_charges_sales_tax: "Tax?"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
         has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
