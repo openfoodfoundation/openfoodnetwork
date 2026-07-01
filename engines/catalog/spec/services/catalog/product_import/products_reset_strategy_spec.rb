@@ -7,7 +7,7 @@ RSpec.describe Catalog::ProductImport::ProductsResetStrategy do
     let(:supplier_ids) { enterprise.id }
     let(:product) { create(:product) }
     let(:variant) { product.variants.first }
-    let(:enterprise) { variant.supplier }
+    let(:enterprise) { variant.enterprise }
 
     before { variant.on_hand = 2 }
 

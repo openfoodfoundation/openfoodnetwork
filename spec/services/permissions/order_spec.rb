@@ -231,7 +231,7 @@ RSpec.describe Permissions::Order do
         ),
         line_items_count: 1
       )
-      order.line_items.first.variant.update_attribute(:supplier_id, producer.id)
+      order.line_items.first.variant.update_attribute(:enterprise_id, producer.id)
 
       order
     end

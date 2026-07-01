@@ -9,9 +9,9 @@ RSpec.describe 'As a producer who have the ability to update orders' do
 
   let!(:supplier1) { create(:supplier_enterprise, name: 'My supplier1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'My supplier2') }
-  let!(:supplier1_v1) { create(:variant, supplier_id: supplier1.id) }
-  let!(:supplier1_v2) { create(:variant, supplier_id: supplier1.id) }
-  let!(:supplier2_v1) { create(:variant, supplier_id: supplier2.id) }
+  let!(:supplier1_v1) { create(:variant, enterprise_id: supplier1.id) }
+  let!(:supplier1_v2) { create(:variant, enterprise_id: supplier1.id) }
+  let!(:supplier2_v1) { create(:variant, enterprise_id: supplier2.id) }
   let(:order_cycle) do
     create(:simple_order_cycle, distributors: [distributor], variants: [supplier1_v1, supplier1_v2])
   end

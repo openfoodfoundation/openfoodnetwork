@@ -55,7 +55,7 @@ RSpec.describe "Packing Reports" do
         build(
           :line_item_with_shipment,
           variant: create(
-            :variant, supplier: supplier1, product: create(:simple_product, name: "visible")
+            :variant, enterprise: supplier1, product: create(:simple_product, name: "visible")
           )
         )
       }
@@ -63,7 +63,7 @@ RSpec.describe "Packing Reports" do
         build(
           :line_item_with_shipment,
           variant: create(
-            :variant, supplier: supplier2, product: create(:simple_product, name: "not visible")
+            :variant, enterprise: supplier2, product: create(:simple_product, name: "not visible")
           )
         )
       }
@@ -163,7 +163,7 @@ RSpec.describe "Packing Reports" do
         before do
           order4.line_items << line_item4
           order4.finalize!
-          line_item4.variant.update(supplier: create(:supplier_enterprise))
+          line_item4.variant.update(enterprise: create(:supplier_enterprise))
         end
 
         context "filtering by order cycle" do

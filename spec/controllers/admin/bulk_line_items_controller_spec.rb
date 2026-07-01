@@ -99,11 +99,11 @@ RSpec.describe Admin::BulkLineItemsController do
       }
       let!(:line_item1) {
         create(:line_item_with_shipment, order: order1,
-                                         variant: create(:variant, supplier:))
+                                         variant: create(:variant, enterprise: supplier))
       }
       let!(:line_item2) {
         create(:line_item_with_shipment, order: order1,
-                                         variant: create(:variant, supplier:))
+                                         variant: create(:variant, enterprise: supplier))
       }
       let!(:order2) {
         create(:order, order_cycle:, state: 'complete',
@@ -112,7 +112,7 @@ RSpec.describe Admin::BulkLineItemsController do
       }
       let!(:line_item3) {
         create(:line_item_with_shipment, order: order2,
-                                         variant: create(:variant, supplier:))
+                                         variant: create(:variant, enterprise: supplier))
       }
 
       context "producer enterprise" do
@@ -207,7 +207,7 @@ RSpec.describe Admin::BulkLineItemsController do
     let!(:line_item1) {
       line_item1 = create(:line_item_with_shipment,
                           order: order1,
-                          variant: create(:variant, supplier:))
+                          variant: create(:variant, enterprise: supplier))
       # make sure shipment is available through db reloads of this line_item
       line_item1.tap(&:save!)
     }
@@ -314,7 +314,7 @@ RSpec.describe Admin::BulkLineItemsController do
     }
     let!(:line_item1) {
       create(:line_item_with_shipment, order: order1,
-                                       variant: create(:variant, supplier:))
+                                       variant: create(:variant, enterprise: supplier))
     }
     let(:params) { { id: line_item1.id, order_id: order1.number } }
 

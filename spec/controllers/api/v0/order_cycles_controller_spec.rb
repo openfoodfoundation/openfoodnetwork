@@ -49,7 +49,7 @@ RSpec.describe Api::V0::OrderCyclesController do
 
     it "returns products that were searched for" do
       ransack_param = "name_or_meta_keywords_or_variants_display_as_or_" \
-                      "variants_display_name_or_variants_supplier_name_cont"
+                      "variants_display_name_or_variants_enterprise_name_cont"
       api_get :products, id: order_cycle.id, distributor: distributor.id,
                          q: { ransack_param => "Kangaroo" }
 
@@ -103,15 +103,15 @@ RSpec.describe Api::V0::OrderCyclesController do
         let!(:supplier) { create(:supplier_enterprise, properties: [supplier_property]) }
 
         before do
-          product1.variants.first.update!(supplier:)
-          product2.variants.first.update!(supplier:)
+          product1.variants.first.update!(enterprise: supplier)
+          product2.variants.first.update!(enterprise: supplier)
           product3.update!(inherits_properties: false)
-          product3.variants.first.update!(supplier:)
+          product3.variants.first.update!(enterprise: supplier)
         end
 
         it "filter out the product that don't inherits from supplier properties" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { with_variants_supplier_properties: [supplier_property.id] }
+                             q: { with_variants_enterprise_properties: [supplier_property.id] }
 
           expect(response).to have_http_status :ok
           expect(product_ids).to match_array [product1.id, product2.id]
@@ -200,9 +200,9 @@ RSpec.describe Api::V0::OrderCyclesController do
     end
 
     context "when variant tag rules apply", feature: :variant_tag do
-      let!(:variant1) { product1.variants.first.tap { |v| v.update(supplier: distributor) } }
-      let!(:variant2) { product2.variants.first.tap { |v| v.update(supplier: distributor) } }
-      let!(:variant3) { product3.variants.first.tap { |v| v.update(supplier: distributor) } }
+      let!(:variant1) { product1.variants.first.tap { |v| v.update(enterprise: distributor) } }
+      let!(:variant2) { product2.variants.first.tap { |v| v.update(enterprise: distributor) } }
+      let!(:variant3) { product3.variants.first.tap { |v| v.update(enterprise: distributor) } }
       let(:default_hide_rule) {
         create(:filter_variants_tag_rule,
                enterprise: distributor,
@@ -301,7 +301,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       create(:producer_property, producer_id: supplier.id, property: property4)
     }
 
-    before { product1.variants.first.update(supplier: ) }
+    before { product1.variants.first.update(enterprise: supplier) }
 
     it "loads producer properties for distributed products in the order cycle" do
       api_get :producer_properties, id: order_cycle.id, distributor: distributor.id
@@ -317,19 +317,19 @@ RSpec.describe Api::V0::OrderCyclesController do
     let!(:supplier) { create(:supplier_enterprise) }
     let!(:product5) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product6) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product7) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
     let!(:product8) {
       create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
-                       supplier_id: supplier.id)
+                       enterprise_id: supplier.id)
     }
 
     before do

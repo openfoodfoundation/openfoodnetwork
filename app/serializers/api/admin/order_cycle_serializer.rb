@@ -40,7 +40,7 @@ module Api
       end
 
       def editable_variants_for_incoming_exchanges
-        variant_ids_by_supplier_id(permissions.all_incoming_editable_variants.all)
+        variant_ids_by_enterprise_id(permissions.all_incoming_editable_variants.all)
       end
 
       def editable_variants_for_outgoing_exchanges
@@ -86,10 +86,10 @@ module Api
         @visible_enterprises ||= permissions.visible_enterprises
       end
 
-      def variant_ids_by_supplier_id(variants)
-        grouped_by_supplier = variants.group_by(&:supplier_id)
-        grouped_by_supplier.each do |supplier_id, grouped_variants|
-          grouped_by_supplier[supplier_id] = grouped_variants.map(&:id)
+      def variant_ids_by_enterprise_id(variants)
+        grouped_by_enterprise = variants.group_by(&:enterprise_id)
+        grouped_by_enterprise.each do |enterprise_id, grouped_variants|
+          grouped_by_enterprise[enterprise_id] = grouped_variants.map(&:id)
         end
       end
     end

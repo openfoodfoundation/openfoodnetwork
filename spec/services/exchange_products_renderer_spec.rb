@@ -12,7 +12,7 @@ RSpec.describe ExchangeProductsRenderer do
 
       it "loads products in order" do
         products = renderer.exchange_products(true, exchange.sender)
-        expected_products = Spree::Product.in_supplier(exchange.sender).map(&:name)
+        expected_products = Spree::Product.in_enterprise(exchange.sender).map(&:name)
 
         expect(products.map(&:name)).to eq(expected_products)
       end
@@ -20,8 +20,8 @@ RSpec.describe ExchangeProductsRenderer do
       it "loads product for the given supplier" do
         products = renderer.exchange_products(true, exchange.sender)
 
-        expect(products.first.variants.first.supplier.name).to eq(
-          exchange.variants.first.supplier.name
+        expect(products.first.variants.first.enterprise.name).to eq(
+          exchange.variants.first.enterprise.name
         )
       end
 
@@ -35,7 +35,7 @@ RSpec.describe ExchangeProductsRenderer do
           exchange.variants.first.inventory_items = [create(:inventory_item,
                                                             enterprise: order_cycle.coordinator)]
           products = renderer.exchange_products(true, exchange.sender)
-          expected_products = Spree::Product.in_supplier(exchange.sender).map(&:name)
+          expected_products = Spree::Product.in_enterprise(exchange.sender).map(&:name)
 
           expect(products.map(&:name)).to eq expected_products
         end
@@ -48,8 +48,8 @@ RSpec.describe ExchangeProductsRenderer do
       it "loads products from the exchange suppliers" do
         products = renderer.exchange_products(false, exchange.receiver)
 
-        expected_suppliers = exchange.variants.map{ |v| v.supplier.name }
-        expect(products.map{ |p| p.variants.first.supplier.name }).to eq(expected_suppliers)
+        expected_suppliers = exchange.variants.map{ |v| v.enterprise.name }
+        expect(products.map{ |p| p.variants.first.enterprise.name }).to eq(expected_suppliers)
       end
 
       it "loads products in order" do
@@ -103,8 +103,8 @@ RSpec.describe ExchangeProductsRenderer do
         exchange = order_cycle.exchanges.incoming.first
         variants = renderer.exchange_variants(true, exchange.sender)
 
-        expect(variants.first.supplier.name)
-          .to eq exchange.variants.first.supplier.name
+        expect(variants.first.enterprise.name)
+          .to eq exchange.variants.first.enterprise.name
       end
 
       describe "when OC is showing only the coordinators inventory" do

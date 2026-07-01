@@ -101,8 +101,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
           it "displays a select box for suppliers, with the appropriate supplier selected" do
             create(:supplier_enterprise, name: "Producer C")
-            variant1.update!(supplier: producer1)
-            variant2a.update!(supplier: producer2)
+            variant1.update!(enterprise: producer1)
+            variant2a.update!(enterprise: producer2)
 
             visit spree.admin_products_path
 
@@ -147,11 +147,11 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     context "with sourced variant" do
       let(:source_producer) { create(:supplier_enterprise, name: "Producer Enterprise") }
       let(:hub) { create(:distributor_enterprise) }
-      let!(:p1) { create(:product, name: "Product1", supplier_id: source_producer.id) }
+      let!(:p1) { create(:product, name: "Product1", enterprise_id: source_producer.id) }
 
       let!(:v_source) { p1.variants.first }
       let!(:v_sourced) {
-        create(:variant, display_name: "Variant-sourced", product: p1, supplier: source_producer,
+        create(:variant, display_name: "Variant-sourced", product: p1, enterprise: source_producer,
                          hub: producer)
       }
       let!(:enterprise_relationship) {
@@ -162,7 +162,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
       # I don't manage this hub, so shouldn't see see the sourced variant
       let!(:v_sourced_hidden) {
-        create(:variant, display_name: "Variant-hidden", product: p1, supplier: source_producer,
+        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: source_producer,
                          hub:)
       }
 
@@ -411,7 +411,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       # create a product with a different supplier
       let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
       let!(:product_by_supplier) {
-        create(:simple_product, name: "Apples", supplier_id: producer1.id)
+        create(:simple_product, name: "Apples", enterprise_id: producer1.id)
       }
 
       before { user.enterprise_roles.create(enterprise: producer1) }
@@ -528,13 +528,13 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
+    let!(:product_supplied) { create(:product, enterprise_id: supplier_managed1.id, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, enterprise_id: supplier_unmanaged.id) }
     let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
+      create(:product, name: 'Product Permitted', enterprise_id: supplier_permitted.id, price: 10.0)
     }
     let(:product_supplied_inactive) {
-      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
+      create(:product, enterprise_id: supplier_managed1.id, price: 10.0)
     }
 
     let!(:supplier_permitted_relationship) do
@@ -567,7 +567,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       within row_containing_placeholder(product_supplied.name) do
         expect_tomselect_existing_with_selected_options(
           existing_options:,
-          from: '_products_0_variants_attributes_0_supplier_id',
+          from: '_products_0_variants_attributes_0_enterprise_id',
           selected_options: [supplier_managed1.name]
         )
       end
@@ -575,7 +575,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       within row_containing_placeholder(product_supplied_permitted.name) do
         expect_tomselect_existing_with_selected_options(
           existing_options:,
-          from: '_products_1_variants_attributes_0_supplier_id',
+          from: '_products_1_variants_attributes_0_enterprise_id',
           selected_options: [supplier_permitted.name]
         )
       end

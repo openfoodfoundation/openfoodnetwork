@@ -61,7 +61,7 @@ module DfcProvider
     private
 
     def variant
-      @variant ||= current_enterprise.supplied_variants.find(params[:id])
+      @variant ||= current_enterprise.variants.find(params[:id])
     end
   end
 end

@@ -188,8 +188,8 @@ RSpec.describe OpenFoodNetwork::Permissions do
   end
 
   describe "#editable_products" do
-    let!(:p1) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
+    let!(:p1) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
 
     before do
       allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where('1=0') }
@@ -200,7 +200,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
 
     it "returns products produced by managed enterprises" do
       allow(user).to receive(:admin?) { false }
-      allow(user).to receive(:enterprises) { [p1.variants.first.supplier] }
+      allow(user).to receive(:enterprises) { [p1.variants.first.enterprise] }
 
       expect(permissions.editable_products).to eq([p1])
     end
@@ -209,7 +209,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(user).to receive(:admin?) { false }
       allow(user).to receive(:enterprises) { [] }
       allow(permissions).to receive(:related_enterprises_granting).
-        with(:manage_products) { Enterprise.where(id: p2.variants.first.supplier) }
+        with(:manage_products) { Enterprise.where(id: p2.variants.first.enterprise) }
 
       expect(permissions.editable_products).to eq([p2])
     end
@@ -224,9 +224,9 @@ RSpec.describe OpenFoodNetwork::Permissions do
   end
 
   describe "finding visible products" do
-    let!(:p1) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
-    let!(:p3) { create(:simple_product, supplier_id: create(:supplier_enterprise).id ) }
+    let!(:p1) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+    let!(:p3) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
 
     before do
       allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where("1=0") }
@@ -240,7 +240,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
 
     it "returns products produced by managed enterprises" do
       allow(user).to receive(:admin?) { false }
-      allow(user).to receive(:enterprises) { Enterprise.where(id: p1.variants.first.supplier_id) }
+      allow(user).to receive(:enterprises) { Enterprise.where(id: p1.variants.first.enterprise_id) }
 
       expect(permissions.visible_products).to eq([p1])
     end
@@ -249,7 +249,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(user).to receive(:admin?) { false }
       allow(user).to receive(:enterprises) { [] }
       allow(permissions).to receive(:related_enterprises_granting).
-        with(:manage_products) { Enterprise.where(id: p2.variants.first.supplier) }
+        with(:manage_products) { Enterprise.where(id: p2.variants.first.enterprise) }
 
       expect(permissions.visible_products).to eq([p2])
     end
@@ -258,7 +258,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       allow(user).to receive(:admin?) { false }
       allow(user).to receive(:enterprises) { [] }
       allow(permissions).to receive(:related_enterprises_granting).
-        with(:add_to_order_cycle) { Enterprise.where(id: p3.variants.first.supplier).select(:id) }
+        with(:add_to_order_cycle) { Enterprise.where(id: p3.variants.first.enterprise).select(:id) }
 
       expect(permissions.visible_products).to eq([p3])
     end

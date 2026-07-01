@@ -5,7 +5,7 @@ RSpec.describe "Admin::ProductsV3" do
 
   let(:user) { create(:user) }
   let(:headers) { { Accept: "text/vnd.turbo-stream.html" } }
-  let(:product) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+  let(:product) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id) }
 
   before do
     login_as user
@@ -65,7 +65,7 @@ RSpec.describe "Admin::ProductsV3" do
     let(:user) { create(:user, enterprises: [enterprise]) }
 
     let(:supplier) { create(:supplier_enterprise) }
-    let(:variant) { create(:variant, display_name: "Original variant", supplier: supplier) }
+    let(:variant) { create(:variant, display_name: "Original variant", enterprise: supplier) }
 
     before do
       sign_in user

@@ -11,9 +11,15 @@ RSpec.describe Reporting::FrontendData do
   let(:supplier2) { create(:supplier_enterprise) }
   let(:supplier3) { create(:supplier_enterprise) }
 
-  let(:product1) { create(:simple_product, name: "Product Supplier 1", supplier_id: supplier1.id) }
-  let(:product2) { create(:simple_product, name: "Product Supplier 2", supplier_id: supplier2.id) }
-  let(:product3) { create(:simple_product, name: "Product Supplier 3", supplier_id: supplier3.id) }
+  let(:product1) {
+    create(:simple_product, name: "Product Supplier 1", enterprise_id: supplier1.id)
+  }
+  let(:product2) {
+    create(:simple_product, name: "Product Supplier 2", enterprise_id: supplier2.id)
+  }
+  let(:product3) {
+    create(:simple_product, name: "Product Supplier 3", enterprise_id: supplier3.id)
+  }
 
   let(:order_cycle1) {
     create(:simple_order_cycle, coordinator: distributor1,

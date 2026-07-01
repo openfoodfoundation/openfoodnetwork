@@ -7,9 +7,8 @@ RSpec.describe Spree::Variant do
 
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
-  it { is_expected.to belong_to(:supplier).required }
-  # it's currently optional until data migration has completed, just in case.
-  it { pending "removal of supplier"; is_expected.to belong_to(:enterprise).required }
+  it { pending "removal of supplier"; is_expected.to belong_to(:supplier) }
+  it { is_expected.to belong_to(:enterprise).required }
   it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
@@ -21,7 +20,7 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many(:exchanges).through(:exchange_variants) }
   it { is_expected.to have_many(:variant_overrides) }
   it { is_expected.to have_many(:inventory_items) }
-  it { is_expected.to have_many(:supplier_properties).through(:supplier) }
+  it { is_expected.to have_many(:enterprise_properties).through(:enterprise) }
 
   it { is_expected.to have_many(:source_variants).through(:variant_links_as_target) }
   it { is_expected.to have_many(:target_variants).through(:variant_links_as_source) }
@@ -35,16 +34,16 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe "supplier properties" do
+  describe "enterprise properties" do
     subject { create(:variant) }
 
-    it "has no supplier properties to start with" do
-      expect(subject.supplier_properties).to eq []
+    it "has no enterprise properties to start with" do
+      expect(subject.enterprise_properties).to eq []
     end
 
-    it "includes the supplier's properties" do
-      subject.supplier.set_producer_property("certified", "yes")
-      expect(subject.supplier_properties.map(&:presentation)).to eq ["certified"]
+    it "includes the enterprise's properties" do
+      subject.enterprise.set_producer_property("certified", "yes")
+      expect(subject.enterprise_properties.map(&:presentation)).to eq ["certified"]
     end
   end
 
@@ -597,10 +596,10 @@ RSpec.describe Spree::Variant do
 
     describe ".with_properties" do
       let!(:variant_from_ipm_supplier) {
-        create(:variant, supplier: ipm_supplier)
+        create(:variant, enterprise: ipm_supplier)
       }
       let!(:variant_from_organic_supplier) {
-        create(:variant, supplier: organic_supplier)
+        create(:variant, enterprise: organic_supplier)
       }
       let(:organic_supplier) {
         create(:supplier_enterprise, properties: [organic])
@@ -889,8 +888,8 @@ RSpec.describe Spree::Variant do
     let(:variant1) { create(:variant) }
     let(:variant2) { create(:variant) }
     let!(:order_cycle) do
-      enterprise1.supplied_variants << variant1
-      enterprise2.supplied_variants << variant2
+      enterprise1.variants << variant1
+      enterprise2.variants << variant2
       create(
         :simple_order_cycle,
         coordinator: enterprise1,
@@ -916,7 +915,7 @@ RSpec.describe Spree::Variant do
 
     it "touches the supplier" do
       supplier = create(:supplier_enterprise, updated_at: 1.hour.ago)
-      variant = create(:variant, supplier:)
+      variant = create(:variant, enterprise: supplier)
 
       expect { variant.destroy }.to change { supplier.reload.updated_at }
     end
@@ -1010,7 +1009,7 @@ RSpec.describe Spree::Variant do
 
   describe "#create_linked_variant" do
     let(:user) { create(:user, enterprises: [enterprise]) }
-    let(:supplier) { variant.supplier }
+    let(:supplier) { variant.enterprise }
     let(:enterprise) { create(:enterprise) }
 
     context "with create_linked_variants permissions on supplier" do
@@ -1044,14 +1043,19 @@ RSpec.describe Spree::Variant do
     end
 
     context "variant doesn't have enterprise set yet" do
-      let(:variant) { create(:variant).tap{ |v| v.update_columns enterprise_id: nil } }
+      let(:variant) {
+        create(:variant).tap{ |v|
+          v.update_columns(enterprise_id: nil, supplier_id: enterprise.id)
+        }
+      }
+      let(:enterprise) { create(:supplier_enterprise) }
 
       it "updates enterprise on validation, if not yet set" do
         variant.display_name = "updated"
         expect(variant).to be_valid
 
         variant.save!
-        expect(variant.reload.enterprise).to eq variant.supplier
+        expect(variant.reload.enterprise).to eq enterprise
       end
     end
   end

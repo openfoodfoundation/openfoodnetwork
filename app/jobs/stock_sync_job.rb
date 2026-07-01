@@ -48,7 +48,7 @@ class StockSyncJob < ApplicationJob
   end
 
   def linked_variants(enterprises, product_ids)
-    Spree::Variant.where(supplier: enterprises)
+    Spree::Variant.where(enterprise: enterprises)
       .includes(:semantic_links).references(:semantic_links)
       .where(semantic_links: { semantic_id: product_ids })
   end

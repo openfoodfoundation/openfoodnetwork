@@ -8,17 +8,17 @@
       %legend{align: "center"}= t(".new_product")
       .sixteen.columns.alpha
         .eight.columns.alpha
-          = f.field_container :supplier_id do
-            = f.label :supplier_id, t(".enterprise")
+          = f.field_container :enterprise_id do
+            = f.label :enterprise_id, t(".enterprise")
             %span.required *
             = render(SearchableDropdownComponent.new(form: f,
-                name: :supplier_id,
+                name: :enterprise_id,
                 aria_label: t('.enterprise'),
                 options: @producers.select(:name, :id).order(:name).pluck(:name, :id),
-                selected_option: @product.supplier_id,
+                selected_option: @product.enterprise_id,
                 include_blank: true,
                 placeholder_value: t('.search_for_enterprises')))
-            = f.error_message_on :supplier_id
+            = f.error_message_on :enterprise_id
         .eight.columns.omega
           = f.field_container :name do
             = f.label :name, t(".product_name")

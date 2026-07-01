@@ -9,8 +9,8 @@
 
     - product.variants.each_with_index do |variant, variant_index|
 
-      -# Filter out variant a user has not permission to update, but keep variant with no supplier
-      - next if variant.supplier.present? && !allowed_producers.include?(variant.supplier)
+      -# Filter out variant a user has not permission to update, but keep variant with no enterprise
+      - next if variant.enterprise.present? && !allowed_producers.include?(variant.enterprise)
       -# Filter out other hub's variants that are linked to mine
       - next if variant.hub.present? && !managed_product_enterprises.include?(variant.hub)
 

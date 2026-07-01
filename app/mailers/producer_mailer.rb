@@ -63,7 +63,7 @@ class ProducerMailer < ApplicationMailer
       includes(variant: :product).
       joins(variant: :product).
       from_order_cycle(order_cycle).
-      merge(Spree::Variant.with_deleted.where(supplier: producer)).
+      merge(Spree::Variant.with_deleted.where(enterprise: producer)).
       merge(Spree::Order.by_state(["complete", "resumed"])).
       sorted_by_name_and_unit_value
   end

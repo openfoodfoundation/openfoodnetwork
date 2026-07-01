@@ -24,37 +24,37 @@ module SampleData
         {
           name: 'Garlic',
           price: 20.00,
-          supplier: producers[0],
+          enterprise: producers[0],
           taxons: [vegetables],
         },
         {
           name: 'Fuji Apple',
           price: 5.00,
-          supplier: producers[1],
+          enterprise: producers[1],
           taxons: [fruit],
         },
         {
           name: 'Mushrooms',
           price: 50.00,
-          supplier: producers[1],
+          enterprise: producers[1],
           taxons: [fungi],
         },
         {
           name: 'Carrots',
           price: 3.00,
-          supplier: producers[2],
+          enterprise: producers[2],
           taxons: [vegetables],
         },
         {
           name: 'Potatoes',
           price: 2.00,
-          supplier: producers[2],
+          enterprise: producers[2],
           taxons: [vegetables],
         },
         {
           name: 'Tomatoes',
           price: 2.00,
-          supplier: producers[2],
+          enterprise: producers[2],
           taxons: [vegetables],
         }
       ]
@@ -63,7 +63,7 @@ module SampleData
     def create_product(hash)
       log "- #{hash[:name]}"
       params = hash.slice(:name, :price).merge(
-        supplier_id: hash[:supplier].id,
+        enterprise_id: hash[:enterprise].id,
         primary_taxon_id: hash[:taxons].first.id,
         variant_unit: "weight",
         variant_unit_scale: 1,

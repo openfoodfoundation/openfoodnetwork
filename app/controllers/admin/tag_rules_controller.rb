@@ -56,7 +56,7 @@ module Admin
       enterprise_ids = enterprises.pluck(:id)
 
       # Tags already applied to variants, most recently used first
-      variant_ids = Spree::Variant.where(supplier_id: enterprise_ids).select(:id)
+      variant_ids = Spree::Variant.where(enterprise_id: enterprise_ids).select(:id)
       variant_tags = ActsAsTaggableOn::Tag
         .joins(:taggings)
         .where(taggings: { taggable_type: "Spree::Variant", taggable_id: variant_ids })

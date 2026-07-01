@@ -1,5 +1,5 @@
 .row.exchange-distributed-products{'ng-init' => 'initializeExchangeProductsPanel(exchange)'}
-  .sixteen.columns.alpha.omega{ 'ng-show' => 'enterprises[exchange.enterprise_id].supplied_products.length != 0' }
+  .sixteen.columns.alpha.omega{ 'ng-show' => 'enterprises[exchange.enterprise_id].products.length != 0' }
     %div{ 'ng-include' => "'admin/panels/exchange_products_panel_header.html'" }
 
     .exchange-select-all-variants
@@ -12,7 +12,7 @@
         {{ 'js.admin.panels.exchange_products.select_all_variants' | t:{ total_number_of_variants: exchangeTotalVariants(exchange) } }}
 
     .exchange-products{ 'ng-hide' => 'productsLoading()' }
-      .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products | filter:visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
+      .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].products | filter:visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
         .exchange-product-details
           %label
             %img{'ng-src' => '{{ product.image_url }}'} 

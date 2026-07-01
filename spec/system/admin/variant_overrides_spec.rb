@@ -48,34 +48,34 @@ RSpec.describe "
 
     context "when inventory_items exist for variants" do
       let!(:product) {
-        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight',
+        create(:simple_product, enterprise_id: producer.id, variant_unit: 'weight',
                                 variant_unit_scale: 1)
       }
       let!(:variant) { create(:variant, product:, unit_value: 1, price: 1.23, on_hand: 12) }
       let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: ) }
 
       let!(:product_managed) {
-        create(:simple_product, supplier_id: producer_managed.id, variant_unit: 'weight',
+        create(:simple_product, enterprise_id: producer_managed.id, variant_unit: 'weight',
                                 variant_unit_scale: 1)
       }
       let!(:variant_managed) {
-        create(:variant, product: product_managed, supplier: producer_managed, unit_value: 3,
+        create(:variant, product: product_managed, enterprise: producer_managed, unit_value: 3,
                          price: 3.65, on_hand: 2)
       }
       let!(:inventory_item_managed) {
         create(:inventory_item, enterprise: hub, variant: variant_managed )
       }
 
-      let!(:product_related) { create(:simple_product, supplier_id: producer_related.id) }
+      let!(:product_related) { create(:simple_product, enterprise_id: producer_related.id) }
       let!(:variant_related) {
-        create(:variant, product: product_related, supplier: producer_related, unit_value: 2,
+        create(:variant, product: product_related, enterprise: producer_related, unit_value: 2,
                          price: 2.34, on_hand: 23)
       }
       let!(:inventory_item_related) {
         create(:inventory_item, enterprise: hub, variant: variant_related )
       }
 
-      let!(:product_unrelated) { create(:simple_product, supplier_id: producer_unrelated.id) }
+      let!(:product_unrelated) { create(:simple_product, enterprise_id: producer_unrelated.id) }
 
       context "when a hub is selected" do
         before do
@@ -265,7 +265,7 @@ RSpec.describe "
             create(:variant_override, variant:, hub: hub2, price: 1, count_on_hand: 2)
           }
           let!(:product2) {
-            create(:simple_product, supplier_id: producer.id, variant_unit: 'weight',
+            create(:simple_product, enterprise_id: producer.id, variant_unit: 'weight',
                                     variant_unit_scale: 1)
           }
           let!(:variant2) {
@@ -482,7 +482,7 @@ RSpec.describe "
 
     describe "when inventory_items do not exist for variants" do
       let!(:product) {
-        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight',
+        create(:simple_product, enterprise_id: producer.id, variant_unit: 'weight',
                                 variant_unit_scale: 1)
       }
       let!(:variant1) {
@@ -536,7 +536,7 @@ RSpec.describe "
     it "shows more than 100 products in my inventory" do
       supplier = create(:supplier_enterprise, sells: "own")
       inventory_items = (1..101).map do
-        product = create(:simple_product, supplier_id: supplier.id)
+        product = create(:simple_product, enterprise_id: supplier.id)
         InventoryItem.create!(
           enterprise: supplier,
           variant: product.variants.first
@@ -550,7 +550,7 @@ RSpec.describe "
       visit admin_inventory_path
 
       expect(page).to have_text first_variant.name
-      expect(page).to have_text first_variant.supplier.name
+      expect(page).to have_text first_variant.enterprise.name
       expect(page).to have_selector "tr.product", count: 10
       expect(page).to have_button "Show more"
       expect(page).to have_button "Show all (91  More)"

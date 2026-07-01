@@ -524,18 +524,18 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
       let!(:fee_b) { create(:enterprise_fee, name: "Fee B", enterprise: producer_b, amount: 2) }
       let!(:fee_c) { create(:enterprise_fee, name: "Fee C", enterprise: producer_c, amount: 3) }
 
-      let!(:product_a) { create(:product, supplier_id: producer_a.id) }
-      let!(:product_b) { create(:product, supplier_id: producer_b.id) }
-      let!(:product_c) { create(:product, supplier_id: producer_c.id) }
+      let!(:product_a) { create(:product, enterprise_id: producer_a.id) }
+      let!(:product_b) { create(:product, enterprise_id: producer_b.id) }
+      let!(:product_c) { create(:product, enterprise_id: producer_c.id) }
 
       let!(:variant_a) do
-        prepare_variant(product: product_a, supplier: producer_a, incoming_exchange_fees: [fee_a])
+        prepare_variant(product: product_a, enterprise: producer_a, incoming_exchange_fees: [fee_a])
       end
       let!(:variant_b) do
-        prepare_variant(product: product_b, supplier: producer_b, incoming_exchange_fees: [fee_b])
+        prepare_variant(product: product_b, enterprise: producer_b, incoming_exchange_fees: [fee_b])
       end
       let!(:variant_c) do
-        prepare_variant(product: product_c, supplier: producer_c, incoming_exchange_fees: [fee_c])
+        prepare_variant(product: product_c, enterprise: producer_c, incoming_exchange_fees: [fee_c])
       end
 
       let!(:order_a) { prepare_order(variant: variant_a) }

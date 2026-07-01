@@ -10,7 +10,7 @@ module Api
                  :variant_unit, :variant_unit_scale, :variant_unit_name, :variant_unit_with_scale
 
       has_one :primary_taxon, key: :category_id, embed: :id
-      has_one :supplier, key: :producer_id, embed: :id
+      has_one :enterprise, key: :producer_id, embed: :id
 
       def name
         if object.full_name.present?
@@ -33,7 +33,7 @@ module Api
       end
 
       def producer_name
-        object.supplier.name
+        object.enterprise.name
       end
 
       def image

@@ -22,15 +22,15 @@ class SuppliedProductImporter < DfcBuilder
     variant
   end
 
-  def self.import_variant(supplied_product, supplier)
-    product = referenced_spree_product(supplied_product, supplier)
+  def self.import_variant(supplied_product, enterprise)
+    product = referenced_spree_product(supplied_product, enterprise)
 
     if product
-      Spree::Variant.new( product:, supplier:, price: 0,).tap do |variant|
+      Spree::Variant.new(product:, enterprise:, price: 0,).tap do |variant|
         apply(supplied_product, variant)
       end
     else
-      product = import_product(supplied_product, supplier)
+      product = import_product(supplied_product, enterprise)
       product.variants.first.tap { |variant| apply(supplied_product, variant) }
     end.tap do |variant|
       link = supplied_product.semanticId
@@ -65,7 +65,7 @@ class SuppliedProductImporter < DfcBuilder
         next
       end
 
-      supplier.supplied_products.find_by(id:)
+      supplier.products.find_by(id:)
     end.compact.first
   end
 
@@ -73,7 +73,7 @@ class SuppliedProductImporter < DfcBuilder
     semantic_ids = supplied_product.isVariantOf.map do |id_or_object|
       id_or_object.try(:semanticId) || id_or_object
     end
-    supplier.supplied_products.includes(:semantic_link)
+    supplier.products.includes(:semantic_link)
       .where(semantic_link: { semantic_id: semantic_ids })
       .first
   end
@@ -88,12 +88,12 @@ class SuppliedProductImporter < DfcBuilder
     # Check that the given URI points to us:
     return unless uri == urls.enterprise_url(route.merge(params))
 
-    supplier.supplied_products.find_by(id: params["spree_product_id"])
+    supplier.products.find_by(id: params["spree_product_id"])
   end
 
   def self.spree_product_from_id(supplied_product, supplier)
     id = supplied_product.spree_product_id
-    supplier.supplied_products.find_by(id:) if id.present?
+    supplier.products.find_by(id:) if id.present?
   end
 
   def self.import_product(supplied_product, supplier)
@@ -101,7 +101,7 @@ class SuppliedProductImporter < DfcBuilder
       name: supplied_product.name,
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
-      supplier_id: supplier.id,
+      enterprise_id: supplier.id,
       primary_taxon_id: taxon(supplied_product).id,
       image: ImageBuilder.import(supplied_product.image),
       semantic_link: semantic_link(supplied_product),

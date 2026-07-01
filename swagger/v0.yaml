@@ -1420,12 +1420,12 @@ paths:
           in: query
           schema:
             type: string
-        - name: q[supplier_id_eq]
+        - name: q[variants_enterprise_id_eq]
           in: query
-          description: Filter by producer enterprise ID
+          description: Filter by variant enterprise ID
           schema:
             type: integer
-        - name: q[primary_taxon_id_eq]
+        - name: q[variants_primary_taxon_id_eq]
           in: query
           schema:
             type: integer
@@ -2881,7 +2881,7 @@ paths:
             type: integer
         - name: q
           in: query
-          description: Ransack search string for product/variant name
+          description: Ransack search string for product/variant name (see Spree::Variant.SEARCH_KEY)
           schema:
             type: string
         - name: page

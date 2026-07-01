@@ -103,10 +103,10 @@
       = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
     .field
-      = f.label :supplier do
+      = f.label :enterprise_id do
         = t(:spree_admin_supplier)
         = content_tag(:span, ' *', class: 'required')
 
-      = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+      = f.collection_select(:enterprise_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
 
   .clear

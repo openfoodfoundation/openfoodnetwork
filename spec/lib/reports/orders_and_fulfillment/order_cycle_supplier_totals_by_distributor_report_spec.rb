@@ -52,7 +52,7 @@ module Reporting
             3.times do
               owner = create(:user)
               s = create(:supplier_enterprise, owner:)
-              variant = create(:variant, supplier: s)
+              variant = create(:variant, enterprise: s)
               create(:line_item_with_shipment, variant:, quantity: 1, order:)
             end
 

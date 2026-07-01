@@ -68,7 +68,7 @@ RSpec.describe Admin::OrdersHelper do
       }
       let!(:ship_address){ create(:ship_address) }
       let!(:product) {
-        create(:simple_product, supplier_id: enterprise.id, price: 10,
+        create(:simple_product, enterprise_id: enterprise.id, price: 10,
                                 tax_category_id: tax_category.id)
       }
       let!(:variant){

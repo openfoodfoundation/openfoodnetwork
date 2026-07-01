@@ -13,7 +13,7 @@ RSpec.describe Sets::ProductSet do
           0 => {
             name: 'a product',
             price: 2.0,
-            supplier_id: create(:enterprise).id,
+            enterprise_id: create(:enterprise).id,
             primary_taxon_id: create(:taxon).id,
             unit_description: 'description',
             variant_unit: 'items',
@@ -142,7 +142,7 @@ RSpec.describe Sets::ProductSet do
     end
 
     describe "updating a product's variants" do
-      let(:product) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+      let(:product) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id) }
       let(:variant) { product.variants.first }
       let(:product_attributes) { {} }
       let(:variant_attributes) { { sku: "var_sku" } }
@@ -233,13 +233,13 @@ RSpec.describe Sets::ProductSet do
 
         context 'when supplier is updated' do
           let(:producer) { create(:supplier_enterprise) }
-          let(:variant_attributes) { { supplier_id: producer.id } }
+          let(:variant_attributes) { { enterprise_id: producer.id } }
 
           it 'updates the variant and removes the variant from order cycles' do
             expect {
               product_set.save
               variant.reload
-            }.to change { variant.supplier }.to(producer).
+            }.to change { variant.enterprise }.to(producer).
               and change { order_cycle.distributed_variants.count }.by(-1)
 
             expect(order_cycle.distributed_variants).not_to include variant
@@ -308,7 +308,7 @@ RSpec.describe Sets::ProductSet do
             # omit ID for new variant
             {
               sku: "new sku", price: "5.00", unit_value: "5", variant_unit: "weight",
-              variant_unit_scale: 1, supplier_id: supplier.id, primary_taxon_id: create(:taxon).id
+              variant_unit_scale: 1, enterprise_id: supplier.id, primary_taxon_id: create(:taxon).id
             },
           ]
         }
@@ -333,7 +333,7 @@ RSpec.describe Sets::ProductSet do
             [
               { id: product.variants.first.id.to_s }, # default variant unchanged
               # price missing, unit_value should be number
-              { sku: "new sku", unit_value: "blah", supplier_id: supplier.id },
+              { sku: "new sku", unit_value: "blah", enterprise_id: supplier.id },
             ]
           }
 
