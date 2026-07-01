@@ -16,6 +16,10 @@ class OfferBuilder < DfcBuilder
     )
   end
 
+  def self.add_offered_item(offer, variant)
+    offer.offeredItem = SuppliedProductBuilder.supplied_product(variant)
+  end
+
   def self.apply(offer, variant)
     return if offer.nil?
 

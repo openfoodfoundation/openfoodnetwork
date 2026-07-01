@@ -1,0 +1,51 @@
+{
+  "@context": "https://www.datafoodconsortium.org",
+  "@graph": [
+    {
+      "@id": "http://test.host/api/dfc/enterprises/10000/orders",
+      "@type": "dfc-b:Order",
+      "dfc-b:belongsTo": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+      "dfc-b:hasPart": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+      "dfc-b:orderedBy": "http://test.host/api/dfc/enterprises/11000",
+      "dfc-b:hasOrderStatus": "dfc-v:Held"
+    },
+    {
+      "@id": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+      "@type": "dfc-b:OrderLine",
+      "dfc-b:quantity": 5,
+      "dfc-b:concerns": "http://test.host/api/dfc/enterprises/10000/offers/10001"
+    },
+    {
+      "@id": "http://test.host/api/dfc/enterprises/10000/offers/10001",
+      "@type": "dfc-b:Offer",
+      "dfc-b:hasPrice": {
+        "@type": "dfc-b:Price",
+        "dfc-b:value": 19.99,
+        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+      },
+      "dfc-b:stockLimitation": 0,
+      "dfc-b:offeredItem": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
+    },
+    {
+      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:name": "Apple",
+      "dfc-b:description": "Red",
+      "dfc-b:hasQuantity": {
+        "@type": "dfc-b:QuantitativeValue",
+        "dfc-b:hasUnit": "dfc-m:Gram",
+        "dfc-b:value": 1
+      },
+      "dfc-b:referencedBy": "http://test.host/api/dfc/enterprises/10000/catalog_items/10001",
+      "dfc-b:isVariantOf": "http://test.host/api/dfc/product_groups/90000",
+      "ofn:spree_product_id": 90000,
+      "ofn:spree_product_uri": "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+    },
+    {
+      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+      "@type": "dfc-b:SaleSession",
+      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+    }
+  ]
+}
