@@ -15,7 +15,7 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
   }
   let(:Authorization) { nil }
   let(:variant) {
-    build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon, supplier: enterprise)
+    build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon, enterprise:)
   }
   let(:taxon) {
     build(

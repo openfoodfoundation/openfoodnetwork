@@ -7,7 +7,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotal
     create(:completed_order_with_totals, line_items_count: 1, distributor:)
   end
   let!(:supplier) do
-    order.line_items.first.variant.supplier
+    order.line_items.first.supplier
   end
   let(:current_user) { distributor.owner }
   let(:params) { { display_summary_row: false, fields_to_hide: [] } }

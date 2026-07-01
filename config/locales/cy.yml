@@ -4159,6 +4159,7 @@ cy:
     logourl: "url Logo"
     are_you_sure_delete: "Ydych chi'n siŵr eich bod chi am ddileu'r cofnod hwn?"
     confirm_delete: "Cadarnhau Dileu"
+    tag_rule: "Tagiwch y reol"
     voucher: "Taleb"
     configurations: "Cyfluniadau"
     general_settings: "Gosodiadau Cyffredinol"
@@ -4397,6 +4398,7 @@ cy:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Nid yw'n bosib ychwanegu'r eitem i archeb a ganslwyd."
+          cannot_add_item_to_shipped_order: "Ni ellir ychwanegu eitem at archeb a gludwyd"
           include_out_of_stock_variants: "Cynnwys amrywolion lle does dim stoc ar gael."
         shipment:
           mark_as_shipped_message_html: "Bydd hyn yn dangos y Dosbarthwyd yr archeb. <br />Ydych chi’n siŵr eich bod chi am barhau?"
@@ -4567,6 +4569,7 @@ cy:
           check: "Arian/TRhE/ac ati (taliadau lle nad oes angen dilysu awtomatig)."
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
+          customercredit: "Credyd cwsmer "
       payments:
         source_forms:
           stripe:
@@ -4574,6 +4577,7 @@ cy:
             submitting_payment: Yn cyflwyno'r taliad ...
           paypal:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
+        customer_credit_successful: Mae'r cwsmer wedi cael credyd yn llwyddiannus!
       products:
         image_upload_error: "Dylid defnyddio fformat JPG, ONG, GIF, SVG neu WEBP i lanlwytho'r llun."
         image_not_processable: "Nid yw’r ddelwedd yn yr atodiad yn ddilys."
@@ -4888,6 +4892,7 @@ cy:
           orders: Archebion
           cards: Cardiau Credyd
           transactions: Trafodion
+          customer_account_transactions: 'Trafodiad cwsmer '
           settings: Gosodiadau Cyfrif
         unconfirmed_email: "Yn aros am gadarnhad e-bost ar gyfer: %{unconfirmed_email}. Bydd eich cyfeiriad e-bost yn cael ei ddiweddaru ar ôl cadarnhau'r e-bost newydd."
       orders:
@@ -4898,6 +4903,8 @@ cy:
         authorisation_required: Angen Awdurdodi
         authorise: Awdurdodi
       customer_account_transactions:
+        title: 'Trafodiad cwsmer '
+        credit_available: "Credyd ar gael:  %{credit}"
         transaction_date: Dyddiad trafodiad
         description: Disgrifiad
         amount: Nifer
@@ -5046,6 +5053,7 @@ cy:
         order_cycle_tagged_bottom: "yw:"
         inventory_tagged_top: "Tagiwyd amrywolion stocrestr"
         inventory_tagged_bottom: "yw:"
+        variant_tagged_top: "Amrywiadau wedi'u tagio"
         variant_tagged_bottom: "yw:"
         visible: GWELEDOL
         not_visible: DDIM YN WELEDOL
@@ -5061,6 +5069,26 @@ cy:
         create_placeholder: Enter the URL of the remote webhook endpoint
       event_types:
         order_cycle_opened: Order Cycle Opened
+        payment_status_changed: Postio webhook ar newid statws Taliad
+      test_endpoint: Profi pwynt gorffen y webhook
   invisible_captcha:
     sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
     timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."
+  api_customer_credit: "Credyd API: %{description}"
+  credit_payment_method:
+    name: 'Credyd cwsmer '
+    description: Caniatáu i'r cwsmer dalu gyda chredyd
+    success: Taliad gyda chredyd yn llwyddiannus!
+    void_success: Wedi marcio'r credyd un annilys yn llwyddiannus!
+    order_payment_description: "Credyd Cwsmer: Taliad ar gyfer yr archeb: %{order_number}"
+    order_void_description: "Credyd Cwsmer: ad-daliad ar gyfer yr archeb: %{order_number}"
+    errors:
+      customer_not_found: Heb wedi dod o hyd i'r cwsmer
+      missing_payment: Taliad ar goll
+      credit_payment_method_missing: Ffurf talu gyda credyd ar goll
+      no_credit_available: 'Dim credyd ar gael '
+      not_enough_credit_available: 'Dim digon credyd ar gael '
+  customer_credit_service:
+    no_credit_owed: Dim credyd dyledus
+    credit_payment_method_missing: Mae dull talu gyda credyd cwsmer ar goll, gwiriwch y ffurfweddiad
+    refund_sucessful: 'Ad-daliad llwyddannus! '

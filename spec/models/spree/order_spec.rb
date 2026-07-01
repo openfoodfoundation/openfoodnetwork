@@ -35,7 +35,7 @@ RSpec.describe Spree::Order do
     end
 
     it "can find a line item matching a given variant" do
-      expect(order.find_line_item_by_variant(order.line_items.third.variant)).not_to be_nil
+      expect(order.find_line_item_by_variant(order.line_items.last.variant)).not_to be_nil
       expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
@@ -1000,8 +1000,8 @@ RSpec.describe Spree::Order do
       context "supplied by me" do
         let(:s1) { create(:enterprise) }
         let(:s2) { create(:enterprise) }
-        let(:v1) { create(:variant, supplier: s1) }
-        let(:v2) { create(:variant, supplier: s2) }
+        let(:v1) { create(:variant, enterprise: s1) }
+        let(:v2) { create(:variant, enterprise: s2) }
         let!(:o1) { create(:order, :with_line_item, variant: v1, distributor: d1) }
         let!(:o2) { create(:order, :with_line_item, variant: v2, distributor: d1) }
 
@@ -1336,7 +1336,7 @@ RSpec.describe Spree::Order do
       end
 
       it "returns previous items" do
-        expect(order.finalised_line_items.length).to eq 11
+        expect(order.finalised_line_items.length).to eq 3
         expect(order.finalised_line_items)
           .to match_array(prev_order.line_items + prev_order2.line_items)
       end
@@ -1484,10 +1484,10 @@ RSpec.describe Spree::Order do
     let(:aaron) { create(:supplier_enterprise, name: "Aaron the farmer") }
     let(:zed) { create(:supplier_enterprise, name: "Zed the farmer") }
 
-    let(:aaron_apple) { create(:product, name: "Apple", supplier_id: aaron.id) }
-    let(:aaron_banana) { create(:product, name: "Banana", supplier_id: aaron.id) }
-    let(:zed_apple) { create(:product, name: "Apple", supplier_id: zed.id) }
-    let(:zed_banana) { create(:product, name: "Banana", supplier_id: zed.id) }
+    let(:aaron_apple) { create(:product, name: "Apple", enterprise_id: aaron.id) }
+    let(:aaron_banana) { create(:product, name: "Banana", enterprise_id: aaron.id) }
+    let(:zed_apple) { create(:product, name: "Apple", enterprise_id: zed.id) }
+    let(:zed_banana) { create(:product, name: "Banana", enterprise_id: zed.id) }
 
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) do

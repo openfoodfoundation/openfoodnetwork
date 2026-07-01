@@ -107,7 +107,7 @@ module SampleData
     end
 
     def add_products(suppliers, exchanges)
-      products = suppliers.flat_map(&:supplied_products)
+      products = suppliers.flat_map(&:products)
       products.each do |product|
         exchanges.each { |exchange| exchange.variants << product.variants.first }
       end

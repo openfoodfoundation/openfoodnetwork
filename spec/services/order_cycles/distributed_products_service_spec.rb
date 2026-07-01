@@ -19,8 +19,8 @@ RSpec.describe OrderCycles::DistributedProductsService do
 
     it "returns de duplicated result" do
       supplier = create(:supplier_enterprise)
-      variant.update(supplier: )
-      create(:variant, product:, supplier: )
+      variant.update(enterprise: )
+      create(:variant, product:, enterprise: )
       expect(products_relation).to eq([product])
     end
 
@@ -124,19 +124,19 @@ RSpec.describe OrderCycles::DistributedProductsService do
       let(:cakes_supplier) { create(:supplier_enterprise) }
       let!(:product_apples) {
         create(:product, name: "apples", primary_taxon_id: fruits.id,
-                         supplier_id: fruits_supplier.id, inherits_properties: true)
+                         enterprise_id: fruits_supplier.id, inherits_properties: true)
       }
       let!(:product_banana_bread) {
         create(:product, name: "banana bread", primary_taxon_id: cakes.id,
-                         supplier_id: cakes_supplier.id, inherits_properties: true)
+                         enterprise_id: cakes_supplier.id, inherits_properties: true)
       }
       let!(:product_cherries) {
         create(:product, name: "cherries", primary_taxon_id: fruits.id,
-                         supplier_id: fruits_supplier.id, inherits_properties: true)
+                         enterprise_id: fruits_supplier.id, inherits_properties: true)
       }
       let!(:product_doughnuts) {
         create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
-                         supplier_id: cakes_supplier.id, inherits_properties: true)
+                         enterprise_id: cakes_supplier.id, inherits_properties: true)
       }
 
       before do

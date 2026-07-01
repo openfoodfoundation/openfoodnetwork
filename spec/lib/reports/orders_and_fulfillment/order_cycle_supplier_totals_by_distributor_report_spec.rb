@@ -26,7 +26,7 @@ module Reporting
           end
 
           it "has a variant row under the distributor" do
-            supplier = order.line_items.first.variant.supplier
+            supplier = order.line_items.first.supplier
             expect(report.rows.first.producer).to eq supplier.name
             expect(report.rows.first.hub).to eq distributor.name
           end
@@ -46,13 +46,13 @@ module Reporting
             create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                                  order_cycle_id: order_cycle.id)
           }
-          let(:supplier){ order.line_items.first.variant.supplier }
+          let(:supplier){ order.line_items.first.supplier }
 
           before do
             3.times do
               owner = create(:user)
               s = create(:supplier_enterprise, owner:)
-              variant = create(:variant, supplier: s)
+              variant = create(:variant, enterprise: s)
               create(:line_item_with_shipment, variant:, quantity: 1, order:)
             end
 

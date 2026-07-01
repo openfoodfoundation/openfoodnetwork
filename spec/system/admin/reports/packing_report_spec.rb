@@ -50,11 +50,11 @@ RSpec.describe "Packing Reports" do
       create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                            bill_address: bill_address2)
     }
-    let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
-    let(:product1) { create(:simple_product, name: "Product 1", supplier_id: supplier.id ) }
-    let(:variant1) { create(:variant, product: product1, unit_description: "Big", supplier: ) }
-    let(:variant2) { create(:variant, product: product1, unit_description: "Small", supplier: ) }
-    let(:product2) { create(:simple_product, name: "Product 2", supplier_id: supplier.id) }
+    let(:enterprise) { create(:supplier_enterprise, name: "Supplier") }
+    let(:product1) { create(:simple_product, name: "Product 1", enterprise_id: enterprise.id ) }
+    let(:variant1) { create(:variant, product: product1, unit_description: "Big", enterprise:) }
+    let(:variant2) { create(:variant, product: product1, unit_description: "Small", enterprise: ) }
+    let(:product2) { create(:simple_product, name: "Product 2", enterprise_id: enterprise.id) }
 
     before do
       order1.finalize!

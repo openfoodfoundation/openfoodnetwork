@@ -22,7 +22,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                                   coordinator: create(:distributor_enterprise),
                                   orders_close_at: 3.days.from_now)
     }
-    let(:product) { create(:simple_product, supplier_id: supplier.id, meta_keywords: "Domestic") }
+    let(:product) { create(:simple_product, enterprise_id: supplier.id, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor:) }
 
@@ -115,7 +115,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         visit shop_path
 
         within_variant(variant) do
-          expect(page).to have_content "Only 2 left"
+          expect(page).to have_content "Only 2 items remaining"
         end
       end
 

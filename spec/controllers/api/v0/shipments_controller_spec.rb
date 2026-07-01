@@ -38,8 +38,8 @@ RSpec.describe Api::V0::ShipmentsController do
 
     before do
       order.update_attribute :ship_address_id, order_ship_address.id
-      order.update_attribute :distributor, variant.supplier
-      shipment.shipping_method.distributors << variant.supplier
+      order.update_attribute :distributor, variant.enterprise
+      shipment.shipping_method.distributors << variant.enterprise
     end
 
     context '#create' do
@@ -246,7 +246,7 @@ RSpec.describe Api::V0::ShipmentsController do
       }
       let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
       let!(:order) {
-        create(:completed_order_with_totals, order_cycle:, distributor:)
+        create(:completed_order_with_totals, line_items_count: 5, order_cycle:, distributor:)
       }
       let(:new_shipping_rate) {
         order.shipment.shipping_rates.select{ |sr| sr.shipping_method == shipping_method2 }.first
@@ -324,7 +324,9 @@ RSpec.describe Api::V0::ShipmentsController do
     end
 
     context 'for a completed order with shipment' do
-      let(:order) { create :completed_order_with_totals }
+      # At least two line items so that #remove can delete one without emptying
+      # the order (and destroying its shipment).
+      let(:order) { create :completed_order_with_totals, line_items_count: 2 }
 
       before { params[:id] = order.shipments.first.to_param }
 
@@ -358,7 +360,7 @@ RSpec.describe Api::V0::ShipmentsController do
 
         context "when line items have fees" do
           let(:fee_order) {
-            instance_double(Spree::Order, number: "123", distributor: variant.supplier)
+            instance_double(Spree::Order, number: "123", distributor: variant.enterprise)
           }
           let(:contents) { instance_double(Spree::OrderContents) }
           let(:fee_order_shipment) {

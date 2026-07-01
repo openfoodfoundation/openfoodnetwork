@@ -1,5 +1,5 @@
 angular.module('Darkswarm').controller "ProductNodeCtrl", ($scope, $modal, FilterSelectorsService) ->
-  $scope.enterprise = $scope.product.supplier # For the modal, so it's consistent
+  $scope.enterprise = $scope.product.enterprise # For the modal, so it's consistent
   $scope.productPropertySelectors = FilterSelectorsService.createSelectors()
 
   $scope.triggerProductModal = ->

@@ -7,10 +7,10 @@ RSpec.describe Api::V0::ProductsController do
 
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
-  let!(:product) { create(:product, supplier_id: supplier.id) }
-  let!(:other_product) { create(:product, supplier_id: supplier.id) }
-  let(:product_other_supplier) { create(:product, supplier_id: supplier2.id) }
-  let(:product_with_image) { create(:product_with_image, supplier_id: supplier.id) }
+  let!(:product) { create(:product, enterprise_id: supplier.id) }
+  let!(:other_product) { create(:product, enterprise_id: supplier.id) }
+  let(:product_other_supplier) { create(:product, enterprise_id: supplier2.id) }
+  let(:product_with_image) { create(:product_with_image, enterprise_id: supplier.id) }
   let(:all_attributes) { ["id", "name", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
@@ -35,7 +35,8 @@ RSpec.describe Api::V0::ProductsController do
     it "gets a single product" do
       product.create_image!(attachment:)
       product.variants.create!(unit_value: "1", variant_unit: "weight", variant_unit_scale: 1,
-                               unit_description: "thing", price: 1, primary_taxon: taxon, supplier:)
+                               unit_description: "thing", price: 1, primary_taxon: taxon,
+                               enterprise: supplier)
       product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
 
@@ -71,22 +72,57 @@ RSpec.describe Api::V0::ProductsController do
   context "as an enterprise user" do
     let(:current_api_user) { supplier_enterprise_user(supplier) }
 
-    it "can delete my product" do
-      expect(product.deleted_at).to be_nil
-      api_delete :destroy, id: product.to_param
+    describe "#update" do
+      it "can update my own product" do
+        api_put :update, id: product.to_param, product: { name: "My lovely product" }
 
-      expect(response).to have_http_status(:no_content)
-      expect { product.reload }.not_to raise_error
-      expect(product.deleted_at).not_to be_nil
+        expect(response).to have_http_status(:ok)
+        expect(json_response["name"]).to eq("My lovely product")
+        expect(product.reload.name).to eq("My lovely product")
+      end
+
+      it "cannot update a product I don't own" do
+        api_put :update, id: product_other_supplier.to_param,
+                         product: { name: "I hacked your store!" }
+
+        assert_unauthorized!
+      end
+
+      context "with permission 'create linked variants'" do
+        let(:friend_supplier) { create(:supplier_enterprise) }
+        let(:read_only_product) { create(:product, enterprise_id: friend_supplier.id) }
+        let!(:create_linked_variants) {
+          # Other producer grants me ability to create linked variant
+          create(:enterprise_relationship, parent: friend_supplier, child: supplier,
+                                           permissions_list: [:create_linked_variants])
+        }
+
+        it "cannot update a product I have permission to 'create linked variants'" do
+          api_put :update, id: read_only_product.to_param, product: { name: "I hacked your store!" }
+
+          assert_unauthorized!
+        end
+      end
     end
 
-    it "is denied access to deleting another enterprises' product" do
-      expect(product_other_supplier.deleted_at).to be_nil
-      api_delete :destroy, id: product_other_supplier.to_param
+    describe "#destroy" do
+      it "can delete my product" do
+        expect(product.deleted_at).to be_nil
+        api_delete :destroy, id: product.to_param
 
-      assert_unauthorized!
-      expect { product_other_supplier.reload }.not_to raise_error
-      expect(product_other_supplier.deleted_at).to be_nil
+        expect(response).to have_http_status(:no_content)
+        expect { product.reload }.not_to raise_error
+        expect(product.deleted_at).not_to be_nil
+      end
+
+      it "is denied access to deleting another enterprises' product" do
+        expect(product_other_supplier.deleted_at).to be_nil
+        api_delete :destroy, id: product_other_supplier.to_param
+
+        assert_unauthorized!
+        expect { product_other_supplier.reload }.not_to raise_error
+        expect(product_other_supplier.deleted_at).to be_nil
+      end
     end
   end
 
@@ -100,7 +136,7 @@ RSpec.describe Api::V0::ProductsController do
       api_post :create, product: { name: "The Other Product",
                                    price: 123.45,
                                    shipping_category_id: create(:shipping_category).id,
-                                   supplier_id: supplier.id,
+                                   enterprise_id: supplier.id,
                                    primary_taxon_id: FactoryBot.create(:taxon).id,
                                    variant_unit: "items",
                                    variant_unit_name: "things",
@@ -119,7 +155,7 @@ RSpec.describe Api::V0::ProductsController do
       errors = json_response["errors"]
       expect(errors.keys).to match_array([
                                            "name", "price", "primary_taxon_id",
-                                           "supplier_id", "variant_unit"
+                                           "enterprise_id", "variant_unit"
                                          ])
     end
 
@@ -228,9 +264,9 @@ RSpec.describe Api::V0::ProductsController do
   describe '#bulk_products' do
     context "as an enterprise user" do
       let!(:taxon) { create(:taxon) }
-      let!(:product2) { create(:product, supplier_id: supplier.id, primary_taxon: taxon) }
-      let!(:product3) { create(:product, supplier_id: supplier2.id, primary_taxon: taxon) }
-      let!(:product4) { create(:product, supplier_id: supplier2.id) }
+      let!(:product2) { create(:product, enterprise_id: supplier.id, primary_taxon: taxon) }
+      let!(:product3) { create(:product, enterprise_id: supplier2.id, primary_taxon: taxon) }
+      let!(:product4) { create(:product, enterprise_id: supplier2.id) }
       let(:current_api_user) { supplier_enterprise_user(supplier) }
 
       before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
@@ -263,7 +299,7 @@ RSpec.describe Api::V0::ProductsController do
 
       it "filters results by supplier" do
         api_get :bulk_products,
-                { page: 1, per_page: 15, q: { variants_supplier_id_eq: supplier.id } },
+                { page: 1, per_page: 15, q: { variants_enterprise_id_eq: supplier.id } },
                 format: :json
         expect(returned_product_ids).to eq [product2.id, other_product.id, product.id]
       end

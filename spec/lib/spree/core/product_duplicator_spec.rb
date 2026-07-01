@@ -74,7 +74,7 @@ RSpec.describe Spree::Core::ProductDuplicator do
 
       before do
         src_variant = product.variants.first.tap { it.update! display_name: "SRC" }
-        user = src_variant.supplier.owner
+        user = src_variant.enterprise.owner
         src_variant.create_linked_variant(user).tap { it.update! display_name: "LNK1" }
         src_variant.create_linked_variant(user).tap { it.update! display_name: "LNK2" }
       end

@@ -3,7 +3,7 @@
 RSpec.describe Orders::CheckStockService do
   subject { described_class.new(order:) }
 
-  let(:order) { create(:order_with_line_items) }
+  let(:order) { create(:order_with_line_items, line_items_count: 2) }
 
   describe "#sufficient_stock?" do
     it "returns true if enough stock" do

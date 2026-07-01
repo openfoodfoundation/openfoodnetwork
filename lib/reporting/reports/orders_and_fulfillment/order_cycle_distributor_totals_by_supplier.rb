@@ -41,7 +41,7 @@ module Reporting
               :adjustments,
               { shipments: { shipping_rates: :shipping_method } }
             ],
-            variant: [:product, :supplier]
+            variant: [:product, :enterprise]
           }]
         end
       end

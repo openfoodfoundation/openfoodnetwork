@@ -4,15 +4,15 @@ RSpec.describe ProductScopeQuery do
   let!(:taxon) { create(:taxon) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
-  let!(:product) { create(:product, supplier_id: supplier.id, primary_taxon: taxon) }
-  let!(:product2) { create(:product, supplier_id: supplier2.id, primary_taxon: taxon) }
+  let!(:product) { create(:product, enterprise_id: supplier.id, primary_taxon: taxon) }
+  let!(:product2) { create(:product, enterprise_id: supplier2.id, primary_taxon: taxon) }
   let!(:current_api_user) { supplier_enterprise_user(supplier) }
 
   before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
   describe '#bulk_products' do
     let!(:product3) {
-      create(:product, supplier_id: supplier2.id, primary_taxon_id: create(:taxon).id)
+      create(:product, enterprise_id: supplier2.id, primary_taxon_id: create(:taxon).id)
     }
 
     it "returns a list of products" do
@@ -87,9 +87,9 @@ RSpec.describe ProductScopeQuery do
 
     let(:hub) { create(:distributor_enterprise) }
     let(:producer_z) { create(:supplier_enterprise, name: "z_name") }
-    let!(:product3) { create(:product, supplier_id: producer_z.id) }
-    let!(:product4) { create(:product, supplier_id: producer_z.id) }
-    let!(:product5) { create(:product, supplier_id: supplier.id) }
+    let!(:product3) { create(:product, enterprise_id: producer_z.id) }
+    let!(:product4) { create(:product, enterprise_id: producer_z.id) }
+    let!(:product5) { create(:product, enterprise_id: supplier.id) }
     let!(:er) {
       create(:enterprise_relationship, parent: producer_z, child: hub,
                                        permissions_list: [:create_variant_overrides])
@@ -101,17 +101,17 @@ RSpec.describe ProductScopeQuery do
 
     it "finds products by producer" do
       # Add variants so we can check if we are not returning duplicate products
-      create(:variant, product: product3, supplier: producer_z)
-      create(:variant, product: product3, supplier: producer_z)
+      create(:variant, product: product3, enterprise: producer_z)
+      create(:variant, product: product3, enterprise: producer_z)
 
       expect(query.products_for_producers).to eq([product3, product4])
     end
 
     it "order products by producer alphabetically and product alphabetically" do
       producer_b = create(:supplier_enterprise, name: "b_name")
-      product_b1 = create(:product, name: "g_name", supplier_id: producer_b.id)
-      product_b2 = create(:product, name: "z_name", supplier_id: producer_b.id)
-      product_b3 = create(:product, name: "a_name", supplier_id: producer_b.id)
+      product_b1 = create(:product, name: "g_name", enterprise_id: producer_b.id)
+      product_b2 = create(:product, name: "z_name", enterprise_id: producer_b.id)
+      product_b3 = create(:product, name: "a_name", enterprise_id: producer_b.id)
 
       create(:enterprise_relationship, parent: producer_b, child: hub,
                                        permissions_list: [:create_variant_overrides])

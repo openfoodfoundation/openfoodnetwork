@@ -48,7 +48,7 @@ module Admin
       # Import all selected products for given enterprise.
       imported = ids.map do |semantic_id|
         subject = catalog.item(semantic_id)
-        existing_variant = @enterprise.supplied_variants.linked_to(semantic_id)
+        existing_variant = @enterprise.variants.linked_to(semantic_id)
 
         if existing_variant
           SuppliedProductImporter.update_product(subject, existing_variant)
@@ -81,13 +81,13 @@ module Admin
       catalog.products.map do |subject|
         [
           subject,
-          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
+          @enterprise.variants.linked_to(subject.semanticId)&.product
         ]
       end
     end
 
     def importer(catalog)
-      DfcCatalogImporter.new(@enterprise.supplied_variants, catalog)
+      DfcCatalogImporter.new(@enterprise.variants, catalog)
     end
   end
 end

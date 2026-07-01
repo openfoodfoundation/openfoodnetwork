@@ -742,7 +742,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         # Ensure all products are shown
         expect_products_count_to_be 2
 
-        supplier_name = variant_a1.supplier.name
+        supplier_name = variant_a1.enterprise.name
         category_name = variant_a1.primary_taxon.name
         tag_name = variant_a1.tags.first.name
         tomselect_select supplier_name, from: "producer_id"

@@ -28,7 +28,7 @@ module Spree
     #
     # Optionally, specify some enterprise_ids to scope the results
     def self.supplied_taxons(enterprise_ids = nil)
-      taxons = Spree::Taxon.joins(variants: :supplier)
+      taxons = Spree::Taxon.joins(variants: :enterprise)
 
       taxons = taxons.where(enterprises: { id: enterprise_ids }) if enterprise_ids.present?
 

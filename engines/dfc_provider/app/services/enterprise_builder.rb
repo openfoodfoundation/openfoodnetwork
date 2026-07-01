@@ -5,7 +5,7 @@ class EnterpriseBuilder < DfcBuilder
     # The ABC size of this method should shrink when our custom attributes are
     # in the DFC standard.
 
-    variants = enterprise.supplied_variants.to_a
+    variants = enterprise.variants.to_a
     catalog_items = variants.map(&CatalogItemBuilder.method(:catalog_item))
     supplied_products = catalog_items.map(&:product)
     address = AddressBuilder.address(enterprise.address)
@@ -50,7 +50,7 @@ class EnterpriseBuilder < DfcBuilder
       urls.enterprise_url(member.id)
     end
 
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       urls.enterprise_group_url(group.id),
       name: group.name,
       description: group.description,

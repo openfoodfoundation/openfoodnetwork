@@ -147,8 +147,8 @@ module Spree
         manifest = shipment.manifest
 
         if filter_by_supplier?(shipment.order)
-          supplier_ids = spree_current_user.enterprises.ids
-          manifest.select! { |mi| supplier_ids.include?(mi.variant.supplier_id) }
+          enterprise_ids = spree_current_user.enterprises.ids
+          manifest.select! { |mi| enterprise_ids.include?(mi.variant.enterprise_id) }
         end
 
         manifest

@@ -52,13 +52,13 @@ class VariantTagRulesFilterer
   end
 
   def variants_to_hide
-    @variants_to_hide ||= Spree::Variant.where(supplier: distributor)
+    @variants_to_hide ||= Spree::Variant.where(enterprise: distributor)
       .tagged_with(default_rule_tags + hide_rule_tags, any: true)
       .pluck(:id)
   end
 
   def variants_to_show
-    @variants_to_show ||= Spree::Variant.where(supplier: distributor)
+    @variants_to_show ||= Spree::Variant.where(enterprise: distributor)
       .tagged_with(show_rule_tags, any: true)
       .pluck(:id)
   end

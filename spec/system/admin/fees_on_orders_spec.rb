@@ -69,6 +69,7 @@ RSpec.describe '
       let!(:order) do
         create(
           :order_with_taxes,
+          line_items_count: 5,
           distributor: distributor1,
           order_cycle: order_cycle1,
           ship_address: create(:address),

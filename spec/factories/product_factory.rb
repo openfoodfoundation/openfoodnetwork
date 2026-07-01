@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier_id do
+    enterprise_id do
       Enterprise.is_primary_producer.first&.id || FactoryBot.create(:supplier_enterprise).id
     end
 

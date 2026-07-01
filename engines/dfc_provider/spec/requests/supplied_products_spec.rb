@@ -18,7 +18,7 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
     build(
       :base_variant,
       id: 10_001, sku: "BP", unit_value: 1,
-      primary_taxon: taxon, supplier: enterprise,
+      primary_taxon: taxon, enterprise:,
     )
   }
   let(:taxon) {

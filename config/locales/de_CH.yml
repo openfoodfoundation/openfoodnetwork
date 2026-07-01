@@ -541,7 +541,7 @@ de_CH:
       title: Produkte
       filters:
         categories:
-          title: Lieferkategorien
+          title: Kategorien
           selected_categories: "%{count} Kategorien ausgewählt"
         producers:
           title: Unsere Produzenten
@@ -877,7 +877,7 @@ de_CH:
         producers:
           label: Unsere Produzenten
         categories:
-          label: Lieferkategorien
+          label: Kategorien
         tags:
           label: Stichwörter
           none: Keine

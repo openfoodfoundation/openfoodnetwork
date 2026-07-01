@@ -13,7 +13,7 @@ RSpec.describe EnterpriseBuilder do
     )
   }
   let(:variant) {
-    create(:product, supplier_id: enterprise.id, name: "Apple").variants.first
+    create(:product, enterprise_id: enterprise.id, name: "Apple").variants.first
   }
 
   describe ".enterprise" do

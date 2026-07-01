@@ -12,7 +12,7 @@ class ProducersController < BaseController
       .is_primary_producer
       .includes(address: [:state, :country])
       .includes(:properties)
-      .includes(supplied_products: :properties)
+      .includes(products: :properties)
       .all
   end
 end

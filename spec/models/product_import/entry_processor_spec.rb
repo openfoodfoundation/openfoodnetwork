@@ -159,7 +159,7 @@ RSpec.describe ProductImport::EntryProcessor do
     end
     let(:supplier1) { create(:supplier_enterprise) }
     let(:supplier2) { create(:supplier_enterprise) }
-    let!(:products) { create_list(:simple_product, 3, supplier_id: supplier1.id) }
+    let!(:products) { create_list(:simple_product, 3, enterprise_id: supplier1.id) }
 
     before do
       allow(ProductImport::Settings).to receive(:new) { settings }
@@ -170,7 +170,7 @@ RSpec.describe ProductImport::EntryProcessor do
       }
       allow(spreadsheet_data).to receive(:enterprises_index).and_return(enterprises)
 
-      create_list(:simple_product, 2, supplier_id: supplier2.id)
+      create_list(:simple_product, 2, enterprise_id: supplier2.id)
     end
 
     it "returns the total of existing variants for the given enterprises" do
@@ -185,7 +185,7 @@ RSpec.describe ProductImport::EntryProcessor do
       it "returns the total of existing variant override for the given enterprises" do
         products.each do |p|
           variant = p.variants.first
-          create(:variant_override, variant:, hub: variant.supplier)
+          create(:variant_override, variant:, hub: variant.enterprise)
         end
 
         entry_processor.count_existing_items
