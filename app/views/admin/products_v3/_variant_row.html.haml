@@ -60,11 +60,11 @@
   - if variant.hub_id.blank?
     = render(SearchableDropdownComponent.new(form: f,
         name: :enterprise_id,
-        aria_label: t('.producer_field_name'),
+        aria_label: t('.enterprise_field_name'),
         options: variant.enterprise_id ? [[variant.enterprise.name, variant.enterprise_id]] : [],
         selected_option: variant.enterprise_id,
         remote_url: admin_ajax_search_producers_url,
-        placeholder_value: t('admin.products_v3.filters.select_producer')))
+        placeholder_value: t('admin.products_v3.filters.select_enterprise')))
     = error_message_on variant, :enterprise
   - else
     .content

@@ -64,7 +64,7 @@
         %th.align-left.col-price= t('admin.products_page.columns.price')
         = render partial: 'spree/admin/shared/stimulus_sortable_header',
             locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'name asc' }
-        %th.align-left.col-producer= t('admin.products_page.columns.producer')
+        %th.align-left.col-producer= t('admin.products_page.columns.enterprise')
         %th.align-left.col-category= t('admin.products_page.columns.category')
         %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
         - if variant_tag_enabled?(spree_current_user)

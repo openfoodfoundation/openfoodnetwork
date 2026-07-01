@@ -8,8 +8,8 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
   include AuthenticationHelper
   include FileHelper
 
-  let(:producer) { create(:supplier_enterprise) }
-  let(:user) { create(:user, enterprises: [producer]) }
+  let(:enterprise) { create(:supplier_enterprise) }
+  let(:user) { create(:user, enterprises: [enterprise]) }
 
   before do
     login_as user
@@ -18,7 +18,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
   describe "column selector" do
     let!(:product) { create(:simple_product) }
 
-    context "with one producer only" do
+    context "with one enterprise only" do
       before do
         visit admin_products_url
       end
@@ -29,11 +29,11 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).to have_selector "th", text: "Name"
         expect_other_columns_visible
 
-        # Producer is hidden by if only one producer is present
+        # Enterprise is hidden by if only one enterprise is present
         expect(page).to have_unchecked_field "Producer"
-        expect(page).not_to have_selector "th", text: "Producer"
+        expect(page).not_to have_selector "th", text: "Enterprise"
 
-        # Show Producer column
+        # Show Enterprise column
         ofn_drop_down("Columns").click
         within ofn_drop_down("Columns") do
           check "Producer"
@@ -41,7 +41,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
         # Preference saved
         save_preferences
-        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Enterprise"
 
         # Name is hidden
         ofn_drop_down("Columns").click
@@ -78,20 +78,20 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
     end
 
-    context "with multiple producers" do
-      let!(:producer2) { create(:supplier_enterprise, owner: user) }
+    context "with multiple enterprises" do
+      let!(:enterprise2) { create(:supplier_enterprise, owner: user) }
 
       before { visit admin_products_url }
 
       it "has selected producer column by default" do
-        # Producer shows by default
-        expect(page).to have_checked_field "Producer"
-        expect(page).to have_selector "th", text: "Producer"
+        # Enterprise shows by default
+        expect(page).to have_checked_field "Producer" # TODO: rename column selector to Enterprise
+        expect(page).to have_selector "th", text: "Enterprise"
       end
     end
   end
 
-  describe "Changing producers, category and tax category" do
+  describe "Changing enterprises, category and tax category" do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
@@ -112,13 +112,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         visit admin_products_url
       end
 
-      it "should display search input, change the producer" do
-        producer_to_select = random_producer(variant_a1)
+      it "should display search input, change the enterprise" do
+        enterprise_to_select = random_producer(variant_a1)
         category_to_select = random_category(variant_a1)
         tax_category_to_select = random_tax_category
 
         within row_containing_name(variant_a1.display_name) do
-          tomselect_search_and_select(producer_to_select, from: "Producer", remote_search: true)
+          tomselect_search_and_select(enterprise_to_select, from: "Enterprise", remote_search: true)
           tomselect_search_and_select(category_to_select, from: "Category", remote_search: true)
           tomselect_search_and_select(
             tax_category_to_select,
@@ -132,7 +132,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).to have_content "Changes saved"
 
         variant_a1.reload
-        expect(variant_a1.enterprise.name).to eq(producer_to_select)
+        expect(variant_a1.enterprise.name).to eq(enterprise_to_select)
         expect(variant_a1.primary_taxon.name).to eq(category_to_select)
         expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end
@@ -240,13 +240,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
     end
 
     describe "Create linked variant" do
-      let!(:variant) { create(:variant, display_name: "My box", enterprise: producer) }
+      let!(:variant) { create(:variant, display_name: "My box", enterprise: enterprise) }
       let!(:linked_variant) {
         variant.create_linked_variant(user).tap{ |v| v.update! display_name: "My linked variant" }
       }
-      let!(:other_producer) { create(:supplier_enterprise) }
+      let!(:other_enterprise) { create(:supplier_enterprise) }
       let!(:other_variant) {
-        create(:variant, display_name: "My friends box", enterprise: other_producer)
+        create(:variant, display_name: "My friends box", enterprise: other_enterprise)
       }
       let!(:read_only_producer) { create(:supplier_enterprise) }
       let!(:read_only_variant) {
@@ -254,20 +254,20 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       }
 
       let!(:enterprise_relationship) {
-        # Other producer grants me access to manage their variant
-        create(:enterprise_relationship, parent: other_producer, child: producer,
+        # Other enterprise grants me access to manage their variant
+        create(:enterprise_relationship, parent: other_enterprise, child: enterprise,
                                          permissions_list: [:manage_products])
       }
 
       let!(:create_linked_variants) {
         # Other producer grants me ability to create linked variant
-        create(:enterprise_relationship, parent: read_only_producer, child: producer,
+        create(:enterprise_relationship, parent: read_only_producer, child: enterprise,
                                          permissions_list: [:create_linked_variants])
       }
 
       context "with create_linked_variants permission for my, and other's variants" do
         it "creates a linked variant" do
-          create(:enterprise_relationship, parent: producer, child: producer,
+          create(:enterprise_relationship, parent: enterprise, child: enterprise,
                                            permissions_list: [:create_linked_variants])
           enterprise_relationship.permissions.create! name: :create_linked_variants
 

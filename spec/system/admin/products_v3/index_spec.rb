@@ -8,14 +8,14 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
   include AuthenticationHelper
   include FileHelper
 
-  let(:producer) { create(:supplier_enterprise, name: "My Enterprise") }
-  let(:user) { create(:user, enterprises: [producer]) }
+  let(:enterprise) { create(:supplier_enterprise, name: "My Enterprise") }
+  let(:user) { create(:user, enterprises: [enterprise]) }
 
   before do
     login_as user
   end
 
-  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
+  let(:enterprise_search_selector) { 'input[placeholder="Search for enterprises"]' }
   let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
@@ -87,38 +87,38 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
         end
       end
 
-      describe "Producer column" do
+      describe "Enterprise column" do
         it "when I have one enterprise" do
           visit spree.admin_products_path
 
-          expect(page).not_to have_select "Producer"
+          expect(page).not_to have_select "Enterprise"
         end
 
         context "when I have multiple enterprises" do
-          let(:user) { create(:user, enterprises: [producer2, producer1]) }
-          let(:producer1) { create(:supplier_enterprise, name: "Producer A") }
-          let(:producer2) { create(:supplier_enterprise, name: "Producer B") }
+          let(:user) { create(:user, enterprises: [enterprise2, enterprise1]) }
+          let(:enterprise1) { create(:supplier_enterprise, name: "Enterprise A") }
+          let(:enterprise2) { create(:supplier_enterprise, name: "Enterprise B") }
 
           it "displays a select box for suppliers, with the appropriate supplier selected" do
-            create(:supplier_enterprise, name: "Producer C")
-            variant1.update!(enterprise: producer1)
-            variant2a.update!(enterprise: producer2)
+            create(:supplier_enterprise, name: "Enterprise C")
+            variant1.update!(enterprise: enterprise1)
+            variant2a.update!(enterprise: enterprise2)
 
             visit spree.admin_products_path
 
             within row_containing_name "Variant1" do
               expect_tomselect_existing_with_selected_options(
-                from: 'Producer',
-                existing_options: ["Producer A", "Producer B"],
-                selected_options: ["Producer A"]
+                from: 'Enterprise',
+                existing_options: ["Enterprise A", "Enterprise B"],
+                selected_options: ["Enterprise A"]
               )
             end
 
             within row_containing_name "Variant2a" do
               expect_tomselect_existing_with_selected_options(
-                from: 'Producer',
-                existing_options: ["Producer A", "Producer B"],
-                selected_options: ["Producer B"]
+                from: 'Enterprise',
+                existing_options: ["Enterprise A", "Enterprise B"],
+                selected_options: ["Enterprise B"]
               )
             end
           end
@@ -145,24 +145,24 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     end
 
     context "with sourced variant" do
-      let(:source_producer) { create(:supplier_enterprise, name: "Producer Enterprise") }
+      let(:source_enterprise) { create(:supplier_enterprise, name: "Producer Enterprise") }
       let(:hub) { create(:distributor_enterprise) }
-      let!(:p1) { create(:product, name: "Product1", enterprise_id: source_producer.id) }
+      let!(:p1) { create(:product, name: "Product1", enterprise_id: source_enterprise.id) }
 
       let!(:v_source) { p1.variants.first }
       let!(:v_sourced) {
-        create(:variant, display_name: "Variant-sourced", product: p1, enterprise: source_producer,
-                         hub: producer)
+        create(:variant, display_name: "Variant-sourced", product: p1,
+                         enterprise: source_enterprise, hub: enterprise)
       }
       let!(:enterprise_relationship) {
-        # Producer grants me access to manage their variant
-        create(:enterprise_relationship, parent: source_producer, child: producer,
+        # Enterprise grants me access to manage their variant
+        create(:enterprise_relationship, parent: source_enterprise, child: enterprise,
                                          permissions_list: [:manage_products])
       }
 
       # I don't manage this hub, so shouldn't see see the sourced variant
       let!(:v_sourced_hidden) {
-        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: source_producer,
+        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: source_enterprise,
                          hub:)
       }
 
@@ -178,8 +178,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
           expect(page).to have_selector 'span[title*="Producer: Producer Enterprise"]'
 
-          # Can't change the producer of a linked variant
-          expect(page).not_to have_select "Producer"
+          # Can't change the enterprise of a linked variant
+          expect(page).not_to have_select "Enterprise"
           expect(page).to have_content "Producer Enterprise"
         end
 
@@ -190,7 +190,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       context "with create_linked_variants permission for someone else variants" do
         let!(:create_linked_variants_permission) {
           # Producer grants me access to create linked variants
-          create(:enterprise_relationship, parent: other_source_producer, child: producer,
+          create(:enterprise_relationship, parent: other_source_producer, child: enterprise,
                                            permissions_list: [:create_linked_variants])
         }
         let(:other_source_producer) {
@@ -437,24 +437,24 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       end
     end
 
-    context "User has multiple producers" do
+    context "User has multiple enterprises" do
       before { create_products 1 }
 
       # create a product with a different supplier
-      let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
+      let!(:enterprise1) { create(:supplier_enterprise, name: "Enterprise 1") }
       let!(:product_by_supplier) {
-        create(:simple_product, name: "Apples", enterprise_id: producer1.id)
+        create(:simple_product, name: "Apples", enterprise_id: enterprise1.id)
       }
 
-      before { user.enterprise_roles.create(enterprise: producer1) }
+      before { user.enterprise_roles.create(enterprise: enterprise1) }
 
       it "can search for and update a product" do
         visit admin_products_url
 
-        search_by_producer "Producer 1"
+        search_by_enterprise "Enterprise 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "producer_id", selected: "Producer 1", wait: 5
+        expect(page).to have_select "Enterprises", selected: "Enterprise 1", wait: 5
         expect_products_count_to_be 1
 
         within row_containing_name("Apples") do
@@ -470,16 +470,16 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
         # Search is still applied
         # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "producer_id", selected: "Producer 1"
+        expect(page).to have_select "Enterprises", selected: "Enterprise 1"
         expect_products_count_to_be 1
       end
     end
 
-    context "User has single producer" do
-      it "producer filter does not show" do
+    context "User has single enterprise" do
+      it "enterprise filter does not show" do
         visit admin_products_url
 
-        expect(page).not_to have_select "Producers"
+        expect(page).not_to have_select "Enterprises"
       end
     end
 
