@@ -73,6 +73,28 @@ RSpec.describe "/admin/products/:product_id/images" do
     }
 
     it_behaves_like "updating images", 302
+
+    context "when attachment is not provided" do
+      let(:params) do
+        {
+          image: {
+            viewable_id: product.id,
+            alt: "Updated alt text",
+          }
+        }
+      end
+
+      it "updates image metadata in place" do
+        expect {
+          subject
+          product.reload
+        }.not_to change { Spree::Image.count }
+
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(spree.admin_product_images_path(product))
+        expect(product.image.alt).to eq("Updated alt text")
+      end
+    end
   end
 
   describe "PATCH /admin/products/:product_id/images/:id with turbo" do
