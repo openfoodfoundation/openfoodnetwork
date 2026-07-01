@@ -176,7 +176,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
         within row_containing_name("Variant-sourced") do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
-          expect(page).to have_selector 'span[title*="Hub: My Enterprise"]'
+          expect(page).to have_selector 'span[title*="Producer: Producer Enterprise"]'
 
           # Can't change the producer of a linked variant
           expect(page).not_to have_select "Producer"
