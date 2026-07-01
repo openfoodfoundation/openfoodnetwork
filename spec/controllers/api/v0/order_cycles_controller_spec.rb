@@ -281,6 +281,43 @@ RSpec.describe Api::V0::OrderCyclesController do
       expect(json_response.length).to be 2
       expect(taxons).to include taxon1.name, taxon2.name
     end
+
+    context "with a taxon whose name sorts before those with lower IDs" do
+      let!(:taxon_apple) { create(:taxon, name: 'Apples') }
+      let!(:product_apple) { create(:product, primary_taxon: taxon_apple) }
+
+      before { exchange.variants << product_apple.variants.first }
+
+      it "returns taxons in alphabetical order by default" do
+        api_get :taxons, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq ['Apples', 'Meat', 'Vegetables']
+      end
+    end
+
+    context "when distributor has a preferred taxon order set" do
+      before do
+        distributor.preferred_shopfront_product_sorting_method = "by_category"
+        distributor.preferred_shopfront_taxon_order = "#{taxon2.id},#{taxon1.id}"
+        distributor.save!
+      end
+
+      it "returns taxons in the preferred order" do
+        api_get :taxons, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq [taxon2.name, taxon1.name]
+      end
+
+      it "appends taxons not in the preferred order alphabetically at the end" do
+        distributor.preferred_shopfront_taxon_order = "#{taxon2.id},9999999"
+        distributor.save!
+
+        api_get :taxons, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pick(:name)).to eq taxon2.name
+        expect(json_response.pluck(:name)).to include taxon1.name
+      end
+    end
   end
 
   describe "#properties" do
