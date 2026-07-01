@@ -100,8 +100,7 @@ module DfcProvider
     def render_v2(*)
       objects = DfcV2Migration.up(*)
 
-      connector = DataFoodConsortium::Connector::Connector.instance
-      render json: connector.export(*objects),
+      render json: DfcLoader.connector_v2.export(*objects),
              content_type: 'application/ld+json; profile="dfc-v2"'
     end
   end

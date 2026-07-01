@@ -51,6 +51,7 @@ class EnterpriseImporter
     enterprise.website = @dfc_enterprise.websites.first
     apply_social_media(enterprise)
     apply_logo(enterprise)
+    apply_certifications(enterprise)
   end
 
   def apply_social_media(enterprise)
@@ -81,6 +82,15 @@ class EnterpriseImporter
     # Any URL parsing or network error shouldn't impact the import
     # at all. Maybe we'll add UX for error handling later.
     nil
+  end
+
+  def apply_certifications(enterprise)
+    @dfc_enterprise.certifications.each do |cert|
+      enterprise.properties.find_or_initialize_by(
+        name: cert.name,
+        presentation: cert.name,
+      )
+    end
   end
 
   def find_country(address)

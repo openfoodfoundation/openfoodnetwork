@@ -9,8 +9,16 @@ class DfcImporter
 
     api = DfcPlatformRequest.new(platform)
     body = api.call(enterprises_url)
-    graph = DfcIo.import(body).to_a
-    farms = graph.select { |item| item.semanticType == "dfc-b:Enterprise" }
+
+    # A bit hacky DFCv2 detection but good enough for now.
+    # The only integration here is Lite Farm.
+    farms = if body.to_s.include?("dfc-b:Organization")
+              graph = DfcLoader.connector_v2.import(body).to_a
+              graph.select { |item| item.semanticType == "dfc-b:Organization" }
+            else
+              graph = DfcIo.import(body).to_a
+              graph.select { |item| item.semanticType == "dfc-b:Enterprise" }
+            end
     farms.each { |farm| import_profile(farm) }
   end
 
