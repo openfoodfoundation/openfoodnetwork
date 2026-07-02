@@ -173,8 +173,8 @@ RSpec.describe Spree::LineItem do
     let(:s1) { create(:supplier_enterprise) }
     let(:s2) { create(:supplier_enterprise) }
 
-    let(:variant1) { create(:variant, supplier: s1) }
-    let(:variant2) { create(:variant, supplier: s2) }
+    let(:variant1) { create(:variant, enterprise: s1) }
+    let(:variant2) { create(:variant, enterprise: s2) }
 
     let(:li1) { create(:line_item, order: o, variant: variant1) }
     let(:li2) { create(:line_item, order: o, variant: variant2) }
@@ -841,8 +841,8 @@ end
 RSpec.describe "searching with ransack" do
   let(:order_cycle1) { create(:order_cycle) }
   let(:order_cycle2) { create(:order_cycle) }
-  let(:variant1) { create(:variant, supplier: supplier1) }
-  let(:variant2) { create(:variant, supplier: supplier2) }
+  let(:variant1) { create(:variant, enterprise: supplier1) }
+  let(:variant2) { create(:variant, enterprise: supplier2) }
   let(:supplier1) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
   let!(:line_item1) { create(:line_item, variant: variant1) }
@@ -856,7 +856,7 @@ RSpec.describe "searching with ransack" do
   end
 
   context "searching by supplier" do
-    let(:query) { { supplier_id_eq: line_item1.variant.supplier_id } }
+    let(:query) { { supplier_id_eq: line_item1.supplier_id } }
 
     it "filters results" do
       expect(search_result.to_a).to eq [line_item1]

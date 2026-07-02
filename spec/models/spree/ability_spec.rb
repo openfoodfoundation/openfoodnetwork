@@ -245,7 +245,7 @@ RSpec.describe Spree::Ability do
               line_items_count: 1,
               distributor: create(:distributor_enterprise, enable_producers_to_edit_orders: true)
             )
-            order.line_items.first.variant.update!(supplier_id: enterprise_none_producer.id)
+            order.line_items.first.variant.update!(enterprise_id: enterprise_none_producer.id)
           end
 
           it { expect(subject.can_manage_line_items_in_orders?(user)).to be true }
@@ -288,9 +288,9 @@ RSpec.describe Spree::Ability do
     let(:d1) { create(:distributor_enterprise) }
     let(:d2) { create(:distributor_enterprise) }
 
-    let(:p1) { create(:product, supplier_id: s1.id) }
-    let(:p2) { create(:product, supplier_id: s2.id) }
-    let(:p_related) { create(:product, supplier_id: s_related.id) }
+    let(:p1) { create(:product, enterprise_id: s1.id) }
+    let(:p2) { create(:product, enterprise_id: s2.id) }
+    let(:p_related) { create(:product, enterprise_id: s_related.id) }
 
     let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
     let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
@@ -324,8 +324,8 @@ RSpec.describe Spree::Ability do
       end
 
       context "with mutiple variant with different supplier" do
-        let(:product1) { create(:product, supplier_id: create(:supplier_enterprise).id) }
-        let(:product1_other_variant) { create(:variant, product: product1, supplier: s1) }
+        let(:product1) { create(:product, enterprise_id: create(:supplier_enterprise).id) }
+        let(:product1_other_variant) { create(:variant, product: product1, enterprise: s1) }
 
         it "is able to read/write their enterprises' products and variants" do
           product1_other_variant
@@ -884,7 +884,7 @@ RSpec.describe Spree::Ability do
   describe "permissions for variant overrides", feature: :inventory do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:variant) { create(:variant, supplier: producer) }
+    let!(:variant) { create(:variant, enterprise: producer) }
     let!(:variant_override) { create(:variant_override, hub: distributor, variant:) }
 
     subject { user }

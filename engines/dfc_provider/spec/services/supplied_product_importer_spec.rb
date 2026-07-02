@@ -7,7 +7,7 @@ RSpec.describe SuppliedProductImporter do
 
   subject(:importer) { described_class }
   let(:variant) {
-    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, supplier:)
+    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, enterprise: supplier)
   }
   let(:spree_product) {
     create(:product, id: 6)
@@ -351,7 +351,7 @@ RSpec.describe SuppliedProductImporter do
 
     it "doesn't return a product of another enterprise" do
       variant.save!
-      create(:product, id: 8, supplier_id: create(:enterprise).id)
+      create(:product, id: 8, enterprise_id: create(:enterprise).id)
 
       supplied_product.spree_product_uri =
         "http://test.host/api/dfc/enterprises/7?spree_product_id=8"

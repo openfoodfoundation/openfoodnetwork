@@ -74,15 +74,15 @@ RSpec.describe Admin::VariantOverridesController do
 
         context "and the producer has granted VO permission" do
           before do
-            create(:enterprise_relationship, parent: variant.supplier, child: hub,
+            create(:enterprise_relationship, parent: variant.enterprise, child: hub,
                                              permissions_list: [:create_variant_overrides])
           end
 
           it "loads data" do
             put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
             expect(assigns[:hubs]).to eq [hub]
-            expect(assigns[:producers]).to eq [variant.supplier]
-            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.supplier.id] })
+            expect(assigns[:producers]).to eq [variant.enterprise]
+            expect(assigns[:hub_permissions]).to eq({ hub.id => [variant.enterprise.id] })
             expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 
@@ -136,8 +136,8 @@ RSpec.describe Admin::VariantOverridesController do
       let(:hub) { create(:distributor_enterprise) }
       let(:producer) { create(:supplier_enterprise) }
       let(:product) { create(:product) }
-      let(:variant1) { create(:variant, product:, supplier: producer) }
-      let(:variant2) { create(:variant, product:, supplier: producer) }
+      let(:variant1) { create(:variant, product:, enterprise: producer) }
+      let(:variant2) { create(:variant, product:, enterprise: producer) }
       let!(:variant_override1) {
         create(:variant_override, hub:, variant: variant1, count_on_hand: 5, default_stock: 7,
                                   resettable: true)
@@ -202,7 +202,7 @@ RSpec.describe Admin::VariantOverridesController do
             before { hub.owner.update_attribute(:enterprise_limit, 2) }
             let(:hub2) { create(:distributor_enterprise, owner: hub.owner) }
             let(:product) { create(:product) }
-            let(:variant3) { create(:variant, product:, supplier: producer) }
+            let(:variant3) { create(:variant, product:, enterprise: producer) }
             let!(:variant_override3) {
               create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1,
                                         default_stock: 13, resettable: true)

@@ -36,7 +36,8 @@ class AffiliateSalesQuery
       <<~SQL.squish
         JOIN spree_variants ON spree_variants.id = spree_line_items.variant_id
         JOIN spree_products ON spree_products.id = spree_variants.product_id
-        JOIN enterprises AS suppliers ON suppliers.id = spree_variants.supplier_id
+        # Although variant supplier is now called "enterprise", we use the old name for the API.
+        JOIN enterprises AS suppliers ON suppliers.id = spree_variants.enterprise_id
         JOIN spree_addresses AS supplier_addresses ON supplier_addresses.id = suppliers.address_id
         JOIN spree_countries AS supplier_countries ON supplier_countries.id = supplier_addresses.country_id
         JOIN spree_orders ON spree_orders.id = spree_line_items.order_id

@@ -23,7 +23,7 @@ RSpec.describe "Payments Reports" do
     )
   end
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:product) { create(:product, supplier_id: supplier.id) }
+  let(:product) { create(:product, enterprise_id: supplier.id) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:user) { order.distributor.owner }
 

@@ -5,7 +5,7 @@ RSpec.describe ProductImport::InventoryResetStrategy do
 
   describe '#reset' do
     context 'when there are excluded_items_ids' do
-      let(:enterprise) { variant.supplier }
+      let(:enterprise) { variant.enterprise }
       let(:variant) { build_stubbed(:variant) }
       let!(:variant_override) do
         build_stubbed(
@@ -129,7 +129,7 @@ RSpec.describe ProductImport::InventoryResetStrategy do
 
       context 'and supplier_ids is set' do
         let(:supplier_ids) { enterprise.id }
-        let(:enterprise) { variant.supplier }
+        let(:enterprise) { variant.enterprise }
         let(:variant) { create(:variant) }
 
         context "and variant overrides with count on hand" do
@@ -200,7 +200,7 @@ RSpec.describe ProductImport::InventoryResetStrategy do
 
       context 'and supplier_ids is set' do
         let(:supplier_ids) { enterprise.id }
-        let(:enterprise) { variant.supplier }
+        let(:enterprise) { variant.enterprise }
         let(:variant) { create(:variant) }
 
         context "and variant overrides with count on hand" do

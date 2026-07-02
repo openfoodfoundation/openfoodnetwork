@@ -174,13 +174,13 @@ RSpec.describe '
       let!(:s1) { create(:supplier_enterprise) }
       let!(:s2) { create(:supplier_enterprise) }
       let!(:li1) {
-        create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1))
+        create(:line_item_with_shipment, order: o1, variant: create(:variant, enterprise: s1))
       }
       let!(:li2) {
-        create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s2))
+        create(:line_item_with_shipment, order: o2, variant: create(:variant, enterprise: s2))
       }
       let!(:li3) {
-        create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s2))
+        create(:line_item_with_shipment, order: o2, variant: create(:variant, enterprise: s2))
       }
 
       before :each do
@@ -195,7 +195,7 @@ RSpec.describe '
       end
 
       it "by supplier name" do
-        fill_in "quick_filter", with: li1.variant.supplier.name
+        fill_in "quick_filter", with: li1.variant.enterprise.name
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items li1, excluding: [li2, li3]
@@ -587,10 +587,10 @@ RSpec.describe '
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) {
-          create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1) )
+          create(:line_item_with_shipment, order: o1, variant: create(:variant, enterprise: s1) )
         }
         let!(:li2) {
-          create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s2) )
+          create(:line_item_with_shipment, order: o1, variant: create(:variant, enterprise: s2) )
         }
 
         before :each do
@@ -754,8 +754,8 @@ RSpec.describe '
         let!(:d2) { create(:distributor_enterprise) }
         let!(:oc1) { create(:simple_order_cycle, suppliers: [s1], distributors: [d1] ) }
         let!(:oc2) { create(:simple_order_cycle, suppliers: [s2], distributors: [d2] ) }
-        let!(:v1) { create(:variant, supplier: s1) }
-        let!(:v2) { create(:variant, supplier: s2) }
+        let!(:v1) { create(:variant, enterprise: s1) }
+        let!(:v2) { create(:variant, enterprise: s2) }
 
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
@@ -1274,10 +1274,10 @@ RSpec.describe '
                                       completed_at: Time.zone.now, distributor: d2 )
     }
     let!(:line_item_distributed) {
-      create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1) )
+      create(:line_item_with_shipment, order: o1, variant: create(:variant, enterprise: s1) )
     }
     let!(:line_item_not_distributed) {
-      create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s1) )
+      create(:line_item_with_shipment, order: o2, variant: create(:variant, enterprise: s1) )
     }
 
     before(:each) do

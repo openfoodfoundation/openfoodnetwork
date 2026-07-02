@@ -15,10 +15,10 @@ module Reporting
       @orders ||= search_orders
     end
 
-    def list(line_item_includes = [{ variant: [:supplier, :product] }])
+    def list(line_item_includes = [{ variant: [:enterprise, :product] }])
       line_items = order_permissions.visible_line_items.in_orders(orders.result)
         .order(
-          "supplier.name",
+          "enterprise.name",
           "product.name",
           "spree_variants.display_name",
           "spree_variants.unit_description"

@@ -3,7 +3,7 @@
 class OfferBuilder < DfcBuilder
   def self.build(variant)
     id = urls.enterprise_offer_url(
-      enterprise_id: variant.supplier_id,
+      enterprise_id: variant.enterprise_id,
       id: variant.id,
     )
 

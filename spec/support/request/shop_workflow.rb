@@ -109,7 +109,7 @@ module ShopWorkflow
   end
 
   def add_variant_to_order_cycle(exchange, variant)
-    ensure_supplier_exchange(exchange, variant.supplier)
+    ensure_supplier_exchange(exchange, variant.enterprise)
     exchange.variants << variant
   end
 

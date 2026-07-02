@@ -14,19 +14,19 @@ RSpec.describe ProductsRenderer do
     let(:cakes_supplier) { create(:supplier_enterprise) }
     let!(:product_apples) {
       create(:product, name: "apples", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id, inherits_properties: true)
+                       enterprise_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
       create(:product, name: "banana bread", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id, inherits_properties: true)
+                       enterprise_id: cakes_supplier.id, inherits_properties: true)
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id, inherits_properties: true)
+                       enterprise_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id, inherits_properties: true)
+                       enterprise_id: cakes_supplier.id, inherits_properties: true)
     }
 
     before do
@@ -38,9 +38,9 @@ RSpec.describe ProductsRenderer do
 
     context "filtering" do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
-         "variants_display_name_or_variants_supplier_name_cont" do
+         "variants_display_name_or_variants_enterprise_name_cont" do
         params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
-                  :variants_supplier_name]
+                  :variants_enterprise_name]
         ransack_param = "#{params.join('_or_')}_cont"
         products_renderer = ProductsRenderer.new(
           distributor,
@@ -74,7 +74,7 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)
@@ -89,7 +89,7 @@ RSpec.describe ProductsRenderer do
 
           search_param = { q:
             {
-              "with_variants_supplier_properties" => [property_organic.id],
+              "with_variants_enterprise_properties" => [property_organic.id],
               "with_properties" => [property_conventional.id]
             } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
@@ -102,7 +102,7 @@ RSpec.describe ProductsRenderer do
           stone_fruit = create(:taxon, name: "Stone fruit")
           product_peach =
             create(:product, name: "peach", primary_taxon_id: stone_fruit.id,
-                             supplier_id: fruits_supplier.id, inherits_properties: true)
+                             enterprise_id: fruits_supplier.id, inherits_properties: true)
 
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
@@ -110,7 +110,7 @@ RSpec.describe ProductsRenderer do
 
           search_param = { q:
             {
-              "with_variants_supplier_properties" => [property_organic.id],
+              "with_variants_enterprise_properties" => [property_organic.id],
               "variants_primary_taxon_id_in_any" => [stone_fruit.id],
             } }
 
@@ -127,7 +127,7 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)
@@ -160,7 +160,7 @@ RSpec.describe ProductsRenderer do
           }
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
           products = products_renderer.__send__(:products)

@@ -23,7 +23,7 @@ module Reporting
     def suppliers_of_products_distributed_by(distributors)
       supplier_ids = Spree::Variant.joins(exchange_variants: { exchange: :order_cycle }).
         where(exchanges: { incoming: false, receiver: distributors } )
-        .select("spree_variants.supplier_id")
+        .select("spree_variants.enterprise_id")
 
       Enterprise.where(id: supplier_ids)
     end

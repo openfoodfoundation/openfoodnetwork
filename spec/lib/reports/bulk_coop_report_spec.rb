@@ -120,7 +120,7 @@ module Reporting
                                ship_address: create(:address))
               end
               let(:li2) do
-                build(:line_item_with_shipment, variant: create(:variant, supplier: s1))
+                build(:line_item_with_shipment, variant: create(:variant, enterprise: s1))
               end
 
               before do
@@ -142,7 +142,7 @@ module Reporting
                                ship_address: create(:address))
               end
               let(:li2) do
-                build(:line_item_with_shipment, variant: create(:variant, supplier: s1))
+                build(:line_item_with_shipment, variant: create(:variant, enterprise: s1))
               end
 
               before do

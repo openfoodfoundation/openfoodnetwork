@@ -27,8 +27,8 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
                                  full_name: "Variant Name",
                                  count_on_hand: 10,
                                  price: 100)
-      allow(variant).to receive_message_chain(:supplier, :name).and_return("Supplier")
-      allow(variant).to receive_message_chain(:supplier, :address, :city).and_return("A city")
+      allow(variant).to receive_message_chain(:enterprise, :name).and_return("Supplier")
+      allow(variant).to receive_message_chain(:enterprise, :address, :city).and_return("A city")
       allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
       allow(variant).to receive_message_chain(:product, :properties)
         .and_return [double(name: "property1"), double(name: "property2")]
@@ -74,15 +74,15 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
     describe "fetching child variants" do
       it "returns some variants" do
         product1 = create(:simple_product)
-        variant1 = create(:variant, product: product1, supplier:)
-        variant2 = create(:variant, product: product1, supplier:)
+        variant1 = create(:variant, product: product1, enterprise: supplier)
+        variant2 = create(:variant, product: product1, enterprise: supplier)
 
         expect(subject.child_variants).to match_array [variant1, variant2]
       end
 
       it "should only return variants managed by the user" do
-        variant1 = create(:variant, supplier: create(:supplier_enterprise))
-        variant2 = create(:variant, supplier:)
+        variant1 = create(:variant, enterprise: create(:supplier_enterprise))
+        variant2 = create(:variant, enterprise: supplier)
 
         expect(subject.child_variants).to match_array([variant2])
       end
@@ -93,8 +93,8 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
 
       describe "based on report type" do
         it "returns only variants on hand" do
-          product1 = create(:simple_product, supplier_id: supplier.id, on_hand: 99)
-          product2 = create(:simple_product, supplier_id: supplier.id, on_hand: 0)
+          product1 = create(:simple_product, enterprise_id: supplier.id, on_hand: 99)
+          product2 = create(:simple_product, enterprise_id: supplier.id, on_hand: 0)
 
           subject = Reporting::Reports::ProductsAndInventory::Inventory.new enterprise_user
           expect(subject.filter(variants)).to eq([product1.variants.first])
@@ -103,17 +103,17 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
 
       it "filters to a specific supplier" do
         supplier2 = create(:supplier_enterprise)
-        variant1 = create(:variant, supplier: )
-        variant2 = create(:variant, supplier: supplier2)
+        variant1 = create(:variant, enterprise: )
+        variant2 = create(:variant, enterprise: supplier2)
 
-        allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
+        allow(subject).to receive(:params).and_return(enterprise_id: supplier.id)
         expect(subject.filter(variants)).to eq([variant1])
       end
 
       it "filters to a specific distributor" do
         distributor = create(:distributor_enterprise)
-        variant1 = create(:variant, supplier:)
-        variant2 = create(:variant, supplier:)
+        variant1 = create(:variant, enterprise: supplier)
+        variant2 = create(:variant, enterprise: supplier)
         order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                   distributors: [distributor],
                                                   variants: [variant2])
@@ -124,7 +124,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
 
       it "ignores variant overrides without filter" do
         distributor = create(:distributor_enterprise)
-        product = create(:simple_product, supplier_id: supplier.id, price: 5)
+        product = create(:simple_product, enterprise_id: supplier.id, price: 5)
         variant = product.variants.first
         order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                   distributors: [distributor],
@@ -138,7 +138,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
 
       it "considers variant overrides with distributor", feature: :inventory do
         distributor = create(:distributor_enterprise)
-        product = create(:simple_product, supplier_id: supplier.id, price: 5)
+        product = create(:simple_product, enterprise_id: supplier.id, price: 5)
         variant = product.variants.first
         order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                   distributors: [distributor],
@@ -153,8 +153,8 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
 
       it "filters to a specific order cycle" do
         distributor = create(:distributor_enterprise)
-        variant1 = create(:variant, supplier:)
-        variant2 = create(:variant, supplier:)
+        variant1 = create(:variant, enterprise: supplier)
+        variant2 = create(:variant, enterprise: supplier)
         order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                   distributors: [distributor],
                                                   variants: [variant1])
@@ -169,11 +169,11 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
         distributor = create(:distributor_enterprise)
         other_distributor = create(:distributor_enterprise)
         other_supplier = create(:supplier_enterprise)
-        not_filtered_variant = create(:variant, supplier:)
-        variant_filtered_by_order_cycle = create(:variant, supplier:)
-        variant_filtered_by_distributor = create(:variant, supplier:)
-        variant_filtered_by_supplier = create(:variant, supplier: other_supplier)
-        variant_filtered_by_stock = create(:variant, supplier:, on_hand: 0)
+        not_filtered_variant = create(:variant, enterprise: supplier)
+        variant_filtered_by_order_cycle = create(:variant, enterprise: supplier)
+        variant_filtered_by_distributor = create(:variant, enterprise: supplier)
+        variant_filtered_by_supplier = create(:variant, enterprise: other_supplier)
+        variant_filtered_by_stock = create(:variant, enterprise: supplier, on_hand: 0)
 
         # This OC contains all products except the one that should be filtered
         # by order cycle. We create a separate OC further down to proof that
@@ -210,7 +210,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
         subject = Reporting::Reports::ProductsAndInventory::Inventory.new enterprise_user
         allow(subject).to receive(:params).and_return(
           order_cycle_id: order_cycle.id,
-          supplier_id: supplier.id,
+          enterprise_id: supplier.id,
           distributor_id: distributor.id
         )
 

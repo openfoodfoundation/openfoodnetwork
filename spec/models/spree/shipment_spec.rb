@@ -65,7 +65,7 @@ RSpec.describe Spree::Shipment do
 
     describe "with soft-deleted products or variants" do
       let(:variant) { create(:variant) }
-      let(:order) { create(:order, distributor: variant.supplier) }
+      let(:order) { create(:order, distributor: variant.enterprise) }
 
       context "when the variant is soft-deleted" do
         it "can still access the variant" do
@@ -87,10 +87,10 @@ RSpec.describe Spree::Shipment do
     end
 
     context "with variant override", feature: :inventory do
-      let(:order) { create(:order, distributor: variant.supplier) }
+      let(:order) { create(:order, distributor: variant.enterprise) }
 
       it "returns the scoped variant" do
-        create(:variant_override, hub: variant.supplier, variant:, price: 25.00)
+        create(:variant_override, hub: variant.enterprise, variant:, price: 25.00)
 
         expect(shipment.manifest.first.variant.price).to eq 25.00
       end

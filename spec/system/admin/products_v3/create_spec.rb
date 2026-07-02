@@ -22,7 +22,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       find("a", text: "New Product").click
       expect(page).to have_content "New Product"
       fill_in 'product_name', with: 'Big Bag Of Apples'
-      tomselect_select supplier.name, from: 'product[supplier_id]'
+      tomselect_select supplier.name, from: "Enterprise"
       tomselect_search_and_select 'Weight (g)', from: "product_variant_unit_with_scale"
       fill_in 'product_unit_value', with: '100'
       fill_in 'product_price', with: '10.00'

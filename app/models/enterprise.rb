@@ -43,10 +43,9 @@ class Enterprise < ApplicationRecord
                                  inverse_of: :producer,
                                  dependent: :destroy
   has_many :properties, through: :producer_properties
-  has_many :supplied_variants,
-           class_name: 'Spree::Variant', foreign_key: 'supplier_id',
-           inverse_of: :supplier, dependent: :destroy
-  has_many :supplied_products, through: :supplied_variants, source: :product
+  has_many :variants, class_name: 'Spree::Variant', dependent: :destroy
+  has_many :products, through: :variants, source: :product
+
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
                                 inverse_of: :distributor,
@@ -181,7 +180,7 @@ class Enterprise < ApplicationRecord
   scope :is_distributor, -> { where.not(sells: 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
-    joins(:supplied_variants).
+    joins(:variants).
       where(spree_variants: { id: variants }).
       select('DISTINCT enterprises.*')
   }
@@ -457,7 +456,7 @@ class Enterprise < ApplicationRecord
   def supplied_taxons
     Spree::Taxon.
       joins(:products).
-      where(spree_products: { id: Spree::Product.in_supplier(self).select(&:id) }).
+      where(spree_products: { id: Spree::Product.in_enterprise(self).select(&:id) }).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -639,7 +638,7 @@ class Enterprise < ApplicationRecord
   # Touch distributors without them touching their distributors.
   # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
-    Enterprise.distributing_variants(supplied_variants.select(:id)).
+    Enterprise.distributing_variants(variants.select(:id)).
       where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
   end

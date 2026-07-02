@@ -114,7 +114,7 @@ module OpenFoodNetwork
     end
 
     def scope_to_supplier
-      @variants = @variants.where(supplier_id: spree_current_user.enterprises.ids)
+      @variants = @variants.where(enterprise_id: spree_current_user.enterprises.ids)
     end
 
     def scope_to_supplier?

@@ -56,7 +56,7 @@ RSpec.describe "Enterprises", swagger_doc: "dfc.yaml" do
     )
   }
   let(:variant) {
-    build(:base_variant, id: 10_001, unit_value: 1, sku: "APP", supplier: enterprise)
+    build(:base_variant, id: 10_001, unit_value: 1, sku: "APP", enterprise:)
   }
 
   before { login_as user }

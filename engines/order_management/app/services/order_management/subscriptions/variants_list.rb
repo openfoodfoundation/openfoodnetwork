@@ -8,7 +8,7 @@ module OrderManagement
       # - Variants of hub
       # - Variants that are in outgoing exchanges where the hub is receiver
       def self.eligible_variants(distributor)
-        query = Spree::Variant.where(supplier_id: permitted_producer_ids(distributor))
+        query = Spree::Variant.where(enterprise_id: permitted_producer_ids(distributor))
 
         exchange_variant_ids = outgoing_exchange_variant_ids(distributor)
         if exchange_variant_ids.present?

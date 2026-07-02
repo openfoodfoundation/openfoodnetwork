@@ -216,9 +216,9 @@ module Spree
            :seo, :group_buy_options,
            :bulk_update, :clone, :delete,
            :destroy], Spree::Product do |product|
-        variant_suppliers = product.variants.map(&:supplier)
+        variant_enterprises = product.variants.map(&:enterprise)
         OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.intersect?(
-          variant_suppliers
+          variant_enterprises
         )
       end
       # An enterprise user can update their own products, product they have manage products
@@ -238,7 +238,7 @@ module Spree
       # use the same name as everywhere else.
       can [:create_linked_variant], Spree::Variant do |variant|
         OpenFoodNetwork::Permissions.new(user).
-          enterprises_granting_linked_variants.include? variant.supplier
+          enterprises_granting_linked_variants.include? variant.enterprise
       end
       can [
         :admin,
@@ -256,12 +256,12 @@ module Spree
       can [:admin, :index, :read, :edit,
            :update, :search, :delete, :destroy], Spree::Variant do |variant|
         OpenFoodNetwork::Permissions.new(user).
-          managed_product_enterprises.include? variant.supplier
+          managed_product_enterprises.include? variant.enterprise
       end
 
       if OpenFoodNetwork::FeatureToggle.enabled?(:inventory, *user.enterprises)
         can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
-          next false unless vo.hub.present? && vo.variant&.supplier.present?
+          next false unless vo.hub.present? && vo.variant&.enterprise.present?
 
           hub_auth = OpenFoodNetwork::Permissions.new(user).
             variant_override_hubs.
@@ -269,7 +269,7 @@ module Spree
 
           producer_auth = OpenFoodNetwork::Permissions.new(user).
             variant_override_producers.
-            include? vo.variant.supplier
+            include? vo.variant.enterprise
 
           hub_auth && producer_auth
         end
@@ -277,7 +277,7 @@ module Spree
 
       can [:admin, :create, :update], InventoryItem do |ii|
         next false unless ii.enterprise.present? &&
-                          ii.variant&.supplier.present?
+                          ii.variant&.enterprise.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -285,7 +285,7 @@ module Spree
 
         producer_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_producers.
-          include? ii.variant.supplier
+          include? ii.variant.enterprise
 
         hub_auth && producer_auth
       end
@@ -461,7 +461,7 @@ module Spree
     def can_edit_as_producer(order, user)
       return unless order.distributor&.enable_producers_to_edit_orders
 
-      order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
+      order.variants.any? { |variant| user.enterprises.ids.include?(variant.enterprise_id) }
     end
 
     def add_manage_line_items_abilities(user)

@@ -16,7 +16,7 @@ module OrderCycles
       relation_by_sorting.order(Arel.sql(order))
     end
 
-    def products_relation_incl_supplier_properties
+    def products_relation_incl_enterprise_properties
       query = relation_by_sorting
 
       query = supplier_property_join(query)
@@ -45,11 +45,11 @@ module OrderCycles
         # Caveat, the supplier sorting won't work properly if there are multiple variant with
         # different supplier for a given product.
         query.
-          joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, supplier_id
+          joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, enterprise_id
                             FROM spree_variants WHERE deleted_at IS NULL) first_variant
                             ON spree_products.id = first_variant.product_id").
-          select("spree_products.*, first_variant.supplier_id").
-          group("spree_products.id, first_variant.supplier_id")
+          select("spree_products.*, first_variant.enterprise_id").
+          group("spree_products.id, first_variant.enterprise_id")
       elsif sorting == "by_category"
         # Joins on the first product variant to allow us to filter product by taxon.  # This is so
         # enterprise can display product sorted by category in a custom order on their shopfront.
@@ -59,7 +59,7 @@ module OrderCycles
         query.
           joins("LEFT JOIN (
                    SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id,
-                   supplier_id
+                   enterprise_id
                    FROM spree_variants WHERE deleted_at IS NULL
                  ) first_variant ON spree_products.id = first_variant.product_id").
           select("spree_products.*, first_variant.primary_taxon_id").
@@ -85,7 +85,7 @@ module OrderCycles
 
     def supplier_property_join(query)
       query.joins("
-        JOIN enterprises ON enterprises.id = first_variant.supplier_id
+        JOIN enterprises ON enterprises.id = first_variant.enterprise_id
         LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
       ")
     end
@@ -94,7 +94,7 @@ module OrderCycles
       if sorting_by_producer?
         order_by_producer = distributor
           .preferred_shopfront_producer_order
-          .split(",").map { |id| "first_variant.supplier_id=#{id} DESC" }
+          .split(",").map { |id| "first_variant.enterprise_id=#{id} DESC" }
           .join(", ")
 
         "#{order_by_producer}, spree_products.name ASC, spree_products.id ASC"

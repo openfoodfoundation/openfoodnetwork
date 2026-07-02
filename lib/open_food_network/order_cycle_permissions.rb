@@ -101,7 +101,7 @@ module OpenFoodNetwork
           product_ids = Spree::Product.joins(:variants).
             where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
-          producers_active_ids = Enterprise.joins(:supplied_products).
+          producers_active_ids = Enterprise.joins(:products).
             where(spree_products: { id: product_ids }).pluck(:id).uniq
         end
 
@@ -151,7 +151,7 @@ module OpenFoodNetwork
     end
 
     def all_variants_supplied_by(producer)
-      Spree::Variant.where(supplier: producer)
+      Spree::Variant.where(enterprise: producer)
     end
 
     def no_variants
@@ -163,9 +163,9 @@ module OpenFoodNetwork
         user_manages_coordinator_or(enterprise)
       end.map(&:id)
 
-      Spree::Variant.includes(:supplier).
-        select(:id, :product_id, :supplier_id).
-        where(supplier_id: valid_suppliers)
+      Spree::Variant.includes(:enterprise).
+        select(:id, :product_id, :enterprise_id).
+        where(enterprise_id: valid_suppliers)
     end
 
     # Find the variants that a user is permitted see within outgoing exchanges
@@ -188,7 +188,7 @@ module OpenFoodNetwork
         #   so things don't break.
         # TODO: Remove this when all P-OC are sorted out
         active_variants = Spree::Variant.joins(:exchanges).
-          where(exchanges: { receiver: hub, incoming: false }, supplier_id: managed_producer_ids)
+          where(exchanges: { receiver: hub, incoming: false }, enterprise_id: managed_producer_ids)
 
         Spree::Variant.where(id: permitted_variants | active_variants)
       end
@@ -234,8 +234,8 @@ module OpenFoodNetwork
       Spree::Variant.where(id: available_variants | active_variants)
     end
 
-    def variants_from_suppliers(supplier_ids)
-      Spree::Variant.where(supplier_id: supplier_ids)
+    def variants_from_suppliers(enterprise_ids)
+      Spree::Variant.where(enterprise_id: enterprise_ids)
     end
 
     def active_outgoing_variants(hub)
@@ -305,7 +305,7 @@ module OpenFoodNetwork
       product_ids = Spree::Product.joins(:variants).
         where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
-      producer_ids = Enterprise.joins(:supplied_products).
+      producer_ids = Enterprise.joins(:products).
         where(spree_products: { id: product_ids }).pluck(:id).uniq
 
       active_exchange_ids = @order_cycle.exchanges.incoming.where(sender_id: producer_ids).pluck :id

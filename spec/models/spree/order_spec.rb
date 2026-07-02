@@ -1000,8 +1000,8 @@ RSpec.describe Spree::Order do
       context "supplied by me" do
         let(:s1) { create(:enterprise) }
         let(:s2) { create(:enterprise) }
-        let(:v1) { create(:variant, supplier: s1) }
-        let(:v2) { create(:variant, supplier: s2) }
+        let(:v1) { create(:variant, enterprise: s1) }
+        let(:v2) { create(:variant, enterprise: s2) }
         let!(:o1) { create(:order, :with_line_item, variant: v1, distributor: d1) }
         let!(:o2) { create(:order, :with_line_item, variant: v2, distributor: d1) }
 
@@ -1484,10 +1484,10 @@ RSpec.describe Spree::Order do
     let(:aaron) { create(:supplier_enterprise, name: "Aaron the farmer") }
     let(:zed) { create(:supplier_enterprise, name: "Zed the farmer") }
 
-    let(:aaron_apple) { create(:product, name: "Apple", supplier_id: aaron.id) }
-    let(:aaron_banana) { create(:product, name: "Banana", supplier_id: aaron.id) }
-    let(:zed_apple) { create(:product, name: "Apple", supplier_id: zed.id) }
-    let(:zed_banana) { create(:product, name: "Banana", supplier_id: zed.id) }
+    let(:aaron_apple) { create(:product, name: "Apple", enterprise_id: aaron.id) }
+    let(:aaron_banana) { create(:product, name: "Banana", enterprise_id: aaron.id) }
+    let(:zed_apple) { create(:product, name: "Apple", enterprise_id: zed.id) }
+    let(:zed_banana) { create(:product, name: "Banana", enterprise_id: zed.id) }
 
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) do

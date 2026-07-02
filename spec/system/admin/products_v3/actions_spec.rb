@@ -132,7 +132,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).to have_content "Changes saved"
 
         variant_a1.reload
-        expect(variant_a1.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.enterprise.name).to eq(producer_to_select)
         expect(variant_a1.primary_taxon.name).to eq(category_to_select)
         expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end
@@ -240,13 +240,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
     end
 
     describe "Create linked variant" do
-      let!(:variant) { create(:variant, display_name: "My box", supplier: producer) }
+      let!(:variant) { create(:variant, display_name: "My box", enterprise: producer) }
       let!(:linked_variant) {
         variant.create_linked_variant(user).tap{ |v| v.update! display_name: "My linked variant" }
       }
       let!(:other_producer) { create(:supplier_enterprise) }
       let!(:other_variant) {
-        create(:variant, display_name: "My friends box", supplier: other_producer)
+        create(:variant, display_name: "My friends box", enterprise: other_producer)
       }
       let!(:read_only_producer) { create(:supplier_enterprise) }
       let!(:read_only_variant) {

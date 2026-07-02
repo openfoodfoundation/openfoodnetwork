@@ -48,10 +48,10 @@ module Spree
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
-        original_supplier_id = @object.supplier_id
+        original_enterprise_id = @object.enterprise_id
 
         if @object.update(permitted_resource_params)
-          if original_supplier_id != @object.supplier_id
+          if original_enterprise_id != @object.enterprise_id
             ExchangeVariantDeleter.new.delete(@object)
           end
 

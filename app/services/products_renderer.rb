@@ -35,8 +35,8 @@ class ProductsRenderer
     return unless order_cycle
 
     @products ||= begin
-      results = if supplier_properties.present?
-                  distributed_products.products_relation_incl_supplier_properties
+      results = if enterprise_properties.present?
+                  distributed_products.products_relation_incl_enterprise_properties
                 else
                   distributed_products.products_relation
                 end
@@ -64,39 +64,39 @@ class ProductsRenderer
   def filter(query)
     ransack_results = query.ransack(args[:q]).result.to_a
 
-    return ransack_results if supplier_properties.blank?
+    return ransack_results if enterprise_properties.blank?
 
-    supplier_properties_results = []
-    if supplier_properties.present?
+    enterprise_properties_results = []
+    if enterprise_properties.present?
       # We can't search on an association's scope with ransack, a work around is to define
       # the a scope on the parent (Spree::Product) but because we are joining on "first_variant"
       # to get the supplier it doesn't work, so we do the filtering manually here
       # see:
       #   OrderCycleDistributedProducts#products_relation
-      supplier_properties_results = query.
-        where(producer_properties: { property_id: supplier_property_ids }).
+      enterprise_properties_results = query.
+        where(producer_properties: { property_id: enterprise_property_ids }).
         where(inherits_properties: true)
     end
 
-    if supplier_properties_results.present? && with_properties.present?
+    if enterprise_properties_results.present? && with_properties.present?
       # apply "OR" between property search
-      return ransack_results | supplier_properties_results
+      return ransack_results | enterprise_properties_results
     end
 
     # Intersect the result to apply "AND" with other search criteria
-    return ransack_results.intersection(supplier_properties_results) \
-      unless supplier_properties_results.empty?
+    return ransack_results.intersection(enterprise_properties_results) \
+      unless enterprise_properties_results.empty?
 
     # We should get here but just in case we return the ransack results
     ransack_results
   end
 
-  def supplier_properties
-    args[:q]&.slice("with_variants_supplier_properties")
+  def enterprise_properties
+    args[:q]&.slice("with_variants_enterprise_properties")
   end
 
-  def supplier_property_ids
-    supplier_properties["with_variants_supplier_properties"]
+  def enterprise_property_ids
+    enterprise_properties["with_variants_enterprise_properties"]
   end
 
   def with_properties

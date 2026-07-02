@@ -84,7 +84,7 @@ RSpec.describe "Sales Tax Totals By order" do
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
 
-    product.update!(supplier_id: supplier.id)
+    product.update!(enterprise_id: supplier.id)
     variant.update!(tax_category_id: tax_category.id)
 
     order.update!(

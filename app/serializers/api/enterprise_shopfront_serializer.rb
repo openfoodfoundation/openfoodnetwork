@@ -116,7 +116,7 @@ module Api
     def distributed_producer_properties
       properties = Spree::Property.joins(
         producer_properties: {
-          producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
+          producer: { products: { variants: { exchanges: :order_cycle } } }
         }
       )
         .merge(Exchange.outgoing).merge(Exchange.to_enterprise(enterprise))
@@ -130,7 +130,7 @@ module Api
     private
 
     def product_properties
-      enterprise.supplied_products.includes(:properties).flat_map(&:properties)
+      enterprise.products.includes(:properties).flat_map(&:properties)
     end
 
     def producer_properties

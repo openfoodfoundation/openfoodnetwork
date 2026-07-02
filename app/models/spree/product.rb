@@ -53,7 +53,7 @@ module Spree
     # These validators are used to make sure the standard variant created via
     # `ensure_standard_variant` will be valid. The are only used when creating a new product
     with_options on: :create_and_create_standard_variant do
-      validates :supplier_id, presence: true
+      validates :enterprise_id, presence: true
       validates :primary_taxon_id, presence: true
       validates :variant_unit, presence: true
       validates :unit_value, presence: true, if: ->(product) {
@@ -80,11 +80,11 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :variant_unit,
                   :variant_unit_name, :variant_unit_scale, :tax_category_id, :shipping_category_id,
-                  :primary_taxon_id, :supplier_id
+                  :primary_taxon_id, :enterprise_id
 
     after_create :ensure_standard_variant
     around_destroy :destruction
-    after_touch :touch_supplier
+    after_touch :touch_enterprise
 
     # -- Scopes
     scope :with_properties, ->(*property_ids) {
@@ -128,8 +128,8 @@ module Spree
         distinct
     }
 
-    scope :in_supplier, lambda { |supplier|
-      distinct.joins(:variants).where(spree_variants: { supplier: })
+    scope :in_enterprise, lambda { |enterprise|
+      distinct.joins(:variants).where(spree_variants: { enterprise: })
     }
 
     # Products distributed via the given distributor through an OC
@@ -161,14 +161,14 @@ module Spree
         where.not(order_cycles: { id: nil })
     }
 
-    scope :by_producer, -> { joins(variants: :supplier).order('enterprises.name') }
+    scope :by_producer, -> { joins(variants: :enterprise).order('enterprises.name') }
     scope :by_name, -> { order('spree_products.name') }
 
     scope :managed_by, lambda { |user|
       if user.admin?
         where(nil)
       else
-        in_supplier(user.enterprises)
+        in_enterprise(user.enterprises)
       end
     }
 
@@ -213,10 +213,10 @@ module Spree
       ps = product_properties.all
 
       if inherits_properties
-        # NOTE: Set the supplier as the first variant supplier. If variants have different supplier,
-        # result might not be correct
-        supplier = variants.first.supplier
-        ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier&.producer_properties || [])
+        # NOTE: Set the enterprise as the first variant enterprise. If variants have different
+        # enterprise, result might not be correct
+        enterprise = variants.first.enterprise
+        ps = OpenFoodNetwork::PropertyMerge.merge(ps, enterprise&.producer_properties || [])
       end
 
       ps.
@@ -267,7 +267,7 @@ module Spree
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
       variant.primary_taxon_id = primary_taxon_id
-      variant.supplier_id = supplier_id
+      variant.enterprise_id = enterprise_id
       variants << variant
     end
     # rubocop:enable Metrics/AbcSize
@@ -279,17 +279,17 @@ module Spree
 
     private
 
-    def touch_supplier
+    def touch_enterprise
       return if variants.empty?
 
-      # Assume the product supplier is the supplier of the first variant
-      # Will breack if product has mutiple variants with different supplier
+      # Assume the product enterprise is the enterprise of the first variant
+      # Will breack if product has mutiple variants with different enterprise
       first_variant = variants.first
 
-      # The variant is invalid if no supplier is present, but this method can be triggered when
-      # importing product. In this scenario the variant has not been updated with the supplier yet
+      # The variant is invalid if no enterprise is present, but this method can be triggered when
+      # importing product. In this scenario the variant has not been updated with the enterprise yet
       # hence the check.
-      first_variant.supplier.touch if first_variant.supplier.present?
+      first_variant.enterprise.touch if first_variant.enterprise.present?
     end
 
     def validate_image

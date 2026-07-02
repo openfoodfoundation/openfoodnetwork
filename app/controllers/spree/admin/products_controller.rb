@@ -141,7 +141,7 @@ module Spree
       def product_import_dates_query
         Spree::Variant.
           select('import_date').distinct.
-          where(supplier_id: editable_enterprises.collect(&:id)).
+          where(enterprise_id: editable_enterprises.collect(&:id)).
           where.not(spree_variants: { import_date: nil }).
           order('import_date DESC')
       end

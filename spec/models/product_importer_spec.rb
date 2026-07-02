@@ -36,16 +36,16 @@ RSpec.describe ProductImport::ProductImporter do
 
   let!(:product) {
     create(:simple_product, name: 'Hypothetical Cake', description: nil,
-                            primary_taxon_id: category2.id, supplier_id: enterprise2.id,
+                            primary_taxon_id: category2.id, enterprise_id: enterprise2.id,
                             variants: [])
   }
   let!(:variant) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Preexisting Banana', supplier: enterprise2)
+                     display_name: 'Preexisting Banana', enterprise: enterprise2)
   }
   let!(:variant_with_empty_display_name) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
-                     display_name: '', supplier: enterprise2)
+                     display_name: '', enterprise: enterprise2)
   }
   let!(:product2) {
     create(:simple_product, on_hand: '100', name: 'Beans', unit_value: '500',
@@ -53,29 +53,29 @@ RSpec.describe ProductImport::ProductImporter do
   }
   let!(:product3) {
     create(:simple_product, on_hand: '100', name: 'Sprouts', unit_value: '500',
-                            primary_taxon_id: category.id, supplier_id: enterprise.id)
+                            primary_taxon_id: category.id, enterprise_id: enterprise.id)
   }
   let!(:product4) {
     create(:simple_product, on_hand: '100', name: 'Cabbage', unit_value: '1',
                             variant_unit_scale: nil, variant_unit: "items",
                             variant_unit_name: "Whole", primary_taxon_id: category.id,
-                            supplier_id: enterprise.id)
+                            enterprise_id: enterprise.id)
   }
   let!(:product5) {
     create(:simple_product, on_hand: '100', name: 'Lettuce', unit_value: '500',
-                            primary_taxon_id: category.id, supplier_id: enterprise2.id)
+                            primary_taxon_id: category.id, enterprise_id: enterprise2.id)
   }
   let!(:product6) {
     create(:simple_product, on_hand: '100', name: 'Beetroot',
                             unit_value: '500', on_demand: true, variant_unit_scale: 1,
                             variant_unit: 'weight', primary_taxon_id: category.id, description: nil,
-                            supplier_id: enterprise3.id)
+                            enterprise_id: enterprise3.id)
   }
   let!(:product7) {
     create(:simple_product, on_hand: '100', name: 'Tomato', unit_value: '500',
                             variant_unit_scale: 1, variant_unit: 'weight',
                             primary_taxon_id: category.id, description: nil,
-                            supplier_id: enterprise3.id)
+                            enterprise_id: enterprise3.id)
   }
 
   let!(:product8) {
@@ -90,15 +90,15 @@ RSpec.describe ProductImport::ProductImporter do
   }
   let!(:variant2) {
     create(:variant, product_id: product8.id, price: '4.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Porridge Oats', supplier: enterprise)
+                     display_name: 'Porridge Oats', enterprise: enterprise)
   }
   let!(:variant3) {
     create(:variant, product_id: product8.id, price: '5.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Rolled Oats', supplier: enterprise)
+                     display_name: 'Rolled Oats', enterprise: enterprise)
   }
   let!(:variant4) {
     create(:variant, product_id: product9.id, price: '6.50', on_hand: '100', unit_value: '500',
-                     display_name: 'Flaked Oats', supplier: enterprise)
+                     display_name: 'Flaked Oats', enterprise: enterprise)
   }
 
   let!(:variant_override) {
@@ -158,7 +158,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       carrots_variant = find_variant("Carrots")
 
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.unit_value).to eq 500
       expect(carrots_variant.variant_unit).to eq 'weight'
@@ -169,7 +169,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       potatoes_variant = find_variant("Potatoes")
 
-      expect(potatoes_variant.supplier).to eq enterprise
+      expect(potatoes_variant.enterprise).to eq enterprise
       expect(potatoes_variant.price).to eq 6.50
       expect(potatoes_variant.unit_value).to eq 2000
       expect(potatoes_variant.variant_unit).to eq 'weight'
@@ -180,7 +180,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       pea_soup_variant = find_variant("Pea Soup")
 
-      expect(pea_soup_variant.supplier).to eq enterprise
+      expect(pea_soup_variant.enterprise).to eq enterprise
       expect(pea_soup_variant.price).to eq 5.50
       expect(pea_soup_variant.unit_value).to eq 0.75
       expect(pea_soup_variant.variant_unit).to eq 'volume'
@@ -191,7 +191,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       salad_variant = find_variant("Salad")
 
-      expect(salad_variant.supplier).to eq enterprise
+      expect(salad_variant.enterprise).to eq enterprise
       expect(salad_variant.price).to eq 4.50
       expect(salad_variant.unit_value).to eq 1
       expect(salad_variant.variant_unit).to eq 'items'
@@ -202,7 +202,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       buns_variant = find_variant("Hot Cross Buns")
 
-      expect(buns_variant.supplier).to eq enterprise
+      expect(buns_variant.enterprise).to eq enterprise
       expect(buns_variant.price).to eq 3.50
       expect(buns_variant.unit_value).to eq 1
       expect(buns_variant.variant_unit).to eq 'items'
@@ -244,7 +244,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       carrots_variant = find_variant("Good Carrots")
       expect(carrots_variant.on_hand).to eq 5
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.import_date).to be_within(1.minute).of Time.zone.now
 
@@ -292,7 +292,7 @@ RSpec.describe ProductImport::ProductImporter do
 
       expect(carrots_variant.on_hand).to eq 5
       expect(carrots_variant.primary_taxon.name).to eq "Vegetables"
-      expect(carrots_variant.supplier).to eq enterprise
+      expect(carrots_variant.enterprise).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.shipping_category).to eq shipping_category
       expect(carrots_variant.unit_presentation).to eq "500g"

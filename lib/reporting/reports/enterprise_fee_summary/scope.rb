@@ -316,7 +316,7 @@ module Reporting
         def filter_by_distribution(params)
           filter_scope(spree_orders: { distributor_id: params.distributor_ids }) \
             if params.distributor_ids.present?
-          filter_scope(spree_variants: { supplier_id: params.producer_ids }) \
+          filter_scope(spree_variants: { enterprise_id: params.producer_ids }) \
             if params.producer_ids.present?
           filter_scope(spree_orders: { order_cycle_id: params.order_cycle_ids }) \
             if params.order_cycle_ids.present?
