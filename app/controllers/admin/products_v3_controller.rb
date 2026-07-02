@@ -113,7 +113,6 @@ module Admin
 
       begin
         variant = linked_variant.create_linked_variant(spree_current_user)
-
         flash.now[:success] = t('.success')
         variant_index = "-#{variant.id}"
       rescue ActiveRecord::RecordInvalid

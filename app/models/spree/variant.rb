@@ -301,6 +301,7 @@ module Spree
         variant.hub_id = hub_id
         variant.on_demand = on_demand
         variant.on_hand = on_hand
+        variant.enterprise_id = hub_id
         variant.save!
       end
     end
