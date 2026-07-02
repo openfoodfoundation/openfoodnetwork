@@ -169,10 +169,11 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       before do
         v_sourced.source_variants << v_source
         v_sourced_hidden.source_variants << v_source
-        visit admin_products_url
       end
 
       it "shows sourced variant with indicator" do
+        visit admin_products_url
+
         within row_containing_name("Variant-sourced") do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
           expect(page).to have_selector 'span[title*="Hub: My Enterprise"]'
@@ -184,6 +185,37 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
         # But not variants sourced by other hubs
         expect(page).not_to have_selector row_containing_name("Variant-hidden")
+      end
+
+      context "with create_linked_variants permission for someone else variants" do
+        let!(:create_linked_variants_permission) {
+          # Producer grants me access to create linked variants
+          create(:enterprise_relationship, parent: other_source_producer, child: producer,
+                                           permissions_list: [:create_linked_variants])
+        }
+        let(:other_source_producer) {
+          create(:supplier_enterprise, name: "Producer Enterprise catalog")
+        }
+        let!(:p2) {
+          create(:product, name: "Product 2 readonly", enterprise_id: other_source_producer.id)
+        }
+        let(:p2_variant) { p2.variants.first }
+
+        it "display readonly product and variant" do
+          visit admin_products_url
+
+          # Product is displayed
+          expect(page).to have_content("Product 2 readonly")
+          # But not editable
+          expect(page).not_to have_selector row_containing_name("Product 2 readonly")
+
+          # Variant is displayed
+          within("#variant_#{p2_variant.id}") do
+            expect(page).to have_content("Producer Enterprise catalog")
+            # But no editable
+            expect(page).not_to have_selector row_containing_placeholder("Product 2 readonly")
+          end
+        end
       end
     end
   end

@@ -248,10 +248,21 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       let!(:other_variant) {
         create(:variant, display_name: "My friends box", enterprise: other_producer)
       }
+      let!(:read_only_producer) { create(:supplier_enterprise) }
+      let!(:read_only_variant) {
+        create(:variant, display_name: "My readonly friends box", enterprise: read_only_producer)
+      }
+
       let!(:enterprise_relationship) {
         # Other producer grants me access to manage their variant
         create(:enterprise_relationship, parent: other_producer, child: producer,
                                          permissions_list: [:manage_products])
+      }
+
+      let!(:create_linked_variants) {
+        # Other producer grants me ability to create linked variant
+        create(:enterprise_relationship, parent: read_only_producer, child: producer,
+                                         permissions_list: [:create_linked_variants])
       }
 
       context "with create_linked_variants permission for my, and other's variants" do
@@ -309,6 +320,25 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # initially obscured by the previous message, then disappears before capybara sees it.
             # expect(page).to have_content "Changes saved"
+          end
+
+          # Create linked variant sourced from my readonly friend
+          within("tr:has(.content)", text: "My readonly friends box") do
+            page.find(".vertical-ellipsis-menu").click
+
+            click_link "Create linked variant"
+          end
+          expect(page).to have_content "Successfully created linked variant"
+
+          within "table.products" do
+            # There are now two copies
+            # One read only
+            expect(page).to have_text("My readonly friends box", count: 1)
+
+            # One editable linked variant
+            within row_containing_name("My readonly friends box") do
+              expect(page).to have_content "🔗"
+            end
           end
         end
       end

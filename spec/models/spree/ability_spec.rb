@@ -296,7 +296,7 @@ RSpec.describe Spree::Ability do
     let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
     let(:er3) { create(:enterprise_relationship, parent: s2, child: d2) }
 
-    let(:er_ps) {
+    let(:manage_products_permission) {
       create(:enterprise_relationship, parent: s_related, child: s1,
                                        permissions_list: [:manage_products])
     }
@@ -348,13 +348,35 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read/write related enterprises' products " \
          "and variants with manage_products permission" do
-        er_ps
+        manage_products_permission
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p_related)
         is_expected.to have_ability(
           [:admin, :index, :read, :edit, :update, :search, :destroy,
            :delete], for: p_related.variants.first
         )
+      end
+
+      context "bulk product and variant update" do
+        it "should be able to bulk update own product" do
+          is_expected.to have_ability([:bulk_product_variant_update], for: p1)
+
+          is_expected.not_to have_ability([:bulk_product_variant_update], for: p_related)
+        end
+
+        it "should be able update related enterprises' products with " \
+           "manage_products permission " do
+          manage_products_permission
+          is_expected.to have_ability([:bulk_product_variant_update], for: p_related)
+        end
+
+        it "should be able to update linked variant product with " \
+           "create linked variant permission" do
+          create(:enterprise_relationship, parent: s_related, child: s1,
+                                           permissions_list: [:create_linked_variants])
+
+          is_expected.to have_ability([:bulk_product_variant_update], for: p_related)
+        end
       end
 
       it "should not be able to read/write other enterprises' products and variants" do

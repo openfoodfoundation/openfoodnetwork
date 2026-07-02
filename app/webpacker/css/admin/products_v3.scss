@@ -312,7 +312,8 @@
     @include unit_popout;
   }
 
-  a.image-field {
+  a.image-field,
+  div.image-field {
     position: relative;
 
     img {

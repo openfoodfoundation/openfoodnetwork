@@ -12,7 +12,7 @@ module Admin
     def index
       fetch_products
       render "index",
-             locals: { available_tags:, flash:, allowed_producers: }
+             locals: { available_tags:, flash:, allowed_producers:, allowed_source_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -20,7 +20,7 @@ module Admin
     def bulk_update
       product_set = product_set_from_params
 
-      product_set.collection.each { |p| authorize! :update, p }
+      product_set.collection.each { |p| authorize! :bulk_product_variant_update, p }
       @products = product_set.collection # use instance variable mainly for testing
 
       if product_set.save
@@ -33,7 +33,7 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          available_tags:, allowed_producers:, flash:
+                          available_tags:, allowed_producers:, allowed_source_producers:, flash:
                         }
       end
     end
@@ -99,7 +99,7 @@ module Admin
         format.turbo_stream {
           render :clone, status:,
                          locals: { product:, cloned_product:, product_index:,
-                                   allowed_producers: }
+                                   allowed_producers:, allowed_source_producers: }
         }
       end
     end
@@ -124,7 +124,8 @@ module Admin
 
       respond_with do |format|
         format.turbo_stream {
-          locals = { linked_variant:, variant:, product_index:, variant_index: }
+          locals = { linked_variant:, variant:, product_index:, variant_index:,
+                     allowed_source_producers: }
           render :create_linked_variant, status:, locals:
         }
       end
@@ -172,13 +173,20 @@ module Admin
 
     def allowed_producers
       OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises.is_primary_producer.by_name
+        .managed_product_enterprises
+        .is_primary_producer
+        .by_name
+    end
+
+    def allowed_source_producers
+      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
+        .enterprises_granting_linked_variants.is_primary_producer.by_name
     end
 
     def available_tags
       variants = Spree::Variant.where(
         product: OpenFoodNetwork::Permissions.new(spree_current_user)
-          .editable_products
+          .editable_and_read_only_products
           .merge(product_scope)
       )
 
@@ -189,7 +197,10 @@ module Admin
 
     def fetch_products
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
+        .editable_and_read_only_products
+        .merge(product_scope_with_includes)
+        .ransack(ransack_query)
+        .result
 
       product_query = apply_tags_filter(product_query)
 

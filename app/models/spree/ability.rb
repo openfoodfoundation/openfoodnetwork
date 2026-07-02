@@ -221,6 +221,17 @@ module Spree
           variant_enterprises
         )
       end
+      # An enterprise user can update their own products, product they have manage products
+      # permission for and their own linked variants
+      # (they have been given create linked variants permission)
+      # NOTE this gives broad permisison, it's only meant to be used with the Bulk Edit Page
+      can [:bulk_product_variant_update], Spree::Product do |product|
+        variant_enterprises = product.variants.map(&:enterprise)
+        OpenFoodNetwork::Permissions.new(user)
+          .managed_product_enterprises_and_enterprises_granting_linked_variants.intersect?(
+            variant_enterprises
+          )
+      end
 
       # An enterprise user can clone if they have been granted permission to the source variant.
       # Technically I'd call this permission clone_linked_variant, but it would be less confusing to

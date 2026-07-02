@@ -47,11 +47,6 @@ module Admin
       feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
     end
 
-    def allowed_source_producers
-      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .enterprises_granting_linked_variants
-    end
-
     def managed_product_enterprises
       @managed_product_enterprises ||= OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises
@@ -65,6 +60,28 @@ module Admin
       return [] unless name
 
       [[name, id]]
+    end
+
+    def variant_displayable?(variant, allowed_producers, allowed_source_producers)
+      # Filter out variant a user has not permission to update, but keep variant with no enterprise
+      return false if variant.enterprise.present? &&
+                      !(allowed_producers.include?(variant.enterprise) ||
+                        allowed_source_producers.include?(variant.enterprise)
+                       )
+
+      # Filter out other hub's variants that are linked to mine
+      return false if variant.hub.present? && managed_product_enterprises.exclude?(variant.hub)
+
+      true
+    end
+
+    # Read only if variant comes from enterprise giving "create_linked_variants" permission and
+    # isn't a variant we can manage
+    def variant_readonly?(variant, allowed_producers, allowed_source_producers)
+      return true if allowed_producers.exclude?(variant.enterprise) &&
+                     allowed_source_producers.include?(variant.enterprise) && variant.hub_id.blank?
+
+      false
     end
   end
 end
