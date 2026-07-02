@@ -8,7 +8,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
   include AuthenticationHelper
   include FileHelper
 
-  let(:enterprise) { create(:supplier_enterprise) }
+  let(:enterprise) { create(:supplier_enterprise, name: "My Enterprise") }
   let(:user) { create(:user, enterprises: [enterprise]) }
 
   before do
@@ -244,7 +244,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       let!(:linked_variant) {
         variant.create_linked_variant(user).tap{ |v| v.update! display_name: "My linked variant" }
       }
-      let!(:other_enterprise) { create(:supplier_enterprise) }
+      let!(:other_enterprise) { create(:supplier_enterprise, name: "Other enterprise") }
       let!(:other_variant) {
         create(:variant, display_name: "My friends box", enterprise: other_enterprise)
       }
@@ -308,8 +308,11 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             # Close action menu (shouldn't need this, it should close itself)
             last_box.click
 
-            # And I can perform actions on the new variant
             within last_box do
+              # The linked variant is owned by the enterprise that created it.
+              expect(page).to have_content "My Enterprise"
+
+              # And I can perform actions on the new variant
               page.find(".vertical-ellipsis-menu").click
               expect(page).to have_link "Edit"
               expect(page).to have_selector "a", text: "Delete" # it's not a proper link

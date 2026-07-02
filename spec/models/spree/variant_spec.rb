@@ -1055,6 +1055,7 @@ RSpec.describe Spree::Variant do
         linked_variant = variant.create_linked_variant(user)
 
         expect(linked_variant.source_variants).to eq [variant]
+        expect(linked_variant.enterprise).to eq enterprise
         expect(linked_variant.hub).to eq enterprise
         expect(linked_variant.producer).to eq producer
         expect(linked_variant.price).to eq 10.95
