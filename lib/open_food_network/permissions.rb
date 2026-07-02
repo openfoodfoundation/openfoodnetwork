@@ -59,6 +59,7 @@ module OpenFoodNetwork
       permissions
     end
 
+    # Note: user may have permission for the product, not necessarily all the variants
     def editable_and_read_only_products
       return Spree::Product.all if admin?
 
