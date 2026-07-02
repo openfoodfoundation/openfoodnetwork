@@ -621,13 +621,13 @@ RSpec.describe '
         order1.update_order!
         order1.update!(email: 'customer@email.com')
         order1.shipment.update(included_tax_total: 10.06)
-        travel_to(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
+        # Finalise the order in the recent past so it falls inside the report's default
+        # completed_at window ([3.months.ago..tomorrow]). A fixed past date (e.g. 2021) would
+        # sit outside that window now that the report runs at real time, returning an empty
+        # report. This block is server-side only, so it doesn't touch the session cookie.
+        travel_to(1.day.ago) { order1.finalize! }
         order1.reload
         order1.create_tax_charge!
-      end
-
-      before do
-        travel_to(Time.zone.local(2021, 4, 26, 14, 0, 0))
       end
 
       context "summary report" do
@@ -749,8 +749,9 @@ RSpec.describe '
       opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1',
                           city: 'customer city', state: 'Victoria', zipcode: '1234',
                           country: 'Australia', invoice_number: order1.number,
-                          order_number: order1.number, invoice_date: '2021-04-26',
-                          due_date: '2021-05-26', account_code: 'food sales')
+                          order_number: order1.number,
+                          invoice_date: Time.zone.today.to_s,
+                          due_date: (Time.zone.today + 1.month).to_s, account_code: 'food sales')
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '',
        opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number],
