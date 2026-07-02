@@ -231,7 +231,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
         expect(permissions.editable_and_read_only_products).to eq([p1])
       end
 
-      it "returns product produced by enteprise permitting linked variants and " \
+      it "returns product produced by enterprise permitting linked variants and " \
          "permitting manage products" do
         allow(user).to receive(:admin?) { false }
         allow(user).to receive(:enterprises) { [] }
