@@ -250,7 +250,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       }
       let!(:read_only_producer) { create(:supplier_enterprise) }
       let!(:read_only_variant) {
-        create(:variant, display_name: "My readonly friends box", supplier: read_only_producer)
+        create(:variant, display_name: "My readonly friends box", enterprise: read_only_producer)
       }
 
       let!(:enterprise_relationship) {

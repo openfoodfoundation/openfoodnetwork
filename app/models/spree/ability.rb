@@ -226,10 +226,10 @@ module Spree
       # (they have been given create linked variants permission)
       # NOTE this gives broad permisison, it's only meant to be used with the Bulk Edit Page
       can [:bulk_product_variant_update], Spree::Product do |product|
-        variant_suppliers = product.variants.map(&:supplier)
+        variant_enterprises = product.variants.map(&:enterprise)
         OpenFoodNetwork::Permissions.new(user)
           .managed_product_enterprises_and_enterprises_granting_linked_variants.intersect?(
-            variant_suppliers
+            variant_enterprises
           )
       end
 

@@ -63,10 +63,10 @@ module Admin
     end
 
     def variant_displayable?(variant, allowed_producers, allowed_source_producers)
-      # Filter out variant a user has not permission to update, but keep variant with no supplier
-      return false if variant.supplier.present? &&
-                      !(allowed_producers.include?(variant.supplier) ||
-                        allowed_source_producers.include?(variant.supplier)
+      # Filter out variant a user has not permission to update, but keep variant with no enterprise
+      return false if variant.enterprise.present? &&
+                      !(allowed_producers.include?(variant.enterprise) ||
+                        allowed_source_producers.include?(variant.enterprise)
                        )
 
       # Filter out other hub's variants that are linked to mine
@@ -75,11 +75,11 @@ module Admin
       true
     end
 
-    # Read only if variant comes from supplier giving "create_linked_variants" permission and
+    # Read only if variant comes from enterprise giving "create_linked_variants" permission and
     # isn't a variant we can manage
     def variant_readonly?(variant, allowed_producers, allowed_source_producers)
-      return true if allowed_producers.exclude?(variant.supplier) &&
-                     allowed_source_producers.include?(variant.supplier) && variant.hub_id.blank?
+      return true if allowed_producers.exclude?(variant.enterprise) &&
+                     allowed_source_producers.include?(variant.enterprise) && variant.hub_id.blank?
 
       false
     end

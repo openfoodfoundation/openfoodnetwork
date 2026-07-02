@@ -225,7 +225,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
           with(:manage_products) { Enterprise.where("1=0").select(:id) }
         allow(permissions).to receive(:related_enterprises_granting).
           with(:create_linked_variants) {
-            Enterprise.where(id: p1.variants.first.supplier).select(:id)
+            Enterprise.where(id: p1.variants.first.enterprise).select(:id)
           }
 
         expect(permissions.editable_and_read_only_products).to eq([p1])
@@ -237,12 +237,12 @@ RSpec.describe OpenFoodNetwork::Permissions do
         allow(user).to receive(:enterprises) { [] }
         allow(permissions).to receive(:related_enterprises_granting).
           with(:manage_products) {
-            Enterprise.where(id: [p1.variants.first.supplier,
-                                  p2.variants.first.supplier]).select(:id)
+            Enterprise.where(id: [p1.variants.first.enterprise,
+                                  p2.variants.first.enterprise]).select(:id)
           }
         allow(permissions).to receive(:related_enterprises_granting).
           with(:create_linked_variants) {
-            Enterprise.where(id: p1.variants.first.supplier).select(:id)
+            Enterprise.where(id: p1.variants.first.enterprise).select(:id)
           }
 
         expect(permissions.editable_and_read_only_products).to match_array([p1, p2])

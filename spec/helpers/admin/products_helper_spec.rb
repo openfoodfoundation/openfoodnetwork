@@ -61,9 +61,9 @@ RSpec.describe Admin::ProductsHelper do
   end
 
   describe "#variant_displayable?" do
-    let(:supplier) { create(:supplier_enterprise) }
-    let(:variant) { create(:variant, supplier: ) }
-    let(:allowed_producers) { [supplier] }
+    let(:enterprise) { create(:supplier_enterprise) }
+    let(:variant) { create(:variant, enterprise: ) }
+    let(:allowed_producers) { [enterprise] }
     let(:allowed_source_producers) { [] }
     let(:managed_product_enterprises) { [] }
 
@@ -79,10 +79,10 @@ RSpec.describe Admin::ProductsHelper do
     context "with linked variant" do
       context "with the user's linked variant" do
         let(:hub) { create(:distributor_enterprise) }
-        let(:source_supplier) { create(:supplier_enterprise) }
-        let(:variant) { create(:variant, supplier: source_supplier, hub: hub) }
-        let(:allowed_source_producers) { [source_supplier] }
-        let(:managed_product_enterprises) { [supplier, hub] }
+        let(:source_enterprise) { create(:supplier_enterprise) }
+        let(:variant) { create(:variant, enterprise: source_enterprise, hub: hub) }
+        let(:allowed_source_producers) { [source_enterprise] }
+        let(:managed_product_enterprises) { [enterprise, hub] }
 
         it "returns true" do
           expect(helper.variant_displayable?(variant, allowed_producers,
@@ -92,7 +92,7 @@ RSpec.describe Admin::ProductsHelper do
 
       context "wiht someone else's linked variant" do
         let(:other_enterprise) { create(:supplier_enterprise) }
-        let(:variant) { create(:variant, supplier:, hub: other_enterprise) }
+        let(:variant) { create(:variant, enterprise:, hub: other_enterprise) }
 
         it "returns false" do
           expect(helper.variant_displayable?(variant, allowed_producers,
@@ -102,9 +102,9 @@ RSpec.describe Admin::ProductsHelper do
     end
 
     context "with a variant the user has permission to manage" do
-      let(:friend_supplier) { create(:supplier_enterprise) }
-      let(:variant) { create(:variant, supplier: friend_supplier) }
-      let(:allowed_producers) { [supplier, friend_supplier] }
+      let(:friend_enterprise) { create(:supplier_enterprise) }
+      let(:variant) { create(:variant, enterprise: friend_enterprise) }
+      let(:allowed_producers) { [enterprise, friend_enterprise] }
 
       it "returns true" do
         expect(helper.variant_displayable?(variant, allowed_producers,
@@ -113,8 +113,8 @@ RSpec.describe Admin::ProductsHelper do
     end
 
     context "with a variant the user doesn't have permission manage" do
-      let(:other_supplier) { create(:supplier_enterprise) }
-      let(:variant) { create(:variant, supplier: other_supplier) }
+      let(:other_enterprise) { create(:supplier_enterprise) }
+      let(:variant) { create(:variant, enterprise: other_enterprise) }
 
       it "returns false" do
         expect(helper.variant_displayable?(variant, allowed_producers,
@@ -122,8 +122,8 @@ RSpec.describe Admin::ProductsHelper do
       end
     end
 
-    context "with a variant with no supplier" do
-      let(:variant) { build(:variant, supplier: nil) }
+    context "with a variant with no enterprise" do
+      let(:variant) { build(:variant, enterprise: nil) }
 
       it "returns true" do
         expect(helper.variant_displayable?(variant, allowed_producers,
@@ -133,11 +133,11 @@ RSpec.describe Admin::ProductsHelper do
   end
 
   describe "#variant_readonly?" do
-    let(:supplier) { create(:supplier_enterprise) }
-    let(:variant) { create(:variant, supplier: ) }
-    let(:allowed_producers) { [supplier] }
+    let(:enterprise) { create(:supplier_enterprise) }
+    let(:variant) { create(:variant, enterprise: ) }
+    let(:allowed_producers) { [enterprise] }
     let(:allowed_source_producers) { [] }
-    let(:friend_supplier) { create(:supplier_enterprise) }
+    let(:friend_enterprise) { create(:supplier_enterprise) }
 
     it "returns false" do
       expect(helper.variant_readonly?(variant, allowed_producers,
@@ -145,8 +145,8 @@ RSpec.describe Admin::ProductsHelper do
     end
 
     context "with linked variant" do
-      let(:variant) { create(:variant, supplier: friend_supplier, hub: supplier) }
-      let(:allowed_source_producers) { [friend_supplier] }
+      let(:variant) { create(:variant, enterprise: friend_enterprise, hub: enterprise) }
+      let(:allowed_source_producers) { [friend_enterprise] }
 
       it "returns false" do
         expect(helper.variant_readonly?(variant, allowed_producers,
@@ -155,8 +155,8 @@ RSpec.describe Admin::ProductsHelper do
     end
 
     context "with variant the user has permission to create linked variants" do
-      let(:variant) { create(:variant, supplier: friend_supplier) }
-      let(:allowed_source_producers) { [friend_supplier] }
+      let(:variant) { create(:variant, enterprise: friend_enterprise) }
+      let(:allowed_source_producers) { [friend_enterprise] }
 
       it "returns true" do
         expect(helper.variant_readonly?(variant, allowed_producers,

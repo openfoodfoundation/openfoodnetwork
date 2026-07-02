@@ -197,7 +197,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
           create(:supplier_enterprise, name: "Producer Enterprise catalog")
         }
         let!(:p2) {
-          create(:product, name: "Product 2 readonly", supplier_id: other_source_producer.id)
+          create(:product, name: "Product 2 readonly", enterprise_id: other_source_producer.id)
         }
         let(:p2_variant) { p2.variants.first }
 
