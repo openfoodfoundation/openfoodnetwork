@@ -70,8 +70,8 @@ RSpec.describe AffiliateSalesQuery do
         price: 10.to_d,
         distributor_postcode: order1.distributor.address.zipcode,
         distributor_country: order1.distributor.address.country.name,
-        supplier_postcode: variant1.supplier.address.zipcode,
-        supplier_country: variant1.supplier.address.country.name,
+        supplier_postcode: variant1.producer.address.zipcode,
+        supplier_country: variant1.producer.address.country.name,
         quantity_sold: 1,
       )
     end

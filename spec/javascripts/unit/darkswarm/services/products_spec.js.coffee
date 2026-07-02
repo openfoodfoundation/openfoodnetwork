@@ -21,13 +21,13 @@ describe 'Products service', ->
       test: "cats"
       price: 11
       variants: [
-        id: 1000, price: 11, enterprise: {id: 9}
+        id: 1000, price: 11, producer: {id: 9}
       ]
     productWithImage =
-      supplier:
+      producer:
         id: 9
       variants: [
-        id: 1000, price: 20, enterprise: {id: 9}
+        id: 1000, price: 20, producer: {id: 9}
       ]
       image: {
         large_url: 'foo.png'
@@ -81,7 +81,7 @@ describe 'Products service', ->
       {id: 9, name: "test"}
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
-    expect(Products.products[0].supplier).toBe Shopfront.producers_by_id["9"]
+    expect(Products.products[0].producer).toBe Shopfront.producers_by_id["9"]
 
   it "dereferences taxons", ->
     product.taxons = [2]
@@ -96,15 +96,15 @@ describe 'Products service', ->
     expect(Products.products[0].properties[1]).toBe properties[0]
 
   it "registers variants with Variants service", ->
-    product.variants = [{id: 1, enterprise: {id: 9}}]
+    product.variants = [{id: 1, producer: {id: 9}}]
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
     expect(Products.products[0].variants[0]).toBe Variants.variants[1]
 
   it "stores variant names", ->
     product.variants = [
-      {id: 1, name_to_display: "one", enterprise: {id: 9}},
-      {id: 2, name_to_display: "two", enterprise: {id: 9}}
+      {id: 1, name_to_display: "one", producer: {id: 9}},
+      {id: 2, name_to_display: "two", producer: {id: 9}}
     ]
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
@@ -129,7 +129,7 @@ describe 'Products service', ->
 
     it "displays the minimum variant price when the product has variants", ->
       product.variants = [
-        {price: 22, enterprise: {id: 9} }, {price: 33, enterprise: {id: 9}}
+        {price: 22, producer: {id: 9} }, {price: 33, producer: {id: 9}}
       ]
       $httpBackend.expectGET(endpoint).respond([product])
       $httpBackend.flush()
