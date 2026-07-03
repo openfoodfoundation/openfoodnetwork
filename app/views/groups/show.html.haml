@@ -49,6 +49,8 @@
               .about{ "embedded_target_blank" => true }
                 %h1
                   = t :groups_about
+                -# haml-lint:disable UnescapedHtml
+                -# long_description is sanitized on save in the model
                 %p!= @group.long_description
 
             %tab{heading: t(:groups_producers),
