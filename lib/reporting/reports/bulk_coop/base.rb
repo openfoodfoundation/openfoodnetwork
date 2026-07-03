@@ -13,7 +13,7 @@ module Reporting
         end
 
         def table_items
-          report_line_items.list(line_item_includes)
+          bulk_coop_filter(report_line_items.list(line_item_includes))
         end
 
         private

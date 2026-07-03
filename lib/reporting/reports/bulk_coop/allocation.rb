@@ -5,7 +5,7 @@ module Reporting
     module BulkCoop
       class Allocation < Base
         def query_result
-          bulk_coop_filter(table_items).group_by { |li| [li.order, li.variant] }.values
+          table_items.group_by { |li| [li.order, li.variant] }.values
         end
 
         def columns
