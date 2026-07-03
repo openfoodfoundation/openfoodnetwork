@@ -3126,7 +3126,6 @@ es_CR:
         add_to_cart: "Añadir"
         in_cart: "en el carrito"
         quantity_in_cart: "%{quantity} en el carrito"
-        remaining_in_stock: "Solo queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Cantidad min"
         max_quantity: "Cantidad máxima"
@@ -3813,7 +3812,7 @@ es_CR:
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
-          supplier: "Proveedor"
+          enterprise: "Organización"
           product_name: "Nombre del producto"
           units: "Unidad de medida"
           value: "Valor"

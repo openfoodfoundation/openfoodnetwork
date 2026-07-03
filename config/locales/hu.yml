@@ -3584,7 +3584,6 @@ hu:
         add_to_cart: "Hozzáadás"
         in_cart: "kosárban"
         quantity_in_cart: "%{quantity} a kosárban"
-        remaining_in_stock: "Már csak %{quantity} maradt"
       bulk_buy_modal:
         min_quantity: "Min. mennyiség"
         max_quantity: "Max. mennyiség"
@@ -4365,9 +4364,7 @@ hu:
         new:
           title: "Új termék"
           new_product: "Új termék"
-          supplier: "Beszállító"
-          supplier_select_placeholder: "Válassz ki egy beszállítót"
-          search_for_suppliers: "Keresés beszállítókra"
+          enterprise: "Vállalkozás"
           search_for_units: "Keresés kiszerelésre"
           product_name: "Termék név"
           units: "Mértékegység"

@@ -3491,7 +3491,7 @@ es_CO:
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
-          supplier: "Proveedor"
+          enterprise: "Organización"
           product_name: "Nombre del producto"
           units: "Unidad de medida"
           value: "Valor"

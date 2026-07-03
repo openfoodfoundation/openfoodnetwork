@@ -3757,7 +3757,7 @@ es_US:
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
-          supplier: "Proveedora"
+          enterprise: "Organización"
           product_name: "nombre del producto"
           units: "Unidad de medida"
           value: "Valor"

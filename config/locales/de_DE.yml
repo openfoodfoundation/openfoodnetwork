@@ -3443,7 +3443,6 @@ de_DE:
         add_to_cart: "Hinzufügen"
         in_cart: "im Warenkorb"
         quantity_in_cart: "%{quantity} im Warenkorb"
-        remaining_in_stock: "Nur noch %{quantity} verfügbar! "
       bulk_buy_modal:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
@@ -4205,8 +4204,7 @@ de_DE:
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
-          supplier: "Lieferant"
-          supplier_select_placeholder: "Lieferant wählen"
+          enterprise: "Unternehmen"
           product_name: "Produktname"
           units: "Einheit"
           value: "Menge"

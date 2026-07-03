@@ -3257,7 +3257,6 @@ mr:
         add_to_cart: "जमा करा"
         in_cart: "कार्टमध्ये"
         quantity_in_cart: "%{quantity} कार्टमध्ये"
-        remaining_in_stock: "फक्त %{quantity} बाकी"
       bulk_buy_modal:
         min_quantity: "किमान प्रमाण"
         max_quantity: "कमाल प्रमाण"
@@ -4002,8 +4001,7 @@ mr:
         new:
           title: "नवीन उत्पादन"
           new_product: "नवीन उत्पादन"
-          supplier: "पुरवठादार"
-          supplier_select_placeholder: "एक पुरवठादार निवडा"
+          enterprise: "एंटरप्राइझ"
           product_name: "उत्पादनाचे नांव"
           units: "युनिट आकार"
           value: "मूल्य"

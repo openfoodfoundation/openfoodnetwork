@@ -3543,7 +3543,6 @@ es:
         add_to_cart: "Añadir"
         in_cart: "en el carrito"
         quantity_in_cart: "%{quantity} en el carrito"
-        remaining_in_stock: "Solo queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
@@ -4357,9 +4356,7 @@ es:
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
-          supplier: "Proveedora"
-          supplier_select_placeholder: "Seleccionar proveedora"
-          search_for_suppliers: "Buscar proveedoras"
+          enterprise: "Organización"
           search_for_units: "Buscar unidades"
           product_name: "nombre del producto"
           units: "Unidad de medida"

@@ -3800,7 +3800,7 @@ fr_CM:
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
-          supplier: "Fournisseur"
+          enterprise: "Entreprise"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Quantité"

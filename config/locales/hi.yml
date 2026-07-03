@@ -3359,7 +3359,6 @@ hi:
         add_to_cart: "जोड़ें"
         in_cart: "कार्ट में"
         quantity_in_cart: "%{quantity} कार्ट में"
-        remaining_in_stock: "केवल %{quantity} बचें है"
       bulk_buy_modal:
         min_quantity: "न्यूनतम मात्रा"
         max_quantity: "अधिकतम मात्रा"
@@ -4114,8 +4113,7 @@ hi:
         new:
           title: "नया उत्पाद"
           new_product: "नया उत्पाद"
-          supplier: "आपूर्तिकर्ता"
-          supplier_select_placeholder: "एक आपूर्तिकर्ता चुनें"
+          enterprise: "एंटरप्राइज़"
           product_name: "उत्पाद का नाम"
           units: "यूनिट का आकार"
           value: "वैल्यू"

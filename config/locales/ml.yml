@@ -3383,7 +3383,6 @@ ml:
         add_to_cart: "ചേർക്കുക"
         in_cart: "കാർട്ടിൽ"
         quantity_in_cart: "കാർട്ടിൽ %{quantity}"
-        remaining_in_stock: "%{quantity} മാത്രം ശേഷിക്കുന്നു"
       bulk_buy_modal:
         min_quantity: "കുറഞ്ഞ അളവ്"
         max_quantity: "പരമാവധി അളവ്"
@@ -4139,8 +4138,7 @@ ml:
         new:
           title: "പുതിയ ഉൽപ്പന്നം"
           new_product: "പുതിയ ഉൽപ്പന്നം"
-          supplier: "വിതരണക്കാരൻ"
-          supplier_select_placeholder: "ഒരു വിതരണക്കാരനെ തിരഞ്ഞെടുക്കുക"
+          enterprise: "എന്റർപ്രൈസ്"
           product_name: "ഉത്പന്നത്തിന്റെ പേര്"
           units: "യൂണിറ്റ് വലിപ്പം"
           value: "മൂല്യം"

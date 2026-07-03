@@ -3452,7 +3452,6 @@ sr:
         add_to_cart: "Додати"
         in_cart: "у колицима"
         quantity_in_cart: "%{quantity} у корпи"
-        remaining_in_stock: "Остао је само %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мин куантити"
         max_quantity: "Максимална количина"
@@ -4259,9 +4258,6 @@ sr:
         new:
           title: "Нови производ"
           new_product: "Нови производ"
-          supplier: "Добављач"
-          supplier_select_placeholder: "Изаберите добављача"
-          search_for_suppliers: "Потражите добављаче"
           search_for_units: "Потражите јединице"
           product_name: "Назив производа"
           units: "Величина јединице"

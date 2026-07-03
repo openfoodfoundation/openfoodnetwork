@@ -3434,7 +3434,7 @@ en_IN:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
+          enterprise: "Enterprise"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"

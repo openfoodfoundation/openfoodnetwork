@@ -3382,7 +3382,7 @@ fil_PH:
         new:
           title: "bagong produkto"
           new_product: "bagong produkto"
-          supplier: "Supplier"
+          enterprise: "Enterprise"
           product_name: "pangalan ng produkto"
           units: "laki kada yunit"
           value: "halaga"

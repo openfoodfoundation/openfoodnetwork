@@ -3332,7 +3332,7 @@ pl:
         new:
           title: "Nowy produkt"
           new_product: "Nowy produkt"
-          supplier: "Dostawca"
+          enterprise: "Podmiot"
           product_name: "Nazwa produktu"
           units: "Rozmiar jednostki"
           value: "Wartość"

@@ -3369,7 +3369,7 @@ pt:
         new:
           title: "Novo Produto"
           new_product: "Novo Produto"
-          supplier: "Fornecedor"
+          enterprise: "Organização"
           product_name: "Nome do Produto"
           units: "Tamanho unitário"
           value: "Valor"

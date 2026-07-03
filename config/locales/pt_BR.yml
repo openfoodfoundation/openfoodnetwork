@@ -3664,7 +3664,7 @@ pt_BR:
         new:
           title: "Novo produto"
           new_product: "Novo produto"
-          supplier: "Fornecedor"
+          enterprise: "Iniciativas"
           product_name: "Nome do Produto"
           units: "Unidade de Medida"
           value: "Quantidade"

@@ -3391,7 +3391,7 @@ nl_BE:
         new:
           title: "Nieuw product"
           new_product: "Nieuw product"
-          supplier: "Leverancier"
+          enterprise: "Onderneming"
           product_name: "Naam produkt"
           units: "Stukgrootte"
           value: "Waarde"

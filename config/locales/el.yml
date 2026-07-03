@@ -3433,7 +3433,6 @@ el:
         add_to_cart: "Προσθήκη"
         in_cart: "στο καλάθι"
         quantity_in_cart: "%{quantity} στο καλάθι"
-        remaining_in_stock: "Έχουν απομείνει %{quantity}"
       bulk_buy_modal:
         min_quantity: "Ελάχιστη ποσότητα"
         max_quantity: "Μέγιστη ποσότητα"
@@ -4199,8 +4198,7 @@ el:
         new:
           title: "Καινούργιο προϊόν"
           new_product: "Καινούργιο προϊόν"
-          supplier: "Προμηθευτής"
-          supplier_select_placeholder: "Διαλέξτε ένα προμηθευτή"
+          enterprise: "Επιχείρηση"
           product_name: "Ονομασία προϊόντος"
           units: "Μονάδα μέτρησης "
           value: "αξία"

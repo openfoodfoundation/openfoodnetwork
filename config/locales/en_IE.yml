@@ -3520,7 +3520,6 @@ en_IE:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4304,9 +4303,7 @@ en_IE:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
-          supplier_select_placeholder: "Select a supplier"
-          search_for_suppliers: "Search for suppliers"
+          enterprise: "Enterprise"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

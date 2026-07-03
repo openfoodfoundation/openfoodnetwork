@@ -3329,7 +3329,6 @@ pa:
         add_to_cart: "ਜੋੜੋ"
         in_cart: "ਕਾਰਟ ਵਿੱਚ"
         quantity_in_cart: "%{quantity} ਕਾਰਟ ਵਿੱਚ"
-        remaining_in_stock: "ਸਿਰਫ %{quantity} ਬਾਕੀ"
       bulk_buy_modal:
         min_quantity: "ਨਿਊਨਤਮ ਮਾਤਰਾ"
         max_quantity: "ਅਧਿਕਤਮ ਮਾਤਰਾ"
@@ -4008,8 +4007,7 @@ pa:
         new:
           title: "ਨਵਾਂ ਉਤਪਾਦ"
           new_product: "ਨਵਾਂ ਉਤਪਾਦ"
-          supplier: "ਸਪਲਾਇਰ"
-          supplier_select_placeholder: "ਇੱਕ ਸਪਲਾਇਰ ਚੁਣੋ"
+          enterprise: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
           product_name: "\"ਉਤਪਾਦ ਦਾ ਨਾਂ\""
           units: "ਯੂਨਿਟ ਸਾਈਜ਼"
           value: "ਵਲਯੂ"

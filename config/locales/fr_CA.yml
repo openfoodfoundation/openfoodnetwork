@@ -3754,7 +3754,6 @@ fr_CA:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
-        remaining_in_stock: "Seulement %{quantity} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4616,9 +4615,7 @@ fr_CA:
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
-          supplier: "Fournisseur"
-          supplier_select_placeholder: "Sélectionner un producteur"
-          search_for_suppliers: "Chercher des fournisseurs"
+          enterprise: "Entreprise"
           search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"

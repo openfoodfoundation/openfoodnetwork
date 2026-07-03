@@ -3437,7 +3437,6 @@ ru:
         add_to_cart: "Добавить"
         in_cart: "в корзине"
         quantity_in_cart: "%{quantity} в корзине"
-        remaining_in_stock: "Остался только %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мин. количество"
         max_quantity: "Макс количество"
@@ -4249,8 +4248,7 @@ ru:
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"
-          supplier: "Поставщик"
-          supplier_select_placeholder: "Выберите поставщика"
+          enterprise: "Предприятие"
           product_name: "Название Товара"
           units: "Единица измерения"
           value: "Значение"

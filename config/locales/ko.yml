@@ -3082,7 +3082,6 @@ ko:
         add_to_cart: "추가"
         in_cart: "내 카트"
         quantity_in_cart: "카트 내에 %{quantity}개 있습니다."
-        remaining_in_stock: "%{quantity}만 남았습니다."
       bulk_buy_modal:
         min_quantity: "최소 수량"
         max_quantity: "최대 수량"
@@ -3779,7 +3778,7 @@ ko:
         new:
           title: "새 상품"
           new_product: "새 상품"
-          supplier: "공급업체"
+          enterprise: "회사"
           product_name: "제품 이름"
           units: "물건 크기"
           value: "가치"

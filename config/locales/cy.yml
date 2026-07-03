@@ -3729,7 +3729,6 @@ cy:
         add_to_cart: "Ychwanegu"
         in_cart: "yn y fasged"
         quantity_in_cart: "%{quantity} yn y fasged"
-        remaining_in_stock: "Dim ond %{quantity} sydd ar ôl"
       bulk_buy_modal:
         min_quantity: "Lleiafswm nifer"
         max_quantity: "Uchfafswm nifer"
@@ -4584,9 +4583,7 @@ cy:
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"
-          supplier: "Cyflenwr"
-          supplier_select_placeholder: "Dewis cyflenwr"
-          search_for_suppliers: "Chwilio am gyflenwyr"
+          enterprise: "Menter"
           search_for_units: "Chwilio am Unedau"
           product_name: "Enw Cynnyrch"
           units: "Maint yr Uned"

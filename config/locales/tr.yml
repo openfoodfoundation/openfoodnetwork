@@ -3691,7 +3691,7 @@ tr:
         new:
           title: "Yeni Ürün"
           new_product: "Yeni Ürün"
-          supplier: "Tedarikçi"
+          enterprise: "İşletme"
           product_name: "ÜRÜN ADI"
           units: "Ölçü Birimi"
           value: "değer"

@@ -3130,7 +3130,6 @@ uk:
         add_to_cart: "Додати"
         in_cart: "у кошику"
         quantity_in_cart: "%{quantity} у кошику"
-        remaining_in_stock: "Залишився лише %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мінімальна кількість"
         max_quantity: "Максимальна кількість"
@@ -3905,7 +3904,7 @@ uk:
         new:
           title: "Новий продукт"
           new_product: "Новий продукт"
-          supplier: "Постачальник"
+          enterprise: "Підприємство"
           product_name: "Назва продукту"
           units: "Розмір одиниці"
           value: "Значення"

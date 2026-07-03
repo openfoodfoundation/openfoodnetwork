@@ -3089,7 +3089,6 @@ it_CH:
         add_to_cart: "Aggiungi"
         in_cart: "nel carrello"
         quantity_in_cart: "%{quantity} nel carrello"
-        remaining_in_stock: "Solo %{quantity} rimanenti"
       bulk_buy_modal:
         min_quantity: "Quantità minima"
         max_quantity: "Quantità massima"
@@ -3835,7 +3834,7 @@ it_CH:
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
-          supplier: "Fornitore"
+          enterprise: "Azienda"
           product_name: "Nome Prodotto"
           units: "Unità di misura"
           value: "Valore"

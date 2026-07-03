@@ -3565,7 +3565,6 @@ nb:
         add_to_cart: "Legg til"
         in_cart: "i handlekurv"
         quantity_in_cart: "%{quantity} i handlekurven"
-        remaining_in_stock: "Kun %{quantity} igjen"
       bulk_buy_modal:
         min_quantity: "Min. mengde"
         max_quantity: "Max mengde"
@@ -4346,9 +4345,7 @@ nb:
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
-          supplier: "Leverandør"
-          supplier_select_placeholder: "Velg en leverandør"
-          search_for_suppliers: "Søk etter leverandører"
+          enterprise: "Bedrift"
           search_for_units: "Søk etter enheter"
           product_name: "Produktnavn"
           units: "Enhetsstørrelse"

@@ -3224,7 +3224,6 @@ ca:
         add_to_cart: "Afegeix"
         in_cart: "a la cistella"
         quantity_in_cart: "%{quantity} a la cistella"
-        remaining_in_stock: "Només queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
@@ -3961,8 +3960,7 @@ ca:
         new:
           title: "Nou producte"
           new_product: "Nou producte"
-          supplier: "Proveïdora"
-          supplier_select_placeholder: "Trieu un proveïdor"
+          enterprise: "Organització"
           product_name: "Nom del producte"
           units: "Mida d'unitat"
           value: "Valor"

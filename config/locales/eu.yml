@@ -3406,7 +3406,6 @@ eu:
         add_to_cart: "Gehitu"
         in_cart: "saskian"
         quantity_in_cart: " %{quantity} saskian"
-        remaining_in_stock: "%{quantity} bakarrik geratzen da"
       bulk_buy_modal:
         min_quantity: "Gutxieneko kopurua"
         max_quantity: "Gehieneko kopurua"
@@ -4091,7 +4090,7 @@ eu:
         new:
           title: "Produktu berria"
           new_product: "Produktu berria"
-          supplier: "Hornitzailea"
+          enterprise: "Antolaketa"
           search_for_units: "Bilatu unitateak"
           product_name: "produktuaren izena"
           units: "Neurketa-unitatea"

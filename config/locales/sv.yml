@@ -2304,7 +2304,7 @@ sv:
           tags: "Taggar"
       products:
         new:
-          supplier: "Leverantör"
+          enterprise: "Företag"
           units: "Enhetsstorlek"
           value: "Värde"
           price: "Pris"

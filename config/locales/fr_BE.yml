@@ -837,6 +837,7 @@ fr_BE:
         id: Id
       destroy:
         has_associated_subscriptions: "Échec de la suppression : ce client a des abonnements actifs. Annulez-les d'abord."
+        has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."
     customer_account_transaction:
       index:
         available_credit: "Avoir disponible : %{available_credit}"
@@ -3753,7 +3754,10 @@ fr_BE:
         add_to_cart: "Ajouter"
         in_cart: "dans le panier"
         quantity_in_cart: "%{num}article dans le panier"
-        remaining_in_stock: "Seulement %{quantity} produits restants"
+        remaining_in_stock:
+          one: " %{count} seul produit restant"
+          many: "Seulement %{count} produits resttants"
+          other: "Seulement %{count} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4615,9 +4619,8 @@ fr_BE:
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
-          supplier: "Fournisseur"
-          supplier_select_placeholder: "Sélectionnez un fournisseur"
-          search_for_suppliers: "Chercher des fournisseurs"
+          enterprise: "Entreprise"
+          search_for_enterprises: "Recherche d'entreprises"
           search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"

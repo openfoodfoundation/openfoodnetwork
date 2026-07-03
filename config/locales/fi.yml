@@ -3692,7 +3692,6 @@ fi:
         add_to_cart: "Lisää"
         in_cart: "ostoskorissa"
         quantity_in_cart: "%{quantity} ostoskorissa"
-        remaining_in_stock: "Vain %{quantity} jäljellä"
       bulk_buy_modal:
         min_quantity: "Minimimäärä"
         max_quantity: "Maksimimäärä"
@@ -4512,9 +4511,7 @@ fi:
         new:
           title: "Uusi tuote"
           new_product: "Uusi tuote"
-          supplier: "Toimittaja"
-          supplier_select_placeholder: "Valitse toimittaja"
-          search_for_suppliers: "Hae toimittajia"
+          enterprise: "Yritys"
           search_for_units: "Hae yksiköitä"
           product_name: "Tuotteen nimi"
           units: "Yksikkökoko"

@@ -836,6 +836,7 @@ fr:
         id: Id
       destroy:
         has_associated_subscriptions: "La suppression a échoué : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+        has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."
     customer_account_transaction:
       index:
         available_credit: "Avoir disponible : %{available_credit}"
@@ -3009,7 +3010,7 @@ fr:
   transaction_date: "Date"
   payment_state: "Statut du paiement"
   shipping_state: "Statut de la livraison"
-  value: "Quantité"
+  value: "Montant:"
   balance_due: "Montant dû"
   credit: "Avoir:"
   Paid: "Payé"
@@ -3768,7 +3769,10 @@ fr:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
-        remaining_in_stock: "Seulement %{quantity} produits restants"
+        remaining_in_stock:
+          one: "%{count} seul produit restant"
+          many: "Seulement %{count} produits restants"
+          other: "Seulement %{count} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4630,13 +4634,12 @@ fr:
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
-          supplier: "Fournisseur"
-          supplier_select_placeholder: "Sélectionner un producteur"
-          search_for_suppliers: "Chercher des fournisseurs"
+          enterprise: "Entreprise"
+          search_for_enterprises: "Recherche d'entreprises"
           search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
-          value: "Quantité"
+          value: "Montant"
           unit_name: "Unité"
           price: "Prix"
           unit_price: "Prix unitaire"
