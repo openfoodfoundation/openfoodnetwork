@@ -514,43 +514,9 @@ RSpec.describe '
     describe "image page" do
       let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
 
-      it "loading new product image page" do
+      it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector ".no-objects-found"
-
-        page.find('a#new_image_link').click
-        expect(page).to have_selector "#image_attachment"
-      end
-
-      it "loading new product image page including url filters" do
-        visit spree.admin_product_images_path(product, filter)
-
-        page.find('a#new_image_link').click
-
-        expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
-                                                                                        filter)))
-        expect(page).to have_link('Cancel', href: expected_cancel_link)
-      end
-
-      it "upload a new product image including url filters" do
-        visit spree.admin_product_images_path(product, filter)
-
-        page.find('a#new_image_link').click
-
-        attach_file('image_attachment', image_file_path)
-        click_button "Create"
-
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
-      end
-
-      it "loading image page including url filter" do
-        visit spree.admin_product_images_path(product, filter)
-
-        expected_new_image_link = Regexp.new(Regexp.escape(spree.new_admin_product_image_path(
-                                                             product, filter
-                                                           )))
-        expect(page).to have_link('New Image', href: expected_new_image_link)
       end
 
       it "loading edit product image page including url filter" do
@@ -599,9 +565,9 @@ RSpec.describe '
                             alt: "position 1", attachment: image, position: 1)
 
         visit spree.admin_product_images_path(product)
-        page.find('a#new_image_link').click
+        page.find("a.icon-edit").click
         attach_file('image_attachment', unsupported_image_file_path)
-        click_button "Create"
+        click_button "Update"
 
         expect(page).to have_text "Attachment has an invalid content type"
         expect(page).to have_text "Attachment is not identified as a valid media file"

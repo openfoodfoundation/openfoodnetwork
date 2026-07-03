@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module Spree
   module Admin
     class ImagesController < ::Admin::ResourceController
@@ -43,15 +44,20 @@ module Spree
             format.turbo_stream { render :update }
           end
         else
-          respond_with_error(@object.errors)
+          respond_with_error((@error_target || @object).errors)
         end
       end
 
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        set_viewable
+        update_successful = if permitted_resource_params[:attachment].present?
+                              replace_image_without_destroy
+                            else
+                              set_viewable
+                              @object.update(permitted_resource_params)
+                            end
 
-        if @object.update(permitted_resource_params)
+        if update_successful
           flash[:success] = flash_message_for(@object, :successfully_updated)
 
           respond_to do |format|
@@ -114,10 +120,33 @@ module Spree
       def respond_with_error(errors)
         @errors = errors.map(&:full_message)
         respond_to do |format|
-          format.html { respond_with(@object) }
-          format.turbo_stream { render :edit }
+          format.html {
+            render action_name == 'create' ? :new : :edit, status: :unprocessable_entity
+          }
+          format.turbo_stream { render :edit, status: :unprocessable_entity }
         end
+      end
+
+      def replace_image_without_destroy
+        previous_image = @object
+        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
+
+        replacement_image.alt = previous_image.alt
+        replacement_image.position = previous_image.position
+        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
+        replacement_image.viewable_type = 'Spree::Product'
+        replacement_image.viewable_id = params[:image][:viewable_id]
+        replacement_image.attachment.attach(permitted_resource_params[:attachment])
+
+        unless replacement_image.save
+          @error_target = replacement_image
+          return false
+        end
+
+        previous_image.destroy!
+        @object = @image = replacement_image
       end
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
