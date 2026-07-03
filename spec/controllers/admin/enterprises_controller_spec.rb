@@ -777,7 +777,7 @@ RSpec.describe Admin::EnterprisesController do
 
         it "returns all enterprises when no filter params given" do
           get :index, format: :html
-          expect(assigns(:collection).size).to be >= 5
+          expect(assigns(:collection).size).to be 5
         end
       end
     end
