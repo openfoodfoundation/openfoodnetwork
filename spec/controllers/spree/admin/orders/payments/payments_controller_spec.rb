@@ -306,5 +306,65 @@ RSpec.describe Spree::Admin::PaymentsController do
         expect(response.location).to eq spree.edit_admin_order_url(order)
       end
     end
+
+    context "order is in cart state" do
+      let!(:order) { create(:order_with_totals, distributor: shop, state: "cart") }
+
+      context "with a customer and line items" do
+        before do
+          order.customer = create(:customer, enterprise: shop)
+          order.save!
+        end
+
+        it "redirects to order details with an actionable flash message" do
+          spree_get :index, order_id: order.number
+
+          expect_redirect_to_order_details_with_fees_flash
+        end
+      end
+
+      context "with line items but no customer" do
+        it "redirects to order details with an actionable flash message" do
+          spree_get :index, order_id: order.number
+
+          expect_redirect_to_order_details_with_fees_flash
+        end
+      end
+
+      context "with a customer but no line items" do
+        let!(:order) { create(:order, distributor: shop, state: "cart") }
+
+        before do
+          order.customer = create(:customer, enterprise: shop)
+          order.save!
+        end
+
+        it "redirects to order details with an actionable flash message" do
+          spree_get :index, order_id: order.number
+
+          expect_redirect_to_order_details_with_fees_flash
+        end
+      end
+    end
+
+    context "order is in address state" do
+      let!(:order) { create(:order_with_totals, distributor: shop, state: "address") }
+
+      it "redirects to order details with an actionable flash message" do
+        spree_get :index, order_id: order.number
+
+        expect_redirect_to_order_details_with_fees_flash
+      end
+    end
+
+    def expect_redirect_to_order_details_with_fees_flash
+      expect(response).to have_http_status :found
+
+      expected_flash = "Please click 'Update and Recalculate Fees' " \
+                       "on the Order Details tab before proceeding to payment."
+      expect(flash[:notice]).to eq expected_flash
+
+      expect(response.location).to eq spree.edit_admin_order_url(order)
+    end
   end
 end

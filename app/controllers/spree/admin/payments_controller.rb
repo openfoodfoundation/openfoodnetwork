@@ -148,15 +148,17 @@ module Spree
       # At this point admin should have passed through Customer Details step
       # where order.next is called which leaves the order in payment step
       #
-      # Orders in complete or canceled step also allows to access this controller
+      # Orders in complete, canceled, resumed, awaiting_return or returned
+      # state also allow access to this controller
       #
-      # Otherwise redirect user to that step
+      # Otherwise redirect user to the order edit page with an actionable
+      # message explaining how to prepare the order for payment.
       def can_transition_to_payment
         return if @order.confirmation? || @order.payment? ||
                   @order.complete? || @order.canceled? || @order.resumed?
 
-        flash[:notice] = Spree.t(:fill_in_customer_info)
-        redirect_to spree.edit_admin_order_customer_url(@order)
+        flash[:notice] = Spree.t(:update_fees_before_payment, scope: "admin.payments")
+        redirect_to spree.edit_admin_order_url(@order)
       end
 
       def ensure_sufficient_stock_lines

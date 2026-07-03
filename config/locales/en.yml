@@ -4734,6 +4734,7 @@ en:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
         customer_credit_successful: Customer has been successfully credited!
+        update_fees_before_payment: "Please click 'Update and Recalculate Fees' on the Order Details tab before proceeding to payment."
 
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
