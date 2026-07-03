@@ -792,7 +792,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
 
         expect(page).to have_content /Image has been successfully (updated|created)/
-        expect(product.reload.image.attachment.filename.to_s).to eq("500.jpg")
+        expect(product.image.reload.url(:large)).to match /500.jpg$/
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')

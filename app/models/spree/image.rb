@@ -4,18 +4,12 @@ module Spree
   class Image < Asset
     ACCEPTED_CONTENT_TYPES = %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
 
-    acts_as_paranoid
-
-    has_one_attached :attachment, service: image_service, dependent: false do |attachment|
+    has_one_attached :attachment, service: image_service do |attachment|
       attachment.variant :mini, resize_to_fill: [48, 48]
       attachment.variant :small, resize_to_fill: [227, 227]
       attachment.variant :product, resize_to_limit: [240, 240]
       attachment.variant :large, resize_to_limit: [600, 600]
     end
-
-    # Prevent ActiveStorage from purging attachments when a Spree::Image is soft-deleted.
-    attachment_reflection = reflect_on_association(:attachment_attachment)
-    attachment_reflection.options[:dependent] = nil
 
     validates :attachment,
               attached: true,
