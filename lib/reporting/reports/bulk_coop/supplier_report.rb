@@ -5,7 +5,7 @@ module Reporting
     module BulkCoop
       class SupplierReport < Base
         def query_result
-          bulk_coop_filter(table_items).group_by(&:variant).values
+          table_items.group_by(&:variant).values
         end
 
         def columns
