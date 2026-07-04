@@ -368,4 +368,13 @@
     transform-origin: top;
     animation: slideInTop 0.5s;
   }
+
+  .condensed .col-image img.variant_placeholder {
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  .condensed:hover .col-image img.variant_placeholder {
+    opacity: 1;
+  }
 }
