@@ -53,6 +53,7 @@ module Spree
                                                dependent: :destroy,
                                                class_name: "Spree::Image",
                                                inverse_of: :viewable
+    has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
     accepts_nested_attributes_for :images
 
     has_one :default_price,
