@@ -119,6 +119,28 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         end
       end
 
+      # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/14500
+      # es.yml has no remaining_in_stock key of its own, so this exercises the same
+      # en.yml fallback path production hit when a locale is missing the key: without
+      # count: at the shopfront's Angular `t` filter call site, i18n-js renders the raw
+      # pluralization hash instead of interpolating "Only N left".
+      it "falls back to the English pluralized string when the active locale has " \
+         "no remaining_in_stock translation of its own" do
+        distributor.set_preference(:product_low_stock_display, true)
+        variant.update on_hand: 2
+        visit shop_path
+
+        find('.language-switcher').click
+        within '.language-switcher .dropdown' do
+          find('li a[href="/locales/es"]').click
+        end
+
+        within_variant(variant) do
+          expect(page).to have_content "Only 2 left"
+          expect(page).not_to have_content "%{count}"
+        end
+      end
+
       it "alerts us when we enter a quantity greater than the stock available" do
         variant.update on_hand: 5
         visit shop_path
