@@ -73,18 +73,7 @@ export default class VariantController extends Controller {
       unit_value = isNaN(unit_value) ? null : unit_value;
       unit_value *= this.variantUnitScale.value ? this.variantUnitScale.value : 1; // Normalise to default scale
 
-      // Preserve original formatting when computed value matches default,
-      // to avoid false positives from number format differences (e.g. "100" vs "100.0")
-      if (
-        unit_value !== null &&
-        !isNaN(unit_value) &&
-        !isNaN(parseFloat(this.unitValue.defaultValue)) &&
-        parseFloat(this.unitValue.defaultValue) === unit_value
-      ) {
-        this.unitValue.value = this.unitValue.defaultValue;
-      } else {
-        this.unitValue.value = unit_value;
-      }
+      this.unitValue.value = unit_value;
       this.unitValue.dispatchEvent(new Event("input", { bubbles: true }));
       this.unitDescription.value = match[3];
       this.unitDescription.dispatchEvent(new Event("input", { bubbles: true }));
@@ -117,15 +106,7 @@ export default class VariantController extends Controller {
 
     if (match) {
       this.variantUnit.value = match[1];
-      const scaleValue = match[2];
-      const defaultScale = this.variantUnitScale.defaultValue;
-      // Preserve original formatting when numeric value matches,
-      // to avoid false positives from number format differences (e.g. "1" vs "1.0")
-      if (defaultScale && parseFloat(defaultScale) === parseFloat(scaleValue)) {
-        this.variantUnitScale.value = defaultScale;
-      } else {
-        this.variantUnitScale.value = scaleValue;
-      }
+      this.variantUnitScale.value = match[2];
     } else {
       // "items"
       this.variantUnit.value = variant_unit_with_scale;

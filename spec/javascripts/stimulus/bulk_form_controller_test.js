@@ -158,6 +158,49 @@ describe("BulkFormController", () => {
           expect(select1.classList).toContain("changed");
         });
       });
+
+      describe("select-one with TomSelect duplicate options", () => {
+        beforeEach(() => {
+          document.body.innerHTML = `
+            <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
+              <table class="products">
+                <div data-record-id="1">
+                  <select id="select1">
+                    <option value="1" selected>Option 1</option>
+                    <option value="2">Option 2</option>
+                  </select>
+                </div>
+                <input type="submit">
+              </table>
+            </form>
+          `;
+        });
+
+        it("detects no change after revert when duplicate options exist", () => {
+          expect(select1.classList).not.toContain("changed");
+
+          // Change to a different value
+          select1.value = "2";
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).toContain("changed");
+
+          // Simulate TomSelect remote search: adds a duplicate <option>
+          // with the same value but no defaultSelected. Insert before
+          // the original so the browser picks it as selectedOptions[0].
+          const duplicate = document.createElement("option");
+          duplicate.value = "1";
+          duplicate.text = "Option 1";
+          select1.insertBefore(duplicate, select1.options[0]);
+
+          // Revert to original value.
+          // With old reference comparison (selectedOptions[0] !== defaultSelected),
+          // the duplicate (no defaultSelected) !== original (has defaultSelected),
+          // falsely reporting as changed. Value comparison fixes this.
+          select1.value = "1";
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).not.toContain("changed");
+        });
+      });
     });
 
     describe("activating sections, and showing a summary", () => {
