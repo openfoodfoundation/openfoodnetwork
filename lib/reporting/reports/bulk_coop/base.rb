@@ -4,6 +4,8 @@ module Reporting
   module Reports
     module BulkCoop
       class Base < ReportTemplate
+        include BulkCoopFilterable
+
         def message
           I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
@@ -37,15 +39,6 @@ module Reporting
             @params,
             CompleteVisibleOrdersQuery.new(order_permissions).call
           )
-        end
-
-        def bulk_coop_filter(items)
-          return items unless OpenFoodNetwork::FeatureToggle.enabled?(:bulk_coop_filters,
-                                                                      *@user.enterprises)
-
-          group_buy_variants = Spree::Variant.joins(:product)
-            .where(spree_products: { group_buy: true })
-          items.where(variant: group_buy_variants)
         end
 
         def empty_cell(_line_items)
