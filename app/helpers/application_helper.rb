@@ -78,7 +78,6 @@ module ApplicationHelper
       :v3,
       locale.to_s,
       I18nDigests.for_locale(locale),
-      :en,
       I18nDigests.for_locale(:en)
     ]
   end

@@ -88,13 +88,13 @@ RSpec.describe ApplicationHelper do
     it "appends locale and digest to a single key" do
       expect(
         helper.cache_key_with_locale("single-key", "en")
-      ).to eq(["single-key", :v3, "en", en_digest, :en, en_digest])
+      ).to eq(["single-key", :v3, "en", en_digest, en_digest])
     end
 
     it "appends locale and digest to multiple keys" do
       expect(
         helper.cache_key_with_locale(["array", "of", "keys"], "es")
-      ).to eq(["array", "of", "keys", :v3, "es", es_digest, :en, en_digest])
+      ).to eq(["array", "of", "keys", :v3, "es", es_digest, en_digest])
     end
   end
 end
