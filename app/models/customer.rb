@@ -67,6 +67,8 @@ class Customer < ApplicationRecord
   attribute :enterprise_charges_sales_tax, :boolean, default: false
 
   def full_name
+    return enterprise_name if enterprise?
+
     "#{first_name} #{last_name}".strip
   end
 

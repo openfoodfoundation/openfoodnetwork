@@ -149,6 +149,49 @@ RSpec.describe Customer do
     end
   end
 
+  describe "#full_name" do
+    context "when customer type is individual" do
+      let(:customer) {
+        build(:customer, customer_type: "individual", first_name: "Jane", last_name: "Doe")
+      }
+
+      it "returns first and last name joined" do
+        expect(customer.full_name).to eq("Jane Doe")
+      end
+
+      context "when only first name is present" do
+        let(:customer) {
+          build(:customer, customer_type: "individual", first_name: "Jane", last_name: nil)
+        }
+
+        it "returns first name without trailing space" do
+          expect(customer.full_name).to eq("Jane")
+        end
+      end
+
+      context "when both names are blank" do
+        let(:customer) {
+          build(:customer, customer_type: "individual", first_name: nil, last_name: nil)
+        }
+
+        it "returns an empty string" do
+          expect(customer.full_name).to eq("")
+        end
+      end
+    end
+
+    context "when customer type is enterprise" do
+      let(:customer) {
+        build(:customer, customer_type: "enterprise", enterprise_name: "Acme Corp",
+                         enterprise_acn: "123456789")
+      }
+
+      it "returns the enterprise name" do
+        expect(customer.full_name).to eq("Acme Corp")
+      end
+    end
+  end
+
   describe "#credit_balance" do
     subject(:customer) { create(:customer) }
 
