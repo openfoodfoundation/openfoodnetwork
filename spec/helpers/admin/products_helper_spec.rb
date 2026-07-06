@@ -106,10 +106,13 @@ RSpec.describe Admin::ProductsHelper do
   describe "#variant_displayable?" do
     let(:enterprise) { create(:supplier_enterprise) }
     let(:variant) { create(:variant, enterprise: ) }
+    let(:producer_id) { nil }
     let(:allowed_producers) { [enterprise] }
     let(:allowed_source_producers) { [] }
     let(:managed_product_enterprises) { [] }
-    subject { helper.variant_displayable?(variant, allowed_producers, allowed_source_producers) }
+    subject {
+      helper.variant_displayable?(variant, producer_id, allowed_producers, allowed_source_producers)
+    }
 
     before do
       allow(helper).to receive(:managed_product_enterprises).and_return(managed_product_enterprises)
@@ -166,6 +169,23 @@ RSpec.describe Admin::ProductsHelper do
 
       it "returns true" do
         expect(subject).to eq(true)
+      end
+    end
+
+    describe "enterprise filter" do
+      context "enterprise selected" do
+        let(:producer_id) { enterprise.id.to_s }
+
+        it "returns true" do
+          expect(subject).to eq(true)
+        end
+      end
+      context "other enterprise selected" do
+        let(:producer_id) { "123" }
+
+        it "returns false" do
+          expect(subject).to eq(false)
+        end
       end
     end
   end

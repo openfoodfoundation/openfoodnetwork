@@ -468,6 +468,22 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
         expect(page).to have_select "Enterprises", selected: "Enterprise 1"
         expect_products_count_to_be 1
       end
+
+      context "product has variant owned by different enterprise" do
+        it "only variants for the selected enterprise are shown" do
+          bananas.variants.first.update! display_name: "Bananas1"
+          create(:variant, product: bananas, display_name: "Bananas2", enterprise: enterprise1)
+
+          visit admin_products_url
+          search_by_enterprise "Enterprise 1"
+          expect(page).to have_content "1 product found for your search criteria."
+
+          expect_products_count_to_be 1
+          # Do not show variant from other enterprise
+          expect(page).not_to have_css row_containing_name("Bananas1")
+          expect(page).to have_css row_containing_name("Bananas2")
+        end
+      end
     end
 
     context "User has single enterprise" do

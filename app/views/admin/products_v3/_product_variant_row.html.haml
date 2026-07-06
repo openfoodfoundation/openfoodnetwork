@@ -39,7 +39,7 @@
 
     - product.variants.each_with_index do |variant, variant_index|
 
-      - next unless variant_displayable?(variant, allowed_producers, allowed_source_producers)
+      - next unless variant_displayable?(variant, @producer_id, allowed_producers, allowed_source_producers)
 
       - #TODO skip if super admin, move to a helper
       - if variant_readonly?(variant, allowed_producers, allowed_source_producers)

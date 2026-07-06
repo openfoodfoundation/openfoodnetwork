@@ -77,7 +77,11 @@ module Admin
       [[name, id]]
     end
 
-    def variant_displayable?(variant, allowed_producers, allowed_source_producers)
+    def variant_displayable?(variant, producer_id, allowed_producers, allowed_source_producers)
+      # Filter out other enterprises if an enterprise filter was selected.
+      # (Note we still don't filter category selections here)
+      return false if producer_id.present? && variant.enterprise_id.to_s != producer_id
+
       # Filter out variant a user has not permission to update, but keep variant with no enterprise
       return false if variant.enterprise.present? &&
                       !(allowed_producers.include?(variant.enterprise) ||
