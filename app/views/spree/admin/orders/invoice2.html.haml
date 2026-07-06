@@ -55,7 +55,9 @@
       %td{ :align => "right" }
         = t :invoice_billing_address
         %br
-        - if @order.bill_address
+        - if @order.customer
+          %strong= @order.customer.full_name
+        - elsif @order.bill_address
           %strong= @order.bill_address.full_name
         - if @order&.customer&.code.present?
           %br
@@ -72,7 +74,7 @@
         - if @order&.customer&.email.present?
           %br
           = @order.customer.email
-        - if @order&.customer&.enterprise_acn.present?
+        - if @order&.customer&.enterprise?
           %br
           = @order.customer.enterprise_acn
 
