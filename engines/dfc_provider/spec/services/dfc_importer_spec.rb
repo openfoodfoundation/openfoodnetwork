@@ -42,4 +42,28 @@ RSpec.describe DfcImporter do
     expect(subject.errors.first.message)
       .to eq "Validation failed: Address zipcode can't be blank, Address is invalid"
   end
+
+  it "imports farms in DFC v2 format" do
+    expect_any_instance_of(DfcPlatformRequest).to receive(:call) do
+      ExampleJson.read("litefarm_v2")
+    end
+
+    expect {
+      subject.import_enterprise_profiles("lf-dev", endpoint)
+    }.to have_enqueued_mail(Spree::UserMailer, :confirmation_instructions).exactly(7)
+      .and have_enqueued_mail(EnterpriseMailer, :welcome).exactly(6)
+
+    enterprise = Enterprise.joins(:semantic_link).find_by(semantic_link: { semantic_id: })
+    expect(enterprise.name).to eq "DFC Test Farm Beta (All Supplied Fields)"
+    expect(enterprise.email_address).to eq "dfcshop@example.com"
+    expect(enterprise.visible).to eq "public"
+    expect(enterprise.properties.count).to eq 1
+    expect(enterprise.properties.first.name).to eq "Organic"
+
+    expect(subject.errors.count).to eq 1
+    expect(subject.errors.first.record.semantic_link.semantic_id)
+      .to eq "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299"
+    expect(subject.errors.first.message)
+      .to eq "Validation failed: Address zipcode can't be blank, Address is invalid"
+  end
 end
