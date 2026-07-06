@@ -14,7 +14,7 @@
   = error_message_on variant, :sku
 %td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
   = f.text_field :variant_unit, style: "display:none"
-  = f.text_field :variant_unit_scale, style: "display:none"
+  = f.text_field :variant_unit_scale, style: "display:none", value: (number_with_precision(variant.variant_unit_scale, strip_insignificant_zeros: true) if variant.variant_unit_scale)
   = f.select :variant_unit_with_scale,
       options_for_select(WeightsAndMeasures.variant_unit_options, variant.variant_unit_with_scale),
       { include_blank: t('.select_unit_scale') },
@@ -33,7 +33,7 @@
   .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Show a composite field for unit_value and unit_description
-      = f.text_field :unit_value, style: "display:none"
+      = f.text_field :unit_value, style: "display:none", value: (number_with_precision(variant.unit_value, strip_insignificant_zeros: true) if variant.unit_value)
       = f.text_field :unit_description, style: "display:none"
       = f.text_field :unit_value_with_description,
           value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
