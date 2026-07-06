@@ -74,7 +74,13 @@ module ApplicationHelper
 
   # Update "v1" to invalidate existing cache key
   def cache_key_with_locale(key, locale)
-    Array.wrap(key) + ["v3", locale.to_s, I18nDigests.for_locale(locale)]
+    Array.wrap(key) + [
+      :v3,
+      locale.to_s,
+      I18nDigests.for_locale(locale),
+      :en,
+      I18nDigests.for_locale(:en)
+    ]
   end
 
   def pdf_stylesheet_pack_tag(source)
