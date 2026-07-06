@@ -16,10 +16,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     login_as user
   end
 
-  let(:enterprise_search_selector) { 'input[placeholder="Search for enterprises"]' }
-  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
-  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
-
   describe "updating", feature: :variant_tag do
     let!(:taxon) { create(:taxon) }
     let!(:variant_a1) {

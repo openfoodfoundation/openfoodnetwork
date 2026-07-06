@@ -15,10 +15,6 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     login_as user
   end
 
-  let(:enterprise_search_selector) { 'input[placeholder="Search for enterprises"]' }
-  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
-  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
-
   describe "with no products" do
     before { visit admin_products_url }
     it "can see the new product page" do
