@@ -434,22 +434,21 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     end
 
     context "User has multiple enterprises" do
-      before { create_products 1 }
+      let!(:bananas) { create(:simple_product, name: "Bananas", enterprise_id: enterprise.id) }
 
-      # create a product with a different supplier
       let!(:enterprise1) { create(:supplier_enterprise, name: "Enterprise 1") }
-      let!(:product_by_supplier) {
-        create(:simple_product, name: "Apples", enterprise_id: enterprise1.id)
-      }
 
       before { user.enterprise_roles.create(enterprise: enterprise1) }
 
       it "can search for and update a product" do
+        # create a product with a different supplier
+        product1 = create(:simple_product, name: "Apples", enterprise_id: enterprise1.id)
+
         visit admin_products_url
 
         search_by_enterprise "Enterprise 1"
 
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "Enterprises", selected: "Enterprise 1", wait: 5
         expect_products_count_to_be 1
 
@@ -461,11 +460,11 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
           click_button "Save changes"
 
           expect(page).to have_content "Changes saved"
-          product_by_supplier.reload
-        }.to change { product_by_supplier.name }.to("Pommes")
+          product1.reload
+        }.to change { product1.name }.to("Pommes")
 
         # Search is still applied
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "Enterprises", selected: "Enterprise 1"
         expect_products_count_to_be 1
       end
