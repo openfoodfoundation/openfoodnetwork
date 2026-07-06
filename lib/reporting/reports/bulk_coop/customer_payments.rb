@@ -10,11 +10,8 @@ module Reporting
 
         def table_items
           all_items = report_line_items.list(line_item_includes)
-          return all_items unless OpenFoodNetwork::FeatureToggle.enabled?(:bulk_coop_filters,
-                                                                          *@user.enterprises)
+          return all_items unless bulk_coop_filters_enabled?
 
-          group_buy_variants = Spree::Variant.joins(:product)
-            .where(spree_products: { group_buy: true })
           bulk_order_ids = all_items.where(variant: group_buy_variants).select(:order_id)
           all_items.where(order_id: bulk_order_ids)
         end
