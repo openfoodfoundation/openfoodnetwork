@@ -94,16 +94,42 @@ module Spree
         Spree::Image.new(viewable: parent)
       end
 
+      def parent
+        return @parent if @parent
+
+        if params[:variant_id]
+          @parent = Spree::Variant.includes(:product).find(params[:variant_id])
+          @variant = @parent
+          @product = @variant.product
+        else
+          @parent = Spree::Product.find(params[:product_id])
+          @product = @parent
+        end
+
+        @parent
+      end
+
       def location_after_save
-        params[:return_url] || spree.admin_product_images_url(params[:product_id], @url_filters)
+        return params[:return_url] if params[:return_url].present?
+
+        if params[:variant_id]
+          admin_products_url
+        else
+          spree.admin_product_images_url(params[:product_id], @url_filters)
+        end
       end
 
       def load_data
-        @product = Product.find(params[:product_id])
+        if params[:variant_id]
+          @variant = Spree::Variant.find(params[:variant_id])
+          @product = @variant.product
+        else
+          @product = Product.find(params[:product_id])
+        end
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Product'
+        @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
         @image.viewable_id = params[:image][:viewable_id]
       end
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Admin::ProductsHelper do
+  include FileHelper
+
   describe '#product_carousel_images_data' do
     context 'when product has images' do
       it 'returns normalized image data for each product image' do
@@ -204,6 +206,80 @@ RSpec.describe Admin::ProductsHelper do
       it "returns true" do
         expect(helper.variant_readonly?(variant, allowed_producers,
                                         allowed_source_producers)).to eq(true)
+      end
+    end
+  end
+
+  describe '#image_form_path' do
+    let(:product) { create(:product) }
+
+    context 'when imageable is a product' do
+      context 'without existing image' do
+        it 'returns new_admin_product_image_path' do
+          expect(helper.image_form_path(product))
+            .to eq "/admin/products/#{product.id}/images/new"
+        end
+      end
+
+      context 'with existing image' do
+        let!(:product) { create(:product_with_image) }
+
+        it 'returns edit_admin_product_image_path' do
+          expect(helper.image_form_path(product))
+            .to eq "/admin/products/#{product.id}/images/#{product.image.id}/edit"
+        end
+      end
+    end
+
+    context 'when imageable is a variant' do
+      let(:variant) { create(:variant, product:) }
+
+      context 'without existing image' do
+        it 'returns new_admin_product_image_path with variant_id' do
+          expect(helper.image_form_path(variant))
+            .to eq "/admin/products/#{product.id}/images/new?variant_id=#{variant.id}"
+        end
+      end
+
+      context 'with existing image' do
+        let!(:variant_image) {
+          Spree::Image.create(
+            attachment: white_logo_file,
+            viewable: variant
+          )
+        }
+
+        it 'returns edit_admin_product_image_path with variant_id' do
+          path = helper.image_form_path(variant.reload)
+          expect(path).to include("/admin/products/#{product.id}/images/#{variant_image.id}/edit")
+          expect(path).to include("variant_id=#{variant.id}")
+        end
+      end
+    end
+  end
+
+  describe '#image_modal_resource_name' do
+    let(:product) { create(:product, name: "Apples") }
+
+    context 'when variant is nil' do
+      it 'returns the product name' do
+        expect(helper.image_modal_resource_name(nil, product)).to eq "Apples"
+      end
+    end
+
+    context 'when variant has a display_name' do
+      let(:variant) { create(:variant, product:, display_name: "Red") }
+
+      it 'returns product name with variant display_name' do
+        expect(helper.image_modal_resource_name(variant, product)).to eq "Apples - Red"
+      end
+    end
+
+    context 'when variant display_name is blank' do
+      let(:variant) { create(:variant, product:, display_name: "") }
+
+      it 'returns only the product name' do
+        expect(helper.image_modal_resource_name(variant, product)).to eq "Apples"
       end
     end
   end

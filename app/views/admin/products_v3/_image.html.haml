@@ -1,0 +1,5 @@
+-# locals: (imageable:, img_class: nil)
+%a.image-field{ href: image_form_path(imageable), 'data-turbo-stream': true }
+  = image_tag imageable.image&.url(:mini) || Spree::Image.default_image_url(:mini),
+    class: img_class, width: 40, height: 40
+  .button.secondary.mini= t('admin.products_page.image.edit')

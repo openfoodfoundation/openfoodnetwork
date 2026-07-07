@@ -783,7 +783,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       it "saves product image" do
         within ".reveal-modal" do
-          expect(page).to have_content "Edit product photo"
+          expect(page).to have_content "Edit image for Apples"
           expect_page_to_have_image(current_img_url)
 
           # Upload a new image file
@@ -830,6 +830,74 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       let(:current_img_url) { Spree::Image.default_image_url(:large) }
 
       include_examples "updating image"
+    end
+  end
+
+  describe "edit variant image" do
+    shared_examples "updating variant image" do
+      before do
+        visit admin_products_url
+
+        within "#variant-image-#{variant.id}" do
+          click_on "Edit"
+        end
+      end
+
+      it "saves variant image" do
+        within ".reveal-modal" do
+          expect(page).to have_content "Edit image for Apples"
+          expect_page_to_have_image(current_img_url)
+
+          attach_file 'image[attachment]', Rails.public_path.join('500.jpg'), visible: false
+        end
+
+        expect(page).to have_content /Image has been successfully (updated|created)/
+        expect(variant.image.reload.url(:large)).to match /500.jpg$/
+
+        within "#variant-image-#{variant.id}" do
+          expect_page_to_have_image('500.jpg')
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading wrong type of file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('Terms-of-service.pdf'),
+                      visible: false
+          expect(page).to have_content /Attachment has an invalid content type/
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading an invalid image file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('invalid_image.jpg'),
+                      visible: false
+          expect(page).to have_content /Attachment is not identified as a valid media file/
+        end
+      end
+    end
+
+    context "with default image" do
+      let!(:product) { create(:product, name: "Apples", supplier_id: producer.id) }
+      let(:variant) { product.variants.first }
+      let(:current_img_url) { Spree::Image.default_image_url(:large) }
+
+      include_examples "updating variant image"
+    end
+
+    context "with existing image" do
+      let!(:product) { create(:product, name: "Apples", supplier_id: producer.id) }
+      let(:variant) { product.variants.first }
+      let!(:variant_image) {
+        Spree::Image.create(
+          attachment: white_logo_file,
+          viewable: variant,
+        )
+      }
+      let(:current_img_url) { variant.image.reload.url(:large) }
+
+      include_examples "updating variant image"
     end
   end
 
