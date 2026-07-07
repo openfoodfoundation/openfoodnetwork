@@ -675,7 +675,7 @@ fr:
       image:
         edit: Modifier
       variant_row:
-        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Hub : %{hub_name}"
+        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Producer : %{producer_name}"
       product_preview:
         product_preview: Prévisualisation du produit
         shop_tab: Boutique
