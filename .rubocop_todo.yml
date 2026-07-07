@@ -106,6 +106,7 @@ Metrics/ClassLength:
     - 'app/controllers/admin/subscriptions_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/checkout_controller.rb'
+    - 'app/controllers/spree/admin/images_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
     - 'app/controllers/spree/admin/payments_controller.rb'
