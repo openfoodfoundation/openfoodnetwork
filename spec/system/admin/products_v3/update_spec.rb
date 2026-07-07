@@ -857,7 +857,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     end
 
     context "with default image" do
-      let!(:product) { create(:product, name: "Apples", supplier_id: producer.id) }
+      let!(:product) { create(:product, name: "Apples") }
       let(:variant) { product.variants.first }
       let(:current_img_url) { Spree::Image.default_image_url(:large) }
 
@@ -865,7 +865,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     end
 
     context "with existing image" do
-      let!(:product) { create(:product, name: "Apples", supplier_id: producer.id) }
+      let!(:product) { create(:product, name: "Apples") }
       let(:variant) { product.variants.first }
       let!(:variant_image) {
         Spree::Image.create(
