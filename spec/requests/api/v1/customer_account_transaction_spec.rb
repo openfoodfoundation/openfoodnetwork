@@ -48,18 +48,21 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
       end
 
       response "422", "Unpermitted parameter" do
+        let(:someone_else) { create(:user) }
         let(:customer_account_transaction) do
           {
             id: 101,
             customer_id: customer.id.to_s,
             amount: "10.25",
+            created_by_id: someone_else.id.to_s,
           }
         end
         schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
+          expect(CustomerAccountTransaction.count).to eq 0
           expect(json_response[:errors][0][:detail]).to eq(
-            "Parameters not allowed in this request: id"
+            "Parameters not allowed in this request: id, created_by_id"
           )
         end
       end
