@@ -380,13 +380,19 @@ paths:
               schema:
                 "$ref": "#/components/schemas/customer_account_transaction"
         '422':
-          description: Invalid resource
+          description: Missing required parameter
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '404':
+          description: Invalid customer ID
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '401':
-          description: Unauthorized
+          description: Access forbidden
       requestBody:
         content:
           application/json:
