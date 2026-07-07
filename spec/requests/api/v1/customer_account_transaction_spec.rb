@@ -4,7 +4,7 @@ require "swagger_helper"
 
 RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
   let!(:enterprise) { create(:enterprise) }
-  let(:customer) { create(:customer) }
+  let(:customer) { create(:customer, enterprise:) }
 
   before do
     login_as enterprise.owner
@@ -79,7 +79,19 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         end
       end
 
-      response "422", "Invalid resource" do
+      response "422", "Missing required parameter" do
+        let(:customer_account_transaction) { { customer_id: customer.id.to_s } }
+        schema '$ref': "#/components/schemas/error_response"
+
+        run_test! do
+          expect(json_response[:errors][0][:detail]).to eq(
+            "Invalid resource. Please fix errors and try again."
+          )
+          expect(json_response[:meta][:validation_errors]).to eq ["Amount can't be blank"]
+        end
+      end
+
+      response "422", "Invalid customer ID" do
         let(:customer_account_transaction) { { amount: "10.25" } }
         schema '$ref': "#/components/schemas/error_response"
 
