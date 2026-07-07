@@ -91,15 +91,14 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         end
       end
 
-      response "422", "Invalid customer ID" do
+      response "404", "Invalid customer ID" do
         let(:customer_account_transaction) { { amount: "10.25" } }
         schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
           expect(json_response[:errors][0][:detail]).to eq(
-            "Invalid resource. Please fix errors and try again."
+            "The resource you were looking for could not be found."
           )
-          expect(json_response[:meta][:validation_errors]).to eq ["Customer must exist"]
         end
       end
 
@@ -114,6 +113,22 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         end
 
         run_test!
+      end
+
+      response "401", "Access forbidden" do
+        # Customer belongs to enterprise that I don't have permission for
+        let(:customer) { create(:customer, enterprise: create(:enterprise)) }
+
+        let(:customer_account_transaction) do
+          {
+            customer_id: customer.id.to_s,
+            amount: "10.25",
+          }
+        end
+
+        run_test! do
+          expect(customer.reload.credit_balance).to eq 0
+        end
       end
     end
 

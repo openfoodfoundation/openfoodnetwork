@@ -6,6 +6,9 @@ module Api
       def create
         authorize! :create, CustomerAccountTransaction
 
+        customer = Customer.find(customer_account_transaction_params[:customer_id])
+        authorize! :update, customer
+
         default_params = {
           currency: CurrentConfig.get(:currency), created_by: current_api_user
         }
