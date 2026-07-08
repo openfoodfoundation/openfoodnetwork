@@ -17,5 +17,130 @@
       margin: 0 0 0.5rem;
     }
   }
+
+  .ofn-thumbnail-carousel {
+    touch-action: pan-y;
+    display: grid;
+    grid-template-columns: $carousel-thumbnail-grid-template-columns;
+
+    .swiper-wrapper {
+      display: flex;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .ofn-thumbnail-carousel__controls {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      z-index: $carousel-controls-z-index;
+      pointer-events: none;
+    }
+
+    // Apply CSS transition only for the AngularJS-driven carousel (not Swiper-managed instances).
+    // Swiper adds `swiper-initialized` when active and manages transitions itself via JS;
+    // adding a CSS transition there causes double transitionend events that lock the navigation.
+    &:not(.swiper-initialized) .swiper-wrapper {
+      transition: transform $carousel-thumbnail-motion-duration $carousel-thumbnail-motion-easing;
+      will-change: transform;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+
+    .swiper-slide {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: $carousel-thumbnail-slide-min-height;
+      position: relative;
+      padding: $carousel-thumbnail-slide-padding;
+    }
+
+    .ofn-thumbnail-carousel__image {
+      width: 100%;
+      height: $carousel-thumbnail-image-height;
+      max-height: $carousel-thumbnail-image-height;
+      object-fit: contain;
+      padding: $carousel-thumbnail-image-padding;
+      margin: $carousel-thumbnail-image-margin;
+    }
+
+    .ofn-thumbnail-carousel__button {
+      margin: 0;
+      padding: 0;
+      width: $carousel-button-size;
+      height: $carousel-button-size;
+      border-radius: 9999px;
+      border: none;
+      background: $carousel-button-background;
+      box-shadow: $carousel-button-shadow;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: $carousel-button-line-height;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: $carousel-controls-z-index;
+      pointer-events: auto;
+      transition: $carousel-button-transition;
+
+      &:hover {
+        background: $carousel-button-hover-background;
+        box-shadow: $carousel-button-hover-shadow;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $carousel-button-focus-color;
+        outline-offset: 2px;
+      }
+    }
+
+    .ofn-thumbnail-carousel__button--prev {
+      left: $carousel-button-offset-wide;
+    }
+
+    .ofn-thumbnail-carousel__button--next {
+      right: $carousel-button-offset-wide;
+    }
+
+    .ofn-thumbnail-carousel__button-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        display: block;
+        width: $carousel-button-icon-size;
+        height: $carousel-button-icon-size;
+      }
+    }
+
+    .ofn-thumbnail-carousel__thumbs {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .ofn-thumbnail-carousel__thumb {
+      width: $carousel-thumbnail-thumb-size;
+      height: $carousel-thumbnail-thumb-size;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      opacity: $carousel-thumbnail-thumb-opacity;
+
+      &.is-active {
+        opacity: $carousel-thumbnail-thumb-active-opacity;
+      }
+    }
+
+    .ofn-thumbnail-carousel__thumb-image {
+      padding: $carousel-thumbnail-image-padding;
+      margin: $carousel-thumbnail-image-margin;
+    }
+  }
 }
 

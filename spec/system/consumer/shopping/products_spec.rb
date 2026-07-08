@@ -121,6 +121,21 @@ RSpec.describe "As a consumer I want to view products" do
         visit shop_path
         expect(find_link('external site')[:target]).to eq('_blank')
       end
+
+      it "loads and clears the product modal in the dynamic modal container" do
+        visit shop_path
+
+        expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
+
+        open_product_modal(product)
+
+        within("#shop-product-modal-container .reveal-modal") do
+          expect(page).to have_content(product.name)
+        end
+
+        close_modal(within_selector: '#shop-product-modal-container')
+        expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
+      end
     end
 
     describe "filtering" do
@@ -167,9 +182,11 @@ RSpec.describe "As a consumer I want to view products" do
   end
 
   def within_product_modal(product, &)
-    click_link product.name
+    open_product_modal(product)
     modal_should_be_open_for product
-    within(".reveal-modal", &)
+    within("#shop-product-modal-container .reveal-modal", &)
+    close_modal(within_selector: '#shop-product-modal-container')
+    expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
   end
 
   def within_product_description(product, &)

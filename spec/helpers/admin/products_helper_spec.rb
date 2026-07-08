@@ -1,6 +1,49 @@
 # frozen_string_literal: true
 
 RSpec.describe Admin::ProductsHelper do
+  describe '#product_carousel_images_data' do
+    context 'when product has images' do
+      it 'returns normalized image data for each product image' do
+        product = create(:product_with_image, images_count: 2)
+        product.images.update_all(alt: 'Front of pack')
+
+        data = helper.product_carousel_images_data(product)
+
+        expect(data).not_to be_empty
+        expect(data.first[:url]).to eq(product.images.first.url(:large))
+        expect(data.first[:alt]).to eq('Front of pack')
+        expect(data.first[:caption]).to eq("#{product.name} - 1")
+        expect(data.second[:url]).to eq(product.images.second.url(:large))
+        expect(data.second[:alt]).to eq('Front of pack')
+        expect(data.second[:caption]).to eq("#{product.name} - 2")
+      end
+
+      it 'falls back to the product name when the image has no alt text' do
+        product = create(:product_with_image)
+        data = helper.product_carousel_images_data(product)
+
+        expect(data.first[:alt]).to eq(product.name)
+        expect(data.first[:caption]).to be_nil
+      end
+    end
+
+    context 'when product has no images' do
+      let(:product) { create(:product) }
+
+      it 'returns a default fallback image entry' do
+        data = helper.product_carousel_images_data(product)
+
+        expect(data).to eq([
+                             {
+                               url: Spree::Image.default_image_url(:large),
+                               alt: product.name,
+                               caption: nil
+                             }
+                           ])
+      end
+    end
+  end
+
   describe '#unit_value_with_description' do
     let(:variant) {
       create(:variant, variant_unit_scale: 1000.0, unit_value: 2000.0, unit_description: 'kg')

@@ -1,0 +1,29 @@
+- # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
+- modal_options = { id: "shop-product-modal-#{@product.id}", instant: true, modal_class: "big", close_button: false, close_x_button: true, :'data-controller' => "shop-product-modal", :'data-action' => "modal:closing->shop-product-modal#clear" }
+
+= render ModalComponent.new(**modal_options) do
+  .row
+    .columns.small-12.medium-6.large-6.product-header
+      %h3= @product.name
+      - if @supplier
+        %span
+          %em= t("products_from")
+          %span= @supplier.name
+
+      %br
+
+      .filter-shopfront.property-selectors.inline-block
+        %ul
+          - @product.properties_including_inherited.each do |property|
+            - next if property[:name].blank?
+            %li
+              %span= property[:name]
+
+      - if @product.description.present?
+        .product-description{ "data-controller" => "add-blank-to-link" }
+          %p.text-small
+            - # description is sanitized in Spree::Product#description method
+            = @product.description.html_safe
+
+    .columns.small-12.medium-6.large-6.product-img
+      = render ThumbnailCarouselComponent.new(images: @carousel_images, class: (@product.images.any? ? nil : "placeholder"))
