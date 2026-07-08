@@ -22,7 +22,7 @@ RSpec.describe "Shop" do
         product.properties << create(:property, name: "Organic")
         order_cycle.exchanges.outgoing.first.variants << product.variants.first
 
-        get "/shop/product_modal", params: { product_id: product.id }
+        get "/shop/product_modal", params: { product_id: product.id, order_cycle_id: order_cycle.id }
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(product.name)
@@ -44,7 +44,7 @@ RSpec.describe "Shop" do
       it "returns not found" do
         product = create(:simple_product)
 
-        get "/shop/product_modal", params: { product_id: product.id }
+        get "/shop/product_modal", params: { product_id: product.id, order_cycle_id: order_cycle.id }
 
         expect(response).to have_http_status(:not_found)
         expect(response.body).to be_empty
@@ -58,7 +58,7 @@ RSpec.describe "Shop" do
           orders_open_at: 1.week.ago, orders_close_at: 1.day.ago
         )
 
-        get "/shop/product_modal", params: { product_id: product.id }
+        get "/shop/product_modal", params: { product_id: product.id, order_cycle_id: order_cycle.id }
 
         expect(response).to have_http_status(:not_found)
         expect(response.body).to be_empty

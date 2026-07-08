@@ -26,4 +26,4 @@
             = @product.description.html_safe
 
     .columns.small-12.medium-6.large-6.product-img
-      = render ThumbnailCarouselComponent.new(images: @carousel_images, show_captions: true, class: (@product.images.any? ? nil : "placeholder"))
+      = render ThumbnailCarouselComponent.new(images: @carousel_images, class: (@product.images.any? ? nil : "placeholder"))

@@ -114,4 +114,4 @@
 
               .columns.small-12.medium-6.large-6.product-img
                 - carousel_images = product_carousel_images_data(@product)
-                = render ThumbnailCarouselComponent.new(images: carousel_images, show_captions: true, class: (@product.images.any? ? nil : "placeholder"))
+                = render ThumbnailCarouselComponent.new(images: carousel_images, class: (@product.images.any? ? nil : "placeholder"))

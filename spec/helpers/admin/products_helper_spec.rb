@@ -3,20 +3,23 @@
 RSpec.describe Admin::ProductsHelper do
   describe '#product_carousel_images_data' do
     context 'when product has images' do
-      let(:product) { create(:product_with_image) }
-
       it 'returns normalized image data for each product image' do
-        product.images.first.update!(alt: 'Front of pack')
+        product = create(:product_with_image, images_count: 2)
+        product.images.update_all(alt: 'Front of pack')
 
         data = helper.product_carousel_images_data(product)
 
         expect(data).not_to be_empty
         expect(data.first[:url]).to eq(product.images.first.url(:large))
         expect(data.first[:alt]).to eq('Front of pack')
-        expect(data.first[:caption]).to eq('Front of pack')
+        expect(data.first[:caption]).to eq("#{product.name} - 1")
+        expect(data.second[:url]).to eq(product.images.second.url(:large))
+        expect(data.second[:alt]).to eq('Front of pack')
+        expect(data.second[:caption]).to eq("#{product.name} - 2")
       end
 
       it 'falls back to the product name when the image has no alt text' do
+        product = create(:product_with_image)
         data = helper.product_carousel_images_data(product)
 
         expect(data.first[:alt]).to eq(product.name)

@@ -38,10 +38,17 @@ FactoryBot.define do
   end
 
   factory :product_with_image, parent: :product do
-    after(:create) do |product|
-      Spree::Image.create(attachment: white_logo_file,
-                          viewable_id: product.id,
-                          viewable_type: 'Spree::Product')
+    transient do
+      images_count { 1 }
+    end
+
+    after(:create) do |product, evaluator|
+      evaluator.images_count.times do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: product
+        )
+      end
     end
   end
 
