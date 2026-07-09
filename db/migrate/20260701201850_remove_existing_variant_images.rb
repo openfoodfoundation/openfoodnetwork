@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 class RemoveExistingVariantImages < ActiveRecord::Migration[7.2]
-  class SpreeImage < ActiveRecord::Base
-    self.table_name = "spree_assets"
-    self.inheritance_column = :_type_disabled
+  module Spree
+    class Asset < ActiveRecord::Base
+      # This class is to allow the migration to reference the Spree::Asset in record_type.
+      self.table_name = "spree_assets"
+      self.inheritance_column = :_type_disabled
+    end
+  end
 
+  class SpreeImage < Spree::Asset
     has_one :attachment_record,
             -> { where(name: "attachment", record_type: "Spree::Asset") },
             class_name: "ActiveStorage::Attachment",
