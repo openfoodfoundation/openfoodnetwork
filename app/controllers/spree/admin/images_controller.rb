@@ -160,17 +160,19 @@ module Spree
         replacement_image.alt = previous_image.alt
         replacement_image.position = previous_image.position
         replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        replacement_image.viewable_type = 'Spree::Product'
+        replacement_image.viewable_type = previous_image.viewable_type
         replacement_image.viewable_id = params[:image][:viewable_id]
         replacement_image.attachment.attach(permitted_resource_params[:attachment])
 
-        unless replacement_image.save
-          @error_target = replacement_image
-          return false
+        Spree::Image.transaction do
+          replacement_image.save!
+          previous_image.destroy!
         end
 
-        previous_image.destroy!
         @object = @image = replacement_image
+      rescue ActiveRecord::RecordInvalid
+        @error_target = replacement_image
+        false
       end
     end
   end

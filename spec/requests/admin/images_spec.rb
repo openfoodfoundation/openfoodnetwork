@@ -182,10 +182,11 @@ RSpec.describe "/admin/products/:product_id/images" do
     it "updates the variant image" do
       expect {
         subject
-        variant_image.reload
-      }.to change { variant_image.attachment&.filename.to_s }
+        variant.reload
+      }.to change { variant.image&.attachment&.filename.to_s }
 
-      expect(variant_image.viewable_type).to eq "Spree::Variant"
+      expect(variant.image.viewable_type).to eq "Spree::Variant"
+      expect(variant.image.viewable_id).to eq variant.id
     end
 
     it "redirects to admin_products_url" do

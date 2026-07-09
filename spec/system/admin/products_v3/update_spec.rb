@@ -852,7 +852,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
 
         expect(page).to have_content /Image has been successfully (updated|created)/
-        expect(variant.image.reload.url(:large)).to match /500.jpg$/
+        expect(variant.reload.image.url(:large)).to match /500.jpg$/
 
         within "#variant-image-#{variant.id}" do
           expect_page_to_have_image('500.jpg')
