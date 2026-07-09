@@ -16,8 +16,8 @@ RSpec.describe Customer do
   context "for an enterprise customer" do
     before { allow(subject).to receive(:enterprise?).and_return(true) }
 
-    it { is_expected.to validate_presence_of(:enterprise_name).on(:create) }
-    it { is_expected.to validate_presence_of(:enterprise_acn).on(:create) }
+    it { is_expected.to validate_presence_of(:enterprise_name) }
+    it { is_expected.to validate_presence_of(:enterprise_acn) }
   end
 
   describe 'an existing customer' do
@@ -183,7 +183,7 @@ RSpec.describe Customer do
     context "when customer type is enterprise" do
       let(:customer) {
         build(:customer, customer_type: "enterprise", enterprise_name: "Acme Corp",
-                         enterprise_acn: "123456789")
+                         enterprise_acn: "123456789", enterprise_abn: "11223344556")
       }
 
       it "returns the enterprise name" do

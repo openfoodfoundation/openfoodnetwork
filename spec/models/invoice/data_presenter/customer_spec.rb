@@ -9,7 +9,8 @@ RSpec.describe Invoice::DataPresenter::Customer do
       email: "customer@example.com",
       customer_type: "individual",
       enterprise_name: "Da Box",
-      enterprise_acn: "123456789",
+      enterprise_abn: "123456789abn",
+      enterprise_acn: "11223344556acn",
       enterprise_charges_sales_tax: true
     }
   end
@@ -33,8 +34,12 @@ RSpec.describe Invoice::DataPresenter::Customer do
       expect(presenter.enterprise_name).to eq("Da Box")
     end
 
+    it "exposes enterprise_abn" do
+      expect(presenter.enterprise_abn).to eq("123456789abn")
+    end
+
     it "exposes enterprise_acn" do
-      expect(presenter.enterprise_acn).to eq("123456789")
+      expect(presenter.enterprise_acn).to eq("11223344556acn")
     end
 
     it "exposes enterprise_charges_sales_tax" do
@@ -51,6 +56,7 @@ RSpec.describe Invoice::DataPresenter::Customer do
       expect(presenter.customer_type).to be_nil
       expect(presenter.enterprise_name).to be_nil
       expect(presenter.enterprise_acn).to be_nil
+      expect(presenter.enterprise_abn).to be_nil
       expect(presenter.enterprise_charges_sales_tax).to be_nil
     end
   end

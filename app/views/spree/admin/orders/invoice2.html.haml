@@ -75,8 +75,12 @@
           %br
           = @order.customer.email
         - if @order&.customer&.enterprise?
-          %br
-          = @order.customer.enterprise_acn
+          - if @order&.customer&.enterprise_acn
+            %br
+            = "#{t :acn} #{@order.customer.enterprise_acn}"
+          - if @order&.customer&.enterprise_abn
+            %br
+            = "#{t :abn} #{@order.customer.enterprise_abn}"
 
 = render 'spree/admin/orders/invoice_table2'
 

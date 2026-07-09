@@ -55,6 +55,7 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
     if customer.customer_type == 'individual'
       customer.enterprise_name = '-'
       customer.enterprise_acn = '-'
+      customer.enterprise_abn = '-'
       customer.enterprise_charges_sales_tax = 'false'
 
   $scope.displayBalanceStatus = (customer) ->

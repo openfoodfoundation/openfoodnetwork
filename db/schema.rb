@@ -125,6 +125,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_01_032848) do
     t.enum "customer_type", default: "individual", null: false, enum_type: "customer_types"
     t.string "enterprise_name"
     t.string "enterprise_acn"
+    t.string "enterprise_abn"
     t.boolean "enterprise_charges_sales_tax", default: false, null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["created_manually"], name: "index_customers_on_created_manually"

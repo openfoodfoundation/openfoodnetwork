@@ -34,6 +34,7 @@ module OpenFoodNetwork
         customer_type: { name: I18n.t("#{node}.customer_type"), visible: false },
         enterprise_name: { name: I18n.t("#{node}.enterprise_name"), visible: false },
         enterprise_acn: { name: I18n.t("#{node}.enterprise_acn"), visible: false },
+        enterprise_abn: { name: I18n.t("#{node}.enterprise_abn"), visible: false },
         enterprise_charges_sales_tax: { name: I18n.t("#{node}.enterprise_charges_sales_tax"),
                                         visible: false },
         first_name: { name: I18n.t("admin.first_name"), visible: true },

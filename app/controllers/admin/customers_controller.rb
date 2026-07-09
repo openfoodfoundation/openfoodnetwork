@@ -124,7 +124,7 @@ module Admin
     def customer_params
       params.require(:customer).permit(
         :enterprise_id, :first_name, :last_name, :email, :code, :tag_list, :customer_type,
-        :enterprise_name, :enterprise_acn, :enterprise_charges_sales_tax,
+        :enterprise_name, :enterprise_acn, :enterprise_abn, :enterprise_charges_sales_tax,
         ship_address_attributes: PermittedAttributes::Address.attributes,
         bill_address_attributes: PermittedAttributes::Address.attributes,
       )

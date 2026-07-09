@@ -57,6 +57,7 @@
         %col.customer_type{ width: "10%", 'ng-show' => 'columns.customer_type.visible' }
         %col.enterprise_name{ width: "10%", 'ng-show' => 'columns.enterprise_name.visible' }
         %col.enterprise_acn{ width: "10%", 'ng-show' => 'columns.enterprise_acn.visible' }
+        %col.enterprise_abn{ width: "10%", 'ng-show' => 'columns.enterprise_abn.visible' }
         %col.enterprise_charges_sales_tax{ width: "5%", 'ng-show' => 'columns.enterprise_charges_sales_tax.visible' }
         %col.first_name{ width: "20%", 'ng-show' => 'columns.first_name.visible' }
         %col.last_name{ width: "20%", 'ng-show' => 'columns.last_name.visible' }
@@ -79,6 +80,8 @@
               %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_name')" }=t('admin.customers.index.enterprise_name')
             %th.enterprise_acn{ 'ng-show' => 'columns.enterprise_acn.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_acn')" }=t('admin.customers.index.enterprise_acn')
+            %th.enterprise_abn{ 'ng-show' => 'columns.enterprise_abn.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_abn')" }=t('admin.customers.index.enterprise_abn')
             %th.enterprise_charges_sales_tax{ 'ng-show' => 'columns.enterprise_charges_sales_tax.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('enterprise_charges_sales_tax')" }=t('admin.customers.index.enterprise_charges_sales_tax')
             %th.first_name{ 'ng-show' => 'columns.first_name.visible' }
@@ -109,6 +112,8 @@
               %input{ type: 'text', name: 'enterprise_name', "obj-for-update": 'customer', "attr-for-update": 'enterprise_name', "ng-model": 'customer.enterprise_name' }
             %td.enterprise_acn{ 'ng-show' => 'columns.enterprise_acn.visible'}
               %input{ type: 'text', name: 'enterprise_acn', "obj-for-update": 'customer', "attr-for-update": 'enterprise_acn', "ng-model": 'customer.enterprise_acn' }
+            %td.enterprise_abn{ 'ng-show' => 'columns.enterprise_abn.visible'}
+              %input{ type: 'text', name: 'enterprise_abn', "obj-for-update": 'customer', "attr-for-update": 'enterprise_abn', "ng-model": 'customer.enterprise_abn' }
             %td.enterprise_charges_sales_tax{ 'ng-show' => 'columns.enterprise_charges_sales_tax.visible'}
               %input{ type: 'checkbox', name: 'enterprise_charges_sales_tax', "obj-for-update": 'customer', "attr-for-update": 'enterprise_charges_sales_tax', "ng-model": 'customer.enterprise_charges_sales_tax', "ng-true-value": "'true'", "ng-false-value": "'false'" }
             %td.first_name{ 'ng-show' => 'columns.first_name.visible'}

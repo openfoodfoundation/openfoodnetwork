@@ -904,6 +904,7 @@ en:
         enterprise: "Enterprise"
         enterprise_name: "Enterprise name"
         enterprise_acn: "ACN number"
+        enterprise_abn: "ABN number"
         enterprise_charges_sales_tax: "Tax?"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."

@@ -5,7 +5,7 @@ module Api
     class CustomerSerializer < BaseSerializer
       attributes :id, :enterprise_id, :first_name, :last_name, :code, :email,
                  :allow_charges, :terms_and_conditions_accepted_at, :customer_type,
-                 :enterprise_name, :enterprise_acn, :enterprise_charges_sales_tax
+                 :enterprise_name, :enterprise_acn, :enterprise_abn, :enterprise_charges_sales_tax
 
       attribute :tags, &:tag_list
 

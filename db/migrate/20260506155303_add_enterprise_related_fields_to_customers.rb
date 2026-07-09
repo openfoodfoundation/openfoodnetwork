@@ -8,6 +8,7 @@ class AddEnterpriseRelatedFieldsToCustomers < ActiveRecord::Migration[7.1]
       t.enum :customer_type, enum_type: :customer_types, default: "individual", null: false
       t.string :enterprise_name
       t.string :enterprise_acn
+      t.string :enterprise_abn
       t.boolean :enterprise_charges_sales_tax, default: false, null: false
     end
   end
