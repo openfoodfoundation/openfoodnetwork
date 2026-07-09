@@ -34,7 +34,7 @@
         %th.text-right
           = t :included_tax
     %tbody
-      - @grouped_line_items.each_pair do |product_and_full_name, line_items|
+      - @grouped_line_items.each_pair do |(product_and_full_name, price), line_items|
         %tr
           %td
             = line_items.first.variant.sku
