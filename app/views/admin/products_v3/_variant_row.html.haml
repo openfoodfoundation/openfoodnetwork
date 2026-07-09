@@ -1,8 +1,9 @@
 -# haml-lint:disable ViewLength (This file is big, but doesn't make sense to split up at this point)
 -# locals: (variant:, f:, product_index: nil, allowed_source_producers:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
-%td.col-image{ id: "variant-image-#{variant.id}" }
-  = render partial: "image", locals: { imageable: variant, img_class: "variant_placeholder" }
+%td.col-image.with-image{ id: "variant-image-#{variant.id}" }
+  - unless variant.new_record?
+    = render partial: "image", locals: { imageable: variant, img_class: "variant_placeholder" }
   - variant.source_variants.each do |source_variant|
     = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.full_name, source_id: source_variant.id, hub_name: variant.hub&.name))
 %td.col-name.field.naked_inputs

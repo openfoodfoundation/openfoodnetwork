@@ -13,7 +13,7 @@
         %p
           = error
     - else
-      %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
+      %p{ style: "text-align: center;" }= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
 
 
     -# Submit as turbo stream to avoid full page reload.
