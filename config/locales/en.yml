@@ -419,6 +419,13 @@ en:
     report_failed: |
       This report failed. It may be too big to process.
       We will look into it but please let us know if the problem persists.
+
+# E-Mails
+#
+  mailers_shared:
+    customer_greeting: "Dear %{name},"
+    enterprise_greeting: "Dear %{name},"
+    general_greeting: "Hello!"
   backorder_mailer:
     backorder_failed:
       subject: "An automatic backorder failed"
@@ -454,9 +461,9 @@ en:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
-      email_welcome: "Welcome"
-      email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      greeting: "Welcome!"
+      registered: "%{enterprise} is now part of %{sitename}!"
       userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
       admin_panel: "Admin Panel"
@@ -464,13 +471,17 @@ en:
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+    manager_invitation:
+      invited_to_manage_html: "You have been invited to manage <strong>%{enterprise}</strong> on %{instance}."
   payment_mailer:
     authorize_payment:
       subject: "Please authorize your payment to %{distributor} on OFN"
-      instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+      intro_html: "Your payment of <strong>%{amount}</strong> to <strong>%{distributor}</strong> requires additional authentication."
+      instructions: "Please visit the following URL to authorize your payment:"
     authorization_required:
       subject: "A payment requires authorization from the customer"
-      message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+      intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
+      instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
     refund_available:
       subject: "Refund from %{shop}"
       message: |
@@ -480,33 +491,27 @@ en:
     order_cycle:
       subject: "Order cycle report for %{producer}"
     order_cycle_report:
+      intro_html: "An order cycle report is ready for <strong>%{producer}</strong>."
       order_number: "Order Number"
   provider_settings: "Provider settings"
   report_mailer:
     report_ready:
       subject: "Report ready"
-      heading: "Report ready for download"
-      intro: |
-        The link below will expire after one week.
+      intro: "Your report is ready for download."
+      message: "The link below will expire after one week."
       link_label: "%{name}"
-  shipment_mailer:
-    shipped_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
-      shipment_summary: "Shipment Summary"
-      subject: "Shipment Notification"
-      thanks: "Thank you for your business."
-      track_information: "Tracking Information: %{tracking}"
-      track_link: "Tracking Link: %{url}"
   subscription_mailer:
+    placement_email:
+      intro_html: "You have a new order with <strong>%{distributor}</strong>."
     placement_summary_email:
       subject: A summary of recently placed subscription orders
-      greeting: "Hi %{name},"
-      intro: "Below is a summary of the subscription orders that have just been placed for %{shop}."
+      intro_html: "Below is a summary of the subscription orders that have just been placed for <strong>%{shop}</strong>."
+    confirmation_email:
+      payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
+      confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed."
     confirmation_summary_email:
       subject: A summary of recently confirmed subscription orders
-      greeting: "Hi %{name},"
-      intro: "Below is a summary of the subscription orders that have just been finalised for %{shop}."
+      intro_html: "Below is a summary of the subscription orders that have just been finalised for <strong>%{shop}</strong>."
     summary_overview:
       total: A total of %{count} subscriptions were marked for automatic processing.
       success_zero: Of these, none were processed successfully.
@@ -533,6 +538,10 @@ en:
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+    empty_email:
+      intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
+    failed_payment_email:
+      intro_html: "We tried to process a payment for <strong>%{distributor}</strong>, but had some problems..."
 
   home: "OFN"
   title: "Open Food Network"
@@ -2625,13 +2634,9 @@ en:
   email_signoff: "Cheers,"
   email_signature: "%{sitename} Team"
 
-  email_confirm_customer_greeting: "Hi %{name},"
-  email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Here are your order details from <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Kind regards,"
-  email_confirm_shop_greeting: "Hi %{name},"
-  email_confirm_shop_order_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
@@ -2646,22 +2651,17 @@ en:
   email_payment_description: Payment Description at Checkout
   email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
-  email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
   email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
   email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
-  email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
-  email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
   email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
   email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
-  email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
   email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
   email_so_failed_payment_details_html: "Here are the details of the failure provided by the payment gateway:"
   email_shipping_delivery_details: Delivery details
@@ -2673,8 +2673,6 @@ en:
   email_special_instructions: "Your notes:"
   email_order_note: "Note:"
 
-  email_signup_greeting: Hello!
-  email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
   email_signup_text: "Thanks for joining the network.
@@ -2683,13 +2681,10 @@ en:
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
 
   invite_email:
-    greeting: "Hello!"
-    invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
     confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
-  producer_mail_greeting: "Dear"
   producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
@@ -4939,8 +4934,11 @@ en:
       invalid: invalid
       authorise: authorise
     order_mailer:
+      confirm_email_for_customer:
+        intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
+      confirm_email_for_shop:
+        intro_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
       cancel_email:
-        customer_greeting: "Dear %{name},"
         instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
@@ -4950,18 +4948,15 @@ en:
         credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       cancel_email_for_shop:
-        greeting: "Dear %{name},"
         subject: "Cancellation of Order"
         intro: "A customer has cancelled their order #%{number}."
         view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
       invoice_email:
-        hi: "Hi %{name}"
-        invoice_attached_text: Please find attached an invoice for your recent order from
+        intro_html: "Please find attached an invoice for your recent order from <strong>%{distributor}</strong>."
     user_mailer:
       reset_password_instructions:
-        dear_customer: "Dear customer,"
         request_sent_text: |
           A request to reset your password has been made.
           If you did not make this request, simply ignore this email.
@@ -4971,18 +4966,20 @@ en:
           If the above URL does not work try copying and pasting it into your browser.
           If you continue to have problems please feel free to contact us.
         subject: "Reset password instructions"
+      signup_confirmation:
+        welcome: "Welcome to %{sitename}!"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
+        welcome: "Welcome to %{sitename}!"
     shipment_mailer:
       shipped_email:
-        dear_customer: "Dear Customer,"
-        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
+        shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
+        picked_up_intro_html: "Your order from <strong>%{distributor}</strong> has been picked-up."
         thanks: "Thank you for your business."
         track_information: ! "Tracking Information: %{tracking}"
         track_link: ! "Tracking Link: %{url}"
-        picked_up_instructions: "Your order from %{distributor} has been picked-up"
         picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:

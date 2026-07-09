@@ -1,7 +1,7 @@
-%h3
-  = t('invite_email.greeting')
-%p.lead
-  = t('invite_email.invited_to_manage', enterprise: @enterprise.name, instance: @instance)
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t("mailers_shared.general_greeting"),
+                   intro: t(".invited_to_manage_html", enterprise: @enterprise.name, instance: @instance),
+                   enterprise_for_logo: @enterprise }
 
 %p
   = t('invite_email.confirm_your_email', enterprise: @enterprise.name)

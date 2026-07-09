@@ -7,7 +7,7 @@ RSpec.describe SubscriptionMailer do
     subject(:mail) { described_class.placement_email(order, changes) }
     let(:changes) { {} }
 
-    let(:shop) { create(:enterprise) }
+    let(:shop) { create(:enterprise, :with_logo_image) }
     let(:customer) { create(:customer, enterprise: shop) }
     let(:subscription) { create(:subscription, shop:, customer:, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription:) }
@@ -16,6 +16,10 @@ RSpec.describe SubscriptionMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
     end
 
     context "when changes have been made to the order" do
@@ -106,8 +110,9 @@ RSpec.describe SubscriptionMailer do
   describe '#confirmation_email (customer)' do
     subject(:mail) { described_class.confirmation_email(order) }
 
+    let(:shop) { create(:enterprise, :with_logo_image) }
     let(:customer) { create(:customer) }
-    let(:subscription) { create(:subscription, customer:, with_items: true) }
+    let(:subscription) { create(:subscription, shop:, customer:, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
     let(:user) { order.user }
@@ -122,6 +127,10 @@ RSpec.describe SubscriptionMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
     end
 
     describe "linking to order page" do
@@ -164,7 +173,8 @@ RSpec.describe SubscriptionMailer do
   describe "#empty_order_email (customer)" do
     subject(:mail) { described_class.empty_email(order, {}) }
 
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:shop) { create(:enterprise, :with_logo_image) }
+    let(:subscription) { create(:subscription, shop:, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription:) }
     let(:distributor) { create(:distributor_enterprise) }
     let!(:order) { proxy_order.initialise_order! }
@@ -172,6 +182,10 @@ RSpec.describe SubscriptionMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
     end
 
     it "sends the email" do
@@ -186,8 +200,9 @@ RSpec.describe SubscriptionMailer do
   describe "#failed_payment_email (customer)" do
     subject(:mail) { described_class.failed_payment_email(order) }
 
+    let(:shop) { create(:enterprise, :with_logo_image) }
     let(:customer) { create(:customer) }
-    let(:subscription) { create(:subscription, customer:, with_items: true) }
+    let(:subscription) { create(:subscription, shop:, customer:, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -200,11 +215,15 @@ RSpec.describe SubscriptionMailer do
       it_behaves_like 'customer facing email with active white labelling', :mail
     end
 
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
+    end
+
     it "sends the email" do
       expect { mail.deliver_now }.to change{ SubscriptionMailer.deliveries.count }.by(1)
 
       body = strip_tags(SubscriptionMailer.deliveries.last.body.encoded)
-      expect(body).to include 'We tried to process a payment, but had some problems...'
+      expect(body).to include 'We tried to process a payment for '
       email_so_failed_payment_explainer_html = "The payment for your subscription with <strong>%s" \
                                                "</strong> failed because of a problem with your " \
                                                "credit card. <strong>%s</strong> has been " \
@@ -255,14 +274,19 @@ RSpec.describe SubscriptionMailer do
       allow(summary).to receive(:issues) { {} }
     end
 
-    it "renders the shop's logo" do
-      mail.deliver_now
-      expect(SubscriptionMailer.deliveries.last.body).to include "logo.png"
-    end
-
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
+    end
+
+    context "enterprise greeting" do
+      let(:enterprise) { shop }
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
     end
 
     context "when no issues were encountered while processing subscriptions" do
@@ -377,7 +401,7 @@ RSpec.describe SubscriptionMailer do
 
   describe "#order_confirmation_summary_email (hub)" do
     subject(:mail) { SubscriptionMailer.confirmation_summary_email(summary) }
-    let!(:shop) { create(:enterprise) }
+    let!(:shop) { create(:enterprise, :with_logo_image) }
     let!(:summary) { double(:summary, shop_id: shop.id) }
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
@@ -394,6 +418,16 @@ RSpec.describe SubscriptionMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :shop
+    end
+
+    context "enterprise greeting" do
+      let(:enterprise) { shop }
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
     end
 
     context "when no issues were encountered while processing subscriptions" do
