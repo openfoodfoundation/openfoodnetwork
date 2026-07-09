@@ -159,6 +159,21 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
             .fees_by_type_for(product1.variants.first))
             .to eq(sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45)
         end
+
+        it "includes negative fees (used as discounts)" do
+          ef_admin.calculator.update_attribute :preferred_amount, -1.23
+          expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+            .fees_by_type_for(product1.variants.first))
+            .to eq(admin: -1.23, sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45)
+        end
+
+        it "drops zero fees while keeping negative ones in the same breakdown" do
+          ef_admin.calculator.update_attribute :preferred_amount, -1.23
+          ef_sales.calculator.update_attribute :preferred_amount, 0
+          expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+            .fees_by_type_for(product1.variants.first))
+            .to eq(admin: -1.23, packing: 7.89, transport: 0.12, fundraising: 3.45)
+        end
       end
 
       describe "indexed computation" do
@@ -173,6 +188,21 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
           expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
             .indexed_fees_by_type_for(product1.variants.first))
             .to eq(sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45)
+        end
+
+        it "includes negative fees (used as discounts)" do
+          ef_admin.calculator.update_attribute :preferred_amount, -1.23
+          expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+            .indexed_fees_by_type_for(product1.variants.first))
+            .to eq(admin: -1.23, sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45)
+        end
+
+        it "drops zero fees while keeping negative ones in the same breakdown" do
+          ef_admin.calculator.update_attribute :preferred_amount, -1.23
+          ef_sales.calculator.update_attribute :preferred_amount, 0
+          expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+            .indexed_fees_by_type_for(product1.variants.first))
+            .to eq(admin: -1.23, packing: 7.89, transport: 0.12, fundraising: 3.45)
         end
       end
     end
