@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module Spree
   module Admin
     class ImagesController < ::Admin::ResourceController
@@ -177,4 +176,3 @@ module Spree
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
