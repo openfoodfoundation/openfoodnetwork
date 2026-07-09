@@ -107,6 +107,11 @@
       padding: $padding-tbl-cell;
       border: none;
 
+      // remove the blue dotted line from the image field
+      a.image-field {
+        border: none;
+      }
+
       .content {
         // Plain content fields need help to align with text in inputs (due to vertical-align)
         margin: ($vpadding-txt + 1px) ($hpadding-txt + 2px);
@@ -159,6 +164,7 @@
       td,
       th {
         padding: $padding-tbl-cell-condensed;
+        vertical-align: middle;
       }
     }
 
