@@ -3584,6 +3584,9 @@ hu:
         add_to_cart: "Hozzáadás"
         in_cart: "kosárban"
         quantity_in_cart: "%{quantity} a kosárban"
+        remaining_in_stock:
+          one: "Már csak %{count} maradt"
+          other: "Már csak %{count} rendelhető"
       bulk_buy_modal:
         min_quantity: "Min. mennyiség"
         max_quantity: "Max. mennyiség"

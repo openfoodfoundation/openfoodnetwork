@@ -835,6 +835,7 @@ en_CA:
         id: Id
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
         available_credit: "Available credit: %{available_credit}"
@@ -3730,6 +3731,9 @@ en_CA:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4558,6 +4562,7 @@ en_CA:
           title: "New Product"
           new_product: "New Product"
           enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

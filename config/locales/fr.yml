@@ -675,7 +675,7 @@ fr:
       image:
         edit: Modifier
       variant_row:
-        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Producer : %{producer_name}"
+        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Hub : %{hub_name}"
       product_preview:
         product_preview: Prévisualisation du produit
         shop_tab: Boutique
@@ -3010,9 +3010,9 @@ fr:
   transaction_date: "Date"
   payment_state: "Statut du paiement"
   shipping_state: "Statut de la livraison"
-  value: "Montant:"
+  value: "Montant"
   balance_due: "Montant dû"
-  credit: "Avoir:"
+  credit: "Avoir"
   Paid: "Payé"
   Ready: "Prêt"
   not_visible: invisible
