@@ -1007,15 +1007,45 @@ RSpec.describe Spree::Variant do
     end
   end
 
+  describe "#producer" do
+    it "is the enterprise that owns the variant" do
+      expect(variant.producer).to eq variant.enterprise
+    end
+
+    context "with source variants" do
+      let(:source_enterprise) { create(:enterprise) }
+      let!(:source_variant1) {
+        create(:variant, target_variants: [variant], enterprise: source_enterprise)
+      }
+      let!(:source_variant2) { create(:variant, target_variants: [variant]) }
+
+      # In the future we will probably support a list of producers
+      it "is the enterprise that owns the first source variant" do
+        expect(variant.producer).to eq source_enterprise
+      end
+
+      context "with multiple links in the chain" do
+        let!(:source_variant1) {
+          create(:variant, target_variants: [source_variant2], enterprise: source_enterprise)
+        }
+
+        it "is the enterprise that owns the first source variant in the chain" do
+          pending "not yet supported"
+          expect(variant.producer).to eq source_enterprise
+        end
+      end
+    end
+  end
+
   describe "#create_linked_variant" do
     let(:user) { create(:user, enterprises: [enterprise]) }
-    let(:supplier) { variant.enterprise }
+    let(:producer) { variant.enterprise }
     let(:enterprise) { create(:enterprise) }
 
-    context "with create_linked_variants permissions on supplier" do
+    context "with create_linked_variants permissions on producer" do
       let!(:enterprise_relationship) {
         create(:enterprise_relationship,
-               parent: supplier,
+               parent: producer,
                child: enterprise,
                permissions_list: [:create_linked_variants])
       }
@@ -1025,7 +1055,9 @@ RSpec.describe Spree::Variant do
         linked_variant = variant.create_linked_variant(user)
 
         expect(linked_variant.source_variants).to eq [variant]
+        expect(linked_variant.enterprise).to eq enterprise
         expect(linked_variant.hub).to eq enterprise
+        expect(linked_variant.producer).to eq producer
         expect(linked_variant.price).to eq 10.95
         expect(linked_variant.on_demand).to eq false
         expect(linked_variant.on_hand).to eq 5

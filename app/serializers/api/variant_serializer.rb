@@ -10,6 +10,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
              :unit_price_price, :unit_price_unit
 
   has_one :enterprise, serializer: Api::IdSerializer
+  has_one :producer, serializer: Api::IdSerializer
 
   delegate :price, to: :object
 

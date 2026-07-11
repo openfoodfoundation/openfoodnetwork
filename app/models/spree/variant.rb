@@ -281,6 +281,12 @@ module Spree
       @on_hand_desired = ActiveModel::Type::Integer.new.cast(val)
     end
 
+    # Producer is the first enterprise in the chain of linked variants, if any.
+    def producer
+      # to consider optimise with query
+      source_variants.any? ? source_variants.first.enterprise : enterprise
+    end
+
     # Clone this variant, retaining a 'source' link to it
     def create_linked_variant(user)
       # Hub owner is my enterprise which has permission to create variant sourced from that supplier
@@ -295,6 +301,7 @@ module Spree
         variant.hub_id = hub_id
         variant.on_demand = on_demand
         variant.on_hand = on_hand
+        variant.enterprise_id = hub_id
         variant.save!
       end
     end

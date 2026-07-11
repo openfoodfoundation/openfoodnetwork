@@ -64,8 +64,8 @@ RSpec.describe "Admin::ProductsV3" do
     let(:enterprise) { create(:supplier_enterprise) }
     let(:user) { create(:user, enterprises: [enterprise]) }
 
-    let(:supplier) { create(:supplier_enterprise) }
-    let(:variant) { create(:variant, display_name: "Original variant", enterprise: supplier) }
+    let(:producer) { create(:supplier_enterprise) }
+    let(:variant) { create(:variant, display_name: "Original variant", enterprise: producer) }
 
     before do
       sign_in user
@@ -80,10 +80,10 @@ RSpec.describe "Admin::ProductsV3" do
       }.not_to change { variant.product.variants.count }
     end
 
-    context "With create_linked_variants permissions on supplier" do
+    context "With create_linked_variants permissions on producer" do
       let!(:enterprise_relationship) {
         create(:enterprise_relationship,
-               parent: supplier,
+               parent: producer,
                child: enterprise,
                permissions_list: [:create_linked_variants])
       }
@@ -101,8 +101,10 @@ RSpec.describe "Admin::ProductsV3" do
         new_variant = variant.product.variants.order(:id).last
         # The new variant is a target of the original. It is a "sourced" variant.
         expect(variant.target_variants.first).to eq new_variant
+        expect(new_variant.enterprise).to eq enterprise
         # The new variant's source is the original
         expect(new_variant.source_variants.first).to eq variant
+        expect(new_variant.producer).to eq producer
       end
 
       context "and I'm also owner of another enterprise" do
@@ -121,7 +123,7 @@ RSpec.describe "Admin::ProductsV3" do
 
           # The new variant is owned by my enterprise that has permission, not the other one
           new_variant = variant.product.variants.order(:id).last
-          expect(new_variant.hub).to eq enterprise
+          expect(new_variant.enterprise).to eq enterprise
         end
       end
     end
