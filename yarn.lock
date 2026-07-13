@@ -6852,9 +6852,9 @@ tsyringe@^4.10.0:
     tslib "^1.9.3"
 
 turbo_power@*:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.7.1.tgz#591769f37cca9b8149ea07682021081039c9f32c"
-  integrity sha512-xnB1Yb3xXSVcDQyiqZV8kLjbHdCmyBfQYZJeJklEnEz+jM5xl6JUNo2yy5vc/8ZPKKMzS05INvvvLxafQYJVuQ==
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.8.0.tgz#09c6145f650ab2b0fb9b938c32082740afdbbefe"
+  integrity sha512-cbcdXJziGUqYWleXg/ehZOSL9gLOdtSArP8yCveOO0CueRv6OsnybH2d9owI0Ibp8fW/oanw8w8iOkXR62MHzA==
 
 type-detect@4.0.8:
   version "4.0.8"
