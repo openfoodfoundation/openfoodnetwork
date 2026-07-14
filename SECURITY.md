@@ -15,6 +15,9 @@ Developers can be contacted privately by creating a new [**Security Advisory on 
 - Please ensure a fully working, end-to-end reproducer is provided.
 - Please ensure the reproducer is real-world and not simulated or abstracted.
 - Please ensure the reproducer demonstrably violates a security boundary.
-- We will try to triage and fix issues in a timely manner, but we cannot guarantee any fixed timeline for issue resolution.
+
+We will try to triage and fix issues in a timely manner, but we cannot guarantee any fixed timeline for issue resolution.
+
+While modern industry practices around coordinated disclosures encourage public disclosure to avoid vendors stonewalling researchers, we are an open source project that would gain little from needlessly stonewalling researchers. We thus kindly request that reporters do not publicly disclose issues they have reported to us before an agreed-to disclosure date.
 
 Thank you for your help in maintaining this open source project for the benefit of the community!
