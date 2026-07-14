@@ -17,7 +17,7 @@ RSpec.describe Customer do
     before { allow(subject).to receive(:enterprise?).and_return(true) }
 
     it { is_expected.to validate_presence_of(:enterprise_name) }
-    it { is_expected.to validate_presence_of(:enterprise_acn) }
+    it { is_expected.to validate_presence_of(:enterprise_abn) }
   end
 
   describe 'an existing customer' do

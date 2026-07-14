@@ -53,7 +53,7 @@ class Customer < ApplicationRecord
                     }
   validates :customer_type, presence: true
   validates :enterprise_name, presence: true, if: :enterprise?
-  validates :enterprise_acn, presence: true, if: :enterprise?
+  validates :enterprise_abn, presence: true, if: :enterprise?
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :managed_by, ->(user) {
