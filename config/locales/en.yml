@@ -1609,7 +1609,7 @@ en:
         search: Search
         clear: Clear
         owner_email: Owner Email
-        member_email: Member Email
+        manager_email: Manager Email
         sells_options:
           unspecified: unspecified
           none: none
