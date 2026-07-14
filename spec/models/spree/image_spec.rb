@@ -95,7 +95,7 @@ module Spree
 
       it "saves a new image when none is present" do
         # Active Storage requests
-        as_upload_pattern = %r"^https://ofn.s3.amazonaws.com/[[:alnum:]]+$"
+        as_upload_pattern = %r"^https://ofn\.s3\.amazonaws\.com/[[:alnum:]]+$"
 
         stub_request(:put, as_upload_pattern).to_return(status: 200, body: "", headers: {})
 

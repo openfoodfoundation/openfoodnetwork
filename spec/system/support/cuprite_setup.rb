@@ -24,13 +24,13 @@ Capybara.register_driver(:cuprite_ofn) do |app|
       %r{^http://localhost}, %r{^http://0.0.0.0}, %r{http://127.0.0.1},
 
       # Testing the DFC Permissions component by Startin'Blox:
-      %r{^https://cdn.jsdelivr.net/npm/@startinblox/},
-      %r{^https://cdn.startinblox.com/},
-      %r{^https://data-server.cqcm.startinblox.com/scopes$},
-      %r{^https://api.proxy-dev.cqcm.startinblox.com/profile$},
+      %r{^https://cdn\.jsdelivr\.net/npm/@startinblox/},
+      %r{^https://cdn\.startinblox\.com/},
+      %r{^https://data-server\.cqcm\.startinblox\.com/scopes$},
+      %r{^https://api\.proxy-dev\.cqcm\.startinblox\.com/profile$},
 
       # Just for testing external connections: spec/system/billy_spec.rb
-      %r{^https?://deb.debian.org},
+      %r{^https?://deb\.debian\.org},
     ],
     inspector: true,
     headless:,
