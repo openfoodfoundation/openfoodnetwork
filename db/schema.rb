@@ -589,7 +589,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_11_223814) do
     t.integer "max_quantity"
     t.string "currency", limit: 255
     t.decimal "distribution_fee", precision: 10, scale: 2
-    t.decimal "final_weight_volume", precision: 10, scale: 2
+    t.decimal "final_weight_volume", precision: 10, scale: 3
     t.integer "tax_category_id"
     t.decimal "weight", precision: 8, scale: 2
     t.decimal "height", precision: 8, scale: 2
