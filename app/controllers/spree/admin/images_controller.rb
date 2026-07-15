@@ -10,8 +10,6 @@ module Spree
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
       belongs_to 'spree/product'
 
-      before_action :load_data
-
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
@@ -115,15 +113,6 @@ module Spree
           admin_products_url
         else
           spree.admin_product_images_url(params[:product_id], @url_filters)
-        end
-      end
-
-      def load_data
-        if params[:variant_id]
-          @variant = Spree::Variant.find(params[:variant_id])
-          @product = @variant.product
-        else
-          @product = Product.find(params[:product_id])
         end
       end
 
