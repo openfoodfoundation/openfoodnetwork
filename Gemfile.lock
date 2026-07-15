@@ -602,7 +602,7 @@ GEM
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
-    rack-proxy (0.8.2)
+    rack-proxy (0.8.3)
       rack
     rack-rewrite (1.5.1)
     rack-session (1.0.2)
@@ -799,7 +799,7 @@ GEM
     sd_notify (0.1.1)
     securerandom (0.4.1)
     semantic_range (3.1.1)
-    shakapacker (10.1.0)
+    shakapacker (10.3.0)
       activesupport (>= 5.2)
       package_json
       rack-proxy (>= 0.6.1)
@@ -1315,7 +1315,7 @@ CHECKSUMS
   rack-mini-profiler (2.3.4) sha256=2c43bb1d0091c23e3efba054de5ebfb9c40a238f37f2d24dd4df7cf70d0bee3c
   rack-oauth2 (2.3.0) sha256=43e02cf73f13886a0a06499603caeec58aeba6eae1fefc4977c9678b7652c632
   rack-protection (3.2.0) sha256=3c74ba7fc59066453d61af9bcba5b6fe7a9b3dab6f445418d3b391d5ea8efbff
-  rack-proxy (0.8.2) sha256=d3086e865cbe74e627d41d2c6cd24521206c68d9e0308576760ea06d68e11ab0
+  rack-proxy (0.8.3) sha256=1e446a37be6d9c59647e710d2df7d23e3b0b4e1b982dab4f188a0354aa1fff0b
   rack-rewrite (1.5.1) sha256=682079619b15e4a8084377ce12887b2d14cdafff6b23120db3dca4ddc2e13456
   rack-session (1.0.2) sha256=a02115e5420b4de036839b9811e3f7967d73446a554b42aa45106af335851d76
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
@@ -1378,7 +1378,7 @@ CHECKSUMS
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   select2-rails (3.4.9)
   semantic_range (3.1.1) sha256=508333196ef0c7ba33e79579d4df7eb0a41080595e6a655c2515b03d634ec4a9
-  shakapacker (10.1.0) sha256=69017102e169ea3baeb26b71b27223ff2689b987770867bf054f48ed71d63da9
+  shakapacker (10.3.0) sha256=25f5c32be61e9b3f8bd3f2d07a057d12c42fb5dbeb379a54224b1e0fe826f029
   shoulda-matchers (8.0.1) sha256=5dbb46e5765b9da225111b085e0819e8c8a121ff94bba430a153eb1ea2c60288
   sidekiq (7.3.10) sha256=781eb4f65ef36042534ad73d72f211283afb7fee82eec786ada4ed1972ef8e3c
   sidekiq-scheduler (6.0.2) sha256=1065f1a989e750849de1d23d1f34338c104ed6ec5a6dc22a2620c5af54a2d6fc

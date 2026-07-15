@@ -2596,15 +2596,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0:
-  version "1.0.30001760"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001760.tgz#bdd1960fafedf8d5f04ff16e81460506ff9b798f"
-  integrity sha512-7AAMPcueWELt1p3mi13HR/LHH0TJLT11cnwDJEs3xA4+CK/PLKeO9Kl1oru24htkyUKtkGCvAx4ohB0Ttry8Dw==
-
-caniuse-lite@^1.0.30001759, caniuse-lite@^1.0.30001760:
-  version "1.0.30001764"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001764.tgz#03206c56469f236103b90f9ae10bcb8b9e1f6005"
-  integrity sha512-9JGuzl2M+vPL+pz70gtMF9sHdMFbY9FJaQBi186cHKH3pSzDvzoUJUPV6fqiKIMyXbud9ZLg4F3Yza1vJ1+93g==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001759, caniuse-lite@^1.0.30001760:
+  version "1.0.30001805"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001805.tgz"
+  integrity sha512-52noaS3DubycKSXaU30TwPGIp+POyQSUVa5jBEq3vkRkY0kjyb3LQgvhU6WGyCcyXqVLWO0Cw0Q6BSdD0kUfVA==
 
 chalk@^4.1.2:
   version "4.1.2"
@@ -6307,9 +6302,9 @@ setprototypeof@1.2.0, setprototypeof@~1.2.0:
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
 shakapacker@*:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/shakapacker/-/shakapacker-10.1.0.tgz#081b4e30900bbe92d6030b42f96e74f4da1b1c40"
-  integrity sha512-FMo4nXpM21rZyNNhXt5jn/rm40olFF1udWC0BPE9QO9QVY6utJAEv1bkKhM/mXY/k3/nDT8ur8B3ZcEs+HoLFg==
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/shakapacker/-/shakapacker-10.3.0.tgz#6c6a76bf3175d80a5a234109d3255c6774a482a0"
+  integrity sha512-+MsocLZYaOPoE5giLygxiIF/xpdfl4nsoENtcCI2RPEM50OX4Jb6LKqrJdsK3leJiXXcbVOy6YYCbIqasduTzQ==
   dependencies:
     js-yaml "^4.1.0"
     pack-config-diff "^0.1.0"
