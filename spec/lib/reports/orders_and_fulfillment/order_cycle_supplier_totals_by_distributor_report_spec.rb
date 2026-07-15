@@ -2,7 +2,7 @@
 
 module Reporting
   module Reports
-    module OrdersAndFulfillment
+    module OrdersAndFulfillment # rubocop:disable Metrics/ModuleLength
       RSpec.describe OrderCycleSupplierTotalsByDistributor do
         let!(:distributor) { create(:distributor_enterprise) }
         let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
@@ -89,7 +89,63 @@ module Reporting
             expect(product_names).not_to include("Apple", "Banane")
           end
         end
+
+        context "with same product ordered via different shipping methods" do
+          let!(:order) { nil }
+          let(:supplier) { create(:supplier_enterprise) }
+          let(:product) {
+            create(:simple_product, enterprise_id: supplier.id, on_demand: true)
+          }
+          let(:variant) { product.variants.first }
+          let!(:pickup) {
+            create(:shipping_method, name: "Pickup", distributors: [distributor])
+          }
+          let!(:delivery) {
+            create(:shipping_method, name: "Delivery", distributors: [distributor])
+          }
+
+          let(:current_user) { distributor.owner }
+          let(:params) { { display_summary_row: true } }
+          let(:report) do
+            OrderCycleSupplierTotalsByDistributor.new(current_user, params)
+          end
+
+          let(:report_table) do
+            report.table_rows
+          end
+
+          let!(:order1) do
+            create(:order, distributor:, state: 'complete',
+                           completed_at: Time.zone.now).tap do |o|
+              create(:line_item_with_shipment, variant:, quantity: 3, order: o,
+                                               shipping_method: pickup)
+            end
+          end
+
+          let!(:order2) do
+            create(:order, distributor:, state: 'complete',
+                           completed_at: Time.zone.now).tap do |o|
+              create(:line_item_with_shipment, variant:, quantity: 4, order: o,
+                                               shipping_method: delivery)
+            end
+          end
+
+          it "separates rows by shipping method with correct quantities and totals" do
+            expect(report_table.length).to eq(3)
+
+            shipping_methods = report.rows.map(&:shipping_method).compact_blank
+            expect(shipping_methods).to contain_exactly("Pickup", "Delivery")
+
+            pickup_row = report.rows.find { |r| r.shipping_method == "Pickup" }
+            delivery_row = report.rows.find { |r| r.shipping_method == "Delivery" }
+            expect(pickup_row.quantity).to eq(3)
+            expect(delivery_row.quantity).to eq(4)
+
+            summary_row = report_table.last
+            expect(summary_row[6]).to be_within(0.01).of(70.00)
+          end
+        end
       end
     end
   end
-end
+end # rubocop:enable Metrics/ModuleLength
