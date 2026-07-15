@@ -29,7 +29,7 @@ FileUtils.chdir APP_ROOT do
   system("bundle check 2> /dev/null") || system!(BUNDLE_ENV, "bundle install")
 
   # Install JavaScript dependencies
-  system!("script/nodenv-install.sh")
+  system("command -v yarn 2> /dev/null") || system!("script/nodenv-install.sh")
   system!("bin/yarn")
 
   # puts "\n== Copying sample files =="
