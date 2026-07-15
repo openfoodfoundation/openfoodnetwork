@@ -4,6 +4,8 @@ module Reporting
   module Reports
     module BulkCoop
       class Base < ReportTemplate
+        include BulkCoopFilterable
+
         def message
           I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
@@ -13,7 +15,7 @@ module Reporting
         end
 
         def table_items
-          report_line_items.list(line_item_includes)
+          bulk_coop_filter(report_line_items.list(line_item_includes))
         end
 
         private

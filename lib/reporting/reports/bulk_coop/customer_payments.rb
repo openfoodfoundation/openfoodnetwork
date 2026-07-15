@@ -8,6 +8,14 @@ module Reporting
           table_items.reorder("spree_orders.completed_at").group_by(&:order).values
         end
 
+        def table_items
+          all_items = report_line_items.list(line_item_includes)
+          return all_items unless bulk_coop_filters_enabled?
+
+          bulk_order_ids = all_items.where(variant: group_buy_variants).select(:order_id)
+          all_items.where(order_id: bulk_order_ids)
+        end
+
         def columns
           {
             customer: :order_billing_address_name,
