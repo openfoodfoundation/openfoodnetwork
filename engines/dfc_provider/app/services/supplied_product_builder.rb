@@ -16,7 +16,7 @@ class SuppliedProductBuilder < DfcBuilder
     product_group = ProductGroupBuilder.product_group(variant.product)
 
     if include_catalog_items
-      catalog_items = [DfcBuilder.catalog_item(variant, include_product: false)]
+      catalog_items = [CatalogItemBuilder.catalog_item(variant, include_product: false)]
     end
 
     DfcProvider::SuppliedProduct.new(

@@ -268,6 +268,17 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           }
         end
       end
+
+      response "422", "unprocessable entity" do
+        let(:enterprise_id) { enterprise.id }
+        let(:order) { create(:order, id: 11_001, distributor: enterprise) }
+        let(:order_id) { order.id }
+
+        run_test! {
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.body).to include "Cannot cancel order"
+        }
+      end
     end
   end
 
@@ -279,6 +290,11 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       consumes "application/json"
 
       parameter name: :body, in: :body, schema: {
+        # To update fixture, add this to orders_controller.rb#create:
+        #   File.write(Rails.root.join('spec/fixtures/files/fdc-send-backorder.json'),
+        #              JSON.pretty_generate(JSON.parse(request.body.read)))
+        # Then execute:
+        #   rspec engines/dfc_provider/spec/system/orders_backorder_spec.rb
         example: Rails.root.join('spec/fixtures/files/fdc-send-backorder.json').read
       }
 
