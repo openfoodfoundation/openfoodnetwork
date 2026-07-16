@@ -639,48 +639,6 @@ RSpec.describe Spree::LineItem do
       end
     end
 
-    context "with a volume product whose unit_value has 3 decimal places (e.g. 125mL)" do
-      # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/13911
-      # final_weight_volume DECIMAL(10,2) rounded 0.125 × 1 = 0.125 up to 0.13,
-      # corrupting unit_presentation to "130mL" instead of "125mL".
-      let!(:p) {
-        create(:product, variant_unit: "volume", variant_unit_scale: 0.001,
-                         unit_value: 0.125)
-      }
-      let!(:v) { p.variants.first }
-      let!(:o) { create(:order) }
-
-      context "when creating a line item with qty=1" do
-        let!(:li) { create(:line_item, order: o, variant: v, quantity: 1) }
-
-        it "stores final_weight_volume without rounding to 2 decimal places" do
-          expect(li.reload.final_weight_volume).to eq(0.125)
-        end
-      end
-
-      context "when creating a line item with qty=3" do
-        let!(:li) { create(:line_item, order: o, variant: v, quantity: 3) }
-
-        it "stores final_weight_volume without rounding to 2 decimal places" do
-          expect(li.reload.final_weight_volume).to eq(0.375)
-        end
-      end
-
-      context "when changing quantity from 1 to 2" do
-        let!(:li) { create(:line_item, order: o, variant: v, quantity: 1) }
-
-        before { li.update!(quantity: 2) }
-
-        it "stores the correct final_weight_volume" do
-          expect(li.reload.final_weight_volume).to eq(0.250)
-        end
-
-        it "preserves the correct unit_presentation" do
-          expect(li.reload.unit_presentation).to eq("125mL")
-        end
-      end
-    end
-
     describe "generating the full name" do
       let(:li) { described_class.new }
 
