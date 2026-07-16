@@ -70,8 +70,12 @@ class FdcBackorderer
 
   def find_order_line(order, offer)
     order.lines.find do |line|
-      line.offer.offeredItem.semanticId == offer.offeredItem.semanticId
+      semantic_id(line.offer.offeredItem) == semantic_id(offer.offeredItem)
     end
+  end
+
+  def semantic_id(item)
+    item.respond_to?(:semanticId) ? item.semanticId : item
   end
 
   def find_subject(object_or_graph, type)
