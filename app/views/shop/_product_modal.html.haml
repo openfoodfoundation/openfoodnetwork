@@ -1,5 +1,5 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
-- modal_options = { id: "shop-product-modal-#{@product.id}", instant: true, modal_class: "big", close_button: false, close_x_button: true, :'data-controller' => "shop-product-modal", :'data-action' => "modal:closing->shop-product-modal#clear" }
+- modal_options = { id: "shop-product-modal-#{@product.id}", instant: true, modal_class: "big", close_button: false, close_x_button: true, 'data-controller': "shop-product-modal" }
 
 = render ModalComponent.new(**modal_options) do
   .row

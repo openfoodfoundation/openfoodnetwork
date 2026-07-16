@@ -18,6 +18,8 @@ import { computePosition, offset, arrow } from "@floating-ui/dom";
 
 export default class extends Controller {
   static targets = ["element", "tooltip", "arrow"];
+  // available placements: 'top', 'right', 'bottom', 'left'
+  // placement options: '-start', '-end', ie right-start or 'bottom-end'
   static values = {
     placement: { type: String, default: "top" },
   };

@@ -49,7 +49,7 @@ RSpec.describe ProductsRenderer do
           { q: { "#{ransack_param}": "apples" } }
         )
 
-        products = products_renderer.__send__(:products)
+        products = products_renderer.products
         expect(products).to eq([product_apples])
       end
 
@@ -66,7 +66,7 @@ RSpec.describe ProductsRenderer do
                                                    { q: {
                                                      with_properties: [property_organic.id, 999]
                                                    } })
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_apples])
         end
 
@@ -77,7 +77,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_apples, product_cherries])
         end
 
@@ -94,7 +94,7 @@ RSpec.describe ProductsRenderer do
             } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_apples, product_banana_bread, product_doughnuts])
         end
 
@@ -116,7 +116,7 @@ RSpec.describe ProductsRenderer do
 
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_peach])
         end
 
@@ -130,7 +130,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_apples])
         end
 
@@ -150,7 +150,7 @@ RSpec.describe ProductsRenderer do
                                                    { q: {
                                                      with_properties: [property_organic.id]
                                                    } })
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])
         end
 
@@ -163,7 +163,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.__send__(:products)
+          products = products_renderer.products
           expect(products).to eq([product_apples, product_cherries])
         end
       end

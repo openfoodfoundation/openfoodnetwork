@@ -70,6 +70,9 @@ module OpenFoodNetwork
       "mo-dev" => <<~DESC,
         Show DFC Permissions interface to share data with Market.Organic.
       DESC
+      "product_grid_view" => <<~DESC,
+        Display shop products as a grid.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
