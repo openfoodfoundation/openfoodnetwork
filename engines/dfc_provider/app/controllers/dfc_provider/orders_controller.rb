@@ -44,6 +44,8 @@ module DfcProvider
 
       if OrderBuilder.apply(order, dfc_order)
         order.recreate_all_fees!
+        order.create_tax_charge!
+        order.update_order!
         render_dfc(OrderBuilder.build(order))
       else
         render json: { error: order.errors.full_messages.to_sentence },

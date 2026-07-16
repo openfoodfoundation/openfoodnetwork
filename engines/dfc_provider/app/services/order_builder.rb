@@ -23,15 +23,25 @@ class OrderBuilder < DfcBuilder
   end
 
   def self.apply(ofn_order, dfc_order)
+    # Set order state if recognised
+    set_order_state(ofn_order, dfc_order)
+
+    attrs = line_item_attributes(ofn_order, dfc_order)
+    destroy_stale_line_items(ofn_order, attrs)
+
+    ofn_order.update(line_items_attributes: attrs.reject { |a| a[:_destroy] })
+  end
+
+  def self.set_order_state(ofn_order, dfc_order)
     ofn_order.state = "complete" if dfc_order.orderStatus == order_states.HELD
+    ofn_order.completed_at ||= Time.zone.now if dfc_order.orderStatus == order_states.COMPLETE
+  end
 
-    if dfc_order.orderStatus == order_states.COMPLETE
-      ofn_order.completed_at ||= Time.zone.now
-    end
-
-    ofn_order.update(
-      line_items_attributes: line_item_attributes(ofn_order, dfc_order)
-    )
+  def self.destroy_stale_line_items(ofn_order, attrs)
+    # `accepts_nested_attributes_for :line_items` does not permit `:_destroy`,
+    # so remove line items that are no longer present explicitly.
+    stale_ids = attrs.filter_map { |a| a[:id] if a[:_destroy] }
+    ofn_order.line_items.where(id: stale_ids).destroy_all if stale_ids.any?
   end
 
   def self.line_item_attributes(ofn_order, dfc_order)

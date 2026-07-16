@@ -79,4 +79,44 @@ RSpec.describe OrderBuilder do
       end
     end
   end
+
+  describe ".line_item_attributes" do
+    let!(:ofn_order) { create(:order, id: 1) }
+    let!(:existing_variant) { create(:variant, id: 101_000, on_demand: true) }
+    let!(:existing_line_item) {
+      create(:line_item, order: ofn_order, variant: existing_variant, quantity: 2)
+    }
+
+    let(:dfc_order) {
+      order = DataFoodConsortium::ConnectorV1::Order.new(nil)
+      offer = DataFoodConsortium::ConnectorV1::Offer.new(
+        nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/101000"
+      )
+      order.lines = [
+        DataFoodConsortium::ConnectorV1::OrderLine.new(nil, offer:, quantity: 5),
+      ]
+      order
+    }
+
+    subject(:attributes) { described_class.line_item_attributes(ofn_order, dfc_order) }
+
+    it "updates the quantity of an existing line item" do
+      expect(attributes.find { |a| a[:id] == existing_line_item.id }[:quantity]).to eq 5
+    end
+
+    it "creates line items for new variants" do
+      offer = DataFoodConsortium::ConnectorV1::Offer.new(
+        nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/101001"
+      )
+      dfc_order.lines << DataFoodConsortium::ConnectorV1::OrderLine.new(nil, offer:, quantity: 3)
+
+      expect(attributes).to include(variant_id: 101_001, quantity: 3)
+    end
+
+    it "marks omitted line items for destruction" do
+      dfc_order.lines = []
+
+      expect(attributes.find { |a| a[:id] == existing_line_item.id }[:_destroy]).to eq true
+    end
+  end
 end

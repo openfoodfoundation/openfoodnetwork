@@ -1140,78 +1140,78 @@ paths:
                     - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
                       "@type": dfc-b:Order
                       dfc-b:hasPart:
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1250
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1251
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1252
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1253
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1254
-                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1255
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1978
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1979
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1980
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1981
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1982
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1983
                       dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
                       dfc-b:hasOrderStatus: dfc-v:Held
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1250
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1978
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
-                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1235/offers/2843
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1251
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4197
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1979
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
-                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1235/offers/2845
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1252
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4199
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1980
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
-                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1235/offers/2847
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1253
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4201
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1981
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
-                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1235/offers/2849
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1254
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4203
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1982
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
-                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1235/offers/2851
-                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1255
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4205
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1983
                       "@type": dfc-b:OrderLine
                       dfc-b:quantity: 1
                       dfc-b:concerns: http://test.host/api/dfc/enterprises/10000/offers/10001
-                    - "@id": http://test.host/api/dfc/enterprises/1235/offers/2843
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4197
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 4
-                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1235/supplied_products/2843
-                    - "@id": http://test.host/api/dfc/enterprises/1235/offers/2845
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4197
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4199
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 4
-                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1235/supplied_products/2845
-                    - "@id": http://test.host/api/dfc/enterprises/1235/offers/2847
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4199
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4201
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 4
-                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1235/supplied_products/2847
-                    - "@id": http://test.host/api/dfc/enterprises/1235/offers/2849
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4201
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4203
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 4
-                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1235/supplied_products/2849
-                    - "@id": http://test.host/api/dfc/enterprises/1235/offers/2851
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4203
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4205
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
                         "@type": dfc-b:Price
                         dfc-b:value: 19.99
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 4
-                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1235/supplied_products/2851
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4205
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
@@ -1220,101 +1220,100 @@ paths:
                         dfc-b:hasUnit: dfc-m:AustralianDollar
                       dfc-b:stockLimitation: 0
                       dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
-                    - "@id": http://test.host/api/dfc/enterprises/1235/supplied_products/2843
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4197
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #23 - 7992 - 1g'
+                      dfc-b:name: 'Product #23 - 7353 - 1g'
                       dfc-b:description: |-
-                        Deserunt sunt illo eius facilis. Esse praesentium sit hic dignissimos quaerat. Velit labore hic qui est.
-                        Maxime sit recusandae veritatis ipsa necessitatibus ex at possimus. Nemo quia a quas ipsa eos. Iste molestias harum quia doloribus quos cum exercitationem.
-                        Nihil assumenda aspernatur sit occaecati officia perspiciatis eius. Sed quia recusandae iste ea. Dolorum alias assumenda repudiandae ducimus esse nostrum id beatae. Libero perspiciatis beatae ad voluptatum. Sequi fugit excepturi illum officia totam.
-                        Accusantium debitis veniam veritatis ipsa nesciunt vero expedita minus. Odit beatae inventore dolorem perspiciatis dolore nemo ducimus. Reiciendis omnis a provident ullam incidunt quas facere inventore.
-                        Excepturi suscipit quod voluptatum ipsam deserunt. Dolor nostrum omnis nisi numquam animi. Consectetur blanditiis rem possimus laborum maxime maiores eius.
+                        Magni omnis rem minus natus iure. Dicta animi officiis perferendis ad nam suscipit ab quod. Dolor placeat error perspiciatis excepturi cumque exercitationem quam et.
+                        Exercitationem sunt rerum tempore quam itaque accusamus possimus praesentium. Nostrum commodi rerum magnam magni sint. Temporibus asperiores molestiae eveniet nihil sed maiores labore. Tenetur cupiditate non beatae id eos.
+                        Esse sunt voluptatibus consequatur at nam nulla. Similique ipsam ad modi quam eligendi suscipit tempora dolorum. At ex expedita ratione veniam itaque optio. Temporibus expedita omnis suscipit perferendis illo fugit. Dolorum sit veritatis repudiandae quidem eos deserunt repellat.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1235/catalog_items/2843
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1688
-                      ofn:spree_product_id: 1688
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1235?spree_product_id=1688
-                    - "@id": http://test.host/api/dfc/enterprises/1235/supplied_products/2845
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4197
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2453
+                      ofn:spree_product_id: 2453
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2453
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4199
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #24 - 3181 - 1g'
+                      dfc-b:name: 'Product #24 - 1888 - 1g'
                       dfc-b:description: |-
-                        Eligendi consectetur blanditiis non beatae praesentium. Fugiat eius repellat aliquam dolorum magni sunt. Delectus odio accusamus architecto blanditiis beatae animi. Culpa impedit veritatis natus laboriosam nisi excepturi.
-                        Atque tenetur quos culpa quas corporis debitis laborum. Ad perspiciatis quis minus sequi quam dicta ducimus. Eveniet vero qui sunt beatae ut laborum maxime. Occaecati unde amet repellat eius assumenda ducimus eos possimus.
-                        Vel a quis tempora ratione totam maiores iste corrupti. Mollitia labore rerum quam accusantium. Commodi reiciendis earum dicta magnam reprehenderit.
-                        Repellendus nisi reprehenderit autem harum impedit veniam quia. Numquam pariatur reiciendis dolore vero sequi. Non voluptatem explicabo assumenda iure totam deserunt dolorum. Soluta possimus vero laborum magnam amet ex. Error impedit officia harum in ducimus voluptas.
-                        Placeat cumque pariatur laudantium odit et commodi. Eos perspiciatis cupiditate at facere commodi blanditiis. Odio rem vero ducimus architecto. Ad deserunt autem veniam velit dignissimos ex. At nesciunt occaecati repudiandae repellendus soluta.
+                        Consequatur assumenda tempore minima recusandae neque ullam veritatis architecto. Dignissimos magni magnam recusandae officiis repellendus dolores. Laborum dolorem non nam perferendis sunt reiciendis optio.
+                        Similique cupiditate quam quis praesentium cum quaerat atque. At eos quas omnis voluptatem eaque nostrum architecto natus. Voluptatibus ea beatae porro modi dolorum officia debitis voluptatem. Debitis placeat saepe recusandae libero consectetur nihil omnis. Animi atque occaecati aliquam magni enim ipsum.
+                        Eius iusto soluta nihil ab explicabo tenetur. Dolor blanditiis ex sint explicabo ea pariatur nulla. In nam facere exercitationem blanditiis a doloremque. Praesentium consequuntur aliquid harum temporibus voluptas non magnam.
+                        Quaerat quae ea quia occaecati consequuntur laborum distinctio numquam. Rerum natus veniam praesentium placeat cupiditate animi soluta sed. Neque aspernatur ab qui excepturi tempore deleniti.
+                        Nihil sed dolorum delectus id commodi. In nemo et natus perspiciatis repellat iusto quia tempore. Voluptatum repudiandae maxime sit rem sed sequi. Porro accusantium exercitationem ipsam debitis dicta soluta pariatur eveniet.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1235/catalog_items/2845
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1689
-                      ofn:spree_product_id: 1689
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1235?spree_product_id=1689
-                    - "@id": http://test.host/api/dfc/enterprises/1235/supplied_products/2847
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4199
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2454
+                      ofn:spree_product_id: 2454
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2454
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4201
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #25 - 1231 - 1g'
+                      dfc-b:name: 'Product #25 - 638 - 1g'
                       dfc-b:description: |-
-                        Doloremque illum unde ullam facilis nisi soluta. Totam pariatur necessitatibus modi veritatis fuga corrupti odio. Atque ratione ullam similique quas quibusdam culpa. Velit fugiat accusamus porro reiciendis possimus.
-                        Placeat quam explicabo laudantium nobis praesentium sit labore hic. Repellat sed voluptatibus animi libero. Nihil excepturi cum fugit inventore facere.
-                        Animi expedita culpa facere aliquam. Dolorum dolorem aliquam similique harum voluptas facere nisi consequuntur. Vitae quis velit delectus modi.
+                        Ipsum ratione dignissimos ullam architecto saepe accusamus soluta totam. Fugit maiores atque dignissimos deserunt. Odio velit eligendi reiciendis quia.
+                        Qui voluptates rerum pariatur asperiores velit quod. Odio non ducimus repellendus expedita aliquam eos quisquam. Autem nobis ducimus quaerat quos quia consequatur quis architecto. Natus sequi quam assumenda tempore quo.
+                        A error optio placeat doloremque ullam est eaque. Quo qui ad laudantium ea dolorum. Voluptates at libero maiores debitis facere nobis hic tempore. Labore adipisci laboriosam beatae error. Temporibus eaque magni aperiam dolore atque dolorem soluta reiciendis.
+                        Temporibus voluptatum excepturi quo sapiente ab molestias ex fugiat. Eligendi iste natus labore minus doloremque reprehenderit. Occaecati sint quisquam mollitia saepe soluta atque.
+                        Minima quod amet occaecati magnam. Libero minima quos ex esse sed. Blanditiis molestiae deserunt laudantium eum veritatis itaque beatae.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1235/catalog_items/2847
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1690
-                      ofn:spree_product_id: 1690
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1235?spree_product_id=1690
-                    - "@id": http://test.host/api/dfc/enterprises/1235/supplied_products/2849
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4201
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2455
+                      ofn:spree_product_id: 2455
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2455
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4203
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #26 - 7241 - 1g'
+                      dfc-b:name: 'Product #26 - 9373 - 1g'
                       dfc-b:description: |-
-                        Quisquam sed eius dolorum nostrum maiores vero. Totam sunt et vel tempore excepturi placeat maiores. Nobis accusamus pariatur aspernatur similique numquam amet corporis at. Ipsa voluptatem tempore recusandae corporis magni officia. Atque a ullam sunt esse magni optio mollitia.
-                        Labore molestiae tempore totam a nihil saepe expedita autem. Doloribus totam voluptatibus omnis cupiditate non excepturi natus illo. Non vitae harum odit occaecati amet molestias sequi omnis. Ullam porro cum quas non veniam delectus.
-                        Vitae tenetur aperiam totam iure quibusdam qui voluptates facere. Voluptate enim quod inventore voluptas. Tempore commodi aperiam quas accusantium similique accusamus.
+                        Laboriosam suscipit quia omnis nemo ratione exercitationem. Officia omnis sint tempora porro ad voluptatum. Omnis temporibus quaerat rerum nobis impedit. Quisquam repellendus eum maxime dolores officiis accusantium. Odio sint ad saepe eaque tenetur libero.
+                        Adipisci consequuntur veritatis beatae eligendi tempora architecto odio non. Dignissimos recusandae velit ullam aperiam. Earum veniam repellat officiis fugiat tenetur veritatis.
+                        Minima incidunt recusandae hic aliquid fugiat. In rerum cum corrupti dolores necessitatibus. Velit alias optio tempora placeat facilis.
+                        Saepe a facere exercitationem voluptatum. Aspernatur rerum ab officiis ipsa libero quis dolor. Excepturi expedita maiores accusamus hic. Magnam soluta animi repellendus deserunt quas temporibus aliquid. Quod adipisci optio perferendis atque facilis praesentium eveniet quam.
+                        Praesentium sed qui ullam laborum eveniet ipsam aliquam et. Maxime reprehenderit sequi tenetur ea quas. Repudiandae molestias eligendi iste culpa corrupti ullam id. Temporibus itaque ex soluta earum officiis ea autem dolorum.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1235/catalog_items/2849
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1691
-                      ofn:spree_product_id: 1691
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1235?spree_product_id=1691
-                    - "@id": http://test.host/api/dfc/enterprises/1235/supplied_products/2851
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4203
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2456
+                      ofn:spree_product_id: 2456
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2456
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4205
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #27 - 4296 - 1g'
+                      dfc-b:name: 'Product #27 - 1064 - 1g'
                       dfc-b:description: |-
-                        Delectus voluptates harum dignissimos velit. Occaecati nam ratione molestias quo quas nesciunt minima maxime. Iste reprehenderit repellat sapiente rem aspernatur corrupti labore nisi.
-                        Et voluptas impedit dicta nam officia quae. Officiis neque doloremque tempora nesciunt quo. Id aperiam enim tenetur quam.
-                        Recusandae consequuntur aliquam rem saepe velit. Dolores eum quam nam consectetur. Tempora atque quam repellat molestias ipsum odio accusantium.
-                        Expedita molestias quia natus provident illum non sunt. Aliquam et fugiat voluptate optio. Doloremque et soluta quas nobis corrupti veniam. Doloremque impedit eligendi similique dolor veniam non. Dolores provident quisquam magnam veritatis velit qui earum eum.
+                        Laboriosam suscipit repellat id iure aliquam sequi occaecati. Dolores et itaque placeat quod voluptatem. Laborum explicabo iste recusandae eius nisi delectus occaecati. Unde voluptas harum vitae minus. Molestiae similique voluptate veritatis quas recusandae laudantium.
+                        Laudantium odit assumenda eaque quod ea iure minima. Repellendus aspernatur rerum odit maiores officia cum hic cupiditate. Quod vero ab doloribus soluta alias. Provident omnis consectetur magnam unde est veniam.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1235/catalog_items/2851
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1692
-                      ofn:spree_product_id: 1692
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1235?spree_product_id=1692
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4205
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2457
+                      ofn:spree_product_id: 2457
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2457
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: 'Product #22 - 8203 - 1g'
+                      dfc-b:name: 'Product #22 - 8910 - 1g'
                       dfc-b:description: |-
-                        Amet dignissimos eum suscipit saepe. Necessitatibus dolorem ipsam atque asperiores nisi enim rem similique. Voluptates reiciendis libero corrupti perspiciatis amet vitae incidunt cupiditate. Delectus ut nobis deleniti harum mollitia minima rerum dolorem. Eaque asperiores repellendus perspiciatis eligendi temporibus omnis voluptatibus inventore.
-                        Dolorum nesciunt incidunt porro beatae placeat error deserunt sapiente. Eum modi magni possimus neque quidem omnis dolorem mollitia. Unde vitae natus alias nobis dolor dolorum iste.
-                        Illo quisquam sapiente consequuntur harum. Atque quam rem explicabo repudiandae rerum nisi ipsa libero. Tempore pariatur sint unde sit itaque reprehenderit vel. Placeat velit enim sint aliquam natus nobis.
+                        Maxime delectus earum numquam qui esse nisi. Iste nihil totam laudantium nostrum ipsam voluptas temporibus neque. Aperiam iusto illum facere quo. Excepturi assumenda atque sint mollitia ut.
+                        Iste exercitationem minima corrupti quisquam vitae voluptate eligendi. Pariatur magni similique quos molestias voluptatem. Saepe sequi ex omnis quisquam.
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
                       dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
-                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/1687
-                      ofn:spree_product_id: 1687
-                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=1687
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2452
+                      ofn:spree_product_id: 2452
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=2452
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products
                       "@type": dfc-b:SaleSession
         '401':
@@ -1437,6 +1436,14 @@ paths:
           description: unauthorized
         '404':
           description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                unprocessable entity:
+                  value:
+                    error: Cannot cancel order in state 'cart'
   "/api/dfc/enterprises/{enterprise_id}/orders":
     parameters:
     - name: enterprise_id
@@ -1990,7 +1997,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
-                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/3016
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/4370
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -2006,7 +2013,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
-                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/3018
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/4372
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000

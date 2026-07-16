@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class CatalogItemBuilder < DfcBuilder
-  def self.catalog_item(variant)
+  def self.catalog_item(variant, include_product: true)
     id = urls.enterprise_catalog_item_url(
       enterprise_id: variant.supplier_id,
       id: variant.id,
     )
     supplier_url = urls.enterprise_url(variant.supplier_id)
-    product = SuppliedProductBuilder.supplied_product(variant)
+    product = SuppliedProductBuilder.supplied_product(variant) if include_product
 
     DfcProvider::CatalogItem.new(
       id, product:,
