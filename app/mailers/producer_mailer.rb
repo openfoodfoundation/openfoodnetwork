@@ -32,7 +32,9 @@ class ProducerMailer < ApplicationMailer
 
     line_items = line_items_from(@order_cycle, @producer)
 
-    @grouped_line_items = line_items.group_by { |item| [item.product_and_full_name, item.price] }
+    @grouped_line_items = line_items.group_by { |item|
+      [item.variant.product_and_full_name, item.price]
+    }
     @distributors_pickup_times = distributors_pickup_times_for(line_items)
     @receival_instructions = @order_cycle.receival_instructions_for(@producer)
     @total = total_from_line_items(line_items)
@@ -88,7 +90,7 @@ class ProducerMailer < ApplicationMailer
       {
         sku: line_item.variant.sku,
         supplier_name: line_item.supplier.name,
-        product_and_full_name: line_item.product_and_full_name,
+        product_and_full_name: line_item.variant.product_and_full_name,
         quantity: line_item.quantity,
         first_name: order.billing_address.first_name,
         last_name: order.billing_address.last_name,

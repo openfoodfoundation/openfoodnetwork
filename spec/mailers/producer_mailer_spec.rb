@@ -147,6 +147,23 @@ RSpec.describe ProducerMailer do
     expect(mail.body.encoded).to include(p1.name)
   end
 
+  it "groups line items for the same variant into one row even when unit_presentation differs" do
+    # Regression test for issue #13911:
+    # When final_weight_volume had insufficient precision (DECIMAL(10,2)), storing
+    # 0.125 rounded it up to 0.13, causing different unit_presentation values
+    # (e.g. "130mL") across line items for the same variant. This split a single
+    # variant into multiple rows in the producer email.
+    variant = p1.variants.first
+    order.line_items.where(variant:).each_with_index do |li, i|
+      li.update_column(:unit_presentation, i.zero? ? "125mL" : "130mL")
+    end
+
+    rows = parsed_email.all("table.order-summary.line-items tbody tr:not(.total-row)")
+    variant_rows = rows.select { |r| r.text.include?(p1.name) }
+
+    expect(variant_rows.size).to eq(1)
+  end
+
   context 'when flag show_customer_names_to_suppliers is true' do
     before do
       order_cycle.coordinator.show_customer_names_to_suppliers = true

@@ -639,6 +639,43 @@ RSpec.describe Spree::LineItem do
       end
     end
 
+    describe "with a volume product whose unit_value has 3 decimal places (e.g. 125mL)" do
+      # Regression test for DECIMAL(10,2) rounding bug:
+      # 0.125 × 1 = 0.125 was rounded UP to 0.13 on storage, causing
+      # assign_units to compute unit_presentation = '130mL' instead of '125mL'.
+      # Fixed by increasing final_weight_volume to DECIMAL(11,3).
+      let!(:product) {
+        create(:product, variant_unit: "volume", variant_unit_scale: 0.001, unit_value: 0.125)
+      }
+      let!(:variant) { product.variants.first }
+      let!(:order) { create(:order) }
+
+      it "stores final_weight_volume exactly when qty=1" do
+        li = create(:line_item, order:, variant:, quantity: 1)
+        expect(li.final_weight_volume).to eq(0.125)
+        expect(li.unit_presentation).to eq("125mL")
+      end
+
+      it "stores final_weight_volume exactly when qty=3" do
+        li = create(:line_item, order:, variant:, quantity: 3)
+        expect(li.final_weight_volume).to eq(0.375)
+        expect(li.unit_presentation).to eq("125mL")
+      end
+
+      it "preserves correct unit_presentation when qty changes from 1 to 2" do
+        li = create(:line_item, order:, variant:, quantity: 1)
+        li.update(quantity: 2)
+        expect(li.final_weight_volume).to eq(0.250)
+        expect(li.unit_presentation).to eq("125mL")
+      end
+
+      it "stores final_weight_volume exactly when qty=2 directly" do
+        li = create(:line_item, order:, variant:, quantity: 2)
+        expect(li.final_weight_volume).to eq(0.250)
+        expect(li.unit_presentation).to eq("125mL")
+      end
+    end
+
     describe "generating the full name" do
       let(:li) { described_class.new }
 
