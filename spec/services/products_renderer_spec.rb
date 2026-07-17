@@ -247,20 +247,18 @@ RSpec.describe ProductsRenderer do
       expect(variants[p.id]).not_to include v2
     end
 
-    it "does not render variants that have been hidden by the hub" do
-      pending
+    it "does not render variants that have been hidden by the hub", feature: :inventory do
       # but does render 'new' variants, ie. v1
       expect(variants[p.id]).to include v1, v3
       expect(variants[p.id]).not_to include v4
     end
 
-    context "when hub opts to only see variants in its inventory" do
+    context "when hub opts to only see variants in its inventory", feature: :inventory do
       before do
         allow(hub).to receive(:prefers_product_selection_from_inventory_only?) { true }
       end
 
       it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
-        pending
         # but does render 'new' variants, ie. v1
         expect(variants[p.id]).to include v3
         expect(variants[p.id]).not_to include v1, v4
