@@ -160,7 +160,7 @@ RSpec.configure do |config|
   config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
 
   # controller spec and route helper use "test.host" as testing host, while request spec use
-  # "www.example.com", we set the request host to "test.host" to aovid issue with unsafe redirect
+  # "www.example.com", we set the request host to "test.host" to avoid issue with unsafe redirect
   config.before(:all, type: :request) { host! "test.host" }
 
   # Reset all feature toggles to prevent leaking.
