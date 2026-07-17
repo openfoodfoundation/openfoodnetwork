@@ -60,7 +60,7 @@ module Reporting
 
         def filter_to_supplier(variants)
           if params[:supplier_id].to_i > 0
-            variants.where(enterprise: params[:enterprise_id])
+            variants.where(enterprise: params[:supplier_id])
           else
             variants
           end
