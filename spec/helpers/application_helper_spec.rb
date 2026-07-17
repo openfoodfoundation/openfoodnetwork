@@ -82,18 +82,19 @@ RSpec.describe ApplicationHelper do
     let(:es_digest) { "9d8tu23oirhad" }
 
     before { allow(I18nDigests).to receive(:for_locale).with("en") { en_digest } }
+    before { allow(I18nDigests).to receive(:for_locale).with(:en) { en_digest } }
     before { allow(I18nDigests).to receive(:for_locale).with("es") { es_digest } }
 
     it "appends locale and digest to a single key" do
       expect(
         helper.cache_key_with_locale("single-key", "en")
-      ).to eq(["single-key", "v3", "en", en_digest])
+      ).to eq(["single-key", :v3, "en", en_digest, en_digest])
     end
 
     it "appends locale and digest to multiple keys" do
       expect(
         helper.cache_key_with_locale(["array", "of", "keys"], "es")
-      ).to eq(["array", "of", "keys", "v3", "es", es_digest])
+      ).to eq(["array", "of", "keys", :v3, "es", es_digest, en_digest])
     end
   end
 end
