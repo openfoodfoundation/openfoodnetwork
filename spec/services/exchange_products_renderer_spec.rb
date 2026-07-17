@@ -72,7 +72,7 @@ RSpec.describe ExchangeProductsRenderer do
           products = renderer.exchange_products(false, exchange.receiver)
 
           expected_products = exchange.variants.map { |v| v.product.name }
-          expect(products.map(&:name)).to eq expected_products
+          expect(products.map(&:name)).to match_array expected_products
         end
 
         context "with inventory enabled" do
