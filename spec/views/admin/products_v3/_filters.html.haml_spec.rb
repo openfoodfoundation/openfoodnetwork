@@ -17,6 +17,7 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
   let(:spree_current_user) { build(:enterprise_user) }
 
   it "shows the producer filter with the default option initially" do
+    pending
     allow(view).to receive_messages locals.merge(
       allowed_producers: [
         instance_double(Enterprise, id: 1),

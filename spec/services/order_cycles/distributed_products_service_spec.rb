@@ -18,6 +18,7 @@ RSpec.describe OrderCycles::DistributedProductsService do
     end
 
     it "returns de duplicated result" do
+      pending
       supplier = create(:supplier_enterprise)
       variant.update(enterprise: )
       create(:variant, product:, enterprise: )

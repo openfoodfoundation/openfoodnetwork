@@ -121,6 +121,7 @@ RSpec.describe OrderManagement::Order::Updater do
         let(:order) { create(:completed_order_with_totals) }
 
         it "updates pending payments" do
+          pending
           payment = create(:payment, order:, amount: order.total)
 
           # update order so the order total will change

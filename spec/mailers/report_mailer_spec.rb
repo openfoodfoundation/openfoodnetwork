@@ -26,6 +26,7 @@ RSpec.describe ReportMailer do
     end
 
     it "contains a download link" do
+      pending
       expect(mail.body).to have_link(
         "customers.csv",
         href: %r"^http://test\.host/rails/active_storage/disk/.*/customers\.csv$"

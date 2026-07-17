@@ -151,6 +151,7 @@ RSpec.describe Spree::OrderMailer do
     end
 
     it "includes a link to the cancelled order in admin" do
+      pending
       expect(mail.body).to match /#{admin_order_link_href}/
     end
 

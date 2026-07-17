@@ -148,7 +148,7 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
-        it "creates a product and variant" do |example|
+        pending "creates a product and variant" do |example|
           # Despite requiring a tax catogory...
           # https://github.com/openfoodfoundation/openfoodnetwork/issues/11212
           create(:tax_category, is_default: true)

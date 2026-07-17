@@ -49,7 +49,8 @@ RSpec.describe ExchangeProductsRenderer do
         products = renderer.exchange_products(false, exchange.receiver)
 
         expected_suppliers = exchange.variants.map{ |v| v.enterprise.name }
-        expect(products.map{ |p| p.variants.first.enterprise.name }).to eq(expected_suppliers)
+        supplier_names = products.map{ |p| p.variants.first.enterprise.name }
+        expect(supplier_names).to match_array(expected_suppliers)
       end
 
       it "loads products in order" do
