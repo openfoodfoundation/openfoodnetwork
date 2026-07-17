@@ -9,6 +9,6 @@
       %button.variant-quantity{ type: "button", "data-action": "add-to-cart#add" , "data-add-to-cart-target": "plusButton" }
         = helpers.image_pack_tag "material-icons/add.svg", class: "material-icons"
     .variant-remaining-stock{ style: "display: none;", "data-add-to-cart-target": "stock" }
-      = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand)
+      = t("js.shopfront.variant.remaining_in_stock", count: variant.on_hand)
     .variant-quantity-display{ "data-add-to-cart-target": "nbItemInCart" }
       = t("js.shopfront.variant.quantity_in_cart", quantity: quantity)
