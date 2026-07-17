@@ -102,12 +102,11 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
       end
 
       it "filters to a specific supplier" do
-        pending
         supplier2 = create(:supplier_enterprise)
-        variant1 = create(:variant, enterprise: )
+        variant1 = create(:variant, enterprise: supplier)
         variant2 = create(:variant, enterprise: supplier2)
 
-        allow(subject).to receive(:params).and_return(enterprise_id: supplier.id)
+        allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
         expect(subject.filter(variants)).to eq([variant1])
       end
 

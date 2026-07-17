@@ -17,7 +17,6 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
   let(:spree_current_user) { build(:enterprise_user) }
 
   it "shows the producer filter with the default option initially" do
-    pending
     allow(view).to receive_messages locals.merge(
       allowed_producers: [
         instance_double(Enterprise, id: 1),
@@ -25,9 +24,9 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
       ],
     )
 
-    is_expected.to have_content "Producers"
+    is_expected.to have_content "Enterprises"
     is_expected.to have_select "producer_id", options: [
-      "All producers"
+      "All enterprises"
     ], selected: nil
   end
 
