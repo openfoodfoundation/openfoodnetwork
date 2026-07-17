@@ -21,9 +21,8 @@ RSpec.describe ProductScopeQuery do
     end
 
     it "filters results by supplier" do
-      pending
       subject = ProductScopeQuery
-        .new(current_api_user, { q: { variants_supplier_id_eq: supplier.id } }).bulk_products
+        .new(current_api_user, { q: { variants_enterprise_id_eq: supplier.id } }).bulk_products
 
       expect(subject).to include(product)
       expect(subject).not_to include(product2, product3)
