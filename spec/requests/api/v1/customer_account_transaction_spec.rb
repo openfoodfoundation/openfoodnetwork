@@ -102,19 +102,6 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         end
       end
 
-      response "401", "Unauthorized" do
-        before { login_as nil }
-
-        let(:customer_account_transaction) do
-          {
-            customer_id: customer.id.to_s,
-            amount: "10.25",
-          }
-        end
-
-        run_test!
-      end
-
       response "401", "Access forbidden" do
         # Customer belongs to enterprise that I don't have permission for
         let(:customer) { create(:customer, enterprise: create(:enterprise)) }
@@ -129,6 +116,37 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         run_test! do
           expect(customer.reload.credit_balance).to eq 0
         end
+      end
+
+      response "401", "Access forbidden" do
+        # Customer belongs to me and an enterprise I don't have permission for
+        let(:customer) {
+          create(:customer, enterprise: create(:enterprise), user: enterprise.owner)
+        }
+
+        let(:customer_account_transaction) do
+          {
+            customer_id: customer.id.to_s,
+            amount: "10.25",
+          }
+        end
+
+        run_test! do
+          expect(customer.reload.credit_balance).to eq 0
+        end
+      end
+
+      response "401", "Unauthorized" do
+        before { login_as nil }
+
+        let(:customer_account_transaction) do
+          {
+            customer_id: customer.id.to_s,
+            amount: "10.25",
+          }
+        end
+
+        run_test!
       end
     end
 

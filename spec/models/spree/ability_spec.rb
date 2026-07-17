@@ -738,8 +738,26 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
       end
 
-      it "is able to read/write customer account transaction" do
-        is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+      describe "customer account transaction" do
+        it "is able to read/write customer account transaction" do
+          is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+        end
+
+        describe "create_customer_Account_transaction" do
+          let(:customer) { create(:customer, enterprise: d1) }
+
+          it "is able to create a customer account transaction" do
+            is_expected.to have_ability([:create_customer_account_transaction], for: customer)
+          end
+
+          context "with a customer not belonging to an enterprise I can manage" do
+            let(:customer) { create(:customer, enterprise: d2) }
+
+            it "is not able to create a customer account transaction" do
+              is_expected.not_to have_ability([:create_customer_account_transaction], for: customer)
+            end
+          end
+        end
       end
 
       context "for a given order_cycle" do

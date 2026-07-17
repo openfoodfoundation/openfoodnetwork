@@ -496,8 +496,10 @@ module Spree
       end
     end
 
-    def add_customer_account_transaction_abilities(_user)
-      can [:admin, :create, :index], CustomerAccountTransaction
+    def add_customer_account_transaction_abilities(user)
+      can [:admin, :index, :create], CustomerAccountTransaction
+      can [:create_customer_account_transaction], Customer,
+          enterprise_id: Enterprise.managed_by(user).pluck(:id)
     end
   end
 end
