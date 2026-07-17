@@ -504,6 +504,7 @@ de_DE:
         unit_value: Menge
         price: Preis
         producer: Produzent
+        enterprise: Unternehmen
         category: Kategorie
         sku: Artikelnummer
         on_hand: "Verfügbar"
@@ -789,12 +790,10 @@ de_DE:
           cancellation_text: "Produktvariante beibehalten"
       filters:
         search_products: Nach Produkten suchen
-        search_for_producers: Produzenten suchen
-        all_producers: Alle Produzenten
         search_for_categories: Kategorie suchen
         all_categories: Alle Kategorien
-        producers:
-          label: Unsere Produzenten
+        enterprises:
+          label: Unternehmen
         categories:
           label: Produktkategorie
         tags:
@@ -841,7 +840,7 @@ de_DE:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
-        producer_field_name: "Produzent"
+        enterprise_field_name: "Unternehmen"
         select_unit_scale: Einheit auswählen
         add_a_tag: Stichwort hinzufügen
       clone:

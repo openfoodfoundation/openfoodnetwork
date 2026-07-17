@@ -435,6 +435,7 @@ uk:
         unit: Одиниця
         price: Ціна
         producer: Виробник
+        enterprise: Підприємство
         category: Категорія
         sku: Артикул
         on_hand: "Під рукою"
@@ -687,8 +688,8 @@ uk:
         header:
           title: Масове редагування продуктів
       filters:
-        producers:
-          label: Виробники
+        enterprises:
+          label: Підприємства
         categories:
           label: Категорії
         tags:
@@ -704,7 +705,7 @@ uk:
         none_tax_category: Жодного
         category_field_name: "Категорія"
         tax_category_field_name: "Категорія податку"
-        producer_field_name: "Виробник"
+        enterprise_field_name: "Підприємство"
         add_a_tag: Додати тег
     product_import:
       title: Імпорт продукту

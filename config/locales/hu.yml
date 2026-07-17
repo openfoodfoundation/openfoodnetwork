@@ -550,6 +550,7 @@ hu:
         display_as: Egység megjelenítése mint
         price: Ár
         producer: Termelő
+        enterprise: Vállalkozás
         category: Kategória
         sku: SKU kód
         on_hand: "Készlet"
@@ -579,8 +580,6 @@ hu:
         create_linked_variant: Kapcsolt termékváltozat létrehozása
       image:
         edit: Szerkesztés
-      variant_row:
-        sourced_from: "Forrás: %{source_name} ( %{source_id} ); Elosztó: %{hub_name}"
       product_preview:
         product_preview: Termék előnézet
         shop_tab: Átvételi pont
@@ -849,15 +848,14 @@ hu:
           cancellation_text: "Változat megtartása"
       filters:
         search_products: Keresés a termékek között
-        search_for_producers: Keresés termelőre
-        select_producer: Válassz termelőt
-        all_producers: Minden termelő
+        search_for_enterprises: Vállalkozások keresése
+        all_enterprises: Minden vállalkozás
         search_for_categories: Keresés termékkategóriára
         select_category: Válassz kategóriát
         all_categories: Minden kategória
         select_tag: Válassz címkét
-        producers:
-          label: Termelők
+        enterprises:
+          label: Vállalkozások
         categories:
           label: Kategóriák
         tags:
@@ -905,7 +903,7 @@ hu:
         search_for_tax_categories: "Keresés adókategóriára."
         category_field_name: "Kategória"
         tax_category_field_name: "Adókategória"
-        producer_field_name: "Termelő"
+        enterprise_field_name: "Vállalkozás"
         select_unit_scale: Válassz mértékegységet
         add_a_tag: Adj hozzá egy címkét
       clone:
@@ -4368,6 +4366,7 @@ hu:
           title: "Új termék"
           new_product: "Új termék"
           enterprise: "Vállalkozás"
+          search_for_enterprises: "Vállalkozások keresése"
           search_for_units: "Keresés kiszerelésre"
           product_name: "Termék név"
           units: "Mértékegység"

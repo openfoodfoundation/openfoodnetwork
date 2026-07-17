@@ -503,6 +503,7 @@ ml:
         unit_value: യൂണിറ്റ് മൂല്യം
         price: വില
         producer: പ്രൊഡ്യൂസർ
+        enterprise: എന്റർപ്രൈസ്
         category: വിഭാഗം
         sku: എസ്.കെ.യു
         on_hand: "കയ്യിൽ"
@@ -765,10 +766,9 @@ ml:
         loading: നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ ലോഡ് ചെയ്യുന്നു
       filters:
         search_products: ഉൽപ്പന്നങ്ങൾക്കായി തിരയുക
-        all_producers: എല്ലാ പ്രൊഡ്യൂസേഴ്‌സും
         all_categories: എല്ലാ വിഭാഗങ്ങളും
-        producers:
-          label: പ്രൊഡ്യൂസഴ്സ്
+        enterprises:
+          label: എന്റർപ്രൈസസ്
         categories:
           label: വിഭാഗങ്ങൾ
         tags:
@@ -806,7 +806,7 @@ ml:
         none_tax_category: ഒന്നുമില്ല
         category_field_name: "വിഭാഗം"
         tax_category_field_name: "നികുതി വിഭാഗം"
-        producer_field_name: "പ്രൊഡ്യൂസർ"
+        enterprise_field_name: "എന്റർപ്രൈസ്"
         add_a_tag: ഒരു ടാഗ് ചേർക്കുക
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി

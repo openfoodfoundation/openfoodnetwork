@@ -822,14 +822,9 @@ sr:
           cancellation_text: "Задржи варијанту"
       filters:
         search_products: Тражите производе
-        search_for_producers: Потражите произвођаче
-        select_producer: Изаберите произвођача
-        all_producers: Сви произвођачи
         search_for_categories: Потражите категорије
         select_category: Изаберите категорију
         all_categories: Све категорије
-        producers:
-          label: Произвођачи
         categories:
           label: Категорије
         search: Претрага
@@ -876,7 +871,6 @@ sr:
         search_for_tax_categories: "Потражите категорије пореза"
         category_field_name: "Категорија"
         tax_category_field_name: "Пореска категорија"
-        producer_field_name: "Произвођач"
       clone:
         success: Производ је успешно клониран
         error: Није могуће клонирати производ

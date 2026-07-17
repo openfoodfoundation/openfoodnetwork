@@ -635,6 +635,7 @@ cy:
         display_as: Dangos uned fel
         price: Pris
         producer: Cynhyrchydd
+        enterprise: Menter
         category: Categori
         sku: Cod y Cynnyrch
         on_hand: "Ar gael"
@@ -956,15 +957,12 @@ cy:
           cancellation_text: "Cadw amrywiolyn"
       filters:
         search_products: Chwilio am gynnyrch
-        search_for_producers: Chwilio am gynhyrchwyr
-        select_producer: Dewis cynhyrchydd
-        all_producers: Pob cynhyrchydd
         search_for_categories: Chwilio am gategorïau
         select_category: Dewis categori
         all_categories: Pob categori
         select_tag: Dewiswch tag
-        producers:
-          label: Prynu bwyd
+        enterprises:
+          label: Mentrau
         categories:
           label: Categorïau
         tags:
@@ -1016,7 +1014,7 @@ cy:
         search_for_tax_categories: "Chwilio am gategorïau treth"
         category_field_name: "Categori"
         tax_category_field_name: "Categori Treth"
-        producer_field_name: "Cynhyrchydd"
+        enterprise_field_name: "Menter"
         select_unit_scale: Dewis graddfa uned
         add_a_tag: Ychwanegu tag
       clone:

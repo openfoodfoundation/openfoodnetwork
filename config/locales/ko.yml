@@ -433,6 +433,7 @@ ko:
         unit: 단위
         price: 가격
         producer: 제공자
+        enterprise: 회사
         category: 목록
         sku: 재고 관리 단위
         on_hand: "대기 중"
@@ -682,8 +683,8 @@ ko:
         header:
           title: 제품 대량 편집
       filters:
-        producers:
-          label: 생산자들
+        enterprises:
+          label: 회사
         categories:
           label: 카테고리
         tags:
@@ -699,7 +700,7 @@ ko:
         none_tax_category: None
         category_field_name: "목록"
         tax_category_field_name: "세금 목록"
-        producer_field_name: "제공자"
+        enterprise_field_name: "회사"
         add_a_tag: 태그 추가
     product_import:
       title: 제품 가져오기

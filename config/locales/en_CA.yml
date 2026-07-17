@@ -644,6 +644,7 @@ en_CA:
         display_as: Display unit as
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "On Hand"
@@ -673,8 +674,6 @@ en_CA:
         create_linked_variant: Create linked variant
       image:
         edit: Edit
-      variant_row:
-        sourced_from: "Sourced from: %{source_name} (%{source_id}); Hub: %{hub_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -970,15 +969,13 @@ en_CA:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
-        search_for_producers: Search for producers
-        select_producer: Select producer
-        all_producers: All producers
+        search_for_enterprises: Search for enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
         select_tag: Select tag
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -1026,7 +1023,7 @@ en_CA:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         select_unit_scale: Select unit scale
         add_a_tag: Add a tag
       clone:

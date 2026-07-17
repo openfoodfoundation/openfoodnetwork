@@ -436,6 +436,7 @@ es_US:
         unit: Unidad
         price: Precio
         producer: Productora
+        enterprise: Organización
         category: Categoría
         sku: SKU
         on_hand: "Disponibles"
@@ -686,8 +687,8 @@ es_US:
         header:
           title: Editar varios Productos
       filters:
-        producers:
-          label: Productoras
+        enterprises:
+          label: Organizaciones
         categories:
           label: Categorías
         tags:
@@ -703,7 +704,7 @@ es_US:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría del impuesto"
-        producer_field_name: "Productora"
+        enterprise_field_name: "Organización"
         add_a_tag: Add a tag
     product_import:
       title: Importación de productos

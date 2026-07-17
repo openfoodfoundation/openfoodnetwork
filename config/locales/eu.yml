@@ -553,6 +553,7 @@ eu:
         display_as: Erakutsi batasuna
         price: Prezioa
         producer: Ekoizlea
+        enterprise: Antolaketa
         category: Kategoria
         sku: SKU
         on_hand: "Eskuragarri"
@@ -833,14 +834,11 @@ eu:
           cancellation_text: "Aldaera mantendu"
       filters:
         search_products: Produktuak bilatu
-        search_for_producers: Ekoiztetxeak bilatu
-        select_producer: Hautatu ekoizlea
-        all_producers: Produkzio-etxe guztiak
         search_for_categories: Bilatu kategorien arabera
         select_category: Hautatu kategoria
         all_categories: Kategoria guztiak
-        producers:
-          label: Ekoizleak
+        enterprises:
+          label: Erakundeak
         categories:
           label: Kategoriak
         tags:
@@ -873,7 +871,7 @@ eu:
         none_tax_category: Bat ere ez
         category_field_name: "Kategoria"
         tax_category_field_name: "Zergen kategoria"
-        producer_field_name: "Ekoizlea"
+        enterprise_field_name: "Antolaketa"
         add_a_tag: Add a tag
       clone:
         success: Produktua klonatu du

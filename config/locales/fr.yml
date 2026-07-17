@@ -645,6 +645,7 @@ fr:
         display_as: 'Afficher l''unité en '
         price: Prix
         producer: Producteur
+        enterprise: Entreprise
         category: Catégorie
         sku: Référence Produit
         on_hand: "En stock"
@@ -675,7 +676,7 @@ fr:
       image:
         edit: Modifier
       variant_row:
-        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Hub : %{hub_name}"
+        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Producteur: %{producer_name}"
       product_preview:
         product_preview: Prévisualisation du produit
         shop_tab: Boutique
@@ -971,15 +972,15 @@ fr:
           cancellation_text: "Conserver la variante"
       filters:
         search_products: Chercher des produits
-        search_for_producers: Rechercher des producteurs
-        select_producer: Sélectionner producteur
-        all_producers: Tous les producteurs
+        search_for_enterprises: Recherche d'entreprises
+        select_enterprise: Sélectionnez une entreprise
+        all_enterprises: Toutes les entreprises
         search_for_categories: Rechercher
         select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
         select_tag: Choisir le tag
-        producers:
-          label: Producteurs
+        enterprises:
+          label: Entreprises
         categories:
           label: Catégories
         tags:
@@ -1029,7 +1030,7 @@ fr:
         search_for_tax_categories: "Chercher les catégories de taxes"
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
-        producer_field_name: "Producteur"
+        enterprise_field_name: "Entreprise"
         select_unit_scale: Sélectionner l'échelle d'unité
         add_a_tag: Ajouter un tag
       clone:

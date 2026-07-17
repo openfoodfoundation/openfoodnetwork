@@ -511,6 +511,7 @@ ru:
         display_as: Отображать единицы как
         price: Цена
         producer: Производитель
+        enterprise: Предприятие
         category: Категория
         sku: SKU
         on_hand: "В наличии"
@@ -784,12 +785,10 @@ ru:
           cancellation_text: "Сохранить вариант"
       filters:
         search_products: Поиск товаров
-        search_for_producers: Поиск производителей
-        all_producers: Все производители
         search_for_categories: Поиск категорий
         all_categories: Все категории
-        producers:
-          label: Производители
+        enterprises:
+          label: Предприятия
         categories:
           label: Категории
         tags:
@@ -835,7 +834,7 @@ ru:
         none_tax_category: Нет
         category_field_name: "Категория"
         tax_category_field_name: "Налоговая Категория"
-        producer_field_name: "Производитель"
+        enterprise_field_name: "Предприятие"
         add_a_tag: Добавить Метку
     product_import:
       title: Импорт Товара

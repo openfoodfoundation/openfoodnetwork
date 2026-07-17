@@ -521,6 +521,7 @@ el:
         display_as: Προβολή μονάδας ως
         price: Τιμή
         producer: Παραγωγός
+        enterprise: Επιχείρηση
         category: Κατηγορία
         sku: SKU
         on_hand: "Διαθέσιμο απόθεμα"
@@ -798,12 +799,10 @@ el:
           cancellation_text: "Διατήρηση παραλλαγής"
       filters:
         search_products: Αναζήτηση προϊόντων
-        search_for_producers: 'Αναζήτηση παραγωγών. '
-        all_producers: Όλοι οι παραγωγοί
         search_for_categories: Αναζήτηση κατηγοριών
         all_categories: Όλες οι κατηγορίες
-        producers:
-          label: Παραγωγοί
+        enterprises:
+          label: Επιχειρήσεις
         categories:
           label: Κατηγορίες
         tags:
@@ -845,7 +844,7 @@ el:
         search_for_tax_categories: "Αναζήτηση φορολογικής κατηγορίας"
         category_field_name: "Κατηγορία"
         tax_category_field_name: "Φορολογική Κατηγορία"
-        producer_field_name: "Παραγωγός"
+        enterprise_field_name: "Επιχείρηση"
         add_a_tag: Προσθήκη ετικέτας
       clone:
         success: Το προϊόν κλωνοποιήθηκε επιτυχώς.

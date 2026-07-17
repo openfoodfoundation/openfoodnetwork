@@ -582,6 +582,7 @@ es:
         display_as: Mostrar unidad como
         price: Precio
         producer: Productora
+        enterprise: Organización
         category: Categoría
         sku: SKU
         on_hand: "Disponibles"
@@ -900,15 +901,12 @@ es:
           cancellation_text: "Mantener variante"
       filters:
         search_products: Buscar productos
-        search_for_producers: Buscar productoras
-        select_producer: Seleccionar productora
-        all_producers: Todas las productoras
         search_for_categories: Buscar por categorías
         select_category: Seleccionar categoría
         all_categories: Todas las categorías
         select_tag: Seleccionar etiqueta
-        producers:
-          label: Productoras
+        enterprises:
+          label: Organizaciones
         categories:
           label: Categorías
         tags:
@@ -958,7 +956,7 @@ es:
         search_for_tax_categories: "Buscar categorías fiscales"
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría de impuestos"
-        producer_field_name: "Productora"
+        enterprise_field_name: "Organización"
         select_unit_scale: Seleccionar escala de la unidad
         add_a_tag: Añadir una etiqueta
       clone:

@@ -631,6 +631,7 @@ fi:
         display_as: Näytä yksikkönä
         price: Hinta
         producer: Tuottaja
+        enterprise: Yritys
         category: Kategoria
         sku: SKU
         on_hand: "Varastossa"
@@ -947,15 +948,12 @@ fi:
           cancellation_text: "Pidä muunnos"
       filters:
         search_products: Etsi tuotteita
-        search_for_producers: Etsi tuottajia
-        select_producer: Valitse tuottaja
-        all_producers: Kaikki tuottajat
         search_for_categories: Etsi kategorioita
         select_category: Valitse kategoria
         all_categories: Kaikki kategoriat
         select_tag: Valitse tägi
-        producers:
-          label: Tuottajat
+        enterprises:
+          label: yritykset
         categories:
           label: Kategoriat
         tags:
@@ -1003,7 +1001,7 @@ fi:
         search_for_tax_categories: "Etsi veroluokkia"
         category_field_name: "Kategoria"
         tax_category_field_name: "Veroluokka"
-        producer_field_name: "Tuottaja"
+        enterprise_field_name: "Yritys"
         select_unit_scale: Valitse yksikön mittakaava
         add_a_tag: Lisää tägi
       clone:

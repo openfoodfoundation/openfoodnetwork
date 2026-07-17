@@ -432,6 +432,7 @@ it_CH:
         unit: Unità
         price: Prezzo
         producer: Produttore
+        enterprise: Azienda
         category: Categoria
         sku: Codice ID
         on_hand: "Disponibile"
@@ -681,8 +682,8 @@ it_CH:
         header:
           title: Modifica prodotti tabella
       filters:
-        producers:
-          label: Produttori
+        enterprises:
+          label: Aziende
         categories:
           label: categorie
         tags:
@@ -698,7 +699,7 @@ it_CH:
         none_tax_category: Nessuno
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria di imposta"
-        producer_field_name: "Produttore"
+        enterprise_field_name: "Azienda"
         add_a_tag: Aggiungi un'etichetta
     product_import:
       title: Importa prodotto

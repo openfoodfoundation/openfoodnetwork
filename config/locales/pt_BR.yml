@@ -371,6 +371,7 @@ pt_BR:
         unit: Unidade
         price: Preço
         producer: Produtor
+        enterprise: Iniciativas
         category: Categoria
         sku: SKU
         on_hand: "Disponível"
@@ -620,8 +621,8 @@ pt_BR:
         header:
           title: Editar Produtos em Atacado
       filters:
-        producers:
-          label: Produtores
+        enterprises:
+          label: Iniciativas
         tags:
           label: Tags
           none: Nenhum
@@ -633,7 +634,7 @@ pt_BR:
         none_tax_category: Nenhum
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de taxa"
-        producer_field_name: "Produtor"
+        enterprise_field_name: "Iniciativas"
         add_a_tag: Adicionar tag
     product_import:
       title: Importação de produtos

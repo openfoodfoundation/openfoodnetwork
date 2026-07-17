@@ -496,6 +496,7 @@ pa:
         unit_value: ਯੂਨਿਟ ਵੈਲਯੂ
         price: ਕੀਮਤ
         producer: ਉਤਪਾਦਕ
+        enterprise: ਐਂਟਰਪ੍ਰਾਈਜ਼
         category: ਸ਼੍ਰੇਣੀ
         sku: SKU
         on_hand: "ਹੱਥ ਵਿਚ"
@@ -754,10 +755,9 @@ pa:
         loading: ਤੁਹਾਡੇ ਉਤਪਾਦ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ
       filters:
         search_products: ਉਤਪਾਦਾਂ ਦੀ ਖੋਜ ਕਰੋ
-        all_producers: ਸਾਰੇ ਉਤਪਾਦਕ
         all_categories: ਸਾਰੀਆਂ ਸ਼੍ਰੇਣੀਆਂ
-        producers:
-          label: ਉਤਪਾਦਕ
+        enterprises:
+          label: ਐਂਟਰਪ੍ਰਾਈਜ਼
         categories:
           label: ਸ਼੍ਰੇਣੀਆਂ
         tags:
@@ -785,7 +785,7 @@ pa:
         none_tax_category: ਕੋਈ ਨਹੀਂ
         category_field_name: "ਸ਼੍ਰੇਣੀ"
         tax_category_field_name: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
-        producer_field_name: "ਉਤਪਾਦਕ"
+        enterprise_field_name: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
         add_a_tag: ਟੈਗ ਜੋੜੋ
     product_import:
       title: ਉਤਪਾਦ ਦਾ ਇਮਪੋਰਟ

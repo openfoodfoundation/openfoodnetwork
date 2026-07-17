@@ -311,6 +311,7 @@ fil_PH:
         unit: yunit
         price: Presyo
         producer: Producer
+        enterprise: Enterprise
         category: kategorya
         sku: SKU
         on_hand: "on hand"
@@ -540,8 +541,8 @@ fil_PH:
         header:
           title: maramihang pag-edit ng mga produkto
       filters:
-        producers:
-          label: Mga Producer
+        enterprises:
+          label: mga enterprise
         categories:
           label: mga kategorya
         tags:
@@ -554,7 +555,7 @@ fil_PH:
         none_tax_category: wala
         category_field_name: "kategorya"
         tax_category_field_name: "kategorya ng tax"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         add_a_tag: magdagdag ng tag
     product_import:
       title: paglipat ng produkto

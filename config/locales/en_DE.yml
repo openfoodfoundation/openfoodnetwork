@@ -304,6 +304,7 @@ en_DE:
         unit: Unit
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "On Hand"
@@ -530,8 +531,8 @@ en_DE:
         header:
           title: Bulk Edit Products
       filters:
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -544,7 +545,7 @@ en_DE:
         none_tax_category: None
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         add_a_tag: Add a tag
     product_import:
       title: Product Import

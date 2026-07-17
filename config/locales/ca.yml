@@ -488,6 +488,7 @@ ca:
         unit_value: Valor de la unitat
         price: Preu
         producer: Productora
+        enterprise: Organització
         category: Categoria
         sku: Número de referència (SKU)
         on_hand: "Disponibles"
@@ -764,12 +765,10 @@ ca:
           cancellation_text: "Mantenir la variant"
       filters:
         search_products: Cerca de productes
-        search_for_producers: Cercar productors
-        all_producers: Tots els productors
         search_for_categories: Cercar categories
         all_categories: Totes les categories
-        producers:
-          label: Productors
+        enterprises:
+          label: Organitzacions
         categories:
           label: Categories
         tags:
@@ -802,7 +801,7 @@ ca:
         none_tax_category: Cap
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'impostos"
-        producer_field_name: "Productora"
+        enterprise_field_name: "Organització"
         add_a_tag: Afegeix una etiqueta
     product_import:
       title: Importació de productes

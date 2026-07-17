@@ -320,6 +320,7 @@ nl_BE:
         unit: Unit
         price: Prijs
         producer: Producent
+        enterprise: Onderneming
         category: Categorie
         sku: SKU
         on_hand: "Bij de Hand"
@@ -553,8 +554,8 @@ nl_BE:
         header:
           title: Beheer van de productencatalogus
       filters:
-        producers:
-          label: Producenten
+        enterprises:
+          label: Ondernemingen
         categories:
           label: Categorieën
         tags:
@@ -570,7 +571,7 @@ nl_BE:
         none_tax_category: Geen enkele
         category_field_name: "Categorie"
         tax_category_field_name: "Belastingcategorie"
-        producer_field_name: "Producent"
+        enterprise_field_name: "Onderneming"
         add_a_tag: Voeg een tag toe
     product_import:
       title: Importeren van producten

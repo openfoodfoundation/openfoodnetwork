@@ -552,6 +552,7 @@ en_IE:
         display_as: Display unit as
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: Product Code
         on_hand: "In Stock"
@@ -845,14 +846,11 @@ en_IE:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
-        search_for_producers: Search for producers
-        select_producer: Select producer
-        all_producers: All producers
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -900,7 +898,7 @@ en_IE:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product

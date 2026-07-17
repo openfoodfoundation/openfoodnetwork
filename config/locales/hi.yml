@@ -503,6 +503,7 @@ hi:
         unit_value: यूनिट वैल्यू
         price: कीमत
         producer: उत्पादक
+        enterprise: एंटरप्राइज़
         category: श्रेणी
         sku: SKU
         on_hand: "अभी उपलब्ध"
@@ -762,10 +763,9 @@ hi:
         loading: अपने उत्पादों को लोड कर रहा है
       filters:
         search_products: उत्पादों के लिए सर्च करें
-        all_producers: सभी उत्पादक
         all_categories: सभी श्रेणियां
-        producers:
-          label: उत्पादक
+        enterprises:
+          label: एंटरप्राइजिस
         categories:
           label: श्रेणियां
         tags:
@@ -801,7 +801,7 @@ hi:
         none_tax_category: कोई नहीं
         category_field_name: "श्रेणी"
         tax_category_field_name: "टैक्स श्रेणी"
-        producer_field_name: "उत्पादक"
+        enterprise_field_name: "एंटरप्राइज़"
         add_a_tag: एक टैग जोड़ें
     product_import:
       title: उत्पाद इम्पोर्ट करें

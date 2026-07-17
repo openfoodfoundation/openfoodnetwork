@@ -161,6 +161,7 @@ sv:
         unit: Enhet
         price: Pris
         producer: Producent
+        enterprise: Företag
         category: Kategori
         sku: SKU
         on_hand: "På lager"
@@ -338,8 +339,8 @@ sv:
         header:
           title: 'Redigera Omfång av Produkter '
       filters:
-        producers:
-          label: 'Producenter '
+        enterprises:
+          label: Företag
         tags:
           label: Taggar
           none: Ingen
@@ -348,7 +349,7 @@ sv:
         none_tax_category: Ingen
         category_field_name: "Kategori"
         tax_category_field_name: "Skattekategori"
-        producer_field_name: "Producent"
+        enterprise_field_name: "Företag"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet

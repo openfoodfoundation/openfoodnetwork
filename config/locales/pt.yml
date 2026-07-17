@@ -357,6 +357,7 @@ pt:
         unit: Unidade
         price: Preço
         producer: Produtor/a
+        enterprise: Organização
         category: Categoria
         sku: SKU
         on_hand: "Disponível"
@@ -592,8 +593,8 @@ pt:
         header:
           title: Editar Produtos
       filters:
-        producers:
-          label: Produtores
+        enterprises:
+          label: Organizações
         categories:
           label: Categorias
         tags:
@@ -606,7 +607,7 @@ pt:
         none_tax_category: Nenhum
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de Imposto"
-        producer_field_name: "Produtor/a"
+        enterprise_field_name: "Organização"
         add_a_tag: Acrescentar uma etiqueta
     product_import:
       title: Importação de Produtos

@@ -335,6 +335,7 @@ es_CO:
         unit: Unidad
         price: Precio
         producer: Productor
+        enterprise: Organización
         category: Categoría
         sku: SKU
         on_hand: "Disponibles"
@@ -567,8 +568,8 @@ es_CO:
         header:
           title: Editar productos por volumen
       filters:
-        producers:
-          label: Productoras
+        enterprises:
+          label: Organizaciones
         categories:
           label: Categorías
         tags:
@@ -581,7 +582,7 @@ es_CO:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría de impuestos"
-        producer_field_name: "Productor"
+        enterprise_field_name: "Organización"
         add_a_tag: Añade una etiqueta
     product_import:
       title: Importe de producto

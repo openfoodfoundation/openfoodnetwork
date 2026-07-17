@@ -318,6 +318,7 @@ pl:
         unit: Jednostka
         price: Cena
         producer: Producent
+        enterprise: Podmiot
         category: Kategoria
         sku: SKU
         on_hand: "Dostępne"
@@ -533,8 +534,8 @@ pl:
         product_properties: "Właściwości produktu"
     products_v3:
       filters:
-        producers:
-          label: Producenci
+        enterprises:
+          label: Podmioty
         tags:
           label: Tagi
           none: Nic
@@ -543,7 +544,7 @@ pl:
         none_tax_category: Nic
         category_field_name: "Kategoria"
         tax_category_field_name: "Kategoria podatku"
-        producer_field_name: "Producent"
+        enterprise_field_name: "Podmiot"
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć

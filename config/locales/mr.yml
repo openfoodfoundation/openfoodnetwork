@@ -498,6 +498,7 @@ mr:
         unit_value: युनिट मूल्य
         price: किंमत
         producer: उत्पादक
+        enterprise: एंटरप्राइझ
         category: श्रेणी
         sku: SKU
         on_hand: "आता उपलब्ध"
@@ -746,10 +747,9 @@ mr:
           title: मोठ्या प्रमाणात उत्पादने संपादित करा
       filters:
         search_products: उत्पादने शोधा
-        all_producers: सर्व उत्पादक
         all_categories: सर्व श्रेण्या
-        producers:
-          label: उत्पादक
+        enterprises:
+          label: एंटरप्राईझेस
         categories:
           label: श्रेण्या
         tags:
@@ -781,7 +781,7 @@ mr:
       variant_row:
         none_tax_category: कोणतेही नाही
         category_field_name: "श्रेणी"
-        producer_field_name: "उत्पादक"
+        enterprise_field_name: "एंटरप्राइझ"
     product_import:
       title: उत्पादन आयात
       file_not_found: फाइल सापडली नाही किंवा उघडता आली नाही

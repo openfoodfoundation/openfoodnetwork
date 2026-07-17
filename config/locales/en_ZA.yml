@@ -311,6 +311,7 @@ en_ZA:
         unit: Unit
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "In Stock"
@@ -540,8 +541,8 @@ en_ZA:
         header:
           title: Bulk Edit Products
       filters:
-        producers:
-          label: Pricing
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -557,7 +558,7 @@ en_ZA:
         none_tax_category: None
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         add_a_tag: Add a tag
     product_import:
       title: Product Import
