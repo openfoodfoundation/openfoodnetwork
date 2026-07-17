@@ -68,6 +68,10 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
@@ -87,7 +91,6 @@ jobs:
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-          bin/rails assets:precompile 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
@@ -147,8 +150,11 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
-      - name: Run tests
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -165,9 +171,7 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
@@ -237,8 +241,11 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
-      - name: Run tests
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -255,9 +262,8 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
+          bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v7
@@ -317,6 +323,10 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
@@ -334,9 +344,8 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
+          bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v7
