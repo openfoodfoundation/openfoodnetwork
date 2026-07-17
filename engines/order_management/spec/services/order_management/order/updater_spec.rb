@@ -121,14 +121,14 @@ RSpec.describe OrderManagement::Order::Updater do
         let(:order) { create(:completed_order_with_totals) }
 
         it "updates pending payments" do
-          pending
           payment = create(:payment, order:, amount: order.total)
 
           # update order so the order total will change
           update_order_quantity(order)
+
           order.payments.reload
 
-          expect { updater.update }.to change { payment.reload.amount }.from(50).to(60)
+          expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
         end
       end
     end
