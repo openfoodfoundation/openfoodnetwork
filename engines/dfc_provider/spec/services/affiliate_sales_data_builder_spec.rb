@@ -58,7 +58,6 @@ RSpec.describe AffiliateSalesDataBuilder do
       end
 
       it "returns required sales data", feature: :affiliate_sales_data do
-        pending
         supplier = person.affiliatedOrganizations[0]
         product = supplier.suppliedProducts[0]
         line = product.semanticPropertyValue("dfc-b:concernedBy")

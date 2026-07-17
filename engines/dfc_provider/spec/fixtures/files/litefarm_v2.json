@@ -1,449 +1,229 @@
 {
-  "@context": "https://w3id.org/dfc/ontology/context/context_2.0.0.json",
+  "@context": "https://www.datafoodconsortium.org/wp-content/plugins/wordpress-context-jsonld/context_2.0.0.jsonld",
   "@graph": [
     {
       "@id": "https://api.beta.litefarm.org/dfc/enterprises",
       "@type": "ldp:Container",
       "ldp:contains": [
-        "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d",
-        "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb",
-        "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b",
-        "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299",
-        "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33",
-        "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125"
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae"
       ]
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b",
       "@type": "dfc-b:Organization",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#address"
-      },
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#person-mainContact"
-      },
-      "dfc-b:name": "DFC Farm Four (Now minimal fields)",
-      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#suppliedProduct-bakery"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#address",
-      "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Vancouver",
-      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "V6A 3Z7",
-      "dfc-b:hasStreet": "1455 Quebec Street",
-      "dfc-b:region": "British Columbia"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#person-mainContact",
-      "@type": "dfc-b:Person",
-      "dfc-b:email": "community+60@litefarm.org",
-      "dfc-b:familyName": "Last",
-      "dfc-b:firstName": "First"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/5122698f-a7ab-40cf-a910-f7393b973de8#suppliedProduct-bakery",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:bakery"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d",
-      "@type": "dfc-b:Organization",
-      "dfc-b:email": "dfcshop@example.com",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#address"
-      },
-      "dfc-b:hasDescription": "Editing \"about\" and testing the import of all fields",
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#person-mainContact"
-      },
-      "dfc-b:hasPhoneNumber": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#phoneNumber"
-      },
+      "dfc-b:email": "info@happyacres.com",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#address",
+      "dfc-b:hasDescription": "Organic vegetables since 2020",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#phoneNumber",
       "dfc-b:hasSocialMedia": [
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-instagram"
-        },
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-facebook"
-        },
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-x"
-        }
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-x"
       ],
-      "dfc-b:logo": "https://litefarmbeta.nyc3.digitaloceanspaces.com/farm_logo/bc35fc0f-19bc-4892-b487-869294abf37b.webp",
-      "dfc-b:name": "DFC Test Farm Beta (All Supplied Fields)",
+      "dfc-b:isCertifiedBy": [
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330d6e38-7beb-11f1-bede-e66db4bef552",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330f4aaa-7beb-11f1-bede-e66db4bef552"
+      ],
+      "dfc-b:logo": "https://example.com/logo.png",
+      "dfc-b:name": "Happy Acres Farm",
       "dfc-b:supplies": [
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
-        "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant"
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-bakery",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-dairy_product"
       ],
-      "dfc-b:websitePage": "www.testfarm.example.com",
-      "dfc-b:isCertifiedBy": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#certification-organic"
+      "dfc-b:websitePage": "https://happyacres.com"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#address",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#address",
       "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Vancouver",
+      "dfc-b:hasCity": "Farmville",
       "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "V6T 1W5",
-      "dfc-b:hasStreet": "3461 Ross Drive",
-      "dfc-b:region": "British Columbia"
+      "dfc-b:hasPostalCode": "V1V 1V1",
+      "dfc-b:hasStreet": "123 Farm Road",
+      "dfc-b:region": "BC"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#person-mainContact",
-      "@type": "dfc-b:Person",
-      "dfc-b:email": "community@litefarm.org",
-      "dfc-b:familyName": "Test",
-      "dfc-b:firstName": "DFC"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#phoneNumber",
-      "@type": "dfc-b:PhoneNumber",
-      "dfc-b:countryCode": "1",
-      "dfc-b:phoneNumber": "(604) 555-5555"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-facebook",
-      "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://www.facebook.com/dfc_test_farm/",
-      "dfc-b:name": "Facebook"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-instagram",
-      "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://www.instagram.com/dfctest/",
-      "dfc-b:name": "Instagram"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#socialMedia-x",
-      "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://x.com/dfc_farm/",
-      "dfc-b:name": "X"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-alcoholic_beverage",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:alcoholic-beverage"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-bakery",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:bakery"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-dairy_product",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:dairy-product"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-egg",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:egg"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-flower",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:flower"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-frozen",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:frozen"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-fruit",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:fruit"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-meat_product",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:meat-product"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-plant",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:plant"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#suppliedProduct-vegetable",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:vegetable"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/23bfd9b1-98b5-4b91-88e5-efa7cb36219d#certification-organic",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330d6e38-7beb-11f1-bede-e66db4bef552",
       "@type": "dfc-b:Certfication",
-      "dfc-b:name": "Organic",
-      "dfc-b:description": null,
-      "dfc-b:certiferReference": "Ecocert",
-      "dfc-b:certificationScore": "56",
-      "dfc-b:operatorId": "asds2334fd"
+      "dfc-b:certiferReference": "Islands Organic Producers Association",
+      "dfc-b:name": "Organic"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb",
-      "@type": "dfc-b:Organization",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#address"
-      },
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact"
-      },
-      "dfc-b:name": "Canadian Farm (Minimal fields)",
-      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg"
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330f4aaa-7beb-11f1-bede-e66db4bef552",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Asociación de Productores Orgánicos",
+      "dfc-b:name": "Biodynamic",
+      "dfc-b:operatorId": "Ecocert"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#address",
-      "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Vancouver",
-      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "V6A 3Z7",
-      "dfc-b:hasStreet": "1455 Quebec Street",
-      "dfc-b:region": "British Columbia"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#person-mainContact",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#person-mainContact",
       "@type": "dfc-b:Person",
-      "dfc-b:email": "community+1@litefarm.org",
-      "dfc-b:familyName": "Owner",
-      "dfc-b:firstName": "Minimal Farm"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/09788ba1-da02-4b7a-8496-8a2e95cf78cb#suppliedProduct-egg",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:egg"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b",
-      "@type": "dfc-b:Organization",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#address"
-      },
-      "dfc-b:hasDescription": "Test Information",
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#person-mainContact"
-      },
-      "dfc-b:hasPhoneNumber": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#phoneNumber"
-      },
-      "dfc-b:hasSocialMedia": [
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-instagram"
-        },
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-facebook"
-        },
-        {
-          "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-x"
-        }
-      ],
-      "dfc-b:name": "Test Farm in Canada",
-      "dfc-b:supplies": [
-        "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#suppliedProduct-fruit",
-        "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#suppliedProduct-egg"
-      ],
-      "dfc-b:websitePage": "example.com"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#address",
-      "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Toronto",
-      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "M4L",
-      "dfc-b:hasStreet": "Vancouver Avenue",
-      "dfc-b:region": "Ontario"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#person-mainContact",
-      "@type": "dfc-b:Person",
-      "dfc-b:email": "community+31@litefarm.org",
+      "dfc-b:email": "john@happyacres.com",
       "dfc-b:familyName": "Farmer",
-      "dfc-b:firstName": "Sanity Novembers"
+      "dfc-b:firstName": "John"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#phoneNumber",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#phoneNumber",
       "@type": "dfc-b:PhoneNumber",
       "dfc-b:countryCode": "1",
-      "dfc-b:phoneNumber": "66655544"
+      "dfc-b:phoneNumber": "555-555-1234"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-facebook",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-facebook",
       "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://www.facebook.com/123/",
+      "dfc-b:URL": "https://www.facebook.com/happyacresfarm/",
       "dfc-b:name": "Facebook"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-instagram",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-instagram",
       "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://www.instagram.com/123/",
+      "dfc-b:URL": "https://www.instagram.com/happyacres/",
       "dfc-b:name": "Instagram"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#socialMedia-x",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-x",
       "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://x.com/123/",
+      "dfc-b:URL": "https://x.com/happyacres/",
       "dfc-b:name": "X"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#suppliedProduct-egg",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:egg"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/e7f76c6c-d3c1-44b6-bd9f-dd756170107b#suppliedProduct-fruit",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:fruit"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299",
-      "@type": "dfc-b:Organization",
-      "dfc-b:email": "community@litefarm.org",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#address"
-      },
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#person-mainContact"
-      },
-      "dfc-b:name": "Granville Farm!",
-      "dfc-b:supplies": [
-        "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-dairy_product",
-        "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-meat_product",
-        "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-alcoholic_beverage"
-      ]
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#address",
-      "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Vancouver",
-      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasStreet": "Island Park Walk",
-      "dfc-b:region": "British Columbia"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#person-mainContact",
-      "@type": "dfc-b:Person",
-      "dfc-b:email": "lsans@litefarm.org",
-      "dfc-b:familyName": "Sans",
-      "dfc-b:firstName": "Loïc"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-alcoholic_beverage",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:alcoholic-beverage"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-dairy_product",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:dairy-product"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/13152ea2-8d19-4309-a443-c95d8879d299#suppliedProduct-meat_product",
-      "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:meat-product"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33",
-      "@type": "dfc-b:Organization",
-      "dfc-b:email": "community+25@litefarm.org",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#address"
-      },
-      "dfc-b:hasDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#person-mainContact"
-      },
-      "dfc-b:hasPhoneNumber": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#phoneNumber"
-      },
-      "dfc-b:name": "TEST 20251210",
-      "dfc-b:supplies": [
-        "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#suppliedProduct-bakery",
-        "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#suppliedProduct-fruit"
-      ]
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#address",
-      "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "University Endowment Lands",
-      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "V6T",
-      "dfc-b:hasStreet": "UBC Bus Loop",
-      "dfc-b:region": "British Columbia"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#person-mainContact",
-      "@type": "dfc-b:Person",
-      "dfc-b:email": "community+25@litefarm.org",
-      "dfc-b:familyName": "1210",
-      "dfc-b:firstName": "2025"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#phoneNumber",
-      "@type": "dfc-b:PhoneNumber",
-      "dfc-b:phoneNumber": "1234567"
-    },
-    {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#suppliedProduct-bakery",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-bakery",
       "@type": "dfc-b:SuppliedProduct",
       "dfc-b:hasType": "dfc-pt:bakery"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/024682d0-b2a8-49ed-a472-635acecb3a33#suppliedProduct-fruit",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-dairy_product",
       "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:fruit"
+      "dfc-b:hasType": "dfc-pt:dairy-product"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd",
       "@type": "dfc-b:Organization",
-      "dfc-b:email": "shop@example.com",
-      "dfc-b:hasAddress": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#address"
-      },
-      "dfc-b:hasDescription": "New farm to test account creation flow",
-      "dfc-b:hasMainContact": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#person-mainContact"
-      },
-      "dfc-b:hasSocialMedia": {
-        "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-instagram"
-      },
-      "dfc-b:logo": "https://litefarmbeta.nyc3.digitaloceanspaces.com/farm_logo/0bb3dbac-e835-41f6-ae47-e9ff51a38daa.webp",
-      "dfc-b:name": "Beta DFC Farm Three",
-      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#suppliedProduct-vegetable"
+      "dfc-b:email": "info@willowcreekdairy.ca",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#address",
+      "dfc-b:hasDescription": "Family-run dairy and bakery in the Okanagan Valley",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#phoneNumber",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-x"
+      ],
+      "dfc-b:isCertifiedBy": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#certification-330fd5ec-7beb-11f1-bede-e66db4bef552",
+      "dfc-b:logo": "https://example.com/willowcreek-logo.png",
+      "dfc-b:name": "Willow Creek Dairy",
+      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#suppliedProduct-bakery",
+      "dfc-b:websitePage": "https://willowcreekdairy.ca"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#address",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#address",
       "@type": "dfc-b:Address",
-      "dfc-b:hasCity": "Vancouver",
+      "dfc-b:hasCity": "Vernon",
       "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
-      "dfc-b:hasPostalCode": "V6A 3Z7",
-      "dfc-b:hasStreet": "1455 Quebec Street",
-      "dfc-b:region": "British Columbia"
+      "dfc-b:hasPostalCode": "V2V 2V2",
+      "dfc-b:hasStreet": "456 Meadow Lane",
+      "dfc-b:region": "BC"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#person-mainContact",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#certification-330fd5ec-7beb-11f1-bede-e66db4bef552",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Living Earth Organic Growers",
+      "dfc-b:name": "Organic"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#person-mainContact",
       "@type": "dfc-b:Person",
-      "dfc-b:email": "community+2@litefarm.org",
-      "dfc-b:familyName": "Last",
-      "dfc-b:firstName": "First"
+      "dfc-b:email": "maria@willowcreekdairy.ca",
+      "dfc-b:familyName": "Lopez",
+      "dfc-b:firstName": "Maria"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-instagram",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#phoneNumber",
+      "@type": "dfc-b:PhoneNumber",
+      "dfc-b:countryCode": "1",
+      "dfc-b:phoneNumber": "555-555-5678"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-facebook",
       "@type": "dfc-b:SocialMedia",
-      "dfc-b:URL": "https://www.instagram.com/example/",
+      "dfc-b:URL": "https://www.facebook.com/willowcreekdairy/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/willowcreekdairy/",
       "dfc-b:name": "Instagram"
     },
     {
-      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#suppliedProduct-vegetable",
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-x",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://x.com/willowcreekdairy/",
+      "dfc-b:name": "X"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#suppliedProduct-bakery",
       "@type": "dfc-b:SuppliedProduct",
-      "dfc-b:hasType": "dfc-pt:vegetable"
+      "dfc-b:hasType": "dfc-pt:bakery"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae",
+      "@type": "dfc-b:Organization",
+      "dfc-b:email": "hello@sunriseorchard.ca",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#address",
+      "dfc-b:hasDescription": "Apples and stone fruit grown in Kelowna",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#phoneNumber",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-x"
+      ],
+      "dfc-b:logo": "https://example.com/sunrise-logo.png",
+      "dfc-b:name": "Sunrise Orchard",
+      "dfc-b:websitePage": "https://sunriseorchard.ca"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#address",
+      "@type": "dfc-b:Address",
+      "dfc-b:hasCity": "Kelowna",
+      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
+      "dfc-b:hasPostalCode": "V3V 3V3",
+      "dfc-b:hasStreet": "789 Orchard Way",
+      "dfc-b:region": "BC"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#person-mainContact",
+      "@type": "dfc-b:Person",
+      "dfc-b:email": "sam@sunriseorchard.ca",
+      "dfc-b:familyName": "Chen",
+      "dfc-b:firstName": "Sam"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#phoneNumber",
+      "@type": "dfc-b:PhoneNumber",
+      "dfc-b:countryCode": "1",
+      "dfc-b:phoneNumber": "555-555-9012"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-facebook",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.facebook.com/sunriseorchard/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/sunriseorchard/",
+      "dfc-b:name": "Instagram"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-x",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://x.com/sunriseorchard/",
+      "dfc-b:name": "X"
     }
   ]
 }

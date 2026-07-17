@@ -28,7 +28,7 @@ RSpec.describe AffiliateSalesQuery do
       travel_to(Time.zone.today.noon)
     end
 
-    pending "returns records filtered by date" do
+    it "returns records filtered by date" do
       # Test data creation takes time.
       # So I'm executing more tests in one `it` block here.
       # And make it simpler to call the subject many times:
@@ -58,7 +58,7 @@ RSpec.describe AffiliateSalesQuery do
       expect(count_rows.call(start_date: tomorrow)).to eq 0
     end
 
-    pending "returns data" do
+    it "returns data" do
       labelled_row = query.label_row(query.data(order1.distributor).first)
 
       expect(labelled_row).to include(
@@ -76,7 +76,7 @@ RSpec.describe AffiliateSalesQuery do
       )
     end
 
-    pending "returns data stored in line item at time of order" do
+    it "returns data stored in line item at time of order" do
       # Records are updated after the orders are created
       product.update! name: "Tommy toes"
       variant1.update! display_name: "Tommy toes - Roma", price: 11
@@ -90,7 +90,7 @@ RSpec.describe AffiliateSalesQuery do
       )
     end
 
-    pending "returns data from variant if line item doesn't have it" do
+    it "returns data from variant if line item doesn't have it" do
       # Old line item records (before migration 20250713110052) don't have these values stored
       order1.line_items.first.update! product_name: nil, variant_name: nil
 
@@ -108,7 +108,7 @@ RSpec.describe AffiliateSalesQuery do
                                                                 distributor: order1.distributor)
       }
 
-      pending "returns data grouped by product name" do
+      it "returns data grouped by product name" do
         labelled_row = query.label_row(query.data(order1.distributor).first)
 
         expect(labelled_row).to include(
@@ -128,7 +128,7 @@ RSpec.describe AffiliateSalesQuery do
                              variant_unit: "weight", unit_value: 500, variant_unit_scale: 1) # 500g
         }
 
-        pending "returns data grouped by variant name" do
+        it "returns data grouped by variant name" do
           labelled_data = query.data(order1.distributor).map{ |row| query.label_row(row) }
 
           expect(labelled_data).to include a_hash_including(

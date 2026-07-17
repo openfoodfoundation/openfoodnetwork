@@ -148,14 +148,14 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
-        pending "creates a product and variant" do |example|
+        it "creates a product and variant" do |example|
           # Despite requiring a tax catogory...
           # https://github.com/openfoodfoundation/openfoodnetwork/issues/11212
           create(:tax_category, is_default: true)
           Spree::Config.products_require_tax_category = true
 
           expect { submit_request(example.metadata) }
-            .to change { enterprise.supplied_products.count }.by(1)
+            .to change { enterprise.products.count }.by(1)
 
           dfc_id = json_response["@id"]
           expect(dfc_id).to match(

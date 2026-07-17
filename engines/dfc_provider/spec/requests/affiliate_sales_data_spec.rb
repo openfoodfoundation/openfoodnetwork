@@ -26,7 +26,7 @@ RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml" do
           ).connect({})
         end
 
-        xcontext "with date filters" do
+        context "with date filters" do
           let(:startDate) { Date.tomorrow }
           let(:endDate) { Date.tomorrow }
 
@@ -40,7 +40,7 @@ RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml" do
           end
         end
 
-        xcontext "not filtered" do
+        context "not filtered" do
           run_test! do
             expect(json_response).to include(
               "@id" => "http://test.host/api/dfc/affiliate_sales_data",
