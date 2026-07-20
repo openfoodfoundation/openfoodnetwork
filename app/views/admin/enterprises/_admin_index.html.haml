@@ -10,11 +10,11 @@
     .five.columns
       = label_tag :q_users_email_i_cont, t('.member_email')
       = text_field_tag 'q[users_email_i_cont]', params.dig(:q, :users_email_i_cont), class: "fullwidth"
-    .omega.one.columns
-      = button t('.search'), 'icon-search', class: "small"
     .row
-      .omega.sixteen.columns
-        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary"
+      .eight.columns.alpha
+        = button t('.search'), 'icon-search', class: "small"
+      .eight.columns.omega
+        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary float-right"
 
 = form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   %table#listing_enterprises.index

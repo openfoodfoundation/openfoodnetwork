@@ -610,6 +610,96 @@ RSpec.describe Admin::EnterprisesController do
         expect(profile_enterprise2.owner).to eq new_owner
       end
     end
+
+    context "with more editable enterprises than are submitted" do
+      let!(:unsubmitted_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "updates only the submitted enterprise and leaves others untouched" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' }
+        } } }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(unsubmitted_enterprise.reload.visible).not_to eq 'false'
+      end
+    end
+
+    context "when there are more editable enterprises than fit on one page" do
+      before { stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1)) }
+
+      let!(:other_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "still updates an enterprise excluded from the first page of the full list" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise2.id, visible: 'false' }
+        } } }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise2.reload.visible).to eq 'false'
+      end
+    end
+
+    context "with an empty collection_attributes" do
+      it "does not raise and makes no changes" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {} } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
+    end
+
+    context "when a submitted enterprise id no longer exists" do
+      it "silently skips it and still saves the rest of the batch" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        non_existent_id = Enterprise.maximum(:id).to_i + 1_000_000
+
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' },
+          '1' => { id: non_existent_id, visible: 'false' }
+        } } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(Enterprise.exists?(non_existent_id)).to be false
+      end
+    end
+
+    context "as manager, when submitting an id for an enterprise they don't manage" do
+      let!(:unmanaged_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "strips :sells and :owner_id for that id and skips it without error" do
+        profile_enterprise1.enterprise_roles.build(user: new_owner).save
+        allow(controller).to receive_messages spree_current_user: new_owner
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' },
+          '1' => { id: unmanaged_enterprise.id, sells: 'any', owner_id: new_owner.id }
+        } } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(unmanaged_enterprise.reload.sells).to eq 'none'
+        expect(unmanaged_enterprise.reload.owner).to eq original_owner
+      end
+    end
   end
 
   describe "for_order_cycle" do
