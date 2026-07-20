@@ -22,8 +22,8 @@ module Admin
     ].freeze
 
     def prepare_new_variant(product, producer_id = nil)
+      template = product.variants.last
       product.variants.build do |new_variant|
-        template = product.variants.reject(&:new_record?).last
         copy_template_fields(template, new_variant) if template
         new_variant.on_hand_desired = 0
         # Integer producer_id explicitly overrides the template's enterprise_id.
