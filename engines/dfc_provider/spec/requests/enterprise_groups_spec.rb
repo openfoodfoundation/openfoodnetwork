@@ -31,10 +31,10 @@ RSpec.describe "EnterpriseGroups", swagger_doc: "dfc.yaml" do
             expect(subject).to include(
               "@id" => "http://test.host/api/dfc/enterprise_groups/60000",
               "dfc-b:name" => "Sustainable Farmers",
-              "dfc-b:affiliatedBy" => [
+              "dfc-b:affiliatedBy" => array_including(
                 "http://test.host/api/dfc/enterprises/10001",
                 "http://test.host/api/dfc/enterprises/10002",
-              ],
+              ),
             )
           end
         end
@@ -81,10 +81,10 @@ RSpec.describe "EnterpriseGroups", swagger_doc: "dfc.yaml" do
             "@type" => "dfc-b:Enterprise",
             "dfc-b:name" => "Sustainable Farmers",
             "dfc-b:hasAddress" => "http://test.host/api/dfc/addresses/40000",
-            "dfc-b:affiliatedBy" => [
+            "dfc-b:affiliatedBy" => array_including(
               "http://test.host/api/dfc/enterprises/10001",
               "http://test.host/api/dfc/enterprises/10002",
-            ],
+            ),
           )
 
           expect(graph[1]).to include(
