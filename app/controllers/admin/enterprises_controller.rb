@@ -263,10 +263,30 @@ module Admin
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises
           .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result
       else
-        OpenFoodNetwork::Permissions.new(spree_current_user).
-          editable_enterprises.
+        bulk_update_collection
+      end
+    end
+
+    def bulk_update_collection
+      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+      enterprise_ids = bulk_update_enterprise_ids
+
+      if enterprise_ids.present?
+        permissions.editable_enterprises.where(id: enterprise_ids).
+          order('is_primary_producer ASC, name')
+      else
+        permissions.editable_enterprises.
           order('is_primary_producer ASC, name')
       end
+    end
+
+    def bulk_update_enterprise_ids
+      return if params[:sets_enterprise_set].blank?
+
+      collection_attributes = params[:sets_enterprise_set][:collection_attributes]
+      return if collection_attributes.blank?
+
+      collection_attributes.values.pluck(:id).compact
     end
 
     def collection_actions
