@@ -75,7 +75,7 @@ module Reporting
             expect(delivery_row.quantity).to eq(4)
 
             summary_row = report_table.last
-            expect(summary_row[6]).to be_within(0.01).of(70.00)
+            expect(summary_row[6]).to eq(70.00)
           end
         end
       end
