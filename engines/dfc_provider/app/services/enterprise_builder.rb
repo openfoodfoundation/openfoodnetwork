@@ -46,7 +46,7 @@ class EnterpriseBuilder < DfcBuilder
   end
 
   def self.enterprise_group(group)
-    members = group.enterprises.map do |member|
+    members = group.enterprises.order(:id).map do |member|
       urls.enterprise_url(member.id)
     end
 
