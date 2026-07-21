@@ -17,8 +17,17 @@ RSpec.describe 'Subscriptions' do
     before { login_as user }
 
     context 'listing subscriptions' do
+      # Give this subscription fully explicit data. The quick search below does a
+      # substring match across the whole serialised row (customer email,
+      # addresses, ...), so random factory data here used to occasionally contain
+      # a search term (e.g. "test" inside a Faker email/city), which made the spec
+      # flaky. Fixed data keeps its row free of the terms we search for.
       let!(:subscription) {
-        create(:subscription, shop:, with_items: true, with_proxy_orders: true)
+        create(:subscription, shop:, with_items: true, with_proxy_orders: true,
+                              customer: create(:customer, enterprise: shop,
+                                                          first_name: "Alice", last_name: "Anderson",
+                                                          email: "alice.anderson@example.com"),
+                              bill_address: create(:address), ship_address: create(:address))
       }
       let!(:customer) { create(:customer, first_name: "Timmy", last_name: "Test") }
       let!(:other_subscription) {
