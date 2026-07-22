@@ -580,6 +580,8 @@ hu:
         create_linked_variant: Kapcsolt termékváltozat létrehozása
       image:
         edit: Szerkesztés
+      variant_row:
+        sourced_from: "Forrás: %{source_name} ( %{source_id} ); Termelő: %{producer_name}"
       product_preview:
         product_preview: Termék előnézet
         shop_tab: Átvételi pont
@@ -728,6 +730,7 @@ hu:
         update_address: "Cím frissítése"
         confirm_delete: "Biztosan törli?"
         search_by_email: "Keresés email/kód alapján..."
+        filter_by_tag: "Szűrés címkére"
         guest_label: "Vendég kijelentkezés"
         credit_owed: "Hiteltartozás"
         balance_due: "Fennálló tartozás"
@@ -849,6 +852,7 @@ hu:
       filters:
         search_products: Keresés a termékek között
         search_for_enterprises: Vállalkozások keresése
+        select_enterprise: Vállalkozás kiválasztása
         all_enterprises: Minden vállalkozás
         search_for_categories: Keresés termékkategóriára
         select_category: Válassz kategóriát
@@ -909,6 +913,8 @@ hu:
       clone:
         success: Sikeresen klónoztad a terméket
         error: A terméket nem sikerült klónozni
+      create_linked_variant:
+        success: "A kapcsolt termékváltozat sikeresen létrehozva"
       tag_rules:
         rules_per_tag:
           one: "%{tag} 1 szabályt tartalmaz"

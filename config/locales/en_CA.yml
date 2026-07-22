@@ -674,6 +674,8 @@ en_CA:
         create_linked_variant: Create linked variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -970,6 +972,8 @@ en_CA:
       filters:
         search_products: Search for products
         search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories

@@ -676,6 +676,8 @@ fr_CA:
         create_linked_variant: Créer une variante liée
       image:
         edit: Modifier
+      variant_row:
+        sourced_from: "Source: %{source_name} (%{source_id}); Producteur: %{producer_name}"
       product_preview:
         product_preview: Prévisualisation du produit
         shop_tab: Boutique
@@ -972,6 +974,8 @@ fr_CA:
       filters:
         search_products: Chercher des produits
         search_for_enterprises: Recherche d'entreprises
+        select_enterprise: Sélectionnez une entreprise
+        all_enterprises: Toutes les entreprises
         search_for_categories: Rechercher des catégories
         select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
