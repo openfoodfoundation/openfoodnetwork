@@ -4460,7 +4460,8 @@ en:
     admin:
       images:
         edit:
-          title: Edit product photo
+          title: Edit image for %{resource_name}
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
       mail_methods:

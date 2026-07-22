@@ -8,7 +8,7 @@
       - if allowed_source_producers.include?(product.variants.first.enterprise) && !spree_current_user.admin?
         -# Read only product
         %td.col-image.with-image{ id: "image-#{product.id}" }
-          = render partial: "product_image", locals: { product:, readonly: true }
+          = render partial: "image", locals: { imageable: product, readonly: true }
         %td.col-name.field.align-left.header
           = product_form.hidden_field :id
           .content= product.name
@@ -46,7 +46,7 @@
         -# Read only variants
         %tr.condensed.nested-form-wrapper{ id: dom_id(variant) }
           %td.col-image
-            -# empty
+            = render partial: "image", locals: { imageable: variant, readonly: true }
           %td.col-name
             .content= variant.display_name
           %td.col-sku

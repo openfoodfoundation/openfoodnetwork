@@ -1,6 +1,5 @@
--# locals: (f:, product:)
-%td.col-image.with-image{ id: "image-#{product.id}" }
-  = render partial: "product_image", locals: { product: }
+%td.col-image.with-image{ id: "product-image-#{product.id}" }
+  = render partial: "image", locals: { imageable: product }
 %td.col-name.field.align-left.header.naked_inputs
   = f.hidden_field :id
   = f.text_field :name, 'aria-label': t('admin.products_page.columns.name')

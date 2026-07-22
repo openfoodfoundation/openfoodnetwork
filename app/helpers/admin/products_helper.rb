@@ -2,11 +2,19 @@
 
 module Admin
   module ProductsHelper
-    def product_image_form_path(product)
-      if product.image.present?
-        edit_admin_product_image_path(product.id, product.image.id)
+    def image_form_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        product_id = imageable.product_id
+        extra = { variant_id: imageable.id }
       else
-        new_admin_product_image_path(product.id)
+        product_id = imageable.id
+        extra = {}
+      end
+
+      if imageable.image.present?
+        edit_admin_product_image_path(product_id, imageable.image.id, extra)
+      else
+        new_admin_product_image_path(product_id, extra)
       end
     end
 
@@ -115,6 +123,12 @@ module Admin
         alt: product.name,
         caption: nil
       }
+    end
+
+    def image_modal_resource_name(variant, product)
+      resource_name = product.name
+
+      variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
     end
   end
 end
