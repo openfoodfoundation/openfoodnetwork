@@ -32,4 +32,22 @@ RSpec.describe DfcLoader do
     connector = DfcLoader.connector_v2
     expect(connector.PRODUCT_TYPES.DRINK.semanticId).to end_with "#drink"
   end
+
+  it "retries loading when the first attempt fails" do
+    DfcLoader.instance_variable_set(:@connector, nil)
+
+    calls = 0
+    allow(DfcLoader).to receive(:read_file).and_wrap_original do |original, name|
+      calls += 1
+      raise Errno::ENOENT, name if calls == 1
+
+      original.call(name)
+    end
+
+    expect { DfcLoader.connector }.to raise_error(Errno::ENOENT)
+
+    # A failed load used to leave a memoised connector with empty MEASURES
+    # behind, so later requests crashed with NoMethodError on Array.
+    expect(DfcLoader.connector.MEASURES.PIECE).not_to be_nil
+  end
 end

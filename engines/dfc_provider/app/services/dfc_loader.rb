@@ -1,31 +1,35 @@
 # frozen_string_literal: true
 
 class DfcLoader
-  def self.connector
-    unless @connector
-      @connector = DataFoodConsortium::ConnectorV1::Connector.instance
-      @connector.loadMeasures(read_file("measures"))
-      @connector.loadFacets(read_file("facets"))
-      @connector.loadProductTypes(read_file("productTypes"))
-      vocabulary("vocabulary") # order states etc
-    end
+  LOCK = Mutex.new
 
-    @connector
+  def self.connector
+    @connector ||= LOCK.synchronize do
+      @connector || DataFoodConsortium::ConnectorV1::Connector.instance.tap do |connector|
+        connector.loadMeasures(read_file("measures"))
+        connector.loadFacets(read_file("facets"))
+        connector.loadProductTypes(read_file("productTypes"))
+        load_thesaurus(connector, "vocabulary") # order states etc
+      end
+    end
   end
 
   def self.connector_v2
-    unless @connector_v2
-      @connector_v2 = DataFoodConsortium::Connector::Connector.instance
-      @connector_v2.loadMeasures(read_file("measures"))
-      @connector_v2.loadFacets(read_file("facets"))
-      @connector_v2.loadProductTypes(read_file("productTypes"))
-      vocabulary("vocabulary") # order states etc
+    @connector_v2 ||= LOCK.synchronize do
+      @connector_v2 || DataFoodConsortium::Connector::Connector.instance.tap do |connector|
+        connector.loadMeasures(read_file("measures"))
+        connector.loadFacets(read_file("facets"))
+        connector.loadProductTypes(read_file("productTypes"))
+        load_thesaurus(connector, "vocabulary") # order states etc
+      end
     end
-
-    @connector_v2
   end
 
   def self.vocabulary(name)
+    load_thesaurus(connector, name)
+  end
+
+  def self.load_thesaurus(connector, name)
     @vocabs ||= {}
     @vocabs[name] ||= connector.__send__(:loadThesaurus, read_file(name))
   end
