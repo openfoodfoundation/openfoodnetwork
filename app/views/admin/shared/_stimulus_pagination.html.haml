@@ -17,6 +17,8 @@
 
       - elsif item == :gap                            # page gap
         %li
+          -# haml-lint:disable UnescapedHtml
+          -# pagy_t return some html code
           %span.page.gap.pagination-ellipsis!= pagy_t('pagy.gap')
 
   - if pagy.next
