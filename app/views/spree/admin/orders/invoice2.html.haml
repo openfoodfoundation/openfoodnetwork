@@ -55,7 +55,9 @@
       %td{ :align => "right" }
         = t :invoice_billing_address
         %br
-        - if @order.bill_address
+        - if @order.customer
+          %strong= @order.customer.full_name
+        - elsif @order.bill_address
           %strong= @order.bill_address.full_name
         - if @order&.customer&.code.present?
           %br
@@ -72,6 +74,13 @@
         - if @order&.customer&.email.present?
           %br
           = @order.customer.email
+        - if @order&.customer&.enterprise?
+          - if @order&.customer&.enterprise_acn
+            %br
+            = "#{t :acn} #{@order.customer.enterprise_acn}"
+          - if @order&.customer&.enterprise_abn
+            %br
+            = "#{t :abn} #{@order.customer.enterprise_abn}"
 
 = render 'spree/admin/orders/invoice_table2'
 

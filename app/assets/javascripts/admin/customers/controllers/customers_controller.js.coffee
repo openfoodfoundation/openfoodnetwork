@@ -51,6 +51,13 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
       defer.resolve filtered
     defer.promise
 
+  $scope.clearEnterpriseFields = (customer) ->
+    if customer.customer_type == 'individual'
+      customer.enterprise_name = '-'
+      customer.enterprise_acn = '-'
+      customer.enterprise_abn = '-'
+      customer.enterprise_charges_sales_tax = 'false'
+
   $scope.displayBalanceStatus = (customer) ->
     return unless customer.balance_status
 
