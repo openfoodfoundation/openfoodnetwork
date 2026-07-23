@@ -517,6 +517,18 @@ RSpec.describe '
       it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector ".no-objects-found"
+        expect(page).to have_selector "#new_image_link_wrapper", visible: true
+        expect(page).to have_link "New Image"
+      end
+
+      it "hides the add image button when images are present" do
+        image = white_logo_file
+        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
+                            alt: "position 1", attachment: image, position: 1)
+
+        visit spree.admin_product_images_path(product)
+        expect(page).to have_selector "table.index td img"
+        expect(page).to have_selector "#new_image_link_wrapper", visible: false
       end
 
       it "loading edit product image page including url filter" do
@@ -581,13 +593,16 @@ RSpec.describe '
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector "table.index td img"
         expect(product.reload.image).not_to be_nil
+        expect(page).to have_selector "#new_image_link_wrapper", visible: false
 
         accept_alert do
-          page.find('a.delete-resource').click
+          page.find('a[data-turbo-method="delete"]').click
         end
 
         expect(page).not_to have_selector "table.index td img"
         expect(product.reload.image).to be_nil
+        expect(page).to have_selector "#new_image_link_wrapper", visible: true
+        expect(page).to have_selector ".no-objects-found", visible: true
       end
 
       it "deleting product image including url filter" do
@@ -598,7 +613,7 @@ RSpec.describe '
         visit spree.admin_product_images_path(product, filter)
 
         accept_alert do
-          page.find('a.delete-resource').click
+          page.find('a[data-turbo-method="delete"]').click
         end
 
         uri = URI.parse(current_url)
