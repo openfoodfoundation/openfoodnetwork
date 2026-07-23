@@ -61,4 +61,36 @@ RSpec.describe DfcImporter do
 
     expect(subject.errors).to be_nil
   end
+
+  describe ".import_profile" do
+    it "updates certificates" do
+      farm_data = ExampleJson.read("litefarm_v2_2026_07_22_beta_dfc_farm_three")
+      graph = DfcLoader.connector_v2.import(farm_data).to_a
+      farm = graph[1]
+
+      expect {
+        subject.import_profile(farm)
+      }.to change { Enterprise.count }.by(1)
+
+      enterprise = Enterprise.last
+      expect(enterprise.properties.count).to eq 1
+
+      enterprise.properties.destroy_all
+
+      expect {
+        subject.import_profile(farm)
+        enterprise.reload
+      }.to change { Enterprise.count }.by(0)
+        .and change { enterprise.properties.count }.by(1)
+      expect(enterprise.properties.pluck(:name)).to eq ["Biodynamic"]
+
+      enterprise.properties.update_all(name: "Updated prop")
+
+      expect {
+        subject.import_profile(farm)
+        enterprise.reload
+      }.to change { enterprise.properties.count }.by(1)
+      expect(enterprise.properties.pluck(:name)).to match_array ["Biodynamic", "Updated prop"]
+    end
+  end
 end
