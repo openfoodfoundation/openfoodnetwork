@@ -596,7 +596,7 @@ RSpec.describe '
         expect(page).to have_selector "#new_image_link_wrapper", visible: false
 
         accept_alert do
-          page.find('a.delete-resource').click
+          page.find('a[data-turbo-method="delete"]').click
         end
 
         expect(page).not_to have_selector "table.index td img"
@@ -613,7 +613,7 @@ RSpec.describe '
         visit spree.admin_product_images_path(product, filter)
 
         accept_alert do
-          page.find('a.delete-resource').click
+          page.find('a[data-turbo-method="delete"]').click
         end
 
         uri = URI.parse(current_url)
