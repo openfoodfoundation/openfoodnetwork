@@ -37,10 +37,9 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
     }
 
     OrderCycleResource.taxons params, (data)=>
-      $scope.supplied_taxons = {}
-      data.map( (taxon) ->
-        $scope.supplied_taxons[taxon.id] = Taxons.taxons_by_id[taxon.id]
-      )
+      $scope.supplied_taxons = data.map( (taxon) ->
+        Taxons.taxons_by_id[taxon.id]
+      ).filter (t) -> t?
 
     OrderCycleResource.properties params, (data)=>
       $scope.supplied_properties = {}
