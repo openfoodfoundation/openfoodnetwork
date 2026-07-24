@@ -26,6 +26,7 @@ Openfoodnetwork::Application.routes.draw do
   patch "/cart", :to => "spree/orders#update", :as => :update_cart
   put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
   get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
+  get '/orders/:id/print' => 'spree/orders#print', :as => :print_order
   get '/payments/:id/authorize' => 'payments#redirect_to_authorize', as: "authorize_payment"
 
   # Well known paths
