@@ -44,9 +44,11 @@ module Api
         @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
         authorize! :update, @enterprise
 
-        if params[:logo] && @enterprise.update!(logo: params[:logo])
+        # A successfull update return an html response instead of json, but we won't fix because 
+        # we don't support API v0 and we don't want to break existing integration
+        if params[:logo] && @enterprise.update(logo: params[:logo])
           render(html: @enterprise.logo_url(:medium), status: :ok)
-        elsif params[:promo] && @enterprise.update!( promo_image: params[:promo] )
+        elsif params[:promo] && @enterprise.update( promo_image: params[:promo] )
           render(html: @enterprise.promo_image_url(:medium), status: :ok)
         else
           invalid_resource!(@enterprise)

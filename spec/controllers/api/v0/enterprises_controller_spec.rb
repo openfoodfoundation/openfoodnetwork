@@ -130,25 +130,52 @@ RSpec.describe Api::V0::EnterprisesController do
       allow(controller).to receive(:spree_current_user) { enterprise_manager }
     end
 
-    describe "submitting a valid image" do
-      let!(:logo) { fixture_file_upload("logo.png", "image/png") }
-      before do
-        allow(Enterprise)
-          .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+    describe "#update_image" do
+      context "when submitting a valid image" do
+        let!(:logo) { fixture_file_upload("logo.png", "image/png") }
+
+        before do
+          allow(Enterprise)
+            .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+        end
+
+        it "I can update enterprise logo image" do
+          api_post :update_image, logo:, id: enterprise.id
+          expect(response).to have_http_status :ok
+          expect(response.content_type).to eq "text/html"
+          expect(response.body).to match /logo\.png$/
+        end
+
+        it "I can update enterprise promo image" do
+          api_post :update_image, promo: logo, id: enterprise.id
+          expect(response).to have_http_status :ok
+          expect(response.content_type).to eq "text/html"
+          expect(response.body).to match /logo\.png$/
+        end
       end
 
-      it "I can update enterprise logo image" do
-        api_post :update_image, logo:, id: enterprise.id
-        expect(response).to have_http_status :ok
-        expect(response.content_type).to eq "text/html"
-        expect(response.body).to match /logo\.png$/
-      end
+      context "when submitting an invalid image" do
+        let(:bad_image) { fixture_file_upload("embedded-group-preview.html", "text/html") }
 
-      it "I can update enterprise promo image" do
-        api_post :update_image, promo: logo, id: enterprise.id
-        expect(response).to have_http_status :ok
-        expect(response.content_type).to eq "text/html"
-        expect(response.body).to match /logo\.png$/
+        before do
+          allow(Enterprise)
+            .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+        end
+
+        it "returns an error for logo image" do
+          api_post :update_image, logo: bad_image, id: enterprise.id
+
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.content_type).to eq "application/json"
+          expect(response.body).to match /is not identified as a valid media file/
+        end
+
+        it "returns an error for promo image" do
+          api_post :update_image, promo: bad_image, id: enterprise.id
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.content_type).to eq "application/json"
+          expect(response.body).to match /is not identified as a valid media file/
+        end
       end
     end
   end
