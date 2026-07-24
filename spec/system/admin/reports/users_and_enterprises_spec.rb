@@ -5,14 +5,14 @@ require 'system_helper'
 RSpec.describe "Users & Enterprises reports" do
   include AuthenticationHelper
 
+  let!(:enterprise) { create(:supplier_enterprise) }
+
   before do
-    login_as_admin
+    login_to_admin_section
     visit main_app.admin_report_path(report_type: 'users_and_enterprises')
   end
 
   it "displays the report" do
-    enterprise = create(:supplier_enterprise)
-
     run_report
 
     expect(page.find("table.report__table thead tr").text).to have_content([
