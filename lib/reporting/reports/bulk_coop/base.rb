@@ -34,8 +34,7 @@ module Reporting
         def report_line_items
           @report_line_items ||= Reporting::LineItems.new(
             order_permissions,
-            @params,
-            CompleteVisibleOrdersQuery.new(order_permissions).call
+            @params
           )
         end
 
