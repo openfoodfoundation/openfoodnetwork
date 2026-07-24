@@ -262,7 +262,7 @@ GEM
     database_cleaner-core (2.0.1)
     datafoodconsortium-connector (2.0.0.pre.beta8)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
-    datafoodconsortium-connector-v1 (1.4.0.pre.beta5)
+    datafoodconsortium-connector-v1 (1.4.0.pre.beta8)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
     date (3.5.1)
     debug (1.11.1)
@@ -1174,7 +1174,7 @@ CHECKSUMS
   database_cleaner-active_record (2.2.2) sha256=88296b9f3088c31f7c0d4fcec10f68e4b71c96698043916de59b04debec10388
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
   datafoodconsortium-connector (2.0.0.pre.beta8) sha256=d729fb193a2581c21e068fb1a65c492ad88b330639de63600672a3027da76aed
-  datafoodconsortium-connector-v1 (1.4.0.pre.beta5) sha256=f178fe9a0196893a511e67fc330ce11b4b35975d55674c18545054ea4d7162a6
+  datafoodconsortium-connector-v1 (1.4.0.pre.beta8) sha256=343baddc9ffd3882f5e64f3596fbbfef047e3b59e8f44b96a952a6d0d6f89443
   date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
   db2fog (0.9.2)
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
