@@ -2,6 +2,7 @@
 // moving to using @use rules. @use rule must be written before any other rules.
 @use 'product-grid';
 @use 'components/tooltip';
+@use 'add_to_cart_component/add_to_cart_component';
 
 @import 'assets/stylesheets/autocomplete';
 @import 'assets/stylesheets/leaflet';

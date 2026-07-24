@@ -1,6 +1,8 @@
 // Variables to be used with @use import rules
 
 $padding-tbl-cell: 12px;
-$radius-image: 8px;
+$radius: 8px;
+$radius-image: $radius;
+$radius-button: $radius;
 
 $product-spinner-width: 100px;

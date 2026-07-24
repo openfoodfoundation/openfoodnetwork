@@ -104,6 +104,48 @@ module ShopWorkflow
     "－"
   end
 
+  # Add item to card with AddToCartComponent
+  def component_add(variant)
+    within_variant(variant) do
+      click_button "Add"
+    end
+    component_wait_for_cart
+  end
+
+  def component_add_to_cart(variant)
+    within_variant(variant) do
+      page.find("img[src*='add']").click
+    end
+    component_wait_for_cart
+  end
+
+  def component_remove_from_cart(variant)
+    within_variant(variant) do
+      page.find("img[src*='remove']").click
+    end
+    component_wait_for_cart
+  end
+
+  def component_manual_add_to_cart(variant, quantity: 1)
+    within_variant(variant) do
+      input = page.find("input.variant-quantity")
+      input.send_keys(:backspace)
+      input.send_keys(quantity.to_s)
+    end
+    component_wait_for_cart
+  end
+
+  def component_wait_for_cart
+    within find_body do
+      # We ignore visibility in case the cart dropdown is not open.
+      within '.cart-sidebar', visible: false do
+        # updating cart is slow to show so we wait for it to show before checking it's gone
+        expect(page).to have_link "Updating cart...", visible: false
+        expect(page).not_to have_link "Updating cart...", visible: false
+      end
+    end
+  end
+
   def toggle_accordion(name)
     find("dd a", text: name).click
   end
