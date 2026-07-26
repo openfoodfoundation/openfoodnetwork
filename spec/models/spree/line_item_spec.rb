@@ -714,6 +714,13 @@ RSpec.describe Spree::LineItem do
         li = build_stubbed(:line_item)
         expect(li.name_to_display).to eq(li.product.name)
       end
+      it "returns the original product name even after the product is renamed" do
+        li = create(:line_item)
+        original_name = li.product_name
+        li.variant.product.update!(name: "New Name")
+
+        expect(li.name_to_display).to eq(original_name)
+      end
     end
 
     describe "getting unit for display" do
