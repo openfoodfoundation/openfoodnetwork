@@ -37,6 +37,12 @@ RSpec.describe "spree/admin/orders/edit.html.haml" do
       assign(:order_cycles, [])
     end
 
+    it "displays the order_links dropdown" do
+      render
+
+      expect(rendered).to have_content("Actions")
+    end
+
     describe "order values" do
       it "displays order shipping costs, transaction fee and order total" do
         render
