@@ -176,6 +176,17 @@ export default class BulkFormController extends Controller {
         }
       });
 
+      // Enable all elements in new (unsaved) variant rows so their pre-filled
+      // values are submitted even though #isChanged doesn't detect them as changed.
+      const newVariantRows = container.querySelectorAll("[data-new-record]");
+      if (newVariantRows.length > 0) {
+        newVariantRows.forEach((row) => {
+          const rowElements = Array.from(row.querySelectorAll("input, select, textarea, button"));
+          this.#enableElementsForSubmit(rowElements);
+        });
+        this.#recordIdentityFields(container).forEach((field) => this.#enableElement(field));
+      }
+
       if (changedElements.length === 0) return;
 
       // When re-submitting after validation errors, submit all fields in the

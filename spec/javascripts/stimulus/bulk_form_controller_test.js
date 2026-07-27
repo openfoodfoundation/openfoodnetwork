@@ -342,6 +342,85 @@ describe("BulkFormController", () => {
         expect(formData.has("products[1][id]")).toBe(false);
       });
     });
+
+    describe("submitting new (unsaved) variant rows", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form data-controller="bulk-form">
+            <table class="products">
+              <tbody data-record-id="1">
+                <tr>
+                  <td>
+                    <input id="product_1_id" type="hidden" name="products[0][id]" value="1">
+                    <input id="product_1_name" type="text" name="products[0][name]" value="Apples">
+                  </td>
+                </tr>
+                <tr id="spree_variant_11">
+                  <td class="field">
+                    <input id="variant_11_id" type="hidden" name="products[0][variants_attributes][0][id]" value="11">
+                    <input id="variant_11_display_name" type="text" name="products[0][variants_attributes][0][display_name]" value="Small">
+                  </td>
+                </tr>
+                <tr id="new_variant_row" data-new-record="true">
+                  <td class="field">
+                    <input id="new_variant_id" type="hidden" name="products[0][variants_attributes][1][id]">
+                    <input id="new_variant_display_name" type="text" name="products[0][variants_attributes][1][display_name]" value="Medium">
+                    <input id="new_variant_price" type="text" name="products[0][variants_attributes][1][price]" value="5.99">
+                  </td>
+                </tr>
+              </tbody>
+              <input id="submit_button" type="submit">
+            </table>
+          </form>
+        `;
+      });
+
+      it("enables all elements in new variant rows on submit", () => {
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        // New variant row elements should be enabled even though values match defaults
+        expect(new_variant_id.disabled).toBe(false);
+        expect(new_variant_display_name.disabled).toBe(false);
+        expect(new_variant_price.disabled).toBe(false);
+
+        // Product identity should also be enabled for the new variant
+        expect(product_1_id.disabled).toBe(false);
+
+        // Existing unchanged variant should be disabled
+        expect(variant_11_id.disabled).toBe(true);
+        expect(variant_11_display_name.disabled).toBe(true);
+
+        // Product name unchanged, should be disabled
+        expect(product_1_name.disabled).toBe(true);
+      });
+
+      it("includes new variant values in submitted form data", () => {
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        // Product id should be present
+        expect(formData.get("products[0][id]")).toBe("1");
+
+        // New variant values should be present (not disabled)
+        expect(formData.get("products[0][variants_attributes][1][display_name]")).toBe("Medium");
+        expect(formData.get("products[0][variants_attributes][1][price]")).toBe("5.99");
+        // Hidden id field with empty value should still be submitted
+        expect(formData.has("products[0][variants_attributes][1][id]")).toBe(true);
+      });
+
+      it("submits new variant values even when a user changes them", () => {
+        new_variant_display_name.value = "Large";
+        new_variant_display_name.dispatchEvent(new Event("input"));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        expect(formData.get("products[0][variants_attributes][1][display_name]")).toBe("Large");
+        expect(formData.get("products[0][variants_attributes][1][price]")).toBe("5.99");
+      });
+    });
   });
 
   describe("When there are errors", () => {
