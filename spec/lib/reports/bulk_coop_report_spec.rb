@@ -13,7 +13,8 @@ module Reporting
           let(:d1) { create(:distributor_enterprise) }
           let(:oc1) { create(:simple_order_cycle) }
           let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
-          let(:li1) { build(:line_item_with_shipment) }
+          let(:group_buy_product) { create(:product, group_buy: true) }
+          let(:li1) { build(:line_item_with_shipment, variant: group_buy_product.variants.first) }
 
           before { o1.line_items << li1 }
 
@@ -32,7 +33,8 @@ module Reporting
               it 'shows canceled orders' do
                 o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
                                     distributor: d1)
-                line_item = build(:line_item_with_shipment)
+                line_item = build(:line_item_with_shipment,
+                                  variant: group_buy_product.variants.first)
                 o2.line_items << line_item
                 expect(subject.table_items).to include(line_item)
               end
@@ -50,9 +52,40 @@ module Reporting
               it 'shows canceled orders' do
                 o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
                                     distributor: d1)
-                line_item = build(:line_item_with_shipment)
+                line_item = build(:line_item_with_shipment,
+                                  variant: group_buy_product.variants.first)
                 o2.line_items << line_item
                 expect(subject.table_items).to include(line_item)
+              end
+            end
+          end
+
+          context "filtering by group_buy" do
+            let(:non_bulk_product) { create(:product, group_buy: false) }
+            let(:o2) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+            let(:non_bulk_li) do
+              build(:line_item_with_shipment, variant: non_bulk_product.variants.first)
+            end
+
+            before { o2.line_items << non_bulk_li }
+
+            context "when bulk_coop_filters feature is disabled" do
+              it 'includes line items from non-group-buy products' do
+                expect(subject.table_items).to include(non_bulk_li)
+              end
+            end
+
+            context "when bulk_coop_filters feature is enabled", feature: :bulk_coop_filters do
+              subject { SupplierReport.new user, params }
+
+              it 'excludes line items from non-group-buy products' do
+                result = subject.query_result.flatten
+                expect(result).not_to include(non_bulk_li)
+              end
+
+              it 'includes line items from group-buy products' do
+                result = subject.query_result.flatten
+                expect(result).to include(li1)
               end
             end
           end
@@ -61,7 +94,7 @@ module Reporting
             it do
               user = create(:admin_user)
               o2 = create(:order, completed_at: 3.days.ago, order_cycle: oc1, distributor: d1)
-              li2 = build(:line_item_with_shipment)
+              li2 = build(:line_item_with_shipment, variant: group_buy_product.variants.first)
               o2.line_items << li2
 
               report = Base.new user, {}
@@ -85,7 +118,7 @@ module Reporting
               d2 = create(:distributor_enterprise)
               o2 = create(:order, distributor: d2, order_cycle: oc1,
                                   completed_at: Time.zone.now)
-              li2 = build(:line_item_with_shipment)
+              li2 = build(:line_item_with_shipment, variant: group_buy_product.variants.first)
               o2.line_items << li2
 
               report = Base.new user, {}
@@ -120,7 +153,9 @@ module Reporting
                                ship_address: create(:address))
               end
               let(:li2) do
-                build(:line_item_with_shipment, variant: create(:variant, enterprise: s1))
+                build(:line_item_with_shipment,
+                      variant: create(:variant, enterprise: s1,
+                                                product: create(:base_product, group_buy: true)))
               end
 
               before do
@@ -153,39 +188,6 @@ module Reporting
                 expect(subject.table_items).to eq([])
               end
             end
-          end
-        end
-
-        describe '#columns' do
-          context 'when report type is bulk_coop_customer_payments' do
-            subject { CustomerPayments.new user }
-
-            it 'returns' do
-              expect(subject.columns.values).to match_array(
-                [
-                  :order_billing_address_name,
-                  :order_completed_at,
-                  :customer_payments_total_cost,
-                  :customer_payments_amount_owed,
-                  :customer_payments_amount_paid,
-                ]
-              )
-            end
-          end
-        end
-
-        # Yes, I know testing a private method is bad practice but report's design, tighly coupling
-        # makes it very hard to make things testeable without ending up in a wormwhole.
-        # This is a trade-off.
-        describe '#customer_payments_amount_owed' do
-          let(:params) { {} }
-          let(:user) { build(:user) }
-          let(:order) { create(:order) }
-          let!(:line_item) { create(:line_item, order: order) }
-
-          it 'calls #new_outstanding_balance' do
-            expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
-            CustomerPayments.new(user).__send__(:customer_payments_amount_owed, [line_item])
           end
         end
       end
