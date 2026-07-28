@@ -6,3 +6,8 @@ $radius-image: $radius;
 $radius-button: $radius;
 
 $product-spinner-width: 100px;
+
+// z-index
+// foundation-rails components/_reveal.scss uses 1005 for modal
+$variant-overlay-bg-z-index: 1005;
+$variant-overlay-z-index: 1006;

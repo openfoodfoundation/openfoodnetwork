@@ -1,0 +1,66 @@
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
+@use "../../webpacker/css/darkswarm/variables" as v;
+@use "../../webpacker/css/darkswarm/branding" as b;
+@use "../../webpacker/css/darkswarm/mixins" as m;
+@use "../../webpacker/css/shared/variables/layout";
+
+.select-variant {
+  height: v.$shop-button-height;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.variant-overlay-bg {
+  display: none;
+  background: b.$black;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: $variant-overlay-bg-z-index;
+
+  &.fade {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+
+    &.in {
+      opacity: 0.75;
+    }
+  }
+}
+
+.variant-overlay {
+  display: none;
+  background-color: white;
+  border-radius: $radius;
+  position: fixed;
+  width: layout.$mobile_breakpoint;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  z-index: $variant-overlay-z-index;
+  top: -5rem;
+
+  @include m.breakpoint(mobile) {
+    top: unset;
+    width: 100%;
+    bottom: -10rem;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+
+  &.in {
+    padding: 1.2rem;
+    // Make the overlay slide from the top
+    transform: translate(0px, 10rem);
+    transition: transform 330ms ease-in-out;
+
+    @include m.breakpoint(mobile) {
+      // Make the overlay slide from the bottom
+      transform: translate(0px, -10rem);
+    }
+  }
+}
