@@ -1,10 +1,12 @@
+@import "../variables";
+
 .variant-quantity-inputs {
-  height: 2.5rem;
+  height: $shop-button-height;
   white-space: nowrap;
 }
 
 button.add-variant, button.variant-quantity {
-  height: 2.5rem;
+  height: $shop-button-height;
   border-radius: 0;
   background-color: $orange-500;
   color: white;
@@ -73,4 +75,3 @@ button.variant-quantity {
 .variant-remaining-stock {
   color: $red-500;
 }
-
