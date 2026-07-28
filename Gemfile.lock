@@ -376,7 +376,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    haml_lint (0.73.0)
+    haml_lint (0.74.0)
       haml (>= 5.0)
       parallel (>= 1.10)
       rainbow
@@ -1222,7 +1222,7 @@ CHECKSUMS
   gmaps4rails (2.1.2) sha256=09c3bf095ca8e97d1d6f3b5c9e4dd905d445b0399c5ecfd5cc53e0fafce87c2b
   good_migrations (0.3.1) sha256=3f8267c00caa29689823cb8d53cbfb62cd5b0310fe6b088f5ce589243f6f797f
   haml (7.2.0) sha256=87fd2b71f7feab1724337b090a7d767f5ab2d42f08c974f3ead673f18cfcd55a
-  haml_lint (0.73.0) sha256=df91d20093ed7c11c4b331d19544e4147b6260f3566cdc919165bb891206d7bd
+  haml_lint (0.74.0) sha256=5a011a04caa6d7b4a494a4fef9e9078622f869a93a23a58a4085aeb233158bd1
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   hashery (2.1.2) sha256=d239cc2310401903f6b79d458c2bbef5bf74c46f3f974ae9c1061fb74a404862
   hashie (5.1.0) sha256=c266471896f323c446ea8207f8ffac985d2718df0a0ba98651a3057096ca3870

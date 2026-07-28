@@ -1,10 +1,12 @@
 - link = pagy_anchor(pagy)
 
-%nav.pagy_nav.pagination{"aria-label" => "pager", :role => "navigation"}
+-# pagy_anchor return html links so we need to display raw html for them to be rendered properly
+-# haml-lint:disable UnescapedHtml
+%nav.pagy_nav.pagination{"aria-label": "pager", role: "navigation"}
   - if pagy.prev
     %span.page.prev!= link.call(pagy.prev, t(:previous))
   - else
-    %span.page.prev.disabled!= t(:previous)
+    %span.page.prev.disabled= t(:previous)
   - pagy.series.each do |item|       # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
     - if item.is_a?(Integer)         # page link
       %span.page
@@ -16,4 +18,4 @@
   - if pagy.next
     %span.page.next!= link.call(pagy.next, t(:next))
   - else
-    %span.page.next.disabled!= t(:next)
+    %span.page.next.disabled= t(:next)
