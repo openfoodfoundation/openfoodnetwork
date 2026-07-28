@@ -98,7 +98,7 @@ jobs:
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -179,7 +179,7 @@ jobs:
         with:
           name: simplecov-chunk-system-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -270,7 +270,7 @@ jobs:
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -352,7 +352,7 @@ jobs:
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
