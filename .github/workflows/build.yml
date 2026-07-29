@@ -425,7 +425,23 @@ jobs:
           if-no-files-found: ignore
           include-hidden-files: true
       - name: Compare SimpleCov results with Undercover
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          git fetch --no-tags origin ${{ github.event.pull_request.base.sha }}:master
-          bundle exec undercover
-        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch
+          base_sha="$PR_BASE_SHA"
+          if [ -z "$base_sha" ]; then
+            # Pushed without a pull request: ask GitHub for the merge base with
+            # upstream master, the same way it does when a PR is opened. Without
+            # this, a fork's own master is used and it may be months behind.
+            upstream=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.parent.full_name // .full_name')
+            base_sha=$(gh api "repos/$upstream/compare/master...${GITHUB_REPOSITORY%%/*}:$GITHUB_SHA" \
+                       --jq '.merge_base_commit.sha')
+          fi
+          # A fork shares its object store with its upstream, so `origin` can serve
+          # a commit that only exists upstream. Depth 1 is enough: undercover falls
+          # back to a direct diff when it can't compute a merge base, and this is
+          # already the merge base.
+          git fetch --no-tags --depth=1 origin "$base_sha"
+          bundle exec undercover --compare "$base_sha"
+        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself
