@@ -107,6 +107,12 @@ module Admin
       false
     end
 
+    def image_modal_resource_name(variant, product)
+      resource_name = product.name
+
+      variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
+    end
+
     private
 
     def product_image_alt_text(image, product)
@@ -119,12 +125,6 @@ module Admin
         alt: product.name,
         caption: nil
       }
-    end
-
-    def image_modal_resource_name(variant, product)
-      resource_name = product.name
-
-      variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
     end
   end
 end
