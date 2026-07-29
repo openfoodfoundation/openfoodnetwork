@@ -32,7 +32,7 @@ class RemoveExistingVariantImages < ActiveRecord::Migration[7.2]
 
         attachment.destroy!
 
-        blob.purge if blob.attachments.none?
+        blob.purge_later if blob.attachments.none?
 
         image.destroy!
         Rails.logger.info("Removed image ##{image.id} and its associated attachment and blob.")

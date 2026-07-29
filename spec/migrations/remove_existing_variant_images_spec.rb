@@ -17,9 +17,13 @@ RSpec.describe RemoveExistingVariantImages, type: :migration do
       attachment_id = variant_image.attachment.id
       product_image = Spree::Image.create!(attachment:, viewable: create(:product))
 
-      expect { migration.up }
-        .to change { Spree::Image.where(viewable_type: 'Spree::Variant').count }
+      expect {
+        migration.up
+      }.to change { Spree::Image.where(viewable_type: 'Spree::Variant').count }
         .from(1).to(0)
+        .and enqueue_job(ActiveStorage::PurgeJob)
+
+      perform_enqueued_jobs
 
       expect(Spree::Image.where(viewable_type: 'Spree::Product').count).to eq 1
       expect(product_image.reload.attachment).to be_present
