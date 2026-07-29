@@ -10,6 +10,8 @@ module Spree
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
       belongs_to 'spree/product'
 
+      before_action :authorize_parent, only: [:create, :update]
+
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
@@ -78,6 +80,10 @@ module Spree
       end
 
       private
+
+      def authorize_parent
+        authorize! :update, parent
+      end
 
       def collection
         parent.image

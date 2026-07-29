@@ -160,7 +160,7 @@ RSpec.describe "/admin/products/:product_id/images" do
   describe "PATCH /admin/products/:product_id/images/:id with variant_id" do
     let(:variant) { create(:variant, product:) }
     let!(:variant_image) {
-      Spree::Image.create(
+      Spree::Image.create!(
         attachment: fixture_file_upload("logo.png", "image/png"),
         viewable_id: variant.id,
         viewable_type: 'Spree::Variant'
