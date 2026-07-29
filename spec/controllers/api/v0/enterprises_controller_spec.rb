@@ -120,6 +120,37 @@ RSpec.describe Api::V0::EnterprisesController do
         end
       end
     end
+
+    describe "#update" do
+      it "can update enteprise" do
+        enterprise_params = { name: "New name" }
+        api_put :update, id: enterprise.id, enterprise: enterprise_params
+
+        expect(response).to have_http_status :ok
+
+        expect(enterprise.reload.name).to eq("New name")
+      end
+
+      context "with an enterprise the user doesn't own" do
+        let(:other_enterprise) { create(:distributor_enterprise) }
+
+        it "can't update the enterprise" do
+          enterprise_params = { name: "New name" }
+          api_put :update, id: other_enterprise.id, enterprise: enterprise_params
+
+          expect(response).to have_http_status :unauthorized
+        end
+
+        it "can't update the enterprise owner" do
+          enterprise_params = { name: "New name" }
+          expect {
+            api_put :update, id: other_enterprise.id, enterprise: enterprise_params
+          }.not_to change{ other_enterprise.reload.owner_id }
+
+          expect(response).to have_http_status :unauthorized
+        end
+      end
+    end
   end
 
   context "as an enterprise manager" do
@@ -128,6 +159,26 @@ RSpec.describe Api::V0::EnterprisesController do
     before do
       enterprise_manager.enterprise_roles.build(enterprise:).save
       allow(controller).to receive(:spree_current_user) { enterprise_manager }
+    end
+
+    describe "#update" do
+      it "can update the enteprise" do
+        enterprise_params = { name: "New name" }
+        api_put :update, id: enterprise.id, enterprise: enterprise_params
+
+        expect(response).to have_http_status :ok
+
+        expect(enterprise.reload.name).to eq("New name")
+      end
+
+      it "can't update the enterprise owner" do
+        enterprise_params = { owner_id: enterprise_manager.id }
+        expect {
+          api_put :update, id: enterprise.id, enterprise: enterprise_params
+        }.not_to change{ enterprise.reload.owner_id }
+
+        expect(response).to have_http_status :unauthorized
+      end
     end
 
     describe "#update_image" do
