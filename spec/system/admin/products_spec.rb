@@ -517,7 +517,6 @@ RSpec.describe '
       it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector ".no-objects-found"
-        expect(page).to have_selector "#new_image_link_wrapper", visible: true
         expect(page).to have_link "New Image"
       end
 
@@ -528,7 +527,7 @@ RSpec.describe '
 
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector "table.index td img"
-        expect(page).to have_selector "#new_image_link_wrapper", visible: false
+        expect(page).not_to have_link "New Image"
       end
 
       it "loading edit product image page including url filter" do
@@ -593,16 +592,16 @@ RSpec.describe '
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector "table.index td img"
         expect(product.reload.image).not_to be_nil
-        expect(page).to have_selector "#new_image_link_wrapper", visible: false
+        expect(page).not_to have_link "New Image"
 
         accept_alert do
-          page.find('a[data-turbo-method="delete"]').click
+          click_link "Delete"
         end
 
         expect(page).not_to have_selector "table.index td img"
         expect(product.reload.image).to be_nil
-        expect(page).to have_selector "#new_image_link_wrapper", visible: true
-        expect(page).to have_selector ".no-objects-found", visible: true
+        expect(page).to have_link "New Image"
+        expect(page).to have_text "NO IMAGES FOUND"
       end
 
       it "deleting product image including url filter" do
@@ -613,7 +612,7 @@ RSpec.describe '
         visit spree.admin_product_images_path(product, filter)
 
         accept_alert do
-          page.find('a[data-turbo-method="delete"]').click
+          click_link "Delete"
         end
 
         uri = URI.parse(current_url)
