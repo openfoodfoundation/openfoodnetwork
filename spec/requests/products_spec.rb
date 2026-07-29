@@ -3,6 +3,17 @@
 RSpec.describe ProductsController do
   include_context "session helper"
 
+  describe "GET /:enterprise_permalink/products/:id" do
+    let(:product) { create(:product, name: "Garlic") }
+    let(:enterprise) { product.variants.first.enterprise }
+
+    it "shows one product with its variants" do
+      get enterprise_product_path(enterprise, product)
+      expect(response).to have_http_status :ok
+      expect(response.body).to include "Garlic"
+    end
+  end
+
   describe "GET /order_cycle/:order_cycle_id/products" do
     let(:distributor) {
       create(:distributor_enterprise, preferred_shopfront_product_sorting_method: "by_producer")

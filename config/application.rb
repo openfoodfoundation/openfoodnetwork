@@ -186,6 +186,7 @@ module Openfoodnetwork
       config/routes.rb
       config/routes/admin.rb
       config/routes/spree.rb
+      config/routes/shopfront.rb
     ).map { |relative_path| Rails.root.join(relative_path) }
 
     # Only load the plugins named here, in the order given (default is alphabetical).

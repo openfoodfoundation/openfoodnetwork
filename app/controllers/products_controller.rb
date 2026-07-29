@@ -8,6 +8,12 @@ class ProductsController < BaseController
     @low_stock_display = distributor.preferred_product_low_stock_display
   end
 
+  def show
+    @enterprise = Enterprise.find_by(permalink: params[:enterprise_permalink])
+    @product = Spree::Product.find(params[:id])
+    # TBC
+  end
+
   private
 
   def product_renderer
