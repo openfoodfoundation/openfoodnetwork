@@ -2527,7 +2527,6 @@ paths:
       summary: Update enterprise
       description: |
         Updates an enterprise. Non-admin users cannot change the `type` field.
-        `owner_id` is always set to the current user.
       tags:
         - Enterprises
       security:
