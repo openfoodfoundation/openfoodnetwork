@@ -516,7 +516,7 @@ RSpec.describe '
 
       it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
-        expect(page).to have_selector ".no-objects-found"
+        expect(page).to have_text "NO IMAGES FOUND"
         expect(page).to have_link "New Image"
       end
 
