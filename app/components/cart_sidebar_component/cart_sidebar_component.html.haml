@@ -47,6 +47,7 @@
 
       .fullwidth
         %a.edit-cart.button.large.dark.left{ href: helpers.main_app.cart_path }
-          = t("shared.menu.cart_sidebar.edit_cart")
+          %span.cart-idle-label= t("shared.menu.cart_sidebar.edit_cart")
+          %span.cart-updating-label{ style: "display: none" }= t(:cart_updating)
         %a.checkout.button.large.bright.right{ href: helpers.main_app.checkout_path }
           = t("shared.menu.cart_sidebar.checkout")

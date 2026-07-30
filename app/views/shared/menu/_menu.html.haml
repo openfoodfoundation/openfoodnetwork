@@ -1,4 +1,5 @@
-- wrapper_attributes = use_turbo_cart? ? { data: { controller: "cart-sidebar" } } : { "ng-controller" => "CartDropdownCtrl" }
+- turbo_cart_actions = "cart:updating@window->cart-sidebar#cartUpdating cart:settled@window->cart-sidebar#cartSettled"
+- wrapper_attributes = use_turbo_cart? ? { data: { controller: "cart-sidebar", action: turbo_cart_actions } } : { "ng-controller" => "CartDropdownCtrl" }
 %div{ wrapper_attributes }
   = render "shared/menu/large_menu"
 

@@ -33,5 +33,28 @@ RSpec.describe ProductsController do
       expect(response.body).to include "Grid product #3"
       expect(response.body).to include "Grid product #4"
     end
+
+    it "doesn't render add to cart widgets by default" do
+      get order_cycle_products_path(order_cycle.id)
+
+      expect(response.body).not_to include 'data-controller="add-to-cart"'
+    end
+
+    context "with the turbo cart enabled" do
+      before do
+        Flipper.enable(:turbo_cart)
+        Flipper.enable(:product_grid_view)
+      end
+
+      it "renders an add to cart widget per variant" do
+        get order_cycle_products_path(order_cycle.id)
+
+        expect(response).to have_http_status :ok
+        variants.each do |variant|
+          expect(response.body).to include "variant-#{variant.id}"
+          expect(response.body).to include "add-to-cart-#{variant.id}"
+        end
+      end
+    end
   end
 end

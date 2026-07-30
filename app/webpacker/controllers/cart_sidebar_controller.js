@@ -4,14 +4,21 @@ import { Controller } from "stimulus";
 // and keeps the cart icons in the menu up to date.
 //
 // The controller lives on the menu wrapper so the sidebar target can be
-// replaced by Turbo Streams without losing the open state.
+// replaced by Turbo Streams without losing the open state. It also
+// listens to the "cart:updating"/"cart:settled" window events of the
+// add-to-cart widgets to show the busy state while changes are saved.
 export default class extends Controller {
   static targets = ["sidebar", "icon", "counter"];
   static values = { open: Boolean };
 
+  initialize() {
+    this.pendingVariants = new Set();
+  }
+
   sidebarTargetConnected(sidebar) {
     sidebar.classList.toggle("shown", this.openValue);
     this.updateIcons(sidebar);
+    this.applyBusy();
   }
 
   toggle() {
@@ -30,6 +37,16 @@ export default class extends Controller {
     document.body.style.overflow = this.openValue ? "hidden" : "";
   }
 
+  cartUpdating(event) {
+    this.pendingVariants.add(event.detail.variantId);
+    this.applyBusy();
+  }
+
+  cartSettled(event) {
+    this.pendingVariants.delete(event.detail.variantId);
+    this.applyBusy();
+  }
+
   updateIcons(sidebar) {
     const count = parseInt(sidebar.dataset.itemCount || "0", 10);
 
@@ -37,7 +54,32 @@ export default class extends Controller {
       counter.textContent = count;
     });
     this.iconTargets.forEach((icon) => {
-      icon.classList.toggle("dirty", count === 0);
+      icon.classList.toggle("dirty", count === 0 || this.busy);
+    });
+  }
+
+  get busy() {
+    return this.pendingVariants.size > 0;
+  }
+
+  // While busy, the edit cart and checkout buttons are disabled and the
+  // edit cart button reads "Updating cart..." instead.
+  applyBusy() {
+    if (!this.hasSidebarTarget) return;
+    const sidebar = this.sidebarTarget;
+
+    sidebar.setAttribute("aria-busy", this.busy);
+    sidebar.querySelectorAll(".sidebar-footer a.button").forEach((link) => {
+      link.toggleAttribute("disabled", this.busy);
+    });
+    sidebar.querySelectorAll(".cart-idle-label").forEach((label) => {
+      label.style.display = this.busy ? "none" : "";
+    });
+    sidebar.querySelectorAll(".cart-updating-label").forEach((label) => {
+      label.style.display = this.busy ? "" : "none";
+    });
+    this.iconTargets.forEach((icon) => {
+      icon.classList.toggle("pure-dirty", this.busy);
     });
   }
 }
