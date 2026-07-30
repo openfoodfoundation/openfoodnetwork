@@ -34,6 +34,34 @@ RSpec.describe AddToCartComponent, type: :component do
     expect(page).to have_button "Add", disabled: true
   end
 
+  describe "group buy" do
+    before { variant.product.update!(group_buy: true) }
+
+    it "renders the Add button and the bulk buy modal" do
+      render_inline(described_class.new(variant:, order: nil))
+
+      expect(page).to have_button "Add"
+      expect(page).to have_selector "#bulk-buy-modal-#{variant.id}"
+      expect(page).to have_content "Min quantity"
+      expect(page).to have_content "Max quantity"
+      expect(page).to have_field "quantity", visible: :all
+      expect(page).to have_field "max_quantity", visible: :all
+    end
+
+    it "renders the quantity and max quantity of the cart" do
+      order = create(:order)
+      create(:line_item, order:, variant:, quantity: 2, max_quantity: 4)
+      order.line_items.reload
+
+      render_inline(described_class.new(variant:, order:))
+
+      expect(page).to have_button "2"
+      expect(page).to have_button "4"
+      expect(page).to have_content "in cart"
+      expect(page).not_to have_button "Add"
+    end
+  end
+
   describe "low stock display" do
     let(:distributor) {
       create(:distributor_enterprise, preferred_product_low_stock_display: true)

@@ -70,6 +70,16 @@ RSpec.describe "Cart" do
       expect(order.line_items.reload).to be_empty
     end
 
+    it "saves the max quantity of group buy variants" do
+      variant.product.update!(group_buy: true)
+
+      update_variant(variant, { quantity: 2, max_quantity: 4 })
+
+      line_item = order.line_items.reload.first
+      expect(line_item.quantity).to eq 2
+      expect(line_item.max_quantity).to eq 4
+    end
+
     it "recalculates enterprise fees" do
       add_enterprise_fee create(:enterprise_fee, amount: 5)
 

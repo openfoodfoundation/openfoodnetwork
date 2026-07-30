@@ -11,10 +11,21 @@ import { renderStreamMessage } from "@hotwired/turbo";
 // Dispatches "cart:updating" and "cart:settled" window events so the
 // cart-sidebar controller can show the busy state.
 export default class extends Controller {
-  static targets = ["addGroup", "controls", "input", "display", "remainingStock"];
+  static targets = [
+    "addGroup",
+    "controls",
+    "input",
+    "maxInput",
+    "bulkQuantity",
+    "bulkMax",
+    "display",
+    "remainingStock",
+  ];
   static values = {
     variantId: Number,
     quantity: Number,
+    maxQuantity: Number,
+    groupBuy: Boolean,
     onHand: Number,
     onDemand: Boolean,
     debounce: { type: Number, default: 1000 },
@@ -34,6 +45,11 @@ export default class extends Controller {
     this.updateQuantity(1);
   }
 
+  // Group buy: the Add button also opens the bulk buy modal (modal-link).
+  addBulk() {
+    if (this.quantityValue === 0) this.updateQuantity(1);
+  }
+
   increment() {
     this.updateQuantity(this.quantityValue + 1);
   }
@@ -42,11 +58,26 @@ export default class extends Controller {
     this.updateQuantity(this.quantityValue - 1);
   }
 
+  incrementMax() {
+    this.updateMaxQuantity(this.maxQuantityValue + 1);
+  }
+
+  decrementMax() {
+    this.updateMaxQuantity(this.maxQuantityValue - 1);
+  }
+
   inputChanged() {
     const value = parseInt(this.inputTarget.value, 10);
     if (isNaN(value)) return; // wait until a number is entered
 
     this.updateQuantity(value, { fromInput: true });
+  }
+
+  maxInputChanged() {
+    const value = parseInt(this.maxInputTarget.value, 10);
+    if (isNaN(value)) return; // wait until a number is entered
+
+    this.updateMaxQuantity(value, { fromInput: true });
   }
 
   // Submitting the form (eg. pressing enter in the input) saves right away.
@@ -65,6 +96,27 @@ export default class extends Controller {
     if (clamped === this.quantityValue) return;
 
     this.quantityValue = clamped;
+    // A group buy maximum can't be below the wanted quantity.
+    if (this.groupBuyValue && (clamped < 1 || this.maxQuantityValue < clamped)) {
+      this.maxQuantityValue = clamped;
+    }
+    this.render();
+    this.scheduleSave();
+  }
+
+  updateMaxQuantity(maxQuantity, { fromInput = false } = {}) {
+    const clamped = this.clamp(maxQuantity);
+
+    if (fromInput && clamped !== maxQuantity) {
+      this.maxInputTarget.value = clamped;
+    }
+    if (clamped === this.maxQuantityValue) return;
+
+    this.maxQuantityValue = clamped;
+    // Lowering the maximum below the wanted quantity lowers the quantity.
+    if (clamped < this.quantityValue) {
+      this.quantityValue = clamped;
+    }
     this.render();
     this.scheduleSave();
   }
@@ -89,9 +141,23 @@ export default class extends Controller {
       this.remainingStockTarget.style.display = quantity > 0 ? "none" : "";
     }
     this.displayTarget.classList.toggle("visible", quantity > 0);
-    this.displayTarget.textContent = I18n.t("js.shopfront.variant.quantity_in_cart", {
-      quantity,
-    });
+    if (!this.groupBuyValue) {
+      this.displayTarget.textContent = I18n.t("js.shopfront.variant.quantity_in_cart", {
+        quantity,
+      });
+    }
+    if (
+      this.hasMaxInputTarget &&
+      parseInt(this.maxInputTarget.value, 10) !== this.maxQuantityValue
+    ) {
+      this.maxInputTarget.value = this.maxQuantityValue;
+    }
+    if (this.hasBulkQuantityTarget) {
+      this.bulkQuantityTarget.textContent = quantity;
+    }
+    if (this.hasBulkMaxTarget) {
+      this.bulkMaxTarget.textContent = this.maxQuantityValue > 0 ? this.maxQuantityValue : "-";
+    }
   }
 
   scheduleSave() {
@@ -116,7 +182,7 @@ export default class extends Controller {
           "Content-Type": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content,
         },
-        body: JSON.stringify({ quantity: this.quantityValue }),
+        body: JSON.stringify(this.payload()),
       });
       renderStreamMessage(await response.text());
     } catch (error) {
@@ -130,6 +196,13 @@ export default class extends Controller {
         this.setSettled();
       }
     }
+  }
+
+  payload() {
+    if (this.groupBuyValue) {
+      return { quantity: this.quantityValue, max_quantity: this.maxQuantityValue };
+    }
+    return { quantity: this.quantityValue };
   }
 
   setDirty() {

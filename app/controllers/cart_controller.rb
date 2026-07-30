@@ -99,7 +99,8 @@ class CartController < BaseController
   def add_to_cart_stream(order, variant)
     turbo_stream.replace(
       "add-to-cart-#{variant.id}",
-      AddToCartComponent.new(variant:, order:, distributor: order.distributor)
+      AddToCartComponent.new(variant:, order:, distributor: order.distributor,
+                             order_cycle: order.order_cycle)
     )
   end
 

@@ -149,4 +149,82 @@ describe("AddToCartController", () => {
       expect(settled.mock.calls[0][0].detail).toEqual({ variantId: 1 });
     });
   });
+
+  describe("group buy", () => {
+    beforeEach(async () => {
+      document.body.innerHTML = `
+        <form action="http://example.com/cart/variants/1" data-controller="add-to-cart"
+          data-action="submit->add-to-cart#submit"
+          data-add-to-cart-variant-id-value="1"
+          data-add-to-cart-quantity-value="0"
+          data-add-to-cart-max-quantity-value="0"
+          data-add-to-cart-group-buy-value="true"
+          data-add-to-cart-on-hand-value="5"
+          data-add-to-cart-on-demand-value="false">
+          <div data-add-to-cart-target="addGroup">
+            <button type="button" id="add" data-action="click->add-to-cart#addBulk">Add</button>
+          </div>
+          <div data-add-to-cart-target="controls" style="display: none">
+            <button type="button" data-add-to-cart-target="bulkQuantity">0</button>
+            <button type="button" data-add-to-cart-target="bulkMax">-</button>
+          </div>
+          <div data-add-to-cart-target="display">in cart</div>
+          <div>
+            <button type="button" id="decrease" data-action="click->add-to-cart#decrement">－</button>
+            <input type="number" name="quantity" value="0"
+              data-add-to-cart-target="input" data-action="input->add-to-cart#inputChanged" />
+            <button type="button" id="increase" data-action="click->add-to-cart#increment">＋</button>
+            <button type="button" id="decreaseMax" data-action="click->add-to-cart#decrementMax">－</button>
+            <input type="number" name="max_quantity" value="0"
+              data-add-to-cart-target="maxInput" data-action="input->add-to-cart#maxInputChanged" />
+            <button type="button" id="increaseMax" data-action="click->add-to-cart#incrementMax">＋</button>
+          </div>
+        </form>
+      `;
+
+      await flushPromises();
+    });
+
+    const maxInput = () => document.querySelector("input[name=max_quantity]");
+
+    it("adding raises the max quantity with the quantity", () => {
+      document.getElementById("add").click();
+      document.getElementById("increase").click();
+
+      expect(input().value).toEqual("2");
+      expect(maxInput().value).toEqual("2");
+      expect(document.querySelector("[data-add-to-cart-target=bulkQuantity]").textContent).toEqual(
+        "2",
+      );
+      expect(document.querySelector("[data-add-to-cart-target=bulkMax]").textContent).toEqual("2");
+    });
+
+    it("the max quantity can exceed the quantity but not fall below it", () => {
+      document.getElementById("add").click();
+      document.getElementById("increaseMax").click();
+      document.getElementById("increaseMax").click();
+
+      expect(input().value).toEqual("1");
+      expect(maxInput().value).toEqual("3");
+
+      document.getElementById("decreaseMax").click();
+      document.getElementById("decreaseMax").click();
+      document.getElementById("decreaseMax").click();
+
+      expect(maxInput().value).toEqual("0");
+      expect(input().value).toEqual("0");
+    });
+
+    it("saves both quantities", () => {
+      document.getElementById("add").click();
+      document.getElementById("increaseMax").click();
+
+      jest.advanceTimersByTime(1000);
+
+      expect(JSON.parse(global.fetch.mock.calls[0][1].body)).toEqual({
+        quantity: 1,
+        max_quantity: 2,
+      });
+    });
+  });
 });
