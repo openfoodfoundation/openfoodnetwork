@@ -33,4 +33,33 @@ RSpec.describe AddToCartComponent, type: :component do
 
     expect(page).to have_button "Add", disabled: true
   end
+
+  describe "low stock display" do
+    let(:distributor) {
+      create(:distributor_enterprise, preferred_product_low_stock_display: true)
+    }
+
+    it "shows the remaining stock when low" do
+      variant.update!(on_hand: 2)
+
+      render_inline(described_class.new(variant:, order: nil, distributor:))
+
+      expect(page).to have_content "Only 2 items remaining"
+    end
+
+    it "doesn't show anything when there is plenty in stock" do
+      render_inline(described_class.new(variant:, order: nil, distributor:))
+
+      expect(page).not_to have_content "remaining"
+    end
+
+    it "doesn't show anything when the shop doesn't display low stock" do
+      variant.update!(on_hand: 2)
+      distributor.update!(preferred_product_low_stock_display: false)
+
+      render_inline(described_class.new(variant:, order: nil, distributor:))
+
+      expect(page).not_to have_content "Only 2 items remaining"
+    end
+  end
 end

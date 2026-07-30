@@ -23,7 +23,7 @@
                   .variant-unit= variant.unit_to_display
                 .variant-price
                   = Spree::Money.new(variant.price_with_fees(@distributor, @order_cycle)).to_html
-                = render AddToCartComponent.new(variant:, order: current_order)
+                = render AddToCartComponent.new(variant:, order: current_order, distributor: @distributor)
 
         = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
           = render partial: "shared/product/product_details", locals: { product: }

@@ -6,15 +6,18 @@
 # to PATCH /cart/variants/:variant_id and renders the Turbo Stream
 # response with the updated cart sidebar.
 class AddToCartComponent < ViewComponent::Base
-  def initialize(variant:, order:)
+  LOW_STOCK_THRESHOLD = 3
+
+  def initialize(variant:, order:, distributor: nil)
     @variant = variant
     @order = order
+    @distributor = distributor
     super()
   end
 
   private
 
-  attr_reader :variant, :order
+  attr_reader :variant, :order, :distributor
 
   def quantity
     @quantity ||= order&.find_line_item_by_variant(variant)&.quantity || 0
@@ -26,6 +29,11 @@ class AddToCartComponent < ViewComponent::Base
 
   def out_of_stock?
     !variant.on_demand && variant.on_hand <= 0
+  end
+
+  def show_low_stock?
+    distributor&.preferred_product_low_stock_display &&
+      !variant.on_demand && variant.on_hand <= LOW_STOCK_THRESHOLD
   end
 
   def form_options

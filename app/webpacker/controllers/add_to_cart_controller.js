@@ -11,7 +11,7 @@ import { renderStreamMessage } from "@hotwired/turbo";
 // Dispatches "cart:updating" and "cart:settled" window events so the
 // cart-sidebar controller can show the busy state.
 export default class extends Controller {
-  static targets = ["addGroup", "controls", "input", "display"];
+  static targets = ["addGroup", "controls", "input", "display", "remainingStock"];
   static values = {
     variantId: Number,
     quantity: Number,
@@ -85,6 +85,9 @@ export default class extends Controller {
     }
     this.addGroupTarget.style.display = quantity > 0 ? "none" : "";
     this.controlsTarget.style.display = quantity > 0 ? "" : "none";
+    if (this.hasRemainingStockTarget) {
+      this.remainingStockTarget.style.display = quantity > 0 ? "none" : "";
+    }
     this.displayTarget.classList.toggle("visible", quantity > 0);
     this.displayTarget.textContent = I18n.t("js.shopfront.variant.quantity_in_cart", {
       quantity,

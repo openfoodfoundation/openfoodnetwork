@@ -10,5 +10,6 @@
   = render "shared/menu/offcanvas_menu"
   - if use_turbo_cart?
     = render CartSidebarComponent.new(order: current_order)
+    #out-of-stock-modal
   - else
     = render "shared/menu/cart_sidebar"

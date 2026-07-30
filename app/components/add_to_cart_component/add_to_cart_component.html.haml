@@ -12,5 +12,9 @@
       -# U+FF0B Fullwidth Plus Sign
       ＋
 
+  - if show_low_stock?
+    .variant-remaining-stock{ data: { "add-to-cart-target": "remainingStock" }, style: ("display: none" if in_cart?) }
+      = t("js.shopfront.variant.remaining_in_stock", count: variant.on_hand)
+
   .variant-quantity-display{ class: ("visible" if in_cart?), data: { "add-to-cart-target": "display" } }
     = t("js.shopfront.variant.quantity_in_cart", quantity:)

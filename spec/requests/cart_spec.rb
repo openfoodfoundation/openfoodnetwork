@@ -38,12 +38,25 @@ RSpec.describe "Cart" do
       expect(response.body).to include "Your cart is empty"
     end
 
-    it "caps the quantity at the available stock" do
+    it "caps the quantity at the available stock and notifies the customer" do
       variant.update!(on_demand: false, on_hand: 3)
 
       update_variant(variant, { quantity: 5 })
 
       expect(order.line_items.reload.first.quantity).to eq 3
+
+      # The add to cart widget is reset to the saved quantity and the
+      # out of stock modal is shown.
+      expect(response.body).to include "target=\"add-to-cart-#{variant.id}\""
+      expect(response.body).to include 'target="out-of-stock-modal"'
+      expect(response.body).to include I18n.t("js.out_of_stock.reduced_stock_available")
+    end
+
+    it "leaves the widget alone when stock suffices" do
+      update_variant(variant, { quantity: 2 })
+
+      expect(response.body).not_to include 'target="add-to-cart-'
+      expect(response.body).not_to include 'target="out-of-stock-modal"'
     end
 
     it "responds with an error when the variant is not in the distribution" do
