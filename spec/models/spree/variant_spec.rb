@@ -9,7 +9,6 @@ RSpec.describe Spree::Variant do
   it { is_expected.to belong_to(:product).required }
   it { pending "removal of supplier"; is_expected.to belong_to(:supplier) }
   it { is_expected.to belong_to(:enterprise).required }
-  it { is_expected.to belong_to(:hub).optional }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
   it { is_expected.to have_many(:stock_items) }
@@ -1056,7 +1055,6 @@ RSpec.describe Spree::Variant do
 
         expect(linked_variant.source_variants).to eq [variant]
         expect(linked_variant.enterprise).to eq enterprise
-        expect(linked_variant.hub).to eq enterprise
         expect(linked_variant.producer).to eq producer
         expect(linked_variant.price).to eq 10.95
         expect(linked_variant.on_demand).to eq false

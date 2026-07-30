@@ -309,7 +309,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             last_box.click
 
             within last_box do
-              # The linked variant is owned by the enterprise that created it.
+              # The linked variant must be owned by the enterprise that created it
               expect(page).to have_content "My Enterprise"
 
               # And I can perform actions on the new variant

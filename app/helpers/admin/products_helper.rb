@@ -106,7 +106,7 @@ module Admin
     # isn't a variant we can manage
     def variant_readonly?(variant, allowed_producers, allowed_source_producers)
       return true if allowed_producers.exclude?(variant.enterprise) &&
-                     allowed_source_producers.include?(variant.enterprise) && variant.hub_id.blank?
+                     allowed_source_producers.include?(variant.enterprise)
 
       false
     end
