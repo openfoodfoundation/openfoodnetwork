@@ -25,6 +25,21 @@ class CartService
     valid?
   end
 
+  # Sets the quantity of a single variant in the cart, leaving all other
+  # line items untouched. A quantity of zero removes the variant.
+  def update_variant(variant_id, quantity, max_quantity = nil)
+    @distributor, @order_cycle = distributor_and_order_cycle
+
+    variant_data = { variant_id: variant_id.to_i, quantity: quantity.to_i,
+                     max_quantity: max_quantity&.to_i }
+
+    @order.with_lock do
+      attempt_cart_add_variants [variant_data]
+    end
+
+    valid?
+  end
+
   def valid?
     errors.empty?
   end
