@@ -25,7 +25,7 @@ class DfcImporter
   def import_profile(farm)
     owner = find_or_import_user(farm)
     enterprise = EnterpriseImporter.new(owner, farm).import
-    enterprise.save! if enterprise.changed?
+    enterprise.save!
     enterprise.address.save! if enterprise.address.changed?
   rescue ActiveRecord::RecordInvalid => e
     Alert.raise(e, farm: DfcIo.export(farm))
