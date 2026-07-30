@@ -8,7 +8,7 @@ import { Controller } from "stimulus";
 // listens to the "cart:updating"/"cart:settled" window events of the
 // add-to-cart widgets to show the busy state while changes are saved.
 export default class extends Controller {
-  static targets = ["sidebar", "icon", "counter"];
+  static targets = ["sidebar", "icon", "counter", "editCartLabel"];
   static values = { open: Boolean };
 
   initialize() {
@@ -72,11 +72,10 @@ export default class extends Controller {
     sidebar.querySelectorAll(".sidebar-footer a.button").forEach((link) => {
       link.toggleAttribute("disabled", this.busy);
     });
-    sidebar.querySelectorAll(".cart-idle-label").forEach((label) => {
-      label.style.display = this.busy ? "none" : "";
-    });
-    sidebar.querySelectorAll(".cart-updating-label").forEach((label) => {
-      label.style.display = this.busy ? "" : "none";
+    this.editCartLabelTargets.forEach((label) => {
+      label.textContent = this.busy
+        ? I18n.t("cart_updating")
+        : I18n.t("shared.menu.cart_sidebar.edit_cart");
     });
     this.iconTargets.forEach((icon) => {
       icon.classList.toggle("pure-dirty", this.busy);
