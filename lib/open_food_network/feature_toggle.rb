@@ -78,6 +78,11 @@ module OpenFoodNetwork
         When enabled for an enterprise, only products with 'group buy' enabled
         appear in bulk co-op reports for that enterprise.
       DESC
+      "turbo_cart" => <<~DESC,
+        Server-rendered cart sidebar and add-to-cart in the shopfront,
+        using Turbo instead of AngularJS. Only takes effect together with
+        <code>product_grid_view</code>.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

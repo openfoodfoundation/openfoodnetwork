@@ -10,6 +10,26 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe "#use_turbo_cart?" do
+    let(:user) { Spree::User.new(id: 4) }
+
+    before do
+      allow(helper).to receive(:spree_current_user) { user }
+    end
+
+    it "is disabled by default" do
+      expect(helper.use_turbo_cart?).to eq false
+    end
+
+    it "requires both turbo_cart and product_grid_view" do
+      Flipper.enable(:turbo_cart, user)
+      expect(helper.use_turbo_cart?).to eq false
+
+      Flipper.enable(:product_grid_view, user)
+      expect(helper.use_turbo_cart?).to eq true
+    end
+  end
+
   describe "#language_meta_tags" do
     let(:request) { double("request", host_with_port: "test.host", protocol: "http://") }
     before do
