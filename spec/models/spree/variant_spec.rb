@@ -7,7 +7,6 @@ RSpec.describe Spree::Variant do
 
   it { is_expected.to have_many :semantic_links }
   it { is_expected.to belong_to(:product).required }
-  it { pending "removal of supplier"; is_expected.to belong_to(:supplier) }
   it { is_expected.to belong_to(:enterprise).required }
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
@@ -1059,33 +1058,6 @@ RSpec.describe Spree::Variant do
         expect(linked_variant.price).to eq 10.95
         expect(linked_variant.on_demand).to eq false
         expect(linked_variant.on_hand).to eq 5
-      end
-    end
-  end
-
-  describe "updating supplier/enterprise during transition period" do
-    it "updates enterprise when updating supplier" do
-      new_supplier = create(:supplier_enterprise)
-      variant.supplier = new_supplier
-      variant.save!
-
-      expect(variant.reload.enterprise).to eq new_supplier
-    end
-
-    context "variant doesn't have enterprise set yet" do
-      let(:variant) {
-        create(:variant).tap{ |v|
-          v.update_columns(enterprise_id: nil, supplier_id: enterprise.id)
-        }
-      }
-      let(:enterprise) { create(:supplier_enterprise) }
-
-      it "updates enterprise on validation, if not yet set" do
-        variant.display_name = "updated"
-        expect(variant).to be_valid
-
-        variant.save!
-        expect(variant.reload.enterprise).to eq enterprise
       end
     end
   end

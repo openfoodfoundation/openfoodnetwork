@@ -11,7 +11,7 @@ module Spree
 
     self.belongs_to_required_by_default = false
 
-    self.ignored_columns += ['hub_id']
+    self.ignored_columns += ['hub_id', 'supplier_id']
 
     # 2 not to be persisted attributes to store preferences.
     # Values to be set via the UI that can be passed by back to UI
@@ -41,7 +41,6 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
-    belongs_to :supplier, class_name: 'Enterprise', optional: true, touch: true
     belongs_to :enterprise, optional: false, touch: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
@@ -112,13 +111,6 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value
     before_validation :convert_variant_weight_to_decimal
-    # Temporary code for migration from supplier to enteprise
-    before_validation :copy_supplier_to_enterprise, if: ->(variant) {
-      variant.supplier_id_changed? || variant.enterprise_id.blank?
-    }
-    before_validation :copy_enterprise_to_supplier, if: ->(variant) {
-      variant.enterprise_id_changed? || variant.supplier_id.blank?
-    }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
@@ -290,7 +282,7 @@ module Spree
 
     # Clone this variant, retaining a 'source' link to it
     def create_linked_variant(user)
-      # Variant owned by enterprise which has permission to create variant sourced from the supplier
+      # Variant owned by enterprise which has permission to create variant sourced from the producer
       enterprise_id = EnterpriseRelationship.permitted_by(enterprise).permitting(user.enterprises)
         .with_permission(:create_linked_variants)
         .pick(:child_id)
@@ -360,14 +352,6 @@ module Spree
 
     def ensure_shipping_category
       self.shipping_category ||= DefaultShippingCategory.find_or_create
-    end
-
-    def copy_supplier_to_enterprise
-      self.enterprise_id = supplier_id
-    end
-
-    def copy_enterprise_to_supplier
-      self.supplier_id = enterprise_id
     end
 
     def convert_variant_weight_to_decimal
