@@ -1,4 +1,5 @@
-%div{'ng-controller' => 'CartDropdownCtrl'}
+- wrapper_attributes = use_turbo_cart? ? { data: { controller: "cart-sidebar" } } : { "ng-controller" => "CartDropdownCtrl" }
+%div{ wrapper_attributes }
   = render "shared/menu/large_menu"
 
   %ofn-flash
@@ -6,4 +7,7 @@
 
   = render "shared/menu/mobile_menu"
   = render "shared/menu/offcanvas_menu"
-  = render "shared/menu/cart_sidebar"
+  - if use_turbo_cart?
+    = render CartSidebarComponent.new(order: current_order)
+  - else
+    = render "shared/menu/cart_sidebar"

@@ -34,12 +34,23 @@
       - else
         = render 'shared/menu/signed_in'
 
-      = cache_with_locale "cart" do
-        %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
-          %a{href: main_app.shop_path}
-            %span{ class: "top-bar--current-hub-prefix" }
-              = t 'label_shopping'
-              = '@'
-            %span{ class: "top-bar--current-hub-name" } {{ CurrentHub.hub.name | truncate:25 }}
-        %li.cart{"ng-cloak" => true}
-          = render partial: "shared/menu/cart"
+      - if use_turbo_cart?
+        - if current_distributor
+          %li.current_hub
+            %a{href: main_app.shop_path}
+              %span{ class: "top-bar--current-hub-prefix" }
+                = t 'label_shopping'
+                = '@'
+              %span{ class: "top-bar--current-hub-name" }= truncate(current_distributor.name, length: 25)
+        %li.cart
+          = render partial: "shared/menu/turbo_cart_icon", locals: { link_id: "cart" }
+      - else
+        = cache_with_locale "cart" do
+          %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
+            %a{href: main_app.shop_path}
+              %span{ class: "top-bar--current-hub-prefix" }
+                = t 'label_shopping'
+                = '@'
+              %span{ class: "top-bar--current-hub-name" } {{ CurrentHub.hub.name | truncate:25 }}
+          %li.cart{"ng-cloak" => true}
+            = render partial: "shared/menu/cart"

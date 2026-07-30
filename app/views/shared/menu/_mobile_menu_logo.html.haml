@@ -1,0 +1,11 @@
+%section.left
+  %a.left-off-canvas-toggle.menu-icon
+    = image_pack_tag "menu/btn-menu-mobile.png"
+
+%section.left
+  .ofn-logo
+    %a{href: main_logo_link(@white_label_distributor)}
+      - if @white_label_logo&.variable?
+        = image_tag @white_label_distributor.white_label_logo_url(:mobile)
+      - else
+        %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}

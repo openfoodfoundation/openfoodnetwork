@@ -8,8 +8,8 @@ RSpec.describe CartSidebarComponent, type: :component do
       expect(page).to have_selector "#cart-sidebar"
       expect(page).to have_content "Your cart is empty"
       expect(page).to have_link "Take me shopping!"
-      expect(page).to have_no_selector "tr.product-cart"
-      expect(page).to have_no_link "Checkout"
+      expect(page).not_to have_selector "tr.product-cart"
+      expect(page).not_to have_link "Checkout"
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe CartSidebarComponent, type: :component do
       expect(page).to have_selector(
         ".total-price", text: line_item.display_amount_with_adjustments.to_s
       )
-      expect(page).to have_no_content "Your cart is empty"
+      expect(page).not_to have_content "Your cart is empty"
     end
 
     it "renders the footer with total and links" do
