@@ -4242,7 +4242,6 @@ en_FR:
     admin:
       images:
         edit:
-          title: Edit product photo
           close: Back
           upload: Upload photo
       mail_methods:

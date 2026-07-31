@@ -4283,7 +4283,6 @@ en_GB:
     admin:
       images:
         edit:
-          title: Edit product photo
           close: Back
           upload: Upload photo
       mail_methods:
