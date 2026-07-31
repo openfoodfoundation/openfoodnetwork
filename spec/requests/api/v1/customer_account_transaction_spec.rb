@@ -172,6 +172,17 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
 
     describe "concurrency", concurrency: true do
       let(:breakpoint) { Mutex.new }
+      # `login_as` can't authenticate two concurrent requests. It only queues a one-shot
+      # login, and Warden's test mode hands the whole queue to the first request reaching
+      # it. The other request then finds an empty queue, and no session cookie either
+      # because the first request is still parked at our breakpoint, so it gets a 401,
+      # never reaches `save` and we wait for it forever. Both requests authenticate
+      # themselves with an API key instead, just like an external POS would.
+      let(:api_token) { "token-for-concurrent-requests" }
+      let(:headers) { { "X-Api-Token" => api_token } }
+
+      before { enterprise.owner.update!(spree_api_key: api_token) }
+
       let(:params) do
         {
           customer_account_transaction: {
@@ -193,14 +204,16 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
 
       it "processes one transaction at the time, ensure correct balance calculation" do
         breakpoint.lock
-        breakpoint_reached_counter = 0
+        # A queue instead of a counter, because two threads incrementing a plain integer
+        # can lose an increment and then we would wait forever.
+        breakpoint_reached = Queue.new
 
         # Set a breakpoint when save is calle. If two requests reach this breakpoint at the
         # same time, they are in a race condition but the the lock in the before_create callback
         # should ensure they are excuted one after the other.
         allow_any_instance_of(CustomerAccountTransaction).to receive(:save)
           .and_wrap_original do |method, *args|
-            breakpoint_reached_counter += 1
+            breakpoint_reached << Thread.current
             breakpoint.synchronize { nil }
             method.call(*args)
           end
@@ -208,28 +221,25 @@ RSpec.describe "CustomerAccountTransactions", swagger_doc: "v1.yaml" do
         # Create two account transactions in parallel
         threads = [
           Thread.new {
-            login_as enterprise.owner
-            post "/api/v1/customer_account_transaction", params: params
+            post "/api/v1/customer_account_transaction", params: params, headers: headers
           },
           Thread.new {
-            login_as enterprise.owner
-            post "/api/v1/customer_account_transaction", params: params2
+            post "/api/v1/customer_account_transaction", params: params2, headers: headers
           },
         ]
 
-        # Wait for the first thread to reach the breakpoint:
-        Timeout.timeout(1) do
-          sleep 0.1 while breakpoint_reached_counter < 1
+        begin
+          # Wait for both requests to reach the breakpoint to confirm that we have a race
+          # condition. They get there within milliseconds but a loaded CI runner can be a
+          # lot slower, so we wait generously.
+          requests_at_breakpoint = Array.new(2) { breakpoint_reached.pop(timeout: 30) }
+          expect(requests_at_breakpoint).to all(be_a(Thread))
+        ensure
+          # Resume and complete both transaction creation, also when we gave up waiting.
+          # Otherwise the threads stay blocked and hold on to their database connection.
+          breakpoint.unlock
+          threads.each(&:join)
         end
-
-        # Wait for the second thread to reach the breakpoint to confirm we have a race condition
-        Timeout.timeout(1) do
-          sleep 0.1 while breakpoint_reached_counter < 2
-        end
-
-        # Resume and complete both transaction creation:
-        breakpoint.unlock
-        threads.each(&:join)
 
         # There is no existing transaction, the thread are competing to create the first
         # transaction. So if the last transaction balance is anything but the sum of the amount
