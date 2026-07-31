@@ -4,12 +4,14 @@ RSpec.describe ProductsController do
   include_context "session helper"
 
   describe "GET /:enterprise_permalink/products/:id" do
-    let(:product) { create(:product, name: "Garlic") }
-    let(:enterprise) { product.variants.first.enterprise }
+    let(:enterprise) { create(:enterprise, name: "The Garlic Guru") }
+    let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let(:page) { Capybara::Node::Simple.new(response.body) }
 
     it "shows one product with its variants" do
       get enterprise_product_path(enterprise, product)
       expect(response).to have_http_status :ok
+      expect(page.title).to eq "Garlic from The Garlic Guru\n - Open Food Network"
       expect(response.body).to include "Garlic"
     end
   end

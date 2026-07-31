@@ -1,1 +1,10 @@
+- content_for(:title) do
+  -# We have a key collision in the locale for the global `products` key.
+  -# = t(".title", enterprise: @enterprise.name, product: @product.name)
+  = [@product.name, t("products_from"), @enterprise.name].join(" ")
+- content_for(:description) do
+  = @product.description
+- content_for(:image) do
+  = @product.image.url(:small) if @product.image.present?
+
 = @product.attributes
