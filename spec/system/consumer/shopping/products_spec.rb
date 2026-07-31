@@ -187,6 +187,9 @@ RSpec.describe "As a consumer I want to view products" do
           visit shop_path
 
           expect(page).to have_selector(".product-item", count: 3)
+          expect(page).to have_content("Beans")
+          expect(page).to have_content("Chickpeas")
+          expect(page).to have_content("Tomatoes")
 
           # Add button is only displayed for single varint product
           expect(page).to have_selector(".add-variant", count: 2)
