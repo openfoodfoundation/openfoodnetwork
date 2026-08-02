@@ -347,6 +347,89 @@ RSpec.describe Spree::Product do
           described_class.with_properties([wanted_property.id, 99_999])
         ).to match_array [product_with_wanted_property]
       end
+
+      context "when the property is inherited from the producer" do
+        let(:enterprise) { create(:supplier_enterprise) }
+        let!(:inheriting_product) {
+          create(:product, enterprise_id: enterprise.id, inherits_properties: true)
+        }
+
+        before do
+          enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                 value: '1', position: 1)
+        end
+
+        it "matches products that inherit the property from their producer" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(inheriting_product)
+        end
+
+        it "does not match when the product does not inherit properties" do
+          inheriting_product.update!(inherits_properties: false)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .not_to include(inheriting_product)
+        end
+      end
+
+      context "when invoked through Ransack (the shopfront filter path)" do
+        # Ransack sanitises scope args against its boolean TRUE/FALSE_VALUES, so filtering by
+        # property id "1" reaches the scope as `true` (and "0" as `false`) rather than the id.
+        # Using ActiveRecord conditions casts these back to integers, so filtering by property
+        # id 1 no longer raises on the integer property_id column (regression: shopfront
+        # returned a 422).
+        it "does not raise when filtering by property id 1" do
+          expect { described_class.with_properties(true).to_a }.not_to raise_error
+        end
+
+        it "does not raise when filtering through Ransack" do
+          expect {
+            described_class.ransack("with_properties" => [wanted_property.id.to_s]).result.to_a
+          }.not_to raise_error
+        end
+      end
+
+      context "when the property is set directly but inheritance is disabled" do
+        let!(:direct_product) {
+          create(:product, properties: [wanted_property], inherits_properties: false)
+        }
+
+        it "matches the product (direct properties don't require inheritance)" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(direct_product)
+        end
+      end
+
+      context "when a product has variants from multiple enterprises" do
+        # Inherited properties are matched against any variant's enterprise, consistent with
+        # Spree::Variant.with_properties. (Products normally have a single enterprise across
+        # their variants.)
+        let(:first_enterprise) { create(:supplier_enterprise) }
+        let(:second_enterprise) { create(:supplier_enterprise) }
+        let!(:multi_enterprise_product) {
+          create(:product, enterprise_id: first_enterprise.id, inherits_properties: true)
+        }
+
+        before do
+          create(:variant, product: multi_enterprise_product, enterprise: second_enterprise)
+        end
+
+        it "matches when the first variant's enterprise has the property" do
+          first_enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                       value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(multi_enterprise_product)
+        end
+
+        it "matches when a later variant's enterprise has the property" do
+          second_enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                        value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(multi_enterprise_product)
+        end
+      end
     end
 
     describe "in_enterprise" do

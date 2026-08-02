@@ -81,6 +81,23 @@ RSpec.describe ProductsRenderer do
           expect(products).to eq([product_apples, product_cherries])
         end
 
+        it "includes products inheriting the property when it is sent via with_properties" do
+          # Regression for #14405: when one producer sets the property at producer level (inherited
+          # by its products) and another producer sets the same property directly on a product, the
+          # shopfront deduplicates the property into the product bucket and sends only
+          # with_properties. Inherited products must still be returned.
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+          product_banana_bread.product_properties.create!({ property_id: property_organic.id,
+                                                            value: '1', position: 1 })
+
+          search_param = { q: { with_properties: [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.products
+          expect(products).to match_array([product_apples, product_cherries, product_banana_bread])
+        end
+
         it "filters products with a product property or a producer property" do
           cakes_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                        value: '1', position: 1 })
