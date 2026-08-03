@@ -88,7 +88,9 @@ module Spree
 
         raise "Unsupported action" if status != "paid"
 
-        taler_amount = "KUDOS:#{amount}"
+        full_amount = taler_order.fetch("contract_terms")["amount"]
+        currency = full_amount.split(":", 2).first
+        taler_amount = "#{currency}:#{amount}"
         taler_order.refund(refund: taler_amount, reason: "credit")
 
         spree_money = Spree::Money.new(amount, currency: payment.currency).to_s
