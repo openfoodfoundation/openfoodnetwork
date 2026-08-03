@@ -360,6 +360,23 @@ RSpec.describe '
 
       it_should_behave_like "Cancelling the order"
     end
+
+    context "when it is the last item of an order and its variant has been deleted" do
+      before do
+        # specify that order has only one line item
+        order.line_items = [order.line_items.first]
+        order.line_items.first.variant.delete
+        login_as_admin
+        visit spree.edit_admin_order_path(order)
+        find("a.delete-item").click
+      end
+
+      it "shows the cancel order modal with restocking disabled" do
+        expect(page).to have_content "This will cancel the current order."
+        expect(page).to have_field "Restock Items: return all items to stock",
+                                   disabled: true, checked: false
+      end
+    end
   end
 
   it "can't add more items than are available" do

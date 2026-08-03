@@ -82,7 +82,7 @@ $(document).ready(function() {
                  handle_delete_click('#custom-confirm', reStockItem);
              }, event);
          } else {
-             adjustItems(shipment_number, variant_id, 0);
+             adjustItems(shipment_number, variant_id, 0, undefined, event);
          }
      } catch (e) {
      }
@@ -90,7 +90,7 @@ $(document).ready(function() {
   }
 });
 
-adjustItems = function(shipment_number, variant_id, quantity, restock_item){
+adjustItems = function(shipment_number, variant_id, quantity, restock_item, event){
   var shipment = _.findWhere(shipments, {number: shipment_number + ''});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
@@ -104,7 +104,7 @@ adjustItems = function(shipment_number, variant_id, quantity, restock_item){
           window.location.href = redirectTo.toString();
         });
       }
-    });
+    }, undefined, event);
     return;
   }
   doAdjustItems(shipment_number, variant_id, quantity, inventory_units, restock_item, () => {
@@ -228,17 +228,24 @@ ofnAlert = function(message) {
   $('#custom-alert').show();
 }
 
-ofnCancelOrderAlert = function(callback, i18nKey) {
+ofnCancelOrderAlert = function(callback, i18nKey, event) {
   if (i18nKey == undefined) {
     i18nKey = "js.admin.orders.cancel_the_order_html";
   }
+  var variantDeleted = event && $(event.target).closest('a').data('variant-deleted');
+  var tooltip = variantDeleted ? t("js.admin.orders.restock_item_deleted_tooltip") : "";
+  var restockCheckbox = variantDeleted
+    ? `<input type="checkbox" name="restock_items" id="restock_items" disabled title="${tooltip}" />`
+    : `<input type="checkbox" name="restock_items" id="restock_items" checked="checked" />`;
+  var labelStyle = variantDeleted ? 'style="color: grey;" ' : '';
+
   $('#custom-confirm .message').html(
     ` ${t(i18nKey)}
       <div class="form">
         <input type="checkbox" name="send_cancellation_email" value="1" id="send_cancellation_email" checked="true" />
         <label for="send_cancellation_email">${t("js.admin.orders.cancel_the_order_send_cancelation_email")}</label><br />
-        <input type="checkbox" name="restock_items"  id="restock_items" checked="checked"/>
-        <label for="restock_items">${t("js.admin.orders.restock_items")}</label>
+        ${restockCheckbox}
+        <label for="restock_items" ${labelStyle}title="${tooltip}">${t("js.admin.orders.restock_items")}</label>
       </div>`);
   $('#custom-confirm button.confirm').unbind( "click" ).click(() => {
     $('#custom-confirm').hide();
