@@ -44,7 +44,7 @@ module Admin
     end
 
     def product_carousel_images_data(product, size: :large)
-      images = product.images.to_a
+      images = product.images.to_a + product.variant_images.to_a
       show_caption = images.many?
 
       return [default_carousel_image(size, product)] if images.empty?
