@@ -48,13 +48,83 @@ RSpec.describe ShopHelper do
         end
       end
 
-      it "returns image data with numbered captions" do
+      it "returns image data with resource name captions" do
         result = helper.product_carousel_images_data(product)
 
         expect(result.size).to eq 3
-        expect(result[0][:caption]).to eq "Test Product - 1"
-        expect(result[1][:caption]).to eq "Test Product - 2"
-        expect(result[2][:caption]).to eq "Test Product - 3"
+        expect(result[0][:caption]).to eq "Test Product"
+        expect(result[1][:caption]).to eq "Test Product"
+        expect(result[2][:caption]).to eq "Test Product"
+      end
+    end
+
+    context "when the product has no images but a variant has images" do
+      let(:product) { create(:simple_product, name: "Test Product") }
+      let(:variant) { product.variants.first }
+
+      before do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: variant
+        )
+      end
+
+      it "returns the variant image data" do
+        result = helper.product_carousel_images_data(product)
+
+        expect(result.size).to eq 1
+        expect(result.first[:url]).to be_present
+        expect(result.first[:alt]).to eq "Test Product"
+        expect(result.first[:caption]).to be_nil
+      end
+    end
+
+    context "when the product has images and a variant also has images" do
+      let(:product) { create(:simple_product, name: "Test Product") }
+      let(:variant) { product.variants.first }
+
+      before do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: product
+        )
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: variant
+        )
+      end
+
+      it "returns product images followed by variant images" do
+        result = helper.product_carousel_images_data(product)
+
+        expect(result.size).to eq 2
+        expect(result[0][:caption]).to eq "Test Product"
+        expect(result[1][:caption]).to eq "Test Product"
+      end
+    end
+
+    context "when a variant image belongs to a variant with a display_name" do
+      let(:product) { create(:simple_product, name: "Test Product") }
+      let(:variant) { create(:variant, product:, display_name: "Red") }
+
+      before do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: product
+        )
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: variant
+        )
+      end
+
+      it "uses the variant display_name in the caption and alt" do
+        result = helper.product_carousel_images_data(product)
+
+        expect(result.size).to eq 2
+        expect(result[0][:caption]).to eq "Test Product"
+        expect(result[1][:caption]).to eq "Test Product - Red"
+        expect(result[1][:alt]).to eq "Test Product - Red"
       end
     end
   end

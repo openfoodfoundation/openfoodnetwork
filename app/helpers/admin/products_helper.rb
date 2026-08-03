@@ -44,16 +44,17 @@ module Admin
     end
 
     def product_carousel_images_data(product, size: :large)
-      images = product.images.to_a
+      images = product.images.to_a + product.variant_images.to_a
       show_caption = images.many?
 
       return [default_carousel_image(size, product)] if images.empty?
 
-      images.map.with_index do |image, index|
+      images.map do |image|
+        variant = image.viewable if image.viewable.is_a?(Spree::Variant)
         {
           url: image.url(size),
-          alt: product_image_alt_text(image, product),
-          caption: show_caption ? "#{product.name} - #{index + 1}" : nil
+          alt: product_image_alt_text(image, product, variant),
+          caption: show_caption ? image_modal_resource_name(variant, product) : nil
         }
       end
     end
@@ -115,8 +116,8 @@ module Admin
 
     private
 
-    def product_image_alt_text(image, product)
-      image.alt.presence || product.name
+    def product_image_alt_text(image, product, variant)
+      image.alt.presence || image_modal_resource_name(variant, product)
     end
 
     def default_carousel_image(size, product)

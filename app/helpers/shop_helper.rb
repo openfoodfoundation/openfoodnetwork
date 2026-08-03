@@ -69,21 +69,28 @@ module ShopHelper
   end
 
   def product_carousel_images_data(product, size: :large)
-    images = product.images.to_a
+    images = product.images.to_a + product.variant_images.to_a
     show_caption = images.many?
 
     return [default_carousel_image(size, product)] if images.empty?
 
-    images.map.with_index do |image, index|
+    images.map do |image|
+      variant = image.viewable if image.viewable.is_a?(Spree::Variant)
       {
         url: image.url(size),
-        alt: image.alt.presence || product.name,
-        caption: show_caption ? "#{product.name} - #{index + 1}" : nil
+        alt: image.alt.presence || image_modal_resource_name(variant, product),
+        caption: show_caption ? image_modal_resource_name(variant, product) : nil
       }
     end
   end
 
   private
+
+  def image_modal_resource_name(variant, product)
+    resource_name = product.name
+
+    variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
+  end
 
   def show_groups_tabs?
     !current_distributor.hide_groups_tab? && current_distributor.groups.any?

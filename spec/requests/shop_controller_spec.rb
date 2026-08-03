@@ -57,6 +57,27 @@ RSpec.describe "Shop" do
       end
     end
 
+    context "when the product has multiple images" do
+      include FileHelper
+
+      it "renders captions for product and variant images" do
+        product = create(:simple_product, name: "Test Product")
+        variant = create(:variant, product:, display_name: "Red")
+        Spree::Image.create!(attachment: white_logo_file, viewable: product)
+        Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+        order_cycle.exchanges.outgoing.first.variants << variant
+
+        get "/shop/product_modal", params: {
+          product_id: product.id,
+          order_cycle_id: order_cycle.id
+        }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("ofn-thumbnail-carousel__caption")
+        expect(response.body).to include("Test Product - Red")
+      end
+    end
+
     context "when no open order cycle exists" do
       it "returns not found" do
         product = create(:simple_product)

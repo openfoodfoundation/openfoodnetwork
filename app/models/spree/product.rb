@@ -43,8 +43,8 @@ module Spree
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
-    has_many :variant_images, -> { order(:position) }, source: :images,
-                                                       through: :variants
+    has_many :variant_images, -> { order(:created_at) }, source: :images,
+                                                         through: :variants
 
     validates_lengths_from_database
     validates :name, presence: true
