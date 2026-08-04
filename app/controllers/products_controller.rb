@@ -2,6 +2,8 @@
 
 class ProductsController < BaseController
   def index
+    @distributor = distributor
+    @order_cycle = order_cycle
     @products = ProductsRenderer.new(
       distributor,
       order_cycle,
@@ -13,6 +15,8 @@ class ProductsController < BaseController
 
     @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
     @low_stock_display = distributor.preferred_product_low_stock_display
+    @enterprise_fee_calculator =
+      OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
   end
 
   private
