@@ -654,7 +654,7 @@ RSpec.describe Spree::LineItem do
         let!(:li) { create(:line_item, order: o, variant: v, quantity: 1) }
 
         it "stores final_weight_volume without rounding to 2 decimal places" do
-          expect(li.reload.final_weight_volume).to eq(0.125)
+          expect(li.final_weight_volume).to eq(0.125)
         end
       end
 
@@ -662,7 +662,7 @@ RSpec.describe Spree::LineItem do
         let!(:li) { create(:line_item, order: o, variant: v, quantity: 3) }
 
         it "stores final_weight_volume without rounding to 2 decimal places" do
-          expect(li.reload.final_weight_volume).to eq(0.375)
+          expect(li.final_weight_volume).to eq(0.375)
         end
       end
 
@@ -672,11 +672,11 @@ RSpec.describe Spree::LineItem do
         before { li.update!(quantity: 2) }
 
         it "stores the correct final_weight_volume" do
-          expect(li.reload.final_weight_volume).to eq(0.250)
+          expect(li.final_weight_volume).to eq(0.250)
         end
 
         it "preserves the correct unit_presentation" do
-          expect(li.reload.unit_presentation).to eq("125mL")
+          expect(li.unit_presentation).to eq("125mL")
         end
       end
     end
