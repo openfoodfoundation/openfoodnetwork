@@ -5,7 +5,7 @@ module Api
     class EnterprisesController < Api::V0::BaseController
       include GeocodeEnterpriseAddress
 
-      before_action :override_owner, only: [:create, :update]
+      before_action :override_owner, only: [:create]
       before_action :check_type, only: :update
       before_action :override_sells, only: [:create, :update]
       before_action :override_visible, only: [:create, :update]
@@ -30,6 +30,10 @@ module Api
 
       def update
         @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
+
+        raise CanCan::AccessDenied if enterprise_params[:owner_id].present? &&
+                                      !allow_updating_owner?(@enterprise)
+
         authorize! :update, @enterprise
 
         if @enterprise.update(enterprise_params)
@@ -89,6 +93,10 @@ module Api
       def enterprise_params
         @enterprise_params ||= PermittedAttributes::Enterprise.new(params).call.
           to_h.with_indifferent_access
+      end
+
+      def allow_updating_owner?(enterprise)
+        current_api_user.owned_enterprises.include? enterprise
       end
     end
   end
