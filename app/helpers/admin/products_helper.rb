@@ -2,6 +2,8 @@
 
 module Admin
   module ProductsHelper
+    include SharedHelper
+
     def image_form_path(imageable)
       if imageable.is_a?(Spree::Variant)
         product_id = imageable.product_id
@@ -41,21 +43,6 @@ module Admin
 
     def products_return_to_url
       session[:products_return_to_url] || admin_products_url
-    end
-
-    def product_carousel_images_data(product, size: :large)
-      images = product.images.to_a
-      show_caption = images.many?
-
-      return [default_carousel_image(size, product)] if images.empty?
-
-      images.map.with_index do |image, index|
-        {
-          url: image.url(size),
-          alt: product_image_alt_text(image, product),
-          caption: show_caption ? "#{product.name} - #{index + 1}" : nil
-        }
-      end
     end
 
     # if user hasn't saved any preferences on products page and there's only one producer;
@@ -111,20 +98,6 @@ module Admin
       resource_name = product.name
 
       variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
-    end
-
-    private
-
-    def product_image_alt_text(image, product)
-      image.alt.presence || product.name
-    end
-
-    def default_carousel_image(size, product)
-      {
-        url: Spree::Image.default_image_url(size),
-        alt: product.name,
-        caption: nil
-      }
     end
   end
 end
