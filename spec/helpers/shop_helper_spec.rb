@@ -118,7 +118,7 @@ RSpec.describe ShopHelper do
         )
       end
 
-      it "uses the variant display_name in the caption and alt" do
+      it "falls back to the product name for a variant image's caption and alt" do
         result = helper.product_carousel_images_data(product)
 
         expect(result.size).to eq 2

@@ -105,7 +105,7 @@ RSpec.describe Admin::ProductsHelper do
         )
       end
 
-      it 'uses the variant display_name in the caption and alt' do
+      it 'falls back to the product name for a variant image\'s caption and alt' do
         data = helper.product_carousel_images_data(product)
 
         expect(data.size).to eq 2
