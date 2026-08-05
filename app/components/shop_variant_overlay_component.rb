@@ -15,6 +15,10 @@ class ShopVariantOverlayComponent < ViewComponent::Base
 
   private
 
+  def product_name
+    variants.first.product.name
+  end
+
   def producers
     @producers ||= @variants.map(&:enterprise).uniq
   end

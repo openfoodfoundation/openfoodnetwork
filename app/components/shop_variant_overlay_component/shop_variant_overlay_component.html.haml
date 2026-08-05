@@ -1,26 +1,33 @@
 %div{ "data-controller": "shop-variant-overlay" }
-  = button_tag t("shopfront.variant.select"), type: "button", class: "select-variant primary", "data-action": "shop-variant-overlay#select"
+  =# TODO translation
+  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#select" }
+    = t("shopfront.variant.select")
 
   - if variants.length > 1
     %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
       .variant-overlay-bg.fade{ "data-shop-variant-overlay-target": "background", "data-action": "click->shop-variant-overlay#close" }
       .variant-overlay{ "data-shop-variant-overlay-target": "element" }
-        =variants.first.product.name
-        %input{ class: "button", type: 'button', value: t('js.admin.modals.close'), "data-action": "click->shop-variant-overlay#close" }
-
-        - # All variants have the same producer
-        - if same_producers?
-          = "From #{variants.first.enterprise.name}"
+        .header
+          %button.tiny.right{ type: "button", "data-action": "click->shop-variant-overlay#close" }
+            = t('js.admin.modals.close')
+          %h5= product_name
+          - # All variants have the same producer
+          - if same_producers?
+            %span.producer="From #{variants.first.enterprise.name}"
 
         - # Loop through variants
         %ul
           - variants.each do |variant|
             %li
-              = "#{variant.name_to_display} | #{variant.unit_to_display}"
-              = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display)
-              %br
-              - unless same_producers?
-                = "From #{variant.enterprise.name}"
-              %br
-              = variant.display_price
-              = "#{variant.display_unit_price} / #{variant.unit_price.unit}"
+              %div
+                = render AddToCartComponent.new(variant: variant, css_class: "right", quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display)
+                = "#{variant.name_to_display} | #{variant.unit_to_display}"
+                .variant-producer
+                  - unless same_producers?
+                    = "From #{variant.enterprise.name}"
+              .prices
+                = variant.display_price
+                %span.unit-price
+                  = "#{variant.display_unit_price}"
+                  &nbsp;/&nbsp;
+                  = "#{variant.unit_price.unit}"

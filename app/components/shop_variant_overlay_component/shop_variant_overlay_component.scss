@@ -63,4 +63,66 @@
       transform: translate(0px, -10rem);
     }
   }
+
+  .header {
+    margin-bottom: 1rem;
+
+    h5 {
+      margin-bottom: 0;
+    }
+
+    button.tiny {
+      color: black;
+      background-color: b.$light-grey;
+      font-size: 0.8125rem;
+    }
+
+    .producer {
+      font-size: 1rem;
+    }
+  }
+
+  ul {
+    margin-left: 0;
+    margin-bottom: 0;
+
+    li {
+      list-style: none;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom-color: b.$light-grey;
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+
+      &:nth-last-child(1) {
+        border: none;
+        padding-bottom: 0;
+      }
+
+      .variant-header {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 40%;
+      }
+
+      .variant-producer {
+        font-weight: 600;
+        font-size: 0.75rem;
+      }
+
+      .prices {
+        font-weight: 600;
+
+        span.unit-price {
+          font-weight: normal;
+          display: inline;
+          color: b.$grey-500;
+          font-size: 0.85rem;
+          margin-left: 1.5rem;
+        }
+      }
+    }
+  }
 }
