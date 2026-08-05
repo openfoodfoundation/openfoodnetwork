@@ -15,11 +15,11 @@ module Spree
     respond_to :html, :json
 
     before_action :check_authorization
-    before_action :set_order_from_params, only: :show
+    before_action :set_order_from_params, only: [:show, :print]
     before_action :set_current_order, only: [:edit, :update]
     before_action :filter_order_params, only: :update
 
-    prepend_before_action :require_order_authentication, only: :show
+    prepend_before_action :require_order_authentication, only: [:show, :print]
     prepend_before_action :require_order_cycle, only: :edit
     prepend_before_action :require_distributor_chosen, only: :edit
     before_action :check_hub_ready_for_checkout, only: :edit
@@ -32,6 +32,17 @@ module Spree
     def show
       @paid_with_credit = @order.payments.customer_credit.sum(:amount)
       @payment_total = @order.payment_total - @paid_with_credit.to_f
+    end
+
+    def print
+      authorize! :show, @order, session[:access_token]
+      renderer = InvoiceRenderer.new
+      send_data(
+        renderer.render_to_string(@order, spree_current_user),
+        filename: renderer.filename(@order),
+        type: "application/pdf",
+        disposition: "inline"
+      )
     end
 
     def empty
