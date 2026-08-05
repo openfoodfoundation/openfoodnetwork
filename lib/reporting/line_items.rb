@@ -21,7 +21,8 @@ module Reporting
           "enterprise.name",
           "product.name",
           "spree_variants.display_name",
-          "spree_variants.unit_description"
+          "spree_variants.unit_description",
+          "spree_line_items.id"
         )
 
       if @params[:supplier_id_in].present?
