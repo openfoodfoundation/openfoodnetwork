@@ -1,0 +1,72 @@
+= form_with url: helpers.main_app.variant_cart_path(variant.id), method: :patch, html: form_options do |form|
+  - if group_buy?
+    .variant-quantity-inputs{ data: { "add-to-cart-target": "addGroup" }, style: ("display: none" if in_cart?) }
+      %button.add-variant{ type: "button", disabled: out_of_stock? || nil, data: { controller: "modal-link", "modal-link-target-value": bulk_modal_id, action: "click->add-to-cart#addBulk click->modal-link#open" } }
+        = t("js.shopfront.variant.add_to_cart")
+
+    .variant-quantity-inputs{ data: { "add-to-cart-target": "controls" }, style: ("display: none" unless in_cart?) }
+      %button.bulk-buy.variant-quantity{ type: "button", data: { controller: "modal-link", "modal-link-target-value": bulk_modal_id, action: "click->modal-link#open", "add-to-cart-target": "bulkQuantity" } }><
+        = quantity
+      %button.bulk-buy.variant-quantity{ type: "button", data: { controller: "modal-link", "modal-link-target-value": bulk_modal_id, action: "click->modal-link#open", "add-to-cart-target": "bulkMax" } }
+        = max_quantity.positive? ? max_quantity : "-"
+  - else
+    .variant-quantity-inputs{ data: { "add-to-cart-target": "addGroup" }, style: ("display: none" if in_cart?) }
+      %button.add-variant{ type: "button", disabled: out_of_stock? || nil, data: { action: "click->add-to-cart#add" } }
+        = t("js.shopfront.variant.add_to_cart")
+
+    .variant-quantity-inputs{ data: { "add-to-cart-target": "controls" }, style: ("display: none" unless in_cart?) }
+      %button.variant-quantity{ type: "button", data: { action: "click->add-to-cart#decrement" } }><
+        -# U+FF0D Fullwidth Hyphen-Minus
+        －
+      %input.variant-quantity{ type: "number", name: "quantity", min: 0, value: quantity, data: { "add-to-cart-target": "input", action: "input->add-to-cart#inputChanged" } }><
+      %button.variant-quantity{ type: "button", data: { action: "click->add-to-cart#increment" } }
+        -# U+FF0B Fullwidth Plus Sign
+        ＋
+
+  - if show_low_stock?
+    .variant-remaining-stock{ data: { "add-to-cart-target": "remainingStock" }, style: ("display: none" if in_cart?) }
+      = t("js.shopfront.variant.remaining_in_stock", count: variant.on_hand)
+
+  .variant-quantity-display{ class: ("visible" if in_cart?), data: { "add-to-cart-target": "display" } }
+    - if group_buy?
+      = t("js.shopfront.variant.in_cart")
+    - else
+      = t("js.shopfront.variant.quantity_in_cart", quantity:)
+
+  - if group_buy?
+    = render ModalComponent.new(id: bulk_modal_id, modal_class: "medium") do
+      .row
+        .columns.small-12
+          %h3= full_name
+
+      .flex.variant-bulk-buy-price-summary{ style: "justify-content: space-around;" }
+        .variant-unit= variant.unit_to_display
+        .unit-price
+          %div{ style: "margin-right: 5px" }
+            = render TooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), element_text: "", placement: "top", element_class: "question-mark-icon")
+          .options-text
+            = helpers.format_unit_price(unit_price)
+
+      .row
+        .columns.small-12.medium-6
+          .variant-bulk-buy-quantity-label
+            = t("js.shopfront.bulk_buy_modal.min_quantity")
+          %div
+            %button.bulk-buy-add.variant-quantity{ type: "button", data: { action: "click->add-to-cart#decrement" } }><
+              -# U+FF0D Fullwidth Hyphen-Minus
+              －
+            %input.bulk-buy.variant-quantity{ type: "number", name: "quantity", min: 0, value: quantity, data: { "add-to-cart-target": "input", action: "input->add-to-cart#inputChanged" } }><
+            %button.bulk-buy-add.variant-quantity{ type: "button", data: { action: "click->add-to-cart#increment" } }
+              -# U+FF0B Fullwidth Plus Sign
+              ＋
+        .columns.small-12.medium-6
+          .variant-bulk-buy-quantity-label
+            = t("js.shopfront.bulk_buy_modal.max_quantity")
+          %div
+            %button.bulk-buy-add.variant-quantity{ type: "button", data: { action: "click->add-to-cart#decrementMax" } }><
+              -# U+FF0D Fullwidth Hyphen-Minus
+              －
+            %input.bulk-buy.variant-quantity{ type: "number", name: "max_quantity", min: 0, value: max_quantity, data: { "add-to-cart-target": "maxInput", action: "input->add-to-cart#maxInputChanged" } }><
+            %button.bulk-buy-add.variant-quantity{ type: "button", data: { action: "click->add-to-cart#incrementMax" } }
+              -# U+FF0B Fullwidth Plus Sign
+              ＋

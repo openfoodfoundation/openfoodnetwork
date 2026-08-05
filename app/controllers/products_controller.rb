@@ -2,14 +2,20 @@
 
 class ProductsController < BaseController
   def index
-    @products = ProductsRenderer.new(
-      distributor,
-      order_cycle,
+    @distributor = distributor
+    @order_cycle = order_cycle
+
+    renderer = ProductsRenderer.new(
+      @distributor,
+      @order_cycle,
       customer,
       search_params,
       inventory_enabled: inventory_enabled?,
       variant_tag_enabled: variant_tag_enabled?
-    ).products
+    )
+
+    @products = renderer.products
+    @variants_by_product_id = renderer.variants_for_shop_by_id
   end
 
   private

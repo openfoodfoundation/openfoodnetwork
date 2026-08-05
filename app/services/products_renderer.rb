@@ -49,6 +49,12 @@ class ProductsRenderer
     end
   end
 
+  # The distributed variants of #products, scoped to the distributor,
+  # grouped by product id.
+  def variants_for_shop_by_id
+    index_by_product_id variants_for_shop
+  end
+
   private
 
   attr_reader :order_cycle, :distributor, :customer, :args, :options
@@ -131,10 +137,6 @@ class ProductsRenderer
 
       variants
     end
-  end
-
-  def variants_for_shop_by_id
-    index_by_product_id variants_for_shop
   end
 
   def index_by_product_id(variants)

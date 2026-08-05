@@ -13,5 +13,17 @@
               = image_tag(Spree::Image.default_image_url(:small), class: "placeholder")
             = product.name
 
+        - if use_turbo_cart?
+          .variants.product-variants
+            - @variants_by_product_id[product.id]&.each do |variant|
+              .variant-row{ id: "variant-#{variant.id}", class: ("out-of-stock" if !variant.on_demand && variant.on_hand <= 0) }
+                .variant-name
+                  - if variant.display_name.present?
+                    .inline= variant.display_name
+                  .variant-unit= variant.unit_to_display
+                .variant-price
+                  = Spree::Money.new(variant.price_with_fees(@distributor, @order_cycle)).to_html
+                = render AddToCartComponent.new(variant:, order: current_order, distributor: @distributor, order_cycle: @order_cycle)
+
         = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
           = render partial: "shared/product/product_details", locals: { product: }

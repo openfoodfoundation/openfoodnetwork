@@ -9,10 +9,10 @@ module ShopWorkflow
 
   def wait_for_cart
     within find_body do
-      # We ignore visibility in case the cart dropdown is not open.
-      within '.cart-sidebar', visible: false do
-        expect(page).not_to have_link "Updating cart...", visible: false
-      end
+      # We ignore visibility in case the cart dropdown is not open. The Turbo
+      # cart (turbo_cart feature) exposes its busy state as aria-busy instead.
+      expect(page).not_to have_link "Updating cart...", visible: false
+      expect(page).not_to have_selector '.cart-sidebar[aria-busy="true"]', visible: :all
     end
   end
 
