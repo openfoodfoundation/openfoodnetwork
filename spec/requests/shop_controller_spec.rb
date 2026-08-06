@@ -29,7 +29,7 @@ RSpec.describe "Shop" do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(product.name)
-        expect(response.body).to include(product.variants.first.supplier.name)
+        expect(response.body).to include(product.variants.first.enterprise.name)
         expect(response.body).to include(
           "data-controller=\"modal shop-product-modal\""
         )
