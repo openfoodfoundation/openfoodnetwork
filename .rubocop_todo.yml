@@ -20,6 +20,13 @@ Layout/IndentationWidth:
     - 'spec/system/admin/bulk_order_management_spec.rb'
     - 'spec/system/consumer/checkout/payment_spec.rb'
 
+# Offense count: 2
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AllowDoxygenCommentStyle, AllowGemfileRubyComment, AllowRBSInlineAnnotation, AllowSteepAnnotation.
+Layout/LeadingCommentSpace:
+  Exclude:
+    - 'app/services/products_renderer.rb'
+
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: RequireParenthesesForMethodChains.
@@ -195,7 +202,7 @@ Metrics/MethodLength:
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
-# Offense count: 9
+# Offense count: 10
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
@@ -207,6 +214,7 @@ Metrics/ModuleLength:
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
     - 'lib/open_food_network/column_preference_defaults.rb'
+    - 'spec/support/request/shop_workflow.rb'
     - 'spec/support/request/stripe_stubs.rb'
 
 # Offense count: 7
