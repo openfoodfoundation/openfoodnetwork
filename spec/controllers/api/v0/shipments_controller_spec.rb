@@ -404,6 +404,16 @@ RSpec.describe Api::V0::ShipmentsController do
           expect(inventory_units_for(variant).size).to eq 0
         end
 
+        it 'removes a soft-deleted variant from the shipment' do
+          deleted_variant = order.line_items.first.variant
+          deleted_variant.delete
+
+          spree_put :remove, params
+
+          expect_valid_response
+          expect(inventory_units_for(deleted_variant).size).to eq 0
+        end
+
         it 'returns error code when removing from order contents fails' do
           make_order_contents_fail
 
