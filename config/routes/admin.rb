@@ -9,7 +9,7 @@ Openfoodnetwork::Application.routes.draw do
       mount Sidekiq::Web, at: "/sidekiq"
     end
 
-    resources :bulk_line_items
+    resources :bulk_line_items, only: [:index, :update, :destroy]
 
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
@@ -23,7 +23,7 @@ Openfoodnetwork::Application.routes.draw do
       end
     end
 
-    resources :enterprises do
+    resources :enterprises, except: [:show] do
       collection do
         get :for_order_cycle
         get :visible
@@ -40,7 +40,7 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :user_invitations, only: [:new, :create]
 
-      resources :producer_properties do
+      resources :producer_properties, except: [:show] do
         post :update_positions, on: :collection
       end
 
@@ -49,17 +49,17 @@ Openfoodnetwork::Application.routes.draw do
       resources :vouchers, only: [:new, :create]
     end
 
-    resources :enterprise_relationships
-    resources :enterprise_roles
+    resources :enterprise_relationships, except: [:show]
+    resources :enterprise_roles, except: [:show]
 
-    resources :enterprise_fees, except: :destroy do
+    resources :enterprise_fees, except: [:destroy, :show] do
       collection do
         get :for_order_cycle
         post :bulk_update, :as => :bulk_update
       end
     end
 
-    resources :enterprise_groups do
+    resources :enterprise_groups, except: [:show] do
       get :move_up
       get :move_down
     end
@@ -92,7 +92,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :product_preview, only: [:show]
 
-    resources :variant_overrides do
+    resources :variant_overrides, except: [:show] do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection
     end
@@ -108,7 +108,7 @@ Openfoodnetwork::Application.routes.draw do
       get :variant_tag_rules, on: :collection
     end
 
-    resource :contents
+    resource :contents, only: [:edit, :update]
 
     resources :column_preferences, only: [] do
       put :bulk_update, on: :collection
@@ -118,7 +118,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resource :stripe_connect_settings, only: [:edit, :update]
 
-    resource :terms_of_service_files
+    resource :terms_of_service_files, only: [:show, :new, :create, :destroy]
 
     resource :matomo_settings, only: [:edit, :update]
 
