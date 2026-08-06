@@ -458,6 +458,7 @@ module Spree
       can [:visible], Enterprise
     end
 
+    # Edit as "producer" here means the enterprise owning the variant (aka supplier)
     def can_edit_as_producer(order, user)
       return unless order.distributor&.enable_producers_to_edit_orders
 
