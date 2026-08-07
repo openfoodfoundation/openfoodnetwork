@@ -450,7 +450,7 @@ RSpec.describe Admin::EnterprisesController do
       end
 
       it "does not allow access" do
-        spree_post :register, id: enterprise.id, sells: 'none'
+        spree_post :register, id: enterprise.id, enterprise: { sells: 'none' }
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -462,7 +462,7 @@ RSpec.describe Admin::EnterprisesController do
       end
 
       it "does not allow access" do
-        spree_post :register, id: enterprise.id, sells: 'none'
+        spree_post :register, id: enterprise.id, enterprise: { sells: 'none' }
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -474,7 +474,7 @@ RSpec.describe Admin::EnterprisesController do
 
       context "setting 'sells' to 'none'" do
         it "is allowed" do
-          spree_post :register, id: enterprise, sells: 'none'
+          spree_post :register, id: enterprise, enterprise: { sells: 'none' }
           expect(response).to redirect_to spree.admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
@@ -484,7 +484,8 @@ RSpec.describe Admin::EnterprisesController do
 
       context "setting producer_profile_only" do
         it "is ignored" do
-          spree_post :register, id: enterprise, sells: 'none', producer_profile_only: true
+          spree_post :register, id: enterprise,
+                                enterprise: { sells: 'none', producer_profile_only: true }
           expect(response).to redirect_to spree.admin_dashboard_path
           expect(enterprise.reload.producer_profile_only).to be false
         end
@@ -497,7 +498,7 @@ RSpec.describe Admin::EnterprisesController do
         end
 
         it "is allowed" do
-          spree_post :register, id: enterprise, sells: 'own'
+          spree_post :register, id: enterprise, enterprise: { sells: 'own' }
           expect(response).to redirect_to spree.admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
@@ -507,7 +508,7 @@ RSpec.describe Admin::EnterprisesController do
 
       context "setting 'sells' to any" do
         it "is allowed" do
-          spree_post :register, id: enterprise, sells: 'any'
+          spree_post :register, id: enterprise, enterprise: { sells: 'any' }
           expect(response).to redirect_to spree.admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
@@ -516,15 +517,17 @@ RSpec.describe Admin::EnterprisesController do
       end
 
       context "settiing 'sells' to 'unspecified'" do
+        render_views
+
         it "is not allowed" do
-          spree_post :register, id: enterprise, sells: 'unspecified'
+          spree_post :register, id: enterprise, enterprise: { sells: 'unspecified' }
           expect(response).to render_template :welcome
-          expect(flash[:error]).to eq "Please select a package"
+          expect(response.body).to include "Please choose one of the options above"
         end
       end
 
       it "set visibility to 'only_through_links' by default" do
-        spree_post :register, id: enterprise, sells: 'none'
+        spree_post :register, id: enterprise, enterprise: { sells: 'none' }
         expect(enterprise.reload.visible).to eq 'only_through_links'
       end
     end
