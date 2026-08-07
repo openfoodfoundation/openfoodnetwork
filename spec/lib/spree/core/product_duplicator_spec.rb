@@ -71,12 +71,17 @@ RSpec.describe Spree::Core::ProductDuplicator do
 
     context "with multiple variant links" do
       let(:product) { create(:product) }
+      let(:distributor_enterprise) { create(:distributor_enterprise) }
+      let(:distributor_user) { distributor_enterprise.owner }
 
       before do
         src_variant = product.variants.first.tap { it.update! display_name: "SRC" }
-        user = src_variant.enterprise.owner
-        src_variant.create_linked_variant(user).tap { it.update! display_name: "LNK1" }
-        src_variant.create_linked_variant(user).tap { it.update! display_name: "LNK2" }
+        EnterpriseRelationship.create!(
+          parent: src_variant.enterprise, child: distributor_enterprise,
+          permissions_list: [:create_linked_variants]
+        )
+        src_variant.create_linked_variant(distributor_user).tap { it.update! display_name: "LNK1" }
+        src_variant.create_linked_variant(distributor_user).tap { it.update! display_name: "LNK2" }
       end
 
       it "duplicates variant links" do
@@ -120,7 +125,6 @@ RSpec.describe Spree::Core::ProductDuplicator do
           "Enterprise Load",
           "Spree::Product Create",
           "Spree::Variant Create",
-          "Enterprise Load",
           "Spree::Price Create",
           "Spree::StockItem Exists?",
           "Spree::StockItem Exists?",
@@ -128,7 +132,6 @@ RSpec.describe Spree::Core::ProductDuplicator do
           "ActsAsTaggableOn::Tagging Load",
           "Spree::Variant Update",
           "Spree::Variant Create",
-          "Enterprise Load",
           "Spree::Price Create",
           "VariantLink Create",
           "Spree::StockItem Exists?",
@@ -137,7 +140,6 @@ RSpec.describe Spree::Core::ProductDuplicator do
           "ActsAsTaggableOn::Tagging Load",
           "Spree::Variant Update",
           "Spree::Variant Create",
-          "Enterprise Load",
           "Spree::Price Create",
           "VariantLink Create",
           "Spree::StockItem Exists?",

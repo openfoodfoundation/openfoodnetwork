@@ -221,8 +221,8 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
       end
 
       it "returns products distributed by distributors allowing producers to edit orders" do
-        v1.supplier_id = producer.id
-        v2.supplier_id = producer.id
+        v1.enterprise_id = producer.id
+        v2.enterprise_id = producer.id
         v1.save!
         v2.save!
 
