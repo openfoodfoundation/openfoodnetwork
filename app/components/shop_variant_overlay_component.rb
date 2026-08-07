@@ -19,6 +19,12 @@ class ShopVariantOverlayComponent < ViewComponent::Base
     variants.first.product.name
   end
 
+  def unit_to_display(variant)
+    text = ""
+    text = " | " if variant.display_name.present?
+    text.dup << variant.unit_to_display
+  end
+
   def producers
     @producers ||= @variants.map(&:enterprise).uniq
   end
