@@ -294,7 +294,7 @@ GEM
       eventmachine (>= 1.0.0.beta.4)
     em-synchrony (1.0.6)
       eventmachine (>= 1.0.0.beta.1)
-    erb (6.0.6)
+    erb (6.0.7)
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
@@ -601,8 +601,8 @@ GEM
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
-    rack-proxy (0.8.3)
-      rack
+    rack-proxy (1.0.1)
+      rack (>= 2.0, < 4)
     rack-rewrite (1.5.1)
     rack-session (1.0.2)
       rack (< 3)
@@ -688,7 +688,7 @@ GEM
     redis-client (0.28.0)
       connection_pool
     regexp_parser (2.12.0)
-    reline (0.6.3)
+    reline (0.7.0)
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
@@ -798,7 +798,7 @@ GEM
     sd_notify (0.1.1)
     securerandom (0.4.1)
     semantic_range (3.1.1)
-    shakapacker (10.3.0)
+    shakapacker (10.3.1)
       activesupport (>= 5.2)
       package_json
       rack-proxy (>= 0.6.1)
@@ -1184,7 +1184,7 @@ CHECKSUMS
   em-http-request (1.1.7) sha256=16fbc72b2a6e20c804c564ac5d12e98668c6fcef8c3b1dd2387dff505f2efdab
   em-socksify (0.3.3) sha256=7d8d08a7a8acc1263173433a6b5540edd80a8a36e35a066b650c929a3a3974ed
   em-synchrony (1.0.6) sha256=6e7470a684d9bbc00d61d552911b65711540bd89e95c157156f5aacdd6f306ca
-  erb (6.0.6) sha256=a9b24986700f5bf127c4f297c5403c3ca41b83b0a316c0cd09a096b56e644ae5
+  erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   et-orbi (1.4.0) sha256=6c7e3c90779821f9e3b324c5e96fda9767f72995d6ae435b96678a4f3e2de8bc
   eventmachine (1.2.7) sha256=994016e42aa041477ba9cff45cbe50de2047f25dd418eba003e84f0d16560972
@@ -1309,7 +1309,7 @@ CHECKSUMS
   rack-mini-profiler (2.3.4) sha256=2c43bb1d0091c23e3efba054de5ebfb9c40a238f37f2d24dd4df7cf70d0bee3c
   rack-oauth2 (2.3.0) sha256=43e02cf73f13886a0a06499603caeec58aeba6eae1fefc4977c9678b7652c632
   rack-protection (3.2.0) sha256=3c74ba7fc59066453d61af9bcba5b6fe7a9b3dab6f445418d3b391d5ea8efbff
-  rack-proxy (0.8.3) sha256=1e446a37be6d9c59647e710d2df7d23e3b0b4e1b982dab4f188a0354aa1fff0b
+  rack-proxy (1.0.1) sha256=cd742611dc3517b6ac60c04d93b2ea7f8a83b1799f109081771ce0f5b8d6e3d7
   rack-rewrite (1.5.1) sha256=682079619b15e4a8084377ce12887b2d14cdafff6b23120db3dca4ddc2e13456
   rack-session (1.0.2) sha256=a02115e5420b4de036839b9811e3f7967d73446a554b42aa45106af335851d76
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
@@ -1335,7 +1335,7 @@ CHECKSUMS
   redis (5.4.1) sha256=b5e675b57ad22b15c9bcc765d5ac26f60b675408af916d31527af9bd5a81faae
   redis-client (0.28.0) sha256=888892f9cd8787a41c0ece00bdf5f556dfff7770326ce40bb2bc11f1bfec824b
   regexp_parser (2.12.0) sha256=35a916a1d63190ab5c9009457136ae5f3c0c7512d60291d0d1378ba18ce08ebb
-  reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
+  reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
   responders (3.2.0) sha256=89c2d6ac0ae16f6458a11524cae4a8efdceba1a3baea164d28ee9046bd3df55a
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
@@ -1372,7 +1372,7 @@ CHECKSUMS
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   select2-rails (3.4.9)
   semantic_range (3.1.1) sha256=508333196ef0c7ba33e79579d4df7eb0a41080595e6a655c2515b03d634ec4a9
-  shakapacker (10.3.0) sha256=25f5c32be61e9b3f8bd3f2d07a057d12c42fb5dbeb379a54224b1e0fe826f029
+  shakapacker (10.3.1) sha256=39647dfccfdc6365ca717629bea43aacd582752be552e77e8eeae495647678c4
   shoulda-matchers (8.0.1) sha256=5dbb46e5765b9da225111b085e0819e8c8a121ff94bba430a153eb1ea2c60288
   sidekiq (7.3.10) sha256=781eb4f65ef36042534ad73d72f211283afb7fee82eec786ada4ed1972ef8e3c
   sidekiq-scheduler (6.0.2) sha256=1065f1a989e750849de1d23d1f34338c104ed6ec5a6dc22a2620c5af54a2d6fc
