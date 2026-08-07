@@ -30,7 +30,7 @@ button.bulk-buy-add.variant-quantity {
 
 [type="number"].variant-quantity {
   border: .1em solid $grey-200;
-  height: 2.5rem;
+  height: $shop-button-height;
   display: inline-block;
   width: 2.5rem;
   padding: 0;

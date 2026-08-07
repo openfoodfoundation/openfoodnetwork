@@ -1,0 +1,144 @@
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
+@use "../../webpacker/css/darkswarm/variables" as v;
+@use "../../webpacker/css/darkswarm/branding" as b;
+@use "../../webpacker/css/darkswarm/mixins" as m;
+@use "../../webpacker/css/shared/variables/layout";
+
+.select-variant {
+  height: v.$shop-button-height;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.variant-overlay-bg {
+  display: none;
+  background: b.$black;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: $variant-overlay-bg-z-index;
+
+  &.fade {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+
+    &.in {
+      opacity: 0.75;
+    }
+  }
+}
+
+.variant-overlay {
+  display: none;
+  background-color: white;
+  border-radius: $radius;
+  position: fixed;
+  width: layout.$mobile_breakpoint;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  z-index: $variant-overlay-z-index;
+  top: -5rem;
+  max-height: 90%;
+  overflow: auto;
+
+  @include m.breakpoint(mobile) {
+    top: unset;
+    width: 100%;
+    bottom: -10rem;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+
+  &.in {
+    padding: 1.2rem;
+    // Make the overlay slide from the top
+    transform: translate(0px, 10rem);
+    transition: transform 330ms ease-in-out;
+
+    @include m.breakpoint(mobile) {
+      // Make the overlay slide from the bottom
+      transform: translate(0px, -10rem);
+    }
+  }
+
+  .header {
+    margin-bottom: 1rem;
+
+    h5 {
+      margin-bottom: 0;
+    }
+
+    button.tiny {
+      color: black;
+      background-color: b.$light-grey;
+      font-size: 0.8125rem;
+    }
+  }
+
+  ul {
+    margin-left: 0;
+    margin-bottom: 0;
+
+    li {
+      list-style: none;
+      padding-top: 1rem;
+      border-bottom: b.$light-grey solid 1px;
+
+      &:nth-last-child(1) {
+        border-bottom: none;
+      }
+
+      .columns {
+        // override columns padding
+        padding: 0;
+
+        .variant-columns {
+          position: relative;
+          float: left;
+
+          &.variant-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: fit-content;
+            max-width: 70%;
+            padding-right: 0.3rem;
+          }
+
+          &.variant-unit {
+            width: fit-content;
+          }
+        }
+
+        .variant-producer {
+          clear: both;
+          font-weight: 600;
+          font-size: 0.75rem;
+        }
+
+        .prices {
+          clear: both;
+          font-weight: 600;
+          padding-bottom: 1rem;
+
+          &:nth-last-child(1) {
+            padding-bottom: 0;
+          }
+
+          span.unit-price {
+            font-weight: normal;
+            display: inline;
+            color: b.$grey-500;
+            font-size: 0.85rem;
+            margin-left: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

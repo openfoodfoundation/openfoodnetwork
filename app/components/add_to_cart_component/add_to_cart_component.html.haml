@@ -1,4 +1,4 @@
-.add-to-cart-component{ id: "variant-#{variant.id}" }
+%div{ class: computed_class, id: "variant-#{variant.id}" }
   .variant-quantity-column{ "data-controller": "add-to-cart", "data-add-to-cart-variant-id-value": variant.id, "data-add-to-cart-variant-on-hand-value": on_hand, "data-add-to-cart-low-stock-display-value": "#{low_stock_display}" }
     .variant-quantity-inputs{ "data-add-to-cart-target": "addButton" }
       %button.add-variant{ type: "button", "data-action": "add-to-cart#addEmpty" }
