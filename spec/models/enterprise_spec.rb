@@ -453,6 +453,7 @@ RSpec.describe Enterprise do
       end
     end
 
+<<<<<<< HEAD
     describe "attachment validation" do
       let(:enterprise) { create(:enterprise) }
       let(:valid_image) { Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', 'image/png') }
@@ -492,6 +493,18 @@ RSpec.describe Enterprise do
       it_behaves_like "an attachment validated only when changed", :promo_image
       it_behaves_like "an attachment validated only when changed", :white_label_logo
       it_behaves_like "an attachment validated only when changed", :terms_and_conditions
+    end
+
+    describe "sells" do
+      let(:enterprise) { build(:enterprise, sells: "unspecified") }
+
+      it "can be 'unspecified' when validating in the default context" do
+        expect(enterprise.valid?).to be_truthy
+      end
+
+      it "cannot be 'unspecified' when validating in the :register context" do
+        expect(enterprise.valid?(:register)).to be_falsey
+      end
     end
   end
 
