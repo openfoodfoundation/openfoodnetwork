@@ -1,70 +1,56 @@
 = admin_inject_enterprise(@enterprise)
 
 = form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
-  html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
-  -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
-  %input{ hidden: "true", name: "sells", "ng-required": true, "ng-pattern": "/^(none|own|any)$/", "ng-model": 'sells', "ng-value": "sells" }
+  html: { name: "change_type", id: "change_type", novalidate: true } do |f|
+  = f.hidden_field :sells
 
   .row
     .options.container
-      - if @enterprise.is_primary_producer
-        .basic_producer.option.six.columns.alpha
-          %a.full-width.button.selector{ "ng-click": "sells='none'", "ng-class": "{selected: sells=='none'}" }
-            .top
-              %h3= t('.producer_profile')
-              %p= t('.connect_ofn')
-            .bottom= t('.always_free')
-          %p.description
-            = t('.producer_description_text')
-
-        .producer_shop.option.six.columns
-          %a.full-width.button.selector{ "ng-click": "sells='own'", "ng-class": "{selected: sells=='own'}" }
-            .top
-              %h3= t('.producer_shop')
-              %p= t('.sell_your_produce')
-          %p.description
-            = t('.producer_shop_description_text')
-            %br
-            %br
-            = t('.producer_shop_description_text2')
-
-        .full_hub.option.six.columns.omega
-          %a.full-width.button.selector{ "ng-click": "sells='any'", "ng-class": "{selected: sells=='any'}" }
-            .top
-              %h3= t('.producer_hub')
-              %p= t('.producer_hub_text')
-          %p.description
-            = t('.producer_hub_description_text')
-
-      - else
-        .two.columns.alpha
-          &nbsp;
-        .shop_profile.option.six.columns
-          %a.full-width.button.selector{ "ng-click": "sells='none'", "ng-class": "{selected: sells=='none'}" }
-            .top
-              %h3= t('.profile')
-              %p= t('.get_listing')
-            .bottom= t('.always_free')
-          %p.description
-            = t('.profile_description_text')
-
-        .full_hub.option.six.columns
-          %a.full-width.button.selector{ "ng-click": "sells='any'", "ng-class": "{selected: sells=='any'}" }
-            .top
-              %h3= t('.hub_shop')
-              %p= t('.hub_shop_text')
-          %p.description
-            = t('.hub_shop_description_text')
-        .two.columns.omega
-          &nbsp;
+      .radio-button-cards
+        - if @enterprise.is_primary_producer
+          = f.label :sells, value: "none", class: "radio-button-card" do
+            %span.header
+              = f.radio_button :sells, "none"
+              %span.title= t('.producer_profile')
+              %span.subtitle
+                = t('.connect_ofn')
+                = "(#{t('.always_free')})"
+            %span.description= t('.producer_description_text')
+          = f.label :sells, value: "own", class: "radio-button-card" do
+            %span.header
+              = f.radio_button :sells, "own"
+              %span.title= t('.producer_shop')
+              %span.subtitle= t('.sell_your_produce')
+            %span.description
+              = t('.producer_shop_description_text')
+              = t('.producer_shop_description_text2')
+          = f.label :sells, value: "any", class: "radio-button-card" do
+            %span.header
+              = f.radio_button :sells, "any"
+              %span.title= t('.producer_hub')
+              %span.subtitle= t('.producer_hub_text')
+            %span.description= t('.producer_hub_description_text')
+        - else
+          = f.label :sells, value: "none", class: "radio-button-card" do
+            %span.header
+              = f.radio_button :sells, "none"
+              %span.title= t('.profile')
+              %span.subtitle
+                = t('.get_listing')
+                = "(#{t('.always_free')})"
+            %span.description= t('.profile_description_text')
+          = f.label :sells, value: "any", class: "radio-button-card" do
+            %span.header
+              = f.radio_button :sells, "any"
+              %span.title= t('.hub_shop')
+              %span.subtitle= t('.hub_shop_text')
+            %span.description= t('.hub_shop_description_text')
 
   .row
     .sixteen.columns.alpha
-      %span.error{ "ng-show": "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" }
-        = t('.choose_option')
-      - if @enterprise.sells == 'unspecified'
-        %input.button.big{ type: 'submit', value: t(:select_continue), "ng-click": "submit(change_type)" }
-      - else
-        %input.button.big{ type: 'submit', value: t('.change_now'), "ng-click": "submit(change_type)" }
+      - if @enterprise.errors.any?
+        .alert-box.error
+          = @enterprise.errors.to_a.to_sentence
+      %input.button.big{ type: 'submit', value: (@enterprise.sells == 'unspecified' ? t(:select_continue) : t('.change_now')) }
       %br &nbsp;
       %hr
