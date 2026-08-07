@@ -20,10 +20,11 @@
             %li
               .row
                 .small-8.columns
-                  .variant-columns.variant-name
-                    = "#{variant.name_to_display}"
+                  - if variant.display_name.present?
+                    .variant-columns.variant-name
+                      = "#{variant.name_to_display}"
                   .variant-columns.variant-unit
-                    = " | #{variant.unit_to_display}"
+                    = unit_to_display(variant)
                   .variant-producer
                     - unless same_producers?
                       = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
