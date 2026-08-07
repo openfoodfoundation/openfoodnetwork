@@ -245,7 +245,7 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
 
-        enterprises.presence&.includes(supplied_products: [:variants, :image])
+        enterprises.presence&.includes(products: [:variants, :image])
       when :index
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).

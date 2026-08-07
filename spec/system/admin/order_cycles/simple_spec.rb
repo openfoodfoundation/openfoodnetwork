@@ -178,8 +178,8 @@ RSpec.describe '
       create(:payment_method,
              distributors: [distributor_managed, distributor_unmanaged, distributor_permitted])
     }
-    let!(:variant_managed) { create(:variant, supplier: supplier_managed) }
-    let!(:variant_permitted) { create(:variant, supplier: supplier_permitted) }
+    let!(:variant_managed) { create(:variant, enterprise: supplier_managed) }
+    let!(:variant_permitted) { create(:variant, enterprise: supplier_permitted) }
     let!(:schedule) {
       create(:schedule, name: 'Schedule1',
                         order_cycles: [
@@ -282,10 +282,8 @@ RSpec.describe '
         expect(page).not_to have_select 'new_supplier_id', with_options: [
           "Unmanaged supplier",
         ]
-        select 'Managed supplier', from: 'new_supplier_id'
-        click_button 'Add supplier'
-        select 'Permitted supplier', from: 'new_supplier_id'
-        click_button 'Add supplier'
+        add_supplier 'Managed supplier', supplier_managed
+        add_supplier 'Permitted supplier', supplier_permitted
         expect(page).to have_content "Permitted supplier"
 
         within("tr.supplier-#{supplier_permitted.id}") { click_button 'Add fee' }
@@ -309,10 +307,8 @@ RSpec.describe '
         expect(page).to have_select 'new_distributor_id'
         expect(page).not_to have_select 'new_distributor_id',
                                         with_options: [distributor_unmanaged.name]
-        select 'Managed distributor', from: 'new_distributor_id'
-        click_button 'Add distributor'
-        select 'Permitted distributor', from: 'new_distributor_id'
-        click_button 'Add distributor'
+        add_distributor 'Managed distributor', distributor_managed
+        add_distributor 'Permitted distributor', distributor_permitted
         expect(page).to have_content "Permitted distributor"
 
         within("tr.distributor-#{distributor_permitted.id}") { click_button 'Add fee' }
@@ -428,7 +424,7 @@ RSpec.describe '
                                       distributors: [distributor_managed],
                                       name: 'Order Cycle 1' )
         end
-        let(:v1) { create(:variant, supplier: supplier_managed) }
+        let(:v1) { create(:variant, enterprise: supplier_managed) }
         let(:inventory_item_v1) {
           create(:inventory_item, enterprise: distributor_managed, variant: v1, visible: false)
         }
@@ -523,8 +519,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, supplier: supplier_managed)
-        v2 = create(:variant, supplier: supplier_managed)
+        v1 = create(:variant, enterprise: supplier_managed)
+        v2 = create(:variant, enterprise: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -614,8 +610,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, supplier: supplier_managed)
-        v2 = create(:variant, supplier: supplier_managed)
+        v1 = create(:variant, enterprise: supplier_managed)
+        v2 = create(:variant, enterprise: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -680,9 +676,9 @@ RSpec.describe '
   describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
-    let!(:p1) { create(:product, supplier_id: enterprise.id) }
-    let!(:p2) { create(:product, supplier_id: enterprise.id) }
-    let!(:p3) { create(:product, supplier_id: enterprise.id) }
+    let!(:p1) { create(:product, enterprise_id: enterprise.id) }
+    let!(:p2) { create(:product, enterprise_id: enterprise.id) }
+    let!(:p3) { create(:product, enterprise_id: enterprise.id) }
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:v3) { p3.variants.first }
@@ -945,6 +941,37 @@ RSpec.describe '
 
   def wait_for_edit_form_to_load_order_cycle(order_cycle)
     expect(page).to have_field "order_cycle_name", with: order_cycle.name
+  end
+
+  # Adding an enterprise to an order cycle is handled by AngularJS. We wait for
+  # the form to finish loading (see wait_until_order_cycle_loaded), then for the
+  # "Add" button to become enabled (it is ng-disabled until a novel enterprise
+  # is selected, which confirms Angular registered the selection), and finally
+  # for the new row to confirm the add actually landed.
+  def add_supplier(name, supplier)
+    wait_until_order_cycle_loaded
+    select name, from: 'new_supplier_id'
+    expect(page).to have_button 'Add supplier', disabled: false
+    click_button 'Add supplier'
+    expect(page).to have_selector "tr.supplier-#{supplier.id}"
+  end
+
+  def add_distributor(name, distributor)
+    wait_until_order_cycle_loaded
+    select name, from: 'new_distributor_id'
+    expect(page).to have_button 'Add distributor', disabled: false
+    click_button 'Add distributor'
+    expect(page).to have_selector "tr.distributor-#{distributor.id}"
+  end
+
+  # The order cycle form is rendered by AngularJS and loads enterprises and
+  # enterprise fees asynchronously. While those requests are in flight the
+  # supplier/distributor dropdown keeps rebuilding its options, which silently
+  # discards a selection made too early (and the following "Add" then adds
+  # nothing). The form shows a "Loading..." indicator until everything has
+  # loaded (`loaded()`), so wait for that to disappear before interacting.
+  def wait_until_order_cycle_loaded
+    expect(page).not_to have_content "Loading..."
   end
 
   def select_incoming_variant(supplier, exchange_no, variant)

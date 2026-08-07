@@ -1,0 +1,229 @@
+{
+  "@context": "https://www.datafoodconsortium.org/wp-content/plugins/wordpress-context-jsonld/context_2.0.0.jsonld",
+  "@graph": [
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises",
+      "@type": "ldp:Container",
+      "ldp:contains": [
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae"
+      ]
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b",
+      "@type": "dfc-b:Organization",
+      "dfc-b:email": "info@happyacres.com",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#address",
+      "dfc-b:hasDescription": "Organic vegetables since 2020",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#phoneNumber",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-x"
+      ],
+      "dfc-b:isCertifiedBy": [
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330d6e38-7beb-11f1-bede-e66db4bef552",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330f4aaa-7beb-11f1-bede-e66db4bef552"
+      ],
+      "dfc-b:logo": "https://example.com/logo.png",
+      "dfc-b:name": "Happy Acres Farm",
+      "dfc-b:supplies": [
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-bakery",
+        "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-dairy_product"
+      ],
+      "dfc-b:websitePage": "https://happyacres.com"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#address",
+      "@type": "dfc-b:Address",
+      "dfc-b:hasCity": "Farmville",
+      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
+      "dfc-b:hasPostalCode": "V1V 1V1",
+      "dfc-b:hasStreet": "123 Farm Road",
+      "dfc-b:region": "BC"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330d6e38-7beb-11f1-bede-e66db4bef552",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Islands Organic Producers Association",
+      "dfc-b:name": "Organic"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#certification-330f4aaa-7beb-11f1-bede-e66db4bef552",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Asociación de Productores Orgánicos",
+      "dfc-b:name": "Biodynamic",
+      "dfc-b:operatorId": "Ecocert"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#person-mainContact",
+      "@type": "dfc-b:Person",
+      "dfc-b:email": "john@happyacres.com",
+      "dfc-b:familyName": "Farmer",
+      "dfc-b:firstName": "John"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#phoneNumber",
+      "@type": "dfc-b:PhoneNumber",
+      "dfc-b:countryCode": "1",
+      "dfc-b:phoneNumber": "555-555-1234"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-facebook",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.facebook.com/happyacresfarm/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/happyacres/",
+      "dfc-b:name": "Instagram"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#socialMedia-x",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://x.com/happyacres/",
+      "dfc-b:name": "X"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-bakery",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:hasType": "dfc-pt:bakery"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/79eba89b-0c26-414f-9f74-50aeb537519b#suppliedProduct-dairy_product",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:hasType": "dfc-pt:dairy-product"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd",
+      "@type": "dfc-b:Organization",
+      "dfc-b:email": "info@willowcreekdairy.ca",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#address",
+      "dfc-b:hasDescription": "Family-run dairy and bakery in the Okanagan Valley",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#phoneNumber",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-x"
+      ],
+      "dfc-b:isCertifiedBy": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#certification-330fd5ec-7beb-11f1-bede-e66db4bef552",
+      "dfc-b:logo": "https://example.com/willowcreek-logo.png",
+      "dfc-b:name": "Willow Creek Dairy",
+      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#suppliedProduct-bakery",
+      "dfc-b:websitePage": "https://willowcreekdairy.ca"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#address",
+      "@type": "dfc-b:Address",
+      "dfc-b:hasCity": "Vernon",
+      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
+      "dfc-b:hasPostalCode": "V2V 2V2",
+      "dfc-b:hasStreet": "456 Meadow Lane",
+      "dfc-b:region": "BC"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#certification-330fd5ec-7beb-11f1-bede-e66db4bef552",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Living Earth Organic Growers",
+      "dfc-b:name": "Organic"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#person-mainContact",
+      "@type": "dfc-b:Person",
+      "dfc-b:email": "maria@willowcreekdairy.ca",
+      "dfc-b:familyName": "Lopez",
+      "dfc-b:firstName": "Maria"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#phoneNumber",
+      "@type": "dfc-b:PhoneNumber",
+      "dfc-b:countryCode": "1",
+      "dfc-b:phoneNumber": "555-555-5678"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-facebook",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.facebook.com/willowcreekdairy/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/willowcreekdairy/",
+      "dfc-b:name": "Instagram"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#socialMedia-x",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://x.com/willowcreekdairy/",
+      "dfc-b:name": "X"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/c2d39e06-e57f-4fbc-8552-76cb6853b9fd#suppliedProduct-bakery",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:hasType": "dfc-pt:bakery"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae",
+      "@type": "dfc-b:Organization",
+      "dfc-b:email": "hello@sunriseorchard.ca",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#address",
+      "dfc-b:hasDescription": "Apples and stone fruit grown in Kelowna",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#person-mainContact",
+      "dfc-b:hasPhoneNumber": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#phoneNumber",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-facebook",
+        "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-x"
+      ],
+      "dfc-b:logo": "https://example.com/sunrise-logo.png",
+      "dfc-b:name": "Sunrise Orchard",
+      "dfc-b:websitePage": "https://sunriseorchard.ca"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#address",
+      "@type": "dfc-b:Address",
+      "dfc-b:hasCity": "Kelowna",
+      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
+      "dfc-b:hasPostalCode": "V3V 3V3",
+      "dfc-b:hasStreet": "789 Orchard Way",
+      "dfc-b:region": "BC"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#person-mainContact",
+      "@type": "dfc-b:Person",
+      "dfc-b:email": "sam@sunriseorchard.ca",
+      "dfc-b:familyName": "Chen",
+      "dfc-b:firstName": "Sam"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#phoneNumber",
+      "@type": "dfc-b:PhoneNumber",
+      "dfc-b:countryCode": "1",
+      "dfc-b:phoneNumber": "555-555-9012"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-facebook",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.facebook.com/sunriseorchard/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/sunriseorchard/",
+      "dfc-b:name": "Instagram"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/1c8f4720-d279-467b-b079-59d02faf44ae#socialMedia-x",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://x.com/sunriseorchard/",
+      "dfc-b:name": "X"
+    }
+  ]
+}

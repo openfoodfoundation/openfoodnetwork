@@ -640,6 +640,7 @@ en_FR:
         display_as: Display unit as
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "On Hand"
@@ -956,15 +957,12 @@ en_FR:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
-        search_for_producers: Search for producers
-        select_producer: Select producer
-        all_producers: All producers
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
         select_tag: Select tag
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -1012,7 +1010,7 @@ en_FR:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         select_unit_scale: Select unit scale
         add_a_tag: Add a tag
       clone:
@@ -2396,12 +2394,11 @@ en_FR:
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
   system_headline: "Shopping - here's how it works."
-  system_step1: "1. Search"
-  system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
-  system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
-  system_step3: "3. Pick-up / Delivery"
-  system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
+  system_step1_html: "1. Search"
+  system_step2_html: "2. Shop"
+  system_step2_text_html: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step3_html: "3. Pick-up / Delivery"
+  system_step3_text_html: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
   cta_headline: "Shopping that makes the world a better place."
   cta_label: "I'm Ready"
   stats_headline: "We're creating a new food system."
@@ -2529,6 +2526,7 @@ en_FR:
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
+  email_order_note: "Note:"
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
@@ -3699,7 +3697,6 @@ en_FR:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4519,9 +4516,7 @@ en_FR:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
-          supplier_select_placeholder: "Select a supplier"
-          search_for_suppliers: "Search for suppliers"
+          enterprise: "Enterprise"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

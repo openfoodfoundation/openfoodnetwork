@@ -3,14 +3,14 @@
 class SuppliedProductBuilder < DfcBuilder
   def self.semantic_id(variant)
     urls.enterprise_supplied_product_url(
-      enterprise_id: variant.supplier_id,
+      enterprise_id: variant.enterprise_id,
       id: variant.id,
     )
   end
 
   def self.supplied_product(variant)
     product_uri = urls.enterprise_url(
-      variant.supplier_id,
+      variant.enterprise_id,
       spree_product_id: variant.product_id
     )
     product_group = ProductGroupBuilder.product_group(variant.product)

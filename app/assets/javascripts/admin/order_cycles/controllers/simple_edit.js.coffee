@@ -16,7 +16,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
   $scope.loadExchangeProducts = ->
     exchange = OrderCycle.order_cycle.incoming_exchanges[0]
     ExchangeProduct.index { exchange_id: exchange.id }, (products) ->
-      $scope.enterprises[exchange.enterprise_id].supplied_products = products
+      $scope.enterprises[exchange.enterprise_id].products = products
 
   $scope.removeDistributionOfVariant = angular.noop
 

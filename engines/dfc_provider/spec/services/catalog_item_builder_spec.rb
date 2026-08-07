@@ -8,7 +8,7 @@ RSpec.describe CatalogItemBuilder do
   describe ".catalog_item" do
     before do
       variant.id = 5
-      variant.supplier_id = 7
+      variant.enterprise_id = 7
     end
 
     it "assigns a semantic id" do

@@ -41,7 +41,7 @@ describe 'Enterprise service', ->
     spyOn(Enterprise, 'variantsOf').and.returnValue(10)
     enterprises = Enterprise.index()
     $httpBackend.flush()
-    Enterprise.enterprises[1].supplied_products = [1, 2]
+    Enterprise.enterprises[1].products = [1, 2]
     expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
 
   describe "finding the variants of a product", ->

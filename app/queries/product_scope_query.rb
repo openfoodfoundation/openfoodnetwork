@@ -9,7 +9,7 @@ class ProductScopeQuery
   def bulk_products
     product_query = OpenFoodNetwork::Permissions.
       new(@user).
-      editable_products.
+      editable_and_read_only_products.
       merge(product_scope)
 
     if @params[:import_date].present?
@@ -32,15 +32,15 @@ class ProductScopeQuery
   end
 
   def products_for_producers
-    producer_ids = OpenFoodNetwork::Permissions.new(@user).
+    enterprise_ids = OpenFoodNetwork::Permissions.new(@user).
       variant_override_producers.by_name.select('enterprises.id')
 
     # Use `order("enterprises.name")` instead of `by_producer scope`, the scope adds a join
     # on variants which messes our query
     Spree::Product.where(nil).
       merge(product_scope).
-      includes(variants: [:product, :default_price, :stock_items, :supplier]).
-      where(variants: { supplier_id: producer_ids }).
+      includes(variants: [:product, :default_price, :stock_items, :enterprise]).
+      where(variants: { enterprise: enterprise_ids }).
       order("enterprises.name, spree_products.name").
       ransack(@params[:q]).result(distinct: true)
   end

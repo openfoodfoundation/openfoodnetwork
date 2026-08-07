@@ -32,7 +32,7 @@ FactoryBot.define do
       proxy.exchanges.incoming.each do |exchange|
         product = create(:product).tap do |p|
           variant = p.variants.first
-          variant.supplier = exchange.sender
+          variant.enterprise = exchange.sender
           variant.save!
         end
         Spree::Image.create(

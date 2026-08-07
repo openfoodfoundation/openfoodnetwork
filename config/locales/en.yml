@@ -693,6 +693,7 @@ en:
         display_as: Display unit as
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "On Hand"
@@ -723,7 +724,7 @@ en:
       image:
         edit: Edit
       variant_row:
-        sourced_from: "Sourced from: %{source_name} (%{source_id}); Hub: %{hub_name}"
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -894,12 +895,14 @@ en:
         update_address: "Update Address"
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
+        filter_by_tag: "Filter by tag"
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
         id: Id 
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
         available_credit: "Available credit: %{available_credit}"
@@ -1039,15 +1042,15 @@ en:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
-        search_for_producers: Search for producers
-        select_producer: Select producer
-        all_producers: All producers
+        search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
         select_tag: Select tag 
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -1097,7 +1100,7 @@ en:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         select_unit_scale: Select unit scale
         add_a_tag: Add a tag
       clone:
@@ -2528,12 +2531,12 @@ en:
   brandstory_part6: "We all love food. Now we can love our food system too."
 
   system_headline: "Shopping - here's how it works."
-  system_step1: "1. Search"
-  system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
-  system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
-  system_step3: "3. Pick-up / Delivery"
-  system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
+  system_step1_html: "1. Search"
+  system_step1_text_html: <a href="/shops">Search</a> our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup.
+  system_step2_html: "2. Shop"
+  system_step2_text_html: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step3_html: "3. Pick-up / Delivery"
+  system_step3_text_html: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
 
   cta_headline: "Shopping that makes the world a better place."
   cta_label: "I'm Ready"
@@ -2669,6 +2672,7 @@ en:
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
+  email_order_note: "Note:"
 
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
@@ -3508,6 +3512,8 @@ en:
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
+  report_header_balance_due: "Balance Due (%{currency_symbol})"
+  report_header_credit_due: "Available Credit (%{currency_symbol})"
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3813,6 +3819,7 @@ en:
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
@@ -3865,7 +3872,9 @@ en:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4734,9 +4743,8 @@ en:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
-          supplier_select_placeholder: "Select a supplier"
-          search_for_suppliers: "Search for suppliers"
+          enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

@@ -8,17 +8,13 @@ RSpec.describe 'As an enterprise user, I can update my products' do
   include AuthenticationHelper
   include FileHelper
 
-  let(:producer) { create(:supplier_enterprise) }
-  let(:producer2) { create(:supplier_enterprise) }
-  let(:user) { create(:user, enterprises: [producer, producer2]) }
+  let(:enterprise) { create(:supplier_enterprise) }
+  let(:enterprise2) { create(:supplier_enterprise) }
+  let(:user) { create(:user, enterprises: [enterprise, enterprise2]) }
 
   before do
     login_as user
   end
-
-  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
-  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
-  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
   describe "updating", feature: :variant_tag do
     let!(:taxon) { create(:taxon) }
@@ -216,7 +212,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
     end
 
-    # it "can select only the producers that I manage"
+    # it "can select only the enterprises that I manage"
 
     it "discards changes and reloads latest data" do
       within row_containing_name("Apples") do
@@ -350,7 +346,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           click_on "On Hand" # activate popout
           fill_in "On Hand", with: "3"
 
-          tomselect_select producer.name, from: 'Producer'
+          tomselect_select enterprise.name, from: 'Enterprise'
           tomselect_select taxon.name, from: 'Category'
         end
 
@@ -439,11 +435,11 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).not_to have_css('form.disabled-section#filters')
       end
 
-      xdescribe "producer" do
-        it "can select only the producers that I manage"
+      xdescribe "enterprise" do
+        it "can select only the enterprises that I manage"
 
-        context " when I manage only one producer" do
-          it "producer select doesn't show, and is saved correctly"
+        context " when I manage only one enterprise" do
+          it "enterprise select doesn't show, and is saved correctly"
         end
       end
 
@@ -505,7 +501,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           within new_variant_row do
             fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
-            # didn't fill_in "Unit", can't be blank
+            # Unit, producer and category are pre-filled from the existing variant,
+            # so the new row is valid apart from the too-long Name and SKU above.
             fill_in "Price", with: "10.25" # valid
           end
         end
@@ -518,30 +515,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             fill_in "Price", with: "10.25"
           end
 
-          # Client side validation
-          click_button "Save changes"
-          within new_variant_row do
-            expect_browser_validation('select[aria-label="Unit scale"]')
-          end
-
-          # Fix error
-          within new_variant_row do
-            tomselect_select("Weight (kg)", from: "Unit scale")
-          end
-
-          # Client side validation
-          click_button "Save changes"
-          within new_variant_row do
-            # In CI we get "Please fill out this field." and locally we get
-            # "Please fill in this field."
-            expect_browser_validation('input[aria-label="Unit value"]')
-          end
-
-          # Fix error
-          within new_variant_row do
-            fill_in "Unit value", with: "200"
-          end
-
           expect {
             click_button "Save changes"
 
@@ -550,13 +523,12 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             variant_a1.reload
           }.not_to change { variant_a1.display_name }
 
-          # New variant
+          # New variant: unit, producer and category are pre-filled, so the only
+          # errors are the too-long Name and SKU.
           within row_containing_name("N" * 256) do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
-            expect(page.find('.col-producer')).to have_content('must exist')
-            expect(page.find('.col-category')).to have_content('must exist')
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
 
@@ -586,7 +558,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
 
-            tomselect_select producer.name, from: 'Producer'
+            tomselect_select enterprise.name, from: 'Enterprise'
             tomselect_select taxon.name, from: 'Category'
           end
 
@@ -668,7 +640,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       it 'displays the correct value afterwards for On Hand' do
         within new_variant_row do
-          fill_in "Name", with: "Large box"
+          # Producer, category and unit are pre-filled, so the new variant is
+          # valid by default. Use a too-long name to keep the save invalid and
+          # still exercise the stock-value-retention path.
+          fill_in "Name", with: "N" * 256
           click_on "On Hand"
           fill_in "On Hand", with: "19"
           tomselect_select("Weight (kg)", from: "Unit scale")
@@ -679,14 +654,17 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         click_button "Save changes"
 
         expect(page).to have_content "Please review the errors and try again"
-        within row_containing_name("Large box") do
+        within row_containing_name("N" * 256) do
           expect(page).to have_content "19"
         end
       end
 
       it 'displays the correct value afterwards for On demand' do
         within new_variant_row do
-          fill_in "Name", with: "Large box"
+          # Producer, category and unit are pre-filled, so the new variant is
+          # valid by default. Use a too-long name to keep the save invalid and
+          # still exercise the stock-value-retention path.
+          fill_in "Name", with: "N" * 256
           click_on "On Hand"
           check "On demand"
           tomselect_select("Weight (kg)", from: "Unit scale")
@@ -697,7 +675,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         click_button "Save changes"
 
         expect(page).to have_content "Please review the errors and try again"
-        within row_containing_name("Large box") do
+        within row_containing_name("N" * 256) do
           expect(page).to have_content "On demand"
         end
       end
@@ -742,10 +720,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         # Ensure all products are shown
         expect_products_count_to_be 2
 
-        supplier_name = variant_a1.supplier.name
+        supplier_name = variant_a1.enterprise.name
         category_name = variant_a1.primary_taxon.name
         tag_name = variant_a1.tags.first.name
-        tomselect_select supplier_name, from: "producer_id"
+        tomselect_select supplier_name, from: "Enterprises"
         tomselect_select category_name, from: "category_id"
         tomselect_multiselect tag_name, from: "tags_name_in"
         click_button "Search"
@@ -792,7 +770,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
 
         expect(page).to have_content /Image has been successfully (updated|created)/
-        expect(product.image.reload.url(:large)).to match /500.jpg$/
+        expect(product.reload.image.attachment.filename.to_s).to eq("500.jpg")
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')

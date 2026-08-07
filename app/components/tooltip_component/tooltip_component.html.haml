@@ -1,0 +1,13 @@
+%div{"data-controller": "tooltip", "data-tooltip-placement-value": @placement }
+  - if @link.present?
+    %a{"data-tooltip-target": "element", href: @link, class: @element_class}
+      = @element_text 
+  - else
+    %span{"data-tooltip-target": "element", class: @element_class}
+      = @element_text 
+
+  .tooltip-container
+    .tooltip.radius{"data-tooltip-target": "tooltip"}
+      = sanitize @text
+      .arrow{"data-tooltip-target": "arrow"}
+

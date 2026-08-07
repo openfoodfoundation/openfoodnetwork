@@ -93,7 +93,7 @@ module Reporting
               :distributor,
               :adjustments,
             ],
-            variant: [:product, :supplier]
+            variant: [:product, :enterprise]
           }]
         end
       end

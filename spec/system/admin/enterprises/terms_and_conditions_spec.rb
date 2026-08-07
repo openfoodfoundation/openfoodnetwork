@@ -33,7 +33,10 @@ RSpec.describe "Uploading Terms and Conditions PDF" do
         # Add PDF
         attach_file "enterprise[terms_and_conditions]", original_terms, make_visible: true
 
-        time = Time.zone.local(2002, 4, 13, 0, 0, 0)
+        # Travel to the future, not the past: under the session cookie's `expire_after`, a real
+        # browser discards the cookie (and logs out mid-request) when the clock sits more than a
+        # month in the past. A future date keeps `now + expire_after` ahead of the real clock.
+        time = 1.year.from_now.change(usec: 0)
         travel_to(run_time = time) do
           click_button "Update"
           expect(distributor.reload.terms_and_conditions_blob.created_at).to eq run_time

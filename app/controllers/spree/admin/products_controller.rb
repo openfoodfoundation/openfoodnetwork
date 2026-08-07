@@ -15,9 +15,8 @@ module Spree
       helper Spree::Admin::TaxCategoriesHelper
 
       before_action :load_data
-      before_action :load_producers, only: [:index, :new]
-      before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
-      before_action :load_spree_api_key, only: [:index, :variant_overrides]
+      before_action :load_producers, only: [:new]
+      before_action :load_form_data, only: [:new, :create, :edit, :update]
       before_action :strip_new_properties, only: [:create, :update]
 
       def show
@@ -93,10 +92,6 @@ module Spree
         [:image, { variants: [:images] }]
       end
 
-      def collection_actions
-        [:index, :bulk_update]
-      end
-
       private
 
       def redirect_after_save
@@ -125,10 +120,6 @@ module Spree
         params.require(:product).permit(::PermittedAttributes::Product.attributes)
       end
 
-      def bulk_index_query
-        (raw_params[:filters] || {}).merge(page: raw_params[:page], per_page: raw_params[:per_page])
-      end
-
       def load_form_data
         @taxons = Spree::Taxon.order(:name)
         @import_dates = product_import_dates.uniq.to_json
@@ -150,7 +141,7 @@ module Spree
       def product_import_dates_query
         Spree::Variant.
           select('import_date').distinct.
-          where(supplier_id: editable_enterprises.collect(&:id)).
+          where(enterprise_id: editable_enterprises.collect(&:id)).
           where.not(spree_variants: { import_date: nil }).
           order('import_date DESC')
       end

@@ -23,7 +23,7 @@ class ShopsListService
       .is_distributor
       .includes(address: [:state, :country])
       .includes(:properties)
-      .includes(supplied_products: :properties)
+      .includes(products: :properties)
       .with_attached_promo_image
       .with_attached_logo
   end

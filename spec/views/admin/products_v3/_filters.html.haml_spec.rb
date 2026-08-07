@@ -24,9 +24,9 @@ RSpec.describe "admin/products_v3/_filters.html.haml" do
       ],
     )
 
-    is_expected.to have_content "Producers"
+    is_expected.to have_content "Enterprises"
     is_expected.to have_select "producer_id", options: [
-      "All producers"
+      "All enterprises"
     ], selected: nil
   end
 

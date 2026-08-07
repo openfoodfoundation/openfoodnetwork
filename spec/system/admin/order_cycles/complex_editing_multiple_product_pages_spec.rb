@@ -16,7 +16,7 @@ RSpec.describe '
     let!(:new_product) {
       create(
         :product,
-        supplier_id: supplier_enterprise.id,
+        enterprise_id: supplier_enterprise.id,
         name: "Z Last Product", # ordered by name
       )
     }

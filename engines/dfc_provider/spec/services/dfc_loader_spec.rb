@@ -27,4 +27,9 @@ RSpec.describe DfcLoader do
     expect(terms.STATES.ORDERSTATE.HELD.semanticId)
       .to eq "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/vocabulary.rdf#Held"
   end
+
+  it "loads vocabularies for v2" do
+    connector = DfcLoader.connector_v2
+    expect(connector.PRODUCT_TYPES.DRINK.semanticId).to end_with "#drink"
+  end
 end

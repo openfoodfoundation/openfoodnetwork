@@ -553,6 +553,7 @@ eu:
         display_as: Erakutsi batasuna
         price: Prezioa
         producer: Ekoizlea
+        enterprise: Antolaketa
         category: Kategoria
         sku: SKU
         on_hand: "Eskuragarri"
@@ -833,14 +834,11 @@ eu:
           cancellation_text: "Aldaera mantendu"
       filters:
         search_products: Produktuak bilatu
-        search_for_producers: Ekoiztetxeak bilatu
-        select_producer: Hautatu ekoizlea
-        all_producers: Produkzio-etxe guztiak
         search_for_categories: Bilatu kategorien arabera
         select_category: Hautatu kategoria
         all_categories: Kategoria guztiak
-        producers:
-          label: Ekoizleak
+        enterprises:
+          label: Erakundeak
         categories:
           label: Kategoriak
         tags:
@@ -873,7 +871,7 @@ eu:
         none_tax_category: Bat ere ez
         category_field_name: "Kategoria"
         tax_category_field_name: "Zergen kategoria"
-        producer_field_name: "Ekoizlea"
+        enterprise_field_name: "Antolaketa"
         add_a_tag: Add a tag
       clone:
         success: Produktua klonatu du
@@ -2153,12 +2151,11 @@ eu:
   brandstory_part5_strong: "Open Food Network deitzen diogu."
   brandstory_part6: "Denok maite dugu janaria. Orain gure janari-sistema ere maita dezakegu. "
   system_headline: "Erosketak - nola funtzionatzen duten."
-  system_step1: "1. Bilatu "
-  system_step1_text: "Bilatu bertako eta sasoiko janaria gure denda askotariko eta independenteetan. Udalerriaren arabera bilatzen du eta kontsumo-talde batean parte hartzen du. "
-  system_step2: "2. Erosi "
-  system_step2_text: "Eraldatu zure kontsumoa tokiko janariarekin eta hainbat ekoizleren eskuragarriarekin. Ezagutu zure janariaren atzeko istorioak eta janaria egiten duen jendea!"
-  system_step3: "3. Bilketa "
-  system_step3_text: "Bisitatu zure Kontsumo Taldea, produkzio-etxeekin eta zure bizilagunekin lotura zuzenagoa izateko, eta zuzenean eros diezaiekezu zenbait produkzio-etxeri edo erosketa-zentrali. Erosi zure janaria natura bezain era ezberdinean. "
+  system_step1_html: "1. Bilatu "
+  system_step2_html: "2. Erosi "
+  system_step2_text_html: "Eraldatu zure kontsumoa tokiko janariarekin eta hainbat ekoizleren eskuragarriarekin. Ezagutu zure janariaren atzeko istorioak eta janaria egiten duen jendea!"
+  system_step3_html: "3. Bilketa "
+  system_step3_text_html: "Bisitatu zure Kontsumo Taldea, produkzio-etxeekin eta zure bizilagunekin lotura zuzenagoa izateko, eta zuzenean eros diezaiekezu zenbait produkzio-etxeri edo erosketa-zentrali. Erosi zure janaria natura bezain era ezberdinean. "
   cta_headline: "Mundua leku hobea egiten duten erosketak."
   cta_label: "Prest nago"
   stats_headline: "Denon artean ekoizpen, banaketa eta kontsumo sistema berri bat sortu genuen."
@@ -2277,6 +2274,7 @@ eu:
   email_shipping_collection_time: "Biltzeko prest:"
   email_shipping_collection_instructions: "Biltzeko jarraibideak:"
   email_special_instructions: "Bere oharrak:"
+  email_order_note: "Oharra:"
   email_signup_greeting: Kaixo!
   email_signup_welcome: "Ongi etorri %{sitename}!"
   email_signup_confirmed_email: "Eskerrik asko zure emaila berresteagatik."
@@ -3406,7 +3404,6 @@ eu:
         add_to_cart: "Gehitu"
         in_cart: "saskian"
         quantity_in_cart: " %{quantity} saskian"
-        remaining_in_stock: "%{quantity} bakarrik geratzen da"
       bulk_buy_modal:
         min_quantity: "Gutxieneko kopurua"
         max_quantity: "Gehieneko kopurua"
@@ -4091,7 +4088,7 @@ eu:
         new:
           title: "Produktu berria"
           new_product: "Produktu berria"
-          supplier: "Hornitzailea"
+          enterprise: "Antolaketa"
           search_for_units: "Bilatu unitateak"
           product_name: "produktuaren izena"
           units: "Neurketa-unitatea"

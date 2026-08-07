@@ -10,6 +10,12 @@ export default class extends Controller {
   };
 
   connect(options = {}) {
+    // Capture the select's current value before TomSelect replaces the element.
+    // For non-remote selects, passing this as `items` tells TomSelect to restore
+    // the pre-selected option during its silent constructor phase (isSetup = false),
+    // so no input/change events fire on the underlying select.
+    const initialValue = !this.remoteUrlValue ? this.element.value : null;
+
     let tomSelectOptions = {
       maxItems: 1,
       maxOptions: null,
@@ -19,6 +25,7 @@ export default class extends Controller {
       onItemAdd: function () {
         this.setTextboxValue("");
       },
+      ...(initialValue ? { items: [initialValue] } : {}),
       ...this.optionsValue,
       ...options,
     };

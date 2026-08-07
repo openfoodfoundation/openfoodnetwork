@@ -4,7 +4,9 @@ module Admin
   class AjaxSearchController < Spree::Admin::BaseController
     def producers
       query = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises.is_primary_producer.by_name
+        .managed_product_enterprises_and_enterprises_granting_linked_variants
+        .is_primary_producer
+        .by_name
 
       render json: build_search_response(query)
     end

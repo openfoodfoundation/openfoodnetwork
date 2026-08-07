@@ -5,12 +5,12 @@ RSpec.describe VariantTagRulesFilterer do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:product) { create(:product) }
-  let!(:variant_hidden_by_default) { create(:variant, product:, supplier: distributor) }
-  let!(:variant_hidden_by_rule) { create(:variant, product:, supplier: distributor) }
-  let!(:variant_shown_by_rule) { create(:variant, product:, supplier: distributor) }
-  let!(:variant_hidden_for_another_customer) { create(:variant, product:, supplier: distributor) }
+  let!(:variant_hidden_by_default) { create(:variant, product:, enterprise: distributor) }
+  let!(:variant_hidden_by_rule) { create(:variant, product:, enterprise: distributor) }
+  let!(:variant_shown_by_rule) { create(:variant, product:, enterprise: distributor) }
+  let!(:variant_hidden_for_another_customer) { create(:variant, product:, enterprise: distributor) }
   let(:customer) { create(:customer, enterprise: distributor) }
-  let(:variants_relation) { Spree::Variant.where(supplier: distributor) }
+  let(:variants_relation) { Spree::Variant.where(enterprise: distributor) }
 
   describe "#call" do
     let!(:hide_rule) {

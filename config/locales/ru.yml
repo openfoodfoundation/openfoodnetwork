@@ -511,6 +511,7 @@ ru:
         display_as: Отображать единицы как
         price: Цена
         producer: Производитель
+        enterprise: Предприятие
         category: Категория
         sku: SKU
         on_hand: "В наличии"
@@ -784,12 +785,10 @@ ru:
           cancellation_text: "Сохранить вариант"
       filters:
         search_products: Поиск товаров
-        search_for_producers: Поиск производителей
-        all_producers: Все производители
         search_for_categories: Поиск категорий
         all_categories: Все категории
-        producers:
-          label: Производители
+        enterprises:
+          label: Предприятия
         categories:
           label: Категории
         tags:
@@ -835,7 +834,7 @@ ru:
         none_tax_category: Нет
         category_field_name: "Категория"
         tax_category_field_name: "Налоговая Категория"
-        producer_field_name: "Производитель"
+        enterprise_field_name: "Предприятие"
         add_a_tag: Добавить Метку
     product_import:
       title: Импорт Товара
@@ -2154,12 +2153,11 @@ ru:
   brandstory_part5_strong: "Мы называем это Открытая Сеть Продуктов."
   brandstory_part6: "Все мы любим еду. Теперь мы можем так же любить нашу продуктовую систему."
   system_headline: "Покупки - как это работает."
-  system_step1: "1. Поиск"
-  system_step1_text: "Ищите наши разнообразные, независимые магазины для сезонной местной еды. Поиск по району и категории продуктов питания, с доставкой или самовывозом."
-  system_step2: "2. Покупка"
-  system_step2_text: "Измените свои покупки на доступные местные продукты от различных производителей и центров. Узнавайте истории, стоящие за вашей едой и людьми, которые ее производят!"
-  system_step3: "3. Забрать / Доставить"
-  system_step3_text: "Воспользуйтесь доставкой или посетите вашего производителя, или центр для более личной связи с вашей едой. Продовольственные магазины настолько разнообразны, насколько это задумывалось природой."
+  system_step1_html: "1. Поиск"
+  system_step2_html: "2. Покупка"
+  system_step2_text_html: "Измените свои покупки на доступные местные продукты от различных производителей и центров. Узнавайте истории, стоящие за вашей едой и людьми, которые ее производят!"
+  system_step3_html: "3. Забрать / Доставить"
+  system_step3_text_html: "Воспользуйтесь доставкой или посетите вашего производителя, или центр для более личной связи с вашей едой. Продовольственные магазины настолько разнообразны, насколько это задумывалось природой."
   cta_headline: "Покупки, которые делают мир лучше."
   cta_label: "Начать Покупки"
   stats_headline: "Мы создаем новую систему питания."
@@ -2279,6 +2277,7 @@ ru:
   email_shipping_collection_time: "Готов для выдачи:"
   email_shipping_collection_instructions: "Инструкции по получению:"
   email_special_instructions: "Ваши заметки:"
+  email_order_note: "Примечание:"
   email_signup_greeting: Добрый день!
   email_signup_welcome: "Добро пожаловать в %{sitename}!"
   email_signup_confirmed_email: "Спасибо за подтверждение Вашего email."
@@ -3437,7 +3436,6 @@ ru:
         add_to_cart: "Добавить"
         in_cart: "в корзине"
         quantity_in_cart: "%{quantity} в корзине"
-        remaining_in_stock: "Остался только %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мин. количество"
         max_quantity: "Макс количество"
@@ -4249,8 +4247,7 @@ ru:
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"
-          supplier: "Поставщик"
-          supplier_select_placeholder: "Выберите поставщика"
+          enterprise: "Предприятие"
           product_name: "Название Товара"
           units: "Единица измерения"
           value: "Значение"

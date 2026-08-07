@@ -22,7 +22,7 @@ And then add an `upstream` remote that points to the main repo:
 
 Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
-    git fetch upstream master
+    git fetch upstream master:master
 
 ### Installation
 

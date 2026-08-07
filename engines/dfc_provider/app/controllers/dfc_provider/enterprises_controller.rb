@@ -10,7 +10,7 @@ module DfcProvider
         EnterpriseBuilder.enterprise(enterprise)
       end
 
-      render json: DfcIo.export(
+      render_dfc(
         *enterprises,
         *enterprises.map(&:mainContact),
         *enterprises.flat_map(&:localizations),
@@ -28,7 +28,7 @@ module DfcProvider
       end
       enterprise.registerSemanticProperty("dfc-b:affiliates") { group_ids }
 
-      render json: DfcIo.export(
+      render_dfc(
         enterprise,
         enterprise.mainContact,
         *enterprise.localizations,

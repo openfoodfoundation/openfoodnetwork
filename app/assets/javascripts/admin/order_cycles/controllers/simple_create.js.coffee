@@ -23,7 +23,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
     ExchangeProduct.index params, $scope.storeProductsAndSelectAllVariants
 
   $scope.storeProductsAndSelectAllVariants = (products) ->
-    $scope.enterprises[$scope.incoming_exchange.enterprise_id].supplied_products = products
+    $scope.enterprises[$scope.incoming_exchange.enterprise_id].products = products
 
     # All variants start as checked
     OrderCycle.setExchangeVariants($scope.incoming_exchange,

@@ -1,0 +1,107 @@
+%ofn-carousel-container {
+  position: relative;
+}
+
+%ofn-carousel-image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+%ofn-carousel-caption {
+  margin: 0;
+  margin-bottom: -1px;
+  padding: $carousel-caption-padding;
+  background: $carousel-caption-background;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-left: $carousel-caption-offset-left;
+  border-radius: $carousel-caption-border-radius;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: $carousel-caption-font-size;
+  color: $carousel-caption-text-color;
+}
+
+%ofn-carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $carousel-z-index;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $carousel-button-size;
+  height: $carousel-button-size;
+  border-radius: 9999px;
+  border: none;
+  background: $carousel-button-background;
+  box-shadow: $carousel-button-shadow;
+  color: $carousel-button-color;
+  cursor: pointer;
+  transition: $carousel-button-transition;
+
+  &:hover {
+    background: $carousel-button-hover-background;
+    box-shadow: $carousel-button-hover-shadow;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $carousel-button-focus-color;
+    outline-offset: 2px;
+  }
+}
+
+%ofn-carousel-button-prev {
+  left: $carousel-button-offset-default;
+  color: $carousel-button-muted-color;
+  font-weight: 400;
+}
+
+%ofn-carousel-button-next {
+  right: $carousel-button-offset-default;
+  color: $carousel-button-muted-color;
+  font-weight: 400;
+}
+
+%ofn-carousel-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: $carousel-pagination-bottom;
+  z-index: $carousel-z-index;
+  text-align: center;
+}
+
+.ofn-carousel {
+  @extend %ofn-carousel-container;
+
+  .swiper-slide {
+    position: relative;
+  }
+
+  .ofn-carousel__image {
+    @extend %ofn-carousel-image;
+  }
+
+  .ofn-carousel__caption {
+    @extend %ofn-carousel-caption;
+  }
+
+  .ofn-carousel__button {
+    @extend %ofn-carousel-button;
+  }
+
+  .ofn-carousel__button--prev {
+    @extend %ofn-carousel-button-prev;
+  }
+
+  .ofn-carousel__button--next {
+    @extend %ofn-carousel-button-next;
+  }
+
+  .ofn-carousel__pagination {
+    @extend %ofn-carousel-pagination;
+  }
+}

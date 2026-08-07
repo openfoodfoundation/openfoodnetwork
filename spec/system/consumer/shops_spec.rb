@@ -111,8 +111,8 @@ RSpec.describe 'Shops' do
       create(:simple_order_cycle, distributors: [d1, d2],
                                   coordinator: create(:distributor_enterprise))
     }
-    let!(:p1) { create(:simple_product, supplier_id: producer.id) }
-    let!(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+    let!(:p1) { create(:simple_product, enterprise_id: producer.id) }
+    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id) }
     let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }
     let(:ex_d2) { order_cycle.exchanges.outgoing.where(receiver_id: d2).first }
 
@@ -183,7 +183,7 @@ RSpec.describe 'Shops' do
         variants: [product.variants.first]
       )
     }
-    let(:product) { create(:simple_product, supplier_id: producer.id) }
+    let(:product) { create(:simple_product, enterprise_id: producer.id) }
 
     before do
       product.set_property 'Local', 'XYZ 123'
@@ -206,7 +206,7 @@ RSpec.describe 'Shops' do
   end
 
   describe "hub producer modal" do
-    let!(:product) { create(:simple_product, supplier_id: producer.id, primary_taxon: taxon) }
+    let!(:product) { create(:simple_product, enterprise_id: producer.id, primary_taxon: taxon) }
     let!(:taxon) { create(:taxon, name: 'Fruit') }
     let!(:order_cycle) {
       create(

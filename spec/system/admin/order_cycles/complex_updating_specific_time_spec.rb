@@ -27,7 +27,7 @@ RSpec.xdescribe '
     supplier = create(:supplier_enterprise, name: 'My supplier')
     distributor = create(:distributor_enterprise, name: 'My distributor',
                                                   with_payment_and_shipping: true)
-    product = create(:product, supplier:)
+    product = create(:product, enterprise: supplier)
     v1 = create(:variant, product:)
     v2 = create(:variant, product:)
 

@@ -102,7 +102,7 @@ module Admin
         "order_bill_address_full_name_reversed",
         "order_bill_address_full_name_with_comma",
         "order_bill_address_full_name_with_comma_reversed",
-        "variant_supplier_name",
+        "variant_enterprise_name",
         "order_email",
         "order_number",
         "product_name"

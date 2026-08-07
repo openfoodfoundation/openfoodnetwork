@@ -8,14 +8,14 @@
       = text_field_tag :search_term, search_term, placeholder: t('.search_products')
   - if allowed_producers.many?
     .producers
-      = label_tag :producer_id, t('.producers.label')
+      = label_tag :producer_id, t('.enterprises.label')
       = render(SearchableDropdownComponent.new(name: :producer_id,
-        aria_label: t('.producers.label'),
+        aria_label: t('.enterprises.label'),
         options: selected_option(producer_id, Enterprise),
         selected_option: producer_id,
         remote_url: admin_ajax_search_producers_url,
-        include_blank: t('.all_producers'),
-        placeholder_value: t('.search_for_producers')))
+        include_blank: t('.all_enterprises'),
+        placeholder_value: t('.search_for_enterprises')))
   .categories
     = label_tag :category_id, t('.categories.label')
     = render(SearchableDropdownComponent.new(name: :category_id,

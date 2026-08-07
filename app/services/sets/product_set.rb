@@ -106,7 +106,7 @@ module Sets
         variant.assign_attributes(variant_attributes.except(:id))
         variant.save if variant.changed?
 
-        ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_supplier_id?
+        ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_enterprise_id?
       else
         variant = create_variant(product, variant_attributes)
       end

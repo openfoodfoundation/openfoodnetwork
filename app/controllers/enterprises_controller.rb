@@ -21,6 +21,8 @@ class EnterprisesController < BaseController
   def shop
     return redirect_to main_app.cart_path unless enough_stock?
 
+    @current_user = spree_current_user
+
     set_noindex_meta_tag
 
     @enterprise = current_distributor

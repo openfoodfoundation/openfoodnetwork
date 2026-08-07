@@ -1,0 +1,806 @@
+erDiagram
+	direction TB
+	"ActiveRecord::SessionStore::Session" {
+		text data
+		string session_id
+	}
+	"ActiveStorage::Attachment" {
+		string name
+		string record_type
+	}
+	"ActiveStorage::Blob" {
+		integer byte_size
+		string checksum
+		string content_type
+		string filename
+		string key
+		text metadata
+		string service_name
+	}
+	"ActiveStorage::VariantRecord" {
+		string variation_digest
+	}
+	"ActsAsTaggableOn::Tag" {
+		string name
+		integer taggings_count
+	}
+	AdjustmentMetadata {
+		string enterprise_role
+		string fee_name
+		string fee_type
+	}
+	ColumnPreference {
+		string action_name
+		string column_name
+		boolean visible
+	}
+	ConnectedApp {
+		json data
+	}
+	CoordinatorFee {
+	}
+	CustomTab {
+		text content
+		string title
+	}
+	Customer {
+		boolean allow_charges
+		string code
+		boolean created_manually
+		string email
+		string first_name
+		string last_name
+		datetime terms_and_conditions_accepted_at
+	}
+	CustomerAccountTransaction {
+		decimal amount
+		decimal balance
+		string currency
+		string description
+	}
+	DfcPermission {
+		string grantee
+		string scope
+	}
+	DistributorPaymentMethod {
+	}
+	DistributorShippingMethod {
+	}
+	Enterprise {
+		string abn
+		string acn
+		boolean allow_guest_orders
+		boolean allow_order_changes
+		boolean charges_sales_tax
+		string contact_name
+		text description
+		boolean display_invoice_logo
+		string email_address
+		boolean enable_producers_to_edit_orders
+		boolean enable_subscriptions
+		string external_billing_id
+		string facebook
+		boolean hide_groups_tab
+		boolean hide_ofn_navigation
+		string instagram
+		text invoice_text
+		boolean is_primary_producer
+		string linkedin
+		text long_description
+		string name
+		string permalink
+		string phone
+		boolean producer_profile_only
+		boolean require_login
+		string sells
+		boolean show_customer_contacts_to_suppliers
+		boolean show_customer_names_to_suppliers
+		string twitter
+		string visible
+		string website
+		string whatsapp_phone
+		text white_label_logo_link
+	}
+	EnterpriseFee {
+		datetime deleted_at
+		string fee_type
+		boolean inherits_tax_category
+		string name
+	}
+	EnterpriseGroup {
+		text description
+		string email
+		string facebook
+		string instagram
+		string linkedin
+		text long_description
+		string name
+		boolean on_front_page
+		string permalink
+		integer position
+		string twitter
+		string website
+	}
+	EnterpriseRelationship {
+	}
+	EnterpriseRelationshipPermission {
+		string name
+	}
+	EnterpriseRole {
+		boolean receives_notifications
+	}
+	Exchange {
+		boolean incoming
+		text pickup_instructions
+		text pickup_time
+		text receival_instructions
+	}
+	ExchangeFee {
+	}
+	ExchangeVariant {
+	}
+	"Flipper::Adapters::ActiveRecord::Feature" {
+		string key
+	}
+	"Flipper::Adapters::ActiveRecord::Gate" {
+		string key
+		text value
+	}
+	InventoryItem {
+		boolean visible
+	}
+	Invoice {
+		boolean cancelled
+		jsonb data
+		date date
+		integer number
+	}
+	OidcAccount {
+		string provider
+		string refresh_token
+		string token
+		string uid
+	}
+	OrderCycle {
+		boolean automatic_notifications
+		boolean mails_sent
+		string name
+		datetime opened_at
+		datetime orders_close_at
+		datetime orders_open_at
+		datetime processed_at
+	}
+	OrderCycleSchedule {
+	}
+	"PaperTrail::Version" {
+		text custom_data
+		string event
+		string item_type
+		text object
+		string whodunnit
+	}
+	ProducerProperty {
+		integer position
+		string value
+	}
+	ProxyOrder {
+		datetime canceled_at
+		datetime confirmed_at
+		datetime placed_at
+	}
+	ReportBlob {
+		integer byte_size
+		string checksum
+		string content_type
+		string filename
+		string key
+		text metadata
+		string service_name
+	}
+	ReportRenderingOptions {
+		text options
+		string report_subtype
+		string report_type
+	}
+	Schedule {
+		string name
+	}
+	SemanticLink {
+		string semantic_id
+		string subject_type
+	}
+	"Spree::Address" {
+		string address1
+		string address2
+		string alternative_phone
+		string city
+		string company
+		string firstname
+		string lastname
+		float latitude
+		float longitude
+		string phone
+		string state_name
+		string zipcode
+	}
+	"Spree::Adjustment" {
+		string adjustable_type
+		decimal amount
+		boolean eligible
+		boolean included
+		decimal included_tax
+		string label
+		boolean mandatory
+		string originator_type
+		string state
+	}
+	"Spree::Asset" {
+		text alt
+		integer position
+		string viewable_type
+	}
+	"Spree::Calculator" {
+		string calculable_type
+	}
+	"Spree::Country" {
+		string iso
+		string iso3
+		string iso_name
+		string name
+		integer numcode
+		boolean states_required
+	}
+	"Spree::CreditCard" {
+		integer address_id
+		string cc_type
+		string first_name
+		string gateway_customer_profile_id
+		string gateway_payment_profile_id
+		boolean is_default
+		string issue_number
+		string last_digits
+		string last_name
+		string month
+		string start_month
+		string start_year
+		string year
+	}
+	"Spree::InventoryUnit" {
+		boolean pending
+		string state
+	}
+	"Spree::LineItem" {
+		string currency
+		decimal depth
+		decimal distribution_fee
+		decimal final_weight_volume
+		decimal height
+		integer max_quantity
+		decimal price
+		string product_name
+		integer quantity
+		string unit_presentation
+		string variant_name
+		decimal weight
+		decimal width
+	}
+	"Spree::LogEntry" {
+		text details
+		string source_type
+	}
+	"Spree::Order" {
+		decimal additional_tax_total
+		decimal adjustment_total
+		datetime completed_at
+		string currency
+		string email
+		decimal included_tax_total
+		decimal item_total
+		string last_ip_address
+		string note
+		string number
+		string payment_state
+		decimal payment_total
+		string shipment_state
+		text special_instructions
+		string state
+		decimal total
+	}
+	"Spree::Payment" {
+		decimal amount
+		string avs_response
+		datetime captured_at
+		string cvv_response_code
+		text cvv_response_message
+		string identifier
+		string redirect_auth_url
+		string response_code
+		string source_type
+		string state
+	}
+	"Spree::PaymentMethod" {
+		boolean active
+		datetime deleted_at
+		text description
+		string display_on
+		string environment
+		string name
+	}
+	"Spree::PaypalExpressCheckout" {
+		string payer_id
+		string refund_transaction_id
+		string refund_type
+		datetime refunded_at
+		string state
+		string token
+		string transaction_id
+	}
+	"Spree::Preference" {
+		string key
+		text value
+		string value_type
+	}
+	"Spree::Price" {
+		decimal amount
+		string currency
+		datetime deleted_at
+	}
+	"Spree::Product" {
+		datetime deleted_at
+		text description
+		boolean group_buy
+		float group_buy_unit_size
+		boolean inherits_properties
+		string meta_keywords
+		string name
+		text notes
+		string sku
+		integer tax_category_id
+	}
+	"Spree::ProductProperty" {
+		integer position
+		string value
+	}
+	"Spree::Property" {
+		string name
+		string presentation
+	}
+	"Spree::ReturnAuthorization" {
+		decimal amount
+		datetime deleted_at
+		string number
+		text reason
+		string state
+	}
+	"Spree::Shipment" {
+		decimal additional_tax_total
+		decimal adjustment_total
+		decimal cost
+		decimal included_tax_total
+		string number
+		datetime shipped_at
+		string state
+		string tracking
+	}
+	"Spree::ShippingCategory" {
+		string name
+		boolean temperature_controlled
+	}
+	"Spree::ShippingMethod" {
+		datetime deleted_at
+		text description
+		string display_on
+		string name
+		boolean require_ship_address
+		string tracking_url
+	}
+	"Spree::ShippingMethodCategory" {
+	}
+	"Spree::ShippingRate" {
+		decimal cost
+		boolean selected
+	}
+	"Spree::State" {
+		string abbr
+		string name
+	}
+	"Spree::StateChange" {
+		string name
+		string next_state
+		string previous_state
+		string stateful_type
+	}
+	"Spree::StockItem" {
+		boolean backorderable
+		integer count_on_hand
+		datetime deleted_at
+		integer lock_version
+	}
+	"Spree::TaxCategory" {
+		datetime deleted_at
+		string description
+		boolean is_default
+		string name
+	}
+	"Spree::TaxRate" {
+		decimal amount
+		datetime deleted_at
+		boolean included_in_price
+		string name
+		boolean show_rate_in_label
+	}
+	"Spree::Taxon" {
+		text description
+		string dfc_id
+		string meta_description
+		string meta_keywords
+		string meta_title
+		string name
+		string permalink
+		integer position
+	}
+	"Spree::TokenizedPermission" {
+		string permissable_type
+		string token
+	}
+	"Spree::User" {
+		boolean admin
+		string api_key
+		datetime confirmation_sent_at
+		string confirmation_token
+		datetime confirmed_at
+		datetime current_sign_in_at
+		string current_sign_in_ip
+		datetime disabled_at
+		string email
+		string encrypted_password
+		integer enterprise_limit
+		integer failed_attempts
+		datetime last_request_at
+		datetime last_sign_in_at
+		string last_sign_in_ip
+		string locale
+		datetime locked_at
+		string login
+		string password_salt
+		string perishable_token
+		string persistence_token
+		string provider
+		datetime remember_created_at
+		string remember_token
+		datetime reset_password_sent_at
+		string reset_password_token
+		boolean show_api_key_view
+		integer sign_in_count
+		string spree_api_key
+		datetime terms_of_service_accepted_at
+		string uid
+		string unconfirmed_email
+		string unlock_token
+	}
+	"Spree::Variant" {
+		string cost_currency
+		datetime deleted_at
+		decimal depth
+		string display_as
+		string display_name
+		decimal height
+		datetime import_date
+		integer owner_id
+		string sku
+		string unit_description
+		string unit_presentation
+		float unit_value
+		string variant_unit
+		string variant_unit_name
+		float variant_unit_scale
+		decimal weight
+		decimal width
+	}
+	"Spree::Zone" {
+		boolean default_tax
+		string description
+		string name
+		integer zone_members_count
+	}
+	"Spree::ZoneMember" {
+		integer zoneable_id
+		string zoneable_type
+	}
+	StripeAccount {
+		string stripe_publishable_key
+		string stripe_user_id
+	}
+	Subscription {
+		datetime begins_at
+		datetime canceled_at
+		datetime ends_at
+		datetime paused_at
+		decimal payment_fee_estimate
+		decimal shipping_fee_estimate
+	}
+	SubscriptionLineItem {
+		decimal price_estimate
+		integer quantity
+	}
+	TagRule {
+		boolean is_default
+		integer priority
+	}
+	TermsOfServiceFile {
+	}
+	VariantLink {
+	}
+	VariantOverride {
+		integer count_on_hand
+		integer default_stock
+		datetime import_date
+		boolean on_demand
+		datetime permission_revoked_at
+		decimal price
+		boolean resettable
+		string sku
+	}
+	Voucher {
+		decimal amount
+		string code
+		datetime deleted_at
+		datetime expiry_date
+		uuid external_voucher_id
+		uuid external_voucher_set_id
+	}
+	WebhookEndpoint {
+		string url
+		string webhook_type
+	}
+	Item ||--}o "PaperTrail::Version" : ""
+	Enterprise ||--}o "PaperTrail::Version" : ""
+	OrderCycle ||--}o "PaperTrail::Version" : ""
+	Schedule ||--}o "PaperTrail::Version" : ""
+	"ActiveStorage::VariantRecord" ||--}o "ActiveStorage::Blob" : ""
+	Record ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::VariantRecord" ||--|o "ActiveStorage::Attachment" : ""
+	Enterprise ||--|o "ActiveStorage::Attachment" : ""
+	EnterpriseGroup ||--|o "ActiveStorage::Attachment" : ""
+	"Spree::Image" ||--|o "ActiveStorage::Attachment" : ""
+	TermsOfServiceFile ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--}o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" o|..|o "ActiveStorage::Blob" : ""
+	"Spree::Zone" o|--}| "Spree::ZoneMember" : ""
+	"Spree::Zone" o|--}o "Spree::TaxRate" : ""
+	"Spree::ShippingMethod" o{--}o "Spree::Zone" : ""
+	"Spree::Variant" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::Product" ||--}o "Spree::Variant" : ""
+	"Spree::TaxCategory" ||--}o "Spree::Variant" : ""
+	"Spree::ShippingCategory" ||--}o "Spree::Variant" : ""
+	"Spree::Taxon" ||--}o "Spree::Variant" : ""
+	Enterprise ||--}o "Spree::Variant" : ""
+	"Spree::Variant" o|--}o "Spree::InventoryUnit" : ""
+	"Spree::Variant" ||--}o "Spree::LineItem" : ""
+	"Spree::Variant" ||--}o "Spree::StockItem" : ""
+	Viewable o|--}o "Spree::Image" : ""
+	"Spree::Product" o|--}o "Spree::Image" : ""
+	"Spree::Variant" o|--}o "Spree::Image" : ""
+	"Spree::Variant" ||--}o "Spree::Price" : ""
+	"Spree::Variant" o|--}o ExchangeVariant : ""
+	"Spree::Variant" o|..}o Exchange : ""
+	"Spree::Variant" ||--}o VariantOverride : ""
+	"Spree::Variant" ||--}o InventoryItem : ""
+	Subject ||--}o SemanticLink : ""
+	Enterprise ||--}o SemanticLink : ""
+	Exchange ||--}o SemanticLink : ""
+	"Spree::Product" ||--}o SemanticLink : ""
+	"Spree::Variant" ||--}o SemanticLink : ""
+	"Spree::Variant" o|..}o "Spree::Property" : ""
+	"Spree::Variant" ||--}o VariantLink : ""
+	"Spree::Variant" o|..}o "Spree::Variant" : ""
+	Permissable o|--|o "Spree::TokenizedPermission" : ""
+	"Spree::Order" o|--|o "Spree::TokenizedPermission" : ""
+	"Spree::Taxon" o|..}o "Spree::Product" : ""
+	Calculable ||--|| "Spree::Calculator" : ""
+	EnterpriseFee ||--|| "Spree::Calculator" : ""
+	"Spree::PaymentMethod" ||--|| "Spree::Calculator" : ""
+	"Spree::ShippingMethod" ||--|| "Spree::Calculator" : ""
+	"Spree::TaxRate" ||--|| "Spree::Calculator" : ""
+	Calculable ||--|| "Calculator::DefaultTax" : ""
+	Calculable ||--|| "Calculator::FlatPercentItemTotal" : ""
+	Calculable ||--|| "Calculator::FlatPercentPerItem" : ""
+	Calculable ||--|| "Calculator::FlatRate" : ""
+	Calculable ||--|| "Calculator::FlexiRate" : ""
+	Calculable ||--|| "Calculator::None" : ""
+	Calculable ||--|| "Calculator::PerItem" : ""
+	Calculable ||--|| "Calculator::PriceSack" : ""
+	Calculable ||--|| "Calculator::Weight" : ""
+	"Spree::TaxCategory" ||--}o "Spree::TaxRate" : ""
+	Originator o|--}o "Spree::Adjustment" : ""
+	"Spree::TaxRate" o|--}o "Spree::Adjustment" : ""
+	Voucher o|--}o "Spree::Adjustment" : ""
+	"Spree::User" o|--}o "Spree::StateChange" : ""
+	Stateful o|--}o "Spree::StateChange" : ""
+	"Spree::Order" o|--}o "Spree::StateChange" : ""
+	"Spree::Shipment" o|--}o "Spree::StateChange" : ""
+	"Spree::Country" ||--}o "Spree::State" : ""
+	"Spree::Shipment" o|--}o "Spree::ShippingRate" : ""
+	"Spree::ShippingMethod" o|--}o "Spree::ShippingRate" : ""
+	"Spree::ShippingMethod" ||--}o "Spree::ShippingMethodCategory" : ""
+	"Spree::ShippingCategory" ||--}o "Spree::ShippingMethodCategory" : ""
+	"Spree::ShippingMethod" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::ShippingMethod" o|..}o "Spree::Shipment" : ""
+	"Spree::ShippingMethod" o|..}o "Spree::ShippingCategory" : ""
+	"Spree::ShippingMethod" ||--}o DistributorShippingMethod : ""
+	"Spree::ShippingMethod" o|..}o Enterprise : ""
+	"Spree::TaxCategory" o|--}o "Spree::ShippingMethod" : ""
+	"Spree::ShippingCategory" o|--}o "Spree::Product" : ""
+	"Spree::Order" o|--}o "Spree::Shipment" : ""
+	"Spree::Address" o|--}o "Spree::Shipment" : ""
+	"Spree::Shipment" o|--}o "Spree::InventoryUnit" : ""
+	Adjustable o|--}o "Spree::Adjustment" : ""
+	"Spree::Adjustment" o|--}o "Spree::Adjustment" : ""
+	"Spree::LineItem" o|--}o "Spree::Adjustment" : ""
+	"Spree::Order" o|--}o "Spree::Adjustment" : ""
+	"Spree::Payment" o|--}o "Spree::Adjustment" : ""
+	"Spree::Shipment" o|--}o "Spree::Adjustment" : ""
+	"Spree::Order" ||--}o "Spree::ReturnAuthorization" : ""
+	"Spree::ReturnAuthorization" o|--}o "Spree::InventoryUnit" : ""
+	"Spree::Property" ||--}o "Spree::ProductProperty" : ""
+	"Spree::Property" o|..}o "Spree::Product" : ""
+	"Spree::Property" o|--}o ProducerProperty : ""
+	"Spree::Product" ||--}o "Spree::ProductProperty" : ""
+	"Spree::Order" o|--}o "Spree::Payment" : ""
+	Source o|--}o "Spree::Payment" : ""
+	"Spree::CreditCard" o|--}o "Spree::Payment" : ""
+	"Spree::Payment" o|--}o "Spree::Payment" : ""
+	"Spree::PaymentMethod" o|--}o "Spree::Payment" : ""
+	"Spree::Gateway" o|--}o "Spree::Payment" : ""
+	"Spree::Gateway::PayPalExpress" o|--}o "Spree::Payment" : ""
+	"Spree::Gateway::StripeSCA" o|--}o "Spree::Payment" : ""
+	"Spree::PaymentMethod::Check" o|--}o "Spree::Payment" : ""
+	"Spree::PaymentMethod::CustomerCredit" o|--}o "Spree::Payment" : ""
+	"Spree::PaymentMethod::Taler" o|--}o "Spree::Payment" : ""
+	Source o|--}o "Spree::LogEntry" : ""
+	"Spree::CreditCard" o|--}o "Spree::LogEntry" : ""
+	"Spree::Payment" o|--}o "Spree::LogEntry" : ""
+	"Spree::Order" ||--}o "Spree::LineItem" : ""
+	"Spree::LineItem" o|..|o OrderCycle : ""
+	"Spree::LineItem" o|..|o "Spree::Product" : ""
+	"Spree::LineItem" o|..|o Enterprise : ""
+	"Spree::TaxCategory" o|--}o "Spree::LineItem" : ""
+	"Spree::Order" o|--}o "Spree::InventoryUnit" : ""
+	"Spree::PaymentMethod" ||--}o DistributorPaymentMethod : ""
+	"Spree::Gateway" ||--}o DistributorPaymentMethod : ""
+	"Spree::Gateway::PayPalExpress" ||--}o DistributorPaymentMethod : ""
+	"Spree::Gateway::StripeSCA" ||--}o DistributorPaymentMethod : ""
+	"Spree::PaymentMethod::Check" ||--}o DistributorPaymentMethod : ""
+	"Spree::PaymentMethod::CustomerCredit" ||--}o DistributorPaymentMethod : ""
+	"Spree::PaymentMethod::Taler" ||--}o DistributorPaymentMethod : ""
+	"Spree::PaymentMethod" o|..}o Enterprise : ""
+	"Spree::Gateway" o|..}o Enterprise : ""
+	"Spree::Gateway::PayPalExpress" o|..}o Enterprise : ""
+	"Spree::Gateway::StripeSCA" o|..}o Enterprise : ""
+	"Spree::PaymentMethod::Check" o|..}o Enterprise : ""
+	"Spree::PaymentMethod::CustomerCredit" o|..}o Enterprise : ""
+	"Spree::PaymentMethod::Taler" o|..}o Enterprise : ""
+	"Spree::PaymentMethod" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::Gateway" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::Gateway::PayPalExpress" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::Gateway::StripeSCA" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::PaymentMethod::Check" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::PaymentMethod::CustomerCredit" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::PaymentMethod::Taler" o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::PaymentMethod" o|--}o "Spree::CreditCard" : ""
+	"Spree::Gateway" o|--}o "Spree::CreditCard" : ""
+	"Spree::Gateway::PayPalExpress" o|--}o "Spree::CreditCard" : ""
+	"Spree::Gateway::StripeSCA" o|--}o "Spree::CreditCard" : ""
+	"Spree::PaymentMethod::Check" o|--}o "Spree::CreditCard" : ""
+	"Spree::PaymentMethod::CustomerCredit" o|--}o "Spree::CreditCard" : ""
+	"Spree::PaymentMethod::Taler" o|--}o "Spree::CreditCard" : ""
+	"Spree::User" o|--}o "Spree::CreditCard" : ""
+	"Spree::Adjustment" ||--|o AdjustmentMetadata : ""
+	"Spree::TaxCategory" o|--}o "Spree::Adjustment" : ""
+	"Spree::Country" ||--}o "Spree::Address" : ""
+	"Spree::State" o|--}o "Spree::Address" : ""
+	"Spree::Address" ||--|o Enterprise : ""
+	Enterprise ||--}o Voucher : ""
+	Enterprise ||--}o "Vouchers::FlatRate" : ""
+	Enterprise ||--}o "Vouchers::PercentageRate" : ""
+	Enterprise ||--}o "Vouchers::Vine" : ""
+	VariantOverride o|..}o "ActsAsTaggableOn::Tag" : ""
+	Enterprise ||--}o VariantOverride : ""
+	TermsOfServiceFile o|..|o "ActiveStorage::Blob" : ""
+	Enterprise ||--}o TagRule : ""
+	Enterprise ||--}o "TagRule::FilterOrderCycles" : ""
+	Enterprise ||--}o "TagRule::FilterPaymentMethods" : ""
+	Enterprise ||--}o "TagRule::FilterProducts" : ""
+	Enterprise ||--}o "TagRule::FilterShippingMethods" : ""
+	Enterprise ||--}o "TagRule::FilterVariants" : ""
+	Subscription ||--}o SubscriptionLineItem : ""
+	"Spree::Variant" ||--}o SubscriptionLineItem : ""
+	Enterprise ||--}o Subscription : ""
+	Customer ||--}o Subscription : ""
+	Schedule ||--}o Subscription : ""
+	"Spree::ShippingMethod" ||--}o Subscription : ""
+	"Spree::PaymentMethod" ||--}o Subscription : ""
+	"Spree::Gateway" ||--}o Subscription : ""
+	"Spree::Gateway::PayPalExpress" ||--}o Subscription : ""
+	"Spree::Gateway::StripeSCA" ||--}o Subscription : ""
+	"Spree::PaymentMethod::Check" ||--}o Subscription : ""
+	"Spree::PaymentMethod::CustomerCredit" ||--}o Subscription : ""
+	"Spree::PaymentMethod::Taler" ||--}o Subscription : ""
+	"Spree::Address" ||--}o Subscription : ""
+	Subscription o|..}o OrderCycle : ""
+	Subscription ||--}o ProxyOrder : ""
+	Subscription o|..}o "Spree::Order" : ""
+	Enterprise o|--|o StripeAccount : ""
+	Schedule ||--}o OrderCycleSchedule : ""
+	Schedule o|..}o OrderCycle : ""
+	Schedule o|..}o Enterprise : ""
+	"Spree::User" o|--}o ReportRenderingOptions : ""
+	"Spree::Order" o|--|o ProxyOrder : ""
+	OrderCycle ||--}o ProxyOrder : ""
+	Enterprise o|--}o ProducerProperty : ""
+	OrderCycle ||--}o OrderCycleSchedule : ""
+	OrderCycle ||..}o Enterprise : ""
+	OrderCycle ||--}o CoordinatorFee : ""
+	OrderCycle o|..}o EnterpriseFee : ""
+	OrderCycle ||--}o Exchange : ""
+	OrderCycle ||--}o "Spree::Order" : ""
+	OrderCycle o{--}o DistributorPaymentMethod : ""
+	OrderCycle o{--}o DistributorShippingMethod : ""
+	"Spree::User" ||--|o OidcAccount : ""
+	"Spree::Order" o|--}o Invoice : ""
+	Enterprise ||--}o InventoryItem : ""
+	Exchange o|--}o ExchangeVariant : ""
+	Exchange o|--}o ExchangeFee : ""
+	EnterpriseFee o|--}o ExchangeFee : ""
+	Exchange o|..}o "ActsAsTaggableOn::Tag" : ""
+	Enterprise ||--}o Exchange : ""
+	Exchange o|..}o EnterpriseFee : ""
+	"Spree::User" ||--}o EnterpriseRole : ""
+	Enterprise ||--}o EnterpriseRole : ""
+	EnterpriseRelationship ||--}o EnterpriseRelationshipPermission : ""
+	Enterprise ||--}o EnterpriseRelationship : ""
+	Enterprise o{--}o EnterpriseGroup : ""
+	"Spree::User" o|--}o EnterpriseGroup : ""
+	"Spree::Address" ||--}o EnterpriseGroup : ""
+	EnterpriseGroup o|..|o "ActiveStorage::Blob" : ""
+	Enterprise ||--}o EnterpriseFee : ""
+	"Spree::TaxCategory" o|--}o EnterpriseFee : ""
+	EnterpriseFee ||--}o CoordinatorFee : ""
+	Viewable o|--}o "Spree::Asset" : ""
+	"Spree::Product" o|--}o "Spree::Asset" : ""
+	"Spree::Variant" o|--}o "Spree::Asset" : ""
+	Enterprise o|..}o "Spree::Property" : ""
+	Enterprise o|..}o "Spree::Product" : ""
+	Enterprise ||--}o "Spree::Order" : ""
+	Enterprise ||--}o "Spree::User" : ""
+	Enterprise ||--}o DistributorPaymentMethod : ""
+	Enterprise ||--}o DistributorShippingMethod : ""
+	Enterprise ||--}o Customer : ""
+	Enterprise ||--}o ConnectedApp : ""
+	Enterprise ||--}o "ConnectedApps::AffiliateSalesData" : ""
+	Enterprise ||--}o "ConnectedApps::Vine" : ""
+	Enterprise ||--}o DfcPermission : ""
+	Enterprise ||--|o CustomTab : ""
+	Enterprise o|..|o "ActiveStorage::Blob" : ""
+	"Spree::User" ||--}o DfcPermission : ""
+	Customer ||--}o CustomerAccountTransaction : ""
+	"Spree::Payment" o|--}o CustomerAccountTransaction : ""
+	"Spree::User" o|--}o CustomerAccountTransaction : ""
+	"Spree::User" ||--}o ColumnPreference : ""
+	Enterprise ||--}o AdjustmentMetadata : ""
+	"Spree::Product" o|..}o "Spree::Price" : ""
+	"Spree::Product" o|..}o "Spree::StockItem" : ""
+	"Spree::Product" o|..}o "Spree::Image" : ""
+	"Spree::User" o|--}o "Spree::Order" : ""
+	"Spree::Address" o|--}o "Spree::Order" : ""
+	"Spree::Order" o|..|o Exchange : ""
+	"Spree::Order" o|..}o SemanticLink : ""
+	Customer ||--}o "Spree::Order" : ""
+	Customer o|..}o "ActsAsTaggableOn::Tag" : ""
+	"Spree::User" o|--}o Customer : ""
+	"Spree::Address" o|--}o Customer : ""
+	"Spree::Address" o|--}o "Spree::User" : ""
+	"Spree::User" o|--}o WebhookEndpoint : ""
+	"Spree::Image" o|..|o "ActiveStorage::Blob" : ""
+	"Flipper::Adapters::ActiveRecord::Feature" o|--}o "Flipper::Adapters::ActiveRecord::Gate" : ""

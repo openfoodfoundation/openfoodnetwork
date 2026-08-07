@@ -281,7 +281,7 @@ RSpec.describe Spree::OrdersController do
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) {
-        create(:exchange, incoming: true, sender: variant1.supplier,
+        create(:exchange, incoming: true, sender: variant1.enterprise,
                           receiver: order_cycle.coordinator, variants: [variant1, variant2],
                           enterprise_fees: [enterprise_fee])
       }

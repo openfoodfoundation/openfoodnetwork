@@ -3,7 +3,6 @@ describe 'Products service', ->
   Products = null
   OrderCycle = {}
   Shopfront = null
-  RailsFlashLoader = null
   Variants = null
   Cart = null
   shopfront = null
@@ -13,21 +12,21 @@ describe 'Products service', ->
   productWithImage = null
   properties = null
   taxons = null
-  GmapsGeo = {}
   endpoint = "/api/v0/order_cycles/1/products.json?distributor=1"
+  productGridViewFeature = null
 
   beforeEach ->
     product =
       test: "cats"
       price: 11
       variants: [
-        id: 1000, price: 11, supplier: {id: 9}
+        id: 1000, price: 11, producer: {id: 9}
       ]
     productWithImage =
-      supplier:
+      producer:
         id: 9
       variants: [
-        id: 1000, price: 20, supplier: {id: 9}
+        id: 1000, price: 20, producer: {id: 9}
       ]
       image: {
         large_url: 'foo.png'
@@ -47,8 +46,8 @@ describe 'Products service', ->
     OrderCycle =
       order_cycle:
         order_cycle_id: 1
-    RailsFlashLoader =
-      loadFlash: (arg) ->
+    productGridViewFeature =
+      { enabled: false}
 
     module 'Darkswarm'
     module ($provide)->
@@ -57,16 +56,15 @@ describe 'Products service', ->
       $provide.value "currentHub", currentHub
       $provide.value "taxons", taxons
       $provide.value "properties", properties
-      $provide.value "GmapsGeo", GmapsGeo
       $provide.value "OrderCycle", OrderCycle
       $provide.value "railsFlash", null
+      $provide.value "productGridViewFeature", productGridViewFeature
       null
 
     inject ($injector, _$httpBackend_, _RailsFlashLoader_)->
       Products = $injector.get("Products")
       Shopfront = $injector.get("Shopfront")
       Properties = $injector.get("Properties")
-      RailsFlashLoader = _RailsFlashLoader_
       Variants = $injector.get("Variants")
       Cart = $injector.get("Cart")
       $httpBackend = _$httpBackend_
@@ -76,12 +74,12 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Products.products[0].test).toEqual "cats"
 
-  it "dereferences suppliers", ->
+  it "dereferences producers", ->
     Shopfront.producers_by_id =
       {id: 9, name: "test"}
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
-    expect(Products.products[0].supplier).toBe Shopfront.producers_by_id["9"]
+    expect(Products.products[0].producer).toBe Shopfront.producers_by_id["9"]
 
   it "dereferences taxons", ->
     product.taxons = [2]
@@ -96,15 +94,15 @@ describe 'Products service', ->
     expect(Products.products[0].properties[1]).toBe properties[0]
 
   it "registers variants with Variants service", ->
-    product.variants = [{id: 1, supplier: {id: 9}}]
+    product.variants = [{id: 1, producer: {id: 9}}]
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
     expect(Products.products[0].variants[0]).toBe Variants.variants[1]
 
   it "stores variant names", ->
     product.variants = [
-      {id: 1, name_to_display: "one", supplier: {id: 9}},
-      {id: 2, name_to_display: "two", supplier: {id: 9}}
+      {id: 1, name_to_display: "one", producer: {id: 9}},
+      {id: 2, name_to_display: "two", producer: {id: 9}}
     ]
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
@@ -129,7 +127,7 @@ describe 'Products service', ->
 
     it "displays the minimum variant price when the product has variants", ->
       product.variants = [
-        {price: 22, supplier: {id: 9} }, {price: 33, supplier: {id: 9}}
+        {price: 22, producer: {id: 9} }, {price: 33, producer: {id: 9}}
       ]
       $httpBackend.expectGET(endpoint).respond([product])
       $httpBackend.flush()

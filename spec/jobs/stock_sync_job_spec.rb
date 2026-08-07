@@ -83,7 +83,7 @@ RSpec.describe StockSyncJob do
     before do
       distributor.save!
       user.enterprises << distributor
-      beans.update!(supplier: distributor)
+      beans.update!(enterprise: distributor)
       beans.semantic_links << SemanticLink.new(semantic_id: beans_retail_link)
     end
 

@@ -7,6 +7,48 @@ $teal-500: #0096ad;
 /* Defined in foundation-rails components/_reveal.scss */
 $modal-zIndex: 1005;
 
+/* Carousel CSS */
+$carousel-z-index: 2;
+$carousel-caption-background: rgb(255 255 255);
+$carousel-caption-text-color: #444;
+$carousel-caption-offset-left: 16px;
+$carousel-caption-border-radius: 8px 8px 0 0;
+$carousel-caption-padding: 8px 12px 4px;
+$carousel-caption-font-size: 0.9rem;
+$carousel-button-size: 1.8rem;
+$carousel-button-line-height: 1;
+$carousel-button-color: #111;
+$carousel-button-muted-color: #444;
+$carousel-button-background: rgb(255 255 255 / 95%);
+$carousel-button-hover-background: rgb(255 255 255);
+$carousel-button-shadow: 0 3px 8px rgb(0 0 0 / 22%);
+$carousel-button-hover-shadow: 0 4px 10px rgb(0 0 0 / 26%);
+$carousel-button-transition: background-color 160ms ease, box-shadow 160ms ease;
+$carousel-button-icon-size: 24px;
+$carousel-button-offset-default: 0.5rem;
+$carousel-button-offset-wide: 0.75rem;
+$carousel-button-focus-color: $teal-500;
+$carousel-controls-z-index: 3;
+$carousel-caption-z-index: 2;
+$carousel-pagination-bottom: 0.5rem;
+$carousel-thumbnail-grid-template-columns: minmax(0, 1fr);
+$carousel-thumbnail-slide-min-height: 360px;
+$carousel-thumbnail-slide-padding: 1px;
+$carousel-thumbnail-image-height: 360px;
+$carousel-thumbnail-image-padding: 0;
+$carousel-thumbnail-image-margin: 0;
+$carousel-thumbnail-thumb-size: 64px;
+$carousel-thumbnail-thumb-opacity: 0.5;
+$carousel-thumbnail-thumb-active-opacity: 1;
+$carousel-thumbnail-thumbs-gap: 0.5rem;
+$carousel-thumbnail-thumbs-margin-top: 0.75rem;
+$carousel-thumbnail-thumbs-margin-bottom: 1rem;
+$carousel-thumbnail-motion-duration: 220ms;
+$carousel-thumbnail-motion-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+$carousel-thumbnail-active-color: $teal-500;
+$carousel-thumbnail-image-background: $white;
+$carousel-thumbnail-image-border-radius: 8px;
+
 @font-face {
 	font-family: 'OFN';
 	src: url('../fonts/OFN-v2.eot');

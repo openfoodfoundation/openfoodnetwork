@@ -20,7 +20,7 @@ module Reporting
       end
 
       def joins_variant_supplier
-        reflect query.join(association(Spree::Variant, :supplier, supplier_alias))
+        reflect query.join(association(Spree::Variant, :enterprise, supplier_alias))
       end
 
       def joins_variant_shipping_category

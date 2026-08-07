@@ -1,6 +1,7 @@
 // Tags input
 .tags-input {
   display: block;
+  position: relative;
 
   .tags {
     -moz-appearance: textfield;
@@ -87,7 +88,7 @@
     list-style-type: none;
     max-height: 21em;
     overflow-y: auto;
-    position: relative;
+    position: absolute;
 
     li.suggestion-item {
       padding: 8px;

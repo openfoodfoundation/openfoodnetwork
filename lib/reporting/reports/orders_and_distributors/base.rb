@@ -42,7 +42,7 @@ module Reporting
         private
 
         def line_item_includes
-          [{ variant: [:supplier, :product],
+          [{ variant: [:enterprise, :product],
              order: [:bill_address, :payments, { distributor: :address }] }]
         end
 

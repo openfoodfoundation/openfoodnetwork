@@ -33,9 +33,6 @@ module OpenFoodNetwork
         An API endpoint for reports at
         <code>/api/v0/reports/:report_type(/:report_subtype)</code>
       DESC
-      "api_v1" => <<~DESC,
-        Enable the new API at <code>/api/v1</code>
-      DESC
       "match_shipping_categories" => <<~DESC,
         During checkout, show only shipping methods that support <em>all</em>
         shipping categories. Activating this feature for an enterprise owner
@@ -72,6 +69,14 @@ module OpenFoodNetwork
       DESC
       "mo-dev" => <<~DESC,
         Show DFC Permissions interface to share data with Market.Organic.
+      DESC
+      "product_grid_view" => <<~DESC,
+        Display shop products as a grid.
+      DESC
+      "bulk_coop_filters" => <<~DESC,
+        Filter non-bulk products from bulk co-op reports.
+        When enabled for an enterprise, only products with 'group buy' enabled
+        appear in bulk co-op reports for that enterprise.
       DESC
     }.merge(conditional_features).freeze;
 

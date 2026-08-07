@@ -9,7 +9,6 @@ module Spree
     invisible_captcha only: [:create], on_timestamp_spam: :render_alert_timestamp_error_message
     skip_before_action :set_current_order, only: :show
     prepend_before_action :load_object, only: [:show, :edit, :update]
-    prepend_before_action :authorize_actions, only: :new
 
     before_action :set_locale
 
@@ -64,10 +63,6 @@ module Spree
       else
         redirect_to main_app.login_path
       end
-    end
-
-    def authorize_actions
-      authorize! params[:action].to_sym, Spree::User.new
     end
 
     def accurate_title

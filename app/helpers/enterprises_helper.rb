@@ -49,9 +49,9 @@ module EnterprisesHelper
   end
 
   def enterprise_confirm_delete_message(enterprise)
-    if enterprise.supplied_products.present?
+    if enterprise.products.present?
       I18n.t(:enterprise_confirm_delete_message,
-             product: pluralize(enterprise.supplied_products.count, 'product'))
+             product: pluralize(enterprise.products.count, 'product'))
     else
       t(:are_you_sure)
     end

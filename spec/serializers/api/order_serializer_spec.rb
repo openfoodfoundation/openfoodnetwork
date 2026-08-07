@@ -37,4 +37,24 @@ RSpec.describe Api::OrderSerializer do
       expect(serializer.serializable_hash[:outstanding_balance]).to eq(1.23)
     end
   end
+
+  describe '#paid' do
+    it "returns false when payment_state is balance_due" do
+      allow(order).to receive(:payment_state).and_return('balance_due')
+
+      expect(serializer.serializable_hash[:paid]).to eq(false)
+    end
+
+    it "returns true when payment_state is paid" do
+      allow(order).to receive(:payment_state).and_return('paid')
+
+      expect(serializer.serializable_hash[:paid]).to eq(true)
+    end
+
+    it "returns true when payment_state is credit_owed" do
+      allow(order).to receive(:payment_state).and_return('credit_owed')
+
+      expect(serializer.serializable_hash[:paid]).to eq(true)
+    end
+  end
 end

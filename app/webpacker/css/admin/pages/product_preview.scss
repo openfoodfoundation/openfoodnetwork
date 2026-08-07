@@ -1,5 +1,6 @@
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
+@import "../../darkswarm/shop_partials/property-selector-base";
 
 #product-preview {
   // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
@@ -102,6 +103,10 @@
     width: 25%;
   }
 
+  .small-12 {
+    width: 100%;
+  }
+
   @media only screen and (min-width: 40.0625em) {
     .medium-3 {
       width: 20%; // original value 25%
@@ -148,6 +153,16 @@
   @import "../../darkswarm/shop_partials/shop-inputs";
   @import "../../shared/question-mark-icon";
 
+  // Fix styling for shopfront tooltip
+  .filter-shopfront {
+    .tooltip-element {
+      @include property-selector($grey-650, $grey-300);
+
+      padding: 0.1em 0.625em;
+      cursor: text;
+    }
+  }
+
   button.add-variant {
     opacity: 0.5;
   }
@@ -172,5 +187,45 @@
 
   .columns {
     margin-left: 0;
+  }
+
+  // Carousel overrides: base styles come from the shared carousel component
+  // (imported in admin/all.scss). Only admin-preview-specific overrides live here.
+  .product-img {
+    .ofn-thumbnail-carousel {
+      // Center images within each slide
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+      }
+
+      // Slightly tighter image height than the default component value
+      .ofn-thumbnail-carousel__image {
+        max-height: $carousel-thumbnail-image-height;
+      }
+
+      // Foundation's button reset adds `margin: 0 0 1.25rem` to every <button>.
+      // Undo that and fix line-height inside the product preview context.
+      .ofn-thumbnail-carousel__button {
+        margin: 0;
+        padding: 0;
+        line-height: $carousel-button-line-height;
+      }
+
+      // Slightly wider offset than the component default (0.5rem) to account
+      // for the wider product preview image container.
+      .ofn-thumbnail-carousel__button--prev {
+        left: $carousel-button-offset-wide;
+      }
+
+      .ofn-thumbnail-carousel__button--next {
+        right: $carousel-button-offset-wide;
+      }
+
+      // Clip any image that overflows the fixed thumb dimensions
+      .ofn-thumbnail-carousel__thumb {
+        overflow: hidden;
+      }
+    }
   }
 }

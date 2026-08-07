@@ -6,7 +6,7 @@ RSpec.describe EnterpriseImporter do
   subject { EnterpriseImporter.new(owner, dfc_enterprise) }
   let(:owner) { Spree::User.new }
   let(:dfc_enterprise) {
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       "litefarm.org",
       name: "Test Farm",
       localizations: [

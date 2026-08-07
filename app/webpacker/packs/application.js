@@ -1,4 +1,5 @@
 import "controllers";
+import "swiper/css/bundle";
 import "../js/turbo";
 import "../js/hotkeys";
 import "../js/mrujs";

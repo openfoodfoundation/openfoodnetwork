@@ -30,7 +30,7 @@ module Api
       end
 
       def producer_id
-        object.supplier_id
+        object.enterprise_id
       end
     end
   end

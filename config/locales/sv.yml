@@ -161,6 +161,7 @@ sv:
         unit: Enhet
         price: Pris
         producer: Producent
+        enterprise: Företag
         category: Kategori
         sku: SKU
         on_hand: "På lager"
@@ -338,8 +339,8 @@ sv:
         header:
           title: 'Redigera Omfång av Produkter '
       filters:
-        producers:
-          label: 'Producenter '
+        enterprises:
+          label: Företag
         tags:
           label: Taggar
           none: Ingen
@@ -348,7 +349,7 @@ sv:
         none_tax_category: Ingen
         category_field_name: "Kategori"
         tax_category_field_name: "Skattekategori"
-        producer_field_name: "Producent"
+        enterprise_field_name: "Företag"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet
@@ -1029,12 +1030,11 @@ sv:
   brandstory_part5_strong: "Vi kallar det Open Food Network."
   brandstory_part6: "Vi alla älskar mat. Nu kan vi älska vårt matsystem också."
   system_headline: "Handla - här är hur det fungerar."
-  system_step1: "1. Sök"
-  system_step1_text: "Sök bland oberoende butiker efter säsongens lokala varor. Sök efter grannskap och matkategori samt om du vill ha leverans eller ?"
-  system_step2: "2. Butik"
-  system_step2_text: "Sammanställ dina transaktioner med prisvärda lokala varor från skilda producenter och grupper. Lär känna hur dina varor produceras och vilka personer som ligger bakom."
-  system_step3: "3, Upphämtning / Leverans"
-  system_step3_text: "Skaffa kunskap om din leverans eller besök din producent för att skapa för att en mer personlig kunskap om de varor du beställer. Att handla mat är så skiftande som naturen gjort den till."
+  system_step1_html: "1. Sök"
+  system_step2_html: "2. Butik"
+  system_step2_text_html: "Sammanställ dina transaktioner med prisvärda lokala varor från skilda producenter och grupper. Lär känna hur dina varor produceras och vilka personer som ligger bakom."
+  system_step3_html: "3, Upphämtning / Leverans"
+  system_step3_text_html: "Skaffa kunskap om din leverans eller besök din producent för att skapa för att en mer personlig kunskap om de varor du beställer. Att handla mat är så skiftande som naturen gjort den till."
   cta_headline: "Handlande som gör världen till en bättre plats."
   cta_label: "Jag är Redo"
   stats_headline: "Vi skapar ett nytt matsystem."
@@ -2305,7 +2305,7 @@ sv:
           tags: "Taggar"
       products:
         new:
-          supplier: "Leverantör"
+          enterprise: "Företag"
           units: "Enhetsstorlek"
           value: "Värde"
           price: "Pris"

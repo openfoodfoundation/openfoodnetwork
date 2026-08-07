@@ -38,7 +38,7 @@ updates:
     versioning-strategy: lockfile-only
   - package-ecosystem: "npm"
     directory: "/"
-    patterns: ["shkapacker"]
+    patterns: ["shakapacker"]
     multi-ecosystem-group: "shakapacker"
     versioning-strategy: lockfile-only
 

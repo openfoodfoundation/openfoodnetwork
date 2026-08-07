@@ -5,7 +5,7 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::AllProducts do
   let(:report) do
     described_class.new user, { fields_to_hide: [] }
   end
-  let(:variant) { create(:variant, supplier:) }
+  let(:variant) { create(:variant, enterprise: supplier) }
   let(:supplier) { create(:supplier_enterprise) }
 
   it "returns headers" do

@@ -6,6 +6,9 @@ module Api
       def create
         authorize! :create, CustomerAccountTransaction
 
+        customer = Customer.find(customer_account_transaction_params[:customer_id])
+        authorize! :create_customer_account_transaction, customer
+
         default_params = {
           currency: CurrentConfig.get(:currency), created_by: current_api_user
         }
@@ -27,7 +30,8 @@ module Api
       end
 
       def description
-        I18n.t(".api_customer_credit", description: params[:description])
+        raw_description = customer_account_transaction_params[:description]
+        I18n.t(".api_customer_credit", description: raw_description)
       end
     end
   end

@@ -150,7 +150,8 @@ RSpec.describe OrderCycle do
   it "checks for variants" do
     variant1 = create(:variant)
     variant2 = create(:variant)
-    order_cycle = create(:simple_order_cycle, suppliers: [variant1.supplier], variants: [variant1])
+    order_cycle = create(:simple_order_cycle, suppliers: [variant1.enterprise],
+                                              variants: [variant1])
 
     expect(order_cycle).to have_variant(variant1)
     expect(order_cycle).not_to have_variant(variant2)

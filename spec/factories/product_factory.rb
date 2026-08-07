@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier_id do
+    enterprise_id do
       Enterprise.is_primary_producer.first&.id || FactoryBot.create(:supplier_enterprise).id
     end
 
@@ -38,10 +38,17 @@ FactoryBot.define do
   end
 
   factory :product_with_image, parent: :product do
-    after(:create) do |product|
-      Spree::Image.create(attachment: white_logo_file,
-                          viewable_id: product.id,
-                          viewable_type: 'Spree::Product')
+    transient do
+      images_count { 1 }
+    end
+
+    after(:create) do |product, evaluator|
+      evaluator.images_count.times do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: product
+        )
+      end
     end
   end
 

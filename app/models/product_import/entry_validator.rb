@@ -32,7 +32,6 @@ module ProductImport
         assign_enterprise_field(entry)
         enterprise_validation(entry)
         unit_fields_validation(entry)
-        variant_of_product_validation(entry)
         price_validation(entry)
         on_hand_on_demand_validation(entry)
 
@@ -69,7 +68,7 @@ module ProductImport
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
       new_variant = Spree::Variant.new(product_id:, **variant_attributes)
-      new_variant.supplier_id = entry.producer_id
+      new_variant.enterprise_id = entry.producer_id
 
       new_variant.save
       if new_variant.persisted?
@@ -227,31 +226,6 @@ module ProductImport
       value.blank? || value.to_s.strip == "-"
     end
 
-    def variant_of_product_validation(entry)
-      return if entry.producer.blank? || entry.name.blank?
-
-      validate_unit_type_unchanged(entry)
-      validate_variant_unit_name_unchanged(entry)
-    end
-
-    def validate_unit_type_unchanged(entry)
-      return if entry.unit_type.blank?
-
-      reference_entry = all_entries_for_product(entry).first
-      return if entry.unit_type.to_s == reference_entry.unit_type.to_s
-
-      mark_as_not_updatable(entry, "unit_type")
-    end
-
-    def validate_variant_unit_name_unchanged(entry)
-      return if entry.variant_unit_name.blank?
-
-      reference_entry = all_entries_for_product(entry).first
-      return if entry.variant_unit_name.to_s == reference_entry.variant_unit_name.to_s
-
-      mark_as_values_must_be_same(entry, "variant_unit_name")
-    end
-
     def producer_validation(entry)
       producer_name = entry.producer
 
@@ -283,7 +257,7 @@ module ProductImport
     end
 
     def inventory_validation(entry)
-      products = Spree::Product.in_supplier(entry.producer_id).where(name: entry.name)
+      products = Spree::Product.in_enterprise(entry.producer_id).where(name: entry.name)
 
       if products.empty?
         mark_as_invalid(entry, attribute: 'name',
@@ -341,7 +315,7 @@ module ProductImport
     end
 
     def product_validation(entry)
-      products = Spree::Product.in_supplier(entry.enterprise_id).where(name: entry.name)
+      products = Spree::Product.in_enterprise(entry.enterprise_id).where(name: entry.name)
 
       if products.empty?
         mark_as_new_product(entry)
@@ -361,7 +335,7 @@ module ProductImport
     end
 
     def mark_as_new_product(entry)
-      new_product = Spree::Product.new(supplier_id: entry.enterprise_id)
+      new_product = Spree::Product.new(enterprise_id: entry.enterprise_id)
       new_product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )

@@ -72,8 +72,8 @@ RSpec.describe Admin::TagRulesController do
     render_views
 
     let(:enterprise) { create(:distributor_enterprise) }
-    let(:product) { create(:product, supplier_id: enterprise.id) }
-    let!(:variant1) { create(:variant, product:, supplier: enterprise, tag_list: "organic,local") }
+    let(:product) { create(:product, enterprise_id: enterprise.id) }
+    let!(:variant1) { create(:variant, product:, enterprise:, tag_list: "organic,local") }
     let!(:rule) {
       create(:filter_variants_tag_rule, enterprise:, preferred_customer_tags: "vip",
                                         preferred_variant_tags: "premium")
@@ -115,7 +115,7 @@ RSpec.describe Admin::TagRulesController do
     end
 
     it "returns tags most recently applied to a variant first" do
-      variant2 = create(:variant, product:, supplier: enterprise, tag_list: "newer-tag")
+      variant2 = create(:variant, product:, enterprise:, tag_list: "newer-tag")
       # Ensure variant1's taggings are older
       ActsAsTaggableOn::Tagging.where(taggable: variant2).update_all(created_at: 1.hour.from_now)
 
@@ -126,8 +126,8 @@ RSpec.describe Admin::TagRulesController do
 
     it "does not return tags from another enterprise" do
       other_enterprise = create(:distributor_enterprise)
-      other_product = create(:product, supplier_id: other_enterprise.id)
-      create(:variant, product: other_product, supplier: other_enterprise, tag_list: "other-tag")
+      other_product = create(:product, enterprise_id: other_enterprise.id)
+      create(:variant, product: other_product, enterprise: other_enterprise, tag_list: "other-tag")
 
       spree_get(:variant_tag_rules, format: :html, enterprise_id: enterprise.id, q:)
 

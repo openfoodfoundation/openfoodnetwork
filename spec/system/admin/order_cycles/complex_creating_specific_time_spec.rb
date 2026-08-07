@@ -16,7 +16,7 @@ RSpec.describe '
   # Given coordinating, supplying and distributing enterprises with some products with variants
   let!(:coordinator) { create(:distributor_enterprise, name: 'My coordinator') }
   let!(:supplier) { create(:supplier_enterprise, name: 'My supplier') }
-  let!(:product) { create(:product, supplier:) }
+  let!(:product) { create(:product, enterprise: supplier) }
   let!(:v1) { create(:variant, product:) }
   let!(:v2) { create(:variant, product:) }
   let!(:distributor) {

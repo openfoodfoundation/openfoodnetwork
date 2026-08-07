@@ -16,6 +16,7 @@ RSpec.describe "Revenues By Hub Reports" do
   let(:order_with_voucher_tax_included) do
     create(
       :order_with_taxes,
+      line_items_count: 5,
       completed_at: 2.days.ago,
       order_cycle:,
       distributor: distributor2,
@@ -28,6 +29,7 @@ RSpec.describe "Revenues By Hub Reports" do
   let(:order_with_voucher_tax_excluded) do
     create(
       :order_with_taxes,
+      line_items_count: 5,
       completed_at: 2.days.ago,
       order_cycle:,
       distributor: distributor3,

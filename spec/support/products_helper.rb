@@ -3,7 +3,7 @@
 module ProductsHelper
   def create_products(amount)
     amount.times do |i|
-      create(:simple_product, name: "product #{i}", supplier_id: producer.id)
+      create(:simple_product, name: "product #{i}", enterprise_id: enterprise.id)
     end
   end
 
@@ -24,8 +24,8 @@ module ProductsHelper
     click_button "Search"
   end
 
-  def search_by_producer(producer)
-    tomselect_select producer, from: "producer_id"
+  def search_by_enterprise(enterprise)
+    tomselect_select enterprise, from: "Enterprises"
     click_button "Search"
   end
 
@@ -81,7 +81,7 @@ module ProductsHelper
 
   def random_producer(product)
     Enterprise.is_primary_producer
-      .where.not(id: product.supplier.id)
+      .where.not(id: product.enterprise.id)
       .pluck(:name).sample
   end
 

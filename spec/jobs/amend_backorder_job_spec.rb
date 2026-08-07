@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe AmendBackorderJob do
-  let(:order) { create(:completed_order_with_totals) }
+  let(:order) { create(:completed_order_with_totals, line_items_count: 2) }
   let(:distributor) { order.distributor }
   let(:beans) { beans_item.variant }
   let(:beans_item) { order.line_items[0] }

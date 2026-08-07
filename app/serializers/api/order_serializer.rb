@@ -5,7 +5,7 @@ module Api
     attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state,
                :outstanding_balance, :payments, :path, :cancel_path,
                :changes_allowed, :changes_allowed_until, :item_count,
-               :shop_id
+               :shop_id, :paid
 
     has_many :payments, serializer: Api::PaymentSerializer
 
@@ -61,6 +61,10 @@ module Api
 
     def changes_allowed
       object.changes_allowed?
+    end
+
+    def paid
+      object.paid?
     end
   end
 end

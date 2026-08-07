@@ -4,22 +4,30 @@ class DfcLoader
   def self.connector
     unless @connector
       @connector = DataFoodConsortium::ConnectorV1::Connector.instance
-      load_vocabularies
+      @connector.loadMeasures(read_file("measures"))
+      @connector.loadFacets(read_file("facets"))
+      @connector.loadProductTypes(read_file("productTypes"))
+      vocabulary("vocabulary") # order states etc
     end
 
     @connector
   end
 
+  def self.connector_v2
+    unless @connector_v2
+      @connector_v2 = DataFoodConsortium::Connector::Connector.instance
+      @connector_v2.loadMeasures(read_file("measures"))
+      @connector_v2.loadFacets(read_file("facets"))
+      @connector_v2.loadProductTypes(read_file("productTypes"))
+      vocabulary("vocabulary") # order states etc
+    end
+
+    @connector_v2
+  end
+
   def self.vocabulary(name)
     @vocabs ||= {}
     @vocabs[name] ||= connector.__send__(:loadThesaurus, read_file(name))
-  end
-
-  def self.load_vocabularies
-    connector.loadMeasures(read_file("measures"))
-    connector.loadFacets(read_file("facets"))
-    connector.loadProductTypes(read_file("productTypes"))
-    vocabulary("vocabulary") # order states etc
   end
 
   def self.read_file(name)

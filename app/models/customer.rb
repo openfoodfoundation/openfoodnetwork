@@ -19,11 +19,14 @@ class Customer < ApplicationRecord
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User", optional: true
   has_many :orders, class_name: "Spree::Order", dependent: :nullify
-  has_many :customer_account_transactions, dependent: :restrict_with_error
+  # deletion handled manually in cleanup callback
+  has_many :customer_account_transactions, dependent: nil
   before_validation :downcase_email
   before_validation :empty_code
   before_create :associate_user
-  before_destroy :update_orders_and_delete_canceled_subscriptions
+  # All validations before any mutations to avoid partial cleanup
+  before_destroy :validate_destroy
+  before_destroy :cleanup_associated_records
 
   belongs_to :bill_address, class_name: "Spree::Address", optional: true
   alias_method :billing_address, :bill_address
@@ -73,11 +76,27 @@ class Customer < ApplicationRecord
     self.user = user || Spree::User.find_by(email:)
   end
 
-  def update_orders_and_delete_canceled_subscriptions
-    if Subscription.where(customer_id: id).not_canceled.any?
-      errors.add(:base, I18n.t('admin.customers.destroy.has_associated_subscriptions'))
+  def validate_destroy
+    if credit_balance != 0
+      errors.add(:base, I18n.t('admin.customers.destroy.has_outstanding_credit'))
       throw :abort
     end
-    Subscription.where(customer_id: id).destroy_all
+    return unless Subscription.where(customer_id: id).not_canceled.any?
+
+    errors.add(:base, I18n.t('admin.customers.destroy.has_associated_subscriptions'))
+    throw :abort
+  end
+
+  def cleanup_associated_records
+    # Single transaction ensures both deletions are atomic
+    ActiveRecord::Base.transaction do
+      records = Subscription.where(customer_id: id).destroy_all
+      unless records.all?(&:destroyed?)
+        raise ActiveRecord::RecordNotDestroyed, "Failed to destroy all subscriptions"
+      end
+
+      # delete_all through model to bypass readonly? and association proxy
+      CustomerAccountTransaction.where(customer_id: id).delete_all
+    end
   end
 end

@@ -68,6 +68,10 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
@@ -87,7 +91,6 @@ jobs:
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-          bin/rails assets:precompile 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
@@ -95,7 +98,7 @@ jobs:
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -147,8 +150,11 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
-      - name: Run tests
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -165,9 +171,7 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
           bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
@@ -175,7 +179,7 @@ jobs:
         with:
           name: simplecov-chunk-system-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -237,8 +241,11 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
-      - name: Run tests
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -255,16 +262,15 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
+          bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -317,6 +323,10 @@ jobs:
         run: |
           bin/rails db:create db:schema:load
 
+      - name: Compile assets
+        run: |
+          bin/rails assets:precompile
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
@@ -334,16 +344,15 @@ jobs:
           # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
           RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
           SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-
         run: |
-          bin/rails assets:precompile knapsack_pro:rspec 2>&1 | sed '/INFO -- : Writing/d' # strip unnecessary output
+          bin/rails knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v7
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -416,7 +425,23 @@ jobs:
           if-no-files-found: ignore
           include-hidden-files: true
       - name: Compare SimpleCov results with Undercover
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          git fetch --no-tags origin ${{ github.event.pull_request.base.sha }}:master
-          bundle exec undercover
-        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch
+          base_sha="$PR_BASE_SHA"
+          if [ -z "$base_sha" ]; then
+            # Pushed without a pull request: ask GitHub for the merge base with
+            # upstream master, the same way it does when a PR is opened. Without
+            # this, a fork's own master is used and it may be months behind.
+            upstream=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.parent.full_name // .full_name')
+            base_sha=$(gh api "repos/$upstream/compare/master...${GITHUB_REPOSITORY%%/*}:$GITHUB_SHA" \
+                       --jq '.merge_base_commit.sha')
+          fi
+          # A fork shares its object store with its upstream, so `origin` can serve
+          # a commit that only exists upstream. Depth 1 is enough: undercover falls
+          # back to a direct diff when it can't compute a merge base, and this is
+          # already the merge base.
+          git fetch --no-tags --depth=1 origin "$base_sha"
+          bundle exec undercover --compare "$base_sha"
+        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself

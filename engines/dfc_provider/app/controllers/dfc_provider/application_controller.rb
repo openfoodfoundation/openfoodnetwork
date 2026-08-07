@@ -71,7 +71,7 @@ module DfcProvider
     end
 
     def profile
-      request.headers["Accept"][/\bprofile="?([^";,\s]+)"?/, 1]
+      @profile ||= request.headers["Accept"][/\bprofile="?([^";,\s]+)"?/, 1]
     end
 
     def import
@@ -83,17 +83,31 @@ module DfcProvider
       OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
     end
 
-    def render_dfc(*)
-      if profile == "dfc-v2"
-        render_v2(*)
-      else
-        render json: DfcIo.export(*)
-      end
+    def render_dfc(subject = nil, *)
+      return render_v1(*subject, *) if profile != "dfc-v2"
+      return render_v2(subject, *) unless subject.is_a?(Array)
+
+      # DFCv2 requires containers for listing resources in an index action.
+      # We need to pass DFCv2 data into the container because the migration
+      # will skip the container itself as it's not a DFCv1 class.
+      members = migration.up(*subject)
+      container = Container.new(url_for, members:)
+      render_v2(container, *subject, *)
+    end
+
+    def render_v1(*)
+      render json: DfcIo.export(*)
     end
 
     def render_v2(*)
-      connector = DataFoodConsortium::Connector::Connector.instance
-      render json: connector.export(*), content_type: 'application/ld+json; profile="dfc-v2"'
+      objects = migration.up(*)
+
+      render json: DfcLoader.connector_v2.export(*objects),
+             content_type: 'application/ld+json; profile="dfc-v2"'
+    end
+
+    def migration
+      @migration ||= DfcV2Migration.new
     end
   end
 end

@@ -27,7 +27,7 @@ RSpec.describe '
       fill_in "Unit value", with: "1"
       fill_in 'Price', with: 2.5
       select taxon.name, from: "variant_primary_taxon_id"
-      select2_select product.variants.first.supplier.name, from: "variant_supplier_id"
+      select2_select product.variants.first.enterprise.name, from: "variant_enterprise_id"
 
       click_button 'Create'
 
@@ -40,7 +40,7 @@ RSpec.describe '
       expect(new_variant.variant_unit_scale).to eq(1) # Liter
       expect(new_variant.price).to eq(2.5)
       expect(new_variant.primary_taxon).to eq(taxon)
-      expect(new_variant.supplier).to eq(product.variants.first.supplier)
+      expect(new_variant.enterprise).to eq(product.variants.first.enterprise)
     end
 
     it "creating a new variant from product variant page with filter" do
@@ -80,7 +80,7 @@ RSpec.describe '
       fill_in "Unit value", with: "1"
       fill_in 'Price', with: 2.5
       select taxon.name, from: "variant_primary_taxon_id"
-      select2_select product.variants.first.supplier.name, from: "variant_supplier_id"
+      select2_select product.variants.first.enterprise.name, from: "variant_enterprise_id"
 
       # Expect variant_weight to accept 3 decimal places
       fill_in 'variant_weight', with: '1.234'
@@ -99,7 +99,7 @@ RSpec.describe '
       tomselect_select("Volume (L)", from: "Unit scale")
       fill_in 'Price', with: 2.5
       select taxon.name, from: "variant_primary_taxon_id"
-      select2_select product.variants.first.supplier.name, from: "variant_supplier_id"
+      select2_select product.variants.first.enterprise.name, from: "variant_enterprise_id"
 
       click_on "Unit" # activate popout
       # Unit popout
@@ -278,12 +278,12 @@ RSpec.describe '
       new_supplier = create(:supplier_enterprise)
       visit spree.edit_admin_product_variant_path(product, variant)
 
-      select2_select new_supplier.name, from: "variant_supplier_id"
+      select2_select new_supplier.name, from: "variant_enterprise_id"
 
       click_button 'Update'
 
       expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
-      expect(variant.reload.supplier).to eq(new_supplier)
+      expect(variant.reload.enterprise).to eq(new_supplier)
     end
   end
 

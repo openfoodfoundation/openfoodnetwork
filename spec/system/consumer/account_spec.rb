@@ -61,6 +61,11 @@ RSpec.describe '
         expect(page).to have_link(distributor_credit.name,
                                   href: "#{distributor_credit.permalink}/shop", count: 1)
 
+        # An order with credit_owed payment state should be shown as paid
+        within('tr', text: credit_order.number) do
+          expect(page).to have_css('td.order6', text: 'Yes')
+        end
+
         # Viewing transaction history
         find("a", text: /Transactions/i).click
 

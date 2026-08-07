@@ -504,6 +504,7 @@ de_DE:
         unit_value: Menge
         price: Preis
         producer: Produzent
+        enterprise: Unternehmen
         category: Kategorie
         sku: Artikelnummer
         on_hand: "Verfügbar"
@@ -789,12 +790,10 @@ de_DE:
           cancellation_text: "Produktvariante beibehalten"
       filters:
         search_products: Nach Produkten suchen
-        search_for_producers: Produzenten suchen
-        all_producers: Alle Produzenten
         search_for_categories: Kategorie suchen
         all_categories: Alle Kategorien
-        producers:
-          label: Unsere Produzenten
+        enterprises:
+          label: Unternehmen
         categories:
           label: Produktkategorie
         tags:
@@ -841,7 +840,7 @@ de_DE:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
-        producer_field_name: "Produzent"
+        enterprise_field_name: "Unternehmen"
         select_unit_scale: Einheit auswählen
         add_a_tag: Stichwort hinzufügen
       clone:
@@ -2156,12 +2155,11 @@ de_DE:
   brandstory_part5_strong: "Das ist das Open Food Network."
   brandstory_part6: "Sie lieben Ihr Essen! Jetzt können Sie auch Ihr regionales Lebensmittelsystem lieben!"
   system_headline: "So einfach regional einkaufen:"
-  system_step1: "1. Wo kann ich regionale und saisonale Produkte kaufen?"
-  system_step1_text: "Auf der Seite \"Einkaufen\" finden Sie die Liste der Läden in Ihrer Nähe. Sie können nach einem Ort suchen oder die Liste nach Kategorien, Lieferoptionen oder Produkteigenschaften filtern. Klicken Sie auf den Namen eines Ladens, um dort einzukaufen.\nAlternativ verwenden Sie die Seite \"Karte\" und finden Sie Produzenten und Läden in Ihrer Region."
-  system_step2: "2. Welche regionalen Lebensmittel kann ich online kaufen?"
-  system_step2_text: "Im Online-Shop des Ladens finden Sie ein großes Sortiment regionaler und saisonaler Produkte. Von Obst und Gemüse über Eier, Milch, Käse, Wurst und Fleisch bis hin zu Backwaren, Süßigkeiten und Fertiggerichten werden Sie fündig. Nutzen Sie die Suche oder die Filter nach Kategorien und Eigenschaften, wie bio, unverpackt oder fair gehandelt."
-  system_step3: "3. Wie kommen regionale Lebensmittel zu mir nach Hause?"
-  system_step3_text: "Jeder Laden kann seine Lieferoptionen selbst festlegen. Viele bieten einen Lieferservice an, oft ist auch die Abholung vor Ort oder an einer Abholstation möglich. Wählen Sie die gewünschte Option einfach beim Abschluss der Bestellung aus. Im Open Food Network kennt man sich - auch das Vereinbaren eines Ablageortes lässt sich sicher organisieren. "
+  system_step1_html: "1. Wo kann ich regionale und saisonale Produkte kaufen?"
+  system_step2_html: "2. Welche regionalen Lebensmittel kann ich online kaufen?"
+  system_step2_text_html: "Im Online-Shop des Ladens finden Sie ein großes Sortiment regionaler und saisonaler Produkte. Von Obst und Gemüse über Eier, Milch, Käse, Wurst und Fleisch bis hin zu Backwaren, Süßigkeiten und Fertiggerichten werden Sie fündig. Nutzen Sie die Suche oder die Filter nach Kategorien und Eigenschaften, wie bio, unverpackt oder fair gehandelt."
+  system_step3_html: "3. Wie kommen regionale Lebensmittel zu mir nach Hause?"
+  system_step3_text_html: "Jeder Laden kann seine Lieferoptionen selbst festlegen. Viele bieten einen Lieferservice an, oft ist auch die Abholung vor Ort oder an einer Abholstation möglich. Wählen Sie die gewünschte Option einfach beim Abschluss der Bestellung aus. Im Open Food Network kennt man sich - auch das Vereinbaren eines Ablageortes lässt sich sicher organisieren. "
   cta_headline: "Machen Sie die Welt mit Ihrem Einkauf ein kleines bisschen besser."
   cta_label: "Jetzt regional einkaufen"
   stats_headline: "Wir erschaffen ein neues Ernährungssystem."
@@ -2282,6 +2280,7 @@ de_DE:
   email_shipping_collection_time: "Bereit zur Abholung am:"
   email_shipping_collection_instructions: "Informationen zur Abholung:"
   email_special_instructions: "Ihre Notizen:"
+  email_order_note: "Anmerkung:"
   email_signup_greeting: Hallo!
   email_signup_welcome: "Willkommen im Open Food Network!"
   email_signup_confirmed_email: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
@@ -3443,7 +3442,6 @@ de_DE:
         add_to_cart: "Hinzufügen"
         in_cart: "im Warenkorb"
         quantity_in_cart: "%{quantity} im Warenkorb"
-        remaining_in_stock: "Nur noch %{quantity} verfügbar! "
       bulk_buy_modal:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
@@ -4205,8 +4203,7 @@ de_DE:
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
-          supplier: "Lieferant"
-          supplier_select_placeholder: "Lieferant wählen"
+          enterprise: "Unternehmen"
           product_name: "Produktname"
           units: "Einheit"
           value: "Menge"

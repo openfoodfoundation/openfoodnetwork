@@ -49,7 +49,7 @@ angular.module('admin.orderCycles')
 
     $scope.loadExchangeProducts = (exchange, page = 1) ->
       enterprise = $scope.enterprises[exchange.enterprise_id]
-      enterprise.supplied_products ?= []
+      enterprise.products ?= []
 
       return if enterprise.last_page_loaded? && enterprise.last_page_loaded >= page
       enterprise.last_page_loaded = page
@@ -59,7 +59,7 @@ angular.module('admin.orderCycles')
       params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming, page: page}
       ExchangeProduct.index params, (products, num_of_pages) ->
         enterprise.num_of_pages = num_of_pages
-        enterprise.supplied_products.push products...
+        enterprise.products.push products...
         angular.forEach products, (product) ->
           enterprise.loaded_variants += product.variants.length
 

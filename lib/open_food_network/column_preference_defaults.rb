@@ -91,7 +91,7 @@ module OpenFoodNetwork
           unit_scale: { name: t(:unit_scale), visible: true },
           price: { name: t(:price), visible: true },
           on_hand: { name: t(:on_hand), visible: true },
-          producer: { name: t(:producer), visible: producer_visibility },
+          producer: { name: t(:enterprise), visible: producer_visibility },
           category: { name: t(:category), visible: true },
           tax_category: { name: t(:tax_category), visible: true },
         }

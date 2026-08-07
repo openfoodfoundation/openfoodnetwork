@@ -488,6 +488,7 @@ ca:
         unit_value: Valor de la unitat
         price: Preu
         producer: Productora
+        enterprise: Organització
         category: Categoria
         sku: Número de referència (SKU)
         on_hand: "Disponibles"
@@ -764,12 +765,10 @@ ca:
           cancellation_text: "Mantenir la variant"
       filters:
         search_products: Cerca de productes
-        search_for_producers: Cercar productors
-        all_producers: Tots els productors
         search_for_categories: Cercar categories
         all_categories: Totes les categories
-        producers:
-          label: Productors
+        enterprises:
+          label: Organitzacions
         categories:
           label: Categories
         tags:
@@ -802,7 +801,7 @@ ca:
         none_tax_category: Cap
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'impostos"
-        producer_field_name: "Productora"
+        enterprise_field_name: "Organització"
         add_a_tag: Afegeix una etiqueta
     product_import:
       title: Importació de productes
@@ -1997,12 +1996,11 @@ ca:
   brandstory_part5_strong: "L'anomenem Open Food Network."
   brandstory_part6: "A totes ens agrada menjar. Ara també podem estimar el nostre sistema alimentari."
   system_headline: "Compres - aquí t'expliquem com funcionen."
-  system_step1: "1. Cerca"
-  system_step1_text: "Cerca a les nostres botigues diverses i independents per menjar producte local de temporada. Cerca per població i categoria d'aliments, o bé si prefereixes lliurament o recollida."
-  system_step2: "2. Compra"
-  system_step2_text: "Transforma les teves transaccions amb aliments locals assequibles de diverses productores i grups. Coneix les històries del teu menjar i de les persones que el fan!"
-  system_step3: "3. Recollida / lliurament"
-  system_step3_text: "Espereu per al vostre lliurament o visiteu la vostra productora o grup de consum per tenir una connexió més personal amb el vostre menjar. La compra d'aliments és tan diversa com ens proposem."
+  system_step1_html: "1. Cerca"
+  system_step2_html: "2. Compra"
+  system_step2_text_html: "Transforma les teves transaccions amb aliments locals assequibles de diverses productores i grups. Coneix les històries del teu menjar i de les persones que el fan!"
+  system_step3_html: "3. Recollida / lliurament"
+  system_step3_text_html: "Espereu per al vostre lliurament o visiteu la vostra productora o grup de consum per tenir una connexió més personal amb el vostre menjar. La compra d'aliments és tan diversa com ens proposem."
   cta_headline: "Compres que fan del món un lloc millor."
   cta_label: "Estic preparada"
   stats_headline: "Estem creant un nou sistema alimentari."
@@ -2118,6 +2116,7 @@ ca:
   email_shipping_collection_time: "Llest per a la recollida:"
   email_shipping_collection_instructions: "Instruccions de recollida:"
   email_special_instructions: "Les teves notes: "
+  email_order_note: "Nota:"
   email_signup_greeting: Hola!
   email_signup_welcome: "Benvinguda a %{sitename}!"
   email_signup_confirmed_email: "Gràcies per confirmar el teu correu electrònic."
@@ -3224,7 +3223,6 @@ ca:
         add_to_cart: "Afegeix"
         in_cart: "a la cistella"
         quantity_in_cart: "%{quantity} a la cistella"
-        remaining_in_stock: "Només queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
@@ -3961,8 +3959,7 @@ ca:
         new:
           title: "Nou producte"
           new_product: "Nou producte"
-          supplier: "Proveïdora"
-          supplier_select_placeholder: "Trieu un proveïdor"
+          enterprise: "Organització"
           product_name: "Nom del producte"
           units: "Mida d'unitat"
           value: "Valor"

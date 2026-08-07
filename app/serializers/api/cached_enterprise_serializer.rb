@@ -104,7 +104,7 @@ module Api
       properties = Spree::Property
         .joins(
           producer_properties: {
-            producer: { supplied_variants: { exchanges: :order_cycle } }
+            producer: { variants: { exchanges: :order_cycle } }
           }
         )
         .merge(Exchange.outgoing)
@@ -161,7 +161,7 @@ module Api
     def product_properties
       Spree::Property.joins(:product_properties).where(
         spree_product_properties: {
-          product_id: enterprise.supplied_product_ids
+          product_id: enterprise.product_ids
         }
       ).select('DISTINCT spree_properties.*')
     end

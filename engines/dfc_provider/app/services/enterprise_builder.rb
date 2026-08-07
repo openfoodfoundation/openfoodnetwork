@@ -5,12 +5,12 @@ class EnterpriseBuilder < DfcBuilder
     # The ABC size of this method should shrink when our custom attributes are
     # in the DFC standard.
 
-    variants = enterprise.supplied_variants.to_a
+    variants = enterprise.variants.to_a
     catalog_items = variants.map(&CatalogItemBuilder.method(:catalog_item))
     supplied_products = catalog_items.map(&:product)
     address = AddressBuilder.address(enterprise.address)
 
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       urls.enterprise_url(enterprise.id),
       name: enterprise.name,
       description: enterprise.description,
@@ -23,6 +23,7 @@ class EnterpriseBuilder < DfcBuilder
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       logo: enterprise.logo_url(:small),
       mainContact: contact(enterprise),
+      certifications: certifications(enterprise),
 
       # The model strips the protocol and we need to add it:
       websites: [enterprise.website].compact_blank.map { |url| "https://#{url}" },
@@ -45,11 +46,11 @@ class EnterpriseBuilder < DfcBuilder
   end
 
   def self.enterprise_group(group)
-    members = group.enterprises.map do |member|
+    members = group.enterprises.order(:id).map do |member|
       urls.enterprise_url(member.id)
     end
 
-    DataFoodConsortium::ConnectorV1::Enterprise.new(
+    DfcProvider::Enterprise.new(
       urls.enterprise_group_url(group.id),
       name: group.name,
       description: group.description,
@@ -81,5 +82,11 @@ class EnterpriseBuilder < DfcBuilder
     )
 
     [number]
+  end
+
+  def self.certifications(enterprise)
+    enterprise.properties.map do |property|
+      CertificationBuilder.certification(property)
+    end
   end
 end

@@ -83,6 +83,8 @@ en_GB:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
+        enterprise_relationship:
+          inventory_vs_linked_variants: "Cannot grant both inventory and linked variants permissions."
         spree/image:
           attributes:
             attachment:
@@ -642,6 +644,7 @@ en_GB:
         display_as: Display unit as
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: Product Code
         on_hand: "In Stock"
@@ -668,6 +671,7 @@ en_GB:
         delete: Delete
         remove: Remove
         preview: Preview
+        create_linked_variant: Create linked variant
       image:
         edit: Edit
       product_preview:
@@ -823,6 +827,7 @@ en_GB:
         update_address: "Update Address"
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
+        filter_by_tag: "Filter by tag"
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
@@ -963,15 +968,12 @@ en_GB:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
-        search_for_producers: Search for producers
-        select_producer: Select producer
-        all_producers: All producers
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
         select_tag: Select tag
-        producers:
-          label: Producer
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -1019,12 +1021,14 @@ en_GB:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         select_unit_scale: Select unit scale
         add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      create_linked_variant:
+        success: "Successfully created linked variant"
       tag_rules:
         rules_per_tag:
           one: "%{tag} has 1 rule"
@@ -2415,12 +2419,12 @@ en_GB:
   brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
   system_headline: "Selling with us - 3 easy steps"
-  system_step1: "1. Open Your Shop"
-  system_step1_text: "Add your shop name, a description and some contact details."
-  system_step2: "2. Add Your Products"
-  system_step2_text: "Create products, set stock levels and open an order cycle."
-  system_step3: "3. Plan Your Deliveries"
-  system_step3_text: "Set up payment methods and add your collection and delivery options."
+  system_step1_html: "1. Open Your Shop"
+  system_step1_text_html: <a href="/shops">Search</a>our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup.
+  system_step2_html: "2. Add Your Products"
+  system_step2_text_html: "Create products, set stock levels and open an order cycle."
+  system_step3_html: "3. Plan Your Deliveries"
+  system_step3_text_html: "Set up payment methods and add your collection and delivery options."
   cta_headline: "The sustainable food network of our future."
   cta_label: "Start shopping"
   stats_headline: "Join over 21k shoppers and producers in creating a new food system"
@@ -2549,6 +2553,7 @@ en_GB:
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
+  email_order_note: "Note:"
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
@@ -3357,6 +3362,8 @@ en_GB:
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
+  report_header_balance_due: "Balance Due (%{currency_symbol})"
+  report_header_credit_due: "Available Credit (%{currency_symbol})"
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3726,7 +3733,6 @@ en_GB:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
-        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -3761,6 +3767,7 @@ en_GB:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
+      create_linked_variants: "create linked variants [BETA]"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:
@@ -4215,6 +4222,7 @@ en_GB:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
+    instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4389,6 +4397,7 @@ en_GB:
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
           send_invoice: "Send Invoices"
           send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
+          credit_orders: Credit orders
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4425,6 +4434,8 @@ en_GB:
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+        bulk_credit:
+          could_not_credit: "Order #%{order_number}could not be credited %{message}"
       invoices:
         index:
           order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
@@ -4549,9 +4560,7 @@ en_GB:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
-          supplier_select_placeholder: "Select a supplier"
-          search_for_suppliers: "Search for suppliers"
+          enterprise: "Enterprise"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
@@ -4836,6 +4845,7 @@ en_GB:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
+        no_payment_found: "No pending Paypal payment found"
     users:
       api_keys:
         regenerate_key: "Regenerate Key"

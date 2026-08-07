@@ -71,11 +71,11 @@ module Reporting
         end
 
         def filter_enterprise_fee_by_id_active?
-          !ransack_params[:enterprise_fee_id_in].compact_blank.empty?
+          Array(ransack_params[:enterprise_fee_id_in]).compact_blank.any?
         end
 
         def filter_enteprise_fee_by_owner_active?
-          !ransack_params[:enterprise_fee_owner_id_in].compact_blank.empty?
+          Array(ransack_params[:enterprise_fee_owner_id_in]).compact_blank.any?
         end
 
         def join_tax_rate

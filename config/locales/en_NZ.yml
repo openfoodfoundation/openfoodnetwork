@@ -435,6 +435,7 @@ en_NZ:
         unit: Unit
         price: Price
         producer: Producer
+        enterprise: Enterprise
         category: Category
         sku: SKU
         on_hand: "On Hand"
@@ -685,8 +686,8 @@ en_NZ:
         header:
           title: Bulk Edit Products
       filters:
-        producers:
-          label: Producers
+        enterprises:
+          label: Enterprises
         categories:
           label: Categories
         tags:
@@ -702,7 +703,7 @@ en_NZ:
         none_tax_category: None
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-        producer_field_name: "Producer"
+        enterprise_field_name: "Enterprise"
         add_a_tag: Add a tag
     product_import:
       title: Product Import
@@ -1889,12 +1890,11 @@ en_NZ:
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
   system_headline: "Shopping - here's how it works."
-  system_step1: "1. Search"
-  system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
-  system_step2: "2. Shop"
-  system_step2_text: "Choose what you want, checkout as guest or make an account, you are good to go. Its that simple. If you'd like a box every week then ask for a subscription."
-  system_step3: "3. Pick-up / Delivery"
-  system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
+  system_step1_html: "1. Search"
+  system_step2_html: "2. Shop"
+  system_step2_text_html: "Choose what you want, checkout as guest or make an account, you are good to go. Its that simple. If you'd like a box every week then ask for a subscription."
+  system_step3_html: "3. Pick-up / Delivery"
+  system_step3_text_html: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
   cta_headline: "Shopping that makes the world a better place."
   cta_label: "I'm Ready"
   stats_headline: "We're creating a new food system."
@@ -2010,6 +2010,7 @@ en_NZ:
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
+  email_order_note: "Note:"
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
@@ -3768,7 +3769,7 @@ en_NZ:
         new:
           title: "New Product"
           new_product: "New Product"
-          supplier: "Supplier"
+          enterprise: "Enterprise"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"

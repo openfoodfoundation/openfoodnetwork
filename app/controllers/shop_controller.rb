@@ -25,4 +25,42 @@ class ShopController < BaseController
   def changeable_orders_alert
     render layout: false
   end
+
+  def product_modal
+    return head :not_found unless resolved_order_cycle&.open?
+
+    @product = distributed_products_relation.find_by(id: params[:product_id])
+    return head :not_found unless @product
+
+    @supplier = @product.variants.first&.supplier
+    @carousel_images = helpers.product_carousel_images_data(@product)
+
+    render partial: "shop/product_modal", layout: false
+  end
+
+  private
+
+  def distributed_products_relation
+    OrderCycles::DistributedProductsService.new(
+      current_distributor,
+      resolved_order_cycle,
+      current_customer,
+      inventory_enabled: inventory_enabled?,
+      variant_tag_enabled: variant_tag_enabled?
+    ).products_relation
+  end
+
+  def resolved_order_cycle
+    return @resolved_order_cycle if defined?(@resolved_order_cycle)
+
+    @resolved_order_cycle = OrderCycle.find_by(id: params[:order_cycle_id])
+  end
+
+  def inventory_enabled?
+    OpenFoodNetwork::FeatureToggle.enabled?(:inventory, current_distributor)
+  end
+
+  def variant_tag_enabled?
+    OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, current_distributor)
+  end
 end

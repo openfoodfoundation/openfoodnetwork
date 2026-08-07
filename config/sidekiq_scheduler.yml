@@ -34,3 +34,7 @@ ofn_clean:
   class: "RakeJob"
   args: ["ofn:data:remove_transient_data"]
   cron: "30 4 1 * *" # every month on the first at 4:30am
+trim_sessions:
+  class: "RakeJob"
+  args: ["db:sessions:trim"]
+  cron: "0 3 * * *" # every day at 3am

@@ -32,6 +32,7 @@ module Api
       def update
         authorize! :update, Spree::Product
         @product = product_finder.find_product
+        authorize! :update, @product
         if @product.update(product_params)
           render json: @product, serializer: Api::Admin::ProductSerializer, status: :ok
         else

@@ -258,6 +258,59 @@ RSpec.describe 'Customers' do
             end
           end
         end
+
+        context "when using the tag filter input" do
+          before do
+            customer2.update!(tag_list: "vip")
+
+            select2_select managed_distributor1.name, from: "shop_id"
+            expect(page).to have_selector "tr#c_#{customer1.id}"
+            fill_in "tag_filter", with: "vip"
+          end
+
+          it "displays only customers matching the tag" do
+            expect(page).to have_content(customer2.email)
+            expect(page).not_to have_content(customer1.email)
+          end
+
+          it "shows all customers when the filter is cleared" do
+            fill_in "tag_filter", with: ""
+            expect(page).to have_content(customer1.email)
+            expect(page).to have_content(customer2.email)
+          end
+        end
+
+        context "when sorting by tags" do
+          before do
+            customer1.update!(tag_list: "apple")
+            customer2.update!(tag_list: "zebra")
+
+            select2_select managed_distributor1.name, from: "shop_id"
+            expect(page).to have_selector "tr#c_#{customer1.id}"
+          end
+
+          it "sorts ascending then descending when the Tags header is clicked" do
+            within "#customers thead" do
+              click_on "Tags"
+            end
+
+            # After ascending sort, apple (customer1) appears before zebra (customer2)
+            rows = all("#customers .customer")
+            apple_pos = rows.index { |r| r["id"] == "c_#{customer1.id}" }
+            zebra_pos = rows.index { |r| r["id"] == "c_#{customer2.id}" }
+            expect(apple_pos).to be < zebra_pos
+
+            within "#customers thead" do
+              click_on "Tags"
+            end
+
+            # After descending sort, zebra appears before apple
+            rows = all("#customers .customer")
+            apple_pos = rows.index { |r| r["id"] == "c_#{customer1.id}" }
+            zebra_pos = rows.index { |r| r["id"] == "c_#{customer2.id}" }
+            expect(zebra_pos).to be < apple_pos
+          end
+        end
       end
 
       it "allows updating of attributes" do

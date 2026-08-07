@@ -115,7 +115,7 @@ RSpec.describe Spree::Product do
         let!(:product){ described_class.new }
         let!(:shipping_category){ create(:shipping_category) }
         let!(:taxon){ create(:taxon) }
-        let(:supplier){ create(:enterprise) }
+        let(:enterprise){ create(:enterprise) }
 
         it "copies properties to the first standard variant" do
           product.primary_taxon_id = taxon.id
@@ -126,7 +126,7 @@ RSpec.describe Spree::Product do
           product.unit_description = "some product"
           product.price = 4.27
           product.shipping_category_id = shipping_category.id
-          product.supplier_id = supplier.id
+          product.enterprise_id = enterprise.id
           product.save(context: :create_and_create_standard_variant)
 
           expect(product.variants.reload.length).to eq 1
@@ -140,7 +140,7 @@ RSpec.describe Spree::Product do
           expect(standard_variant.price).to eq 4.27
           expect(standard_variant.shipping_category).to eq shipping_category
           expect(standard_variant.primary_taxon).to eq taxon
-          expect(standard_variant.supplier).to eq supplier
+          expect(standard_variant.enterprise).to eq enterprise
         end
 
         context "with variant attributes" do
@@ -149,7 +149,7 @@ RSpec.describe Spree::Product do
               .on(:create_and_create_standard_variant)
           }
           it {
-            is_expected.to validate_presence_of(:supplier_id)
+            is_expected.to validate_presence_of(:enterprise_id)
               .on(:create_and_create_standard_variant)
           }
           it {
@@ -275,7 +275,7 @@ RSpec.describe Spree::Product do
     let(:product) { create(:simple_product) }
 
     describe "destroy product" do
-      let(:product) { create(:simple_product, supplier_id: distributor.id) }
+      let(:product) { create(:simple_product, enterprise_id: distributor.id) }
       let(:distributor) { create(:distributor_enterprise) }
       let!(:oc) {
         create(:simple_order_cycle, distributors: [distributor],
@@ -288,13 +288,13 @@ RSpec.describe Spree::Product do
     end
 
     describe "after updating primary taxon" do
-      let(:product) { create(:simple_product, supplier_id: supplier.id) }
-      let(:supplier) { create(:supplier_enterprise) }
+      let(:product) { create(:simple_product, enterprise_id: enterprise.id) }
+      let(:enterprise) { create(:supplier_enterprise) }
       let(:new_taxon) { create(:taxon) }
 
-      it "touches the supplier" do
+      it "touches the enterprise" do
         expect { product.update(primary_taxon_id: new_taxon.id) }
-          .to change { supplier.reload.updated_at }
+          .to change { enterprise.reload.updated_at }
       end
 
       context "when product has no variant" do
@@ -308,17 +308,17 @@ RSpec.describe Spree::Product do
     end
 
     describe "after touching the product" do
-      let(:product) { create(:simple_product, supplier_id: supplier.id) }
-      let(:supplier) { create(:supplier_enterprise) }
+      let(:product) { create(:simple_product, enterprise_id: enterprise.id) }
+      let(:enterprise) { create(:supplier_enterprise) }
 
-      it "touches the supplier" do
+      it "touches the enterprise" do
         expect { product.touch }
-          .to change { supplier.reload.updated_at }
+          .to change { enterprise.reload.updated_at }
       end
 
-      context "when the first variant is missing supplier" do
+      context "when the first variant is missing enterprise" do
         it "doesn't blow up" do
-          product.variants.first.update_attribute(:supplier_id, nil)
+          product.variants.first.update_attribute(:enterprise_id, nil)
 
           expect { product.touch }.not_to raise_error
         end
@@ -342,25 +342,107 @@ RSpec.describe Spree::Product do
         expect(described_class.with_properties([])).to eq []
       end
 
-      it "returns only products with the wanted property set both on supplier & product itself" do
+      it "returns only products with the wanted property set both on enterprise & product itself" do
         expect(
           described_class.with_properties([wanted_property.id, 99_999])
         ).to match_array [product_with_wanted_property]
       end
+
+      context "when the property is inherited from the producer" do
+        let(:enterprise) { create(:supplier_enterprise) }
+        let!(:inheriting_product) {
+          create(:product, enterprise_id: enterprise.id, inherits_properties: true)
+        }
+
+        before do
+          enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                 value: '1', position: 1)
+        end
+
+        it "matches products that inherit the property from their producer" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(inheriting_product)
+        end
+
+        it "does not match when the product does not inherit properties" do
+          inheriting_product.update!(inherits_properties: false)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .not_to include(inheriting_product)
+        end
+      end
+
+      context "when invoked through Ransack (the shopfront filter path)" do
+        # Ransack sanitises scope args against its boolean TRUE/FALSE_VALUES, so filtering by
+        # property id "1" reaches the scope as `true` (and "0" as `false`) rather than the id.
+        # Using ActiveRecord conditions casts these back to integers, so filtering by property
+        # id 1 no longer raises on the integer property_id column (regression: shopfront
+        # returned a 422).
+        it "does not raise when filtering by property id 1" do
+          expect { described_class.with_properties(true).to_a }.not_to raise_error
+        end
+
+        it "does not raise when filtering through Ransack" do
+          expect {
+            described_class.ransack("with_properties" => [wanted_property.id.to_s]).result.to_a
+          }.not_to raise_error
+        end
+      end
+
+      context "when the property is set directly but inheritance is disabled" do
+        let!(:direct_product) {
+          create(:product, properties: [wanted_property], inherits_properties: false)
+        }
+
+        it "matches the product (direct properties don't require inheritance)" do
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(direct_product)
+        end
+      end
+
+      context "when a product has variants from multiple enterprises" do
+        # Inherited properties are matched against any variant's enterprise, consistent with
+        # Spree::Variant.with_properties. (Products normally have a single enterprise across
+        # their variants.)
+        let(:first_enterprise) { create(:supplier_enterprise) }
+        let(:second_enterprise) { create(:supplier_enterprise) }
+        let!(:multi_enterprise_product) {
+          create(:product, enterprise_id: first_enterprise.id, inherits_properties: true)
+        }
+
+        before do
+          create(:variant, product: multi_enterprise_product, enterprise: second_enterprise)
+        end
+
+        it "matches when the first variant's enterprise has the property" do
+          first_enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                       value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(multi_enterprise_product)
+        end
+
+        it "matches when a later variant's enterprise has the property" do
+          second_enterprise.producer_properties.create!(property_id: wanted_property.id,
+                                                        value: '1', position: 1)
+
+          expect(described_class.with_properties([wanted_property.id]))
+            .to include(multi_enterprise_product)
+        end
+      end
     end
 
-    describe "in_supplier" do
-      it "shows products in supplier" do
+    describe "in_enterprise" do
+      it "shows products in enterprise" do
         s1 = create(:supplier_enterprise)
-        p1 = create(:product, supplier_id: s1.id)
+        p1 = create(:product, enterprise_id: s1.id)
         # We create two variants to let us test we don't get duplicated product
-        create(:variant, product: p1, supplier: s1)
-        create(:variant, product: p1, supplier: s1)
+        create(:variant, product: p1, enterprise: s1)
+        create(:variant, product: p1, enterprise: s1)
         s2 = create(:supplier_enterprise)
-        p2 = create(:product, supplier_id: s2.id)
-        create(:variant, product: p2, supplier: s2)
-
-        expect(described_class.in_supplier(s1)).to eq([p1])
+        p2 = create(:product, enterprise_id: s2.id)
+        create(:variant, product: p2, enterprise: s2)
+        expect(described_class.in_enterprise(s1)).to eq([p1])
       end
     end
 
@@ -476,9 +558,9 @@ RSpec.describe Spree::Product do
         producer_a = create(:enterprise, name: "a_cooperative")
         producer_g = create(:enterprise, name: "g_cooperative")
 
-        product1 = create(:product, supplier_id: producer_z.id)
-        product2 = create(:product, supplier_id: producer_a.id)
-        product3 = create(:product, supplier_id: producer_g.id)
+        product1 = create(:product, enterprise_id: producer_z.id)
+        product2 = create(:product, enterprise_id: producer_a.id)
+        product3 = create(:product, enterprise_id: producer_g.id)
 
         expect(described_class.by_producer).to eq([product2, product3, product1])
       end
@@ -491,8 +573,8 @@ RSpec.describe Spree::Product do
       let!(:p2) { create(:product) }
 
       before(:each) do
-        create(:variant, product: p1, supplier: e1)
-        create(:variant, product: p1, supplier: e2)
+        create(:variant, product: p1, enterprise: e1)
+        create(:variant, product: p1, enterprise: e2)
       end
 
       it "shows only products for given user" do
@@ -558,11 +640,11 @@ RSpec.describe Spree::Product do
 
   describe "#properties_including_inherited" do
     let(:product) { create(:simple_product) }
-    let(:supplier) { create(:supplier_enterprise) }
+    let(:enterprise) { create(:supplier_enterprise) }
 
     before do
       product.variants = []
-      product.variants << create(:variant, product:, supplier:)
+      product.variants << create(:variant, product:, enterprise:)
     end
 
     it "returns product properties as a hash" do
@@ -574,8 +656,8 @@ RSpec.describe Spree::Product do
     end
 
     it "returns producer properties as a hash" do
-      supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
-      property = supplier.properties.last
+      enterprise.set_producer_property 'Organic Certified', 'NASAA 54321'
+      property = enterprise.properties.last
 
       expect(product.properties_including_inherited)
         .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
@@ -583,7 +665,7 @@ RSpec.describe Spree::Product do
 
     it "overrides producer properties with product properties" do
       product.set_property 'Organic Certified', 'NASAA 12345'
-      supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+      enterprise.set_producer_property 'Organic Certified', 'NASAA 54321'
       property = product.properties.last
 
       expect(product.properties_including_inherited)
@@ -594,8 +676,8 @@ RSpec.describe Spree::Product do
       let(:product) { create(:simple_product, inherits_properties: true) }
 
       it "inherits producer properties" do
-        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
-        property = supplier.properties.last
+        enterprise.set_producer_property 'Organic Certified', 'NASAA 54321'
+        property = enterprise.properties.last
 
         expect(product.properties_including_inherited)
           .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
@@ -606,7 +688,7 @@ RSpec.describe Spree::Product do
       let(:product) { create(:simple_product, inherits_properties: false) }
 
       it "does not inherit producer properties" do
-        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+        enterprise.set_producer_property 'Organic Certified', 'NASAA 54321'
 
         expect(product.properties_including_inherited).to eq([])
       end
@@ -619,7 +701,7 @@ RSpec.describe Spree::Product do
 
       product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 })
       product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 })
-      supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 })
+      enterprise.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 })
 
       expect(product.properties_including_inherited).to eq(
         [{ id: pa.id, name: "A", value: '1' },

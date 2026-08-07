@@ -1,0 +1,4 @@
+- modal_options = { id: "shop-product-modal-#{@product.id}", instant: true, modal_class: "big", close_button: false, close_x_button: true, 'data-controller': "shop-product-modal" }
+
+= render ModalComponent.new(**modal_options) do
+  = render partial: "shared/product/product_details", locals: { product: @product }

@@ -2,12 +2,14 @@
 
 # Generate the API documentation based on our specs.
 #
-# For API v0 and v1 you can call one of these:
+# API v0: these are not yet documented by specs and a swagger file was generated using AI instead.
 #
-#   ./bin/rake rswag
-#   ./script/rswag --dry-run
+# API v1: you can call one of these for a dry run (much faster because it assumes the specs pass):
 #
-# For the DFC API you need to call:
+#   ./bin/rake rswag spec/requests/api/v1/
+#   ./script/rswag --dry-run spec/requests/api/v1/
+#
+# DFC API: you need to call
 #
 #   ./script/rswag engines/dfc_provider
 #

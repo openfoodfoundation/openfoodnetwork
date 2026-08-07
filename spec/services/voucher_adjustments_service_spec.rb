@@ -30,6 +30,7 @@ RSpec.describe VoucherAdjustmentsService do
         let(:order) do
           create(
             :order_with_taxes,
+            line_items_count: 5,
             distributor: enterprise,
             ship_address: create(:address),
             product_price: 110,
@@ -90,6 +91,7 @@ RSpec.describe VoucherAdjustmentsService do
         let(:order) do
           create(
             :order_with_taxes,
+            line_items_count: 5,
             distributor: enterprise,
             ship_address: create(:address),
             product_price: 110,
@@ -196,6 +198,7 @@ RSpec.describe VoucherAdjustmentsService do
         let(:order) do
           create(
             :order_with_taxes,
+            line_items_count: 5,
             distributor: enterprise,
             ship_address: create(:address),
             product_price: 110,
@@ -224,6 +227,7 @@ RSpec.describe VoucherAdjustmentsService do
         let(:order) do
           create(
             :order_with_taxes,
+            line_items_count: 5,
             distributor: enterprise,
             ship_address: create(:address),
             product_price: 110,
@@ -305,6 +309,7 @@ RSpec.describe VoucherAdjustmentsService do
     let(:order) do
       create(
         :order_with_taxes,
+        line_items_count: 5,
         distributor: enterprise,
         ship_address: create(:address),
         product_price: 110,

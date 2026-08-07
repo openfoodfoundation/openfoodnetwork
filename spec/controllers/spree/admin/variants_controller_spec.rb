@@ -10,7 +10,7 @@ RSpec.describe Spree::Admin::VariantsController do
         let(:deleted_variant) do
           deleted_variant = product.variants.create(
             unit_value: "2", variant_unit: "weight", variant_unit_scale: 1, price: 1,
-            primary_taxon: create(:taxon), supplier: create(:supplier_enterprise)
+            primary_taxon: create(:taxon), enterprise: create(:supplier_enterprise)
           )
           deleted_variant.delete
           deleted_variant
@@ -34,7 +34,7 @@ RSpec.describe Spree::Admin::VariantsController do
           :variant,
           display_name: "Tomatoes",
           sku: 123,
-          supplier: producer
+          enterprise: producer
         )
       }
       let(:producer) { create(:enterprise) }
@@ -52,19 +52,19 @@ RSpec.describe Spree::Admin::VariantsController do
           .and change { variant.sku }.to(456.to_s)
       end
 
-      context "when updating supplier" do
+      context "when updating enterprise" do
         let(:new_producer) { create(:enterprise) }
 
-        it "updates the supplier" do
+        it "updates the enterprise" do
           expect {
             spree_put(
               :update,
               id: variant.id,
               product_id: variant.product.id,
-              variant: { supplier_id: new_producer.id }
+              variant: { enterprise_id: new_producer.id }
             )
             variant.reload
-          }.to change { variant.supplier_id }.to(new_producer.id)
+          }.to change { variant.enterprise_id }.to(new_producer.id)
         end
 
         it "removes associated product from existing Order Cycles" do
@@ -80,7 +80,7 @@ RSpec.describe Spree::Admin::VariantsController do
             :update,
             id: variant.id,
             product_id: variant.product.id,
-            variant: { supplier_id: new_producer.id }
+            variant: { enterprise_id: new_producer.id }
           )
 
           expect(order_cycle.reload.distributed_variants).not_to include variant
@@ -90,8 +90,8 @@ RSpec.describe Spree::Admin::VariantsController do
 
     describe "#search" do
       let(:supplier) { create(:supplier_enterprise) }
-      let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier.id) }
-      let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier.id) }
+      let!(:p1) { create(:simple_product, name: 'Product 1', enterprise_id: supplier.id) }
+      let!(:p2) { create(:simple_product, name: 'Product 2', enterprise_id: supplier.id) }
       let!(:v1) { p1.variants.first }
       let!(:v2) { p2.variants.first }
       let!(:vo) { create(:variant_override, variant: v1, hub: d, count_on_hand: 44) }
@@ -162,8 +162,8 @@ RSpec.describe Spree::Admin::VariantsController do
   context "log in as supplier and distributor enable_producers_to_edit_orders" do
     let(:supplier1) { create(:supplier_enterprise) }
     let(:supplier2) { create(:supplier_enterprise) }
-    let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier1.id) }
-    let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier2.id) }
+    let!(:p1) { create(:simple_product, name: 'Product 1', enterprise_id: supplier1.id) }
+    let!(:p2) { create(:simple_product, name: 'Product 2', enterprise_id: supplier2.id) }
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:d)  { create(:distributor_enterprise, enable_producers_to_edit_orders: true) }
@@ -171,7 +171,7 @@ RSpec.describe Spree::Admin::VariantsController do
 
     before do
       order = create(:order_with_line_items, distributor: d, line_items_count: 1)
-      order.line_items.take.variant.update_attribute(:supplier_id, supplier1.id)
+      order.line_items.take.variant.update_attribute(:enterprise_id, supplier1.id)
       controller_login_as_enterprise_user([supplier1])
     end
 

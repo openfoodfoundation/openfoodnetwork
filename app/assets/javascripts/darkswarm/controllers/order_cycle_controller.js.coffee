@@ -25,7 +25,7 @@ angular.module('Darkswarm').controller "OrderCycleChangeCtrl", ($scope, $rootSco
     Cart.reloadFinalisedLineItems()
     ChangeableOrdersAlert.reload()
     $rootScope.$broadcast 'orderCycleSelected'
-    event = new CustomEvent('orderCycleSelected')
+    event = new CustomEvent('orderCycleSelected', detail: { orderCycleId: $scope.order_cycle.order_cycle_id })
     window.dispatchEvent(event)
 
   $scope.closesInLessThan3Months = () ->

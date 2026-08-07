@@ -39,7 +39,7 @@ RSpec.describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
       end
 
       context "whith associated products" do
-        let!(:product) { create(:simple_product, supplier_id: enterprise.id) }
+        let!(:product) { create(:simple_product, enterprise_id: enterprise.id) }
 
         it "returns nil" do
           expect(serialized_enterprise.issues_summary_supplier).to be_nil

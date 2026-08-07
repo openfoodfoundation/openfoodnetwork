@@ -72,7 +72,15 @@ export default class BulkFormController extends Controller {
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
       elements.some(this.#checkIsChanged.bind(this)),
     ).length;
-    this.formChanged = changedRecordCount > 0 || this.errorValue;
+
+    // New (unsaved) variants have an empty hidden id field (no value attribute, or value="").
+    // Their pre-filled values look "unchanged" to #isChanged because Rails bakes the defaults
+    // into the HTML, so we detect them separately and treat their presence as a pending change.
+    const hasNewVariants = Array.from(
+      this.form.querySelectorAll('input[type="hidden"][name*="variants_attributes"][name$="[id]"]'),
+    ).some((el) => !el.value);
+
+    this.formChanged = changedRecordCount > 0 || this.errorValue || hasNewVariants;
 
     // Show actions
     this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !this.formChanged);
@@ -103,6 +111,12 @@ export default class BulkFormController extends Controller {
     this.variantUnits = this.element.querySelectorAll("button.popout__button");
     this.variantUnits.forEach((element) => {
       if (element.textContent == "") {
+        // If the row already has a unit type set (e.g. from pre-filled defaults or a prior
+        // TomSelect choice), skip the popout — the unit type is known, and the unit value
+        // will be caught by server-side validation with a clear error message.
+        const row = element.closest("tr");
+        const variantUnitField = row?.querySelector('input[type="hidden"][name$="[variant_unit]"]');
+        if (variantUnitField?.value) return;
         element.click();
       }
     });
@@ -112,6 +126,7 @@ export default class BulkFormController extends Controller {
 
   #registerSubmit() {
     this.submitting = true;
+    this.#filterSubmittedFields();
   }
 
   #registerElements(elements) {
@@ -148,6 +163,89 @@ export default class BulkFormController extends Controller {
     });
   }
 
+  #filterSubmittedFields() {
+    const recordContainers = this.form.querySelectorAll("[data-record-id]");
+
+    recordContainers.forEach((container) => {
+      const elements = Array.from(container.querySelectorAll("input, select, textarea, button"));
+      const changedElements = elements.filter((element) => this.#isChanged(element));
+
+      elements.forEach((element) => {
+        if (element.type !== "submit") {
+          element.disabled = true;
+        }
+      });
+
+      // Enable all elements in new (unsaved) variant rows so their pre-filled
+      // values are submitted even though #isChanged doesn't detect them as changed.
+      const newVariantRows = container.querySelectorAll("[data-new-record]");
+      if (newVariantRows.length > 0) {
+        newVariantRows.forEach((row) => {
+          const rowElements = Array.from(row.querySelectorAll("input, select, textarea, button"));
+          this.#enableElementsForSubmit(rowElements);
+        });
+        this.#recordIdentityFields(container).forEach((field) => this.#enableElement(field));
+      }
+
+      if (changedElements.length === 0) return;
+
+      // When re-submitting after validation errors, submit all fields in the
+      // record container so previously-valid field values aren't dropped just because
+      // they match the server-rendered defaults from the error recovery page
+      const elementsToSubmit = this.errorValue ? elements : changedElements;
+
+      this.#enableElementsForSubmit(elementsToSubmit);
+      this.#enableRecordIdentityFields(container);
+    });
+  }
+
+  #enableElementsForSubmit(changedElements) {
+    changedElements.forEach((element) => {
+      this.#enableElement(element);
+      // Rails check_box helper generates a hidden+checkbox pair sharing the
+      // same name. When only the checkbox is re-enabled, unchecking it
+      // submits nothing (unchecked checkboxes don't submit). Enable the
+      // hidden sibling so the "0" value is sent on uncheck.
+      if (element.type === "checkbox") {
+        const hiddenSibling = element.previousElementSibling;
+        if (hiddenSibling?.type === "hidden" && hiddenSibling.name === element.name) {
+          this.#enableElement(hiddenSibling);
+        }
+      }
+    });
+  }
+
+  #enableRecordIdentityFields(recordContainer) {
+    const changedVariantRows = new Set(
+      this.recordElements[recordContainer.dataset.recordId]
+        .filter((element) => this.#isChanged(element))
+        .map((element) => element.closest("[id^='spree_variant_'], [data-new-record]"))
+        .filter((container) => container),
+    );
+
+    this.#recordIdentityFields(recordContainer).forEach((field) => this.#enableElement(field));
+
+    changedVariantRows.forEach((variantRow) => {
+      this.#variantIdentityFields(variantRow).forEach((field) => this.#enableElement(field));
+    });
+  }
+
+  #enableElement(element) {
+    if (element) {
+      element.disabled = false;
+    }
+  }
+
+  #recordIdentityFields(recordContainer) {
+    return Array.from(
+      recordContainer.querySelectorAll('input[type="hidden"][name$="[id]"]'),
+    ).filter((element) => !element.closest("[id^='spree_variant_'], [data-new-record]"));
+  }
+
+  #variantIdentityFields(variantRow) {
+    return Array.from(variantRow.querySelectorAll('input[type="hidden"][name$="[id]"]'));
+  }
+
   // Check if changed, and mark with class if it is.
   #checkIsChanged(element) {
     if (!element.isConnected) return false;
@@ -165,13 +263,14 @@ export default class BulkFormController extends Controller {
       //   If a select field has include_blank option selected (its value will be ''),
       //   its respective option doesn't have the selected attribute
       //   but selectedOptions have that option present
-      const defaultSelected = Array.from(element.options).find((opt) =>
-        opt.hasAttribute("selected"),
-      );
-      const selectedOption = element.selectedOptions[0];
-      const areBothBlank = selectedOption.value === "" && defaultSelected === undefined;
+      // Compare by value instead of DOM element reference.
+      // Tom Select can create duplicate <option> DOM elements during remote
+      // search, so reference comparison (===) fails after revert.
+      const defaultOption = Array.from(element.options).find((opt) => opt.defaultSelected);
+      const defaultValue = defaultOption?.value ?? "";
+      const noDefaultSelected = defaultOption === undefined && element.value === "";
 
-      return !areBothBlank && selectedOption !== defaultSelected;
+      return !noDefaultSelected && element.value !== defaultValue;
     } else {
       // This doesn't work with hidden field
       //   Workaround: use a text field with "display:none;"

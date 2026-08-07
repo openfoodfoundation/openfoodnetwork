@@ -13,10 +13,14 @@ require "dfc_provider/address"
 require "dfc_provider/catalog_item"
 require "dfc_provider/container"
 require "dfc_provider/coordination"
+require "dfc_provider/enterprise"
 
 # 🙈 Monkey-patch a better inspector for semantic objects
 require "semantic_object_inspect"
 
 module DfcProvider
+  DataFoodConsortium::Connector::Importer.register_type(Container)
+
+  DataFoodConsortium::ConnectorV1::Importer.register_type(Enterprise)
   DataFoodConsortium::ConnectorV1::Importer.register_type(SuppliedProduct)
 end

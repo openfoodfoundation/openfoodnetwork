@@ -77,7 +77,7 @@ components:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true
@@ -190,7 +190,7 @@ components:
                   billing_address:
                     type: object
                     nullable: true
-                    example: 
+                    example:
                   shipping_address:
                     type: object
                     nullable: true
@@ -380,13 +380,19 @@ paths:
               schema:
                 "$ref": "#/components/schemas/customer_account_transaction"
         '422':
-          description: Invalid resource
+          description: Missing required parameter
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '404':
+          description: Invalid customer ID
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '401':
-          description: Unauthorized
+          description: Access forbidden
       requestBody:
         content:
           application/json:
@@ -481,7 +487,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true
@@ -574,7 +580,7 @@ paths:
                           billing_address:
                             type: object
                             nullable: true
-                            example: 
+                            example:
                           shipping_address:
                             type: object
                             nullable: true
@@ -704,7 +710,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example: 
+                  example:
                 shipping_address:
                   type: object
                   nullable: true

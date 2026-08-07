@@ -245,7 +245,7 @@ RSpec.describe Spree::Ability do
               line_items_count: 1,
               distributor: create(:distributor_enterprise, enable_producers_to_edit_orders: true)
             )
-            order.line_items.first.variant.update!(supplier_id: enterprise_none_producer.id)
+            order.line_items.first.variant.update!(enterprise_id: enterprise_none_producer.id)
           end
 
           it { expect(subject.can_manage_line_items_in_orders?(user)).to be true }
@@ -288,15 +288,15 @@ RSpec.describe Spree::Ability do
     let(:d1) { create(:distributor_enterprise) }
     let(:d2) { create(:distributor_enterprise) }
 
-    let(:p1) { create(:product, supplier_id: s1.id) }
-    let(:p2) { create(:product, supplier_id: s2.id) }
-    let(:p_related) { create(:product, supplier_id: s_related.id) }
+    let(:p1) { create(:product, enterprise_id: s1.id) }
+    let(:p2) { create(:product, enterprise_id: s2.id) }
+    let(:p_related) { create(:product, enterprise_id: s_related.id) }
 
     let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
     let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
     let(:er3) { create(:enterprise_relationship, parent: s2, child: d2) }
 
-    let(:er_ps) {
+    let(:manage_products_permission) {
       create(:enterprise_relationship, parent: s_related, child: s1,
                                        permissions_list: [:manage_products])
     }
@@ -324,8 +324,8 @@ RSpec.describe Spree::Ability do
       end
 
       context "with mutiple variant with different supplier" do
-        let(:product1) { create(:product, supplier_id: create(:supplier_enterprise).id) }
-        let(:product1_other_variant) { create(:variant, product: product1, supplier: s1) }
+        let(:product1) { create(:product, enterprise_id: create(:supplier_enterprise).id) }
+        let(:product1_other_variant) { create(:variant, product: product1, enterprise: s1) }
 
         it "is able to read/write their enterprises' products and variants" do
           product1_other_variant
@@ -348,13 +348,35 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read/write related enterprises' products " \
          "and variants with manage_products permission" do
-        er_ps
+        manage_products_permission
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p_related)
         is_expected.to have_ability(
           [:admin, :index, :read, :edit, :update, :search, :destroy,
            :delete], for: p_related.variants.first
         )
+      end
+
+      context "bulk product and variant update" do
+        it "should be able to bulk update own product" do
+          is_expected.to have_ability([:bulk_product_variant_update], for: p1)
+
+          is_expected.not_to have_ability([:bulk_product_variant_update], for: p_related)
+        end
+
+        it "should be able update related enterprises' products with " \
+           "manage_products permission " do
+          manage_products_permission
+          is_expected.to have_ability([:bulk_product_variant_update], for: p_related)
+        end
+
+        it "should be able to update linked variant product with " \
+           "create linked variant permission" do
+          create(:enterprise_relationship, parent: s_related, child: s1,
+                                           permissions_list: [:create_linked_variants])
+
+          is_expected.to have_ability([:bulk_product_variant_update], for: p_related)
+        end
       end
 
       it "should not be able to read/write other enterprises' products and variants" do
@@ -716,8 +738,26 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
       end
 
-      it "is able to read/write customer account transaction" do
-        is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+      describe "customer account transaction" do
+        it "is able to read/write customer account transaction" do
+          is_expected.to have_ability([:admin, :index, :create], for: CustomerAccountTransaction)
+        end
+
+        describe "create_customer_Account_transaction" do
+          let(:customer) { create(:customer, enterprise: d1) }
+
+          it "is able to create a customer account transaction" do
+            is_expected.to have_ability([:create_customer_account_transaction], for: customer)
+          end
+
+          context "with a customer not belonging to an enterprise I can manage" do
+            let(:customer) { create(:customer, enterprise: d2) }
+
+            it "is not able to create a customer account transaction" do
+              is_expected.not_to have_ability([:create_customer_account_transaction], for: customer)
+            end
+          end
+        end
       end
 
       context "for a given order_cycle" do
@@ -862,7 +902,7 @@ RSpec.describe Spree::Ability do
   describe "permissions for variant overrides", feature: :inventory do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:variant) { create(:variant, supplier: producer) }
+    let!(:variant) { create(:variant, enterprise: producer) }
     let!(:variant_override) { create(:variant_override, hub: distributor, variant:) }
 
     subject { user }

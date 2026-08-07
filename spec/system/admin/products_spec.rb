@@ -23,7 +23,7 @@ RSpec.describe '
     end
 
     it "display all attributes when submitting with error: no name" do
-      select supplier.name, from: 'product_supplier_id'
+      select supplier.name, from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: "5.00 g"
       assert_selector(:field, placeholder: "5kg g")
@@ -38,7 +38,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(page).to have_content "Name can't be blank"
-      expect(page).to have_field 'product_supplier_id', with: supplier.id
+      expect(page).to have_field "Enterprise", with: supplier.id
       expect(page).to have_field 'product_unit_value', with: "5.00 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
@@ -52,7 +52,7 @@ RSpec.describe '
     end
 
     it "display all attributes when submitting with error: Unit Value must be grater than 0" do
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       fill_in 'product_name', with: "new product name"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: "0.00 g"
@@ -68,7 +68,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(page).to have_field 'product_name', with: "new product name"
-      expect(page).to have_field 'product_supplier_id', with: supplier.id
+      expect(page).to have_field "Enterprise", with: supplier.id
       expect(page).to have_field 'product_unit_value', with: "0 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
@@ -94,7 +94,7 @@ RSpec.describe '
     it "assigning important attributes" do
       expect(find_field('product_shipping_category_id').text).to eq(shipping_category.name)
 
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 5
@@ -126,12 +126,12 @@ RSpec.describe '
       expect(variant.tax_category_id).to eq(tax_category.id)
       expect(variant.shipping_category).to eq(shipping_category)
       expect(variant.unit_presentation).to eq("5kg")
-      expect(variant.supplier).to eq(supplier)
+      expect(variant.enterprise).to eq(supplier)
     end
 
     it "creating an on-demand product" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 1
       select taxon.name, from: "product_primary_taxon_id"
@@ -153,7 +153,7 @@ RSpec.describe '
 
     it "creating product with empty unit value" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in "product_unit_value", with: ""
       select taxon.name, from: "product_primary_taxon_id"
@@ -171,7 +171,7 @@ RSpec.describe '
 
     it "creating product with empty product category fails" do
       fill_in 'product_name', with: 'Hot Cakes'
-      select 'New supplier', from: 'product_supplier_id'
+      select 'New supplier', from: "Enterprise"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in "product_unit_value", with: '1'
       fill_in 'product_price', with: '1.99'
@@ -200,7 +200,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Supplier can't be blank"
+      expect(page).to have_content "Enterprise can't be blank"
     end
 
     describe "localization settings" do
@@ -212,7 +212,7 @@ RSpec.describe '
 
           it "and price is #{price}" do
             fill_in 'product_name', with: 'Priceless Mangoes'
-            select 'New supplier', from: 'product_supplier_id'
+            select 'New supplier', from: "Enterprise"
             select "Weight (kg)", from: 'product_variant_unit_with_scale'
             fill_in "product_unit_value", with: 1
             select taxon.name, from: "product_primary_taxon_id"
@@ -283,17 +283,17 @@ RSpec.describe '
         fill_in 'product_name', with: 'A new product !!!'
         fill_in 'product_price', with: '19.99'
 
-        expect(page).to have_selector('#product_supplier_id')
-        select 'Another Supplier', from: 'product_supplier_id'
+        expect(page).to have_select "Enterprise"
+        select 'Another Supplier', from: "Enterprise"
         select 'Weight (g)', from: 'product_variant_unit_with_scale'
         fill_in 'product_unit_value', with: '500'
         select taxon.name, from: "product_primary_taxon_id"
         select 'None', from: "product_tax_category_id"
 
         # Should only have suppliers listed which the user can manage
-        expect(page).to have_select 'product_supplier_id',
+        expect(page).to have_select "Enterprise",
                                     with_options: [supplier2.name, supplier_permitted.name]
-        expect(page).not_to have_select 'product_supplier_id', with_options: [supplier.name]
+        expect(page).not_to have_select "Enterprise", with_options: [supplier.name]
 
         click_button 'Create'
 
@@ -301,12 +301,12 @@ RSpec.describe '
         product = Spree::Product.find_by(name: 'A new product !!!')
         variant = product.variants.first
         expect(variant.tax_category).to be_nil
-        expect(variant.supplier).to eq(supplier2)
+        expect(variant.enterprise).to eq(supplier2)
       end
     end
 
     describe "editing page" do
-      let!(:product) { create(:simple_product, name: 'a product', supplier_id: supplier2.id) }
+      let!(:product) { create(:simple_product, name: 'a product', enterprise_id: supplier2.id) }
 
       describe "'Back To Products List' and 'Cancel' buttons" do
         context "navigates to edit from the bulk product update page with searched results" do
@@ -455,7 +455,7 @@ RSpec.describe '
     describe "product properties" do
       # Given a product with a property
       let!(:product) {
-        create(:simple_product, supplier_id: supplier2.id).tap do |product|
+        create(:simple_product, enterprise_id: supplier2.id).tap do |product|
           product.set_property('fooprop', 'fooval')
         end
       }
@@ -512,45 +512,22 @@ RSpec.describe '
     end
 
     describe "image page" do
-      let!(:product) { create(:simple_product, supplier_id: supplier2.id) }
+      let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
 
-      it "loading new product image page" do
+      it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
-        expect(page).to have_selector ".no-objects-found"
-
-        page.find('a#new_image_link').click
-        expect(page).to have_selector "#image_attachment"
+        expect(page).to have_text "NO IMAGES FOUND"
+        expect(page).to have_link "New Image"
       end
 
-      it "loading new product image page including url filters" do
-        visit spree.admin_product_images_path(product, filter)
+      it "hides the add image button when images are present" do
+        image = white_logo_file
+        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
+                            alt: "position 1", attachment: image, position: 1)
 
-        page.find('a#new_image_link').click
-
-        expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
-                                                                                        filter)))
-        expect(page).to have_link('Cancel', href: expected_cancel_link)
-      end
-
-      it "upload a new product image including url filters" do
-        visit spree.admin_product_images_path(product, filter)
-
-        page.find('a#new_image_link').click
-
-        attach_file('image_attachment', image_file_path)
-        click_button "Create"
-
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
-      end
-
-      it "loading image page including url filter" do
-        visit spree.admin_product_images_path(product, filter)
-
-        expected_new_image_link = Regexp.new(Regexp.escape(spree.new_admin_product_image_path(
-                                                             product, filter
-                                                           )))
-        expect(page).to have_link('New Image', href: expected_new_image_link)
+        visit spree.admin_product_images_path(product)
+        expect(page).to have_selector "table.index td img"
+        expect(page).not_to have_link "New Image"
       end
 
       it "loading edit product image page including url filter" do
@@ -592,16 +569,16 @@ RSpec.describe '
 
       it "checks error when creating product image with unsupported format" do
         unsupported_image_file_path = Rails.root.join("README.md").to_s
-        product = create(:simple_product, supplier_id: supplier2.id)
+        product = create(:simple_product, enterprise_id: supplier2.id)
 
         image = white_logo_file
         Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                             alt: "position 1", attachment: image, position: 1)
 
         visit spree.admin_product_images_path(product)
-        page.find('a#new_image_link').click
+        page.find("a.icon-edit").click
         attach_file('image_attachment', unsupported_image_file_path)
-        click_button "Create"
+        click_button "Update"
 
         expect(page).to have_text "Attachment has an invalid content type"
         expect(page).to have_text "Attachment is not identified as a valid media file"
@@ -615,13 +592,16 @@ RSpec.describe '
         visit spree.admin_product_images_path(product)
         expect(page).to have_selector "table.index td img"
         expect(product.reload.image).not_to be_nil
+        expect(page).not_to have_link "New Image"
 
         accept_alert do
-          page.find('a.delete-resource').click
+          click_link "Delete"
         end
 
         expect(page).not_to have_selector "table.index td img"
         expect(product.reload.image).to be_nil
+        expect(page).to have_link "New Image"
+        expect(page).to have_text "NO IMAGES FOUND"
       end
 
       it "deleting product image including url filter" do
@@ -632,7 +612,7 @@ RSpec.describe '
         visit spree.admin_product_images_path(product, filter)
 
         accept_alert do
-          page.find('a.delete-resource').click
+          click_link "Delete"
         end
 
         uri = URI.parse(current_url)

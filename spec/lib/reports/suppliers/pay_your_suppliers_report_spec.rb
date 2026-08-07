@@ -5,7 +5,7 @@ RSpec.describe "Pay Your Suppliers Report" do
   let(:order_cycle) { create(:open_order_cycle, distributors: [hub]) }
   let(:product) { order.products.first }
   let(:variant) { product.variants.first }
-  let(:supplier) { variant.supplier }
+  let(:supplier) { variant.enterprise }
   let(:current_user) { hub.owner }
   let!(:order) do
     create(:completed_order_with_totals, distributor: hub, order_cycle:, line_items_count: 1)

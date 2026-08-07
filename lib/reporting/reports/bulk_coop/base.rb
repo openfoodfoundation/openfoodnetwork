@@ -4,6 +4,8 @@ module Reporting
   module Reports
     module BulkCoop
       class Base < ReportTemplate
+        include BulkCoopFilterable
+
         def message
           I18n.t("spree.admin.reports.hidden_customer_details_tip")
         end
@@ -13,7 +15,7 @@ module Reporting
         end
 
         def table_items
-          report_line_items.list(line_item_includes)
+          bulk_coop_filter(report_line_items.list(line_item_includes))
         end
 
         private
@@ -22,7 +24,7 @@ module Reporting
           [
             {
               order: [:bill_address],
-              variant: [:product, :supplier]
+              variant: [:product, :enterprise]
             }
           ]
         end
@@ -34,8 +36,7 @@ module Reporting
         def report_line_items
           @report_line_items ||= Reporting::LineItems.new(
             order_permissions,
-            @params,
-            CompleteVisibleOrdersQuery.new(order_permissions).call
+            @params
           )
         end
 

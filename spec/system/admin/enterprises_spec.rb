@@ -537,6 +537,9 @@ RSpec.describe '
 
       click_button 'Update'
 
+      # Wait for the response before looking at the database. Otherwise we may
+      # read it before the update has been processed.
+      expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
       expect(supplier1.producer_properties.reload.count).to eq(1)
 
       # -- Destroy
@@ -544,13 +547,17 @@ RSpec.describe '
         click_link "Properties"
       end
 
+      property = supplier1.producer_properties.first
       accept_alert do
-        property = supplier1.producer_properties.first
         within("#spree_producer_property_#{property.id}") { page.find('a.remove_fields').click }
       end
 
       click_button 'Update'
 
+      # The success message of the update above is still displayed, so we can't
+      # wait for it again. But the removed row disappears from the page only
+      # once the update has been processed and the page reloaded.
+      expect(page).not_to have_selector "#spree_producer_property_#{property.id}", visible: false
       expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
       expect(supplier1.producer_properties.reload).to be_empty
     end
@@ -565,7 +572,7 @@ RSpec.describe '
                                     orders_close_at: 2.days.from_now)
       }
       let(:product) {
-        create(:simple_product, supplier_id: supplier1.id, primary_taxon: taxon,
+        create(:simple_product, enterprise_id: supplier1.id, primary_taxon: taxon,
                                 properties: [property], name: "Beans")
       }
       let(:variant) { product.variants.first }

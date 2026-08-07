@@ -466,6 +466,7 @@ ar:
         unit_value: قيمةالوحدة
         price: السعر
         producer: المنتج
+        enterprise: الشركة
         category: الفئة
         sku: SKU
         on_hand: "متوفر"
@@ -722,8 +723,8 @@ ar:
         header:
           title: تحرير المنتجات بالجملة
       filters:
-        producers:
-          label: المنتجين
+        enterprises:
+          label: المؤسسات
         categories:
           label: التصنيفات
         tags:
@@ -739,7 +740,7 @@ ar:
         none_tax_category: لا شيء
         category_field_name: "الفئة"
         tax_category_field_name: "الفئة الضريبية"
-        producer_field_name: "المنتج"
+        enterprise_field_name: "الشركة"
         add_a_tag: أضف وسم
     product_import:
       title: استيراد المنتج
@@ -1985,12 +1986,11 @@ ar:
   brandstory_part5_strong: "وما لا يقل أهمية عن المنصة نفسها هو القيم التي تدعمها."
   brandstory_part6: "إذا كنت تبيع طعامًا جيدًا - كمزارع ، سوق زراعي، جمعية تعاونية منتجة، مركز طعام - فاختر برنامجًا يتوافق مع قيمك لبناء أنظمة غذائية للناس و الوطن. من خلال العمل الجماعي بدلاً من التنافس ، نشارك تكاليف تطوير برامج جديدة ، ونضمن أن مشروعنا مرن!"
   system_headline: "البيع على منصة فلاحة 3 خطوات سهلة"
-  system_step1: "1. أنشئ مؤسستك"
-  system_step1_text: "قم بإعداد مؤسستك بالاسم والوصف والصور وتفاصيل الاتصال وروابط الوسائط الاجتماعية."
-  system_step2: "2. أضف منتجاتك"
-  system_step2_text: "أضف منتجات إلى متجرك - خاصة بك و / أو من منتجين آخرين من حولك. تعيين الصور والأوصاف والأسعار المخزون والأوزان والمقاييس المرنة!"
-  system_step3: "3. عمليات التسليم الخاصة بك"
-  system_step3_text: "قم بإعداد طرق الدفع. إنشاء نقاط استلام متعددة وتفاصيل التسليم. إنشاء أوامر متكررة وتوزيعات منتظمة."
+  system_step1_html: "1. أنشئ مؤسستك"
+  system_step2_html: "2. أضف منتجاتك"
+  system_step2_text_html: "أضف منتجات إلى متجرك - خاصة بك و / أو من منتجين آخرين من حولك. تعيين الصور والأوصاف والأسعار المخزون والأوزان والمقاييس المرنة!"
+  system_step3_html: "3. عمليات التسليم الخاصة بك"
+  system_step3_text_html: "قم بإعداد طرق الدفع. إنشاء نقاط استلام متعددة وتفاصيل التسليم. إنشاء أوامر متكررة وتوزيعات منتظمة."
   cta_headline: "شبكة الغذاء المستدامة في المستقبل."
   cta_label: "أنا مستعد"
   stats_headline: "نحن بصدد إنشاء نظام غذائي جديد."
@@ -2106,6 +2106,7 @@ ar:
   email_shipping_collection_time: "جاهز للتحصيل:"
   email_shipping_collection_instructions: "تعليمات المجموعة:"
   email_special_instructions: "ملاحظاتك:"
+  email_order_note: "ملحوظة:"
   email_signup_greeting: مرحبا!
   email_signup_welcome: "مرحبا بكم في %{sitename}!"
   email_signup_confirmed_email: "شكرا لتأكيد بريدك الالكتروني"
@@ -3241,7 +3242,6 @@ ar:
         add_to_cart: "إضافة"
         in_cart: "في السلة"
         quantity_in_cart: "%{quantity} في السلة"
-        remaining_in_stock: "بقي %{quantity} فقط"
       bulk_buy_modal:
         min_quantity: "اقل كمية "
         max_quantity: "اعلى كمية"
@@ -4082,8 +4082,7 @@ ar:
         new:
           title: "منتج جديد"
           new_product: "منتج جديد"
-          supplier: "المورد"
-          supplier_select_placeholder: "حدد المورد"
+          enterprise: "الشركة"
           product_name: "اسم المنتج"
           units: "حجم الوحدة"
           value: "القيمة"

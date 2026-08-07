@@ -17,6 +17,11 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
+printf "Make sure that you installed all app dependencies first.\n"
+printf "You may find a handy script for your system here:\n\n"
+ls -1 script/setup-*
+printf "\n\n"
+
 # Check ruby version
 RUBY_VERSION=$(cat .ruby-version)
 if command -v rbenv > /dev/null; then

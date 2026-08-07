@@ -107,6 +107,7 @@ RSpec.describe "Order Management" do
     let(:order) do
       create(
         :completed_order_with_totals,
+        line_items_count: 5,
         order_cycle:,
         distributor:,
         user:,

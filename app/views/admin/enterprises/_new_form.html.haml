@@ -10,16 +10,14 @@
     .three.columns.alpha
       =f.label :owner_id, t('.owner')
       %span.required *
-      %div{'ofn-with-tip' => t('.owner_tip')}
-        %a= t('admin.whats_this')
+      = render WhatsThisTooltipComponent.new(text: t('.owner_tip'), placement: "top-start")
     .nine.columns.omega
       - owner_email = @enterprise&.owner&.email || ""
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
 .row
   .three.columns.alpha
     %label= t('primary_details.primary_producer', scope: scope)
-    %div{'ofn-with-tip' => t('primary_details.primary_producer_tip', scope: scope)}
-      %a= t('admin.whats_this')
+    = render WhatsThisTooltipComponent.new(text: t('primary_details.primary_producer_tip', scope: scope), placement: "top-start")
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
     &nbsp;
@@ -29,8 +27,7 @@
     .alpha.eleven.columns
       .three.columns.alpha
         = f.label :sells, t('primary_details.sells', scope: scope)
-        %div{'ofn-with-tip' => t('primary_details.sells_tip', scope: scope)}
-          %a What's this?
+        = render WhatsThisTooltipComponent.new(text: t('primary_details.sells_tip', scope: scope), placement: "top-start")
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
         &nbsp;
@@ -102,8 +99,7 @@
       = af.label :latitude, t(:latitude)
       \/
       = af.label :longitude, t(:longitude)
-      %div{'ofn-with-tip' => t('latitude_longitude_tip')}
-        %a= t('admin.whats_this')
+      = render WhatsThisTooltipComponent.new(text: t('latitude_longitude_tip'), placement: "top-start")
     .four.columns
       = af.text_field :latitude, { placeholder: t(:latitude_placeholder) }
     .four.columns.omega

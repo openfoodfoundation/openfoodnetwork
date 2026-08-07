@@ -15,14 +15,14 @@ RSpec.describe ProducerMailer do
   let(:d1) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:d2) { create(:distributor_enterprise) }
   let(:p1) {
-    create(:product, name: "Zebra", price: 12.34, supplier_id: s1.id,
+    create(:product, name: "Zebra", price: 12.34, enterprise_id: s1.id,
                      tax_category_id: tax_category.id)
   }
-  let(:p2) { create(:product, name: "Aardvark", price: 23.45, supplier_id: s2.id) }
-  let(:p3) { create(:product, name: "Banana", price: 34.56, supplier_id: s1.id) }
-  let(:p4) { create(:product, name: "coffee", price: 45.67, supplier_id: s1.id) }
-  let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier_id: s1.id) }
-  let(:p6) { create(:product, name: "Eggs", price: 67.89, supplier_id: s1.id) }
+  let(:p2) { create(:product, name: "Aardvark", price: 23.45, enterprise_id: s2.id) }
+  let(:p3) { create(:product, name: "Banana", price: 34.56, enterprise_id: s1.id) }
+  let(:p4) { create(:product, name: "coffee", price: 45.67, enterprise_id: s1.id) }
+  let(:p5) { create(:product, name: "Daffodil", price: 56.78, enterprise_id: s1.id) }
+  let(:p6) { create(:product, name: "Eggs", price: 67.89, enterprise_id: s1.id) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) {
     order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true,
@@ -289,6 +289,45 @@ RSpec.describe ProducerMailer do
       it "doesn't display a supplier column in the summary of orders grouped by customer" do
         expect(parsed_email.find(".customer-order"))
           .not_to have_selector("th", text: "Supplier")
+      end
+    end
+  end
+
+  context "when product price is modified in another order" do
+    let!(:order_with_modified_price) do
+      order = create(:order, distributor: d1, order_cycle:, state: 'complete')
+      order.line_items << create(:line_item, quantity: 2, variant: p1.variants.first, price: 16.50)
+      order.finalize!
+      order.save
+      order
+    end
+
+    let(:zebra_rows) do
+      parsed_email.all('table.order-summary.line-items tbody tr:not(.total-row)').select do |tr|
+        tr.text.include?(p1.name)
+      end
+    end
+
+    it "shows product on separate rows for the different prices" do
+      expect(zebra_rows.size).to eq(2)
+
+      quantities = zebra_rows.map { |tr| tr.all('td')[2].text.strip }
+      expect(quantities).to contain_exactly('3', '2')
+
+      prices = zebra_rows.map { |tr| tr.all('td')[3].text.strip }
+      expect(prices).to contain_exactly('$10.00', '$16.50')
+
+      subtotals = zebra_rows.map { |tr| tr.all('td')[4].text.strip }
+      expect(subtotals).to contain_exactly('$30.00', '$33.00')
+    end
+
+    it "validates subtotal to be equal to quantity multiplied by price for each row" do
+      zebra_rows.each do |row|
+        cells = row.all('td').map { |td| td.text.strip }
+        quantity = cells[2].to_i
+        price = BigDecimal(cells[3].delete('$,'), 10)
+        subtotal = BigDecimal(cells[4].delete('$,'), 10)
+        expect(price * quantity).to eq(subtotal)
       end
     end
   end

@@ -24,25 +24,27 @@ RSpec.describe "Product Import" do
   let!(:tax_category2) { create(:tax_category) }
   let!(:shipping_category) { create(:shipping_category) }
 
-  let!(:product) { create(:simple_product, supplier_id: enterprise2.id, name: 'Hypothetical Cake') }
+  let!(:product) {
+    create(:simple_product, enterprise_id: enterprise2.id, name: 'Hypothetical Cake')
+  }
   let!(:variant) {
     create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500',
-                     display_name: 'Preexisting Banana', supplier: enterprise2)
+                     display_name: 'Preexisting Banana', enterprise: enterprise2)
   }
   let!(:product2) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Beans',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Beans',
                             unit_value: '500', description: '', primary_taxon_id: category.id)
   }
   let!(:product3) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Sprouts',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Sprouts',
                             unit_value: '500')
   }
   let!(:product4) {
-    create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Cabbage',
+    create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Cabbage',
                             unit_value: '500')
   }
   let!(:product5) {
-    create(:simple_product, supplier_id: enterprise2.id, on_hand: 100, name: 'Lettuce',
+    create(:simple_product, enterprise_id: enterprise2.id, on_hand: 100, name: 'Lettuce',
                             unit_value: '500')
   }
   let!(:variant_override) {
@@ -92,7 +94,7 @@ RSpec.describe "Product Import" do
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       potatoes = Spree::Product.find_by(name: 'Potatoes')
-      expect(potatoes.variants.first.supplier).to eq enterprise
+      expect(potatoes.variants.first.enterprise).to eq enterprise
       expect(potatoes.variants.first.on_hand).to eq 6
       expect(potatoes.variants.first.price).to eq 6.50
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
@@ -105,7 +107,7 @@ RSpec.describe "Product Import" do
       expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
     end
 
-    it "displays info about invalid entries but no save button if all items are invalid" do
+    it "displays info about invalid entries and no save button if any items are invalid" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, shipping_category_id
         Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
@@ -125,14 +127,14 @@ RSpec.describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "4"
-      expect(page).to have_selector '.invalid-count', text: "3"
-      expect(page).to have_selector ".create-count", text: "1"
+      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector ".create-count", text: "2"
       expect(page).not_to have_selector '.update-count'
 
       expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
-    it "displays info about inconsistent variant unit names, within the same product" do
+    it "allows variants of the same product to have different variant unit names" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, variant_unit_name, \
           shipping_category_id
@@ -148,12 +150,14 @@ RSpec.describe "Product Import" do
       click_button 'Upload'
 
       proceed_to_validation
-      find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "Variant_unit_name must be the same for products " \
-                                   "with the same name"
-      expect(page).to have_content "Imported file contains invalid entries"
 
-      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).not_to have_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "2"
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '2'
     end
 
     it "handles saving of named tax and shipping categories" do
@@ -371,7 +375,7 @@ RSpec.describe "Product Import" do
       end
 
       it "handles a unit of kg for inventory import" do
-        product = create(:simple_product, supplier_id: enterprise.id, on_hand: 100, name: 'Beets',
+        product = create(:simple_product, enterprise_id: enterprise.id, on_hand: 100, name: 'Beets',
                                           unit_value: '1000', variant_unit_scale: 1000)
         csv_data = <<~CSV
           name, distributor, producer, category, on_hand, price, unit_type, units, on_demand
@@ -410,7 +414,7 @@ RSpec.describe "Product Import" do
 
     describe "Item type products" do
       let!(:product) {
-        create(:simple_product, supplier_id: enterprise.id, on_hand: nil, name: 'Aubergine',
+        create(:simple_product, enterprise_id: enterprise.id, on_hand: nil, name: 'Aubergine',
                                 unit_value: '1', variant_unit_scale: nil, variant_unit: "items",
                                 variant_unit_name: "Bag")
       }
@@ -449,7 +453,7 @@ RSpec.describe "Product Import" do
           )
         end
 
-        it "displays the appropriate error message, when variant unit names are inconsistent" do
+        it "allows variants of the same product to have different variant unit names" do
           csv_data = <<~CSV
             name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
               variant_unit_name
@@ -464,15 +468,10 @@ RSpec.describe "Product Import" do
           click_button 'Upload'
           proceed_to_validation
 
-          find('div.header-description', text: 'Items contain errors').click
-          expect(page).to have_content "Variant_unit_name must be the same for products " \
-                                       "with the same name"
-          expect(page).to have_content "Imported file contains invalid entries"
-          expect(page).not_to have_selector 'input[type=submit][value="Save"]'
-
-          visit main_app.admin_inventory_path
-
-          expect(page).not_to have_content "Aubergine"
+          expect(page).to have_selector '.item-count', text: "2"
+          expect(page).not_to have_selector '.invalid-count'
+          expect(page).to have_selector '.inv-create-count', text: '2'
+          expect(page).not_to have_selector '.inv-update-count'
         end
 
         it "invalidates units value if 0 or non-numeric" do
@@ -913,9 +912,9 @@ RSpec.describe "Product Import" do
         expect_import_completed
 
         # Check that all rows are saved.
-        expect(producer.supplied_products.find_by(name: "Imported Product 10")).to be_present
-        expect(producer.supplied_products.find_by(name: "Imported Product 60")).to be_present
-        expect(producer.supplied_products.find_by(name: "Imported Product 110")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 10")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 60")).to be_present
+        expect(producer.products.find_by(name: "Imported Product 110")).to be_present
       end
     end
   end

@@ -53,7 +53,7 @@ module InjectionHelper
     enterprises_and_relatives = current_distributor.
       relatives_including_self.
       activated.
-      includes(:properties, address: [:state, :country], supplied_products: :properties).
+      includes(:properties, address: [:state, :country], products: :properties).
       all
 
     inject_json_array "enterprises",
@@ -135,6 +135,13 @@ module InjectionHelper
 
   def inject_rails_flash
     inject_json "railsFlash", OpenStruct.new(flash.to_hash), Api::RailsFlashSerializer
+  end
+
+  def inject_feature_flag
+    name = "productGridViewFeature"
+    json = { enabled: feature?(:product_grid_view, spree_current_user) }.to_json
+
+    render partial: "json/injection_ams", locals: { name:, json: }
   end
 
   def inject_json_array(name, data, serializer, opts = {})

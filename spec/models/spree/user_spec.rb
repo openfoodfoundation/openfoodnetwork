@@ -309,7 +309,7 @@ RSpec.describe Spree::User do
       context "order containing their product" do
         before do
           order.line_items << create(:line_item,
-                                     product: create(:product, supplier_id: producer.id))
+                                     product: create(:product, enterprise_id: producer.id))
         end
         context "order distributor allow producer to edit orders" do
           let(:distributor) do

@@ -12,7 +12,7 @@ module Admin
     def index
       fetch_products
       render "index",
-             locals: { available_tags:, flash:, allowed_producers: }
+             locals: { available_tags:, flash:, allowed_producers:, allowed_source_producers: }
 
       session[:products_return_to_url] = request.url
     end
@@ -20,7 +20,7 @@ module Admin
     def bulk_update
       product_set = product_set_from_params
 
-      product_set.collection.each { |p| authorize! :update, p }
+      product_set.collection.each { |p| authorize! :bulk_product_variant_update, p }
       @products = product_set.collection # use instance variable mainly for testing
 
       if product_set.save
@@ -33,7 +33,7 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: {
-                          available_tags:, allowed_producers:, flash:
+                          available_tags:, allowed_producers:, allowed_source_producers:, flash:
                         }
       end
     end
@@ -99,7 +99,7 @@ module Admin
         format.turbo_stream {
           render :clone, status:,
                          locals: { product:, cloned_product:, product_index:,
-                                   allowed_producers: }
+                                   allowed_producers:, allowed_source_producers: }
         }
       end
     end
@@ -113,7 +113,6 @@ module Admin
 
       begin
         variant = linked_variant.create_linked_variant(spree_current_user)
-
         flash.now[:success] = t('.success')
         variant_index = "-#{variant.id}"
       rescue ActiveRecord::RecordInvalid
@@ -124,7 +123,8 @@ module Admin
 
       respond_with do |format|
         format.turbo_stream {
-          locals = { linked_variant:, variant:, product_index:, variant_index: }
+          locals = { linked_variant:, variant:, product_index:, variant_index:,
+                     allowed_source_producers: }
           render :create_linked_variant, status:, locals:
         }
       end
@@ -172,13 +172,20 @@ module Admin
 
     def allowed_producers
       OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises.is_primary_producer.by_name
+        .managed_product_enterprises
+        .is_primary_producer
+        .by_name
+    end
+
+    def allowed_source_producers
+      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
+        .enterprises_granting_linked_variants.is_primary_producer.by_name
     end
 
     def available_tags
       variants = Spree::Variant.where(
         product: OpenFoodNetwork::Permissions.new(spree_current_user)
-          .editable_products
+          .editable_and_read_only_products
           .merge(product_scope)
       )
 
@@ -189,7 +196,10 @@ module Admin
 
     def fetch_products
       product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .editable_products.merge(product_scope_with_includes).ransack(ransack_query).result
+        .editable_and_read_only_products
+        .merge(product_scope_with_includes)
+        .ransack(ransack_query)
+        .result
 
       product_query = apply_tags_filter(product_query)
 
@@ -234,7 +244,7 @@ module Admin
 
     def ransack_query
       query = {}
-      query.merge!(variants_supplier_id_in: @producer_id) if @producer_id.present?
+      query.merge!(variants_enterprise_id_in: @producer_id) if @producer_id.present?
       if @search_term.present?
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
@@ -294,7 +304,7 @@ module Admin
           :product,
           :stock_items,
           :tax_category,
-          :supplier,
+          :enterprise,
           :taggings,
         ] },
       ]
@@ -320,18 +330,32 @@ module Admin
       #         }
       #       }
       #     }
-      collection_hash = products_bulk_params[:products]
-        .transform_values { |product|
-          # Convert variants_attributes form hash to an array if present
-          product[:variants_attributes] &&= product[:variants_attributes].values
-          product
-        }.with_indifferent_access
+      collection_hash = normalized_products_bulk_params
       Sets::ProductSet.new(collection_attributes: collection_hash)
     end
 
     def products_bulk_params
       params.permit(products: ::PermittedAttributes::Product.attributes)
         .to_h.with_indifferent_access
+    end
+
+    def normalized_products_bulk_params
+      submitted_products = products_bulk_params[:products] || {}
+
+      submitted_products.each_with_object({}.with_indifferent_access) do |
+        (key, product), normalized
+      |
+        next if product.blank?
+
+        product = product.with_indifferent_access
+
+        # Convert variants_attributes form hash to an array if present
+        product[:variants_attributes] = product[:variants_attributes]&.values
+
+        next if product[:id].blank?
+
+        normalized[key] = product
+      end
     end
 
     def clone_error_message(error)

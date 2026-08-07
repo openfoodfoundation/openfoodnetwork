@@ -1,3 +1,5 @@
+@use "shop_partials/spinner";
+
 // Shop partials
 @import "shop-inputs";
 @import "shop-navigation";
@@ -81,9 +83,12 @@
         display: inline;
       }
 
+      .spinner-summary {
+        @include spinner.summary;
+      }
+
       .spinner {
-        width: 100px;
-        margin-bottom: 20px;
+        @include spinner.product-spinner;
       }
     }
   }

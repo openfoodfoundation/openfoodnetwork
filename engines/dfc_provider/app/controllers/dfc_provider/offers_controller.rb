@@ -6,7 +6,7 @@ module DfcProvider
 
     def show
       subject = OfferBuilder.build(variant)
-      render json: DfcIo.export(subject)
+      render_dfc(subject)
     end
 
     def update
@@ -22,7 +22,7 @@ module DfcProvider
     private
 
     def variant
-      @variant ||= current_enterprise.supplied_variants.find(params[:id])
+      @variant ||= current_enterprise.variants.find(params[:id])
     end
   end
 end

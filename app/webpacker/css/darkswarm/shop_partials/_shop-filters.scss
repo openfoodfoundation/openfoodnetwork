@@ -1,5 +1,8 @@
+@use "property-selector-base" as base;
+
 @mixin filter-selector($base-clr, $border-clr, $hover-clr) {
-  &.inline-block, ul.inline-block {
+  &.inline-block,
+  ul.inline-block {
     display: inline-block;
   }
 
@@ -11,7 +14,8 @@
     padding: 0;
     margin: 0 0.5rem 0.5rem 0;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: transparent;
     }
 
@@ -19,23 +23,16 @@
       box-shadow: none;
     }
 
-    a, a.button {
-      display: block;
-
-      @include border-radius(0.5em);
-
-      border: 1px solid $border-clr;
-      padding: 0.5em 0.625em;
-      color: $base-clr;
-      font-size: 0.75em;
-      background: white;
-      margin: 0;
+    a,
+    a.button {
+      @include base.property-selector($base-clr, $border-clr);
 
       i {
         padding-left: 0.25rem;
       }
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         border-color: $hover-clr;
         color: $hover-clr;
       }
@@ -43,13 +40,16 @@
       &.disabled {
         opacity: 0.6;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           border-color: $border-clr;
           color: $base-clr;
         }
       }
 
-      &.active, &.active:hover, &.active:focus {
+      &.active,
+      &.active:hover,
+      &.active:focus {
         border: 1px solid $base-clr;
         background: $base-clr;
         color: white;
@@ -59,7 +59,8 @@
 }
 
 .filter-shopfront {
-  &.taxon-selectors, &.property-selectors {
+  &.taxon-selectors,
+  &.property-selectors {
     background: transparent;
   }
 
@@ -70,11 +71,10 @@
 
   // Shopfront properties
   &.property-selectors {
-    @include filter-selector(#666, #ccc, #777);
+    @include filter-selector($grey-650, $grey-300, $grey-600);
   }
 
   ul {
     margin: 0;
   }
 }
-

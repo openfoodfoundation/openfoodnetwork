@@ -1,10 +1,11 @@
 -# haml-lint:disable ViewLength (This file is big, but doesn't make sense to split up at this point)
--# locals: (variant:, f:, product_index: nil)
+-# locals: (variant:, f:, product_index: nil, allowed_source_producers:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
 %td.col-image
   -# empty
   - variant.source_variants.each do |source_variant|
-    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.full_name, source_id: source_variant.id, hub_name: variant.hub&.name))
+    -# todo: remove old parameter hub_name once translations have been updated.
+    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.product_and_full_name, source_id: source_variant.id, producer_name:variant.producer.name, hub_name: variant.hub&.name))
 %td.col-name.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
@@ -13,8 +14,8 @@
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
 %td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
-  = f.hidden_field :variant_unit
-  = f.hidden_field :variant_unit_scale
+  = f.text_field :variant_unit, style: "display:none"
+  = f.text_field :variant_unit_scale, style: "display:none", value: (number_with_precision(variant.variant_unit_scale, strip_insignificant_zeros: true) if variant.variant_unit_scale)
   = f.select :variant_unit_with_scale,
       options_for_select(WeightsAndMeasures.variant_unit_options, variant.variant_unit_with_scale),
       { include_blank: t('.select_unit_scale') },
@@ -33,8 +34,8 @@
   .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Show a composite field for unit_value and unit_description
-      = f.hidden_field :unit_value
-      = f.hidden_field :unit_description
+      = f.text_field :unit_value, style: "display:none", value: (number_with_precision(variant.unit_value, strip_insignificant_zeros: true) if variant.unit_value)
+      = f.text_field :unit_description, style: "display:none"
       = f.text_field :unit_value_with_description,
           value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
     .field
@@ -58,16 +59,16 @@
 %td.col-producer.field.naked_inputs
   - if variant.hub_id.blank?
     = render(SearchableDropdownComponent.new(form: f,
-        name: :supplier_id,
-        aria_label: t('.producer_field_name'),
-        options: variant.supplier_id ? [[variant.supplier.name, variant.supplier_id]] : [],
-        selected_option: variant.supplier_id,
+        name: :enterprise_id,
+        aria_label: t('.enterprise_field_name'),
+        options: variant.enterprise_id ? [[variant.enterprise.name, variant.enterprise_id]] : [],
+        selected_option: variant.enterprise_id,
         remote_url: admin_ajax_search_producers_url,
-        placeholder_value: t('admin.products_v3.filters.select_producer')))
-    = error_message_on variant, :supplier
+        placeholder_value: t('admin.products_v3.filters.select_enterprise')))
+    = error_message_on variant, :enterprise
   - else
     .content
-      = variant.supplier.name
+      = variant.enterprise.name
 %td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
@@ -89,7 +90,7 @@
   = error_message_on variant, :tax_category
 - if variant_tag_enabled?(spree_current_user)
   %td.col-tags.field.naked_inputs
-    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.supplier_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags')) if feature?(:variant_tag, variant.supplier)
+    = render TagListInputComponent.new(name: f.field_name(:tag_list), tags: variant.tag_list, autocomplete_url: variant_tag_rules_admin_tag_rules_path(enterprise_id: variant.enterprise_id), placeholder: t('.add_a_tag'), aria_label: t('admin.products_page.columns.tags')) if feature?(:variant_tag, variant.enterprise)
 %td.col-inherits_properties.align-left
   -# empty
 %td.align-right
@@ -97,7 +98,7 @@
     - if variant.persisted?
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
 
-      - if variant.source_variants.empty? && allowed_source_producers.include?(variant.supplier)
+      - if variant.source_variants.empty? && allowed_source_producers.include?(variant.enterprise)
         = link_to t('admin.products_page.actions.create_linked_variant'), admin_create_linked_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
 
       - if variant.product.variants.size > 1

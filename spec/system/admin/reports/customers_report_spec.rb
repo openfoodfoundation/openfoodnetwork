@@ -23,6 +23,7 @@ RSpec.describe "Customers report" do
           "First Name", "Last Name", "Billing Address", "Email", "Phone",
           "Hub", "Hub Address", "Shipping Method", "Total Number of Orders",
           "Total incl. tax ($)", "Last completed order date",
+          "Balance Due ($)", "Available Credit ($)",
         ]
       ]
     )

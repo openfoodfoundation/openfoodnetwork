@@ -11,6 +11,7 @@
     "@floating-ui/dom": "*",
     "@hotwired/stimulus": "*",
     "@hotwired/turbo": "*",
+    "@stimulus-components/carousel": "^6.0.0",
     "@stimulus-components/rails-nested-form": "*",
     "@swc/core": "*",
     "cable_ready": "5.0.6",

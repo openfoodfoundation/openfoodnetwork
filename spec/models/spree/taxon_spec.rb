@@ -10,10 +10,10 @@ RSpec.describe Spree::Taxon do
 
   describe ".supplied_taxons" do
     let!(:p1) {
-      create(:simple_product, primary_taxon_id: t1.id, supplier_id: e.id)
+      create(:simple_product, primary_taxon_id: t1.id, enterprise_id: e.id)
     }
     let!(:p2) {
-      create(:simple_product, primary_taxon_id: t2.id, supplier_id: e2.id)
+      create(:simple_product, primary_taxon_id: t2.id, enterprise_id: e2.id)
     }
 
     context "when scoped to specific enterprises" do

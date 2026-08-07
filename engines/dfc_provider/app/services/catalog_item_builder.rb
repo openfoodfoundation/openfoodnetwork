@@ -3,10 +3,10 @@
 class CatalogItemBuilder < DfcBuilder
   def self.catalog_item(variant)
     id = urls.enterprise_catalog_item_url(
-      enterprise_id: variant.supplier_id,
+      enterprise_id: variant.enterprise_id,
       id: variant.id,
     )
-    supplier_url = urls.enterprise_url(variant.supplier_id)
+    supplier_url = urls.enterprise_url(variant.enterprise_id)
     product = SuppliedProductBuilder.supplied_product(variant)
 
     DfcProvider::CatalogItem.new(

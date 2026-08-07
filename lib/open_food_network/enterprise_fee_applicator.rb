@@ -24,7 +24,8 @@ module OpenFoodNetwork
     end
 
     def line_item_adjustment_label
-      "#{variant.product.name} - #{base_adjustment_label}"
+      label_limit = Spree::Adjustment.columns_hash['label'].limit
+      "#{variant.product.name} - #{base_adjustment_label}".truncate(label_limit)
     end
 
     def order_adjustment_label

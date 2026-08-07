@@ -1,4 +1,4 @@
--# locals: (products:, allowed_producers:)
+-# locals: (products:, allowed_producers:, allowed_source_producers:)
 = form_with url: admin_products_bulk_update_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
             html: { data: { 'turbo-frame': "_self",
@@ -64,7 +64,7 @@
         %th.align-left.col-price= t('admin.products_page.columns.price')
         = render partial: 'spree/admin/shared/stimulus_sortable_header',
             locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'name asc' }
-        %th.align-left.col-producer= t('admin.products_page.columns.producer')
+        %th.align-left.col-producer= t('admin.products_page.columns.enterprise')
         %th.align-left.col-category= t('admin.products_page.columns.category')
         %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
         - if variant_tag_enabled?(spree_current_user)
@@ -72,4 +72,4 @@
         %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
-      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, allowed_producers:}
+      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, allowed_producers:, allowed_source_producers: }

@@ -13,10 +13,11 @@ gem 'rails'
 gem "active_storage_validations"
 gem "aws-sdk-s3", require: false
 gem "image_processing"
+gem "mini_magick" # required by image_processing
 
 gem 'activemerchant'
 gem 'angular-rails-templates'
-gem 'ransack', '~> 4.1.0'
+gem 'ransack'
 gem 'responders'
 gem 'shakapacker'
 
@@ -52,7 +53,7 @@ gem 'ffaker'
 gem 'highline'
 gem 'json'
 gem 'monetize', '~> 1.11'
-gem 'paranoia', '~> 2.4'
+gem 'paranoia'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
@@ -63,7 +64,7 @@ gem "taler"
 gem 'devise'
 gem 'devise-encryptable'
 gem 'devise-i18n'
-gem 'jwt', '~> 2.3'
+gem 'jwt'
 
 gem 'datafoodconsortium-connector'
 gem 'datafoodconsortium-connector-v1'

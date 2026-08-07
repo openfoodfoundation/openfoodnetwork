@@ -435,6 +435,7 @@ uk:
         unit: Одиниця
         price: Ціна
         producer: Виробник
+        enterprise: Підприємство
         category: Категорія
         sku: Артикул
         on_hand: "Під рукою"
@@ -687,8 +688,8 @@ uk:
         header:
           title: Масове редагування продуктів
       filters:
-        producers:
-          label: Виробники
+        enterprises:
+          label: Підприємства
         categories:
           label: Категорії
         tags:
@@ -704,7 +705,7 @@ uk:
         none_tax_category: Жодного
         category_field_name: "Категорія"
         tax_category_field_name: "Категорія податку"
-        producer_field_name: "Виробник"
+        enterprise_field_name: "Підприємство"
         add_a_tag: Додати тег
     product_import:
       title: Імпорт продукту
@@ -1895,12 +1896,11 @@ uk:
   brandstory_part5_strong: "Ми називаємо це Open Food Network, Відкрита продуктова мережа."
   brandstory_part6: "Ми всі любимо їжу. Тепер ми також можемо любити нашу систему постачання продуктів."
   system_headline: "Шопінг – ось як це працює."
-  system_step1: "1. Пошук"
-  system_step1_text: "Шукайте в наших різноманітних незалежних магазинах сезонну місцеву їжу. Шукайте за розташуванням та категоріями страв, віддаєте перевагу доставці чи самовивозу."
-  system_step2: "2. Магазин"
-  system_step2_text: "Трансформуйте свої транзакції за допомогою доступної місцевої їжі від різноманітних виробників і хабів. Дізнайтеся історію вашої їжі та людей, які її готують!"
-  system_step3: "3. Самовивіз / Доставка"
-  system_step3_text: "Зачекайте на доставку або відвідайте свого виробника чи хаб для більш особистого спілкування зі своєю їжею. Покупки їжі настільки різноманітні, наскільки це задумано природою."
+  system_step1_html: "1. Пошук"
+  system_step2_html: "2. Магазин"
+  system_step2_text_html: "Трансформуйте свої транзакції за допомогою доступної місцевої їжі від різноманітних виробників і хабів. Дізнайтеся історію вашої їжі та людей, які її готують!"
+  system_step3_html: "3. Самовивіз / Доставка"
+  system_step3_text_html: "Зачекайте на доставку або відвідайте свого виробника чи хаб для більш особистого спілкування зі своєю їжею. Покупки їжі настільки різноманітні, наскільки це задумано природою."
   cta_headline: "Покупки, які роблять світ кращим."
   cta_label: "Я готовий"
   stats_headline: "Ми створюємо нову систему продовольства."
@@ -2016,6 +2016,7 @@ uk:
   email_shipping_collection_time: "Готовий до збору:"
   email_shipping_collection_instructions: "Інструкції зі збору:"
   email_special_instructions: "Ваші примітки:"
+  email_order_note: "Примітка:"
   email_signup_greeting: Привіт!
   email_signup_welcome: "Ласкаво просимо до %{sitename}!"
   email_signup_confirmed_email: "Дякуємо за підтвердження електронної пошти."
@@ -3130,7 +3131,6 @@ uk:
         add_to_cart: "Додати"
         in_cart: "у кошику"
         quantity_in_cart: "%{quantity} у кошику"
-        remaining_in_stock: "Залишився лише %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мінімальна кількість"
         max_quantity: "Максимальна кількість"
@@ -3905,7 +3905,7 @@ uk:
         new:
           title: "Новий продукт"
           new_product: "Новий продукт"
-          supplier: "Постачальник"
+          enterprise: "Підприємство"
           product_name: "Назва продукту"
           units: "Розмір одиниці"
           value: "Значення"

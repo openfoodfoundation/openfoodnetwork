@@ -645,6 +645,7 @@ fr:
         display_as: 'Afficher l''unité en '
         price: Prix
         producer: Producteur
+        enterprise: Entreprise
         category: Catégorie
         sku: Référence Produit
         on_hand: "En stock"
@@ -675,7 +676,7 @@ fr:
       image:
         edit: Modifier
       variant_row:
-        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Hub : %{hub_name}"
+        sourced_from: "Source : %{source_name} ( %{source_id} ) ; Producteur: %{producer_name}"
       product_preview:
         product_preview: Prévisualisation du produit
         shop_tab: Boutique
@@ -829,12 +830,14 @@ fr:
         update_address: "Mettre à jour l'adresse"
         confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
+        filter_by_tag: "Filtrer par étiquette"
         guest_label: "Commande en mode invité"
-        credit_owed: "Avoir:"
+        credit_owed: "Avoir"
         balance_due: "Solde dû"
         id: Id
       destroy:
-        has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+        has_associated_subscriptions: "La suppression a échoué : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+        has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."
     customer_account_transaction:
       index:
         available_credit: "Avoir disponible : %{available_credit}"
@@ -969,15 +972,15 @@ fr:
           cancellation_text: "Conserver la variante"
       filters:
         search_products: Chercher des produits
-        search_for_producers: Rechercher des producteurs
-        select_producer: Sélectionner producteur
-        all_producers: Tous les producteurs
+        search_for_enterprises: Recherche d'entreprises
+        select_enterprise: Sélectionnez une entreprise
+        all_enterprises: Toutes les entreprises
         search_for_categories: Rechercher
         select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
         select_tag: Choisir le tag
-        producers:
-          label: Producteurs
+        enterprises:
+          label: Entreprises
         categories:
           label: Catégories
         tags:
@@ -1027,7 +1030,7 @@ fr:
         search_for_tax_categories: "Chercher les catégories de taxes"
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
-        producer_field_name: "Producteur"
+        enterprise_field_name: "Entreprise"
         select_unit_scale: Sélectionner l'échelle d'unité
         add_a_tag: Ajouter un tag
       clone:
@@ -2431,12 +2434,12 @@ fr:
   brandstory_part5_strong: " "
   brandstory_part6: " "
   system_headline: "Commander en ligne - comment ça marche?"
-  system_step1: "1. Recherche"
-  system_step1_text: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
-  system_step2: "2. Achat"
-  system_step2_text: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné, et découvrez les producteurs qui se cachent derrière les produits."
-  system_step3: "3. Retrait / Livraison"
-  system_step3_text: "Retirez votre panier au lieu et à l’heure indiqués lors de votre commande, ou à domicile si le circuit sélectionné propose cette option."
+  system_step1_html: "1. Recherche"
+  system_step1_text_html: <a href="/shops">Découvrez</a> nos commerces indépendants et variés de produits locaux et de saison. Filtrez par localisation et catégorie de produits, ou indiquez si vous préférez la livraison ou le retrait sur place.
+  system_step2_html: "2. Achat"
+  system_step2_text_html: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné, et découvrez les producteurs qui se cachent derrière les produits."
+  system_step3_html: "3. Retrait / Livraison"
+  system_step3_text_html: "Retirez votre panier au lieu et à l’heure indiqués lors de votre commande, ou à domicile si le circuit sélectionné propose cette option."
   cta_headline: "Des achats qui rendent le monde un peu meilleur."
   cta_label: "Je vote avec mes achats"
   stats_headline: "Nous créons un nouveau système alimentaire."
@@ -2565,6 +2568,7 @@ fr:
   email_shipping_collection_time: "Prêt pour retrait:"
   email_shipping_collection_instructions: "Instructions de retrait:"
   email_special_instructions: "Vos commentaires:"
+  email_order_note: "Note :"
   email_signup_greeting: Bonjour,
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
@@ -2578,7 +2582,7 @@ fr:
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
-  producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
+  producer_mail_text_before: "Vous trouverez ci-dessous la mise à jour des informations pour le cycle de vente prévu pour :"
   producer_mail_order_text: "Les produits et quantités à livrer :"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
@@ -3007,9 +3011,9 @@ fr:
   transaction_date: "Date"
   payment_state: "Statut du paiement"
   shipping_state: "Statut de la livraison"
-  value: "Quantité"
+  value: "Montant"
   balance_due: "Montant dû"
-  credit: "Avoir:"
+  credit: "Avoir"
   Paid: "Payé"
   Ready: "Prêt"
   not_visible: invisible
@@ -3373,6 +3377,8 @@ fr:
   report_line_cost_of_produce: 'Coût des produits hors '
   report_line_line_items: produits
   report_header_last_completed_order_date: Date dernière commande
+  report_header_balance_due: "Solde dû ( %{currency_symbol} )"
+  report_header_credit_due: "Crédit disponible ( %{currency_symbol} )"
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "N° de facture initial :"
   invoice_date: "Date de facture :"
@@ -3764,7 +3770,10 @@ fr:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
-        remaining_in_stock: "Seulement %{quantity} produits restants"
+        remaining_in_stock:
+          one: "%{count} seul produit restant"
+          many: "Seulement %{count} produits restants"
+          other: "Seulement %{count} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4055,7 +4064,7 @@ fr:
   adjustments: "Ajustements"
   payments: "Paiements"
   return_authorizations: "Autorisations de retours"
-  credit_owed: "Avoir :"
+  credit_owed: "Avoir"
   new_adjustment: "Nouvel ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
@@ -4104,7 +4113,7 @@ fr:
     card_number: "Numéro de la carte"
     category: "Catégorie"
     created_successfully: "Créé avec succès"
-    credit: "Avoir :"
+    credit: "Avoir"
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
@@ -4626,13 +4635,12 @@ fr:
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
-          supplier: "Fournisseur"
-          supplier_select_placeholder: "Sélectionner un producteur"
-          search_for_suppliers: "Chercher des fournisseurs"
+          enterprise: "Entreprise"
+          search_for_enterprises: "Recherche d'entreprises"
           search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
-          value: "Quantité"
+          value: "Montant"
           unit_name: "Unité"
           price: "Prix"
           unit_price: "Prix unitaire"
@@ -4814,7 +4822,7 @@ fr:
       balance_due: solde dû
       completed: effectué
       checkout: solde dû
-      credit_owed: avoir.
+      credit_owed: avoir
       failed: échec
       paid: payé
       pending: en attente
@@ -4940,10 +4948,10 @@ fr:
           settings: Paramètres du Compte
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
-        open_orders: Commandes Ouvertes
-        past_orders: Commandes Passées
+        open_orders: Commandes en cours
+        past_orders: Commandes passées
       transactions:
-        transaction_history: Historique des Transactions
+        transaction_history: Historique des Achats
         authorisation_required: Autorisation nécessaire
         authorise: Autoriser
       customer_account_transactions:

@@ -568,6 +568,7 @@ nb:
         display_as: Vis enhet som
         price: Pris
         producer: Produsent
+        enterprise: Bedrift
         category: Kategori
         sku: SKU
         on_hand: "Tilgjengelig"
@@ -884,14 +885,11 @@ nb:
           cancellation_text: "Behold variant"
       filters:
         search_products: Søk etter produkter
-        search_for_producers: Søk etter produsenter
-        select_producer: Velg produsent
-        all_producers: Alle produsenter
         search_for_categories: Søk etter kategorier
         select_category: Velg kategori
         all_categories: Alle kategorier
-        producers:
-          label: Produsenter
+        enterprises:
+          label: Bedrifter
         categories:
           label: Kategorier
         tags:
@@ -939,7 +937,7 @@ nb:
         search_for_tax_categories: "Søk etter avgiftskategorier"
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
-        producer_field_name: "Produsent"
+        enterprise_field_name: "Bedrift"
         select_unit_scale: Velg enhetsskala
         add_a_tag: Legg til en merkelapp
       clone:
@@ -2288,12 +2286,11 @@ nb:
   brandstory_part5_strong: "Vi kaller det Open Food Network."
   brandstory_part6: "Alle er vi glad i mat. Nå kan vi elske vårt matsystem også."
   system_headline: "Shopping - slik virker det."
-  system_step1: "1. Søk"
-  system_step1_text: "Søk blant våre mangfoldige, uavhengige butikker for lokal mat i sesong. Søk i nabolag og matkategori, eller om du foretrekker levering eller å hente selv."
-  system_step2: "2. Handle"
-  system_step2_text: "Endre dine kjøpevaner med rimelig lokal mat fra mangfoldige produsenter og hubs. Oppdag historiene bak maten din og de som lager den!"
-  system_step3: "3. Hent / Få det levert"
-  system_step3_text: "Vent på din levering, eller besøk produsenten eller hub'en for en mer personlig kobling til maten din. Mathandling så mangfoldig slik det var ment fra naturens side."
+  system_step1_html: "1. Søk"
+  system_step2_html: "2. Handle"
+  system_step2_text_html: "Endre dine kjøpevaner med rimelig lokal mat fra mangfoldige produsenter og hubs. Oppdag historiene bak maten din og de som lager den!"
+  system_step3_html: "3. Hent / Få det levert"
+  system_step3_text_html: "Vent på din levering, eller besøk produsenten eller hub'en for en mer personlig kobling til maten din. Mathandling så mangfoldig slik det var ment fra naturens side."
   cta_headline: "Handling som gjør verden til et bedre sted."
   cta_label: "Jeg er klar"
   stats_headline: "Vi skaper et nytt matsystem."
@@ -2413,6 +2410,7 @@ nb:
   email_shipping_collection_time: "Klar for henting:"
   email_shipping_collection_instructions: "Henteinstruksjoner:"
   email_special_instructions: "Dine kommentarer:"
+  email_order_note: "Merk:"
   email_signup_greeting: Hei!
   email_signup_welcome: "Velkommen til %{sitename}!"
   email_signup_confirmed_email: "Takk for at du bekreftet eposten din."
@@ -3565,7 +3563,6 @@ nb:
         add_to_cart: "Legg til"
         in_cart: "i handlekurv"
         quantity_in_cart: "%{quantity} i handlekurven"
-        remaining_in_stock: "Kun %{quantity} igjen"
       bulk_buy_modal:
         min_quantity: "Min. mengde"
         max_quantity: "Max mengde"
@@ -4346,9 +4343,7 @@ nb:
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
-          supplier: "Leverandør"
-          supplier_select_placeholder: "Velg en leverandør"
-          search_for_suppliers: "Søk etter leverandører"
+          enterprise: "Bedrift"
           search_for_units: "Søk etter enheter"
           product_name: "Produktnavn"
           units: "Enhetsstørrelse"

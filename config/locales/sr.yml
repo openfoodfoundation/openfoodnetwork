@@ -822,14 +822,9 @@ sr:
           cancellation_text: "Задржи варијанту"
       filters:
         search_products: Тражите производе
-        search_for_producers: Потражите произвођаче
-        select_producer: Изаберите произвођача
-        all_producers: Сви произвођачи
         search_for_categories: Потражите категорије
         select_category: Изаберите категорију
         all_categories: Све категорије
-        producers:
-          label: Произвођачи
         categories:
           label: Категорије
         search: Претрага
@@ -876,7 +871,6 @@ sr:
         search_for_tax_categories: "Потражите категорије пореза"
         category_field_name: "Категорија"
         tax_category_field_name: "Пореска категорија"
-        producer_field_name: "Произвођач"
       clone:
         success: Производ је успешно клониран
         error: Није могуће клонирати производ
@@ -2183,12 +2177,6 @@ sr:
   brandstory_part5_strong: "Ми то зовемо Опен Фоод Нетворк."
   brandstory_part6: "Сви волимо храну. Сада можемо да волимо и наш систем исхране."
   system_headline: "Куповина - ево како то функционише."
-  system_step1: "1. Претрага"
-  system_step1_text: "Претражите наше разноврсне, независне продавнице за сезонску локалну храну. Претражујте по комшилуку и категорији хране, или да ли више волите доставу или преузимање."
-  system_step2: "2. Продавница"
-  system_step2_text: "Трансформишите своје трансакције приступачном локалном храном различитих произвођача и центара. Упознајте приче иза ваше хране и људи који је праве!"
-  system_step3: "3. Преузимање / достава"
-  system_step3_text: "Сачекајте своју испоруку или посетите свог произвођача или центар за личнију везу са храном. Куповина хране разноврсна како је природа замислила."
   cta_headline: "Куповина која чини свет бољим местом."
   cta_label: "Спреман сам"
   stats_headline: "Стварамо нови систем исхране."
@@ -3458,7 +3446,6 @@ sr:
         add_to_cart: "Додати"
         in_cart: "у колицима"
         quantity_in_cart: "%{quantity} у корпи"
-        remaining_in_stock: "Остао је само %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мин куантити"
         max_quantity: "Максимална количина"
@@ -4265,9 +4252,6 @@ sr:
         new:
           title: "Нови производ"
           new_product: "Нови производ"
-          supplier: "Добављач"
-          supplier_select_placeholder: "Изаберите добављача"
-          search_for_suppliers: "Потражите добављаче"
           search_for_units: "Потражите јединице"
           product_name: "Назив производа"
           units: "Величина јединице"

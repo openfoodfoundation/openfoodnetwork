@@ -18,8 +18,8 @@ RSpec.describe Enterprise do
 
   describe "associations" do
     it { is_expected.to belong_to(:owner).required }
-    it { is_expected.to have_many(:supplied_products) }
-    it { is_expected.to have_many(:supplied_variants) }
+    it { is_expected.to have_many(:products) }
+    it { is_expected.to have_many(:variants) }
     it { is_expected.to have_many(:distributed_orders) }
     it { is_expected.to belong_to(:address).required }
     it { is_expected.to belong_to(:business_address).optional }
@@ -38,7 +38,7 @@ RSpec.describe Enterprise do
     it "destroys supplied variants upon destroy" do
       pending "Variant are soft deletable, see: https://github.com/openfoodfoundation/openfoodnetwork/issues/2971"
       supplier = create(:supplier_enterprise)
-      variant = create(:variant, supplier:)
+      variant = create(:variant, enterprise: supplier)
 
       supplier.destroy
 
@@ -476,7 +476,7 @@ RSpec.describe Enterprise do
       it "touches supplied variant distributors" do
         enterprise = create(:enterprise)
         variant = create(:variant)
-        enterprise.supplied_variants << variant
+        enterprise.variants << variant
 
         updated_at = 1.hour.ago
         distributor1 = create(:distributor_enterprise, updated_at:)
@@ -642,7 +642,7 @@ RSpec.describe Enterprise do
     describe ".supplying_variant_in" do
       it "finds producers by supply of variant" do
         supplier = create(:supplier_enterprise)
-        variant = create(:variant, supplier:)
+        variant = create(:variant, enterprise: supplier)
 
         expect(Enterprise.supplying_variant_in([variant])).to eq([supplier])
       end
@@ -650,8 +650,8 @@ RSpec.describe Enterprise do
       it "returns multiple enterprises when given multiple variants" do
         supplier1 = create(:supplier_enterprise)
         supplier2 = create(:supplier_enterprise)
-        variant1 = create(:variant, supplier: supplier1)
-        variant2 = create(:variant, supplier: supplier2)
+        variant1 = create(:variant, enterprise: supplier1)
+        variant2 = create(:variant, enterprise: supplier2)
 
         expect(Enterprise.supplying_variant_in([variant1, variant2]))
           .to match_array([supplier1, supplier2])
@@ -659,8 +659,8 @@ RSpec.describe Enterprise do
 
       it "does not return duplicates" do
         supplier = create(:supplier_enterprise)
-        variant1 = create(:variant, supplier:)
-        variant2 = create(:variant, supplier:)
+        variant1 = create(:variant, enterprise: supplier)
+        variant2 = create(:variant, enterprise: supplier)
 
         expect(Enterprise.supplying_variant_in([variant1, variant2])).to eq([supplier])
       end
@@ -832,7 +832,7 @@ RSpec.describe Enterprise do
     end
 
     it "gets all taxons of all supplied products" do
-      allow(Spree::Product).to receive(:in_supplier).and_return [product1, product2]
+      allow(Spree::Product).to receive(:in_enterprise).and_return [product1, product2]
       expect(supplier.supplied_taxons).to match_array [taxon1, taxon2]
     end
   end

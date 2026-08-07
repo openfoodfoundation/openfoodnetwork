@@ -16,20 +16,20 @@ RSpec.describe "As a consumer I want to view products" do
     let(:user) { create(:user, enterprise_limit: 1) }
     let(:distributor) {
       create(:distributor_enterprise, with_payment_and_shipping: true, owner: user,
-                                      name: "Testing Farm")
+                                      name: "Testing Distributor")
     }
-    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier) { create(:supplier_enterprise, name: "Test Farm", long_description: "Long Dsc") }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
                                   orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, supplier_id: supplier.id, primary_taxon: taxon,
+      create(:simple_product, enterprise_id: supplier.id, primary_taxon: taxon,
                               properties: [property], name: "Beans")
     }
     let(:product2) {
-      create(:product, supplier_id: supplier.id, primary_taxon: taxon2, properties: [property2],
+      create(:product, enterprise_id: supplier.id, primary_taxon: taxon2, properties: [property2],
                        name: "Chickpeas")
     }
     let(:variant) { product.variants.first }
@@ -41,27 +41,51 @@ RSpec.describe "As a consumer I want to view products" do
       pick_order order
     end
 
-    describe "supplier's name is displayed" do
+    describe "producer name is displayed" do
       before do
         exchange1.update_attribute :pickup_time, "monday"
         add_variant_to_order_cycle(exchange1, variant)
       end
 
-      it "shows supplier's name" do
+      it "shows enterprise name" do
         visit shop_path
-        expect(page).to have_content supplier.name
-        page.find("span", text: supplier.name).click
+        expect(page).to have_content "from Test Farm"
+        page.find("span", text: "Test Farm").click
         assert_selector ".reveal-modal"
+        expect(page).to have_content "ABOUT"
+        expect(page).to have_content "Long Dsc"
       end
 
-      it "shows supplier's name even when supplier's visibility is hidden" do
+      it "shows enterprise name even when visibility is hidden" do
         supplier.visible = 'hidden'
         supplier.save
         visit shop_path
-        expect(page).to have_content supplier.name
+        expect(page).to have_content "from Test Farm"
         # Does not open the modal though
-        page.find("span", text: supplier.name).click
+        page.find("span", text: "Test Farm").click
         assert_no_selector ".reveal-modal"
+        expect(page).not_to have_content "Long Dsc"
+      end
+
+      context "with linked variant" do
+        let(:source_variant) { create(:variant, enterprise: supplier) }
+        let!(:variant) {
+          source_variant.create_linked_variant(user).tap{ |v| v.update! enterprise: distributor }
+        }
+
+        before do
+          # Producer grants distributor ability to create linked variant
+          create(:enterprise_relationship, parent: supplier, child: distributor,
+                                           permissions_list: [:create_linked_variants])
+        end
+
+        it "shows source enterprise name" do
+          visit shop_path
+          expect(page).to have_content "from Test Farm"
+          page.find("span", text: "Test Farm").click
+          assert_selector ".reveal-modal"
+          expect(page).to have_content "Long Dsc"
+        end
       end
     end
 
@@ -121,6 +145,70 @@ RSpec.describe "As a consumer I want to view products" do
         visit shop_path
         expect(find_link('external site')[:target]).to eq('_blank')
       end
+
+      it "loads and clears the product modal in the dynamic modal container" do
+        visit shop_path
+
+        expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
+
+        open_product_modal(product)
+
+        within("#shop-product-modal-container .reveal-modal") do
+          expect(page).to have_content(product.name)
+        end
+
+        close_modal(within_selector: '#shop-product-modal-container')
+        expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
+      end
+
+      context "product grid view", feature: :product_grid_view do
+        let(:product3) {
+          create(:simple_product, enterprise_id: supplier.id, name: "Tomatoes")
+        }
+        let(:variant3) {
+          product3.variants.first
+        }
+        let(:variant4) {
+          create(:variant, product: product3)
+        }
+
+        before do
+          exchange1.update_attribute :pickup_time, "monday"
+          add_variant_to_order_cycle(exchange1, variant)
+          add_variant_to_order_cycle(exchange1, variant2)
+          add_variant_to_order_cycle(exchange1, variant3)
+          add_variant_to_order_cycle(exchange1, variant4)
+        end
+
+        it "displays products in a grid, with button for single variant product" do
+          product.description = "<script>alert('Dangerous!');</script><p>Safe</p>"
+          product.save!
+
+          visit shop_path
+
+          expect(page).to have_selector(".product-item", count: 3)
+          expect(page).to have_content("Beans")
+          expect(page).to have_content("Chickpeas")
+          expect(page).to have_content("Tomatoes")
+
+          # Add button is only displayed for single varint product
+          expect(page).to have_selector(".add-variant", count: 2)
+
+          # Product modal
+          click_link product.name
+          within(".reveal-modal") do
+            expect(page).to have_content product.name
+
+            # No insecure HTML
+            expect(html).to include "<p>Safe</p>"
+            expect(html).not_to include "<script>alert('Dangerous!');</script>"
+            expect(page).to have_content "alert('Dangerous!'); Safe"
+
+            # Product properties
+            expect(page).to have_selector("span", text: "Fresh and Fine")
+          end
+        end
+      end
     end
 
     describe "filtering" do
@@ -167,9 +255,11 @@ RSpec.describe "As a consumer I want to view products" do
   end
 
   def within_product_modal(product, &)
-    click_link product.name
+    open_product_modal(product)
     modal_should_be_open_for product
-    within(".reveal-modal", &)
+    within("#shop-product-modal-container .reveal-modal", &)
+    close_modal(within_selector: '#shop-product-modal-container')
+    expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
   end
 
   def within_product_description(product, &)

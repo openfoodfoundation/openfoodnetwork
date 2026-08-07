@@ -4,10 +4,8 @@ form[name="enterprise_form"] {
   }
 
   table.managers {
-    th {
-      div[data-controller="tooltip"] {
-        display: inline-block;
-      }
+    div[data-controller="tooltip"] {
+      display: inline-block;
     }
 
     .center {

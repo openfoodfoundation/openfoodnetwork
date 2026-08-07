@@ -20,7 +20,7 @@ RSpec.describe "Pay Your Suppliers Report" do
   let(:hub2) { create(:enterprise, owner:) }
   let(:product2) { order1.products.first }
   let(:variant2) { product2.variants.first }
-  let(:supplier2) { variant2.supplier }
+  let(:supplier2) { variant2.enterprise }
   let(:order_cycle2) { create(:open_order_cycle, distributors: [hub2]) }
   let!(:order2) do
     create(

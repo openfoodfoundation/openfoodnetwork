@@ -4,10 +4,10 @@ RSpec.describe ProductTagRulesFilterer do
   describe "filtering by tag rules" do
     let!(:distributor) { create(:distributor_enterprise) }
     let(:product) { create(:product, ) }
-    let(:v1) { create(:variant, product:, supplier: distributor) }
-    let(:v2) { create(:variant, product:, supplier: distributor) }
-    let(:v3) { create(:variant, product:, supplier: distributor) }
-    let(:v4) { create(:variant, product:, supplier: distributor) }
+    let(:v1) { create(:variant, product:, enterprise: distributor) }
+    let(:v2) { create(:variant, product:, enterprise: distributor) }
+    let(:v3) { create(:variant, product:, enterprise: distributor) }
+    let(:v4) { create(:variant, product:, enterprise: distributor) }
     let(:variant_hidden_by_default) { create(:variant_override, variant: v1, hub: distributor) }
     let(:variant_hidden_by_rule) { create(:variant_override, variant: v2, hub: distributor) }
     let(:variant_shown_by_rule) { create(:variant_override, variant: v3, hub: distributor) }
@@ -16,7 +16,7 @@ RSpec.describe ProductTagRulesFilterer do
     }
     let(:customer) { create(:customer, enterprise: distributor) }
     let(:variants_relation) {
-      Spree::Variant.left_joins(:variant_overrides).where(supplier: distributor.id)
+      Spree::Variant.left_joins(:variant_overrides).where(enterprise: distributor.id)
     }
     let(:default_hide_rule) {
       create(:filter_products_tag_rule,

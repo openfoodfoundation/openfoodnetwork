@@ -326,8 +326,11 @@ RSpec.describe '
                  order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
               }
               it "orders by customer name ascending" do
-                page.find('a', text: "Name").click # orders alphabetically (asc)
-                sleep(0.5) # waits for column sorting
+                name_header = 'a[data-column="billing_address_name"]'
+                page.find(name_header).click # orders alphabetically (asc)
+                # Wait for the table to be re-sorted before selecting all rows,
+                # otherwise the invoices may be printed in the previous order.
+                expect(page).to have_css("#{name_header}[data-current='billing_address_name asc']")
 
                 page.find("#selectAll").click
 
@@ -346,10 +349,15 @@ RSpec.describe '
                  order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
               }
               it "order by customer name descending" do
-                page.find('a', text: "Name").click # orders alphabetically (asc)
-                sleep(0.5) # waits for column sorting
-                page.find('a', text: "Name").click # orders alphabetically (desc)
-                sleep(0.5) # waits for column sorting
+                name_header = 'a[data-column="billing_address_name"]'
+                page.find(name_header).click # orders alphabetically (asc)
+                # Wait for the ascending sort to be applied before toggling,
+                # otherwise the second click reads the stale sort direction.
+                expect(page).to have_css("#{name_header}[data-current='billing_address_name asc']")
+                page.find(name_header).click # orders alphabetically (desc)
+                # Wait for the table to be re-sorted before selecting all rows,
+                # otherwise the invoices may be printed in the previous order.
+                expect(page).to have_css("#{name_header}[data-current='billing_address_name desc']")
 
                 page.find("#selectAll").click
 

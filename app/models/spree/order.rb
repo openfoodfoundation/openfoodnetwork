@@ -138,7 +138,7 @@ module Spree
         # WARNING: This only filters orders, not line items.
         with_line_items_variants_outer.
           where(distributor_id: user.enterprises).or(
-            where(spree_variants: { supplier_id: user.enterprises })
+            where(spree_variants: { enterprise_id: user.enterprises })
           ).
           select('DISTINCT spree_orders.*')
       end

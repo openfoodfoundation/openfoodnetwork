@@ -70,7 +70,7 @@ module Api
 
       def load_producer_properties
         producers = Enterprise.
-          joins(:supplied_products).
+          joins(:products).
           where(spree_products: { id: distributed_products })
 
         Spree::Property.

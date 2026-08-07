@@ -1,0 +1,67 @@
+{
+  "@context": "https://www.datafoodconsortium.org/wp-content/plugins/wordpress-context-jsonld/context_2.0.0.jsonld",
+  "@graph": [
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises",
+      "@type": "ldp:Container",
+      "ldp:contains": [
+        "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125"
+      ]
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125",
+      "@type": "dfc-b:Organization",
+      "dfc-b:email": "shop@example.com",
+      "dfc-b:hasAddress": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#address",
+      "dfc-b:hasDescription": "New farm to test account creation flow",
+      "dfc-b:hasMainContact": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#person-mainContact",
+      "dfc-b:hasSocialMedia": [
+        "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-instagram",
+        "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-facebook"
+      ],
+      "dfc-b:isCertifiedBy": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#certification-74722946-8608-11f1-abcc-0242ac120003",
+      "dfc-b:logo": "https://litefarmbeta.nyc3.digitaloceanspaces.com/farm_logo/0bb3dbac-e835-41f6-ae47-e9ff51a38daa.webp",
+      "dfc-b:name": "Beta DFC Farm Three",
+      "dfc-b:supplies": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#suppliedProduct-vegetable"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#address",
+      "@type": "dfc-b:Address",
+      "dfc-b:hasCity": "Vancouver",
+      "dfc-b:hasCountry": "http://publications.europa.eu/resource/authority/country/CAN",
+      "dfc-b:hasPostalCode": "V6A 3Z7",
+      "dfc-b:hasStreet": "1455 Quebec Street",
+      "dfc-b:region": "British Columbia"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#certification-74722946-8608-11f1-abcc-0242ac120003",
+      "@type": "dfc-b:Certfication",
+      "dfc-b:certiferReference": "Bio-Dynamic Agricultural Society of British Columbia",
+      "dfc-b:name": "Biodynamic"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#person-mainContact",
+      "@type": "dfc-b:Person",
+      "dfc-b:email": "community+2@litefarm.org",
+      "dfc-b:familyName": "Last",
+      "dfc-b:firstName": "First"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-facebook",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.facebook.com/fac/",
+      "dfc-b:name": "Facebook"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#socialMedia-instagram",
+      "@type": "dfc-b:SocialMedia",
+      "dfc-b:URL": "https://www.instagram.com/example/",
+      "dfc-b:name": "Instagram"
+    },
+    {
+      "@id": "https://api.beta.litefarm.org/dfc/enterprises/b83ed554-b550-4315-b95d-8481a8140125#suppliedProduct-vegetable",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:hasType": "dfc-pt:vegetable"
+    }
+  ]
+}

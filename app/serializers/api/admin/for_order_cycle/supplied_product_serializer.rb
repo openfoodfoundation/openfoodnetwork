@@ -7,7 +7,7 @@ module Api
         attributes :name, :supplier_name, :image_url, :variants
 
         def supplier_name
-          object.variants.first.supplier&.name
+          object.variants.first.enterprise&.name
         end
 
         def image_url

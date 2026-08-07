@@ -36,7 +36,7 @@ RSpec.describe "Sales Tax Totals By Producer" do
   let!(:ship_address) { create(:ship_address) }
   let(:another_state){ create(:state, name: 'Another state', country: ship_address.country) }
 
-  let!(:variant) { create(:variant, supplier:, tax_category:) }
+  let!(:variant) { create(:variant, enterprise: supplier, tax_category:) }
   let!(:product) { variant.product }
   let!(:supplier) { create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true) }
   let!(:distributor) { create(:distributor_enterprise_with_tax, name: 'Distributor') }

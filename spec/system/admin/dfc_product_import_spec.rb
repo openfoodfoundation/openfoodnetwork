@@ -8,8 +8,8 @@ RSpec.describe "DFC Product Import" do
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
   let(:enterprise) { create(:supplier_enterprise, name: "Saucy preserves") }
-  let(:source_product) { create(:product, name: "Sauce", supplier_id: enterprise.id) }
-  let(:old_product) { create(:product, name: "Best Sauce of 1995", supplier_id: enterprise.id) }
+  let(:source_product) { create(:product, name: "Sauce", enterprise_id: enterprise.id) }
+  let(:old_product) { create(:product, name: "Best Sauce of 1995", enterprise_id: enterprise.id) }
 
   before do
     login_as user
@@ -98,7 +98,7 @@ RSpec.describe "DFC Product Import" do
       expect(page).to have_content "Stock reset for absent products: 1"
       linked_variant.reload
       unlinked_variant.reload
-    }.to change { enterprise.supplied_products.count }.by(2) # 1 updated, 2 new, 1 reset
+    }.to change { enterprise.products.count }.by(2) # 1 updated, 2 new, 1 reset
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
       # 18.85 wholesale variant price divided by 12 cans in the slab.

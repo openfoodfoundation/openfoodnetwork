@@ -320,6 +320,7 @@ nl_BE:
         unit: Unit
         price: Prijs
         producer: Producent
+        enterprise: Onderneming
         category: Categorie
         sku: SKU
         on_hand: "Bij de Hand"
@@ -553,8 +554,8 @@ nl_BE:
         header:
           title: Beheer van de productencatalogus
       filters:
-        producers:
-          label: Producenten
+        enterprises:
+          label: Ondernemingen
         categories:
           label: Categorieën
         tags:
@@ -570,7 +571,7 @@ nl_BE:
         none_tax_category: Geen enkele
         category_field_name: "Categorie"
         tax_category_field_name: "Belastingcategorie"
-        producer_field_name: "Producent"
+        enterprise_field_name: "Onderneming"
         add_a_tag: Voeg een tag toe
     product_import:
       title: Importeren van producten
@@ -1648,12 +1649,11 @@ nl_BE:
   brandstory_part5_strong: "Wij noemen het Open Food Network."
   brandstory_part6: "We kunnen allemaal meewerken aan de opbouw van een eerlijker voedselsysteem dat de mensheid respecteert en de planeet in stand houdt."
   system_headline: "Winkelen - dit is hoe het werkt."
-  system_step1: "1. Zoek"
-  system_step1_text: "Zoek in onze uitgebreide, onafhankelijke winkels voor lokale seizoenswaren. Zoek op basis van buurt-en-voedselcategorie, of indien je levering of ophaling verkiest. "
-  system_step2: "2. Winkel"
-  system_step2_text: "Vorm je aankopen om met betaalbaar en lokaal eten van uitgebreide producenten en hubs. Leer het verhaal achter je eten kennen en de mensen die het maakten."
-  system_step3: "3. Ophalen / Leveren"
-  system_step3_text: "Wacht een poosje voor je levering, of bezoek de producten of hub voor een persoonlijke touch met je eten. Voedsel scoren zo divers als de natuur het in gedachten had."
+  system_step1_html: "1. Zoek"
+  system_step2_html: "2. Winkel"
+  system_step2_text_html: "Vorm je aankopen om met betaalbaar en lokaal eten van uitgebreide producenten en hubs. Leer het verhaal achter je eten kennen en de mensen die het maakten."
+  system_step3_html: "3. Ophalen / Leveren"
+  system_step3_text_html: "Wacht een poosje voor je levering, of bezoek de producten of hub voor een persoonlijke touch met je eten. Voedsel scoren zo divers als de natuur het in gedachten had."
   cta_headline: "Winkelen op een manier zodat de wereld er beter van wordt."
   cta_label: "Ik ben Klaar"
   stats_headline: "We bouwen een nieuw voedsel systeem."
@@ -3392,7 +3392,7 @@ nl_BE:
         new:
           title: "Nieuw product"
           new_product: "Nieuw product"
-          supplier: "Leverancier"
+          enterprise: "Onderneming"
           product_name: "Naam produkt"
           units: "Stukgrootte"
           value: "Waarde"

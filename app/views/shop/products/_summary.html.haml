@@ -1,7 +1,11 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
 = cache_with_locale do
   .product-thumb
-    %a{"ng-click" => "triggerProductModal()"}
+    %a{
+      "data-controller" => "shop-product-modal",
+      "data-action" => "click->shop-product-modal#open",
+      "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}",
+    }
       %span.product-thumb__bulk-label{"ng-if" => "::product.group_buy"}
         = t(".bulk")
       %img{"ng-src" => "{{::product.primaryImageOrMissing}}"}
@@ -9,9 +13,19 @@
   .summary
     .summary-header
       %h3
-        %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
+        %a{
+          "data-controller" => "shop-product-modal",
+          "data-action" => "click->shop-product-modal#open",
+          "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}",
+        }
           %span{"ng-bind" => "::product.name"}
-      .product-description{ "data-controller": "add-blank-to-link", "ng-bind-html": "::product.description_html", "ng-click": "triggerProductModal()", "ng-show": "product.description_html.length" }
+      .product-description{
+        "data-controller": "add-blank-to-link shop-product-modal",
+        "data-action": "click->shop-product-modal#open",
+        "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}",
+        "ng-bind-html": "::product.description_html",
+        "ng-show": "product.description_html.length"
+      }
       %div{ "ng-switch" => "enterprise.visible" }
         .product-producer
           = t :products_from

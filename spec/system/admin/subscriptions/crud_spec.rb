@@ -17,13 +17,33 @@ RSpec.describe 'Subscriptions' do
     before { login_as user }
 
     context 'listing subscriptions' do
+      # Give this subscription fully explicit data. The quick search below does a
+      # substring match across the whole serialised row (customer email,
+      # addresses, ...), so random factory data here used to occasionally contain
+      # a search term (e.g. "test" inside a Faker email/city), which made the spec
+      # flaky. Fixed data keeps its row free of the terms we search for.
       let!(:subscription) {
-        create(:subscription, shop:, with_items: true, with_proxy_orders: true)
+        create(:subscription,
+               shop:, with_items: true, with_proxy_orders: true,
+               customer:,
+               bill_address: create(:address), ship_address: create(:address))
       }
-      let!(:customer) { create(:customer, first_name: "Timmy", last_name: "Test") }
       let!(:other_subscription) {
-        create(:subscription, shop:, customer:, with_items: true,
-                              with_proxy_orders: true)
+        create(:subscription,
+               shop:, customer: other_customer, with_items: true,
+               with_proxy_orders: true)
+      }
+      let!(:customer) {
+        create(:customer,
+               enterprise: shop,
+               first_name: "Alice", last_name: "Anderson",
+               email: "alice.anderson@example.com")
+      }
+      let!(:other_customer) {
+        create(:customer,
+               enterprise: shop,
+               first_name: "Timmy", last_name: "Test",
+               email: "timmy.test@example.com")
       }
       let!(:subscription2) {
         create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true)
@@ -208,11 +228,11 @@ RSpec.describe 'Subscriptions' do
       }
       let!(:test_product) { create(:product) }
       let!(:test_variant) {
-        create(:variant, product: test_product, unit_value: "100", price: 12.00, supplier: shop)
+        create(:variant, product: test_product, unit_value: "100", price: 12.00, enterprise: shop)
       }
       let!(:shop_product) { create(:product) }
       let!(:shop_variant) {
-        create(:variant, product: shop_product, unit_value: "1000", price: 6.00, supplier: shop)
+        create(:variant, product: shop_product, unit_value: "1000", price: 6.00, enterprise: shop)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {
@@ -452,13 +472,13 @@ RSpec.describe 'Subscriptions' do
       let!(:product2) { create(:product) }
       let!(:product3) { create(:product) }
       let!(:variant1) {
-        create(:variant, product: product1, unit_value: '100', price: 12.00, supplier: shop)
+        create(:variant, product: product1, unit_value: '100', price: 12.00, enterprise: shop)
       }
       let!(:variant2) {
-        create(:variant, product: product2, unit_value: '1000', price: 6.00, supplier: shop)
+        create(:variant, product: product2, unit_value: '1000', price: 6.00, enterprise: shop)
       }
       let!(:variant3) {
-        create(:variant, product: product3, unit_value: '10000', price: 22.00, supplier: shop)
+        create(:variant, product: product3, unit_value: '10000', price: 22.00, enterprise: shop)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {

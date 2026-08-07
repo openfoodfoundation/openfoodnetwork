@@ -36,10 +36,10 @@ RSpec.describe "Orders And Fulfillment" do
                                            bill_address: bill_address2,
                                            order_cycle_id: order_cycle.id)
     }
-    let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
-    let(:product) { create(:simple_product, name: "Baked Beans", supplier_id: supplier.id ) }
-    let(:variant1) { create(:variant, product:, unit_description: "Big", supplier:) }
-    let(:variant2) { create(:variant, product:, unit_description: "Small", supplier: ) }
+    let(:enterprise) { create(:supplier_enterprise, name: "Supplier Name") }
+    let(:product) { create(:simple_product, name: "Baked Beans", enterprise_id: enterprise.id ) }
+    let(:variant1) { create(:variant, product:, unit_description: "Big", enterprise:) }
+    let(:variant2) { create(:variant, product:, unit_description: "Small", enterprise: ) }
 
     before do
       # order1 has two line items / variants
@@ -104,7 +104,7 @@ RSpec.describe "Orders And Fulfillment" do
                               name: "My Order Cycle")
         end
 
-        it "correclty renders the report" do
+        it "correctly renders the report" do
           run_report
           expect(page).to have_content "My Order Cycle"
         end
@@ -379,20 +379,22 @@ RSpec.describe "Orders And Fulfillment" do
               end
 
               it "aggregates results per variant" do
-                expect(all('table.report__table tbody tr').count).to eq(4)
-                # 1 row per variant = 2 rows
+                expect(all('table.report__table tbody tr').count).to eq(5)
+                # 1 row per variant per shipping method = 3 rows
                 # 2 TOTAL rows
-                # 4 rows total
+                # 5 rows total
 
                 rows = find("table.report__table").all("tbody tr")
                 table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
                 expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
-                                        "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-                expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
-                expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                        "Distributor Name", "1", "10.0", "10.0", "UPS Ground"])
+                expect(table[1]).to eq(["Supplier Name", "Baked Beans", "1g Big",
+                                        "Distributor Name", "2", "10.0", "20.0", "UPS Ground"])
+                expect(table[2]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+                expect(table[3]).to eq(["Supplier Name", "Baked Beans", "1g Small",
                                         "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-                expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
+                expect(table[4]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
               end
             end
 
@@ -425,10 +427,10 @@ RSpec.describe "Orders And Fulfillment" do
           end
 
           context "as the supplier granting P-OC to distributor" do
-            let(:current_user) { supplier.owner }
+            let(:current_user) { enterprise.owner }
 
             before do
-              create(:enterprise_relationship, parent: supplier, child: distributor,
+              create(:enterprise_relationship, parent: enterprise, child: distributor,
                                                permissions_list: [:add_to_order_cycle])
 
               login_as(current_user)
@@ -464,17 +466,19 @@ RSpec.describe "Orders And Fulfillment" do
               rows = find("table.report__table").all("tbody tr")
               table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
-              expect(table.count).to eq(4)
-              # 1 row per variant = 2 rows
+              expect(table.count).to eq(5)
+              # 1 row per variant per shipping method = 3 rows
               # 2 TOTAL rows for distributors
-              # 4 rows total
+              # 5 rows total
 
               expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
-                                      "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-              expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
-              expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                      "Distributor Name", "1", "10.0", "10.0", "UPS Ground"])
+              expect(table[1]).to eq(["Supplier Name", "Baked Beans", "1g Big",
+                                      "Distributor Name", "2", "10.0", "20.0", "UPS Ground"])
+              expect(table[2]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+              expect(table[3]).to eq(["Supplier Name", "Baked Beans", "1g Small",
                                       "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-              expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
+              expect(table[4]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
             end
           end
         end
@@ -485,10 +489,10 @@ RSpec.describe "Orders And Fulfillment" do
       context "for an OC supplied by two suppliers" do
         let(:supplier2) { create(:supplier_enterprise, name: "Another Supplier Name") }
         let(:product2) {
-          create(:simple_product, name: "Salted Peanuts", supplier_id: supplier2.id )
+          create(:simple_product, name: "Salted Peanuts", enterprise_id: supplier2.id )
         }
         let(:variant3) {
-          create(:variant, product: product2, unit_description: "Bag", supplier: supplier2)
+          create(:variant, product: product2, unit_description: "Bag", enterprise: supplier2)
         }
         let(:order4) {
           create(:completed_order_with_totals, line_items_count: 0, distributor:,

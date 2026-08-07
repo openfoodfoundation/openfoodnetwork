@@ -17,7 +17,7 @@ module Reporting
           end.values
         end
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
         def columns
           {
             first_name: proc { |orders| last_completed_order(orders).billing_address.firstname },
@@ -35,9 +35,25 @@ module Reporting
             total_orders: proc { |orders| orders.count },
             total_incl_tax: proc { |orders| orders.map(&:total).compact.sum },
             last_completed_order_date: proc { |orders| last_completed_order_date(orders) },
+            # Outstanding amount the customer still owes across all their orders at this hub.
+            # Uses outstanding_balance (which deducts incomplete customer credit payments) rather
+            # than the raw order total, so applied-but-not-yet-captured credits are accounted for.
+            # Floored at zero — negative values mean the shop owes the customer, which is
+            # captured separately in credit_due.
+            balance_due: proc { |orders|
+              total = orders.sum { |o| o.outstanding_balance.to_f }
+              total.positive? ? total : 0
+            },
+            # Credit held in the customer's account (from CustomerAccountTransaction records),
+            # available to be applied to future orders. This is a separate ledger from order
+            # balances — credit is granted explicitly (e.g. via the bulk credit admin action)
+            # and does not simply reflect overpayments on individual orders.
+            credit_due: proc { |orders|
+              orders.first.customer&.credit_balance || 0
+            },
           }
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
         def filter(orders)
           filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
