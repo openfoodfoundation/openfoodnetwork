@@ -14,12 +14,12 @@ body {
 
 .text-vbig {
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .text-big {
   font-size: 1.5rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 small, .small {
@@ -28,11 +28,6 @@ small, .small {
 
 .text-normal {
   font-weight: 400;
-  font-family: $body-font;
-}
-
-.text-skinny {
-  font-weight: 300;
   font-family: $body-font;
 }
 

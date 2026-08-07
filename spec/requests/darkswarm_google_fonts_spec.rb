@@ -19,6 +19,8 @@ RSpec.describe "Google Fonts loading" do
       expect(stylesheet_link["href"]).to include("Open+Sans")
       expect(stylesheet_link["href"]).to include("display=fallback")
       expect(stylesheet_link["href"]).not_to include("Roboto")
+      expect(stylesheet_link["href"]).not_to include("0,300")
+      expect(stylesheet_link["href"]).not_to include("1,300")
 
       expect(head_links.index(stylesheet_link)).to be > head_links.index(preconnect_links.first)
       expect(head_links.index(stylesheet_link)).to be > head_links.index(preconnect_links.last)
