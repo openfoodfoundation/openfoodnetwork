@@ -1,7 +1,6 @@
 %div{ "data-controller": "shop-variant-overlay" }
-  =# TODO translation
   %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#select" }
-    = t("shopfront.variant.select")
+    = t("components.shop_variant_overlay.select")
 
   - if variants.length > 1
     %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
@@ -13,7 +12,7 @@
           %h5= product_name
           - # All variants have the same producer
           - if same_producers?
-            %span.producer="From #{variants.first.enterprise.name}"
+            %span.producer= t("components.shop_variant_overlay.from_producer", name: variants.first.enterprise.name)
 
         - # Loop through variants
         %ul
@@ -27,7 +26,7 @@
                     = " | #{variant.unit_to_display}"
                   .variant-producer
                     - unless same_producers?
-                      = "From #{variant.enterprise.name}"
+                      = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
                   .prices
                     = variant.display_price
                     %span.unit-price
