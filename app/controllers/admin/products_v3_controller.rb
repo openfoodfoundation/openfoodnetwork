@@ -306,6 +306,7 @@ module Admin
           :tax_category,
           :enterprise,
           :taggings,
+          :image,
         ] },
       ]
     end
