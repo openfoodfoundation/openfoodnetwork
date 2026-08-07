@@ -19,15 +19,20 @@
         %ul
           - variants.each do |variant|
             %li
-              %div
-                = render AddToCartComponent.new(variant: variant, css_class: "right", quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display)
-                = "#{variant.name_to_display} | #{variant.unit_to_display}"
-                .variant-producer
-                  - unless same_producers?
-                    = "From #{variant.enterprise.name}"
-              .prices
-                = variant.display_price
-                %span.unit-price
-                  = "#{variant.display_unit_price}"
-                  &nbsp;/&nbsp;
-                  = "#{variant.unit_price.unit}"
+              .row
+                .small-8.columns
+                  .variant-columns.variant-name
+                    = "#{variant.name_to_display}"
+                  .variant-columns.variant-unit
+                    = " | #{variant.unit_to_display}"
+                  .variant-producer
+                    - unless same_producers?
+                      = "From #{variant.enterprise.name}"
+                  .prices
+                    = variant.display_price
+                    %span.unit-price
+                      = "#{variant.display_unit_price}"
+                      &nbsp;/&nbsp;
+                      = "#{variant.unit_price.unit}"
+                .small-4.columns
+                  = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display)
