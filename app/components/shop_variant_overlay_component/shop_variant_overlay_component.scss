@@ -41,6 +41,8 @@
   right: 0;
   z-index: $variant-overlay-z-index;
   top: -5rem;
+  max-height: 90%;
+  overflow: auto;
 
   @include m.breakpoint(mobile) {
     top: unset;
