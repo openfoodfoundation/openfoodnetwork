@@ -20,6 +20,23 @@ RSpec.describe "Order print" do
       end
     end
 
+    context "when the invoices feature is enabled", feature: :invoices do
+      before { sign_in user }
+
+      it "returns a PDF" do
+        get print_order_path(order.number)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/pdf")
+      end
+
+      it "renders the stored invoice rather than the order" do
+        expect {
+          get print_order_path(order.number)
+        }.to change { order.invoices.count }.from(0).to(1)
+      end
+    end
+
     context "when the user is not logged in" do
       it "redirects to login" do
         get print_order_path(order.number)
