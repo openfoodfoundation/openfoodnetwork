@@ -30,7 +30,7 @@ FileUtils.chdir APP_ROOT do
 
   # Install JavaScript dependencies
   system("command -v yarn 2> /dev/null") || system!("script/nodenv-install.sh")
-  system!("bin/yarn")
+  system!("bin/yarn --ignore-scripts")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
@@ -57,7 +57,7 @@ FileUtils.chdir APP_ROOT do
   # system! "bin/rails restart"
   # Faster to do it manually:
   system! "touch tmp/restart.txt"
-  
+
   # puts "\n== Configuring puma-dev =="
   # system "ln -nfs #{APP_ROOT} ~/.puma-dev/#{APP_NAME}"
   # system "curl -Is https://#{APP_NAME}.test/up | head -n 1"
