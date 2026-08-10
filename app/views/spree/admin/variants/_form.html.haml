@@ -78,7 +78,9 @@
           .fullwidth
             = f.text_field :on_hand, data: { "edit-variant-target": "onHand" }
 
-  .right.six.columns.omega.label-block
+  .center.six.columns.label-block
+    = render partial: 'spree/admin/products/image_upload', locals: { imageable: @variant }
+
     .field
       = f.label 'weight', t(:weight)+' (kg)'
       - value = number_with_precision(@variant.weight, precision: 3)

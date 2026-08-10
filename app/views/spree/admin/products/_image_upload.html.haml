@@ -1,0 +1,9 @@
+-# locals: (imageable:)
+.field.image-upload-field
+  = label_tag nil, t('admin.products.image_upload.label')
+  - unless imageable.image.present?
+    %span.info= t('admin.products.image_upload.subtitle')
+  .image-upload{ class: ("image-upload--has-image" if imageable.image.present?) }
+    - if imageable.image.present?
+      = image_tag imageable.image.url(:product), alt: imageable.image.alt, class: "image-upload__preview"
+    = link_to (imageable.image.present? ? t('admin.products.image_upload.edit') : t('admin.products.image_upload.upload')), image_form_path(imageable), class: "button secondary image-upload__button"

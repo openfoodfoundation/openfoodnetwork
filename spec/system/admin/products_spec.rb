@@ -450,6 +450,37 @@ RSpec.describe '
         )
         expect(page).to have_link('Cancel', href: expected_cancel_link)
       end
+
+      describe "image upload" do
+        let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
+        let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
+
+        it "shows the image upload component when no image is present" do
+          visit spree.edit_admin_product_path(product)
+
+          within ".image-upload-field" do
+            expect(page).to have_content "Image"
+            expect(page).to have_content image_subtitle
+            expect(page).to have_link "Upload image"
+            expect(page).to have_selector ".image-upload"
+            expect(page).not_to have_selector ".image-upload__preview"
+          end
+        end
+
+        it "shows the image preview when an image is present" do
+          Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
+                              attachment: white_logo_file)
+
+          visit spree.edit_admin_product_path(product)
+
+          within ".image-upload-field" do
+            expect(page).to have_selector ".image-upload .image-upload__preview"
+            expect(page).to have_selector ".image-upload--has-image"
+            expect(page).to have_link "Edit"
+            expect(page).not_to have_content image_subtitle
+          end
+        end
+      end
     end
 
     describe "product properties" do

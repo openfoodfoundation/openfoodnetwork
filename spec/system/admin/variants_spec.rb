@@ -8,6 +8,7 @@ RSpec.describe '
 ' do
   include AuthenticationHelper
   include WebHelper
+  include FileHelper
 
   let!(:taxon) { create(:taxon) }
 
@@ -394,6 +395,40 @@ RSpec.describe '
         click_button 'Update'
 
         expect(variant.reload.tax_category).to eq tax_category
+      end
+    end
+  end
+
+  describe "image upload" do
+    let!(:variant) { create(:variant, variant_unit: "weight", variant_unit_scale: "1") }
+    let(:product) { variant.product }
+    let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
+
+    before do
+      login_as_admin
+      visit spree.edit_admin_product_variant_path product, variant
+    end
+
+    it "shows the image upload component when no image is present" do
+      within ".image-upload-field" do
+        expect(page).to have_content "Image"
+        expect(page).to have_content image_subtitle
+        expect(page).to have_link "Upload image"
+        expect(page).to have_selector ".image-upload"
+        expect(page).not_to have_selector ".image-upload__preview"
+      end
+    end
+
+    it "shows the image preview when an image is present" do
+      Spree::Image.create(attachment: white_logo_file, viewable: variant)
+
+      visit spree.edit_admin_product_variant_path product, variant
+
+      within ".image-upload-field" do
+        expect(page).to have_selector ".image-upload .image-upload__preview"
+        expect(page).to have_selector ".image-upload--has-image"
+        expect(page).to have_link "Edit"
+        expect(page).not_to have_content image_subtitle
       end
     end
   end
