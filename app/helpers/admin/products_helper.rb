@@ -20,6 +20,14 @@ module Admin
       end
     end
 
+    def image_upload_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        admin_product_images_path(imageable.product_id, variant_id: imageable.id)
+      else
+        admin_product_images_path(imageable.id)
+      end
+    end
+
     NEW_VARIANT_TEMPLATE_FIELDS = %i[
       tax_category_id
       primary_taxon_id

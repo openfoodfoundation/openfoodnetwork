@@ -461,10 +461,35 @@ RSpec.describe '
           within ".image-upload-field" do
             expect(page).to have_content "Image"
             expect(page).to have_content image_subtitle
-            expect(page).to have_link "Upload image"
+            expect(page).to have_css ".image-upload__button", text: "Upload image"
+            expect(page).to have_field "image[attachment]", visible: false
             expect(page).to have_selector ".image-upload"
             expect(page).not_to have_selector ".image-upload__preview"
           end
+        end
+
+        it "uploads the image and navigates to the image edit page" do
+          visit spree.edit_admin_product_path(product)
+
+          attach_file "image[attachment]", white_logo_path, visible: false
+
+          expect(page).to have_content /Image has been successfully created/
+          expect(product.reload.image).to be_present
+          expect(page).to have_current_path(
+            spree.edit_admin_product_image_path(product, product.image)
+          )
+        end
+
+        it "shows an error and stays on the page for an invalid file" do
+          visit spree.edit_admin_product_path(product)
+
+          attach_file "image[attachment]",
+                      Rails.public_path.join('invalid_image.jpg'),
+                      visible: false
+
+          expect(Spree::Image.count).to eq 0
+          expect(page).to have_current_path(spree.edit_admin_product_path(product))
+          expect(page).to have_content "not identified as a valid media file"
         end
 
         it "shows the image preview when an image is present" do
@@ -474,6 +499,7 @@ RSpec.describe '
           visit spree.edit_admin_product_path(product)
 
           within ".image-upload-field" do
+            find(".image-upload").hover
             expect(page).to have_selector ".image-upload .image-upload__preview"
             expect(page).to have_selector ".image-upload--has-image"
             expect(page).to have_link "Edit"

@@ -1,5 +1,5 @@
 %div
-  = f.hidden_field :viewable_id, value: @product.id
+  = f.hidden_field :viewable_id, value: @variant ? @variant.id : @product.id
 
   .four.columns.alpha
     .field

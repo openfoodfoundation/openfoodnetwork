@@ -413,10 +413,21 @@ RSpec.describe '
       within ".image-upload-field" do
         expect(page).to have_content "Image"
         expect(page).to have_content image_subtitle
-        expect(page).to have_link "Upload image"
+        expect(page).to have_css ".image-upload__button", text: "Upload image"
+        expect(page).to have_field "image[attachment]", visible: false
         expect(page).to have_selector ".image-upload"
         expect(page).not_to have_selector ".image-upload__preview"
       end
+    end
+
+    it "uploads the image to the variant and navigates to the image edit page" do
+      attach_file "image[attachment]", white_logo_path, visible: false
+
+      expect(page).to have_content /Image has been successfully created/
+      expect(variant.reload.image).to be_present
+      expect(page).to have_current_path(
+        %r{/admin/products/#{product.id}/images/#{variant.reload.image.id}/edit}
+      )
     end
 
     it "shows the image preview when an image is present" do
@@ -425,11 +436,27 @@ RSpec.describe '
       visit spree.edit_admin_product_variant_path product, variant
 
       within ".image-upload-field" do
+        find(".image-upload").hover
         expect(page).to have_selector ".image-upload .image-upload__preview"
         expect(page).to have_selector ".image-upload--has-image"
         expect(page).to have_link "Edit"
         expect(page).not_to have_content image_subtitle
       end
+    end
+
+    it "keeps the image on the variant when updated from the image edit page" do
+      Spree::Image.create(attachment: white_logo_file, viewable: variant)
+
+      visit spree.edit_admin_product_image_path(
+        product, variant.reload.image, variant_id: variant.id
+      )
+
+      fill_in "image[alt]", with: "Updated alt text"
+      click_button "Update"
+
+      expect(variant.reload.image.alt).to eq "Updated alt text"
+      expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
+      expect(variant.reload.image.viewable_id).to eq variant.id
     end
   end
 end

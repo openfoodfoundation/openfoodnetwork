@@ -224,6 +224,26 @@ RSpec.describe Admin::ProductsHelper do
     end
   end
 
+  describe '#image_upload_path' do
+    context 'when imageable is a product' do
+      let(:product) { create(:product) }
+
+      it 'returns admin_product_images_path' do
+        expect(helper.image_upload_path(product))
+          .to eq "/admin/products/#{product.id}/images"
+      end
+    end
+
+    context 'when imageable is a variant' do
+      let(:variant) { create(:variant, product: create(:product)) }
+
+      it 'returns admin_product_images_path with variant_id' do
+        expect(helper.image_upload_path(variant))
+          .to eq "/admin/products/#{variant.product_id}/images?variant_id=#{variant.id}"
+      end
+    end
+  end
+
   describe '#image_form_path' do
     let(:product) { create(:product) }
 

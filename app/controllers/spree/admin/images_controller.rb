@@ -35,16 +35,10 @@ module Spree
 
         @object.attributes = permitted_resource_params
 
-        if @object.save
-          flash[:success] = flash_message_for(@object, :successfully_created)
+        return respond_to_create_errors unless @object.save
 
-          respond_to do |format|
-            format.html { redirect_to location_after_save }
-            format.turbo_stream { render :update }
-          end
-        else
-          respond_with_error((@error_target || @object).errors)
-        end
+        flash[:success] = flash_message_for(@object, :successfully_created)
+        respond_to_create_save
       end
 
       def update
@@ -122,6 +116,11 @@ module Spree
         end
       end
 
+      def edit_image_path_after_upload
+        extra = params[:variant_id].present? ? { variant_id: @variant.id } : {}
+        edit_admin_product_image_path(@product.id, @object.id, extra)
+      end
+
       def set_viewable
         @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
         @image.viewable_id = params[:image][:viewable_id]
@@ -144,6 +143,26 @@ module Spree
             render action_name == 'create' ? :new : :edit, status: :unprocessable_entity
           }
           format.turbo_stream { render :edit, status: :unprocessable_entity }
+        end
+      end
+
+      def respond_to_create_save
+        if params[:redirect_to_edit].present?
+          render json: { redirect_url: edit_image_path_after_upload }
+        else
+          respond_to do |format|
+            format.html { redirect_to location_after_save }
+            format.turbo_stream { render :update }
+          end
+        end
+      end
+
+      def respond_to_create_errors
+        if params[:redirect_to_edit].present?
+          flash[:error] = (@error_target || @object).errors.full_messages.to_sentence
+          render :create_error, status: :unprocessable_entity
+        else
+          respond_with_error((@error_target || @object).errors)
         end
       end
 

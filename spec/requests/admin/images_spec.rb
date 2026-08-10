@@ -66,6 +66,80 @@ RSpec.describe "/admin/products/:product_id/images" do
     it_behaves_like "updating images", 200
   end
 
+  describe "POST /admin/products/:product_id/images with redirect_to_edit" do
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("logo.png", "image/png"),
+          viewable_id: product.id,
+        },
+        redirect_to_edit: true,
+      }
+    end
+    subject { post(spree.admin_product_images_path(product), params:) }
+
+    it "creates the image and returns its edit url" do
+      expect {
+        subject
+        product.reload
+      }.to change { product.image&.attachment&.filename.to_s }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["redirect_url"]).to eq(
+        spree.edit_admin_product_image_path(product, product.image)
+      )
+    end
+
+    context "with a wrong type of file" do
+      let(:params) do
+        {
+          image: {
+            attachment: fixture_file_upload("sample_file_120_products.csv", "text/csv"),
+            viewable_id: product.id,
+          },
+          redirect_to_edit: true,
+        }
+      end
+
+      it "streams a flash error without creating an image" do
+        post(spree.admin_product_images_path(product), params:, as: :turbo_stream)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(product.reload.image).not_to be_present
+        expect(response.body).to include "flashes"
+        expect(response.body).to include "Attachment has an invalid content type"
+      end
+    end
+  end
+
+  describe "POST /admin/products/:product_id/images for a variant with redirect_to_edit" do
+    let(:variant) { create(:variant, product:) }
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("logo.png", "image/png"),
+          viewable_id: variant.id,
+        },
+        variant_id: variant.id,
+        redirect_to_edit: true,
+      }
+    end
+    subject { post(spree.admin_product_images_path(product), params:) }
+
+    it "creates the image on the variant and returns its edit url" do
+      expect {
+        subject
+        variant.reload
+      }.to change { variant.image&.attachment&.filename.to_s }
+
+      expect(variant.image.viewable_type).to eq "Spree::Variant"
+      expect(variant.image.viewable_id).to eq variant.id
+      expect(response.parsed_body["redirect_url"]).to eq(
+        spree.edit_admin_product_image_path(product, variant.image, variant_id: variant.id)
+      )
+    end
+  end
+
   describe "PATCH /admin/products/:product_id/images/:id" do
     let!(:product) { create(:product_with_image) }
     subject {
