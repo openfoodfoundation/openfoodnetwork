@@ -253,47 +253,53 @@ RSpec.describe ProductsRenderer do
       expect(products_renderer.products_view.first).to be_a(ViewData::Product)
       expect(products_renderer.products_view.first.variants.first).to be_a(ViewData::Variant)
     end
-  end
 
-  describe "loading variants" do
-    let(:hub) { create(:distributor_enterprise) }
-    let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1, v3, v4]) }
-    let(:p) { create(:simple_product) }
-    let!(:v1) {
-      create(:variant, product: p, unit_value: 3)
-    } # In exchange, not in inventory (ie. not_hidden)
-    let!(:v2) { create(:variant, product: p, unit_value: 5) } # Not in exchange
-    let!(:v3) {
-      create(:variant, product: p, unit_value: 7,
-                       inventory_items: [create(:inventory_item, enterprise: hub, visible: true)])
-    }
-    let!(:v4) {
-      create(:variant, product: p, unit_value: 9,
-                       inventory_items: [create(:inventory_item, enterprise: hub, visible: false)])
-    }
-    let(:products_renderer) { ProductsRenderer.new(hub, oc, customer) }
-    let(:variants) { products_renderer.__send__(:variants_for_shop_by_id) }
+    describe "loading variants" do
+      subject(:variant_ids) { products_renderer.products_view.first.variants.map(&:id) }
 
-    it "scopes variants to distribution" do
-      expect(variants[p.id]).to include v1
-      expect(variants[p.id]).not_to include v2
-    end
+      let(:order_cycle) {
+        create(:simple_order_cycle, distributors: [distributor], variants: [v1, v3, v4])
+      }
+      let!(:v1) {
+        create(:variant, product:, unit_value: 3)
+      } # In exchange, not in inventory (ie. not_hidden)
+      let!(:v2) { create(:variant, product:, unit_value: 5) } # Not in exchange
+      let!(:v3) {
+        create(:variant, product:, unit_value: 7,
+                         inventory_items: [
+                           create(:inventory_item, enterprise: distributor, visible: true)
+                         ])
+      }
+      let!(:v4) {
+        create(:variant, product:, unit_value: 9,
+                         inventory_items: [
+                           create(:inventory_item, enterprise: distributor, visible: false)
+                         ])
+      }
 
-    it "does not render variants that have been hidden by the hub", feature: :inventory do
-      # but does render 'new' variants, ie. v1
-      expect(variants[p.id]).to include v1, v3
-      expect(variants[p.id]).not_to include v4
-    end
-
-    context "when hub opts to only see variants in its inventory", feature: :inventory do
-      before do
-        allow(hub).to receive(:prefers_product_selection_from_inventory_only?) { true }
+      it "scopes variants to distribution, ie variant included in the order cycle" do
+        expect(variant_ids).to include v1.id
+        expect(variant_ids).not_to include v2.id
       end
 
-      it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
-        # but does render 'new' variants, ie. v1
-        expect(variants[p.id]).to include v3
-        expect(variants[p.id]).not_to include v1, v4
+      context "with inventory enable", feature: :inventory do
+        it "does not render variants that have been hidden by the hub" do
+          # but does render 'new' variants, ie. v1
+          expect(variant_ids).to include v1.id, v3.id
+          expect(variant_ids).not_to include v4.id
+        end
+
+        context "when distributor opts to only see variants in its inventory" do
+          before do
+            allow(distributor).to receive(:prefers_product_selection_from_inventory_only?) { true }
+          end
+
+          it "doesn't render variants that haven't been explicitly added to inventory" do
+            # but does render 'new' variants, ie. v1
+            expect(variant_ids).to include v3.id
+            expect(variant_ids).not_to include v1.id, v4.id
+          end
+        end
       end
     end
   end
