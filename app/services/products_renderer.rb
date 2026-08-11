@@ -49,6 +49,27 @@ class ProductsRenderer
     end
   end
 
+  # Generate read only data
+  def products_view
+    products.map do |p|
+      attrs = p.slice(*ViewData::Product.members)
+      attrs[:variants] = variants_for_shop_by_id[p.id].map do |v|
+        variant = VariantPresenter.new(
+          variant: v, distributor:, order_cycle:, enterprise_fee_calculator:
+        )
+        variant_attrs = v.slice(
+          :id, :on_demand, :on_hand, :display_name, :name_to_display, :unit_to_display, :price,
+          :display_price, :enterprise, :product
+        )
+        variant_attrs[:unit_price] = variant.unit_price
+        variant_attrs[:unit_price_price] = variant.unit_price_price
+        variant_attrs[:display_unit_price] = variant.display_unit_price
+        ViewData::Variant.new(**variant_attrs)
+      end
+      ViewData::Product.new(**attrs)
+    end
+  end
+
   private
 
   attr_reader :order_cycle, :distributor, :customer, :args, :options

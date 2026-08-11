@@ -240,6 +240,21 @@ RSpec.describe ProductsRenderer do
     end
   end
 
+  describe "#products_view" do
+    subject(:products_renderer) { described_class.new(distributor, order_cycle, customer) }
+
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v1]) }
+    let(:product) { create(:simple_product) }
+    let!(:v1) {
+      create(:variant, product:)
+    }
+
+    it "returns read only product and variants" do
+      expect(products_renderer.products_view.first).to be_a(ViewData::Product)
+      expect(products_renderer.products_view.first.variants.first).to be_a(ViewData::Variant)
+    end
+  end
+
   describe "loading variants" do
     let(:hub) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1, v3, v4]) }
