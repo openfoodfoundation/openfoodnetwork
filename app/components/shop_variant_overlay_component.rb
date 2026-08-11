@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class ShopVariantOverlayComponent < ViewComponent::Base
-  def initialize(variants:, distributor:, order_cycle:, enterprise_fee_calculator:,
-                 variants_in_cart:, low_stock_display:, presenter_class: VariantPresenter)
-    @variants = variants.map { |v|
-      presenter_class.new(variant: v, distributor:, order_cycle:, enterprise_fee_calculator:)
-    }
-
+  def initialize(variants:, variants_in_cart:, low_stock_display:)
+    @variants = variants
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
   end
