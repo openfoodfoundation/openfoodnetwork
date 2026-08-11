@@ -88,7 +88,12 @@ RSpec.describe Spree::PaymentMethod::Taler do
     end
 
     it "starts the refund process" do
-      order_status = { order_status: "paid" }
+      order_status = {
+        order_status: "paid",
+        contract_terms: {
+          amount: "KUDOS:2",
+        }
+      }
       stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
       stub_request(:post, refund_endpoint).to_return(body: { taler_refund_uri: }.to_json)
 
