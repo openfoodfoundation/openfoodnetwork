@@ -27,28 +27,6 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
-  def products
-    return unless order_cycle
-
-    @products ||= begin
-      results = if enterprise_properties.present?
-                  distributed_products.products_relation_incl_enterprise_properties
-                else
-                  distributed_products.products_relation
-                end
-      results = filter(results)
-
-      paginated_products = paginate(results)
-
-      if inventory_enabled?
-        # Scope results with variant_overrides
-        paginated_products.each { |product| product_scoper.scope(product) }
-      end
-
-      paginated_products
-    end
-  end
-
   # Generate read only data
   def products_view
     products.map do |p|
@@ -73,6 +51,28 @@ class ProductsRenderer
   private
 
   attr_reader :order_cycle, :distributor, :customer, :args, :options
+
+  def products
+    return unless order_cycle
+
+    @products ||= begin
+      results = if enterprise_properties.present?
+                  distributed_products.products_relation_incl_enterprise_properties
+                else
+                  distributed_products.products_relation
+                end
+      results = filter(results)
+
+      paginated_products = paginate(results)
+
+      if inventory_enabled?
+        # Scope results with variant_overrides
+        paginated_products.each { |product| product_scoper.scope(product) }
+      end
+
+      paginated_products
+    end
+  end
 
   def product_scoper
     @product_scoper ||= OpenFoodNetwork::ScopeProductToHub.new(distributor)
