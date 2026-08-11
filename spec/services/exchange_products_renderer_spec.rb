@@ -25,6 +25,27 @@ RSpec.describe ExchangeProductsRenderer do
         )
       end
 
+      context "with variants owned by other enterprises" do
+        let(:enterprise) { create(:supplier_enterprise) }
+        let(:product) { create(:product, enterprise_id: enterprise.id) }
+        let(:my_variant) { product.variants.first }
+        let(:other_variant) { create(:variant, product:, enterprise: create(:enterprise)) }
+        let(:order_cycle) {
+          create(:simple_order_cycle, suppliers: [enterprise],
+                                      variants: [my_variant, other_variant] )
+        }
+
+        it "doesn't load variants owned by other enterprises" do
+          products = renderer.exchange_products(true, exchange.sender)
+          # #count on the variants association would produce the total number of 2, but due to
+          # filtering, the length of the array will be 1.
+          variants = products.first.variants.to_a
+
+          expect(variants.count).to eq 1
+          expect(variants.first.enterprise).to eq enterprise
+        end
+      end
+
       context "showing products from coordinator inventory only" do
         before {
           order_cycle.update prefers_product_selection_from_coordinator_inventory_only: true
