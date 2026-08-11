@@ -18,7 +18,7 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     	Enterprise.index params, (data) =>
         for enterprise in data
           @enterprises[enterprise.id] = enterprise
-          @producer_enterprises.push(enterprise) if enterprise.is_primary_producer
+          @producer_enterprises.push(enterprise) if enterprise.can_create_variants
           @hub_enterprises.push(enterprise) if enterprise.sells == 'any'
 
         @loaded = true
