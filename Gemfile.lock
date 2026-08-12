@@ -98,11 +98,11 @@ GEM
       rails-html-sanitizer (~> 1.6)
     active_model_serializers (0.8.4)
       activemodel (>= 3.0)
-    active_storage_validations (3.0.5)
-      activejob (>= 6.1.4)
-      activemodel (>= 6.1.4)
-      activestorage (>= 6.1.4)
-      activesupport (>= 6.1.4)
+    active_storage_validations (4.0.0)
+      activejob (>= 7.0.1)
+      activemodel (>= 7.0.1)
+      activestorage (>= 7.0.1)
+      activesupport (>= 7.0.1)
       marcel (>= 1.0.3)
     activejob (7.2.3.2)
       activesupport (= 7.2.3.2)
@@ -1103,7 +1103,7 @@ CHECKSUMS
   actiontext (7.2.3.2) sha256=19ab7e2a07ab976a5456a9aa98b93e1b899a7729b931ca1e9e01a3e8bd33f0b0
   actionview (7.2.3.2) sha256=42bfd966040c93271dfa9f3243d73c40aa0228108696f956e1f287f3b02edc01
   active_model_serializers (0.8.4) sha256=7350e3d3b6a5946bbec033241d908013cc85ff4d584230e6aa074225547c754c
-  active_storage_validations (3.0.5) sha256=4ae7338769ea28d67f1eb20a5693de4cf356c0a68ade914be4b5ae9691628425
+  active_storage_validations (4.0.0) sha256=ee590234ba7c1755c2b3f67d953004c36166ec1232ba9afafc6f0da78fac87b9
   activejob (7.2.3.2) sha256=b83fa070898911823f0c4cb8c0d1d25dabb5d00f18379d5b4fe01b84e173a93a
   activemerchant (1.137.0) sha256=fdf5e33f5c94d1981bd632d72e282c0a5afaf06bac6df3f933c08a95e98bd5ce
   activemodel (7.2.3.2) sha256=3777c67cd8dd1560f30387523013dacb370a0a1cf532037410887819e4416927
