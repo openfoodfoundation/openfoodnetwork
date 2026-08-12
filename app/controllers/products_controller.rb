@@ -16,7 +16,12 @@ class ProductsController < BaseController
     # But we still have to fill other used variables later (see below).
     @enterprise = Enterprise.find_by(permalink: params[:enterprise_permalink])
     @product = Spree::Product.find(params[:id])
+
     @order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@enterprise, current_customer)
+
+    # TODO: DRY
+    @variants_in_cart = current_order(true).line_items.to_h { |li| [li.variant.id, li.quantity] }
+    @low_stock_display = @product.variants.first.enterprise.preferred_product_low_stock_display
 
     # Lots of views and helpers assume this variable:
     @current_distributor = @enterprise

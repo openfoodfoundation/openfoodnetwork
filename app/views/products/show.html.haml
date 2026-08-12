@@ -20,7 +20,6 @@
 %shop.darkswarm
   = render partial: "shopping_shared/header"
   = render partial: "tabs"
-
-  = @product.attributes
+  = render partial: "product_details", locals: { product: @product }
 
 = render partial: "shared/footer"

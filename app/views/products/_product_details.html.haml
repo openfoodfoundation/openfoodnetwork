@@ -1,0 +1,42 @@
+-# locals: (product:)
+.row
+  .columns.product-header
+    %h3= product.name
+    %span
+      %em
+        = t("products_from")
+      %span
+        = product.variants.first.enterprise.name # TODO: only display if same for all variants
+    %br
+    - if product.description
+      .product-description{ 'data-controller': "add-blank-to-link" }
+        %p.text-small
+          = product.description.html_safe
+.row.footer-pad
+  .columns.product-body
+    .product-images{ style: "width: 146px" }
+      .product-img
+        - carousel_images = product_carousel_images_data(product)
+        = render ThumbnailCarouselComponent.new(images: carousel_images, class: (product.images.any? ? nil : "placeholder"))
+    .product-variants
+      %ul
+        - product.variants.each do |variant| # TODO: use OC variants
+          %li
+            .row
+              .small-8.columns
+                - if variant.display_name.present?
+                  .variant-columns.variant-name
+                    = "#{variant.name_to_display}"
+                .variant-columns.variant-unit
+                  = variant.unit_to_display
+                .variant-producer
+                  - # TODO: unless same_producers?
+                  = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
+                .prices
+                  = variant.display_price
+                  %span.unit-price
+                    = # TODO: "#{variant.display_unit_price}"
+                    &nbsp;/&nbsp;
+                    = # TODO: "#{variant.unit_price.unit}"
+              .small-4.columns
+                = render AddToCartComponent.new(variant: variant, quantity: @variants_in_cart[variant.id], low_stock_display: @low_stock_display)

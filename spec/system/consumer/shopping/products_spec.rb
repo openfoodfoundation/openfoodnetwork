@@ -8,6 +8,42 @@ RSpec.describe "As a consumer I want to view products" do
   include ShopWorkflow
   include UIComponentHelper
 
+  describe "on their own pages" do
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let!(:order_cycle) {
+      create(
+        :simple_order_cycle,
+        distributors: [enterprise], coordinator: enterprise,
+        variants: product.variants,
+        orders_close_at: 2.days.from_now
+      )
+    }
+
+    # smoke test
+    it "and add a variant to the cart" do
+      # Current code expects the user to have a cart already
+      visit enterprise_shop_path(enterprise)
+      sleep 3
+
+      visit enterprise_product_path(enterprise, product)
+
+      expect(page).to have_content "Garlic"
+      expect(page).to have_content "from The Garlic Guru"
+      expect(page).to have_content "1g"
+
+      click_button "Add"
+
+      expect(page).to have_content "1 in cart"
+
+      page.find("img[src*='add']").click
+
+      expect(page).to have_content "2 in cart"
+    end
+  end
+
   describe "Viewing a product" do
     let(:taxon) { create(:taxon, name: "Tricky Taxon") }
     let(:property) { create(:property, presentation: "Fresh and Fine") }
