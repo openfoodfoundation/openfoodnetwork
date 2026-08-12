@@ -1,0 +1,12 @@
+#shop-tabs
+  .tab-buttons
+    .flex.row
+      .columns.small-12.large-8
+        - shop_tabs.each do |tab|
+          .page
+            %a{ href: "../shop##{tab[:name]}_panel", class: ("selected" if tab[:default]) }=tab[:title]
+      .columns.large-4.show-for-large-up
+        = render partial: "shopping_shared/order_cycles"
+
+.order-cycle-bar.hide-for-large-up
+  = render partial: "shopping_shared/order_cycles"

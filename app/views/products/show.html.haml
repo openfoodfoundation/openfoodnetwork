@@ -6,5 +6,21 @@
   = @product.description
 - content_for(:image) do
   = @product.image.url(:small) if @product.image.present?
+- content_for :order_cycle_form do
+  = render partial: "enterprises/change_order_cycle"
 
-= @product.attributes
+- content_for :injection_data do
+  - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
+    = inject_enterprise_shopfront(@enterprise)
+  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
+    = inject_taxons
+  - cache(*CacheService::FragmentCaching.ams_all_properties) do
+    = inject_properties
+
+%shop.darkswarm
+  = render partial: "shopping_shared/header"
+  = render partial: "tabs"
+
+  = @product.attributes
+
+= render partial: "shared/footer"

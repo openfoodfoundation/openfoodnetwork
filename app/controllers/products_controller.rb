@@ -9,9 +9,17 @@ class ProductsController < BaseController
   end
 
   def show
+    # Most of the shop uses `current_distributor` and relies on the user
+    # only being able to look at one shop at a time.
+    # But following a link to view a product shouldn't change the current
+    # state of your cart. So we are calling it enterprise here.
+    # But we still have to fill other used variables later (see below).
     @enterprise = Enterprise.find_by(permalink: params[:enterprise_permalink])
     @product = Spree::Product.find(params[:id])
-    # TBC
+    @order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@enterprise, current_customer)
+
+    # Lots of views and helpers assume this variable:
+    @current_distributor = @enterprise
   end
 
   private
@@ -28,7 +36,7 @@ class ProductsController < BaseController
   end
 
   def distributor
-    current_distributor
+    @distributor ||= current_distributor
   end
 
   def order_cycle
