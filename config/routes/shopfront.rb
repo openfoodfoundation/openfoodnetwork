@@ -13,6 +13,7 @@ Openfoodnetwork::Application.routes.draw do
     # - Change enterprise_shop_path → shop_enterprise_path
     #get :shop, on: :member
 
+    get :products, on: :member, to: redirect("/%{permalink}/shop")
     resources :products, only: [:show]
   end
 end
