@@ -364,6 +364,21 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
+  describe "#enterprises_granted_linked_variants" do
+    it "returns only my enterprises that are granted permission to create_linked_variants" do
+      e1 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e1,
+                                       permissions_list: [:create_linked_variants])
+      e2 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e2,
+                                       permissions_list: [:manage_products])
+      # User manages two enterprises, which have different permissions.
+      allow(user).to receive(:enterprises).and_return([e1, e2])
+
+      expect(permissions.enterprises_granted_linked_variants).to eq([e1])
+    end
+  end
+
   ########################################
 
   describe "finding related enterprises with a particular permission" do

@@ -98,6 +98,13 @@ module OpenFoodNetwork
       managed_product_enterprises.or(Enterprise.where(id: enterprises_granting_linked_variants))
     end
 
+    def enterprises_granted_linked_variants
+      Enterprise.where(id:
+        EnterpriseRelationship.with_permission(:create_linked_variants)
+          .permitting(@user.enterprises)
+          .select(:child_id))
+    end
+
     def manages_one_enterprise?
       @user.enterprises.length == 1
     end

@@ -142,7 +142,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
     context "with sourced variant" do
       let(:source_enterprise) { create(:supplier_enterprise, name: "Producer Enterprise") }
-      let(:hub) { create(:distributor_enterprise) }
+      let(:enterprise) { create(:distributor_enterprise, name: "My Hub Enterprise") }
+      let(:other_hub) { create(:distributor_enterprise) }
       let!(:p1) { create(:product, name: "Product1", enterprise_id: source_enterprise.id) }
 
       let!(:v_source) { p1.variants.first }
@@ -151,14 +152,14 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
                          enterprise:)
       }
       let!(:enterprise_relationship) {
-        # Enterprise grants me access to manage their variant
+        # Enterprise grants me access to link to their variant
         create(:enterprise_relationship, parent: source_enterprise, child: enterprise,
-                                         permissions_list: [:manage_products])
+                                         permissions_list: [:create_linked_variants])
       }
 
       # I don't manage this hub, so shouldn't see see the sourced variant
       let!(:v_sourced_hidden) {
-        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: hub)
+        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: other_hub)
       }
 
       before do
@@ -169,13 +170,19 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       it "shows sourced variant with indicator" do
         visit admin_products_url
 
+        # Show Enterprise column
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          check "Producer"
+        end
+
         within row_containing_name("Variant-sourced") do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
           expect(page).to have_selector 'span[title*="Producer: Producer Enterprise"]'
 
           # Can't change the enterprise of a linked variant
           expect(page).not_to have_select "Enterprise"
-          expect(page).to have_content "My Enterprise"
+          expect(page).to have_content "My Hub Enterprise"
         end
 
         # But not variants sourced by other hubs
