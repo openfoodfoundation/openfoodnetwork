@@ -2,24 +2,24 @@
 
 class ProductsController < BaseController
   def index
-    @distributor = distributor
-    @order_cycle = order_cycle
-    @products = ProductsRenderer.new(
+    @products = product_renderer.products_view
+
+    @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
+    @low_stock_display = distributor.preferred_product_low_stock_display
+  end
+
+  private
+
+  def product_renderer
+    ProductsRenderer.new(
       distributor,
       order_cycle,
       customer,
       search_params,
       inventory_enabled: inventory_enabled?,
       variant_tag_enabled: variant_tag_enabled?
-    ).products
-
-    @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
-    @low_stock_display = distributor.preferred_product_low_stock_display
-    @enterprise_fee_calculator =
-      OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+    )
   end
-
-  private
 
   def distributor
     current_distributor

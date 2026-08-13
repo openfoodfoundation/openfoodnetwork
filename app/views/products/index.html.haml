@@ -20,7 +20,7 @@
               - variant = product.variants.first
               = render AddToCartComponent.new(variant: variant, quantity: @variants_in_cart[variant.id], low_stock_display: @low_stock_display)
             - else
-              = render ShopVariantOverlayComponent.new(variants: product.variants, distributor: @distributor, order_cycle: @order_cycle, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display, enterprise_fee_calculator: @enterprise_fee_calculator)
+              = render ShopVariantOverlayComponent.new(variants: product.variants, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
 
           = render ModalComponent.new(id: "product-modal-#{product.id}", modal_class: "big") do
             = render partial: "shared/product/product_details", locals: { product: }
