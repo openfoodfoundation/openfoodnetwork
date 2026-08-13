@@ -1,7 +1,9 @@
 #!/bin/env ruby
 # frozen_string_literal: true
 
-SimpleCov.start 'rails' do
+SimpleCov.configure do
+  load_profile "rails"
+
   # The rails profile contains some filters already:
   #
   # - "/test/"
@@ -10,9 +12,9 @@ SimpleCov.start 'rails' do
   # - "/autotest/"
   # - /^\/config\//
   # - /^\/db\//
-  add_filter '/bin/'
-  add_filter '/config/' # to include engine config
-  add_filter '/script'
+  skip "/bin/"
+  skip "/config/" # to also skip engine config
+  skip "/script"
 
   formatter SimpleCov::Formatter::SimpleFormatter
 end

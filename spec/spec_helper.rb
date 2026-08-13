@@ -5,7 +5,10 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 # for full configuration, see .simplecov
-require 'simplecov' if ENV["COVERAGE"]
+if ENV["COVERAGE"]
+  require "simplecov"
+  SimpleCov.start
+end
 
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'
