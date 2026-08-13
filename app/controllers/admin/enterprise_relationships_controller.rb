@@ -15,6 +15,13 @@ module Admin
     def create
       @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
 
+      # Given that we get an empty object when checking for :create ability
+      # Admin::ResourceController, we can't check the user manages the parent enterprise with
+      # an ability. So we do it manually here.
+      unless spree_current_user.enterprises.include?(@enterprise_relationship.parent)
+        return head :forbidden
+      end
+
       if @enterprise_relationship.save
         render plain: Api::Admin::EnterpriseRelationshipSerializer
           .new(@enterprise_relationship).to_json
