@@ -319,7 +319,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           expect(page).to have_in_cart product.name
           toggle_cart
 
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          li = order.reload.line_items.order(:created_at).last
           expect(li.quantity).to eq(1)
 
           # Add more
@@ -376,6 +376,40 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
           within_variant(single_variant) do
             expect(page).to have_content "Only 2 items remaining"
+          end
+        end
+
+        context "with product with multiple variant" do
+          it "lets us select variant from a variant overlay" do
+            visit shop_path
+
+            expect(page).to have_content product.name
+            expect(page).to have_button "Select"
+
+            # Open the overlay
+            click_button "Select"
+
+            within ".variant-overlay" do
+              expect(page).to have_content product.name
+              # 2 variant displayed
+              expect(page).to have_button "Add", count: 2
+
+              # the cart is hidden by the overlay so we can't use component_add here
+              within_variant(variant) do
+                click_button "Add"
+                expect(page).to have_content "1 in cart"
+              end
+
+              click_button "Close"
+            end
+
+            # We can't see the cart when the overlay is open, so we close overlay before checking
+            # the variant has been added to the cart
+            expect(page).to have_in_cart product.name
+            toggle_cart
+
+            li = order.reload.line_items.order(:created_at).last
+            expect(li.variant).to eq(variant)
           end
         end
       end
