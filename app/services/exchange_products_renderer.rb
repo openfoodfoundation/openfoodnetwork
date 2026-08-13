@@ -42,13 +42,11 @@ class ExchangeProductsRenderer
     if @order_cycle.present? &&
        options[:inventory_enabled] &&
        @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-      relation = relation.visible_for(@order_cycle.coordinator)
+      relation.visible_for(@order_cycle.coordinator)
     else
       # Include only variants owned by this enterprise
-      relation = relation.includes(:variants).where(spree_variants: { enterprise: })
+      relation.includes(:variants).where(spree_variants: { enterprise: })
     end
-
-    relation
   end
 
   def products_for_outgoing_exchange
