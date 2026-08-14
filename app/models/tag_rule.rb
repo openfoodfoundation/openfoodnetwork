@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class TagRule < ApplicationRecord
+  TYPES = %w[
+    TagRule::FilterOrderCycles
+    TagRule::FilterPaymentMethods
+    TagRule::FilterProducts
+    TagRule::FilterShippingMethods
+    TagRule::FilterVariants
+  ].freeze
+
   belongs_to :enterprise
 
   preference :customer_tags, :string, default: ""
