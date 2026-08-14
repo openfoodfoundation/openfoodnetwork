@@ -62,7 +62,7 @@ jobs:
           cache: yarn
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
@@ -144,7 +144,7 @@ jobs:
           cache: yarn
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
@@ -235,7 +235,7 @@ jobs:
           cache: yarn
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
@@ -317,7 +317,7 @@ jobs:
           cache: yarn
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
@@ -384,7 +384,7 @@ jobs:
           cache: yarn
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Run JS tests
         run: bin/rake karma:run

@@ -30,7 +30,7 @@ FileUtils.chdir APP_ROOT do
 
   # Install JavaScript dependencies
   system("command -v yarn 2> /dev/null") || system!("script/nodenv-install.sh")
-  system!("bin/yarn --ignore-scripts")
+  system!("bin/yarn")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
