@@ -129,5 +129,15 @@ RSpec.describe Orders::FindPaymentService do
         expect(finder.last_pending_paypal_payment).to be_nil
       end
     end
+
+    context "when a pending payment has no associated payment method" do
+      let!(:payment_without_method) {
+        create(:payment, order:, state: "processing", payment_method: nil)
+      }
+
+      it "returns nil" do
+        expect(finder.last_pending_paypal_payment).to be_nil
+      end
+    end
   end
 end
