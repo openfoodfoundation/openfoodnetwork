@@ -44,7 +44,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   private
 
   def presenter
-    VariantPresenter.new(
+    @presenter ||= VariantPresenter.new(
       variant: object,
       distributor: options[:current_distributor],
       order_cycle: options[:current_order_cycle],

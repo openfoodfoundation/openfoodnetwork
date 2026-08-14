@@ -79,7 +79,9 @@ class ProductsRenderer
   end
 
   def enterprise_fee_calculator
-    OpenFoodNetwork::EnterpriseFeeCalculator.new distributor, order_cycle
+    @enterprise_fee_calculator ||= OpenFoodNetwork::EnterpriseFeeCalculator.new(
+      distributor, order_cycle
+    )
   end
 
   def filter(query)

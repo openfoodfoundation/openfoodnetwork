@@ -251,13 +251,20 @@ RSpec.describe ProductsRenderer do
 
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v1]) }
     let(:product) { create(:simple_product) }
-    let!(:v1) {
-      create(:variant, product:)
-    }
+    let!(:v1) { create(:variant, product:) }
 
     it "returns read only product and variants" do
       expect(products_renderer.products_view.first).to be_a(ViewData::Product)
       expect(products_renderer.products_view.first.variants.first).to be_a(ViewData::Variant)
+    end
+
+    context "when product doesn't have any variants" do
+      # In exchange, but out of stock
+      let(:v1) { create(:variant, product:, on_hand: 0) }
+
+      it "returns an empty array" do
+        expect(products_renderer.products_view).to eq([])
+      end
     end
 
     describe "loading variants" do
