@@ -92,10 +92,11 @@ RSpec.describe ProductsRenderer do
                                                             value: '1', position: 1 })
 
           search_param = { q: { with_properties: [property_organic.id] } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to match_array([product_apples, product_cherries, product_banana_bread])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to match_array([product_apples.id, product_cherries.id,
+                                              product_banana_bread.id])
         end
 
         it "filters products with a product property or a producer property" do
