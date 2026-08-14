@@ -256,6 +256,9 @@ RSpec.describe ProductsRenderer do
     it "returns read only product and variants" do
       expect(products_renderer.products_view.first).to be_a(ViewData::Product)
       expect(products_renderer.products_view.first.variants.first).to be_a(ViewData::Variant)
+      expect(products_renderer.products_view.first.variants.first.product).to be_a(
+        ViewData::SimpleProduct
+      )
     end
 
     context "when product doesn't have any variants" do
