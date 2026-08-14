@@ -2,28 +2,26 @@ import { Controller } from "stimulus";
 
 // Close a <details> element when click outside
 export default class extends Controller {
+  #closeBound;
+
   connect() {
-    document.body.addEventListener("click", this.#close.bind(this));
-    this.element.addEventListener("click", this.#stopPropagation.bind(this));
+    this.#closeBound = this.#close.bind(this);
+    document.body.addEventListener("click", this.#closeBound);
   }
 
   disconnect() {
-    document.removeEventListener("click", this.#close);
-    document.removeEventListener("click", this.#stopPropagation);
+    document.body.removeEventListener("click", this.#closeBound);
   }
 
-  closeOnMenu(event) {
-    this.#close();
-    this.#stopPropagation(event);
+  closeOnMenu() {
+    this.element.open = false;
   }
 
   // private
 
   #close(event) {
-    this.element.open = false;
-  }
-
-  #stopPropagation(event) {
-    event.stopPropagation();
+    if (!this.element.contains(event.target)) {
+      this.element.open = false;
+    }
   }
 }
