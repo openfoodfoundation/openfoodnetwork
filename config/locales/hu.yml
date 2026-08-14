@@ -2337,7 +2337,7 @@ hu:
   order_produce: Termékek
   order_amount_paid: Kifizetett összeg
   order_total_price: Összesen
-  order_balance_due: Fizetendő összeg
+  order_balance_due: Fennálló tartozás
   order_includes_tax: (adót tartalmaz)
   order_payment_paypal_successful: PayPal-on keresztüli fizetését sikeresen feldolgoztuk.
   order_hub_info: Átvételi Pont Info
@@ -2861,7 +2861,7 @@ hu:
   payment_state: "Fizetési státusz"
   shipping_state: "Szállítási státusz"
   value: "Érték"
-  balance_due: "Fizetendő összeg"
+  balance_due: "Fennálló tartozás"
   credit: "Hitel"
   Paid: "Fizetett"
   Ready: "Kész"
@@ -3520,7 +3520,7 @@ hu:
           shipped: "kiszállítva"
           canceled: "törölve"
         payment_states:
-          balance_due: "fizetendő összeg"
+          balance_due: "fennálló tartozás"
           completed: "elkészült"
           checkout: "tovább"
           credit_owed: "hiteltartozás"
