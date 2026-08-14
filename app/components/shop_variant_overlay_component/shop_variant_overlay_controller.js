@@ -14,13 +14,13 @@ export default class extends Controller {
   }
 
   close() {
-    this.elementTarget.style.display = "none";
-    this.backgroundTarget.style.display = "none";
+    this.backgroundTarget.classList.remove("in");
 
     setTimeout(() => {
       this.elementTarget.classList.remove("in");
-      this.backgroundTarget.classList.remove("in");
-    });
+      this.elementTarget.style.display = "none";
+      this.backgroundTarget.style.display = "none";
+    }, 100);
   }
 
   closeIfEscapeKey(e) {
