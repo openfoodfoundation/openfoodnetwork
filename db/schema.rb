@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_01_201850) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_11_032309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -501,6 +501,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_01_201850) do
     t.string "type", limit: 75
     t.text "alt"
     t.datetime "deleted_at"
+    t.string "caption"
     t.index ["deleted_at"], name: "index_spree_assets_on_deleted_at"
     t.index ["viewable_id"], name: "index_assets_on_viewable_id"
     t.index ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"

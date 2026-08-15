@@ -604,7 +604,8 @@ RSpec.describe '
         expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                         filter)))
         expect(page).to have_link('Cancel', href: expected_cancel_link)
-        expect(page).to have_link("Back To Images List", href: expected_cancel_link)
+        expect(page).to have_content "Edit \"#{product.name}\""
+        expect(page).to have_button "Save"
       end
 
       it "updating a product image including url filter" do
@@ -617,8 +618,7 @@ RSpec.describe '
 
         page.find("a.icon-edit").click
 
-        attach_file('image_attachment', image_file_path)
-        click_button "Update"
+        attach_file('image_attachment', image_file_path, make_visible: true)
 
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
@@ -634,11 +634,27 @@ RSpec.describe '
 
         visit spree.admin_product_images_path(product)
         page.find("a.icon-edit").click
-        attach_file('image_attachment', unsupported_image_file_path)
-        click_button "Update"
+        attach_file('image_attachment', unsupported_image_file_path, make_visible: true)
 
         expect(page).to have_text "Attachment has an invalid content type"
         expect(page).to have_text "Attachment is not identified as a valid media file"
+      end
+
+      it "editing caption and alternative text on the image edit page" do
+        image_object = Spree::Image.create(viewable_id: product.id,
+                                           viewable_type: 'Spree::Product',
+                                           alt: "position 1",
+                                           attachment: white_logo_file, position: 1)
+
+        visit spree.edit_admin_product_image_path(product, image_object)
+
+        expect(page).to have_field "image[caption]"
+        fill_in "image[caption]", with: "Fresh asparagus"
+        fill_in "image[alt]", with: "Bunch of asparagus spears"
+        click_button "Save"
+
+        expect(product.reload.image.caption).to eq "Fresh asparagus"
+        expect(product.reload.image.alt).to eq "Bunch of asparagus spears"
       end
 
       it "deleting product images" do

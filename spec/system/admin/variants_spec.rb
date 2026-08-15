@@ -452,7 +452,7 @@ RSpec.describe '
       )
 
       fill_in "image[alt]", with: "Updated alt text"
-      click_button "Update"
+      click_button "Save"
 
       expect(variant.reload.image.alt).to eq "Updated alt text"
       expect(variant.reload.image.viewable_type).to eq "Spree::Variant"

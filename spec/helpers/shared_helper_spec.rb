@@ -38,6 +38,13 @@ RSpec.describe SharedHelper do
 
         expect(data.first[:alt]).to eq "Custom alt"
       end
+
+      it 'does not return a caption even when the image has one' do
+        product.images.first.update!(caption: "Custom caption")
+        data = helper.product_carousel_images_data(product)
+
+        expect(data.first[:caption]).to be_nil
+      end
     end
 
     context 'when product has multiple images' do
@@ -50,13 +57,21 @@ RSpec.describe SharedHelper do
         end
       end
 
-      it 'returns image data with numbered captions' do
+      it 'returns image data with the product name as the default caption' do
         data = helper.product_carousel_images_data(product)
 
         expect(data.size).to eq 3
-        expect(data[0][:caption]).to eq "Test Product - 1"
-        expect(data[1][:caption]).to eq "Test Product - 2"
-        expect(data[2][:caption]).to eq "Test Product - 3"
+        expect(data[0][:caption]).to eq "Test Product"
+        expect(data[1][:caption]).to eq "Test Product"
+        expect(data[2][:caption]).to eq "Test Product"
+      end
+
+      it 'prefers the image caption over the default caption' do
+        product.images.first.update!(caption: "Custom caption")
+        data = helper.product_carousel_images_data(product)
+
+        expect(data[0][:caption]).to eq "Custom caption"
+        expect(data[1][:caption]).to eq "Test Product"
       end
     end
 
@@ -98,8 +113,8 @@ RSpec.describe SharedHelper do
         data = helper.product_carousel_images_data(product)
 
         expect(data.size).to eq 2
-        expect(data[0][:caption]).to eq "Test Product - 1"
-        expect(data[1][:caption]).to eq "Test Product - 2"
+        expect(data[0][:caption]).to eq "Test Product"
+        expect(data[1][:caption]).to eq "Test Product"
       end
     end
 
@@ -117,12 +132,12 @@ RSpec.describe SharedHelper do
         )
       end
 
-      it 'falls back to the product name for a variant image\'s caption and alt' do
+      it "uses the variant display name as the variant image's caption" do
         data = helper.product_carousel_images_data(product)
 
         expect(data.size).to eq 2
-        expect(data[0][:caption]).to eq "Test Product - 1"
-        expect(data[1][:caption]).to eq "Test Product - 2"
+        expect(data[0][:caption]).to eq "Test Product"
+        expect(data[1][:caption]).to eq "Red"
         expect(data[1][:alt]).to eq "Test Product"
       end
     end

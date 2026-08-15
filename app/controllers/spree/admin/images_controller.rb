@@ -132,7 +132,7 @@ module Spree
 
       def permitted_resource_params
         params.require(:image).permit(
-          :attachment, :viewable_id, :alt
+          :attachment, :viewable_id, :alt, :caption
         )
       end
 
@@ -167,25 +167,32 @@ module Spree
       end
 
       def replace_image_without_destroy
-        previous_image = @object
-        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
-
-        replacement_image.alt = previous_image.alt
-        replacement_image.position = previous_image.position
-        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        replacement_image.viewable_type = previous_image.viewable_type
-        replacement_image.viewable_id = params[:image][:viewable_id]
-        replacement_image.attachment.attach(permitted_resource_params[:attachment])
+        replacement_image = build_replacement_image(@object)
 
         Spree::Image.transaction do
           replacement_image.save!
-          previous_image.destroy!
+          @object.destroy!
         end
 
         @object = @image = replacement_image
       rescue ActiveRecord::RecordInvalid
         @error_target = replacement_image
         false
+      end
+
+      def build_replacement_image(previous_image)
+        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
+
+        replacement_image.alt = previous_image.alt
+        replacement_image.position = previous_image.position
+        replacement_image.caption =
+          params[:image][:caption].presence || previous_image.caption
+        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
+        replacement_image.viewable_type = previous_image.viewable_type
+        replacement_image.viewable_id = params[:image][:viewable_id]
+        replacement_image.attachment.attach(permitted_resource_params[:attachment])
+
+        replacement_image
       end
     end
   end

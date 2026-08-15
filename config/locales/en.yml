@@ -4398,8 +4398,11 @@ en:
 
     no_images_found: "No Images Found"
     new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
 
@@ -4436,6 +4439,7 @@ en:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4466,10 +4470,11 @@ en:
     admin:
       images:
         edit:
-          title: Edit image for %{resource_name}
+          title: 'Edit image for "%{resource_name}"'
           subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+          breadcrumb_edit: "Edit \"%{resource_name}\""
       mail_methods:
         send_testmail: "Send test email"
         testmail:

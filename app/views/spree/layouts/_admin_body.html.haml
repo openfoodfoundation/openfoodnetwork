@@ -27,37 +27,44 @@
         .sixteen.columns
           = yield :sub_menu
 
-  - if content_for?(:page_title) || content_for?(:page_actions)
-    .js-admin-section-header.admin__section-header
+  .admin-page{class: yield(:page_class)}
+    - if content_for?(:breadcrumb)
+      .admin__breadcrumb
+        .container
+          .sixteen.columns
+            = yield :breadcrumb
+
+    - if content_for?(:page_title) || content_for?(:page_actions)
+      .js-admin-section-header.admin__section-header
+        .container
+          .sixteen.columns
+            .admin__section-header__content
+              - if content_for?(:page_title)
+                .admin__section-header__title
+                  %h1.js-admin-page-title= yield :page_title
+
+              - if content_for?(:page_actions)
+                %ul.admin__section-header__actions
+                  = yield :page_actions
+
+    - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
+    - usefull_width_columns = content_for?(:sidebar) ? "twelve columns" : "sixteen columns"
+    #content{class: content_class}
       .container
-        .sixteen.columns
-          .admin__section-header__content
-            - if content_for?(:page_title)
-              .admin__section-header__title
-                %h1.js-admin-page-title= yield :page_title
-
-            - if content_for?(:page_actions)
-              %ul.admin__section-header__actions
-                = yield :page_actions
-
-  - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
-  - usefull_width_columns = content_for?(:sidebar) ? "twelve columns" : "sixteen columns"
-  #content{class: content_class}
-    .container
-      .row
-        - if content_for?(:table_filter)
-          #table-filter{:class => usefull_width_columns}
-            %fieldset
-              %legend{:align => "center"}= yield :table_filter_title
-              = yield :table_filter
-        %div{:class => usefull_width_columns}
-          = yield
-        - if content_for?(:sidebar)
-          %aside#sidebar.four.columns
-            - if content_for?(:sidebar_title)
-              %h5.sidebar-title
-                %span= yield :sidebar_title
-            = yield :sidebar
+        .row
+          - if content_for?(:table_filter)
+            #table-filter{:class => usefull_width_columns}
+              %fieldset
+                %legend{:align => "center"}= yield :table_filter_title
+                = yield :table_filter
+          %div{:class => usefull_width_columns}
+            = yield
+          - if content_for?(:sidebar)
+            %aside#sidebar.four.columns
+              - if content_for?(:sidebar_title)
+                %h5.sidebar-title
+                  %span= yield :sidebar_title
+              = yield :sidebar
 
   = render "admin/terms_of_service_banner" if tos_need_accepting?
 

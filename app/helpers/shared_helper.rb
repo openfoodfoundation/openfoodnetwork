@@ -15,14 +15,15 @@ module SharedHelper
 
   def product_carousel_images_data(product, size: :large)
     images = product.images.to_a + product.variant_images.to_a
+    show_caption = images.many?
 
     return [default_carousel_image(size, product)] if images.empty?
 
-    images.map.with_index do |image, index|
+    images.map do |image|
       {
         url: image.url(size),
         alt: image.alt.presence || product.name,
-        caption: images.many? ? "#{product.name} - #{index + 1}" : nil
+        caption: show_caption ? (image.caption.presence || default_caption(image)) : nil
       }
     end
   end
@@ -35,5 +36,12 @@ module SharedHelper
       alt: product.name,
       caption: nil
     }
+  end
+
+  def default_caption(image)
+    viewable = image.viewable
+    return viewable.name if viewable.is_a?(Spree::Product)
+
+    viewable.display_name.presence || viewable.product.name
   end
 end

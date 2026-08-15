@@ -1,0 +1,160 @@
+.image-edit-page {
+  background-color: $lighter-grey;
+
+  .admin__breadcrumb {
+    padding: 16px 0;
+
+    .admin-breadcrumb {
+      ol {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.4;
+        color: $dark-grey;
+
+        li {
+          display: flex;
+          align-items: center;
+          // text-decoration: underline;
+
+          a {
+            color: $dark-grey;
+
+            &:hover {
+              color: $medium-grey;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .admin__section-header {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 48px;
+
+    &__title {
+      margin-bottom: 0;
+
+      h1 {
+        margin: 0;
+      }
+    }
+  }
+
+  #content {
+    background-color: transparent;
+  }
+}
+
+.image-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 0;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(40px, 12vw, 200px);
+  }
+
+  &__preview {
+    flex: 0 0 auto;
+    width: 250px;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__preview-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: $border-radius;
+  }
+
+  &__panel {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 450px;
+    padding: 32px;
+    background-color: $white;
+    border: 1px solid $light-grey;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+
+    .field {
+      padding: 0;
+      margin: 0 0 20px;
+
+      label {
+        display: block;
+      }
+    }
+  }
+
+  &__filename {
+    margin: 0 0 20px;
+    font-size: 13px;
+    color: $dark-grey;
+
+    .image-edit__filename-label {
+      font-weight: bold;
+      margin-right: 0.25em;
+    }
+
+    .image-edit__filename-value {
+      font-weight: normal;
+    }
+  }
+
+  textarea.image-edit__alt {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 32px;
+  }
+
+  &__link {
+    font-size: 13px;
+
+    &--replace {
+      cursor: pointer;
+      color: $color-link !important;
+
+      &:hover {
+        color: $color-link-hover !important;
+      }
+    }
+
+    &--delete {
+      color: $color-5 !important;
+
+      &:hover {
+        color: $roof-terracotta !important;
+      }
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}

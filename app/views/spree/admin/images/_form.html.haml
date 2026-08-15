@@ -7,6 +7,10 @@
       %br/
       = f.file_field :attachment
   .field.omega.five.columns
+    = f.label t('spree.caption')
+    %br/
+    = f.text_field :caption
+  .field.omega.five.columns
     = f.label t('spree.alt_text')
     %br/
     = f.text_area :alt, rows: 4, class: 'fullwidth'

@@ -154,6 +154,7 @@ RSpec.describe "/admin/products/:product_id/images" do
           image: {
             viewable_id: product.id,
             alt: "Updated alt text",
+            caption: "Updated caption",
           }
         }
       end
@@ -167,6 +168,26 @@ RSpec.describe "/admin/products/:product_id/images" do
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(spree.admin_product_images_path(product))
         expect(product.image.alt).to eq("Updated alt text")
+        expect(product.image.caption).to eq("Updated caption")
+      end
+    end
+
+    context "when replacing the image" do
+      let(:params) do
+        {
+          image: {
+            attachment: fixture_file_upload("thinking-cat.jpg", "image/jpeg"),
+            viewable_id: product.id,
+          }
+        }
+      end
+
+      it "keeps an existing caption on the replacement" do
+        product.image.update!(caption: "Original caption")
+
+        expect { subject }.to change { product.reload.image.attachment&.filename.to_s }
+
+        expect(product.reload.image.caption).to eq "Original caption"
       end
     end
   end

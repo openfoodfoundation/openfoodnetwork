@@ -1,21 +1,56 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
-= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Images' }
+
+- content_for :page_class do
+  image-edit-page
+
+- content_for :page_title do
+  = t('spree.admin.images.edit.title', resource_name: image_modal_resource_name(@variant, @product))
+
+- content_for :breadcrumb do
+  %nav.admin-breadcrumb
+    %ol
+      %li
+        = link_to t('spree.admin.tab.products'), admin_products_path
+      %li{ "style": "margin: 0.5rem;" }
+        &sol;
+      %li{ "aria-current": "page" }
+        = t('spree.admin.images.edit.breadcrumb_edit', resource_name: @product.name)
+
 = render partial: 'spree/shared/error_messages', locals: { target: @error_target || @image }
 
-- content_for :page_actions do
-  %li= button_link_to t('spree.back_to_images_list'), admin_product_images_url(@product, @url_filters), icon: 'icon-arrow-left'
+.image-edit
+  .image-edit__preview
+    = image_tag @image.url(:large), alt: @image.alt, class: "image-edit__preview-image"
+  .image-edit__panel
+    = form_for [:admin, @product, @image], url: admin_product_image_path(@product, @image, @url_filters), html: { multipart: true, data: { controller: "form" } } do |f|
+      = hidden_field_tag :variant_id, @variant.id if @variant
+      = f.hidden_field :viewable_id, value: @variant ? @variant.id : @product.id
 
-= form_for [:admin, @product, @image], url: admin_product_image_path(@product, @image, @url_filters), html: { multipart: true } do |f|
-  %fieldset
-    %legend{align: "center"}= @image.attachment.filename
-    = hidden_field_tag :variant_id, @variant.id if @variant
-    .field.alpha.three.columns.align-center
-      = f.label t('spree.thumbnail')
-      %br/
-      = link_to image_tag(@image.url(:small)), @image.url(:product)
-    .nine.columns.omega
-      = render partial: 'form', locals: { f: f }
-    .clear
-    .form-buttons.filter-actions.actions
-      = button t('spree.actions.update'), 'icon-refresh'
-      = link_to t('spree.actions.cancel'), admin_product_images_url(@product, @url_filters), id: 'cancel_link', class: 'button icon-remove'
+      %p.image-edit__filename
+        %span.image-edit__filename-label= "#{t('spree.filename')}:"
+        %span.image-edit__filename-value= @image.attachment.filename
+
+      .field
+        = f.label :caption, t('spree.caption')
+        = f.text_field :caption, value: @image.caption, class: "fullwidth"
+
+      .field
+        = f.label :alt, t('spree.alt_text')
+        = f.text_area :alt, rows: 4, class: "fullwidth image-edit__alt"
+
+      .image-edit__actions
+        = f.label :attachment, t('spree.replace_image'), class: "image-edit__link image-edit__link--replace"
+        = f.file_field :attachment, accept: "image/*", class: "image-edit__input",
+          "data-action": "change->form#submit"
+
+        - delete_url_options = @url_filters.merge(@variant ? { variant_id: @variant.id } : {})
+        = link_to t('spree.delete_permanently'),
+            admin_product_image_path(@product, @image, delete_url_options),
+            method: :delete,
+            data: { confirm: t('are_you_sure') },
+            class: "image-edit__link image-edit__link--delete"
+
+      .image-edit__buttons
+        - back_url = @variant ? admin_products_url : admin_product_images_url(@product, @url_filters)
+        = link_to t('spree.actions.cancel'), back_url, class: "button secondary"
+        = button t('spree.actions.save')
