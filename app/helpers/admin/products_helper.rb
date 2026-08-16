@@ -78,11 +78,6 @@ module Admin
       feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
     end
 
-    def managed_product_enterprises
-      @managed_product_enterprises ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises
-    end
-
     # Query only name of the model to avoid loading the whole record
     def selected_option(id, model)
       return [] unless id
@@ -104,9 +99,6 @@ module Admin
                         allowed_source_producers.include?(variant.enterprise)
                        )
 
-      # Filter out other hub's variants that are linked to mine
-      return false if variant.hub.present? && managed_product_enterprises.exclude?(variant.hub)
-
       true
     end
 
@@ -114,7 +106,7 @@ module Admin
     # isn't a variant we can manage
     def variant_readonly?(variant, allowed_producers, allowed_source_producers)
       return true if allowed_producers.exclude?(variant.enterprise) &&
-                     allowed_source_producers.include?(variant.enterprise) && variant.hub_id.blank?
+                     allowed_source_producers.include?(variant.enterprise)
 
       false
     end

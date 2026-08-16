@@ -168,14 +168,9 @@ RSpec.describe Admin::ProductsHelper do
     let(:producer_id) { nil }
     let(:allowed_producers) { [enterprise] }
     let(:allowed_source_producers) { [] }
-    let(:managed_product_enterprises) { [] }
     subject {
       helper.variant_displayable?(variant, producer_id, allowed_producers, allowed_source_producers)
     }
-
-    before do
-      allow(helper).to receive(:managed_product_enterprises).and_return(managed_product_enterprises)
-    end
 
     it "returns true" do
       expect(subject).to eq(true)
@@ -183,20 +178,18 @@ RSpec.describe Admin::ProductsHelper do
 
     context "with linked variant" do
       context "with the user's linked variant" do
-        let(:hub) { create(:distributor_enterprise) }
         let(:source_enterprise) { create(:supplier_enterprise) }
-        let(:variant) { create(:variant, enterprise: source_enterprise, hub: hub) }
+        let(:variant) { create(:variant, enterprise: source_enterprise) }
         let(:allowed_source_producers) { [source_enterprise] }
-        let(:managed_product_enterprises) { [enterprise, hub] }
 
         it "returns true" do
           expect(subject).to eq(true)
         end
       end
 
-      context "wiht someone else's linked variant" do
+      context "with someone else's linked variant" do
         let(:other_enterprise) { create(:supplier_enterprise) }
-        let(:variant) { create(:variant, enterprise:, hub: other_enterprise) }
+        let(:variant) { create(:variant, enterprise: other_enterprise) }
 
         it "returns false" do
           expect(subject).to eq(false)
@@ -259,16 +252,6 @@ RSpec.describe Admin::ProductsHelper do
     it "returns false" do
       expect(helper.variant_readonly?(variant, allowed_producers,
                                       allowed_source_producers)).to eq(false)
-    end
-
-    context "with linked variant" do
-      let(:variant) { create(:variant, enterprise: friend_enterprise, hub: enterprise) }
-      let(:allowed_source_producers) { [friend_enterprise] }
-
-      it "returns false" do
-        expect(helper.variant_readonly?(variant, allowed_producers,
-                                        allowed_source_producers)).to eq(false)
-      end
     end
 
     context "with variant the user has permission to create linked variants" do

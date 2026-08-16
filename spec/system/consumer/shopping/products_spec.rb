@@ -69,14 +69,12 @@ RSpec.describe "As a consumer I want to view products" do
 
       context "with linked variant" do
         let(:source_variant) { create(:variant, enterprise: supplier) }
-        let!(:variant) {
-          source_variant.create_linked_variant(user).tap{ |v| v.update! enterprise: distributor }
-        }
 
         before do
           # Producer grants distributor ability to create linked variant
           create(:enterprise_relationship, parent: supplier, child: distributor,
                                            permissions_list: [:create_linked_variants])
+          source_variant.create_linked_variant(user)
         end
 
         it "shows source enterprise name" do
