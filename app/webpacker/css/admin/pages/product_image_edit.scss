@@ -6,19 +6,20 @@
 
     .admin-breadcrumb {
       ol {
-        display: flex;
+        display: inline-flex;
+        flex-wrap: wrap; // a long product name must wrap, not scroll the page
         align-items: center;
         list-style: none;
-        margin: 0;
-        padding: 0;
-        font-size: 14px;
         line-height: 1.4;
         color: $dark-grey;
 
         li {
           display: flex;
           align-items: center;
-          // text-decoration: underline;
+          overflow-wrap: anywhere;
+          font-size: 14px;
+          font-weight: 700;
+          border-bottom: 1.5px solid $dark-grey;
 
           a {
             color: $dark-grey;
@@ -28,6 +29,10 @@
             }
           }
         }
+
+        .admin-breadcrumb__separator {
+          padding: 0 0.5rem;
+        }
       }
     }
   }
@@ -35,13 +40,17 @@
   .admin__section-header {
     padding: 0;
     margin-top: 0;
-    margin-bottom: 48px;
+    margin-bottom: 24px;
 
     &__title {
       margin-bottom: 0;
+      min-width: 0;
 
       h1 {
         margin: 0;
+        font-size: 22px;
+        line-height: 1.25;
+        overflow-wrap: anywhere; // product names can be long and unbroken
       }
     }
   }
@@ -54,40 +63,32 @@
 .image-edit {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 40px;
+  align-items: stretch;
   margin-top: 0;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(40px, 12vw, 200px);
-  }
-
   &__preview {
-    flex: 0 0 auto;
-    width: 250px;
-    max-width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center; // the design centres the image in the grey band
+    width: 100%;
+    padding: 24px 16px 32px;
   }
 
   &__preview-image {
+    display: block;
     max-width: 100%;
+    max-height: 280px; // keeps a tall image from filling the whole phone screen
     height: auto;
     border-radius: $border-radius;
   }
 
   &__panel {
-    flex: 0 0 auto;
     width: 100%;
-    max-width: 450px;
-    padding: 32px;
+    padding: 24px 16px 28px;
     background-color: $white;
     border: 1px solid $light-grey;
-    border-radius: 6px;
+    border-width: 1px 0;
+    border-radius: 0;
     box-shadow: $box-shadow;
 
     .field {
@@ -96,14 +97,29 @@
 
       label {
         display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      input[type="text"],
+      textarea {
+        font-size: 16px;
+      }
+
+      input[type="text"] {
+        height: 44px;
+      }
+
+      textarea {
+        line-height: 24px;
       }
     }
   }
 
   &__filename {
     margin: 0 0 20px;
-    font-size: 13px;
     color: $dark-grey;
+    overflow-wrap: anywhere; // long_underscored_filenames.jpeg must not overflow
 
     .image-edit__filename-label {
       font-weight: bold;
@@ -122,39 +138,118 @@
 
   &__actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 16px;
-    margin: 0 0 32px;
-  }
-
-  &__link {
-    font-size: 13px;
-
-    &--replace {
-      cursor: pointer;
-      color: $color-link !important;
-
-      &:hover {
-        color: $color-link-hover !important;
-      }
-    }
-
-    &--delete {
-      color: $color-5 !important;
-
-      &:hover {
-        color: $roof-terracotta !important;
-      }
-    }
-  }
-
-  &__input {
-    display: none;
+    gap: 4px 24px;
+    margin: 0 0 20px;
   }
 
   &__buttons {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: flex-end;
     gap: 12px;
+  }
+
+  & &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+
+    &--replace {
+      cursor: pointer;
+      color: $color-link;
+
+      &:hover {
+        color: $color-link-hover;
+      }
+    }
+
+    &--delete {
+      color: $color-5;
+
+      &:hover {
+        color: $roof-terracotta;
+      }
+    }
+  }
+
+  & &__input:focus-visible + &__link--replace,
+  & &__link:focus-visible {
+    outline: 2px solid $color-link;
+    outline-offset: 2px;
+  }
+
+  & &__buttons .button {
+    height: 44px;
+    line-height: 42px;
+    padding: 0 20px;
+  }
+
+  @media all and (min-width: $tablet_breakpoint) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(40px, 12vw, 200px);
+
+    &__preview {
+      flex: 0 1 250px; // shrinkable, so 250 + gap + 450 cannot overflow at 768px
+      align-items: flex-start;
+      padding: 0;
+    }
+
+    &__preview-image {
+      max-height: none;
+    }
+
+    &__panel {
+      flex: 1 1 450px;
+      min-width: 0;
+      max-width: 450px;
+      padding: 32px;
+      border-width: 1px;
+      border-radius: 6px;
+
+      .field {
+        label {
+          font-size: 85%;
+          margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+          font-size: 14px;
+        }
+
+        input[type="text"] {
+          height: $btn-relaxed-height;
+        }
+
+        textarea {
+          line-height: 19px;
+        }
+      }
+    }
+
+    &__actions {
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    & &__link {
+      min-height: 0;
+      font-size: 13px;
+    }
+
+    & &__buttons .button {
+      height: $btn-regular-height;
+      line-height: $btn-regular-height - 2px;
+      padding: 0 12px;
+    }
   }
 }

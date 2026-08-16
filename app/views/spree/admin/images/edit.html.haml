@@ -1,5 +1,10 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
+-# The admin layout has no viewport meta tag, so phones lay this page out at
+-# ~980px and scale it down. Opt this page in so its small-screen styles apply.
+- content_for :head do
+  %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
+
 - content_for :page_class do
   image-edit-page
 
@@ -11,7 +16,7 @@
     %ol
       %li
         = link_to t('spree.admin.tab.products'), admin_products_path
-      %li{ "style": "margin: 0.5rem;" }
+      %li.admin-breadcrumb__separator
         &sol;
       %li{ "aria-current": "page" }
         = t('spree.admin.images.edit.breadcrumb_edit', resource_name: @product.name)
@@ -39,9 +44,9 @@
         = f.text_area :alt, rows: 4, class: "fullwidth image-edit__alt"
 
       .image-edit__actions
-        = f.label :attachment, t('spree.replace_image'), class: "image-edit__link image-edit__link--replace"
-        = f.file_field :attachment, accept: "image/*", class: "image-edit__input",
+        = f.file_field :attachment, accept: "image/*", class: "image-edit__input sr-only",
           "data-action": "change->form#submit"
+        = f.label :attachment, t('spree.replace_image'), class: "image-edit__link image-edit__link--replace"
 
         - delete_url_options = @url_filters.merge(@variant ? { variant_id: @variant.id } : {})
         = link_to t('spree.delete_permanently'),
