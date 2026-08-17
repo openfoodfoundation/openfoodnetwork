@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_action :load_order, except: [:show]
+      before_action :load_order
       before_action :load_payment, only: [:fire, :show]
       before_action :load_data, except: [:credit_customer]
       before_action :can_transition_to_payment
@@ -182,7 +182,7 @@ module Spree
       end
 
       def load_payment
-        @payment = Payment.find(params[:id])
+        @payment = @order.payments.find(params[:id])
       end
 
       def authorize_stripe_sca_payment
