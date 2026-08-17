@@ -43,7 +43,7 @@ RSpec.describe "/admin/enterprise_relationships" do
         }
         post(admin_enterprise_relationships_path(enterprise), params: )
 
-        expect(response).to have_http_status(:forbidden)
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
