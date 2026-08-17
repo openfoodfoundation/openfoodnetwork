@@ -232,7 +232,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "with 'void' event" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
       end
 
       it "calls void_transaction! on payment" do
@@ -276,7 +276,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "with 'capture_and_complete_order' event" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
       end
 
       it "calls capture_and_complete_order! on payment" do
@@ -390,7 +390,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "when something unexpected happen" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
         allow(payment).to receive(:void_transaction!).and_raise(StandardError, "Unexpected !")
       end
 
@@ -468,5 +468,10 @@ RSpec.describe Spree::Admin::PaymentsController do
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
     OrderManagement::Order::Updater.new(order).update_voucher
+  end
+
+  def return_mocked_payment(payment)
+    allow(Spree::Order).to receive(:find_by!).and_return(order)
+    allow(order.payments).to receive(:find).with(payment.id.to_s).and_return(payment)
   end
 end
