@@ -13,14 +13,14 @@ module Admin
     end
 
     def create
-      @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
-
       # Given that we get an empty object when checking for :create ability in
       # Admin::ResourceController, we can't check the user manages the parent enterprise with
       # an ability. So we do it manually here.
       unless can_grant_permission?
-        return head :forbidden
+        raise CanCan::AccessDenied
       end
+
+      @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
 
       if @enterprise_relationship.save
         render plain: Api::Admin::EnterpriseRelationshipSerializer
@@ -44,9 +44,9 @@ module Admin
     end
 
     def can_grant_permission?
-      return true if spree_current_user.admin
-
-      spree_current_user.enterprises.include?(@enterprise_relationship.parent)
+      OpenFoodNetwork::Permissions.new(spree_current_user).managed_enterprises.where(
+        id: enterprise_relationship_params[:parent_id]
+      ).exists?
     end
   end
 end
