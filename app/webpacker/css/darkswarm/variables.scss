@@ -37,6 +37,14 @@ $sidebar-medium-width: 65%;
 $sidebar-large-width: 45%;
 $sidebar-footer-height: 5em;
 
+// The logo of the global footer is pulled up out of the footer and pokes into
+// the page above it. Pages need to keep that much room below their content.
+$footer-logo-size: 200px;
+$footer-logo-offset: 140px; // how far the logo is pulled up out of the footer
+$footer-padding-top: 60px;
+$footer-logo-overhang: $footer-logo-offset - $footer-padding-top;
+$footer-clearance: $footer-logo-overhang + 20px;
+
 $radius-small: 0.25em;
 $radius-medium: 0.5em;
 
