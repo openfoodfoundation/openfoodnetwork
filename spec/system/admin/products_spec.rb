@@ -569,7 +569,7 @@ RSpec.describe '
     end
 
     describe "image page" do
-      let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
+      let!(:product) { create(:simple_product, name: 'Product A', enterprise_id: supplier2.id) }
 
       it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
@@ -602,24 +602,51 @@ RSpec.describe '
           .to eq spree.edit_admin_product_image_path(product, image_object, filter)
 
         expect(page).to have_link('Cancel', href: spree.edit_admin_product_path(product))
-        expect(page).to have_content "Edit \"#{product.name}\""
+        expect(page).to have_content "Edit image for \"Product A\""
         expect(page).to have_button "Save"
       end
 
-      it "updating a product image including url filter" do
-        image = white_logo_file
+      it "previews a replacement file without uploading it, then saves it" do
         image_object = Spree::Image.create(viewable_id: product.id,
                                            viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: image, position: 1)
+                                           attachment: white_logo_file, position: 1)
+
+        visit spree.edit_admin_product_image_path(product, image_object)
+
+        expect(page).to have_content "logo-white.png"
+
+        attach_file('image_attachment', image_file_path, make_visible: true)
+
+        # The new file is only previewed: we stay on the page and nothing is persisted yet.
+        expect(page).to have_content "thinking-cat.jpg"
+        # The blob: preview must actually render; a missing CSP img-src would silently block it.
+        expect(wait_until { preview_image_rendered?('.image-edit__preview-image') }).to be true
+        expect(page).to have_current_path(
+          spree.edit_admin_product_image_path(product, image_object)
+        )
+        expect(product.reload.image.attachment.filename.to_s).to eq "logo-white.png"
+
+        click_button "Save"
+
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
+      end
+
+      it "updating a product image reached from a filtered list" do
+        image = white_logo_file
+        Spree::Image.create(viewable_id: product.id,
+                            viewable_type: 'Spree::Product', alt: "position 1",
+                            attachment: image, position: 1)
 
         visit spree.admin_product_images_path(product, filter)
 
         page.find("a.icon-edit").click
 
         attach_file('image_attachment', image_file_path, make_visible: true)
+        click_button "Save"
 
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
       end
 
       it "checks error when creating product image with unsupported format" do
@@ -633,9 +660,39 @@ RSpec.describe '
         visit spree.admin_product_images_path(product)
         page.find("a.icon-edit").click
         attach_file('image_attachment', unsupported_image_file_path, make_visible: true)
+        click_button "Save"
 
         expect(page).to have_text "Attachment has an invalid content type"
         expect(page).to have_text "Attachment is not identified as a valid media file"
+      end
+
+      it "prefills the caption with the product name" do
+        image_object = Spree::Image.create(viewable_id: product.id,
+                                           viewable_type: 'Spree::Product',
+                                           attachment: white_logo_file, position: 1)
+
+        visit spree.edit_admin_product_image_path(product, image_object)
+
+        expect(page).to have_field "image[caption]", with: product.name
+      end
+
+      it "deleting the image from the image edit page" do
+        image_object = Spree::Image.create(viewable_id: product.id,
+                                           viewable_type: 'Spree::Product',
+                                           attachment: white_logo_file, position: 1)
+
+        visit spree.edit_admin_product_image_path(product, image_object)
+
+        # No confirmation dialog: the link deletes straight away.
+        click_link "Delete permanently"
+
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(product.reload.image).to be_nil
+
+        within ".image-upload-field" do
+          expect(page).to have_css ".image-upload__button", text: "Upload image"
+          expect(page).not_to have_selector ".image-upload__preview"
+        end
       end
 
       it "editing caption and alternative text on the image edit page" do
@@ -651,6 +708,7 @@ RSpec.describe '
         fill_in "image[alt]", with: "Bunch of asparagus spears"
         click_button "Save"
 
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
         expect(product.reload.image.caption).to eq "Fresh asparagus"
         expect(product.reload.image.alt).to eq "Bunch of asparagus spears"
       end

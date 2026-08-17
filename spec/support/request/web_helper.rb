@@ -45,6 +45,15 @@ module WebHelper
     end
   end
 
+  # Whether the browser actually decoded and rendered the image edit page's preview. A blocked
+  # image (eg. a blob: url missing from the CSP img-src directive) still has a src but no size.
+  def preview_image_rendered?(img_selector)
+    # '.image-edit__preview-image'
+    page.evaluate_script(
+      "document.querySelector('#{img_selector}')?.naturalWidth > 0"
+    )
+  end
+
   def within_row(num, &)
     within("table.index tbody tr:nth-child(#{num})", &)
   end

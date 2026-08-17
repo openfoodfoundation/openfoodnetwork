@@ -454,9 +454,70 @@ RSpec.describe '
       fill_in "image[alt]", with: "Updated alt text"
       click_button "Save"
 
+      expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
       expect(variant.reload.image.alt).to eq "Updated alt text"
       expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
       expect(variant.reload.image.viewable_id).to eq variant.id
+    end
+
+    describe "the image edit page" do
+      before { Spree::Image.create(attachment: white_logo_file, viewable: variant) }
+
+      def visit_image_edit_page
+        visit spree.edit_admin_product_image_path(
+          product, variant.reload.image, variant_id: variant.id
+        )
+      end
+
+      context "when the variant has a display name" do
+        before { variant.update!(display_name: "Small bag") }
+
+        it "titles the page with both names and prefills the caption with the variant name" do
+          visit_image_edit_page
+
+          expect(page).to have_content "Edit image for \"#{product.name} - Small bag\""
+          expect(page).to have_field "image[caption]", with: "Small bag"
+        end
+      end
+
+      context "when the variant has no display name" do
+        it "titles the page with the product name and leaves the caption empty" do
+          visit_image_edit_page
+
+          expect(page).to have_content "Edit image for \"#{product.name}\""
+          expect(page).to have_field "image[caption]", with: ""
+        end
+      end
+
+      it "previews a replacement file without uploading it, then saves it" do
+        visit_image_edit_page
+
+        attach_file "image_attachment", black_logo_path, make_visible: true
+
+        expect(page).to have_content "logo-black.png"
+        expect(wait_until { preview_image_rendered?('.image-edit__preview-image') }).to be true
+        expect(variant.reload.image.attachment.filename.to_s).to eq "logo-white.png"
+
+        click_button "Save"
+
+        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(variant.reload.image.attachment.filename.to_s).to eq "logo-black.png"
+        expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
+      end
+
+      it "deletes the image without a confirmation dialog" do
+        visit_image_edit_page
+
+        click_link "Delete permanently"
+
+        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(variant.reload.image).to be_nil
+
+        within ".image-upload-field" do
+          expect(page).to have_css ".image-upload__button", text: "Upload image"
+          expect(page).not_to have_selector ".image-upload__preview"
+        end
+      end
     end
   end
 end

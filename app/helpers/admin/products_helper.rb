@@ -29,6 +29,14 @@ module Admin
       end
     end
 
+    # Default caption offered on the image edit page when none has been saved yet.
+    # Variants without a display name intentionally get no default.
+    def default_image_caption(product, variant = nil)
+      return variant.display_name.to_s if variant
+
+      product.name
+    end
+
     def image_upload_path(imageable)
       if imageable.is_a?(Spree::Variant)
         admin_product_images_path(imageable.product_id, variant_id: imageable.id)

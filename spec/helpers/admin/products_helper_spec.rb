@@ -264,6 +264,32 @@ RSpec.describe Admin::ProductsHelper do
     end
   end
 
+  describe '#default_image_caption' do
+    let(:product) { create(:product, name: "Asparagus") }
+
+    context 'without a variant' do
+      it 'defaults to the product name' do
+        expect(helper.default_image_caption(product)).to eq "Asparagus"
+      end
+    end
+
+    context 'with a variant that has a display name' do
+      let(:variant) { create(:variant, product:, display_name: "Small bunch") }
+
+      it 'defaults to the display name' do
+        expect(helper.default_image_caption(product, variant)).to eq "Small bunch"
+      end
+    end
+
+    context 'with a variant that has no display name' do
+      let(:variant) { create(:variant, product:, display_name: nil) }
+
+      it 'has no default' do
+        expect(helper.default_image_caption(product, variant)).to eq ""
+      end
+    end
+  end
+
   describe '#image_form_path' do
     let(:product) { create(:product) }
 

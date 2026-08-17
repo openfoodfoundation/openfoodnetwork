@@ -28,12 +28,17 @@ export default class extends Controller {
         if (response.ok) {
           return response.json().then((data) => {
             if (data.redirect_url) {
-              window.location.href = data.redirect_url;
+              this.navigateTo(data.redirect_url);
             }
           });
         }
         return response.text().then((html) => Turbo.renderStreamMessage(html));
       })
       .catch((error) => console.error(error));
+  }
+
+  // Extracted so tests can observe the redirect: jsdom makes window.location unstubbable.
+  navigateTo(url) {
+    window.location.href = url;
   }
 }
