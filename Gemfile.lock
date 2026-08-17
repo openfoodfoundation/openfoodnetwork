@@ -555,11 +555,10 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.4)
       paypal-sdk-core (~> 0.3.0)
-    pdf-reader (2.15.1)
+    pdf-reader (2.16.0)
       Ascii85 (>= 1.0, < 3.0, != 2.0.0)
       afm (>= 0.2.1, < 2)
       hashery (~> 2.0)
-      ruby-rc4
       ttfunk
     pg (1.6.3)
     pp (0.6.4)
@@ -1292,7 +1291,7 @@ CHECKSUMS
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
   paypal-sdk-core (0.3.6) sha256=ffc8c247b926b0d083d9a91f515df710ebf6b55663c8654a6691f755bcab30a0
   paypal-sdk-merchant (1.117.4) sha256=61d9992fad90a22251d116d27b01aabec6ae1a48cf5cf6d125251c3280eb58de
-  pdf-reader (2.15.1) sha256=18c6a986a84a3117fa49f4279fc2de51f5d2399b71833df5d2bccd595c7068ce
+  pdf-reader (2.16.0) sha256=bf1b5564c085264d8279bde3cf1467778b75841494d20c0fe7da3dad475f3732
   pg (1.6.3) sha256=1388d0563e13d2758c1089e35e973a3249e955c659592d10e5b77c468f628a99
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
