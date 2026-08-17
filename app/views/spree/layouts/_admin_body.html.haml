@@ -28,12 +28,6 @@
           = yield :sub_menu
 
   .admin-page{class: yield(:page_class)}
-    - if content_for?(:breadcrumb)
-      .admin__breadcrumb
-        .container
-          .sixteen.columns
-            = yield :breadcrumb
-
     - if content_for?(:page_title) || content_for?(:page_actions)
       .js-admin-section-header.admin__section-header
         .container

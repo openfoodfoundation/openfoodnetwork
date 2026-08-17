@@ -11,16 +11,6 @@
 - content_for :page_title do
   = t('spree.admin.images.edit.title', resource_name: image_modal_resource_name(@variant, @product))
 
-- content_for :breadcrumb do
-  %nav.admin-breadcrumb
-    %ol
-      %li
-        = link_to t('spree.admin.tab.products'), admin_products_path
-      %li.admin-breadcrumb__separator
-        &sol;
-      %li{ "aria-current": "page" }
-        = t('spree.admin.images.edit.breadcrumb_edit', resource_name: @product.name)
-
 = render partial: 'spree/shared/error_messages', locals: { target: @error_target || @image }
 
 .image-edit

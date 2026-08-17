@@ -4474,7 +4474,6 @@ en:
           subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
-          breadcrumb_edit: "Edit \"%{resource_name}\""
       mail_methods:
         send_testmail: "Send test email"
         testmail:
