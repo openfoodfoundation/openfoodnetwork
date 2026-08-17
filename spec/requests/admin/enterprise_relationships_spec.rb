@@ -26,6 +26,9 @@ RSpec.describe "/admin/enterprise_relationships" do
       expect(json["parent_id"]).to eq(enterprise.id)
       expect(json["child_id"]).to eq(child_enterprise.id)
       expect(json["permissions"][0]["name"]).to eq("manage_products")
+
+      relation = EnterpriseRelationship.where(parent: enterprise, child: child_enterprise).first
+      expect(relation.permissions_list).to include("manage_products")
     end
 
     context "with a parent enterprise the user doesn't manage" do
