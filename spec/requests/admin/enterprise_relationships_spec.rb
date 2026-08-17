@@ -44,6 +44,33 @@ RSpec.describe "/admin/enterprise_relationships" do
       end
     end
 
+    context "with an admin user" do
+      let(:admin) { create(:user, admin: true) }
+
+      before do
+        sign_in admin
+      end
+
+      it "can add permission for an enterprise they don't manage" do
+        other_enterprise = create(:supplier_enterprise)
+
+        params = {
+          enterprise_relationship: {
+            parent_id: other_enterprise.id,
+            child_id: child_enterprise.id,
+            permissions_list: ["manage_products"]
+          }
+        }
+        post(admin_enterprise_relationships_path(enterprise), params: )
+
+        expect(response).to have_http_status(:ok)
+
+        relation = EnterpriseRelationship.where(parent: other_enterprise,
+                                                child: child_enterprise).first
+        expect(relation.permissions_list).to include("manage_products")
+      end
+    end
+
     context "when an error occurs when saving the relationship" do
       it "returs a bad request with an error message" do
         params = {

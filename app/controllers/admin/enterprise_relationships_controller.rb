@@ -15,10 +15,10 @@ module Admin
     def create
       @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
 
-      # Given that we get an empty object when checking for :create ability
+      # Given that we get an empty object when checking for :create ability in
       # Admin::ResourceController, we can't check the user manages the parent enterprise with
       # an ability. So we do it manually here.
-      unless spree_current_user.enterprises.include?(@enterprise_relationship.parent)
+      unless can_grant_permission?
         return head :forbidden
       end
 
@@ -41,6 +41,12 @@ module Admin
 
     def enterprise_relationship_params
       params.require(:enterprise_relationship).permit(:parent_id, :child_id, permissions_list: [])
+    end
+
+    def can_grant_permission?
+      return true if spree_current_user.admin
+
+      spree_current_user.enterprises.include?(@enterprise_relationship.parent)
     end
   end
 end
