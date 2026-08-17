@@ -601,9 +601,7 @@ RSpec.describe '
         expect("#{uri.path}?#{uri.query}")
           .to eq spree.edit_admin_product_image_path(product, image_object, filter)
 
-        expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
-                                                                                        filter)))
-        expect(page).to have_link('Cancel', href: expected_cancel_link)
+        expect(page).to have_link('Cancel', href: spree.edit_admin_product_path(product))
         expect(page).to have_content "Edit \"#{product.name}\""
         expect(page).to have_button "Save"
       end

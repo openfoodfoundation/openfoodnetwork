@@ -46,6 +46,6 @@
             class: "image-edit__link image-edit__link--delete"
 
       .image-edit__buttons
-        - back_url = @variant ? admin_products_url : admin_product_images_url(@product, @url_filters)
-        = link_to t('spree.actions.cancel'), back_url, class: "button secondary"
+        = link_to t('spree.actions.cancel'), image_owner_edit_path(@product, @variant),
+            class: "button secondary"
         = button t('spree.actions.save')

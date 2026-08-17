@@ -244,6 +244,26 @@ RSpec.describe Admin::ProductsHelper do
     end
   end
 
+  describe '#image_owner_edit_path' do
+    let(:product) { create(:product) }
+
+    context 'without a variant' do
+      it 'returns the product edit path' do
+        expect(helper.image_owner_edit_path(product))
+          .to eq "/admin/products/#{product.id}/edit"
+      end
+    end
+
+    context 'with a variant' do
+      let(:variant) { create(:variant, product:) }
+
+      it 'returns the variant edit path' do
+        expect(helper.image_owner_edit_path(product, variant))
+          .to eq "/admin/products/#{product.id}/variants/#{variant.id}/edit"
+      end
+    end
+  end
+
   describe '#image_form_path' do
     let(:product) { create(:product) }
 

@@ -20,6 +20,15 @@ module Admin
       end
     end
 
+    # Where the image edit page came from: the product or variant edit page.
+    def image_owner_edit_path(product, variant = nil)
+      if variant
+        edit_admin_product_variant_path(product, variant)
+      else
+        edit_admin_product_path(product)
+      end
+    end
+
     def image_upload_path(imageable)
       if imageable.is_a?(Spree::Variant)
         admin_product_images_path(imageable.product_id, variant_id: imageable.id)
