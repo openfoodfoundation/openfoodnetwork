@@ -157,7 +157,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       before do
         request.env["HTTP_REFERER"] = "http://test.host"
-        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        return_mocked_payment(payment)
       end
 
       it 'handles gateway errors' do
@@ -193,7 +193,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       before do
         request.env["HTTP_REFERER"] = "http://test.host"
-        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        return_mocked_payment(payment)
       end
 
       it 'handles gateway errors' do
@@ -231,7 +231,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       before do
         allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
         request.env["HTTP_REFERER"] = "http://test.host"
-        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        return_mocked_payment(payment)
         allow(payment).to receive(:redirect_auth_url).and_return("https://www.stripe.com/authorize")
         allow(payment).to receive(:requires_authorization?) { true }
       end
@@ -250,7 +250,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       before do
         request.env["HTTP_REFERER"] = "http://test.host"
-        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        return_mocked_payment(payment)
       end
 
       it 'does not process the event' do
@@ -328,5 +328,10 @@ RSpec.describe Spree::Admin::PaymentsController do
         expect(response.location).to eq spree.edit_admin_order_url(order)
       end
     end
+  end
+
+  def return_mocked_payment(payment)
+    allow(Spree::Order).to receive(:find_by!).and_return(order)
+    allow(order.payments).to receive(:find).with(payment.id.to_s).and_return(payment)
   end
 end
