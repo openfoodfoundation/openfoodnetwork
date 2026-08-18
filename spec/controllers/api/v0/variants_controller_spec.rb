@@ -86,36 +86,51 @@ RSpec.describe Api::V0::VariantsController do
   context "as an enterprise user" do
     let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
-    let!(:product) { create(:product, enterprise_id: supplier.id) }
+    let(:product) { create(:product, enterprise_id: supplier.id) }
     let(:variant) { product.variants.first }
-    let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
     let(:variant_other) { product_other.variants.first }
+    let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
 
-    context "with a single remaining variant" do
-      it "does not delete the variant" do
-        api_delete :destroy, id: variant.id
+    describe "create" do
+      it "cannot create a variant for another enterprise's product" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier_other.id },
+                          product_id: product_other.id
 
-        expect(variant.reload.deleted_at).to be_nil
+        pending "permission needs to be checked"
+        assert_unauthorized!
       end
     end
 
-    context "with more than one variants" do
-      let(:variant_to_delete) { create(:variant, product:, enterprise: supplier) }
+    describe "#delete" do
+      context "with a single remaining variant" do
+        it "does not delete the variant" do
+          api_delete :destroy, id: variant.id
 
-      it "deletes a variant" do
-        api_delete :destroy, id: variant_to_delete.id
-
-        expect(response).to have_http_status(:no_content)
-        expect { variant_to_delete.reload }.not_to raise_error
-        expect(variant_to_delete.deleted_at).to be_present
+          expect(variant.reload.deleted_at).to be_nil
+        end
       end
 
-      it "is denied access to soft deleting another enterprises' variant" do
-        api_delete :destroy, id: variant_other.to_param
+      context "with more than one variants" do
+        let(:variant_to_delete) { create(:variant, product:, enterprise: supplier) }
 
-        assert_unauthorized!
-        expect { variant_other.reload }.not_to raise_error
-        expect(variant_other.deleted_at).to be_nil
+        it "deletes a variant" do
+          api_delete :destroy, id: variant_to_delete.id
+
+          expect(response).to have_http_status(:no_content)
+          expect { variant_to_delete.reload }.not_to raise_error
+          expect(variant_to_delete.deleted_at).to be_present
+        end
+
+        it "is denied access to soft deleting another enterprises' variant" do
+          api_delete :destroy, id: variant_other.to_param
+
+          assert_unauthorized!
+          expect { variant_other.reload }.not_to raise_error
+          expect(variant_other.deleted_at).to be_nil
+        end
       end
     end
   end
