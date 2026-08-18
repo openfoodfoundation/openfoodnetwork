@@ -21,7 +21,7 @@ class ExchangeProductsRenderer
     variants_relation = Spree::Variant.
       where(product_id: exchange_products(incoming, enterprise).select(&:id))
 
-    filter_visible(variants_relation)
+    filter_visible(variants_relation, enterprise)
   end
 
   private
@@ -38,6 +38,7 @@ class ExchangeProductsRenderer
     filter_visible(products_relation, enterprises_query_matcher)
   end
 
+  # Filter product or variant relation for the enterprise
   def filter_visible(relation, enterprise)
     if @order_cycle.present? &&
        options[:inventory_enabled] &&
@@ -45,7 +46,8 @@ class ExchangeProductsRenderer
       relation.visible_for(@order_cycle.coordinator)
     else
       # Include only variants owned by this enterprise
-      relation.includes(:variants).where(spree_variants: { enterprise: })
+      relation = relation.includes(:variants) if relation.model == Spree::Product
+      relation.where(spree_variants: { enterprise: })
     end
   end
 
