@@ -91,7 +91,7 @@ RSpec.describe Api::V0::VariantsController do
     let(:variant_other) { product_other.variants.first }
     let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
 
-    describe "create" do
+    describe "#create" do
       it "cannot create a variant for another enterprise's product" do
         api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
                                      variant_unit_scale: 1, unit_description: "kg", price: "10.00",
@@ -100,6 +100,15 @@ RSpec.describe Api::V0::VariantsController do
                           product_id: product_other.id
 
         assert_unauthorized!
+      end
+    end
+
+    describe "#update" do
+      it "cannot update a variant for another enterprise's product" do
+        api_put :update, variant: { id: variant_other.id, sku: "12345",
+                                    enterprise_id: supplier.id }
+
+        assert_not_found!
       end
     end
 

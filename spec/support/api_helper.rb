@@ -10,5 +10,12 @@ module OpenFoodNetwork
       expect(json_response).to eq("error" => "You are not authorized to perform that action.")
       expect(response).to have_http_status :unauthorized
     end
+
+    def assert_not_found!
+      expect(json_response).to eq(
+        "error" => "The resource you were looking for could not be found."
+      )
+      expect(response).to have_http_status :not_found
+    end
   end
 end
