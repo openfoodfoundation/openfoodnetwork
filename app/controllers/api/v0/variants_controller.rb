@@ -37,6 +37,8 @@ module Api
       def update
         authorize! :update, Spree::Variant
         @variant = scope.find(params[:id])
+        authorize! :update, @variant
+
         if @variant.update(variant_params)
           render json: @variant, serializer: Api::VariantSerializer, status: :ok
         else

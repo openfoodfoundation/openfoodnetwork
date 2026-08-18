@@ -105,10 +105,11 @@ RSpec.describe Api::V0::VariantsController do
 
     describe "#update" do
       it "cannot update a variant for another enterprise's product" do
-        api_put :update, variant: { id: variant_other.id, sku: "12345",
+        api_put :update, id: variant_other.id, variant: { sku: "12345",
                                     enterprise_id: supplier.id }
 
-        assert_not_found!
+        assert_unauthorized!
+        expect(variant_other.reload.enterprise).not_to eq supplier
       end
     end
 
