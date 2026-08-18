@@ -99,7 +99,6 @@ RSpec.describe Api::V0::VariantsController do
                                      enterprise_id: supplier_other.id },
                           product_id: product_other.id
 
-        pending "permission needs to be checked"
         assert_unauthorized!
       end
     end
