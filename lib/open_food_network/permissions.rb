@@ -105,6 +105,16 @@ module OpenFoodNetwork
           .select(:child_id))
     end
 
+    # User's enterprises that are allowed to have variants in some way
+    def allowed_producers
+      managed_product_enterprises.is_primary_producer + enterprises_granted_linked_variants
+    end
+
+    # Enterprises that user is allowed to create linked variants from
+    def allowed_source_producers
+      enterprises_granting_linked_variants.is_primary_producer
+    end
+
     def manages_one_enterprise?
       @user.enterprises.length == 1
     end

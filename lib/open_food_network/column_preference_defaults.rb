@@ -147,10 +147,8 @@ module OpenFoodNetwork
     end
 
     def display_producer_column?(user)
-      producers = OpenFoodNetwork::Permissions.new(user)
-        .managed_product_enterprises.is_primary_producer
-
-      producers.many?
+      permissions = OpenFoodNetwork::Permissions.new(user)
+      (permissions.allowed_producers | permissions.allowed_source_producers).many?
     end
   end
 end

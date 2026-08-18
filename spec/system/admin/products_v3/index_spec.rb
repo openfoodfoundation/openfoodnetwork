@@ -170,12 +170,6 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       it "shows sourced variant with indicator" do
         visit admin_products_url
 
-        # Show Enterprise column
-        ofn_drop_down("Columns").click
-        within ofn_drop_down("Columns") do
-          check "Producer"
-        end
-
         within row_containing_name("Variant-sourced") do
           expect(page).to have_selector 'span[title*="Sourced from: "]'
           expect(page).to have_selector 'span[title*="Producer: Producer Enterprise"]'

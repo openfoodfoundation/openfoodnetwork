@@ -171,13 +171,11 @@ module Admin
     end
 
     def allowed_producers
-      @allowed_producers ||= permissions.managed_product_enterprises.is_primary_producer +
-                             permissions.enterprises_granted_linked_variants
+      @allowed_producers ||= permissions.allowed_producers
     end
 
     def allowed_source_producers
-      @allowed_source_producers ||= permissions.enterprises_granting_linked_variants
-        .is_primary_producer.by_name
+      @allowed_source_producers ||= permissions.allowed_source_producers
     end
 
     def available_tags
