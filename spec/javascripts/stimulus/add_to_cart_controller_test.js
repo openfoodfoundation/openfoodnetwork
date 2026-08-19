@@ -1,36 +1,38 @@
 /**
  * @jest-environment jsdom
- * @jest-environment-options {"url": "http://www.example.com/"}
  */
 
 import { Application } from "stimulus";
 import add_to_cart_controller from "add_to_cart_component/add_to_cart_controller";
 
+jest.mock("@hotwired/turbo", () => ({
+  renderStreamMessage: jest.fn(),
+}));
+
+const flushPromises = () => new Promise(process.nextTick);
+
 describe("AddToCartController", () => {
   beforeAll(() => {
     const application = Application.start();
     application.register("add-to-cart", add_to_cart_controller);
+    global.I18n = { t: (key, options) => `${options.quantity} in cart` };
   });
 
-  let dispatchEventSpy;
-  const htmlTemplate = (quantity = 0, onHand = 10) => `
-      <div 
-        data-controller="add-to-cart" 
+  const htmlTemplate = (quantity = 0, onHand = 3) => `
+      <div
+        data-controller="add-to-cart"
         data-add-to-cart-variant-id-value="10"
         data-add-to-cart-variant-on-hand-value="${onHand}"
         data-add-to-cart-low-stock-display-value="true"
+        data-add-to-cart-url-value="http://example.com/cart/variants/10"
       >
         <div id="add_container" class="variant-quantity-inputs" data-add-to-cart-target="addButton">
-          <button id="add" name="button" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
+          <button id="add" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
         </div>
         <div id="quantity_buttons" class="variant-quantity-inputs" data-add-to-cart-target="quantityButton" style="display: none;">
-          <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">
-            - 
-          </button>
+          <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">-</button>
           <input id="quantity" class="variant-quantity" data-add-to-cart-target="quantity" data-action="keyup->add-to-cart#manual" min="0" type="number" value="${quantity}">
-          <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">
-            + 
-          </button>
+          <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">+</button>
         </div>
         <div id="remainingStock" class="variant-remaining-stock" style="display: none;" data-add-to-cart-target="stock">
           Only ${onHand} left
@@ -40,353 +42,139 @@ describe("AddToCartController", () => {
         </div>
       </div>`;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    jest.useFakeTimers({ doNotFake: ["nextTick", "queueMicrotask"] });
+    global.fetch = jest.fn(() =>
+      Promise.resolve({ text: () => Promise.resolve("<turbo-stream></turbo-stream>") }),
+    );
+
     document.body.innerHTML = htmlTemplate();
 
-    const mockedT = jest.fn();
-    mockedT.mockImplementation((string, opts) => string + ", " + JSON.stringify(opts));
-
-    global.I18n = { t: mockedT };
-
-    dispatchEventSpy = jest.spyOn(window, "dispatchEvent");
+    // Wait for Stimulus to connect the controller.
+    await flushPromises();
   });
 
-  afterAll(() => {
-    delete global.I18n;
+  afterEach(() => {
+    jest.useRealTimers();
   });
+
+  const input = () => document.getElementById("quantity");
 
   describe("#addEmpty", () => {
-    it("add 1 item to the cart", () => {
-      add.click();
+    it("switches to the quantity controls", () => {
+      document.getElementById("add").click();
 
-      const lastCall = getLastMockCall();
-      expect(lastCall.type).toEqual("updateCart");
-
-      const detail = lastCall.detail;
-      expect(detail.variant).toEqual({ id: 10 });
-      expect(detail.quantity).toEqual(1);
-    });
-
-    it("toggles to minus/plus button and quantity input", () => {
-      expect(quantity_buttons.style.display).toBe("none");
-
-      add.click();
-
-      expect(quantity_buttons.style.display).toBe("flex");
-      expect(add_container.style.display).toBe("none");
-      expect(quantity.value).toEqual("1");
-    });
-
-    it("shows one item in the cart", () => {
-      add.click();
-
-      expect(itemInCart.style.visibility).toBe("visible");
-      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":1}');
-    });
-
-    describe("when low stock is displayed", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(0, 2);
-      });
-
-      it("hides low stock", () => {
-        expect(remainingStock.style.display).toBe("block");
-
-        add.click();
-
-        expect(remainingStock.style.display).toBe("none");
-      });
+      expect(input().value).toEqual("1");
+      expect(document.getElementById("quantity_buttons").style.display).toEqual("flex");
+      expect(document.getElementById("add_container").style.display).toEqual("none");
+      expect(document.getElementById("itemInCart").textContent).toEqual("1 in cart");
+      expect(document.getElementById("itemInCart").style.visibility).toEqual("visible");
     });
   });
 
-  describe("#add", () => {
-    it("increase quantity by one", () => {
-      quantity.value = 5;
+  describe("clamping", () => {
+    it("caps the quantity at the stock on hand and disables the plus button", () => {
+      document.getElementById("add").click();
+      for (let i = 0; i < 5; i++) document.getElementById("plus").click();
 
-      plus.click();
-
-      const lastCall = getLastMockCall();
-      expect(lastCall.type).toEqual("updateCart");
-
-      const detail = lastCall.detail;
-      expect(detail.quantity).toEqual(6);
-      expect(quantity.value).toEqual("6");
+      expect(input().value).toEqual("3");
+      expect(document.getElementById("plus").disabled).toEqual(true);
     });
 
-    it("updates the number of item in the cart", () => {
-      quantity.value = 5;
+    it("does not go below zero and switches back to the Add button", () => {
+      document.getElementById("add").click();
+      document.getElementById("minus").click();
+      document.getElementById("minus").click();
 
-      plus.click();
-
-      expect(itemInCart.style.visibility).toBe("visible");
-      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":6}');
+      expect(input().value).toEqual("0");
+      expect(document.getElementById("add_container").style.display).toEqual("block");
+      expect(document.getElementById("quantity_buttons").style.display).toEqual("none");
     });
 
-    describe("when quantity equal available stock", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(4, 5);
-      });
+    it("shows the remaining stock when low and not in cart", () => {
+      expect(document.getElementById("remainingStock").style.display).toEqual("block");
 
-      it("disables the add button", () => {
-        plus.click();
+      document.getElementById("add").click();
 
-        expect(plus.disabled).toBe(true);
-      });
+      expect(document.getElementById("remainingStock").style.display).toEqual("none");
     });
   });
 
-  describe("#remove", () => {
-    it("decrease quantity by one", () => {
-      quantity.value = 5;
+  describe("saving", () => {
+    it("saves the quantity once after the debounce", () => {
+      document.getElementById("add").click();
+      document.getElementById("plus").click();
 
-      minus.click();
+      expect(global.fetch).not.toHaveBeenCalled();
 
-      const lastCall = getLastMockCall();
-      expect(lastCall.type).toEqual("updateCart");
+      jest.advanceTimersByTime(1000);
 
-      const detail = lastCall.detail;
-      expect(detail.quantity).toEqual(4);
-      expect(quantity.value).toEqual("4");
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      const [url, options] = global.fetch.mock.calls[0];
+      expect(url).toEqual("http://example.com/cart/variants/10");
+      expect(options.method).toEqual("PATCH");
+      expect(JSON.parse(options.body)).toEqual({ quantity: 2 });
     });
 
-    it("updates the number of item in the cart", () => {
-      quantity.value = 5;
+    it("coalesces changes made while a request is in flight", async () => {
+      let resolveFetch;
+      global.fetch = jest.fn(
+        () =>
+          new Promise((resolve) => {
+            resolveFetch = resolve;
+          }),
+      );
 
-      minus.click();
+      document.getElementById("add").click();
+      jest.advanceTimersByTime(1000);
+      expect(global.fetch).toHaveBeenCalledTimes(1);
 
-      expect(itemInCart.style.visibility).toBe("visible");
-      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":4}');
+      // Two changes while the first request is still running
+      document.getElementById("plus").click();
+      jest.advanceTimersByTime(1000);
+      document.getElementById("plus").click();
+      jest.advanceTimersByTime(1000);
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+
+      // Once the first request finishes, one follow-up request is sent
+      resolveFetch({ text: () => Promise.resolve("") });
+      await flushPromises();
+
+      expect(global.fetch).toHaveBeenCalledTimes(2);
+      expect(JSON.parse(global.fetch.mock.calls[1][1].body)).toEqual({ quantity: 3 });
     });
 
-    describe("when quantity becomes 0", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(1);
-      });
+    it("dispatches cart:updating and cart:settled events", async () => {
+      const updating = jest.fn();
+      const settled = jest.fn();
+      window.addEventListener("cart:updating", updating);
+      window.addEventListener("cart:settled", settled);
 
-      it("toggles to the add button", () => {
-        expect(quantity_buttons.style.display).toBe("flex");
-        expect(add_container.style.display).toBe("none");
+      document.getElementById("add").click();
+      expect(updating).toHaveBeenCalledTimes(1);
+      expect(settled).not.toHaveBeenCalled();
 
-        minus.click();
+      jest.advanceTimersByTime(1000);
+      await flushPromises();
 
-        expect(quantity_buttons.style.display).toBe("none");
-        expect(add_container.style.display).toBe("block");
-      });
+      expect(settled).toHaveBeenCalledTimes(1);
+      expect(settled.mock.calls[0][0].detail).toEqual({ variantId: 10 });
 
-      it("hides the number of item in cart", () => {
-        minus.click();
-
-        expect(itemInCart.style.visibility).toBe("hidden");
-        expect(itemInCart.textContent).toBe(
-          'js.shopfront.variant.quantity_in_cart, {"quantity":0}',
-        );
-      });
-
-      describe("when low stock", () => {
-        beforeEach(() => {
-          document.body.innerHTML = htmlTemplate(1, 2);
-        });
-
-        it("shows low stock", () => {
-          expect(remainingStock.style.display).toBe("none");
-
-          minus.click();
-
-          expect(remainingStock.style.display).toBe("block");
-        });
-      });
-    });
-
-    describe("when quantity below available stock", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(5, 5);
-      });
-
-      it("enables the add button", () => {
-        minus.click();
-
-        expect(plus.disabled).toBe(false);
-      });
+      window.removeEventListener("cart:updating", updating);
+      window.removeEventListener("cart:settled", settled);
     });
   });
 
-  describe("quantity input", () => {
-    beforeEach(() => {
-      document.body.innerHTML = htmlTemplate(1);
-    });
+  describe("on demand variants", () => {
+    it("allows any quantity", async () => {
+      document.body.innerHTML = htmlTemplate(0, "Infinity");
+      await flushPromises();
 
-    it("update quantity in cart by the given number", () => {
-      dispatchKeyboardEvent("3");
+      document.getElementById("add").click();
+      for (let i = 0; i < 10; i++) document.getElementById("plus").click();
 
-      const lastCall = getLastMockCall();
-      expect(lastCall.type).toEqual("updateCart");
-      const detail = lastCall.detail;
-      expect(detail.quantity).toEqual(3);
-      expect(quantity.value).toEqual("3");
-    });
-
-    it("updates the number of item in the cart", () => {
-      dispatchKeyboardEvent("3");
-
-      expect(itemInCart.style.visibility).toBe("visible");
-      expect(itemInCart.textContent).toBe('js.shopfront.variant.quantity_in_cart, {"quantity":3}');
-    });
-
-    it("does nothing if quantity is not a valid number", () => {
-      const preTestCallsNb = dispatchEventSpy.mock.calls.length;
-
-      dispatchKeyboardEvent("b");
-
-      expect(dispatchEventSpy).toHaveBeenCalledTimes(preTestCallsNb);
-    });
-
-    it("does nothing if quantity is negative", () => {
-      const preTestCallsNb = dispatchEventSpy.mock.calls.length;
-
-      dispatchKeyboardEvent("-2");
-
-      expect(dispatchEventSpy).toHaveBeenCalledTimes(preTestCallsNb);
-    });
-
-    describe("when quantity becomes 0", () => {
-      it("toggles to the add button if quantity is 0", () => {
-        dispatchKeyboardEvent("0");
-
-        const lastCall = getLastMockCall();
-        expect(lastCall.type).toEqual("updateCart");
-        expect(quantity_buttons.style.display).toBe("none");
-        expect(add_container.style.display).toBe("block");
-      });
-
-      it("hides the number of item in cart", () => {
-        dispatchKeyboardEvent("0");
-
-        expect(itemInCart.style.visibility).toBe("hidden");
-        expect(itemInCart.textContent).toBe(
-          'js.shopfront.variant.quantity_in_cart, {"quantity":0}',
-        );
-      });
-
-      describe("when low stock", () => {
-        beforeEach(() => {
-          document.body.innerHTML = htmlTemplate(1, 2);
-        });
-
-        it("shows low stock", () => {
-          expect(remainingStock.style.display).toBe("none");
-
-          dispatchKeyboardEvent("0");
-
-          expect(remainingStock.style.display).toBe("block");
-        });
-      });
-    });
-
-    describe("when quantity equal available stock", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(2, 5);
-      });
-
-      it("disables the add button", () => {
-        dispatchKeyboardEvent("5");
-
-        expect(plus.disabled).toBe(true);
-      });
-    });
-
-    describe("when quantity is more than available stock", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(2, 5);
-      });
-
-      it("sets quantity to availabe stock and disables the add button", () => {
-        dispatchKeyboardEvent("8");
-
-        expect(plus.disabled).toBe(true);
-        expect(quantity.value).toBe("5");
-      });
-    });
-
-    describe("when plus button disabled", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(5, 5);
-      });
-
-      it("enables plus button when quantity below available stock", () => {
-        expect(plus.disabled).toBe(true);
-
-        dispatchKeyboardEvent("2");
-
-        expect(plus.disabled).toBe(false);
-      });
+      expect(input().value).toEqual("11");
+      expect(document.getElementById("plus").disabled).toEqual(false);
     });
   });
-
-  describe("connect", () => {
-    describe("when quantity is positive", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(5);
-      });
-
-      it("displays the minus/plus button and quantity", () => {
-        expect(quantity_buttons.style.display).toBe("flex");
-        expect(add_container.style.display).toBe("none");
-      });
-
-      it("shows the number of items in the cart", () => {
-        expect(itemInCart.style.visibility).toBe("visible");
-        expect(itemInCart.textContent.trim()).toBe("5 in cart");
-      });
-    });
-
-    describe("when quantity is not positive", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(-2);
-      });
-
-      it("displays the add button", () => {
-        expect(quantity_buttons.style.display).toBe("none");
-        expect(add_container.style.display).toBe("");
-      });
-    });
-
-    describe("when display low stock is enabled", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(0, 4);
-      });
-
-      it("doesn't show low stock warning", () => {
-        expect(remainingStock.style.display).toBe("none");
-      });
-
-      describe("when remaining stock below 4", () => {
-        beforeEach(() => {
-          document.body.innerHTML = htmlTemplate(0, 2);
-        });
-
-        it("shows low stock warning", () => {
-          expect(remainingStock.style.display).toBe("block");
-        });
-      });
-    });
-
-    describe("when quantity equal available stock", () => {
-      beforeEach(() => {
-        document.body.innerHTML = htmlTemplate(5, 5);
-      });
-
-      it("disables the plus button", () => {
-        expect(plus.disabled).toBe(true);
-      });
-    });
-  });
-
-  const getLastMockCall = () => {
-    return dispatchEventSpy.mock.calls.at(-1)[0];
-  };
-
-  const dispatchKeyboardEvent = (key) => {
-    quantity.value = key;
-    quantity.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
-  };
 });
