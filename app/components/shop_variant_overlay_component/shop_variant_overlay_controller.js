@@ -15,12 +15,12 @@ export default class extends Controller {
 
   close() {
     this.backgroundTarget.classList.remove("in");
+    this.elementTarget.classList.remove("in");
 
     setTimeout(() => {
-      this.elementTarget.classList.remove("in");
       this.elementTarget.style.display = "none";
       this.backgroundTarget.style.display = "none";
-    }, 100);
+    }, 200);
   }
 
   closeIfEscapeKey(e) {

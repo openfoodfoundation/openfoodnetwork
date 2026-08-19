@@ -44,6 +44,8 @@
   top: -5rem;
   overflow: auto;
   max-height: 85%;
+  padding: 1.2rem;
+  opacity: 0;
 
   @include m.breakpoint(mobile) {
     top: unset;
@@ -57,7 +59,7 @@
   }
 
   &.in {
-    padding: 1.2rem;
+    opacity: 1;
     // Make the overlay slide from the top
     transform: translate(0px, 10rem);
     transition: transform 330ms ease-in-out;
