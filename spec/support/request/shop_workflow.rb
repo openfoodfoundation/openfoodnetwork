@@ -138,9 +138,10 @@ module ShopWorkflow
   def component_wait_for_cart
     within find_body do
       # The Turbo cart is busy from the first change until the update is
-      # saved, so we wait for the busy state to show and then to clear.
+      # saved. The update may already be saved when we get here, so we
+      # don't insist on seeing the busy state.
       # We ignore visibility in case the cart sidebar is not open.
-      expect(page).to have_selector '.cart-sidebar[aria-busy="true"]', visible: :all
+      page.has_selector? '.cart-sidebar[aria-busy="true"]', visible: :all
       expect(page).not_to have_selector '.cart-sidebar[aria-busy="true"]', visible: :all
     end
   end
