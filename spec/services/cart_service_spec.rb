@@ -105,6 +105,65 @@ RSpec.describe CartService do
         end
       end
     end
+
+    describe "#update_variant" do
+      it "adds a variant" do
+        cart_service.update_variant(variant.id, 2)
+
+        li = order.find_line_item_by_variant(variant)
+        expect(li).to be
+        expect(li.quantity).to eq(2)
+      end
+
+      it "leaves other line items untouched" do
+        other_variant = create(:variant)
+        order_cycle.exchanges.outgoing.first.variants << other_variant
+        order.contents.update_or_create(other_variant, { quantity: 3 })
+
+        cart_service.update_variant(variant.id, 1)
+
+        expect(order.find_line_item_by_variant(other_variant).quantity).to eq(3)
+        expect(order.line_items.reload.count).to eq(2)
+      end
+
+      context "with an existing line item" do
+        before do
+          order.contents.update_or_create(variant, { quantity: 1, max_quantity: 2 })
+        end
+
+        it "updates the quantity and max quantity" do
+          cart_service.update_variant(variant.id, 3, 4)
+
+          li = order.find_line_item_by_variant(variant)
+          expect(li.quantity).to eq(3)
+          expect(li.max_quantity).to eq(4)
+        end
+
+        it "removes the variant when the quantity is zero" do
+          cart_service.update_variant(variant.id, 0)
+
+          order.line_items.reload
+          expect(order.find_line_item_by_variant(variant)).not_to be
+        end
+      end
+
+      it "caps the quantity at the available stock" do
+        variant.update!(on_demand: false, on_hand: 3)
+
+        cart_service.update_variant(variant.id, 5)
+
+        expect(order.find_line_item_by_variant(variant).quantity).to eq(3)
+      end
+
+      it "fails when the variant is not available in the distribution" do
+        other_variant = create(:variant)
+
+        expect(cart_service.update_variant(other_variant.id, 1)).to eq false
+        expect(cart_service.errors.full_messages)
+          .to include I18n.t(:spree_order_populator_availability_error)
+        expect(order.line_items.reload).to be_empty
+      end
+    end
   end
 
   describe "varies_from_cart" do
