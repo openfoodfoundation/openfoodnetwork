@@ -43,6 +43,32 @@ module Spree
           expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
         end
       end
+
+      context "with an authorized return authorization" do
+        let!(:return_authorization) { create(:return_authorization, order:, state: 'authorized') }
+
+        it "fires the cancel event" do
+          I18n.backend.store_translations(:en_TST, spree: { return_authorization_updated: "Return authorization updated" })
+
+          spree_put :fire, id: return_authorization.id, order_id: order.number, e: 'cancel'
+
+          expect(return_authorization.reload.state).to eq 'canceled'
+        end
+      end
+
+      context "when destroy fails" do
+        let!(:return_authorization) { create(:return_authorization, order:) }
+
+        before do
+          allow_any_instance_of(Spree::ReturnAuthorization).to receive(:destroy).and_return(false)
+        end
+
+        it "redirects to the collection url" do
+          spree_delete :destroy, id: return_authorization.id, order_id: order.number
+
+          expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
+        end
+      end
     end
   end
 end
