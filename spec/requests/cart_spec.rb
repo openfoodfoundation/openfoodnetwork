@@ -70,6 +70,27 @@ RSpec.describe "Cart" do
       expect(order.line_items.reload).to be_empty
     end
 
+    context "with a plain HTML request" do
+      it "redirects back after saving" do
+        patch variant_cart_path(variant.id), params: { quantity: 1 }
+
+        expect(response).to redirect_to "/cart"
+        expect(order.line_items.reload.first.quantity).to eq 1
+      end
+
+      it "redirects back with a flash message on error" do
+        other_variant = create(:variant)
+
+        patch variant_cart_path(other_variant.id),
+              params: { quantity: 1 },
+              headers: { "HTTP_REFERER" => "http://test.host/shop" }
+
+        expect(response).to redirect_to "/shop"
+        expect(flash[:error]).to eq I18n.t(:spree_order_populator_availability_error)
+        expect(order.line_items.reload).to be_empty
+      end
+    end
+
     it "saves the max quantity of group buy variants" do
       variant.product.update!(group_buy: true)
 

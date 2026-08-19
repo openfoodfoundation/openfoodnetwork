@@ -37,6 +37,25 @@ RSpec.describe CartSidebarComponent, type: :component do
       expect(page).to have_link "Checkout", href: "/checkout"
     end
 
+    it "renders the product and variant name" do
+      line_item.variant.product.update!(name: "Apples")
+      line_item.variant.update!(display_name: "Gala")
+
+      render_inline(described_class.new(order:))
+
+      expect(page).to have_content "Apples - Gala"
+    end
+
+    it "truncates long names" do
+      line_item.variant.product.update!(name: "Aromatic Antipodean Apples")
+      line_item.variant.update!(display_name: "Golden Delicious")
+
+      render_inline(described_class.new(order:))
+
+      expect(page).to have_content "Aromatic Antipode..."
+      expect(page).not_to have_content "Aromatic Antipodean Apples - Golden Delicious"
+    end
+
     it "pluralizes the item count" do
       create(:line_item, order:, quantity: 2)
       order.line_items.reload
