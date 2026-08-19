@@ -49,7 +49,22 @@ RSpec.describe "Cart" do
       # out of stock modal is shown.
       expect(response.body).to include "target=\"variant-#{variant.id}\""
       expect(response.body).to include 'target="out-of-stock-modal"'
-      expect(response.body).to include I18n.t("js.out_of_stock.reduced_stock_available")
+      expect(response.body).to include "Reduced stock available"
+    end
+
+    it "notifies when the stock of other cart items ran short" do
+      other_variant = create(:variant, on_demand: false, on_hand: 5)
+      create(:line_item, order:, variant: other_variant, quantity: 5)
+      other_variant.update!(on_hand: 2)
+
+      update_variant(variant, { quantity: 1 })
+
+      # The other item's quantity is capped, its widget reset and the
+      # out of stock modal is shown.
+      expect(order.line_items.reload.find_by(variant_id: other_variant.id).quantity).to eq 2
+      expect(response.body).to include "target=\"variant-#{other_variant.id}\""
+      expect(response.body).to include 'target="out-of-stock-modal"'
+      expect(response.body).to include "Reduced stock available"
     end
 
     it "leaves the widget alone when stock suffices" do

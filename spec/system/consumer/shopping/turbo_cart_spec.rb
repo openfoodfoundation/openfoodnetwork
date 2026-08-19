@@ -38,7 +38,7 @@ RSpec.describe "Turbo cart", feature: :product_grid_view do
     component_add_to_cart(variant)
 
     # The server capped the quantity and tells us about it.
-    expect(page).to have_content I18n.t("js.out_of_stock.reduced_stock_available")
+    expect(page).to have_content "Reduced stock available"
     expect(order.reload.line_items.first.quantity).to eq(1)
 
     within("#out-of-stock") do
