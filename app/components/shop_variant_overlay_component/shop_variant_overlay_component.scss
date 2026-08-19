@@ -76,7 +76,12 @@
     button.tiny {
       color: black;
       background-color: b.$light-grey;
-      font-size: 0.8125rem;
+      font-size: 1rem;
+
+      &:hover {
+        background: b.$grey-300;
+        text-shadow: 0 1px 0 b.$light-grey;
+      }
     }
   }
 

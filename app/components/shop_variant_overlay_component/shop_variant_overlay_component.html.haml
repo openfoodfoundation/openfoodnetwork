@@ -37,4 +37,4 @@
                       &nbsp;/&nbsp;
                       = "#{variant.unit_price.unit}"
                 .small-4.columns
-                  = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display)
+                  = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display, css_class: "right")
