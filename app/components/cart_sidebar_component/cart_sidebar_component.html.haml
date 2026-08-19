@@ -1,0 +1,52 @@
+#cart-sidebar.expanding-sidebar.cart-sidebar{ data: { "cart-sidebar-target": "sidebar", "item-count": total_item_count } }
+  .background{ data: { action: "click->cart-sidebar#close" } }
+  .sidebar
+    .cart-header
+      - if total_item_count == 1
+        %span.title= t("shared.menu.cart_sidebar.items_in_cart_singular", num: total_item_count)
+      - elsif total_item_count > 1
+        %span.title= t("shared.menu.cart_sidebar.items_in_cart_plural", num: total_item_count)
+      %a.close{ href: "#", data: { action: "click->cart-sidebar#close" } }
+        = t("shared.menu.cart_sidebar.close")
+        %i.ofn-i_009-close
+
+    .cart-content
+      %table
+        - line_items.each do |line_item|
+          %tr.product-cart{ id: "cart-variant-#{line_item.variant_id}" }
+            %td.image
+              = render "spree/shared/variant_thumbnail", variant: line_item.variant
+            %td
+              %span= variant_name(line_item.variant)
+              %br
+              %span.options-text= helpers.truncate(line_item.variant.options_text, length: MAX_NAME_LENGTH)
+            %td.text-right
+              %span.quantity= line_item.quantity
+            %td
+              .total-price.text-right= line_item.display_amount_with_adjustments.to_html
+              .unit-price
+                %div{ style: "margin-right: 5px" }
+                  = render TooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), element_text: "", placement: "top", element_class: "question-mark-icon")
+                .options-text
+                  = helpers.format_unit_price(line_item.unit_price)
+
+      - if line_items.empty?
+        .cart-empty
+          %p= t("shared.menu.cart_sidebar.cart_empty")
+
+          - if show_shopping_cta?
+            %a.go-shopping.button.large.bright{ href: shopping_path }
+              = t("shared.menu.cart_sidebar.take_me_shopping")
+
+  .sidebar-footer{ style: ("display: none" if line_items.empty?) }
+    - if line_items.any?
+      %p.cart-total
+        %strong
+          = t("total")
+          = helpers.display_checkout_subtotal(order)
+
+      .fullwidth
+        %a.edit-cart.button.large.dark.left{ href: helpers.main_app.cart_path }
+          %span{ data: { "cart-sidebar-target": "editCartLabel" } }= t("shared.menu.cart_sidebar.edit_cart")
+        %a.checkout.button.large.bright.right{ href: helpers.main_app.checkout_path }
+          = t("shared.menu.cart_sidebar.checkout")
