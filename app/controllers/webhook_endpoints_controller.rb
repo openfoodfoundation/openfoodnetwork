@@ -16,13 +16,22 @@ class WebhookEndpointsController < BaseController
   end
 
   def destroy
+    id = @webhook_endpoint.id
     if @webhook_endpoint.destroy
       flash[:success] = t('.success')
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.remove("webhook-endpoint-#{id}"),
+            turbo_stream.update(:flashes, partial: "shared/flashes", locals: { flashes: flash })
+          ]
+        end
+        format.html { redirect_to redirect_path }
+      end
     else
       flash[:error] = t('.error')
+      redirect_to redirect_path
     end
-
-    redirect_to redirect_path
   end
 
   def test
