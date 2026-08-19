@@ -15,9 +15,11 @@ module Spree
           button_link_to t(:create_or_update_invoice), generate_admin_order_invoices_path(order),
                          data: { turbo: true, turbo_method: 'post' }, icon: 'icon-plus'
         else
+          confirm_message = t(:must_have_valid_business_number,
+                              enterprise_name: order.distributor.name)
           button_link_to t(:create_or_update_invoice), "#", data: {
             turbo: true, turbo_method: "get",
-            turbo_confirm: t(:must_have_valid_business_number, enterprise_name: order.distributor.name)
+            turbo_confirm: confirm_message
           }, icon: 'icon-plus'
         end
       end

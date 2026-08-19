@@ -15,7 +15,7 @@
     &nbsp;
   - if order.changes_allowed?
     .columns.small-12.medium-3
-      = link_to main_app.cancel_order_path(@order), method: :put, class: "button secondary expand", "data-confirm": t('orders_confirm_cancel') do
+      = link_to main_app.cancel_order_path(@order), data: { turbo: true, turbo_method: :put, turbo_confirm: t('orders_confirm_cancel') }, class: "button secondary expand" do
         %i.ofn-i_009-close
         = t(:cancel_order)
     .columns.small-12.medium-3
