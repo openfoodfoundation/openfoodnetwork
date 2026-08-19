@@ -48,7 +48,9 @@ module Spree
         let!(:return_authorization) { create(:return_authorization, order:, state: 'authorized') }
 
         it "fires the cancel event" do
-          I18n.backend.store_translations(:en_TST, spree: { return_authorization_updated: "Return authorization updated" })
+          I18n.backend.store_translations(
+            :en_TST, spree: { return_authorization_updated: "Return authorization updated" }
+          )
 
           spree_put :fire, id: return_authorization.id, order_id: order.number, e: 'cancel'
 
