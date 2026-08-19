@@ -34,6 +34,7 @@
   display: none;
   background-color: white;
   border-radius: $radius;
+  clip-path: inset(0 round $radius); //hack to apply radius to the top/bottom of the scroll bar
   position: fixed;
   width: layout.$mobile_breakpoint;
   margin: 0 auto;
@@ -41,8 +42,8 @@
   right: 0;
   z-index: $variant-overlay-z-index;
   top: -5rem;
-  max-height: 90%;
   overflow: auto;
+  max-height: 85%;
 
   @include m.breakpoint(mobile) {
     top: unset;
@@ -52,6 +53,7 @@
     border-top-right-radius: $radius;
     border-bottom-left-radius: unset;
     border-bottom-right-radius: unset;
+    max-height: 90%;
   }
 
   &.in {
@@ -122,14 +124,13 @@
 
         .variant-producer {
           clear: both;
-          font-weight: 600;
-          font-size: 0.75rem;
         }
 
         .prices {
           clear: both;
           font-weight: 600;
           padding-bottom: 1rem;
+          margin-bottom: 1rem;
 
           &:nth-last-child(1) {
             padding-bottom: 0;
