@@ -4781,18 +4781,6 @@ morphdom@2.6.1:
   resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.6.1.tgz#e868e24f989fa3183004b159aed643e628b4306e"
   integrity sha512-Y8YRbAEP3eKykroIBWrjcfMw7mmwJfjhqdpSvoqinu8Y702nAwikpXcNFDiIkyvfCLxLM9Wu95RZqo4a9jFBaA==
 
-"morphdom@>=2.6.0 <3.0.0":
-  version "2.7.7"
-  resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.7.7.tgz#72559af781357a4eb2169a0a578acb76ff7e8abf"
-  integrity sha512-04GmsiBcalrSCNmzfo+UjU8tt3PhZJKzcOy+r1FlGA7/zri8wre3I1WkYN9PT3sIeIKfW9bpyElA+VzOg2E24g==
-
-mrujs@*:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-1.0.2.tgz#f19818735d8f5865dab75254f4cfc38d33804f2e"
-  integrity sha512-dGTUHLH+COsGOn78R7lUFUK/eDLaY8W14N25EymB6lXknENeyoVL31Hsxfb2hEsMb2yjBx0cB//ibO/NTECIzQ==
-  dependencies:
-    morphdom ">=2.6.0 <3.0.0"
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
