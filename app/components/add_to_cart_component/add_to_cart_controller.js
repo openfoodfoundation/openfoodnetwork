@@ -1,5 +1,15 @@
 import { Controller } from "stimulus";
+import { renderStreamMessage } from "@hotwired/turbo";
 
+// Add to cart widget of the product grid (AddToCartComponent).
+//
+// Quantity changes are saved to the cart with a debounce and only one
+// request in flight at a time; changes made while saving are coalesced
+// into a single follow-up request. The server responds with Turbo
+// Streams re-rendering the cart sidebar (CartSidebarComponent).
+//
+// Dispatches "cart:updating" and "cart:settled" window events so the
+// cart-sidebar controller can show the busy state while saving.
 export default class extends Controller {
   static targets = [
     "addButton",
@@ -11,131 +21,134 @@ export default class extends Controller {
   ];
   static values = {
     variantId: Number,
-    variantOnHand: Number,
+    variantOnHand: Number, // parses to the Infinity global when on demand
     lowStockDisplay: Boolean,
+    url: String,
+    debounce: { type: Number, default: 1000 },
   };
 
+  initialize() {
+    this.saving = false;
+    this.queued = false;
+    this.dirty = false;
+  }
+
   connect() {
-    const quantity = parseInt(this.quantityTarget.value);
+    this.lastQuantity = this.quantity;
+    this.render();
+  }
 
-    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
-
-    if (quantity > 0) {
-      this.#showQuantityButtons();
-      this.#showItemInCart();
-    } else {
-      this.#showStock();
-    }
+  disconnect() {
+    clearTimeout(this.saveTimeout);
   }
 
   addEmpty() {
-    this.#dispatchCartUpdate(1);
-
-    this.#showQuantityButtons();
-    this.quantityTarget.value = 1;
-
-    this.#showAndUpdateItemInCart(1);
+    this.updateQuantity(1);
   }
 
   add() {
-    let quantity = parseInt(this.quantityTarget.value);
-    quantity = quantity + 1;
-    this.quantityTarget.value = quantity;
-
-    this.#dispatchCartUpdate(quantity);
-
-    this.#showAndUpdateItemInCart(quantity);
-
-    // disable button if reach max on hand
-    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
+    this.updateQuantity(this.quantity + 1);
   }
 
   remove() {
-    let quantity = parseInt(this.quantityTarget.value);
-    quantity = Math.max(0, quantity - 1);
-    this.quantityTarget.value = quantity;
-
-    this.#dispatchCartUpdate(quantity);
-
-    this.#showAndUpdateItemInCart(quantity);
-
-    if (quantity < this.variantOnHandValue) this.plusButtonTarget.disabled = false;
-
-    if (quantity === 0) {
-      this.#hideQuantityButtons();
-      this.#hideItemInCart();
-      this.#showStock();
-    }
+    this.updateQuantity(this.quantity - 1);
   }
 
-  manual(e) {
-    let quantity = parseInt(this.quantityTarget.value);
+  manual() {
+    const value = parseInt(this.quantityTarget.value, 10);
+    if (isNaN(value)) return; // wait until a number is entered
 
-    // check it's a number or a negative value
-    if (isNaN(quantity) || quantity < 0) {
-      return;
-    }
-
-    quantity = Math.min(this.variantOnHandValue, quantity);
-    this.quantityTarget.value = quantity;
-
-    this.#dispatchCartUpdate(quantity);
-    this.#showAndUpdateItemInCart(quantity);
-
-    if (quantity === this.variantOnHandValue) this.plusButtonTarget.disabled = true;
-
-    if (quantity < this.variantOnHandValue) this.plusButtonTarget.disabled = false;
-
-    if (quantity === 0) {
-      this.#hideQuantityButtons();
-      this.nbItemInCartTarget.style.visibility = "hidden";
-      this.#showStock();
-    }
+    this.updateQuantity(value);
   }
 
   // private
 
-  #showQuantityButtons() {
-    this.addButtonTarget.style.display = "none";
-    this.quantityButtonTarget.style.display = "flex";
+  get quantity() {
+    return parseInt(this.quantityTarget.value, 10) || 0;
   }
 
-  #hideQuantityButtons() {
-    this.addButtonTarget.style.display = "block";
-    this.quantityButtonTarget.style.display = "none";
+  updateQuantity(quantity) {
+    const clamped = Math.max(0, Math.min(quantity, this.variantOnHandValue));
+    this.quantityTarget.value = clamped;
+
+    if (clamped === this.lastQuantity) return;
+
+    this.lastQuantity = clamped;
+    this.render();
+    this.scheduleSave();
   }
 
-  #dispatchCartUpdate(quantity) {
-    const ev = new CustomEvent("updateCart", {
-      detail: { variant: { id: this.variantIdValue }, quantity: quantity },
-    });
-    window.dispatchEvent(ev);
-  }
+  render() {
+    const quantity = this.quantity;
 
-  #showAndUpdateItemInCart(quantity = 0) {
+    if (quantity > 0) {
+      this.addButtonTarget.style.display = "none";
+      this.quantityButtonTarget.style.display = "flex";
+    } else {
+      this.addButtonTarget.style.display = "block";
+      this.quantityButtonTarget.style.display = "none";
+    }
+
+    // disable button when we reach the stock on hand
+    this.plusButtonTarget.disabled = quantity >= this.variantOnHandValue;
+
     this.nbItemInCartTarget.textContent = I18n.t("js.shopfront.variant.quantity_in_cart", {
       quantity: quantity,
     });
-    this.#showItemInCart();
-    this.#hideStock();
+    this.nbItemInCartTarget.style.visibility = quantity > 0 ? "visible" : "hidden";
+
+    // display low stock if enabled and stock less than 3
+    const showStock = quantity === 0 && this.lowStockDisplayValue && this.variantOnHandValue <= 3;
+    this.stockTarget.style.display = showStock ? "block" : "none";
   }
 
-  #showItemInCart() {
-    this.nbItemInCartTarget.style.visibility = "visible";
+  scheduleSave() {
+    this.setDirty();
+    clearTimeout(this.saveTimeout);
+    this.saveTimeout = setTimeout(() => this.save(), this.debounceValue);
   }
 
-  #hideItemInCart() {
-    this.nbItemInCartTarget.style.visibility = "hidden";
-  }
-
-  #hideStock() {
-    this.stockTarget.style.display = "none";
-  }
-
-  // display low stock if enabled and stock less than 3
-  #showStock() {
-    if (this.lowStockDisplayValue === true && this.variantOnHandValue <= 3) {
-      this.stockTarget.style.display = "block";
+  async save() {
+    if (this.saving) {
+      this.queued = true;
+      return;
     }
+    this.saving = true;
+
+    try {
+      const response = await fetch(this.urlValue, {
+        method: "PATCH",
+        credentials: "same-origin",
+        headers: {
+          Accept: "text/vnd.turbo-stream.html",
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content,
+        },
+        body: JSON.stringify({ quantity: this.quantity }),
+      });
+      renderStreamMessage(await response.text());
+    } catch (error) {
+      console.error("Failed to update the cart", error);
+    } finally {
+      this.saving = false;
+      if (this.queued) {
+        this.queued = false;
+        this.save();
+      } else {
+        this.setSettled();
+      }
+    }
+  }
+
+  setDirty() {
+    if (this.dirty) return;
+
+    this.dirty = true;
+    this.dispatch("updating", { prefix: "cart", detail: { variantId: this.variantIdValue } });
+  }
+
+  setSettled() {
+    this.dirty = false;
+    this.dispatch("settled", { prefix: "cart", detail: { variantId: this.variantIdValue } });
   }
 }

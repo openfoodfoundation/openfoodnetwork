@@ -329,7 +329,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           # Add more
           component_add_to_cart(single_variant)
 
-          expect(page).to have_in_cart "2 item in your cart"
+          expect(page).to have_in_cart "2 items in your cart"
           toggle_cart
 
           expect(li.reload.quantity).to eq(2)
@@ -337,7 +337,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           # Manually enter quantity
           component_manual_add_to_cart(single_variant, quantity: 5)
 
-          expect(page).to have_in_cart "5 item in your cart"
+          expect(page).to have_in_cart "5 items in your cart"
           toggle_cart
 
           # Display quantity in cart
@@ -413,9 +413,12 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
               click_button "Close"
             end
 
-            # We can't see the cart when the overlay is open, so we close overlay before checking
-            # the variant has been added to the cart
-            expect(page).to have_in_cart product.name
+            # We can't see the cart when the overlay is open, so we close the overlay and
+            # wait for the cart to be saved before checking the database.
+            toggle_cart
+            within(".cart-sidebar") do
+              expect(page).to have_content "1 item in your cart"
+            end
             toggle_cart
 
             li = order.reload.line_items.order(:created_at).last
