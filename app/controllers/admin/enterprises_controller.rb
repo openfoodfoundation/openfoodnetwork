@@ -309,13 +309,8 @@ module Admin
       # record is persisted. This problem is compounded by the use of calculators.
       @object.transaction do
         tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each_value do |attrs|
-          rule = @object.tag_rules.find_by(id: attrs.delete(:id))
-
-          if rule.nil?
-            next unless TagRule::TYPES.include?(attrs[:type])
-
-            rule = attrs[:type].constantize.new(enterprise: @object)
-          end
+          rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
+                 TagRule.new(type: attrs[:type], enterprise: @object)
 
           rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end

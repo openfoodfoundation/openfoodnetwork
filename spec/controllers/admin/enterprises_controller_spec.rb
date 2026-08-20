@@ -289,17 +289,19 @@ RSpec.describe Admin::EnterprisesController do
         context "with an unrecognised type" do
           it "does not instantiate an arbitrary class from a fully-qualified name" do
             expect {
-              spree_put :update,
-                        id: enterprise,
-                        enterprise: {
-                          tag_rules_attributes: {
-                            '0' => {
-                              id: "",
-                              type: "Spree::Order",
-                              preferred_exchange_tags: "malicious"
+              expect {
+                spree_put :update,
+                          id: enterprise,
+                          enterprise: {
+                            tag_rules_attributes: {
+                              '0' => {
+                                id: "",
+                                type: "Spree::Order",
+                                preferred_exchange_tags: "malicious"
+                              }
                             }
                           }
-                        }
+              }.to raise_error(ActiveRecord::SubclassNotFound)
             }.not_to change { Spree::Order.count }
 
             expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
@@ -307,23 +309,25 @@ RSpec.describe Admin::EnterprisesController do
 
           it "does not instantiate a class that isn't a TagRule subclass" do
             expect {
-              spree_put :update,
-                        id: enterprise,
-                        enterprise: {
-                          tag_rules_attributes: {
-                            '0' => {
-                              id: "",
-                              type: "Enterprise",
-                              preferred_exchange_tags: "malicious"
+              expect {
+                spree_put :update,
+                          id: enterprise,
+                          enterprise: {
+                            tag_rules_attributes: {
+                              '0' => {
+                                id: "",
+                                type: "Enterprise",
+                                preferred_exchange_tags: "malicious"
+                              }
                             }
                           }
-                        }
+              }.to raise_error(ActiveRecord::SubclassNotFound)
             }.not_to change { Enterprise.count }
 
             expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
           end
 
-          it "does not raise and simply ignores the attributes" do
+          it "raises for a type that isn't a real class" do
             expect {
               spree_put :update,
                         id: enterprise,
@@ -336,9 +340,9 @@ RSpec.describe Admin::EnterprisesController do
                             }
                           }
                         }
-            }.not_to raise_error
+            }.to raise_error(ActiveRecord::SubclassNotFound)
 
-            expect(response).to redirect_to edit_admin_enterprise_path(enterprise)
+            expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
           end
         end
       end
