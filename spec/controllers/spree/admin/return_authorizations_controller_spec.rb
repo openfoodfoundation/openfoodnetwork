@@ -51,6 +51,7 @@ module Spree
           spree_put :fire, id: return_authorization.id, order_id: order.number, e: 'cancel'
 
           expect(return_authorization.reload.state).to eq 'canceled'
+          expect(response).to have_http_status(:see_other)
         end
       end
 

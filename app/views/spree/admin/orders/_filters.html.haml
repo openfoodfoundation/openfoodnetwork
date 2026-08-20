@@ -1,5 +1,5 @@
 .admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
-  = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { remote: true, turbo: true, "search-target": "form" } do
+  = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { turbo: true, "search-target": "form" } do
     = hidden_field_tag :page, 1, class: "page"
     = hidden_field_tag :per_page, 15, class: "per-page"
     = hidden_field_tag "[q][s]", params.dig(:q, :s) || "completed_at desc", class: "sort", "data-default": "completed_at desc"
