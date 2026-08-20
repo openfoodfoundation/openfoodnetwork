@@ -2,7 +2,7 @@
   .checkout-title
     = t("checkout.step2.voucher.apply_voucher")
   .checkout-input{"data-controller": "toggle-control"}
-    = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { remote: true } do |form|
+    = form_with url: voucher_adjustments_path, model: @order, method: :post do |form|
       - if voucher_adjustment.present?
         .two-columns-inputs.voucher
           %span.button.voucher-added
