@@ -17,10 +17,11 @@ module Spree
         else
           confirm_message = t(:must_have_valid_business_number,
                               enterprise_name: order.distributor.name)
-          button_link_to t(:create_or_update_invoice), "#", data: {
-            turbo: true, turbo_method: "get",
-            turbo_confirm: confirm_message
-          }, icon: 'icon-plus'
+          button_link_to t(:create_or_update_invoice), "#",
+                         data: { controller: "confirm-alert",
+                                 confirm_alert_message_value: confirm_message,
+                                 action: "click->confirm-alert#confirm" },
+                         icon: 'icon-plus'
         end
       end
 
@@ -135,7 +136,10 @@ module Spree
         button_link_to(event_label,
                        fire_admin_order_url(order, e: "resume"),
                        method: :put, icon: "icon-resume",
-                       data: { confirm: confirm_message })
+                       data: {
+                         turbo: true,
+                         turbo_confirm: confirm_message
+                       })
       end
 
       def quantity_field_tag(manifest_item)
