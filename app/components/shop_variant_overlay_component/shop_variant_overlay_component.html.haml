@@ -4,37 +4,36 @@
   %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#select" }
     = t("components.shop_variant_overlay.select")
 
-  - if variants.length > 1
-    %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
-      .variant-overlay-bg.fade{ "data-shop-variant-overlay-target": "background", "data-action": "click->shop-variant-overlay#close" }
-      .variant-overlay{ "data-shop-variant-overlay-target": "element" }
-        .header
-          %button.tiny.right{ type: "button", "data-action": "click->shop-variant-overlay#close" }
-            = t('js.admin.modals.close')
-          %h5= product_name
-          - # All variants have the same producer
-          - if same_producers?
-            %span.producer= t("components.shop_variant_overlay.from_producer", name: variants.first.enterprise.name)
+  %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
+    .variant-overlay-bg.fade{ "data-shop-variant-overlay-target": "background", "data-action": "click->shop-variant-overlay#close" }
+    .variant-overlay{ "data-shop-variant-overlay-target": "element" }
+      .header
+        %button.tiny.right{ type: "button", "data-action": "click->shop-variant-overlay#close" }
+          = t('js.admin.modals.close')
+        %h5= product_name
+        - # All variants have the same producer
+        - if same_producers?
+          %span.producer= t("components.shop_variant_overlay.from_producer", name: variants.first.enterprise.name)
 
-        - # Loop through variants
-        %ul
-          - variants.each do |variant|
-            %li
-              .row
-                .small-8.columns
-                  - if variant.display_name.present?
-                    .variant-columns.variant-name
-                      = "#{variant.name_to_display}"
-                  .variant-columns.variant-unit
-                    = unit_to_display(variant)
-                  .variant-producer
-                    - unless same_producers?
-                      = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
-                  .prices
-                    = variant.display_price
-                    %span.unit-price
-                      = "#{variant.display_unit_price}"
-                      &nbsp;/&nbsp;
-                      = "#{variant.unit_price.unit}"
-                .small-4.columns
-                  = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display, css_class: "right")
+      - # Loop through variants
+      %ul
+        - variants.each do |variant|
+          %li
+            .row
+              .small-8.columns
+                - if variant.display_name.present?
+                  .variant-columns.variant-name
+                    = "#{variant.name_to_display}"
+                .variant-columns.variant-unit
+                  = unit_to_display(variant)
+                .variant-producer
+                  - unless same_producers?
+                    = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
+                .prices
+                  = variant.display_price
+                  %span.unit-price
+                    = "#{variant.display_unit_price}"
+                    &nbsp;/&nbsp;
+                    = "#{variant.unit_price.unit}"
+              .small-4.columns
+                = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display, css_class: "right")

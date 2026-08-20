@@ -21,11 +21,9 @@ class ShopVariantOverlayComponent < ViewComponent::Base
     text.dup << variant.unit_to_display
   end
 
-  def producers
-    @producers ||= @variants.map(&:enterprise).uniq
-  end
-
   def same_producers?
-    producers.length == 1
+    return @same_producers unless @same_producers.nil?
+
+    @same_producers = @variants.map(&:enterprise).uniq.one?
   end
 end
