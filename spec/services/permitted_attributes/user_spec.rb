@@ -27,6 +27,24 @@ module PermittedAttributes
       end
     end
 
+    describe "disabled attribute" do
+      let(:params) {
+        ActionController::Parameters.new(user: { disabled: "1" })
+      }
+
+      it "does not permit disabling a user by default" do
+        permitted_attributes = PermittedAttributes::User.new(params).call
+
+        expect(permitted_attributes[:disabled]).to be_nil
+      end
+
+      it "permits disabling a user when explicitly allowed" do
+        permitted_attributes = PermittedAttributes::User.new(params).call([:disabled])
+
+        expect(permitted_attributes[:disabled]).to eq "1"
+      end
+    end
+
     describe "with custom resource_name" do
       let(:user_permitted_attributes) { PermittedAttributes::User.new(params, :spree_user) }
       let(:params) {
