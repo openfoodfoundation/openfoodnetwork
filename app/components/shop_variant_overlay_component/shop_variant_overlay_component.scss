@@ -62,7 +62,7 @@
     opacity: 1;
     // Make the overlay slide from the top
     transform: translate(0px, 10rem);
-    transition: transform 330ms ease-in-out;
+    transition: transform 0.2s ease-out;
 
     @include m.breakpoint(mobile) {
       // Make the overlay slide from the bottom
