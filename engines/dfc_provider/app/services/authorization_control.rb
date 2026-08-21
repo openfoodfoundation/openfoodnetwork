@@ -17,7 +17,7 @@ class AuthorizationControl
       -----END PUBLIC KEY-----
     KEY
 
-    "https:///authentification.cqcm.coop/realms/cqcm" => <<~KEY,
+    "https://authentification.cqcm.coop/realms/cqcm" => <<~KEY,
       -----BEGIN PUBLIC KEY-----
       MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhz7dK3xQAWL+u++E/64T1OHEvnFrZRLzgCmw0leib3JL/XbaE4Jbd3fs2+zc3+dCwvCuLEKKO9Hc9wg79ifjtMKFfZDE1Ba+qhw7J9tYnu7TBtaxKuWUCdtwuultEdW+NFndaUvhD/TdyjDkRiO98mgvUbm2A3q/zyDmoUpR2IEfevkMSz8MnxUo1bDTJIyoYoKwnbToI1E9RVx2uYsYKk24Pfd+r6oTbi7TxA6Ia4EiREFki2gNIAdp66IqF0Gxyd+nGlkIbQGrW+9xynU4ar3ZNq/P8EZFdO57AdEvC3ZAzpTvOVcQ0cQ4XbRSYWQHyZ8jnjggpeddTGSqVlgx1wIDAQAB
       -----END PUBLIC KEY-----
