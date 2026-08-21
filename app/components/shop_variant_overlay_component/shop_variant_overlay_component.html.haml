@@ -1,12 +1,12 @@
 -# locals: (variants:, variants_in_cart:, low_stock_display:)
 
 %div{ "data-controller": "shop-variant-overlay" }
-  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#select" }
+  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#open" }
     = t("components.shop_variant_overlay.select")
 
   %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
     .variant-overlay-bg.fade{ "data-shop-variant-overlay-target": "background", "data-action": "click->shop-variant-overlay#close" }
-    .variant-overlay{ "data-shop-variant-overlay-target": "element" }
+    .variant-overlay{ "data-shop-variant-overlay-target": "modal" }
       .header
         %button.tiny.right{ type: "button", "data-action": "click->shop-variant-overlay#close" }
           = t('js.admin.modals.close')

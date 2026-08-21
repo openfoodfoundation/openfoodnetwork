@@ -1,31 +1,10 @@
 import { Controller } from "stimulus";
+import { useOpenAndCloseAsAModal } from "../../webpacker/controllers/mixins/useOpenAndCloseAsAModal";
 
 export default class extends Controller {
-  static targets = ["element", "background"];
+  static targets = ["background", "modal"];
 
-  select() {
-    this.backgroundTarget.style.display = "block";
-    this.elementTarget.style.display = "block";
-
-    setTimeout(() => {
-      this.elementTarget.classList.add("in");
-      this.backgroundTarget.classList.add("in");
-    });
-  }
-
-  close() {
-    this.backgroundTarget.classList.remove("in");
-    this.elementTarget.classList.remove("in");
-
-    setTimeout(() => {
-      this.elementTarget.style.display = "none";
-      this.backgroundTarget.style.display = "none";
-    }, 200);
-  }
-
-  closeIfEscapeKey(e) {
-    if (e.code == "Escape") {
-      this.close();
-    }
+  connect() {
+    useOpenAndCloseAsAModal(this);
   }
 }
