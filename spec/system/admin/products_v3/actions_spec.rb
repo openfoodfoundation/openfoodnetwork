@@ -269,6 +269,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
           visit admin_products_url
 
+          # Verify readonly product image has no Edit button
+          read_only_product = read_only_variant.product
+          within "#image-#{read_only_product.id}" do
+            expect(page).to have_selector "img"
+            expect(page).not_to have_link "Edit"
+          end
+
           # Create linked variant sourced from my friend
           within row_containing_name("My friends box") do
             page.find(".vertical-ellipsis-menu").click
@@ -303,6 +310,14 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # initially obscured by the previous message, then disappears before capybara sees it.
             # expect(page).to have_content "Changes saved"
+          end
+
+          # Verify readonly variant image has no Edit button
+          within("tr:has(.content)", text: "My readonly friends box") do
+            within "td.col-image" do
+              expect(page).to have_selector "img"
+              expect(page).not_to have_link "Edit"
+            end
           end
 
           # Create linked variant sourced from my readonly friend
