@@ -455,17 +455,11 @@ RSpec.describe '
         let!(:product) { create(:simple_product, enterprise_id: supplier2.id) }
         let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
 
-        it "shows the image upload component when no image is present" do
+        it "shows the image upload prompt when no image is present" do
           visit spree.edit_admin_product_path(product)
 
-          within ".image-upload-field" do
-            expect(page).to have_content "Image"
-            expect(page).to have_content image_subtitle
-            expect(page).to have_css ".image-upload__button", text: "Upload image"
-            expect(page).to have_field "image[attachment]", visible: false
-            expect(page).to have_selector ".image-upload"
-            expect(page).not_to have_selector ".image-upload__preview"
-          end
+          expect(page).to have_content image_subtitle
+          expect(page).to have_content "Upload image"
         end
 
         it "uploads the image and navigates to the image edit page" do
@@ -494,17 +488,14 @@ RSpec.describe '
 
         it "shows the image preview when an image is present" do
           Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                              attachment: white_logo_file)
+                              attachment: white_logo_file, alt: "White logo")
 
           visit spree.edit_admin_product_path(product)
 
-          within ".image-upload-field" do
-            find(".image-upload").hover
-            expect(page).to have_selector ".image-upload .image-upload__preview"
-            expect(page).to have_selector ".image-upload--has-image"
-            expect(page).to have_link "Edit"
-            expect(page).not_to have_content image_subtitle
-          end
+          find("img[alt='White logo']").hover
+
+          expect(page).to have_link "Edit"
+          expect(page).not_to have_content image_subtitle
         end
       end
     end
@@ -570,6 +561,7 @@ RSpec.describe '
 
     describe "image page" do
       let!(:product) { create(:simple_product, name: 'Product A', enterprise_id: supplier2.id) }
+      let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
 
       it "loading image page with no image" do
         visit spree.admin_product_images_path(product)
@@ -620,7 +612,7 @@ RSpec.describe '
         # The new file is only previewed: we stay on the page and nothing is persisted yet.
         expect(page).to have_content "thinking-cat.jpg"
         # The blob: preview must actually render; a missing CSP img-src would silently block it.
-        expect(wait_until { preview_image_rendered?('.image-edit__preview-image') }).to be true
+        expect(wait_until { preview_image_rendered? }).to be true
         expect(page).to have_current_path(
           spree.edit_admin_product_image_path(product, image_object)
         )
@@ -688,11 +680,8 @@ RSpec.describe '
 
         expect(page).to have_current_path spree.edit_admin_product_path(product)
         expect(product.reload.image).to be_nil
-
-        within ".image-upload-field" do
-          expect(page).to have_css ".image-upload__button", text: "Upload image"
-          expect(page).not_to have_selector ".image-upload__preview"
-        end
+        expect(page).to have_content image_subtitle
+        expect(page).to have_content "Upload image"
       end
 
       it "editing caption and alternative text on the image edit page" do

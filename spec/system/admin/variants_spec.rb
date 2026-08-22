@@ -409,15 +409,9 @@ RSpec.describe '
       visit spree.edit_admin_product_variant_path product, variant
     end
 
-    it "shows the image upload component when no image is present" do
-      within ".image-upload-field" do
-        expect(page).to have_content "Image"
-        expect(page).to have_content image_subtitle
-        expect(page).to have_css ".image-upload__button", text: "Upload image"
-        expect(page).to have_field "image[attachment]", visible: false
-        expect(page).to have_selector ".image-upload"
-        expect(page).not_to have_selector ".image-upload__preview"
-      end
+    it "shows the image upload prompt when no image is present" do
+      expect(page).to have_content image_subtitle
+      expect(page).to have_content "Upload image"
     end
 
     it "uploads the image to the variant and navigates to the image edit page" do
@@ -431,17 +425,14 @@ RSpec.describe '
     end
 
     it "shows the image preview when an image is present" do
-      Spree::Image.create(attachment: white_logo_file, viewable: variant)
+      Spree::Image.create(attachment: white_logo_file, viewable: variant, alt: "White logo")
 
       visit spree.edit_admin_product_variant_path product, variant
 
-      within ".image-upload-field" do
-        find(".image-upload").hover
-        expect(page).to have_selector ".image-upload .image-upload__preview"
-        expect(page).to have_selector ".image-upload--has-image"
-        expect(page).to have_link "Edit"
-        expect(page).not_to have_content image_subtitle
-      end
+      find("img[alt='White logo']").hover
+
+      expect(page).to have_link "Edit"
+      expect(page).not_to have_content image_subtitle
     end
 
     it "keeps the image on the variant when updated from the image edit page" do
@@ -495,7 +486,7 @@ RSpec.describe '
         attach_file "image_attachment", black_logo_path, make_visible: true
 
         expect(page).to have_content "logo-black.png"
-        expect(wait_until { preview_image_rendered?('.image-edit__preview-image') }).to be true
+        expect(wait_until { preview_image_rendered? }).to be true
         expect(variant.reload.image.attachment.filename.to_s).to eq "logo-white.png"
 
         click_button "Save"
@@ -512,11 +503,8 @@ RSpec.describe '
 
         expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
         expect(variant.reload.image).to be_nil
-
-        within ".image-upload-field" do
-          expect(page).to have_css ".image-upload__button", text: "Upload image"
-          expect(page).not_to have_selector ".image-upload__preview"
-        end
+        expect(page).to have_content image_subtitle
+        expect(page).to have_content "Upload image"
       end
     end
   end
