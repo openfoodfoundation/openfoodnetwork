@@ -9,7 +9,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     login_as_admin
   end
 
-  shared_examples "updating images" do |expected_http_status_code|
+  shared_examples "updating images" do |expected_http_status_code, on_error = :render|
     let(:params) do
       {
         image: {
@@ -27,7 +27,7 @@ RSpec.describe "/admin/products/:product_id/images" do
 
       expect(response.status).to eq expected_http_status_code
       if expected_http_status_code == 302
-        expect(response.location).to end_with spree.admin_product_images_path(product)
+        expect(response.location).to end_with spree.edit_admin_product_path(product)
       end
 
       expect(product.image.url(:product)).to end_with "logo.png"
@@ -49,7 +49,13 @@ RSpec.describe "/admin/products/:product_id/images" do
           product.reload
         }.not_to change{ product.image&.attachment&.filename.to_s }
 
-        expect(response.body).to include "Attachment has an invalid content type"
+        if on_error == :redirect
+          # There is no HTML image form any more, so the error goes back to the product page.
+          expect(response).to redirect_to spree.edit_admin_product_path(product)
+          expect(flash[:error]).to include "Attachment has an invalid content type"
+        else
+          expect(response.body).to include "Attachment has an invalid content type"
+        end
       end
     end
   end
@@ -57,7 +63,7 @@ RSpec.describe "/admin/products/:product_id/images" do
   describe "POST /admin/products/:product_id/images" do
     subject { post(spree.admin_product_images_path(product), params:) }
 
-    it_behaves_like "updating images", 302
+    it_behaves_like "updating images", 302, :redirect
   end
 
   describe "POST /admin/products/:product_id/images without a caption param" do
@@ -242,7 +248,7 @@ RSpec.describe "/admin/products/:product_id/images" do
         }.not_to change { Spree::Image.count }
 
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to(spree.admin_product_images_path(product))
+        expect(response).to redirect_to(spree.edit_admin_product_path(product))
         expect(product.image.alt).to eq("Updated alt text")
         expect(product.image.caption).to eq("Updated caption")
       end
@@ -362,7 +368,8 @@ RSpec.describe "/admin/products/:product_id/images" do
           variant.reload
         }.not_to change { variant.image&.attachment&.filename.to_s }
 
-        expect(response.body).to include "Attachment has an invalid content type"
+        expect(response).to redirect_to spree.edit_admin_product_variant_path(product, variant)
+        expect(flash[:error]).to include "Attachment has an invalid content type"
       end
     end
   end

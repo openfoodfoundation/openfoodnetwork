@@ -1020,7 +1020,6 @@ en:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -4391,15 +4390,11 @@ en:
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
 
-    no_images_found: "No Images Found"
-    new_image: "New Image"
     filename: "File name"
     caption: "Caption"
     replace_image: "Replace image"
     delete_permanently: "Delete permanently"
     alt_text: "Alternative text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back To Images List"
 
     # Attributes of the Taler payment gateway
     instance_url: "Instance URL"
