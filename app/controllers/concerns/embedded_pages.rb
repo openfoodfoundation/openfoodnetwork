@@ -11,6 +11,10 @@ module EmbeddedPages
     before_action :enable_embedded_pages
   end
 
+  def test_page
+    return if enable_embedded_pages
+  end
+
   private
 
   def enable_embedded_pages

@@ -56,6 +56,19 @@ module Spree
       User.admin.count > 0
     end
 
+
+    def self.user_created?
+      User.count > 0
+    end
+
+    def user_created?
+      User.count > 0
+    end
+
+    def is_created?
+      true
+    end
+
     # Send devise-based user emails asyncronously via ActiveJob
     # See: https://github.com/heartcombo/devise/tree/v3.5.10#activejob-integration
     def send_devise_notification(notification, *)
