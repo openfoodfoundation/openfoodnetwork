@@ -119,7 +119,7 @@ GEM
       activemodel (= 7.2.3.2)
       activesupport (= 7.2.3.2)
       timeout (>= 0.4.0)
-    activerecord-import (2.2.0)
+    activerecord-import (2.3.0)
       activerecord (>= 4.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
@@ -1108,7 +1108,7 @@ CHECKSUMS
   activemerchant (1.137.0) sha256=fdf5e33f5c94d1981bd632d72e282c0a5afaf06bac6df3f933c08a95e98bd5ce
   activemodel (7.2.3.2) sha256=3777c67cd8dd1560f30387523013dacb370a0a1cf532037410887819e4416927
   activerecord (7.2.3.2) sha256=e62d24ba7e5f820d24ed122eb9225491b0aaa8398778783b400067c3467285c7
-  activerecord-import (2.2.0) sha256=f8ca99b196e50775723d1f1d192c379f656378dc9f5628240992a0d78807fa4b
+  activerecord-import (2.3.0) sha256=e2d7e87b019053d21e8ef8372d773751af867fcf4045a19075369abb4ce1f374
   activerecord-postgresql-adapter (0.0.1) sha256=b42b23d8e94f32b32e9a5f5cb4789735140393e928546b328d48683b6b68aef1
   activerecord-session_store (2.3.0) sha256=3e66ad3c4c51ae54931ec19a54d21c4ad7372395aff67c003e790588a93e80f6
   activestorage (7.2.3.2) sha256=863cb4b21b83505555be2addb939fefb856ab05f6c6d24bab00d6f1a7e4edbfc
