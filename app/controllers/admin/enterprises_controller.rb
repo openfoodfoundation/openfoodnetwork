@@ -237,8 +237,9 @@ module Admin
 
     def search_filter_params
       q = params[:q]
-      q.is_a?(ActionController::Parameters) ? q.to_unsafe_h : nil
+      q.is_a?(ActionController::Parameters) ? q.to_unsafe_h : {}
     end
+    helper_method :search_filter_params
 
     def collection
       case action
