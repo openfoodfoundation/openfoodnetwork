@@ -374,6 +374,17 @@ RSpec.describe "/admin/products/:product_id/images" do
     end
   end
 
+  describe "GET /admin/products/:product_id/images/:id/edit with an unknown image" do
+    subject { get(spree.edit_admin_product_image_path(product, "unknown")) }
+
+    it "flashes an error and redirects to the product's edit page" do
+      subject
+
+      expect(response).to redirect_to spree.edit_admin_product_path(product)
+      expect(flash[:error]).to eq "Not found"
+    end
+  end
+
   describe "PATCH /admin/products/:product_id/images/:id with variant_id" do
     let(:variant) { create(:variant, product:) }
     let!(:variant_image) {
