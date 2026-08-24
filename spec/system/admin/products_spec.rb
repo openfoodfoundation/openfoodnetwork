@@ -494,8 +494,22 @@ RSpec.describe '
 
           find("img[alt='White logo']").hover
 
-          expect(page).to have_link "Edit"
+          expect(page).to have_content "Edit"
           expect(page).not_to have_content image_subtitle
+        end
+
+        it "opens the image edit page when the image tile itself is clicked" do
+          image = Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
+                                      attachment: white_logo_file, alt: "White logo")
+
+          visit spree.edit_admin_product_path(product)
+
+          find("img[alt='White logo']").click
+
+          expect(page).to have_current_path(
+            spree.edit_admin_product_image_path(product, image)
+          )
+          expect(page).to have_content "Edit image for"
         end
       end
     end

@@ -19,12 +19,27 @@
       display: none;
     }
 
-    &:hover .image-upload__button {
+    .image-upload__link:hover .image-upload__button,
+    .image-upload__link:focus-visible .image-upload__button {
       display: block;
     }
 
-    &:hover .image-upload__preview {
+    .image-upload__link:hover .image-upload__preview,
+    .image-upload__link:focus-visible .image-upload__preview {
       opacity: 0.8;
+    }
+  }
+
+  &__link {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:focus-visible {
+      outline: 2px solid $color-link;
+      outline-offset: 2px;
     }
   }
 
@@ -40,6 +55,12 @@
   &__button {
     z-index: 1;
   }
+}
+
+.image-upload-field span.info {
+  font-style: normal;
+  font-size: $body-font-size;
+  color: $color-body-text;
 }
 
 .image-upload__input {

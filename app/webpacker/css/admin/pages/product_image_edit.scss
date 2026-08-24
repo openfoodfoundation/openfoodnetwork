@@ -1,10 +1,16 @@
 .image-edit-page {
   background-color: $lighter-grey;
+  padding-bottom: 2rem;
 
   .admin__section-header {
     padding: 0;
     margin-top: 0;
     margin-bottom: 24px;
+
+    .container {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
 
     &__title {
       margin-top: 24px;
@@ -20,6 +26,18 @@
 
   #content {
     background-color: transparent;
+  }
+
+  @media all and (max-width: $tablet_breakpoint - 1px) {
+    #content .container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #content .container .columns {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 }
 
@@ -42,7 +60,6 @@
     max-width: 100%;
     max-height: 280px; // keeps a tall image from filling the whole phone screen
     height: auto;
-    border-radius: $border-radius;
   }
 
   &__panel {
@@ -206,7 +223,6 @@
 
     & &__link {
       min-height: 0;
-      font-size: 13px;
     }
 
     & &__buttons .button {

@@ -5,8 +5,9 @@
     %span.info= t('admin.products.image_upload.subtitle')
   .image-upload{ class: ("image-upload--has-image" if imageable.image.present?) }
     - if imageable.image.present?
-      = image_tag imageable.image.url(:product), alt: imageable.image.alt, class: "image-upload__preview"
-      = link_to t('admin.products.image_upload.edit'), image_form_path(imageable), class: "button secondary image-upload__button"
+      %a.image-upload__link{ href: image_form_path(imageable) }
+        = image_tag imageable.image.url(:product), alt: imageable.image.alt, class: "image-upload__preview"
+        .button.secondary.image-upload__button= t('admin.products.image_upload.edit')
     - else
       .image-upload__controls{ data: { controller: "upload-image",
                                        "upload-image-url-value": image_upload_path(imageable),
