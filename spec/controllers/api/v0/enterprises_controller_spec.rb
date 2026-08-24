@@ -120,6 +120,37 @@ RSpec.describe Api::V0::EnterprisesController do
         end
       end
     end
+
+    describe "#update" do
+      it "can update enteprise" do
+        enterprise_params = { name: "New name" }
+        api_put :update, id: enterprise.id, enterprise: enterprise_params
+
+        expect(response).to have_http_status :ok
+
+        expect(enterprise.reload.name).to eq("New name")
+      end
+
+      context "with an enterprise the user doesn't own" do
+        let(:other_enterprise) { create(:distributor_enterprise) }
+
+        it "can't update the enterprise" do
+          enterprise_params = { name: "New name" }
+          api_put :update, id: other_enterprise.id, enterprise: enterprise_params
+
+          expect(response).to have_http_status :unauthorized
+        end
+
+        it "can't update the enterprise owner" do
+          enterprise_params = { name: "New name" }
+          expect {
+            api_put :update, id: other_enterprise.id, enterprise: enterprise_params
+          }.not_to change{ other_enterprise.reload.owner_id }
+
+          expect(response).to have_http_status :unauthorized
+        end
+      end
+    end
   end
 
   context "as an enterprise manager" do
@@ -130,25 +161,72 @@ RSpec.describe Api::V0::EnterprisesController do
       allow(controller).to receive(:spree_current_user) { enterprise_manager }
     end
 
-    describe "submitting a valid image" do
-      let!(:logo) { fixture_file_upload("logo.png", "image/png") }
-      before do
-        allow(Enterprise)
-          .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+    describe "#update" do
+      it "can update the enteprise" do
+        enterprise_params = { name: "New name" }
+        api_put :update, id: enterprise.id, enterprise: enterprise_params
+
+        expect(response).to have_http_status :ok
+
+        expect(enterprise.reload.name).to eq("New name")
       end
 
-      it "I can update enterprise logo image" do
-        api_post :update_image, logo:, id: enterprise.id
-        expect(response).to have_http_status :ok
-        expect(response.content_type).to eq "text/html"
-        expect(response.body).to match /logo\.png$/
+      it "can't update the enterprise owner" do
+        enterprise_params = { owner_id: enterprise_manager.id }
+        expect {
+          api_put :update, id: enterprise.id, enterprise: enterprise_params
+        }.not_to change{ enterprise.reload.owner_id }
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    describe "#update_image" do
+      context "when submitting a valid image" do
+        let!(:logo) { fixture_file_upload("logo.png", "image/png") }
+
+        before do
+          allow(Enterprise)
+            .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+        end
+
+        it "I can update enterprise logo image" do
+          api_post :update_image, logo:, id: enterprise.id
+          expect(response).to have_http_status :ok
+          expect(response.content_type).to eq "text/html"
+          expect(response.body).to match /logo\.png$/
+        end
+
+        it "I can update enterprise promo image" do
+          api_post :update_image, promo: logo, id: enterprise.id
+          expect(response).to have_http_status :ok
+          expect(response.content_type).to eq "text/html"
+          expect(response.body).to match /logo\.png$/
+        end
       end
 
-      it "I can update enterprise promo image" do
-        api_post :update_image, promo: logo, id: enterprise.id
-        expect(response).to have_http_status :ok
-        expect(response.content_type).to eq "text/html"
-        expect(response.body).to match /logo\.png$/
+      context "when submitting an invalid image" do
+        let(:bad_image) { fixture_file_upload("embedded-group-preview.html", "text/html") }
+
+        before do
+          allow(Enterprise)
+            .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
+        end
+
+        it "returns an error for logo image" do
+          api_post :update_image, logo: bad_image, id: enterprise.id
+
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.content_type).to eq "application/json"
+          expect(response.body).to match /is not identified as a valid media file/
+        end
+
+        it "returns an error for promo image" do
+          api_post :update_image, promo: bad_image, id: enterprise.id
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.content_type).to eq "application/json"
+          expect(response.body).to match /is not identified as a valid media file/
+        end
       end
     end
   end

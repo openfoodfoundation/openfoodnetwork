@@ -674,6 +674,8 @@ en_CA:
         create_linked_variant: Create linked variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -970,6 +972,8 @@ en_CA:
       filters:
         search_products: Search for products
         search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
@@ -3676,6 +3680,7 @@ en_CA:
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
         restock_item: "Restock Items: Return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: Return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order. <br />Are you sure you want to proceed?"
@@ -4277,7 +4282,6 @@ en_CA:
     admin:
       images:
         edit:
-          title: Edit product photo
           close: Back
           upload: Upload photo
       mail_methods:

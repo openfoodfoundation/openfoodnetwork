@@ -29,4 +29,23 @@ RSpec.describe Spree::Admin::MailMethodsController do
       spree_post :testmail
     }.to change { ActionMailer::Base.deliveries.size }.by(1)
   end
+
+  it "reports errors" do
+    request.env["HTTP_REFERER"] = "/"
+    user = instance_double(Spree::User, email: 'user@example.com',
+                                        spree_api_key: 'fake',
+                                        id: nil,
+                                        owned_groups: nil)
+    allow(user).to receive_messages(enterprises: [create(:enterprise)],
+                                    admin?: true,
+                                    locale: nil,
+                                    can_manage_orders?: true,
+                                    flipper_id: nil)
+    allow(controller).to receive_messages(spree_current_user: user)
+
+    expect(Spree::TestMailer).to receive(:test_email).and_raise("This is a test.")
+    expect {
+      spree_post :testmail
+    }.to change { flash[:error] }.to("An error occurred trying to send the test email.")
+  end
 end

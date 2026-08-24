@@ -43,8 +43,8 @@ module Spree
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
-    has_many :variant_images, -> { order(:position) }, source: :images,
-                                                       through: :variants
+    has_many :variant_images, -> { order(:created_at) }, source: :images,
+                                                         through: :variants
 
     validates_lengths_from_database
     validates :name, presence: true
@@ -88,10 +88,29 @@ module Spree
     after_touch :touch_enterprise
 
     # -- Scopes
+    # Matches products carrying any of the given properties, whether the property is set directly
+    # on the product or inherited from its producer (when inherits_properties is true).
+    #
+    # The shopfront sidebar consolidates a property shown both as a product property and an
+    # inherited producer property into a single "Filter by" tag, which sends only
+    # q[with_properties]. Without the inherited branch, products carrying the property purely by
+    # inheritance were filtered out (#14405).
+    #
+    # Note: Ransack sanitises scope arguments against its boolean TRUE/FALSE_VALUES, so a property
+    # id of "1" arrives here as `true` (and "0" as `false`). Using ActiveRecord conditions rather
+    # than raw SQL casts these back to integers on the property_id column, so filtering by id 1
+    # does not raise a 422.
     scope :with_properties, ->(*property_ids) {
-      left_outer_joins(:product_properties).
-        where(inherits_properties: true).
-        where(spree_product_properties: { property_id: property_ids })
+      property_ids = property_ids.flatten
+
+      with_direct_property = where(
+        id: Spree::ProductProperty.where(property_id: property_ids).select(:product_id)
+      )
+      with_inherited_property = where(inherits_properties: true).where(
+        id: Spree::Variant.with_properties(property_ids).select(:product_id)
+      )
+
+      with_direct_property.or(with_inherited_property)
     }
 
     scope :with_order_cycles_outer, lambda {

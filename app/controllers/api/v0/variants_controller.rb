@@ -20,6 +20,12 @@ module Api
 
       def create
         authorize! :create, Spree::Variant
+
+        # Check if user is permitted to create variants for the specified enterprise
+        unless managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
+          return unauthorized
+        end
+
         @variant = scope.new(variant_params)
         if @variant.save
           render json: @variant, serializer: Api::VariantSerializer, status: :created
@@ -31,6 +37,8 @@ module Api
       def update
         authorize! :update, Spree::Variant
         @variant = scope.find(params[:id])
+        authorize! :update, @variant
+
         if @variant.update(variant_params)
           render json: @variant, serializer: Api::VariantSerializer, status: :ok
         else
@@ -75,6 +83,10 @@ module Api
 
       def variant_params
         params.require(:variant).permit(PermittedAttributes::Variant.attributes)
+      end
+
+      def managed_product_enterprises
+        OpenFoodNetwork::Permissions.new(current_api_user).managed_product_enterprises
       end
     end
   end

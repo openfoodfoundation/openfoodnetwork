@@ -1,11 +1,12 @@
 -# haml-lint:disable ViewLength (This file is big, but doesn't make sense to split up at this point)
 -# locals: (variant:, f:, product_index: nil, allowed_source_producers:)
 - method_on_demand, method_on_hand = variant.new_record? ? [:on_demand_desired, :on_hand_desired ]: [:on_demand, :on_hand]
-%td.col-image
-  -# empty
+%td.col-image.with-image{ id: "variant-image-#{variant.id}" }
+  - unless variant.new_record?
+    = render partial: "image", locals: { imageable: variant, img_class: "variant_placeholder" }
   - variant.source_variants.each do |source_variant|
     -# todo: remove old parameter hub_name once translations have been updated.
-    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.product_and_full_name, source_id: source_variant.id, producer_name:variant.producer.name, hub_name: variant.hub&.name))
+    = content_tag(:span, "🔗", title: t('admin.products_page.variant_row.sourced_from', source_name: source_variant.product_and_full_name, source_id: source_variant.id, producer_name: variant.producer.name))
 %td.col-name.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
@@ -14,8 +15,8 @@
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
 %td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
-  = f.hidden_field :variant_unit
-  = f.hidden_field :variant_unit_scale
+  = f.text_field :variant_unit, style: "display:none"
+  = f.text_field :variant_unit_scale, style: "display:none", value: (number_with_precision(variant.variant_unit_scale, strip_insignificant_zeros: true) if variant.variant_unit_scale)
   = f.select :variant_unit_with_scale,
       options_for_select(WeightsAndMeasures.variant_unit_options, variant.variant_unit_with_scale),
       { include_blank: t('.select_unit_scale') },
@@ -34,8 +35,8 @@
   .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Show a composite field for unit_value and unit_description
-      = f.hidden_field :unit_value
-      = f.hidden_field :unit_description
+      = f.text_field :unit_value, style: "display:none", value: (number_with_precision(variant.unit_value, strip_insignificant_zeros: true) if variant.unit_value)
+      = f.text_field :unit_description, style: "display:none"
       = f.text_field :unit_value_with_description,
           value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
     .field
@@ -57,7 +58,7 @@
         = f.check_box method_on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
         = t(:on_demand)
 %td.col-producer.field.naked_inputs
-  - if variant.hub_id.blank?
+  - if variant.source_variants.none?
     = render(SearchableDropdownComponent.new(form: f,
         name: :enterprise_id,
         aria_label: t('.enterprise_field_name'),
@@ -68,7 +69,7 @@
     = error_message_on variant, :enterprise
   - else
     .content
-      = variant.enterprise.name
+      = variant.enterprise&.name
 %td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,

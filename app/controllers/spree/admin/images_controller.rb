@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module Spree
   module Admin
     class ImagesController < ::Admin::ResourceController
@@ -11,7 +10,7 @@ module Spree
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
       belongs_to 'spree/product'
 
-      before_action :load_data
+      before_action :authorize_parent, only: [:create, :update]
 
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
@@ -82,6 +81,10 @@ module Spree
 
       private
 
+      def authorize_parent
+        authorize! :update, parent
+      end
+
       def collection
         parent.image
       end
@@ -94,16 +97,33 @@ module Spree
         Spree::Image.new(viewable: parent)
       end
 
-      def location_after_save
-        params[:return_url] || spree.admin_product_images_url(params[:product_id], @url_filters)
+      def parent
+        return @parent if @parent
+
+        if params[:variant_id]
+          @parent = Spree::Variant.includes(:product).find(params[:variant_id])
+          @variant = @parent
+          @product = @variant.product
+        else
+          @parent = Spree::Product.find(params[:product_id])
+          @product = @parent
+        end
+
+        @parent
       end
 
-      def load_data
-        @product = Product.find(params[:product_id])
+      def location_after_save
+        return params[:return_url] if params[:return_url].present?
+
+        if params[:variant_id]
+          admin_products_url
+        else
+          spree.admin_product_images_url(params[:product_id], @url_filters)
+        end
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Product'
+        @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
         @image.viewable_id = params[:image][:viewable_id]
       end
 
@@ -134,19 +154,20 @@ module Spree
         replacement_image.alt = previous_image.alt
         replacement_image.position = previous_image.position
         replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        replacement_image.viewable_type = 'Spree::Product'
+        replacement_image.viewable_type = previous_image.viewable_type
         replacement_image.viewable_id = params[:image][:viewable_id]
         replacement_image.attachment.attach(permitted_resource_params[:attachment])
 
-        unless replacement_image.save
-          @error_target = replacement_image
-          return false
+        Spree::Image.transaction do
+          replacement_image.save!
+          previous_image.destroy!
         end
 
-        previous_image.destroy!
         @object = @image = replacement_image
+      rescue ActiveRecord::RecordInvalid
+        @error_target = replacement_image
+        false
       end
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

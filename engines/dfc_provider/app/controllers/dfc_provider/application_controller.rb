@@ -88,7 +88,9 @@ module DfcProvider
       return render_v2(subject, *) unless subject.is_a?(Array)
 
       # DFCv2 requires containers for listing resources in an index action.
-      members = DfcV2Migration.up(*subject)
+      # We need to pass DFCv2 data into the container because the migration
+      # will skip the container itself as it's not a DFCv1 class.
+      members = migration.up(*subject)
       container = Container.new(url_for, members:)
       render_v2(container, *subject, *)
     end
@@ -98,10 +100,14 @@ module DfcProvider
     end
 
     def render_v2(*)
-      objects = DfcV2Migration.up(*)
+      objects = migration.up(*)
 
       render json: DfcLoader.connector_v2.export(*objects),
              content_type: 'application/ld+json; profile="dfc-v2"'
+    end
+
+    def migration
+      @migration ||= DfcV2Migration.new
     end
   end
 end

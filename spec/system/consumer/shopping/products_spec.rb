@@ -69,14 +69,12 @@ RSpec.describe "As a consumer I want to view products" do
 
       context "with linked variant" do
         let(:source_variant) { create(:variant, enterprise: supplier) }
-        let!(:variant) {
-          source_variant.create_linked_variant(user).tap{ |v| v.update! enterprise: distributor }
-        }
 
         before do
           # Producer grants distributor ability to create linked variant
           create(:enterprise_relationship, parent: supplier, child: distributor,
                                            permissions_list: [:create_linked_variants])
+          source_variant.create_linked_variant(user)
         end
 
         it "shows source enterprise name" do
@@ -159,6 +157,55 @@ RSpec.describe "As a consumer I want to view products" do
 
         close_modal(within_selector: '#shop-product-modal-container')
         expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
+      end
+
+      context "product grid view", feature: :product_grid_view do
+        let(:product3) {
+          create(:simple_product, enterprise_id: supplier.id, name: "Tomatoes")
+        }
+        let(:variant3) {
+          product3.variants.first
+        }
+        let(:variant4) {
+          create(:variant, product: product3)
+        }
+
+        before do
+          exchange1.update_attribute :pickup_time, "monday"
+          add_variant_to_order_cycle(exchange1, variant)
+          add_variant_to_order_cycle(exchange1, variant2)
+          add_variant_to_order_cycle(exchange1, variant3)
+          add_variant_to_order_cycle(exchange1, variant4)
+        end
+
+        it "displays products in a grid, with button for single variant product" do
+          product.description = "<script>alert('Dangerous!');</script><p>Safe</p>"
+          product.save!
+
+          visit shop_path
+
+          expect(page).to have_selector(".product-item", count: 3)
+          expect(page).to have_content("Beans")
+          expect(page).to have_content("Chickpeas")
+          expect(page).to have_content("Tomatoes")
+
+          # Add button is only displayed for single varint product
+          expect(page).to have_selector(".add-variant", count: 2)
+
+          # Product modal
+          click_link product.name
+          within(".reveal-modal") do
+            expect(page).to have_content product.name
+
+            # No insecure HTML
+            expect(html).to include "<p>Safe</p>"
+            expect(html).not_to include "<script>alert('Dangerous!');</script>"
+            expect(page).to have_content "alert('Dangerous!'); Safe"
+
+            # Product properties
+            expect(page).to have_selector("span", text: "Fresh and Fine")
+          end
+        end
       end
     end
 

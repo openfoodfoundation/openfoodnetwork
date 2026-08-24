@@ -17,6 +17,17 @@ module Reporting
           }
         end
 
+        def query_result
+          report_line_items.list(line_item_includes).group_by { |li|
+            [
+              li.variant_id,
+              li.price,
+              li.order.distributor_id,
+              li.order.shipping_method&.id
+            ]
+          }.values
+        end
+
         def rules
           [
             {
@@ -40,7 +51,10 @@ module Reporting
         end
 
         def line_item_includes
-          [{ order: :distributor,
+          [{ order: [
+               :distributor,
+               { shipments: { shipping_rates: :shipping_method } }
+             ],
              variant: [:product, :enterprise] }]
         end
       end

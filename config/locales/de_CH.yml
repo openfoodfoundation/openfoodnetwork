@@ -3571,6 +3571,9 @@ de_CH:
         add_to_cart: "Hinzufügen"
         in_cart: "im Warenkorb"
         quantity_in_cart: "%{quantity} im Warenkorb"
+        remaining_in_stock:
+          one: "Nur noch %{count} übrig"
+          other: "Nur noch %{count} übrig."
       bulk_buy_modal:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"

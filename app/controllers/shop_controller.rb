@@ -32,7 +32,6 @@ class ShopController < BaseController
     @product = distributed_products_relation.find_by(id: params[:product_id])
     return head :not_found unless @product
 
-    @supplier = @product.variants.first&.supplier
     @carousel_images = helpers.product_carousel_images_data(@product)
 
     render partial: "shop/product_modal", layout: false

@@ -148,7 +148,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       let!(:v_source) { p1.variants.first }
       let!(:v_sourced) {
         create(:variant, display_name: "Variant-sourced", product: p1,
-                         enterprise: source_enterprise, hub: enterprise)
+                         enterprise:)
       }
       let!(:enterprise_relationship) {
         # Enterprise grants me access to manage their variant
@@ -158,8 +158,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
       # I don't manage this hub, so shouldn't see see the sourced variant
       let!(:v_sourced_hidden) {
-        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: source_enterprise,
-                         hub:)
+        create(:variant, display_name: "Variant-hidden", product: p1, enterprise: hub)
       }
 
       before do
@@ -176,7 +175,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
           # Can't change the enterprise of a linked variant
           expect(page).not_to have_select "Enterprise"
-          expect(page).to have_content "Producer Enterprise"
+          expect(page).to have_content "My Enterprise"
         end
 
         # But not variants sourced by other hubs

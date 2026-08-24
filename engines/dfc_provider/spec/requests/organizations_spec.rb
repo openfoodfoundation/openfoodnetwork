@@ -78,6 +78,7 @@ RSpec.describe "Organizations", swagger_doc: "dfc.yaml" do
             expect(response.body).to include '"@type":"dfc-b:Organization"'
             expect(response.body).to include "host/api/dfc/organizations/10000"
             expect(response.body).to include "Fred's Farm"
+            expect(response.body).to include "organizations/10000#mainContact"
             expect(response.body).to include "#certification-30000"
             expect(response.body).to include "Organic"
           end

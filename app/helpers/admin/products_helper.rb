@@ -2,18 +2,44 @@
 
 module Admin
   module ProductsHelper
-    def product_image_form_path(product)
-      if product.image.present?
-        edit_admin_product_image_path(product.id, product.image.id)
+    include SharedHelper
+
+    def image_form_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        product_id = imageable.product_id
+        extra = { variant_id: imageable.id }
       else
-        new_admin_product_image_path(product.id)
+        product_id = imageable.id
+        extra = {}
+      end
+
+      if imageable.image.present?
+        edit_admin_product_image_path(product_id, imageable.image.id, extra)
+      else
+        new_admin_product_image_path(product_id, extra)
       end
     end
 
+    NEW_VARIANT_TEMPLATE_FIELDS = %i[
+      tax_category_id
+      primary_taxon_id
+      enterprise_id
+      variant_unit
+      variant_unit_scale
+      variant_unit_name
+      unit_value
+      price
+    ].freeze
+
     def prepare_new_variant(product, producer_id = nil)
+      template = product.variants.last
       product.variants.build do |new_variant|
-        new_variant.enterprise_id = producer_id
-        new_variant.tax_category_id = product.variants.first.tax_category_id
+        copy_template_fields(template, new_variant) if template
+        new_variant.on_hand_desired = 0
+        # Integer producer_id explicitly overrides the template's enterprise_id.
+        # The view passes an AR relation (allowed_producers), not an ID, so this
+        # guard ensures only a real ID overrides the copied value.
+        new_variant.enterprise_id = producer_id if producer_id.is_a?(Integer)
       end
     end
 
@@ -35,21 +61,6 @@ module Admin
       session[:products_return_to_url] || admin_products_url
     end
 
-    def product_carousel_images_data(product, size: :large)
-      images = product.images.to_a
-      show_caption = images.many?
-
-      return [default_carousel_image(size, product)] if images.empty?
-
-      images.map.with_index do |image, index|
-        {
-          url: image.url(size),
-          alt: product_image_alt_text(image, product),
-          caption: show_caption ? "#{product.name} - #{index + 1}" : nil
-        }
-      end
-    end
-
     # if user hasn't saved any preferences on products page and there's only one producer;
     # we need to hide producer column
     def hide_producer_column?(allowed_producers)
@@ -60,11 +71,6 @@ module Admin
     # the enterprises the user manages
     def variant_tag_enabled?(user)
       feature?(:variant_tag, user) || feature?(:variant_tag, *user.enterprises)
-    end
-
-    def managed_product_enterprises
-      @managed_product_enterprises ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises
     end
 
     # Query only name of the model to avoid loading the whole record
@@ -88,9 +94,6 @@ module Admin
                         allowed_source_producers.include?(variant.enterprise)
                        )
 
-      # Filter out other hub's variants that are linked to mine
-      return false if variant.hub.present? && managed_product_enterprises.exclude?(variant.hub)
-
       true
     end
 
@@ -98,23 +101,23 @@ module Admin
     # isn't a variant we can manage
     def variant_readonly?(variant, allowed_producers, allowed_source_producers)
       return true if allowed_producers.exclude?(variant.enterprise) &&
-                     allowed_source_producers.include?(variant.enterprise) && variant.hub_id.blank?
+                     allowed_source_producers.include?(variant.enterprise)
 
       false
     end
 
-    private
+    def image_modal_resource_name(variant, product)
+      resource_name = product.name
 
-    def product_image_alt_text(image, product)
-      image.alt.presence || product.name
+      variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
     end
 
-    def default_carousel_image(size, product)
-      {
-        url: Spree::Image.default_image_url(size),
-        alt: product.name,
-        caption: nil
-      }
+    private
+
+    def copy_template_fields(template, new_variant)
+      NEW_VARIANT_TEMPLATE_FIELDS.each do |field|
+        new_variant.public_send(:"#{field}=", template.public_send(field))
+      end
     end
   end
 end

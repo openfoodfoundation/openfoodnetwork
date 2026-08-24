@@ -22,8 +22,8 @@ module Spree
         else
           flash[:error] = Spree.t('admin.mail_methods.testmail.delivery_error')
         end
-      rescue StandardError => e
-        flash[:error] = Spree.t('admin.mail_methods.testmail.error') % ({ e: })
+      rescue StandardError
+        flash[:error] = Spree.t('admin.mail_methods.testmail.error')
       ensure
         redirect_to spree.edit_admin_mail_methods_url
       end

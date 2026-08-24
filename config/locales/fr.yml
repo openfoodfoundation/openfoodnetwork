@@ -4064,7 +4064,7 @@ fr:
   adjustments: "Ajustements"
   payments: "Paiements"
   return_authorizations: "Autorisations de retours"
-  credit_owed: "Avoir :"
+  credit_owed: "Avoir"
   new_adjustment: "Nouvel ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
@@ -4113,7 +4113,7 @@ fr:
     card_number: "Numéro de la carte"
     category: "Catégorie"
     created_successfully: "Créé avec succès"
-    credit: "Avoir :"
+    credit: "Avoir"
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
@@ -4948,10 +4948,10 @@ fr:
           settings: Paramètres du Compte
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
-        open_orders: Commandes Ouvertes
-        past_orders: Commandes Passées
+        open_orders: Commandes en cours
+        past_orders: Commandes passées
       transactions:
-        transaction_history: Historique des Transactions
+        transaction_history: Historique des Achats
         authorisation_required: Autorisation nécessaire
         authorise: Autoriser
       customer_account_transactions:

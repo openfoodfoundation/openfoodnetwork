@@ -57,7 +57,7 @@ FileUtils.chdir APP_ROOT do
   # system! "bin/rails restart"
   # Faster to do it manually:
   system! "touch tmp/restart.txt"
-  
+
   # puts "\n== Configuring puma-dev =="
   # system "ln -nfs #{APP_ROOT} ~/.puma-dev/#{APP_NAME}"
   # system "curl -Is https://#{APP_NAME}.test/up | head -n 1"

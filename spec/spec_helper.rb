@@ -5,7 +5,10 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 # for full configuration, see .simplecov
-require 'simplecov' if ENV["COVERAGE"]
+if ENV["COVERAGE"]
+  require "simplecov"
+  SimpleCov.start
+end
 
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'
@@ -162,6 +165,14 @@ RSpec.configure do |config|
   # controller spec and route helper use "test.host" as testing host, while request spec use
   # "www.example.com", we set the request host to "test.host" to avoid issue with unsafe redirect
   config.before(:all, type: :request) { host! "test.host" }
+
+  # Make FFaker's random data deterministic so that a given run is reproducible.
+  # With random ordering we follow RSpec's seed (reproduce with `--seed`);
+  # otherwise we pin a fixed seed. Data still varies with the RSpec seed but is
+  # no longer a source of unreproducible flakiness. `reset!` before each example
+  # restarts the sequence so data is independent of run order.
+  config.before(:all) { FFaker::Random.seed = config.seed_used? ? config.seed : 0 }
+  config.before(:each) { FFaker::Random.reset! }
 
   # Reset all feature toggles to prevent leaking.
   config.before(:each) do

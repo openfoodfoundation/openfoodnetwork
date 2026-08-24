@@ -23,6 +23,29 @@ RSpec.describe Api::V0::ShipmentsController do
     end
   end
 
+  context "as an enterprise user" do
+    let(:producer) { create(:supplier_enterprise) }
+    let(:current_api_user) { create(:user, enterprises: [producer]) }
+    let(:distributor_other) { create(:distributor_enterprise) }
+    let(:order_other) { create(:order, distributor: distributor_other) }
+    let(:variant) { create(:variant, enterprise: producer) }
+
+    context "#create" do
+      it "cannot create a shipment for another enterprise's order" do
+        params = {
+          quantity: 2,
+          variant_id: variant.to_param,
+          order_id: order_other.number,
+          format: :json
+        }
+
+        api_post :create, params
+
+        assert_unauthorized!
+      end
+    end
+  end
+
   context "as an admin" do
     let(:current_api_user) { build(:admin_user) }
     let!(:order) { shipment.order }
@@ -402,6 +425,16 @@ RSpec.describe Api::V0::ShipmentsController do
 
           expect_valid_response
           expect(inventory_units_for(variant).size).to eq 0
+        end
+
+        it 'removes a soft-deleted variant from the shipment' do
+          deleted_variant = order.line_items.first.variant
+          deleted_variant.delete
+
+          spree_put :remove, params
+
+          expect_valid_response
+          expect(inventory_units_for(deleted_variant).size).to eq 0
         end
 
         it 'returns error code when removing from order contents fails' do

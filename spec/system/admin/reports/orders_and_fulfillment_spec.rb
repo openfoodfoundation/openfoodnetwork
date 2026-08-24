@@ -379,20 +379,22 @@ RSpec.describe "Orders And Fulfillment" do
               end
 
               it "aggregates results per variant" do
-                expect(all('table.report__table tbody tr').count).to eq(4)
-                # 1 row per variant = 2 rows
+                expect(all('table.report__table tbody tr').count).to eq(5)
+                # 1 row per variant per shipping method = 3 rows
                 # 2 TOTAL rows
-                # 4 rows total
+                # 5 rows total
 
                 rows = find("table.report__table").all("tbody tr")
                 table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
                 expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
-                                        "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-                expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
-                expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                        "Distributor Name", "1", "10.0", "10.0", "UPS Ground"])
+                expect(table[1]).to eq(["Supplier Name", "Baked Beans", "1g Big",
+                                        "Distributor Name", "2", "10.0", "20.0", "UPS Ground"])
+                expect(table[2]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+                expect(table[3]).to eq(["Supplier Name", "Baked Beans", "1g Small",
                                         "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-                expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
+                expect(table[4]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
               end
             end
 
@@ -464,17 +466,19 @@ RSpec.describe "Orders And Fulfillment" do
               rows = find("table.report__table").all("tbody tr")
               table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
-              expect(table.count).to eq(4)
-              # 1 row per variant = 2 rows
+              expect(table.count).to eq(5)
+              # 1 row per variant per shipping method = 3 rows
               # 2 TOTAL rows for distributors
-              # 4 rows total
+              # 5 rows total
 
               expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
-                                      "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-              expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
-              expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                      "Distributor Name", "1", "10.0", "10.0", "UPS Ground"])
+              expect(table[1]).to eq(["Supplier Name", "Baked Beans", "1g Big",
+                                      "Distributor Name", "2", "10.0", "20.0", "UPS Ground"])
+              expect(table[2]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+              expect(table[3]).to eq(["Supplier Name", "Baked Beans", "1g Small",
                                       "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-              expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
+              expect(table[4]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
             end
           end
         end

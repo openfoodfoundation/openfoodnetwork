@@ -25,13 +25,23 @@ jobs:
         ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 30
         env:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+      # Redis settings shared with all jobs
+      redis: &redis
+        image: redis # ofn-install uses latest stable version
+        ports: ["6379:6379"]
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 30
     strategy:
       fail-fast: false
       matrix:
@@ -44,11 +54,6 @@ jobs:
         ci_node_index: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -98,7 +103,7 @@ jobs:
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -115,6 +120,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -127,11 +133,6 @@ jobs:
         ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -179,7 +180,7 @@ jobs:
         with:
           name: simplecov-chunk-system-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -205,6 +206,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -217,11 +219,6 @@ jobs:
         ci_node_index: [0, 1]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -270,7 +267,7 @@ jobs:
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -287,6 +284,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
+      redis: *redis
     strategy:
       fail-fast: false
       matrix:
@@ -299,11 +297,6 @@ jobs:
         ci_node_index: [0, 1, 2]
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.8.1
-        with:
-          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -352,7 +345,7 @@ jobs:
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
-          retention-days: 2 # doesn't need to be long, because it's the combined results that matter
+          retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
 
@@ -425,7 +418,23 @@ jobs:
           if-no-files-found: ignore
           include-hidden-files: true
       - name: Compare SimpleCov results with Undercover
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          git fetch --no-tags origin ${{ github.event.pull_request.base.sha }}:master
-          bundle exec undercover
-        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't fetch master in the master branch
+          base_sha="$PR_BASE_SHA"
+          if [ -z "$base_sha" ]; then
+            # Pushed without a pull request: ask GitHub for the merge base with
+            # upstream master, the same way it does when a PR is opened. Without
+            # this, a fork's own master is used and it may be months behind.
+            upstream=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.parent.full_name // .full_name')
+            base_sha=$(gh api "repos/$upstream/compare/master...${GITHUB_REPOSITORY%%/*}:$GITHUB_SHA" \
+                       --jq '.merge_base_commit.sha')
+          fi
+          # A fork shares its object store with its upstream, so `origin` can serve
+          # a commit that only exists upstream. Depth 1 is enough: undercover falls
+          # back to a direct diff when it can't compute a merge base, and this is
+          # already the merge base.
+          git fetch --no-tags --depth=1 origin "$base_sha"
+          bundle exec undercover --compare "$base_sha"
+        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself

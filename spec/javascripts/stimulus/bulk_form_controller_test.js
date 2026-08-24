@@ -158,6 +158,49 @@ describe("BulkFormController", () => {
           expect(select1.classList).toContain("changed");
         });
       });
+
+      describe("select-one with TomSelect duplicate options", () => {
+        beforeEach(() => {
+          document.body.innerHTML = `
+            <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
+              <table class="products">
+                <div data-record-id="1">
+                  <select id="select1">
+                    <option value="1" selected>Option 1</option>
+                    <option value="2">Option 2</option>
+                  </select>
+                </div>
+                <input type="submit">
+              </table>
+            </form>
+          `;
+        });
+
+        it("detects no change after revert when duplicate options exist", () => {
+          expect(select1.classList).not.toContain("changed");
+
+          // Change to a different value
+          select1.value = "2";
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).toContain("changed");
+
+          // Simulate TomSelect remote search: adds a duplicate <option>
+          // with the same value but no defaultSelected. Insert before
+          // the original so the browser picks it as selectedOptions[0].
+          const duplicate = document.createElement("option");
+          duplicate.value = "1";
+          duplicate.text = "Option 1";
+          select1.insertBefore(duplicate, select1.options[0]);
+
+          // Revert to original value.
+          // With old reference comparison (selectedOptions[0] !== defaultSelected),
+          // the duplicate (no defaultSelected) !== original (has defaultSelected),
+          // falsely reporting as changed. Value comparison fixes this.
+          select1.value = "1";
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).not.toContain("changed");
+        });
+      });
     });
 
     describe("activating sections, and showing a summary", () => {
@@ -219,6 +262,163 @@ describe("BulkFormController", () => {
         expect(disable1_element.disabled).toBe(false);
         expect(disable2.classList).not.toContain("disabled-section");
         expect(disable2_element.disabled).toBe(false);
+      });
+    });
+
+    describe("submitting only changed fields", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form data-controller="bulk-form">
+            <table class="products">
+              <tbody data-record-id="1">
+                <tr>
+                  <td>
+                    <input id="product_1_id" type="hidden" name="products[0][id]" value="1">
+                    <input id="product_1_name" type="text" name="products[0][name]" value="Apples">
+                  </td>
+                </tr>
+                <tr id="spree_variant_11">
+                  <td class="field">
+                    <input id="variant_11_id" type="hidden" name="products[0][variants_attributes][0][id]" value="11">
+                    <input id="variant_11_unit_value" type="text" style="display:none" name="products[0][variants_attributes][0][unit_value]" value="100">
+                    <input id="variant_11_display_name" type="text" name="products[0][variants_attributes][0][display_name]" value="Small">
+                  </td>
+                </tr>
+                <tr id="spree_variant_12">
+                  <td class="field">
+                    <input id="variant_12_id" type="hidden" name="products[0][variants_attributes][1][id]" value="12">
+                    <input id="variant_12_display_name" type="text" name="products[0][variants_attributes][1][display_name]" value="Large">
+                  </td>
+                </tr>
+              </tbody>
+              <tbody data-record-id="2">
+                <tr>
+                  <td>
+                    <input id="product_2_id" type="hidden" name="products[1][id]" value="2">
+                    <input id="product_2_name" type="text" name="products[1][name]" value="Oranges">
+                  </td>
+                </tr>
+              </tbody>
+              <input id="submit_button" type="submit">
+            </table>
+          </form>
+        `;
+      });
+
+      it("keeps only changed fields and required ids enabled", () => {
+        variant_11_display_name.value = "Small bag";
+        variant_11_display_name.dispatchEvent(new Event("input"));
+
+        // Simulate variant_controller updating unit_value and firing input event.
+        variant_11_unit_value.value = "200";
+        variant_11_unit_value.dispatchEvent(new Event("input", { bubbles: true }));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        expect(product_1_id.disabled).toBe(false);
+        expect(variant_11_id.disabled).toBe(false);
+        expect(variant_11_display_name.disabled).toBe(false);
+        expect(variant_11_unit_value.disabled).toBe(false);
+
+        expect(product_1_name.disabled).toBe(true);
+        expect(variant_12_id.disabled).toBe(true);
+        expect(variant_12_display_name.disabled).toBe(true);
+        expect(product_2_id.disabled).toBe(true);
+        expect(product_2_name.disabled).toBe(true);
+        expect(submit_button.disabled).toBe(false);
+      });
+
+      it("keeps the product id in submitted form data for a variant-only change", () => {
+        variant_11_display_name.value = "Small bag";
+        variant_11_display_name.dispatchEvent(new Event("input"));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        expect(formData.get("products[0][id]")).toBe("1");
+        expect(formData.get("products[0][variants_attributes][0][id]")).toBe("11");
+        expect(formData.get("products[0][variants_attributes][0][display_name]")).toBe("Small bag");
+        expect(formData.has("products[1][id]")).toBe(false);
+      });
+    });
+
+    describe("submitting new (unsaved) variant rows", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form data-controller="bulk-form">
+            <table class="products">
+              <tbody data-record-id="1">
+                <tr>
+                  <td>
+                    <input id="product_1_id" type="hidden" name="products[0][id]" value="1">
+                    <input id="product_1_name" type="text" name="products[0][name]" value="Apples">
+                  </td>
+                </tr>
+                <tr id="spree_variant_11">
+                  <td class="field">
+                    <input id="variant_11_id" type="hidden" name="products[0][variants_attributes][0][id]" value="11">
+                    <input id="variant_11_display_name" type="text" name="products[0][variants_attributes][0][display_name]" value="Small">
+                  </td>
+                </tr>
+                <tr id="new_variant_row" data-new-record="true">
+                  <td class="field">
+                    <input id="new_variant_id" type="hidden" name="products[0][variants_attributes][1][id]">
+                    <input id="new_variant_display_name" type="text" name="products[0][variants_attributes][1][display_name]" value="Medium">
+                    <input id="new_variant_price" type="text" name="products[0][variants_attributes][1][price]" value="5.99">
+                  </td>
+                </tr>
+              </tbody>
+              <input id="submit_button" type="submit">
+            </table>
+          </form>
+        `;
+      });
+
+      it("enables all elements in new variant rows on submit", () => {
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        // New variant row elements should be enabled even though values match defaults
+        expect(new_variant_id.disabled).toBe(false);
+        expect(new_variant_display_name.disabled).toBe(false);
+        expect(new_variant_price.disabled).toBe(false);
+
+        // Product identity should also be enabled for the new variant
+        expect(product_1_id.disabled).toBe(false);
+
+        // Existing unchanged variant should be disabled
+        expect(variant_11_id.disabled).toBe(true);
+        expect(variant_11_display_name.disabled).toBe(true);
+
+        // Product name unchanged, should be disabled
+        expect(product_1_name.disabled).toBe(true);
+      });
+
+      it("includes new variant values in submitted form data", () => {
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        // Product id should be present
+        expect(formData.get("products[0][id]")).toBe("1");
+
+        // New variant values should be present (not disabled)
+        expect(formData.get("products[0][variants_attributes][1][display_name]")).toBe("Medium");
+        expect(formData.get("products[0][variants_attributes][1][price]")).toBe("5.99");
+        // Hidden id field with empty value should still be submitted
+        expect(formData.has("products[0][variants_attributes][1][id]")).toBe(true);
+      });
+
+      it("submits new variant values even when a user changes them", () => {
+        new_variant_display_name.value = "Large";
+        new_variant_display_name.dispatchEvent(new Event("input"));
+
+        document.querySelector("form").dispatchEvent(new Event("submit"));
+
+        const formData = new FormData(document.querySelector("form"));
+
+        expect(formData.get("products[0][variants_attributes][1][display_name]")).toBe("Large");
+        expect(formData.get("products[0][variants_attributes][1][price]")).toBe("5.99");
       });
     });
   });
@@ -303,6 +503,91 @@ describe("BulkFormController", () => {
         input1b.dispatchEvent(new Event("input"));
         expect(input1b.classList).not.toContain("changed");
       });
+    });
+  });
+
+  describe("New unsaved variant detection", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form"
+              data-action="rails-nested-form:add->bulk-form#toggleFormChanged">
+          <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
+          <table class="products">
+            <div data-record-id="1">
+              <input id="input1" type="text" value="initial">
+            </div>
+          </table>
+        </form>
+      `;
+    });
+
+    it("shows save button when a new (unsaved) variant id field is present (no value attribute)", () => {
+      // Rails renders new-record hidden id fields with no value attribute
+      input1.insertAdjacentHTML(
+        "afterend",
+        '<input id="new_variant_id" type="hidden" name="form[products][0][variants_attributes][1][id]">',
+      );
+
+      form.dispatchEvent(new Event("rails-nested-form:add"));
+
+      expect(actions.classList).not.toContain("hidden");
+    });
+
+    it("does not show save button when all variant ids are present (existing variants)", () => {
+      input1.insertAdjacentHTML(
+        "afterend",
+        '<input id="existing_variant_id" type="hidden" name="form[products][0][variants_attributes][0][id]" value="42">',
+      );
+
+      form.dispatchEvent(new Event("rails-nested-form:add"));
+
+      expect(actions.classList).toContain("hidden");
+    });
+  });
+
+  describe("popoutEmptyVariantUnit", () => {
+    // Trigger the action via a custom event wired to popoutEmptyVariantUnit, the same
+    // pattern used by the rest of this test file to invoke controller actions.
+    const triggerPopout = () => form.dispatchEvent(new Event("trigger-popout"));
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form"
+              data-action="trigger-popout->bulk-form#popoutEmptyVariantUnit">
+          <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
+          <table class="products">
+            <tr>
+              <td class="col-unit_scale">
+                <input id="variant_unit_field" type="hidden"
+                       name="form[products][0][variants_attributes][0][variant_unit]" value="">
+              </td>
+              <td class="col-unit">
+                <button id="unit_popout_button" class="popout__button"></button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      `;
+    });
+
+    it("clicks the button when its text is empty and variant_unit is not set", () => {
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).toHaveBeenCalled();
+    });
+
+    it("does not click the button when variant_unit is already set (pre-filled variant)", () => {
+      variant_unit_field.value = "weight";
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).not.toHaveBeenCalled();
+    });
+
+    it("does not click the button when its text is not empty", () => {
+      unit_popout_button.textContent = "100 g";
+      const clickSpy = jest.spyOn(unit_popout_button, "click");
+      triggerPopout();
+      expect(clickSpy).not.toHaveBeenCalled();
     });
   });
 

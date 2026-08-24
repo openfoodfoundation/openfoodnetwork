@@ -163,6 +163,35 @@ RSpec.describe Sets::ProductSet do
         expect(product_set.saved_count).to eq 1
       end
 
+      context "when variant_unit_scale and unit_value both change" do
+        let(:variant_attributes) { { variant_unit_scale: 1000, unit_value: 2000 } }
+
+        before do
+          variant.update!(variant_unit: "weight", variant_unit_scale: 1, unit_value: 1)
+        end
+
+        it "keeps submitted unit_value" do
+          expect {
+            product_set.save
+            variant.reload
+          }.to change { variant.variant_unit_scale }.to(1000)
+            .and change { variant.unit_value }.to(2000)
+        end
+      end
+
+      context "when variant_unit_scale changes and submitted unit_value is non-numeric" do
+        let(:variant_attributes) { { variant_unit_scale: 1000, unit_value: "abc" } }
+
+        before do
+          variant.update!(variant_unit: "weight", variant_unit_scale: 1, unit_value: 1)
+        end
+
+        it "does not apply scale conversion and keeps validation errors" do
+          expect(product_set.save).to eq false
+          expect(product_set.errors.full_messages).to include("Variant unit value is not a number")
+        end
+      end
+
       shared_examples "nothing saved" do
         it "doesn't update product" do
           expect {

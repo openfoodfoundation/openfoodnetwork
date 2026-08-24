@@ -8,6 +8,46 @@ RSpec.describe Spree::Admin::PaymentsController do
     sign_in user
   end
 
+  describe "GET /admin/order/:order_number/payments/:id" do
+    let(:payment) do
+      create(
+        :payment,
+        order:,
+        response_code: "pi_123",
+        amount: order.total,
+        state: "completed"
+      )
+    end
+
+    before do
+      order.update(payments: [])
+      order.payments << payment
+    end
+
+    it "shows a payment" do
+      get "/admin/orders/#{order.number}/payments/#{payment.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    context "with a payment that doesn't belong to the order" do
+      let(:other_payment) do
+        create(
+          :payment,
+          response_code: "pi_123",
+          amount: 250.00,
+          state: "completed"
+        )
+      end
+
+      it "returns not found" do
+        get "/admin/orders/#{order.number}/payments/#{other_payment.id}"
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
   describe "POST /admin/orders/:order_number/payments.json" do
     let(:params) do
       {
@@ -167,10 +207,32 @@ RSpec.describe Spree::Admin::PaymentsController do
       end
     end
 
-    # TODO with internal_void event
+    context "with a payment that doesn't belong to the order" do
+      let(:other_payment) do
+        create(
+          :payment,
+          payment_method: stripe_payment_method,
+          response_code: "pi_123",
+          amount: 250.00,
+          state: "completed"
+        )
+      end
+
+      it "returns not found" do
+        put(
+          "/admin/orders/#{order.number}/payments/#{other_payment.id}/fire?e=void",
+          params: {},
+          headers:
+        )
+
+        expect(response).to have_http_status(:not_found)
+        expect(other_payment.reload.state).to eq("completed")
+      end
+    end
+
     context "with 'void' event" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
       end
 
       it "calls void_transaction! on payment" do
@@ -214,7 +276,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "with 'capture_and_complete_order' event" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
       end
 
       it "calls capture_and_complete_order! on payment" do
@@ -328,7 +390,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
     context "when something unexpected happen" do
       before do
-        allow(Spree::Payment).to receive(:find).and_return(payment)
+        return_mocked_payment(payment)
         allow(payment).to receive(:void_transaction!).and_raise(StandardError, "Unexpected !")
       end
 
@@ -406,5 +468,10 @@ RSpec.describe Spree::Admin::PaymentsController do
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
     OrderManagement::Order::Updater.new(order).update_voucher
+  end
+
+  def return_mocked_payment(payment)
+    allow(Spree::Order).to receive(:find_by!).and_return(order)
+    allow(order.payments).to receive(:find).with(payment.id.to_s).and_return(payment)
   end
 end
