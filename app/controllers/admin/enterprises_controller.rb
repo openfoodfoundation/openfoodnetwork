@@ -118,7 +118,7 @@ module Admin
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
-        redirect_to main_app.admin_enterprises_path
+        redirect_to main_app.admin_enterprises_path(q: search_filter_params)
       else
         touched_enterprises = @enterprise_set.collection.select(&:changed?)
         @enterprise_set.collection.to_a.select! { |e| touched_enterprises.include? e }
@@ -235,6 +235,11 @@ module Admin
       @countries = Spree::Country.order(:name)
     end
 
+    def search_filter_params
+      q = params[:q]
+      q.is_a?(ActionController::Parameters) ? q.to_unsafe_h : nil
+    end
+
     def collection
       case action
       when :for_order_cycle
@@ -255,13 +260,13 @@ module Admin
             order('is_primary_producer ASC, name')
         elsif json_request?
           OpenFoodNetwork::Permissions.new(spree_current_user)
-            .editable_enterprises.ransack(params[:q]).result
+            .editable_enterprises.ransack(params[:q]).result.distinct
         else
           Enterprise.where("1=0")
         end
       when :visible
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises
-          .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result
+          .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result.distinct
       else
         bulk_update_collection
       end

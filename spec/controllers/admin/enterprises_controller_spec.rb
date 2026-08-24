@@ -700,6 +700,40 @@ RSpec.describe Admin::EnterprisesController do
         expect(unmanaged_enterprise.reload.owner).to eq original_owner
       end
     end
+
+    context "when a search filter (q param) is present" do
+      it "preserves the filter on redirect after a successful update" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = {
+          q: { name_i_cont: profile_enterprise1.name },
+          sets_enterprise_set: { collection_attributes: {
+            '0' => { id: profile_enterprise1.id, visible: 'false' }
+          } }
+        }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(response).to redirect_to admin_enterprises_path(
+          q: { name_i_cont: profile_enterprise1.name }
+        )
+      end
+
+      it "does not raise when q is submitted in array notation instead of a hash" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = {
+          q: ["a", "b"],
+          sets_enterprise_set: { collection_attributes: {
+            '0' => { id: profile_enterprise1.id, visible: 'false' }
+          } }
+        }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
+    end
   end
 
   describe "for_order_cycle" do
@@ -799,6 +833,17 @@ RSpec.describe Admin::EnterprisesController do
         .with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
       get :visible, format: :json
     end
+
+    it "does not duplicate an enterprise with multiple matching managers" do
+      manager_a = create(:user, email: "team-a@example.com")
+      manager_b = create(:user, email: "team-b@example.com")
+      create(:enterprise_role, user: manager_a, enterprise: visible_enterprise)
+      create(:enterprise_role, user: manager_b, enterprise: visible_enterprise)
+
+      get :visible, params: { q: { users_email_i_cont: "team" } }, format: :json
+
+      expect(assigns(:collection).to_a.count { |e| e == visible_enterprise }).to eq 1
+    end
   end
 
   describe "index" do
@@ -894,6 +939,17 @@ RSpec.describe Admin::EnterprisesController do
           get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2
           expect(assigns(:collection)).not_to include enterprise3
+        end
+
+        it "does not duplicate an enterprise with multiple matching managers" do
+          manager_a = create(:user, email: "team-a@example.com")
+          manager_b = create(:user, email: "team-b@example.com")
+          create(:enterprise_role, user: manager_a, enterprise: enterprise1)
+          create(:enterprise_role, user: manager_b, enterprise: enterprise1)
+
+          get :index, params: { q: { users_email_i_cont: "team" } }, format: :json
+
+          expect(assigns(:collection).to_a.count { |e| e == enterprise1 }).to eq 1
         end
       end
     end
