@@ -176,6 +176,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'simplecov', require: false  
   gem 'simplecov-cobertura'
+  gem 'coveralls_reborn', require: false
   gem 'undercover', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false

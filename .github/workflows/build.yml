@@ -114,6 +114,12 @@ jobs:
           files: coverage/coverage.xml          
           fail_ci_if_error: true
 
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@v2
+        with:
+          flag-name: run-${{ join(matrix.*, '-') }}
+          parallel: true
+
       - name: Archive debug log files
         if: runner.debug
         uses: actions/upload-artifact@v7
@@ -122,6 +128,17 @@ jobs:
           path: log/*
           retention-days: 7
           if-no-files-found: ignore
+
+  finish:
+    needs: controllers_and_models
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@v2
+      with:
+        parallel-finished: true
+        carryforward: "run-1,run-2"
 
   system:
     runs-on: ubuntu-22.04
