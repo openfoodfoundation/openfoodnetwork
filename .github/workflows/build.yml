@@ -106,6 +106,13 @@ jobs:
           retention-days: 14 # long enough to re-run one job later and still collate all results
           if-no-files-found: ignore
           include-hidden-files: true
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/coverage.xml          
+          fail_ci_if_error: true
 
       - name: Archive debug log files
         if: runner.debug

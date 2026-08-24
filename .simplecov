@@ -14,7 +14,5 @@ SimpleCov.configure do
   # - /^\/db\//
   skip "/bin/"
   skip "/config/" # to also skip engine config
-  skip "/script"
-
-  formatter SimpleCov::Formatter::SimpleFormatter
+  skip "/script"  
 end
