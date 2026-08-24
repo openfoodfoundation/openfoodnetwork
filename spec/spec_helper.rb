@@ -7,6 +7,8 @@ ENV["RAILS_ENV"] ||= 'test'
 # for full configuration, see .simplecov
 if ENV["COVERAGE"]
   require "simplecov"
+  require 'simplecov-cobertura'
+  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
   SimpleCov.start
 end
 

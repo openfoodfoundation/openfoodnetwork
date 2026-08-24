@@ -174,7 +174,8 @@ group :test do
   gem 'pdf-reader'
   gem 'puffing-billy'
   gem 'rails-controller-testing'
-  gem 'simplecov', require: false
+  gem 'simplecov', require: false  
+  gem 'simplecov-cobertura'
   gem 'undercover', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false

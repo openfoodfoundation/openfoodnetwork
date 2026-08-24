@@ -16,5 +16,5 @@ SimpleCov.configure do
   skip "/config/" # to also skip engine config
   skip "/script"
 
-  formatter SimpleCov::Formatter::SimpleFormatter
+  formatter SimpleCov::Formatter::CoberturaFormatter  
 end
