@@ -3634,9 +3634,9 @@ hasown@^2.0.2:
     function-bind "^1.1.2"
 
 hotkeys-js@*:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-4.0.4.tgz#27cf0b69140225e89bf7e75d3b7c799e144ff4e9"
-  integrity sha512-hseNiqaskxSnujuGp8aRMLJfcjaFiTSS0I2GQhqru82N/sx6CGyUf6pvU5X1iycvw2EqmvILkFIb5OzYFXY+9A==
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-4.0.5.tgz#4790940ac9738243b7a0fde17bf4494eb11188ed"
+  integrity sha512-Os0VaEH8gvOSzwZnEDU2yn7G868OfFiLydUHIe2uln7Fi9Ii1xhOCoPGu27RkZYWYqM93gC4xoyONCZE9iiwLw==
 
 html-encoding-sniffer@^4.0.0:
   version "4.0.0"
