@@ -42,7 +42,6 @@ class ProductsRenderer
         simple_product_attrs = p.slice(*ViewData::SimpleProduct.members)
         variant_attrs[:product] = ViewData::SimpleProduct.new(**simple_product_attrs)
         variant_attrs[:unit_price] = variant.unit_price
-        variant_attrs[:unit_price_price] = variant.unit_price_price
         variant_attrs[:display_unit_price] = variant.display_unit_price
         ViewData::Variant.new(**variant_attrs)
       end
