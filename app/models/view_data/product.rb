@@ -2,5 +2,5 @@
 
 # This represent a read only Product value object, to be used in the view.
 # `:variants` is an array of ViewData::Variant
-ViewData::Product = Data.define(:id, :name, :description, :image, :images,
+ViewData::Product = Data.define(:id, :name, :description, :image, :images, :variant_images,
                                 :properties_including_inherited, :variants)
