@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'open_food_network/add_to_param'
 require 'open_food_network/property_merge'
 
 # PRODUCTS
@@ -18,10 +19,13 @@ require 'open_food_network/property_merge'
 #
 module Spree
   class Product < ApplicationRecord
+    extend OpenFoodNetwork::AddToParam
     include LogDestroyPerformer
     include ProductSortByStocks
 
     self.belongs_to_required_by_default = false
+
+    add_to_param :name
 
     acts_as_paranoid
 
