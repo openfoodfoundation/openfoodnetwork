@@ -175,7 +175,7 @@ module Admin
     end
 
     def allowed_source_producers
-      @allowed_source_producers ||= permissions.allowed_source_producers
+      @allowed_source_producers ||= permissions.enterprises_granting_linked_variants
     end
 
     def available_tags

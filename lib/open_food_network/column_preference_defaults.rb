@@ -146,9 +146,11 @@ module OpenFoodNetwork
       }
     end
 
+    # Show the column only if there's more than one enterprise that could appear there.
     def display_producer_column?(user)
       permissions = OpenFoodNetwork::Permissions.new(user)
-      (permissions.allowed_producers | permissions.allowed_source_producers).many?
+      (permissions.allowed_producers |
+        permissions.enterprises_granting_linked_variants).many?
     end
   end
 end

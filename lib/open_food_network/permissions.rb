@@ -110,11 +110,6 @@ module OpenFoodNetwork
       managed_product_enterprises.is_primary_producer + enterprises_granted_linked_variants
     end
 
-    # Enterprises that user is allowed to create linked variants from
-    def allowed_source_producers
-      enterprises_granting_linked_variants.is_primary_producer
-    end
-
     def manages_one_enterprise?
       @user.enterprises.length == 1
     end
