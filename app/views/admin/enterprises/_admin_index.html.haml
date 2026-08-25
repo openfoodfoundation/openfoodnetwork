@@ -11,10 +11,9 @@
       = label_tag :q_users_email_i_cont, t('.manager_email')
       = text_field_tag 'q[users_email_i_cont]', search_filter_params.dig(:users_email_i_cont), class: "fullwidth"
     .row
-      .eight.columns.alpha
+      .sixteen.columns.alpha.omega.text-center
         = button t('.search'), 'icon-search', class: "small"
-      .eight.columns.omega
-        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary float-right"
+        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary", style: "margin-left: 10px;"
 
 = form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   - search_filter_params.each do |key, value|
