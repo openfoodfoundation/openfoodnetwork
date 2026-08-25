@@ -3,6 +3,12 @@
 require 'spree/core/product_duplicator'
 
 RSpec.describe Spree::Product do
+  it "adds its name to the URL" do
+    product = Spree::Product.new(id: 5, name: "Apples")
+    url = spree.edit_admin_product_url(product)
+    expect(url).to eq "http://test.host/admin/products/5-apples/edit"
+  end
+
   context 'product instance' do
     let(:product) { create(:product) }
 
