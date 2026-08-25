@@ -4,16 +4,15 @@
     .alpha.five.columns
       = label_tag :q_name_i_cont, t('.name')
       = text_field_tag 'q[name_i_cont]', search_filter_params.dig(:name_i_cont), class: "fullwidth"
-    .five.columns
+    .four.columns
       = label_tag :q_owner_email_i_cont, t('.owner_email')
       = text_field_tag 'q[owner_email_i_cont]', search_filter_params.dig(:owner_email_i_cont), class: "fullwidth"
-    .five.columns
+    .four.columns
       = label_tag :q_users_email_i_cont, t('.manager_email')
       = text_field_tag 'q[users_email_i_cont]', search_filter_params.dig(:users_email_i_cont), class: "fullwidth"
-    .row
-      .sixteen.columns.alpha.omega.text-center
-        = button t('.search'), 'icon-search', class: "small"
-        = link_to t('.clear'), admin_enterprises_path, class: "button small secondary", style: "margin-left: 10px;"
+    .three.columns
+      = button t('.search'), 'icon-search', class: "small"
+      = link_to t('.clear'), admin_enterprises_path, class: "button small secondary", style: "margin-top: 2em;"
 
 = form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   - search_filter_params.each do |key, value|
