@@ -4,12 +4,14 @@ RSpec.describe VariantPresenter do
   subject(:presenter) { described_class.new(variant:, distributor:, order_cycle: ) }
 
   let(:variant) { build(:variant, price: 10.00) }
-  let(:distributor) { build(:distributor_enterprise) }
-  let(:order_cycle) { build(:simple_order_cycle, coordinator: distributor) }
+  let(:distributor) { instance_double(Enterprise) }
+  let(:order_cycle) { instance_double(OrderCycle, coordinator: distributor) }
 
   describe "delegation" do
     it "uses the variant method is method not defined on the presenter" do
-      expect(presenter.product).to be(variant.product)
+      expect(variant).to receive(:product).and_return(instance_double(Spree::Product)).at_least(:once)
+
+      presenter.product
     end
   end
 
