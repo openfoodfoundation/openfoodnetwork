@@ -33,4 +33,11 @@ RSpec.describe OpenFoodNetwork::AddToParam do
 
     expect(found).to eq apple
   end
+
+  it "handles unpersisted records" do
+    model.add_to_param(:name)
+
+    expect(model.new.to_param).to eq nil
+    expect(model.new(id: " ").to_param).to eq nil
+  end
 end
