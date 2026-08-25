@@ -5,6 +5,7 @@ require "system_helper"
 RSpec.describe "Uploading Terms and Conditions PDF" do
   include AuthenticationHelper
   include FileHelper
+  include WebHelper
 
   context "as an Enterprise user" do
     let(:enterprise_user) { create(:user, enterprise_limit: 1) }
@@ -57,6 +58,34 @@ RSpec.describe "Uploading Terms and Conditions PDF" do
 
         go_to_business_details
         expect(page).to have_selector "a[href*='Terms-of-ServiceUK.pdf']"
+      end
+    end
+
+    describe "with terms and conditions already uploaded" do
+      def go_to_business_details
+        within(".side_menu") do
+          click_link "Business Details"
+        end
+      end
+
+      before do
+        distributor.update!(terms_and_conditions: terms_pdf_file)
+
+        visit edit_admin_enterprise_path(distributor)
+        go_to_business_details
+      end
+
+      it "removes the terms and conditions file" do
+        expect(page).to have_selector "a[href*='Terms-of-service.pdf']"
+
+        click_link "Remove File"
+        within ".reveal-modal" do
+          click_button "Confirm"
+        end
+
+        expect(flash_message).to match(/Terms and Conditions file removed successfully/)
+        expect(page).not_to have_selector "a[href*='Terms-of-service.pdf']"
+        expect(distributor.reload.terms_and_conditions).not_to be_attached
       end
     end
   end
