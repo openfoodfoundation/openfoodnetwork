@@ -11,8 +11,6 @@ module Spree
 
     self.belongs_to_required_by_default = false
 
-    self.ignored_columns += ['hub_id', 'supplier_id']
-
     # 2 not to be persisted attributes to store preferences.
     # Values to be set via the UI that can be passed by back to UI
     # in a not yet persisted variant. Setters are below.
