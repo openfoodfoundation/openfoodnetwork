@@ -12,6 +12,5 @@
   %select#country.observe_field.select2.fullwidth{"data-base-url" => databaseurl, "data-update" => "#state-list"}
     = options_from_collection_for_select(@countries, :id, :name, @country.id)
 = image_pack_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
-= turbo_frame_tag "new_state"
 #state-list
   = render partial: 'state_list'
