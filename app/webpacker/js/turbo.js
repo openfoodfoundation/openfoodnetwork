@@ -5,11 +5,13 @@ import TurboPower from "turbo_power";
 TurboPower.initialize(Turbo.StreamActions);
 
 document.addEventListener("turbo:frame-missing", (event) => {
-  // don't replace frame contents
   event.preventDefault();
-
-  // show error message instead
-  showHttpError(event.detail.response?.status);
+  const status = event.detail.response?.status;
+  if (status && status >= 400) {
+    showHttpError(status);
+  } else {
+    event.detail.visit(event.detail.response);
+  }
 });
 
 document.addEventListener("turbo:submit-end", (event) => {
@@ -17,5 +19,15 @@ document.addEventListener("turbo:submit-end", (event) => {
     // show error message on failure
     showHttpError(event.detail.fetchResponse?.statusCode);
     event.preventDefault();
+  }
+});
+
+document.addEventListener("turbo:load", () => {
+  if (typeof jQuery !== "undefined" && typeof jQuery.fn.select2 === "function") {
+    jQuery("select.select2").each(function () {
+      if (!jQuery(this).data("select2")) {
+        jQuery(this).select2({ allowClear: true });
+      }
+    });
   }
 });
