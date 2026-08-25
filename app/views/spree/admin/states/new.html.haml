@@ -6,7 +6,7 @@
 = turbo_frame_tag "new_state" do
   = render partial: 'spree/shared/error_messages', locals: { target: @state }
 
-  = form_for [:admin, @country, @state] do |f|
+  = form_for [:admin, @country, @state], html: { data: { turbo: true } } do |f|
     %fieldset
       %legend= t("spree.new_state")
       = render partial: 'form', locals: { f: f }

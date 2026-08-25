@@ -6,8 +6,6 @@
     = button_link_to t('.new_property'), new_admin_property_url, { icon: 'icon-plus', data: { turbo: true, turbo_frame: 'new_property' }, id: 'new_property_link' }
 
 = render partial: 'spree/admin/shared/product_sub_menu'
-
-= turbo_frame_tag "new_property"
 %table#listing_properties.index
   %colgroup
     %col{style: "width: 45%"}/

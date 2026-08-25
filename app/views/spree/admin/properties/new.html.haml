@@ -3,7 +3,7 @@
 = turbo_frame_tag "new_property" do
   = render partial: 'spree/shared/error_messages', locals: { target: @property }
 
-  = form_for [:admin, @property] do |f|
+  = form_for [:admin, @property], html: { data: { turbo: true } } do |f|
     %fieldset
       %legend{align: "center"}= t('.new_property')
       = render partial: 'form', locals: { f: f }
