@@ -10,7 +10,7 @@
   padding-bottom: 0;
 }
 
-.variant-overlay-bg {
+.variant-modal-bg {
   display: none;
   background: b.$black;
   position: fixed;
@@ -18,7 +18,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: $variant-overlay-bg-z-index;
+  z-index: $variant-modal-bg-z-index;
 
   &.fade {
     opacity: 0;
@@ -30,7 +30,7 @@
   }
 }
 
-.variant-overlay {
+.variant-modal {
   display: none;
   background-color: white;
   border-radius: $radius;
@@ -40,7 +40,7 @@
   margin: 0 auto;
   left: 0;
   right: 0;
-  z-index: $variant-overlay-z-index;
+  z-index: $variant-modal-z-index;
   top: -5rem;
   overflow: auto;
   max-height: 85%;
@@ -60,12 +60,12 @@
 
   &.in {
     opacity: 1;
-    // Make the overlay slide from the top
+    // Make the modal slide from the top
     transform: translate(0px, 10rem);
     transition: transform 0.2s ease-out;
 
     @include m.breakpoint(mobile) {
-      // Make the overlay slide from the bottom
+      // Make the modal slide from the bottom
       transform: translate(0px, -10rem);
     }
   }

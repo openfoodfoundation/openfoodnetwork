@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ShopVariantOverlayComponent < ViewComponent::Base
+class ShopVariantModalComponent < ViewComponent::Base
   def initialize(variants:, variants_in_cart:, low_stock_display:)
     @variants = variants
     @variants_in_cart = variants_in_cart

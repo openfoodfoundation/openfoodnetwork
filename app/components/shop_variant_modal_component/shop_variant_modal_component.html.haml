@@ -1,19 +1,19 @@
 -# locals: (variants:, variants_in_cart:, low_stock_display:)
 
-%div{ "data-controller": "shop-variant-overlay" }
-  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-overlay#open" }
-    = t("components.shop_variant_overlay.select")
+%div{ "data-controller": "shop-variant-modal" }
+  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-modal#open" }
+    = t("components.shop_variant_modal.select")
 
-  %div{ "data-action": "keyup@document->shop-variant-overlay#closeIfEscapeKey" }
-    .variant-overlay-bg.fade{ "data-shop-variant-overlay-target": "background", "data-action": "click->shop-variant-overlay#close" }
-    .variant-overlay{ "data-shop-variant-overlay-target": "modal" }
+  %div{ "data-action": "keyup@document->shop-variant-modal#closeIfEscapeKey" }
+    .variant-modal-bg.fade{ "data-shop-variant-modal-target": "background", "data-action": "click->shop-variant-modal#close" }
+    .variant-modal{ "data-shop-variant-modal-target": "modal" }
       .header
-        %button.tiny.right{ type: "button", "data-action": "click->shop-variant-overlay#close" }
+        %button.tiny.right{ type: "button", "data-action": "click->shop-variant-modal#close" }
           = t('js.admin.modals.close')
         %h5= product_name
         - # All variants have the same producer
         - if same_producers?
-          %span.producer= t("components.shop_variant_overlay.from_producer", name: variants.first.enterprise.name)
+          %span.producer= t("components.shop_variant_modal.from_producer", name: variants.first.enterprise.name)
 
       - # Loop through variants
       %ul
@@ -26,9 +26,9 @@
                     = "#{variant.name_to_display}"
                 .variant-columns.variant-unit
                   = unit_to_display(variant)
-                .variant-producer
-                  - unless same_producers?
-                    = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
+                - unless same_producers?
+                  .variant-producer
+                    = t("components.shop_variant_modal.from_producer", name: variant.enterprise.name)
                 .prices
                   = variant.display_price
                   %span.unit-price
