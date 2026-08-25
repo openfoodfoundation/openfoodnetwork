@@ -171,7 +171,7 @@ module Admin
     end
 
     def allowed_producers
-      @allowed_producers ||= permissions.allowed_producers
+      @allowed_producers ||= permissions.enterprises_can_create_variants
     end
 
     def allowed_source_producers
