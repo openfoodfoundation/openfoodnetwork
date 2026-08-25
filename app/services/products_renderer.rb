@@ -27,7 +27,7 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
-  # Generate read only data
+  # Generate read only data, with variants filtered for shop
   def products_view
     products.map do |p|
       attrs = p.slice(*ViewData::Product.members)
