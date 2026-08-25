@@ -4,11 +4,15 @@ require "open_food_network/add_to_param"
 
 RSpec.describe OpenFoodNetwork::AddToParam do
   let(:model) {
-    Class.new(Spree::Product) do
+    Class.new(ApplicationRecord) do
       extend OpenFoodNetwork::AddToParam
 
       def self.name
         "Spree::Product"
+      end
+
+      def name
+        "Apples: Golden Delicious"
       end
     end
   }
@@ -17,14 +21,14 @@ RSpec.describe OpenFoodNetwork::AddToParam do
     expect {
       model.add_to_param(:name)
     }.to change {
-      model.new(id: 1, name: "Apples: Golden Delicious").to_param
+      model.new(id: 1).to_param
     }.from("1").to("1-apples-golden-delicious")
   end
 
   it "creates a param that #find can use as id" do
     model.add_to_param(:name)
 
-    apple = model.create!(name: "Apple", price: 1)
+    apple = model.create!
     found = model.find(apple.to_param)
 
     expect(found).to eq apple
