@@ -1,21 +1,22 @@
-name: Auto-move Dependabot PRs to Code Review
+name: Auto-move ready PRs to Code Review
 permissions:
   contents: read
   pull-requests: read
 
 on:
   pull_request_target:
-    types: [opened]
+    types: [opened, ready_for_review]
 
 jobs:
   move-pr-to-code-review:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'dependabot[bot]' || startsWith(github.event.pull_request.title, 'Bump')
+    if: github.event.pull_request.draft == false
     steps:
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
+          # (This workflow was previously only used for dependabot PRs)
           client-id: ${{ secrets.DEPENDABOT_PR_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_PR_APP_PRIVATE_KEY }}
 
