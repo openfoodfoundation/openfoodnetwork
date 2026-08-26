@@ -36,7 +36,7 @@
       .field
         = f.label :caption, t('spree.caption')
         = f.text_field :caption, class: "fullwidth",
-          value: @image.caption.presence || default_image_caption(@product, @variant)
+          value: image_caption_field_value(@image, @product, @variant)
 
       .field
         = f.label :alt, t('spree.alt_text')

@@ -716,6 +716,27 @@ RSpec.describe '
         expect(product.reload.image.alt).to eq "Bunch of asparagus spears"
       end
 
+      it "clearing the caption on the image edit page" do
+        image_object = Spree::Image.create(viewable_id: product.id,
+                                           viewable_type: 'Spree::Product',
+                                           alt: "position 1",
+                                           caption: "Fresh asparagus",
+                                           attachment: white_logo_file, position: 1)
+
+        visit spree.edit_admin_product_image_path(product, image_object)
+
+        fill_in "image[caption]", with: ""
+        click_button "Save"
+
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(product.reload.image.caption).to eq ""
+
+        # The cleared caption must not be re-prefilled with the product name.
+        visit spree.edit_admin_product_image_path(product, product.reload.image)
+
+        expect(page).to have_field "image[caption]", with: ""
+      end
+
       it "deleting product images" do
         image = white_logo_file
         Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',

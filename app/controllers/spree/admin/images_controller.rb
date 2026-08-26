@@ -185,9 +185,10 @@ module Spree
 
         replacement_image.alt = previous_image.alt
         replacement_image.position = previous_image.position
-        replacement_image.caption =
-          params[:image][:caption].presence || previous_image.caption
         replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
+        # Carry the caption over only when the request didn't supply one at all;
+        # a submitted blank caption is a deliberate clear.
+        replacement_image.caption = previous_image.caption unless params[:image].key?(:caption)
         replacement_image.viewable_type = previous_image.viewable_type
         replacement_image.viewable_id = params[:image][:viewable_id]
         replacement_image.attachment.attach(permitted_resource_params[:attachment])

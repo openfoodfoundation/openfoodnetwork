@@ -172,6 +172,25 @@ RSpec.describe "/admin/products/:product_id/images" do
       end
     end
 
+    context "when the caption is cleared" do
+      let(:params) do
+        {
+          image: {
+            viewable_id: product.id,
+            caption: "",
+          }
+        }
+      end
+
+      it "stores the empty caption instead of keeping the previous one" do
+        product.image.update!(caption: "Original caption")
+
+        subject
+
+        expect(product.reload.image.caption).to eq ""
+      end
+    end
+
     context "when replacing the image" do
       let(:params) do
         {
@@ -188,6 +207,26 @@ RSpec.describe "/admin/products/:product_id/images" do
         expect { subject }.to change { product.reload.image.attachment&.filename.to_s }
 
         expect(product.reload.image.caption).to eq "Original caption"
+      end
+
+      context "when the caption is cleared while replacing the file" do
+        let(:params) do
+          {
+            image: {
+              attachment: fixture_file_upload("thinking-cat.jpg", "image/jpeg"),
+              viewable_id: product.id,
+              caption: "",
+            }
+          }
+        end
+
+        it "clears the caption on the replacement" do
+          product.image.update!(caption: "Original caption")
+
+          expect { subject }.to change { product.reload.image.attachment&.filename.to_s }
+
+          expect(product.reload.image.caption).to eq ""
+        end
       end
     end
   end

@@ -22,7 +22,7 @@ module SharedHelper
       {
         url: image.url(size),
         alt: image.alt.presence || product.name,
-        caption: image.caption.presence || default_caption(image)
+        caption: image.caption.nil? ? default_caption(image) : image.caption
       }
     end
   end

@@ -290,6 +290,35 @@ RSpec.describe Admin::ProductsHelper do
     end
   end
 
+  describe '#image_caption_field_value' do
+    let(:product) { create(:product_with_image, name: "Asparagus") }
+    let(:image) { product.image }
+
+    context 'when the caption has never been set' do
+      it 'offers the default caption' do
+        image.update!(caption: nil)
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Asparagus"
+      end
+    end
+
+    context 'when the caption was deliberately cleared' do
+      it 'stays empty rather than falling back to the default' do
+        image.update!(caption: "")
+
+        expect(helper.image_caption_field_value(image, product)).to eq ""
+      end
+    end
+
+    context 'when a caption is set' do
+      it 'uses the saved caption' do
+        image.update!(caption: "Fresh asparagus")
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Fresh asparagus"
+      end
+    end
+  end
+
   describe '#image_form_path' do
     let(:product) { create(:product) }
 

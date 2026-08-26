@@ -37,6 +37,14 @@ module Admin
       product.name
     end
 
+    # A caption that was deliberately cleared is stored as an empty string and must
+    # stay empty; only a caption that was never set falls back to the default.
+    def image_caption_field_value(image, product, variant = nil)
+      return image.caption unless image.caption.nil?
+
+      default_image_caption(product, variant)
+    end
+
     def image_upload_path(imageable)
       if imageable.is_a?(Spree::Variant)
         admin_product_images_path(imageable.product_id, variant_id: imageable.id)

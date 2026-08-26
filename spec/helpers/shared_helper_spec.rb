@@ -45,6 +45,13 @@ RSpec.describe SharedHelper do
 
         expect(data.first[:caption]).to eq "Custom caption"
       end
+
+      it 'keeps a deliberately cleared caption empty' do
+        product.images.first.update!(caption: "")
+        data = helper.product_carousel_images_data(product)
+
+        expect(data.first[:caption]).to eq ""
+      end
     end
 
     context 'when product has multiple images' do
