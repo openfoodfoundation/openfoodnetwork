@@ -206,6 +206,61 @@ RSpec.describe "As a consumer I want to view products" do
             expect(page).to have_selector("span", text: "Fresh and Fine")
           end
         end
+
+        it "shows the producer, name, price and unit price on each tile" do
+          visit shop_path
+
+          within(".product-item", text: "Beans") do
+            expect(page).to have_selector(".producer", text: "Test Farm")
+            expect(page).to have_selector(".product-name", text: "Beans | ")
+            expect(page).to have_selector(".price", text: "$19.99")
+            expect(page).to have_selector(".unit-price")
+          end
+
+          # A product with several variants has no single price or unit price to show.
+          within(".product-item", text: "Tomatoes") do
+            expect(page).to have_selector(".product-name", text: "Tomatoes | multiple options")
+            expect(page).to have_selector(".price", text: /\Afrom \$/)
+            expect(page).not_to have_selector(".unit-price")
+          end
+        end
+
+        context "when the variants of a product come from different producers" do
+          let!(:other_supplier) { create(:supplier_enterprise, name: "Other Farm") }
+
+          before do
+            variant4.update!(enterprise: other_supplier)
+          end
+
+          it "says multiple producers instead of naming one of them" do
+            visit shop_path
+
+            within(".product-item", text: "Tomatoes") do
+              expect(page).to have_selector(".producer", text: "Multiple producers")
+            end
+          end
+        end
+
+        it "opens the product details from the tile, but not from the add to cart control" do
+          visit shop_path
+
+          # The link is stretched over the whole card, so clicking the tile opens the details
+          # rather than only the product name doing so.
+          within(".product-item", text: "Beans") do
+            find(".product-link").click
+          end
+          within(".reveal-modal") do
+            expect(page).to have_content "Beans"
+            click_button "Close"
+          end
+          expect(page).not_to have_selector(".reveal-modal")
+
+          # The add to cart control sits above the stretched link, so using it doesn't open
+          # the details as well.
+          component_add(variant)
+
+          expect(page).not_to have_selector(".reveal-modal")
+        end
       end
     end
 
