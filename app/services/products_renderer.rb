@@ -29,23 +29,9 @@ class ProductsRenderer
 
   # Generate read only data, with variants filtered for shop
   def products_view
-    products.map do |p|
-      attrs = p.slice(*ViewData::Product.members)
-      attrs[:variants] = variants_for_shop_by_id[p.id].map do |v|
-        variant = VariantPresenter.new(
-          variant: v, distributor:, order_cycle:, enterprise_fee_calculator:
-        )
-        variant_attrs = v.slice(
-          :id, :on_demand, :on_hand, :display_name, :name_to_display, :unit_to_display, :price,
-          :enterprise
-        )
-        simple_product_attrs = p.slice(*ViewData::SimpleProduct.members)
-        variant_attrs[:product] = ViewData::SimpleProduct.new(**simple_product_attrs)
-        variant_attrs[:display_price_with_fees] = variant.display_price_with_fees
-        variant_attrs[:unit_price] = variant.unit_price
-        variant_attrs[:display_unit_price] = variant.display_unit_price
-        ViewData::Variant.new(**variant_attrs)
-      end
+    products.map do |product|
+      attrs = product.slice(*ViewData::Product.members)
+      attrs[:variants] = variants_view(product)
       ViewData::Product.new(**attrs)
     end
   end
@@ -53,6 +39,26 @@ class ProductsRenderer
   private
 
   attr_reader :order_cycle, :distributor, :customer, :args, :options
+
+  def variants_view(product)
+    simple_product = ViewData::SimpleProduct.new(**product.slice(*ViewData::SimpleProduct.members))
+
+    variants_for_shop_by_id[product.id].map do |variant|
+      presenter = VariantPresenter.new(
+        variant:, distributor:, order_cycle:, enterprise_fee_calculator:
+      )
+
+      ViewData::Variant.new(
+        **variant.slice(:id, :on_demand, :on_hand, :display_name, :name_to_display,
+                        :unit_to_display, :price, :enterprise, :producer),
+        price_with_fees: presenter.price_with_fees,
+        display_price_with_fees: presenter.display_price_with_fees,
+        unit_price: presenter.unit_price,
+        display_unit_price: presenter.display_unit_price,
+        product: simple_product
+      )
+    end
+  end
 
   def products
     return unless order_cycle
