@@ -8,7 +8,7 @@ describe 'Enterprise service', ->
       Enterprise = $injector.get('Enterprise')
       $httpBackend = _$httpBackend_
       $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
-        {id: 1, name: 'One', is_primary_producer: true}
+        {id: 1, name: 'One', can_create_variants: true}
         {id: 2, name: 'Two'}
         {id: 3, name: 'Three', sells: 'any'}
         ]
@@ -17,7 +17,7 @@ describe 'Enterprise service', ->
     enterprises = Enterprise.index()
     $httpBackend.flush()
     expect(enterprises).toEqual
-      1: new Enterprise.Enterprise({id: 1, name: 'One', is_primary_producer: true})
+      1: new Enterprise.Enterprise({id: 1, name: 'One', can_create_variants: true})
       2: new Enterprise.Enterprise({id: 2, name: 'Two'})
       3: new Enterprise.Enterprise({id: 3, name: 'Three', sells: 'any'})
 
@@ -30,7 +30,7 @@ describe 'Enterprise service', ->
   it 'loads producers as an array', ->
     Enterprise.index()
     $httpBackend.flush()
-    expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', is_primary_producer: true})]
+    expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', can_create_variants: true})]
 
   it 'loads hubs as an array', ->
     Enterprise.index()

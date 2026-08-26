@@ -171,22 +171,16 @@ module Admin
     end
 
     def allowed_producers
-      OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises
-        .is_primary_producer
-        .by_name
+      @allowed_producers ||= permissions.enterprises_can_create_variants
     end
 
     def allowed_source_producers
-      @allowed_source_producers ||= OpenFoodNetwork::Permissions.new(spree_current_user)
-        .enterprises_granting_linked_variants.is_primary_producer.by_name
+      @allowed_source_producers ||= permissions.enterprises_granting_linked_variants
     end
 
     def available_tags
       variants = Spree::Variant.where(
-        product: OpenFoodNetwork::Permissions.new(spree_current_user)
-          .editable_and_read_only_products
-          .merge(product_scope)
+        product: permissions.editable_and_read_only_products.merge(product_scope)
       )
 
       ActsAsTaggableOn::Tag.joins(:taggings).where(
@@ -195,7 +189,7 @@ module Admin
     end
 
     def fetch_products
-      product_query = OpenFoodNetwork::Permissions.new(spree_current_user)
+      product_query = permissions
         .editable_and_read_only_products
         .merge(product_scope_with_includes)
         .ransack(ransack_query)
@@ -370,6 +364,10 @@ module Admin
 
     def init_none_tag
       @none_tag_value = '""'
+    end
+
+    def permissions
+      @permissions ||= OpenFoodNetwork::Permissions.new(spree_current_user)
     end
   end
 end

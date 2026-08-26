@@ -364,6 +364,47 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
+  describe "#enterprises_can_create_variants" do
+    let(:user) { create(:user) }
+
+    it "returns only my enterprises that are primary producers" do
+      e1 = create(:enterprise, is_primary_producer: true)
+      e2 = create(:enterprise, is_primary_producer: false)
+      user.enterprises = [e1, e2]
+      e3 = create(:enterprise, is_primary_producer: true) # someone else's enterprise
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
+    end
+
+    it "returns only my enterprises that are granted permission to create_linked_variants" do
+      e1 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e1,
+                                       permissions_list: [:create_linked_variants])
+      e2 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e2,
+                                       permissions_list: [:manage_products])
+      # User manages two enterprises, which have different permissions.
+      user.enterprises = [e1, e2]
+
+      # someone else's enterprise
+      e3 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e3,
+                                       permissions_list: [:create_linked_variants])
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
+    end
+
+    it "avoids duplicates" do
+      # Enterprise is primary _and_ permitted create_linked_variants
+      e1 = create(:enterprise, is_primary_producer: true)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e1,
+                                       permissions_list: [:create_linked_variants])
+      user.enterprises = [e1]
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
+    end
+  end
+
   ########################################
 
   describe "finding related enterprises with a particular permission" do
