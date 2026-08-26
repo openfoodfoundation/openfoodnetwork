@@ -270,31 +270,60 @@ RSpec.describe ProductsRenderer do
       end
     end
 
-    describe "preloading the producer chain" do
+    describe "preloading" do
       # Building the view reads `producer` on every variant, which walks source_variants and
-      # their enterprise. Unless both are preloaded that is extra queries per variant.
-      #
-      # Only enterprise/variant_link queries are counted: the view is separately N+1 on
-      # stock_items (via `on_hand`), which is out of scope here and would mask this.
-      def producer_query_count_for(variant_count)
-        product = create(:simple_product)
-        variants = Array.new(variant_count) { create(:variant, product:) }
-        cycle = create(:simple_order_cycle, distributors: [distributor], variants:)
+      # their enterprise, and `on_hand`/`on_demand`, which read stock items. Each of these
+      # tables has to be queried once for the whole page, not once per variant.
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants:) }
+      let!(:variants) { Array.new(4) { create(:variant, product:) } }
 
-        count = 0
-        counter = lambda { |_name, _start, _finish, _id, payload|
-          count += 1 if payload[:sql]&.match?(/FROM "(enterprises|variant_links)"/)
-        }
-        ActiveSupport::Notifications.subscribed(counter, "sql.active_record") do
-          described_class.new(distributor, cycle, customer).products_view
-        end
-        count
+      # Build the fixtures and the renderer up front so their queries aren't counted below.
+      before { products_renderer }
+
+      # Every count below is per page or per product. None of them may grow with the number of
+      # variants: losing a preload shows up here as spree_variants, enterprises or
+      # spree_stock_items climbing with the four variants above.
+      it "reads the whole page in a fixed number of queries" do
+        expect {
+          products_renderer.products_view
+        }.to query_database(
+          select: {
+            spree_products: 1,
+            # The variants themselves, eager loaded with their price, enterprise, stock item
+            # and linked source variant; plus product.variants.first to inherit properties.
+            spree_variants: 2,
+            spree_assets: 1,
+            spree_product_properties: 1,
+            producer_properties: 1,
+            enterprises: 1,
+            enterprise_fees: 2,
+          }
+        )
+      end
+    end
+
+    describe "stock" do
+      subject(:variant_view) { products_renderer.products_view.first.variants.first }
+
+      let!(:v1) { create(:variant, product:, on_hand: 3) }
+
+      it "is the producer's stock" do
+        expect(variant_view.on_hand).to eq 3
       end
 
-      it "does not query per variant to resolve the producer" do
-        producer_query_count_for(2) # warm up one-off configuration queries
+      context "with inventory enabled", feature: :inventory do
+        # The controller passes the feature toggle in, see ProductsController#index.
+        subject(:products_renderer) {
+          described_class.new(distributor, order_cycle, customer, {}, inventory_enabled: true)
+        }
 
-        expect(producer_query_count_for(4)).to eq producer_query_count_for(2)
+        let!(:variant_override) {
+          create(:variant_override, hub: distributor, variant: v1, count_on_hand: 7)
+        }
+
+        it "is the hub's overridden stock rather than the producer's" do
+          expect(variant_view.on_hand).to eq 7
+        end
       end
     end
 
