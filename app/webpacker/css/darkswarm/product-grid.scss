@@ -1,5 +1,4 @@
 @use "modern-variables" as *;
-@use "branding" as b;
 @use "shop_partials/spinner";
 
 .loading {
@@ -12,7 +11,7 @@
   }
 }
 
-// product grid view layout
+// product grid view layout. The tiles themselves are styled by ProductTileComponent.
 .products-container {
   // Locally scoped variables
   --gap: 2px;
@@ -24,55 +23,4 @@
   grid-template-columns: repeat(auto-fit, minmax(var(--column-width), 1fr));
   overflow: hidden;
   margin-top: $padding-tbl-cell; // 12px
-}
-
-.product-item {
-  width: 100%;
-  position: relative;
-
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    background-color: b.$light-grey;
-    z-index: 1;
-  }
-
-  // Row Borders
-  &:after {
-    inline-size: 100vw;
-    block-size: var(--line-thickness);
-    inset-inline-start: 0;
-    inset-block-start: calc(var(--line-offset) * -1);
-  }
-
-  // Column Borders
-  &:before {
-    inline-size: var(--line-thickness);
-    block-size: 100vh;
-    inset-inline-start: calc(var(--line-offset) * -1);
-  }
-
-  .product-content {
-    width: var(--column-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding: $padding-tbl-cell;
-
-    p {
-      font-weight: bold;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
-
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: $radius-image; // 8px
-      margin-bottom: $padding-tbl-cell;
-    }
-  }
 }
