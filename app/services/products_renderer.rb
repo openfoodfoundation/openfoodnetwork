@@ -151,7 +151,7 @@ class ProductsRenderer
   def variants_for_shop
     @variants_for_shop ||= begin
       variants = distributed_products.variants_relation.
-        includes(:default_price, :product).
+        includes(:default_price, :product, :enterprise, source_variants: :enterprise).
         where(product_id: products)
 
       if inventory_enabled?

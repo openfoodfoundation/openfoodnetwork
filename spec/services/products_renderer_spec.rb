@@ -270,6 +270,34 @@ RSpec.describe ProductsRenderer do
       end
     end
 
+    describe "preloading the producer chain" do
+      # Building the view reads `producer` on every variant, which walks source_variants and
+      # their enterprise. Unless both are preloaded that is extra queries per variant.
+      #
+      # Only enterprise/variant_link queries are counted: the view is separately N+1 on
+      # stock_items (via `on_hand`), which is out of scope here and would mask this.
+      def producer_query_count_for(variant_count)
+        product = create(:simple_product)
+        variants = Array.new(variant_count) { create(:variant, product:) }
+        cycle = create(:simple_order_cycle, distributors: [distributor], variants:)
+
+        count = 0
+        counter = lambda { |_name, _start, _finish, _id, payload|
+          count += 1 if payload[:sql]&.match?(/FROM "(enterprises|variant_links)"/)
+        }
+        ActiveSupport::Notifications.subscribed(counter, "sql.active_record") do
+          described_class.new(distributor, cycle, customer).products_view
+        end
+        count
+      end
+
+      it "does not query per variant to resolve the producer" do
+        producer_query_count_for(2) # warm up one-off configuration queries
+
+        expect(producer_query_count_for(4)).to eq producer_query_count_for(2)
+      end
+    end
+
     describe "loading variants" do
       subject(:variant_ids) { products_renderer.products_view.first.variants.map(&:id) }
 
