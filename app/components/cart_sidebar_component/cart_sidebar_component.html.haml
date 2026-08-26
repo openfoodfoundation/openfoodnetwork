@@ -2,10 +2,8 @@
   .background{ data: { action: "click->cart-sidebar#close" } }
   .sidebar
     .cart-header
-      - if total_item_count == 1
-        %span.title= t("shared.menu.cart_sidebar.items_in_cart_singular", num: total_item_count)
-      - elsif total_item_count > 1
-        %span.title= t("shared.menu.cart_sidebar.items_in_cart_plural", num: total_item_count)
+      - if total_item_count.positive?
+        %span.title= t("shared.menu.cart_sidebar.items_in_cart", count: total_item_count)
       %a.close{ href: "#", data: { action: "click->cart-sidebar#close" } }
         = t("shared.menu.cart_sidebar.close")
         %i.ofn-i_009-close
