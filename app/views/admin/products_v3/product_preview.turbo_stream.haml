@@ -28,7 +28,7 @@
                       = @product.name
                 - if @product.description
                   .product-description{ "data-controller": "add-blank-to-link" }
-                    = TrixSanitizer.new.sanitize_content(@product.description).html_safe
+                    = @product.description.html_safe
 
                 - if @product.variants.first.enterprise.visible
                   %div

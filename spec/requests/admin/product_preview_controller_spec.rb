@@ -23,5 +23,21 @@ RSpec.describe "Admin::ProductPreview" do
       expect(response.body).to include("Real product description.")
       expect(response.body).not_to match(%r{<div>\s*<br\s*/?>\s*</div>\s*<div>})
     end
+
+    context "when the description has tags outside the old read-time scrubber's list" do
+      let(:product) {
+        create(
+          :simple_product,
+          enterprise_id: create(:supplier_enterprise).id,
+          description: "<h2>Heading</h2><p>Body</p>"
+        )
+      }
+
+      it "renders the description exactly as stored" do
+        get admin_product_preview_path(product), headers: headers
+
+        expect(response.body).to include("<h2>Heading</h2>")
+      end
+    end
   end
 end
