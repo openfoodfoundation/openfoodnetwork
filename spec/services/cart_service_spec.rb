@@ -147,12 +147,21 @@ RSpec.describe CartService do
         end
       end
 
-      it "caps the quantity at the available stock" do
+      it "caps the quantity at the available stock and reports the variant" do
         variant.update!(on_demand: false, on_hand: 3)
 
         cart_service.update_variant(variant.id, 5)
 
         expect(order.find_line_item_by_variant(variant).quantity).to eq(3)
+        expect(cart_service.capped_variants.map(&:id)).to eq [variant.id]
+      end
+
+      it "reports no capped variants when stock suffices" do
+        variant.update!(on_demand: false, on_hand: 3)
+
+        cart_service.update_variant(variant.id, 3)
+
+        expect(cart_service.capped_variants).to be_empty
       end
 
       it "fails when the variant is not available in the distribution" do
