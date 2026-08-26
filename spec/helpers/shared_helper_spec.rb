@@ -23,13 +23,13 @@ RSpec.describe SharedHelper do
     context 'when product has one image' do
       let(:product) { create(:product_with_image, name: "Test Product") }
 
-      it 'returns image data without a caption' do
+      it 'returns image data with the product name as the default caption' do
         data = helper.product_carousel_images_data(product)
 
         expect(data.size).to eq 1
         expect(data.first[:url]).to be_present
         expect(data.first[:alt]).to eq "Test Product"
-        expect(data.first[:caption]).to be_nil
+        expect(data.first[:caption]).to eq "Test Product"
       end
 
       it 'uses image alt when present' do
@@ -39,11 +39,11 @@ RSpec.describe SharedHelper do
         expect(data.first[:alt]).to eq "Custom alt"
       end
 
-      it 'does not return a caption even when the image has one' do
+      it 'prefers the image caption over the default caption' do
         product.images.first.update!(caption: "Custom caption")
         data = helper.product_carousel_images_data(product)
 
-        expect(data.first[:caption]).to be_nil
+        expect(data.first[:caption]).to eq "Custom caption"
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe SharedHelper do
         expect(data.size).to eq 1
         expect(data.first[:url]).to be_present
         expect(data.first[:alt]).to eq "Test Product"
-        expect(data.first[:caption]).to be_nil
+        expect(data.first[:caption]).to eq "Test Product"
       end
     end
 
@@ -115,6 +115,25 @@ RSpec.describe SharedHelper do
         expect(data.size).to eq 2
         expect(data[0][:caption]).to eq "Test Product"
         expect(data[1][:caption]).to eq "Test Product"
+      end
+    end
+
+    context 'when a single variant image belongs to a variant with a display_name' do
+      let!(:variant) { create(:variant, product:, display_name: 'Red') }
+
+      before do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: variant
+        )
+      end
+
+      it "uses the variant display name as the caption" do
+        data = helper.product_carousel_images_data(product)
+
+        expect(data.size).to eq 1
+        expect(data.first[:caption]).to eq "Red"
+        expect(data.first[:alt]).to eq "Test Product"
       end
     end
 

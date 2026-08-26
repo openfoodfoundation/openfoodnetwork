@@ -15,7 +15,6 @@ module SharedHelper
 
   def product_carousel_images_data(product, size: :large)
     images = product.images.to_a + product.variant_images.to_a
-    show_caption = images.many?
 
     return [default_carousel_image(size, product)] if images.empty?
 
@@ -23,7 +22,7 @@ module SharedHelper
       {
         url: image.url(size),
         alt: image.alt.presence || product.name,
-        caption: show_caption ? (image.caption.presence || default_caption(image)) : nil
+        caption: image.caption.presence || default_caption(image)
       }
     end
   end
