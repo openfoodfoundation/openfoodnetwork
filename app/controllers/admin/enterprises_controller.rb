@@ -340,7 +340,8 @@ module Admin
       return if spree_current_user.admin?
 
       params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
-        unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
+        enterprise = Enterprise.find_by(id: enterprise_params[:id])
+        unless enterprise && spree_current_user == enterprise.owner
           enterprise_params.delete :sells
         end
       end
