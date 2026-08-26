@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import { renderStreamMessage } from "@hotwired/turbo";
+import showHttpError from "js/services/show_http_error";
 
 // Add to cart widget of the product grid (AddToCartComponent).
 //
@@ -126,9 +127,15 @@ export default class extends Controller {
         },
         body: JSON.stringify({ quantity: this.quantity }),
       });
-      renderStreamMessage(await response.text());
-    } catch (error) {
-      console.error("Failed to update the cart", error);
+      if (response.ok || response.status === 422) {
+        // Validation errors (422) come as Turbo Streams with a flash message.
+        renderStreamMessage(await response.text());
+      } else {
+        showHttpError(response.status);
+      }
+    } catch {
+      // A network error; showHttpError alerts about it when passed no status.
+      showHttpError();
     } finally {
       this.saving = false;
       if (this.queued) {
