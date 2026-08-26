@@ -17,8 +17,8 @@ export default class extends Controller {
 
   sidebarTargetConnected(sidebar) {
     sidebar.classList.toggle("shown", this.openValue);
-    this.updateIcons(sidebar);
-    this.applyBusy();
+    this.#updateIcons(sidebar);
+    this.#applyBusy();
   }
 
   toggle() {
@@ -39,46 +39,48 @@ export default class extends Controller {
 
   cartUpdating(event) {
     this.pendingVariants.add(event.detail.variantId);
-    this.applyBusy();
+    this.#applyBusy();
   }
 
   cartSettled(event) {
     this.pendingVariants.delete(event.detail.variantId);
-    this.applyBusy();
+    this.#applyBusy();
   }
 
-  updateIcons(sidebar) {
+  // private
+
+  get #busy() {
+    return this.pendingVariants.size > 0;
+  }
+
+  #updateIcons(sidebar) {
     const count = parseInt(sidebar.dataset.itemCount || "0", 10);
 
     this.counterTargets.forEach((counter) => {
       counter.textContent = count;
     });
     this.iconTargets.forEach((icon) => {
-      icon.classList.toggle("dirty", count === 0 || this.busy);
+      icon.classList.toggle("dirty", count === 0 || this.#busy);
     });
-  }
-
-  get busy() {
-    return this.pendingVariants.size > 0;
   }
 
   // While busy, the edit cart and checkout buttons are disabled and the
   // edit cart button reads "Updating cart..." instead.
-  applyBusy() {
+  #applyBusy() {
     if (!this.hasSidebarTarget) return;
     const sidebar = this.sidebarTarget;
 
-    sidebar.setAttribute("aria-busy", this.busy);
+    sidebar.setAttribute("aria-busy", this.#busy);
     sidebar.querySelectorAll(".sidebar-footer a.button").forEach((link) => {
-      link.toggleAttribute("disabled", this.busy);
+      link.toggleAttribute("disabled", this.#busy);
     });
     this.editCartLabelTargets.forEach((label) => {
-      label.textContent = this.busy
+      label.textContent = this.#busy
         ? I18n.t("cart_updating")
         : I18n.t("shared.menu.cart_sidebar.edit_cart");
     });
     this.iconTargets.forEach((icon) => {
-      icon.classList.toggle("pure-dirty", this.busy);
+      icon.classList.toggle("pure-dirty", this.#busy);
     });
   }
 }
