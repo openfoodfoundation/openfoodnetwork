@@ -81,7 +81,8 @@ RSpec.describe "Cart" do
 
       expect(response).to have_http_status :unprocessable_entity
       expect(response.body).to include 'target="flashes"'
-      expect(response.body).to include I18n.t(:spree_order_populator_availability_error)
+      expect(response.body)
+        .to include "That product is not available from the chosen distributor or order cycle."
       expect(order.line_items.reload).to be_empty
     end
 
@@ -101,7 +102,8 @@ RSpec.describe "Cart" do
               headers: { "HTTP_REFERER" => "http://test.host/shop" }
 
         expect(response).to redirect_to "/shop"
-        expect(flash[:error]).to eq I18n.t(:spree_order_populator_availability_error)
+        expect(flash[:error])
+          .to eq "That product is not available from the chosen distributor or order cycle."
         expect(order.line_items.reload).to be_empty
       end
     end

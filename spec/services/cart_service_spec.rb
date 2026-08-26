@@ -111,7 +111,7 @@ RSpec.describe CartService do
         cart_service.update_variant(variant.id, 2)
 
         li = order.find_line_item_by_variant(variant)
-        expect(li).to be
+        expect(li).not_to be_nil
         expect(li.quantity).to eq(2)
       end
 
@@ -143,7 +143,7 @@ RSpec.describe CartService do
           cart_service.update_variant(variant.id, 0)
 
           order.line_items.reload
-          expect(order.find_line_item_by_variant(variant)).not_to be
+          expect(order.find_line_item_by_variant(variant)).to be_nil
         end
       end
 
@@ -169,7 +169,7 @@ RSpec.describe CartService do
 
         expect(cart_service.update_variant(other_variant.id, 1)).to eq false
         expect(cart_service.errors.full_messages)
-          .to include I18n.t(:spree_order_populator_availability_error)
+          .to include "That product is not available from the chosen distributor or order cycle."
         expect(order.line_items.reload).to be_empty
       end
     end
