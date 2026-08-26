@@ -589,6 +589,21 @@ RSpec.describe Admin::EnterprisesController do
       end
     end
 
+    context "when a submitted enterprise no longer exists" do
+      it "does not raise and still applies the change to the remaining enterprise" do
+        allow(controller).to receive_messages spree_current_user: original_owner
+        missing_id = profile_enterprise2.id
+        profile_enterprise2.destroy
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, sells: 'any' },
+          '1' => { id: missing_id, sells: 'any' }
+        } } }
+
+        expect { spree_put :bulk_update, bulk_enterprise_params }.not_to raise_error
+        expect(profile_enterprise1.reload.sells).to eq 'any'
+      end
+    end
+
     context "as super admin" do
       it "allows 'sells' and 'owner' to be changed" do
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
