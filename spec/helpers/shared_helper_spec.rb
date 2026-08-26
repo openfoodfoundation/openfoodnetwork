@@ -98,7 +98,8 @@ RSpec.describe SharedHelper do
         expect(data.size).to eq 1
         expect(data.first[:url]).to be_present
         expect(data.first[:alt]).to eq "Test Product"
-        expect(data.first[:caption]).to eq "Test Product"
+        # The variant has no display name, so it gets no caption.
+        expect(data.first[:caption]).to be_blank
       end
     end
 
@@ -121,7 +122,8 @@ RSpec.describe SharedHelper do
 
         expect(data.size).to eq 2
         expect(data[0][:caption]).to eq "Test Product"
-        expect(data[1][:caption]).to eq "Test Product"
+        # The variant has no display name, so its image gets no caption.
+        expect(data[1][:caption]).to be_blank
       end
     end
 
@@ -140,6 +142,25 @@ RSpec.describe SharedHelper do
 
         expect(data.size).to eq 1
         expect(data.first[:caption]).to eq "Red"
+        expect(data.first[:alt]).to eq "Test Product"
+      end
+    end
+
+    context 'when a single variant image belongs to a variant without a display_name' do
+      let!(:variant) { create(:variant, product:, display_name: nil) }
+
+      before do
+        Spree::Image.create!(
+          attachment: white_logo_file,
+          viewable: variant
+        )
+      end
+
+      it "has no caption rather than borrowing the product name" do
+        data = helper.product_carousel_images_data(product)
+
+        expect(data.size).to eq 1
+        expect(data.first[:caption]).to be_blank
         expect(data.first[:alt]).to eq "Test Product"
       end
     end

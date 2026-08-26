@@ -34,6 +34,7 @@ module Spree
         set_viewable
 
         @object.attributes = permitted_resource_params
+        set_default_caption unless params[:image].key?(:caption)
 
         return respond_to_create_errors unless @object.save
 
@@ -124,6 +125,13 @@ module Spree
       def set_viewable
         @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
         @image.viewable_id = params[:image][:viewable_id]
+      end
+
+      # An upload carries no caption field, so store the default up front rather than
+      # relying on a display-time fallback. A caption cleared later is stored as "".
+      def set_default_caption
+        parent
+        @object.caption = helpers.default_image_caption(@product, @variant)
       end
 
       def destroy_before

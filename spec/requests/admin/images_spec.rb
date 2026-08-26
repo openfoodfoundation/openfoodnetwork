@@ -60,6 +60,79 @@ RSpec.describe "/admin/products/:product_id/images" do
     it_behaves_like "updating images", 302
   end
 
+  describe "POST /admin/products/:product_id/images without a caption param" do
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("logo.png", "image/png"),
+          viewable_id: product.id,
+        }
+      }
+    end
+
+    it "stores the product name as the caption" do
+      post(spree.admin_product_images_path(product), params:)
+
+      expect(product.reload.image.caption).to eq product.name
+    end
+
+    context "for a variant with a display name" do
+      let(:variant) { create(:variant, product:, display_name: "Small bag") }
+      let(:params) do
+        {
+          image: {
+            attachment: fixture_file_upload("logo.png", "image/png"),
+            viewable_id: variant.id,
+          },
+          variant_id: variant.id,
+        }
+      end
+
+      it "stores the display name as the caption" do
+        post(spree.admin_product_images_path(product), params:)
+
+        expect(variant.reload.image.caption).to eq "Small bag"
+      end
+    end
+
+    context "for a variant without a display name" do
+      let(:variant) { create(:variant, product:, display_name: nil) }
+      let(:params) do
+        {
+          image: {
+            attachment: fixture_file_upload("logo.png", "image/png"),
+            viewable_id: variant.id,
+          },
+          variant_id: variant.id,
+        }
+      end
+
+      it "stores a blank caption rather than borrowing the product name" do
+        post(spree.admin_product_images_path(product), params:)
+
+        expect(variant.reload.image.caption).to eq ""
+      end
+    end
+  end
+
+  describe "POST /admin/products/:product_id/images with a caption param" do
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("logo.png", "image/png"),
+          viewable_id: product.id,
+          caption: "Fresh asparagus",
+        }
+      }
+    end
+
+    it "keeps the submitted caption instead of the default" do
+      post(spree.admin_product_images_path(product), params:)
+
+      expect(product.reload.image.caption).to eq "Fresh asparagus"
+    end
+  end
+
   describe "POST /admin/products/:product_id/images with turbo" do
     subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 

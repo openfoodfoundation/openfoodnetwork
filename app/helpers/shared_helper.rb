@@ -37,10 +37,12 @@ module SharedHelper
     }
   end
 
+  # Mirrors Admin::ProductsHelper#default_image_caption: a variant with no display
+  # name gets no caption rather than borrowing the product's name.
   def default_caption(image)
     viewable = image.viewable
     return viewable.name if viewable.is_a?(Spree::Product)
 
-    viewable.display_name.presence || viewable.product.name
+    viewable.display_name.presence
   end
 end
