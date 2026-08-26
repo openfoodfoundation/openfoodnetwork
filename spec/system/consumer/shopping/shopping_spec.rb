@@ -300,8 +300,12 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       context "product grid view", feature: :product_grid_view do
         let(:single_variant_product) { create(:simple_product) }
         let(:single_variant) { single_variant_product.variants.first }
+        let(:enterprise_fee) {
+          create(:enterprise_fee, amount: 11.00)
+        }
 
         before do
+          oc1.exchanges.outgoing.first.enterprise_fees << enterprise_fee
           add_variant_to_order_cycle(exchange, single_variant)
         end
 
@@ -389,8 +393,14 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             # Open the overlay
             click_button "Select"
 
-            within ".variant-overlay" do
+            within ".variant-modal" do
               expect(page).to have_content product.name
+              # Check price includes fees
+              within ".prices" do
+                # Price $19.99 + $11.00 of fees
+                expect(page).to have_content "$30.99"
+              end
+
               # 2 variant displayed
               expect(page).to have_button "Add", count: 2
 

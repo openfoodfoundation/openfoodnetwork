@@ -30,7 +30,7 @@
                   .variant-producer
                     = t("components.shop_variant_modal.from_producer", name: variant.enterprise.name)
                 .prices
-                  = variant.display_price
+                  = variant.display_price_with_fees
                   %span.unit-price
                     = "#{variant.display_unit_price}"
                     &nbsp;/&nbsp;

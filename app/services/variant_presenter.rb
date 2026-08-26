@@ -31,6 +31,10 @@ class VariantPresenter < SimpleDelegator
     variant.price_with_fees(distributor, order_cycle)
   end
 
+  def display_price_with_fees
+    Spree::Money.new(price_with_fees).to_s
+  end
+
   def unit_price
     @unit_price ||= UnitPrice.new(variant)
   end
