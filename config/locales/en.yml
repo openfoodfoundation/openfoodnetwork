@@ -5209,6 +5209,10 @@ en:
     shop_variant_modal:
       select: Select
       from_producer: "From %{name}"
+    product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
+      from_price: "from %{price}"
   # Gem to prevent bot form submissions
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
