@@ -2302,6 +2302,9 @@ en:
       cart_sidebar:
         checkout: "Checkout"
         edit_cart: "Edit cart"
+        items_in_cart:
+          one: "%{count} item in your cart"
+          other: "%{count} items in your cart"
         items_in_cart_singular: "%{num} item in your cart"
         items_in_cart_plural: "%{num} items in your cart"
         close: "Close"
