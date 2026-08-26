@@ -94,7 +94,7 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
 
-    @include m.breakpoint(phablet) {
+    @include m.breakpoint(mobile) {
       -webkit-line-clamp: 3;
       line-clamp: 3;
     }
