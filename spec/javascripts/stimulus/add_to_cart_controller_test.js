@@ -4,10 +4,12 @@
 
 import { Application } from "stimulus";
 import add_to_cart_controller from "add_to_cart_component/add_to_cart_controller";
+import showHttpError from "js/services/show_http_error";
 
 jest.mock("@hotwired/turbo", () => ({
   renderStreamMessage: jest.fn(),
 }));
+jest.mock("js/services/show_http_error");
 
 const flushPromises = () => new Promise(process.nextTick);
 
@@ -45,7 +47,7 @@ describe("AddToCartController", () => {
   beforeEach(async () => {
     jest.useFakeTimers({ doNotFake: ["nextTick", "queueMicrotask"] });
     global.fetch = jest.fn(() =>
-      Promise.resolve({ text: () => Promise.resolve("<turbo-stream></turbo-stream>") }),
+      Promise.resolve({ ok: true, text: () => Promise.resolve("<turbo-stream></turbo-stream>") }),
     );
 
     document.body.innerHTML = htmlTemplate();
@@ -116,6 +118,31 @@ describe("AddToCartController", () => {
       expect(JSON.parse(options.body)).toEqual({ quantity: 2 });
     });
 
+    it("saves a manually entered quantity, clamped at the stock on hand", () => {
+      document.getElementById("add").click();
+
+      input().value = "9";
+      input().dispatchEvent(new KeyboardEvent("keyup", { bubbles: true }));
+
+      expect(input().value).toEqual("3");
+      expect(document.getElementById("itemInCart").textContent).toEqual("3 in cart");
+
+      jest.advanceTimersByTime(1000);
+
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(JSON.parse(global.fetch.mock.calls[0][1].body)).toEqual({ quantity: 3 });
+    });
+
+    it("alerts the user when saving fails", async () => {
+      global.fetch = jest.fn(() => Promise.resolve({ ok: false, status: 500 }));
+
+      document.getElementById("add").click();
+      jest.advanceTimersByTime(1000);
+      await flushPromises();
+
+      expect(showHttpError).toHaveBeenCalledWith(500);
+    });
+
     it("coalesces changes made while a request is in flight", async () => {
       let resolveFetch;
       global.fetch = jest.fn(
@@ -137,7 +164,7 @@ describe("AddToCartController", () => {
       expect(global.fetch).toHaveBeenCalledTimes(1);
 
       // Once the first request finishes, one follow-up request is sent
-      resolveFetch({ text: () => Promise.resolve("") });
+      resolveFetch({ ok: true, text: () => Promise.resolve("") });
       await flushPromises();
 
       expect(global.fetch).toHaveBeenCalledTimes(2);
