@@ -575,8 +575,10 @@ module Spree
       save!
     end
 
+    # Reduces line item quantities to the available stock and returns the
+    # line items that had to be reduced.
     def cap_quantity_at_stock!
-      line_items.includes(variant: :stock_items).find_each(&:cap_quantity_at_stock!)
+      line_items.includes(variant: :stock_items).find_each.select(&:cap_quantity_at_stock!)
     end
 
     def assign_distributor!(distributor)
