@@ -98,6 +98,14 @@ module OpenFoodNetwork
       managed_product_enterprises.or(Enterprise.where(id: enterprises_granting_linked_variants))
     end
 
+    # User's enterprises that are able to have variants either as producer, or linked.
+    def enterprises_can_create_variants
+      managed_product_enterprises.is_primary_producer.or(Enterprise.where(id:
+        EnterpriseRelationship.with_permission(:create_linked_variants)
+          .permitting(@user.enterprises)
+          .select(:child_id))).distinct
+    end
+
     def manages_one_enterprise?
       @user.enterprises.length == 1
     end

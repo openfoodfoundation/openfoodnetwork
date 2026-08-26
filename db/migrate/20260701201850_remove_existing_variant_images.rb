@@ -1,45 +1,48 @@
 # frozen_string_literal: true
 
 class RemoveExistingVariantImages < ActiveRecord::Migration[7.2]
-  module Spree
-    class Asset < ActiveRecord::Base
-      # This class is to allow the migration to reference the Spree::Asset in record_type.
-      self.table_name = "spree_assets"
-      self.inheritance_column = :_type_disabled
-    end
+  class Asset < ActiveRecord::Base
+    self.table_name = "spree_assets"
+    self.inheritance_column = :_type_disabled
   end
 
-  class SpreeImage < Spree::Asset
-    has_one :attachment_record,
-            -> { where(name: "attachment", record_type: "Spree::Asset") },
-            class_name: "ActiveStorage::Attachment",
-            foreign_key: :record_id,
-            primary_key: :id
-
-    has_one :blob,
-            through: :attachment_record,
-            source: :blob
+  class Attachment < ActiveRecord::Base
+    self.table_name = "active_storage_attachments"
   end
 
-  def up
-    SpreeImage
+  def up # rubocop:disable Metrics/MethodLength
+    Asset
       .where(type: "Spree::Image", viewable_type: "Spree::Variant")
       .find_each do |image|
-        attachment = image.attachment_record
-        next unless attachment
+      attachment = Attachment.find_by(
+        name: "attachment",
+        record_type: "Spree::Asset",
+        record_id: image.id
+      )
 
-        blob = attachment.blob
-
-        attachment.destroy!
-
-        blob.purge_later if blob.attachments.none?
-
+      unless attachment
         image.destroy!
-        Rails.logger.info("Removed image ##{image.id} and its associated attachment and blob.")
-      rescue StandardError => e
-        Rails.logger.error("Failed to remove image ##{image.id}: #{e.message}")
+        next
       end
-  end
+
+      blob_id = attachment.blob_id
+
+      attachment.destroy!
+      image.destroy!
+
+      if !Attachment.where(blob_id: blob_id).exists?
+        ActiveStorage::Blob.find_by(id: blob_id)&.purge_later
+      end
+
+      Rails.logger.info(
+        "Removed image ##{image.id} and its associated attachment and blob."
+      )
+    rescue StandardError => e
+      Rails.logger.error(
+        "Failed to remove image ##{image.id}: #{e.class}: #{e.message}"
+      )
+    end
+  end # rubocop:enable Metrics/MethodLength
 
   def down
     raise ActiveRecord::IrreversibleMigration

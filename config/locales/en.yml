@@ -3773,8 +3773,7 @@ en:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
-          no_variants: "No variant available for this product (hidden via inventory settings)."
-          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
