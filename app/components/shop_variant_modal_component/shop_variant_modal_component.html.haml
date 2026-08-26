@@ -1,4 +1,4 @@
--# locals: (variants:, variants_in_cart:, low_stock_display:)
+-# locals: (product:, variants_in_cart:, low_stock_display:)
 
 %div{ "data-controller": "shop-variant-modal" }
   %button.select-variant.primary{ type:"button", "data-action": "shop-variant-modal#open" }
@@ -11,9 +11,9 @@
         %button.tiny.right{ type: "button", "data-action": "click->shop-variant-modal#close" }
           = t('js.admin.modals.close')
         %h5= product_name
-        - # All variants have the same producer
-        - if same_producers?
-          %span.producer= t("components.shop_variant_modal.from_producer", name: variants.first.enterprise.name)
+        - # All variants share a producer, so name it once here instead of on every row
+        - if single_producer?
+          %span.producer= t("components.shop_variant_modal.from_producer", name: producers.first.name)
 
       - # Loop through variants
       %ul
@@ -26,9 +26,9 @@
                     = "#{variant.name_to_display}"
                 .variant-columns.variant-unit
                   = unit_to_display(variant)
-                - unless same_producers?
+                - unless single_producer?
                   .variant-producer
-                    = t("components.shop_variant_modal.from_producer", name: variant.enterprise.name)
+                    = t("components.shop_variant_modal.from_producer", name: variant.producer.name)
                 .prices
                   = variant.display_price_with_fees
                   %span.unit-price
