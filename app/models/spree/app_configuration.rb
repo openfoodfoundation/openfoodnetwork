@@ -131,6 +131,9 @@ module Spree
     preference :enable_products_cache?, :boolean,
                default: Rails.env.production? || Rails.env.staging?
 
+    # Address display
+    preference :address_display_format, :string, default: "default"
+
     # Available units
     preference :available_units, :string, default: "g,kg,T,mL,L,kL"
 
