@@ -146,6 +146,63 @@ RSpec.describe Spree::Admin::InvoicesController do
     end
   end
 
+  describe "#show" do
+    let(:user) { create(:admin_user) }
+    let(:invoices_dir) { Rails.root.join("tmp/invoices") }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { user }
+      FileUtils.mkdir_p(invoices_dir)
+    end
+
+    after { FileUtils.rm_rf(invoices_dir) }
+
+    context "when the invoice file exists" do
+      let(:invoice_id) { "42" }
+
+      before { File.write(invoices_dir.join("#{invoice_id}.pdf"), "%PDF-1.4") }
+
+      it "sends the invoice PDF" do
+        spree_get :show, id: invoice_id
+
+        expect(response).to have_http_status :success
+        expect(response.media_type).to eq "application/pdf"
+      end
+    end
+
+    context "when the invoice file does not exist" do
+      it "renders not found" do
+        spree_get :show, id: "unknown"
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context "when the id attempts a path traversal attack" do
+      let(:malicious_id) { "../../../../etc/passwd" }
+
+      it "does not serve a file from outside the invoices directory" do
+        spree_get :show, id: malicious_id
+
+        expect(response).to have_http_status :not_found
+        expect(Dir.children(invoices_dir)).to be_empty
+      end
+
+      it "sanitizes the id into a plain filename confined to the invoices directory" do
+        sanitized_id = ActiveStorage::Filename.new(malicious_id).sanitized
+        expect(sanitized_id).not_to include("/")
+
+        # Only reachable if the controller confines the lookup to `invoices_dir`
+        # using the same sanitized name.
+        File.write(invoices_dir.join("#{sanitized_id}.pdf"), "%PDF-1.4")
+
+        spree_get :show, id: malicious_id
+
+        expect(response).to have_http_status :success
+      end
+    end
+  end
+
   describe "#generate" do
     let(:user) { create(:user) }
     let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
