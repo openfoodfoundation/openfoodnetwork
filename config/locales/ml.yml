@@ -3280,8 +3280,6 @@ ml:
           select_all_variants: "%{total_number_of_variants} വേരിയന്റുകളും തിരഞ്ഞെടുക്കുക"
           variants_loaded: "%{num_of_variants_loaded} ൽ %{total_number_of_variants} വേരിയന്റുകൾ ലോഡ് ചെയ്തു"
           loading_variants: "വേരിയന്റുകൾ ലോഡുചെയ്യുന്നു"
-          no_variants: "ഈ ഉൽപ്പന്നത്തിന് വേരിയന്റൊന്നും ലഭ്യമല്ല (ഇൻവെന്ററി ക്രമീകരണങ്ങൾ വഴി മറച്ചിരിക്കുന്നു)."
-          some_variants_hidden: "(ചില വേരിയന്റുകൾ ഇൻവെന്ററി ക്രമീകരണങ്ങൾ വഴി മറച്ചിരിക്കാം)"
       enterprise_fees:
         inherit_from_product: "ഉൽപ്പന്നത്തിൽ നിന്ന് അവകാശം നേടുക"
       orders:

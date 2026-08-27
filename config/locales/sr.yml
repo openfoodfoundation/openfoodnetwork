@@ -3343,8 +3343,6 @@ sr:
           select_all_variants: "Изаберите све варијанте %{total_number_of_variants}"
           variants_loaded: "%{num_of_variants_loaded} од %{total_number_of_variants} Вариантс Лоадед"
           loading_variants: "Варијанте учитавања"
-          no_variants: "За овај производ није доступна ниједна варијанта (скривена преко подешавања инвентара)."
-          some_variants_hidden: "(Неке варијанте могу бити скривене преко подешавања инвентара)"
       enterprise_fees:
         inherit_from_product: "Наследи од производа"
       orders:
@@ -3978,7 +3976,6 @@ sr:
     admin:
       images:
         edit:
-          title: Уредите слику производа
           close: Назад
           upload: Отпремите фотографију
       mail_methods:

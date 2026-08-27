@@ -3155,8 +3155,6 @@ mr:
           select_all_variants: "सर्व %{total_number_of_variants} प्रकार निवडा"
           variants_loaded: "%{total_number_of_variants} चे %{num_of_variants_loaded} प्रकार लोड केले"
           loading_variants: "प्रकार लोड करत आहे"
-          no_variants: "या उत्पादनासाठी कोणतेही प्रकार उपलब्ध नाहीत ( इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केलेले)."
-          some_variants_hidden: "(काही प्रकार इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केले जाऊ शकतात)"
       enterprise_fees:
         inherit_from_product: "उत्पादनाकडून मिळवा"
       orders:

@@ -3622,8 +3622,6 @@ cy:
           select_all_variants: "Dewis Pob Amrywiolyn %{total_number_of_variants}"
           variants_loaded: "Llwythwyd %{num_of_variants_loaded} o %{total_number_of_variants} Amrywiolyn"
           loading_variants: "Yn llwytho Amrywolion"
-          no_variants: "Nid oes amrywiolyn ar gael ar gyfer y cynnyrch yma (cuddiwyd trwy osodiadau’r stocrestr )"
-          some_variants_hidden: "(Hwyrach y cuddiwyd amrywiolion trwy osodiadau’r stocrestr)"
       enterprise_fees:
         inherit_from_product: "Etifeddu o'r Cynnyrch"
       orders:
@@ -4304,7 +4302,6 @@ cy:
     admin:
       images:
         edit:
-          title: Golygu llun y cynnyrch
           close: Yn ôl
           upload: Lanlwytho llun
       mail_methods:

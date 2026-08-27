@@ -3468,8 +3468,6 @@ de_CH:
           select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
           variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
           loading_variants: "Produktvarianten werden geladen ..."
-          no_variants: "Für dieses Produkt ist keine Variante verfügbar (über die Katalogeinstellungen ausgeblendet)."
-          some_variants_hidden: "(Einige Varianten könnten über die Katalogeinstellungen ausgeblendet sein.)"
       enterprise_fees:
         inherit_from_product: "Vom Produkt übernehmen"
       orders:

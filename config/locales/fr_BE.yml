@@ -3650,8 +3650,7 @@ fr_BE:
           select_all_variants: "Sélectionner toutes %{total_number_of_variants}les variantes"
           variants_loaded: " %{num_of_variants_loaded}de %{total_number_of_variants}variantes chargées"
           loading_variants: "Chargement des variantes"
-          no_variants: "Aucune variante disponible pour ce produit (masquée via les paramètres d'inventaire)."
-          some_variants_hidden: "(Certaines variantes peuvent être masquées via les paramètres d'inventaire)"
+          no_variants: "Aucune variante disponible pour ce produit."
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
@@ -3701,6 +3700,7 @@ fr_BE:
         cancel_the_order_html: "Cela annulera la commande en cours.<br /> Êtes-vous sur de vouloir continuer?"
         cancel_the_order_send_cancelation_email: "Envoyer un e-mail d'annulation au client"
         restock_item: "Recharger le stock de ce produit"
+        restock_item_deleted_tooltip: "Ce produit a été retiré du stock et ne peut être réapprovisionné."
         restock_items: "Recharger le stock de tous les produits"
         delete_line_items_html:
           one: "Cela supprimera un article de la commande.<br /> Êtes-vous sur de vouloir continuer?"
@@ -4339,7 +4339,8 @@ fr_BE:
     admin:
       images:
         edit:
-          title: Modifier la photo du produit
+          title: Modifier l'image pour %{resource_name}
+          subtitle: Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px.
           close: Retour
           upload: Charger une photo
       mail_methods:

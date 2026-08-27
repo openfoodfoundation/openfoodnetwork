@@ -3485,8 +3485,6 @@ hu:
           select_all_variants: "Válaszd ki az összes %{total_number_of_variants} változatot"
           variants_loaded: "%{num_of_variants_loaded}/%{total_number_of_variants} változat betöltve"
           loading_variants: "Változatok betöltése"
-          no_variants: "Nincs elérhető termékváltozat ehhez a termékhez (a leltár beállításokban rejtett státuszúak)."
-          some_variants_hidden: "(Egyes termékváltozatok a leltárbeállítások miatt rejtve maradhatnak)"
       enterprise_fees:
         inherit_from_product: "Öröklés a terméktől"
       orders:
@@ -3536,6 +3534,7 @@ hu:
         cancel_the_order_html: "Ezzel a teljes rendelés törlésre kerül.<br />\nBiztosan folytatod?"
         cancel_the_order_send_cancelation_email: "Törlésről szóló email küldése a vásárlónak"
         restock_item: "A törölt tételek visszarakása a készletbe"
+        restock_item_deleted_tooltip: "Ez a termék törölve lett, és nem lehet újra készleten tartani."
         restock_items: "Az összes törölt tétel visszarakása a készletbe"
         delete_line_items_html:
           one: "Most törölni fogsz 1 elemet a rendelésedből. <br />Biztosan folytatni szeretnéd?"
@@ -4097,7 +4096,8 @@ hu:
     admin:
       images:
         edit:
-          title: Termékkép szerkesztése
+          title: 'Kép szerkesztése: %{resource_name}'
+          subtitle: Legalább 440 × 440 képpontos, négyzet alakú kép ajánlott.
           close: Vissza
           upload: Fotó feltöltése
       mail_methods:

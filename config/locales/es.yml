@@ -4082,7 +4082,6 @@ es:
     admin:
       images:
         edit:
-          title: Modificar la foto del producto
           close: Atrás
           upload: Subir foto
       mail_methods:

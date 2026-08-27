@@ -3460,8 +3460,6 @@ nb:
           select_all_variants: "Velg alle %{total_number_of_variants} varianter"
           variants_loaded: "%{num_of_variants_loaded} av %{total_number_of_variants} Varianter lastet"
           loading_variants: "Laster varianter"
-          no_variants: "Ingen variant tilgjengelig for dette produktet (skjult via lagerinnstillinger)."
-          some_variants_hidden: "(Noen varianter kan være skjult via beholdningsinnstillinger)"
       enterprise_fees:
         inherit_from_product: "Arv fra Produkt"
       orders:
@@ -4069,7 +4067,6 @@ nb:
     admin:
       images:
         edit:
-          title: Rediger produktbilde
           close: Tilbake
           upload: Last opp bilde
       mail_methods:

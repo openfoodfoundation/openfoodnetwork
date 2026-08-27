@@ -3229,8 +3229,6 @@ pa:
           select_all_variants: "ਸਾਰੇ %{total_number_of_variants} ਵੇਰੀਐਂਟ ਚੁਣੋ"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} ਵੇਰੀਐਂਟਸ ਲੋਡ ਕੀਤੇ ਗਏ"
           loading_variants: "ਵੇਰੀਐਂਟ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
-          no_variants: "ਇਸ ਉਤਪਾਦ ਲਈ ਕੋਈ ਵੇਰੀਐਂਟ ਉਪਲਬਧ ਨਹੀਂ ਹੈ (ਇਨਵੇਂਟਰੀ ਸੈਟਿੰਗਾਂ ਰਾਹੀਂ ਲੁਕਿਆ ਹੋਇਆ)।"
-          some_variants_hidden: "(ਕੁਝ ਵੇਰੀਐਂਟ ਇਨਵੇਂਟਰੀ ਸੈਟਿੰਗਾਂ ਰਾਹੀਂ ਲੁਕੇ ਹੋਏ ਹੋ ਸਕਦੇ ਹਨ)"
       enterprise_fees:
         inherit_from_product: "ਉਤਪਾਦ ਤੋਂ ਅਪਣਾਓ"
       orders:

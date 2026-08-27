@@ -3587,8 +3587,6 @@ fi:
           select_all_variants: "Valitse kaikki %{total_number_of_variants} -muunnelmat"
           variants_loaded: "%{num_of_variants_loaded} / %{total_number_of_variants} Ladatut variantit"
           loading_variants: "Varianttien lataaminen"
-          no_variants: "Tälle tuotteelle ei ole saatavilla versioita (piilotettu varastoasetuksissa)."
-          some_variants_hidden: "(Jotkin versiot saattavat olla piilotettuja varastoasetusten kautta)"
       enterprise_fees:
         inherit_from_product: "Periytyy tuotteesta"
       orders:
@@ -4233,7 +4231,6 @@ fi:
     admin:
       images:
         edit:
-          title: Muokkaa tuotekuvaa
           close: Takaisin
           upload: Lähetä kuva
       mail_methods:

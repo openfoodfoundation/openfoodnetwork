@@ -3331,8 +3331,6 @@ ru:
           select_all_variants: "Выбрать Все %{total_number_of_variants} Варианты"
           variants_loaded: "Загружено %{num_of_variants_loaded} из %{total_number_of_variants} Вариантов"
           loading_variants: "Загрузка Вариантов"
-          no_variants: "Для этого товара нет доступных вариантов (скрыт в настройках инвентаря)."
-          some_variants_hidden: "(Некоторые варианты могут быть скрыты в настройках инвентаря)"
       enterprise_fees:
         inherit_from_product: "Наследовать От Товара"
       orders:
@@ -3974,7 +3972,6 @@ ru:
     admin:
       images:
         edit:
-          title: Изменить фотографию товара
           close: Назад
           upload: Загрузить фото
       mail_methods:

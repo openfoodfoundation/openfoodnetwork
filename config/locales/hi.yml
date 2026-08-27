@@ -3256,8 +3256,6 @@ hi:
           select_all_variants: "सभी %{total_number_of_variants} वैरिएंट्स चुनें"
           variants_loaded: "%{total_number_of_variants} में से %{num_of_variants_loaded} वैरिएंट्स लोड किए गए"
           loading_variants: "वैरिएंट्स लोड हो रहा है"
-          no_variants: "इस उत्पाद के लिए कोई संस्करण उपलब्ध नहीं है (इन्वेंट्री सेटिंग्स के माध्यम से छिपा हुआ)।"
-          some_variants_hidden: "(कुछ वैरिएंट इन्वेंट्री सेटिंग्स के माध्यम से छिपाए जा सकते हैं)"
       enterprise_fees:
         inherit_from_product: "उत्पाद से इन्हेरिट करें"
       orders:

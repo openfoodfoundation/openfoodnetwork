@@ -3828,7 +3828,6 @@ eu:
     admin:
       images:
         edit:
-          title: Aldatu produktuaren argazkia
           close: Atzera
           upload: Igo argazkia
       mail_methods:

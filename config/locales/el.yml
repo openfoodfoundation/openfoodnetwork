@@ -3332,8 +3332,6 @@ el:
           select_all_variants: "Επιλέξτε Όλες οι παραλλαγές %{total_number_of_variants}"
           variants_loaded: "%{num_of_variants_loaded} από %{total_number_of_variants} Παραλλαγές φορτωμένες"
           loading_variants: "Φόρτωση παραλλαγών"
-          no_variants: "Δεν υπάρχει διαθέσιμη παραλλαγή για αυτό το προϊόν (κρυμμένο μέσω των ρυθμίσεων αποθεμάτων)."
-          some_variants_hidden: "(Ορισμένες παραλλαγές μπορεί να είναι κρυμμένες μέσω των ρυθμίσεων αποθεμάτων)"
       enterprise_fees:
         inherit_from_product: "Κληρονομιά από το προϊόν"
       orders:
@@ -3924,7 +3922,6 @@ el:
     admin:
       images:
         edit:
-          title: Επεξεργασία φωτογραφίας προϊόντος
           close: Πίσω
           upload: Μεταφόρτωση φωτογραφίας
       mail_methods:
