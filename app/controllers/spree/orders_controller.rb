@@ -36,9 +36,9 @@ module Spree
 
     def print
       authorize! :show, @order, session[:access_token]
-      renderer = InvoiceRenderer.new
+      renderer = OrderPdfRenderer.new
       send_data(
-        renderer.render_to_string(@order, spree_current_user),
+        renderer.render_to_string(@order),
         filename: renderer.filename(@order),
         type: "application/pdf",
         disposition: "inline"

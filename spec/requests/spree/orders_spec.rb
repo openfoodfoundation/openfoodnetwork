@@ -11,12 +11,22 @@ RSpec.describe "Order print" do
     context "when the user is logged in and owns the order" do
       before { sign_in user }
 
-      it "returns a PDF" do
+      it "returns a PDF named after the order" do
         get print_order_path(order.number)
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/pdf")
-        expect(response.headers["Content-Disposition"]).to include("invoice-#{order.number}.pdf")
+        expect(response.headers["Content-Disposition"]).to include("order-#{order.number}.pdf")
+      end
+
+      it "does not create an invoice" do
+        expect { get print_order_path(order.number) }.not_to change { Invoice.count }
+      end
+
+      context "when the invoices feature is enabled", feature: :invoices do
+        it "still does not create an invoice" do
+          expect { get print_order_path(order.number) }.not_to change { Invoice.count }
+        end
       end
     end
 
