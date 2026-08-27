@@ -1,6 +1,6 @@
 Openfoodnetwork::Application.routes.draw do
   scope module: 'spree' do
-    resources :orders do
+    resources :orders, only: [:show, :edit, :update] do
       put :cancel, on: :member
     end
   end
@@ -32,7 +32,7 @@ Spree::Core::Engine.routes.draw do
     put '/password/change' => 'user_passwords#update', :as => :update_password
   end
 
-  resource :account, :controller => 'users' do
+  resource :account, :controller => 'users', :only => [:show, :edit, :create, :update] do
     resources :webhook_endpoints, only: [:create, :destroy], controller: '/webhook_endpoints'
     post '/webhook_endpoints/:id/test', to: "/webhook_endpoints#test", as: "webhook_endpoint_test"
   end
@@ -43,13 +43,13 @@ Spree::Core::Engine.routes.draw do
 
   match '/admin', to: 'admin/overview#index', as: :admin_dashboard, via: :get
 
-  resources :credit_cards
+  resources :credit_cards, :only => [:update, :destroy]
 
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
 
-    resources :users
+    resources :users, except: [:show]
 
     resources :products, except: [:index, :destroy] do
       member do
@@ -57,29 +57,29 @@ Spree::Core::Engine.routes.draw do
         get :seo
       end
 
-      resources :product_properties do
+      resources :product_properties, except: [:show] do
         collection do
           post :update_positions
         end
       end
 
-      resources :images do
+      resources :images, except: [:show] do
         collection do
           post :update_positions
         end
       end
 
-      resources :variants
+      resources :variants, except: [:show]
     end
 
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
-    resources :properties
+    resources :properties, except: [:show]
 
 
     post "orders/bulk_credit", to: "orders#bulk_credit"
 
-    resources :orders do
+    resources :orders, except: [:show, :destroy] do
       member do
         put :fire
         get :fire
@@ -89,14 +89,10 @@ Spree::Core::Engine.routes.draw do
       end
 
       collection do
-        get :managed
-
-        resources :invoices, only: [:create, :show] do
-          get :poll
-        end
+        resources :invoices, only: [:show]
       end
 
-      resources :adjustments
+      resources :adjustments, except: [:show]
       resources :invoices, only: [:index]
       resource :invoices, only: [] do
         post :generate
@@ -104,7 +100,7 @@ Spree::Core::Engine.routes.draw do
 
       post "payments/credit_customer", to: "payments#credit_customer"
 
-      resources :payments do
+      resources :payments, only: [:index, :show, :new, :create] do
         member do
           put :fire
           get 'paypal_refund'
@@ -112,9 +108,10 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resource :customer, :controller => "orders/customer_details"
+      resource :customer, :controller => "orders/customer_details",
+                          :only => [:show, :edit, :update]
 
-      resources :return_authorizations do
+      resources :return_authorizations, except: [:show] do
         member do
           put :fire
         end
@@ -122,27 +119,25 @@ Spree::Core::Engine.routes.draw do
     end
 
     # Configuration section
-    resource :general_settings
+    resource :general_settings, :only => [:edit, :update]
     resource :mail_methods, :only => [:edit, :update] do
       post :testmail, :on => :collection
     end
 
-    resources :zones
-    resources :countries do
-      resources :states
+    resources :zones, except: [:show]
+    resources :countries, except: [:show] do
+      resources :states, except: [:show]
     end
-    resources :states
+    resources :states, except: [:show]
 
     resources :taxons, except: :show
 
-    resources :tax_rates
-    resource  :tax_settings
+    resources :tax_rates, except: [:show]
+    resource  :tax_settings, :only => [:edit, :update]
     resources :tax_categories
 
-    resources :shipping_methods
-    resources :shipping_categories
-    resources :payment_methods
+    resources :shipping_methods, except: [:show]
+    resources :shipping_categories, except: [:show]
+    resources :payment_methods, except: [:show]
   end
-
-  resources :products
 end
