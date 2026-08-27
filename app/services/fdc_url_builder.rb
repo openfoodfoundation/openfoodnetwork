@@ -14,5 +14,6 @@ class FdcUrlBuilder
     @orders_url = base_url.sub("/SuppliedProducts", "/Orders")
       .sub("/supplied_products", "/orders")
     @sale_session_url = base_url.sub("/SuppliedProducts", "/SalesSession/#")
+      .sub("/supplied_products", "/SalesSession/#")
   end
 end

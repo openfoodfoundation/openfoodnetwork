@@ -75,7 +75,7 @@ class FdcBackorderer
   end
 
   def semantic_id(item)
-    item.respond_to?(:semanticId) ? item.semanticId : item
+    DfcBuilder.semantic_id(item)
   end
 
   def find_subject(object_or_graph, type)

@@ -8,4 +8,8 @@ class DfcBuilder
   def self.urls
     DfcProvider::Engine.routes.url_helpers
   end
+
+  def self.semantic_id(item)
+    item.respond_to?(:semanticId) ? item.semanticId : item.to_s
+  end
 end
