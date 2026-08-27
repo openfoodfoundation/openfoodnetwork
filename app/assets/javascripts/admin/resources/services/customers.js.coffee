@@ -8,9 +8,15 @@ angular.module("admin.resources").factory "Customers", ($q, $injector, InfoDialo
       if $injector.has('customers')
         @load($injector.get('customers'))
 
+    # Resolves with the customer and whether it existed before this request.
     add: (params) ->
-      CustomerResource.create params, (customer) =>
+      deferred = $q.defer()
+      CustomerResource.create params, (customer, headers, status) =>
         @merge(customer) if customer.id
+        deferred.resolve(customer: customer, existed: status == 200)
+      , (response) ->
+        deferred.reject(response)
+      deferred.promise
 
     # Add the customer to the collection, or refresh it if we know it already.
     #

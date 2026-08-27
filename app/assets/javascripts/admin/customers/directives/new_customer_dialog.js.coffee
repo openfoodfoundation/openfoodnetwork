@@ -6,20 +6,27 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($rootScope, $c
     scope.submitted = false
     scope.email = ""
     scope.errors = []
+    scope.notice = null
 
     scope.addCustomer = ->
       scope.new_customer_form.$setPristine()
       scope.submitted = true
       scope.errors = []
+      scope.notice = null
       if scope.new_customer_form.$valid
         params =
           enterprise_id: CurrentShop.shop.id
           email: scope.email
-        Customers.add(params).$promise.then (data) ->
-          if data.id
+        Customers.add(params).then (result) ->
+          if result.customer.id
             scope.email = ""
             scope.submitted = false
-            template.dialog('close')
+            if result.existed
+              # Keep the dialog open so that the admin sees what happened.
+              scope.notice = t('js.admin.customers.index.customer_already_exists',
+                email: result.customer.email, shop_name: CurrentShop.shop.name)
+            else
+              template.dialog('close')
             $rootScope.$evalAsync()
         , (response) ->
           if response.data.errors
