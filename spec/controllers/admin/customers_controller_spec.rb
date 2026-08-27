@@ -221,6 +221,25 @@ RSpec.describe Admin::CustomersController do
           expect { create_customer enterprise }.to change { Customer.count }.by(1)
         end
       end
+
+      context "where a customer already exists with the same email in a different case" do
+        let!(:customer) { create(:customer, enterprise:, email: "existing@example.com") }
+
+        before do
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
+        end
+
+        it "finds the existing customer instead of failing a duplicate-email validation" do
+          expect {
+            spree_put :create, format: :json,
+                               customer: { email: "Existing@Example.com",
+                                           enterprise_id: enterprise.id }
+          }.to change { Customer.count }.by(0)
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["id"]).to eq customer.id
+        end
+      end
     end
   end
 
