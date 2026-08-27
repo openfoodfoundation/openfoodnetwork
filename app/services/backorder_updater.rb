@@ -75,12 +75,7 @@ class BackorderUpdater
   def cancel_stale_lines(unprocessed_lines, managed_variants, broker)
     unprocessed_lines.each do |line|
       wholesale_quantity = line.quantity.to_i
-      offered_item = line.offer.offeredItem
-      wholesale_product_id = if offered_item.respond_to?(:semanticId)
-                               offered_item.semanticId
-                             else
-                               offered_item
-                             end
+      wholesale_product_id = DfcBuilder.semantic_id(line.offer.offeredItem)
       transformation = broker.wholesale_to_retail(wholesale_product_id)
       linked_variant = managed_variants.linked_to(transformation.retail_product_id)
 

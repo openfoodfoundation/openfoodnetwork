@@ -31,6 +31,7 @@ module DfcProvider
         subject = OrderBuilder.build(@order)
         render json: DfcIo.export(subject), status: :created
       else
+        @order.destroy if @order.persisted?
         render json: { error: @order.errors.full_messages.to_sentence },
                status: :unprocessable_entity
       end
@@ -76,7 +77,7 @@ module DfcProvider
 
     def build_sale_session(order)
       SaleSessionBuilder.build(order.order_cycle).tap do |session|
-        session.semanticId = enterprise_supplied_products_url(current_enterprise.id)
+        session.semanticId = "#{enterprise_url(current_enterprise.id)}/SalesSession/#"
       end
     end
   end

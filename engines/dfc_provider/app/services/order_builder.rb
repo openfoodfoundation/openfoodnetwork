@@ -26,10 +26,10 @@ class OrderBuilder < DfcBuilder
     # Set order state if recognised
     set_order_state(ofn_order, dfc_order)
 
-    attrs = line_item_attributes(ofn_order, dfc_order)
-    destroy_stale_line_items(ofn_order, attrs)
+    attrs, stale_ids = line_item_attributes(ofn_order, dfc_order)
+    destroy_stale_line_items(ofn_order, stale_ids)
 
-    ofn_order.update(line_items_attributes: attrs.reject { |a| a[:_destroy] })
+    ofn_order.update(line_items_attributes: attrs)
   end
 
   def self.set_order_state(ofn_order, dfc_order)
@@ -37,32 +37,37 @@ class OrderBuilder < DfcBuilder
     ofn_order.completed_at ||= Time.zone.now if dfc_order.orderStatus == order_states.COMPLETE
   end
 
-  def self.destroy_stale_line_items(ofn_order, attrs)
+  def self.destroy_stale_line_items(ofn_order, stale_ids)
     # `accepts_nested_attributes_for :line_items` does not permit `:_destroy`,
     # so remove line items that are no longer present explicitly.
-    stale_ids = attrs.filter_map { |a| a[:id] if a[:_destroy] }
     ofn_order.line_items.where(id: stale_ids).destroy_all if stale_ids.any?
   end
 
   def self.line_item_attributes(ofn_order, dfc_order)
     incoming = dfc_order.lines.each_with_object({}) do |line, hash|
       next if line.quantity.nil? || line.quantity <= 0
+      next if line.offer&.offeredItem.nil?
 
-      vid = line.offer.offeredItem.split('/supplied_products/').last
+      vid = semantic_id(line.offer.offeredItem).split(/\/supplied_products\//i).last
       hash[vid.to_i] = line.quantity
     end
 
-    ofn_order.line_items.each_with_object([]) do |li, arr|
-      arr << if incoming.key?(li.variant_id)
-               { id: li.id, quantity: incoming.delete(li.variant_id) }
-             else
-               { id: li.id, _destroy: true }
-             end
-    end.tap do |attrs|
-      incoming.each do |variant_id, quantity|
-        attrs << { variant_id:, quantity: }
+    attrs = []
+    stale_ids = []
+
+    ofn_order.line_items.each do |li|
+      if incoming.key?(li.variant_id)
+        attrs << { id: li.id, quantity: incoming.delete(li.variant_id) }
+      else
+        stale_ids << li.id
       end
     end
+
+    incoming.each do |variant_id, quantity|
+      attrs << { variant_id:, quantity: }
+    end
+
+    [attrs, stale_ids]
   end
 
   def self.order_states

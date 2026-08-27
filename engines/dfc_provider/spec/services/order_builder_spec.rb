@@ -101,7 +101,8 @@ RSpec.describe OrderBuilder do
     subject(:attributes) { described_class.line_item_attributes(ofn_order, dfc_order) }
 
     it "updates the quantity of an existing line item" do
-      expect(attributes.find { |a| a[:id] == existing_line_item.id }[:quantity]).to eq 5
+      attrs, _stale = attributes
+      expect(attrs.find { |a| a[:id] == existing_line_item.id }[:quantity]).to eq 5
     end
 
     it "creates line items for new variants" do
@@ -110,13 +111,15 @@ RSpec.describe OrderBuilder do
       )
       dfc_order.lines << DataFoodConsortium::ConnectorV1::OrderLine.new(nil, offer:, quantity: 3)
 
-      expect(attributes).to include(variant_id: 101_001, quantity: 3)
+      attrs, _stale = attributes
+      expect(attrs).to include(variant_id: 101_001, quantity: 3)
     end
 
     it "marks omitted line items for destruction" do
       dfc_order.lines = []
 
-      expect(attributes.find { |a| a[:id] == existing_line_item.id }[:_destroy]).to eq true
+      _attrs, stale_ids = attributes
+      expect(stale_ids).to include(existing_line_item.id)
     end
   end
 end
