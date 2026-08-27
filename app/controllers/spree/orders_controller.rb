@@ -38,7 +38,7 @@ module Spree
       authorize! :show, @order, session[:access_token]
       renderer = InvoiceRenderer.new
       send_data(
-        renderer.render_to_string(invoice_renderer_data, spree_current_user),
+        renderer.render_to_string(@order, spree_current_user),
         filename: renderer.filename(@order),
         type: "application/pdf",
         disposition: "inline"
@@ -127,16 +127,6 @@ module Spree
     end
 
     private
-
-    # The invoice templates used when the :invoices feature is enabled expect an
-    # Invoice::DataPresenter rather than a Spree::Order. See Spree::Admin::OrdersController#print,
-    # Spree::OrderMailer#invoice_email and BulkInvoiceJob, which branch the same way.
-    def invoice_renderer_data
-      return @order unless OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
-
-      ::Orders::GenerateInvoiceService.new(@order).generate_or_update_latest_invoice
-      @order.invoices.first.presenter
-    end
 
     def set_order_from_params
       @order = Spree::Order.find_by!(number: params[:id])
