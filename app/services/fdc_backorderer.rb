@@ -74,9 +74,11 @@ class FdcBackorderer
     end
   end
 
+  # rubocop:disable Rails/Delegate
   def semantic_id(item)
     DfcBuilder.semantic_id(item)
   end
+  # rubocop:enable Rails/Delegate
 
   def find_subject(object_or_graph, type)
     if object_or_graph.is_a?(Array)
