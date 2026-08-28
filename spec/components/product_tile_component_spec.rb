@@ -112,10 +112,12 @@ RSpec.describe ProductTileComponent, type: :component do
   end
 
   describe "unit price" do
-    it "is shown for a single variant" do
+    # The spaces around the slash don't break, so the price keeps its unit on one line.
+    it "is shown for a single variant, with its unit" do
       render_tile
 
-      expect(page).to have_selector ".product-link .unit-price", text: "$12.00"
+      expect(page).to have_selector ".product-link .unit-price"
+      expect(rendered_content).to include "$12.00&nbsp;/&nbsp;kg"
     end
 
     # Variants come in different sizes, so there is no single unit price for the product.

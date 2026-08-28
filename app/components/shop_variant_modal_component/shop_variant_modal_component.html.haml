@@ -31,9 +31,6 @@
                     = t("components.shop_variant_modal.from_producer", name: variant.producer.name)
                 .prices
                   = variant.display_price_with_fees
-                  %span.unit-price
-                    = "#{variant.display_unit_price}"
-                    &nbsp;/&nbsp;
-                    = "#{variant.unit_price.unit}"
+                  %span.unit-price= helpers.unit_price_with_unit(variant)
               .small-4.columns
                 = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display, css_class: "right")

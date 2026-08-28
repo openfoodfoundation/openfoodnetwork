@@ -60,8 +60,6 @@ class ProductTileComponent < ViewComponent::Base
   def unit_price
     return unless product.single_variant?
 
-    # The unit can be a producer-entered name, so build it with safe_join rather than
-    # interpolating into an html_safe string.
-    safe_join([product.variant.display_unit_price, product.variant.unit_price.unit], " / ")
+    helpers.unit_price_with_unit(product.variant)
   end
 end
