@@ -113,11 +113,10 @@
 
           &.variant-name {
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             width: fit-content;
             max-width: 70%;
             padding-right: 0.3rem;
+            @include m.line-clamp(1);
           }
 
           &.variant-unit {

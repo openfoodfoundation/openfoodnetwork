@@ -88,16 +88,10 @@
 
   .product-name {
     margin-bottom: $product-grid-margin-bottom;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    @include m.line-clamp(2);
 
     @include m.breakpoint(mobile) {
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
+      @include m.line-clamp(3);
     }
   }
 

@@ -1,3 +1,5 @@
+@use "../darkswarm/mixins" as m;
+
 .ellipsed {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5,14 +7,7 @@
 }
 
 .line-clamp-1 {
-  // Clip content instead of wrapping to new line
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* number of lines to show */
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
+  @include m.line-clamp(1);
 }
 
 .no-wrap {
