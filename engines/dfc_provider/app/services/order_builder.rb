@@ -44,14 +44,21 @@ class OrderBuilder < DfcBuilder
   end
 
   def self.line_item_attributes(ofn_order, dfc_order)
-    incoming = dfc_order.lines.each_with_object({}) do |line, hash|
+    incoming = incoming_quantities(dfc_order)
+    build_line_item_attributes(ofn_order, incoming)
+  end
+
+  def self.incoming_quantities(dfc_order)
+    dfc_order.lines.each_with_object({}) do |line, hash|
       next if line.quantity.nil? || line.quantity <= 0
       next if line.offer&.offeredItem.nil?
 
-      vid = semantic_id(line.offer.offeredItem).split(/\/supplied_products\//i).last
+      vid = semantic_id(line.offer.offeredItem).split(%r{/supplied_products/}i).last
       hash[vid.to_i] = line.quantity
     end
+  end
 
+  def self.build_line_item_attributes(ofn_order, incoming)
     attrs = []
     stale_ids = []
 
