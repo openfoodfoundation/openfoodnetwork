@@ -18,7 +18,9 @@ RSpec.describe "Orders backorder integration" do
   let(:supplier) {
     create(:distributor_enterprise, id: 10_000, name: "Fred's Farm", owner: supplier_owner)
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "SUP", supplier:) }
+  let(:variant) {
+    build(:base_variant, id: 10_001, unit_value: 1, sku: "SUP", enterprise: supplier)
+  }
   let(:semantic_id) {
     "http://#{host}/api/dfc/enterprises/#{supplier.id}/supplied_products/#{variant.id}"
   }
@@ -35,7 +37,7 @@ RSpec.describe "Orders backorder integration" do
   }
   let(:distributor_variant) {
     create(:variant, id: 11_001, unit_value: 1, sku: "DIST", on_hand: 10,
-                     supplier: distributor).tap { |v|
+                     enterprise: distributor).tap { |v|
       v.semantic_links.create(semantic_id:) # variant is linked to supplier variant
       v.on_demand = false
     }
