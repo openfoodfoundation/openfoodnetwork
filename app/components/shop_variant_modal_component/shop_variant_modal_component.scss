@@ -2,6 +2,7 @@
 @use "../../webpacker/css/darkswarm/variables" as v;
 @use "../../webpacker/css/darkswarm/branding" as b;
 @use "../../webpacker/css/darkswarm/mixins" as m;
+@use "../../webpacker/css/darkswarm/shop_partials/price";
 @use "../../webpacker/css/shared/variables/layout";
 
 .select-variant {
@@ -71,7 +72,7 @@
   }
 
   .header {
-    margin-bottom: 1rem;
+    margin-bottom: $product-grid-margin-bottom;
 
     h5 {
       margin-bottom: 0;
@@ -130,20 +131,16 @@
 
         .prices {
           clear: both;
-          font-weight: 600;
+          font-weight: $product-grid-price-font-weight;
           padding-bottom: 1rem;
-          margin-bottom: 1rem;
+          margin-bottom: $product-grid-margin-bottom;
 
           &:nth-last-child(1) {
             padding-bottom: 0;
           }
 
           span.unit-price {
-            font-weight: normal;
-            display: inline;
-            color: b.$grey-500;
-            font-size: 0.85rem;
-            margin-left: 1.5rem;
+            @include price.unit-price;
           }
         }
       }

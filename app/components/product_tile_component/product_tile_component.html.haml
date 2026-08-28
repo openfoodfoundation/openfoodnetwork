@@ -10,6 +10,8 @@
       %p.producer= producer_name
       %p.product-name= product_title
       %p.prices
+        - unless product.single_variant?
+          = t("components.product_tile.from_price")
         %span.price= price
         - if unit_price
           %span.unit-price= unit_price

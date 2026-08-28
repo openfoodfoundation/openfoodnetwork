@@ -1,6 +1,7 @@
 @use "../../webpacker/css/darkswarm/modern-variables" as *;
 @use "../../webpacker/css/darkswarm/branding" as b;
 @use "../../webpacker/css/darkswarm/mixins" as m;
+@use "../../webpacker/css/darkswarm/shop_partials/price";
 
 .product-item {
   width: 100%;
@@ -71,22 +72,22 @@
 
   img {
     max-width: 100%;
-    height: auto;
+    height: 146px;
     display: block;
     border-radius: $radius-image; // 8px
     margin-bottom: $padding-tbl-cell;
   }
 
   .producer {
-    color: b.$med-grey;
-    margin-bottom: 0;
+    font-weight: bold;
+    margin-bottom: $product-grid-margin-bottom;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .product-name {
-    font-weight: bold;
+    margin-bottom: $product-grid-margin-bottom;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -101,13 +102,14 @@
   }
 
   .prices {
-    font-weight: bold;
-    margin-bottom: 0;
+    margin-bottom: $product-grid-margin-bottom;
+
+    .price {
+      font-weight: $product-grid-price-font-weight;
+    }
 
     .unit-price {
-      display: block;
-      font-weight: normal;
-      color: b.$med-grey;
+      @include price.unit-price;
     }
   }
 }

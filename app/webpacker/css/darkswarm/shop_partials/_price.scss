@@ -1,0 +1,9 @@
+@use "../branding" as b;
+
+@mixin unit-price {
+  font-weight: normal;
+  display: inline;
+  color: b.$grey-500;
+  font-size: 0.85rem;
+  margin-left: 1.5rem;
+}

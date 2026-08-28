@@ -107,7 +107,7 @@ RSpec.describe ProductTileComponent, type: :component do
                               ])
       render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
 
-      expect(page).to have_selector ".price", text: "from $15.00"
+      expect(page).to have_selector ".price", text: "$15.00"
     end
   end
 

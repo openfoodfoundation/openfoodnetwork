@@ -220,7 +220,7 @@ RSpec.describe "As a consumer I want to view products" do
           # A product with several variants has no single price or unit price to show.
           within(".product-item", text: "Tomatoes") do
             expect(page).to have_selector(".product-name", text: "Tomatoes | multiple options")
-            expect(page).to have_selector(".price", text: /\Afrom \$/)
+            expect(page).to have_selector(".prices", text: /\Afrom \$/)
             expect(page).not_to have_selector(".unit-price")
           end
         end

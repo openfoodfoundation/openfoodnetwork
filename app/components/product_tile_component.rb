@@ -53,7 +53,7 @@ class ProductTileComponent < ViewComponent::Base
   def price
     return product.variant.display_price_with_fees if product.single_variant?
 
-    t("components.product_tile.from_price", price: product.cheapest_variant.display_price_with_fees)
+    product.cheapest_variant.display_price_with_fees
   end
 
   # Variants come in different sizes, so a product with several has no single unit price.
