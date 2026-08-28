@@ -302,7 +302,11 @@ RSpec.describe ProductsRenderer do
       end
     end
 
-    describe "stock" do
+    # Stock is read from preloaded rows so the page doesn't query once per variant, and that
+    # shortcut doesn't know about variant overrides. These guard the branch that hands back to
+    # the variant when inventory is enabled: drop it and the shop quietly shows the producer's
+    # stock instead of the hub's, while the VariantOverride specs still pass.
+    describe "on_hand" do
       subject(:variant_view) { products_renderer.products_view.first.variants.first }
 
       let!(:v1) { create(:variant, product:, on_hand: 3) }
