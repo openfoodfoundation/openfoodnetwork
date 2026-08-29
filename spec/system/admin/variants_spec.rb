@@ -425,7 +425,7 @@ RSpec.describe '
     end
 
     it "shows the image preview when an image is present" do
-      Spree::Image.create(attachment: white_logo_file, viewable: variant, alt: "White logo")
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
 
       visit spree.edit_admin_product_variant_path product, variant
 
@@ -436,7 +436,7 @@ RSpec.describe '
     end
 
     it "opens the image edit page when the image tile itself is clicked" do
-      Spree::Image.create(attachment: white_logo_file, viewable: variant, alt: "White logo")
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
 
       visit spree.edit_admin_product_variant_path product, variant
 
@@ -449,7 +449,7 @@ RSpec.describe '
     end
 
     it "keeps the image on the variant when updated from the image edit page" do
-      Spree::Image.create(attachment: white_logo_file, viewable: variant)
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
 
       visit spree.edit_admin_product_image_path(
         product, variant.reload.image, variant_id: variant.id
@@ -465,7 +465,7 @@ RSpec.describe '
     end
 
     describe "the image edit page" do
-      before { Spree::Image.create(attachment: white_logo_file, viewable: variant) }
+      before { Spree::Image.create!(attachment: white_logo_file, viewable: variant) }
 
       def visit_image_edit_page
         visit spree.edit_admin_product_image_path(

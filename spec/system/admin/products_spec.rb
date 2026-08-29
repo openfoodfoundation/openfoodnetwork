@@ -487,8 +487,8 @@ RSpec.describe '
         end
 
         it "shows the image preview when an image is present" do
-          Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                              attachment: white_logo_file, alt: "White logo")
+          Spree::Image.create!(viewable_id: product.id, viewable_type: 'Spree::Product',
+                               attachment: white_logo_file, alt: "White logo")
 
           visit spree.edit_admin_product_path(product)
 
@@ -499,8 +499,8 @@ RSpec.describe '
         end
 
         it "opens the image edit page when the image tile itself is clicked" do
-          image = Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                                      attachment: white_logo_file, alt: "White logo")
+          image = Spree::Image.create!(viewable_id: product.id, viewable_type: 'Spree::Product',
+                                       attachment: white_logo_file, alt: "White logo")
 
           visit spree.edit_admin_product_path(product)
 
@@ -640,9 +640,9 @@ RSpec.describe '
 
       it "updating a product image reached from a filtered list" do
         image = white_logo_file
-        Spree::Image.create(viewable_id: product.id,
-                            viewable_type: 'Spree::Product', alt: "position 1",
-                            attachment: image, position: 1)
+        Spree::Image.create!(viewable_id: product.id,
+                             viewable_type: 'Spree::Product', alt: "position 1",
+                             attachment: image, position: 1)
 
         visit spree.admin_product_images_path(product, filter)
 
@@ -673,9 +673,9 @@ RSpec.describe '
       end
 
       it "prefills the caption with the product name" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product',
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product',
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 
@@ -683,9 +683,9 @@ RSpec.describe '
       end
 
       it "deleting the image from the image edit page" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product',
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product',
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 
@@ -699,10 +699,10 @@ RSpec.describe '
       end
 
       it "editing caption and alternative text on the image edit page" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product',
-                                           alt: "position 1",
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product',
+                                            alt: "position 1",
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 
@@ -717,11 +717,11 @@ RSpec.describe '
       end
 
       it "clearing the caption on the image edit page" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product',
-                                           alt: "position 1",
-                                           caption: "Fresh asparagus",
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product',
+                                            alt: "position 1",
+                                            caption: "Fresh asparagus",
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 

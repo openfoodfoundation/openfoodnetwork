@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import showHttpError from "../../webpacker/js/services/show_http_error";
 
 export default class extends Controller {
   static values = { url: String, viewableId: Number };
@@ -34,7 +35,7 @@ export default class extends Controller {
         }
         return response.text().then((html) => Turbo.renderStreamMessage(html));
       })
-      .catch((error) => console.error(error));
+      .catch(() => showHttpError());
   }
 
   // Extracted so tests can observe the redirect: jsdom makes window.location unstubbable.
