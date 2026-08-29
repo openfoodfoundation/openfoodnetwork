@@ -4464,6 +4464,8 @@ en:
           subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+        new:
+          use_uploader: "Please use the image uploader on this page to add an image."
       mail_methods:
         send_testmail: "Send test email"
         testmail:

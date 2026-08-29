@@ -586,9 +586,9 @@ RSpec.describe '
 
       it "loading edit product image page including url filter" do
         image = white_logo_file
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: image, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: image, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object, filter)
 
@@ -598,9 +598,9 @@ RSpec.describe '
       end
 
       it "previews a replacement file without uploading it, then saves it" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 
@@ -643,9 +643,9 @@ RSpec.describe '
         product = create(:simple_product, enterprise_id: supplier2.id)
 
         image = white_logo_file
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: image, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: image, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
         attach_file('image_attachment', unsupported_image_file_path, make_visible: true)

@@ -17,7 +17,12 @@ module Spree
 
         respond_to do |format|
           format.turbo_stream { render :edit }
-          format.html { redirect_to owner_edit_path }
+          # There is no standalone HTML form for adding an image any more; the uploader
+          # lives on the owner's edit page, so say why we're sending them back there.
+          format.html {
+            flash[:notice] = t('.use_uploader')
+            redirect_to owner_edit_path
+          }
         end
       end
 
