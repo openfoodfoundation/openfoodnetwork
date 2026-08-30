@@ -11,8 +11,10 @@
 # Adding to these attributes is officially supported:
 # - https://github.com/haml/haml/releases/tag/v6.2.2
 #
-Haml::BOOLEAN_ATTRIBUTES.push(
-  *%w[
+# Haml 7.4 changed the collection from an Array to a Set.
+#
+Haml::BOOLEAN_ATTRIBUTES.merge(
+  %w[
     mailto
     new-tag-rule-dialog
     ng-cloak
