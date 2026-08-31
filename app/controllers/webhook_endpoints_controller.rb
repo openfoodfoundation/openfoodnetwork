@@ -26,12 +26,15 @@ class WebhookEndpointsController < BaseController
   end
 
   def test
-    at = Time.zone.now
-    test_payload = Payments::WebhookPayload.test_data.to_hash
+    event, payload = test_delivery
 
-    WebhookDeliveryJob.perform_later(@webhook_endpoint.url, "payment.completed", test_payload, at:)
+    if event
+      WebhookDeliveryJob.perform_later(@webhook_endpoint.url, event, payload, at: Time.zone.now)
+      flash[:success] = t(".success")
+    else
+      flash[:error] = t(".unsupported")
+    end
 
-    flash[:success] = t(".success")
     respond_with do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.update(
@@ -42,6 +45,16 @@ class WebhookEndpointsController < BaseController
   end
 
   private
+
+  # The event and payload to preview, for the webhook types we can describe.
+  def test_delivery
+    case @webhook_endpoint.webhook_type
+    when "payment_status_changed"
+      ["payment.completed", Payments::WebhookPayload.test_data.to_hash]
+    when "order_payment_due"
+      ["order.payment_due", Orders::WebhookPayload.test_data.to_hash]
+    end
+  end
 
   def load_resource
     @webhook_endpoint = spree_current_user.webhook_endpoints.find(params[:id])

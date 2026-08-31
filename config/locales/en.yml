@@ -4184,6 +4184,7 @@ en:
       error: Webhook endpoint failed to delete
     test:
       success: Some test data will be sent to the webhook url
+      unsupported: There is no test data for this webhook type
 
   spree:
     order_updated: "Order Updated"

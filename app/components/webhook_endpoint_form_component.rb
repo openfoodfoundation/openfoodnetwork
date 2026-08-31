@@ -10,7 +10,8 @@ class WebhookEndpointFormComponent < ViewComponent::Base
 
   attr_reader :webhooks, :webhook_type
 
-  def is_webhook_payment_status?
-    webhook_type == "payment_status_changed"
+  # The webhook types we can send test data for.
+  def testable?
+    webhook_type.in?(%w(payment_status_changed order_payment_due))
   end
 end
