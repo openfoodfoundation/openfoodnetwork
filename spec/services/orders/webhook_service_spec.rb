@@ -12,7 +12,7 @@ RSpec.describe Orders::WebhookService do
   describe "creating payloads" do
     context "with order cycle coordinator owner webhook endpoints configured" do
       before do
-        order.order_cycle.coordinator.owner.webhook_endpoints.payment_status.create!(
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
           url: "http://coordinator.payment.url"
         )
       end
@@ -54,8 +54,8 @@ RSpec.describe Orders::WebhookService do
         end
 
         it "enqueues a delivery for every unique configured endpoint" do
-          user1.webhook_endpoints.payment_status.create!(url: "http://coordinator.payment.url")
-          user2.webhook_endpoints.payment_status.create!(url: "http://user2.payment.url")
+          user1.webhook_endpoints.order_payment_due.create!(url: "http://coordinator.payment.url")
+          user2.webhook_endpoints.order_payment_due.create!(url: "http://user2.payment.url")
 
           expect{ subject }
             .to enqueue_job(WebhookDeliveryJob)
@@ -68,6 +68,16 @@ RSpec.describe Orders::WebhookService do
 
     context "with no webhook configured" do
       it "does not enqueue a delivery" do
+        expect{ subject }.not_to enqueue_job(WebhookDeliveryJob)
+      end
+    end
+
+    context "with only a payment status webhook configured" do
+      it "does not enqueue a delivery" do
+        order.order_cycle.coordinator.owner.webhook_endpoints.payment_status.create!(
+          url: "http://coordinator.payment.url"
+        )
+
         expect{ subject }.not_to enqueue_job(WebhookDeliveryJob)
       end
     end

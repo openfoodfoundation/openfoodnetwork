@@ -5204,6 +5204,7 @@ en:
       event_types:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
+        order_payment_due: Post webhook on Order placed with payment due
       test_endpoint: Test webhook endpoint 
 
   # Gem to prevent bot form submissions

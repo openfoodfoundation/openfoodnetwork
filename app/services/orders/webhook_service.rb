@@ -14,8 +14,7 @@ module Orders
       payload = WebhookPayload.new(order:, payment:, enterprise: order.distributor).to_hash
 
       coordinator = order.order_cycle.coordinator
-      urls = WebhookUrlsService.for_coordinator(coordinator,
-                                                webhook_type: "payment_status_changed")
+      urls = WebhookUrlsService.for_coordinator(coordinator, webhook_type: "order_payment_due")
       urls.each do |url|
         WebhookDeliveryJob.perform_later(url, "order.payment_due", payload)
       end
