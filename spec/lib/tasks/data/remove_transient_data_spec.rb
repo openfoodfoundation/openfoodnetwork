@@ -61,6 +61,17 @@ RSpec.describe RemoveTransientData do
         expect{ old_line_item.reload }.to raise_error ActiveRecord::RecordNotFound
         expect{ old_adjustment.reload }.to raise_error ActiveRecord::RecordNotFound
       end
+
+      it "keeps proxy order carts" do
+        create(:proxy_order, order: old_cart)
+        old_cart.update_columns(updated_at: remover.expiration_date - 1.day)
+
+        remover.call
+
+        expect{ old_cart.reload }.not_to raise_error
+        expect{ old_line_item.reload }.not_to raise_error
+        expect{ old_adjustment.reload }.not_to raise_error
+      end
     end
   end
 end
