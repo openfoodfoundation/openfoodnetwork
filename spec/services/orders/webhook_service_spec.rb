@@ -33,8 +33,8 @@ RSpec.describe Orders::WebhookService do
             outstanding_balance: order.new_outstanding_balance
           },
           payment_method: {
-            name: payment.payment_method.name,
-            type: payment.payment_method.type
+            id: payment.payment_method.id,
+            name: payment.payment_method.name
           }
         }
 
@@ -67,6 +67,46 @@ RSpec.describe Orders::WebhookService do
     end
 
     context "with no webhook configured" do
+      it "does not enqueue a delivery" do
+        expect{ subject }.not_to enqueue_job(WebhookDeliveryJob)
+      end
+    end
+
+    # Customer credit is applied before the customer picks a payment method, so an
+    # order can carry both when it's placed.
+    context "with a customer credit payment" do
+      let!(:credit_payment) {
+        create(:payment, order:, payment_method: Spree::PaymentMethod.customer_credit,
+                         skip_source_validation: true, source: nil)
+      }
+      let!(:chosen_payment) { create(:payment, order:) }
+
+      before do
+        order.payments.reload
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
+          url: "http://coordinator.payment.url"
+        )
+      end
+
+      it "reports the payment method the customer chose, not the credit" do
+        expect{ subject }
+          .to enqueue_job(WebhookDeliveryJob).exactly(1).times
+          .with("http://coordinator.payment.url", "order.payment_due",
+                hash_including("payment_method" => {
+                                 "id" => chosen_payment.payment_method.id,
+                                 "name" => chosen_payment.payment_method.name
+                               }))
+      end
+    end
+
+    context "without a payment to report" do
+      before do
+        order.payments.destroy_all
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
+          url: "http://coordinator.payment.url"
+        )
+      end
+
       it "does not enqueue a delivery" do
         expect{ subject }.not_to enqueue_job(WebhookDeliveryJob)
       end

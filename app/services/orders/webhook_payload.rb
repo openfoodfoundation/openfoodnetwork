@@ -15,10 +15,7 @@ module Orders
       {
         order: @order.slice(:number, :email, :total, :currency)
           .merge(outstanding_balance: @order.new_outstanding_balance),
-        payment_method: {
-          name: @payment&.payment_method&.name,
-          type: @payment&.payment_method&.type
-        },
+        payment_method: @payment.payment_method.slice(:id, :name),
         enterprise: @enterprise.slice(:abn, :acn, :name)
           .merge(address: @enterprise.address.slice(:address1, :address2, :city, :zipcode))
       }.with_indifferent_access

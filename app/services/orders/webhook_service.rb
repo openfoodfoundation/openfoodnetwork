@@ -10,7 +10,11 @@ module Orders
     def self.create_payment_due_job(order:)
       return if order.order_cycle.nil?
 
-      payment = order.pending_payments.first
+      payment = FindPaymentService.new(order).last_pending_payment_excluding_credit
+
+      # Without a payment method there is nothing for an integration to act on.
+      return if payment&.payment_method.nil?
+
       payload = WebhookPayload.new(order:, payment:, enterprise: order.distributor).to_hash
 
       coordinator = order.order_cycle.coordinator

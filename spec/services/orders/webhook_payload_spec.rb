@@ -20,8 +20,8 @@ RSpec.describe Orders::WebhookPayload do
           outstanding_balance: order.new_outstanding_balance
         },
         payment_method: {
-          name: payment.payment_method.name,
-          type: payment.payment_method.type
+          id: payment.payment_method.id,
+          name: payment.payment_method.name
         },
         enterprise: {
           abn: enterprise.abn,
@@ -39,14 +39,8 @@ RSpec.describe Orders::WebhookPayload do
       expect(subject.to_hash).to eq(payload)
     end
 
-    context "without a pending payment" do
-      subject { described_class.new(order:, payment: nil, enterprise: order.distributor) }
-
-      it "returns nil payment method details" do
-        expect(subject.to_hash[:payment_method]).to eq(
-          "name" => nil, "type" => nil
-        )
-      end
+    it "doesn't expose the payment method class name" do
+      expect(subject.to_hash[:payment_method].keys).to contain_exactly("id", "name")
     end
   end
 end
