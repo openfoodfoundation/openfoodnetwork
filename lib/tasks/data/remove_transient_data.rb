@@ -30,7 +30,8 @@ class RemoveTransientData
   def clear_old_cart_data!
     old_carts = Spree::Order.
       where("spree_orders.state = 'cart' AND spree_orders.updated_at < ?", expiration_date).
-      merge(orders_without_payments)
+      merge(orders_without_payments).
+      where.missing(:proxy_order)
 
     old_cart_line_items = Spree::LineItem.where(order_id: old_carts)
     old_cart_adjustments = Spree::Adjustment.where(order_id: old_carts)
