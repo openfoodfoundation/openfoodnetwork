@@ -173,7 +173,7 @@ module Spree
           format.html {
             if action_name == 'create'
               flash[:error] = @errors.to_sentence
-              redirect_to owner_edit_path
+              redirect_to location_after_save
             else
               render :edit, status: :unprocessable_entity
             end

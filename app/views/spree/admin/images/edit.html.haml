@@ -47,7 +47,7 @@
           "data-action": "change->image-preview#update"
         = f.label :attachment, t('spree.replace_image'), class: "image-edit__link image-edit__link--replace"
 
-        - delete_url_options = @url_filters.merge(return_url: owner_edit_path)
+        - delete_url_options = { return_url: owner_edit_path }
         - delete_url_options.merge!(variant_id: @variant.id) if @variant
         = link_to t('spree.delete_permanently'),
             admin_product_image_path(@product, @image, delete_url_options),
