@@ -371,7 +371,7 @@ GEM
     good_migrations (0.3.1)
       activerecord (>= 3.1)
       railties (>= 3.1)
-    haml (7.3.0)
+    haml (7.4.1)
       prism (>= 1.1.0)
       temple (>= 0.8.2)
       thor
@@ -1215,7 +1215,7 @@ CHECKSUMS
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   gmaps4rails (2.1.2) sha256=09c3bf095ca8e97d1d6f3b5c9e4dd905d445b0399c5ecfd5cc53e0fafce87c2b
   good_migrations (0.3.1) sha256=3f8267c00caa29689823cb8d53cbfb62cd5b0310fe6b088f5ce589243f6f797f
-  haml (7.3.0) sha256=4383cb90bb0b525d4025dcb9721fec085edda1c43525043fc327c80127f6cf37
+  haml (7.4.1) sha256=e5d09bfcf91c0c7e49e564385adb9aab0a91bc73767736eb1acbdb97eaf21754
   haml_lint (0.78.0) sha256=e8840e3c3b43345eced88ea2c46adcb253be8b940b095f9e0abf4512cdad40a6
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   hashery (2.1.2) sha256=d239cc2310401903f6b79d458c2bbef5bf74c46f3f974ae9c1061fb74a404862
