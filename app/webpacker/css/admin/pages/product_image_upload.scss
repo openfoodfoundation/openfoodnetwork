@@ -55,23 +55,23 @@
   &__button {
     z-index: 1;
   }
+
+  &__input {
+    display: none;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+  }
 }
 
 .image-upload-field span.info {
   font-style: normal;
   font-size: $body-font-size;
   color: $color-body-text;
-}
-
-.image-upload__input {
-  display: none;
-}
-
-.image-upload__controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 1em;
 }

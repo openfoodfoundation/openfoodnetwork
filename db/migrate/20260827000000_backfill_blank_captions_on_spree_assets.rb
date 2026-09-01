@@ -11,7 +11,7 @@ class BackfillBlankCaptionsOnSpreeAssets < ActiveRecord::Migration[7.2]
   end
 
   def up
-    Asset.unscoped.where(caption: nil).in_batches do |assets|
+    Asset.where(caption: nil).in_batches do |assets|
       assets.update_all(caption: "")
     end
   end

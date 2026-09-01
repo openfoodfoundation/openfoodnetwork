@@ -9,7 +9,7 @@
   image-edit-page
 
 - content_for :page_title do
-  = t('spree.admin.images.edit.title', resource_name: image_modal_resource_name(@variant, @product))
+  = t('.title', resource_name: image_modal_resource_name(@variant, @product))
 
 = render partial: 'spree/shared/error_messages', locals: { target: @error_target || @image }
 

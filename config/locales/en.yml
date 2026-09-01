@@ -1015,11 +1015,6 @@ en:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      image_upload:
-        label: "Image"
-        subtitle: "A square size starting from 440px by 440px is recommended."
-        upload: "Upload image"
-        edit: "Edit"
       back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
@@ -4747,6 +4742,11 @@ en:
         customer_credit_successful: Customer has been successfully credited!
 
       products:
+        image_upload:
+          label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
+          edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
         new:

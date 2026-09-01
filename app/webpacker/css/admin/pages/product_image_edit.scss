@@ -17,7 +17,7 @@
 
       h1 {
         margin: 0;
-        font-size: 22px;
+        font-size: $h3-size;
         line-height: 1.25;
         overflow-wrap: anywhere; // product names can be long and unbroken
       }
@@ -77,13 +77,13 @@
 
       label {
         display: block;
-        font-size: 14px;
+        font-size: $body-font-size;
         margin-bottom: 6px;
       }
 
       input[type="text"],
       textarea {
-        font-size: 16px;
+        font-size: $h6-size;
       }
 
       input[type="text"] {
@@ -102,12 +102,12 @@
     overflow-wrap: anywhere; // long_underscored_filenames.jpeg must not overflow
 
     .image-edit__filename-label {
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       margin-right: 0.25em;
     }
 
     .image-edit__filename-value {
-      font-weight: normal;
+      font-weight: $font-weight-normal;
     }
   }
 
@@ -137,8 +137,8 @@
     align-items: center;
     min-height: 44px;
     margin: 0;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: $body-font-size;
+    font-weight: $font-weight-normal;
     overflow-wrap: anywhere;
 
     &--replace {
@@ -151,10 +151,10 @@
     }
 
     &--delete {
-      color: $color-5;
+      color: $color-btn-red-bg;
 
       &:hover {
-        color: $roof-terracotta;
+        color: $color-btn-red-hover-bg;
       }
     }
   }
@@ -193,7 +193,7 @@
       max-width: 450px;
       padding: 32px;
       border-width: 1px;
-      border-radius: 6px;
+      border-radius: $border-radius;
 
       .field {
         label {
@@ -203,7 +203,7 @@
 
         input[type="text"],
         textarea {
-          font-size: 14px;
+          font-size: $body-font-size;
         }
 
         input[type="text"] {

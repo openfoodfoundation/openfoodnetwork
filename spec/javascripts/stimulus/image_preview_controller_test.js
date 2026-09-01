@@ -3,7 +3,7 @@
  */
 
 import { Application } from "stimulus";
-import image_preview_controller from "../../../app/webpacker/controllers/image_preview_controller";
+import image_preview_controller from "controllers/image_preview_controller";
 
 // jsdom implements neither of these, and we need to observe the revoking.
 const mockObjectUrls = () => {
