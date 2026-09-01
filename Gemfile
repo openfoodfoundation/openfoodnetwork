@@ -188,7 +188,6 @@ group :development do
   gem 'i18n-tasks'
   gem 'listen'
   gem 'pry'
-  gem 'query_count'
   gem 'rails-erd'
   gem 'rubocop'
   gem 'rubocop-capybara'
