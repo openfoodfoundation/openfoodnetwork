@@ -944,6 +944,24 @@ RSpec.describe Admin::EnterprisesController do
           expect(assigns(:collection).size).to be 5
         end
       end
+
+      context "when the requested page is out of range but matches exist" do
+        render_views
+
+        it "does not render the bulk-update button for the empty rendered page" do
+          stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1))
+
+          get :index, params: { page: 99 }, format: :html
+
+          # @collection (aliased as @enterprises in the view) reflects the full, unpaginated
+          # filtered result — it is NOT empty here, which is exactly why gating the button on
+          # it was wrong: fields_for :collection iterates @enterprise_set.collection, the
+          # paginated slice, which IS empty on an out-of-range page.
+          expect(assigns(:collection)).not_to be_empty
+          expect(assigns(:enterprise_set).collection).to be_empty
+          expect(response.body).not_to include 'name="commit"'
+        end
+      end
     end
 
     context "as an enterprise user" do

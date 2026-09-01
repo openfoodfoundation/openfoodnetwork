@@ -52,10 +52,10 @@
             %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
           %td.enterprise-actions
             = render 'actions', enterprise: enterprise
-      - if @enterprises.empty?
+      - if @enterprise_set.collection.empty?
         %tr
           %td{colspan: "6"}= t(:none)
-  - unless @enterprises.empty?
+  - unless @enterprise_set.collection.empty?
     = f.submit t(:update)
 
   = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }
