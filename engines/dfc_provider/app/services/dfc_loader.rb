@@ -29,9 +29,13 @@ class DfcLoader
     load_thesaurus(connector, name)
   end
 
+  # Each connector needs its own copy of a thesaurus. Caching only by name
+  # would leave whichever connector asked second without the vocabulary, and it
+  # would then deserialise terms like "dfc-v:Held" into a parsed URI Hash
+  # instead of a SKOSConcept.
   def self.load_thesaurus(connector, name)
     @vocabs ||= {}
-    @vocabs[name] ||= connector.__send__(:loadThesaurus, read_file(name))
+    @vocabs[[connector.class, name]] ||= connector.__send__(:loadThesaurus, read_file(name))
   end
 
   def self.read_file(name)
