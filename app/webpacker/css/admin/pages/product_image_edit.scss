@@ -1,3 +1,5 @@
+@import "../../darkswarm/mixins";
+
 .image-edit-page {
   background-color: $lighter-grey;
   padding-bottom: 2rem;
@@ -28,7 +30,7 @@
     background-color: transparent;
   }
 
-  @media all and (max-width: $tablet_breakpoint - 1px) {
+  @include breakpoint(tablet) {
     #content .container {
       padding-left: 0;
       padding-right: 0;
@@ -87,7 +89,7 @@
       }
 
       input[type="text"] {
-        height: 44px;
+        height: $touch-target-height;
       }
 
       textarea {
@@ -135,7 +137,7 @@
   & &__link {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: $touch-target-height;
     margin: 0;
     font-size: $body-font-size;
     font-weight: $font-weight-normal;
@@ -166,16 +168,16 @@
   }
 
   & &__buttons .button {
-    height: 44px;
+    height: $touch-target-height;
     line-height: 42px;
     padding: 0 20px;
   }
 
-  @media all and (min-width: $tablet_breakpoint) {
+  @include breakpoint-up(tablet) {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: clamp(40px, 12vw, 200px);
+    gap: clamp($layout-gap-min, 12vw, 200px);
 
     &__preview {
       flex: 0 1 250px; // shrinkable, so 250 + gap + 450 cannot overflow at 768px
