@@ -64,12 +64,15 @@ class OrderBuilder < DfcBuilder
 
     ofn_order.line_items.each do |li|
       if incoming.key?(li.variant_id)
+        # Update existing line items
         attrs << { id: li.id, quantity: incoming.delete(li.variant_id) }
       else
+        # Delete line items that weren't provided
         stale_ids << li.id
       end
     end
 
+    # Create any new line items
     incoming.each do |variant_id, quantity|
       attrs << { variant_id:, quantity: }
     end
