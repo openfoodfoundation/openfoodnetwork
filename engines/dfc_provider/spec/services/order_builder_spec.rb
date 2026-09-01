@@ -50,6 +50,9 @@ RSpec.describe OrderBuilder do
     context "with OrderLines" do
       let!(:variant) { create(:variant, id: 10_000) }
       let!(:variant2) { create(:variant, id: 10_001) }
+      let!(:existing_line_item) {
+        create(:line_item, order: ofn_order, variant:, quantity: 2)
+      }
 
       before do
         offer1 = DataFoodConsortium::ConnectorV1::Offer.new(
@@ -64,7 +67,6 @@ RSpec.describe OrderBuilder do
         order_line2 = DataFoodConsortium::ConnectorV1::OrderLine.new(
           nil, offer: offer2, quantity: 5
         )
-
         dfc_order.lines = [order_line1, order_line2]
       end
 
@@ -77,49 +79,18 @@ RSpec.describe OrderBuilder do
         li2 = ofn_order.line_items.find_by!(variant: variant2)
         expect(li2.quantity).to eq 5
       end
-    end
-  end
 
-  describe ".line_item_attributes" do
-    let!(:ofn_order) { create(:order, id: 1) }
-    let!(:existing_variant) { create(:variant, id: 101_000, on_demand: true) }
-    let!(:existing_line_item) {
-      create(:line_item, order: ofn_order, variant: existing_variant, quantity: 2)
-    }
+      it "updates the quantity of an existing line item" do
+        expect(subject).to be true
+        li = ofn_order.line_items.find_by!(variant:)
+        expect(li.quantity).to eq 3
+      end
 
-    let(:dfc_order) {
-      order = DataFoodConsortium::ConnectorV1::Order.new(nil)
-      offer = DataFoodConsortium::ConnectorV1::Offer.new(
-        nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/101000"
-      )
-      order.lines = [
-        DataFoodConsortium::ConnectorV1::OrderLine.new(nil, offer:, quantity: 5),
-      ]
-      order
-    }
-
-    subject(:attributes) { described_class.line_item_attributes(ofn_order, dfc_order) }
-
-    it "updates the quantity of an existing line item" do
-      attrs, _stale = attributes
-      expect(attrs.find { |a| a[:id] == existing_line_item.id }[:quantity]).to eq 5
-    end
-
-    it "creates line items for new variants" do
-      offer = DataFoodConsortium::ConnectorV1::Offer.new(
-        nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/101001"
-      )
-      dfc_order.lines << DataFoodConsortium::ConnectorV1::OrderLine.new(nil, offer:, quantity: 3)
-
-      attrs, _stale = attributes
-      expect(attrs).to include(variant_id: 101_001, quantity: 3)
-    end
-
-    it "marks omitted line items for destruction" do
-      dfc_order.lines = []
-
-      _attrs, stale_ids = attributes
-      expect(stale_ids).to include(existing_line_item.id)
+      it "deletes omitted line items" do
+        dfc_order.lines = []
+        expect(subject).to be true
+        expect(ofn_order.line_items.reload.count).to eq 0
+      end
     end
   end
 end
