@@ -659,6 +659,21 @@ RSpec.describe Admin::EnterprisesController do
       end
     end
 
+    context "with no sets_enterprise_set param at all" do
+      it "does not raise and makes no changes" do
+        # Reproduces submitting the bulk-update form when a search filter's result is
+        # empty: `fields_for :collection` renders no fields, so the whole
+        # `sets_enterprise_set` key is absent from the request, not just empty.
+        allow(controller).to receive_messages spree_current_user: admin_user
+
+        expect {
+          spree_put :bulk_update, q: { name_i_cont: "no such enterprise" }
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
+    end
+
     context "when a submitted enterprise id no longer exists" do
       it "silently skips it and still saves the rest of the batch" do
         allow(controller).to receive_messages spree_current_user: admin_user

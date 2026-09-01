@@ -276,8 +276,8 @@ module Admin
     # Include only enterprises being updated
     def bulk_update_collection
       permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-      enterprise_ids = params[:sets_enterprise_set][:collection_attributes]
-        .values.pluck(:id).compact
+      submitted_attributes = params.dig(:sets_enterprise_set, :collection_attributes) || {}
+      enterprise_ids = submitted_attributes.values.pluck(:id).compact
 
       permissions.editable_enterprises
         .where(id: enterprise_ids)
@@ -474,7 +474,7 @@ module Admin
     end
 
     def bulk_params
-      @bulk_params ||= params.require(:sets_enterprise_set).permit(
+      @bulk_params ||= params.fetch(:sets_enterprise_set, ActionController::Parameters.new).permit(
         collection_attributes: PermittedAttributes::Enterprise.attributes
       ).to_h.with_indifferent_access
     end

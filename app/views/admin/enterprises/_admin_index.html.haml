@@ -55,6 +55,7 @@
       - if @enterprises.empty?
         %tr
           %td{colspan: "6"}= t(:none)
-  = f.submit t(:update)
+  - unless @enterprises.empty?
+    = f.submit t(:update)
 
   = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }
