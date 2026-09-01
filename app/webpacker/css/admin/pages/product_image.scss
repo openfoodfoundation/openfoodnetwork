@@ -1,4 +1,4 @@
-.image-upload {
+.image {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,21 +11,21 @@
   box-shadow: none;
   margin-top: 0.5em;
 
-  &--has-image {
+  &--present {
     border: none;
     cursor: pointer;
 
-    .image-upload__button {
+    .image__button {
       display: none;
     }
 
-    .image-upload__link:hover .image-upload__button,
-    .image-upload__link:focus-visible .image-upload__button {
+    .image__link:hover .image__button,
+    .image__link:focus-visible .image__button {
       display: block;
     }
 
-    .image-upload__link:hover .image-upload__preview,
-    .image-upload__link:focus-visible .image-upload__preview {
+    .image__link:hover .image__preview,
+    .image__link:focus-visible .image__preview {
       opacity: 0.8;
     }
   }
@@ -70,7 +70,7 @@
   }
 }
 
-.image-upload-field span.info {
+.image-field span.info {
   font-style: normal;
   font-size: $body-font-size;
   color: $color-body-text;

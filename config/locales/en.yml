@@ -4742,7 +4742,7 @@ en:
         customer_credit_successful: Customer has been successfully credited!
 
       products:
-        image_upload:
+        image:
           label: "Image"
           subtitle: "A square size starting from 440px by 440px is recommended."
           upload: "Upload image"
