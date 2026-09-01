@@ -567,6 +567,20 @@ RSpec.describe Admin::EnterprisesController do
         spree_put :bulk_update, bulk_enterprise_params
         expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
       end
+
+      it "does not raise when a manager submits bulk_update with no sets_enterprise_set param" do
+        # check_can_change_bulk_sells reads the submitted collection directly (for non-admins
+        # only) and must be guarded the same way as bulk_update_collection/bulk_params, since a
+        # manager also has :bulk_update ability and can hit this before_action.
+        profile_enterprise1.enterprise_roles.build(user: new_owner).save
+        allow(controller).to receive_messages spree_current_user: new_owner
+
+        expect {
+          spree_put :bulk_update, q: { name_i_cont: "no such enterprise" }
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
     end
 
     context "as the owner of an enterprise" do

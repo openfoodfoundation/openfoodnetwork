@@ -276,7 +276,7 @@ module Admin
     # Include only enterprises being updated
     def bulk_update_collection
       permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-      submitted_attributes = params.dig(:sets_enterprise_set, :collection_attributes) || {}
+      submitted_attributes = bulk_params.fetch(:collection_attributes, {})
       enterprise_ids = submitted_attributes.values.pluck(:id).compact
 
       permissions.editable_enterprises
@@ -356,7 +356,7 @@ module Admin
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
-      params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
+      bulk_params.fetch(:collection_attributes, {}).each_value do |enterprise_params|
         unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
           enterprise_params.delete :sells
         end
@@ -390,7 +390,7 @@ module Admin
     def check_can_change_bulk_owner
       return if spree_current_user.admin?
 
-      bulk_params[:collection_attributes].each_value do |enterprise_params|
+      bulk_params.fetch(:collection_attributes, {}).each_value do |enterprise_params|
         enterprise_params.delete :owner_id
       end
     end
