@@ -13,10 +13,11 @@ export default class extends Controller {
     const formData = new FormData();
     formData.append("image[attachment]", file, file.name);
     formData.append("image[viewable_id]", this.viewableIdValue);
-    formData.append("redirect_to_edit", "true");
+    formData.append("edit_after_upload", "true");
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
 
+    // The server decides where to go next: a redirect stream on success, a flash on failure.
     fetch(this.urlValue, {
       method: "POST",
       body: formData,
@@ -25,21 +26,8 @@ export default class extends Controller {
         "X-CSRF-Token": csrfToken,
       },
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json().then((data) => {
-            if (data.redirect_url) {
-              this.navigateTo(data.redirect_url);
-            }
-          });
-        }
-        return response.text().then((html) => Turbo.renderStreamMessage(html));
-      })
+      .then((response) => response.text())
+      .then((html) => Turbo.renderStreamMessage(html))
       .catch(() => showHttpError());
-  }
-
-  // Extracted so tests can observe the redirect: jsdom makes window.location unstubbable.
-  navigateTo(url) {
-    window.location.href = url;
   }
 }

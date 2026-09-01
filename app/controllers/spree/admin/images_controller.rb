@@ -36,10 +36,15 @@ module Spree
         @object.attributes = permitted_resource_params
         set_default_caption unless params[:image].key?(:caption)
 
-        return respond_to_create_errors unless @object.save
+        return respond_with_error((@error_target || @object).errors) unless @object.save
 
         flash[:success] = flash_message_for(@object, :successfully_created)
-        respond_to_create_save
+        @redirect_url = location_after_save
+
+        respond_to do |format|
+          format.html { redirect_to @redirect_url }
+          format.turbo_stream
+        end
       end
 
       def update
@@ -109,6 +114,7 @@ module Spree
 
       def location_after_save
         return params[:return_url] if params[:return_url].present?
+        return edit_image_path_after_upload if params[:edit_after_upload].present?
 
         if params[:variant_id]
           admin_products_url
@@ -145,6 +151,9 @@ module Spree
       end
 
       def respond_with_error(errors)
+        # The inline upload widget has no modal to re-render, so it only gets a flash.
+        return respond_with_upload_error(errors) if params[:edit_after_upload].present?
+
         @errors = errors.map(&:full_message)
         respond_to do |format|
           format.html {
@@ -154,24 +163,9 @@ module Spree
         end
       end
 
-      def respond_to_create_save
-        if params[:redirect_to_edit].present?
-          render json: { redirect_url: edit_image_path_after_upload }
-        else
-          respond_to do |format|
-            format.html { redirect_to location_after_save }
-            format.turbo_stream { render :update }
-          end
-        end
-      end
-
-      def respond_to_create_errors
-        if params[:redirect_to_edit].present?
-          flash[:error] = (@error_target || @object).errors.full_messages.to_sentence
-          render :create_error, status: :unprocessable_entity
-        else
-          respond_with_error((@error_target || @object).errors)
-        end
+      def respond_with_upload_error(errors)
+        flash[:error] = errors.full_messages.to_sentence
+        render :create_error, status: :unprocessable_entity
       end
 
       def replace_image_without_destroy

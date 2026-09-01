@@ -21,9 +21,6 @@ const selectFile = async (name = "new-image.jpg") => {
 const uploadedFormData = () => global.fetch.mock.calls[0][1].body;
 
 describe("UploadImageController", () => {
-  // jsdom's window.location cannot be redefined, so we observe the controller's own seam.
-  let navigateTo;
-
   beforeAll(() => {
     const application = Application.start();
     application.register("upload-image", upload_image_controller);
@@ -31,9 +28,6 @@ describe("UploadImageController", () => {
 
   beforeEach(async () => {
     global.Turbo = { renderStreamMessage: jest.fn() };
-    navigateTo = jest
-      .spyOn(upload_image_controller.prototype, "navigateTo")
-      .mockImplementation(() => {});
 
     document.body.innerHTML = `
       <meta name="csrf-token" content="test-csrf-token">
@@ -63,7 +57,11 @@ describe("UploadImageController", () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ redirect_url: "/admin/products/7/images/3/edit" }),
+          text: () =>
+            Promise.resolve(
+              '<turbo-stream action="redirect_to" url="/admin/products/7/images/3/edit">' +
+                "</turbo-stream>",
+            ),
         }),
       );
     });
@@ -85,13 +83,16 @@ describe("UploadImageController", () => {
       const body = uploadedFormData();
       expect(body.get("image[attachment]").name).toEqual("courgettes.jpg");
       expect(body.get("image[viewable_id]")).toEqual("42");
-      expect(body.get("redirect_to_edit")).toEqual("true");
+      expect(body.get("edit_after_upload")).toEqual("true");
     });
 
-    it("navigates to the image edit page", async () => {
+    it("renders the redirect stream returned by the server", async () => {
       await selectFile();
 
-      expect(navigateTo).toHaveBeenCalledWith("/admin/products/7/images/3/edit");
+      expect(global.Turbo.renderStreamMessage).toHaveBeenCalledWith(
+        '<turbo-stream action="redirect_to" url="/admin/products/7/images/3/edit">' +
+          "</turbo-stream>",
+      );
     });
   });
 
@@ -105,13 +106,12 @@ describe("UploadImageController", () => {
       );
     });
 
-    it("renders the returned turbo stream instead of navigating", async () => {
+    it("renders the returned turbo stream so the flash is shown", async () => {
       await selectFile();
 
       expect(global.Turbo.renderStreamMessage).toHaveBeenCalledWith(
         "<turbo-stream></turbo-stream>",
       );
-      expect(navigateTo).not.toHaveBeenCalled();
     });
   });
 
@@ -125,7 +125,7 @@ describe("UploadImageController", () => {
       await flush();
 
       expect(global.fetch).not.toHaveBeenCalled();
-      expect(navigateTo).not.toHaveBeenCalled();
+      expect(global.Turbo.renderStreamMessage).not.toHaveBeenCalled();
     });
   });
 });

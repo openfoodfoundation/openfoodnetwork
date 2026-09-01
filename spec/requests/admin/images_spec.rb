@@ -139,26 +139,28 @@ RSpec.describe "/admin/products/:product_id/images" do
     it_behaves_like "updating images", 200
   end
 
-  describe "POST /admin/products/:product_id/images with redirect_to_edit" do
+  describe "POST /admin/products/:product_id/images with edit_after_upload" do
     let(:params) do
       {
         image: {
           attachment: fixture_file_upload("logo.png", "image/png"),
           viewable_id: product.id,
         },
-        redirect_to_edit: true,
+        edit_after_upload: true,
       }
     end
-    subject { post(spree.admin_product_images_path(product), params:) }
+    subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 
-    it "creates the image and returns its edit url" do
+    it "creates the image and streams a redirect to its edit page" do
       expect {
         subject
         product.reload
       }.to change { product.image&.attachment&.filename.to_s }
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["redirect_url"]).to eq(
+      expect(response.media_type).to eq Mime[:turbo_stream]
+      expect(response.body).to include 'action="redirect_to"'
+      expect(response.body).to include(
         spree.edit_admin_product_image_path(product, product.image)
       )
     end
@@ -170,7 +172,7 @@ RSpec.describe "/admin/products/:product_id/images" do
             attachment: fixture_file_upload("sample_file_120_products.csv", "text/csv"),
             viewable_id: product.id,
           },
-          redirect_to_edit: true,
+          edit_after_upload: true,
         }
       end
 
@@ -185,7 +187,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     end
   end
 
-  describe "POST /admin/products/:product_id/images for a variant with redirect_to_edit" do
+  describe "POST /admin/products/:product_id/images for a variant with edit_after_upload" do
     let(:variant) { create(:variant, product:) }
     let(:params) do
       {
@@ -194,12 +196,12 @@ RSpec.describe "/admin/products/:product_id/images" do
           viewable_id: variant.id,
         },
         variant_id: variant.id,
-        redirect_to_edit: true,
+        edit_after_upload: true,
       }
     end
-    subject { post(spree.admin_product_images_path(product), params:) }
+    subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 
-    it "creates the image on the variant and returns its edit url" do
+    it "creates the image on the variant and streams a redirect to its edit page" do
       expect {
         subject
         variant.reload
@@ -207,7 +209,8 @@ RSpec.describe "/admin/products/:product_id/images" do
 
       expect(variant.image.viewable_type).to eq "Spree::Variant"
       expect(variant.image.viewable_id).to eq variant.id
-      expect(response.parsed_body["redirect_url"]).to eq(
+      expect(response.body).to include 'action="redirect_to"'
+      expect(response.body).to include CGI.escapeHTML(
         spree.edit_admin_product_image_path(product, variant.image, variant_id: variant.id)
       )
     end
