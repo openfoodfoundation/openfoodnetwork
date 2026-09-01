@@ -1373,8 +1373,7 @@ paths:
               examples:
                 unprocessable entity:
                   value:
-                    error: Line items variant must exist and Line items price is not
-                      a number
+                    error: 'Line items reference unknown products: http://test.host/api/dfc/enterprises/10000/supplied_products/99999'
       requestBody:
         content:
           application/json:
@@ -1494,8 +1493,7 @@ paths:
               examples:
                 variant not found:
                   value:
-                    error: Line items variant must exist and Line items price is not
-                      a number
+                    error: 'Line items reference unknown products: http://test.host/api/dfc/enterprises/10000/supplied_products/10001'
       requestBody:
         content:
           application/json:

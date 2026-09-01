@@ -69,8 +69,10 @@ class FdcBackorderer
   end
 
   def find_order_line(order, offer)
+    offered_item_id = DfcBuilder.extract_semantic_id(offer.offeredItem)
+
     order.lines.find do |line|
-      DfcBuilder.semantic_id(line.offer.offeredItem) == DfcBuilder.semantic_id(offer.offeredItem)
+      DfcBuilder.extract_semantic_id(line.offer.offeredItem) == offered_item_id
     end
   end
 

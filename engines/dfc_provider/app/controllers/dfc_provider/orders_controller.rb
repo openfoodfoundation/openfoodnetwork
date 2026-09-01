@@ -8,17 +8,13 @@ module DfcProvider
       dfc_order = OrderBuilder.build(order)
       lines = OrderBuilder.build_order_lines(dfc_order, order.line_items)
       offers = lines.map(&:offer)
-      catalog_items = offers.map(&:offeredItem)
+      supplied_products = offers.map(&:offeredItem)
 
       sessions = [build_sale_session(order)]
-      render_dfc(dfc_order, *lines, *offers, *catalog_items, *sessions)
+      render_dfc(dfc_order, *lines, *offers, *supplied_products, *sessions)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def create
-      graph = import
-      dfc_order = select_type(graph, "dfc-b:Order").first if graph
-
       return head :bad_request unless dfc_order
 
       @order = current_enterprise.distributed_orders.build(
@@ -28,34 +24,25 @@ module DfcProvider
         customer: current_user.customers.find_by(enterprise: current_enterprise),
       )
 
-      if OrderBuilder.apply(@order, dfc_order, current_enterprise)
-        @order.recreate_all_fees!
-        @order.create_tax_charge!
+      if @order.save && apply(@order)
         @order.update_order!
-        subject = OrderBuilder.build(@order)
-        response.headers["Location"] = subject.semanticId
-        render_dfc(subject, status: :created)
+        render_dfc(OrderBuilder.build(@order), status: :created)
       else
-        render json: { error: @order.errors.full_messages.to_sentence },
-               status: :unprocessable_entity
+        @order.destroy if @order.persisted?
+        render_error(@order)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def update
-      graph = import
-      dfc_order = select_type(graph, "dfc-b:Order").first if graph
-
       return head :bad_request unless dfc_order
 
-      if OrderBuilder.apply(order, dfc_order, current_enterprise)
+      if apply(order)
         order.recreate_all_fees!
         order.create_tax_charge!
         order.update_order!
         render_dfc(OrderBuilder.build(order))
       else
-        render json: { error: order.errors.full_messages.to_sentence },
-               status: :unprocessable_entity
+        render_error(order)
       end
     end
 
@@ -76,12 +63,25 @@ module DfcProvider
       @order ||= current_enterprise.distributed_orders.find(params[:id])
     end
 
-    def import
-      super.then { |graph| Array.wrap(graph) }
+    def apply(ofn_order)
+      OrderBuilder.apply(ofn_order, dfc_order, variant_scope: current_enterprise.variants)
+    end
+
+    # `DfcIo.import` returns a bare object when the payload contains only one
+    # subject, for example when a client just updates the order status.
+    def dfc_order
+      return @dfc_order if defined?(@dfc_order)
+
+      @dfc_order = select_type(Array.wrap(import), "dfc-b:Order").first
     end
 
     def select_type(graph, semantic_type)
-      Array.wrap(graph).select { |i| i.semanticType == semantic_type }
+      graph.select { |i| i.semanticType == semantic_type }
+    end
+
+    def render_error(ofn_order)
+      render json: { error: ofn_order.errors.full_messages.to_sentence },
+             status: :unprocessable_entity
     end
 
     def build_sale_session(order)

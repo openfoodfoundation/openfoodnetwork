@@ -52,9 +52,9 @@ RSpec.describe OrderBuilder do
       )
     }
 
-    it "applies attribute changes to order" do
+    it "doesn't complete an order without line items" do
       expect(subject).to be true
-      expect(ofn_order.state).to eq "complete"
+      expect(ofn_order.state).to eq "cart"
     end
 
     context "with OrderLines" do
@@ -78,6 +78,18 @@ RSpec.describe OrderBuilder do
           nil, offer: offer2, quantity: 5
         )
         dfc_order.lines = [order_line1, order_line2]
+      end
+
+      it "completes the order" do
+        expect(subject).to be true
+
+        ofn_order.reload
+        expect(ofn_order.state).to eq "complete"
+
+        # An order without completed_at is not complete to the rest of OFN: it
+        # can't be cancelled and it shows up as the user's shopping cart.
+        expect(ofn_order).to be_completed
+        expect(ofn_order.shipments).to be_present
       end
 
       it "creates line items" do
