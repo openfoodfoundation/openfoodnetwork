@@ -38,7 +38,7 @@ class ProductTileComponent < ViewComponent::Base
   #
   # `unit_to_display` already returns the "display unit as" label when one is set and the
   # computed unit ("1kg") otherwise, so there is no need to branch on it here.
-  def product_title
+  def product_name
     safe_join(name_parts.compact_blank, NAME_SEPARATOR)
   end
 
