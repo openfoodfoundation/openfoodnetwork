@@ -141,6 +141,27 @@ RSpec.describe "Orders lifecycle" do
     end
   end
 
+  describe "cancelling via the order status" do
+    it "cancels the order" do
+      order = create_order!
+
+      put "#{orders_url}/#{order.id}", headers:,
+                                       params: order_payload(status: "dfc-v:Cancelled")
+
+      expect(response).to have_http_status :ok
+      expect(order.reload.state).to eq "canceled"
+    end
+
+    it "returns the stock" do
+      order = create_order!
+
+      expect {
+        put "#{orders_url}/#{order.id}", headers:,
+                                         params: order_payload(status: "dfc-v:Cancelled")
+      }.to change { variant.reload.on_hand }.from(9).to(10)
+    end
+  end
+
   describe "an invalid update" do
     it "leaves the order untouched" do
       order = create_order!
@@ -153,6 +174,17 @@ RSpec.describe "Orders lifecycle" do
 
       expect(response).to have_http_status :unprocessable_entity
       expect(order.reload.line_items.map { |li| [li.variant_id, li.quantity] }).to eq original
+    end
+
+    it "reports a line item the order can't hold" do
+      order = create_order!
+
+      put "#{orders_url}/#{order.id}", headers:,
+                                       params: order_payload(quantity: 999)
+
+      expect(response).to have_http_status :unprocessable_entity
+      expect(response.body).to include "is out of stock"
+      expect(order.reload.line_items.first.quantity).to eq 1
     end
   end
 end
