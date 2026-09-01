@@ -16,7 +16,29 @@ permissions:
   contents: read
 
 jobs:
+  # Check if we are on a branch with an open pull request.
+  # Then we just run the PR build but not the branch build.
+  decide:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # pull_request runs (upstream) always proceed
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # push run: skip if an open PR upstream already covers this branch
+          count=$(gh api \
+            "repos/openfoodfoundation/openfoodnetwork/pulls?state=open&head=${{ github.repository_owner }}:${{ github.ref_name }}" \
+            --jq "length")
+          [ "$count" -gt 0 ] && echo "run=false" >> "$GITHUB_OUTPUT" || echo "run=true" >> "$GITHUB_OUTPUT"
   controllers_and_models:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-22.04
     services:
       # Postgres settings shared with all jobs
@@ -117,6 +139,8 @@ jobs:
           if-no-files-found: ignore
 
   system:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
@@ -203,6 +227,8 @@ jobs:
           if-no-files-found: ignore
 
   engines:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
@@ -281,6 +307,8 @@ jobs:
           if-no-files-found: ignore
 
   test_the_rest:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
@@ -359,6 +387,8 @@ jobs:
           if-no-files-found: ignore
 
   non_knapsack_jest_karma:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-22.04
     services:
       postgres: *postgres
