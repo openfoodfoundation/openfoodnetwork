@@ -26,7 +26,8 @@ class OrderBuilder < DfcBuilder
     # Set order state if recognised
     set_order_state(ofn_order, dfc_order)
 
-    attrs, stale_ids = line_item_attributes(ofn_order, dfc_order)
+    incoming = incoming_quantities(dfc_order)
+    attrs, stale_ids = build_line_item_attributes(ofn_order, incoming)
     destroy_stale_line_items(ofn_order, stale_ids)
 
     ofn_order.update(line_items_attributes: attrs)
@@ -41,11 +42,6 @@ class OrderBuilder < DfcBuilder
     # `accepts_nested_attributes_for :line_items` does not permit `:_destroy`,
     # so remove line items that are no longer present explicitly.
     ofn_order.line_items.where(id: stale_ids).destroy_all if stale_ids.any?
-  end
-
-  def self.line_item_attributes(ofn_order, dfc_order)
-    incoming = incoming_quantities(dfc_order)
-    build_line_item_attributes(ofn_order, incoming)
   end
 
   def self.incoming_quantities(dfc_order)
