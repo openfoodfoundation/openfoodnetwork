@@ -11,26 +11,22 @@ RSpec.describe EnterpriseFeesBulkUpdate do
     end
     let(:valid_attributes) do
       set_attributes = {
-        sets_enterprise_fee_set: {
-          collection_attributes: {
-            "0" => base_attributes
-          }
+        collection_attributes: {
+          "0" => base_attributes
         }
       }
-      ActionController::Parameters.new(set_attributes)
+      ActionController::Parameters.new(set_attributes).permit!
     end
     let(:invalid_attributes) do
       base_attributes[:inherits_tax_category] = "true"
       base_attributes[:calculator_type] = EnterpriseFee::PER_ORDER_CALCULATORS.first
       base_attributes[:calculator_attributes].merge!(preferred_amount: "%12")
       set_attributes = {
-        sets_enterprise_fee_set: {
-          collection_attributes: {
-            "0" => base_attributes
-          }
+        collection_attributes: {
+          "0" => base_attributes
         }
       }
-      ActionController::Parameters.new(set_attributes)
+      ActionController::Parameters.new(set_attributes).permit!
     end
     let(:loaded_fees) { [enterprise_fee] }
 
