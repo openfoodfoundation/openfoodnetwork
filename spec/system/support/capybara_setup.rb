@@ -17,14 +17,3 @@ Capybara.default_normalize_ws = true
 # Where to store system tests artifacts (e.g. screenshots, downloaded files, etc.).
 # It could be useful to be able to configure this path from the outside (e.g., on CI).
 Capybara.save_path = ENV.fetch("CAPYBARA_ARTIFACTS", "./tmp/capybara")
-
-Capybara.singleton_class.prepend(Module.new do
-  attr_accessor :last_used_session
-
-  def using_session(name, &)
-    self.last_used_session = name
-    super
-  ensure
-    self.last_used_session = nil
-  end
-end)
