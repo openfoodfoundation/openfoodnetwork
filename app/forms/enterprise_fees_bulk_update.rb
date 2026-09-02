@@ -8,15 +8,18 @@ class EnterpriseFeesBulkUpdate
   validate :check_enterprise_fee_input
   validate :check_calculators_compatibility_with_taxes
 
-  def initialize(params)
+  def initialize(params, loaded_fees)
     @errors = ActiveModel::Errors.new self
     @params = params
+    @loaded_fees = loaded_fees
   end
 
   def save
     return false unless valid?
 
-    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
+    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(
+      enterprise_fee_bulk_params.merge(collection: @loaded_fees)
+    )
     unless @enterprise_fee_set.save
       @enterprise_fee_set.errors.each do |error|
         @errors.add(error.attribute, error.type)

@@ -2,7 +2,7 @@
 
 RSpec.describe EnterpriseFeesBulkUpdate do
   describe "error reporting" do
-    let(:enterprise_fee) { build_stubbed(:enterprise_fee) }
+    let(:enterprise_fee) { create(:enterprise_fee) }
     let(:base_attributes) do
       attributes = enterprise_fee.attributes.symbolize_keys
       attributes[:calculator_type] = enterprise_fee.calculator_type
@@ -32,9 +32,10 @@ RSpec.describe EnterpriseFeesBulkUpdate do
       }
       ActionController::Parameters.new(set_attributes)
     end
+    let(:loaded_fees) { [enterprise_fee] }
 
     it "creates a valid form with valid parameters" do
-      subject = EnterpriseFeesBulkUpdate.new(valid_attributes)
+      subject = EnterpriseFeesBulkUpdate.new(valid_attributes, loaded_fees)
       subject.save
       expect(subject).to be_valid
     end
@@ -46,13 +47,13 @@ RSpec.describe EnterpriseFeesBulkUpdate do
       allow(enterprise_fee_set).to receive(:errors).and_return(test_errors)
       allow(Sets::EnterpriseFeeSet).to receive(:new).and_return(enterprise_fee_set)
 
-      subject = EnterpriseFeesBulkUpdate.new(valid_attributes)
+      subject = EnterpriseFeesBulkUpdate.new(valid_attributes, loaded_fees)
       subject.save
       expect(subject.errors.messages[:base]).to include("error with model creation")
     end
 
     it "passes up errors with invalid set attributes" do
-      subject = EnterpriseFeesBulkUpdate.new(invalid_attributes)
+      subject = EnterpriseFeesBulkUpdate.new(invalid_attributes, loaded_fees)
       subject.save
       expect(subject.errors.messages[:base]).to include(
         "Invalid input. Please use only numbers. For example: 10, 5.5, -20"

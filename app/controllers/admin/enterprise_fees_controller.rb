@@ -34,8 +34,9 @@ module Admin
     end
 
     def bulk_update
-      # Forms has strong parameters, so we don't need to validate them in controller
-      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params)
+      # @enterprise_fees is set by Admin::ResourceController, see `collection` to check
+      # how enterprise fees are scoped
+      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params, @enterprise_fees)
 
       if @enterprise_fee_set.save
         flash[:success] = I18n.t(:enterprise_fees_update_notice)
