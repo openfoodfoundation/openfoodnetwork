@@ -31,9 +31,11 @@ module Spree
 
       def create
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        set_viewable
 
         @object.attributes = permitted_resource_params
+        # After the attributes, so a blank viewable_id in the body can't win over the
+        # owner resolved from the URL.
+        set_viewable
         set_default_caption unless params[:image].key?(:caption)
 
         return respond_with_error((@error_target || @object).errors) unless @object.save
@@ -128,9 +130,12 @@ module Spree
         edit_admin_product_image_path(@product.id, @object.id, extra)
       end
 
+      # The id arrives in the request body, so fall back to the parent that has already
+      # been resolved and authorized rather than trusting a blank value and saving an
+      # image that points at no record (Spree::Asset doesn't require its parent).
       def set_viewable
         @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
-        @image.viewable_id = params[:image][:viewable_id]
+        @image.viewable_id = params[:image][:viewable_id].presence || parent.id
       end
 
       # An upload carries no caption field, so store the default up front rather than

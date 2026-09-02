@@ -520,5 +520,55 @@ RSpec.describe '
         expect(page).to have_content "Upload image"
       end
     end
+
+    # A variant that hasn't been saved yet has no id to upload against, so the
+    # widget is only offered once the variant exists.
+    context "on the new variant page" do
+      it "does not offer an image upload until the variant exists" do
+        login_as_admin
+        visit spree.new_admin_product_variant_path(product)
+
+        expect(page).to have_content "New Variant"
+        expect(page).not_to have_selector "[data-controller='upload-image']"
+        expect(page).not_to have_selector "input[name='image[attachment]']"
+        expect(page).not_to have_content image_subtitle
+        expect(page).not_to have_content "Upload image"
+      end
+
+      it "keeps the form intact and creates no orphaned image, then allows upload" do
+        login_as_admin
+        visit spree.new_admin_product_variant_path(product)
+
+        tomselect_select("Weight (g)", from: "Unit scale")
+        click_on "Unit" # activate popout
+        fill_in "Unit value", with: "500"
+        fill_in 'Price', with: 3.5
+        select taxon.name, from: "variant_primary_taxon_id"
+        select2_select variant.enterprise.name, from: "variant_enterprise_id"
+
+        # There is deliberately no upload field here; if one is ever rendered again,
+        # this fails rather than silently uploading against a nil id.
+        expect(page).not_to have_selector "input[name='image[attachment]']", visible: :all
+        expect(Spree::Image.count).to eq 0
+
+        expect(page).to have_field "Price", with: "3.5"
+
+        expect { click_button 'Create' }.to change { product.variants.reload.count }.by(1)
+        expect(page).to have_content "has been successfully created!"
+        expect(Spree::Image.count).to eq 0
+
+        new_variant = product.variants.reload.order(:id).last
+        visit spree.edit_admin_product_variant_path(product, new_variant)
+
+        expect(page).to have_content image_subtitle
+        expect(page).to have_content "Upload image"
+
+        attach_file "image[attachment]", white_logo_path, visible: false
+
+        expect(page).to have_content /Image has been successfully created/
+        expect(new_variant.reload.image).to be_present
+        expect(new_variant.image.viewable).to eq new_variant
+      end
+    end
   end
 end

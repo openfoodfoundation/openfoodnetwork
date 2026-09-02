@@ -405,4 +405,42 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(response.location).to end_with spree.admin_products_path
     end
   end
+
+  # A blank viewable_id used to be trusted verbatim, saving an image that pointed at no
+  # record at all (Spree::Asset doesn't require the polymorphic parent).
+  describe "POST with a blank viewable_id" do
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("logo.png", "image/png"),
+          viewable_id: "",
+        }
+      }
+    end
+
+    it "falls back to the product rather than creating an orphaned image" do
+      expect { post(spree.admin_product_images_path(product), params:) }
+        .to change { Spree::Image.count }.by(1)
+
+      image = Spree::Image.last
+      expect(image.viewable_type).to eq "Spree::Product"
+      expect(image.viewable_id).to eq product.id
+      expect(image.viewable).to eq product
+    end
+
+    context "when the parent is a variant" do
+      let(:variant) { create(:variant, product:) }
+
+      it "falls back to the variant" do
+        expect {
+          post(spree.admin_product_images_path(product, variant_id: variant.id), params:)
+        }.to change { Spree::Image.count }.by(1)
+
+        image = Spree::Image.last
+        expect(image.viewable_type).to eq "Spree::Variant"
+        expect(image.viewable_id).to eq variant.id
+        expect(image.viewable).to eq variant
+      end
+    end
+  end
 end
