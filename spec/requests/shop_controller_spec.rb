@@ -41,6 +41,34 @@ RSpec.describe "Shop" do
         expect(response.body).to include("cap color")
         expect(response.body).to include("ofn-thumbnail-carousel")
       end
+
+      it "strips leading empty blocks from the description" do
+        product = create(
+          :simple_product,
+          description: "<div><br></div><div>Real product description.</div>"
+        )
+        order_cycle.exchanges.outgoing.first.variants << product.variants.first
+
+        get "/shop/product_modal", params: {
+          product_id: product.id,
+          order_cycle_id: order_cycle.id
+        }
+
+        expect(response.body).to include("Real product description.")
+        expect(response.body).not_to match(%r{<div>\s*<br\s*/?>\s*</div>\s*<div>})
+      end
+
+      it "renders the description exactly as stored, without a separate read-time sanitizer" do
+        product = create(:simple_product, description: "<h2>Heading</h2><p>Body</p>")
+        order_cycle.exchanges.outgoing.first.variants << product.variants.first
+
+        get "/shop/product_modal", params: {
+          product_id: product.id,
+          order_cycle_id: order_cycle.id
+        }
+
+        expect(response.body).to include("<h2>Heading</h2>")
+      end
     end
 
     context "when the product is not distributed by the current shop" do

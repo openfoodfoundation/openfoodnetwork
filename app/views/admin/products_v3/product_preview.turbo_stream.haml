@@ -28,7 +28,6 @@
                       = @product.name
                 - if @product.description
                   .product-description{ "data-controller": "add-blank-to-link" }
-                    - # description is sanitized in Spree::Product#description method
                     = @product.description.html_safe
 
                 - if @product.variants.first.enterprise.visible

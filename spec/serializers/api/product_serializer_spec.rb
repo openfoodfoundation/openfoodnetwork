@@ -36,4 +36,13 @@ RSpec.describe Api::ProductSerializer do
 
     expect(serializer.serializable_hash[:properties_with_values]).to include product_property
   end
+
+  describe "#description_html" do
+    it "returns the description exactly as sanitized and stored on save" do
+      product.update!(description: "<h2>Heading</h2><p>Body</p>")
+
+      expect(serializer.description_html).to eq(product.description)
+      expect(serializer.description_html).to include("<h2>Heading</h2>")
+    end
+  end
 end

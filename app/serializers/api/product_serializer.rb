@@ -18,7 +18,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   # return a sanitized html description
   def description_html
-    trix_sanitizer.sanitize_content(object.description)
+    object.description
   end
 
   def properties_with_values
@@ -33,9 +33,5 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   def sanitizer
     @sanitizer ||= ContentSanitizer.new
-  end
-
-  def trix_sanitizer
-    @trix_sanitizer ||= TrixSanitizer.new
   end
 end
