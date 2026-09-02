@@ -19,6 +19,8 @@ Capybara.register_driver(:cuprite_ofn) do |app|
     browser_options:,
     process_timeout: 60,
     timeout: 60,
+    # Keep downloads separate from other Capybara artifacts for easy cleanup.
+    save_path: DownloadsHelper.path.to_s,
     # Don't load scripts from external sources, like google maps or stripe
     url_whitelist: [
       %r{^http://localhost}, %r{^http://0.0.0.0}, %r{http://127.0.0.1},
