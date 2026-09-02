@@ -2138,6 +2138,7 @@ en:
         remove_logo_success: "Logo removed successfully"
         remove_promo_image_success: "Promo image removed successfully"
         remove_white_label_logo_success: "Logo removed successfully"
+        remove_terms_and_conditions_success: "Terms and Conditions file removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
 

@@ -40,7 +40,8 @@ module PermittedAttributes
         :hide_ofn_navigation, :white_label_logo, :white_label_logo_link,
         :hide_groups_tab, :external_billing_id,
         :enable_producers_to_edit_orders,
-        :remove_logo, :remove_promo_image, :remove_white_label_logo, :contact_id
+        :remove_logo, :remove_promo_image, :remove_white_label_logo,
+        :remove_terms_and_conditions, :contact_id
       ]
     end
   end
