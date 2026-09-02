@@ -54,13 +54,11 @@ RSpec.describe EnterpriseFeesBulkUpdate do
     it "passes up errors with invalid set attributes" do
       subject = EnterpriseFeesBulkUpdate.new(invalid_attributes)
       subject.save
-      expect(subject.errors.messages[:base]).to include(I18n.t(:calculator_preferred_value_error))
+      expect(subject.errors.messages[:base]).to include(
+        "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
+      )
       expect(subject.errors.messages[:base])
-        .to include(
-          I18n.t(
-            'activerecord.errors.models.enterprise_fee.inherit_tax_requires_per_item_calculator'
-          )
-        )
+        .to include("Inheriting the tax category requires a per-item calculator.")
     end
   end
 end
