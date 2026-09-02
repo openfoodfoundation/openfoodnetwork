@@ -109,6 +109,19 @@ RSpec.describe Api::V0::ShipmentsController do
         expect_error_response
       end
 
+      it 'returns a validation error when quantity exceeds available stock' do
+        variant.on_hand = 1
+        variant.save!
+        original_total = order.total
+
+        spree_post :create, params
+
+        expect(response).to have_http_status :unprocessable_entity
+        expect(json_response["errors"]["quantity"]).to be_present
+        expect(order.reload.line_items).to be_empty
+        expect(order.total).to eq original_total
+      end
+
       it "applies any enterprise fees that are present" do
         order_cycle = create(:simple_order_cycle,
                              coordinator: order.distributor,
@@ -369,6 +382,17 @@ RSpec.describe Api::V0::ShipmentsController do
           expect_error_response
         end
 
+        it 'returns a validation error when quantity exceeds available stock' do
+          variant.on_hand = 1
+          variant.save!
+
+          spree_put :add, params
+
+          expect(response).to have_http_status :unprocessable_entity
+          expect(json_response["errors"]["quantity"]).to be_present
+          expect(inventory_units_for(variant)).to be_empty
+        end
+
         it 'adds a variant override to the shipment', feature: :inventory do
           hub = create(:distributor_enterprise)
           order.update_attribute(:distributor, hub)
@@ -394,7 +418,9 @@ RSpec.describe Api::V0::ShipmentsController do
             allow(Spree::Order).to receive(:find_by!) { fee_order }
             allow(controller).to receive(:refuse_changing_cancelled_orders)
             allow(fee_order).to receive(:contents) { contents }
-            allow(contents).to receive_messages(add: {}, remove: {})
+            allow(contents).to receive_messages(
+              add: instance_double(Spree::LineItem, errors: []), remove: {}
+            )
             allow(fee_order).to receive_message_chain(:shipments, :find_by!) { fee_order_shipment }
             allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil)
             allow(fee_order).to receive(:recreate_all_fees!)
