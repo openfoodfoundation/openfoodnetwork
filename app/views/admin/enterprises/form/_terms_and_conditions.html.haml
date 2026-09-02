@@ -7,7 +7,7 @@
     - if @enterprise.terms_and_conditions.attached?
       = link_to "#{@enterprise.terms_and_conditions.blob.filename} #{ t('admin.enterprises.form.business_details.uploaded_on') } #{@enterprise.terms_and_conditions.blob.created_at}", url_for(@enterprise.terms_and_conditions), target: '_blank'
       %div
-        %a.icon-trash{ href: '#', data: { controller: 'modal-link', action: 'click->modal-link#open', 'modal-link-target-value': 'remove_terms_and_conditions' } }
+        %a.icon-trash{ href: '#', data: { controller: 'modal-link', action: 'modal-link#open:prevent', 'modal-link-target-value': 'remove_terms_and_conditions' } }
           = t('admin.enterprises.form.business_details.remove_terms_and_conditions')
     .pad-top
     %div
