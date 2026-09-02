@@ -41,9 +41,16 @@ RSpec.describe Admin::EnterpriseFeesController do
     let(:enterprise) { create(:distributor_enterprise_with_tax) }
     let!(:fee1) { create(:enterprise_fee, :flat_rate, enterprise:, amount: 5.0) }
     let!(:fee2) { create(:enterprise_fee, :per_item, enterprise:, amount: 10.00) }
+    let!(:other_fee) {
+      create(:enterprise_fee, :flat_rate, enterprise: create(:distributor_enterprise),
+                                          amount: 20.00)
+    }
+
+    before do
+      allow(controller).to receive_messages spree_current_user: enterprise.owner
+    end
 
     it "updates the enterprise fees" do
-      allow(controller).to receive_messages spree_current_user: enterprise.owner
       params = {
         enterprise_id: enterprise.id,
         sets_enterprise_fee_set: {
@@ -69,8 +76,6 @@ RSpec.describe Admin::EnterpriseFeesController do
     end
 
     it "doesn't update fees from another enterprise" do
-      allow(controller).to receive_messages spree_current_user: enterprise.owner
-
       params = {
         enterprise_id: enterprise.id,
         sets_enterprise_fee_set: {
@@ -104,6 +109,59 @@ RSpec.describe Admin::EnterpriseFeesController do
       expect(fee1.reload.name).to eq("sales fee")
 
       expect(response).to redirect_to admin_enterprise_fees_path(enterprise_id: enterprise.id)
+    end
+
+    it "filters out fees we are not allowed to update" do
+      params = {
+        enterprise_id: enterprise.id,
+        sets_enterprise_fee_set: {
+          collection_attributes: {
+            '0': {
+              id: fee1.id,
+              enterprise_id: fee1.enterprise_id,
+              fee_type: fee1.fee_type,
+              name: "sales fee",
+              tax_category_id: nil,
+              inherits_tax_category: fee1.inherits_tax_category,
+              calculator_type: "Calculator::FlatRate",
+              calculator_attributes: { id: fee1.calculator.id, preferred_amount: 10.00 }
+            },
+            '1': {
+              id: other_fee.id,
+              enterprise_id: other_fee.enterprise_id,
+              fee_type: other_fee.fee_type,
+              name: "non updatable fee",
+              tax_category_id: nil,
+              inherits_tax_category: other_fee.inherits_tax_category,
+              calculator_type: "Calculator::FlatRate",
+              calculator_attributes: { id: other_fee.calculator.id, preferred_amount: 10.00 }
+            }
+          }
+        }
+      }
+
+      allowed_fees = ActionController::Parameters.new(
+        {
+          id: fee1.id,
+          enterprise_id: fee1.enterprise_id,
+          fee_type: fee1.fee_type,
+          name: "sales fee",
+          tax_category_id: nil,
+          inherits_tax_category: fee1.inherits_tax_category,
+          calculator_type: "Calculator::FlatRate",
+          calculator_attributes: { id: fee1.calculator.id, preferred_amount: 10.00 }
+        }
+      ).permit!
+
+      filtered_params = {
+        collection_attributes: {
+          "0" => allowed_fees
+        }
+      }
+      expect(EnterpriseFeesBulkUpdate).to receive(:new).with(filtered_params,
+                                                             anything).and_call_original
+
+      post(:bulk_update, params: )
     end
   end
 end

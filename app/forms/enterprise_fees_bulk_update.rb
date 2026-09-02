@@ -17,9 +17,7 @@ class EnterpriseFeesBulkUpdate
   def save
     return false unless valid?
 
-    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(
-      enterprise_fee_bulk_params.merge(collection: @loaded_fees)
-    )
+    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(@params.merge(collection: @loaded_fees))
     unless @enterprise_fee_set.save
       @enterprise_fee_set.errors.each do |error|
         @errors.add(error.attribute, error.type)
@@ -33,7 +31,7 @@ class EnterpriseFeesBulkUpdate
   private
 
   def check_enterprise_fee_input
-    enterprise_fee_bulk_params['collection_attributes'].each_value do |fee_row|
+    @params[:collection_attributes].each_value do |fee_row|
       enterprise_fees = fee_row['calculator_attributes']&.slice(
         :preferred_flat_percent, :preferred_amount,
         :preferred_first_item, :preferred_additional_item,
@@ -52,7 +50,7 @@ class EnterpriseFeesBulkUpdate
   end
 
   def check_calculators_compatibility_with_taxes
-    enterprise_fee_bulk_params['collection_attributes'].each_value do |enterprise_fee|
+    @params[:collection_attributes].each_value do |enterprise_fee|
       next unless enterprise_fee['inherits_tax_category'] == "true"
       next unless EnterpriseFee::PER_ORDER_CALCULATORS.include?(enterprise_fee['calculator_type'])
 
@@ -63,15 +61,5 @@ class EnterpriseFeesBulkUpdate
         )
       )
     end
-  end
-
-  def enterprise_fee_bulk_params
-    @params.require(:sets_enterprise_fee_set).permit(
-      collection_attributes: [
-        :id, :enterprise_id, :fee_type, :name, :tax_category_id,
-        :inherits_tax_category, :calculator_type,
-        { calculator_attributes: PermittedAttributes::Calculator.attributes }
-      ]
-    )
   end
 end

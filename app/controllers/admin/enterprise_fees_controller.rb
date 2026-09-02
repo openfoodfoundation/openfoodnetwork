@@ -36,7 +36,9 @@ module Admin
     def bulk_update
       # @enterprise_fees is set by Admin::ResourceController, see `collection` to check
       # how enterprise fees are scoped
-      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params, @enterprise_fees)
+      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(
+        enterprise_fee_bulk_params, @enterprise_fees
+      )
 
       if @enterprise_fee_set.save
         flash[:success] = I18n.t(:enterprise_fees_update_notice)
@@ -97,6 +99,28 @@ module Admin
       end
 
       main_app.admin_enterprise_fees_path
+    end
+
+    # Remove fees we are not allowed to update
+    def enterprise_fee_bulk_params
+      fee_id = @enterprise_fees.map(&:id)
+      collection = params.dig(:sets_enterprise_fee_set, :collection_attributes)
+      matching = collection.values.select { |value| fee_id.include?(value[:id]) }
+      matching = matching.map do |fee_param|
+        fee_param.permit(
+          :id, :enterprise_id, :fee_type, :name, :tax_category_id,
+          :inherits_tax_category, :calculator_type,
+          { calculator_attributes: PermittedAttributes::Calculator.attributes }
+        )
+      end
+      # Rebuilding the expected parameters for the EnterpriseFeeSet
+      parameters = {
+        collection_attributes: {}
+      }
+      matching.each_with_index { |fee_param, i|
+        parameters[:collection_attributes][i.to_s] = fee_param
+      }
+      parameters
     end
   end
 end
