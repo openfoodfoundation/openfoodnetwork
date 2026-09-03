@@ -857,7 +857,7 @@ GEM
       railties (>= 5.2)
       redis (>= 4.0, < 6.0)
     stringex (2.8.6)
-    stripe (19.5.0)
+    stripe (19.6.0)
       bigdecimal
       logger
     swd (2.0.3)
@@ -1391,7 +1391,7 @@ CHECKSUMS
   stimulus_reflex (3.5.5) sha256=cf08eddccc75c4b8f61446da73972b8bd9304f173f4881f500202d5c3f70e3c9
   stimulus_reflex_testing (0.3.1)
   stringex (2.8.6) sha256=c7b382d2b2a47a1e1646f256df201c48d487d6296fbb289d76802f67f5e929c4
-  stripe (19.5.0) sha256=04d7bf83c65e5021cfc94bac92f2dd95d3843dcd70cac1cb8362757398bf5aaf
+  stripe (19.6.0) sha256=bbd4668cd3cddc05a292ac5d9a99ca55f1925b2002cfa4f3b3c94a599f548ebf
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
   sysexits (1.2.0) sha256=598241c4ae57baa403c125182dfdcc0d1ac4c0fb606dd47fbed57e4aaf795662
   taler (0.4.0) sha256=6cfd452c4da36ccf28aa4bd477cb91d18ff1f1673270a9625d08fb0ad2973375
