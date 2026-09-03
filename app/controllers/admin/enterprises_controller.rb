@@ -310,7 +310,7 @@ module Admin
       @object.transaction do
         tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each_value do |attrs|
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
-                 attrs[:type].constantize.new(enterprise: @object)
+                 TagRule.new(type: attrs[:type], enterprise: @object)
 
           rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end

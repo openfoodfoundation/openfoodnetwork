@@ -285,6 +285,66 @@ RSpec.describe Admin::EnterprisesController do
             expect(new_tag_rule.preferred_exchange_tags).to eq "tags,are,awesome"
           end
         end
+
+        context "with an unrecognised type" do
+          it "does not instantiate an arbitrary class from a fully-qualified name" do
+            expect {
+              expect {
+                spree_put :update,
+                          id: enterprise,
+                          enterprise: {
+                            tag_rules_attributes: {
+                              '0' => {
+                                id: "",
+                                type: "Spree::Order",
+                                preferred_exchange_tags: "malicious"
+                              }
+                            }
+                          }
+              }.to raise_error(ActiveRecord::SubclassNotFound)
+            }.not_to change { Spree::Order.count }
+
+            expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
+          end
+
+          it "does not instantiate a class that isn't a TagRule subclass" do
+            expect {
+              expect {
+                spree_put :update,
+                          id: enterprise,
+                          enterprise: {
+                            tag_rules_attributes: {
+                              '0' => {
+                                id: "",
+                                type: "Enterprise",
+                                preferred_exchange_tags: "malicious"
+                              }
+                            }
+                          }
+              }.to raise_error(ActiveRecord::SubclassNotFound)
+            }.not_to change { Enterprise.count }
+
+            expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
+          end
+
+          it "raises for a type that isn't a real class" do
+            expect {
+              spree_put :update,
+                        id: enterprise,
+                        enterprise: {
+                          tag_rules_attributes: {
+                            '0' => {
+                              id: "",
+                              type: "NotARealClass",
+                              preferred_exchange_tags: "malicious"
+                            }
+                          }
+                        }
+            }.to raise_error(ActiveRecord::SubclassNotFound)
+
+            expect(TagRule.count).to eq 1 # only the pre-existing tag_rule
+          end
+        end
       end
 
       describe "vouchers" do
