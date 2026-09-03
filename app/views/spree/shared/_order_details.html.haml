@@ -16,7 +16,7 @@
         .text-big
           = t :order_payment
           %strong= order_payment_method&.display_name
-        %p.text-small.text-skinny.pre-line.word-wrap
+        %p.text-small.text-normal.pre-line.word-wrap
           %em= order_payment_method&.display_description
       - else
         .text-big

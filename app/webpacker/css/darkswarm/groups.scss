@@ -6,8 +6,12 @@
 
   @include panepadding;
 
-  h1, p.text {
+  h1 {
     font-weight: 300;
+  }
+
+  p.text {
+    font-weight: 400;
   }
 
   h1 {
