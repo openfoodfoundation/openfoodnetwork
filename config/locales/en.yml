@@ -5090,6 +5090,7 @@ en:
         status: Status
         completed: Completed
         cancelled: Cancelled
+        print: Print PDF
       saved_cards:
         default?: Default?
         delete?: Delete?
