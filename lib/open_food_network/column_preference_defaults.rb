@@ -112,8 +112,8 @@ module OpenFoodNetwork
         name: { name: I18n.t("admin.name"), visible: true },
         producer: { name: I18n.t("#{node}.producer?"), visible: true },
         package: { name: I18n.t("#{node}.package"), visible: true },
-        status: { name: I18n.t("#{node}.status"),     visible: true },
-        manage: { name: I18n.t("#{node}.manage"),     visible: true }
+        status: { name: I18n.t("#{node}.status"), visible: true },
+        manage: { name: I18n.t("#{node}.manage"), visible: true }
       }
     end
 
@@ -134,8 +134,8 @@ module OpenFoodNetwork
     def subscriptions_index_columns
       _node = "admin.subscriptions.index"
       {
-        customer: { name: I18n.t("admin.customer"),         visible: true },
-        schedule: { name: I18n.t("admin.schedule"),         visible: true },
+        customer: { name: I18n.t("admin.customer"), visible: true },
+        schedule: { name: I18n.t("admin.schedule"), visible: true },
         items: { name: I18n.t("items"), visible: true },
         orders: { name: I18n.t("orders"), visible: true },
         state: { name: I18n.t("admin.status_state"), visible: true },
