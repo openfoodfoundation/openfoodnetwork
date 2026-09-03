@@ -567,6 +567,20 @@ RSpec.describe Admin::EnterprisesController do
         spree_put :bulk_update, bulk_enterprise_params
         expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
       end
+
+      it "does not raise when a manager submits bulk_update with no sets_enterprise_set param" do
+        # check_can_change_bulk_sells reads the submitted collection directly (for non-admins
+        # only) and must be guarded the same way as bulk_update_collection/bulk_params, since a
+        # manager also has :bulk_update ability and can hit this before_action.
+        profile_enterprise1.enterprise_roles.build(user: new_owner).save
+        allow(controller).to receive_messages spree_current_user: new_owner
+
+        expect {
+          spree_put :bulk_update, q: { name_i_cont: "no such enterprise" }
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
     end
 
     context "as the owner of an enterprise" do
@@ -608,6 +622,145 @@ RSpec.describe Admin::EnterprisesController do
         expect(profile_enterprise2.sells).to eq 'any'
         expect(profile_enterprise1.owner).to eq new_owner
         expect(profile_enterprise2.owner).to eq new_owner
+      end
+    end
+
+    context "with more editable enterprises than are submitted" do
+      let!(:unsubmitted_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "updates only the submitted enterprise and leaves others untouched" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' }
+        } } }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(unsubmitted_enterprise.reload.visible).not_to eq 'false'
+      end
+    end
+
+    context "when there are more editable enterprises than fit on one page" do
+      before { stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1)) }
+
+      let!(:other_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "still updates an enterprise excluded from the first page of the full list" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise2.id, visible: 'false' }
+        } } }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise2.reload.visible).to eq 'false'
+      end
+    end
+
+    context "with an empty collection_attributes" do
+      it "does not raise and makes no changes" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {} } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
+    end
+
+    context "with no sets_enterprise_set param at all" do
+      it "does not raise and makes no changes" do
+        # Reproduces submitting the bulk-update form when a search filter's result is
+        # empty: `fields_for :collection` renders no fields, so the whole
+        # `sets_enterprise_set` key is absent from the request, not just empty.
+        allow(controller).to receive_messages spree_current_user: admin_user
+
+        expect {
+          spree_put :bulk_update, q: { name_i_cont: "no such enterprise" }
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+      end
+    end
+
+    context "when a submitted enterprise id no longer exists" do
+      it "silently skips it and still saves the rest of the batch" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        non_existent_id = Enterprise.maximum(:id).to_i + 1_000_000
+
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' },
+          '1' => { id: non_existent_id, visible: 'false' }
+        } } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(Enterprise.exists?(non_existent_id)).to be false
+      end
+    end
+
+    context "as manager, when submitting an id for an enterprise they don't manage" do
+      let!(:unmanaged_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
+
+      it "strips :sells and :owner_id for that id and skips it without error" do
+        profile_enterprise1.enterprise_roles.build(user: new_owner).save
+        allow(controller).to receive_messages spree_current_user: new_owner
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'false' },
+          '1' => { id: unmanaged_enterprise.id, sells: 'any', owner_id: new_owner.id }
+        } } }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
+        expect(profile_enterprise1.reload.visible).to eq 'false'
+        expect(unmanaged_enterprise.reload.sells).to eq 'none'
+        expect(unmanaged_enterprise.reload.owner).to eq original_owner
+      end
+    end
+
+    context "when a search filter (q param) is present" do
+      it "preserves the filter on redirect after a successful update" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = {
+          q: { name_i_cont: profile_enterprise1.name },
+          sets_enterprise_set: { collection_attributes: {
+            '0' => { id: profile_enterprise1.id, visible: 'false' }
+          } }
+        }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(response).to redirect_to admin_enterprises_path(
+          q: { name_i_cont: profile_enterprise1.name }
+        )
+      end
+
+      it "does not raise when q is submitted in array notation instead of a hash" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = {
+          q: ["a", "b"],
+          sets_enterprise_set: { collection_attributes: {
+            '0' => { id: profile_enterprise1.id, visible: 'false' }
+          } }
+        }
+
+        expect {
+          spree_put :bulk_update, bulk_enterprise_params
+        }.not_to raise_error
+
+        expect(flash[:success]).to be_present
       end
     end
   end
@@ -709,6 +862,17 @@ RSpec.describe Admin::EnterprisesController do
         .with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
       get :visible, format: :json
     end
+
+    it "does not duplicate an enterprise with multiple matching managers" do
+      manager_a = create(:user, email: "team-a@example.com")
+      manager_b = create(:user, email: "team-b@example.com")
+      create(:enterprise_role, user: manager_a, enterprise: visible_enterprise)
+      create(:enterprise_role, user: manager_b, enterprise: visible_enterprise)
+
+      get :visible, params: { q: { users_email_i_cont: "team" } }, format: :json
+
+      expect(assigns(:collection).to_a.count { |e| e == visible_enterprise }).to eq 1
+    end
   end
 
   describe "index" do
@@ -736,6 +900,68 @@ RSpec.describe Admin::EnterprisesController do
           expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
         end
       end
+
+      describe "ransack filtering" do
+        let!(:search_user) { create(:user, email: "searchy@example.com") }
+        let!(:filter_enterprise1) {
+          create(:enterprise, name: "Alpha Foods", owner: search_user)
+        }
+        let!(:filter_enterprise2) {
+          create(:enterprise, name: "Beta Bakery", owner: search_user)
+        }
+
+        it "filters by name (case-insensitive)" do
+          get :index, params: { q: { name_i_cont: "alpha" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1
+          expect(assigns(:collection)).not_to include filter_enterprise2
+        end
+
+        it "filters by owner email" do
+          get :index, params: { q: { owner_email_i_cont: "searchy" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1, filter_enterprise2
+          expect(assigns(:collection)).not_to include enterprise3
+        end
+
+        it "filters by member email" do
+          manager = create(:user, email: "manager@example.com")
+          create(:enterprise_role, user: manager, enterprise: filter_enterprise1)
+
+          get :index, params: { q: { users_email_i_cont: "manager" } }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise1
+          expect(assigns(:collection)).not_to include filter_enterprise2
+        end
+
+        it "combines multiple filter fields" do
+          get :index, params: {
+            q: { name_i_cont: "beta", owner_email_i_cont: "searchy" }
+          }, format: :html
+          expect(assigns(:collection)).to include filter_enterprise2
+          expect(assigns(:collection)).not_to include filter_enterprise1
+        end
+
+        it "returns all enterprises when no filter params given" do
+          get :index, format: :html
+          expect(assigns(:collection).size).to be 5
+        end
+      end
+
+      context "when the requested page is out of range but matches exist" do
+        render_views
+
+        it "does not render the bulk-update button for the empty rendered page" do
+          stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1))
+
+          get :index, params: { page: 99 }, format: :html
+
+          # @collection (aliased as @enterprises in the view) reflects the full, unpaginated
+          # filtered result — it is NOT empty here, which is exactly why gating the button on
+          # it was wrong: fields_for :collection iterates @enterprise_set.collection, the
+          # paginated slice, which IS empty on an out-of-range page.
+          expect(assigns(:collection)).not_to be_empty
+          expect(assigns(:enterprise_set).collection).to be_empty
+          expect(response.body).not_to include 'name="commit"'
+        end
+      end
     end
 
     context "as an enterprise user" do
@@ -760,6 +986,17 @@ RSpec.describe Admin::EnterprisesController do
           get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2
           expect(assigns(:collection)).not_to include enterprise3
+        end
+
+        it "does not duplicate an enterprise with multiple matching managers" do
+          manager_a = create(:user, email: "team-a@example.com")
+          manager_b = create(:user, email: "team-b@example.com")
+          create(:enterprise_role, user: manager_a, enterprise: enterprise1)
+          create(:enterprise_role, user: manager_b, enterprise: enterprise1)
+
+          get :index, params: { q: { users_email_i_cont: "team" } }, format: :json
+
+          expect(assigns(:collection).to_a.count { |e| e == enterprise1 }).to eq 1
         end
       end
     end
