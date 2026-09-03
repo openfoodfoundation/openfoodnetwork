@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :ofn do
   namespace :subs do
     namespace :debug do
@@ -61,4 +61,3 @@ namespace :ofn do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

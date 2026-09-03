@@ -933,7 +933,7 @@ RSpec.describe '
         expect(page).to have_selector "tr#li_#{li2.id} input[type='checkbox'][name='bulk']"
       end
 
-      # rubocop:disable Rails/FindEach. # These are Capybara finders
+      # rubocop:disable-next Rails/FindEach. # These are Capybara finders
       it "displays a checkbox to which toggles the 'checked' state of all checkboxes" do
         check "toggle_bulk"
         page.all("input[type='checkbox'][name='bulk']").each{ |checkbox|
@@ -944,7 +944,6 @@ RSpec.describe '
           expect(checkbox.checked?).to be false
         }
       end
-      # rubocop:enable Rails/FindEach
 
       it "displays a bulk action select box with a list of actions" do
         list_of_actions = ['Delete Selected']

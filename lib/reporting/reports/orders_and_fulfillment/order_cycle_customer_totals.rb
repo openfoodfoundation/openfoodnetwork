@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module Reporting
   module Reports
     module OrdersAndFulfillment
@@ -191,4 +191,3 @@ module Reporting
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

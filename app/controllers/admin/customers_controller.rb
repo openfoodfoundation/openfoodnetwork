@@ -2,7 +2,7 @@
 
 require 'open_food_network/address_finder'
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module Admin
   class CustomersController < Admin::ResourceController
     before_action :load_managed_shops, only: :index, if: :html_request?
@@ -146,4 +146,3 @@ module Admin
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

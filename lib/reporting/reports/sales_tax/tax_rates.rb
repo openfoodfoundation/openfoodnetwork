@@ -4,7 +4,7 @@ module Reporting
   module Reports
     module SalesTax
       class TaxRates < Base
-        # rubocop:disable Rails/OutputSafety
+        # rubocop:disable-next Rails/OutputSafety
         def columns
           result = {
             order_number: proc { |order| order_number_column(order).html_safe },
@@ -19,7 +19,6 @@ module Reporting
           }
           result.merge(other)
         end
-        # rubocop:enable Rails/OutputSafety
 
         def custom_headers
           result = {}
