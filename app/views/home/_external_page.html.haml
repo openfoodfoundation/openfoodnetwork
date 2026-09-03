@@ -1,0 +1,9 @@
+-# Renders content managed in an external CMS. The styles come from the same
+-# source and are limited to the ones needed to lay out the content, see
+-# ExternalPage.
+- content_for :head do
+  = raw page[:styles]
+
+.external-page{ data: { controller: "wp-tabs",
+  action: "click->wp-tabs#activate keydown->wp-tabs#navigate" } }
+  = raw page[:content]

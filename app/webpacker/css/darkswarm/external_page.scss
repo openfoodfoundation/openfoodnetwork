@@ -1,0 +1,11 @@
+// Content managed in an external CMS, see ExternalPage.
+//
+// The CMS supplies the styles for its own blocks. We only need to adjust for
+// the differences between its page and ours.
+.external-page {
+  // Sections designed to fill the screen don't know about our menu bar. The
+  // CMS renders their height as an inline style which we have to override.
+  .wp-block-cover[style*="100vh"] {
+    min-height: calc(100vh - #{$topbar-height}) !important;
+  }
+}

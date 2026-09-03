@@ -4,6 +4,9 @@ class HomeController < BaseController
   layout 'darkswarm'
 
   def index
+    @external_page = CachedExternalPage.fetch(ContentConfig.home_page_url)
+    return if @external_page
+
     return unless ContentConfig.home_show_stats
 
     @num_distributors = cached_count('distributors', Enterprise.is_distributor.activated.visible)
