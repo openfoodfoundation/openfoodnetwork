@@ -2,10 +2,13 @@
   = f.label :primary_taxon_id, t('.product_category')
   %span.required *
   %br
+  -# Taxon#name is locale-aware (resolved from name_i18n in Ruby), so it can't be
+  -# plucked/ordered in SQL like before. We load full records and sort in Ruby instead.
+  -# Instances are expected to have a reduced number of 100 taxons, so this should be negligible.
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
       aria_label: t('.product_category'),
-      options: Spree::Taxon.select(:name, :id).order(:name).pluck(:name, :id),
+      options: Spree::Taxon.all.sort_by(&:name).map { |t| [t.name, t.id] },
       selected_option: @product.primary_taxon_id,
       include_blank: true,
       placeholder_value: t('.search_for_categories')))

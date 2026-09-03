@@ -12,9 +12,7 @@ module Admin
     end
 
     def categories
-      query = Spree::Taxon.all
-
-      render json: build_search_response(query)
+      render json: build_taxon_search_response
     end
 
     def tax_categories
@@ -35,6 +33,36 @@ module Admin
       results = format_results(items)
 
       { results: results, pagination: { more: (page * per_page) < total_count } }
+    end
+
+    def build_taxon_search_response
+      page = (params[:page] || 1).to_i
+      per_page = 30
+
+      # Taxon#name is locale-aware (resolved from name_i18n in Ruby), so it can't be
+      # filtered/sorted/paginated in SQL via pluck/where/order like the other search
+      # endpoints in this controller. We load all taxons and do it in Ruby instead.
+      # Instances are expected to have a reduced number of taxons, so this should be negligible;
+      # revisit if that assumption changes
+      taxons = Spree::Taxon.all.to_a
+      taxons = filter_taxons(taxons)
+      taxons = taxons.sort_by(&:name)
+      total_count = taxons.size
+      items = taxons.slice((page - 1) * per_page, per_page) || []
+
+      results = items.map { |t| { value: t.id, label: t.name } }
+      { results: results, pagination: { more: (page * per_page) < total_count } }
+    end
+
+    def filter_taxons(taxons)
+      search_term = params[:q]
+      return taxons if search_term.blank?
+
+      pattern = Regexp.new(Regexp.escape(search_term), Regexp::IGNORECASE)
+      taxons.select do |taxon|
+        taxon.name.match?(pattern) ||
+          taxon.name_i18n.values.any? { |v| pattern.match?(v.to_s) }
+      end
     end
 
     def apply_search_filter(query)
