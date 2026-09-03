@@ -413,6 +413,8 @@ module Spree
 
       deliver_order_confirmation_email
 
+      Orders::WebhookService.create_payment_due_job(order: self) if payment_state == 'balance_due'
+
       state_changes.create(
         previous_state: 'cart',
         next_state: 'complete',

@@ -78,12 +78,47 @@ RSpec.describe WebhookEndpointsController do
 
     it "enqueus a webhook job" do
       expect { subject }.to enqueue_job(WebhookDeliveryJob).exactly(1).times
+        .with("https://url", "payment.completed", any_args)
     end
 
     it "shows a success mesage" do
       subject
 
       expect(flash[:success]).to eq "Some test data will be sent to the webhook url"
+    end
+
+    context "with an order payment due endpoint" do
+      let(:webhook_endpoint) {
+        user.webhook_endpoints.create(url: "https://url", webhook_type: "order_payment_due")
+      }
+
+      it "enqueues a webhook job with the order payment due test data" do
+        expect { subject }.to enqueue_job(WebhookDeliveryJob).exactly(1).times
+          .with("https://url", "order.payment_due", any_args)
+      end
+
+      it "describes the payload an integration will receive" do
+        payload = Orders::WebhookPayload.test_data.to_hash
+
+        expect(payload[:order]).to include("number", "email", "outstanding_balance")
+        expect(payload[:payment_method].keys).to contain_exactly("id", "name")
+      end
+    end
+
+    context "with a webhook type we have no test data for" do
+      let(:webhook_endpoint) {
+        user.webhook_endpoints.create(url: "https://url", webhook_type: "order_cycle_opened")
+      }
+
+      it "does not enqueue a webhook job" do
+        expect { subject }.not_to enqueue_job(WebhookDeliveryJob)
+      end
+
+      it "shows an error message" do
+        subject
+
+        expect(flash[:error]).to eq "There is no test data for this webhook type"
+      end
     end
   end
 end

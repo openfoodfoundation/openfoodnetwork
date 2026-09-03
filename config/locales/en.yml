@@ -4185,6 +4185,7 @@ en:
       error: Webhook endpoint failed to delete
     test:
       success: Some test data will be sent to the webhook url
+      unsupported: There is no test data for this webhook type
 
   spree:
     order_updated: "Order Updated"
@@ -5214,6 +5215,7 @@ en:
       event_types:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
+        order_payment_due: Post webhook on Order placed with payment due
       test_endpoint: Test webhook endpoint 
 
   # Gem to prevent bot form submissions
