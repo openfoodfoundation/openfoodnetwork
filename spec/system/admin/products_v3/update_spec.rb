@@ -761,7 +761,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       it "saves product image" do
         within ".reveal-modal" do
-          expect(page).to have_content "Edit image for Apples"
+          expect(page).to have_content "Edit image for \"Apples\""
           expect_page_to_have_image(current_img_url)
 
           # Upload a new image file
@@ -823,7 +823,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       it "saves variant image" do
         within ".reveal-modal" do
-          expect(page).to have_content "Edit image for Apples"
+          expect(page).to have_content "Edit image for \"Apples\""
           expect_page_to_have_image(current_img_url)
 
           attach_file 'image[attachment]', Rails.public_path.join('500.jpg'), visible: false

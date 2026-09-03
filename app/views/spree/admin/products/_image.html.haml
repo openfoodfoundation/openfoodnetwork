@@ -1,0 +1,21 @@
+-# locals: (imageable:)
+-# An unsaved record has no id to build an upload route from and no row to own the
+-# image, so the image is added once the record exists.
+- if imageable.persisted?
+  .field.image-field
+    = label_tag nil, t('.label')
+    - unless imageable.image.present?
+      %span.info= t('.subtitle')
+    .image{ class: ("image--present" if imageable.image.present?) }
+      - if imageable.image.present?
+        %a.image__link{ href: image_form_path(imageable) }
+          = image_tag imageable.image.url(:product), alt: imageable.image.alt, class: "image__preview"
+          .button.secondary.image__button= t('.edit')
+      - else
+        .image__controls{ data: { controller: "upload-image",
+                                  "upload-image-url-value": image_upload_path(imageable),
+                                  "upload-image-viewable-id-value": imageable.id } }
+          = label_tag nil, t('.upload'), for: "image-input-#{imageable.id}", class: "button secondary image__button"
+          = file_field_tag "image[attachment]", accept: "image/*", id: "image-input-#{imageable.id}",
+            class: "image__input",
+            "data-action": "change->upload-image#upload"

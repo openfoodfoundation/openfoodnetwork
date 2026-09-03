@@ -1,5 +1,5 @@
 .admin-product-form-fields
-  .left.sixteen.columns.alpha
+  .left.ten.columns.alpha
     = f.field_container :name do
       = f.label :name, raw(t(:name) + content_tag(:span, ' *', :class => 'required'))
       = f.text_field :name, :class => 'fullwidth title'
@@ -10,8 +10,7 @@
       = f.hidden_field :description, id: "product_description", value: @product.description
       %trix-editor{ input: "product_description", "data-controller": "trixeditor" }
 
-  .clear
-
-  %div
+  .right.six.columns.omega
+    = render partial: 'image', locals: { imageable: @product }
 
   .clear

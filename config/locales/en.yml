@@ -4393,8 +4393,11 @@ en:
 
     no_images_found: "No Images Found"
     new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
 
@@ -4431,6 +4434,7 @@ en:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4461,7 +4465,7 @@ en:
     admin:
       images:
         edit:
-          title: Edit image for %{resource_name}
+          title: 'Edit image for "%{resource_name}"'
           subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
@@ -4739,6 +4743,11 @@ en:
         customer_credit_successful: Customer has been successfully credited!
 
       products:
+        image:
+          label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
+          edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
         new:

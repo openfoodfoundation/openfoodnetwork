@@ -31,19 +31,21 @@ module Spree
 
       def create
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        set_viewable
 
         @object.attributes = permitted_resource_params
+        # After the attributes, so a blank viewable_id in the body can't win over the
+        # owner resolved from the URL.
+        set_viewable
+        set_default_caption unless params[:image].key?(:caption)
 
-        if @object.save
-          flash[:success] = flash_message_for(@object, :successfully_created)
+        return respond_with_error((@error_target || @object).errors) unless @object.save
 
-          respond_to do |format|
-            format.html { redirect_to location_after_save }
-            format.turbo_stream { render :update }
-          end
-        else
-          respond_with_error((@error_target || @object).errors)
+        flash[:success] = flash_message_for(@object, :successfully_created)
+        @redirect_url = location_after_save
+
+        respond_to do |format|
+          format.html { redirect_to @redirect_url }
+          format.turbo_stream
         end
       end
 
@@ -114,6 +116,7 @@ module Spree
 
       def location_after_save
         return params[:return_url] if params[:return_url].present?
+        return edit_image_path_after_upload if params[:edit_after_upload].present?
 
         if params[:variant_id]
           admin_products_url
@@ -122,9 +125,24 @@ module Spree
         end
       end
 
+      def edit_image_path_after_upload
+        extra = params[:variant_id].present? ? { variant_id: @variant.id } : {}
+        edit_admin_product_image_path(@product.id, @object.id, extra)
+      end
+
+      # The id arrives in the request body, so fall back to the parent that has already
+      # been resolved and authorized rather than trusting a blank value and saving an
+      # image that points at no record (Spree::Asset doesn't require its parent).
       def set_viewable
         @image.viewable_type = params[:variant_id] ? 'Spree::Variant' : 'Spree::Product'
-        @image.viewable_id = params[:image][:viewable_id]
+        @image.viewable_id = params[:image][:viewable_id].presence || parent.id
+      end
+
+      # An upload carries no caption field, so store the default up front rather than
+      # relying on a display-time fallback. A caption cleared later is stored as "".
+      def set_default_caption
+        parent
+        @object.caption = helpers.default_image_caption(@product, @variant)
       end
 
       def destroy_before
@@ -133,11 +151,14 @@ module Spree
 
       def permitted_resource_params
         params.require(:image).permit(
-          :attachment, :viewable_id, :alt
+          :attachment, :viewable_id, :alt, :caption
         )
       end
 
       def respond_with_error(errors)
+        # The inline upload widget has no modal to re-render, so it only gets a flash.
+        return respond_with_upload_error(errors) if params[:edit_after_upload].present?
+
         @errors = errors.map(&:full_message)
         respond_to do |format|
           format.html {
@@ -147,26 +168,39 @@ module Spree
         end
       end
 
-      def replace_image_without_destroy
-        previous_image = @object
-        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
+      def respond_with_upload_error(errors)
+        flash[:error] = errors.full_messages.to_sentence
+        render :create_error, status: :unprocessable_entity
+      end
 
-        replacement_image.alt = previous_image.alt
-        replacement_image.position = previous_image.position
-        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        replacement_image.viewable_type = previous_image.viewable_type
-        replacement_image.viewable_id = params[:image][:viewable_id]
-        replacement_image.attachment.attach(permitted_resource_params[:attachment])
+      def replace_image_without_destroy
+        replacement_image = build_replacement_image(@object)
 
         Spree::Image.transaction do
           replacement_image.save!
-          previous_image.destroy!
+          @object.destroy!
         end
 
         @object = @image = replacement_image
       rescue ActiveRecord::RecordInvalid
         @error_target = replacement_image
         false
+      end
+
+      def build_replacement_image(previous_image)
+        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
+
+        replacement_image.alt = previous_image.alt
+        replacement_image.position = previous_image.position
+        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
+        # Carry the caption over only when the request didn't supply one at all;
+        # a submitted blank caption is a deliberate clear.
+        replacement_image.caption = previous_image.caption unless params[:image].key?(:caption)
+        replacement_image.viewable_type = previous_image.viewable_type
+        replacement_image.viewable_id = params[:image][:viewable_id]
+        replacement_image.attachment.attach(permitted_resource_params[:attachment])
+
+        replacement_image
       end
     end
   end

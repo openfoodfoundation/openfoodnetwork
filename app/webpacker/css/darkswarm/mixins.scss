@@ -213,6 +213,22 @@
   }
 }
 
+// Min-width counterpart to breakpoint(), for mobile-first styles.
+@mixin breakpoint-up($point) {
+  @if $point == desktop {
+    @media all and (min-width: layout.$desktop_breakpoint) { @content; }
+  }
+  @else if $point == tablet {
+    @media all and (min-width: layout.$tablet_breakpoint) { @content; }
+  }
+  @else if $point == phablet {
+    @media all and (min-width: layout.$phablet_breakpoint)  { @content; }
+  }
+  @else if $point == mobile {
+    @media all and (min-width: layout.$mobile_breakpoint)  { @content; }
+  }
+}
+
 @mixin force-wrap {
   word-wrap: break-word;
 }

@@ -20,6 +20,39 @@ module Admin
       end
     end
 
+    # Where the image edit page came from: the product or variant edit page.
+    def image_owner_edit_path(product, variant = nil)
+      if variant
+        edit_admin_product_variant_path(product, variant)
+      else
+        edit_admin_product_path(product)
+      end
+    end
+
+    # Default caption offered on the image edit page when none has been saved yet.
+    # Variants without a display name intentionally get no default.
+    def default_image_caption(product, variant = nil)
+      return variant.display_name.to_s if variant
+
+      product.name
+    end
+
+    # A caption that was deliberately cleared is stored as an empty string and must
+    # stay empty; only a caption that was never set falls back to the default.
+    def image_caption_field_value(image, product, variant = nil)
+      return image.caption unless image.caption.nil?
+
+      default_image_caption(product, variant)
+    end
+
+    def image_upload_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        admin_product_images_path(imageable.product_id, variant_id: imageable.id)
+      else
+        admin_product_images_path(imageable.id)
+      end
+    end
+
     NEW_VARIANT_TEMPLATE_FIELDS = %i[
       tax_category_id
       primary_taxon_id

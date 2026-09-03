@@ -224,6 +224,101 @@ RSpec.describe Admin::ProductsHelper do
     end
   end
 
+  describe '#image_upload_path' do
+    context 'when imageable is a product' do
+      let(:product) { create(:product) }
+
+      it 'returns admin_product_images_path' do
+        expect(helper.image_upload_path(product))
+          .to eq "/admin/products/#{product.id}/images"
+      end
+    end
+
+    context 'when imageable is a variant' do
+      let(:variant) { create(:variant, product: create(:product)) }
+
+      it 'returns admin_product_images_path with variant_id' do
+        expect(helper.image_upload_path(variant))
+          .to eq "/admin/products/#{variant.product_id}/images?variant_id=#{variant.id}"
+      end
+    end
+  end
+
+  describe '#image_owner_edit_path' do
+    let(:product) { create(:product) }
+
+    context 'without a variant' do
+      it 'returns the product edit path' do
+        expect(helper.image_owner_edit_path(product))
+          .to eq "/admin/products/#{product.id}/edit"
+      end
+    end
+
+    context 'with a variant' do
+      let(:variant) { create(:variant, product:) }
+
+      it 'returns the variant edit path' do
+        expect(helper.image_owner_edit_path(product, variant))
+          .to eq "/admin/products/#{product.id}/variants/#{variant.id}/edit"
+      end
+    end
+  end
+
+  describe '#default_image_caption' do
+    let(:product) { create(:product, name: "Asparagus") }
+
+    context 'without a variant' do
+      it 'defaults to the product name' do
+        expect(helper.default_image_caption(product)).to eq "Asparagus"
+      end
+    end
+
+    context 'with a variant that has a display name' do
+      let(:variant) { create(:variant, product:, display_name: "Small bunch") }
+
+      it 'defaults to the display name' do
+        expect(helper.default_image_caption(product, variant)).to eq "Small bunch"
+      end
+    end
+
+    context 'with a variant that has no display name' do
+      let(:variant) { create(:variant, product:, display_name: nil) }
+
+      it 'has no default' do
+        expect(helper.default_image_caption(product, variant)).to eq ""
+      end
+    end
+  end
+
+  describe '#image_caption_field_value' do
+    let(:product) { create(:product_with_image, name: "Asparagus") }
+    let(:image) { product.image }
+
+    context 'when the caption has never been set' do
+      it 'offers the default caption' do
+        image.update!(caption: nil)
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Asparagus"
+      end
+    end
+
+    context 'when the caption was deliberately cleared' do
+      it 'stays empty rather than falling back to the default' do
+        image.update!(caption: "")
+
+        expect(helper.image_caption_field_value(image, product)).to eq ""
+      end
+    end
+
+    context 'when a caption is set' do
+      it 'uses the saved caption' do
+        image.update!(caption: "Fresh asparagus")
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Fresh asparagus"
+      end
+    end
+  end
+
   describe '#image_form_path' do
     let(:product) { create(:product) }
 

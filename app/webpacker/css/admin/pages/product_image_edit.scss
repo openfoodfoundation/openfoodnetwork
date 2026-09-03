@@ -1,0 +1,236 @@
+@import "../../darkswarm/mixins";
+
+.image-edit-page {
+  background-color: $lighter-grey;
+  padding-bottom: 2rem;
+
+  .admin__section-header {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 24px;
+
+    .container {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    &__title {
+      margin-top: 24px;
+
+      h1 {
+        margin: 0;
+        font-size: $h3-size;
+        line-height: 1.25;
+        overflow-wrap: anywhere; // product names can be long and unbroken
+      }
+    }
+  }
+
+  #content {
+    background-color: transparent;
+  }
+
+  @include breakpoint(tablet) {
+    #content .container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #content .container .columns {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+
+.image-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 0;
+
+  &__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center; // the design centres the image in the grey band
+    width: 100%;
+    padding: 14px 16px 32px;
+  }
+
+  &__preview-image {
+    display: block;
+    max-width: 100%;
+    max-height: 280px; // keeps a tall image from filling the whole phone screen
+    height: auto;
+  }
+
+  &__panel {
+    width: 100%;
+    padding: 24px 16px 28px;
+    background-color: $white;
+    border: 1px solid $light-grey;
+    border-width: 1px 0;
+    border-radius: 0;
+    box-shadow: $box-shadow;
+
+    .field {
+      padding: 0;
+      margin: 0 0 20px;
+
+      label {
+        display: block;
+        font-size: $body-font-size;
+        margin-bottom: 6px;
+      }
+
+      input[type="text"],
+      textarea {
+        font-size: $h6-size;
+      }
+
+      input[type="text"] {
+        height: $touch-target-height;
+      }
+
+      textarea {
+        line-height: 24px;
+      }
+    }
+  }
+
+  &__filename {
+    margin: 0 0 20px;
+    color: $dark-grey;
+    overflow-wrap: anywhere; // long_underscored_filenames.jpeg must not overflow
+
+    .image-edit__filename-label {
+      font-weight: $font-weight-bold;
+      margin-right: 0.25em;
+    }
+
+    .image-edit__filename-value {
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  textarea.image-edit__alt {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 24px;
+    margin: 0 0 20px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  & &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: $touch-target-height;
+    margin: 0;
+    font-size: $body-font-size;
+    font-weight: $font-weight-normal;
+    overflow-wrap: anywhere;
+
+    &--replace {
+      cursor: pointer;
+      color: $color-link;
+
+      &:hover {
+        color: $color-link-hover;
+      }
+    }
+
+    &--delete {
+      color: $color-btn-red-bg;
+
+      &:hover {
+        color: $color-btn-red-hover-bg;
+      }
+    }
+  }
+
+  & &__input:focus-visible + &__link--replace,
+  & &__link:focus-visible {
+    outline: 2px solid $color-link;
+    outline-offset: 2px;
+  }
+
+  & &__buttons .button {
+    height: $touch-target-height;
+    line-height: 42px;
+    padding: 0 20px;
+  }
+
+  @include breakpoint-up(tablet) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp($layout-gap-min, 12vw, 200px);
+
+    &__preview {
+      flex: 0 1 250px; // shrinkable, so 250 + gap + 450 cannot overflow at 768px
+      align-items: flex-start;
+      padding: 0;
+    }
+
+    &__preview-image {
+      max-height: none;
+    }
+
+    &__panel {
+      flex: 1 1 450px;
+      min-width: 0;
+      max-width: 450px;
+      padding: 32px;
+      border-width: 1px;
+      border-radius: $border-radius;
+
+      .field {
+        label {
+          font-size: 85%;
+          margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+          font-size: $body-font-size;
+        }
+
+        input[type="text"] {
+          height: $btn-relaxed-height;
+        }
+
+        textarea {
+          line-height: 19px;
+        }
+      }
+    }
+
+    &__actions {
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    & &__link {
+      min-height: 0;
+    }
+
+    & &__buttons .button {
+      height: $btn-regular-height;
+      line-height: $btn-regular-height - 2px;
+      padding: 0 12px;
+    }
+  }
+}

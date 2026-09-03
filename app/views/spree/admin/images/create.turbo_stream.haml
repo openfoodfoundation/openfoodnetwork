@@ -1,0 +1,6 @@
+-# The inline upload widget sends the user on to the image edit page; the images
+-# index modal just refreshes the image in place.
+- if params[:edit_after_upload].present?
+  = turbo_stream.redirect_to @redirect_url
+- else
+  = render template: "spree/admin/images/update"

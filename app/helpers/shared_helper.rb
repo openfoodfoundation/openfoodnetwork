@@ -18,11 +18,11 @@ module SharedHelper
 
     return [default_carousel_image(size, product)] if images.empty?
 
-    images.map.with_index do |image, index|
+    images.map do |image|
       {
         url: image.url(size),
         alt: image.alt.presence || product.name,
-        caption: images.many? ? "#{product.name} - #{index + 1}" : nil
+        caption: image.caption.nil? ? default_caption(image) : image.caption
       }
     end
   end
@@ -35,5 +35,14 @@ module SharedHelper
       alt: product.name,
       caption: nil
     }
+  end
+
+  # Mirrors Admin::ProductsHelper#default_image_caption: a variant with no display
+  # name gets no caption rather than borrowing the product's name.
+  def default_caption(image)
+    viewable = image.viewable
+    return viewable.name if viewable.is_a?(Spree::Product)
+
+    viewable.display_name.presence
   end
 end
