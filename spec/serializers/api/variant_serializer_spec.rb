@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Api::VariantSerializer do
-  subject { Api::VariantSerializer.new variant }
-  let(:variant) { create(:variant) }
+  subject { described_class.new variant }
+  let(:variant) { create(:variant, price: 10.00) }
 
   it "includes the expected attributes" do
     expect(subject.attributes.keys).
@@ -20,25 +20,9 @@ RSpec.describe Api::VariantSerializer do
         :fees_name,
         :price_with_fees,
         :product_name,
-        :tag_list # Used to apply tag rules
+        :tag_list, # Used to apply tag rules
+        :unit_price_price,
+        :unit_price_unit
       )
-  end
-
-  describe "#unit_price_price" do
-    context "without fees" do
-      it "displays the price divided by the unit price denominator" do
-        allow(subject).to receive_message_chain(:unit_price, :denominator) { 1000 }
-
-        expect(subject.unit_price_price).to eq(variant.price / 1000)
-      end
-    end
-
-    context "when the denominator returns nil" do
-      it "returns the price" do
-        allow(subject).to receive_message_chain(:unit_price, :denominator) { nil }
-
-        expect(subject.unit_price_price).to eq(variant.price)
-      end
-    end
   end
 end

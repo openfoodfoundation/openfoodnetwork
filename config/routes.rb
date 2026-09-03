@@ -33,6 +33,7 @@ Openfoodnetwork::Application.routes.draw do
 
   resource :cart, controller: "cart", only: [] do
     post :populate
+    patch "variants/:variant_id", action: :update_variant, as: :variant
   end
 
   resource :shop, controller: "shop", only: [:show] do

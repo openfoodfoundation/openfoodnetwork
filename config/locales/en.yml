@@ -670,6 +670,11 @@ en:
     destroy: "Destroy"
     rename: "Rename"
 
+  cart_sidebar_component:
+    items_in_cart:
+      one: "%{count} item in your cart"
+      other: "%{count} items in your cart"
+
 # Admin
 #
   admin:
@@ -5206,7 +5211,9 @@ en:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint 
-
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
   # Gem to prevent bot form submissions
   invisible_captcha:
     sentence_for_humans: "Please leave empty"

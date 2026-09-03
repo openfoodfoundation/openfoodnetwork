@@ -27,6 +27,33 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
+  # Generate read only data, with variants filtered for shop
+  def products_view
+    products.map do |p|
+      attrs = p.slice(*ViewData::Product.members)
+      attrs[:variants] = variants_for_shop_by_id[p.id].map do |v|
+        variant = VariantPresenter.new(
+          variant: v, distributor:, order_cycle:, enterprise_fee_calculator:
+        )
+        variant_attrs = v.slice(
+          :id, :on_demand, :on_hand, :display_name, :name_to_display, :unit_to_display, :price,
+          :enterprise
+        )
+        simple_product_attrs = p.slice(*ViewData::SimpleProduct.members)
+        variant_attrs[:product] = ViewData::SimpleProduct.new(**simple_product_attrs)
+        variant_attrs[:display_price_with_fees] = variant.display_price_with_fees
+        variant_attrs[:unit_price] = variant.unit_price
+        variant_attrs[:display_unit_price] = variant.display_unit_price
+        ViewData::Variant.new(**variant_attrs)
+      end
+      ViewData::Product.new(**attrs)
+    end
+  end
+
+  private
+
+  attr_reader :order_cycle, :distributor, :customer, :args, :options
+
   def products
     return unless order_cycle
 
@@ -49,16 +76,14 @@ class ProductsRenderer
     end
   end
 
-  private
-
-  attr_reader :order_cycle, :distributor, :customer, :args, :options
-
   def product_scoper
     @product_scoper ||= OpenFoodNetwork::ScopeProductToHub.new(distributor)
   end
 
   def enterprise_fee_calculator
-    OpenFoodNetwork::EnterpriseFeeCalculator.new distributor, order_cycle
+    @enterprise_fee_calculator ||= OpenFoodNetwork::EnterpriseFeeCalculator.new(
+      distributor, order_cycle
+    )
   end
 
   def filter(query)

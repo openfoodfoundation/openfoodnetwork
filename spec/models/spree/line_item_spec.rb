@@ -248,8 +248,13 @@ RSpec.describe Spree::LineItem do
     end
 
     it "caps quantity" do
-      li.cap_quantity_at_stock!
+      expect(li.cap_quantity_at_stock!).to eq true
       expect(li.reload.quantity).to eq 5
+    end
+
+    it "returns false when the quantity was not reduced" do
+      li.update!(quantity: 5)
+      expect(li.cap_quantity_at_stock!).to eq false
     end
 
     it "does not cap max_quantity" do
@@ -267,7 +272,7 @@ RSpec.describe Spree::LineItem do
 
     it "does nothing for on_demand items" do
       v.update! on_demand: true
-      li.cap_quantity_at_stock!
+      expect(li.cap_quantity_at_stock!).to eq false
       li.reload
       expect(li.quantity).to eq 10
       expect(li.max_quantity).to eq 10

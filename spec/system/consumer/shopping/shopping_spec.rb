@@ -300,8 +300,12 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       context "product grid view", feature: :product_grid_view do
         let(:single_variant_product) { create(:simple_product) }
         let(:single_variant) { single_variant_product.variants.first }
+        let(:enterprise_fee) {
+          create(:enterprise_fee, amount: 11.00)
+        }
 
         before do
+          oc1.exchanges.outgoing.first.enterprise_fees << enterprise_fee
           add_variant_to_order_cycle(exchange, single_variant)
         end
 
@@ -319,13 +323,13 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           expect(page).to have_in_cart product.name
           toggle_cart
 
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          li = order.reload.line_items.order(:created_at).last
           expect(li.quantity).to eq(1)
 
           # Add more
           component_add_to_cart(single_variant)
 
-          expect(page).to have_in_cart "2 item in your cart"
+          expect(page).to have_in_cart "2 items in your cart"
           toggle_cart
 
           expect(li.reload.quantity).to eq(2)
@@ -333,7 +337,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           # Manually enter quantity
           component_manual_add_to_cart(single_variant, quantity: 5)
 
-          expect(page).to have_in_cart "5 item in your cart"
+          expect(page).to have_in_cart "5 items in your cart"
           toggle_cart
 
           # Display quantity in cart
@@ -376,6 +380,49 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
           within_variant(single_variant) do
             expect(page).to have_content "Only 2 items remaining"
+          end
+        end
+
+        context "with product with multiple variant" do
+          it "lets us select variant from a variant overlay" do
+            visit shop_path
+
+            expect(page).to have_content product.name
+            expect(page).to have_button "Select"
+
+            # Open the overlay
+            click_button "Select"
+
+            within ".variant-modal" do
+              expect(page).to have_content product.name
+              # Check price includes fees
+              within ".prices" do
+                # Price $19.99 + $11.00 of fees
+                expect(page).to have_content "$30.99"
+              end
+
+              # 2 variant displayed
+              expect(page).to have_button "Add", count: 2
+
+              # the cart is hidden by the overlay so we can't use component_add here
+              within_variant(variant) do
+                click_button "Add"
+                expect(page).to have_content "1 in cart"
+              end
+
+              click_button "Close"
+            end
+
+            # We can't see the cart when the overlay is open, so we close the overlay and
+            # wait for the cart to be saved before checking the database.
+            toggle_cart
+            within(".cart-sidebar") do
+              expect(page).to have_content "1 item in your cart"
+            end
+            toggle_cart
+
+            li = order.reload.line_items.order(:created_at).last
+            expect(li.variant).to eq(variant)
           end
         end
       end
