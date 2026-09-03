@@ -339,11 +339,22 @@ module Admin
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
-      params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
-        unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
+      collection_attributes = params[:sets_enterprise_set][:collection_attributes]
+      stale_keys = []
+
+      collection_attributes.each do |key, enterprise_params|
+        enterprise = Enterprise.find_by(id: enterprise_params[:id])
+
+        if enterprise.nil?
+          # Deleted elsewhere since the form was loaded; drop the row so the
+          # rest of the batch still saves.
+          stale_keys << key
+        elsif spree_current_user != enterprise.owner
           enterprise_params.delete :sells
         end
       end
+
+      stale_keys.each { |key| collection_attributes.delete key }
     end
 
     def check_can_change_sells
