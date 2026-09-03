@@ -78,6 +78,9 @@ module OpenFoodNetwork
         When enabled for an enterprise, only products with 'group buy' enabled
         appear in bulk co-op reports for that enterprise.
       DESC
+      "fdc-staging" => <<~DESC,
+        Show DFC Permissions interface to share data with the FDC staging platform.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.
