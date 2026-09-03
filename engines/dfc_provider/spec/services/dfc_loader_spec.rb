@@ -33,6 +33,18 @@ RSpec.describe DfcLoader do
     expect(connector.PRODUCT_TYPES.DRINK.semanticId).to end_with "#drink"
   end
 
+  it "loads vocabularies into each connector, whatever the order" do
+    # A dfc-v2 request may be served before any v1 request after boot. The v1
+    # connector still has to understand vocabulary terms afterwards, otherwise
+    # it deserialises them into a parsed URI Hash.
+    DfcLoader.instance_variable_set(:@vocabs, nil)
+    DfcLoader.instance_variable_set(:@connector_v2, nil)
+    DfcLoader.connector_v2
+
+    expect(DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE.HELD)
+      .to be_a DataFoodConsortium::ConnectorV1::SKOSConcept
+  end
+
   it "retries loading when the first attempt fails" do
     DfcLoader.instance_variable_set(:@connector, nil)
 
