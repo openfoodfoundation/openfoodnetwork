@@ -63,11 +63,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resources :images, except: [:show] do
-        collection do
-          post :update_positions
-        end
-      end
+      resources :images, except: [:index, :show]
 
       resources :variants, except: [:show]
     end

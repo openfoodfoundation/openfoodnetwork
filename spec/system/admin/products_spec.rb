@@ -577,35 +577,20 @@ RSpec.describe '
       let!(:product) { create(:simple_product, name: 'Product A', enterprise_id: supplier2.id) }
       let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
 
-      it "loading image page with no image" do
-        visit spree.admin_product_images_path(product)
-        expect(page).to have_text "NO IMAGES FOUND"
-        expect(page).to have_link "New Image"
-      end
+      it "has no images entry in the product edit menu" do
+        visit spree.edit_admin_product_path(product)
 
-      it "hides the add image button when images are present" do
-        image = white_logo_file
-        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                            alt: "position 1", attachment: image, position: 1)
-
-        visit spree.admin_product_images_path(product)
-        expect(page).to have_selector "table.index td img"
-        expect(page).not_to have_link "New Image"
+        expect(page).to have_link "Product Details"
+        expect(page).not_to have_link "Images"
       end
 
       it "loading edit product image page including url filter" do
         image = white_logo_file
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: image, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: image, position: 1)
 
-        visit spree.admin_product_images_path(product, filter)
-
-        page.find("a.icon-edit").click
-
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}")
-          .to eq spree.edit_admin_product_image_path(product, image_object, filter)
+        visit spree.edit_admin_product_image_path(product, image_object, filter)
 
         expect(page).to have_link('Cancel', href: spree.edit_admin_product_path(product))
         expect(page).to have_content "Edit image for \"Product A\""
@@ -613,9 +598,9 @@ RSpec.describe '
       end
 
       it "previews a replacement file without uploading it, then saves it" do
-        image_object = Spree::Image.create(viewable_id: product.id,
-                                           viewable_type: 'Spree::Product', alt: "position 1",
-                                           attachment: white_logo_file, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: white_logo_file, position: 1)
 
         visit spree.edit_admin_product_image_path(product, image_object)
 
@@ -638,15 +623,13 @@ RSpec.describe '
         expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
       end
 
-      it "updating a product image reached from a filtered list" do
+      it "updating a product image reached with a url filter" do
         image = white_logo_file
-        Spree::Image.create!(viewable_id: product.id,
-                             viewable_type: 'Spree::Product', alt: "position 1",
-                             attachment: image, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: image, position: 1)
 
-        visit spree.admin_product_images_path(product, filter)
-
-        page.find("a.icon-edit").click
+        visit spree.edit_admin_product_image_path(product, image_object, filter)
 
         attach_file('image_attachment', image_file_path, make_visible: true)
         click_button "Save"
@@ -655,16 +638,16 @@ RSpec.describe '
         expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
       end
 
-      it "checks error when creating product image with unsupported format" do
+      it "checks error when replacing a product image with an unsupported format" do
         unsupported_image_file_path = Rails.root.join("README.md").to_s
         product = create(:simple_product, enterprise_id: supplier2.id)
 
         image = white_logo_file
-        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                            alt: "position 1", attachment: image, position: 1)
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product', alt: "position 1",
+                                            attachment: image, position: 1)
 
-        visit spree.admin_product_images_path(product)
-        page.find("a.icon-edit").click
+        visit spree.edit_admin_product_image_path(product, image_object)
         attach_file('image_attachment', unsupported_image_file_path, make_visible: true)
         click_button "Save"
 
@@ -737,39 +720,18 @@ RSpec.describe '
         expect(page).to have_field "image[caption]", with: ""
       end
 
-      it "deleting product images" do
-        image = white_logo_file
-        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                            alt: "position 1", attachment: image, position: 1)
+      it "deleting a product image returns to the product edit page" do
+        image_object = Spree::Image.create!(viewable_id: product.id,
+                                            viewable_type: 'Spree::Product',
+                                            alt: "position 1",
+                                            attachment: white_logo_file, position: 1)
 
-        visit spree.admin_product_images_path(product)
-        expect(page).to have_selector "table.index td img"
-        expect(product.reload.image).not_to be_nil
-        expect(page).not_to have_link "New Image"
+        visit spree.edit_admin_product_image_path(product, image_object, filter)
 
-        accept_alert do
-          click_link "Delete"
-        end
+        click_link "Delete permanently"
 
-        expect(page).not_to have_selector "table.index td img"
+        expect(page).to have_current_path spree.edit_admin_product_path(product)
         expect(product.reload.image).to be_nil
-        expect(page).to have_link "New Image"
-        expect(page).to have_text "NO IMAGES FOUND"
-      end
-
-      it "deleting product image including url filter" do
-        image = white_logo_file
-        Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
-                            alt: "position 1", attachment: image, position: 1)
-
-        visit spree.admin_product_images_path(product, filter)
-
-        accept_alert do
-          click_link "Delete"
-        end
-
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
       end
     end
   end

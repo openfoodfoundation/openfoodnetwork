@@ -27,30 +27,48 @@ RSpec.describe "/admin/products/:product_id/images" do
 
       expect(response.status).to eq expected_http_status_code
       if expected_http_status_code == 302
-        expect(response.location).to end_with spree.admin_product_images_path(product)
+        expect(response.location).to end_with spree.edit_admin_product_path(product)
       end
 
       expect(product.image.url(:product)).to end_with "logo.png"
     end
+  end
 
-    context "with wrong type of file" do
-      let(:params) do
-        {
-          image: {
-            attachment: fixture_file_upload("sample_file_120_products.csv", "text/csv"),
-            viewable_id: product.id,
-          }
+  shared_context "with an invalid attachment" do
+    let(:params) do
+      {
+        image: {
+          attachment: fixture_file_upload("sample_file_120_products.csv", "text/csv"),
+          viewable_id: product.id,
         }
-      end
+      }
+    end
 
-      it "responds with an error" do
-        expect {
-          subject
-          product.reload
-        }.not_to change{ product.image&.attachment&.filename.to_s }
+    before do
+      expect {
+        subject
+        product.reload
+      }.not_to change{ product.image&.attachment&.filename.to_s }
+    end
+  end
 
-        expect(response.body).to include "Attachment has an invalid content type"
-      end
+  # Replacing an image renders the error on the image edit form it was submitted from.
+  shared_examples "rejecting an invalid attachment in place" do
+    include_context "with an invalid attachment"
+
+    it "responds with an error" do
+      expect(response.body).to include "Attachment has an invalid content type"
+    end
+  end
+
+  # There is no HTML form for adding an image any more: the uploader lives on the
+  # owner's edit page, so a failed upload goes back there as a flash.
+  shared_examples "rejecting an invalid upload" do
+    include_context "with an invalid attachment"
+
+    it "redirects to the product's edit page with an error" do
+      expect(response).to redirect_to spree.edit_admin_product_path(product)
+      expect(flash[:error]).to include "Attachment has an invalid content type"
     end
   end
 
@@ -58,6 +76,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     subject { post(spree.admin_product_images_path(product), params:) }
 
     it_behaves_like "updating images", 302
+    it_behaves_like "rejecting an invalid upload"
   end
 
   describe "POST /admin/products/:product_id/images without a caption param" do
@@ -137,6 +156,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 
     it_behaves_like "updating images", 200
+    it_behaves_like "rejecting an invalid attachment in place"
   end
 
   describe "POST /admin/products/:product_id/images with edit_after_upload" do
@@ -223,6 +243,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     }
 
     it_behaves_like "updating images", 302
+    it_behaves_like "rejecting an invalid attachment in place"
 
     context "when attachment is not provided" do
       let(:params) do
@@ -242,7 +263,7 @@ RSpec.describe "/admin/products/:product_id/images" do
         }.not_to change { Spree::Image.count }
 
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to(spree.admin_product_images_path(product))
+        expect(response).to redirect_to(spree.edit_admin_product_path(product))
         expect(product.image.alt).to eq("Updated alt text")
         expect(product.image.caption).to eq("Updated caption")
       end
@@ -314,6 +335,7 @@ RSpec.describe "/admin/products/:product_id/images" do
     }
 
     it_behaves_like "updating images", 200
+    it_behaves_like "rejecting an invalid attachment in place"
   end
 
   describe "POST /admin/products/:product_id/images with variant_id" do
@@ -339,10 +361,11 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(variant.image.viewable_id).to eq variant.id
     end
 
-    it "redirects to admin_products_url" do
+    it "redirects to the variant's edit page" do
       subject
       expect(response).to have_http_status :found
-      expect(response.location).to end_with spree.admin_products_path
+      expect(response.location)
+        .to end_with spree.edit_admin_product_variant_path(product, variant)
     end
 
     context "with wrong type of file" do
@@ -362,8 +385,48 @@ RSpec.describe "/admin/products/:product_id/images" do
           variant.reload
         }.not_to change { variant.image&.attachment&.filename.to_s }
 
-        expect(response.body).to include "Attachment has an invalid content type"
+        expect(response).to redirect_to spree.edit_admin_product_variant_path(product, variant)
+        expect(flash[:error]).to include "Attachment has an invalid content type"
       end
+    end
+  end
+
+  describe "GET /admin/products/:product_id/images/new" do
+    subject { get(spree.new_admin_product_image_path(product)) }
+
+    it "redirects to the product's edit page explaining where to upload" do
+      subject
+
+      expect(response).to redirect_to spree.edit_admin_product_path(product)
+      expect(flash[:notice])
+        .to eq "Please use the image uploader on this page to add an image."
+    end
+
+    context "with a variant_id" do
+      let(:variant) { create(:variant, product:) }
+
+      subject {
+        get(spree.new_admin_product_image_path(product, variant_id: variant.id))
+      }
+
+      it "redirects to the variant's edit page" do
+        subject
+
+        expect(response).to redirect_to spree.edit_admin_product_variant_path(product, variant)
+        expect(flash[:notice])
+          .to eq "Please use the image uploader on this page to add an image."
+      end
+    end
+  end
+
+  describe "GET /admin/products/:product_id/images/:id/edit with an unknown image" do
+    subject { get(spree.edit_admin_product_image_path(product, "unknown")) }
+
+    it "flashes an error and redirects to the product's edit page" do
+      subject
+
+      expect(response).to redirect_to spree.edit_admin_product_path(product)
+      expect(flash[:error]).to eq "Not found"
     end
   end
 
@@ -399,10 +462,11 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(variant.image.viewable_id).to eq variant.id
     end
 
-    it "redirects to admin_products_url" do
+    it "redirects to the variant's edit page" do
       subject
       expect(response).to have_http_status :found
-      expect(response.location).to end_with spree.admin_products_path
+      expect(response.location)
+        .to end_with spree.edit_admin_product_variant_path(product, variant)
     end
   end
 

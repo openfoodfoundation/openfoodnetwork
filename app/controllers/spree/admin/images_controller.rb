@@ -12,16 +12,17 @@ module Spree
 
       before_action :authorize_parent, only: [:create, :update]
 
-      def index
-        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-      end
-
       def new
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
-        respond_with do |format|
+        respond_to do |format|
           format.turbo_stream { render :edit }
-          format.all { render layout: !request.xhr? }
+          # There is no standalone HTML form for adding an image any more; the uploader
+          # lives on the owner's edit page, so say why we're sending them back there.
+          format.html {
+            flash[:notice] = t('.use_uploader')
+            redirect_to owner_edit_path
+          }
         end
       end
 
@@ -87,8 +88,10 @@ module Spree
         authorize! :update, parent
       end
 
-      def collection
-        parent.image
+      # The inherited handler redirects to the images list, which no longer exists.
+      def resource_not_found
+        flash[:error] = Spree.t(:not_found)
+        redirect_to owner_edit_path
       end
 
       def find_resource
@@ -118,11 +121,15 @@ module Spree
         return params[:return_url] if params[:return_url].present?
         return edit_image_path_after_upload if params[:edit_after_upload].present?
 
-        if params[:variant_id]
-          admin_products_url
-        else
-          spree.admin_product_images_url(params[:product_id], @url_filters)
-        end
+        owner_edit_path
+      end
+
+      # The image belongs to a product or a variant; that owner's edit page is where
+      # every image action returns to now that the images list page is gone.
+      def owner_edit_path
+        return admin_products_url if @product.blank?
+
+        helpers.image_owner_edit_path(@product, @variant)
       end
 
       def edit_image_path_after_upload
@@ -161,8 +168,15 @@ module Spree
 
         @errors = errors.map(&:full_message)
         respond_to do |format|
+          # There is no HTML form for creating an image any more: the uploader on the
+          # product/variant edit page posts it, so errors go back there as a flash.
           format.html {
-            render action_name == 'create' ? :new : :edit, status: :unprocessable_entity
+            if action_name == 'create'
+              flash[:error] = @errors.to_sentence
+              redirect_to location_after_save
+            else
+              render :edit, status: :unprocessable_entity
+            end
           }
           format.turbo_stream { render :edit, status: :unprocessable_entity }
         end
