@@ -43,6 +43,16 @@ RSpec.describe ExternalPage do
       expect(page.content).to include 'src="https://cms.example.com/uploads/tomato.jpg"'
     end
 
+    it "keeps URLs it can't resolve" do
+      page = described_class.new(
+        '<div class="entry-content"><a href="http://foo bar">Broken link</a></div>',
+        "https://cms.example.com/home/"
+      )
+
+      expect(page.content).to include "Broken link"
+      expect(page.content).to include "foo bar"
+    end
+
     it "falls back to the body when there's no content wrapper" do
       page = described_class.new("<html><body><p>Hi</p></body></html>", "https://cms.example.com")
 
