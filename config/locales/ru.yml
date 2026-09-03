@@ -763,7 +763,6 @@ ru:
       tabs:
         product_details: "Информация о Товаре"
         group_buy_options: "Параметры Групповой Покупки"
-        images: "Изображения"
         variants: "Варианты"
         product_properties: "Свойства Товара"
     products_v3:
@@ -1789,6 +1788,7 @@ ru:
         remove_logo_success: "Логотип успешно удален"
         remove_promo_image_success: "Промо-изображение успешно удалено"
         remove_white_label_logo_success: "Логотип успешно удален"
+        remove_terms_and_conditions_success: "Файл Условий и Положений успешно удален"
       stripe_connect_settings:
         resource: Конфигурация Stripe Connect
     resend_confirmation_emails_feedback:
@@ -3910,12 +3910,6 @@ ru:
     minimal_amount: "Минимальная сумма"
     normal_amount: "Обычная сумма"
     discount_amount: "Сумма скидки"
-    no_images_found: "Изображений Не Найдено"
-    new_image: "Новое Изображение"
-    filename: "Имя Файла"
-    alt_text: "Альтернативный Текст"
-    thumbnail: "Миниатюра"
-    back_to_images_list: "Назад К Списку Изображений"
     email: Email
     account_updated: "Профиль обновлен!"
     email_updated: "Профиль будет обновлен после подтверждения нового адреса электронной почты..."
@@ -3944,6 +3938,7 @@ ru:
     actions:
       update: "Обновить"
       cancel: "Выход"
+      save: "Сохранить"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4239,6 +4234,9 @@ ru:
           paypal:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
+        image:
+          label: "Изображение"
+          edit: "Изменить"
         image_upload_error: "Загрузите изображение в формате JPG, PNG, GIF, SVG или WEBP."
         image_not_processable: "Вложенное изображение не является допустимым изображением."
         new:

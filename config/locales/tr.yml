@@ -615,7 +615,6 @@ tr:
       tabs:
         product_details: "Ürün Detayları"
         group_buy_options: "Grup Alım Seçenekleri"
-        images: "Görseller"
         variants: "Çeşitler"
         product_properties: "Ürün Özellikleri"
     products_v3:
@@ -1450,6 +1449,7 @@ tr:
         remove_logo_success: "Logo başarıyla kaldırıldı"
         remove_promo_image_success: "Kapak resmi başarıyla kaldırıldı"
         remove_white_label_logo_success: "Logo başarıyla kaldırıldı"
+        remove_terms_and_conditions_success: "Şartlar ve Koşullar dosyası başarıyla kaldırıldı. "
       stripe_connect_settings:
         resource: Iyzico yapılandırması
   api:
@@ -3388,12 +3388,6 @@ tr:
     minimal_amount: "Minimum Tutar"
     normal_amount: "NORMAL ÜCRET"
     discount_amount: "İNDİRİMLİ ÜCRET"
-    no_images_found: "Resim Bulunamadı"
-    new_image: "Yeni Görüntü"
-    filename: "Dosya adı"
-    alt_text: "alternatif metin"
-    thumbnail: "Küçük görsel"
-    back_to_images_list: "Görüntüler Listesine Geri Dön"
     email: E-posta
     account_updated: "Hesap güncellendi!"
     email_updated: "Yeni e-posta onaylandıktan sonra hesap güncellenecektir."
@@ -3421,6 +3415,7 @@ tr:
     actions:
       update: "Güncelle"
       cancel: "İptal et"
+      save: "Kaydet"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3689,6 +3684,9 @@ tr:
           paypal:
             no_payment_via_admin_backend: Paypal ödemeleri alınamıyor.
       products:
+        image:
+          label: "Görsel"
+          edit: "Düzenle"
         new:
           title: "Yeni Ürün"
           new_product: "Yeni Ürün"

@@ -863,7 +863,6 @@ nb:
       tabs:
         product_details: "Produktdetaljer"
         group_buy_options: "Gruppekjøpsalternativer"
-        images: "Bilder"
         variants: "Varianter"
         product_properties: "Produktegenskaper"
     products_v3:
@@ -1926,6 +1925,7 @@ nb:
         remove_logo_success: "Logo fjernet vellykket"
         remove_promo_image_success: "Promobilde fjernet vellykket"
         remove_white_label_logo_success: "Logo fjernet vellykket"
+        remove_terms_and_conditions_success: "Vilkår og Betingleser-filen ble fjernet"
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
     resend_confirmation_emails_feedback:
@@ -4005,12 +4005,6 @@ nb:
     minimal_amount: "Minimal Mengde"
     normal_amount: "Normal Mengde"
     discount_amount: "Rabattmengde"
-    no_images_found: "Ingen Bilder Funnet"
-    new_image: "Nytt Bilde"
-    filename: "Filnavn"
-    alt_text: "Alternativ Tekst"
-    thumbnail: "Miniatyrbilde"
-    back_to_images_list: "Tilbake til bildelisten"
     email: Epost
     account_updated: "Konto oppdatert!"
     email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
@@ -4039,6 +4033,7 @@ nb:
     actions:
       update: "Oppdater"
       cancel: "Avbryt"
+      save: "Lagre"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4335,6 +4330,9 @@ nb:
           paypal:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
+        image:
+          label: "Bilde"
+          edit: "Rediger"
         image_upload_error: "Last opp bildet i JPG-, PNG-, GIF-, SVG- eller WEBP-format."
         image_not_processable: "Bildevedlegg er ikke et gyldig bilde."
         new:

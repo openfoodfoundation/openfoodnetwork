@@ -743,7 +743,6 @@ ca:
       tabs:
         product_details: "Detalls del producte"
         group_buy_options: "Opcions de compra en grup"
-        images: "Imatges"
         variants: "Variants"
         product_properties: "Propietats del producte"
     products_v3:
@@ -1672,6 +1671,7 @@ ca:
         remove_logo_success: "Logotip eliminat correctament"
         remove_promo_image_success: "Imatge promocional eliminada correctament"
         remove_white_label_logo_success: "Logotip eliminat correctament"
+        remove_terms_and_conditions_success: "El fitxer de termes i condicions s’ha eliminat correctament"
       stripe_connect_settings:
         resource: 'Configuració de la connexió amb Stripe '
   api:
@@ -3640,12 +3640,6 @@ ca:
     minimal_amount: "Quantitat mínima"
     normal_amount: "Quantitat normal"
     discount_amount: "Import de descompte"
-    no_images_found: "No s'han trobat imatges"
-    new_image: "Nova imatge"
-    filename: "Nom de l'arxiu"
-    alt_text: "Text alternatiu"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Torna a la llista d’imatges"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
     email_updated: "El compte s’actualitzarà un cop es confirmi el nou correu electrònic."
@@ -3673,6 +3667,7 @@ ca:
     actions:
       update: "Actualitzar"
       cancel: "Cancel·lar"
+      save: "Desa"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3954,6 +3949,9 @@ ca:
           paypal:
             no_payment_via_admin_backend: Els pagaments amb Paypal no es poden marcar com pagats des de l'administració
       products:
+        image:
+          label: "Imatge"
+          edit: "Editar"
         image_upload_error: "Si us plau, pugeu les imatges en el format JPG, PNG, GIF, SVG o WEBP."
         image_not_processable: "La imatge adjunta no és una imatge vàlida"
         new:

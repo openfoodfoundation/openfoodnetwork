@@ -533,7 +533,6 @@ en_PH:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -3114,12 +3113,6 @@ en_PH:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
-    no_images_found: "No Images Found"
-    new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back To Images List"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -3141,6 +3134,7 @@ en_PH:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       payments_list:
         amount: "Amount"
@@ -3369,6 +3363,9 @@ en_PH:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
+        image:
+          label: "Image"
+          edit: "Edit"
         new:
           title: "New Product"
           new_product: "New Product"

@@ -951,7 +951,6 @@ fr_BE:
       tabs:
         product_details: "Détails du produit"
         group_buy_options: "Options d'achat par lot"
-        images: "Images"
         variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
     products_v3:
@@ -2067,6 +2066,7 @@ fr_BE:
         remove_logo_success: "Logo supprimé avec succès"
         remove_promo_image_success: "Bannière supprimée avec succès"
         remove_white_label_logo_success: "Logo supprimé avec succès"
+        remove_terms_and_conditions_success: "Le fichier des conditions de ventes a été supprimé avec succès "
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
     resend_confirmation_emails_feedback:
@@ -4276,12 +4276,6 @@ fr_BE:
     minimal_amount: "Montant minimal"
     normal_amount: "Montant normal"
     discount_amount: "Montant de la remise"
-    no_images_found: "Pas d'image trouvée"
-    new_image: "Nouvelle image"
-    filename: "Nom de fichier"
-    alt_text: "Texte alternatif"
-    thumbnail: "Miniature"
-    back_to_images_list: "Retour à la liste d'images"
     instance_url: "URL du site"
     email: Email
     account_updated: "Compte mis à jour!"
@@ -4311,6 +4305,7 @@ fr_BE:
     actions:
       update: "Mettre à jour"
       cancel: "Annuler"
+      save: "Sauvegarder"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4339,7 +4334,6 @@ fr_BE:
     admin:
       images:
         edit:
-          title: Modifier l'image pour %{resource_name}
           subtitle: Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px.
           close: Retour
           upload: Charger une photo
@@ -4616,6 +4610,10 @@ fr_BE:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
         customer_credit_successful: Le client a été crédité avec succès !
       products:
+        image:
+          label: "Image"
+          subtitle: "Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px."
+          edit: "Modifier"
         image_upload_error: "Veuillez télécharger l'image au format JPG, PNG, GIF, SVG ou WEBP."
         image_not_processable: "L’image jointe n’est pas une image valide."
         new:

@@ -829,7 +829,6 @@ hu:
       tabs:
         product_details: "Termék leírás"
         group_buy_options: "Rugalmas vásárlási mennyiség"
-        images: "Képek"
         variants: "Változatok"
         product_properties: "Termék tulajdonságai"
     products_v3:
@@ -1920,6 +1919,7 @@ hu:
         remove_logo_success: "A logo sikeresen eltávolítva"
         remove_promo_image_success: "A promóciós kép sikeresen eltávolítva"
         remove_white_label_logo_success: "A logo sikeresen eltávolítva"
+        remove_terms_and_conditions_success: "A GDPR és ÁSZF fájl sikeresen eltávolítva"
       stripe_connect_settings:
         resource: Stripe Connect konfiguráció
     resend_confirmation_emails_feedback:
@@ -4034,12 +4034,6 @@ hu:
     minimal_amount: "Minimális mennyiség"
     normal_amount: "Normál mennyiség"
     discount_amount: "Kedvezmény mértéke"
-    no_images_found: "Nem található kép"
-    new_image: "Új kép"
-    filename: "Fájl név"
-    alt_text: "Alternatív szöveg"
-    thumbnail: "Miniatűr"
-    back_to_images_list: "Vissza a képek listájához"
     email: Email
     account_updated: "Fiók frissítve!"
     email_updated: "A fiók az új e-mail-cím megerősítését követően frissül."
@@ -4068,6 +4062,7 @@ hu:
     actions:
       update: "Frissítés"
       cancel: "Mégsem"
+      save: "Mentés"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4096,7 +4091,6 @@ hu:
     admin:
       images:
         edit:
-          title: 'Kép szerkesztése: %{resource_name}'
           subtitle: Legalább 440 × 440 képpontos, négyzet alakú kép ajánlott.
           close: Vissza
           upload: Fotó feltöltése
@@ -4366,6 +4360,10 @@ hu:
           paypal:
             no_payment_via_admin_backend: A Paypal fizetések nem rögzíthetők a Backoffice-ban
       products:
+        image:
+          label: "Kép"
+          subtitle: "Legalább 440 × 440 képpontos, négyzet alakú kép ajánlott."
+          edit: "Szerkesztés"
         image_upload_error: "Kérjük, a képet JPG, PNG, GIF, SVG vagy WEBP formátumban töltsd fel."
         image_not_processable: "A csatolt kép nem megfelelő"
         new:

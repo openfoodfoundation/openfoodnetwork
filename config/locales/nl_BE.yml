@@ -546,7 +546,6 @@ nl_BE:
       tabs:
         product_details: "Product details"
         group_buy_options: "Group Buy Options"
-        images: "Afbeeldingen"
         variants: "Variant"
         product_properties: "Producteigenschappen"
     products_v3:
@@ -3118,12 +3117,6 @@ nl_BE:
     minimal_amount: "Minimaal bedrag"
     normal_amount: "Normaal bedrag"
     discount_amount: "Korting hoeveelheid"
-    no_images_found: "Geen afbeelding gevonden"
-    new_image: "Nieuwe afbeelding"
-    filename: "Bestand naam"
-    alt_text: "Alternatieve text"
-    thumbnail: "Miniatuur"
-    back_to_images_list: "Terug naar de afbeeldings lijst."
     email: Email
     account_updated: "Rekening reset !"
     email_updated: "Het account word geupdate waneer de nieuwe email bevestigd is."
@@ -3145,6 +3138,7 @@ nl_BE:
     actions:
       update: "Update"
       cancel: "Annuleren"
+      save: "Save"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Er waren fouten met de volgende velden"
@@ -3389,6 +3383,9 @@ nl_BE:
           paypal:
             no_payment_via_admin_backend: Paypal betaling kan niet worden opgepakt in de Backoffice
       products:
+        image:
+          label: "beeltenis"
+          edit: "bewerking"
         new:
           title: "Nieuw product"
           new_product: "Nieuw product"

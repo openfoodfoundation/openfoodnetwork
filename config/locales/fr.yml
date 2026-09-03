@@ -950,7 +950,6 @@ fr:
       tabs:
         product_details: "Détails"
         group_buy_options: "Options d'achat par lot"
-        images: "Images"
         variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
     products_v3:
@@ -2068,6 +2067,7 @@ fr:
         remove_logo_success: "Logo supprimé avec succès"
         remove_promo_image_success: "Bannière supprimée avec succès"
         remove_white_label_logo_success: "Logo supprimé avec succès"
+        remove_terms_and_conditions_success: "Le fichier a été supprimé avec succès"
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
     resend_confirmation_emails_feedback:
@@ -4291,12 +4291,6 @@ fr:
     minimal_amount: "Montant minimal"
     normal_amount: "Montant classique"
     discount_amount: "Montant réduit"
-    no_images_found: "Aucune image pour l'instant"
-    new_image: "Nouvelle image"
-    filename: "Nom du fichier"
-    alt_text: "Texte alternatif"
-    thumbnail: "Miniature"
-    back_to_images_list: "Retour à la liste des images"
     instance_url: "URL du site"
     email: Email
     account_updated: "Compte mis à jour!"
@@ -4326,6 +4320,7 @@ fr:
     actions:
       update: "Mettre à jour"
       cancel: "Annuler"
+      save: "Sauvegarder"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4354,7 +4349,6 @@ fr:
     admin:
       images:
         edit:
-          title: Modifier l'image pour %{resource_name}
           subtitle: Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px.
           close: Retour
           upload: Télécharger la photo
@@ -4631,6 +4625,10 @@ fr:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
         customer_credit_successful: Le client a été crédité avec succès !
       products:
+        image:
+          label: "Image"
+          subtitle: "Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px."
+          edit: "Modifier"
         image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         image_not_processable: "L'image n'est pas valide"
         new:

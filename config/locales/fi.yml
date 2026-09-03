@@ -926,7 +926,6 @@ fi:
       tabs:
         product_details: "Tuotteen tiedot"
         group_buy_options: "Ryhmäostovaihtoehdot"
-        images: "Kuvat"
         variants: "Muunnokset"
         product_properties: "Tuotteen ominaisuudet"
     products_v3:
@@ -2022,6 +2021,7 @@ fi:
         remove_logo_success: "Logo poistettu onnistuneesti"
         remove_promo_image_success: "Mainoskuvan poisto onnistui"
         remove_white_label_logo_success: "Logo poistettu onnistuneesti"
+        remove_terms_and_conditions_success: "Käyttöehtotiedosto poistettu onnistuneesti"
       stripe_connect_settings:
         resource: Stripe Connect -määritys
     resend_confirmation_emails_feedback:
@@ -4169,12 +4169,6 @@ fi:
     minimal_amount: "Minimimäärä"
     normal_amount: "Normaali määrä"
     discount_amount: "Alennusmäärä"
-    no_images_found: "Ei kuvia löytynyt"
-    new_image: "Uusi kuva"
-    filename: "Tiedostonimi"
-    alt_text: "Vaihtoehtoinen teksti"
-    thumbnail: "Pienoiskuva"
-    back_to_images_list: "Takaisin kuvaluetteloon"
     email: Sähköposti
     account_updated: "Tili päivitetty!"
     email_updated: "Tili päivitetään, kun uusi sähköpostiosoite on vahvistettu."
@@ -4203,6 +4197,7 @@ fi:
     actions:
       update: "Päivitä"
       cancel: "Peruuta"
+      save: "tallenna"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4501,6 +4496,9 @@ fi:
           paypal:
             no_payment_via_admin_backend: PayPal-maksuja ei voi tallentaa Backofficeen
       products:
+        image:
+          label: "Kuva"
+          edit: "muokata"
         image_upload_error: "Lataa kuva JPG-, PNG-, GIF-, SVG- tai WEBP-muodossa."
         image_not_processable: "Kuvaliite ei ole kelvollinen kuva."
         new:

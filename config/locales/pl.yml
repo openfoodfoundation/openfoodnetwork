@@ -529,7 +529,6 @@ pl:
       tabs:
         product_details: "Szczegóły produktu"
         group_buy_options: "Opcje zakupu grupowego"
-        images: "Obrazy"
         variants: "Warianty"
         product_properties: "Właściwości produktu"
     products_v3:
@@ -3074,12 +3073,6 @@ pl:
     minimal_amount: "Minimalna ilość"
     normal_amount: "Kwota normalna"
     discount_amount: "Kwota rabatu"
-    no_images_found: "Nie znaleziono obrazów"
-    new_image: "Nowy wygląd"
-    filename: "Nazwa pliku"
-    alt_text: "alternatywny tekst"
-    thumbnail: "Miniaturka"
-    back_to_images_list: "Powrót do listy zdjęć"
     email: E-mail
     account_updated: "Konto zaktualizowane!"
     email_updated: "Konto zostanie zaktualizowane po potwierdzeniu nowego e-maila."
@@ -3098,6 +3091,7 @@ pl:
     actions:
       update: "Aktualizuj"
       cancel: "Anuluj"
+      save: "Zapisz"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Wystąpiły problemy z następującymi polami"
@@ -3330,6 +3324,9 @@ pl:
           paypal:
             no_payment_via_admin_backend: Płatności PayPal nie mogą być przechwytywane w Backoffice
       products:
+        image:
+          label: "Obraz"
+          edit: "Edytuj"
         new:
           title: "Nowy produkt"
           new_product: "Nowy produkt"

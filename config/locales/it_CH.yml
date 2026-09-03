@@ -674,7 +674,6 @@ it_CH:
       tabs:
         product_details: "Dettagli Prodotto"
         group_buy_options: "Opzioni Acquisti di gruppo"
-        images: "Immagini"
         variants: "Varianti"
         product_properties: "Proprietà prodotto"
     products_v3:
@@ -1538,6 +1537,7 @@ it_CH:
         remove_logo_success: "Logo rimosso con successo"
         remove_promo_image_success: "Immagine promozionale rimossa con successo"
         remove_white_label_logo_success: "Logo rimosso con successo"
+        remove_terms_and_conditions_success: "File di Termini e Condizioni rimosso con successo"
       stripe_connect_settings:
         resource: 'Configurazione Stripe Connect '
   api:
@@ -3530,12 +3530,6 @@ it_CH:
     minimal_amount: "Importo minimo"
     normal_amount: "Tariffa normale"
     discount_amount: "Tariffa scontata"
-    no_images_found: "Nessuna immagine trovata"
-    new_image: "Nuova immagine"
-    filename: "Nome file"
-    alt_text: "Testo alternativo"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Torna alla lista Immagini"
     email: Email
     account_updated: "Account aggiornato!"
     email_updated: "L'account sarà aggiornato una volta confermata la nuova email"
@@ -3563,6 +3557,7 @@ it_CH:
     actions:
       update: "Aggiorna"
       cancel: "Annulla"
+      save: "Salva"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3832,6 +3827,9 @@ it_CH:
           paypal:
             no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
+        image:
+          label: "Immagine"
+          edit: "Modifica"
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"

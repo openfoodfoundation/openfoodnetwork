@@ -744,7 +744,6 @@ pa:
       tabs:
         product_details: "ਉਤਪਾਦ ਵੇਰਵੇ"
         group_buy_options: "ਸਮੂਹ ਖਰੀਦ ਵਿਕਲਪ"
-        images: "ਫੋਟੋ"
         variants: "ਵੇਰੀਐਂਟਸ"
         product_properties: "ਉਤਪਾਦ ਦੀ ਪਰੌਪਰਟੀਆਂ"
     products_v3:
@@ -1711,6 +1710,7 @@ pa:
         remove_logo_success: "ਲੋਗੋ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
         remove_promo_image_success: "ਪ੍ਰੋਮੋ ਦੀ ਫੋਟੋ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
         remove_white_label_logo_success: "ਲੋਗੋ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
+        remove_terms_and_conditions_success: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ ਦੀ ਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਈ ਗਈ"
       stripe_connect_settings:
         resource: ਸਟ੍ਰਾਈਪ ਕਨੇਕਟ ਕੌਂਫਿਗਰੇਸ਼ਨ
   api:
@@ -3679,12 +3679,6 @@ pa:
     minimal_amount: "ਨਿਊਨਤਮ ਰਕਮ"
     normal_amount: "ਆਮ ਰਕਮ"
     discount_amount: "ਛੂਟ ਰਕਮ"
-    no_images_found: "ਕੋਈ ਫੋਟੋ ਨਹੀਂ ਮਿਲੇ"
-    new_image: "ਨਈ ਫੋਟੋ"
-    filename: "ਫਾਈਲ ਦਾ ਨਾਂ"
-    alt_text: "ਵੈਕਲਪਿਕ ਟੈਕਸਟ"
-    thumbnail: "ਥੰਬਨੇਲ"
-    back_to_images_list: "ਫੋਟੋ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     email: ਈਮੇਲ
     account_updated: "ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ!"
     email_updated: "ਨਵੇਂ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਣ ਤੋਂ ਬਾਅਦ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾਵੇਗਾ।"
@@ -3713,6 +3707,7 @@ pa:
     actions:
       update: "ਅੱਪਡੇਟ"
       cancel: "ਰੱਦ ਕਰੋ"
+      save: "ਸੇਵ ਕਰੋ"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4000,6 +3995,9 @@ pa:
           paypal:
             no_payment_via_admin_backend: ਪੇਪਾਲ ਭੁਗਤਾਨਾਂ ਨੂੰ ਬੈਕ ਆਫਿਸ ਵਿੱਚ ਕੈਪਚਰ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ
       products:
+        image:
+          label: "ਤਸਵੀਰ"
+          edit: "ਸੰਪਾਦਿਤ ਕਰੋ"
         image_upload_error: "ਕਿਰਪਾ ਕਰਕੇ ਫੋਟੋ ਨੂੰ JPG, PNG, GIF, SVG ਜਾਂ WEBP ਫਾਰਮੈਟ ਵਿੱਚ ਅੱਪਲੋਡ ਕਰੋ।"
         image_not_processable: "ਅਟੈਚ ਕੀਤੀ ਫੋਟੋ ਇੱਕ ਵੈਧ ਫੋਟੋ ਨਹੀਂ ਹੈ।"
         new:

@@ -768,7 +768,6 @@ de_DE:
       tabs:
         product_details: "Produktdetails"
         group_buy_options: "Gruppenkauf"
-        images: "Bilder"
         variants: "Produktvarianten"
         product_properties: "Produkteigenschaften"
     products_v3:
@@ -1795,6 +1794,7 @@ de_DE:
         remove_logo_success: "Das Logo wurde erfolgreich gelöscht."
         remove_promo_image_success: "Bild wurde erfolgreich gelöscht."
         remove_white_label_logo_success: "Das Logo wurde erfolgreich gelöscht."
+        remove_terms_and_conditions_success: "Die AGB-Datei wurde erfolgreich gelöscht."
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
     resend_confirmation_emails_feedback:
@@ -3870,12 +3870,6 @@ de_DE:
     minimal_amount: "Mengenrabatt ab (€)"
     normal_amount: "Gebühr unterhalb (€)"
     discount_amount: "Gebühr oberhalb (€)"
-    no_images_found: "Keine Bilder gefunden."
-    new_image: "Neues Bild"
-    filename: "Dateiname"
-    alt_text: "Alternativtext"
-    thumbnail: "Miniaturansicht"
-    back_to_images_list: "Zurück zur Bilderliste"
     email: E-Mail-Adresse
     account_updated: "Konto aktualisiert!"
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
@@ -3904,6 +3898,7 @@ de_DE:
     actions:
       update: "Speichern"
       cancel: "Abbrechen"
+      save: "Speichern"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4196,6 +4191,9 @@ de_DE:
           paypal:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
+        image:
+          label: "Bild"
+          edit: "Bearbeiten"
         image_upload_error: "Bitte laden Sie ein Bild im JPG-, PNG-, GIF-, SVG- oder WEBP-Format hoch."
         image_not_processable: "Die ausgewählte Datei ist kein gültiges Bild."
         new:

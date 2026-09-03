@@ -560,7 +560,6 @@ es_CO:
       tabs:
         product_details: "Detalles del producto"
         group_buy_options: "Opciones de compra grupales"
-        images: "Imágenes"
         variants: "Variante"
         product_properties: "Propiedades del producto"
     products_v3:
@@ -3219,12 +3218,6 @@ es_CO:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Cantidad de descuento"
-    no_images_found: "No se encontraron imágenes "
-    new_image: "Nueva imágen"
-    filename: "Nombre de archivo"
-    alt_text: "Texto alternativo"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Volver a la lista de imágenes "
     email: Correo electrónico
     account_updated: "¡Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -3246,6 +3239,7 @@ es_CO:
     actions:
       update: "Actualizar"
       cancel: "Cancelar"
+      save: "Guardar"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Hubo problemas con los siguientes campos"
@@ -3489,6 +3483,9 @@ es_CO:
           paypal:
             no_payment_via_admin_backend: Los pagos de Paypal no se pueden capturar en el Backoffice
       products:
+        image:
+          label: "Imágen"
+          edit: "Editar"
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"

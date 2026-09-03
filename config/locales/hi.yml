@@ -752,7 +752,6 @@ hi:
       tabs:
         product_details: "उत्पाद का विवरण"
         group_buy_options: "ग्रुप खरीदरी के विकल्प"
-        images: "छवियाँ"
         variants: "वेरिएंट्स"
         product_properties: "उत्पाद प्रॉपर्टीज़"
     products_v3:
@@ -1728,6 +1727,7 @@ hi:
         remove_logo_success: "लोगो सफलतापूर्वक हटा दिया गया"
         remove_promo_image_success: "प्रोमो छवि सफलतापूर्वक हटा दी गई"
         remove_white_label_logo_success: "लोगो सफलतापूर्वक हटा दिया गया"
+        remove_terms_and_conditions_success: "नियम और शर्तें की फ़ाइल सफलतापूर्वक हटा दी गई"
       stripe_connect_settings:
         resource: Stripe कनेक्ट कॉन्फ़िगरेशन
     resend_confirmation_emails_feedback:
@@ -3785,12 +3785,6 @@ hi:
     minimal_amount: "न्यूनतम राशि"
     normal_amount: "सामान्य मात्रा"
     discount_amount: "डिस्काउंट की राशि"
-    no_images_found: "कोई छवि नहीं मिली"
-    new_image: "नई छवि"
-    filename: "फ़ाइलनाम"
-    alt_text: "वैकल्पिक टेक्स्ट"
-    thumbnail: "थंबनेल"
-    back_to_images_list: "छवियों की सूची पर वापस जाएं"
     email: ईमेल
     account_updated: "अकाउंट अपडेट किया गया!"
     email_updated: "नए ईमेल की पुष्टि होने के बाद अकाउंट अपडेट हो जाएगा।"
@@ -3819,6 +3813,7 @@ hi:
     actions:
       update: "अपडेट करें"
       cancel: "रद्द करें"
+      save: "सेव करें"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4106,6 +4101,9 @@ hi:
           paypal:
             no_payment_via_admin_backend: Paypal भुगतानों को बैकऑफ़िस में कैप्चर नहीं किया जा सकता है
       products:
+        image:
+          label: "छवि"
+          edit: "एडिट करें"
         image_upload_error: "कृपया छवि को JPG, PNG, GIF, SVG या WEBP फॉर्मेट में अपलोड करें।"
         image_not_processable: "छवि का अटैचमेंट एक मान्य छवि नहीं है।"
         new:

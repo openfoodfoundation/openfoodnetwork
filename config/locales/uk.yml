@@ -680,7 +680,6 @@ uk:
       tabs:
         product_details: "Деталі продукту"
         group_buy_options: "Варіанти групування"
-        images: "Зображення"
         variants: "Варіанти"
         product_properties: "Властивості продукту"
     products_v3:
@@ -1565,6 +1564,7 @@ uk:
         remove_logo_success: "Логотип видалено"
         remove_promo_image_success: "Рекламне зображення видалено"
         remove_white_label_logo_success: "Логотип видалено"
+        remove_terms_and_conditions_success: "Файл із положеннями та умовами успішно видалено"
       stripe_connect_settings:
         resource: Конфігурація Stripe Connect
   api:
@@ -3592,12 +3592,6 @@ uk:
     minimal_amount: "Мінімальна сума"
     normal_amount: "Нормальна сума"
     discount_amount: "Розмір знижки"
-    no_images_found: "Зображення не знайдено"
-    new_image: "Нове зображення"
-    filename: "Ім'я файлу"
-    alt_text: "Альтернативний текст"
-    thumbnail: "Мініатюра"
-    back_to_images_list: "Назад до списку зображень"
     email: Email
     account_updated: "Обліковий запис оновлено!"
     email_updated: "Обліковий запис буде оновлено після підтвердження нової електронної пошти."
@@ -3625,6 +3619,7 @@ uk:
     actions:
       update: "Оновити"
       cancel: "Скасувати"
+      save: "Зберегти"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3901,6 +3896,9 @@ uk:
           paypal:
             no_payment_via_admin_backend: Платежі Paypal не можуть бути зафіксовані в Backoffice
       products:
+        image:
+          label: "Зображення"
+          edit: "Редагувати"
         image_upload_error: "Завантажте зображення у форматі JPG, PNG, GIF, SVG або WEBP."
         new:
           title: "Новий продукт"

@@ -755,7 +755,6 @@ ml:
       tabs:
         product_details: "ഉൽപ്പന്നത്തിന്റെ വിവരം"
         group_buy_options: "ഗ്രൂപ്പ് വാങ്ങൽ ഓപ്ഷനുകൾ"
-        images: "ചിത്രങ്ങൾ"
         variants: "വകഭേദങ്ങൾ"
         product_properties: "ഉൽപ്പന്ന സവിശേഷതകൾ"
     products_v3:
@@ -1740,6 +1739,7 @@ ml:
         remove_logo_success: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
         remove_promo_image_success: "പ്രമോ ചിത്രം വിജയകരമായി നീക്കം ചെയ്തു"
         remove_white_label_logo_success: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
+        remove_terms_and_conditions_success: "നിബന്ധനകളും വ്യവസ്ഥകളും എന്ന ഫയൽ വിജയകരമായി നീക്കം ചെയ്തു"
       stripe_connect_settings:
         resource: സ്ട്രൈപ്പ് കണക്റ്റ് കോൺഫിഗറേഷൻ
     resend_confirmation_emails_feedback:
@@ -3809,12 +3809,6 @@ ml:
     minimal_amount: "കുറഞ്ഞ തുക"
     normal_amount: "സാധാരണ തുക"
     discount_amount: "കിഴിവ് തുക"
-    no_images_found: "ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല"
-    new_image: "പുതിയ ചിത്രം"
-    filename: "ഫയലിന്റെ പേര്"
-    alt_text: "ഇതര വാചകം"
-    thumbnail: "ലഘുചിത്രം"
-    back_to_images_list: "ചിത്രങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     email: ഇമെയിൽ
     account_updated: "അക്കൗണ്ട് അപ്ഡേറ്റ് ചെയ്തു!"
     email_updated: "പുതിയ ഇമെയിൽ സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ അക്കൗണ്ട് അപ്‌ഡേറ്റ് ചെയ്യും."
@@ -3843,6 +3837,7 @@ ml:
     actions:
       update: "അപ്ഡേറ്റ് ചെയ്യുക"
       cancel: "റദ്ദാക്കുക"
+      save: "സേവ്"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4131,6 +4126,9 @@ ml:
           paypal:
             no_payment_via_admin_backend: പേപാൽ പേയ്‌മെന്റുകൾ ബാക്ക് ഓഫീസിൽ ക്യാപ്‌ചർ ചെയ്യാൻ കഴിയില്ല
       products:
+        image:
+          label: "ചിത്രം"
+          edit: "എഡിറ്റ് ചെയ്യുക"
         image_upload_error: "ദയവായി JPG, PNG, GIF, SVG അല്ലെങ്കിൽ WEBP ഫോർമാറ്റിൽ ചിത്രം അപ്‌ലോഡ് ചെയ്യുക."
         image_not_processable: "ഇമേജ് അറ്റാച്ച്‌മെന്റ് ഒരു സാധുവായ ചിത്രമല്ല."
         new:

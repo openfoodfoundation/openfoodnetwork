@@ -553,7 +553,6 @@ en_AU:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -1394,6 +1393,7 @@ en_AU:
         remove_logo_success: "Logo removed successfully"
         remove_promo_image_success: "Promo image removed successfully"
         remove_white_label_logo_success: "Logo removed successfully"
+        remove_terms_and_conditions_success: "Terms and Conditions file removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
@@ -3242,12 +3242,6 @@ en_AU:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
-    no_images_found: "No Images Found"
-    new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back To Images List"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -3274,6 +3268,7 @@ en_AU:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3523,6 +3518,9 @@ en_AU:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
+        image:
+          label: "Image"
+          edit: "Edit"
         new:
           title: "New Product"
           new_product: "New Product"

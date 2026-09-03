@@ -679,7 +679,6 @@ es_US:
       tabs:
         product_details: "Detalles del Producto"
         group_buy_options: "Opciones de compra grupales"
-        images: "Imágenes"
         variants: "variaciones"
         product_properties: "Propiedades del producto"
     products_v3:
@@ -1536,6 +1535,7 @@ es_US:
         remove_logo_success: "Logotipo eliminado con éxito"
         remove_promo_image_success: "Imagen promocional eliminada con éxito"
         remove_white_label_logo_success: "Logotipo eliminado con éxito"
+        remove_terms_and_conditions_success: "Archivo de términos y condiciones eliminado correctamente"
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
@@ -3456,12 +3456,6 @@ es_US:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Importe de descuento"
-    no_images_found: "No se encontraron imágenes "
-    new_image: "Nueva Imagen"
-    filename: "Nombre de archivo"
-    alt_text: "Texto Alternativo"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Volver a lista de imágenes "
     email: Email
     account_updated: "Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -3489,6 +3483,7 @@ es_US:
     actions:
       update: "Actualizar"
       cancel: "Cancelar"
+      save: "Guardar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3755,6 +3750,9 @@ es_US:
           paypal:
             no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
       products:
+        image:
+          label: "Imagen"
+          edit: "Editar"
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"

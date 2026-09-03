@@ -674,6 +674,8 @@ en_GB:
         create_linked_variant: Create linked variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -834,6 +836,7 @@ en_GB:
         id: Id
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
         available_credit: "Available credit: %{available_credit}"
@@ -946,7 +949,6 @@ en_GB:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -968,6 +970,9 @@ en_GB:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
+        search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
@@ -2055,6 +2060,7 @@ en_GB:
         remove_logo_success: "Logo removed successfully"
         remove_promo_image_success: "Promo image removed successfully"
         remove_white_label_logo_success: "Logo removed successfully"
+        remove_terms_and_conditions_success: "Terms and Conditions file has been removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
     resend_confirmation_emails_feedback:
@@ -3630,6 +3636,7 @@ en_GB:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3679,6 +3686,7 @@ en_GB:
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order. <br />Are you sure you want to proceed?"
@@ -3731,6 +3739,9 @@ en_GB:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4214,12 +4225,6 @@ en_GB:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
-    no_images_found: "No Images Found"
-    new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back To Images List"
     instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
@@ -4249,6 +4254,7 @@ en_GB:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4277,6 +4283,7 @@ en_GB:
     admin:
       images:
         edit:
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
       mail_methods:
@@ -4552,12 +4559,17 @@ en_GB:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
         customer_credit_successful: Customer has been successfully credited!
       products:
+        image:
+          label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"
           enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"

@@ -674,7 +674,6 @@ es_CR:
       tabs:
         product_details: "Detalles del producto"
         group_buy_options: "Opciones de compra grupales"
-        images: "Imágenes"
         variants: "Variante"
         product_properties: "Propiedades del producto"
     products_v3:
@@ -1559,6 +1558,7 @@ es_CR:
         remove_logo_success: "Logotipo eliminado con éxito"
         remove_promo_image_success: "Imágen promocional eliminada con éxito"
         remove_white_label_logo_success: "Logotipo eliminado con éxito"
+        remove_terms_and_conditions_success: "El archivo de términos y condiciones se eliminó con éxito"
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
@@ -3550,12 +3550,6 @@ es_CR:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Cantidad de descuento"
-    no_images_found: "No se encontraron imágenes "
-    new_image: "Nueva imágen"
-    filename: "Nombre de archivo"
-    alt_text: "Texto alternativo"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Volver a la lista de imágenes "
     email: Correo electrónico
     account_updated: "¡Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -3577,6 +3571,7 @@ es_CR:
     actions:
       update: "Actualizar"
       cancel: "Cancelar"
+      save: "Guardar"
     shared:
       payments_list:
         amount: "Cantidad"
@@ -3810,6 +3805,9 @@ es_CR:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
       products:
+        image:
+          label: "Imágen"
+          edit: "Editar"
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"

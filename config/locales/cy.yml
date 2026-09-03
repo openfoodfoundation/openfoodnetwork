@@ -817,6 +817,7 @@ cy:
         update_address: "Diweddaru cyfeiriad"
         confirm_delete: "Dileu?  Cadarnhau hyn"
         search_by_email: "Chwilio trwy e-bost / cod ..."
+        filter_by_tag: "Hidlo fesul tag"
         guest_label: "Talu fel gwestai"
         credit_owed: "Credyd yn ddyledus"
         balance_due: "Balans sy'n ddyledus"
@@ -935,7 +936,6 @@ cy:
       tabs:
         product_details: "Manylion Cynnyrch"
         group_buy_options: "Opsiynau Prynu fel grŵp"
-        images: "Delweddau"
         variants: "Amrywolion"
         product_properties: "Priodoleddau Cynnyrch"
     products_v3:
@@ -957,6 +957,9 @@ cy:
           cancellation_text: "Cadw amrywiolyn"
       filters:
         search_products: Chwilio am gynnyrch
+        search_for_enterprises: Chwilio am mentrau
+        select_enterprise: Dewis menter
+        all_enterprises: Pob mentrau
         search_for_categories: Chwilio am gategorïau
         select_category: Dewis categori
         all_categories: Pob categori
@@ -2049,6 +2052,7 @@ cy:
         remove_logo_success: "Llwyddwyd i ddileu'r logo "
         remove_promo_image_success: "Llwyddwyd i ddileu delwedd hyrwyddo"
         remove_white_label_logo_success: "Llwyddwyd i ddileu'r logo "
+        remove_terms_and_conditions_success: "Llwyddwyd i ddileu'r ffeil Telerau ac Amodau "
       stripe_connect_settings:
         resource: Cyfluniad Stripe Connect
     resend_confirmation_emails_feedback:
@@ -2418,6 +2422,7 @@ cy:
   brandstory_part6: "Mae pawb yn caru bwyd. Nawr gallwn garu ein system bwyd hefyd."
   system_headline: "Siopa - fel hyn mae'n gweithio."
   system_step1_html: "1.  Chwilio"
+  system_step1_text_html: <a href="/shops">Chwilio</a>'r siiopau annibynnol, amrywiol am fwyd tymhorol lleol.  Chwilio yn ôl cymdogaeth a chategori bwyd, neu pe dymunir, os byddai'n well gennych casglu neu gael gwasanaeth cyflenwi.
   system_step2_html: "2. Siopa"
   system_step2_text_html: "Trawsnewid eich trafodion gyda bwyd lleol fforddiadwy gan gynhyrchwyr amrywiol a hybiau. Byddwch yn gyfarwydd gyda'r straeon tu ôl i'r bwyd a'r bobl sy'n ei gynhyrchu!"
   system_step3_html: "3. Casglu / Derbyn Cyflenwad"
@@ -3622,6 +3627,7 @@ cy:
           select_all_variants: "Dewis Pob Amrywiolyn %{total_number_of_variants}"
           variants_loaded: "Llwythwyd %{num_of_variants_loaded} o %{total_number_of_variants} Amrywiolyn"
           loading_variants: "Yn llwytho Amrywolion"
+          no_variants: "Nid oes amrywiolyn ar gael ar gyfer y cynnyrch yma."
       enterprise_fees:
         inherit_from_product: "Etifeddu o'r Cynnyrch"
       orders:
@@ -3725,6 +3731,11 @@ cy:
         add_to_cart: "Ychwanegu"
         in_cart: "yn y fasged"
         quantity_in_cart: "%{quantity} yn y fasged"
+        remaining_in_stock:
+          one: "Dim ond %{count} sydd ar ôl"
+          two: "Dim ond %{count} sydd ar ôl"
+          many: "Dim ond %{count} sydd ar ôl"
+          other: "Dim ond %{count} sydd ar ôl"
       bulk_buy_modal:
         min_quantity: "Lleiafswm nifer"
         max_quantity: "Uchfafswm nifer"
@@ -3939,6 +3950,16 @@ cy:
       two: cunnog
       many: cunnog
       other: cunnog
+    stem:
+      one: "goesynnau"
+      two: "goesynnau"
+      many: "goesynnau"
+      other: "goesynnau"
+    plug:
+      one: "plygiau"
+      two: "plygiau"
+      many: "plygiau"
+      other: "plygiau"
     plant:
       one: "planhigyn"
       two: "planhigion"
@@ -3949,6 +3970,31 @@ cy:
       two: "bwndeli"
       many: "bwndeli"
       other: "bwndeli"
+    bulb:
+      one: "bylbiau"
+      two: "bylbiau"
+      many: "bylbiau"
+      other: "bylbiau"
+    root:
+      one: "gwreiddiau"
+      two: "gwreiddiau"
+      many: "gwreiddiau"
+      other: "gwreiddiau"
+    tuber:
+      one: "tiwbiau"
+      two: "tiwbiau"
+      many: "tiwbiau"
+      other: "tiwbiau"
+    corm:
+      one: "corms"
+      two: "corms"
+      many: "corms"
+      other: "corms"
+    crate:
+      one: "cratiau"
+      two: "cratiau"
+      many: "cratiau"
+      other: "cratiau"
   producers:
     signup:
       start_free_profile: "Dechreuwch gyda phroffil am ddim, a gallwch ehangu an fyddwch yn barod!"
@@ -4240,12 +4286,6 @@ cy:
     minimal_amount: "Isafswm"
     normal_amount: "Nifer arferol"
     discount_amount: "Maint y gostyngiad"
-    no_images_found: "Ni ddarganfuwyd unrhyw ddelweddau"
-    new_image: "Delwedd Newydd"
-    filename: "Enw ffeil"
-    alt_text: "Testun Amgen"
-    thumbnail: "Cryno-lun"
-    back_to_images_list: "Yn ôl i'r Rhestr Delweddau"
     email: E-bost
     account_updated: "Diweddarwyd y cyfrif!"
     email_updated: "Bydd y cyfrif yn cael ei ddiweddaru ar ôl cadarnhau'r cyfeiriad e-bost newydd."
@@ -4274,6 +4314,7 @@ cy:
     actions:
       update: "Diweddaru"
       cancel: "Canslo"
+      save: "Cadw"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4419,6 +4460,7 @@ cy:
           resend_confirmation_confirm_html: "Bydd hwn yn ail-anfon yr ebost cadarnhau at y cwsmer. <br />Ydych chi’n siŵr eich bod am wneud hyn?"
           send_invoice: "Anfon anfonebau"
           send_invoice_confirm_html: "Bydd hyn yn ebostio anfonebau y cwsmer ar gyfer yr holl archebion cyflawn a ddewiswyd.  <br>Ydych chi’n siwr eich bod chi am barhau?"
+          credit_orders: 'Archebion credyd '
           selected:
             zero: "Ni ddewiswyd archeb."
             one: "Dewiswyd 1 archeb"
@@ -4573,12 +4615,16 @@ cy:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
         customer_credit_successful: Mae'r cwsmer wedi cael credyd yn llwyddiannus!
       products:
+        image:
+          label: "Delwedd"
+          edit: "Golygu"
         image_upload_error: "Dylid defnyddio fformat JPG, ONG, GIF, SVG neu WEBP i lanlwytho'r llun."
         image_not_processable: "Nid yw’r ddelwedd yn yr atodiad yn ddilys."
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"
           enterprise: "Menter"
+          search_for_enterprises: "Chwilio am mentrau"
           search_for_units: "Chwilio am Unedau"
           product_name: "Enw Cynnyrch"
           units: "Maint yr Uned"

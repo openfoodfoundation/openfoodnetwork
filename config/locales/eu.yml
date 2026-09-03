@@ -814,7 +814,6 @@ eu:
       tabs:
         product_details: "Produktuaren xehetasunak"
         group_buy_options: "Taldeko erosketa-aukerak"
-        images: "Irudiak"
         variants: "aldakuntzak"
         product_properties: "Produktuaren propietateak"
     products_v3:
@@ -1807,6 +1806,7 @@ eu:
         remove_logo_success: "Logotipoa arrakastaz ezabatu da"
         remove_promo_image_success: "Sustapen-irudia arrakastaz ezabatu da"
         remove_white_label_logo_success: "Logotipoa arrakastaz ezabatu da"
+        remove_terms_and_conditions_success: "Terminoen eta baldintzen artxiboa behar bezala ezabatu da"
       stripe_connect_settings:
         resource: Stripe Connect konfiguratzea
   api:
@@ -3768,12 +3768,6 @@ eu:
     minimal_amount: "Gutxieneko kopurua"
     normal_amount: "Kopuru normala"
     discount_amount: "Deskontuaren zenbatekoa"
-    no_images_found: "Ez da irudirik aurkitu"
-    new_image: "Irudi berria"
-    filename: "Fitxategiaren izena"
-    alt_text: "Ordezko testua"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Itzuli irudi-zerrendara"
     email: Emaila
     account_updated: "Kontu eguneratua!"
     email_updated: "Kontua eguneratu egingo da posta elektroniko berria baieztatzen denean."
@@ -3801,6 +3795,7 @@ eu:
     actions:
       update: "Eguneratu"
       cancel: "Ezeztatu"
+      save: "Gorde"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4084,6 +4079,9 @@ eu:
           paypal:
             no_payment_via_admin_backend: PayPal-en ordainketak ezin dira markatu administrazioak ordaindutakotzat
       products:
+        image:
+          label: "Irudia"
+          edit: "Editatu"
         new:
           title: "Produktu berria"
           new_product: "Produktu berria"

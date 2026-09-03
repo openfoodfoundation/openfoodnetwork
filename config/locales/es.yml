@@ -879,7 +879,6 @@ es:
       tabs:
         product_details: "Detalles del Producto"
         group_buy_options: "Opciones de compra grupales"
-        images: "Imágenes"
         variants: "variaciones"
         product_properties: "Propiedades del producto"
     products_v3:
@@ -1930,6 +1929,7 @@ es:
         remove_logo_success: "Logotipo eliminado con éxito"
         remove_promo_image_success: "Imagen promocional eliminada con éxito"
         remove_white_label_logo_success: "Logotipo eliminado con éxito"
+        remove_terms_and_conditions_success: "Archivo de términos y condiciones eliminado correctamente"
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
@@ -4021,12 +4021,6 @@ es:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Importe de descuento"
-    no_images_found: "No se encontraron imágenes "
-    new_image: "Nueva Imagen"
-    filename: "Nombre de archivo"
-    alt_text: "Texto Alternativo"
-    thumbnail: "Miniatura"
-    back_to_images_list: "Volver a lista de imágenes "
     email: Email
     account_updated: "Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -4054,6 +4048,7 @@ es:
     actions:
       update: "Actualizar"
       cancel: "Cancelar"
+      save: "Guardar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4348,6 +4343,9 @@ es:
             no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
         customer_credit_successful: ¡El saldo de la consumidora ha sido actualizado!
       products:
+        image:
+          label: "Imagen"
+          edit: "Editar"
         image_upload_error: "Por favor, sube la imagen en formato JPG, PNG, GIF, SVG o WEBP."
         image_not_processable: "La imagen adjunta no es una imagen válida."
         new:

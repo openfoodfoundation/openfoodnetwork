@@ -533,7 +533,6 @@ fil_PH:
       tabs:
         product_details: "mga detalye ng produkto"
         group_buy_options: "pagpipilian para sa Grupong pagbili"
-        images: "mga larawan"
         variants: "mga uri"
         product_properties: "mga katangian ng produkto"
     products_v3:
@@ -3125,12 +3124,6 @@ fil_PH:
     minimal_amount: "pinakamaliit na  halaga"
     normal_amount: "normal na halaga"
     discount_amount: "halaga na may diskuwento"
-    no_images_found: "walang mahanap na larawan"
-    new_image: "bagong larawan"
-    filename: "pangalan ng file"
-    alt_text: "alternatibong teksto"
-    thumbnail: "thumbnail"
-    back_to_images_list: "balik sa listahan ng mga larawan"
     email: email
     account_updated: "na-update na ang Account"
     email_updated: "ang account ay maa-update kapag ang bagong email ay nakumpirma na"
@@ -3152,6 +3145,7 @@ fil_PH:
     actions:
       update: "i-update"
       cancel: "kanselahin"
+      save: "i-save"
     shared:
       payments_list:
         amount: "Halaga"
@@ -3380,6 +3374,9 @@ fil_PH:
             error_saving_payment: error sa pag-save ng bayad
             submitting_payment: sinusumite ang bayad...
       products:
+        image:
+          label: "larawan"
+          edit: "i-edit"
         new:
           title: "bagong produkto"
           new_product: "bagong produkto"

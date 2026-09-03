@@ -675,7 +675,6 @@ ko:
       tabs:
         product_details: "상품 세부사항"
         group_buy_options: "단체 구매 옵션"
-        images: "사진"
         variants: "변경사항"
         product_properties: "제품 속성"
     products_v3:
@@ -1545,6 +1544,7 @@ ko:
         remove_logo_success: "로고가 삭제되었습니다."
         remove_promo_image_success: "프로모션 이미지가 제거되었습니다."
         remove_white_label_logo_success: "로고가 삭제되었습니다."
+        remove_terms_and_conditions_success: "계약 조건 파일이 제거되었습니다."
       stripe_connect_settings:
         resource: Stripe Connect  환경 설정
   api:
@@ -3474,12 +3474,6 @@ ko:
     minimal_amount: "최소량"
     normal_amount: "평균가격"
     discount_amount: "할인액"
-    no_images_found: "이미지를 찾을 수 없습니다"
-    new_image: "신규 이미지"
-    filename: "파일이름"
-    alt_text: "대체 텍스트"
-    thumbnail: "썸네일"
-    back_to_images_list: "이미지 리스트로 돌아가기"
     email: 이메일
     account_updated: "계정 업데이트 됨!"
     email_updated: "새 이메일이 확인되면 계정이 업데이트됩니다."
@@ -3507,6 +3501,7 @@ ko:
     actions:
       update: "업데이트"
       cancel: "취소"
+      save: "저장"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3776,6 +3771,9 @@ ko:
           paypal:
             no_payment_via_admin_backend: 고객들을 직접 상대하지 않는 부서 전용에서 페이팔 결제를 캡처할 수 없습니다.
       products:
+        image:
+          label: "사진"
+          edit: "편집"
         new:
           title: "새 상품"
           new_product: "새 상품"

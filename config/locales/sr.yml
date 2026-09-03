@@ -800,7 +800,6 @@ sr:
       tabs:
         product_details: "детаљи о производу"
         group_buy_options: "Опције групне куповине"
-        images: "Слике"
         variants: "Варианте"
         product_properties: "Својства производа"
     products_v3:
@@ -3914,12 +3913,6 @@ sr:
     minimal_amount: "Минимални износ"
     normal_amount: "Нормалан износ"
     discount_amount: "Износ попуста"
-    no_images_found: "Слике нису пронађене"
-    new_image: "Нова слика"
-    filename: "Назив документа"
-    alt_text: "Алтернативни текст"
-    thumbnail: "Тхумбнаил"
-    back_to_images_list: "Назад на листу слика"
     email: Емаил
     account_updated: "Налог је ажуриран!"
     email_updated: "Налог ће бити ажуриран када се потврди нова е-пошта."

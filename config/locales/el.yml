@@ -777,7 +777,6 @@ el:
       tabs:
         product_details: "Λεπτομέριες Προϊόντος"
         group_buy_options: "Επιλογές Ομαδικών Αγορών"
-        images: "Εικόνες"
         variants: "Παραλλαγές"
         product_properties: "Ιδιότητες Προϊόντος"
     products_v3:
@@ -1804,6 +1803,7 @@ el:
         remove_logo_success: "Το λογότυπο καταργήθηκε με επιτυχία"
         remove_promo_image_success: "Η εικόνα προώθησης καταργήθηκε με επιτυχία"
         remove_white_label_logo_success: "Το λογότυπο καταργήθηκε με επιτυχία"
+        remove_terms_and_conditions_success: "Το αρχείο Όρων και Προϋποθέσεων καταργήθηκε με επιτυχία"
       stripe_connect_settings:
         resource: Διαμόρφωση Stripe Connect
   api:
@@ -3860,12 +3860,6 @@ el:
     minimal_amount: "Ελάχιστο Ποσό"
     normal_amount: "Κανονικό Ποσό"
     discount_amount: "Ποσό έκπτωσης"
-    no_images_found: "Δεν βρέθηκαν εικόνες"
-    new_image: "Νέα εικόνα"
-    filename: "Ονομα αρχείου"
-    alt_text: "Εναλλακτικό Κείμενο"
-    thumbnail: "Μικρογραφία (Thumnail) "
-    back_to_images_list: "Επιστροφή στη λίστα εικόνων"
     email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
     account_updated: "Ο λογαριασμός ενημερώθηκε!"
     email_updated: "Ο λογαριασμός θα ενημερωθεί μόλις επιβεβαιωθεί το νέο μήνυμα ηλεκτρονικού ταχυδρομείου."
@@ -3894,6 +3888,7 @@ el:
     actions:
       update: "Ενημέρωση"
       cancel: "Ακύρωση"
+      save: "Αποθήκευση"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4189,6 +4184,9 @@ el:
           paypal:
             no_payment_via_admin_backend: Οι πληρωμές μέσω Paypal δεν μπορούν να καταγραφούν στο Backoffice
       products:
+        image:
+          label: "Εικόνα"
+          edit: "Επεξεργασία"
         image_upload_error: "Παρακαλώ ανεβάστε την εικόνα σε τύπο αρχείου JPG, PNG, GIF, SVG ή WEBP."
         image_not_processable: "Η συνημμένη εικόνα δεν υποστηρίζεται."
         new:

@@ -533,7 +533,6 @@ en_ZA:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -3070,6 +3069,7 @@ en_ZA:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       payments_list:
         amount: "Amount"
@@ -3270,6 +3270,9 @@ en_ZA:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
+        image:
+          label: "Image"
+          edit: "Edit"
         new:
           title: "New Product"
           new_product: "New Product"
