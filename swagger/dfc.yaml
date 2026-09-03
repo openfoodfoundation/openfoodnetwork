@@ -199,6 +199,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -232,6 +233,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -265,6 +267,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -298,6 +301,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -633,6 +637,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -711,6 +716,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -789,6 +795,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -868,6 +875,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -930,6 +938,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -992,6 +1001,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -1113,6 +1123,434 @@ paths:
                 "@type": dfc-b:Offer
                 dfc-b:hasPrice: 9.99
                 dfc-b:stockLimitation: 7
+  "/api/dfc/enterprises/{enterprise_id}/orders/{order_id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: success
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                      "@type": dfc-b:Order
+                      dfc-b:hasPart:
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1978
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1979
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1980
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1981
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1982
+                      - http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1983
+                      dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:hasOrderStatus: dfc-v:Held
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1978
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4197
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1979
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4199
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1980
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4201
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1981
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4203
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1982
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/1458/offers/4205
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/1983
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4197
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 4
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4197
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4199
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 4
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4199
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4201
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 4
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4201
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4203
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 4
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4203
+                    - "@id": http://test.host/api/dfc/enterprises/1458/offers/4205
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 4
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/1458/supplied_products/4205
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4197
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #23 - 7353 - 1g'
+                      dfc-b:description: |-
+                        Magni omnis rem minus natus iure. Dicta animi officiis perferendis ad nam suscipit ab quod. Dolor placeat error perspiciatis excepturi cumque exercitationem quam et.
+                        Exercitationem sunt rerum tempore quam itaque accusamus possimus praesentium. Nostrum commodi rerum magnam magni sint. Temporibus asperiores molestiae eveniet nihil sed maiores labore. Tenetur cupiditate non beatae id eos.
+                        Esse sunt voluptatibus consequatur at nam nulla. Similique ipsam ad modi quam eligendi suscipit tempora dolorum. At ex expedita ratione veniam itaque optio. Temporibus expedita omnis suscipit perferendis illo fugit. Dolorum sit veritatis repudiandae quidem eos deserunt repellat.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4197
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2453
+                      ofn:spree_product_id: 2453
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2453
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4199
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #24 - 1888 - 1g'
+                      dfc-b:description: |-
+                        Consequatur assumenda tempore minima recusandae neque ullam veritatis architecto. Dignissimos magni magnam recusandae officiis repellendus dolores. Laborum dolorem non nam perferendis sunt reiciendis optio.
+                        Similique cupiditate quam quis praesentium cum quaerat atque. At eos quas omnis voluptatem eaque nostrum architecto natus. Voluptatibus ea beatae porro modi dolorum officia debitis voluptatem. Debitis placeat saepe recusandae libero consectetur nihil omnis. Animi atque occaecati aliquam magni enim ipsum.
+                        Eius iusto soluta nihil ab explicabo tenetur. Dolor blanditiis ex sint explicabo ea pariatur nulla. In nam facere exercitationem blanditiis a doloremque. Praesentium consequuntur aliquid harum temporibus voluptas non magnam.
+                        Quaerat quae ea quia occaecati consequuntur laborum distinctio numquam. Rerum natus veniam praesentium placeat cupiditate animi soluta sed. Neque aspernatur ab qui excepturi tempore deleniti.
+                        Nihil sed dolorum delectus id commodi. In nemo et natus perspiciatis repellat iusto quia tempore. Voluptatum repudiandae maxime sit rem sed sequi. Porro accusantium exercitationem ipsam debitis dicta soluta pariatur eveniet.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4199
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2454
+                      ofn:spree_product_id: 2454
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2454
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4201
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #25 - 638 - 1g'
+                      dfc-b:description: |-
+                        Ipsum ratione dignissimos ullam architecto saepe accusamus soluta totam. Fugit maiores atque dignissimos deserunt. Odio velit eligendi reiciendis quia.
+                        Qui voluptates rerum pariatur asperiores velit quod. Odio non ducimus repellendus expedita aliquam eos quisquam. Autem nobis ducimus quaerat quos quia consequatur quis architecto. Natus sequi quam assumenda tempore quo.
+                        A error optio placeat doloremque ullam est eaque. Quo qui ad laudantium ea dolorum. Voluptates at libero maiores debitis facere nobis hic tempore. Labore adipisci laboriosam beatae error. Temporibus eaque magni aperiam dolore atque dolorem soluta reiciendis.
+                        Temporibus voluptatum excepturi quo sapiente ab molestias ex fugiat. Eligendi iste natus labore minus doloremque reprehenderit. Occaecati sint quisquam mollitia saepe soluta atque.
+                        Minima quod amet occaecati magnam. Libero minima quos ex esse sed. Blanditiis molestiae deserunt laudantium eum veritatis itaque beatae.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4201
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2455
+                      ofn:spree_product_id: 2455
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2455
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4203
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #26 - 9373 - 1g'
+                      dfc-b:description: |-
+                        Laboriosam suscipit quia omnis nemo ratione exercitationem. Officia omnis sint tempora porro ad voluptatum. Omnis temporibus quaerat rerum nobis impedit. Quisquam repellendus eum maxime dolores officiis accusantium. Odio sint ad saepe eaque tenetur libero.
+                        Adipisci consequuntur veritatis beatae eligendi tempora architecto odio non. Dignissimos recusandae velit ullam aperiam. Earum veniam repellat officiis fugiat tenetur veritatis.
+                        Minima incidunt recusandae hic aliquid fugiat. In rerum cum corrupti dolores necessitatibus. Velit alias optio tempora placeat facilis.
+                        Saepe a facere exercitationem voluptatum. Aspernatur rerum ab officiis ipsa libero quis dolor. Excepturi expedita maiores accusamus hic. Magnam soluta animi repellendus deserunt quas temporibus aliquid. Quod adipisci optio perferendis atque facilis praesentium eveniet quam.
+                        Praesentium sed qui ullam laborum eveniet ipsam aliquam et. Maxime reprehenderit sequi tenetur ea quas. Repudiandae molestias eligendi iste culpa corrupti ullam id. Temporibus itaque ex soluta earum officiis ea autem dolorum.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4203
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2456
+                      ofn:spree_product_id: 2456
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2456
+                    - "@id": http://test.host/api/dfc/enterprises/1458/supplied_products/4205
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #27 - 1064 - 1g'
+                      dfc-b:description: |-
+                        Laboriosam suscipit repellat id iure aliquam sequi occaecati. Dolores et itaque placeat quod voluptatem. Laborum explicabo iste recusandae eius nisi delectus occaecati. Unde voluptas harum vitae minus. Molestiae similique voluptate veritatis quas recusandae laudantium.
+                        Laudantium odit assumenda eaque quod ea iure minima. Repellendus aspernatur rerum odit maiores officia cum hic cupiditate. Quod vero ab doloribus soluta alias. Provident omnis consectetur magnam unde est veniam.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/1458/catalog_items/4205
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2457
+                      ofn:spree_product_id: 2457
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/1458?spree_product_id=2457
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #22 - 8910 - 1g'
+                      dfc-b:description: |-
+                        Maxime delectus earum numquam qui esse nisi. Iste nihil totam laudantium nostrum ipsam voluptas temporibus neque. Aperiam iusto illum facere quo. Excepturi assumenda atque sint mollitia ut.
+                        Iste exercitationem minima corrupti quisquam vitae voluptate eligendi. Pariatur magni similique quos molestias voluptatem. Saepe sequi ex omnis quisquam.
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/2452
+                      ofn:spree_product_id: 2452
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=2452
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products
+                      "@type": dfc-b:SaleSession
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+    put:
+      summary: Update Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: order completed
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+                order completed:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                unprocessable entity:
+                  value:
+                    error: Line items variant must exist and Line items price is not
+                      a number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: |
+                {
+                  "@context": "https://www.datafoodconsortium.org",
+                  "@graph": [
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders",
+                      "@type": "dfc-b:Order",
+                      "dfc-b:belongsTo": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "dfc-b:hasPart": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "dfc-b:orderedBy": "http://test.host/api/dfc/enterprises/11000",
+                      "dfc-b:hasOrderStatus": "dfc-v:Held"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "@type": "dfc-b:OrderLine",
+                      "dfc-b:quantity": 5,
+                      "dfc-b:concerns": "http://test.host/api/dfc/enterprises/10000/offers/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/offers/10001",
+                      "@type": "dfc-b:Offer",
+                      "dfc-b:hasPrice": {
+                        "@type": "dfc-b:Price",
+                        "dfc-b:value": 19.99,
+                        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+                      },
+                      "dfc-b:stockLimitation": 0,
+                      "dfc-b:offeredItem": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001",
+                      "@type": "dfc-b:SuppliedProduct",
+                      "dfc-b:name": "Apple",
+                      "dfc-b:description": "Red",
+                      "dfc-b:hasQuantity": {
+                        "@type": "dfc-b:QuantitativeValue",
+                        "dfc-b:hasUnit": "dfc-m:Gram",
+                        "dfc-b:value": 1
+                      },
+                      "dfc-b:referencedBy": "http://test.host/api/dfc/enterprises/10000/catalog_items/10001",
+                      "dfc-b:isVariantOf": "http://test.host/api/dfc/product_groups/90000",
+                      "ofn:spree_product_id": 90000,
+                      "ofn:spree_product_uri": "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "@type": "dfc-b:SaleSession",
+                      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+                      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+                    }
+                  ]
+                }
+    delete:
+      summary: Cancel Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Orders
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                unprocessable entity:
+                  value:
+                    error: Cannot cancel order in state 'cart'
+  "/api/dfc/enterprises/{enterprise_id}/orders":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create Order
+      parameters: []
+      tags:
+      - Orders
+      responses:
+        '201':
+          description: created
+          content:
+            application/json; charset=utf-8:
+              examples:
+                with line items:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/10001
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                variant not found:
+                  value:
+                    error: Line items variant must exist and Line items price is not
+                      a number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: |
+                {
+                  "@context": "https://www.datafoodconsortium.org",
+                  "@graph": [
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders",
+                      "@type": "dfc-b:Order",
+                      "dfc-b:belongsTo": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "dfc-b:hasPart": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "dfc-b:orderedBy": "http://test.host/api/dfc/enterprises/11000",
+                      "dfc-b:hasOrderStatus": "dfc-v:Held"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "@type": "dfc-b:OrderLine",
+                      "dfc-b:quantity": 1,
+                      "dfc-b:concerns": "http://test.host/api/dfc/enterprises/10000/offers/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/offers/10001",
+                      "@type": "dfc-b:Offer",
+                      "dfc-b:hasPrice": {
+                        "@type": "dfc-b:Price",
+                        "dfc-b:value": 19.99,
+                        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+                      },
+                      "dfc-b:stockLimitation": 0,
+                      "dfc-b:offeredItem": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001",
+                      "@type": "dfc-b:SuppliedProduct",
+                      "dfc-b:name": "Apple",
+                      "dfc-b:description": "Red",
+                      "dfc-b:hasQuantity": {
+                        "@type": "dfc-b:QuantitativeValue",
+                        "dfc-b:hasUnit": "dfc-m:Gram",
+                        "dfc-b:value": 1
+                      },
+                      "dfc-b:referencedBy": "http://test.host/api/dfc/enterprises/10000/catalog_items/10001",
+                      "dfc-b:isVariantOf": "http://test.host/api/dfc/product_groups/90000",
+                      "ofn:spree_product_id": 90000,
+                      "ofn:spree_product_uri": "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "@type": "dfc-b:SaleSession",
+                      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+                      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+                    }
+                  ]
+                }
   "/api/dfc/organizations":
     get:
       summary: List organizations
@@ -1484,6 +1922,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -1520,6 +1959,7 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                       dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
@@ -1604,6 +2044,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/4370
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -1619,6 +2060,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/4372
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
@@ -1679,6 +2121,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 1.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
