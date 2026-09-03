@@ -17,11 +17,19 @@ class Invoice
       end
 
       def address_part2
-        render_address([city, zipcode, state&.name])
+        if postal_code_first?
+          render_address([zipcode, city])
+        else
+          render_address([city, zipcode, state&.name])
+        end
       end
 
       def full_address
-        render_address([address1, address2, city, zipcode, state&.name])
+        if postal_code_first?
+          render_address([address1, address2, zipcode, city])
+        else
+          render_address([address1, address2, city, zipcode, state&.name])
+        end
       end
 
       def blank?
@@ -29,6 +37,10 @@ class Invoice
       end
 
       private
+
+      def postal_code_first?
+        Spree::Config[:address_display_format] == "postal_code_first"
+      end
 
       def render_address(address_parts)
         address_parts.compact_blank.join(', ')

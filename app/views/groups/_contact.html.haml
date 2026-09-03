@@ -43,6 +43,4 @@
           = @group.address2
         - if @group.city.present?
           %br
-          = @group.city
-          = @group.state
-          = @group.zipcode
+          = @group.address.address_part2

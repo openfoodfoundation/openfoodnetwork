@@ -12,9 +12,7 @@
               %br
               = current_distributor.address.address2
             %br
-            = current_distributor.address.city
-            = current_distributor.address.state
-            = current_distributor.address.zipcode
+            = current_distributor.address.address_part2
 
     .small-12.large-4.columns
       - if current_distributor.website || current_distributor.email_address || current_distributor.phone || current_distributor.whatsapp_phone

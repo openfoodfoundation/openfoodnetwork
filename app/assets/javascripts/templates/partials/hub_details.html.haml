@@ -21,5 +21,5 @@
           .hub-name{"ng-bind" => "::enterprise.name"}
           %span{"ng-if" => "::enterprise.active"} ({{'maps_open' | t}})
           %span{"ng-if" => "::!enterprise.active"} ({{'maps_closed' | t}})
-          .button-address{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
+          .button-address{"ng-bind" => "::enterprise.address.address_part2"}
           / %i.ofn-i_007-caret-right

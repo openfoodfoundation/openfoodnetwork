@@ -828,6 +828,9 @@ en:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
 
+    address_display:
+      address_display_settings: "Address Display Settings"
+
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -4310,6 +4313,9 @@ en:
     hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
+    address_display_format: "Address display format"
+    address_display_format_default: "Default"
+    address_display_format_postal_code_first: "Postal code first"
 
     mail_method_settings: "Mail Method Settings"
     mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
