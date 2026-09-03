@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
+# rubocop:disable-next Metrics/ModuleLength
 module Reporting
   RSpec.describe ReportTemplate do
     let(:user) { create(:user) }
     let(:params) { {} }
     subject { described_class.new(user, params) }
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def check_report
       # Mock using instance variables
       allow(subject).to receive(:columns).and_return(@columns)
@@ -22,7 +22,6 @@ module Reporting
       expect(subject.table_rows).to eq(@expected_table_rows) if @expected_table_rows.present?
       expect(subject.table_headers).to eq(@expected_headers) if @expected_headers.present?
     end
-    # rubocop:enable Metrics/AbcSize
 
     describe ".default_params" do
       it "use correctly the default values" do
@@ -319,4 +318,3 @@ module Reporting
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength

@@ -273,7 +273,7 @@ module Spree
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def ensure_standard_variant
       return unless variants.empty?
 
@@ -292,7 +292,6 @@ module Spree
       variant.enterprise_id = enterprise_id
       variants << variant
     end
-    # rubocop:enable Metrics/AbcSize
 
     # Remove any unsupported HTML.
     def description=(html)

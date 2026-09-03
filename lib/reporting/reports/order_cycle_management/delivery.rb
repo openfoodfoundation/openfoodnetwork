@@ -4,7 +4,7 @@ module Reporting
   module Reports
     module OrderCycleManagement
       class Delivery < Base
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable-next Metrics/AbcSize
         def columns
           {
             first_name: proc { |order| order.shipping_address.firstname },
@@ -22,7 +22,6 @@ module Reporting
             special_instructions: proc { |order| order.special_instructions },
           }
         end
-        # rubocop:enable Metrics/AbcSize
 
         def has_temperature_controlled_items?(order)
           order.line_items.any? { |line_item|

@@ -155,7 +155,7 @@ module Reporting
           row order, '', description, '1', amount, invoice_number, tax_type, opts
         end
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable-next Metrics/AbcSize
         def row(order, sku, description, quantity, amount, invoice_number, tax_type, opts = {})
           return nil if amount == 0
 
@@ -188,7 +188,6 @@ module Reporting
            '',
            order.paid? ? I18n.t(:y) : I18n.t(:n)]
         end
-        # rubocop:enable Metrics/AbcSize
 
         def admin_adjustments(order)
           order.adjustments.admin

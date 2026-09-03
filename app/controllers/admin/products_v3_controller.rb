@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module Admin
   class ProductsV3Controller < Spree::Admin::BaseController
     helper ProductsHelper
@@ -371,4 +371,3 @@ module Admin
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

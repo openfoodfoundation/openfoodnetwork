@@ -62,9 +62,8 @@ module Reporting
         options_text = variant_table[:unit_presentation]
 
         unit_to_display = coalesce(nullify_empty_strings(display_as), options_text)
-        # rubocop:disable Rails/OutputSafety
+        # rubocop:disable-next Rails/OutputSafety
         combined_description = sql_concat(display_name, raw("' ('"), unit_to_display, raw("')'"))
-        # rubocop:enable Rails/OutputSafety
 
         Case.new.
           when(nullify_empty_strings(display_name).eq(nil)).then(unit_to_display).

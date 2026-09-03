@@ -436,9 +436,8 @@ module Admin
     # Overriding method on Spree's resource controller
     def location_after_save
       referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
-      # rubocop:disable Style/RegexpLiteral
+      # rubocop:disable-next Style/RegexpLiteral
       refered_from_producer_properties = referer_path =~ /\/producer_properties$/
-      # rubocop:enable Style/RegexpLiteral
 
       if refered_from_producer_properties
         main_app.admin_enterprise_producer_properties_path(@enterprise)

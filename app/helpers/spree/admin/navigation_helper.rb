@@ -103,9 +103,8 @@ module Spree
           options[:title] = text
           options['aria-label'] = text
         end
-        # rubocop:disable Rails/OutputSafety
+        # rubocop:disable-next Rails/OutputSafety
         text = options[:no_text] ? '' : raw("<span class='text'>#{text}</span>")
-        # rubocop:enable Rails/OutputSafety
         options.delete(:no_text)
         link_to(text, url, options)
       end

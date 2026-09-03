@@ -161,7 +161,7 @@ create(:enterprise)
     end
   end
 
-  # rubocop:disable Rails/FindEach. # These are Capybara finders
+  # rubocop:disable-next Rails/FindEach. # These are Capybara finders
   def find_relationship(parent, child)
     page.all('tr').each do |tr|
       return tr if tr.find('td:first-child').text == parent.name &&
@@ -170,5 +170,4 @@ create(:enterprise)
     end
     raise "relationship not found"
   end
-  # rubocop:enable Rails/FindEach.
 end

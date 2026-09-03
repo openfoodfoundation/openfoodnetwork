@@ -82,8 +82,8 @@ RSpec.describe 'ProductSortByStocks' do
   end
 
   describe 'combined sorting' do
-    let!(:bo_a)     { create(:product, name: "Backorder-A") }
-    let!(:bo_b)     { create(:product, name: "Backorder-B") }
+    let!(:bo_a) { create(:product, name: "Backorder-A") }
+    let!(:bo_b) { create(:product, name: "Backorder-B") }
     let!(:stock_low)  { create(:product, name: "Stock-Low") }
     let!(:stock_high) { create(:product, name: "Stock-High") }
 

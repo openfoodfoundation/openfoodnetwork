@@ -125,7 +125,7 @@ RSpec.describe 'Customers' do
                          state: 'complete', customer: customer2)
         }
         let!(:order3) {
-          create(:order, total: 0,  payment_total: 0, distributor: managed_distributor1, user: nil,
+          create(:order, total: 0, payment_total: 0, distributor: managed_distributor1, user: nil,
                          state: 'complete', customer: customer4)
         }
 
