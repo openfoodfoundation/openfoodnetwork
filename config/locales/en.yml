@@ -371,6 +371,7 @@ en:
     oidc:
       failure: "Could not sign in: %{error}"
       record_not_unique: "%{uid} is already associated with another account"
+  home_page_url: "Home page URL (leave blank to use the built-in home page)"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
