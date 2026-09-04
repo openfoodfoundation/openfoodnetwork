@@ -20,7 +20,8 @@
   --column-width: 170px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--column-width), 1fr));
+  // Keep column aligned left, and Limit to 4 columns max
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, max(var(--column-width), 100%/4)), 1fr));
   overflow: hidden;
   margin-top: $padding-tbl-cell; // 12px
 }

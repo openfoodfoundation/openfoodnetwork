@@ -62,14 +62,6 @@
     text-decoration: none;
   }
 
-  // Opens the product details from anywhere on the tile, without nesting the add to cart
-  // buttons inside the anchor. Left without a z-index on purpose, see .variant above.
-  &:after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-
   img {
     max-width: 100%;
     height: 146px;
