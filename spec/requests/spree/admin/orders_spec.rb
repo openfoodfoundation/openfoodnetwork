@@ -355,6 +355,51 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#capture" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order_with_totals, distributor:) }
+    let(:capture_service) { instance_double(Orders::CaptureService) }
+
+    before do
+      sign_in distributor.owner
+      allow(Orders::CaptureService).to receive(:new).with(order).and_return(capture_service)
+    end
+
+    context "when the capture succeeds" do
+      it "replaces the order row" do
+        allow(capture_service).to receive(:call).and_return(true)
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("order_#{order.id}")
+      end
+    end
+
+    context "when the capture fails" do
+      it "displays the gateway error as a flash message" do
+        allow(capture_service).to receive(:call).and_return(false)
+        allow(capture_service).to receive(:gateway_error).and_return("Card declined")
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq "Card declined"
+      end
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
   describe "#bulk_credit" do
     let(:order) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
     let(:order1) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
