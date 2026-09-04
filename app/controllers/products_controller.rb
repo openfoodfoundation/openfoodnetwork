@@ -2,20 +2,24 @@
 
 class ProductsController < BaseController
   def index
-    @products = ProductsRenderer.new(
-      distributor,
-      order_cycle,
-      customer,
-      search_params,
-      inventory_enabled: inventory_enabled?,
-      variant_tag_enabled: variant_tag_enabled?
-    ).products
+    @products = product_renderer.products_view
 
     @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
     @low_stock_display = distributor.preferred_product_low_stock_display
   end
 
   private
+
+  def product_renderer
+    ProductsRenderer.new(
+      distributor,
+      order_cycle,
+      customer,
+      search_params,
+      inventory_enabled: inventory_enabled?,
+      variant_tag_enabled: variant_tag_enabled?
+    )
+  end
 
   def distributor
     current_distributor

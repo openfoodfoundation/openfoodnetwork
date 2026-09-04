@@ -1,0 +1,101 @@
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
+@use "../../webpacker/css/darkswarm/branding" as b;
+@use "../../webpacker/css/darkswarm/mixins" as m;
+@use "../../webpacker/css/darkswarm/shop_partials/price";
+
+.product-item {
+  width: 100%;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    background-color: b.$light-grey;
+    z-index: 1;
+  }
+
+  // Row Borders
+  &:after {
+    inline-size: 100vw;
+    block-size: var(--line-thickness);
+    inset-inline-start: 0;
+    inset-block-start: calc(var(--line-offset) * -1);
+  }
+
+  // Column Borders
+  &:before {
+    inline-size: var(--line-thickness);
+    block-size: 100vh;
+    inset-inline-start: calc(var(--line-offset) * -1);
+  }
+
+  .product-content {
+    width: var(--column-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: $padding-tbl-cell;
+    // Containing block for the stretched link below. Must not gain a transform, filter or
+    // will-change, or the product modal rendered inside would be positioned against it
+    // instead of the viewport.
+    position: relative;
+  }
+
+  // The variant modal is rendered inside .product-content, so tile styles are scoped to the
+  // link to avoid reaching into it.
+  //
+  // Positioning alone lifts these controls above the stretched link, because positioned
+  // siblings paint in document order. Giving them a z-index instead would open a stacking
+  // context around the variant modal and drop it behind the page header.
+  .variant {
+    position: relative;
+  }
+}
+
+.product-link {
+  display: block;
+  color: inherit;
+
+  &:hover,
+  &:focus {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: 146px;
+    display: block;
+    border-radius: $radius-image; // 8px
+    margin-bottom: $padding-tbl-cell;
+  }
+
+  .producer {
+    font-weight: bold;
+    margin-bottom: $product-grid-margin-bottom;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-name {
+    margin-bottom: $product-grid-margin-bottom;
+    @include m.line-clamp(2);
+
+    @include m.breakpoint(mobile) {
+      @include m.line-clamp(3);
+    }
+  }
+
+  .prices {
+    margin-bottom: $product-grid-margin-bottom;
+
+    .price {
+      font-weight: $product-grid-price-font-weight;
+    }
+
+    .unit-price {
+      @include price.unit-price;
+    }
+  }
+}

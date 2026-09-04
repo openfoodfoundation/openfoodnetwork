@@ -5,7 +5,6 @@ RSpec.describe ProductsRenderer do
   let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
   let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
   let(:customer) { create(:customer) }
-  let(:products_renderer) { ProductsRenderer.new(distributor, order_cycle, customer) }
 
   describe "sorting and filtering" do
     let(:fruits) { create(:taxon) }
@@ -42,15 +41,15 @@ RSpec.describe ProductsRenderer do
         params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
                   :variants_enterprise_name]
         ransack_param = "#{params.join('_or_')}_cont"
-        products_renderer = ProductsRenderer.new(
+        products_renderer = described_class.new(
           distributor,
           order_cycle,
           customer,
           { q: { "#{ransack_param}": "apples" } }
         )
 
-        products = products_renderer.products
-        expect(products).to eq([product_apples])
+        product_ids = products_renderer.products_view.map(&:id)
+        expect(product_ids).to eq([product_apples.id])
       end
 
       context "when property is set" do
@@ -62,12 +61,13 @@ RSpec.describe ProductsRenderer do
         it "filters products with a product property" do
           product_apples.product_properties.create!({ property_id: property_organic.id,
                                                       value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
-                                                   { q: {
-                                                     with_properties: [property_organic.id, 999]
-                                                   } })
-          products = products_renderer.products
-          expect(products).to eq([product_apples])
+          products_renderer = described_class.new(distributor, order_cycle, customer,
+                                                  { q: {
+                                                    with_properties: [property_organic.id, 999]
+                                                  } })
+
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_apples.id])
         end
 
         it "filters products with a producer property" do
@@ -75,10 +75,10 @@ RSpec.describe ProductsRenderer do
                                                         value: '1', position: 1 })
 
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to eq([product_apples, product_cherries])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_apples.id, product_cherries.id])
         end
 
         it "includes products inheriting the property when it is sent via with_properties" do
@@ -92,10 +92,11 @@ RSpec.describe ProductsRenderer do
                                                             value: '1', position: 1 })
 
           search_param = { q: { with_properties: [property_organic.id] } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to match_array([product_apples, product_cherries, product_banana_bread])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to match_array([product_apples.id, product_cherries.id,
+                                              product_banana_bread.id])
         end
 
         it "filters products with a product property or a producer property" do
@@ -109,10 +110,11 @@ RSpec.describe ProductsRenderer do
               "with_variants_enterprise_properties" => [property_organic.id],
               "with_properties" => [property_conventional.id]
             } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to eq([product_apples, product_banana_bread, product_doughnuts])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_apples.id, product_banana_bread.id,
+                                     product_doughnuts.id])
         end
 
         it "filters product with property and taxon set" do
@@ -131,10 +133,10 @@ RSpec.describe ProductsRenderer do
               "variants_primary_taxon_id_in_any" => [stone_fruit.id],
             } }
 
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to eq([product_peach])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_peach.id])
         end
 
         it "filters out products with inherits_properties set to false" do
@@ -145,10 +147,10 @@ RSpec.describe ProductsRenderer do
                                                         value: '1', position: 1 })
 
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to eq([product_apples])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_apples.id])
         end
 
         it "filters products with property when sorting is enabled" do
@@ -163,12 +165,14 @@ RSpec.describe ProductsRenderer do
                                                         value: '1', position: 1 })
           product_doughnuts.product_properties.create!({ property_id: property_organic.id,
                                                          value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
-                                                   { q: {
-                                                     with_properties: [property_organic.id]
-                                                   } })
-          products = products_renderer.products
-          expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])
+          products_renderer = described_class.new(distributor, order_cycle, customer,
+                                                  { q: {
+                                                    with_properties: [property_organic.id]
+                                                  } })
+
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_cherries.id, product_banana_bread.id,
+                                     product_doughnuts.id])
         end
 
         it "filters products with producer properties when sorting is enabled" do
@@ -178,16 +182,18 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
           search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+          products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.products
-          expect(products).to eq([product_apples, product_cherries])
+          product_ids = products_renderer.products_view.map(&:id)
+          expect(product_ids).to eq([product_apples.id, product_cherries.id])
         end
       end
     end
   end
 
   context "JSON tests" do
+    subject(:products_renderer) { described_class.new(distributor, order_cycle, customer) }
+
     let(:product) { create(:product) }
     let(:variant) { product.variants.first }
 
@@ -222,15 +228,15 @@ RSpec.describe ProductsRenderer do
 
     context "when inventory is enabled", feature: :inventory do
       it "loads tag_list for variants" do
-        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
-                                                 inventory_enabled: true)
+        products_renderer = described_class.new(distributor, order_cycle, customer, {},
+                                                inventory_enabled: true)
         VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
         expect(products_renderer.products_json).to include "[\"lalala\"]"
       end
 
       it "loads variant override" do
-        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, {},
-                                                 inventory_enabled: true)
+        products_renderer = described_class.new(distributor, order_cycle, customer, {},
+                                                inventory_enabled: true)
         VariantOverride.create(variant:, hub: distributor, price: 25.00)
 
         json = products_renderer.products_json
@@ -240,45 +246,137 @@ RSpec.describe ProductsRenderer do
     end
   end
 
-  describe "loading variants" do
-    let(:hub) { create(:distributor_enterprise) }
-    let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1, v3, v4]) }
-    let(:p) { create(:simple_product) }
-    let!(:v1) {
-      create(:variant, product: p, unit_value: 3)
-    } # In exchange, not in inventory (ie. not_hidden)
-    let!(:v2) { create(:variant, product: p, unit_value: 5) } # Not in exchange
-    let!(:v3) {
-      create(:variant, product: p, unit_value: 7,
-                       inventory_items: [create(:inventory_item, enterprise: hub, visible: true)])
-    }
-    let!(:v4) {
-      create(:variant, product: p, unit_value: 9,
-                       inventory_items: [create(:inventory_item, enterprise: hub, visible: false)])
-    }
-    let(:products_renderer) { ProductsRenderer.new(hub, oc, customer) }
-    let(:variants) { products_renderer.__send__(:variants_for_shop_by_id) }
+  describe "#products_view" do
+    subject(:products_renderer) { described_class.new(distributor, order_cycle, customer) }
 
-    it "scopes variants to distribution" do
-      expect(variants[p.id]).to include v1
-      expect(variants[p.id]).not_to include v2
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v1]) }
+    let(:product) { create(:simple_product) }
+    let!(:v1) { create(:variant, product:) }
+
+    it "returns read only product and variants" do
+      expect(products_renderer.products_view.first).to be_a(ViewData::Product)
+      expect(products_renderer.products_view.first.variants.first).to be_a(ViewData::Variant)
+      expect(products_renderer.products_view.first.variants.first.product).to be_a(
+        ViewData::SimpleProduct
+      )
     end
 
-    it "does not render variants that have been hidden by the hub", feature: :inventory do
-      # but does render 'new' variants, ie. v1
-      expect(variants[p.id]).to include v1, v3
-      expect(variants[p.id]).not_to include v4
+    context "when product doesn't have any variants" do
+      # In exchange, but out of stock
+      let(:v1) { create(:variant, product:, on_hand: 0) }
+
+      it "returns an empty array" do
+        expect(products_renderer.products_view).to eq([])
+      end
     end
 
-    context "when hub opts to only see variants in its inventory", feature: :inventory do
-      before do
-        allow(hub).to receive(:prefers_product_selection_from_inventory_only?) { true }
+    describe "preloading" do
+      # Building the view reads `producer` on every variant, which walks source_variants and
+      # their enterprise, and `on_hand`/`on_demand`, which read stock items. Each of these
+      # tables has to be queried once for the whole page, not once per variant.
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants:) }
+      let!(:variants) { Array.new(4) { create(:variant, product:) } }
+
+      # Build the fixtures and the renderer up front so their queries aren't counted below.
+      before { products_renderer }
+
+      # Every count below is per page or per product. None of them may grow with the number of
+      # variants: losing a preload shows up here as spree_variants, enterprises or
+      # spree_stock_items climbing with the four variants above.
+      it "reads the whole page in a fixed number of queries" do
+        expect {
+          products_renderer.products_view
+        }.to query_database(
+          select: {
+            spree_products: 1,
+            # The variants themselves, eager loaded with their price, enterprise, stock item
+            # and linked source variant; plus product.variants.first to inherit properties.
+            spree_variants: 2,
+            spree_assets: 1,
+            spree_product_properties: 1,
+            producer_properties: 1,
+            enterprises: 1,
+            enterprise_fees: 2,
+          }
+        )
+      end
+    end
+
+    # Stock is read from preloaded rows so the page doesn't query once per variant, and that
+    # shortcut doesn't know about variant overrides. These guard the branch that hands back to
+    # the variant when inventory is enabled: drop it and the shop quietly shows the producer's
+    # stock instead of the hub's, while the VariantOverride specs still pass.
+    describe "on_hand" do
+      subject(:variant_view) { products_renderer.products_view.first.variants.first }
+
+      let!(:v1) { create(:variant, product:, on_hand: 3) }
+
+      it "is the producer's stock" do
+        expect(variant_view.on_hand).to eq 3
       end
 
-      it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
-        # but does render 'new' variants, ie. v1
-        expect(variants[p.id]).to include v3
-        expect(variants[p.id]).not_to include v1, v4
+      context "with inventory enabled", feature: :inventory do
+        # The controller passes the feature toggle in, see ProductsController#index.
+        subject(:products_renderer) {
+          described_class.new(distributor, order_cycle, customer, {}, inventory_enabled: true)
+        }
+
+        let!(:variant_override) {
+          create(:variant_override, hub: distributor, variant: v1, count_on_hand: 7)
+        }
+
+        it "is the hub's overridden stock rather than the producer's" do
+          expect(variant_view.on_hand).to eq 7
+        end
+      end
+    end
+
+    describe "loading variants" do
+      subject(:variant_ids) { products_renderer.products_view.first.variants.map(&:id) }
+
+      let(:order_cycle) {
+        create(:simple_order_cycle, distributors: [distributor], variants: [v1, v3, v4])
+      }
+      let!(:v1) {
+        create(:variant, product:, unit_value: 3)
+      } # In exchange, not in inventory (ie. not_hidden)
+      let!(:v2) { create(:variant, product:, unit_value: 5) } # Not in exchange
+      let!(:v3) {
+        create(:variant, product:, unit_value: 7,
+                         inventory_items: [
+                           create(:inventory_item, enterprise: distributor, visible: true)
+                         ])
+      }
+      let!(:v4) {
+        create(:variant, product:, unit_value: 9,
+                         inventory_items: [
+                           create(:inventory_item, enterprise: distributor, visible: false)
+                         ])
+      }
+
+      it "scopes variants to distribution, ie variant included in the order cycle" do
+        expect(variant_ids).to include v1.id
+        expect(variant_ids).not_to include v2.id
+      end
+
+      context "with inventory enable", feature: :inventory do
+        it "does not render variants that have been hidden by the hub" do
+          # but does render 'new' variants, ie. v1
+          expect(variant_ids).to include v1.id, v3.id
+          expect(variant_ids).not_to include v4.id
+        end
+
+        context "when distributor opts to only see variants in its inventory" do
+          before do
+            allow(distributor).to receive(:prefers_product_selection_from_inventory_only?) { true }
+          end
+
+          it "doesn't render variants that haven't been explicitly added to inventory" do
+            # but does render 'new' variants, ie. v1
+            expect(variant_ids).to include v3.id
+            expect(variant_ids).not_to include v1.id, v4.id
+          end
+        end
       end
     end
   end

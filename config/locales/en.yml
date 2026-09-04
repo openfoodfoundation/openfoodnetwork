@@ -5218,7 +5218,13 @@ en:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint 
-
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
+    product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
+      from_price: "from"
   # Gem to prevent bot form submissions
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
