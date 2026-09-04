@@ -2,7 +2,7 @@
 
 module Admin
   class OrdersReflex < ApplicationReflex
-    before_reflex :authorize_order, only: [:capture, :ship]
+    before_reflex :authorize_order, only: [:capture]
 
     def capture
       payment_capture = Orders::CaptureService.new(@order)
@@ -14,20 +14,6 @@ module Admin
         morph :nothing
       else
         flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
-        morph_admin_flashes
-      end
-    end
-
-    def ship
-      @order.send_shipment_email = false unless params[:send_shipment_email]
-      if @order.ship
-        paths = %w[edit customer payments adjustments invoices return_authorizations].freeze
-        return set_param_for_controller if Regexp.union(paths).match? request.url
-
-        morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
-                                     locals: { order: @order.reload, success: true })
-      else
-        flash[:error] = I18n.t("api.orders.failed_to_update")
         morph_admin_flashes
       end
     end
@@ -114,10 +100,6 @@ module Admin
 
     def editable_orders
       Permissions::Order.new(current_user).editable_orders
-    end
-
-    def set_param_for_controller
-      params[:id] = @order.number
     end
 
     def render_business_number_required_error(distributors)
