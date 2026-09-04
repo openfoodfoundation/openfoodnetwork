@@ -409,6 +409,22 @@ RSpec.describe Spree::Admin::OrdersController do
       end
     end
 
+    context "when the order fails to ship" do
+      it "shows an error without redirecting" do
+        allow_any_instance_of(Spree::Order).to receive(:ship).and_return(false)
+
+        put(
+          "/admin/orders/#{order.number}/ship",
+          params: { replace_row: "true", format: :turbo_stream }
+        )
+
+        expect(order.reload.shipment_state).not_to eq "shipped"
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq "Failed to update order"
+      end
+    end
+
     context "when the user cannot manage the order" do
       it "denies access" do
         sign_in create(:user)
