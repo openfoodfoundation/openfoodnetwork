@@ -583,9 +583,6 @@ GEM
       multi_json
     puma (8.0.2)
       nio4r (~> 2.0)
-    query_count (1.1.1)
-      activerecord (>= 4.2)
-      railties (>= 4.2)
     raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.24)
@@ -1036,7 +1033,6 @@ DEPENDENCIES
   pry
   puffing-billy
   puma
-  query_count
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-timeout
@@ -1302,7 +1298,6 @@ CHECKSUMS
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   puffing-billy (4.0.4) sha256=87015b0c41e0722b2171a0c5aa8130fd3f58aa1c016a1dc6dc569b2028aa846f
   puma (8.0.2) sha256=c8ed871dfbbe66448ea9ffd46692342d9804d4071522b52b5331b7b6e7b686fb
-  query_count (1.1.1) sha256=97204a71ae22d7bda9165ebb85f7e967ef86b3b07d5c966b42e5b22d6a41b181
   raabro (1.4.0) sha256=d4fa9ff5172391edb92b242eed8be802d1934b1464061ae5e70d80962c5da882
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (2.2.24) sha256=ef16526a0d871c43753452338c754040a664c8b41bf0dd7450b85f7772adca5f
