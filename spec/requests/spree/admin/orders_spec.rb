@@ -355,6 +355,92 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#resend_confirmation_emails" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order_with_totals, distributor:) }
+    let(:other_order) { create(:order_with_totals, distributor: create(:distributor_enterprise)) }
+
+    before { sign_in distributor.owner }
+
+    it "resends the confirmation email for editable orders and closes the modal" do
+      expect {
+        post(
+          "/admin/orders/resend_confirmation_emails",
+          params: { bulk_ids: [order.id, other_order.id], format: :turbo_stream }
+        )
+      }.to have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
+        .with(order.id, true).once
+
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("modal:close")
+      # Matches the count of orders requested, not the count actually resent
+      expect(flash[:success]).to eq "Confirmation emails sent for 2 orders."
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        post(
+          "/admin/orders/resend_confirmation_emails",
+          params: { bulk_ids: [order.id], format: :turbo_stream }
+        )
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
+  describe "#send_invoices" do
+    let(:distributor) { create(:distributor_enterprise, abn: "12345678901") }
+    let(:order) { create(:completed_order_with_totals, distributor:) }
+    let(:other_distributor) { create(:distributor_enterprise) }
+    let(:other_order) { create(:completed_order_with_totals, distributor: other_distributor) }
+
+    before { sign_in distributor.owner }
+
+    it "sends the invoice email for invoiceable orders and closes the modal" do
+      expect {
+        post(
+          "/admin/orders/send_invoices",
+          params: { bulk_ids: [order.id, other_order.id], format: :turbo_stream }
+        )
+      }.to have_enqueued_mail(Spree::OrderMailer, :invoice_email).once
+
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("modal:close")
+      expect(flash[:success]).to eq "Invoice email sent for 1 order."
+    end
+
+    context "when the distributor cannot invoice" do
+      it "skips the order" do
+        allow_any_instance_of(Enterprise).to receive(:can_invoice?).and_return(false)
+
+        expect {
+          post(
+            "/admin/orders/send_invoices",
+            params: { bulk_ids: [order.id], format: :turbo_stream }
+          )
+        }.not_to have_enqueued_mail(Spree::OrderMailer, :invoice_email)
+
+        expect(flash[:success]).to eq "Invoice emails sent for 0 orders."
+      end
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        post(
+          "/admin/orders/send_invoices",
+          params: { bulk_ids: [order.id], format: :turbo_stream }
+        )
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
   describe "#bulk_credit" do
     let(:order) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
     let(:order1) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
