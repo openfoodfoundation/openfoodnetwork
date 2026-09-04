@@ -3,16 +3,16 @@
 require 'open_food_network/scope_variants_for_search'
 
 RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
-  let!(:p1) { create(:simple_product, name: 'Product 1') }
-  let!(:p2) { create(:simple_product, sku: 'Product 1a') }
-  let!(:p3) { create(:simple_product, name: 'Product 3') }
-  let!(:p4) { create(:simple_product, name: 'Product 4') }
-  let!(:v1) { p1.variants.first }
-  let!(:v2) { p2.variants.first }
-  let!(:v3) { p3.variants.first }
-  let!(:v4) { p4.variants.first }
-  let!(:d1)  { create(:distributor_enterprise) }
-  let!(:d2)  { create(:distributor_enterprise) }
+  let!(:p1) { create(:simple_product, name: 'Product 1', enterprise_id: d1.id) }
+  let!(:p2) { create(:simple_product, sku: 'Product 1a', enterprise_id: d1.id) }
+  let!(:p3) { create(:simple_product, name: 'Product 3', enterprise_id: d1.id) }
+  let!(:p4) { create(:simple_product, name: 'Product 4', enterprise_id: d2.id) }
+  let(:v1) { p1.variants.first }
+  let(:v2) { p2.variants.first }
+  let(:v3) { p3.variants.first }
+  let(:v4) { p4.variants.first }
+  let(:d1)  { create(:distributor_enterprise) }
+  let(:d2)  { create(:distributor_enterprise) }
   let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [v1, v3]) }
   let!(:oc2) { create(:simple_order_cycle, distributors: [d1], variants: [v2]) }
   let!(:oc3) { create(:simple_order_cycle, distributors: [d2], variants: [v4]) }
@@ -22,8 +22,13 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
 
   let(:scoper) { OpenFoodNetwork::ScopeVariantsForSearch.new(params, spree_current_user) }
 
-  describe "search" do
-    let(:result) { scoper.search }
+  before do
+    spree_current_user.enterprise_roles.create(enterprise: d1)
+    spree_current_user.enterprise_roles.create(enterprise: d2)
+  end
+
+  describe "#search" do
+    subject(:result) { scoper.search }
 
     context "when a search query is provided" do
       let(:params) { { q: "product 1" } }
@@ -68,7 +73,8 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
         expect{ result }.to query_database [
           "Enterprise Load",
           "EnterpriseGroup Load",
-          "OrderCycle Exists?",
+          "Enterprise Pluck",
+          "Enterprise Pluck",
           "Enterprise Load",
           "VariantOverride Load",
           "SQL"
@@ -211,11 +217,10 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
       let(:params) { { q: "product", search_variants_as: 'supplier', order_id: order.id } }
       let(:producer) { create(:supplier_enterprise) }
       let(:ability) { instance_double('Spree::Ability', can?: true) }
-      let!(:spree_current_user) {
-        instance_double('Spree::User', enterprises: Enterprise.where(id: producer.id))
-      }
 
       before do
+        spree_current_user.enterprise_roles.destroy_all
+        spree_current_user.enterprise_roles.create(enterprise: producer)
         allow(Spree::Ability).to receive(:new).with(spree_current_user).and_return(ability)
         allow(ability).to receive(:can?).with(:edit_as_producer_only, order).and_return(true)
       end
