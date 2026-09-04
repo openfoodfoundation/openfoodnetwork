@@ -1,10 +1,11 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-= render partial: 'spree/shared/error_messages', locals: { target: @property }
+= turbo_frame_tag "new_property" do
+  = render partial: 'spree/shared/error_messages', locals: { target: @property }
 
-= form_for [:admin, @property] do |f|
-  %fieldset
-    %legend{align: "center"}= t('.new_property')
-    = render partial: 'form', locals: { f: f }
-    .filter-actions
-      = render partial: 'spree/admin/shared/new_resource_links'
+  = form_for [:admin, @property], html: { data: { turbo: true } } do |f|
+    %fieldset
+      %legend{align: "center"}= t('.new_property')
+      = render partial: 'form', locals: { f: f }
+      .filter-actions
+        = render partial: 'spree/admin/shared/new_resource_links'

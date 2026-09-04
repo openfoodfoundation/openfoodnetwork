@@ -13,11 +13,15 @@ module Spree
       def generate_invoice_button(order)
         if order.distributor.can_invoice?
           button_link_to t(:create_or_update_invoice), generate_admin_order_invoices_path(order),
-                         data: { method: 'post' }, icon: 'icon-plus'
+                         data: { turbo: true, turbo_method: 'post' }, icon: 'icon-plus'
         else
-          button_link_to t(:create_or_update_invoice), "#", data: {
-            confirm: t(:must_have_valid_business_number, enterprise_name: order.distributor.name)
-          }, icon: 'icon-plus'
+          confirm_message = t(:must_have_valid_business_number,
+                              enterprise_name: order.distributor.name)
+          button_link_to t(:create_or_update_invoice), "#",
+                         data: { controller: "confirm-alert",
+                                 confirm_alert_message_value: confirm_message,
+                                 action: "click->confirm-alert#confirm" },
+                         icon: 'icon-plus'
         end
       end
 
@@ -132,7 +136,10 @@ module Spree
         button_link_to(event_label,
                        fire_admin_order_url(order, e: "resume"),
                        method: :put, icon: "icon-resume",
-                       data: { confirm: confirm_message })
+                       data: {
+                         turbo: true,
+                         turbo_confirm: confirm_message
+                       })
       end
 
       def quantity_field_tag(manifest_item)

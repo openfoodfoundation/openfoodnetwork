@@ -4190,6 +4190,7 @@ en:
 
   spree:
     order_updated: "Order Updated"
+    return_authorization_updated: "Return Authorization Updated"
     cannot_perform_operation: "Can not perform this operation"
     add_country: "Add country"
     add_state: "Add state"

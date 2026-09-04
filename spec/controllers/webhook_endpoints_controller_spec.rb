@@ -66,6 +66,22 @@ RSpec.describe WebhookEndpointsController do
       spree_delete :destroy, id: webhook_endpoint.id
 
       expect(response).to redirect_to "/account#/developer_settings"
+      expect(response).to have_http_status(:see_other)
+    end
+
+    context "when destroy fails" do
+      before do
+        allow_any_instance_of(WebhookEndpoint).to receive(:destroy).and_return(false)
+      end
+
+      it "shows error and redirects" do
+        spree_delete :destroy, { id: webhook_endpoint.id }
+
+        expect(flash[:error]).to be_present
+        expect(flash[:success]).to be_blank
+        expect(response).to redirect_to "/account#/developer_settings"
+        expect(response).to have_http_status(:see_other)
+      end
     end
   end
 

@@ -16,13 +16,22 @@ class WebhookEndpointsController < BaseController
   end
 
   def destroy
+    id = @webhook_endpoint.id
     if @webhook_endpoint.destroy
-      flash[:success] = t('.success')
+      flash.now[:success] = t('.success')
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.remove("webhook-endpoint-#{id}"),
+            turbo_stream.replace(:flashes, partial: "shared/flashes", locals: { flashes: flash })
+          ]
+        end
+        format.html { redirect_to redirect_path, status: :see_other }
+      end
     else
       flash[:error] = t('.error')
+      redirect_to redirect_path, status: :see_other
     end
-
-    redirect_to redirect_path
   end
 
   def test
@@ -31,10 +40,10 @@ class WebhookEndpointsController < BaseController
 
     WebhookDeliveryJob.perform_later(@webhook_endpoint.url, "payment.completed", test_payload, at:)
 
-    flash[:success] = t(".success")
+    flash.now[:success] = t(".success")
     respond_with do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update(
+        render turbo_stream: turbo_stream.replace(
           :flashes, partial: "shared/flashes", locals: { flashes: flash }
         )
       end
