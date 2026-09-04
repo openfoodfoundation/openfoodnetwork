@@ -73,17 +73,21 @@ module OpenFoodNetwork
       )
     end
 
+    def visible_variants
+      return Spree::Variant.all if admin?
+
+      Spree::Variant.where(enterprise_id: @user.enterprises).or(
+        Spree::Variant.where(
+          enterprise_id: related_enterprises_granting(:manage_products) |
+            related_enterprises_granting(:add_to_order_cycle)
+        )
+      )
+    end
+
     def visible_products
       return Spree::Product.all if admin?
 
-      product_with_variants.where(spree_variants: { enterprise_id: @user.enterprises }).or(
-        product_with_variants.where(
-          spree_variants: {
-            enterprise_id: related_enterprises_granting(:manage_products) |
-              related_enterprises_granting(:add_to_order_cycle)
-          }
-        )
-      )
+      product_with_variants.where(spree_variants: { id: visible_variants })
     end
 
     def managed_product_enterprises

@@ -309,6 +309,61 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
+  describe "#visible_variants" do
+    let(:s1) { create(:supplier_enterprise) }
+    let(:s2) { create(:supplier_enterprise) }
+    let(:s3) { create(:supplier_enterprise) }
+    let(:p1) { create(:simple_product, enterprise_id: s1.id) }
+    let(:p2) { create(:simple_product, enterprise_id: s2.id) }
+    let(:p3) { create(:simple_product, enterprise_id: s3.id) }
+    let!(:v1) { p1.variants.first }
+    let!(:v2) { p2.variants.first }
+    let!(:v3) { p3.variants.first }
+
+    before do
+      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products).and_return(
+        Enterprise.where("1=0").select(:id)
+      )
+
+      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle).and_return(
+        Enterprise.where("1=0").select(:id)
+      )
+    end
+
+    it "returns variants produced by managed enterprises" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([s1])
+
+      expect(permissions.visible_variants).to eq([v1])
+    end
+
+    it "returns variants produced by enterprises that have granted manage products" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
+      allow(permissions).to receive(:related_enterprises_granting).
+        with(:manage_products).and_return(Enterprise.where(id: s2))
+
+      expect(permissions.visible_variants).to eq([v2])
+    end
+
+    it "returns variants produced by enterprises that have granted P-OC" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
+      allow(permissions).to receive(:related_enterprises_granting).
+        with(:add_to_order_cycle).and_return(Enterprise.where(id: s3).select(:id))
+
+      expect(permissions.visible_variants).to eq([v3])
+    end
+
+    context "as superadmin" do
+      it "returns all products" do
+        allow(user).to receive(:admin?).and_return(true)
+
+        expect(permissions.visible_variants).to include v1, v2, v3
+      end
+    end
+  end
+
   describe "finding enterprises that we manage products for" do
     let(:e) { double(:enterprise) }
 
