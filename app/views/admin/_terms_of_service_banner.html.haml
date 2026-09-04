@@ -3,6 +3,5 @@
     .column-left
       %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
     .column-right
-      %button{ data: { reflex: "click->user#accept_terms_of_services" } }
-        = t("admin.accept_terms_of_service")
-      
+      = button_to t("admin.accept_terms_of_service"), main_app.admin_accept_terms_of_service_path,
+                  method: :patch
