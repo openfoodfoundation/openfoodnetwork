@@ -1,4 +1,5 @@
 @use "../../webpacker/css/darkswarm/modern-variables" as *;
+@use "../../webpacker/css/darkswarm/variables" as v;
 @use "../../app/webpacker/css/darkswarm/branding.scss" as b;
 
 // The component relies on existing CSS with minimal overide. Existing CSS is defined in :
@@ -6,6 +7,10 @@
 //  - app/webpacker/css/darkswarm/shop_partials/_shop-inputs.scss
 //
 .add-to-cart-component {
+  .variant-quantity-inputs {
+    width: v.$shop-button-width;
+  }
+
   // override existing border radius
   button.add-variant,
   button.variant-quantity {

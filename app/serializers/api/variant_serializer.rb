@@ -13,6 +13,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   has_one :producer, serializer: Api::IdSerializer
 
   delegate :price, to: :object
+  delegate :price_with_fees, :unit_price_price, :unit_price, to: :presenter
 
   def fees
     options[:enterprise_fee_calculator]&.indexed_fees_by_type_for(object) ||
@@ -21,14 +22,6 @@ class Api::VariantSerializer < ActiveModel::Serializer
 
   def fees_name
     object.fees_name_by_type_for(options[:current_distributor], options[:current_order_cycle])
-  end
-
-  def price_with_fees
-    if options[:enterprise_fee_calculator]
-      object.price + options[:enterprise_fee_calculator].indexed_fees_for(object)
-    else
-      object.price_with_fees(options[:current_distributor], options[:current_order_cycle])
-    end
   end
 
   def product_name
@@ -46,15 +39,16 @@ class Api::VariantSerializer < ActiveModel::Serializer
     object.product.image&.url(:mini) || Spree::Image.default_image_url(:mini)
   end
 
-  def unit_price_price
-    price_with_fees / (unit_price.denominator || 1)
-  end
-
   delegate :unit, to: :unit_price, prefix: true
 
   private
 
-  def unit_price
-    @unit_price ||= UnitPrice.new(object)
+  def presenter
+    @presenter ||= VariantPresenter.new(
+      variant: object,
+      distributor: options[:current_distributor],
+      order_cycle: options[:current_order_cycle],
+      enterprise_fee_calculator: options[:enterprise_fee_calculator]
+    )
   end
 end
