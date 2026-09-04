@@ -363,7 +363,7 @@ module Spree
           can_edit_as_producer(order, user)
       end
 
-      can [:fire, :resend, :invoice, :print], Spree::Order do |order|
+      can [:fire, :resend, :invoice, :print, :capture], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
