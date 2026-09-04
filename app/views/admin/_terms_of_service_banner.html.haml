@@ -4,4 +4,4 @@
       %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
     .column-right
       = button_to t("admin.accept_terms_of_service"), main_app.admin_accept_terms_of_service_path,
-                  method: :patch
+                  method: :patch, form: { data: { turbo: true } }
