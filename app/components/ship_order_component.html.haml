@@ -1,8 +1,9 @@
-= render ConfirmModalComponent.new(id: dom_id(@order, :ship), confirm_actions: "click->modal#close", confirm_reflexes: "click->Admin::OrdersReflex#ship", controller: "orders", reflex: "Admin::Orders#ship") do
-  %div{class: "margin-bottom-30"}
-    %p= t('spree.admin.orders.shipment.mark_as_shipped_message_html')
-  %div{class: "margin-bottom-30"}
-    = hidden_field_tag :id, @order.id
-    = label_tag do
-      = check_box_tag :send_shipment_email, "1", true
-      = t('spree.admin.orders.shipment.mark_as_shipped_label_message')
+= form_with url: helpers.spree.ship_admin_order_path(@order), method: :put, data: { turbo: true } do
+  = render ConfirmModalComponent.new(id: dom_id(@order, :ship), confirm_button_type: "submit") do
+    %div{class: "margin-bottom-30"}
+      %p= t('spree.admin.orders.shipment.mark_as_shipped_message_html')
+    %div{class: "margin-bottom-30"}
+      = hidden_field_tag :replace_row, @replace_row
+      = label_tag do
+        = check_box_tag :send_shipment_email, "1", true
+        = t('spree.admin.orders.shipment.mark_as_shipped_label_message')
