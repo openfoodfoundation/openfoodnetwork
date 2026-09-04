@@ -76,40 +76,12 @@ module Admin
       morph :nothing
     end
 
-    def resend_confirmation_emails(params)
-      editable_orders.where(id: params[:bulk_ids]).find_each do |order|
-        next unless can? :resend, order
-
-        Spree::OrderMailer.confirm_email_for_customer(order.id, true).deliver_later
-      end
-
-      success("admin.resend_confirmation_emails_feedback", params[:bulk_ids].count)
-    end
-
-    def send_invoices(params)
-      count = 0
-      editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice?
-
-        Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
-        count += 1
-      end
-
-      success("admin.send_invoice_feedback", count)
-    end
-
     private
 
     def authorize_order
       id = element.dataset[:id] || params[:id]
       @order = Spree::Order.find_by(id:)
       authorize! :admin, @order
-    end
-
-    def success(i18n_key, count)
-      flash[:success] = I18n.t(i18n_key, count:)
-      cable_ready.dispatch_event(name: "modal:close")
-      morph_admin_flashes
     end
 
     def editable_orders
