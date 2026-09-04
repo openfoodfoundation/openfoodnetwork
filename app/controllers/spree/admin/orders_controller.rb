@@ -191,6 +191,19 @@ module Spree
         bulk_action_feedback("admin.send_invoice_feedback", count)
       end
 
+      def cancel_orders
+        cancelled_orders = ::Orders::BulkCancelService.new(params, spree_current_user).call
+
+        render turbo_stream: [
+          turbo_stream.dispatch_event("modal:close"),
+          *cancelled_orders.map { |order|
+            turbo_stream.replace(
+              "order_#{order.id}", partial: "spree/admin/orders/table_row", locals: { order: }
+            )
+          }
+        ]
+      end
+
       private
 
       def editable_orders
