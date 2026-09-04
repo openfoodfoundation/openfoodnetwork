@@ -102,6 +102,8 @@ en:
         white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise:
+          sells_not_specified: "Please choose one of the options above."
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         enterprise_relationship:
@@ -1630,7 +1632,6 @@ en:
         hub_shop: Hub Shop
         hub_shop_text: Sell produce from others
         hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
-        choose_option: Please choose one of the options above.
         change_now: Change now
       enterprise_user_index:
         loading_enterprises: LOADING ENTERPRISES
@@ -3588,7 +3589,6 @@ en:
     but do not have valid shipping and payment methods.
     Until you set these up, customers will not be able to shop at these hubs.
   enterprise_fees_update_notice: Your enterprise fees have been updated.
-  enterprise_register_package_error: "Please select a package"
   enterprise_register_error: "Could not complete registration for %{enterprise}"
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"

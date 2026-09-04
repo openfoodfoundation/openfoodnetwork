@@ -94,20 +94,11 @@ module Admin
     end
 
     def register
-      register_params = params.permit(:sells)
-
-      if register_params[:sells] == 'unspecified'
-        flash[:error] = I18n.t(:enterprise_register_package_error)
-        return render :welcome, layout: "spree/layouts/bare_admin"
-      end
-
-      attributes = { sells: register_params[:sells], visible: "only_through_links" }
-
-      if @enterprise.update(attributes)
+      @enterprise.attributes = register_params
+      if @enterprise.save(context: :register)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
         redirect_to spree.admin_dashboard_path
       else
-        flash[:error] = I18n.t(:enterprise_register_error, enterprise: @enterprise.name)
         render :welcome, layout: "spree/layouts/bare_admin"
       end
     end
@@ -464,6 +455,10 @@ module Admin
     # Used in Admin::ResourceController#create
     def permitted_resource_params
       enterprise_params
+    end
+
+    def register_params
+      enterprise_params.slice(:sells).merge(visible: "only_through_links")
     end
   end
 end
