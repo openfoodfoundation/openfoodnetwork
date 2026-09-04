@@ -3852,6 +3852,7 @@ en:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+          customer_already_exists: "%{email} is already a customer of %{shop_name}. You can find them in the customer list."
       subscriptions:
         error_saving: "Error saving subscription"
         new:
