@@ -21,10 +21,15 @@ export default class extends ApplicationController {
 
   turboPerform() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+    let params = { bulk_ids: this.getSelectedIds() };
+
+    if (this.hasExtraParamsTarget) {
+      Object.assign(params, this.extraFormData());
+    }
 
     fetch(this.urlValue, {
       method: "POST",
-      body: JSON.stringify({ bulk_ids: this.getSelectedIds() }),
+      body: JSON.stringify(params),
       headers: {
         "Content-Type": "application/json",
         Accept: "text/vnd.turbo-stream.html",
