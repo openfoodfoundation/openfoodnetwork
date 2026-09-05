@@ -39,7 +39,7 @@ module Spree
         set_viewable
         set_default_caption unless params[:image].key?(:caption)
 
-        return respond_with_error((@error_target || @object).errors) unless @object.save
+        return respond_with_error(@object.errors) unless @object.save
 
         flash[:success] = flash_message_for(@object, :successfully_created)
         @redirect_url = location_after_save
@@ -114,7 +114,7 @@ module Spree
 
       def location_after_save
         return params[:return_url] if params[:return_url].present?
-        return edit_image_path_after_upload if params[:edit_after_upload].present?
+        return edit_image_path if params[:edit_after_upload].present?
 
         owner_edit_path
       end
@@ -127,7 +127,7 @@ module Spree
         helpers.image_owner_edit_path(@product, @variant)
       end
 
-      def edit_image_path_after_upload
+      def edit_image_path
         extra = params[:variant_id].present? ? { variant_id: @variant.id } : {}
         edit_admin_product_image_path(@product.id, @object.id, extra)
       end
@@ -163,15 +163,12 @@ module Spree
 
         @errors = errors.map(&:full_message)
         respond_to do |format|
-          # There is no HTML form for creating an image any more: the uploader on the
-          # product/variant edit page posts it, so errors go back there as a flash.
           format.html {
-            if action_name == 'create'
-              flash[:error] = @errors.to_sentence
-              redirect_to location_after_save
-            else
-              render :edit, status: :unprocessable_entity
-            end
+            flash[:error] = @errors.to_sentence
+
+            # There is no HTML form for creating an image any more: the uploader on the
+            # product/variant edit page posts it, so errors go back there as a flash.
+            redirect_to action_name == 'create' ? location_after_save : edit_image_path
           }
           format.turbo_stream { render :edit, status: :unprocessable_entity }
         end
