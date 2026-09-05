@@ -11,7 +11,7 @@
 - content_for :page_title do
   = t('.title', resource_name: image_modal_resource_name(@variant, @product))
 
-= render partial: 'spree/shared/error_messages', locals: { target: @error_target || @image }
+= render partial: 'spree/shared/error_messages', locals: { target: @image }
 
 -# Saving, replacing or deleting from this page all return to the page that owns the image,
 -# which is also where Cancel goes.

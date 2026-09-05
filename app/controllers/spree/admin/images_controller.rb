@@ -52,14 +52,9 @@ module Spree
 
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        update_successful = if permitted_resource_params[:attachment].present?
-                              replace_image_without_destroy
-                            else
-                              set_viewable
-                              @object.update(permitted_resource_params)
-                            end
+        set_viewable
 
-        if update_successful
+        if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
 
           respond_to do |format|
@@ -185,36 +180,6 @@ module Spree
       def respond_with_upload_error(errors)
         flash[:error] = errors.full_messages.to_sentence
         render :create_error, status: :unprocessable_entity
-      end
-
-      def replace_image_without_destroy
-        replacement_image = build_replacement_image(@object)
-
-        Spree::Image.transaction do
-          replacement_image.save!
-          @object.destroy!
-        end
-
-        @object = @image = replacement_image
-      rescue ActiveRecord::RecordInvalid
-        @error_target = replacement_image
-        false
-      end
-
-      def build_replacement_image(previous_image)
-        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
-
-        replacement_image.alt = previous_image.alt
-        replacement_image.position = previous_image.position
-        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        # Carry the caption over only when the request didn't supply one at all;
-        # a submitted blank caption is a deliberate clear.
-        replacement_image.caption = previous_image.caption unless params[:image].key?(:caption)
-        replacement_image.viewable_type = previous_image.viewable_type
-        replacement_image.viewable_id = params[:image][:viewable_id]
-        replacement_image.attachment.attach(permitted_resource_params[:attachment])
-
-        replacement_image
       end
     end
   end
