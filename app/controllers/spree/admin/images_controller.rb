@@ -39,7 +39,7 @@ module Spree
         set_viewable
         set_default_caption unless params[:image].key?(:caption)
 
-        return respond_with_error((@error_target || @object).errors) unless @object.save
+        return respond_with_error(@object.errors) unless @object.save
 
         flash[:success] = flash_message_for(@object, :successfully_created)
         @redirect_url = location_after_save
@@ -52,14 +52,9 @@ module Spree
 
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        update_successful = if permitted_resource_params[:attachment].present?
-                              replace_image_without_destroy
-                            else
-                              set_viewable
-                              @object.update(permitted_resource_params)
-                            end
+        set_viewable
 
-        if update_successful
+        if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
 
           respond_to do |format|
@@ -119,7 +114,7 @@ module Spree
 
       def location_after_save
         return params[:return_url] if params[:return_url].present?
-        return edit_image_path_after_upload if params[:edit_after_upload].present?
+        return edit_image_path if params[:edit_after_upload].present?
 
         owner_edit_path
       end
@@ -132,7 +127,7 @@ module Spree
         helpers.image_owner_edit_path(@product, @variant)
       end
 
-      def edit_image_path_after_upload
+      def edit_image_path
         extra = params[:variant_id].present? ? { variant_id: @variant.id } : {}
         edit_admin_product_image_path(@product.id, @object.id, extra)
       end
@@ -168,15 +163,12 @@ module Spree
 
         @errors = errors.map(&:full_message)
         respond_to do |format|
-          # There is no HTML form for creating an image any more: the uploader on the
-          # product/variant edit page posts it, so errors go back there as a flash.
           format.html {
-            if action_name == 'create'
-              flash[:error] = @errors.to_sentence
-              redirect_to location_after_save
-            else
-              render :edit, status: :unprocessable_entity
-            end
+            flash[:error] = @errors.to_sentence
+
+            # There is no HTML form for creating an image any more: the uploader on the
+            # product/variant edit page posts it, so errors go back there as a flash.
+            redirect_to action_name == 'create' ? location_after_save : edit_image_path
           }
           format.turbo_stream { render :edit, status: :unprocessable_entity }
         end
@@ -185,36 +177,6 @@ module Spree
       def respond_with_upload_error(errors)
         flash[:error] = errors.full_messages.to_sentence
         render :create_error, status: :unprocessable_entity
-      end
-
-      def replace_image_without_destroy
-        replacement_image = build_replacement_image(@object)
-
-        Spree::Image.transaction do
-          replacement_image.save!
-          @object.destroy!
-        end
-
-        @object = @image = replacement_image
-      rescue ActiveRecord::RecordInvalid
-        @error_target = replacement_image
-        false
-      end
-
-      def build_replacement_image(previous_image)
-        replacement_image = Spree::Image.new(viewable: previous_image.viewable)
-
-        replacement_image.alt = previous_image.alt
-        replacement_image.position = previous_image.position
-        replacement_image.attributes = permitted_resource_params.except(:attachment, :viewable_id)
-        # Carry the caption over only when the request didn't supply one at all;
-        # a submitted blank caption is a deliberate clear.
-        replacement_image.caption = previous_image.caption unless params[:image].key?(:caption)
-        replacement_image.viewable_type = previous_image.viewable_type
-        replacement_image.viewable_id = params[:image][:viewable_id]
-        replacement_image.attachment.attach(permitted_resource_params[:attachment])
-
-        replacement_image
       end
     end
   end
