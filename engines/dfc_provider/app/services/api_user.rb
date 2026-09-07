@@ -28,6 +28,11 @@ class ApiUser
       webhook: "/api/webhooks/ofn",
       tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
     },
+    'fdc-staging' => {
+      id: "https://fdc-djangoldp-central.jcloud-ver-jpe.ik-server.com/profile",
+      webhook: "/djangoldp-dfc/webhook/",
+      tokens: "https://login.fooddatacollaboration.org.uk/realms/dev/protocol/openid-connect/token",
+    },
 
   }.freeze
   CLIENT_MAP = PLATFORMS.keys.index_by { |key| PLATFORMS.dig(key, :id) }.freeze
