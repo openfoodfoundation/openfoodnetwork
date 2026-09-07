@@ -31,7 +31,7 @@ class DfcLoader
 
   def self.load_thesaurus(connector, name)
     @vocabs ||= {}
-    @vocabs[name] ||= connector.__send__(:loadThesaurus, read_file(name))
+    @vocabs[[connector.class, name]] ||= connector.__send__(:loadThesaurus, read_file(name))
   end
 
   def self.read_file(name)
