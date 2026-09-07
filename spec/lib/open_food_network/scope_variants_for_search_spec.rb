@@ -39,7 +39,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
       end
 
       context "matching both product SKUs and variant SKUs" do
-        let!(:v5) { create(:variant, sku: "Product 1b") }
+        let!(:v5) { create(:variant, sku: "Product 1b", enterprise: d1) }
 
         it "returns all variants whose SKU or product's SKU match the query" do
           expect(result).to include v1, v2, v5
@@ -76,6 +76,8 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           "Enterprise Pluck",
           "Enterprise Pluck",
           "Enterprise Load",
+          "Enterprise Load",
+          "Enterprise Load",
           "VariantOverride Load",
           "SQL"
         ]
@@ -104,21 +106,21 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           create_variant_with_variant_override_for(d1, on_demand: false, count_on_hand: 0)
         end
         let!(:distributor1_variant_with_override_not_in_stock_but_producer_in_stock) do
-          variant = create(:simple_product).variants.first
+          variant = create(:simple_product, enterprise_id: d1.id).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
           create(:variant_override, variant:, hub: d1, on_demand: false, count_on_hand: 0)
           variant
         end
         let!(:distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock) do
-          variant = create(:simple_product).variants.first
+          variant = create(:simple_product, enterprise_id: d1.id).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
           create(:variant_override, variant:, hub: d1, on_demand: nil, count_on_hand: nil)
           variant
         end
         let!(:distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock) do
-          variant = create(:simple_product).variants.first
+          variant = create(:simple_product, enterprise_id: d1.id).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
           create(:variant_override, variant:, hub: d1, on_demand: nil, count_on_hand: nil)
@@ -235,19 +237,31 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
         expect(result).not_to include v3, v4
       end
     end
+
+    context "when searching for non accessible variant" do
+      let(:params) { { q: "product" } }
+      let!(:non_accessible_product) { create(:simple_product, name: 'product', enterprise_id: other_distributor.id) }
+      let(:non_accessible_variant) { non_accessible_product.variants.first }
+      let(:other_distributor)  { create(:distributor_enterprise) }
+
+      it "returns only variant the user has access to" do
+        expect(result).to include v1, v2, v3, v4
+        expect(result).not_to include non_accessible_variant
+      end
+    end
   end
 
   private
 
   def create_variant_with_stock_item_for(distributor, stock_item_attributes)
-    variant = create(:simple_product).variants.first
+    variant = create(:simple_product, enterprise_id: distributor.id).variants.first
     variant.stock_items.first.update!(stock_item_attributes)
     create(:simple_order_cycle, distributors: [distributor], variants: [variant])
     variant
   end
 
   def create_variant_with_variant_override_for(distributor, variant_override_attributes)
-    variant = create(:simple_product).variants.first
+    variant = create(:simple_product, enterprise_id: distributor.id).variants.first
     variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
     create(:simple_order_cycle, distributors: [distributor], variants: [variant])
     create(:variant_override, {
