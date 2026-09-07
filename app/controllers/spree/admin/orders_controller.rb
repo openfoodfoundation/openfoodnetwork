@@ -9,7 +9,7 @@ module Spree
 
       helper CheckoutHelper
 
-      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print, :capture]
       before_action :refuse_changing_shipped_orders, only: [:update]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
@@ -119,6 +119,22 @@ module Spree
           type: "application/pdf",
           disposition: "inline"
         )
+      end
+
+      def capture
+        payment_capture = ::Orders::CaptureService.new(@order)
+
+        if payment_capture.call
+          render turbo_stream: turbo_stream.replace(
+            "order_#{@order.id}",
+            partial: "spree/admin/orders/table_row", locals: { order: @order.reload, success: true }
+          )
+        else
+          flash.now[:error] = payment_capture.gateway_error || t(:payment_processing_failed)
+          render turbo_stream: turbo_stream.append(
+            "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
+          )
+        end
       end
 
       def bulk_credit

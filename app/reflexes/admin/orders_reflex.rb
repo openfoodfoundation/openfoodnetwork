@@ -2,21 +2,7 @@
 
 module Admin
   class OrdersReflex < ApplicationReflex
-    before_reflex :authorize_order, only: [:capture, :ship]
-
-    def capture
-      payment_capture = Orders::CaptureService.new(@order)
-
-      if payment_capture.call
-        cable_ready.replace(selector: dom_id(@order),
-                            html: render(partial: "spree/admin/orders/table_row",
-                                         locals: { order: @order.reload, success: true }))
-        morph :nothing
-      else
-        flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
-        morph_admin_flashes
-      end
-    end
+    before_reflex :authorize_order, only: [:ship]
 
     def ship
       @order.send_shipment_email = false unless params[:send_shipment_email]
