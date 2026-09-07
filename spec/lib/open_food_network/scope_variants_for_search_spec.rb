@@ -240,7 +240,9 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
 
     context "when searching for non accessible variant" do
       let(:params) { { q: "product" } }
-      let!(:non_accessible_product) { create(:simple_product, name: 'product', enterprise_id: other_distributor.id) }
+      let!(:non_accessible_product) {
+        create(:simple_product, name: 'product', enterprise_id: other_distributor.id)
+      }
       let(:non_accessible_variant) { non_accessible_product.variants.first }
       let(:other_distributor)  { create(:distributor_enterprise) }
 

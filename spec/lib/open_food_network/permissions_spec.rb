@@ -267,12 +267,10 @@ RSpec.describe OpenFoodNetwork::Permissions do
     let!(:p3) { create(:simple_product, enterprise_id: s3.id) }
 
     before do
-      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products).and_return(
-        Enterprise.where("1=0").select(:id)
-      )
-      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle).and_return(
-        Enterprise.where("1=0").select(:id)
-      )
+      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products)
+        .and_return(Enterprise.where("1=0").select(:id))
+      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle)
+        .and_return(Enterprise.where("1=0").select(:id))
     end
 
     it "returns products produced by managed enterprises" do
@@ -321,13 +319,11 @@ RSpec.describe OpenFoodNetwork::Permissions do
     let!(:v3) { p3.variants.first }
 
     before do
-      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products).and_return(
-        Enterprise.where("1=0").select(:id)
-      )
+      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products)
+        .and_return(Enterprise.where("1=0").select(:id))
 
-      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle).and_return(
-        Enterprise.where("1=0").select(:id)
-      )
+      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle)
+        .and_return(Enterprise.where("1=0").select(:id))
     end
 
     it "returns variants produced by managed enterprises" do
