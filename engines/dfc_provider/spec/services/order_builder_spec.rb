@@ -27,8 +27,18 @@ RSpec.describe OrderBuilder do
     it "builds and stores a DFC order object" do
       expect(result.semanticId).to  eq "http://test.host/api/dfc/enterprises/10000/orders/1"
       expect(result.client).to      eq "http://test.host/api/dfc/enterprises/10000"
-      expect(result.orderStatus).to eq "dfc-v:Held"
+      expect(result.orderStatus).to eq "dfc-v:Complete"
       expect(result.lines.count).to eq 0
+    end
+
+    it "maps cart state to Held" do
+      ofn_order.update_columns(state: "cart", completed_at: nil)
+      expect(described_class.build(ofn_order).orderStatus).to eq "dfc-v:Held"
+    end
+
+    it "maps canceled state to Cancelled" do
+      ofn_order.cancel!
+      expect(described_class.build(ofn_order).orderStatus).to eq "dfc-v:Cancelled"
     end
   end
 

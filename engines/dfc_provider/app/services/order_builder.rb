@@ -15,27 +15,54 @@ class OrderBuilder < DfcBuilder
       id: ofn_order.id,
     )
 
+    status = case ofn_order.state
+             when "canceled" then "dfc-v:Cancelled"
+             when "complete" then "dfc-v:Complete"
+             else "dfc-v:Held"
+             end
+
     DataFoodConsortium::ConnectorV1::Order.new(
       id,
       client: urls.enterprise_url(ofn_order.distributor_id),
-      orderStatus: "dfc-v:Held",
+      orderStatus: status,
     )
   end
 
-  def self.apply(ofn_order, dfc_order)
-    # Set order state if recognised
-    set_order_state(ofn_order, dfc_order)
-
-    incoming = incoming_quantities(dfc_order)
+  def self.apply(ofn_order, dfc_order, enterprise = nil)
+    enterprise ||= ofn_order.distributor
+    incoming = incoming_quantities(dfc_order, enterprise)
     attrs, stale_ids = build_line_item_attributes(ofn_order, incoming)
-    destroy_stale_line_items(ofn_order, stale_ids)
 
-    ofn_order.update(line_items_attributes: attrs)
+    ofn_order.transaction do
+      # For new records, save empty first inside transaction to avoid
+      # products_available_from_new_distribution and to allow rollback
+      if ofn_order.new_record?
+        ofn_order.state = "cart" unless ofn_order.state == "cart"
+        ofn_order.completed_at = nil
+        ofn_order.save!
+      end
+
+      ofn_order.assign_attributes(line_items_attributes: attrs)
+      destroy_stale_line_items(ofn_order, stale_ids) if stale_ids.any?
+
+      ofn_order.save!
+
+      # Now set order state after line items exist
+      set_order_state(ofn_order, dfc_order)
+      ofn_order.save! if ofn_order.changed?
+    end
+
+    true
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::Rollback
+    false
   end
 
   def self.set_order_state(ofn_order, dfc_order)
-    ofn_order.state = "complete" if dfc_order.orderStatus == order_states.HELD
-    ofn_order.completed_at ||= Time.zone.now if dfc_order.orderStatus == order_states.COMPLETE
+    case dfc_order.orderStatus
+    when order_states.HELD, order_states.COMPLETE
+      ofn_order.state = "complete" if ofn_order.state != "complete"
+      ofn_order.completed_at ||= Time.zone.now
+    end
   end
 
   def self.destroy_stale_line_items(ofn_order, stale_ids)
@@ -44,13 +71,14 @@ class OrderBuilder < DfcBuilder
     ofn_order.line_items.where(id: stale_ids).destroy_all if stale_ids.any?
   end
 
-  def self.incoming_quantities(dfc_order)
-    dfc_order.lines.each_with_object({}) do |line, hash|
+  def self.incoming_quantities(dfc_order, _enterprise = nil)
+    dfc_order.lines.each_with_object(Hash.new(0)) do |line, hash|
       next if line.quantity.nil? || line.quantity <= 0
       next if line.offer&.offeredItem.nil?
 
-      vid = semantic_id(line.offer.offeredItem).split(%r{/supplied_products/}i).last
-      hash[vid.to_i] = line.quantity
+      sid = semantic_id(line.offer.offeredItem)
+      vid = sid.split(%r{/supplied_products/}i).last.to_i
+      hash[vid] += line.quantity.to_i
     end
   end
 

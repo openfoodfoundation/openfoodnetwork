@@ -14,6 +14,7 @@ module DfcProvider
       render_dfc(dfc_order, *lines, *offers, *catalog_items, *sessions)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def create
       graph = import
       dfc_order = select_type(graph, "dfc-b:Order").first if graph
@@ -27,15 +28,19 @@ module DfcProvider
         customer: current_user.customers.find_by(enterprise: current_enterprise),
       )
 
-      if @order.save && OrderBuilder.apply(@order, dfc_order)
+      if OrderBuilder.apply(@order, dfc_order, current_enterprise)
+        @order.recreate_all_fees!
+        @order.create_tax_charge!
+        @order.update_order!
         subject = OrderBuilder.build(@order)
-        render json: DfcIo.export(subject), status: :created
+        response.headers["Location"] = subject.semanticId
+        render_dfc(subject, status: :created)
       else
-        @order.destroy if @order.persisted?
         render json: { error: @order.errors.full_messages.to_sentence },
                status: :unprocessable_entity
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def update
       graph = import
@@ -43,7 +48,7 @@ module DfcProvider
 
       return head :bad_request unless dfc_order
 
-      if OrderBuilder.apply(order, dfc_order)
+      if OrderBuilder.apply(order, dfc_order, current_enterprise)
         order.recreate_all_fees!
         order.create_tax_charge!
         order.update_order!
@@ -71,8 +76,12 @@ module DfcProvider
       @order ||= current_enterprise.distributed_orders.find(params[:id])
     end
 
+    def import
+      super.then { |graph| Array.wrap(graph) }
+    end
+
     def select_type(graph, semantic_type)
-      graph.select { |i| i.semanticType == semantic_type }
+      Array.wrap(graph).select { |i| i.semanticType == semantic_type }
     end
 
     def build_sale_session(order)
