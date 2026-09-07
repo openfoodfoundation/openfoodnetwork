@@ -383,4 +383,28 @@
   .condensed:hover .col-image img.variant_placeholder {
     opacity: 1;
   }
+
+
+  $linked-variant-icon-size: 20px;
+
+  .col-name__field {
+    display: flex;
+    align-items: center;
+    gap: $hpadding-txt;
+
+    input {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+
+  .linked-variant-icon {
+    flex: 0 0 auto;
+    width: $linked-variant-icon-size;
+    height: $linked-variant-icon-size;
+    background-color: $color-link;
+    mask: url("../images/material-icons/graph_1.svg") no-repeat center / contain;
+    -webkit-mask: url("../images/material-icons/graph_1.svg") no-repeat center / contain;
+    cursor: default;
+  }
 }
