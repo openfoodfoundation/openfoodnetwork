@@ -228,7 +228,9 @@ module Admin
 
     def load_enterprise_set_with_params(params = {})
       @pagy, @paginated_collection = pagy(@collection)
-      @enterprise_set = Sets::EnterpriseSet.new(@paginated_collection, params)
+      @enterprise_set = Sets::EnterpriseSet.new(
+        @paginated_collection, params.merge(scope: @collection)
+      )
     end
 
     def load_countries
