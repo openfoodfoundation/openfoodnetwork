@@ -40,6 +40,25 @@ module Api
         end
       end
 
+      context "when updating the enterprise id" do
+        let(:new_enterprise) { create(:enterprise) }
+        let(:params) {
+          {
+            format: :json,
+            id: customer.id,
+            customer: { code: '123', enterprise_id: new_enterprise.id }
+          }
+        }
+
+        before do
+          allow(controller).to receive(:spree_current_user) { user }
+        end
+
+        it "ignores the enterprise_id parameter" do
+          expect { spree_post :update, params }.not_to change { customer.reload.enterprise }
+        end
+      end
+
       context "as the user associated with the customer" do
         before do
           allow(controller).to receive(:spree_current_user) { user }
