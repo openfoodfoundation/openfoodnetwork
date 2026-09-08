@@ -43,4 +43,34 @@ RSpec.describe Orders::WebhookPayload do
       expect(subject.to_hash[:payment_method].keys).to contain_exactly("id", "name")
     end
   end
+
+  describe ".test_data" do
+    subject { described_class.test_data }
+
+    it "describes the payload an integration will receive" do
+      payload = subject.to_hash
+
+      expect(payload[:order]).to include("number", "email", "outstanding_balance")
+      expect(payload[:payment_method].keys).to contain_exactly("id", "name")
+    end
+
+    it "can't be saved to the database" do
+      payment = described_class.__send__(:test_payment)
+      enterprise = described_class.__send__(:test_enterprise)
+      records = [
+        described_class.__send__(:test_order),
+        payment,
+        payment.payment_method,
+        enterprise,
+        enterprise.address,
+      ]
+
+      expect(records).to all(be_readonly)
+      records.each do |record|
+        # Skipping validation so we reach the readonly guard rather than
+        # failing earlier on incomplete test data.
+        expect{ record.save!(validate: false) }.to raise_error(ActiveRecord::ReadOnlyRecord)
+      end
+    end
+  end
 end

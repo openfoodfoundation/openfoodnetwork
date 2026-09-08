@@ -37,4 +37,36 @@ RSpec.describe WebhookUrlsService do
 
     expect(subject).to eq []
   end
+
+  it "ignores endpoints of people who don't manage this coordinator" do
+    other_enterprise = create(:enterprise)
+    other_manager = create(:user)
+    other_enterprise.users << other_manager
+
+    other_enterprise.owner.webhook_endpoints.payment_status.create!(url: "http://other.owner.url")
+    other_manager.webhook_endpoints.payment_status.create!(url: "http://other.manager.url")
+    create(:user).webhook_endpoints.payment_status.create!(url: "http://stranger.url")
+
+    expect(subject).to eq []
+  end
+
+  context "for the order balance due webhook type" do
+    subject { described_class.for_coordinator(coordinator, webhook_type: "order_balance_due") }
+
+    it "returns the endpoints of the coordinator owner and managers" do
+      manager = create(:user)
+      coordinator.users << manager
+      coordinator.owner.webhook_endpoints.order_balance_due.create!(url: "http://owner.url")
+      manager.webhook_endpoints.order_balance_due.create!(url: "http://manager.url")
+
+      expect(subject).to contain_exactly("http://owner.url", "http://manager.url")
+    end
+
+    it "ignores endpoints of people who don't manage this coordinator" do
+      other_enterprise = create(:enterprise)
+      other_enterprise.owner.webhook_endpoints.order_balance_due.create!(url: "http://other.url")
+
+      expect(subject).to eq []
+    end
+  end
 end

@@ -25,6 +25,9 @@ module Orders
       new(order: test_order, payment: test_payment, enterprise: test_enterprise)
     end
 
+    # The test records below are never meant to reach the database, so they are
+    # all marked readonly. `readonly!` returns true rather than the record, so
+    # it can't be chained directly.
     def self.test_order
       Spree::Order.new(
         number: "R555555555",
@@ -32,14 +35,15 @@ module Orders
         total: 20.00,
         payment_total: 0.00,
         currency: "AUD",
-      )
+      ).tap(&:readonly!)
     end
 
     def self.test_payment
-      Spree::Payment.new(
-        amount: 20.00,
-        payment_method: Spree::PaymentMethod::Check.new(id: 0, name: "Test payment method")
-      )
+      payment_method = Spree::PaymentMethod::Check.new(
+        id: 0, name: "Test payment method"
+      ).tap(&:readonly!)
+
+      Spree::Payment.new(amount: 20.00, payment_method:).tap(&:readonly!)
     end
 
     def self.test_enterprise
@@ -53,9 +57,9 @@ module Orders
         address2: "",
         city: "TestCity",
         zipcode: "1234"
-      )
+      ).tap(&:readonly!)
 
-      enterprise
+      enterprise.tap(&:readonly!)
     end
 
     private_class_method :test_order, :test_payment, :test_enterprise
