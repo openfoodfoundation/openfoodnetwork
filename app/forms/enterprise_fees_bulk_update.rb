@@ -17,7 +17,7 @@ class EnterpriseFeesBulkUpdate
   def save
     return false unless valid?
 
-    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(@params.merge(collection: @loaded_fees))
+    @enterprise_fee_set = Sets::EnterpriseFeeSet.new(@loaded_fees, @params)
     unless @enterprise_fee_set.save
       @enterprise_fee_set.errors.each do |error|
         @errors.add(error.attribute, error.type)

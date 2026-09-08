@@ -52,7 +52,7 @@ module Admin
     private
 
     def load_enterprise_fee_set
-      @enterprise_fee_set = Sets::EnterpriseFeeSet.new collection:
+      @enterprise_fee_set = Sets::EnterpriseFeeSet.new @enterprise_fees
     end
 
     def load_data
