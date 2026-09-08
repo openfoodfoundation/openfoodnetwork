@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Create a webhook payload for an order-level event, such as an order placed
-# while a payment is still due. The payload will be delivered asynchronously.
+# while a balance is still due. The payload will be delivered asynchronously.
 
 module Orders
   class WebhookPayload

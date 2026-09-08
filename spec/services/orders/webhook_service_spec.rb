@@ -7,20 +7,20 @@ RSpec.describe Orders::WebhookService do
 
   before { order.payments.reload }
 
-  subject { described_class.create_payment_due_job(order:) }
+  subject { described_class.create_balance_due_job(order:) }
 
   describe "creating payloads" do
     context "with order cycle coordinator owner webhook endpoints configured" do
       before do
-        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_balance_due.create!(
           url: "http://coordinator.payment.url"
         )
       end
 
-      it "enqueues an order.payment_due delivery for the coordinator owner" do
+      it "enqueues an order.balance_due delivery for the coordinator owner" do
         expect{ subject }
           .to enqueue_job(WebhookDeliveryJob).exactly(1).times
-          .with("http://coordinator.payment.url", "order.payment_due", any_args)
+          .with("http://coordinator.payment.url", "order.balance_due", any_args)
       end
 
       it "includes the order, amount due and payment method in the payload" do
@@ -40,7 +40,7 @@ RSpec.describe Orders::WebhookService do
 
         expect{ subject }
           .to enqueue_job(WebhookDeliveryJob).exactly(1).times
-          .with("http://coordinator.payment.url", "order.payment_due", hash_including(data))
+          .with("http://coordinator.payment.url", "order.balance_due", hash_including(data))
       end
 
       context "with coordinator managers with webhook endpoints configured" do
@@ -54,14 +54,14 @@ RSpec.describe Orders::WebhookService do
         end
 
         it "enqueues a delivery for every unique configured endpoint" do
-          user1.webhook_endpoints.order_payment_due.create!(url: "http://coordinator.payment.url")
-          user2.webhook_endpoints.order_payment_due.create!(url: "http://user2.payment.url")
+          user1.webhook_endpoints.order_balance_due.create!(url: "http://coordinator.payment.url")
+          user2.webhook_endpoints.order_balance_due.create!(url: "http://user2.payment.url")
 
           expect{ subject }
             .to enqueue_job(WebhookDeliveryJob)
-            .with("http://coordinator.payment.url", "order.payment_due", any_args)
+            .with("http://coordinator.payment.url", "order.balance_due", any_args)
             .and enqueue_job(WebhookDeliveryJob)
-            .with("http://user2.payment.url", "order.payment_due", any_args)
+            .with("http://user2.payment.url", "order.balance_due", any_args)
         end
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Orders::WebhookService do
 
       before do
         order.payments.reload
-        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_balance_due.create!(
           url: "http://coordinator.payment.url"
         )
       end
@@ -91,7 +91,7 @@ RSpec.describe Orders::WebhookService do
       it "reports the payment method the customer chose, not the credit" do
         expect{ subject }
           .to enqueue_job(WebhookDeliveryJob).exactly(1).times
-          .with("http://coordinator.payment.url", "order.payment_due",
+          .with("http://coordinator.payment.url", "order.balance_due",
                 hash_including("payment_method" => {
                                  "id" => chosen_payment.payment_method.id,
                                  "name" => chosen_payment.payment_method.name
@@ -102,7 +102,7 @@ RSpec.describe Orders::WebhookService do
     context "without a payment to report" do
       before do
         order.payments.destroy_all
-        order.order_cycle.coordinator.owner.webhook_endpoints.order_payment_due.create!(
+        order.order_cycle.coordinator.owner.webhook_endpoints.order_balance_due.create!(
           url: "http://coordinator.payment.url"
         )
       end

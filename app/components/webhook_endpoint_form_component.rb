@@ -12,6 +12,6 @@ class WebhookEndpointFormComponent < ViewComponent::Base
 
   # The webhook types we can send test data for.
   def testable?
-    webhook_type.in?(%w(payment_status_changed order_payment_due))
+    webhook_type.in?(%w(payment_status_changed order_balance_due))
   end
 end

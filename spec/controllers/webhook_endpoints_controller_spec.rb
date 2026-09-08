@@ -87,14 +87,14 @@ RSpec.describe WebhookEndpointsController do
       expect(flash[:success]).to eq "Some test data will be sent to the webhook url"
     end
 
-    context "with an order payment due endpoint" do
+    context "with an order balance due endpoint" do
       let(:webhook_endpoint) {
-        user.webhook_endpoints.create(url: "https://url", webhook_type: "order_payment_due")
+        user.webhook_endpoints.create(url: "https://url", webhook_type: "order_balance_due")
       }
 
-      it "enqueues a webhook job with the order payment due test data" do
+      it "enqueues a webhook job with the order balance due test data" do
         expect { subject }.to enqueue_job(WebhookDeliveryJob).exactly(1).times
-          .with("https://url", "order.payment_due", any_args)
+          .with("https://url", "order.balance_due", any_args)
       end
 
       it "describes the payload an integration will receive" do

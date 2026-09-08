@@ -51,8 +51,8 @@ class WebhookEndpointsController < BaseController
     case @webhook_endpoint.webhook_type
     when "payment_status_changed"
       ["payment.completed", Payments::WebhookPayload.test_data.to_hash]
-    when "order_payment_due"
-      ["order.payment_due", Orders::WebhookPayload.test_data.to_hash]
+    when "order_balance_due"
+      ["order.balance_due", Orders::WebhookPayload.test_data.to_hash]
     end
   end
 
