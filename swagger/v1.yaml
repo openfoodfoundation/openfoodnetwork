@@ -392,7 +392,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '401':
-          description: Access forbidden
+          description: Unauthorized
       requestBody:
         content:
           application/json:
@@ -682,9 +682,6 @@ paths:
             schema:
               type: object
               properties:
-                enterprise_id:
-                  type: integer
-                  example: 2
                 first_name:
                   type: string
                   nullable: true
