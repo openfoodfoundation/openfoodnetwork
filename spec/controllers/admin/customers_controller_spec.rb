@@ -163,6 +163,17 @@ RSpec.describe Admin::CustomersController do
           expect(assigns(:customer)).to eq customer
           expect(customer.reload.email).to eq 'new.email@gmail.com'
         end
+
+        it "ignores the enterprise id parameter" do
+          spree_put :update, format: :json, id: customer.id,
+                             customer: {
+                               email: 'new.email@gmail.com', enterprise_id: another_enterprise.id
+                             }
+          expect(response.parsed_body["id"]).to eq customer.id
+          expect(response.parsed_body["enterprise_id"]).to eq enterprise.id
+          expect(assigns(:customer)).to eq customer
+          expect(customer.reload.email).to eq 'new.email@gmail.com'
+        end
       end
 
       context "where I don't manage the customer's enterprise" do
