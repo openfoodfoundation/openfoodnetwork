@@ -18,55 +18,12 @@ module Payments
     end
 
     def self.test_data
-      new(payment: test_payment, order: test_order, enterprise: test_enterprise)
-    end
-
-    def self.test_payment
-      {
-        updated_at: Time.zone.now,
-        amount: 0.00,
-        state: "completed"
-      }
-    end
-
-    def self.test_order
-      order = Spree::Order.new(
-        number: "R555555555",
-        total: 0.00,
-        currency: "AUD",
+      new(
+        payment: WebhookTestData.payment,
+        order: WebhookTestData.order,
+        enterprise: WebhookTestData.enterprise
       )
-
-      tax_category = Spree::TaxCategory.new(name: "VAT")
-      product = Spree::Product.new(name: "Test product")
-      Spree::Variant.new(product:, display_name: "")
-      order.line_items << Spree::LineItem.new(
-        quantity: 1,
-        price: 20.00,
-        tax_category:,
-        product:,
-        unit_presentation: "1kg"
-      )
-
-      order
     end
-
-    def self.test_enterprise
-      enterprise = Enterprise.new(
-        abn: "65797115831",
-        acn: "",
-        name: "TEST Enterprise",
-      )
-      enterprise.address = Spree::Address.new(
-        address1: "1 testing street",
-        address2: "",
-        city: "TestCity",
-        zipcode: "1234"
-      )
-
-      enterprise
-    end
-
-    private_class_method :test_payment, :test_order, :test_enterprise
 
     private
 
