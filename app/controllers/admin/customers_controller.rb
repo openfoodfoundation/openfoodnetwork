@@ -106,7 +106,9 @@ module Admin
     end
 
     def managed_enterprise_id
-      @managed_enterprise_id ||= Enterprise.managed_by(spree_current_user).
+      return @managed_enterprise_id if defined?(@managed_enterprise_id)
+
+      @managed_enterprise_id = Enterprise.managed_by(spree_current_user).
         select('enterprises.id').find_by(id: params[:enterprise_id])
     end
 
