@@ -610,6 +610,33 @@ RSpec.describe Admin::EnterprisesController do
         expect(profile_enterprise2.owner).to eq new_owner
       end
     end
+
+    context "when submitted from a page other than the one the server re-derives" do
+      it "still applies the update, instead of silently failing" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        bulk_enterprise_params = { page: 2, sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, visible: 'hidden' }
+        } } }
+
+        expect { spree_put :bulk_update, bulk_enterprise_params }.not_to raise_error
+        profile_enterprise1.reload
+        expect(profile_enterprise1.visible).to eq 'hidden'
+      end
+    end
+
+    context "as a manager submitting an id outside their editable enterprises" do
+      it "ignores that id, rather than updating it or crashing" do
+        allow(controller).to receive_messages spree_current_user: distributor_manager
+
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: supplier.id, visible: 'hidden' }
+        } } }
+
+        expect { spree_put :bulk_update, bulk_enterprise_params }.not_to raise_error
+        supplier.reload
+        expect(supplier.visible).to eq 'public'
+      end
+    end
   end
 
   describe "for_order_cycle" do
