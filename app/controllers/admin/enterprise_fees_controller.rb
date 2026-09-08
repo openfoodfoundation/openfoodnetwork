@@ -10,7 +10,7 @@ module Admin
     def index
       @include_calculators = params[:include_calculators].present?
       @enterprise = current_enterprise
-      @enterprises = Enterprise.managed_by(spree_current_user).by_name
+      @enterprises = managed_enterprises
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
@@ -93,6 +93,10 @@ module Admin
       Enterprise.find params[:enterprise_id] if params.key? :enterprise_id
     end
 
+    def managed_enterprises
+      Enterprise.managed_by(spree_current_user).by_name
+    end
+
     def redirect_path
       if params.key? :enterprise_id
         return main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
@@ -105,7 +109,12 @@ module Admin
     def enterprise_fee_bulk_params
       fee_id = @enterprise_fees.map(&:id)
       collection = params.dig(:sets_enterprise_fee_set, :collection_attributes)
-      matching = collection.values.select { |value| fee_id.include?(value[:id]) }
+      # check we are updating an existing fee, or creating a fee for enterprise the user manages
+      matching = collection.values.select do |value|
+        fee_id.include?(value[:id].to_i) ||
+          managed_enterprises.map(&:id).include?(value[:enterprise_id].to_i)
+      end
+
       matching = matching.map do |fee_param|
         fee_param.permit(
           :id, :enterprise_id, :fee_type, :name, :tax_category_id,
