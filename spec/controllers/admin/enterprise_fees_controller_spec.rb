@@ -75,6 +75,29 @@ RSpec.describe Admin::EnterpriseFeesController do
       expect(response).to redirect_to admin_enterprise_fees_path(enterprise_id: enterprise.id)
     end
 
+    it "create new the enterprise fees" do
+      params = {
+        enterprise_id: enterprise.id,
+        sets_enterprise_fee_set: {
+          collection_attributes: {
+            '1': {
+              enterprise_id: enterprise.id,
+              fee_type: fee1.fee_type,
+              name: "new fee",
+              tax_category_id: nil,
+              inherits_tax_category: false,
+              calculator_type: "Calculator::FlatRate",
+              calculator_attributes: { id: nil, preferred_amount: 10.00 }
+            }
+          }
+        }
+      }
+      expect { post(:bulk_update, params: ) }.to change { EnterpriseFee.count }.by(1)
+
+      expect(response).to redirect_to admin_enterprise_fees_path(enterprise_id: enterprise.id)
+      expect( EnterpriseFee.where(enterprise:).last.name).to eq("new fee")
+    end
+
     it "doesn't update fees from another enterprise" do
       params = {
         enterprise_id: enterprise.id,
@@ -117,8 +140,8 @@ RSpec.describe Admin::EnterpriseFeesController do
         sets_enterprise_fee_set: {
           collection_attributes: {
             '0': {
-              id: fee1.id,
-              enterprise_id: fee1.enterprise_id,
+              id: fee1.id.to_s,
+              enterprise_id: fee1.enterprise_id.to_s,
               fee_type: fee1.fee_type,
               name: "sales fee",
               tax_category_id: nil,
@@ -127,23 +150,43 @@ RSpec.describe Admin::EnterpriseFeesController do
               calculator_attributes: { id: fee1.calculator.id, preferred_amount: 10.00 }
             },
             '1': {
-              id: other_fee.id,
-              enterprise_id: other_fee.enterprise_id,
+              id: other_fee.id.to_s,
+              enterprise_id: other_fee.enterprise_id.to_s,
               fee_type: other_fee.fee_type,
               name: "non updatable fee",
               tax_category_id: nil,
               inherits_tax_category: other_fee.inherits_tax_category,
               calculator_type: "Calculator::FlatRate",
               calculator_attributes: { id: other_fee.calculator.id, preferred_amount: 10.00 }
+            },
+            '2': {
+              id: nil,
+              enterprise_id: fee1.enterprise_id.to_s,
+              fee_type: fee1.fee_type,
+              name: "new fee",
+              tax_category_id: nil,
+              inherits_tax_category: fee1.inherits_tax_category,
+              calculator_type: "Calculator::FlatRate",
+              calculator_attributes: {}
+            },
+            '3': {
+              id: nil,
+              enterprise_id: create(:distributor_enterprise).id.to_s,
+              fee_type: fee1.fee_type,
+              name: "other new fee",
+              tax_category_id: nil,
+              inherits_tax_category: fee1.inherits_tax_category,
+              calculator_type: "Calculator::FlatRate",
+              calculator_attributes: {}
             }
           }
         }
       }
 
-      allowed_fees = ActionController::Parameters.new(
+      existing_fee = ActionController::Parameters.new(
         {
-          id: fee1.id,
-          enterprise_id: fee1.enterprise_id,
+          id: fee1.id.to_s,
+          enterprise_id: fee1.enterprise_id.to_s,
           fee_type: fee1.fee_type,
           name: "sales fee",
           tax_category_id: nil,
@@ -153,15 +196,29 @@ RSpec.describe Admin::EnterpriseFeesController do
         }
       ).permit!
 
+      new_fee = ActionController::Parameters.new(
+        {
+          id: nil,
+          enterprise_id: fee1.enterprise_id.to_s,
+          fee_type: fee1.fee_type,
+          name: "new fee",
+          tax_category_id: nil,
+          inherits_tax_category: fee1.inherits_tax_category,
+          calculator_type: "Calculator::FlatRate",
+          calculator_attributes: {}
+        }
+      ).permit!
+
       filtered_params = {
         collection_attributes: {
-          "0" => allowed_fees
+          "0" => existing_fee,
+          "1" => new_fee
         }
       }
       expect(EnterpriseFeesBulkUpdate).to receive(:new).with(filtered_params,
                                                              anything).and_call_original
 
-      post(:bulk_update, params: )
+      post(:bulk_update, params:)
     end
   end
 end
