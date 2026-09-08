@@ -7,13 +7,21 @@
         %a.summary-edit{ href: main_app.checkout_step_path(:details), data: { action: "guest-checkout#removeUnloadEvent" } }
           = t("checkout.step3.delivery_details.edit")
 
-      .summary-subtitle
-        = @order.shipping_method.name
-        %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
+      - if @order.shipping_method.delivery?
+        %div
+          = @order.shipping_method.name
+          %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
       .two-columns
-        = render "delivery_details" if @order.shipping_method.delivery?
+        - if @order.shipping_method.delivery?
+          = render "delivery_details"
+        - else
+          %div
+            = @order.shipping_method.name
+            %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
         - if @order.shipping_method.description.present?
           %div
+            - if @order.shipping_method.delivery?
+              %br
             .summary-subtitle
               = t("checkout.step3.delivery_details.instructions")
             %div
