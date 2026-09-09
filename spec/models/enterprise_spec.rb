@@ -452,6 +452,18 @@ RSpec.describe Enterprise do
         expect(e).not_to be_valid
       end
     end
+
+    describe "sells" do
+      let(:enterprise) { build(:enterprise, sells: "unspecified") }
+
+      it "can be 'unspecified' when validating in the default context" do
+        expect(enterprise.valid?).to be_truthy
+      end
+
+      it "cannot be 'unspecified' when validating in the :register context" do
+        expect(enterprise.valid?(:register)).to be_falsey
+      end
+    end
   end
 
   describe "serialisation" do

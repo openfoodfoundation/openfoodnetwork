@@ -977,7 +977,7 @@ RSpec.describe '
         expect(page).not_to have_content "Hub Shop"
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "Producer Hub")
+        expect(page).to have_checked_field "Producer Hub"
         expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('any')
 
@@ -986,14 +986,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer shop
-        page.find('a', text: "Producer Shop").click
+        choose "Producer Shop"
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "Producer Shop")
+        expect(page).to have_checked_field "Producer Shop"
         expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('own')
 
@@ -1002,14 +1002,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer profile
-        page.find('a', text: "Producer Profile").click
+        choose "Producer Profile"
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "Producer Profile")
+        expect(page).to have_checked_field "Producer Profile"
 
         # a primary producer:
         expect(enterprise.reload.is_primary_producer).to eq true
@@ -1045,7 +1045,7 @@ RSpec.describe '
         expect(page).to have_content "Hub Shop"
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "Hub Shop")
+        expect(page).to have_checked_field "Hub Shop"
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.producer_profile_only).to eq false
 
@@ -1054,14 +1054,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer shop
-        page.find('a', text: "Profile Only").click
+        choose "Profile Only"
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "Profile Only")
+        expect(page).to have_checked_field "Profile Only"
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.producer_profile_only).to eq false
 

@@ -140,6 +140,7 @@ class Enterprise < ApplicationRecord
   validates :external_billing_id,
             format: { with: /\A\S+\z/ },
             allow_blank: true
+  validate :sells_specified, on: :register
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -637,6 +638,12 @@ class Enterprise < ApplicationRecord
     return unless name
 
     self.permalink = Enterprise.find_available_permalink(name)
+  end
+
+  def sells_specified
+    return unless (SELLS - ["unspecified"]).exclude?(sells)
+
+    errors.add(:base, :sells_not_specified)
   end
 
   # Touch distributors without them touching their distributors.
