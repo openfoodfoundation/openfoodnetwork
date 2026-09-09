@@ -27,7 +27,7 @@ RSpec.describe OrderBuilder do
     it "builds and stores a DFC order object" do
       expect(result.semanticId).to  eq "http://test.host/api/dfc/enterprises/10000/orders/1"
       expect(result.client).to      eq "http://test.host/api/dfc/enterprises/10000"
-      expect(result.orderStatus).to eq "dfc-v:Complete"
+      expect(result.orderStatus).to eq "dfc-v:Held"
       expect(result.lines.count).to eq 0
     end
 
