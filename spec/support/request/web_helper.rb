@@ -64,17 +64,37 @@ module WebHelper
   def select2_select(value, options)
     open_select2("#s2id_#{options[:from]}")
 
-    if options[:search]
-      page.find(:xpath, '//body')
-        .find(:css, '.select2-drop-active input.select2-input, ' \
-                    '.select2-dropdown-open input.select2-input')
-        .set(value)
-    end
+    search_select2(value, options) if options[:search]
 
     page.find(:xpath, '//body')
       .find(:css, '.select2-drop-active .select2-result-label',
             text: options[:select_text] || value)
       .click
+  end
+
+  # Type a search term and wait for the select2 to show results.
+  #
+  # A remote select2 sends a single (debounced) request per search term and
+  # remembers the term it last queried for, so it never asks the server again for
+  # the same input. If that one request fails to produce results, the dropdown is
+  # stuck on "No matches found" and Capybara's retrying can't recover: nothing on
+  # the page will ever change again. Closing and re-opening the select2 clears the
+  # remembered term, so typing it again triggers a fresh request.
+  def search_select2(value, options, attempts: 2)
+    attempts.times do |attempt|
+      if attempt.positive?
+        close_select2
+        open_select2("#s2id_#{options[:from]}") # re-opening clears the remembered term
+      end
+
+      select2_search_field.set(value)
+      break if page.has_css?('.select2-drop-active .select2-result-label')
+    end
+  end
+
+  def select2_search_field
+    page.find(:xpath, '//body').find(:css, '.select2-drop-active input.select2-input, ' \
+                                           '.select2-dropdown-open input.select2-input')
   end
 
   def open_select2(selector)
