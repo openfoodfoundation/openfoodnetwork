@@ -118,7 +118,7 @@ module Admin
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
-        redirect_to main_app.admin_enterprises_path
+        redirect_to main_app.admin_enterprises_path(q: search_filter_params)
       else
         touched_enterprises = @enterprise_set.collection.select(&:changed?)
         @enterprise_set.collection.to_a.select! { |e| touched_enterprises.include? e }
@@ -235,6 +235,12 @@ module Admin
       @countries = Spree::Country.order(:name)
     end
 
+    def search_filter_params
+      q = params[:q]
+      q.is_a?(ActionController::Parameters) ? q.to_unsafe_h : {}
+    end
+    helper_method :search_filter_params
+
     def collection
       case action
       when :for_order_cycle
@@ -250,21 +256,32 @@ module Admin
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).
             editable_enterprises.
+            ransack(params[:q]).result.
+            distinct.
             order('is_primary_producer ASC, name')
         elsif json_request?
           OpenFoodNetwork::Permissions.new(spree_current_user)
-            .editable_enterprises.ransack(params[:q]).result
+            .editable_enterprises.ransack(params[:q]).result.distinct
         else
           Enterprise.where("1=0")
         end
       when :visible
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises
-          .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result
+          .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result.distinct
       else
-        OpenFoodNetwork::Permissions.new(spree_current_user).
-          editable_enterprises.
-          order('is_primary_producer ASC, name')
+        bulk_update_collection
       end
+    end
+
+    # Include only enterprises being updated
+    def bulk_update_collection
+      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+      submitted_attributes = bulk_params.fetch(:collection_attributes, {})
+      enterprise_ids = submitted_attributes.values.pluck(:id).compact
+
+      permissions.editable_enterprises
+        .where(id: enterprise_ids)
+        .order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -339,7 +356,7 @@ module Admin
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
-      params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
+      bulk_params.fetch(:collection_attributes, {}).each_value do |enterprise_params|
         unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
           enterprise_params.delete :sells
         end
@@ -373,7 +390,7 @@ module Admin
     def check_can_change_bulk_owner
       return if spree_current_user.admin?
 
-      bulk_params[:collection_attributes].each_value do |enterprise_params|
+      bulk_params.fetch(:collection_attributes, {}).each_value do |enterprise_params|
         enterprise_params.delete :owner_id
       end
     end
@@ -456,7 +473,7 @@ module Admin
     end
 
     def bulk_params
-      @bulk_params ||= params.require(:sets_enterprise_set).permit(
+      @bulk_params ||= params.fetch(:sets_enterprise_set, ActionController::Parameters.new).permit(
         collection_attributes: PermittedAttributes::Enterprise.attributes
       ).to_h.with_indifferent_access
     end

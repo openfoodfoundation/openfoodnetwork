@@ -19,4 +19,14 @@ RSpec.describe Admin::EnterprisesController do
       expect(response).to redirect_to(admin_enterprises_path)
     end
   end
+
+  describe 'GET #index' do
+    it "does not raise when q is submitted in array notation instead of a hash" do
+      expect {
+        get admin_enterprises_path(q: ["foo", "bar"])
+      }.not_to raise_error
+
+      expect(response).to have_http_status(:success)
+    end
+  end
 end

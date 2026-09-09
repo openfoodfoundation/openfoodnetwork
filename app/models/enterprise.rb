@@ -11,7 +11,7 @@ class Enterprise < ApplicationRecord
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
   searchable_attributes :sells, :is_primary_producer, :name
-  searchable_associations :properties
+  searchable_associations :properties, :owner, :users
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
                     :ready_for_checkout, :not_ready_for_checkout
 
