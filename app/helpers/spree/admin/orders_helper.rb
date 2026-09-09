@@ -137,8 +137,9 @@ module Spree
                        fire_admin_order_url(order, e: "resume"),
                        method: :put, icon: "icon-resume",
                        data: {
-                         turbo: true,
-                         turbo_confirm: confirm_message
+                         controller: "confirm-alert",
+                         confirm_alert_message_value: confirm_message,
+                         action: "click->confirm-alert#confirm"
                        })
       end
 
