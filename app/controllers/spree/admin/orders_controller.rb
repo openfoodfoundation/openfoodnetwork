@@ -9,7 +9,7 @@ module Spree
 
       helper CheckoutHelper
 
-      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print, :ship]
       before_action :refuse_changing_shipped_orders, only: [:update]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
@@ -119,6 +119,29 @@ module Spree
           type: "application/pdf",
           disposition: "inline"
         )
+      end
+
+      def ship
+        @order.send_shipment_email = params[:send_shipment_email].present?
+
+        unless @order.ship
+          flash.now[:error] = t("api.orders.failed_to_update")
+          return render turbo_stream: turbo_stream.append(
+            "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
+          )
+        end
+
+        if params[:replace_row] == "true"
+          render turbo_stream: [
+            turbo_stream.dispatch_event("modal:close"),
+            turbo_stream.replace(
+              "order_#{@order.id}", partial: "spree/admin/orders/table_row",
+                                    locals: { order: @order.reload, success: true }
+            )
+          ]
+        else
+          redirect_back_or_to(spree.edit_admin_order_path(@order))
+        end
       end
 
       def bulk_credit

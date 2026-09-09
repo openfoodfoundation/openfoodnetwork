@@ -9,6 +9,7 @@ class ConfirmModalComponent < ModalComponent
     message: nil,
     confirm_actions: nil,
     confirm_reflexes: nil,
+    confirm_button_type: "button",
     confirm_button_class: :primary,
     confirm_button_text: I18n.t('js.admin.modals.confirm'),
     cancel_button_text: I18n.t('js.admin.modals.cancel'),
@@ -20,6 +21,7 @@ class ConfirmModalComponent < ModalComponent
     @confirm_reflexes = confirm_reflexes
     @controller = controller
     @message = message
+    @confirm_button_type = confirm_button_type
     @confirm_button_class = confirm_button_class
     @confirm_button_text = confirm_button_text
     @cancel_button_text = cancel_button_text

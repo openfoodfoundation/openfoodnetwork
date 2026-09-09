@@ -355,6 +355,90 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#ship" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let!(:order) do
+      order = create(:order_with_totals_and_distribution, distributor:, order_cycle:,
+                                                          state: "complete",
+                                                          payment_state: "balance_due")
+      order.finalize!
+      order.payments << create(:check_payment, order:, amount: order.total)
+      order.payments.first.capture!
+      order.reload
+    end
+
+    before { sign_in distributor.owner }
+
+    context "when submitted from the orders index" do
+      it "ships the order, sends the notification email, and replaces the row" do
+        expect {
+          put(
+            "/admin/orders/#{order.number}/ship",
+            params: { send_shipment_email: "1", replace_row: "true", format: :turbo_stream }
+          )
+        }.to have_enqueued_mail(Spree::ShipmentMailer, :shipped_email).once
+
+        expect(order.reload.shipment_state).to eq "shipped"
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("modal:close")
+        expect(response.body).to include("order_#{order.id}")
+      end
+
+      it "does not send the notification email when unchecked" do
+        expect {
+          put(
+            "/admin/orders/#{order.number}/ship",
+            params: { replace_row: "true", format: :turbo_stream }
+          )
+        }.not_to have_enqueued_mail(Spree::ShipmentMailer, :shipped_email)
+
+        expect(order.reload.shipment_state).to eq "shipped"
+      end
+    end
+
+    context "when submitted from a detail page" do
+      it "ships the order and redirects back to it" do
+        put(
+          "/admin/orders/#{order.number}/ship",
+          params: { send_shipment_email: "1" }
+        )
+
+        expect(order.reload.shipment_state).to eq "shipped"
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    context "when the order fails to ship" do
+      it "shows an error without redirecting" do
+        allow_any_instance_of(Spree::Order).to receive(:ship).and_return(false)
+
+        put(
+          "/admin/orders/#{order.number}/ship",
+          params: { replace_row: "true", format: :turbo_stream }
+        )
+
+        expect(order.reload.shipment_state).not_to eq "shipped"
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq "Failed to update order"
+      end
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        put(
+          "/admin/orders/#{order.number}/ship",
+          params: { replace_row: "true", format: :turbo_stream }
+        )
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
   describe "#bulk_credit" do
     let(:order) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
     let(:order1) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }

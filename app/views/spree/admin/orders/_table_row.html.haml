@@ -48,8 +48,7 @@
         %i.success.icon-ok-sign{"data-controller": "ephemeral"}
     = render TooltipComponent.new(text: t('spree.admin.orders.index.edit'), element_text: "", link: edit_admin_order_path(order), element_class: "icon_link with-tip icon-edit no-text")
     - if can?(:manage_order_sections, order) && order.ready_to_ship?
-      %form
-        = render ShipOrderComponent.new(order: order)
+      = render ShipOrderComponent.new(order: order, replace_row: true)
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-road icon_link with-tip no-text", reflex_data_id: order.id.to_s, tooltip_text: t('spree.admin.orders.index.ship'), shipment: true}
 
     - if can?(:manage_order_sections, order) && can?(:update, Spree::Payment) && order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
