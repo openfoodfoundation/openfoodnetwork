@@ -205,7 +205,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
         }
 
         run_test! {
-          expect(response.body).to include "Line items variant must exist"
+          expect(response.body).to include "Line items reference unknown products"
         }
       end
     end
@@ -381,7 +381,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           run_test! {
             expect(enterprise.distributed_orders).to be_empty
 
-            expect(response.body).to include "Line items variant must exist"
+            expect(response.body).to include "Line items reference unknown products"
           }
         end
       end

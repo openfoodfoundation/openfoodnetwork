@@ -85,28 +85,30 @@ RSpec.describe "Orders backorder integration" do
       expect(supplier_order.line_items.first.quantity).to eq 1
     end
 
-    # The backorder should be synchronised at the end of the order cycle via
-    # CompleteBackorderJob, which re-exports the imported supplier order. This
-    # currently fails under the DFC connector v1 migration: imported orders
-    # carry bare references (and the connector deserialises them into raw
-    # Hashes/Strings rather than inlined SemanticObjects), so the backorder
-    # updater/broker and the re-export break. These are pre-existing backorder
-    # integration bugs, tracked separately from this orders-endpoint PR.
+    # Blocked by a DFC connector v1 bug, not by the orders endpoint: importing
+    # an order whose `dfc-b:orderedBy` is a bare URI reference turns that
+    # property into a parsed-URI Hash, which then can't be exported again.
+    #
+    #   order = DfcIo.import('{"@context":"https://www.datafoodconsortium.org",
+    #     "@graph":[{"@id":"http://test.host/orders/5","@type":"dfc-b:Order",
+    #     "dfc-b:orderedBy":"http://test.host/enterprises/1"}]}')
+    #   order.client
+    #   # => {scheme: "http", authority: "test.host", ...}
+    #   DfcIo.export(order)
+    #   # => RuntimeError: The type of the property 'dfc-b:orderedBy' is 'Hash'
+    #   #    but a primitive, a SemanticObject or an Array is required.
+    #
+    # CompleteBackorderJob re-exports the order it fetched, so it fails there.
     xit "synchronises quantities at the end of the order cycle" do
-      distributor_order.line_items.first.update! quantity: 2
+      BackorderJob.new.place_backorder(distributor_order)
+
       supplier_line_item = supplier_order.line_items.first
+      distributor_order.line_items.first.update! quantity: 2
 
       expect {
-        # No route exists yet for updating the placed backorder, so we run the
-        # completion job directly instead of via its URL:
-        # CompleteBackorderJob.perform_now(distributor_owner, distributor,
-        #                                 distributor_order_cycle, backorder_url)
         perform_enqueued_jobs(only: CompleteBackorderJob)
         supplier_line_item.reload
-      }.to change { supplier_line_item.quantity }.to(2)
-    rescue Faraday::UnprocessableEntityError => e
-      # Output error message for convenient debugging
-      expect(e.response[:body]).to be_blank
+      }.to change { supplier_line_item.quantity }.from(1).to(2)
     end
   end
 end

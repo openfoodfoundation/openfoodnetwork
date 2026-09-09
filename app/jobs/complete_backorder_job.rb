@@ -22,7 +22,7 @@ class CompleteBackorderJob < ApplicationJob
 
     return if order&.lines.blank?
 
-    semantic_id = DfcBuilder.semantic_id(order.lines[0].offer.offeredItem)
+    semantic_id = DfcBuilder.extract_semantic_id(order.lines[0].offer.offeredItem)
     urls = FdcUrlBuilder.new(semantic_id)
 
     BackorderUpdater.new.update(order, user, distributor, order_cycle)
