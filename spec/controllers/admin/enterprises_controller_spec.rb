@@ -587,6 +587,20 @@ RSpec.describe Admin::EnterprisesController do
         expect(profile_enterprise1.owner).to eq original_owner
         expect(profile_enterprise2.owner).to eq original_owner
       end
+
+      it "ignores enterprises that no longer exist and saves the rest" do
+        allow(controller).to receive_messages spree_current_user: original_owner
+        missing_id = Enterprise.maximum(:id) + 1
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, sells: 'any' },
+          '1' => { id: missing_id, sells: 'any' }
+        } } }
+
+        spree_put :bulk_update, bulk_enterprise_params
+
+        expect(profile_enterprise1.reload.sells).to eq 'any'
+        expect(Enterprise.where(id: missing_id)).to be_empty
+      end
     end
 
     context "as super admin" do
