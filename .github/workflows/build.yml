@@ -213,7 +213,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
-          path: tmp/capybara/screenshots/*.png
+          path: tmp/capybara/*.png
           retention-days: 7
           if-no-files-found: ignore
 
