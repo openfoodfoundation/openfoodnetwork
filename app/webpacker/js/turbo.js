@@ -15,7 +15,7 @@ document.addEventListener("turbo:frame-missing", (event) => {
 document.addEventListener("turbo:submit-end", (event) => {
   if (!event.detail.success) {
     // show error message on failure
-    showHttpError(event.detail.fetchResponse);
+    showHttpError(event.detail.error ?? event.detail.fetchResponse);
     event.preventDefault();
   }
 });
