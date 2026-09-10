@@ -6,11 +6,13 @@ require 'open_food_network/scope_variant_to_hub'
 
 class CartService
   attr_accessor :order
-  attr_reader :errors
+  # Variants whose quantity had to be reduced to the available stock:
+  attr_reader :errors, :capped_variants
 
   def initialize(order)
     @order = order
     @errors = ActiveModel::Errors.new(self)
+    @capped_variants = []
   end
 
   def populate(from_hash)
@@ -22,6 +24,21 @@ class CartService
       attempt_cart_add_variants variants_data
       overwrite_variants variants_data
     end
+    valid?
+  end
+
+  # Sets the quantity of a single variant in the cart, leaving all other
+  # line items untouched. A quantity of zero removes the variant.
+  def update_variant(variant_id, quantity, max_quantity = nil)
+    @distributor, @order_cycle = distributor_and_order_cycle
+
+    variant_data = { variant_id: variant_id.to_i, quantity: quantity.to_i,
+                     max_quantity: max_quantity&.to_i }
+
+    @order.with_lock do
+      attempt_cart_add_variants [variant_data]
+    end
+
     valid?
   end
 
@@ -68,6 +85,7 @@ class CartService
 
   def cart_add(variant, quantity, max_quantity)
     attributes = final_quantities(variant, quantity, max_quantity)
+    @capped_variants << variant if attributes[:quantity] < quantity.to_i
 
     if attributes[:quantity].positive?
       @order.contents.update_or_create(variant, attributes)

@@ -28,6 +28,12 @@ module ApplicationHelper
     OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
   end
 
+  # The product grid view comes with the server-rendered Turbo cart,
+  # which replaces the AngularJS cart in the shopfront.
+  def use_turbo_cart?
+    feature?(:product_grid_view, spree_current_user)
+  end
+
   def language_meta_tags
     return if I18n.available_locales.one?
 

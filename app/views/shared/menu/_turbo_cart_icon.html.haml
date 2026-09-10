@@ -1,0 +1,9 @@
+-# locals: (link_id: nil)
+- count = current_order ? current_order.line_items.sum(&:quantity) : 0
+%span.cart-span{ class: ("dirty" if count.zero?), data: { "cart-sidebar-target": "icon" } }
+  %a.icon{ id: link_id, data: { action: "click->cart-sidebar#toggle" } }
+    %span
+      = t("shared.menu.cart.cart")
+    %span.count
+      = image_pack_tag "menu/icn-cart.svg"
+      %span{ data: { "cart-sidebar-target": "counter" } }= count

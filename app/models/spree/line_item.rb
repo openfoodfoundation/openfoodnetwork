@@ -165,11 +165,13 @@ module Spree
       @preferred_shipment = shipment
     end
 
+    # Returns true if the quantity was reduced, otherwise false.
     def cap_quantity_at_stock!
       scoper.scope(variant)
-      return if variant.on_demand
+      return false if variant.on_demand
+      return false if quantity <= variant.on_hand
 
-      update!(quantity: variant.on_hand) if quantity > variant.on_hand
+      update!(quantity: variant.on_hand)
     end
 
     def has_tax?
