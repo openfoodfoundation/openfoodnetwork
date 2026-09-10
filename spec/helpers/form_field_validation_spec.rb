@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe ActionView::Helpers::FormBuilder do
+  before { FormBuilderMaxlength.enabled = true }
+  after { FormBuilderMaxlength.enabled = nil }
+
   let(:view) { ActionView::Base.new(ActionController::Base.view_paths, {}, ActionController::Base.new) }
 
   let(:model_class) do

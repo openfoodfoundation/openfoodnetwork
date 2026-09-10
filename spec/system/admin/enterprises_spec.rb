@@ -859,15 +859,13 @@ RSpec.describe '
               expect(page).to have_checked_field "Create custom tab in shopfront"
             end
 
-            it "binds the custom tab title to the allowed maximum length" do
+            it "can't save custom tab fields if title is too long" do
               fill_in "enterprise_custom_tab_attributes_title", with: "a" * 21
-              expect(page).to have_field("enterprise_custom_tab_attributes_title",
-                                         with: "a" * 20)
-
               fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
               click_button 'Update'
-              expect(distributor1.reload.custom_tab.title).to eq("a" * 20)
-              expect(distributor1.reload.custom_tab.content).to include("Custom tab content")
+              expect(page).
+                to have_content("Custom tab title is too long (maximum is 20 characters)")
+              expect(distributor1.reload.custom_tab).to be_nil
             end
           end
 

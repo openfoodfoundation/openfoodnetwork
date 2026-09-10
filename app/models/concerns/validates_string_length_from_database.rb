@@ -18,18 +18,22 @@ module ValidatesStringLengthFromDatabase
 
   def validate_string_length_from_database
     self.class.columns.each do |column|
-      next unless %i[string text].include?(column.type)
-      next if column.respond_to?(:array) && column.array
-
-      limit = column.limit
-      next if limit.nil?
-
-      value = public_send(column.name)
-      next if value.blank?
-      next unless value.is_a?(String)
-      next if value.length <= limit
-
-      errors.add(column.name, :too_long, count: limit)
+      add_too_long_error(column) if validated_length_column?(column)
     end
+  end
+
+  # Whether a column is a string/text column with a length limit.
+  def validated_length_column?(column)
+    %i[string text].include?(column.type) &&
+      !(column.respond_to?(:array) && column.array) &&
+      !column.limit.nil?
+  end
+
+  def add_too_long_error(column)
+    value = public_send(column.name)
+    return unless value.is_a?(String)
+    return if value.blank? || value.length <= column.limit
+
+    errors.add(column.name, :too_long, count: column.limit)
   end
 end

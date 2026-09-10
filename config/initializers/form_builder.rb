@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Allow some application_helper methods to be used in the scoped form_for manner
 #
@@ -53,6 +55,7 @@ module ActionView
 
       def with_maxlength(method, options)
         return options if options.key?(:maxlength) || options.key?("maxlength")
+        return options unless FormBuilderMaxlength.enabled?
         return options unless object
 
         maxlength = maxlength_for(method)

@@ -246,7 +246,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
     end
 
-    context "with over-limit input" do
+    context "with invalid data" do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
       let(:invalid_product_name) { "A" * 256 }
 
@@ -258,14 +258,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
       end
 
-      it "truncates over-limit product and variant names on save" do
-        # Name and SKU fields enforce a maxlength, so over-limit input is
-        # trimmed to the allowed length rather than rejected with an error.
-        within row_containing_name("A" * 255) do
-          expect(page).to have_field "Name", with: "A" * 255
-        end
-
-        # Update variant with over-limit data too
+      it "shows errors for both product and variant fields" do
+        # Update variant with invalid data too
         within row_containing_name("Medium box") do
           fill_in "Name", with: "L" * 256
           fill_in "SKU", with: "1" * 256
@@ -279,25 +273,36 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect {
           click_button "Save changes"
 
-          expect(page).to have_content "Changes saved"
+          expect(page).to have_content "1 product was saved correctly"
+          expect(page).to have_content "1 product could not be saved"
+          expect(page).to have_content "Please review the errors and try again"
           product_a.reload
-          variant_a1.reload
-        }.to change { product_a.name }.from("Apples").to("A" * 255)
+        }.not_to change { product_a.name }
 
-        expect(variant_a1.display_name).to eq "L" * 255
-        expect(variant_a1.sku).to eq "1" * 255
-        expect(product_b.reload.name).to eq "Bananes"
+        # (there's no identifier displayed, so the user must remember which product it is..)
+        within row_containing_name(invalid_product_name) do
+          expect(page).to have_field "Name", with: invalid_product_name
+          expect(page).to have_content "is too long"
+        end
+
+        pending "bug #11748"
+        within row_containing_name("L" * 256) do
+          expect(page).to have_field "Name", with: "L" * 256
+          expect(page).to have_field "SKU", with: "1" * 256
+          expect(page).to have_content "is too long"
+          expect(page).to have_field "Price", with: "10.25" # other updated value is retained
+        end
       end
 
-      it "allows editing a truncated product name to a valid value" do
+      it "saves changes after fixing errors" do
         expect {
           click_button "Save changes"
 
-          expect(page).to have_content "Changes saved"
+          expect(page).to have_content("1 product could not be saved")
           product_a.reload
-        }.to change { product_a.name }.from("Apples").to("A" * 255)
+        }.not_to change { product_a.name }
 
-        within row_containing_name("A" * 255) do
+        within row_containing_name(invalid_product_name) do
           fill_in "Name", with: "Pommes"
         end
 
@@ -306,6 +311,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
           expect(page).to have_content "Changes saved"
           product_a.reload
+          variant_a1.reload
         }.to change { product_a.name }.to("Pommes")
       end
     end
@@ -493,7 +499,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           expect(new_variant_row).to be_present
 
           within new_variant_row do
-            fill_in "Name", with: "N" * 256 # over-limit, trimmed by maxlength
+            fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
             # Unit, producer and category are pre-filled from the existing variant,
             # so the new row is valid apart from the too-long Name and SKU above.
@@ -501,48 +507,36 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           end
         end
 
-        it "shows errors for missing new variant fields" do
-          # Client side validation
-          click_button "Save changes"
-          within new_variant_row do
-            expect_browser_validation('select[aria-label="Unit scale"]')
+        it "shows errors for both existing and new variant fields" do
+          # Update existing variant with invalid data too
+          within row_containing_name("Medium box") do
+            fill_in "Name", with: "M" * 256
+            fill_in "SKU", with: "m" * 256
+            fill_in "Price", with: "10.25"
           end
 
-          # Fix error
-          within new_variant_row do
-            tomselect_select("Weight (kg)", from: "Unit scale")
-          end
-
-          # Client side validation
-          click_button "Save changes"
-          within new_variant_row do
-            # In CI we get "Please fill out this field." and locally we get
-            # "Please fill in this field."
-            expect_browser_validation('input[aria-label="Unit value"]')
-          end
-
-          # Fix error
-          within new_variant_row do
-            fill_in "Unit value", with: "200"
-          end
-
-          # The new variant is rejected because its producer and category are
-          # missing.
           expect {
             click_button "Save changes"
 
             expect(page).to have_content "1 product could not be saved"
             expect(page).to have_content "Please review the errors and try again"
-          }.not_to change { product_a.variants.count }
+            variant_a1.reload
+          }.not_to change { variant_a1.display_name }
 
-          # New variant is retained with its (truncated) values and shows the
-          # "must exist" errors.
-          within row_containing_name("N" * 255) do
-            expect(page).to have_field "Name", with: "N" * 255
-            expect(page).to have_field "SKU", with: "n" * 255
-            expect(page.find('.col-producer')).to have_content('must exist')
-            expect(page.find('.col-category')).to have_content('must exist')
+          # New variant: unit, producer and category are pre-filled, so the only
+          # errors are the too-long Name and SKU.
+          within row_containing_name("N" * 256) do
+            expect(page).to have_field "Name", with: "N" * 256
+            expect(page).to have_field "SKU", with: "n" * 256
+            expect(page).to have_content "is too long"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
+          end
+
+          # Existing variant
+          within row_containing_name("M" * 256) do
+            expect(page).to have_field "Name", with: "M" * 256
+            expect(page).to have_field "SKU", with: "m" * 256
+            expect(page).to have_content "is too long"
           end
         end
 
@@ -560,7 +554,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             variant_a1.reload
           }.not_to change { variant_a1.display_name }
 
-          within row_containing_name("N" * 255) do
+          within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
 
@@ -595,7 +589,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
           expect(page).to have_text("1 product could not be saved.")
 
-          within row_containing_name("N" * 255) do
+          within row_containing_name("N" * 256) do
             page.find(".vertical-ellipsis-menu").click
             page.find('a', text: 'Remove').click
           end
