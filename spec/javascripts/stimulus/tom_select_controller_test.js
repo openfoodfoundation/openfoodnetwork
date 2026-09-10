@@ -271,7 +271,7 @@ describe("TomSelectController", () => {
       openDropdown();
 
       await waitFor(() => {
-        expect(showHttpError).toHaveBeenCalledWith(500);
+        expect(showHttpError).toHaveBeenCalledWith(expect.objectContaining({ status: 500 }));
       });
 
       expectDropdownWithNoResults();
