@@ -61,7 +61,7 @@ export default class extends Controller {
     fetch(url)
       .then((response) => {
         if (!response.ok) {
-          showHttpError(response.status);
+          showHttpError(response);
           throw response;
         }
         return response.json();
