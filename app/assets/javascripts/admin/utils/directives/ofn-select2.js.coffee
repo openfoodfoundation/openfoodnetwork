@@ -39,7 +39,6 @@ angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $fil
     init = ->
       scope.data.unshift(scope.blank) if scope.blank? && typeof scope.blank is "object"
 
-      item.name = $sanitize(item.name) for item in scope.data
       element.select2
         multiple: scope.multiple
         placeholder: scope.placeholder
@@ -48,6 +47,6 @@ angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $fil
           filtered = $filter('filter')(scope.data,scope.filter)
           { results: filtered, text: scope.text }
         formatSelection: (item) ->
-          item[scope.text]
+          $sanitize(item[scope.text])
         formatResult: (item) ->
-          item[scope.text]
+          $sanitize(item[scope.text])
