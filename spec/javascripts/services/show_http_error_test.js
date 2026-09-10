@@ -17,13 +17,19 @@ describe("showHttpError service", function () {
     delete global.I18n;
   });
 
-  it("ignores missing errors", function () {
+  it("alerts on missing errors (offline)", function () {
     showHttpError(undefined);
-    expect(global.alert).not.toHaveBeenCalled();
+    expect(global.I18n.t).toHaveBeenCalledWith("errors.network_error.message");
+    expect(global.alert).toHaveBeenCalledWith("errors.network_error.message");
   });
 
   it("ignores aborted fetch requests", function () {
     showHttpError({ name: "AbortError" });
+    expect(global.alert).not.toHaveBeenCalled();
+  });
+
+  it("ignores aborted XHRs with status 0", function () {
+    showHttpError({ status: 0 });
     expect(global.alert).not.toHaveBeenCalled();
   });
 
@@ -42,6 +48,16 @@ describe("showHttpError service", function () {
   it("alerts on server errors", function () {
     showHttpError({ statusCode: 500 });
     expect(global.I18n.t).toHaveBeenCalledWith("errors.general_error.message");
+    expect(global.alert).toHaveBeenCalledWith("errors.general_error.message");
+  });
+
+  it("supports legacy status numbers", function () {
+    showHttpError(401);
+    expect(global.alert).toHaveBeenCalledWith("errors.unauthorized.message");
+  });
+
+  it("alerts on Turbo frame-missing responses", function () {
+    showHttpError({ status: 500 });
     expect(global.alert).toHaveBeenCalledWith("errors.general_error.message");
   });
 });
