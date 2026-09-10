@@ -270,6 +270,67 @@ RSpec.describe ProductsRenderer do
       end
     end
 
+    describe "preloading" do
+      # Building the view reads `producer` on every variant, which walks source_variants and
+      # their enterprise, and `on_hand`/`on_demand`, which read stock items. Each of these
+      # tables has to be queried once for the whole page, not once per variant.
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants:) }
+      let!(:variants) { Array.new(4) { create(:variant, product:) } }
+
+      # Build the fixtures and the renderer up front so their queries aren't counted below.
+      before { products_renderer }
+
+      # Every count below is per page or per product. None of them may grow with the number of
+      # variants: losing a preload shows up here as spree_variants, enterprises or
+      # spree_stock_items climbing with the four variants above.
+      it "reads the whole page in a fixed number of queries" do
+        expect {
+          products_renderer.products_view
+        }.to query_database(
+          select: {
+            spree_products: 1,
+            # The variants themselves, eager loaded with their price, enterprise, stock item
+            # and linked source variant; plus product.variants.first to inherit properties.
+            spree_variants: 2,
+            spree_assets: 1,
+            spree_product_properties: 1,
+            producer_properties: 1,
+            enterprises: 1,
+            enterprise_fees: 2,
+          }
+        )
+      end
+    end
+
+    # Stock is read from preloaded rows so the page doesn't query once per variant, and that
+    # shortcut doesn't know about variant overrides. These guard the branch that hands back to
+    # the variant when inventory is enabled: drop it and the shop quietly shows the producer's
+    # stock instead of the hub's, while the VariantOverride specs still pass.
+    describe "on_hand" do
+      subject(:variant_view) { products_renderer.products_view.first.variants.first }
+
+      let!(:v1) { create(:variant, product:, on_hand: 3) }
+
+      it "is the producer's stock" do
+        expect(variant_view.on_hand).to eq 3
+      end
+
+      context "with inventory enabled", feature: :inventory do
+        # The controller passes the feature toggle in, see ProductsController#index.
+        subject(:products_renderer) {
+          described_class.new(distributor, order_cycle, customer, {}, inventory_enabled: true)
+        }
+
+        let!(:variant_override) {
+          create(:variant_override, hub: distributor, variant: v1, count_on_hand: 7)
+        }
+
+        it "is the hub's overridden stock rather than the producer's" do
+          expect(variant_view.on_hand).to eq 7
+        end
+      end
+    end
+
     describe "loading variants" do
       subject(:variant_ids) { products_renderer.products_view.first.variants.map(&:id) }
 

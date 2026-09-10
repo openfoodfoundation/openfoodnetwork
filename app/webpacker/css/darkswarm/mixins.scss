@@ -232,3 +232,13 @@
 @mixin force-wrap {
   word-wrap: break-word;
 }
+
+@mixin line-clamp($nb-line) {
+  // Clip content instead of wrapping to new line
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $nb-line; /* number of lines to show */
+  line-clamp: $nb-line;
+}

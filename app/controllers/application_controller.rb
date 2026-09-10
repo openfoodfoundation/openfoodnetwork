@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   helper 'checkout'
   helper 'link'
   helper 'terms_and_conditions'
+  helper 'unit_price'
 
   protect_from_forgery
 
