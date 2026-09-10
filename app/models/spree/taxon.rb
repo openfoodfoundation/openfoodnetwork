@@ -45,7 +45,13 @@ module Spree
     end
 
     def name=(value)
-      self.name_i18n = (name_i18n || {}).merge(I18n.locale.to_s => value)
+      updates = { I18n.locale.to_s => value }
+      # Validation requires the default locale. If it isn't present yet,
+      # mirror the value there so legacy usage (factory, plain `name` param)
+      # remains valid regardless of the current locale context.
+      updates[I18n.default_locale.to_s] = value if
+        name_i18n[I18n.default_locale.to_s].blank?
+      self.name_i18n = (name_i18n || {}).merge(updates)
       write_attribute(:name, value)
     end
 

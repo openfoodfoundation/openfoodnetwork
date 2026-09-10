@@ -210,7 +210,9 @@ RSpec.describe Spree::Taxon do
     it "writes into name_i18n keyed by the current locale" do
       I18n.with_locale(:es) do
         taxon = described_class.new(name: "Verduras")
-        expect(taxon.name_i18n).to eq({ "es" => "Verduras" })
+        expect(taxon.name_i18n).to eq(
+          { "es" => "Verduras", I18n.default_locale.to_s => "Verduras" }
+        )
       end
     end
   end
