@@ -44,7 +44,7 @@ module Api
       end
 
       def update
-        if customer.update(customer_params)
+        if customer.update(customer_params.except("enterprise_id"))
           render json: Api::V1::CustomerSerializer.new(customer)
         else
           invalid_resource! customer

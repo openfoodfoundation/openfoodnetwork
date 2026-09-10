@@ -347,7 +347,7 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml" do
 
       parameter name: :customer, in: :body, schema: {
         type: :object,
-        properties: CustomerSchema.writable_attributes,
+        properties: CustomerSchema.writable_attributes.except(:enterprise_id),
         required: CustomerSchema.required_attributes
       }
 
@@ -366,6 +366,22 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml" do
           expect(json_response[:data][:attributes]).to include(
             tags: ["long-term"],
           )
+        end
+      end
+
+      describe "updating enterprise" do
+        let(:new_enterprise) { create(:enterprise) }
+
+        it "ignores the enterprise_id parameter " do
+          expect {
+            put "/api/v1/customers/#{customer1.id}", params: {
+              customer: {
+                enterprise_id: new_enterprise.id,
+              }
+            }
+          }.not_to change { customer1.reload.enterprise }
+
+          expect(response).to have_http_status :ok
         end
       end
 

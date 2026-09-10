@@ -55,7 +55,7 @@ module Admin
 
     # copy of Admin::ResourceController without flash notice
     def update
-      if @object.update(permitted_resource_params)
+      if @object.update(customer_params.except("enterprise_id"))
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
@@ -106,7 +106,9 @@ module Admin
     end
 
     def managed_enterprise_id
-      @managed_enterprise_id ||= Enterprise.managed_by(spree_current_user).
+      return @managed_enterprise_id if defined?(@managed_enterprise_id)
+
+      @managed_enterprise_id = Enterprise.managed_by(spree_current_user).
         select('enterprises.id').find_by(id: params[:enterprise_id])
     end
 
@@ -129,11 +131,6 @@ module Admin
         ship_address_attributes: PermittedAttributes::Address.attributes,
         bill_address_attributes: PermittedAttributes::Address.attributes,
       )
-    end
-
-    # Used in Admin::ResourceController#update
-    def permitted_resource_params
-      customer_params
     end
 
     def tag_rule_mapping
