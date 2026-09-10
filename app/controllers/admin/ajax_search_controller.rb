@@ -40,12 +40,10 @@ module Admin
       per_page = 30
 
       # Taxon#name is locale-aware (resolved from name_i18n in Ruby), so it can't be
-      # filtered/sorted/paginated in SQL via pluck/where/order like the other search
-      # endpoints in this controller. We load all taxons and do it in Ruby instead.
-      # Instances are expected to have a reduced number of taxons, so this should be negligible;
-      # revisit if that assumption changes
-      taxons = Spree::Taxon.all.to_a
-      taxons = filter_taxons(taxons)
+      # sorted/paginated in SQL via order/limit like the other search endpoints.
+      # We filter in SQL when possible (to avoid instantiating all records for a search)
+      # then sort and paginate in Ruby.
+      taxons = filter_taxons_sql.to_a
       taxons = taxons.sort_by(&:name)
       total_count = taxons.size
       items = taxons.slice((page - 1) * per_page, per_page) || []
@@ -54,15 +52,14 @@ module Admin
       { results: results, pagination: { more: (page * per_page) < total_count } }
     end
 
-    def filter_taxons(taxons)
+    def filter_taxons_sql
       search_term = params[:q]
-      return taxons if search_term.blank?
+      return Spree::Taxon.all if search_term.blank?
 
-      pattern = Regexp.new(Regexp.escape(search_term), Regexp::IGNORECASE)
-      taxons.select do |taxon|
-        taxon.name.match?(pattern) ||
-          taxon.name_i18n.values.any? { |v| pattern.match?(v.to_s) }
-      end
+      escaped = ActiveRecord::Base.sanitize_sql_like(search_term)
+      # Casting jsonb to text searches across all locale keys and values.
+      # A GIN index on name_i18n helps PostgreSQL skip rows that can't match.
+      Spree::Taxon.where("name_i18n::text ILIKE ?", "%#{escaped}%")
     end
 
     def apply_search_filter(query)

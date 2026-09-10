@@ -9,6 +9,10 @@ module Spree
 
     validate :name_i18n_has_at_least_one_translation
 
+    # The legacy `name` column is kept for now to make rollback easy if issues
+    # arise. It will be removed in a follow-up PR once we confirm nothing still
+    # reads it directly. The `name=` setter also stays in place so the API v0
+    # endpoint can continue accepting a plain `name` parameter.
     before_validation :sync_legacy_name_column,
                       if: -> { self[:name].blank? && name_i18n.present? }
 
@@ -28,7 +32,7 @@ module Spree
     end
 
     def name_i18n_has_at_least_one_translation
-      return if name_i18n.is_a?(Hash) && name_i18n.values.any?(&:present?)
+      return if name_i18n.is_a?(Hash) && name_i18n[I18n.default_locale.to_s].present?
 
       errors.add(:name_i18n, :blank)
     end

@@ -121,11 +121,20 @@ RSpec.describe Spree::Taxon do
 
     it "overwrites a locale's translation when it is resubmitted" do
       taxon = create(:taxon, name: "Fruit")
-      taxon.update_column(:name_i18n, { "en" => "Fruit", "es" => "Fruta vieja" })
+      taxon.update_column(:name_i18n,
+                          {
+                            I18n.default_locale.to_s => "Fruit",
+                            "es" => "Fruta vieja"
+                          })
 
       taxon.update(name_i18n: { "es" => "Fruta" })
 
-      expect(taxon.reload.name_i18n).to eq({ "en" => "Fruit", "es" => "Fruta" })
+      expect(taxon.reload.name_i18n).to eq(
+        {
+          I18n.default_locale.to_s => "Fruit",
+          "es" => "Fruta"
+        }
+      )
     end
   end
 
@@ -145,20 +154,6 @@ RSpec.describe Spree::Taxon do
     it "still exposes the original name column via read_attribute" do
       expect(taxon.read_attribute(:name)).to eq("Vegetables")
     end
-
-    context "after backfilling name_i18n from the legacy name column" do
-      before do
-        taxon.update_column(:name_i18n, { I18n.default_locale.to_s => taxon.name })
-      end
-
-      it "has a non-empty name_i18n hash" do
-        expect(taxon.reload.name_i18n).not_to be_empty
-      end
-
-      it "stores the legacy name under the default locale" do
-        expect(taxon.name_i18n[I18n.default_locale.to_s]).to eq("Vegetables")
-      end
-    end
   end
 
   describe "#name" do
@@ -175,7 +170,10 @@ RSpec.describe Spree::Taxon do
 
     context "when the current locale is missing but default locale is present" do
       it "falls back to the default locale" do
-        taxon.update_column(:name_i18n, { "en" => "Vegetables" })
+        taxon.update_column(:name_i18n, {
+                              "en_AU" => "Veggies",
+                              I18n.default_locale.to_s => "Vegetables"
+                            })
         I18n.with_locale(:es) do
           expect(taxon.reload.name).to eq("Vegetables")
         end
@@ -232,6 +230,17 @@ RSpec.describe Spree::Taxon do
       taxon = described_class.new
       expect(taxon).not_to be_valid
       expect(taxon.errors[:name_i18n]).to include("can't be blank")
+    end
+
+    it "is invalid when only a non-default locale is present" do
+      taxon = described_class.new(name_i18n: { "es" => "Verduras" })
+      expect(taxon).not_to be_valid
+      expect(taxon.errors[:name_i18n]).to include("can't be blank")
+    end
+
+    it "is valid when the default locale is present" do
+      taxon = described_class.new(name_i18n: { I18n.default_locale.to_s => "Vegetables" })
+      expect(taxon).to be_valid
     end
   end
 end

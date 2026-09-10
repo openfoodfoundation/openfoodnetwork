@@ -4,7 +4,8 @@
   %br
   -# Taxon#name is locale-aware (resolved from name_i18n in Ruby), so it can't be
   -# plucked/ordered in SQL like before. We load full records and sort in Ruby instead.
-  -# Instances are expected to have a reduced number of 100 taxons, so this should be negligible.
+  -# Instances are expected to have <100 taxons, so this should be negligible.
+  -# The options list here is a good candidate for low-level template caching if needed.
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
       aria_label: t('.product_category'),

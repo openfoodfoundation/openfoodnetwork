@@ -56,7 +56,7 @@ RSpec.describe Spree::Admin::TaxonsController do
 
         taxon = Spree::Taxon.last
         expect(taxon.name_i18n).to eq(
-          { "es" => "Verduras", I18n.default_locale.to_s => "Vegetables" }
+          { I18n.default_locale.to_s => "Vegetables", "es" => "Verduras" }
         )
         expect(taxon.name).to eq("Vegetables")
       end
@@ -89,7 +89,7 @@ RSpec.describe Spree::Admin::TaxonsController do
         }
 
         expect(new_taxon.reload.name_i18n).to eq(
-          { "es" => "Verduras", I18n.default_locale.to_s => "Vegetables" }
+          { I18n.default_locale.to_s => "Vegetables", "es" => "Verduras" }
         )
       end
     end
