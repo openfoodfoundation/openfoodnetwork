@@ -161,8 +161,8 @@ GEM
       sprockets (>= 3.0, < 5)
       sprockets-rails
       tilt
-    angular_rails_csrf (7.0.2)
-      railties (>= 3, < 9)
+    angular_rails_csrf (8.0.0)
+      railties (>= 7, < 9)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
     arel-helpers (2.17.0)
@@ -1114,7 +1114,7 @@ CHECKSUMS
   aes_key_wrap (1.1.0) sha256=b935f4756b37375895db45669e79dfcdc0f7901e12d4e08974d5540c8e0776a5
   afm (1.0.0) sha256=5bd4d6f6241e7014ef090985ec6f4c3e9745f6de0828ddd58bc1efdd138f4545
   angular-rails-templates (1.4.0) sha256=1eaf00a796eaeca9574acdc1adc3c4f005d004c3d938003520fa19853236398d
-  angular_rails_csrf (7.0.2) sha256=b9672752efa7ec1089c864e3bd130b44bd7711471380f3dc179b03d368d31e7f
+  angular_rails_csrf (8.0.0) sha256=4784a99faff98c571f00936992187b932ee378a3103fd5a92d3f3bd35e97b52d
   angularjs-file-upload-rails (2.4.1) sha256=6de1d8a70b0b6ccd5656786bc42d2e949d70d1c126dc6c02d30addc6175a401f
   angularjs-rails (1.8.0) sha256=fde5805a84dd760e7af29ceb528391adf7e9ed63f24857b43954a0f7b3847405
   arel-helpers (2.17.0) sha256=0af23b8d32c3ef670eda04e6e371ab177ed684f0edaa06aeed57f822bc0acf6d
