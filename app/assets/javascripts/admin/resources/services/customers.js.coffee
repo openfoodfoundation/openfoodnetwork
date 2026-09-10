@@ -35,6 +35,7 @@ angular.module("admin.resources").factory "Customers", ($q, $injector, InfoDialo
 
     load: (customers) ->
       for customer in customers
+        customer.enterprise_charges_sales_tax = String(customer.enterprise_charges_sales_tax) if customer.enterprise_charges_sales_tax?
         @all.push customer
         @byID[customer.id] = customer
         @pristineByID[customer.id] = angular.copy(customer)

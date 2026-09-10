@@ -6,6 +6,19 @@ RSpec.describe Customer do
   it { is_expected.to belong_to(:bill_address).optional }
   it { is_expected.to belong_to(:ship_address).optional }
   it { is_expected.to have_many(:customer_account_transactions) }
+  it {
+    is_expected.to define_enum_for(:customer_type)
+      .with_values(individual: "individual", enterprise: "enterprise")
+      .with_default("individual")
+      .backed_by_column_of_type(:enum)
+  }
+
+  context "for an enterprise customer" do
+    before { allow(subject).to receive(:enterprise?).and_return(true) }
+
+    it { is_expected.to validate_presence_of(:enterprise_name) }
+    it { is_expected.to validate_presence_of(:enterprise_abn) }
+  end
 
   describe 'an existing customer' do
     let(:customer) { create(:customer) }
@@ -132,6 +145,49 @@ RSpec.describe Customer do
 
       it 'returns customers with completed orders' do
         expect(Customer.visible).to match_array [customer4, customer5]
+      end
+    end
+  end
+
+  describe "#full_name" do
+    context "when customer type is individual" do
+      let(:customer) {
+        build(:customer, customer_type: "individual", first_name: "Jane", last_name: "Doe")
+      }
+
+      it "returns first and last name joined" do
+        expect(customer.full_name).to eq("Jane Doe")
+      end
+
+      context "when only first name is present" do
+        let(:customer) {
+          build(:customer, customer_type: "individual", first_name: "Jane", last_name: nil)
+        }
+
+        it "returns first name without trailing space" do
+          expect(customer.full_name).to eq("Jane")
+        end
+      end
+
+      context "when both names are blank" do
+        let(:customer) {
+          build(:customer, customer_type: "individual", first_name: nil, last_name: nil)
+        }
+
+        it "returns an empty string" do
+          expect(customer.full_name).to eq("")
+        end
+      end
+    end
+
+    context "when customer type is enterprise" do
+      let(:customer) {
+        build(:customer, customer_type: "enterprise", enterprise_name: "Acme Corp",
+                         enterprise_acn: "123456789", enterprise_abn: "11223344556")
+      }
+
+      it "returns the enterprise name" do
+        expect(customer.full_name).to eq("Acme Corp")
       end
     end
   end
