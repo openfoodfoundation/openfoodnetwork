@@ -74,6 +74,7 @@ Spree::Core::Engine.routes.draw do
 
 
     post "orders/bulk_credit", to: "orders#bulk_credit"
+    post "orders/bulk_invoice", to: "orders#bulk_invoice"
 
     resources :orders, except: [:show, :destroy] do
       member do

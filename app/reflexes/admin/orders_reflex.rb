@@ -32,34 +32,6 @@ module Admin
       end
     end
 
-    def bulk_invoice(params)
-      visible_orders = bulk_load_orders(params)
-
-      return if notify_if_abn_related_issue(visible_orders)
-
-      file_id = "#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}"
-
-      cable_ready.append(
-        selector: "#orders-index",
-        html: render(partial: "spree/admin/orders/bulk/invoice_modal",
-                     locals: { invoice_url: "/admin/orders/invoices/#{file_id}" })
-      ).broadcast
-
-      # Preserve order of bulk_ids.
-      # The ids are supplied in the sequence of the orders screen and may be
-      # sorted, for example by last name of the customer.
-      visible_order_ids = params[:bulk_ids].map(&:to_i) & visible_orders.pluck(:id)
-
-      BulkInvoiceJob.perform_later(
-        visible_order_ids,
-        "tmp/invoices/#{file_id}.pdf",
-        channel: SessionChannel.for_request(request),
-        current_user_id: current_user.id
-      )
-
-      morph :nothing
-    end
-
     def cancel_orders(params)
       cancelled_orders = Orders::BulkCancelService.new(params, current_user).call
 
@@ -118,44 +90,6 @@ module Admin
 
     def set_param_for_controller
       params[:id] = @order.number
-    end
-
-    def render_business_number_required_error(distributors)
-      distributor_names = distributors.pluck(:name)
-
-      flash[:error] = I18n.t(:must_have_valid_business_number,
-                             enterprise_name: distributor_names.join(", "))
-      morph_admin_flashes
-    end
-
-    def bulk_load_orders(params)
-      editable_orders.invoiceable.where(id: params[:bulk_ids])
-    end
-
-    def notify_if_abn_related_issue(orders)
-      return false unless abn_required?
-
-      distributors = distributors_without_abn(orders)
-      return false if distributors.empty?
-
-      render_business_number_required_error(distributors)
-      true
-    end
-
-    def abn_required?
-      Spree::Config.enterprise_number_required_on_invoices?
-    end
-
-    def distributors_without_abn(orders)
-      abn = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
-              [nil, ""]
-            else
-              [nil]
-            end
-      Enterprise.where(
-        id: orders.select(:distributor_id),
-        abn:,
-      )
     end
   end
 end
