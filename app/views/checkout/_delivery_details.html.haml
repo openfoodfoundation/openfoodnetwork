@@ -15,11 +15,7 @@
     %div
       = @order.ship_address.address2
   %div
-    = @order.ship_address.city
-  %div
-    = @order.ship_address.state
-  %div
-    = @order.ship_address.zipcode
+    = @order.ship_address.address_part2
   %div
     = @order.ship_address.country
   - if @order.special_instructions.present?

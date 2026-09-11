@@ -738,7 +738,6 @@ mr:
       tabs:
         product_details: "उत्पादन तपशील"
         group_buy_options: "गट खरेदी पर्याय"
-        images: "इमेजेस "
         variants: "प्रकार"
         product_properties: "उत्पादन गुणधर्म"
     products_v3:
@@ -1221,6 +1220,8 @@ mr:
         visible: दृश्यमान?
         owner: मालक
         producer: उत्पादक
+        search: सर्च
+        clear: क्लिअर
       change_type_form:
         producer_profile: उत्पादक प्रोफाइल
         connect_ofn: OFN द्वारे कनेक्ट करा
@@ -1690,6 +1691,7 @@ mr:
         stripe_connect_cancelled: "Stripeचे कनेक्शन रद्द केले गेले आहे"
         stripe_connect_success: "Stripe खाते यशस्वीरित्या कनेक्ट झाले"
         stripe_connect_fail: क्षमस्व, तुमच्या Stripe खात्याचे कनेक्शन अयशस्वी झाले
+        remove_terms_and_conditions_success: "अटी आणि नियम फाइल यशस्वीरित्या काढली"
       stripe_connect_settings:
         resource: Stripe Connect कॉन्फिगरेशन
     resend_confirmation_emails_feedback:
@@ -3155,8 +3157,6 @@ mr:
           select_all_variants: "सर्व %{total_number_of_variants} प्रकार निवडा"
           variants_loaded: "%{total_number_of_variants} चे %{num_of_variants_loaded} प्रकार लोड केले"
           loading_variants: "प्रकार लोड करत आहे"
-          no_variants: "या उत्पादनासाठी कोणतेही प्रकार उपलब्ध नाहीत ( इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केलेले)."
-          some_variants_hidden: "(काही प्रकार इन्व्हेंटरी सेटिंग्जद्वारे अदृश्यमान केले जाऊ शकतात)"
       enterprise_fees:
         inherit_from_product: "उत्पादनाकडून मिळवा"
       orders:
@@ -3681,12 +3681,6 @@ mr:
     minimal_amount: "किमान रक्कम"
     normal_amount: "सामान्य रक्कम"
     discount_amount: "सवलत रक्कम"
-    no_images_found: "कोणतीही प्रतिमा आढळली नाही"
-    new_image: "नवीन इमेज"
-    filename: "फाईलचे नाव"
-    alt_text: "पर्यायी मजकूर"
-    thumbnail: "लघुप्रतिमा"
-    back_to_images_list: "प्रतिमा सूचीकडे परत"
     email: ईमेल
     account_updated: "खाते अपडेट केले!"
     email_updated: "नवीन ईमेलची पुष्टी झाल्यानंतर खाते अद्यतनित केले जाईल."
@@ -3715,6 +3709,7 @@ mr:
     actions:
       update: "अपडेट करा"
       cancel: "रद्द करा"
+      save: "सेव्ह करा"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3996,6 +3991,8 @@ mr:
           paypal:
             no_payment_via_admin_backend: PayPal पेमेंट्स बॅकऑफिसमध्ये नोंदली जाऊ शकत नाहीत
       products:
+        image:
+          edit: "सुधारित करा"
         image_upload_error: "कृपया इमेज JPG, PNG, GIF, SVG किंवा WEBP फॉरमॅटमध्ये अपलोड करा."
         image_not_processable: "इमेज ॲटॅचमेंट वैध इमेज नाही."
         new:
@@ -4405,3 +4402,5 @@ mr:
     webhook_endpoint_form:
       url:
         create_placeholder: रिमोट वेबहुक एंडपॉइंटची URL एंटर करा
+    product_tile:
+      from_price: "पासून"

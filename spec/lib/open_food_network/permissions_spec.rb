@@ -194,10 +194,10 @@ RSpec.describe OpenFoodNetwork::Permissions do
     before do
       allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where('1=0') }
       allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
-                              Enterprise.where("1=0").select(:id)
+                              Enterprise.none.select(:id)
                             }
       allow(permissions).to receive(:related_enterprises_granting).with(:create_linked_variants) {
-                              Enterprise.where("1=0").select(:id)
+                              Enterprise.none.select(:id)
                             }
     end
 
@@ -222,7 +222,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
         allow(user).to receive(:admin?) { false }
         allow(user).to receive(:enterprises) { [] }
         allow(permissions).to receive(:related_enterprises_granting).
-          with(:manage_products) { Enterprise.where("1=0").select(:id) }
+          with(:manage_products) { Enterprise.none.select(:id) }
         allow(permissions).to receive(:related_enterprises_granting).
           with(:create_linked_variants) {
             Enterprise.where(id: p1.variants.first.enterprise).select(:id)
@@ -258,51 +258,104 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
-  describe "finding visible products" do
-    let!(:p1) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
-    let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
-    let!(:p3) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
+  describe "#visible_products" do
+    let(:s1) { create(:supplier_enterprise) }
+    let(:s2) { create(:supplier_enterprise) }
+    let(:s3) { create(:supplier_enterprise) }
+    let!(:p1) { create(:simple_product, enterprise_id: s1.id) }
+    let!(:p2) { create(:simple_product, enterprise_id: s2.id) }
+    let!(:p3) { create(:simple_product, enterprise_id: s3.id) }
 
     before do
-      allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where("1=0") }
-      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
-                              Enterprise.where("1=0").select(:id)
-                            }
-      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle) {
-                              Enterprise.where("1=0").select(:id)
-                            }
+      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products)
+        .and_return(Enterprise.none.select(:id))
+      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle)
+        .and_return(Enterprise.none.select(:id))
     end
 
     it "returns products produced by managed enterprises" do
-      allow(user).to receive(:admin?) { false }
-      allow(user).to receive(:enterprises) { Enterprise.where(id: p1.variants.first.enterprise_id) }
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([s1])
 
       expect(permissions.visible_products).to eq([p1])
     end
 
     it "returns products produced by enterprises that have granted manage products" do
-      allow(user).to receive(:admin?) { false }
-      allow(user).to receive(:enterprises) { [] }
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
       allow(permissions).to receive(:related_enterprises_granting).
-        with(:manage_products) { Enterprise.where(id: p2.variants.first.enterprise) }
+        with(:manage_products).and_return( Enterprise.where(id: s2))
 
       expect(permissions.visible_products).to eq([p2])
     end
 
     it "returns products produced by enterprises that have granted P-OC" do
-      allow(user).to receive(:admin?) { false }
-      allow(user).to receive(:enterprises) { [] }
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
       allow(permissions).to receive(:related_enterprises_granting).
-        with(:add_to_order_cycle) { Enterprise.where(id: p3.variants.first.enterprise).select(:id) }
+        with(:add_to_order_cycle).and_return(Enterprise.where(id: s3).select(:id))
 
       expect(permissions.visible_products).to eq([p3])
     end
 
     context "as superadmin" do
       it "returns all products" do
-        allow(user).to receive(:admin?) { true }
+        allow(user).to receive(:admin?).and_return(true)
 
         expect(permissions.visible_products.to_a).to include p1, p2, p3
+      end
+    end
+  end
+
+  describe "#visible_variants" do
+    let(:s1) { create(:supplier_enterprise) }
+    let(:s2) { create(:supplier_enterprise) }
+    let(:s3) { create(:supplier_enterprise) }
+    let(:p1) { create(:simple_product, enterprise_id: s1.id) }
+    let(:p2) { create(:simple_product, enterprise_id: s2.id) }
+    let(:p3) { create(:simple_product, enterprise_id: s3.id) }
+    let!(:v1) { p1.variants.first }
+    let!(:v2) { p2.variants.first }
+    let!(:v3) { p3.variants.first }
+
+    before do
+      allow(permissions).to receive(:related_enterprises_granting).with(:manage_products)
+        .and_return(Enterprise.none.select(:id))
+
+      allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle)
+        .and_return(Enterprise.none.select(:id))
+    end
+
+    it "returns variants produced by managed enterprises" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([s1])
+
+      expect(permissions.visible_variants).to eq([v1])
+    end
+
+    it "returns variants produced by enterprises that have granted manage products" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
+      allow(permissions).to receive(:related_enterprises_granting).
+        with(:manage_products).and_return(Enterprise.where(id: s2))
+
+      expect(permissions.visible_variants).to eq([v2])
+    end
+
+    it "returns variants produced by enterprises that have granted P-OC" do
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:enterprises).and_return([])
+      allow(permissions).to receive(:related_enterprises_granting).
+        with(:add_to_order_cycle).and_return(Enterprise.where(id: s3).select(:id))
+
+      expect(permissions.visible_variants).to eq([v3])
+    end
+
+    context "as superadmin" do
+      it "returns all products" do
+        allow(user).to receive(:admin?).and_return(true)
+
+        expect(permissions.visible_variants).to include v1, v2, v3
       end
     end
   end
@@ -328,7 +381,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
         .and_return(Enterprise.where(id: enterprise))
       expect(permissions).to receive(:related_enterprises_granting)
         .with(:create_linked_variants)
-        .and_return(Enterprise.where("1=0").select(:id))
+        .and_return(Enterprise.none.select(:id))
 
       expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
         .to eq([enterprise])
@@ -338,7 +391,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
       enterprise = create(:enterprise)
       expect(permissions).to receive(:managed_and_related_enterprises_granting)
         .with(:manage_products)
-        .and_return(Enterprise.where("1=0"))
+        .and_return(Enterprise.none)
       expect(permissions).to receive(:related_enterprises_granting)
         .with(:create_linked_variants)
         .and_return(Enterprise.where(id: enterprise).select(:id))
@@ -361,6 +414,47 @@ RSpec.describe OpenFoodNetwork::Permissions do
         expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
           .to eq([enterprise_manage_products, enterprise_create_linked_variants])
       end
+    end
+  end
+
+  describe "#enterprises_can_create_variants" do
+    let(:user) { create(:user) }
+
+    it "returns only my enterprises that are primary producers" do
+      e1 = create(:enterprise, is_primary_producer: true)
+      e2 = create(:enterprise, is_primary_producer: false)
+      user.enterprises = [e1, e2]
+      e3 = create(:enterprise, is_primary_producer: true) # someone else's enterprise
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
+    end
+
+    it "returns only my enterprises that are granted permission to create_linked_variants" do
+      e1 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e1,
+                                       permissions_list: [:create_linked_variants])
+      e2 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e2,
+                                       permissions_list: [:manage_products])
+      # User manages two enterprises, which have different permissions.
+      user.enterprises = [e1, e2]
+
+      # someone else's enterprise
+      e3 = create(:enterprise)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e3,
+                                       permissions_list: [:create_linked_variants])
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
+    end
+
+    it "avoids duplicates" do
+      # Enterprise is primary _and_ permitted create_linked_variants
+      e1 = create(:enterprise, is_primary_producer: true)
+      create(:enterprise_relationship, parent: create(:enterprise), child: e1,
+                                       permissions_list: [:create_linked_variants])
+      user.enterprises = [e1]
+
+      expect(permissions.enterprises_can_create_variants).to eq([e1])
     end
   end
 

@@ -42,9 +42,9 @@ RSpec.describe EnterpriseRelationship do
   end
 
   describe "scopes" do
-    let(:e1)  { create(:enterprise, name: 'A') }
-    let(:e2)  { create(:enterprise, name: 'B') }
-    let(:e3)  { create(:enterprise, name: 'C') }
+    let(:e1) { create(:enterprise, name: 'A') }
+    let(:e2) { create(:enterprise, name: 'B') }
+    let(:e3) { create(:enterprise, name: 'C') }
 
     it "sorts by child, parent enterprise name" do
       er1 = create(:enterprise_relationship, parent: e3, child: e1)

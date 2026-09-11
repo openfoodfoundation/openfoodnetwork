@@ -15,14 +15,14 @@ Openfoodnetwork::Application.routes.draw do
     mount DfcProvider::Engine, at: '/dfc/'
 
     namespace :v0 do
-      resources :products do
+      resources :products, only: [:show, :create, :update, :destroy] do
         collection do
           get :bulk_products
           get :overridable
         end
         post :clone
 
-        resources :variants
+        resources :variants, except: [:new, :edit]
       end
 
       resources :variants, only: [:index]
@@ -43,7 +43,7 @@ Openfoodnetwork::Application.routes.draw do
         end
       end
 
-      resources :enterprises do
+      resources :enterprises, only: [:create, :update] do
         post :update_image, on: :member
 
         resource :logo, only: [:destroy]
@@ -57,7 +57,7 @@ Openfoodnetwork::Application.routes.draw do
         end
       end
 
-      resources :order_cycles do
+      resources :order_cycles, only: [] do
         get :products, on: :member
         get :taxons, on: :member
         get :properties, on: :member
@@ -68,7 +68,7 @@ Openfoodnetwork::Application.routes.draw do
         get :products, to: 'exchange_products#index'
       end
 
-      resource :status do
+      resource :status, only: [] do
         get :job_queue
       end
 
@@ -80,16 +80,20 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :states, only: [:index, :show]
 
-      resources :taxons, except: %i[show edit]
+      resources :taxons, except: %i[show new edit]
 
       get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
                                                      constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }
     end
 
     namespace :v1 do
-      resources :customers
+      resources :customers, except: [:new, :edit]
 
-      resources :enterprises do
+      # There is no Api::V1::EnterprisesController, so `show` 404s. It's kept
+      # only because Api::V1::CustomerSerializer advertises it as the `related`
+      # link of the enterprise relationship, and removing the route would make
+      # that serializer raise. Either implement the endpoint or drop the link.
+      resources :enterprises, only: [:show] do
         resources :customers, only: :index
       end
 

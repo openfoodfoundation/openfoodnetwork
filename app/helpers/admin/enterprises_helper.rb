@@ -64,6 +64,8 @@ module Admin
         "white_label"
       elsif ["remove_logo", "remove_promo_image"].include?(attachment_removal_parameter)
         "images"
+      elsif attachment_removal_parameter == "remove_terms_and_conditions"
+        "business_details"
       end
     end
 

@@ -89,4 +89,4 @@
             %i.ofn-i_068-shop-reversed{"ng-if" => "::hub.active"}
             %i.ofn-i_068-shop-reversed{"ng-if" => "::!hub.active"}
             .hub-name{"ng-bind" => "::hub.name"}
-            .button-address{"ng-bind" => "::[hub.address.city, hub.address.state_name] | printArray"}
+            .button-address{"ng-bind" => "::hub.address.address_part2"}

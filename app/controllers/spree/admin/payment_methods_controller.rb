@@ -126,11 +126,10 @@ module Spree
       end
 
       def load_hubs
-        # rubocop:disable Style/TernaryParentheses
+        # rubocop:disable-next Style/TernaryParentheses
         @hubs = Enterprise.managed_by(spree_current_user).is_distributor.to_a.sort_by! do |d|
           [(@payment_method.has_distributor? d) ? 0 : 1, d.name]
         end
-        # rubocop:enable Style/TernaryParentheses
       end
 
       def load_providers

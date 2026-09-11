@@ -292,7 +292,7 @@ module Spree
 
       can [:admin, :index, :read, :create,
            :edit, :update_positions, :destroy], Spree::ProductProperty
-      can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
+      can [:admin, :read, :create, :edit, :update, :destroy], Spree::Image
 
       can [:admin, :index, :read, :search], Spree::Taxon
 

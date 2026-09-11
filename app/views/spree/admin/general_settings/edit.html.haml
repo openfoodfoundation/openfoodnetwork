@@ -39,6 +39,11 @@
             .field
               = label_tag(:embedded_shopfronts_whitelist, t('admin.shopfront_settings.embedded_shopfronts_whitelist')) + tag(:br)
               = preference_field_tag(:embedded_shopfronts_whitelist, Spree::Config[:embedded_shopfronts_whitelist], type: Spree::Config.preference_type(:embedded_shopfronts_whitelist))
+          %fieldset.address_display.no-border-bottom
+            %legend{:align => "center"}= t('admin.address_display.address_display_settings')
+            .field
+              = label_tag(:address_display_format, Spree.t(:address_display_format) + ': ') + tag(:br)
+              = select_tag(:address_display_format, options_for_select([[Spree.t(:address_display_format_default), 'default'], [Spree.t(:address_display_format_postal_code_first), 'postal_code_first']], Spree::Config[:address_display_format]))
 
         .omega.six.columns
           %fieldset.currency.no-border-bottom

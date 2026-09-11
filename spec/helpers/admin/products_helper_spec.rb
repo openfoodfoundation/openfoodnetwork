@@ -1,48 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Admin::ProductsHelper do
-  describe '#product_carousel_images_data' do
-    context 'when product has images' do
-      it 'returns normalized image data for each product image' do
-        product = create(:product_with_image, images_count: 2)
-        product.images.update_all(alt: 'Front of pack')
-
-        data = helper.product_carousel_images_data(product)
-
-        expect(data).not_to be_empty
-        expect(data.first[:url]).to eq(product.images.first.url(:large))
-        expect(data.first[:alt]).to eq('Front of pack')
-        expect(data.first[:caption]).to eq("#{product.name} - 1")
-        expect(data.second[:url]).to eq(product.images.second.url(:large))
-        expect(data.second[:alt]).to eq('Front of pack')
-        expect(data.second[:caption]).to eq("#{product.name} - 2")
-      end
-
-      it 'falls back to the product name when the image has no alt text' do
-        product = create(:product_with_image)
-        data = helper.product_carousel_images_data(product)
-
-        expect(data.first[:alt]).to eq(product.name)
-        expect(data.first[:caption]).to be_nil
-      end
-    end
-
-    context 'when product has no images' do
-      let(:product) { create(:product) }
-
-      it 'returns a default fallback image entry' do
-        data = helper.product_carousel_images_data(product)
-
-        expect(data).to eq([
-                             {
-                               url: Spree::Image.default_image_url(:large),
-                               alt: product.name,
-                               caption: nil
-                             }
-                           ])
-      end
-    end
-  end
+  include FileHelper
 
   describe '#unit_value_with_description' do
     let(:variant) {
@@ -261,6 +220,175 @@ RSpec.describe Admin::ProductsHelper do
       it "returns true" do
         expect(helper.variant_readonly?(variant, allowed_producers,
                                         allowed_source_producers)).to eq(true)
+      end
+    end
+  end
+
+  describe '#image_upload_path' do
+    context 'when imageable is a product' do
+      let(:product) { create(:product) }
+
+      it 'returns admin_product_images_path' do
+        expect(helper.image_upload_path(product))
+          .to eq "/admin/products/#{product.id}/images"
+      end
+    end
+
+    context 'when imageable is a variant' do
+      let(:variant) { create(:variant, product: create(:product)) }
+
+      it 'returns admin_product_images_path with variant_id' do
+        expect(helper.image_upload_path(variant))
+          .to eq "/admin/products/#{variant.product_id}/images?variant_id=#{variant.id}"
+      end
+    end
+  end
+
+  describe '#image_owner_edit_path' do
+    let(:product) { create(:product) }
+
+    context 'without a variant' do
+      it 'returns the product edit path' do
+        expect(helper.image_owner_edit_path(product))
+          .to eq "/admin/products/#{product.id}/edit"
+      end
+    end
+
+    context 'with a variant' do
+      let(:variant) { create(:variant, product:) }
+
+      it 'returns the variant edit path' do
+        expect(helper.image_owner_edit_path(product, variant))
+          .to eq "/admin/products/#{product.id}/variants/#{variant.id}/edit"
+      end
+    end
+  end
+
+  describe '#default_image_caption' do
+    let(:product) { create(:product, name: "Asparagus") }
+
+    context 'without a variant' do
+      it 'defaults to the product name' do
+        expect(helper.default_image_caption(product)).to eq "Asparagus"
+      end
+    end
+
+    context 'with a variant that has a display name' do
+      let(:variant) { create(:variant, product:, display_name: "Small bunch") }
+
+      it 'defaults to the display name' do
+        expect(helper.default_image_caption(product, variant)).to eq "Small bunch"
+      end
+    end
+
+    context 'with a variant that has no display name' do
+      let(:variant) { create(:variant, product:, display_name: nil) }
+
+      it 'has no default' do
+        expect(helper.default_image_caption(product, variant)).to eq ""
+      end
+    end
+  end
+
+  describe '#image_caption_field_value' do
+    let(:product) { create(:product_with_image, name: "Asparagus") }
+    let(:image) { product.image }
+
+    context 'when the caption has never been set' do
+      it 'offers the default caption' do
+        image.update!(caption: nil)
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Asparagus"
+      end
+    end
+
+    context 'when the caption was deliberately cleared' do
+      it 'stays empty rather than falling back to the default' do
+        image.update!(caption: "")
+
+        expect(helper.image_caption_field_value(image, product)).to eq ""
+      end
+    end
+
+    context 'when a caption is set' do
+      it 'uses the saved caption' do
+        image.update!(caption: "Fresh asparagus")
+
+        expect(helper.image_caption_field_value(image, product)).to eq "Fresh asparagus"
+      end
+    end
+  end
+
+  describe '#image_form_path' do
+    let(:product) { create(:product) }
+
+    context 'when imageable is a product' do
+      context 'without existing image' do
+        it 'returns new_admin_product_image_path' do
+          expect(helper.image_form_path(product))
+            .to eq "/admin/products/#{product.id}/images/new"
+        end
+      end
+
+      context 'with existing image' do
+        let!(:product) { create(:product_with_image) }
+
+        it 'returns edit_admin_product_image_path' do
+          expect(helper.image_form_path(product))
+            .to eq "/admin/products/#{product.id}/images/#{product.image.id}/edit"
+        end
+      end
+    end
+
+    context 'when imageable is a variant' do
+      let(:variant) { create(:variant, product:) }
+
+      context 'without existing image' do
+        it 'returns new_admin_product_image_path with variant_id' do
+          expect(helper.image_form_path(variant))
+            .to eq "/admin/products/#{product.id}/images/new?variant_id=#{variant.id}"
+        end
+      end
+
+      context 'with existing image' do
+        let!(:variant_image) {
+          Spree::Image.create(
+            attachment: white_logo_file,
+            viewable: variant
+          )
+        }
+
+        it 'returns edit_admin_product_image_path with variant_id' do
+          path = helper.image_form_path(variant.reload)
+          expect(path).to include("/admin/products/#{product.id}/images/#{variant_image.id}/edit")
+          expect(path).to include("variant_id=#{variant.id}")
+        end
+      end
+    end
+  end
+
+  describe '#image_modal_resource_name' do
+    let(:product) { create(:product, name: "Apples") }
+
+    context 'when variant is nil' do
+      it 'returns the product name' do
+        expect(helper.image_modal_resource_name(nil, product)).to eq "Apples"
+      end
+    end
+
+    context 'when variant has a display_name' do
+      let(:variant) { create(:variant, product:, display_name: "Red") }
+
+      it 'returns product name with variant display_name' do
+        expect(helper.image_modal_resource_name(variant, product)).to eq "Apples - Red"
+      end
+    end
+
+    context 'when variant display_name is blank' do
+      let(:variant) { create(:variant, product:, display_name: "") }
+
+      it 'returns only the product name' do
+        expect(helper.image_modal_resource_name(variant, product)).to eq "Apples"
       end
     end
   end

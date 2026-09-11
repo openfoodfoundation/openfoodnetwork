@@ -10,7 +10,7 @@ RSpec.describe '
   include AuthenticationHelper
 
   let(:user) { create(:user) }
-  let(:product) { create(:simple_product) }
+  let(:product) { create(:simple_product, enterprise_id: distributor.id) }
   let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor],

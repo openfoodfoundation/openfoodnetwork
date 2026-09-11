@@ -240,6 +240,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
     end
 
     describe "Create linked variant" do
+      let(:enterprise) { create(:supplier_enterprise, name: "My Hub Enterprise") }
       let!(:other_enterprise) { create(:supplier_enterprise, name: "Other enterprise") }
       let!(:other_variant) {
         create(:variant, display_name: "My friends box", enterprise: other_enterprise)
@@ -269,6 +270,13 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
           visit admin_products_url
 
+          # Verify readonly product image has no Edit button
+          read_only_product = read_only_variant.product
+          within "#image-#{read_only_product.id}" do
+            expect(page).to have_selector "img"
+            expect(page).not_to have_link "Edit"
+          end
+
           # Create linked variant sourced from my friend
           within row_containing_name("My friends box") do
             page.find(".vertical-ellipsis-menu").click
@@ -290,7 +298,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             within last_box do
               # The linked variant must be owned by the enterprise that created it
-              expect(page).to have_content "My Enterprise"
+              expect(page).to have_content "My Hub Enterprise"
 
               # And I can perform actions on the new variant
               page.find(".vertical-ellipsis-menu").click
@@ -303,6 +311,14 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # initially obscured by the previous message, then disappears before capybara sees it.
             # expect(page).to have_content "Changes saved"
+          end
+
+          # Verify readonly variant image has no Edit button
+          within("tr:has(.content)", text: "My readonly friends box") do
+            within "td.col-image" do
+              expect(page).to have_selector "img"
+              expect(page).not_to have_link "Edit"
+            end
           end
 
           # Create linked variant sourced from my readonly friend

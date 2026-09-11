@@ -107,6 +107,11 @@
       padding: $padding-tbl-cell;
       border: none;
 
+      // remove the blue dotted line from the image field
+      a.image-field {
+        border: none;
+      }
+
       .content {
         // Plain content fields need help to align with text in inputs (due to vertical-align)
         margin: ($vpadding-txt + 1px) ($hpadding-txt + 2px);
@@ -146,7 +151,7 @@
       }
 
       tr:first-child td {
-        border-top: 4px solid $color-tbl-bg;
+        border-top: 8px solid $color-tbl-bg;
       }
 
       tr:last-child td {
@@ -159,6 +164,7 @@
       td,
       th {
         padding: $padding-tbl-cell-condensed;
+        vertical-align: middle;
       }
     }
 
@@ -367,5 +373,14 @@
   .slide-in {
     transform-origin: top;
     animation: slideInTop 0.5s;
+  }
+
+  .condensed .col-image img.variant_placeholder {
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  .condensed:hover .col-image img.variant_placeholder {
+    opacity: 1;
   }
 }

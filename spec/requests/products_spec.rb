@@ -33,5 +33,15 @@ RSpec.describe ProductsController do
       expect(response.body).to include "Grid product #3"
       expect(response.body).to include "Grid product #4"
     end
+
+    # Smoke test over the whole ProductsRenderer -> ViewData -> ProductTileComponent chain,
+    # which a component spec can't cover because it builds its own value objects.
+    it "renders the product details in each tile" do
+      get order_cycle_products_path(order_cycle.id)
+
+      expect(response.body).to include variants.first.producer.name
+      expect(response.body).to include "unit-price"
+      expect(response.body).to include "$19.99"
+    end
   end
 end

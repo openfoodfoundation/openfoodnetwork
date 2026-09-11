@@ -763,7 +763,6 @@ ru:
       tabs:
         product_details: "Информация о Товаре"
         group_buy_options: "Параметры Групповой Покупки"
-        images: "Изображения"
         variants: "Варианты"
         product_properties: "Свойства Товара"
     products_v3:
@@ -1294,6 +1293,8 @@ ru:
         visible: Видимое?
         owner: Владелец
         producer: Производитель
+        search: Поиск
+        clear: Сбросить
       change_type_form:
         producer_profile: Профиль Производителя
         connect_ofn: Подключиться через ОСП
@@ -1789,6 +1790,7 @@ ru:
         remove_logo_success: "Логотип успешно удален"
         remove_promo_image_success: "Промо-изображение успешно удалено"
         remove_white_label_logo_success: "Логотип успешно удален"
+        remove_terms_and_conditions_success: "Файл Условий и Положений успешно удален"
       stripe_connect_settings:
         resource: Конфигурация Stripe Connect
     resend_confirmation_emails_feedback:
@@ -3331,8 +3333,6 @@ ru:
           select_all_variants: "Выбрать Все %{total_number_of_variants} Варианты"
           variants_loaded: "Загружено %{num_of_variants_loaded} из %{total_number_of_variants} Вариантов"
           loading_variants: "Загрузка Вариантов"
-          no_variants: "Для этого товара нет доступных вариантов (скрыт в настройках инвентаря)."
-          some_variants_hidden: "(Некоторые варианты могут быть скрыты в настройках инвентаря)"
       enterprise_fees:
         inherit_from_product: "Наследовать От Товара"
       orders:
@@ -3912,12 +3912,6 @@ ru:
     minimal_amount: "Минимальная сумма"
     normal_amount: "Обычная сумма"
     discount_amount: "Сумма скидки"
-    no_images_found: "Изображений Не Найдено"
-    new_image: "Новое Изображение"
-    filename: "Имя Файла"
-    alt_text: "Альтернативный Текст"
-    thumbnail: "Миниатюра"
-    back_to_images_list: "Назад К Списку Изображений"
     email: Email
     account_updated: "Профиль обновлен!"
     email_updated: "Профиль будет обновлен после подтверждения нового адреса электронной почты..."
@@ -3946,6 +3940,7 @@ ru:
     actions:
       update: "Обновить"
       cancel: "Выход"
+      save: "Сохранить"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3974,7 +3969,6 @@ ru:
     admin:
       images:
         edit:
-          title: Изменить фотографию товара
           close: Назад
           upload: Загрузить фото
       mail_methods:
@@ -4242,6 +4236,9 @@ ru:
           paypal:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
+        image:
+          label: "Изображение"
+          edit: "Изменить"
         image_upload_error: "Загрузите изображение в формате JPG, PNG, GIF, SVG или WEBP."
         image_not_processable: "Вложенное изображение не является допустимым изображением."
         new:
@@ -4708,3 +4705,5 @@ ru:
         create_placeholder: Введите URL-адрес конечной точки удаленного веб-хука.
       event_types:
         order_cycle_opened: Цикл Заказа Открыт
+    product_tile:
+      from_price: "от"

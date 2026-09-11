@@ -672,6 +672,8 @@ hu:
     number_localization:
       number_localization_settings: "Számhonosítási beállítások"
       enable_localized_number: "Használd a nemzetközi ezer/tizedes elválasztó logikát"
+    address_display:
+      address_display_settings: "Címmegjelenítési beállítások"
     invoice_settings:
       edit:
         title: "Számlabeállítások"
@@ -829,7 +831,6 @@ hu:
       tabs:
         product_details: "Termék leírás"
         group_buy_options: "Rugalmas vásárlási mennyiség"
-        images: "Képek"
         variants: "Változatok"
         product_properties: "Termék tulajdonságai"
     products_v3:
@@ -1396,6 +1397,8 @@ hu:
         visible: Látható?
         owner: Tulajdonos
         producer: Termelő
+        search: Keresés
+        clear: Mégsem
         sells_options:
           none: n.a.
           own: saját
@@ -1920,6 +1923,7 @@ hu:
         remove_logo_success: "A logo sikeresen eltávolítva"
         remove_promo_image_success: "A promóciós kép sikeresen eltávolítva"
         remove_white_label_logo_success: "A logo sikeresen eltávolítva"
+        remove_terms_and_conditions_success: "A GDPR és ÁSZF fájl sikeresen eltávolítva"
       stripe_connect_settings:
         resource: Stripe Connect konfiguráció
     resend_confirmation_emails_feedback:
@@ -3485,8 +3489,7 @@ hu:
           select_all_variants: "Válaszd ki az összes %{total_number_of_variants} változatot"
           variants_loaded: "%{num_of_variants_loaded}/%{total_number_of_variants} változat betöltve"
           loading_variants: "Változatok betöltése"
-          no_variants: "Nincs elérhető termékváltozat ehhez a termékhez (a leltár beállításokban rejtett státuszúak)."
-          some_variants_hidden: "(Egyes termékváltozatok a leltárbeállítások miatt rejtve maradhatnak)"
+          no_variants: "Ehhez a termékhez nincs termékváltozat."
       enterprise_fees:
         inherit_from_product: "Öröklés a terméktől"
       orders:
@@ -3536,6 +3539,7 @@ hu:
         cancel_the_order_html: "Ezzel a teljes rendelés törlésre kerül.<br />\nBiztosan folytatod?"
         cancel_the_order_send_cancelation_email: "Törlésről szóló email küldése a vásárlónak"
         restock_item: "A törölt tételek visszarakása a készletbe"
+        restock_item_deleted_tooltip: "Ez a termék törölve lett, és nem lehet újra készleten tartani."
         restock_items: "Az összes törölt tétel visszarakása a készletbe"
         delete_line_items_html:
           one: "Most törölni fogsz 1 elemet a rendelésedből. <br />Biztosan folytatni szeretnéd?"
@@ -3965,6 +3969,9 @@ hu:
     hide_cents: "Fillérek elrejtése"
     display_currency: "Megjelenítési pénznem"
     choose_currency: "Válassz pénznemet"
+    address_display_format: "Cím megjelenítési formátuma"
+    address_display_format_default: "Alapértelmezett"
+    address_display_format_postal_code_first: "Irányítószámmal kezdődjön"
     mail_method_settings: "Levelezési mód beállításai"
     mail_settings_notice_html: "<b>Az itt végrehajtott módosítások csak ideiglenesek, </b> hibakeresés céljából történnek, és a jövőben visszaállíthatók. <br>A végleges változtatásokat a biztonsági adatok frissítésével és az <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a>segítségével történő telepítéssel lehet elvégezni. További részletekért fordulj az OFN globális csapatához."
     general: "Általános"
@@ -4035,12 +4042,11 @@ hu:
     minimal_amount: "Minimális mennyiség"
     normal_amount: "Normál mennyiség"
     discount_amount: "Kedvezmény mértéke"
-    no_images_found: "Nem található kép"
-    new_image: "Új kép"
-    filename: "Fájl név"
+    filename: "Fájlnév"
+    caption: "Felirat"
+    replace_image: "Kép cseréje"
+    delete_permanently: "Végleges törlés"
     alt_text: "Alternatív szöveg"
-    thumbnail: "Miniatűr"
-    back_to_images_list: "Vissza a képek listájához"
     email: Email
     account_updated: "Fiók frissítve!"
     email_updated: "A fiók az új e-mail-cím megerősítését követően frissül."
@@ -4069,6 +4075,7 @@ hu:
     actions:
       update: "Frissítés"
       cancel: "Mégsem"
+      save: "Mentés"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4097,9 +4104,12 @@ hu:
     admin:
       images:
         edit:
-          title: Termékkép szerkesztése
+          title: 'A(z) „ %{resource_name} ” képének szerkesztése'
+          subtitle: Legalább 440 × 440 képpontos, négyzet alakú kép ajánlott.
           close: Vissza
           upload: Fotó feltöltése
+        new:
+          use_uploader: "Kérlek, használd a kép feltöltését ezen az oldalon."
       mail_methods:
         send_testmail: "Küldj teszt e-mailt"
         testmail:
@@ -4366,6 +4376,11 @@ hu:
           paypal:
             no_payment_via_admin_backend: A Paypal fizetések nem rögzíthetők a Backoffice-ban
       products:
+        image:
+          label: "Kép"
+          subtitle: "Legalább 440 × 440 képpontos, négyzet alakú kép ajánlott."
+          upload: "Kép feltöltése"
+          edit: "Szerkesztés"
         image_upload_error: "Kérjük, a képet JPG, PNG, GIF, SVG vagy WEBP formátumban töltsd fel."
         image_not_processable: "A csatolt kép nem megfelelő"
         new:
@@ -4825,6 +4840,8 @@ hu:
         create_placeholder: Add meg a távoli webhook végpont URL-címét
       event_types:
         order_cycle_opened: Rendelési ciklus megnyitva
+    product_tile:
+      from_price: "termelő"
   invisible_captcha:
     sentence_for_humans: "Kérjük, hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."

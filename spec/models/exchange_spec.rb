@@ -144,7 +144,7 @@ RSpec.describe Exchange do
 
     describe "finding exchanges by direction" do
       let!(:incoming_exchange) {
-        oc.exchanges.create! sender: supplier,    receiver: coordinator, incoming: true
+        oc.exchanges.create! sender: supplier, receiver: coordinator, incoming: true
       }
       let!(:outgoing_exchange) {
         oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false

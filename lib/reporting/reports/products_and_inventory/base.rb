@@ -10,7 +10,7 @@ module Reporting
           filter(child_variants)
         end
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable-next Metrics/AbcSize
         def columns
           {
             supplier: proc { |variant| variant.enterprise.name },
@@ -25,7 +25,6 @@ module Reporting
             sku: proc { |variant| variant.sku.presence || variant.product.sku },
           }
         end
-        # rubocop:enable Metrics/AbcSize
 
         def filter(variants)
           filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier variants

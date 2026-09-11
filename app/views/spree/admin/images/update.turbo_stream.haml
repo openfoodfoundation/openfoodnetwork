@@ -1,3 +1,7 @@
-= turbo_stream.update "image-#{@product.id}" do
-  = render partial: "admin/products_v3/product_image", locals: { product: @product }
+- viewable = @variant || @product
+= turbo_stream.update "#{@variant ? 'variant' : 'product'}-image-#{viewable.id}" do
+  - if @variant
+    = render partial: "admin/products_v3/image", locals: { imageable: @variant, img_class: "variant_placeholder" }
+  - else
+    = render partial: "admin/products_v3/image", locals: { imageable: @product }
   = render partial: "admin/shared/flashes", locals: { flashes: flash } if defined? flash

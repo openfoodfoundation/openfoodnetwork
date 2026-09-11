@@ -196,8 +196,8 @@ RSpec.describe 'shipping methods' do
         click_link "Shipping Methods"
       end
 
-      expect(page).to     have_content shipping_method1.name
-      expect(page).to     have_content shipping_method2.name
+      expect(page).to have_content shipping_method1.name
+      expect(page).to have_content shipping_method2.name
 
       expect(page).to have_checked_field "enterprise_shipping_method_ids_#{shipping_method2.id}"
       expect(page).to have_unchecked_field "enterprise_shipping_method_ids_#{shipping_method1.id}"

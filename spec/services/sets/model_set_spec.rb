@@ -15,6 +15,34 @@ RSpec.describe Sets::ModelSet do
       expect(Spree::Country.where(name: ["Fantasia", "Utopia"]).count).to eq(2)
     end
 
+    context "when passing a collection as part of attributes" do
+      it "creates new models" do
+        attrs = { collection_attributes: { '1' => { name: "Fantasia", iso_name: "FAN" } } }
+        collection = Spree::Country.last(2)
+
+        ms = Sets::ModelSet.new(Spree::Country,
+                                Spree::Country.all,
+                                attrs.merge(collection: collection))
+
+        expect { ms.save }.to change { Spree::Country.count }.by(1)
+        expect(Spree::Country.where(name: "Fantasia")).to be_present
+      end
+
+      context "when the given collection is not an array" do
+        it "creates new models" do
+          attrs = { collection_attributes: { '1' => { name: "Fantasia", iso_name: "FAN" } } }
+          collection = Spree::Country.where(name: "Australia")
+
+          ms = Sets::ModelSet.new(Spree::Country,
+                                  Spree::Country.all,
+                                  attrs.merge(collection: collection))
+
+          expect { ms.save }.to change { Spree::Country.count }.by(1)
+          expect(Spree::Country.where(name: "Fantasia")).to be_present
+        end
+      end
+    end
+
     it "updates existing models" do
       e1 = create(:enterprise_group)
       e2 = create(:enterprise_group)

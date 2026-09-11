@@ -2,10 +2,8 @@
 
 module Sets
   class EnterpriseFeeSet < ModelSet
-    def initialize(attributes = {})
-      super(EnterpriseFee, EnterpriseFee.all,
-            attributes,
-            proc { |attrs| attrs[:name].blank? })
+    def initialize(collection, attributes = {})
+      super(EnterpriseFee, collection, attributes, proc { |attrs| attrs[:name].blank? })
     end
   end
 end

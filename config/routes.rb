@@ -31,11 +31,11 @@ Openfoodnetwork::Application.routes.draw do
   # Well known paths
   get "/.well-known/dfc/", to: "well_known#dfc"
 
-  resource :cart, controller: "cart" do
+  resource :cart, controller: "cart", only: [] do
     post :populate
   end
 
-  resource :shop, controller: "shop" do
+  resource :shop, controller: "shop", only: [:show] do
     post :order_cycle
     get :order_cycle
     get :changeable_orders_alert
@@ -104,9 +104,8 @@ Openfoodnetwork::Application.routes.draw do
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
   post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
 
-  resources :enterprises do
+  resources :enterprises, only: [] do
     collection do
-      post :search
       get :check_permalink
     end
 

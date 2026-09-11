@@ -949,7 +949,6 @@ en_CA:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -1534,6 +1533,8 @@ en_CA:
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
         sells_options:
           unspecified: unspecified
           none: none
@@ -2061,6 +2062,7 @@ en_CA:
         remove_logo_success: "Logo removed successfully"
         remove_promo_image_success: "Promo image removed successfully"
         remove_white_label_logo_success: "Logo removed successfully"
+        remove_terms_and_conditions_success: "Terms and Conditions file removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
     resend_confirmation_emails_feedback:
@@ -3629,8 +3631,6 @@ en_CA:
           select_all_variants: "Select All  %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants}  Variants Loaded"
           loading_variants: "Loading Variants"
-          no_variants: "No variant available for this product (hidden via inventory settings)."
-          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3680,6 +3680,7 @@ en_CA:
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
         restock_item: "Restock Items: Return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: Return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order. <br />Are you sure you want to proceed?"
@@ -4218,12 +4219,6 @@ en_CA:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
-    no_images_found: "No Images Found"
-    new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back to Images List"
     instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
@@ -4253,6 +4248,7 @@ en_CA:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4281,7 +4277,6 @@ en_CA:
     admin:
       images:
         edit:
-          title: Edit product photo
           close: Back
           upload: Upload photo
       mail_methods:
@@ -4557,6 +4552,9 @@ en_CA:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the backoffice.
         customer_credit_successful: Customer has been successfully credited!
       products:
+        image:
+          label: "Image"
+          edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
         new:
@@ -5023,6 +5021,8 @@ en_CA:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint
+    product_tile:
+      from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

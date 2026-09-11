@@ -76,7 +76,7 @@ module Reporting
       report.columns.transform_values { |_v| "" }
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable-next Metrics/CyclomaticComplexity
     def format_cell(value, column = nil)
       return I18n.t("admin.reports.none") if value.nil?
 
@@ -106,7 +106,6 @@ module Reporting
         value
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
 
     def format_currency(value)
       value.present? ? number_to_currency(value, unit: Spree::Money.currency_symbol) : ""

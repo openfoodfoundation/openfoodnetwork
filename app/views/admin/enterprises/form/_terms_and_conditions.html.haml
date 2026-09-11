@@ -1,0 +1,49 @@
+.row{ data: { controller: 'terms-and-conditions' } }
+  .alpha.three.columns
+    = f.label :terms_and_conditions, t('admin.enterprises.form.business_details.terms_and_conditions')
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "terms_and_conditions_info_modal" }
+
+  .omega.eight.columns#terms_and_conditions
+    - if @enterprise.terms_and_conditions.attached?
+      = link_to "#{@enterprise.terms_and_conditions.blob.filename} #{ t('admin.enterprises.form.business_details.uploaded_on') } #{@enterprise.terms_and_conditions.blob.created_at}", url_for(@enterprise.terms_and_conditions), target: '_blank'
+      %div
+        %a.icon-trash{ href: '#', data: { controller: 'modal-link', action: 'modal-link#open:prevent', 'modal-link-target-value': 'remove_terms_and_conditions' } }
+          = t('admin.enterprises.form.business_details.remove_terms_and_conditions')
+    .pad-top
+    %div
+      .button.small{ data: { controller: 'help-modal-link', action: 'click->help-modal-link#open', "help-modal-link-target-value": "terms_and_conditions_warning_modal" } }
+        = t('admin.enterprises.form.business_details.upload')
+      %span{ data: { "terms-and-conditions-target": "filename" } }
+      = f.file_field :terms_and_conditions, accept: 'application/pdf', style: 'display: none;', data: { "terms-and-conditions-target": "fileinput" }
+
+  = render HelpModalComponent.new(id: "terms_and_conditions_warning_modal", close_button: false ) do
+    %div
+      .margin-bottom-30.text-center
+        .text-big{ style: 'color: red'}
+          = t('js.admin.modals.terms_and_conditions_warning.title')
+      .margin-bottom-30
+        %p
+          = t('js.admin.modals.terms_and_conditions_warning.message_1')
+      .margin-bottom-30
+        %p
+          = t('js.admin.modals.terms_and_conditions_warning.message_2')
+
+      .text-center
+        %input.button.red{ type: 'button', value: t('js.admin.modals.close'), "data-action": "click->help-modal#close"}
+        %input.button.red{ type: 'button', value: t('js.admin.modals.continue'), "data-action": "click->help-modal#close click->terms-and-conditions#add" }
+
+- if @enterprise.terms_and_conditions.attached?
+  - # add to admin footer to avoid nesting forms
+  - content_for :admin_footer do
+    = render "admin/enterprises/form/terms_and_conditions_removal_modal", enterprise: @enterprise
+
+= render HelpModalComponent.new(id: "terms_and_conditions_info_modal") do
+  .margin-bottom-30.text-center
+    .text-big
+      = t('js.admin.modals.terms_and_conditions_info.title')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.terms_and_conditions_info.message_1')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.terms_and_conditions_info.message_2')

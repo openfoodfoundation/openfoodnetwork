@@ -160,6 +160,7 @@ RSpec.describe "As a consumer I want to view products" do
       end
 
       context "product grid view", feature: :product_grid_view do
+        let(:other_supplier) { create(:supplier_enterprise, name: "Other Farm") }
         let(:product3) {
           create(:simple_product, enterprise_id: supplier.id, name: "Tomatoes")
         }
@@ -167,7 +168,7 @@ RSpec.describe "As a consumer I want to view products" do
           product3.variants.first
         }
         let(:variant4) {
-          create(:variant, product: product3)
+          create(:variant, product: product3, enterprise: other_supplier)
         }
 
         before do
@@ -189,7 +190,24 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).to have_content("Chickpeas")
           expect(page).to have_content("Tomatoes")
 
-          # Add button is only displayed for single varint product
+          within(".product-item", text: "Beans") do
+            expect(page).to have_selector(".producer", text: "Test Farm")
+            expect(page).to have_selector(".product-name", text: "Beans | ")
+            expect(page).to have_selector(".price", text: "$19.99")
+            expect(page).to have_selector(".unit-price")
+          end
+
+          # A product with mutiple producers and with several variants
+          # - Multiple producers as producer name
+          # - no single price or unit price to show,
+          within(".product-item", text: "Tomatoes") do
+            expect(page).to have_selector(".producer", text: "Multiple producers")
+            expect(page).to have_selector(".product-name", text: "Tomatoes | multiple options")
+            expect(page).to have_selector(".prices", text: /\Afrom \$/)
+            expect(page).not_to have_selector(".unit-price")
+          end
+
+          # Add button is only displayed for single variant product
           expect(page).to have_selector(".add-variant", count: 2)
 
           # Product modal

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::ImageSerializer < ActiveModel::Serializer
-  attributes :id, :alt, :thumb_url, :small_url, :image_url, :large_url
+  attributes :id, :alt, :caption, :thumb_url, :small_url, :image_url, :large_url
 
   def thumb_url
     object.url(:mini)

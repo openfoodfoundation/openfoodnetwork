@@ -14,6 +14,11 @@
     overflow: auto;
   }
 
+  &.fit {
+    max-height: calc(100vh - 6em);
+    overflow-y: auto;
+  }
+
   h1,
   h2,
   h3,

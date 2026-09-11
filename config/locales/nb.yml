@@ -863,7 +863,6 @@ nb:
       tabs:
         product_details: "Produktdetaljer"
         group_buy_options: "Gruppekjøpsalternativer"
-        images: "Bilder"
         variants: "Varianter"
         product_properties: "Produktegenskaper"
     products_v3:
@@ -1425,6 +1424,8 @@ nb:
         visible: Synlig?
         owner: Eier
         producer: Produsent
+        search: Søk
+        clear: Fjern
       change_type_form:
         producer_profile: Produsentprofil
         connect_ofn: Koble gjennom OFN
@@ -1926,6 +1927,7 @@ nb:
         remove_logo_success: "Logo fjernet vellykket"
         remove_promo_image_success: "Promobilde fjernet vellykket"
         remove_white_label_logo_success: "Logo fjernet vellykket"
+        remove_terms_and_conditions_success: "Vilkår og Betingleser-filen ble fjernet"
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
     resend_confirmation_emails_feedback:
@@ -3460,8 +3462,6 @@ nb:
           select_all_variants: "Velg alle %{total_number_of_variants} varianter"
           variants_loaded: "%{num_of_variants_loaded} av %{total_number_of_variants} Varianter lastet"
           loading_variants: "Laster varianter"
-          no_variants: "Ingen variant tilgjengelig for dette produktet (skjult via lagerinnstillinger)."
-          some_variants_hidden: "(Noen varianter kan være skjult via beholdningsinnstillinger)"
       enterprise_fees:
         inherit_from_product: "Arv fra Produkt"
       orders:
@@ -4007,12 +4007,6 @@ nb:
     minimal_amount: "Minimal Mengde"
     normal_amount: "Normal Mengde"
     discount_amount: "Rabattmengde"
-    no_images_found: "Ingen Bilder Funnet"
-    new_image: "Nytt Bilde"
-    filename: "Filnavn"
-    alt_text: "Alternativ Tekst"
-    thumbnail: "Miniatyrbilde"
-    back_to_images_list: "Tilbake til bildelisten"
     email: Epost
     account_updated: "Konto oppdatert!"
     email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
@@ -4041,6 +4035,7 @@ nb:
     actions:
       update: "Oppdater"
       cancel: "Avbryt"
+      save: "Lagre"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4069,7 +4064,6 @@ nb:
     admin:
       images:
         edit:
-          title: Rediger produktbilde
           close: Tilbake
           upload: Last opp bilde
       mail_methods:
@@ -4338,6 +4332,9 @@ nb:
           paypal:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
+        image:
+          label: "Bilde"
+          edit: "Rediger"
         image_upload_error: "Last opp bildet i JPG-, PNG-, GIF-, SVG- eller WEBP-format."
         image_not_processable: "Bildevedlegg er ikke et gyldig bilde."
         new:
@@ -4792,6 +4789,8 @@ nb:
         create_placeholder: Skriv inn URL-en til det eksterne webhook-endepunktet
       event_types:
         order_cycle_opened: Bestillingsrunde åpnet
+    product_tile:
+      from_price: "fra"
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

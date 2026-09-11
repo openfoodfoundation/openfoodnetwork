@@ -25,7 +25,7 @@ module Orders
     def last_pending_paypal_payment
       last(
         @order.pending_payments.select do |payment|
-          payment.payment_method.type == "Spree::Gateway::PayPalExpress"
+          payment.payment_method&.type == "Spree::Gateway::PayPalExpress"
         end
       )
     end

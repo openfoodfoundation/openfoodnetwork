@@ -444,7 +444,7 @@ RSpec.describe Spree::Ability do
       end
 
       it "should be able to read/write their enterprises' product images" do
-        is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :destroy],
+        is_expected.to have_ability([:admin, :read, :create, :edit, :update, :destroy],
                                     for: Spree::Image)
       end
 

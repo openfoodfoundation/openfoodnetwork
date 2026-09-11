@@ -1,0 +1,77 @@
+.image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  background-color: $white;
+  border: 1px dashed $medium-light-grey;
+  border-radius: $border-radius;
+  box-shadow: none;
+  margin-top: 0.5em;
+
+  &--present {
+    border: none;
+    cursor: pointer;
+
+    .image__button {
+      display: none;
+    }
+
+    .image__link:hover .image__button,
+    .image__link:focus-visible .image__button {
+      display: block;
+    }
+
+    .image__link:hover .image__preview,
+    .image__link:focus-visible .image__preview {
+      opacity: 0.8;
+    }
+  }
+
+  &__link {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:focus-visible {
+      outline: 2px solid $color-link;
+      outline-offset: 2px;
+    }
+  }
+
+  &__preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $border-radius;
+  }
+
+  &__button {
+    z-index: 1;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+  }
+}
+
+.image-field span.info {
+  font-style: normal;
+  font-size: $body-font-size;
+  color: $color-body-text;
+}

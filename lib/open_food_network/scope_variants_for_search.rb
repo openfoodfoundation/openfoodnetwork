@@ -36,7 +36,8 @@ module OpenFoodNetwork
     end
 
     def query_scope
-      Spree::Variant.
+      permission = OpenFoodNetwork::Permissions.new(spree_current_user)
+      permission.visible_variants.
         ransack(search_params.merge(m: 'or')).
         result.
         order("spree_products.name, display_name, display_as, spree_variants.variant_unit_name").

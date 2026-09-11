@@ -715,7 +715,6 @@ ar:
       tabs:
         product_details: "تفاصيل المنتج"
         group_buy_options: "مجموعة خيارات الشراء"
-        images: "صور"
         variants: "الانواع"
         product_properties: "خصائص المنتج"
     products_v3:
@@ -1173,6 +1172,8 @@ ar:
         visible: مرئي؟
         owner: المالك
         producer: المنتج
+        search: بحث
+        clear: ازالة
       change_type_form:
         producer_profile: الملف الشخصي للمنتج
         connect_ofn: الاتصال من خلال OFN
@@ -1632,6 +1633,7 @@ ar:
         remove_logo_success: "تمت إزالة الشعار بنجاح"
         remove_promo_image_success: "تمت إزالة الصورة الترويجية بنجاح"
         remove_white_label_logo_success: "تمت إزالة الشعار بنجاح"
+        remove_terms_and_conditions_success: "تمت إزالة ملف الشروط والأحكام بنجاح"
       stripe_connect_settings:
         resource: تهيئة ربط Strip
     resend_confirmation_emails_feedback:
@@ -3762,12 +3764,6 @@ ar:
     minimal_amount: "الحد الأدنى للمبلغ"
     normal_amount: "المبلغ الطبيعي"
     discount_amount: "مقدار الخصم"
-    no_images_found: "لم يتم العثور على صور"
-    new_image: "صورة جديدة"
-    filename: "اسم الملف"
-    alt_text: "نص بديل"
-    thumbnail: "الباقة"
-    back_to_images_list: "العودة إلى قائمة الصور"
     email: البريد الإلكتروني
     account_updated: "تم تحديث الحساب!"
     email_updated: "سيتم تحديث الحساب بمجرد تأكيد البريد الإلكتروني الجديد."
@@ -3796,6 +3792,7 @@ ar:
     actions:
       update: "تحديث"
       cancel: "إلغاء"
+      save: "حفظ"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4078,6 +4075,9 @@ ar:
           paypal:
             no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
+        image:
+          label: "الصورة"
+          edit: "تعديل"
         image_upload_error: "يرجى تحميل الصورة بتنسيق JPG أو PNG أو GIF أو SVG أو WEBP."
         new:
           title: "منتج جديد"
@@ -4563,3 +4563,5 @@ ar:
         create_placeholder: 'أدخل عنوان URL لنقطة نهاية webhook '
       event_types:
         order_cycle_opened: تم فتح دورة الطلب
+    product_tile:
+      from_price: "من عند"

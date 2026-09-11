@@ -31,7 +31,9 @@ module Spree
     searchable_scopes :active, :with_properties
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
-    has_many :images, class_name: "Spree::Image", as: :viewable, dependent: :destroy
+    has_many :images, -> { order(:position) }, class_name: "Spree::Image",
+                                               as: :viewable, dependent: :destroy,
+                                               inverse_of: :viewable
     has_one :semantic_link, as: :subject, dependent: :delete
 
     has_many :product_properties, dependent: :destroy
@@ -43,8 +45,8 @@ module Spree
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
-    has_many :variant_images, -> { order(:position) }, source: :images,
-                                                       through: :variants
+    has_many :variant_images, -> { order(:created_at) }, source: :images,
+                                                         through: :variants
 
     validates_lengths_from_database
     validates :name, presence: true
@@ -273,7 +275,7 @@ module Spree
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def ensure_standard_variant
       return unless variants.empty?
 
@@ -292,7 +294,6 @@ module Spree
       variant.enterprise_id = enterprise_id
       variants << variant
     end
-    # rubocop:enable Metrics/AbcSize
 
     # Remove any unsupported HTML.
     def description=(html)

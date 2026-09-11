@@ -298,8 +298,8 @@ RSpec.describe '
         click_link "Payment Methods"
       end
 
-      expect(page).to     have_content payment_method1.name
-      expect(page).to     have_content payment_method2.name
+      expect(page).to have_content payment_method1.name
+      expect(page).to have_content payment_method2.name
 
       click_link 'Enterprises'
       within("#e_#{distributor2.id}") { click_link 'Settings' }
@@ -307,8 +307,8 @@ RSpec.describe '
         click_link "Payment Methods"
       end
 
-      expect(page).to     have_content payment_method1.name
-      expect(page).to     have_content payment_method2.name
+      expect(page).to have_content payment_method1.name
+      expect(page).to have_content payment_method2.name
 
       expect(page).to have_checked_field "enterprise_payment_method_ids_#{payment_method2.id}"
       expect(page).to have_unchecked_field "enterprise_payment_method_ids_#{payment_method1.id}"

@@ -31,6 +31,12 @@ RSpec.describe Spree::Admin::UsersController do
 
         expect(response).to render_template :edit
       end
+
+      it "allows admins to disable a user" do
+        spree_put :update, id: test_user.id, user: { disabled: "1" }
+
+        expect(test_user.reload.disabled).to eq true
+      end
     end
 
     it 'should deny access to users without an admin role' do

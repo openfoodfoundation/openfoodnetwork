@@ -17,7 +17,7 @@ module Reporting
           end.values
         end
 
-        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+        # rubocop:disable-next Metrics/AbcSize, Metrics/CyclomaticComplexity
         def columns
           {
             first_name: proc { |orders| last_completed_order(orders).billing_address.firstname },
@@ -53,7 +53,6 @@ module Reporting
             },
           }
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
         def filter(orders)
           filter_to_completed_at filter_to_distributor filter_to_order_cycle orders

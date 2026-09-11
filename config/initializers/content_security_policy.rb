@@ -8,8 +8,11 @@ Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self, :https
     policy.font_src :self, :https, :data, "fonts.gstatic.com"
-    policy.img_src :self, :https, :data, ENV.fetch("S3_CORS_POLICY_DOMAIN", "*.s3.amazonaws.com")
-    policy.img_src :self, :http, :data, ENV["SITE_URL"] if Rails.env.development?
+    # blob: lets us preview a locally selected file before uploading it, eg. when replacing a
+    # product image. Blobs can only be created by same-origin scripts.
+    policy.img_src :self, :https, :data, :blob,
+                   ENV.fetch("S3_CORS_POLICY_DOMAIN", "*.s3.amazonaws.com")
+    policy.img_src :self, :http, :data, :blob, ENV["SITE_URL"] if Rails.env.development?
     policy.object_src :none
     policy.frame_ancestors :none
     policy.script_src :self, :https, :unsafe_inline, :unsafe_eval, "*.stripe.com", "openfoodnetwork.innocraft.cloud",

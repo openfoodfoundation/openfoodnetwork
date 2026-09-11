@@ -281,10 +281,11 @@ RSpec.describe CheckoutController do
             let(:new_shipping_method) { create(:shipping_method, distributors: [distributor]) }
 
             before do
-              # Add a shipping rates for the new shipping method to prevent
-              # order.select_shipping_method from failing
-              order.shipment.shipping_rates <<
-                Spree::ShippingRate.create(shipping_method: new_shipping_method, selected: true)
+              # Add a shipping rate for the new shipping method to prevent
+              # order.select_shipping_method from failing. It must not be selected, otherwise
+              # the shipment has two selected rates and Shipment#selected_shipping_rate
+              # picks one of them at random.
+              order.shipment.add_shipping_method(new_shipping_method)
             end
 
             it "recalculates the voucher adjustment" do

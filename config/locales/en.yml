@@ -371,6 +371,7 @@ en:
     oidc:
       failure: "Could not sign in: %{error}"
       record_not_unique: "%{uid} is already associated with another account"
+  home_page_url: "Home page URL (leave blank to use the built-in home page)"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -828,6 +829,9 @@ en:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
 
+    address_display:
+      address_display_settings: "Address Display Settings"
+
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -1020,7 +1024,6 @@ en:
       tabs:
         product_details: "Product Details"
         group_buy_options: "Group Buy Options"
-        images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
     products_v3:
@@ -1599,12 +1602,17 @@ en:
         enterprise_fees: Enterprise Fees
         enterprise_fees_tip: This enterprise has no fees
       admin_index:
+        search_legend: Search Enterprises
         name: Name
         role: Role
         sells: Sells
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
+        owner_email: Owner Email
+        manager_email: Manager Email
         sells_options:
           unspecified: unspecified
           none: none
@@ -2138,6 +2146,7 @@ en:
         remove_logo_success: "Logo removed successfully"
         remove_promo_image_success: "Promo image removed successfully"
         remove_white_label_logo_success: "Logo removed successfully"
+        remove_terms_and_conditions_success: "Terms and Conditions file removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
 
@@ -3768,8 +3777,7 @@ en:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
-          no_variants: "No variant available for this product (hidden via inventory settings)."
-          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -4311,6 +4319,9 @@ en:
     hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
+    address_display_format: "Address display format"
+    address_display_format_default: "Default"
+    address_display_format_postal_code_first: "Postal code first"
 
     mail_method_settings: "Mail Method Settings"
     mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
@@ -4392,12 +4403,11 @@ en:
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
 
-    no_images_found: "No Images Found"
-    new_image: "New Image"
-    filename: "Filename"
-    alt_text: "Alternative Text"
-    thumbnail: "Thumbnail"
-    back_to_images_list: "Back To Images List"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
 
     # Attributes of the Taler payment gateway
     instance_url: "Instance URL"
@@ -4432,6 +4442,7 @@ en:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4462,9 +4473,12 @@ en:
     admin:
       images:
         edit:
-          title: Edit product photo
+          title: 'Edit image for "%{resource_name}"'
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+        new:
+          use_uploader: "Please use the image uploader on this page to add an image."
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -4739,6 +4753,11 @@ en:
         customer_credit_successful: Customer has been successfully credited!
 
       products:
+        image:
+          label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
+          edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
         new:
@@ -5206,7 +5225,13 @@ en:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint 
-
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
+    product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
+      from_price: "from"
   # Gem to prevent bot form submissions
   invisible_captcha:
     sentence_for_humans: "Please leave empty"

@@ -1,0 +1,36 @@
+-# locals: (product:, variants_in_cart:, low_stock_display:)
+
+%div{ "data-controller": "shop-variant-modal" }
+  %button.select-variant.primary{ type:"button", "data-action": "shop-variant-modal#open" }
+    = t("components.shop_variant_modal.select")
+
+  %div{ "data-action": "keyup@document->shop-variant-modal#closeIfEscapeKey" }
+    .variant-modal-bg.fade{ "data-shop-variant-modal-target": "background", "data-action": "click->shop-variant-modal#close" }
+    .variant-modal{ "data-shop-variant-modal-target": "modal" }
+      .header
+        %button.tiny.right{ type: "button", "data-action": "click->shop-variant-modal#close" }
+          = t('js.admin.modals.close')
+        %h5= product_name
+        - # All variants share a producer, so name it once here instead of on every row
+        - if single_producer?
+          %span.producer= t("components.shop_variant_modal.from_producer", name: producers.first.name)
+
+      - # Loop through variants
+      %ul
+        - variants.each do |variant|
+          %li
+            .row
+              .small-8.columns
+                - if variant.display_name.present?
+                  .variant-columns.variant-name
+                    = "#{variant.name_to_display}"
+                .variant-columns.variant-unit
+                  = unit_to_display(variant)
+                - unless single_producer?
+                  .variant-producer
+                    = t("components.shop_variant_modal.from_producer", name: variant.producer.name)
+                .prices
+                  = variant.display_price_with_fees
+                  %span.unit-price= helpers.unit_price_with_unit(variant)
+              .small-4.columns
+                = render AddToCartComponent.new(variant: variant, quantity: variants_in_cart[variant.id], low_stock_display: low_stock_display, css_class: "right")

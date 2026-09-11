@@ -73,17 +73,21 @@ module OpenFoodNetwork
       )
     end
 
+    def visible_variants
+      return Spree::Variant.all if admin?
+
+      Spree::Variant.where(enterprise_id: @user.enterprises).or(
+        Spree::Variant.where(
+          enterprise_id: related_enterprises_granting(:manage_products) |
+            related_enterprises_granting(:add_to_order_cycle)
+        )
+      )
+    end
+
     def visible_products
       return Spree::Product.all if admin?
 
-      product_with_variants.where(spree_variants: { enterprise_id: @user.enterprises }).or(
-        product_with_variants.where(
-          spree_variants: {
-            enterprise_id: related_enterprises_granting(:manage_products) |
-              related_enterprises_granting(:add_to_order_cycle)
-          }
-        )
-      )
+      product_with_variants.where(spree_variants: { id: visible_variants })
     end
 
     def managed_product_enterprises
@@ -96,6 +100,14 @@ module OpenFoodNetwork
 
     def managed_product_enterprises_and_enterprises_granting_linked_variants
       managed_product_enterprises.or(Enterprise.where(id: enterprises_granting_linked_variants))
+    end
+
+    # User's enterprises that are able to have variants either as producer, or linked.
+    def enterprises_can_create_variants
+      managed_product_enterprises.is_primary_producer.or(Enterprise.where(id:
+        EnterpriseRelationship.with_permission(:create_linked_variants)
+          .permitting(@user.enterprises)
+          .select(:child_id))).distinct
     end
 
     def manages_one_enterprise?

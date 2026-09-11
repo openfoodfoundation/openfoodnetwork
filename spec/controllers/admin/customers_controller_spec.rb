@@ -163,6 +163,17 @@ RSpec.describe Admin::CustomersController do
           expect(assigns(:customer)).to eq customer
           expect(customer.reload.email).to eq 'new.email@gmail.com'
         end
+
+        it "ignores the enterprise id parameter" do
+          spree_put :update, format: :json, id: customer.id,
+                             customer: {
+                               email: 'new.email@gmail.com', enterprise_id: another_enterprise.id
+                             }
+          expect(response.parsed_body["id"]).to eq customer.id
+          expect(response.parsed_body["enterprise_id"]).to eq enterprise.id
+          expect(assigns(:customer)).to eq customer
+          expect(customer.reload.email).to eq 'new.email@gmail.com'
+        end
       end
 
       context "where I don't manage the customer's enterprise" do
@@ -219,6 +230,25 @@ RSpec.describe Admin::CustomersController do
 
         it "allows admins to create the customer" do
           expect { create_customer enterprise }.to change { Customer.count }.by(1)
+        end
+      end
+
+      context "where a customer already exists with the same email in a different case" do
+        let!(:customer) { create(:customer, enterprise:, email: "existing@example.com") }
+
+        before do
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
+        end
+
+        it "finds the existing customer instead of failing a duplicate-email validation" do
+          expect {
+            spree_put :create, format: :json,
+                               customer: { email: "Existing@Example.com",
+                                           enterprise_id: enterprise.id }
+          }.to change { Customer.count }.by(0)
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["id"]).to eq customer.id
         end
       end
     end

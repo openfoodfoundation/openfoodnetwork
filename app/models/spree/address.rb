@@ -114,7 +114,11 @@ module Spree
     end
 
     def full_address
-      render_address([address1, address2, city, zipcode, state&.name])
+      if postal_code_first?
+        render_address([address1, address2, zipcode, city])
+      else
+        render_address([address1, address2, city, zipcode, state&.name])
+      end
     end
 
     def address_part1
@@ -122,7 +126,11 @@ module Spree
     end
 
     def address_part2
-      render_address([city, zipcode, state&.name])
+      if postal_code_first?
+        render_address([zipcode, city])
+      else
+        render_address([city, zipcode, state&.name])
+      end
     end
 
     def address_and_city
@@ -130,6 +138,10 @@ module Spree
     end
 
     private
+
+    def postal_code_first?
+      Spree::Config[:address_display_format] == "postal_code_first"
+    end
 
     def require_zipcode?
       true

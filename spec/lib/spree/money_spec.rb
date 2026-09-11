@@ -122,7 +122,7 @@ RSpec.describe Spree::Money do
       expect(money.to_s).to eq("1.000.00 €")
     end
 
-    # rubocop:disable Layout/LineLength
+    # rubocop:disable-next Layout/LineLength
     it "formats as HTML if asked (nicely) to" do
       money = Spree::Money.new(10)
       # The HTMLified version of the euro sign
@@ -130,6 +130,5 @@ RSpec.describe Spree::Money do
         "<span style='white-space: nowrap;'><span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">&#x20AC;</span></span>"
       )
     end
-    # rubocop:enable Layout/LineLength
   end
 end

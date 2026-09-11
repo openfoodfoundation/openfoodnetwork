@@ -524,7 +524,6 @@ en_DE:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       tabs:
         group_buy_options: "Group Buy Options"
-        images: "Images"
         product_properties: "Product Properties"
     products_v3:
       index:
@@ -919,6 +918,8 @@ en_DE:
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -3009,6 +3010,7 @@ en_DE:
     actions:
       update: "Update"
       cancel: "Cancel"
+      save: "Save"
     shared:
       payments_list:
         amount: "Amount"
@@ -3211,6 +3213,9 @@ en_DE:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
+        image:
+          label: "Image"
+          edit: "Edit"
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3489,3 +3494,5 @@ en_DE:
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
+    product_tile:
+      from_price: "from"

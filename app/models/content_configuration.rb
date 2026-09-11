@@ -9,6 +9,9 @@ class ContentConfiguration < Spree::Preferences::Configuration
   file_preference :logo_mobile_svg, default_url: "/default_images/ofn-logo-mobile.svg"
 
   # Home page
+  # When set, the home page renders the content of this page instead of the
+  # built-in one. See CachedExternalPage.
+  preference :home_page_url, :string, default: ""
   preference :home_page_alert_html, :text
   file_preference :home_hero, default_url: "/default_images/home.jpg"
   preference :home_show_stats, :boolean, default: true

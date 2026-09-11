@@ -8,6 +8,7 @@ RSpec.describe '
 ' do
   include AuthenticationHelper
   include WebHelper
+  include FileHelper
 
   let!(:taxon) { create(:taxon) }
 
@@ -394,6 +395,179 @@ RSpec.describe '
         click_button 'Update'
 
         expect(variant.reload.tax_category).to eq tax_category
+      end
+    end
+  end
+
+  describe "image upload" do
+    let!(:variant) { create(:variant, variant_unit: "weight", variant_unit_scale: "1") }
+    let(:product) { variant.product }
+    let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
+
+    before do
+      login_as_admin
+      visit spree.edit_admin_product_variant_path product, variant
+    end
+
+    it "shows the image upload prompt when no image is present" do
+      expect(page).to have_content image_subtitle
+      expect(page).to have_content "Upload image"
+    end
+
+    it "uploads the image to the variant and navigates to the image edit page" do
+      attach_file "image[attachment]", white_logo_path, visible: false
+
+      expect(page).to have_content /Image has been successfully created/
+      expect(variant.reload.image).to be_present
+      expect(page).to have_current_path(
+        %r{/admin/products/#{product.id}/images/#{variant.reload.image.id}/edit}
+      )
+    end
+
+    it "shows the image preview when an image is present" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
+
+      visit spree.edit_admin_product_variant_path product, variant
+
+      find("img[alt='White logo']").hover
+
+      expect(page).to have_content "Edit"
+      expect(page).not_to have_content image_subtitle
+    end
+
+    it "opens the image edit page when the image tile itself is clicked" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
+
+      visit spree.edit_admin_product_variant_path product, variant
+
+      find("img[alt='White logo']").click
+
+      expect(page).to have_current_path(
+        %r{/admin/products/#{product.id}/images/#{variant.reload.image.id}/edit}
+      )
+      expect(page).to have_content "Edit image for"
+    end
+
+    it "keeps the image on the variant when updated from the image edit page" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+
+      visit spree.edit_admin_product_image_path(
+        product, variant.reload.image, variant_id: variant.id
+      )
+
+      fill_in "image[alt]", with: "Updated alt text"
+      click_button "Save"
+
+      expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+      expect(variant.reload.image.alt).to eq "Updated alt text"
+      expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
+      expect(variant.reload.image.viewable_id).to eq variant.id
+    end
+
+    describe "the image edit page" do
+      before { Spree::Image.create!(attachment: white_logo_file, viewable: variant) }
+
+      def visit_image_edit_page
+        visit spree.edit_admin_product_image_path(
+          product, variant.reload.image, variant_id: variant.id
+        )
+      end
+
+      context "when the variant has a display name" do
+        before { variant.update!(display_name: "Small bag") }
+
+        it "titles the page with both names and prefills the caption with the variant name" do
+          visit_image_edit_page
+
+          expect(page).to have_content "Edit image for \"#{product.name} - Small bag\""
+          expect(page).to have_field "image[caption]", with: "Small bag"
+        end
+      end
+
+      context "when the variant has no display name" do
+        it "titles the page with the product name and leaves the caption empty" do
+          visit_image_edit_page
+
+          expect(page).to have_content "Edit image for \"#{product.name}\""
+          expect(page).to have_field "image[caption]", with: ""
+        end
+      end
+
+      it "previews a replacement file without uploading it, then saves it" do
+        visit_image_edit_page
+
+        attach_file "image_attachment", black_logo_path, make_visible: true
+
+        expect(page).to have_content "logo-black.png"
+        expect(wait_until { preview_image_rendered? }).to be true
+        expect(variant.reload.image.attachment.filename.to_s).to eq "logo-white.png"
+
+        click_button "Save"
+
+        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(variant.reload.image.attachment.filename.to_s).to eq "logo-black.png"
+        expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
+      end
+
+      it "deletes the image without a confirmation dialog" do
+        visit_image_edit_page
+
+        click_link "Delete permanently"
+
+        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(variant.reload.image).to be_nil
+        expect(page).to have_content image_subtitle
+        expect(page).to have_content "Upload image"
+      end
+    end
+
+    # A variant that hasn't been saved yet has no id to upload against, so the
+    # widget is only offered once the variant exists.
+    context "on the new variant page" do
+      it "does not offer an image upload until the variant exists" do
+        login_as_admin
+        visit spree.new_admin_product_variant_path(product)
+
+        expect(page).to have_content "New Variant"
+        expect(page).not_to have_selector "[data-controller='upload-image']"
+        expect(page).not_to have_selector "input[name='image[attachment]']"
+        expect(page).not_to have_content image_subtitle
+        expect(page).not_to have_content "Upload image"
+      end
+
+      it "keeps the form intact and creates no orphaned image, then allows upload" do
+        login_as_admin
+        visit spree.new_admin_product_variant_path(product)
+
+        tomselect_select("Weight (g)", from: "Unit scale")
+        click_on "Unit" # activate popout
+        fill_in "Unit value", with: "500"
+        fill_in 'Price', with: 3.5
+        select taxon.name, from: "variant_primary_taxon_id"
+        select2_select variant.enterprise.name, from: "variant_enterprise_id"
+
+        # There is deliberately no upload field here; if one is ever rendered again,
+        # this fails rather than silently uploading against a nil id.
+        expect(page).not_to have_selector "input[name='image[attachment]']", visible: :all
+        expect(Spree::Image.count).to eq 0
+
+        expect(page).to have_field "Price", with: "3.5"
+
+        expect { click_button 'Create' }.to change { product.variants.reload.count }.by(1)
+        expect(page).to have_content "has been successfully created!"
+        expect(Spree::Image.count).to eq 0
+
+        new_variant = product.variants.reload.order(:id).last
+        visit spree.edit_admin_product_variant_path(product, new_variant)
+
+        expect(page).to have_content image_subtitle
+        expect(page).to have_content "Upload image"
+
+        attach_file "image[attachment]", white_logo_path, visible: false
+
+        expect(page).to have_content /Image has been successfully created/
+        expect(new_variant.reload.image).to be_present
+        expect(new_variant.image.viewable).to eq new_variant
       end
     end
   end

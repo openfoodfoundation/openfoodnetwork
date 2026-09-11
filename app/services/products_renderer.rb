@@ -27,6 +27,51 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
+  # Generate read only data, with variants filtered for shop
+  def products_view
+    products.map do |product|
+      attrs = product.slice(*ViewData::Product.members)
+      attrs[:variants] = variants_view(product)
+      ViewData::Product.new(**attrs)
+    end
+  end
+
+  private
+
+  attr_reader :order_cycle, :distributor, :customer, :args, :options
+
+  def variants_view(product)
+    simple_product = ViewData::SimpleProduct.new(**product.slice(*ViewData::SimpleProduct.members))
+
+    variants_for_shop_by_id[product.id].map do |variant|
+      presenter = VariantPresenter.new(
+        variant:, distributor:, order_cycle:, enterprise_fee_calculator:
+      )
+
+      ViewData::Variant.new(
+        **variant.slice(:id, :on_demand, :display_name, :name_to_display,
+                        :unit_to_display, :price, :enterprise, :producer),
+        on_hand: on_hand(variant),
+        price_with_fees: presenter.price_with_fees,
+        display_price_with_fees: presenter.display_price_with_fees,
+        unit_price: presenter.unit_price,
+        display_unit_price: presenter.display_unit_price,
+        product: simple_product
+      )
+    end
+  end
+
+  # Spree::Variant#on_hand sums stock in the database on every call, because stock is live and
+  # the caller may have just changed it. Rendering the shop doesn't write stock, so read the
+  # preloaded rows instead of querying once per variant.
+  #
+  # Variant overrides replace the producer's stock entirely, so leave those to the variant.
+  def on_hand(variant)
+    return variant.on_hand if inventory_enabled?
+
+    variant.stock_items.sum { |stock_item| stock_item.count_on_hand.to_i }
+  end
+
   def products
     return unless order_cycle
 
@@ -49,16 +94,14 @@ class ProductsRenderer
     end
   end
 
-  private
-
-  attr_reader :order_cycle, :distributor, :customer, :args, :options
-
   def product_scoper
     @product_scoper ||= OpenFoodNetwork::ScopeProductToHub.new(distributor)
   end
 
   def enterprise_fee_calculator
-    OpenFoodNetwork::EnterpriseFeeCalculator.new distributor, order_cycle
+    @enterprise_fee_calculator ||= OpenFoodNetwork::EnterpriseFeeCalculator.new(
+      distributor, order_cycle
+    )
   end
 
   def filter(query)
@@ -120,7 +163,8 @@ class ProductsRenderer
   def variants_for_shop
     @variants_for_shop ||= begin
       variants = distributed_products.variants_relation.
-        includes(:default_price, :product).
+        includes(:default_price, :product, :enterprise, :stock_items,
+                 source_variants: :enterprise).
         where(product_id: products)
 
       if inventory_enabled?

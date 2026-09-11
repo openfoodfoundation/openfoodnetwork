@@ -2,7 +2,7 @@
 
 require 'open_food_network/address_finder'
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module Admin
   class CustomersController < Admin::ResourceController
     before_action :load_managed_shops, only: :index, if: :html_request?
@@ -36,7 +36,9 @@ module Admin
     end
 
     def create
-      @customer = Customer.find_or_initialize_by(customer_params.slice(:email, :enterprise_id))
+      lookup_params = customer_params.slice(:email, :enterprise_id)
+      lookup_params[:email] = lookup_params[:email]&.downcase
+      @customer = Customer.find_or_initialize_by(lookup_params)
 
       if user_can_create_customer?
         @customer.created_manually = true
@@ -53,7 +55,7 @@ module Admin
 
     # copy of Admin::ResourceController without flash notice
     def update
-      if @object.update(permitted_resource_params)
+      if @object.update(customer_params.except("enterprise_id"))
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
@@ -104,7 +106,9 @@ module Admin
     end
 
     def managed_enterprise_id
-      @managed_enterprise_id ||= Enterprise.managed_by(spree_current_user).
+      return @managed_enterprise_id if defined?(@managed_enterprise_id)
+
+      @managed_enterprise_id = Enterprise.managed_by(spree_current_user).
         select('enterprises.id').find_by(id: params[:enterprise_id])
     end
 
@@ -129,11 +133,6 @@ module Admin
       )
     end
 
-    # Used in Admin::ResourceController#update
-    def permitted_resource_params
-      customer_params
-    end
-
     def tag_rule_mapping
       TagRule.mapping_for(Enterprise.where(id: managed_enterprise_id))
     end
@@ -144,4 +143,3 @@ module Admin
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

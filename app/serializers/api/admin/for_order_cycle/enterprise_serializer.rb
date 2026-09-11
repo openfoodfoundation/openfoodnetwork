@@ -8,7 +8,8 @@ module Api
       class EnterpriseSerializer < ActiveModel::Serializer
         attributes :id, :name, :managed,
                    :issues_summary_supplier, :issues_summary_distributor,
-                   :is_primary_producer, :is_distributor, :sells
+                   :is_primary_producer, :is_distributor, :sells,
+                   :can_create_variants
 
         def issues_summary_supplier
           issues =
@@ -28,6 +29,11 @@ module Api
 
         def managed
           Enterprise.managed_by(options[:spree_current_user]).include? object
+        end
+
+        def can_create_variants
+          is_primary_producer ||
+            EnterpriseRelationship.permitting(object).with_permission(:create_linked_variants).any?
         end
 
         private

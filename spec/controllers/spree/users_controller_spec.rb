@@ -61,6 +61,26 @@ RSpec.describe Spree::UsersController do
     end
   end
 
+  describe '#update' do
+    let!(:user) { create(:user) }
+
+    before do
+      allow(controller).to receive_messages(spree_current_user: user)
+    end
+
+    it "does not allow a user to disable themselves" do
+      spree_put :update, user: { disabled: "1" }
+
+      expect(user.reload.disabled).to eq false
+    end
+
+    it "still allows updating other permitted attributes" do
+      spree_put :update, user: { locale: "es" }
+
+      expect(user.reload.locale).to eq "es"
+    end
+  end
+
   describe '#create' do
     it 'creates a new user' do
       post :create,

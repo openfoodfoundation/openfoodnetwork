@@ -4,7 +4,7 @@ module Reporting
   module Reports
     module OrdersAndDistributors
       class Base < ReportTemplate
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable-next Metrics/AbcSize
         def columns
           {
             order_date: proc { |line_item| line_item.order.completed_at.strftime("%F %T") },
@@ -29,7 +29,6 @@ module Reporting
             shipping_instructions: proc { |line_item| line_item.order.special_instructions }
           }
         end
-        # rubocop:enable Metrics/AbcSize
 
         def search
           report_line_items.orders

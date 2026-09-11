@@ -675,7 +675,7 @@ RSpec.describe '
             xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
                                      'GST Free Income', opts),
             xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
-                                     'GST on Income',   opts),
+                                     'GST on Income', opts),
             xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                      'GST Free Income', opts),
             xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
@@ -685,7 +685,7 @@ RSpec.describe '
             xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0,
                                      'GST Free Income', opts),
             xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0,
-                                     'GST on Income',   opts)
+                                     'GST on Income', opts)
           ]
         end
       end
@@ -710,7 +710,7 @@ RSpec.describe '
             xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
                                      'GST on Income',   opts),
             xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
-                                     'GST on Income',   opts)
+                                     'GST on Income', opts)
           ]
         end
       end

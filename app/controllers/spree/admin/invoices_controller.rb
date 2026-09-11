@@ -34,7 +34,8 @@ module Spree
       private
 
       def filepath(invoice_id)
-        "tmp/invoices/#{invoice_id}.pdf"
+        sanitized_id = ActiveStorage::Filename.new(invoice_id.to_s).sanitized
+        "tmp/invoices/#{sanitized_id}.pdf"
       end
     end
   end

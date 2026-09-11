@@ -19,4 +19,4 @@
           .hub-name{"ng-bind" => "::hub.name"}
           %span{"ng-if" => "::hub.active"} ({{'maps_open' | t}})
           %span{"ng-if" => "::!hub.active"} ({{'maps_closed' | t}})
-          .button-address{"ng-bind" => "::[hub.address.city, hub.address.state_name] | printArray"}
+          .button-address{"ng-bind" => "::hub.address.address_part2"}

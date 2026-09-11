@@ -12,7 +12,9 @@ module Sets
       @klass, @collection, @reject_if, @delete_if = klass, collection, reject_if, delete_if
 
       # Set here first, to ensure that we apply collection_attributes to the right collection
-      @collection = attributes[:collection] if attributes[:collection]
+      # delete it from attributes so that collection doesn't get overriden later by call
+      # to `public_send`
+      @collection = attributes.delete(:collection) if attributes[:collection]
       @collection = @collection.to_a
 
       attributes.each do |name, value|
@@ -46,7 +48,7 @@ module Sets
 
     def errors
       errors = ActiveModel::Errors.new self
-      full_messages = @collection
+      full_messages = collection
         .map { |model| model.errors.full_messages }
         .flatten
 
@@ -55,7 +57,7 @@ module Sets
     end
 
     def invalid
-      @collection.select { |model| model.errors.any? }
+      collection.select { |model| model.errors.any? }
     end
 
     def save

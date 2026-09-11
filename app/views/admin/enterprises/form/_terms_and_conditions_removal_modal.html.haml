@@ -1,0 +1,6 @@
+= render ModalComponent.new(id: "remove_terms_and_conditions", close_button: false, modal_class: "tiny") do
+  .margin-bottom-30
+    = t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning')
+  %div{ class: "modal-actions justify-space-around" }
+    %input{ class: "button icon-plus secondary", type: 'button', value: I18n.t('js.admin.modals.cancel'), "data-action": "click->modal#close" }
+    = button_to I18n.t('js.admin.modals.confirm'), admin_enterprise_path(enterprise), method: :patch, params: { enterprise: { remove_terms_and_conditions: 1 } }, form: { "data-turbo": true }

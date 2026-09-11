@@ -4,8 +4,8 @@ require 'open_food_network/enterprise_fee_calculator'
 
 RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
   describe "integration" do
-    let(:supplier1)    { create(:supplier_enterprise) }
-    let(:supplier2)    { create(:supplier_enterprise) }
+    let(:supplier1) { create(:supplier_enterprise) }
+    let(:supplier2) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle) }

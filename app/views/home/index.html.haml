@@ -1,17 +1,21 @@
-:css
-  #tagline:before { background-image: url("#{ContentConfig.url_for(:home_hero)}") }
+- unless @external_page
+  :css
+    #tagline:before { background-image: url("#{ContentConfig.url_for(:home_hero)}") }
 
 
 - content_for :page_alert do
   = render "shared/menu/alert"
 
 %div
-  = render "home/tagline"
+  - if @external_page
+    = render "home/external_page", page: @external_page
+  - else
+    = render "home/tagline"
 
-  #panes
-    = render "home/brandstory"
-    = render "home/system"
-    = render "home/cta"
-    = render "home/stats"
+    #panes
+      = render "home/brandstory"
+      = render "home/system"
+      = render "home/cta"
+      = render "home/stats"
 
   = render "shared/footer"

@@ -115,7 +115,7 @@ module Spree
 
       def user_params
         ::PermittedAttributes::User.new(params).call(
-          %i[admin enterprise_limit show_api_key_view]
+          %i[admin enterprise_limit show_api_key_view disabled]
         )
       end
     end

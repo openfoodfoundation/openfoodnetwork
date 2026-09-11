@@ -71,4 +71,32 @@ RSpec.describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
       end
     end
   end
+
+  describe "can_create_variants" do
+    subject{ serialized_enterprise.can_create_variants }
+
+    context "producer" do
+      let(:enterprise) { create(:enterprise, is_primary_producer: true) }
+
+      it { is_expected.to be true }
+    end
+
+    context "not producer" do
+      let(:enterprise) { create(:enterprise, is_primary_producer: false) }
+
+      it { is_expected.to be false }
+
+      context "with create_linked_variants permission" do
+        before do
+          EnterpriseRelationship.create(
+            parent: create(:enterprise),
+            child: enterprise,
+            permissions_list: [:create_linked_variants]
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+  end
 end

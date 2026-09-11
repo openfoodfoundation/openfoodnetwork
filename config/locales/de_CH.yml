@@ -844,7 +844,6 @@ de_CH:
       tabs:
         product_details: "Produktdetails"
         group_buy_options: "Gruppenkauf"
-        images: "Bilder"
         variants: "Produktvarianten"
         product_properties: "Produkteigenschaften"
     products_v3:
@@ -1390,6 +1389,8 @@ de_CH:
         visible: Sichtbar?
         owner: Inhaber
         producer: Produzent
+        search: Suche
+        clear: Zurücksetzen
         sells_options:
           unspecified: nicht spezifiziert
           none: keine
@@ -1906,6 +1907,7 @@ de_CH:
         remove_logo_success: "Das Logo wurde erfolgreich gelöscht."
         remove_promo_image_success: "Bild wurde erfolgreich gelöscht."
         remove_white_label_logo_success: "Das Logo wurde erfolgreich gelöscht."
+        remove_terms_and_conditions_success: "Die AGB-Datei wurde erfolgreich gelöscht."
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
     resend_confirmation_emails_feedback:
@@ -3468,8 +3470,6 @@ de_CH:
           select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
           variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
           loading_variants: "Produktvarianten werden geladen ..."
-          no_variants: "Für dieses Produkt ist keine Variante verfügbar (über die Katalogeinstellungen ausgeblendet)."
-          some_variants_hidden: "(Einige Varianten könnten über die Katalogeinstellungen ausgeblendet sein.)"
       enterprise_fees:
         inherit_from_product: "Vom Produkt übernehmen"
       orders:
@@ -3997,12 +3997,6 @@ de_CH:
     minimal_amount: "Mengenrabatt ab (CHF)"
     normal_amount: "Gebühr unterhalb (CHF)"
     discount_amount: "Gebühr oberhalb (CHF)"
-    no_images_found: "Keine Bilder gefunden."
-    new_image: "Neues Bild"
-    filename: "Dateiname"
-    alt_text: "Alternativtext"
-    thumbnail: "Miniaturansicht"
-    back_to_images_list: "Zurück zur Bilderliste"
     email: E-Mail-Adresse
     account_updated: "Konto aktualisiert!"
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
@@ -4030,6 +4024,7 @@ de_CH:
     actions:
       update: "Speichern"
       cancel: "Abbrechen"
+      save: "Speichern"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -4311,6 +4306,9 @@ de_CH:
           paypal:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
+        image:
+          label: "Bild"
+          edit: "Bearbeiten"
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
@@ -4722,6 +4720,8 @@ de_CH:
     add_tag_rule_modal:
       select_rule_type: "Wählen Sie einen Regelart aus:"
       add_rule: "Regel hinzufügen"
+    product_tile:
+      from_price: "von"
   credit_payment_method:
     errors:
       no_credit_available: Kein Guthaben verfügbar

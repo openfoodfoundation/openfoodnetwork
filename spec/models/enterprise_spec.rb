@@ -872,16 +872,16 @@ RSpec.describe Enterprise do
   end
 
   describe "provide enterprise category" do
-    let(:producer_sell_all) { build_stubbed(:enterprise, is_primary_producer: true,  sells: "any") }
-    let(:producer_sell_own) { build_stubbed(:enterprise, is_primary_producer: true,  sells: "own") }
+    let(:producer_sell_all) { build_stubbed(:enterprise, is_primary_producer: true, sells: "any") }
+    let(:producer_sell_own) { build_stubbed(:enterprise, is_primary_producer: true, sells: "own") }
     let(:producer_sell_none) {
       build_stubbed(:enterprise, is_primary_producer: true, sells: "none")
     }
     let(:non_producer_sell_all) {
-      build_stubbed(:enterprise, is_primary_producer: false,  sells: "any")
+      build_stubbed(:enterprise, is_primary_producer: false, sells: "any")
     }
     let(:non_producer_sell_own) {
-      build_stubbed(:enterprise, is_primary_producer: false,  sells: "own")
+      build_stubbed(:enterprise, is_primary_producer: false, sells: "own")
     }
     let(:non_producer_sell_none) {
       build_stubbed(:enterprise, is_primary_producer: false, sells: "none")

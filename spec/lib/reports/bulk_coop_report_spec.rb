@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
+# rubocop:disable-next Metrics/ModuleLength
 module Reporting
   module Reports
     module BulkCoop
@@ -205,4 +205,3 @@ module Reporting
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength

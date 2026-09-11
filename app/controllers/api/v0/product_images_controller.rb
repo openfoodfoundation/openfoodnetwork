@@ -18,13 +18,15 @@ module Api
 
         success_status = previous_image.present? ? :ok : :created
 
-        if image.save
+        Spree::Image.transaction do
+          image.save!
           previous_image&.destroy!
-          render json: image, serializer: ImageSerializer, status: success_status
-        else
-          error_json = { errors: image.errors.full_messages }
-          render json: error_json, status: :unprocessable_entity
         end
+
+        render json: image, serializer: ImageSerializer, status: success_status
+      rescue ActiveRecord::RecordInvalid
+        error_json = { errors: image.errors.full_messages }
+        render json: error_json, status: :unprocessable_entity
       end
     end
   end

@@ -2,11 +2,54 @@
 
 module Admin
   module ProductsHelper
-    def product_image_form_path(product)
-      if product.image.present?
-        edit_admin_product_image_path(product.id, product.image.id)
+    include SharedHelper
+
+    def image_form_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        product_id = imageable.product_id
+        extra = { variant_id: imageable.id }
       else
-        new_admin_product_image_path(product.id)
+        product_id = imageable.id
+        extra = {}
+      end
+
+      if imageable.image.present?
+        edit_admin_product_image_path(product_id, imageable.image.id, extra)
+      else
+        new_admin_product_image_path(product_id, extra)
+      end
+    end
+
+    # Where the image edit page came from: the product or variant edit page.
+    def image_owner_edit_path(product, variant = nil)
+      if variant
+        edit_admin_product_variant_path(product, variant)
+      else
+        edit_admin_product_path(product)
+      end
+    end
+
+    # Default caption offered on the image edit page when none has been saved yet.
+    # Variants without a display name intentionally get no default.
+    def default_image_caption(product, variant = nil)
+      return variant.display_name.to_s if variant
+
+      product.name
+    end
+
+    # A caption that was deliberately cleared is stored as an empty string and must
+    # stay empty; only a caption that was never set falls back to the default.
+    def image_caption_field_value(image, product, variant = nil)
+      return image.caption unless image.caption.nil?
+
+      default_image_caption(product, variant)
+    end
+
+    def image_upload_path(imageable)
+      if imageable.is_a?(Spree::Variant)
+        admin_product_images_path(imageable.product_id, variant_id: imageable.id)
+      else
+        admin_product_images_path(imageable.id)
       end
     end
 
@@ -49,21 +92,6 @@ module Admin
 
     def products_return_to_url
       session[:products_return_to_url] || admin_products_url
-    end
-
-    def product_carousel_images_data(product, size: :large)
-      images = product.images.to_a
-      show_caption = images.many?
-
-      return [default_carousel_image(size, product)] if images.empty?
-
-      images.map.with_index do |image, index|
-        {
-          url: image.url(size),
-          alt: product_image_alt_text(image, product),
-          caption: show_caption ? "#{product.name} - #{index + 1}" : nil
-        }
-      end
     end
 
     # if user hasn't saved any preferences on products page and there's only one producer;
@@ -111,24 +139,18 @@ module Admin
       false
     end
 
+    def image_modal_resource_name(variant, product)
+      resource_name = product.name
+
+      variant&.display_name.present? ? "#{resource_name} - #{variant.display_name}" : resource_name
+    end
+
     private
 
     def copy_template_fields(template, new_variant)
       NEW_VARIANT_TEMPLATE_FIELDS.each do |field|
         new_variant.public_send(:"#{field}=", template.public_send(field))
       end
-    end
-
-    def product_image_alt_text(image, product)
-      image.alt.presence || product.name
-    end
-
-    def default_carousel_image(size, product)
-      {
-        url: Spree::Image.default_image_url(size),
-        alt: product.name,
-        caption: nil
-      }
     end
   end
 end

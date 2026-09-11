@@ -58,6 +58,46 @@ RSpec.describe Spree::Address do
 
       expect(address.full_address.split(',').length).to eql(3)
     end
+
+    context "when postal_code_first format is configured" do
+      before do
+        allow(Spree::Config).to receive(:[])
+          .with(:address_display_format).and_return("postal_code_first")
+      end
+
+      it "displays postal code before city and omits state" do
+        expect(address.full_address).to include(address.address1)
+        expect(address.full_address).to include(address.address2)
+        expect(address.full_address).to include(address.zipcode)
+        expect(address.full_address).to include(address.city)
+        expect(address.full_address).not_to include(address.state.name)
+        expect(address.full_address).to match(/#{address.zipcode}.*#{address.city}/)
+      end
+    end
+  end
+
+  describe "address_part2" do
+    let(:address) { FactoryBot.build(:address) }
+
+    it "displays city, zipcode and state by default" do
+      expect(address.address_part2).to include(address.city)
+      expect(address.address_part2).to include(address.zipcode)
+      expect(address.address_part2).to include(address.state.name)
+    end
+
+    context "when postal_code_first format is configured" do
+      before do
+        allow(Spree::Config).to receive(:[])
+          .with(:address_display_format).and_return("postal_code_first")
+      end
+
+      it "displays postal code before city and omits state" do
+        expect(address.address_part2).to include(address.city)
+        expect(address.address_part2).to include(address.zipcode)
+        expect(address.address_part2).not_to include(address.state.name)
+        expect(address.address_part2).to match(/#{address.zipcode}.*#{address.city}/)
+      end
+    end
   end
 
   describe "setters" do

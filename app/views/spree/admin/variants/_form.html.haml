@@ -79,6 +79,8 @@
             = f.text_field :on_hand, data: { "edit-variant-target": "onHand" }
 
   .right.six.columns.omega.label-block
+    = render partial: 'spree/admin/products/image', locals: { imageable: @variant }
+
     .field
       = f.label 'weight', t(:weight)+' (kg)'
       - value = number_with_precision(@variant.weight, precision: 3)

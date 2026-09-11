@@ -1,5 +1,16 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
-= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Images' }
+
+-# The admin layout has no viewport meta tag, so phones lay this page out at
+-# ~980px and scale it down. Opt this page in so its small-screen styles apply.
+- content_for :head do
+  %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
+
+- content_for :page_class do
+  image-edit-page
+
+- content_for :page_title do
+  = t('.title', resource_name: image_modal_resource_name(@variant, @product))
+
 = render partial: 'spree/shared/error_messages', locals: { target: @error_target || @image }
 
 -# Saving, replacing or deleting from this page all return to the page that owns the image,

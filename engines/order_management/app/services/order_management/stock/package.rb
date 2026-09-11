@@ -80,7 +80,7 @@ module OrderManagement
       def shipping_methods
         return [] if order.distributor.blank?
 
-        order.distributor.shipping_methods.uniq.to_a
+        order.distributor.shipping_methods.order(:id).uniq.to_a
       end
 
       def inspect

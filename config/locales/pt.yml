@@ -585,7 +585,6 @@ pt:
       tabs:
         product_details: "Detalhes do Produto"
         group_buy_options: "Opções de Compra Colectiva"
-        images: "Imagens"
         variants: "Variantes"
         product_properties: "Propriedades do Produto"
     products_v3:
@@ -998,6 +997,8 @@ pt:
         visible: Visível?
         owner: Proprietário
         producer: Produtor
+        search: Procurar
+        clear: Limpar
       change_type_form:
         producer_profile: Perfil do Produtor
         connect_ofn: Conectar através da Open Food Network
@@ -3150,6 +3151,7 @@ pt:
     actions:
       update: "Atualizar"
       cancel: "Cancelar"
+      save: "Guardar"
     shared:
       payments_list:
         amount: "Quantia"
@@ -3367,6 +3369,9 @@ pt:
             error_saving_payment: Erro a gravar pagamento
             submitting_payment: A submeter pagamento...
       products:
+        image:
+          label: "Imagem"
+          edit: "Editar"
         new:
           title: "Novo Produto"
           new_product: "Novo Produto"
@@ -3666,3 +3671,5 @@ pt:
       no_rules_yet: Nenhuma regra foi aplicada a esta etiqueta
     add_tag_rule_modal:
       select_rule_type: "Selecionar um tipo de regra:"
+    product_tile:
+      from_price: "de"
