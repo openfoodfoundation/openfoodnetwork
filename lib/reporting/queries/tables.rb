@@ -31,6 +31,24 @@ module Reporting
         Enterprise.arel_table.alias(:product_supplier)
       end
 
+      # The producer is the first enterprise in the chain of linked variants, if
+      # any, otherwise the variant's own enterprise. Mirrors Spree::Variant#producer,
+      # but resolved as a correlated subquery so it can be used in report SQL.
+      def producer_name_field
+        Arel.sql(<<~SQL.squish)
+          (
+            SELECT enterprises.name FROM variant_links
+            INNER JOIN spree_variants AS source_variant_for_producer
+              ON source_variant_for_producer.id = variant_links.source_variant_id
+            INNER JOIN enterprises
+              ON enterprises.id = source_variant_for_producer.enterprise_id
+            WHERE variant_links.target_variant_id = spree_variants.id
+            ORDER BY source_variant_for_producer.id ASC
+            LIMIT 1
+          )
+        SQL
+      end
+
       def bill_address_alias
         Spree::Address.arel_table.alias(:bill_address)
       end

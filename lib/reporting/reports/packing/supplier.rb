@@ -46,7 +46,7 @@ module Reporting
           lambda do
             [
               distributor_alias[:name],
-              supplier_alias[:name],
+              Arel.sql("supplier"),
               Arel.sql("product"),
               Arel.sql("variant"),
               Arel.sql("last_name")
