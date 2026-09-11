@@ -8,12 +8,29 @@ angular.module("admin.resources").factory "Customers", ($q, $injector, InfoDialo
       if $injector.has('customers')
         @load($injector.get('customers'))
 
+    # Resolves with the customer and whether it existed before this request.
     add: (params) ->
-      CustomerResource.create params, (customer) =>
-        if customer.id
-          @all.unshift customer
-          @byID[customer.id] = customer
-          @pristineByID[customer.id] = angular.copy(customer)
+      deferred = $q.defer()
+      CustomerResource.create params, (customer, headers, status) =>
+        @merge(customer) if customer.id
+        deferred.resolve(customer: customer, existed: status == 200)
+      , (response) ->
+        deferred.reject(response)
+      deferred.promise
+
+    # Add the customer to the collection, or refresh it if we know it already.
+    #
+    # The server may respond with a customer we listed already, for example
+    # when the given email differs only in case. Listing it twice breaks the
+    # index table, because its ng-repeat tracks customers by id.
+    merge: (customer) ->
+      known = @byID[customer.id]
+      if known?
+        angular.extend known, customer
+      else
+        @all.unshift customer
+        @byID[customer.id] = customer
+      @pristineByID[customer.id] = angular.copy(@byID[customer.id])
 
     remove: (customer) ->
       params = id: customer.id
