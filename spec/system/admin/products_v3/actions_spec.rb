@@ -290,7 +290,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             # There are now two copies
             expect(all_input_values).to match /My friends box.*My friends box/
             # One of them is designated as a linked variant
-            expect(page).to have_content "🔗"
+            expect(page).to have_selector ".col-name .linked-variant-icon"
 
             last_box = page.all(row_containing_name("My friends box")).last
             # Close action menu (shouldn't need this, it should close itself)
@@ -336,7 +336,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
             # One editable linked variant
             within row_containing_name("My readonly friends box") do
-              expect(page).to have_content "🔗"
+              expect(page).to have_selector ".col-name .linked-variant-icon"
             end
           end
         end
