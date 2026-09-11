@@ -355,6 +355,60 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#cancel_orders" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:completed_order_with_totals, distributor:) }
+    let(:other_order) {
+      create(:completed_order_with_totals, distributor: create(:distributor_enterprise))
+    }
+
+    before { sign_in distributor.owner }
+
+    it "cancels editable orders and closes the modal" do
+      expect {
+        post(
+          "/admin/orders/cancel_orders",
+          params: { bulk_ids: [order.id, other_order.id], format: :turbo_stream }
+        )
+      }.to change { order.reload.state }.to("canceled")
+
+      expect(other_order.reload.state).to eq "complete"
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("modal:close")
+      expect(response.body).to include("order_#{order.id}")
+      expect(response.body).not_to include("order_#{other_order.id}")
+    end
+
+    it "forwards the cancellation options to the service" do
+      expect(Orders::BulkCancelService).to receive(:new).
+        and_wrap_original do |original, params, user|
+          expect(params[:send_cancellation_email]).to be_nil
+          expect(params[:restock_items]).to eq "1"
+          original.call(params, user)
+        end
+
+      post(
+        "/admin/orders/cancel_orders",
+        params: { bulk_ids: [order.id], restock_items: "1", format: :turbo_stream }
+      )
+
+      expect(response).to have_http_status :ok
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        post(
+          "/admin/orders/cancel_orders",
+          params: { bulk_ids: [order.id], format: :turbo_stream }
+        )
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
   describe "#bulk_credit" do
     let(:order) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
     let(:order1) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
