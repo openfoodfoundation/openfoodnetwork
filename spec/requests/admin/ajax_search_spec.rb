@@ -151,6 +151,17 @@ RSpec.describe "/admin/ajax_search" do
         expect(json_response["pagination"]["more"]).to be false
       end
 
+      it "returns translated category names in the current locale" do
+        category1.update_column(:name_i18n, { "en" => "Vegetables", "es" => "Verduras" })
+        category2.update_column(:name_i18n, { "en" => "Fruits", "es" => "Frutas" })
+        category3.update_column(:name_i18n, { "en" => "Dairy", "es" => "Lácteos" })
+
+        get admin_ajax_search_categories_path(locale: "es")
+
+        json_response = response.parsed_body
+        expect(json_response["results"].pluck("label")).to eq(['Frutas', 'Lácteos', 'Verduras'])
+      end
+
       it "filters categories by search query" do
         get admin_ajax_search_categories_path, params: { q: "fruit" }
 

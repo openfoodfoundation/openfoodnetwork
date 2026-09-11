@@ -34,7 +34,7 @@ class CacheService
 
     def self.ams_all_taxons
       [
-        "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}",
+        "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}-#{I18n.locale}",
         { skip_digest: true }
       ]
     end
