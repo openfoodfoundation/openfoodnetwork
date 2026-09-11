@@ -83,27 +83,28 @@ module DfcProvider
       OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
     end
 
-    def render_dfc(subject = nil, *)
-      return render_v1(*subject, *) if profile != "dfc-v2"
-      return render_v2(subject, *) unless subject.is_a?(Array)
+    def render_dfc(subject = nil, *subjects, status: :ok)
+      return render_v1(*subject, *subjects, status:) if profile != "dfc-v2"
+      return render_v2(subject, *subjects, status:) unless subject.is_a?(Array)
 
       # DFCv2 requires containers for listing resources in an index action.
       # We need to pass DFCv2 data into the container because the migration
       # will skip the container itself as it's not a DFCv1 class.
       members = migration.up(*subject)
       container = Container.new(url_for, members:)
-      render_v2(container, *subject, *)
+      render_v2(container, *subject, *subjects, status:)
     end
 
-    def render_v1(*)
-      render json: DfcIo.export(*)
+    def render_v1(*subjects, status: :ok)
+      render json: DfcIo.export(*subjects), status:
     end
 
-    def render_v2(*)
-      objects = migration.up(*)
+    def render_v2(*subjects, status: :ok)
+      objects = migration.up(*subjects)
 
       render json: DfcLoader.connector_v2.export(*objects),
-             content_type: 'application/ld+json; profile="dfc-v2"'
+             content_type: 'application/ld+json; profile="dfc-v2"',
+             status:
     end
 
     def migration
