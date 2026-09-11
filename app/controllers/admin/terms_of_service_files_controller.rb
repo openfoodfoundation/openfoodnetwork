@@ -22,7 +22,7 @@ module Admin
 
     def destroy
       TermsOfServiceFile.current.destroy!
-      redirect_to main_app.admin_terms_of_service_files_path
+      redirect_to main_app.admin_terms_of_service_files_path, status: :see_other
     end
 
     private

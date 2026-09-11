@@ -11,17 +11,18 @@
 
 -# Existing endpoints
 - webhooks.each do |webhook_endpoint|
-  %tr
+  %tr{ id: "webhook-endpoint-#{webhook_endpoint.id}" }
     %td= t("components.webhook_endpoint_form.event_types.#{webhook_type}")
     %td= webhook_endpoint.url
     %td.actions.endpoints-actions
       - if webhook_endpoint.persisted?
         = button_to helpers.account_webhook_endpoint_path(webhook_endpoint), method: :delete,
                                                                              class: "tiny alert no-margin",
-                                                                             data: { confirm: I18n.t(:are_you_sure) } do
+                                                                             form: { data: { turbo: true } },
+                                                                             data: { turbo_confirm: I18n.t(:are_you_sure) } do
           = I18n.t(:delete)
 
         - if is_webhook_payment_status?
           = form_tag helpers.webhook_endpoint_test_account_path(webhook_endpoint), class: "button_to", 'data-turbo': true do
-            = button_tag type: "submit", class: "tiny alert no-margin", data: { confirm: I18n.t(:are_you_sure) } do
+            = button_tag type: "submit", class: "tiny alert no-margin", data: { turbo_confirm: I18n.t(:are_you_sure) } do
               = I18n.t("components.webhook_endpoint_form.test_endpoint")

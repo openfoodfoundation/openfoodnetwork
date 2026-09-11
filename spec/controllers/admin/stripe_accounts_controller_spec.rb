@@ -26,8 +26,13 @@ RSpec.describe Admin::StripeAccountsController do
     let(:params) { { format: :json, id: "client_id" } }
 
     context "when the specified stripe account doesn't exist" do
-      it "raises an error?" do
+      before { allow(controller).to receive(:spree_current_user) { enterprise.owner } }
+
+      it "redirects to the dashboard with an error flash" do
         spree_delete :destroy, params
+
+        expect(response).to redirect_to spree.admin_dashboard_path
+        expect(flash[:error]).to eq "Failed to disconnect Stripe."
       end
     end
 
