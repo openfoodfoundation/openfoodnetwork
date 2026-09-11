@@ -12,6 +12,10 @@ class Invoice
 
       delegate :name_to_display, :options_text, to: :variant
 
+      def full_product_name
+        variant.product.name
+      end
+
       def amount_with_adjustments_without_taxes
         fee_tax = enterprise_fee_included_tax || 0.0
         (price_with_adjustments * quantity) - included_tax - fee_tax
