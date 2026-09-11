@@ -1540,6 +1540,8 @@ fr_CA:
         visible: Visible?
         owner: Gérant
         producer: Producteur
+        search: Chercher
+        clear: Effacer
         sells_options:
           unspecified: non spécifié
           none: aucun
@@ -5091,6 +5093,8 @@ fr_CA:
         order_cycle_opened: Cycle de vente ouvert
         payment_status_changed: Poster webhook sur le changement du statut de paiement
       test_endpoint: Tester le point de terminaison du webhook
+    product_tile:
+      from_price: "de"
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

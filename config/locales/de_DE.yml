@@ -1294,6 +1294,8 @@ de_DE:
         visible: Sichtbar?
         owner: Inhaber
         producer: Produzent
+        search: Suche
+        clear: Zurücksetzen
         sells_options:
           unspecified: nicht spezifiziert
       change_type_form:
@@ -4639,3 +4641,5 @@ de_DE:
         create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
       event_types:
         order_cycle_opened: Bestellzyklus eröffnet
+    product_tile:
+      from_price: "von"

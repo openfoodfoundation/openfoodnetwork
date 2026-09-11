@@ -1430,6 +1430,8 @@ es:
         visible: ¿Visible?
         owner: Propietaria
         producer: Productora
+        search: Buscar
+        clear: Limpiar
         sells_options:
           unspecified: Sin especificar
           none: Ninguno
@@ -4807,6 +4809,8 @@ es:
     webhook_endpoint_form:
       event_types:
         order_cycle_opened: Ciclo de pedidos abierto
+    product_tile:
+      from_price: "desde"
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"
     timestamp_error_message: "Por favor, inténtelo de nuevo después de 5 segundos."

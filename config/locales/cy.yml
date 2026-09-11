@@ -1524,6 +1524,8 @@ cy:
         visible: Gweladwy?
         owner: Perchennog
         producer: Cynhyrchydd
+        search: Chwilio
+        clear: Clirio
         sells_options:
           unspecified: amhenodol
           none: dim
@@ -5109,6 +5111,8 @@ cy:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Postio webhook ar newid statws Taliad
       test_endpoint: Profi pwynt gorffen y webhook
+    product_tile:
+      from_price: "o"
   invisible_captcha:
     sentence_for_humans: "Gadewch yn wag os gwelwch yn dda."
     timestamp_error_message: "Rhowch gynnig arall ar ôl 5 eiliad."

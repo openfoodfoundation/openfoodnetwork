@@ -1522,6 +1522,8 @@ sv:
         visible: Synligt?
         owner: Ägare
         producer: Producent
+        search: Sök
+        clear: Rensa
         sells_options:
           unspecified: ospecificerat
           none: ingen
@@ -5006,6 +5008,8 @@ sv:
         order_cycle_opened: Beställningsomgång öppnad
         payment_status_changed: Skicka webhook när betalningsstatusen ändras
       test_endpoint: Testa webhook-slutpunkt
+    product_tile:
+      from_price: "från"
   invisible_captcha:
     sentence_for_humans: "Vänligen lämna tomt"
     timestamp_error_message: "Försök igen efter 5 sekunder."

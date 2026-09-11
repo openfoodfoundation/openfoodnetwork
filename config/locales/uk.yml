@@ -1126,6 +1126,8 @@ uk:
         visible: Видимий?
         owner: Власник
         producer: Виробник
+        search: Пошук
+        clear: Очистити
       change_type_form:
         producer_profile: Профіль виробника
         connect_ofn: Підключення через OFN
@@ -4330,3 +4332,5 @@ uk:
     add_tag_rule_modal:
       select_rule_type: "Виберіть тип правила:"
       add_rule: "Додати правило"
+    product_tile:
+      from_price: "від"

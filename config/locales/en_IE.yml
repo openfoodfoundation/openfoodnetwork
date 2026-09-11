@@ -1373,6 +1373,8 @@ en_IE:
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -4745,6 +4747,8 @@ en_IE:
         create_placeholder: Enter the URL of the remote webhook endpoint
       event_types:
         order_cycle_opened: Order Cycle Opened
+    product_tile:
+      from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

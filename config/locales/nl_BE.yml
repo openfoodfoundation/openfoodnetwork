@@ -957,6 +957,8 @@ nl_BE:
         visible: Zichtbaar?
         owner: Eigenaar
         producer: Producent
+        search: Zoeken
+        clear: Duidelijk
       change_type_form:
         producer_profile: Producentsprofiel
         connect_ofn: Verbind via Open Food Network
@@ -3708,3 +3710,5 @@ nl_BE:
     add_tag_rule_modal:
       select_rule_type: "Selecteer een regel : "
       add_rule: "Regel toevoegen"
+    product_tile:
+      from_price: "van"

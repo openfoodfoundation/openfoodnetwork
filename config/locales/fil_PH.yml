@@ -934,6 +934,8 @@ fil_PH:
         visible: nakikita?
         owner: May-ari
         producer: Producer
+        search: hanapin
+        clear: alisin
       change_type_form:
         producer_profile: Profile ng Producer
         connect_ofn: kumonekta sa pamamagitan ng OFN
@@ -3682,3 +3684,5 @@ fil_PH:
     add_tag_rule_modal:
       select_rule_type: "pumili ng uri ng panuntunan:"
       add_rule: "magdagdag ng panuntunan"
+    product_tile:
+      from_price: "mula sa"

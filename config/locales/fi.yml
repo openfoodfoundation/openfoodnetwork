@@ -1501,6 +1501,8 @@ fi:
         visible: Näkyvissä?
         owner: Omistaja
         producer: Tuottaja
+        search: Haku
+        clear: Tyhjennä
         sells_options:
           unspecified: määrittämätön
           none: ei yhtään
@@ -4959,6 +4961,8 @@ fi:
         order_cycle_opened: Tilausjakso avattu
         payment_status_changed: Lähetä webhook maksun tilan muutoksesta
       test_endpoint: Testaa webhookin päätepiste
+    product_tile:
+      from_price: "alkaen"
   invisible_captcha:
     sentence_for_humans: "Jätä tyhjäksi"
     timestamp_error_message: "Yritä uudelleen 5 sekunnin kuluttua."

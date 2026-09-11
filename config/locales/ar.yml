@@ -1172,6 +1172,8 @@ ar:
         visible: مرئي؟
         owner: المالك
         producer: المنتج
+        search: بحث
+        clear: ازالة
       change_type_form:
         producer_profile: الملف الشخصي للمنتج
         connect_ofn: الاتصال من خلال OFN
@@ -4561,3 +4563,5 @@ ar:
         create_placeholder: 'أدخل عنوان URL لنقطة نهاية webhook '
       event_types:
         order_cycle_opened: تم فتح دورة الطلب
+    product_tile:
+      from_price: "من عند"

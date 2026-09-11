@@ -1293,6 +1293,8 @@ ru:
         visible: Видимое?
         owner: Владелец
         producer: Производитель
+        search: Поиск
+        clear: Сбросить
       change_type_form:
         producer_profile: Профиль Производителя
         connect_ofn: Подключиться через ОСП
@@ -4703,3 +4705,5 @@ ru:
         create_placeholder: Введите URL-адрес конечной точки удаленного веб-хука.
       event_types:
         order_cycle_opened: Цикл Заказа Открыт
+    product_tile:
+      from_price: "от"

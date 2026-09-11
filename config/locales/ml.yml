@@ -1252,6 +1252,8 @@ ml:
         visible: ദൃശ്യമാണോ?
         owner: ഉടമ
         producer: നിർമ്മാതാവ്
+        search: തിരയുക
+        clear: ക്ലിയർ
       change_type_form:
         producer_profile: പ്രൊഡ്യൂസർ പ്രൊഫൈൽ
         connect_ofn: ഒഎഫ്എൻ വഴി ബന്ധിപ്പിക്കുക
@@ -4566,3 +4568,5 @@ ml:
         create_placeholder: റിമോട്ട് വെബ്ഹുക്ക് എൻഡ് പോയിന്റിന്റെ യുആർഎൽ നൽകുക
       event_types:
         order_cycle_opened: ഓർഡർ സൈക്കിൾ തുറന്നു
+    product_tile:
+      from_price: "നിന്ന്"

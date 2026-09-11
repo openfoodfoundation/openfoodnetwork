@@ -972,6 +972,8 @@ en_AU:
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -3850,3 +3852,5 @@ en_AU:
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
+    product_tile:
+      from_price: "from"

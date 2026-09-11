@@ -1226,6 +1226,8 @@ ca:
         visible: Visible?
         owner: Propietària
         producer: Productor
+        search: Cerca
+        clear: Netejar
       change_type_form:
         producer_profile: Perfil de productora
         connect_ofn: Connecta mitjançant OFN
@@ -4376,3 +4378,5 @@ ca:
     webhook_endpoint_form:
       event_types:
         order_cycle_opened: Cicle de comanda obert
+    product_tile:
+      from_price: "de"

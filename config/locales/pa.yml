@@ -1227,6 +1227,8 @@ pa:
         visible: ਦਿਸਣਯੋਗ?
         owner: ਮਾਲਕ'
         producer: ਉਤਪਾਦਕ
+        search: ਖੋਜੋ
+        clear: ਮਿਟਾਓ
       change_type_form:
         producer_profile: ਉਤਪਾਦਕ ਪ੍ਰੋਫਾਈਲ'
         connect_ofn: OFN ਦੁਆਰਾ ਕਨੇਕਟ ਕਰੋ
@@ -4392,3 +4394,5 @@ pa:
         create_placeholder: ਰਿਮੋਟ ਵੈਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਦਾ URL ਦਾਖਲ ਕਰੋ
       event_types:
         order_cycle_opened: ਆਰਡਰ ਸਾਈਕਲ ਖੋਲ੍ਹਿਆ ਗਿਆ
+    product_tile:
+      from_price: "ਤੋਂ"

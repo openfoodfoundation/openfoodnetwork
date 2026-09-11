@@ -1220,6 +1220,8 @@ mr:
         visible: दृश्यमान?
         owner: मालक
         producer: उत्पादक
+        search: सर्च
+        clear: क्लिअर
       change_type_form:
         producer_profile: उत्पादक प्रोफाइल
         connect_ofn: OFN द्वारे कनेक्ट करा
@@ -4400,3 +4402,5 @@ mr:
     webhook_endpoint_form:
       url:
         create_placeholder: रिमोट वेबहुक एंडपॉइंटची URL एंटर करा
+    product_tile:
+      from_price: "पासून"

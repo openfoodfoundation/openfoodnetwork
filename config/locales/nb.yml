@@ -1424,6 +1424,8 @@ nb:
         visible: Synlig?
         owner: Eier
         producer: Produsent
+        search: Søk
+        clear: Fjern
       change_type_form:
         producer_profile: Produsentprofil
         connect_ofn: Koble gjennom OFN
@@ -4787,6 +4789,8 @@ nb:
         create_placeholder: Skriv inn URL-en til det eksterne webhook-endepunktet
       event_types:
         order_cycle_opened: Bestillingsrunde åpnet
+    product_tile:
+      from_price: "fra"
   invisible_captcha:
     sentence_for_humans: "Vennligst la stå tomt"
     timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

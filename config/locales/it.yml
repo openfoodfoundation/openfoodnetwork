@@ -1163,6 +1163,8 @@ it:
         visible: Visibile?
         owner: Proprietario
         producer: Produttore
+        search: Cerca
+        clear: Pulisci
       change_type_form:
         producer_profile: Profilo produttore
         connect_ofn: Connetti attraverso OFN
@@ -4398,3 +4400,5 @@ it:
     add_tag_rule_modal:
       select_rule_type: "Seleziona un tipo di regola:"
       add_rule: "Aggiungi regola"
+    product_tile:
+      from_price: "da"

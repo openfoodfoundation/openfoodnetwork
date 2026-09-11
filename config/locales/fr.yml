@@ -84,7 +84,7 @@ fr:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article"
         enterprise_relationship:
-          inventory_vs_linked_variants: "Impossible d'accorder simultanément les autorisations d'inventaire et de variantes liées."
+          inventory_vs_linked_variants: "Impossible d'accorder simultanément les autorisations d'inventaire et de produits associés."
         spree/image:
           attributes:
             attachment:
@@ -331,6 +331,7 @@ fr:
     oidc:
       failure: "La connexion n'a pas fonctionné : %{error}"
       record_not_unique: "%{uid} est déjà associé à un autre compte"
+  home_page_url: "URL de la page d'accueil (laisser vide pour utiliser la page d'accueil intégrée)"
   home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
   hub_signup_case_studies_html: "HTML page cas d'études hub"
   hub_signup_detail_html: "HTML page inscription hub"
@@ -672,7 +673,7 @@ fr:
         delete: Supprimer
         remove: Supprimer
         preview: Prévisualisation
-        create_linked_variant: Créer une variante liée
+        create_linked_variant: Créer un produit associé
       image:
         edit: Modifier
       variant_row:
@@ -767,6 +768,8 @@ fr:
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
+    address_display:
+      address_display_settings: "Affichage de l'adresse"
     invoice_settings:
       edit:
         title: "Paramètres de facturation"
@@ -1036,7 +1039,7 @@ fr:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
       create_linked_variant:
-        success: "Variante liée créée avec succès"
+        success: "Produit associé créé avec succès"
       tag_rules:
         rules_per_tag:
           one: "%{tag} comporte une règle"
@@ -1538,6 +1541,8 @@ fr:
         visible: Visible?
         owner: Gestionnaire principal
         producer: Producteur
+        search: Rechercher
+        clear: Annuler
         sells_options:
           unspecified: non spécifié
           none: aucun
@@ -3662,7 +3667,7 @@ fr:
         exchange_products:
           load_more_variants: "Afficher plus de variantes"
           load_all_variants: "Afficher toutes les variantes"
-          select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
+          select_all_variants: "Sélectionnez les %{total_number_of_variants} variantes"
           variants_loaded: " %{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
           no_variants: "Aucune variante disponible pour ce produit."
@@ -3808,7 +3813,7 @@ fr:
       manage_products: "modifier les produits"
       edit_profile: "modifier le profil"
       add_products_to_inventory: "ajouter les produits au catalogue boutique"
-      create_linked_variants: "créer des variantes liées [BÊTA]"
+      create_linked_variants: "créer des produits associés [BÊTA]"
     resources:
       could_not_delete_customer: 'L''acheteur n''a pas pu être supprimé'
     product_import:
@@ -4221,6 +4226,9 @@ fr:
     hide_cents: "Masquer les centimes"
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
+    address_display_format: "Format d'affichage de l'adresse"
+    address_display_format_default: "Par défaut"
+    address_display_format_postal_code_first: "Code postal d'abord"
     mail_method_settings: "Paramètre méthode mail"
     mail_settings_notice_html: "<b> Les modifications apportées ici seront temporaires </b>et peuvent changer à la prochaine mise à jour. <br> Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a> . "
     general: "Général"
@@ -4291,6 +4299,11 @@ fr:
     minimal_amount: "Montant minimal"
     normal_amount: "Montant classique"
     discount_amount: "Montant réduit"
+    filename: "Nom du fichier"
+    caption: "Légende"
+    replace_image: "Remplacer l'image"
+    delete_permanently: "Supprimer définitivement"
+    alt_text: "Texte de remplacement"
     instance_url: "URL du site"
     email: Email
     account_updated: "Compte mis à jour!"
@@ -4349,9 +4362,12 @@ fr:
     admin:
       images:
         edit:
+          title: 'Modifier l''image pour « %{resource_name} »'
           subtitle: Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px.
           close: Retour
           upload: Télécharger la photo
+        new:
+          use_uploader: "Veuillez utiliser l'outil de téléchargement d'images sur cette page pour ajouter une image."
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:
@@ -4628,6 +4644,7 @@ fr:
         image:
           label: "Image"
           subtitle: "Il est recommandé d'utiliser un format carré d'au moins 440px sur 440px."
+          upload: "Importer une image"
           edit: "Modifier"
         image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         image_not_processable: "L'image n'est pas valide"
@@ -5109,6 +5126,8 @@ fr:
         order_cycle_opened: Cycle de vente ouvert
         payment_status_changed: Poster webhook sur le changement du statut de paiement
       test_endpoint: Tester le point de terminaison du webhook
+    product_tile:
+      from_price: "de"
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"
     timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

@@ -1109,6 +1109,8 @@ ko:
         visible: 표시하시겠습니까?
         owner: 오너
         producer: 제공자
+        search: 탐색
+        clear: 지우기
       change_type_form:
         producer_profile: 생산자 프로필
         connect_ofn: OFN을 통해 연결
@@ -4165,3 +4167,5 @@ ko:
     add_tag_rule_modal:
       select_rule_type: "규칙 유형 선택 :"
       add_rule: "규칙 추가"
+    product_tile:
+      from_price: "부터"

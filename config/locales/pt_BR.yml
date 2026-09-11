@@ -1516,6 +1516,8 @@ pt_BR:
         visible: Visível?
         owner: Proprietário
         producer: Produtor
+        search: Buscar
+        clear: Limpar
         sells_options:
           unspecified: não especificado
           none: nenhum
@@ -5003,6 +5005,8 @@ pt_BR:
         order_cycle_opened: Ciclo de pedidos aberto
         payment_status_changed: Disparar webhook quando o status do pagamento mudar
       test_endpoint: Testar endpoint de webhook
+    product_tile:
+      from_price: "de"
   invisible_captcha:
     sentence_for_humans: "Deixe em branco"
     timestamp_error_message: "Tente novamente em 5 segundos."

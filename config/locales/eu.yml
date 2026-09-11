@@ -1332,6 +1332,8 @@ eu:
         visible: Ikusgai?
         owner: Jabea
         producer: Ekoizlea
+        search: Bilatu
+        clear: Garbitu
       change_type_form:
         producer_profile: Produkzio-profila
         connect_ofn: OFN bidez konektatzea
@@ -4474,6 +4476,8 @@ eu:
     webhook_endpoint_form:
       event_types:
         order_cycle_opened: Eskaera-ziklo irekia
+    product_tile:
+      from_price: "ekoizlea: "
   invisible_captcha:
     sentence_for_humans: "Mesedez, utzi hutsik"
     timestamp_error_message: "Mesedez, saia zaitez berriro 5 segundoren ondoren."

@@ -1389,6 +1389,8 @@ de_CH:
         visible: Sichtbar?
         owner: Inhaber
         producer: Produzent
+        search: Suche
+        clear: Zurücksetzen
         sells_options:
           unspecified: nicht spezifiziert
           none: keine
@@ -4718,6 +4720,8 @@ de_CH:
     add_tag_rule_modal:
       select_rule_type: "Wählen Sie einen Regelart aus:"
       add_rule: "Regel hinzufügen"
+    product_tile:
+      from_price: "von"
   credit_payment_method:
     errors:
       no_credit_available: Kein Guthaben verfügbar

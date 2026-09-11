@@ -1533,6 +1533,8 @@ en_CA:
         visible: Visible?
         owner: Owner
         producer: Producer
+        search: Search
+        clear: Clear
         sells_options:
           unspecified: unspecified
           none: none
@@ -5019,6 +5021,8 @@ en_CA:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint
+    product_tile:
+      from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."

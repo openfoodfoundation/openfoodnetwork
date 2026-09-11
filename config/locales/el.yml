@@ -1310,6 +1310,8 @@ el:
         visible: Ορατός?
         owner: Κάτοχος
         producer: Παραγωγός
+        search: Αναζήτηση
+        clear: Καθαρισμός
       change_type_form:
         producer_profile: Προφίλ Παραγωγού
         connect_ofn: Συνδεθείτε μέσω OFN
@@ -4637,6 +4639,8 @@ el:
         create_placeholder: Εισάγετε το URL απο το απομακρυσμένο webhook endpoint.
       event_types:
         order_cycle_opened: Ο Κύκλος παραγγελίας άνοιξε
+    product_tile:
+      from_price: "από"
   invisible_captcha:
     sentence_for_humans: "Παρακαλώ αφήστε κενό"
     timestamp_error_message: "Παρακαλώ δοκιμάστε ξανά σε 5 δευτερόλεπτα."
