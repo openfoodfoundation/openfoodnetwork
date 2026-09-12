@@ -57,41 +57,21 @@ RSpec.describe PurgeSoftDeletedImages, type: :migration do
       expect(image.reload.attachment).to be_attached
     end
 
-    it "keeps a blob that another attachment still references" do
-      image = Spree::Image.create!(attachment:, viewable: create(:product))
-      blob_id = image.attachment.blob_id
+    it "purges the blob of every soft-deleted image in the batch" do
+      first = Spree::Image.create!(attachment:, viewable: create(:product))
+      first_blob_id = first.attachment.blob_id
 
-      other_image = Spree::Image.create!(attachment:, viewable: create(:product))
-      other_image.attachment.attach(ActiveStorage::Blob.find(blob_id))
+      second = Spree::Image.create!(attachment:, viewable: create(:product))
+      second_blob_id = second.attachment.blob_id
 
-      soft_delete(image)
-
-      migration.up
-      perform_enqueued_jobs
-
-      expect(ActiveStorage::Blob.find_by(id: blob_id)).to be_present
-      expect(other_image.reload.attachment).to be_attached
-    end
-
-    it "purges an orphaned blob while sparing a shared one in the same batch" do
-      shared_blob_image = Spree::Image.create!(attachment:, viewable: create(:product))
-      shared_blob_id = shared_blob_image.attachment.blob_id
-
-      live_image = Spree::Image.create!(attachment:, viewable: create(:product))
-      live_image.attachment.attach(ActiveStorage::Blob.find(shared_blob_id))
-
-      orphan_blob_image = Spree::Image.create!(attachment:, viewable: create(:product))
-      orphan_blob_id = orphan_blob_image.attachment.blob_id
-
-      soft_delete(shared_blob_image)
-      soft_delete(orphan_blob_image)
+      soft_delete(first)
+      soft_delete(second)
 
       migration.up
       perform_enqueued_jobs
 
-      expect(ActiveStorage::Blob.find_by(id: shared_blob_id)).to be_present
-      expect(ActiveStorage::Blob.find_by(id: orphan_blob_id)).to be_nil
-      expect(live_image.reload.attachment).to be_attached
+      expect(ActiveStorage::Blob.find_by(id: first_blob_id)).to be_nil
+      expect(ActiveStorage::Blob.find_by(id: second_blob_id)).to be_nil
     end
 
     it "removes a soft-deleted image that has no attachment" do

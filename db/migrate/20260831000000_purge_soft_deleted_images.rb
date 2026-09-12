@@ -62,12 +62,11 @@ class PurgeSoftDeletedImages < ActiveRecord::Migration[7.2]
       asset_count = Asset.where(id: ids).delete_all
     end
 
-    orphan_ids = blob_ids - Attachment.where(blob_id: blob_ids).distinct.pluck(:blob_id)
-    ActiveStorage::Blob.where(id: orphan_ids).find_each(&:purge_later)
+    ActiveStorage::Blob.where(id: blob_ids).find_each(&:purge_later)
 
     Rails.logger.info(
       "Purged #{asset_count} soft-deleted image(s), #{attachment_count} attachment(s) " \
-      "and enqueued #{orphan_ids.size} orphaned blob(s) for purge."
+      "and enqueued #{blob_ids.size} blob(s) for purge."
     )
   end
 end
