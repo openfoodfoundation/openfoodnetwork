@@ -28,6 +28,9 @@ RSpec.describe 'Terms of Service banner' do
       end.to change { admin_user.terms_of_service_accepted_at }
       expect(page).not_to have_content("Terms of Service have been updated")
 
+      # The button submits via Turbo Stream, not a full page navigation
+      expect(page).to have_current_path('/admin')
+
       # Check the banner doesn't show again once ToS has been accepted
       page.refresh
       expect(page).not_to have_content("Terms of Service have been updated")

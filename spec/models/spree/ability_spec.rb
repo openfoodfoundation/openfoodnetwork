@@ -130,10 +130,18 @@ RSpec.describe Spree::Ability do
         let(:resource) { user }
         it_should_behave_like 'access granted'
         it_should_behave_like 'no index allowed'
+
+        it 'allows accepting terms of service' do
+          expect(subject).to be_able_to(:accept_terms_of_service, resource)
+        end
       end
       context 'requested by other user' do
         let(:resource) { Spree::User.new }
         it_should_behave_like 'create only'
+
+        it 'does not allow accepting terms of service' do
+          expect(subject).not_to be_able_to(:accept_terms_of_service, resource)
+        end
       end
     end
 
