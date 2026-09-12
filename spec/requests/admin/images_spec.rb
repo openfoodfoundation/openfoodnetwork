@@ -243,7 +243,17 @@ RSpec.describe "/admin/products/:product_id/images" do
     }
 
     it_behaves_like "updating images", 302
-    it_behaves_like "rejecting an invalid attachment in place"
+
+    context "with an invalid attachment" do
+      include_context "with an invalid attachment"
+
+      it "redirects to the image's edit page with the error in a flash" do
+        expect(response).to redirect_to spree.edit_admin_product_image_path(
+          product, product.image
+        )
+        expect(flash[:error]).to include "Attachment has an invalid content type"
+      end
+    end
 
     context "when attachment is not provided" do
       let(:params) do
@@ -467,6 +477,27 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(response).to have_http_status :found
       expect(response.location)
         .to end_with spree.edit_admin_product_variant_path(product, variant)
+    end
+
+    context "with an invalid attachment" do
+      let(:params) do
+        {
+          image: {
+            attachment: fixture_file_upload("sample_file_120_products.csv", "text/csv"),
+            viewable_id: variant.id,
+          },
+          variant_id: variant.id,
+        }
+      end
+
+      it "redirects back to the image's edit page keeping the variant_id" do
+        subject
+
+        expect(response).to redirect_to spree.edit_admin_product_image_path(
+          product, variant_image, variant_id: variant.id
+        )
+        expect(flash[:error]).to include "Attachment has an invalid content type"
+      end
     end
   end
 

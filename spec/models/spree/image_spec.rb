@@ -77,6 +77,21 @@ module Spree
       end
     end
 
+    describe "#destroy" do
+      it "removes the image and purges its attachment and blob" do
+        image = subject
+        blob_id = image.attachment.blob_id
+        attachment_id = image.attachment.id
+
+        expect { image.destroy }.to change { Spree::Image.count }.by(-1)
+
+        perform_enqueued_jobs
+
+        expect(ActiveStorage::Attachment.find_by(id: attachment_id)).to be_nil
+        expect(ActiveStorage::Blob.find_by(id: blob_id)).to be_nil
+      end
+    end
+
     describe "using local storage" do
       it "stores a new image" do
         attachment = subject.attachment
