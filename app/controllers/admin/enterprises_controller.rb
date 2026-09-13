@@ -357,16 +357,19 @@ module Admin
       return if spree_current_user.admin?
 
       collection_attributes = bulk_params.fetch(:collection_attributes, {})
+      # @collection is the set of enterprises this user may edit, set up by
+      # ResourceController#load_resource, so one query covers the whole batch.
+      owner_ids = @collection.pluck(:id, :owner_id).to_h
       stale_keys = []
 
       collection_attributes.each do |key, enterprise_params|
-        enterprise = Enterprise.find_by(id: enterprise_params[:id])
+        owner_id = owner_ids[enterprise_params[:id].to_i]
 
-        if enterprise.nil?
-          # Deleted elsewhere since the form was loaded; drop the row so the
-          # rest of the batch still saves.
+        if owner_id.nil?
+          # Gone, or no longer ours, since the form was loaded; drop the row so
+          # the rest of the batch still saves.
           stale_keys << key
-        elsif spree_current_user != enterprise.owner
+        elsif spree_current_user.id != owner_id
           enterprise_params.delete :sells
         end
       end
