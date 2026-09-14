@@ -19,8 +19,9 @@ RSpec.describe ProductTileComponent, type: :component do
   end
 
   def build_product(variants)
-    ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                          variant_images: [], properties_including_inherited: [], variants:)
+    ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: Spree::Image.none,
+                          variant_images: Spree::Image.none, properties_including_inherited: [],
+                          variants:)
   end
 
   describe "producer" do
