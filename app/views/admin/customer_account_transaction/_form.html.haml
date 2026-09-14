@@ -1,0 +1,13 @@
+= form_with model: @object, url: admin_customer_customer_account_transaction_index_path(@customer), html: { data: { turbo: true } } do |f|
+  .row.field
+    = f.label :amount, t(".amount")
+    = f.text_field :amount, class: "fullwidth"
+    = f.error_message_on :amount
+  .row.field
+    = f.label :description, t(".description")
+    = f.text_field :description, class: "fullwidth"
+    = f.error_message_on :description
+  .row.field.justify-end
+    %a.button.secondary{ href: admin_customer_customer_account_transaction_index_path(@customer), data: { turbo_stream: "" } }
+      = t(".cancel")
+    = f.submit t(".submit"), class: "button primary", data: { turbo_confirm: t(:are_you_sure) }
