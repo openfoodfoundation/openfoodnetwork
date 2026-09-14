@@ -91,8 +91,9 @@ module Spree
           if @payment_method['type'].to_s != payment_method_type
             # Use .new (not .becomes) so the preference form shows the new type's
             # defaults rather than carrying over the old type's serialized prefs.
-            @payment_method = payment_method_type.constantize.new
-            @payment_method.id = params[:pm_id].to_i
+            # Assign type via PaymentMethod.new (not .constantize) so Rails' STI
+            # lookup rejects anything that isn't really a PaymentMethod subclass.
+            @payment_method = PaymentMethod.new(id: params[:pm_id].to_i, type: payment_method_type)
           end
         else
           @payment_method = PaymentMethod.new(type: params[:provider_type])

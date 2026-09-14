@@ -283,6 +283,14 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
                       provider_type: "Spree::Gateway::PayPalExpress"
             expect(assigns(:payment_method).preferences).to be_present
           end
+
+          it "does not instantiate an arbitrary class from a bogus provider_type" do
+            expect {
+              spree_get :show_provider_preferences,
+                        pm_id: payment_method.id,
+                        provider_type: "Kernel"
+            }.to raise_error(ActiveRecord::SubclassNotFound)
+          end
         end
       end
 
