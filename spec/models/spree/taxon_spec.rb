@@ -215,6 +215,11 @@ RSpec.describe Spree::Taxon do
         )
       end
     end
+
+    it "also populates the legacy name column" do
+      taxon = described_class.new(name: "Vegetables")
+      expect(taxon.read_attribute(:name)).to eq("Vegetables")
+    end
   end
 
   describe "#sync_legacy_name_column" do
