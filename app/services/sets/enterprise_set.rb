@@ -7,6 +7,7 @@ module Sets
       # any submitted id that isn't found in the collection is stale or out of scope,
       # never a genuine new record. Reject creation unconditionally rather than
       # fabricating an Enterprise without a :name, which crashes on save.
+      @scope = attributes.delete(:scope)
       super(Enterprise, collection, attributes, proc { true })
     end
 
