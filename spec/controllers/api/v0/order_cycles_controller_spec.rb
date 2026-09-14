@@ -309,13 +309,13 @@ RSpec.describe Api::V0::OrderCyclesController do
       end
 
       it "appends taxons not in the preferred order alphabetically at the end" do
+        exchange.variants << product4.variants.first
         distributor.preferred_shopfront_taxon_order = "#{taxon2.id},9999999"
         distributor.save!
 
         api_get :taxons, id: order_cycle.id, distributor: distributor.id
 
-        expect(json_response.pick(:name)).to eq taxon2.name
-        expect(json_response.pluck(:name)).to include taxon1.name
+        expect(json_response.pluck(:name)).to eq ["Vegetables", "Cake", "Meat"]
       end
     end
   end
