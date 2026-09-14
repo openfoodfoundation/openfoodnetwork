@@ -57,6 +57,7 @@ module Api
 
       private
 
+      # Sort first by shopfront_taxon_order if set, then alphabetically.
       def sort_taxons(taxons)
         return taxons.sort_by(&:name) unless preferred_taxon_order?
 
