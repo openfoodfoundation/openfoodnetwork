@@ -285,8 +285,7 @@ RSpec.describe '
 
   context "resuming a canceled order" do
     let(:resume_confirm_message) do
-      I18n.t("admin.orders.edit.order_sure_want_to",
-             event: I18n.t("resume", scope: "actions"))
+      "Are you sure you want to Resume this order?"
     end
 
     before do
