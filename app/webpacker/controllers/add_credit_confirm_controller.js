@@ -14,7 +14,7 @@ export default class extends Controller {
   updateConfirmMessage() {
     this.submitTarget.dataset.turboConfirm = I18n.t(
       "admin.customer_account_transaction.form.confirm",
-      { currency: this.currencyValue, amount: this.amountTarget.value }
+      { currency: this.currencyValue, amount: this.amountTarget.value },
     );
   }
 }
