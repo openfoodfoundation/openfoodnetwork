@@ -1,4 +1,4 @@
--# locals: (product:)
+-# locals: (product:, available_variant_ids: nil)
 .row
   .columns.small-12.medium-6.large-6.product-header
     %h3
@@ -28,6 +28,6 @@
           = product.description.html_safe
 
   .columns.small-12.medium-6.large-6.product-img
-    - carousel_images = product_carousel_images_data(product)
-    - has_any_images = product.images.any? || product.variant_images.any?
+    - carousel_images = product_carousel_images_data(product, available_variant_ids:)
+    - has_any_images = product_carousel_images?(product, available_variant_ids:)
     = render ThumbnailCarouselComponent.new(images: carousel_images, class: (has_any_images ? nil : "placeholder"), show_captions: true)
