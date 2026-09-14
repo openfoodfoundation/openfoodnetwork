@@ -83,12 +83,49 @@ RSpec.describe Admin::CustomerAccountTransactionController do
         }
       end
 
-      it "does not create a transaction and re-renders the form" do
+      it "does not create a transaction and re-renders the form with an error message" do
         expect {
           post admin_customer_customer_account_transaction_index_path(customer), params:
         }.not_to change { customer.customer_account_transactions.count }
 
         expect(response).to render_template("admin/customer_account_transaction/new")
+        expect(response.body).to include("must be greater than 0")
+      end
+    end
+
+    context "with a negative amount" do
+      let(:params) do
+        {
+          customer_account_transaction: { amount: "-5", description: "Prepaid top-up" },
+          format: :turbo_stream
+        }
+      end
+
+      it "does not create a transaction and re-renders the form with an error message" do
+        expect {
+          post admin_customer_customer_account_transaction_index_path(customer), params:
+        }.not_to change { customer.customer_account_transactions.count }
+
+        expect(response).to render_template("admin/customer_account_transaction/new")
+        expect(response.body).to include("must be greater than 0")
+      end
+    end
+
+    context "with an amount above the allowed maximum" do
+      let(:params) do
+        {
+          customer_account_transaction: { amount: "999999999999", description: "Prepaid top-up" },
+          format: :turbo_stream
+        }
+      end
+
+      it "rejects the amount instead of raising, and re-renders the form" do
+        expect {
+          post admin_customer_customer_account_transaction_index_path(customer), params:
+        }.not_to change { customer.customer_account_transactions.count }
+
+        expect(response).to render_template("admin/customer_account_transaction/new")
+        expect(response.body).to include("must be less than 100000000")
       end
     end
 
@@ -100,12 +137,13 @@ RSpec.describe Admin::CustomerAccountTransactionController do
         }
       end
 
-      it "does not create a transaction and re-renders the form" do
+      it "does not create a transaction and re-renders the form with an error message" do
         expect {
           post admin_customer_customer_account_transaction_index_path(customer), params:
         }.not_to change { customer.customer_account_transactions.count }
 
         expect(response).to render_template("admin/customer_account_transaction/new")
+        expect(response.body).to include("can&#39;t be blank")
       end
     end
 
