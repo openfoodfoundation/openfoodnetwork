@@ -30,7 +30,8 @@ module Admin
       @object = @customer.customer_account_transactions.new(permitted_resource_params)
       @object.created_by = spree_current_user
       @object.currency = CurrentConfig.get(:currency)
-      @object.errors.add(:amount, :greater_than, count: 0) if invalid_amount?
+      @object.errors.add(:amount, :greater_than, count: 0) if non_positive_amount?
+      @object.errors.add(:amount, :less_than, count: 100_000_000) if amount_too_large?
       @object.errors.add(:description, :blank) if @object.description.blank?
 
       if @object.errors.empty? && @object.save
@@ -72,8 +73,12 @@ module Admin
       @customer = Customer.find(params[:customer_id])
     end
 
-    def invalid_amount?
+    def non_positive_amount?
       @object.amount.nil? || @object.amount <= 0
+    end
+
+    def amount_too_large?
+      @object.amount.present? && @object.amount >= 100_000_000
     end
 
     def permitted_resource_params
