@@ -135,6 +135,19 @@ RSpec.describe Api::V0::ShipmentsController do
       end
     end
 
+    context '#add on a cart-state order' do
+      let(:add_params) { params.merge(id: shipment.to_param) }
+
+      it "advances the order out of the cart state, as #create already does" do
+        expect(order.state).to eq("cart")
+
+        spree_put :add, add_params
+
+        expect_valid_response
+        expect(order.reload.state).not_to eq("cart")
+      end
+    end
+
     it "can make a shipment ready" do
       allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
       api_put :ready, order_id: shipment.order.to_param, id: shipment.to_param
@@ -422,8 +435,10 @@ RSpec.describe Api::V0::ShipmentsController do
               add: instance_double(Spree::LineItem, errors: []), remove: {}
             )
             allow(fee_order).to receive_message_chain(:shipments, :find_by!) { fee_order_shipment }
-            allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil)
+            allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil,
+                                                          refresh_rates: nil, save!: true)
             allow(fee_order).to receive(:recreate_all_fees!)
+            allow(fee_order).to receive(:line_items) { [] }
           end
 
           it "recalculates fees for the line item" do

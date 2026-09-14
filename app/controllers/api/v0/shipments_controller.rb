@@ -76,6 +76,11 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
+        @shipment.refresh_rates
+        @shipment.save!
+
+        Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
+
         @order.recreate_all_fees!
         AmendBackorderJob.perform_later(@order) if @order.completed?
 
