@@ -1,7 +1,7 @@
-= form_with model: @object, url: admin_customer_customer_account_transaction_index_path(@customer), html: { data: { turbo: true } } do |f|
+= form_with model: @object, url: admin_customer_customer_account_transaction_index_path(@customer), html: { data: { turbo: true, controller: "add-credit-confirm", "add-credit-confirm-currency-value": ::Money::Currency.new(CurrentConfig.get(:currency)).symbol } } do |f|
   .row.field
     = f.label :amount, t(".amount")
-    = f.text_field :amount, class: "fullwidth", required: true
+    = f.text_field :amount, class: "fullwidth", required: true, data: { "add-credit-confirm-target": "amount", action: "input->add-credit-confirm#updateConfirmMessage" }
     = error_message_on @object, :amount
   .row.field
     = f.label :description, t(".description")
@@ -10,4 +10,4 @@
   .row.field.justify-end
     %a.button.secondary{ href: admin_customer_customer_account_transaction_index_path(@customer), data: { turbo: true, turbo_stream: "" } }
       = t(".cancel")
-    = f.submit t(".submit"), class: "button primary", data: { turbo_confirm: t(:are_you_sure) }
+    = f.submit t(".submit"), class: "button primary", data: { "add-credit-confirm-target": "submit" }
