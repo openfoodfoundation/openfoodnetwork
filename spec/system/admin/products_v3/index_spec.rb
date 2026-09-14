@@ -171,8 +171,9 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
         visit admin_products_url
 
         within row_containing_name("Variant-sourced") do
-          expect(page).to have_selector 'span[title*="Sourced from: "]'
-          expect(page).to have_selector 'span[title*="Producer: Producer Enterprise"]'
+          # The linked-variant indicator lives in the name column, not the image column
+          expect(page).to have_selector '.col-name span[title*="Sourced from: "]'
+          expect(page).to have_selector '.col-name span[title*="Producer: Producer Enterprise"]'
 
           # Can't change the enterprise of a linked variant
           expect(page).not_to have_select "Enterprise"
