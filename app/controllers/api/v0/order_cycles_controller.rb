@@ -65,7 +65,7 @@ module Api
       end
 
       def preferred_taxon_order?
-        distributor&.preferred_shopfront_product_sorting_method == "by_category" &&
+        distributor.preferred_shopfront_product_sorting_method == "by_category" &&
           distributor.preferred_shopfront_taxon_order.present?
       end
 
