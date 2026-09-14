@@ -915,6 +915,12 @@ en:
         amount: Amount
         created_by: Created by
         running_balance: Running balance
+        add_credit: "Add Credit"
+      form:
+        amount: Amount
+        description: Reason
+        submit: "Add Credit"
+        cancel: Cancel
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
