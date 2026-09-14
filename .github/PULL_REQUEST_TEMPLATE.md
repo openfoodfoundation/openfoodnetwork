@@ -32,6 +32,10 @@ Changelog Category (reviewers may add a label for the release notes):
 
 The title of the pull request will be included in the release notes.
 
+<!-- To help us better understand and work with AI, please confirm if: -->
+
+- [ ] This PR includes code written by AI
+
 
 ## Dependencies
 <!-- Does this PR depend on another one?
