@@ -305,7 +305,7 @@ RSpec.describe Api::V0::OrderCyclesController do
       it "returns taxons in the preferred order" do
         api_get :taxons, id: order_cycle.id, distributor: distributor.id
 
-        expect(json_response.pluck(:name)).to eq [taxon2.name, taxon1.name]
+        expect(json_response.pluck(:name)).to eq ["Vegetables", "Meat"]
       end
 
       it "appends taxons not in the preferred order alphabetically at the end" do
