@@ -8,6 +8,6 @@
     = f.text_field :description, class: "fullwidth"
     = f.error_message_on :description
   .row.field.justify-end
-    %a.button.secondary{ href: admin_customer_customer_account_transaction_index_path(@customer), data: { turbo_stream: "" } }
+    %a.button.secondary{ href: admin_customer_customer_account_transaction_index_path(@customer), data: { turbo: true, turbo_stream: "" } }
       = t(".cancel")
     = f.submit t(".submit"), class: "button primary", data: { turbo_confirm: t(:are_you_sure) }

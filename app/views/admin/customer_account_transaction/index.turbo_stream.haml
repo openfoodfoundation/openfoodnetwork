@@ -4,7 +4,7 @@
       = t(".available_credit", available_credit: Spree::Money.new(@available_credit))
 
     #add-credit-container
-      %a.button.icon-plus{ href: new_admin_customer_customer_account_transaction_path(@customer), data: { turbo_stream: "" } }
+      %a.button.icon-plus{ href: new_admin_customer_customer_account_transaction_path(@customer), data: { turbo: true, turbo_stream: "" } }
         = t(".add_credit")
 
     %table.index
