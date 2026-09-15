@@ -87,9 +87,9 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           find('button[id$="unit_to_display"]').click # opens the unit value pop out
           find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
           find('input[id$="_display_as"]').fill_in with: "2 grams"
-          find('button[aria-label="On Hand"]').click
           find('input[id$="_price"]').fill_in with: "11.1"
 
+          find('button[aria-label="On Hand"]').click
           if stock == "on_hand"
             find('input[id$="_on_hand_desired"]').fill_in with: "66"
           elsif stock == "on_demand"
