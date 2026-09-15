@@ -18,4 +18,8 @@ module OrderHelper
   def order_comparator(order)
     Orders::CompareInvoiceService.new(order)
   end
+
+  def format_shipping_description(description)
+    simple_format(html_escape(description))
+  end
 end
