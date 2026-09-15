@@ -75,7 +75,6 @@
         = t("checkout.step1.shipping_info.title")
 
       - display_ship_address = false
-      - ship_method_description = nil
 
       - selected_shipping_method ||= @shipping_methods[0].id if @shipping_methods.length == 1
       - @shipping_methods.each do |shipping_method|
@@ -95,7 +94,7 @@
         .checkout-input{"data-shippingmethod-target": "shippingMethodDescription", "data-shippingmethodid": shipping_method.id , style: "display: #{ship_method_is_selected ? 'block' : 'none'}" }
           #distributor_address.panel
             - if shipping_method.description.present?
-              = simple_format(html_escape(shipping_method.description))
+              = format_shipping_description(shipping_method.description)
 
       = f.error_message_on :shipping_method, standalone: true
 
