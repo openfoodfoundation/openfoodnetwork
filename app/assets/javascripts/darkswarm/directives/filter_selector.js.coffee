@@ -33,7 +33,11 @@ angular.module('Darkswarm').directive "filterSelector", ->
       # This means the $digest cycle can never close and times out
       # See http://stackoverflow.com/questions/19306452/how-to-fix-10-digest-iterations-reached-aborting-error-in-angular-1-2-fil
       selectors = []
-      for id, object of scope.objects()
+      objects = scope.objects()
+      # Arrays (e.g. taxons) preserve API sort order; plain objects (e.g. properties) are iterated by key.
+      items = if angular.isArray(objects) then objects else (v for k, v of objects)
+      for object in items
+        id = object.id
         if selector = selectors_by_id[id]
           selectors.push selector
         else
