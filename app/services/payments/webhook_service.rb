@@ -10,21 +10,11 @@ module Payments
       payload = WebhookPayload.new(payment:, order:, enterprise: order.distributor).to_hash
 
       coordinator = payment.order.order_cycle.coordinator
-      webhook_urls(coordinator).each do |url|
+      urls = WebhookUrlsService.for_coordinator(coordinator,
+                                                webhook_type: "payment_status_changed")
+      urls.each do |url|
         WebhookDeliveryJob.perform_later(url, event, payload, at:)
       end
-    end
-
-    def self.webhook_urls(coordinator)
-      # url for coordinator owner
-      webhook_urls = coordinator.owner.webhook_endpoints.payment_status.pluck(:url)
-
-      # plus url for coordinator manager (ignore duplicate)
-      users_webhook_urls = coordinator.users.flat_map do |user|
-        user.webhook_endpoints.payment_status.pluck(:url)
-      end
-
-      webhook_urls | users_webhook_urls
     end
   end
 end

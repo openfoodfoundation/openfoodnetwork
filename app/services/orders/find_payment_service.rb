@@ -14,6 +14,16 @@ module Orders
       last(@order.pending_payments)
     end
 
+    # The payment the customer chose to pay with. Customer credit is applied on
+    # top of it and isn't a method anyone selects, so it's excluded here.
+    def last_pending_payment_excluding_credit
+      last(
+        @order.pending_payments.reject do |payment|
+          payment.payment_method == Spree::PaymentMethod.customer_credit
+        end
+      )
+    end
+
     def last_customer_credit
       last(
         @order.pending_payments.select do |payment|
