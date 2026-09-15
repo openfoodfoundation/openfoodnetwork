@@ -1,26 +1,26 @@
-= cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
+- if use_turbo_cart?
   %nav.tab-bar.show-for-medium-down
-    %section.left
-      %a.left-off-canvas-toggle.menu-icon
-        = image_pack_tag "menu/btn-menu-mobile.png"
+    = render "shared/menu/mobile_menu_logo"
 
-    %section.left
-      .ofn-logo
-        %a{href: main_logo_link(@white_label_distributor)}
-          - if @white_label_logo&.variable?
-            = image_tag @white_label_distributor.white_label_logo_url(:mobile)
-          - else
-            %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
+    %section.right
+      = render partial: "shared/menu/turbo_cart_icon"
 
-    %section.right{"ng-cloak" => true}
-      %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-        %a.icon{ "ng-click": 'toggleCartSidebar()' }
-          %span
-            = t '.cart'
-          %span.count
-            = image_pack_tag "menu/icn-cart.svg"
+      - if current_distributor
+        %a{href: main_app.shop_path}= current_distributor.name
+- else
+  = cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
+    %nav.tab-bar.show-for-medium-down
+      = render "shared/menu/mobile_menu_logo"
+
+      %section.right{"ng-cloak" => true}
+        %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
+          %a.icon{ "ng-click": 'toggleCartSidebar()' }
             %span
-              {{ Cart.total_item_count() }}
+              = t '.cart'
+            %span.count
+              = image_pack_tag "menu/icn-cart.svg"
+              %span
+                {{ Cart.total_item_count() }}
 
-      %a{href: main_app.shop_path}
-        {{ CurrentHub.hub.name }}
+        %a{href: main_app.shop_path}
+          {{ CurrentHub.hub.name }}
