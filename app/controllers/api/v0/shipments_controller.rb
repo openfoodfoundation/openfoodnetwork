@@ -16,7 +16,8 @@ module Api
         quantity = params[:quantity].to_i
         @shipment = @order.shipment || @order.shipments.create
 
-        @order.contents.add(variant, quantity, @shipment)
+        line_item = @order.contents.add(variant, quantity, @shipment)
+        return invalid_resource!(line_item) unless line_item.errors.empty?
 
         @shipment.refresh_rates
         @shipment.save!
@@ -72,7 +73,9 @@ module Api
         variant = scoped_variant(params[:variant_id])
         quantity = params[:quantity].to_i
 
-        @order.contents.add(variant, quantity, @shipment)
+        line_item = @order.contents.add(variant, quantity, @shipment)
+        return invalid_resource!(line_item) unless line_item.errors.empty?
+
         @order.recreate_all_fees!
         AmendBackorderJob.perform_later(@order) if @order.completed?
 
