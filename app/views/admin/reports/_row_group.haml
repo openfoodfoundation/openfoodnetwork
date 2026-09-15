@@ -8,7 +8,7 @@
     - if group_or_row[:header].present? && report.display_header_row?
       %tr
         %td.header-row{ colspan: report.table_headers.count, class: group_or_row[:header_class] }
-          = group_or_row[:header].html_safe
+          = group_or_row[:header]
     / Rows
     = render partial: 'admin/reports/row_group', locals: { report: report, data: group_or_row[:data] }
     / Summary Row
