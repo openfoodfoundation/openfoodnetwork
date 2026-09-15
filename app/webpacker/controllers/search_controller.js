@@ -12,7 +12,7 @@ export default class extends Controller {
     const productsForm = document.querySelector("#products-form");
     if (productsForm) productsForm.scrollIntoView({ behavior: "smooth" });
 
-    this.page.value = event.target.dataset.page;
+    this.page.value = event.params.page;
     this.submitSearch();
     this.page.value = 1;
   }
