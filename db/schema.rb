@@ -925,6 +925,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_27_000000) do
     t.string "meta_description", limit: 255
     t.string "meta_keywords", limit: 255
     t.string "dfc_id"
+    t.jsonb "name_i18n", default: {}, null: false
     t.index ["permalink"], name: "index_taxons_on_permalink"
   end
 

@@ -51,7 +51,9 @@ module Api
       def taxon_params
         return if params[:taxon].blank?
 
-        params.require(:taxon).permit([:name, :position])
+        params.require(:taxon).permit(
+          [:name, :position, { name_i18n: OpenFoodNetwork::I18nConfig.selectable_locales }]
+        )
       end
     end
   end
