@@ -144,7 +144,14 @@ RSpec.describe Api::V0::ShipmentsController do
         spree_put :add, add_params
 
         expect_valid_response
-        expect(order.reload.state).not_to eq("cart")
+        expect(order.reload.state).to eq("payment")
+      end
+
+      it "renders the shipment that actually exists after advancing, not a destroyed one" do
+        spree_put :add, add_params
+
+        expect_valid_response
+        expect(json_response["id"]).to eq(order.reload.shipment.id)
       end
     end
 
@@ -426,6 +433,7 @@ RSpec.describe Api::V0::ShipmentsController do
           let(:fee_order_shipment) {
             instance_double(Spree::Shipment)
           }
+          let(:workflow_service) { instance_double(Orders::WorkflowService) }
 
           before do
             allow(Spree::Order).to receive(:find_by!) { fee_order }
@@ -438,13 +446,24 @@ RSpec.describe Api::V0::ShipmentsController do
             allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil,
                                                           refresh_rates: nil, save!: true)
             allow(fee_order).to receive(:recreate_all_fees!)
-            allow(fee_order).to receive(:line_items) { [] }
+            allow(fee_order).to receive(:before_payment_state?).and_return(true)
+            allow(fee_order).to receive(:line_items) { [instance_double(Spree::LineItem)] }
+            allow(fee_order).to receive(:reload) { fee_order }
+            allow(fee_order).to receive(:shipment) { fee_order_shipment }
+            allow(Orders::WorkflowService).to receive(:new).with(fee_order) { workflow_service }
+            allow(workflow_service).to receive(:advance_to_payment)
           end
 
           it "recalculates fees for the line item" do
             params[:order_id] = fee_order.number
             spree_put :add, params
             expect(fee_order).to have_received(:recreate_all_fees!)
+          end
+
+          it "advances the order to payment when adding an item" do
+            params[:order_id] = fee_order.number
+            spree_put :add, params
+            expect(workflow_service).to have_received(:advance_to_payment)
           end
 
           it "recalculates fees for the line item when qty is decreased" do
