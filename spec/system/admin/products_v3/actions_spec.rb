@@ -24,6 +24,9 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       end
 
       it "hides column and remembers saved preference" do
+        # Open dropdown
+        ofn_drop_down("Columns").click
+
         # Name shows by default
         expect(page).to have_checked_field "Name"
         expect(page).to have_selector "th", text: "Name"
@@ -34,7 +37,6 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
         expect(page).not_to have_selector "th", text: "Enterprise"
 
         # Show Enterprise column
-        ofn_drop_down("Columns").click
         within ofn_drop_down("Columns") do
           check "Producer"
         end
@@ -85,6 +87,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
       it "has selected producer column by default" do
         # Enterprise shows by default
+        ofn_drop_down("Columns").click
         expect(page).to have_checked_field "Producer" # TODO: rename column selector to Enterprise
         expect(page).to have_selector "th", text: "Enterprise"
       end
