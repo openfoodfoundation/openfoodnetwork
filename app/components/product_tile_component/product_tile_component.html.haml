@@ -23,4 +23,4 @@
         = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:)
 
     = render ModalComponent.new(id: modal_id, modal_class: "big") do
-      = render partial: "shared/product/product_details", locals: { product: }
+      = render partial: "shared/product/product_details", locals: { product:, available_variant_ids: product.variants.map(&:id) }

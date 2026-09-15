@@ -2,6 +2,7 @@
 
 RSpec.describe "Shop" do
   include_context "session helper"
+  include FileHelper
 
   let(:pm) { create(:payment_method) }
   let(:sm) { create(:shipping_method) }
@@ -40,6 +41,35 @@ RSpec.describe "Shop" do
         expect(response.body).to include("<p>Fresh apples</p>")
         expect(response.body).to include("cap color")
         expect(response.body).to include("ofn-thumbnail-carousel")
+      end
+    end
+
+    context "when a variant is not available for purchase" do
+      # Reproduces #14718: a carousel must not show images of variants a customer can't buy.
+      it "shows images of available variants but not of unavailable ones" do
+        product = create(:simple_product)
+        available_variant = product.variants.first
+        available_variant.update!(on_demand: true)
+        unavailable_variant = create(:variant, product:, on_demand: false)
+        unavailable_variant.stock_items.update_all(count_on_hand: 0)
+
+        order_cycle.exchanges.outgoing.first.variants << [available_variant, unavailable_variant]
+
+        available_image = Spree::Image.create!(
+          attachment: white_logo_file, viewable: available_variant
+        )
+        unavailable_image = Spree::Image.create!(
+          attachment: white_logo_file, viewable: unavailable_variant
+        )
+
+        get "/shop/product_modal", params: {
+          product_id: product.id,
+          order_cycle_id: order_cycle.id
+        }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(available_image.url(:large))
+        expect(response.body).not_to include(unavailable_image.url(:large))
       end
     end
 

@@ -29,24 +29,25 @@ class ShopController < BaseController
   def product_modal
     return head :not_found unless resolved_order_cycle&.open?
 
-    @product = distributed_products_relation.find_by(id: params[:product_id])
+    @product = distributed_products_service.products_relation.find_by(id: params[:product_id])
     return head :not_found unless @product
 
-    @carousel_images = helpers.product_carousel_images_data(@product)
+    @available_variant_ids = distributed_products_service.variants_relation
+      .where(product_id: @product.id).pluck(:id)
 
     render partial: "shop/product_modal", layout: false
   end
 
   private
 
-  def distributed_products_relation
-    OrderCycles::DistributedProductsService.new(
+  def distributed_products_service
+    @distributed_products_service ||= OrderCycles::DistributedProductsService.new(
       current_distributor,
       resolved_order_cycle,
       current_customer,
       inventory_enabled: inventory_enabled?,
       variant_tag_enabled: variant_tag_enabled?
-    ).products_relation
+    )
   end
 
   def resolved_order_cycle

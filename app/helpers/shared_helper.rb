@@ -13,8 +13,8 @@ module SharedHelper
     "#{main_app.enterprise_shop_path(current_distributor)}#/shop_panel"
   end
 
-  def product_carousel_images_data(product, size: :large)
-    images = product.images.to_a + product.variant_images.to_a
+  def product_carousel_images_data(product, available_variant_ids: nil, size: :large)
+    images = carousel_images(product, available_variant_ids)
 
     return [default_carousel_image(size, product)] if images.empty?
 
@@ -27,7 +27,30 @@ module SharedHelper
     end
   end
 
+  # Whether the carousel has any real image (product-level or an available variant's) once
+  # unavailable-variant images are filtered out. Drives the carousel's placeholder styling.
+  def product_carousel_images?(product, available_variant_ids: nil)
+    carousel_images(product, available_variant_ids).any?
+  end
+
   private
+
+  # Product-level images are always shown. Variant images are shown only when their variant
+  # is available for purchase. A nil `available_variant_ids` means "don't filter" (e.g. the
+  # admin preview, which has no order cycle) and preserves the pre-filtering behaviour.
+  def carousel_images(product, available_variant_ids)
+    product_images = product.images.to_a
+    variant_images = if available_variant_ids.nil?
+                       product.variant_images.to_a
+                     else
+                       product.variant_images.where(
+                         viewable_id: available_variant_ids,
+                         viewable_type: 'Spree::Variant'
+                       ).to_a
+                     end
+
+    product_images + variant_images
+  end
 
   def default_carousel_image(size, product)
     {
