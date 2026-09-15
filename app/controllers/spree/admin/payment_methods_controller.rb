@@ -89,11 +89,11 @@ module Spree
           authorize! :show_provider_preferences, @payment_method
           payment_method_type = params[:provider_type]
           if @payment_method['type'].to_s != payment_method_type
-            @payment_method.update_columns(
-              type: payment_method_type,
-              updated_at: Time.zone.now
-            )
-            @payment_method = PaymentMethod.find(params[:pm_id])
+            # Use .new (not .becomes) so the preference form shows the new type's
+            # defaults rather than carrying over the old type's serialized prefs.
+            # Assign type via PaymentMethod.new (not .constantize) so Rails' STI
+            # lookup rejects anything that isn't really a PaymentMethod subclass.
+            @payment_method = PaymentMethod.new(id: params[:pm_id].to_i, type: payment_method_type)
           end
         else
           @payment_method = PaymentMethod.new(type: params[:provider_type])
