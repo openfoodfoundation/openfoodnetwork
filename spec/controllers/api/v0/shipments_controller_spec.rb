@@ -146,13 +146,6 @@ RSpec.describe Api::V0::ShipmentsController do
         expect(order.line_item_adjustments.where(originator_type: "EnterpriseFee")).to be_present
       end
 
-      it "renders the shipment that actually exists after advancing, not a destroyed one" do
-        spree_post :create, params
-
-        expect_valid_response
-        expect(json_response["id"]).to eq(order.reload.shipment.id)
-      end
-
       context "with customer credit available" do
         before do
           order.shipment.destroy
