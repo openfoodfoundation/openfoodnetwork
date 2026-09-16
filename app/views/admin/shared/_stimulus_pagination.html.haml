@@ -1,12 +1,10 @@
-- link = pagy_anchor(pagy)
-
 %nav.pagination{ "aria-label": t('.navigation'), "data-controller": "search" }
-  - if pagy.prev
-    %a.page.prev{ href: "#", rel: "prev", "aria-label": t('.previous'), data: { action: 'click->search#changePage', 'search-page-param': pagy.prev } }
+  - if pagy.previous
+    %a.page.prev{ href: "#", rel: "prev", "aria-label": t('.previous'), data: { action: 'click->search#changePage', 'search-page-param': pagy.previous } }
       %i.icon-chevron-left
 
   %ul.pagelist
-    - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
+    - pagy.page_series.each do |item|                 # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
       - if item.is_a?(Integer)                        # page link
         %li
           %a.page{ href: "#", "aria-label": t('.page', number: item), data: { action: 'click->search#changePage', 'search-page-param': item } }= item
@@ -18,8 +16,8 @@
       - elsif item == :gap                            # page gap
         %li
           -# haml-lint:disable UnescapedHtml
-          -# pagy_t return some html code
-          %span.page.gap.pagination-ellipsis!= pagy_t('pagy.gap')
+          -# Pagy::I18n.translate returns some html code
+          %span.page.gap.pagination-ellipsis!= Pagy::I18n.translate('pagy.gap')
 
   - if pagy.next
     %a.page.next{ href: "#", rel: "next", "aria-label": t('.next'), data: { action: 'click->search#changePage', 'search-page-param': pagy.next } }
