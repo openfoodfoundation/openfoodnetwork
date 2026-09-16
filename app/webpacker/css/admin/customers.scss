@@ -12,3 +12,9 @@ table#customers.index {
     }
   }
 }
+
+// ".container .row" (grid.scss) outranks a plain ".row.field" rule here, so
+// the ID is needed to remove spacing between the add-credit form's fields.
+#add-credit-container .row.field:not(.justify-end) {
+  margin-bottom: 0;
+}
