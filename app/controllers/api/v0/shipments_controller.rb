@@ -76,10 +76,24 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
+        # Only orders still before payment need advancing; doing this
+        # unconditionally would also refresh shipping rates/cost on
+        # completed-but-unshipped orders, which is out of scope here.
+        if @order.before_payment_state?
+          @shipment.refresh_rates
+          @shipment.save!
+
+          Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
+        end
+
         @order.recreate_all_fees!
         AmendBackorderJob.perform_later(@order) if @order.completed?
 
-        render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
+        # advance_to_payment can rebuild the order's shipments from scratch
+        # (Spree::Order::Checkout's before_transition to: :delivery), which
+        # destroys @shipment — re-resolve the current one rather than
+        # rendering a stale/deleted record.
+        render json: @order.reload.shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 
       def remove
