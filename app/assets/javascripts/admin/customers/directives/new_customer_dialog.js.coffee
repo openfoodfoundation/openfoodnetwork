@@ -44,6 +44,10 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($rootScope, $c
     # Link opening of dialog to click event on element
     element.bind 'click', (e) ->
       if CurrentShop.shop.id
+        # Don't show the result of the previous customer we added.
+        scope.submitted = false
+        scope.errors = []
+        scope.notice = null
         template.dialog('open')
         $rootScope.$evalAsync()
       else

@@ -562,6 +562,20 @@ RSpec.describe 'Customers' do
             expect(page).not_to have_selector "#new-customer-dialog"
             expect(page).to have_content "new@email.com"
           end
+
+          it "doesn't show the notice again when the dialog is opened again" do
+            click_link('New Customer')
+            fill_in 'email', with: customer2.email.upcase
+            click_button 'Add Customer'
+            expect(page).to have_selector "#new-customer-notice"
+
+            find(".ui-dialog-titlebar-close").click
+            expect(page).not_to have_selector "#new-customer-dialog"
+
+            click_link('New Customer')
+            expect(page).to have_selector "#new-customer-dialog"
+            expect(page).not_to have_selector "#new-customer-notice"
+          end
         end
       end
     end
