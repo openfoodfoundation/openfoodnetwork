@@ -10,4 +10,4 @@
   .row.field.justify-end
     %a.button.secondary{ href: admin_customer_customer_account_transaction_index_path(@customer), data: { turbo: true, turbo_stream: "" } }
       = t(".cancel")
-    = f.submit t(".submit"), class: "button primary", data: { "add-credit-confirm-target": "submit" }
+    = f.submit t(".submit"), class: "button primary", data: { "add-credit-confirm-target": "submit", "turbo-submits-with": t("saving") }
