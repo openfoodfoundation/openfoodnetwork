@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe "spree/shared/_shipment_pickup_details.html.haml" do
+  helper OrderHelper
+
   let(:order) { create(:completed_order_with_fees) }
 
   it "shows the shipping method name and pickup time" do

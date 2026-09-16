@@ -9,6 +9,7 @@ RSpec.describe "spree/orders/show.html.haml" do
   helper FooterLinksHelper
   helper MarkdownHelper
   helper TermsAndConditionsHelper
+  helper OrderHelper
 
   let(:order) {
     create(

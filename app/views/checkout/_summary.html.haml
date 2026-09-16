@@ -25,7 +25,7 @@
             .summary-subtitle
               = t("checkout.step3.delivery_details.instructions")
             %div
-              = @order.shipping_method.description
+              = format_shipping_description(@order.shipping_method.description)
 
     %hr
 
@@ -65,7 +65,7 @@
     .summary-right-line.total
       .summary-right-line-label= t :order_total_price
 
-      .summary-right-line-value#order_total= @order.display_outstanding_balance.to_html 
+      .summary-right-line-value#order_total= @order.display_outstanding_balance.to_html
 
     .summary-right-line
       .summary-right-line-label= t :order_produce
