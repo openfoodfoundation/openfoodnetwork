@@ -8,22 +8,10 @@ module Admin
 
     def index
       @available_credit = @collection.first&.balance || 0.00
-
-      respond_with do |format|
-        format.turbo_stream {
-          render :index
-        }
-      end
     end
 
     def new
       @object = @customer.customer_account_transactions.new
-
-      respond_with do |format|
-        format.turbo_stream {
-          render :new
-        }
-      end
     end
 
     def create
