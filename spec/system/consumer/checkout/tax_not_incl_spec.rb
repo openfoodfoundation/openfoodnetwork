@@ -103,10 +103,11 @@ RSpec.describe "As a consumer, I want to see adjustment breakdown" do
 
         click_button "Next - Payment method"
 
+        click_on "Next - Order summary"
+
         # DB checks
         expect(order_within_zone.reload.additional_tax_total).to eq(1.3)
 
-        click_on "Next - Order summary"
         click_on "Complete order"
 
         # UI checks
