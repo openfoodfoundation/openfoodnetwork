@@ -172,13 +172,13 @@ RSpec.describe Api::V0::ShipmentsController do
       end
 
       context "when the order can't advance past cart" do
-        context "because the order has no ship address" do
+        context "because the order has no ship address yet" do
           before { order.update_columns(ship_address_id: nil) }
 
-          it "returns an error instead of silently leaving the order stuck" do
+          it "still adds the item, silently leaving the order to advance later" do
             spree_post :create, params
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect_valid_response
             expect(order.reload.state).not_to eq("payment")
           end
         end
@@ -240,13 +240,13 @@ RSpec.describe Api::V0::ShipmentsController do
           end
         end
 
-        context "because the order has no ship address" do
+        context "because the order has no ship address yet" do
           before { order.update_columns(ship_address_id: nil) }
 
-          it "returns an error instead of silently leaving the order stuck" do
+          it "still adds the item, silently leaving the order to advance later" do
             spree_put :add, add_params
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect_valid_response
             expect(order.reload.state).not_to eq("payment")
           end
         end
