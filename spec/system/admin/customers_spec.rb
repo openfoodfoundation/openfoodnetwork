@@ -7,6 +7,10 @@ RSpec.describe 'Customers' do
   include AuthenticationHelper
   include WebHelper
 
+  def listed_emails
+    all("tr.customer td.email span:first-child").map(&:text)
+  end
+
   context "as an enterprise user" do
     let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_distributor1) { create(:distributor_enterprise, owner: user) }
@@ -519,6 +523,9 @@ RSpec.describe 'Customers' do
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
             }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
+
+            # And it's listed first, so that we don't have to look for it.
+            expect(listed_emails.first).to eq "new@email.com"
           end
 
           it "shows a hidden customer when trying to create it" do
