@@ -270,6 +270,49 @@ RSpec.describe ProductsRenderer do
       end
     end
 
+    describe "pagination" do
+      subject(:products_renderer) {
+        described_class.new(distributor, order_cycle, customer, args)
+      }
+
+      let(:args) { {} }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants:) }
+      let(:product_a) { create(:simple_product, name: "Apples") }
+      let(:product_b) { create(:simple_product, name: "Bananas") }
+      let(:product_c) { create(:simple_product, name: "Cherries") }
+      let(:variants) {
+        [product_a, product_b, product_c].map { |product| create(:variant, product:) }
+      }
+
+      it "defaults to DEFAULT_PER_PAGE products per page" do
+        stub_const("#{described_class}::DEFAULT_PER_PAGE", 2)
+
+        expect(products_renderer.products_view.map(&:name)).to eq(["Apples", "Bananas"])
+      end
+
+      it "limits the page to the given per_page" do
+        args[:per_page] = 1
+
+        expect(products_renderer.products_view.map(&:name)).to eq(["Apples"])
+      end
+
+      it "returns the requested page" do
+        args[:per_page] = 1
+        args[:page] = 2
+
+        expect(products_renderer.products_view.map(&:name)).to eq(["Bananas"])
+      end
+
+      it "returns an empty page when requesting a page beyond the last one" do
+        # Regression: #paginate slices the filtered Array directly. With an out-of-range
+        # offset, Array#[] returns nil (not []), which used to blow up in #products_view.
+        args[:per_page] = 1
+        args[:page] = 99
+
+        expect(products_renderer.products_view).to eq([])
+      end
+    end
+
     describe "preloading" do
       # Building the view reads `producer` on every variant, which walks source_variants and
       # their enterprise, and `on_hand`/`on_demand`, which read stock items. Each of these
