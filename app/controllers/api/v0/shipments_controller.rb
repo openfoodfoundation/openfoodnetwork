@@ -19,15 +19,27 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
-        @shipment.refresh_rates
-        @shipment.save!
-
-        Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
-
+        # Fees must be recreated before advancing to payment: advancing runs
+        # apply_customer_credit (Spree::Order::Checkout's before_transition to:
+        # :payment), which sizes the credit payment off order.total as it stands
+        # at that moment — if fees aren't applied yet, the credit payment is
+        # created short.
         @order.recreate_all_fees!
         AmendBackorderJob.perform_later(@order) if @order.completed?
 
-        render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
+        @shipment.refresh_rates
+        @shipment.save!
+
+        if @order.line_items.any?
+          advanced = Orders::WorkflowService.new(@order).advance_to_payment
+          return invalid_resource!(@order) unless advanced
+        end
+
+        # advance_to_payment can rebuild the order's shipments from scratch
+        # (Spree::Order::Checkout's before_transition to: :delivery), which
+        # destroys @shipment — re-resolve the current one rather than
+        # rendering a stale/deleted record. See #14787.
+        render json: @order.reload.shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 
       def update
@@ -76,6 +88,14 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
+        # Fees must be recreated before advancing to payment: advancing runs
+        # apply_customer_credit (Spree::Order::Checkout's before_transition to:
+        # :payment), which sizes the credit payment off order.total as it stands
+        # at that moment — if fees aren't applied yet, the credit payment is
+        # created short.
+        @order.recreate_all_fees!
+        AmendBackorderJob.perform_later(@order) if @order.completed?
+
         # Only orders still before payment need advancing; doing this
         # unconditionally would also refresh shipping rates/cost on
         # completed-but-unshipped orders, which is out of scope here.
@@ -83,11 +103,11 @@ module Api
           @shipment.refresh_rates
           @shipment.save!
 
-          Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
+          if @order.line_items.any?
+            advanced = Orders::WorkflowService.new(@order).advance_to_payment
+            return invalid_resource!(@order) unless advanced
+          end
         end
-
-        @order.recreate_all_fees!
-        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         # advance_to_payment can rebuild the order's shipments from scratch
         # (Spree::Order::Checkout's before_transition to: :delivery), which

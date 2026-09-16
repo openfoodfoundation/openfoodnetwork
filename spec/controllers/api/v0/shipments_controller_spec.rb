@@ -78,12 +78,13 @@ RSpec.describe Api::V0::ShipmentsController do
       end
 
       it 'updates and returns exiting shipment, if order already has a shipment' do
-        original_shipment_id = order.shipment.id
-
         spree_post :create, params
 
-        expect(json_response["id"]).to eq(original_shipment_id)
         expect_valid_response
+        # advance_to_payment can rebuild the order's shipments (see #14787), so
+        # the id may legitimately change — what matters is the response matches
+        # whatever shipment the order actually ends up with, not the pre-request one.
+        expect(json_response["id"]).to eq(order.reload.shipment.id)
         expect(order.shipment.reload.inventory_units.size).to eq 2
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
       end
@@ -133,6 +134,51 @@ RSpec.describe Api::V0::ShipmentsController do
 
         expect(order.line_item_adjustments.where(originator_type: "EnterpriseFee")).to be_present
       end
+
+      it "renders the shipment that actually exists after advancing, not a destroyed one" do
+        spree_post :create, params
+
+        expect_valid_response
+        expect(json_response["id"]).to eq(order.reload.shipment.id)
+      end
+
+      context "with customer credit available" do
+        before do
+          order.shipment.destroy
+          order.reload
+
+          order_cycle = create(:simple_order_cycle,
+                               coordinator: order.distributor,
+                               coordinator_fees: [create(:enterprise_fee, amount: 20)],
+                               distributors: [order.distributor],
+                               variants: [variant])
+          order.update!(order_cycle_id: order_cycle.id,
+                        customer: create(:customer, enterprise: order.distributor))
+          create(:customer_account_transaction, customer: order.customer, amount: 1000)
+        end
+
+        it "sizes the credit payment using the final total, fees included" do
+          spree_post :create, params
+
+          expect_valid_response
+          order.reload
+          credit_payment = order.payments.customer_credit.last
+          expect(credit_payment.amount).to eq(order.total)
+        end
+      end
+
+      context "when the order can't advance past cart" do
+        context "because the order has no ship address" do
+          before { order.update_columns(ship_address_id: nil) }
+
+          it "returns an error instead of silently leaving the order stuck" do
+            spree_post :create, params
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(order.reload.state).not_to eq("payment")
+          end
+        end
+      end
     end
 
     context '#add on a cart-state order' do
@@ -152,6 +198,54 @@ RSpec.describe Api::V0::ShipmentsController do
 
         expect_valid_response
         expect(json_response["id"]).to eq(order.reload.shipment.id)
+      end
+
+      context "with customer credit available" do
+        before do
+          order_cycle = create(:simple_order_cycle,
+                               coordinator: order.distributor,
+                               coordinator_fees: [create(:enterprise_fee, amount: 20)],
+                               distributors: [order.distributor],
+                               variants: [variant])
+          order.update!(order_cycle_id: order_cycle.id,
+                        customer: create(:customer, enterprise: order.distributor))
+          create(:customer_account_transaction, customer: order.customer, amount: 1000)
+        end
+
+        it "sizes the credit payment using the final total, fees included" do
+          spree_put :add, add_params
+
+          expect_valid_response
+          order.reload
+          credit_payment = order.payments.customer_credit.last
+          expect(credit_payment.amount).to eq(order.total)
+        end
+      end
+
+      context "when the order can't advance past cart" do
+        context "because no shipping method is available for the distributor" do
+          before {
+            shipment.shipping_method.update!(distributors: [create(:distributor_enterprise)])
+          }
+
+          it "returns an error instead of silently leaving the order stuck" do
+            spree_put :add, add_params
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(order.reload.state).not_to eq("payment")
+          end
+        end
+
+        context "because the order has no ship address" do
+          before { order.update_columns(ship_address_id: nil) }
+
+          it "returns an error instead of silently leaving the order stuck" do
+            spree_put :add, add_params
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(order.reload.state).not_to eq("payment")
+          end
+        end
       end
     end
 
@@ -443,26 +537,35 @@ RSpec.describe Api::V0::ShipmentsController do
               add: instance_double(Spree::LineItem, errors: []), remove: {}
             )
             allow(fee_order).to receive_message_chain(:shipments, :find_by!) { fee_order_shipment }
-            allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil,
-                                                          refresh_rates: nil, save!: true)
+            allow(fee_order_shipment).to receive_messages(
+              update: nil, reload: nil, persisted?: nil, refresh_rates: nil, save!: true,
+              id: 1, tracking: nil, number: "100", cost: 10.0, shipped_at: nil, state: "pending",
+              order: fee_order
+            )
+            allow(fee_order_shipment).to receive(:read_attribute_for_serialization) { |attr|
+              fee_order_shipment.public_send(attr)
+            }
             allow(fee_order).to receive(:recreate_all_fees!)
+            allow(fee_order).to receive(:completed?).and_return(false)
             allow(fee_order).to receive(:before_payment_state?).and_return(true)
             allow(fee_order).to receive(:line_items) { [instance_double(Spree::LineItem)] }
             allow(fee_order).to receive(:reload) { fee_order }
             allow(fee_order).to receive(:shipment) { fee_order_shipment }
             allow(Orders::WorkflowService).to receive(:new).with(fee_order) { workflow_service }
-            allow(workflow_service).to receive(:advance_to_payment)
+            allow(workflow_service).to receive(:advance_to_payment).and_return(true)
           end
 
           it "recalculates fees for the line item" do
             params[:order_id] = fee_order.number
             spree_put :add, params
+            expect(response).to have_http_status(:ok)
             expect(fee_order).to have_received(:recreate_all_fees!)
           end
 
           it "advances the order to payment when adding an item" do
             params[:order_id] = fee_order.number
             spree_put :add, params
+            expect(response).to have_http_status(:ok)
             expect(workflow_service).to have_received(:advance_to_payment)
           end
 
