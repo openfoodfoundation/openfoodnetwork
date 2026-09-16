@@ -2,9 +2,9 @@
 
 module Admin
   class CustomerAccountTransactionController < Admin::ResourceController
-    skip_before_action :load_resource, only: [:new, :create]
-    before_action :authorize_customer_access, only: [:index, :new, :create]
     before_action :load_customer, only: [:index, :new, :create]
+    before_action :authorize_customer_access, only: [:index, :new, :create]
+    skip_before_action :load_resource, only: [:new, :create]
 
     def index
       @available_credit = @collection.first&.balance || 0.00
@@ -50,11 +50,7 @@ module Admin
     private
 
     def authorize_customer_access
-      allowed = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_enterprises.joins(:customers)
-        .where(customers: { id: params[:customer_id].to_i })
-        .exists?
-      raise CanCan::AccessDenied unless allowed
+      authorize! :create_customer_account_transaction, @customer
     end
 
     def load_customer
