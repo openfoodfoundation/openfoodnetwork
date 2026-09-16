@@ -28,7 +28,9 @@ RSpec.describe 'Schedules' do
     before { login_as user }
 
     describe "Adding a new Schedule" do
-      it "immediately shows the schedule in the order cycle list once created" do
+      it "shows a schedule with special characters immediately and after reloading" do
+        schedule_name = "wöchentlich"
+
         visit spree.admin_dashboard_path
         click_link 'Order cycles'
         expect(page).to have_selector ".order-cycle-#{oc1.id}"
@@ -41,7 +43,7 @@ RSpec.describe 'Schedules' do
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc3.name
           expect(page).not_to have_selector '#available-order-cycles .order-cycle', text: oc4.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc5.name
-          fill_in 'name', with: "Fortnightly"
+          fill_in 'name', with: schedule_name
           find("#available-order-cycles .order-cycle", text: oc1.name).click
           find("#add-remove-buttons a.add").click
           # Selection of an order cycles limits available options to those with the same coordinator
@@ -52,21 +54,27 @@ RSpec.describe 'Schedules' do
         end
 
         save_bar = find("#save-bar")
-        expect(save_bar).to have_content "Created schedule: 'Fortnightly'"
+        expect(save_bar).to have_content "Created schedule: '#{schedule_name}'"
 
         within ".order-cycle-#{oc1.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
-          expect(page).to have_selector "a", text: "Fortnightly"
+          expect(page).to have_selector "a", text: schedule_name
         end
 
         within ".order-cycle-#{oc2.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
-          expect(page).not_to have_selector "a", text: "Fortnightly"
+          expect(page).not_to have_selector "a", text: schedule_name
         end
 
         within ".order-cycle-#{oc3.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
-          expect(page).to have_selector "a", text: "Fortnightly"
+          expect(page).to have_selector "a", text: schedule_name
+        end
+
+        refresh
+
+        within ".order-cycle-#{oc1.id} td.schedules" do
+          expect(page).to have_selector "a", text: schedule_name
         end
       end
     end
