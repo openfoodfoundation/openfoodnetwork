@@ -2,7 +2,6 @@
 
 module ApplicationHelper
   include RawParams
-  include Pagy::Frontend
 
   def error_message_on(object, method, options = {})
     object = convert_to_model(object)
