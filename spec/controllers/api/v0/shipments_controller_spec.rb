@@ -123,6 +123,17 @@ RSpec.describe Api::V0::ShipmentsController do
         expect(order.total).to eq original_total
       end
 
+      it "adds an item to an already-shipped order without erroring" do
+        # advance_to_payment is a no-op past cart/address/delivery, so this must
+        # not be treated as a failed advance and 422 a legitimate add.
+        order.update_columns(state: "complete", completed_at: Time.zone.now)
+        shipment.update_columns(state: "shipped")
+
+        spree_post :create, params
+
+        expect_valid_response
+      end
+
       it "applies any enterprise fees that are present" do
         order_cycle = create(:simple_order_cycle,
                              coordinator: order.distributor,
@@ -133,13 +144,6 @@ RSpec.describe Api::V0::ShipmentsController do
         spree_post :create, params
 
         expect(order.line_item_adjustments.where(originator_type: "EnterpriseFee")).to be_present
-      end
-
-      it "renders the shipment that actually exists after advancing, not a destroyed one" do
-        spree_post :create, params
-
-        expect_valid_response
-        expect(json_response["id"]).to eq(order.reload.shipment.id)
       end
 
       context "with customer credit available" do

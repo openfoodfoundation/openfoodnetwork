@@ -27,12 +27,19 @@ module Api
         @order.recreate_all_fees!
         AmendBackorderJob.perform_later(@order) if @order.completed?
 
-        @shipment.refresh_rates
-        @shipment.save!
+        # Only orders still before payment need advancing; calling
+        # advance_to_payment on an order already at/past payment (e.g.
+        # completed, shipped) returns nil, not true, so without this guard
+        # the return-value check below would wrongly 422 a legitimate add
+        # to an already-shipped order.
+        if @order.before_payment_state?
+          @shipment.refresh_rates
+          @shipment.save!
 
-        if @order.line_items.any?
-          advanced = Orders::WorkflowService.new(@order).advance_to_payment
-          return invalid_resource!(@order) unless advanced
+          if @order.line_items.any?
+            advanced = Orders::WorkflowService.new(@order).advance_to_payment
+            return invalid_resource!(@order) unless advanced
+          end
         end
 
         # advance_to_payment can rebuild the order's shipments from scratch
