@@ -1,11 +1,13 @@
 import { Controller } from "stimulus";
-const NOTIFICATION_TIME = 5000; // 5 seconds
+const INITIAL_POLL_INTERVAL = 1000; // 1 second
+const MAX_POLL_INTERVAL = 5000; // 5 seconds
 const HIDE_CLASS = "hidden";
 
 export default class extends Controller {
   static targets = ["loading", "loaded", "link"];
 
   connect() {
+    this.pollInterval = INITIAL_POLL_INTERVAL;
     this.setTimeout();
   }
 
@@ -26,13 +28,15 @@ export default class extends Controller {
         }
         this.loadedTarget.classList.remove(HIDE_CLASS);
       } else {
+        // Poll quickly at first (most jobs finish in well under a second), then back off.
+        this.pollInterval = Math.min(this.pollInterval * 2, MAX_POLL_INTERVAL);
         this.setTimeout();
       }
     });
   }
 
   setTimeout() {
-    this.timeout = setTimeout(this.checkFile.bind(this), NOTIFICATION_TIME);
+    this.timeout = setTimeout(this.checkFile.bind(this), this.pollInterval);
   }
   clearTimeout() {
     clearTimeout(this.timeout);
