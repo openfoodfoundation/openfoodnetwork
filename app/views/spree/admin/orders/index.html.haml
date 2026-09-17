@@ -29,6 +29,6 @@
   .margin-bottom-30
     = t('.send_invoice_confirm_html')
 
-= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#cancel_orders", message: "spree/admin/orders/messages/cancel_orders") do
+= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->bulk-actions#turboPerform", controller: "bulk-actions", url: "orders/cancel_orders", message: "spree/admin/orders/messages/cancel_orders") do
   .margin-bottom-30
     = t("js.admin.orders.cancel_the_order_html")
