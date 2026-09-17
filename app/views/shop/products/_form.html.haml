@@ -2,28 +2,29 @@
 - cache_key = feature?(:product_grid_view, @current_user) ? [current_order_cycle&.id, true] : false
 = cache_with_locale cache_key do
   %form{action: main_app.cart_path}
-    %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
-      = render partial: "shop/products/searchbar"
-
+    - if feature?(:product_grid_view, @current_user)
       .row
-        .small-12.columns.product-listing
-          .row.full
-            .medium-12.large-9.columns.full
-              = render partial: "shop/products/search_feedback"
+        - if current_order_cycle.present?
+          = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
+            .loading{ "data-product-grid-view-target": "loading" }
+              = render partial: "shop/products/product_spinner"
 
-              - if feature?(:product_grid_view, @current_user)
-                - if current_order_cycle.present?
-                  = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
-                    .loading{ "data-product-grid-view-target": "loading" }
-                      = render partial: "shop/products/product_spinner"
+        - else
+          = turbo_frame_tag("shop-products", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
+            .loading{ "data-product-grid-view-target": "loading" }
+              = render partial: "shop/products/product_spinner"
 
-                - else
-                  = turbo_frame_tag("shop-products", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts") do
-                    .loading{ "data-product-grid-view-target": "loading" }
-                      = render partial: "shop/products/product_spinner"
+    - else
+      %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
-              - else
+        = render partial: "shop/products/searchbar"
+
+        .row
+          .small-12.columns.product-listing
+            .row.full
+              .medium-12.large-9.columns.full
+                = render partial: "shop/products/search_feedback"
                 .pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading', "infinite-scroll-immediate-check": "false" }
                   %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
                     = render "shop/products/summary"
