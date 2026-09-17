@@ -33,6 +33,27 @@ RSpec.describe Orders::FindPaymentService do
     end
   end
 
+  describe "#last_pending_payment_excluding_credit" do
+    let!(:credit_payment) {
+      create(:payment, order:, payment_method: Spree::PaymentMethod.customer_credit,
+                       skip_source_validation: true, source: nil)
+    }
+
+    context "when the order only has a customer credit payment" do
+      it "returns nil" do
+        expect(finder.last_pending_payment_excluding_credit).to be nil
+      end
+    end
+
+    context "when the customer also chose a payment method" do
+      let!(:chosen_payment) { create(:payment, order:) }
+
+      it "returns the payment the customer chose" do
+        expect(finder.last_pending_payment_excluding_credit).to eq chosen_payment
+      end
+    end
+  end
+
   describe "#last_payment" do
     context "when order has several non pending payments" do
       let!(:failed_payment) { create(:payment, order:, state: 'failed') }
