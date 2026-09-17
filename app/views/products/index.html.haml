@@ -2,7 +2,7 @@
   - if @pagy.last > 1
     .pagination-info= t("products_pagination.info_tag",from: @pagy.from, to: @pagy.to, count: @pagy.count)
 
-  .loading{ style: "display: none;", "data-product-grid-view-target": "loading" }
+  .loading
     = render partial: "shop/products/product_spinner"
 
   .products-container{ "data-product-grid-view-target": "products" }
