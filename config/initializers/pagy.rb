@@ -25,3 +25,22 @@ class Pagy
   def page_series(**) = series(**)
   def page_anchor(**) = a_lambda(**)
 end
+
+# v43's Pagy::Request builds the params for pagination links from GET *and* POST (pagy 9 used
+# GET only). Admin::EnterprisesController#bulk_update re-renders the index from a PUT when the
+# set fails to save, which would embed the whole submitted form - every enterprise row, plus
+# authenticity_token and _method - in every page link. Only the query string belongs in a link.
+#
+# Pagy::Request isn't autoloaded (only Pagy::Method is, and it require_relative's this), so the
+# require is needed. Prepending rather than reopening keeps that honest: without the require,
+# Pagy::Request.prepend raises NameError at boot instead of quietly defining a fresh class that
+# pagy's own request.rb then overwrites.
+require 'pagy/classes/request'
+
+module PagyRequestQueryParamsOnly
+  private
+
+  def get_params(request) = request.GET.to_h.freeze
+end
+
+Pagy::Request.prepend PagyRequestQueryParamsOnly
