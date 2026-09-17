@@ -5253,5 +5253,6 @@ en:
       not_enough_credit_available: Not enough credit available 
   customer_credit_service:
     no_credit_owed: No credit owed
+    customer_missing: No customer is assigned to this order
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
