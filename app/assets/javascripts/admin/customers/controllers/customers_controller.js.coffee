@@ -8,6 +8,12 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
 
+  # Sort by id descending so that the customers we just added are listed first.
+  # Without a predicate, orderBy compares customers by their position in the
+  # collection and reversing that would list new ones last.
+  SortOptions.predicate = 'id'
+  SortOptions.reverse = true
+
   $scope.confirmRefresh = (event) ->
     event.preventDefault() unless pendingChanges.unsavedCount() == 0 || confirm(t("unsaved_changes_warning"))
 

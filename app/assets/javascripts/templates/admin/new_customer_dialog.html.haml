@@ -2,6 +2,8 @@
   .text-normal.margin-bottom-30.text-center
     {{ 'js.admin.customers.index.add_a_new_customer_for' | t:{ shop_name: CurrentShop.shop.name } }}
 
+  .alert-box.warning#new-customer-notice{ "ng-if": "notice", "ng-bind": "notice" }
+
   %form{ name: 'new_customer_form', novalidate: true, "ng-submit": "addCustomer()" }
 
     .text-center.margin-bottom-30

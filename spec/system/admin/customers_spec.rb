@@ -7,6 +7,10 @@ RSpec.describe 'Customers' do
   include AuthenticationHelper
   include WebHelper
 
+  def listed_emails
+    all("tr.customer td.email span:first-child").map(&:text)
+  end
+
   context "as an enterprise user" do
     let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_distributor1) { create(:distributor_enterprise, owner: user) }
@@ -519,6 +523,9 @@ RSpec.describe 'Customers' do
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
             }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
+
+            # And it's listed first, so that we don't have to look for it.
+            expect(listed_emails.first).to eq "new@email.com"
           end
 
           it "shows a hidden customer when trying to create it" do
@@ -527,7 +534,8 @@ RSpec.describe 'Customers' do
 
             expect do
               click_button 'Add Customer'
-              expect(page).not_to have_selector "#new-customer-dialog"
+              expect(page).to have_selector "#new-customer-notice",
+                                            text: "#{customer1.email} is already a customer"
               customer1.reload
             end
               .to change { customer1.created_manually }.from(false).to(true)
@@ -536,6 +544,37 @@ RSpec.describe 'Customers' do
             expect(page).to have_content customer1.email
             expect(page).to have_field "first_name", with: "John"
             expect(page).to have_field "last_name", with: "Doe"
+          end
+
+          it "tells the user about a listed customer with the same email in a different case" do
+            click_link('New Customer')
+            fill_in 'email', with: customer2.email.upcase
+
+            expect do
+              click_button 'Add Customer'
+              expect(page).to have_selector "#new-customer-notice",
+                                            text: "#{customer2.email} is already a customer"
+            end.not_to change { Customer.count }
+
+            # The customer wasn't listed twice, so the list keeps working. #14669
+            fill_in 'email', with: "new@email.com"
+            click_button 'Add Customer'
+            expect(page).not_to have_selector "#new-customer-dialog"
+            expect(page).to have_content "new@email.com"
+          end
+
+          it "doesn't show the notice again when the dialog is opened again" do
+            click_link('New Customer')
+            fill_in 'email', with: customer2.email.upcase
+            click_button 'Add Customer'
+            expect(page).to have_selector "#new-customer-notice"
+
+            find(".ui-dialog-titlebar-close").click
+            expect(page).not_to have_selector "#new-customer-dialog"
+
+            click_link('New Customer')
+            expect(page).to have_selector "#new-customer-dialog"
+            expect(page).not_to have_selector "#new-customer-notice"
           end
         end
       end

@@ -39,12 +39,14 @@ module Admin
       lookup_params = customer_params.slice(:email, :enterprise_id)
       lookup_params[:email] = lookup_params[:email]&.downcase
       @customer = Customer.find_or_initialize_by(lookup_params)
+      customer_existed = @customer.persisted?
 
       if user_can_create_customer?
         @customer.created_manually = true
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
-          render_as_json @customer, tag_rule_mapping:
+          render_as_json @customer, tag_rule_mapping:,
+                                    status: customer_existed ? :ok : :created
         else
           render json: { errors: @customer.errors.full_messages }, status: :bad_request
         end
