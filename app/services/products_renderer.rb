@@ -29,11 +29,19 @@ class ProductsRenderer
 
   # Generate read only data, with variants filtered for shop
   def products_view
-    products.map do |product|
+    @products_view ||= products.map do |product|
       attrs = product.slice(*ViewData::Product.members)
       attrs[:variants] = variants_view(product)
       ViewData::Product.new(**attrs)
     end
+  end
+
+  # List all properties attached to these products (whether directly or by enterprise)
+  def properties
+    #todo: check if there's a more efficient way to do this.
+    products_view.flat_map do |product|
+      product.properties_including_inherited
+    end.uniq
   end
 
   private

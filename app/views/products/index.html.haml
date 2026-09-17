@@ -2,6 +2,9 @@
   .loading
     = render partial: "shop/products/product_spinner"
 
+  - if @properties.any?
+    = render Shop::FiltersComponent.new(properties: @properties)
+
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       = render ProductTileComponent.new(product:, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
