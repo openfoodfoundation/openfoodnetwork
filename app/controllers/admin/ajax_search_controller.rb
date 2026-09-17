@@ -57,9 +57,8 @@ module Admin
       return Spree::Taxon.all if search_term.blank?
 
       escaped = ActiveRecord::Base.sanitize_sql_like(search_term)
-      # Casting jsonb to text searches across all locale keys and values.
-      # A GIN index on name_i18n helps PostgreSQL skip rows that can't match.
-      Spree::Taxon.where("name_i18n::text ILIKE ?", "%#{escaped}%")
+      # Search only the current locale within the jsonb (not all translations).
+      Spree::Taxon.where("(name_i18n ->> ?) ILIKE ?", I18n.locale.to_s, "%#{escaped}%")
     end
 
     def apply_search_filter(query)

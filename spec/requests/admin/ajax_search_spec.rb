@@ -163,7 +163,8 @@ RSpec.describe "/admin/ajax_search" do
       end
 
       it "filters categories by search query" do
-        get admin_ajax_search_categories_path, params: { q: "fruit" }
+        get admin_ajax_search_categories_path,
+            params: { q: "fruit", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Fruits'])
@@ -171,14 +172,16 @@ RSpec.describe "/admin/ajax_search" do
       end
 
       it "filters are case insensitive" do
-        get admin_ajax_search_categories_path, params: { q: "VEGETABLES" }
+        get admin_ajax_search_categories_path,
+            params: { q: "VEGETABLES", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Vegetables'])
       end
 
       it "filters with partial matches" do
-        get admin_ajax_search_categories_path, params: { q: "ege" }
+        get admin_ajax_search_categories_path,
+            params: { q: "ege", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Vegetables'])
