@@ -1,3 +1,31 @@
+// The logo pokes out of the top of the footer and overlaps the page above it.
+// Pages used to leave room for it with the `.footer-pad` class. The footer asks
+// for that room itself now: whatever sits directly above the footer keeps space
+// below its content, so that its background still runs into the footer.
+//
+// This selector is deliberately weak: sections which set their own bottom
+// padding, like the hub, producer and group lists, have room already and keep
+// what they have.
+:has(+ footer) {
+  padding-bottom: $footer-clearance;
+}
+
+// Panes span the full width of the page and bring their own background. The
+// room for the logo belongs inside the last pane, not below it.
+#panes:has(+ footer) {
+  padding-bottom: 0;
+
+  > .pane:last-child {
+    padding-bottom: $footer-clearance;
+  }
+}
+
+// Same for the shop: its panel paints the background and keeps the room
+// (see shop_tabs.scss).
+shop:has(+ footer) {
+  padding-bottom: 0;
+}
+
 footer {
   .row {
     p {
@@ -18,17 +46,17 @@ footer {
 
   .footer-global {
     background-color: $ofn-grey;
-    padding-top: 60px;
+    padding-top: $footer-padding-top;
     padding-bottom: 40px;
 
     .logo {
-      width: 200px;
-      height: 200px;
+      width: $footer-logo-size;
+      height: $footer-logo-size;
       background: $ofn-grey;
 
       @include border-radius(120px);
 
-      margin: (-140px) auto 0 auto;
+      margin: (-$footer-logo-offset) auto 0 auto;
 
       img {
         margin-top: 36px;
