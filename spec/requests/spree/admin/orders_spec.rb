@@ -355,6 +355,70 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#bulk_invoice" do
+    let(:distributor) { create(:distributor_enterprise, abn: "12345678901") }
+    let(:order) { create(:completed_order_with_totals, distributor:) }
+    let(:other_order) {
+      create(:completed_order_with_totals, distributor: create(:distributor_enterprise))
+    }
+
+    before do
+      sign_in distributor.owner
+      Spree::Config[:enterprise_number_required_on_invoices?] = false
+    end
+
+    it "enqueues a bulk invoice job and shows the compiling modal" do
+      expect {
+        post(
+          "/admin/orders/bulk_invoice",
+          params: { bulk_ids: [order.id, other_order.id], format: :turbo_stream }
+        )
+      }.to have_enqueued_job(BulkInvoiceJob).with { |order_ids, filepath, options|
+        expect(order_ids).to eq [order.id]
+        expect(filepath).to match(%r{\Atmp/invoices/\d+-[0-9a-f]+\.pdf\z})
+        expect(options[:current_user_id]).to eq distributor.owner.id
+        expect(options[:channel]).to be_nil
+      }
+
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("bulk_invoices_modal")
+      expect(response.body).to include("orders-index")
+    end
+
+    context "when a distributor is missing a business number" do
+      before do
+        Spree::Config[:enterprise_number_required_on_invoices?] = true
+        distributor.update!(abn: nil)
+      end
+
+      it "shows an error and does not enqueue the job" do
+        expect {
+          post(
+            "/admin/orders/bulk_invoice",
+            params: { bulk_ids: [order.id], format: :turbo_stream }
+          )
+        }.not_to have_enqueued_job(BulkInvoiceJob)
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to include(distributor.name)
+      end
+    end
+
+    context "when the user cannot manage the order" do
+      it "denies access" do
+        sign_in create(:user)
+
+        post(
+          "/admin/orders/bulk_invoice",
+          params: { bulk_ids: [order.id], format: :turbo_stream }
+        )
+
+        expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
   describe "#bulk_credit" do
     let(:order) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }
     let(:order1) { create(:order_with_totals, payment_state: "credit_owed", distributor:) }

@@ -17,7 +17,7 @@
             %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
               = t('spree.admin.orders.index.send_invoice')
           .menu_item
-            %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#perform", "data-bulk-actions-reflex-value": "Admin::Orders#bulk_invoice" }
+            %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#turboPerform", "data-bulk-actions-url-value": "orders/bulk_invoice" }
               = t('spree.admin.orders.index.print_invoices')
         .menu_item
           %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }

@@ -150,7 +150,59 @@ module Spree
         render turbo_stream: streams
       end
 
+      def bulk_invoice
+        visible_orders = bulk_load_orders
+
+        abn_issue_stream = abn_related_issue_stream(visible_orders)
+        return render turbo_stream: abn_issue_stream if abn_issue_stream
+
+        # Preserve order of bulk_ids.
+        # The ids are supplied in the sequence of the orders screen and may be
+        # sorted, for example by last name of the customer.
+        visible_order_ids = params[:bulk_ids].map(&:to_i) & visible_orders.pluck(:id)
+
+        file_id = "#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}"
+
+        BulkInvoiceJob.perform_later(
+          visible_order_ids,
+          "tmp/invoices/#{file_id}.pdf",
+          current_user_id: spree_current_user.id
+        )
+
+        render turbo_stream: turbo_stream.append(
+          "orders-index", partial: "spree/admin/orders/bulk/invoice_modal",
+                          locals: { invoice_url: "/admin/orders/invoices/#{file_id}" }
+        )
+      end
+
       private
+
+      def bulk_load_orders
+        Permissions::Order.new(spree_current_user).editable_orders.invoiceable.where(
+          id: params[:bulk_ids]
+        )
+      end
+
+      def abn_related_issue_stream(orders)
+        return unless abn_required?
+
+        distributors = distributors_without_abn(orders)
+        return if distributors.empty?
+
+        flash.now[:error] = t(:must_have_valid_business_number,
+                              enterprise_name: distributors.pluck(:name).join(", "))
+        turbo_stream.append("flashes", partial: "admin/shared/flashes", locals: { flashes: flash })
+      end
+
+      def abn_required?
+        Spree::Config.enterprise_number_required_on_invoices?
+      end
+
+      def distributors_without_abn(orders)
+        abn = OpenFoodNetwork::FeatureToggle.enabled?(:invoices) ? [nil, ""] : [nil]
+
+        Enterprise.where(id: orders.select(:distributor_id), abn:)
+      end
 
       def line_items_present?
         return true if @order.line_items.any?
