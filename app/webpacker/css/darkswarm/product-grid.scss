@@ -2,6 +2,12 @@
 @use "shop_partials/spinner";
 
 .loading {
+  display: none;
+
+  turbo-frame[busy] & {
+    display: block;
+  }
+
   .spinner-summary {
     @include spinner.summary;
   }

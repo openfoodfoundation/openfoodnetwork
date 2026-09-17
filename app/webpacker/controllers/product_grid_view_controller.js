@@ -1,11 +1,9 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["loading", "products"];
+  static targets = ["products"];
 
   updateProducts(ev) {
-    // show loading
-    this.loadingTarget.style.display = "block";
     if (this.hasProductsTarget) {
       this.productsTarget.style.display = "none";
     }
