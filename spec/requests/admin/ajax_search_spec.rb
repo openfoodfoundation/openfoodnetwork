@@ -151,8 +151,20 @@ RSpec.describe "/admin/ajax_search" do
         expect(json_response["pagination"]["more"]).to be false
       end
 
+      it "returns translated category names in the current locale" do
+        category1.update_column(:name_i18n, { "en" => "Vegetables", "es" => "Verduras" })
+        category2.update_column(:name_i18n, { "en" => "Fruits", "es" => "Frutas" })
+        category3.update_column(:name_i18n, { "en" => "Dairy", "es" => "Lácteos" })
+
+        get admin_ajax_search_categories_path(locale: "es")
+
+        json_response = response.parsed_body
+        expect(json_response["results"].pluck("label")).to eq(['Frutas', 'Lácteos', 'Verduras'])
+      end
+
       it "filters categories by search query" do
-        get admin_ajax_search_categories_path, params: { q: "fruit" }
+        get admin_ajax_search_categories_path,
+            params: { q: "fruit", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Fruits'])
@@ -160,14 +172,16 @@ RSpec.describe "/admin/ajax_search" do
       end
 
       it "filters are case insensitive" do
-        get admin_ajax_search_categories_path, params: { q: "VEGETABLES" }
+        get admin_ajax_search_categories_path,
+            params: { q: "VEGETABLES", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Vegetables'])
       end
 
       it "filters with partial matches" do
-        get admin_ajax_search_categories_path, params: { q: "ege" }
+        get admin_ajax_search_categories_path,
+            params: { q: "ege", locale: I18n.default_locale.to_s }
 
         json_response = response.parsed_body
         expect(json_response["results"].pluck("label")).to eq(['Vegetables'])
