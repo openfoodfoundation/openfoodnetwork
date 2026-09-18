@@ -1025,7 +1025,7 @@ DEPENDENCIES
   omniauth_openid_connect
   openid_connect
   order_management!
-  pagy (~> 43.6)
+  pagy
   paper_trail
   paranoia
   paypal-sdk-merchant
