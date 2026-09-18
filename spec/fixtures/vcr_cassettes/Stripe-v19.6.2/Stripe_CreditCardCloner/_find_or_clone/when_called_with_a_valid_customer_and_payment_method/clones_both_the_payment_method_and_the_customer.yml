@@ -1,0 +1,1483 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_methods
+    body:
+      encoding: UTF-8
+      string: type=card&card[number]=4242424242424242&card[exp_month]=8&card[exp_year]=2027&card[cvc]=314
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_lMcjfK8MMQ4Fzn","request_duration_ms":2352}}'
+      Idempotency-Key:
+      - 6bfdbf5b-8bab-4449-b1b0-cb84c9953081
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1122'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - 6bfdbf5b-8bab-4449-b1b0-cb84c9953081
+      Original-Request:
+      - req_8lvJhZAxLYP3z7
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_8lvJhZAxLYP3z7
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxNKuuB1fWySnNX27rmPM",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "unchecked"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692433,
+          "customer": null,
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {},
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:21 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: name=Apple+Customer&email=apple.customer%40example.com
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_8lvJhZAxLYP3z7","request_duration_ms":438}}'
+      Idempotency-Key:
+      - '079bb4d4-8fb7-4d20-96d0-3c803aa7d869'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '678'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - '079bb4d4-8fb7-4d20-96d0-3c803aa7d869'
+      Original-Request:
+      - req_zHseBZcO19cCJj
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_zHseBZcO19cCJj
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "cus_VHOku5Gv13xwCS",
+          "object": "customer",
+          "address": null,
+          "balance": 0,
+          "created": 1789692433,
+          "currency": null,
+          "customer_account": null,
+          "default_source": null,
+          "delinquent": false,
+          "description": null,
+          "discount": null,
+          "email": "apple.customer@example.com",
+          "invoice_prefix": "TDAZVJJ6",
+          "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null,
+            "rendering_options": null
+          },
+          "livemode": false,
+          "metadata": {},
+          "name": "Apple Customer",
+          "next_invoice_sequence": 1,
+          "phone": null,
+          "preferred_locales": [],
+          "shipping": null,
+          "tax_exempt": "none",
+          "test_clock": null
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:22 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_methods/pm_1UGpxNKuuB1fWySnNX27rmPM/attach
+    body:
+      encoding: UTF-8
+      string: customer=cus_VHOku5Gv13xwCS
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_zHseBZcO19cCJj","request_duration_ms":511}}'
+      Idempotency-Key:
+      - c6de271c-4c4e-43e9-84fb-6ac992dc643b
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1133'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - c6de271c-4c4e-43e9-84fb-6ac992dc643b
+      Original-Request:
+      - req_xsBhOTrwZ5vH2D
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_xsBhOTrwZ5vH2D
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxNKuuB1fWySnNX27rmPM",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692433,
+          "customer": "cus_VHOku5Gv13xwCS",
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {},
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:23 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts
+    body:
+      encoding: UTF-8
+      string: type=standard&country=AU&email=apple.producer%40example.com
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_xsBhOTrwZ5vH2D","request_duration_ms":717}}'
+      Idempotency-Key:
+      - 11e41e2d-3228-4c46-90c4-72bfca7b2f18
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:16 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3500'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - 11e41e2d-3228-4c46-90c4-72bfca7b2f18
+      Original-Request:
+      - req_Q0jSYMgEmOIgO9
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_Q0jSYMgEmOIgO9
+      Stripe-Notice:
+      - We recommend building your integration using Accounts v2. See https://docs.stripe.com/api/v2/core/accounts
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "acct_1UGpxO42lbb63e3R",
+          "object": "account",
+          "business_profile": {
+            "annual_revenue": null,
+            "estimated_worker_count": null,
+            "mcc": null,
+            "minority_owned_business_designation": null,
+            "name": null,
+            "product_description": null,
+            "specified_commercial_transactions_act_url": null,
+            "support_address": null,
+            "support_email": null,
+            "support_phone": null,
+            "support_url": null,
+            "url": null
+          },
+          "business_type": null,
+          "capabilities": {},
+          "charges_enabled": false,
+          "controller": {
+            "fees": {
+              "payer": "account"
+            },
+            "is_controller": true,
+            "losses": {
+              "payments": "stripe"
+            },
+            "requirement_collection": "stripe",
+            "stripe_dashboard": {
+              "type": "full"
+            },
+            "type": "application"
+          },
+          "country": "AU",
+          "created": 1789692436,
+          "default_currency": "aud",
+          "details_submitted": false,
+          "email": "apple.producer@example.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/accounts/acct_1UGpxO42lbb63e3R/external_accounts"
+          },
+          "future_requirements": {
+            "alternatives": [],
+            "current_deadline": null,
+            "currently_due": [],
+            "disabled_reason": null,
+            "errors": [],
+            "eventually_due": [],
+            "past_due": [],
+            "pending_verification": []
+          },
+          "metadata": {},
+          "payouts_enabled": false,
+          "requirements": {
+            "alternatives": [],
+            "current_deadline": null,
+            "currently_due": [
+              "business_profile.product_description",
+              "business_profile.support_phone",
+              "business_profile.url",
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "disabled_reason": "requirements.past_due",
+            "errors": [],
+            "eventually_due": [
+              "business_profile.product_description",
+              "business_profile.support_phone",
+              "business_profile.url",
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "past_due": [
+              "business_profile.product_description",
+              "business_profile.support_phone",
+              "business_profile.url",
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "pending_verification": []
+          },
+          "settings": {
+            "bacs_debit_payments": {
+              "display_name": null,
+              "service_user_number": null
+            },
+            "branding": {
+              "icon": null,
+              "logo": null,
+              "primary_color": null,
+              "secondary_color": null
+            },
+            "card_issuing": {
+              "tos_acceptance": {
+                "date": null,
+                "ip": null
+              }
+            },
+            "card_payments": {
+              "decline_on": {
+                "avs_failure": false,
+                "cvc_failure": false
+              },
+              "statement_descriptor_prefix": null,
+              "statement_descriptor_prefix_kana": null,
+              "statement_descriptor_prefix_kanji": null
+            },
+            "dashboard": {
+              "display_name": null,
+              "timezone": "Etc/UTC"
+            },
+            "invoices": {
+              "default_account_tax_ids": null,
+              "hosted_payment_method_save": "offer"
+            },
+            "payments": {
+              "statement_descriptor": null,
+              "statement_descriptor_kana": null,
+              "statement_descriptor_kanji": null
+            },
+            "payouts": {
+              "debit_negative_balances": true,
+              "schedule": {
+                "delay_days": 2,
+                "interval": "daily"
+              },
+              "statement_descriptor": null
+            },
+            "sepa_debit_payments": {}
+          },
+          "tos_acceptance": {
+            "date": null,
+            "ip": null,
+            "user_agent": null
+          },
+          "type": "standard"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:25 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods/pm_1UGpxNKuuB1fWySnNX27rmPM
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_Q0jSYMgEmOIgO9","request_duration_ms":2381}}'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1133'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_ixzuUGcZRw9z2U
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxNKuuB1fWySnNX27rmPM",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692433,
+          "customer": "cus_VHOku5Gv13xwCS",
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {},
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:25 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers?email=apple.customer@example.com&limit=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_ixzuUGcZRw9z2U","request_duration_ms":285}}'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '83'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_KwNT8xFr90kmz1
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "object": "list",
+          "data": [],
+          "has_more": false,
+          "url": "/v1/customers"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:26 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_methods
+    body:
+      encoding: UTF-8
+      string: customer=cus_VHOku5Gv13xwCS&payment_method=pm_1UGpxNKuuB1fWySnNX27rmPM
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_KwNT8xFr90kmz1","request_duration_ms":303}}'
+      Idempotency-Key:
+      - e571f6e5-0f46-48ce-b9e5-90d5d9b34579
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1117'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - e571f6e5-0f46-48ce-b9e5-90d5d9b34579
+      Original-Request:
+      - req_kTmlVaeLepJd1F
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_kTmlVaeLepJd1F
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxR42lbb63e3RbQJ81Tlt",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692437,
+          "customer": null,
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {},
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:26 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: email=apple.customer%40example.com
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_kTmlVaeLepJd1F","request_duration_ms":396}}'
+      Idempotency-Key:
+      - ebf48a73-b343-4aec-a30d-a9e3c7ae7deb
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '666'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - ebf48a73-b343-4aec-a30d-a9e3c7ae7deb
+      Original-Request:
+      - req_Axfgqgb6MhL1Ah
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_Axfgqgb6MhL1Ah
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "cus_VHOk01EwH8L8U8",
+          "object": "customer",
+          "address": null,
+          "balance": 0,
+          "created": 1789692438,
+          "currency": null,
+          "customer_account": null,
+          "default_source": null,
+          "delinquent": false,
+          "description": null,
+          "discount": null,
+          "email": "apple.customer@example.com",
+          "invoice_prefix": "MWP5CDA8",
+          "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null,
+            "rendering_options": null
+          },
+          "livemode": false,
+          "metadata": {},
+          "name": null,
+          "next_invoice_sequence": 1,
+          "phone": null,
+          "preferred_locales": [],
+          "shipping": null,
+          "tax_exempt": "none",
+          "test_clock": null
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:26 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_methods/pm_1UGpxR42lbb63e3RbQJ81Tlt/attach
+    body:
+      encoding: UTF-8
+      string: customer=cus_VHOk01EwH8L8U8
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_Axfgqgb6MhL1Ah","request_duration_ms":412}}'
+      Idempotency-Key:
+      - 5268601b-6d35-4c96-abcd-4312c783aefa
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1133'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - 5268601b-6d35-4c96-abcd-4312c783aefa
+      Original-Request:
+      - req_L7ePEhsVtF8ieG
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_L7ePEhsVtF8ieG
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxR42lbb63e3RbQJ81Tlt",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692437,
+          "customer": "cus_VHOk01EwH8L8U8",
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {},
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:27 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_methods/pm_1UGpxR42lbb63e3RbQJ81Tlt
+    body:
+      encoding: UTF-8
+      string: metadata[ofn-clone]=true
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_L7ePEhsVtF8ieG","request_duration_ms":383}}'
+      Idempotency-Key:
+      - fd4a012d-e259-4d03-8d44-12868301ffad
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1160'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - fd4a012d-e259-4d03-8d44-12868301ffad
+      Original-Request:
+      - req_BIFeiUbC2UX071
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_BIFeiUbC2UX071
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pm_1UGpxR42lbb63e3RbQJ81Tlt",
+          "object": "payment_method",
+          "allow_redisplay": "unspecified",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null,
+            "tax_id": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "display_brand": "visa",
+            "exp_month": 8,
+            "exp_year": 2027,
+            "fingerprint": "6E6tgVjx6U65iHFV",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1789692437,
+          "customer": "cus_VHOk01EwH8L8U8",
+          "customer_account": null,
+          "livemode": false,
+          "metadata": {
+            "ofn-clone": "true"
+          },
+          "shared_payment_granted_token": null,
+          "type": "card"
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:27 GMT
+- request:
+    method: delete
+    uri: https://api.stripe.com/v1/accounts/acct_1UGpxO42lbb63e3R
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/19.6.2
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_BIFeiUbC2UX071","request_duration_ms":425}}'
+      Idempotency-Key:
+      - 5fc86d28-6d3e-499f-a388-5a7a54923785
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Sep 2026 00:47:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '77'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD, PUT, PATCH, POST, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src
+        'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31;
+        report-to csp
+      Idempotency-Key:
+      - 5fc86d28-6d3e-499f-a388-5a7a54923785
+      Report-To:
+      - '{"group":"csp","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - csp="https://q.stripe.com/csp-report-v2?q=YWnQx3kXCnyhgv-38nD9NQDDor9Rj0bzFGDLeSpaNtzWO123JpKny6xzhIyvgkhsbu0cDdutT9eAsb31&t=1"
+      Request-Id:
+      - req_1nlPXUPJUw2wXW
+      Stripe-Account:
+      - acct_1UGpxO42lbb63e3R
+      Stripe-Version:
+      - 2026-08-26.dahlia
+      Vary:
+      - Origin
+      X-Stripe-Priority-Routing-Enabled:
+      - 'true'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      X-Wc:
+      - 3c3
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "acct_1UGpxO42lbb63e3R",
+          "object": "account",
+          "deleted": true
+        }
+  recorded_at: Fri, 18 Sep 2026 00:48:30 GMT
+recorded_with: VCR 6.4.0
