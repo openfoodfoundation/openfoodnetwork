@@ -24,6 +24,7 @@ RSpec.describe Api::Admin::CustomerSerializer do
     expect(result['bill_address']['id']).to eq customer.bill_address.id
     expect(result['bill_address']['address1']).to eq customer.bill_address.address1
     expect(result['ship_address']).to be nil
+    expect(result['customer_type']).to eq('individual')
   end
 
   it 'serializes a customer without tag_rule_mapping' do
