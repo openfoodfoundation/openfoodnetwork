@@ -10,7 +10,7 @@ require 'open_food_network/referer_parser'
 
 class ApplicationController < ActionController::Base
   include CablecarResponses
-  include Pagy::Backend
+  include Pagy::Method
   include RequestTimeouts
   include RespondWith
 

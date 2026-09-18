@@ -216,8 +216,7 @@ module Admin
       @pagy, @products = pagy(
         product_query.order(:name),
         limit: @per_page,
-        page: @page,
-        size: [1, 2, 2, 1]
+        page: @page
       )
     end
 

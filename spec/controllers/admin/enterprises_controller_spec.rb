@@ -703,7 +703,7 @@ RSpec.describe Admin::EnterprisesController do
     end
 
     context "when there are more editable enterprises than fit on one page" do
-      before { stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1)) }
+      before { stub_const("Pagy::OPTIONS", Pagy::OPTIONS.merge(limit: 1)) }
 
       let!(:other_enterprise) { create(:enterprise, sells: 'none', owner: original_owner) }
 
@@ -1009,7 +1009,7 @@ RSpec.describe Admin::EnterprisesController do
         render_views
 
         it "does not render the bulk-update button for the empty rendered page" do
-          stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 1))
+          stub_const("Pagy::OPTIONS", Pagy::OPTIONS.merge(limit: 1))
 
           get :index, params: { page: 99 }, format: :html
 

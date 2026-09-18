@@ -15,7 +15,11 @@ module JsonApiPagination
   end
 
   def pagy_options
-    { items: final_per_page_value }
+    # Pagy resolves a missing/out-of-range :page itself when we don't pass one, silently
+    # clamping it to 1 instead of raising. Passing our own parsed value makes pagy validate
+    # it via Pagy::Offset#assign_and_check instead (raising Pagy::OptionError on eg. page=0),
+    # preserving the v1 API's existing "informs about invalid pages" contract.
+    { items: final_per_page_value, page: current_page }
   end
 
   private

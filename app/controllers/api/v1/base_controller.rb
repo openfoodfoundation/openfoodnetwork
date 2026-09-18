@@ -5,7 +5,7 @@ module Api
     class BaseController < ActionController::API
       include CanCan::ControllerAdditions
       include RequestTimeouts
-      include Pagy::Backend
+      include Pagy::Method
       include JsonApiPagination
       include RaisingParameters
 
@@ -18,7 +18,7 @@ module Api
       rescue_from StandardError, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
-      rescue_from Pagy::VariableError, with: :invalid_pagination
+      rescue_from Pagy::OptionError, with: :invalid_pagination
       rescue_from ActionController::ParameterMissing, with: :missing_parameter
       rescue_from ActionController::UnpermittedParameters, with: :unpermitted_parameters
 

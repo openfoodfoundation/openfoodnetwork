@@ -8,7 +8,7 @@ module Admin
   class EnterprisesController < Admin::ResourceController
     include GeocodeEnterpriseAddress
     include CablecarResponses
-    include Pagy::Backend
+    include Pagy::Method
 
     # These need to run before #load_resource so that @object is initialised with sanitised values
     prepend_before_action :override_owner, only: :create
