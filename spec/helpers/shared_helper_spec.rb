@@ -188,5 +188,90 @@ RSpec.describe SharedHelper do
         expect(data[1][:alt]).to eq "Test Product"
       end
     end
+
+    context 'when available_variant_ids is given' do
+      let(:available_variant) { product.variants.first }
+      let!(:unavailable_variant) { create(:variant, product:, display_name: 'Hidden') }
+
+      before do
+        Spree::Image.create!(attachment: white_logo_file, viewable: product)
+        Spree::Image.create!(attachment: white_logo_file, viewable: available_variant)
+        Spree::Image.create!(attachment: white_logo_file, viewable: unavailable_variant)
+      end
+
+      it 'keeps product images and only available variants images' do
+        data = helper.product_carousel_images_data(
+          product, available_variant_ids: [available_variant.id]
+        )
+
+        # Product image + the available variant's image, but not the hidden variant's.
+        expect(data.size).to eq 2
+        expect(data.pluck(:caption)).to contain_exactly("Test Product", nil)
+      end
+
+      it 'excludes all variant images when no variant is available' do
+        data = helper.product_carousel_images_data(product, available_variant_ids: [])
+
+        expect(data.size).to eq 1
+        expect(data.first[:caption]).to eq "Test Product"
+      end
+
+      it 'falls back to the default image when nothing survives filtering' do
+        product.images.destroy_all
+        data = helper.product_carousel_images_data(product, available_variant_ids: [])
+
+        expect(data).to eq([
+                             {
+                               url: Spree::Image.default_image_url(:large),
+                               alt: "Test Product",
+                               caption: nil
+                             }
+                           ])
+      end
+    end
+
+    context 'when available_variant_ids is nil (no filtering)' do
+      let!(:variant) { create(:variant, product:, display_name: 'Red') }
+
+      before do
+        Spree::Image.create!(attachment: white_logo_file, viewable: product)
+        Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+      end
+
+      it 'shows every variant image, preserving the pre-filtering behaviour' do
+        data = helper.product_carousel_images_data(product, available_variant_ids: nil)
+
+        expect(data.size).to eq 2
+      end
+    end
+  end
+
+  describe '#product_carousel_images?' do
+    let(:product) { create(:simple_product, name: "Test Product") }
+    let(:variant) { product.variants.first }
+
+    it 'is false when the product has no real images' do
+      expect(helper.product_carousel_images?(product)).to be false
+    end
+
+    it 'is true when the product has a product-level image' do
+      Spree::Image.create!(attachment: white_logo_file, viewable: product)
+
+      expect(helper.product_carousel_images?(product)).to be true
+    end
+
+    it 'is false when the only image belongs to an unavailable variant' do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+
+      expect(helper.product_carousel_images?(product, available_variant_ids: [])).to be false
+    end
+
+    it 'is true when an available variant has an image' do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+
+      expect(
+        helper.product_carousel_images?(product, available_variant_ids: [variant.id])
+      ).to be true
+    end
   end
 end
