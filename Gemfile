@@ -69,7 +69,7 @@ gem 'jwt'
 gem 'datafoodconsortium-connector'
 gem 'datafoodconsortium-connector-v1'
 gem 'jsonapi-serializer'
-gem 'pagy', '~> 9'
+gem 'pagy', '~> 43.6'
 
 gem 'rswag-api'
 gem 'rswag-ui'

@@ -15,7 +15,19 @@ module JsonApiPagination
   end
 
   def pagy_options
-    { items: final_per_page_value }
+    {
+      # :limit is the number of records pagy actually returns. max_limit overrides, for this
+      # call only, the app-wide Pagy::OPTIONS[:max_limit] that every other paginated endpoint
+      # shares - without it, a per_page above that app-wide cap would be silently trimmed
+      # below MAX_PER_PAGE, disagreeing with the per_page reported in meta.pagination/links.
+      limit: final_per_page_value,
+      max_limit: MAX_PER_PAGE,
+      # Pagy resolves a missing/out-of-range :page itself when we don't pass one, silently
+      # clamping it to 1 instead of raising. Passing our own parsed value makes pagy validate
+      # it via Pagy::Offset#assign_and_check instead (raising Pagy::OptionError on eg. page=0),
+      # preserving the v1 API's existing "informs about invalid pages" contract.
+      page: current_page,
+    }
   end
 
   private

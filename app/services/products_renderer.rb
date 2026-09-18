@@ -3,7 +3,7 @@
 require 'open_food_network/scope_product_to_hub'
 
 class ProductsRenderer
-  include Pagy::Backend
+  include Pagy::Method
 
   class NoProducts < RuntimeError; end
   DEFAULT_PER_PAGE = 10
@@ -147,10 +147,15 @@ class ProductsRenderer
   end
 
   def paginate(results)
-    _pagy, paginated_results = pagy_array(
+    # ProductsRenderer is a PORO, not a controller: pagy always builds a Pagy::Request from
+    # the :request option (falling back to #request otherwise), so it needs an explicit
+    # params hash here rather than reading from an actual Rack request.
+    _pagy, paginated_results = pagy(
+      :offset,
       results,
       page: args[:page] || 1,
-      limit: args[:per_page] || DEFAULT_PER_PAGE
+      limit: args[:per_page] || DEFAULT_PER_PAGE,
+      request: { params: {} }
     )
 
     paginated_results

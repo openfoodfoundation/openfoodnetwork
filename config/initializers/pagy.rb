@@ -1,20 +1,27 @@
 # frozen_string_literal: true
 
-require 'pagy/extras/arel'
-require 'pagy/extras/array'
-require 'pagy/extras/limit'
-require 'pagy/extras/overflow'
-require 'pagy/extras/size'
-
 # Pagy Variables
-# See https://ddnexus.github.io/pagy/api/pagy#variables
-Pagy::DEFAULT[:limit] = 100
+# See https://ddnexus.github.io/pagy/toolbox/configuration/options/
+Pagy::OPTIONS[:limit] = 100
 
-# limit extra: Allow the client to request a custom number of limit per page with an optional
-# selector UI
-# See https://ddnexus.github.io/pagy/extras/limit
-Pagy::DEFAULT[:limit_param] = :per_page
-Pagy::DEFAULT[:limit_max]   = 100
+# Allow the client to request a custom number of items per page with ?per_page=N, capped at
+# :max_limit. :max_limit also acts as the switch that makes pagy read the client param at all.
+Pagy::OPTIONS[:limit_key] = 'per_page'
+Pagy::OPTIONS[:max_limit] = 100
 
-# For handling requests for non-existant pages eg: page 35 when there are only 4 pages of results
-Pagy::DEFAULT[:overflow] = :empty_page
+# Handling requests for non-existant pages (eg: page 35 when there are only 4 pages of results)
+# by returning an empty page is the default behaviour in v43, so nothing to configure here.
+
+Pagy::OPTIONS.freeze
+
+# v43 made #series and #a_lambda protected (its own nav helpers, e.g. #series_nav, call them
+# internally). OFN renders its own pagination markup (Stimulus-driven links, custom classes)
+# in app/views/admin/shared/_pagy_links.html.haml and _stimulus_pagination.html.haml instead
+# of using #series_nav, so those views need public access to the page series and the anchor
+# builder. Don't try `public :series` here instead: #series and #a_lambda are lazily loaded on
+# first call (see pagy/toolbox/helpers/loaders.rb), and that load redefines them as protected,
+# clobbering any visibility change made ahead of time.
+class Pagy
+  def page_series(**) = series(**)
+  def page_anchor(**) = a_lambda(**)
+end
