@@ -352,7 +352,8 @@ module Spree
       can [:create], Spree::Order
 
       # Spree::Admin::PaymentController need to load the order to credit_customer
-      can [:read, :update, :credit_customer, :bulk_credit], Spree::Order do |order|
+      can [:read, :update, :credit_customer, :bulk_credit,
+           :resend_confirmation_emails, :send_invoices], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
