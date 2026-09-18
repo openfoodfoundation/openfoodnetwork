@@ -99,6 +99,16 @@
           color: $grey-500;
           font-size: 14px;
         }
+
+        // The whole unit price line, including the money's spans, uses the
+        // same black as the other cart labels, but smaller.
+        .unit-price {
+          span,
+          .options-text {
+            color: $grey-800;
+            font-size: 14px;
+          }
+        }
       }
     }
   }

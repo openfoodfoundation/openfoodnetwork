@@ -7,6 +7,26 @@ RSpec.describe Spree::Order do
   it { is_expected.to have_one :exchange }
   it { is_expected.to have_many :semantic_links }
 
+  describe "#cap_quantity_at_stock!" do
+    let(:order) { create(:order) }
+    let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
+    let(:other_variant) { create(:variant, on_demand: false, on_hand: 5) }
+    let!(:line_item) { create(:line_item, order:, variant:, quantity: 5) }
+    let!(:other_line_item) { create(:line_item, order:, variant: other_variant, quantity: 5) }
+
+    it "caps quantities and returns the reduced line items" do
+      variant.update!(on_hand: 2)
+
+      expect(order.cap_quantity_at_stock!).to eq [line_item]
+      expect(line_item.reload.quantity).to eq 2
+      expect(other_line_item.reload.quantity).to eq 5
+    end
+
+    it "returns an empty array when all quantities are in stock" do
+      expect(order.cap_quantity_at_stock!).to eq []
+    end
+  end
+
   describe "#errors" do
     it "provides friendly error messages" do
       order.ship_address = Spree::Address.new
