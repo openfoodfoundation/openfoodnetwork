@@ -7,6 +7,7 @@ class ApplicationRecord < ActiveRecord::Base
   include ArelHelpers::ArelTable
   include ArelHelpers::Aliases
   include ArelHelpers::JoinAssociation
+  include ValidatesStringLengthFromDatabase
 
   self.abstract_class = true
   self.include_root_in_json = true
