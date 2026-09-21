@@ -28,6 +28,7 @@ const setupDOM = (html) => {
 
 const getSelect = () => document.getElementById("select");
 const getTomSelect = () => getSelect().tomselect;
+const getSelectedValues = () => [...getSelect().selectedOptions].map((o) => o.value);
 
 const openDropdown = () => fireEvent.click(document.getElementById("select-ts-control"));
 
@@ -293,6 +294,28 @@ describe("TomSelectController", () => {
 
       // Query present
       expect(settings.shouldLoad("a")).toBe(true);
+    });
+  });
+  describe("connect() with a multiple select", () => {
+    beforeEach(() => {
+      setupDOM(`
+        <select
+          id="select"
+          name="enterprise[group_ids][]"
+          multiple
+          data-controller="tom-select"
+          data-tom-select-options-value='{"plugins":["remove_button"],"maxItems":null}'
+        >
+          <option value="1" selected>Group 1</option>
+          <option value="2" selected>Group 2</option>
+          <option value="3">Group 3</option>
+        </select>
+      `);
+    });
+
+    it("keeps every pre-selected option", () => {
+      expect(getTomSelect().items).toEqual(["1", "2"]);
+      expect(getSelectedValues()).toEqual(["1", "2"]);
     });
   });
 });

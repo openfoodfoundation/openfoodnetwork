@@ -10,11 +10,11 @@ export default class extends Controller {
   };
 
   connect(options = {}) {
-    // Capture the select's current value before TomSelect replaces the element.
-    // For non-remote selects, passing this as `items` tells TomSelect to restore
-    // the pre-selected option during its silent constructor phase (isSetup = false),
+    // Capture the select's current values before TomSelect replaces the element.
+    // For non-remote selects, passing these as `items` tells TomSelect to restore
+    // the pre-selected options during its silent constructor phase (isSetup = false),
     // so no input/change events fire on the underlying select.
-    const initialValue = !this.remoteUrlValue ? this.element.value : null;
+    const initialItems = this.remoteUrlValue ? [] : this.#selectedValues();
 
     let tomSelectOptions = {
       maxItems: 1,
@@ -25,7 +25,7 @@ export default class extends Controller {
       onItemAdd: function () {
         this.setTextboxValue("");
       },
-      ...(initialValue ? { items: [initialValue] } : {}),
+      ...(initialItems.length ? { items: initialItems } : {}),
       ...this.optionsValue,
       ...options,
     };
@@ -42,6 +42,13 @@ export default class extends Controller {
   }
 
   // private
+
+  // `select.value` only returns the first selected option, which would drop the
+  // rest of the selection on a multiple select. Options with a blank value are
+  // ignored so an unselected select stays empty.
+  #selectedValues() {
+    return [...this.element.selectedOptions].map((option) => option.value).filter(Boolean);
+  }
 
   #emptyOption() {
     const optionsArray = [...this.element.options];
