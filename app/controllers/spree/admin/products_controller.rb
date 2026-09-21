@@ -29,6 +29,8 @@ module Spree
       end
 
       def edit
+        return if redirect_to_canonical_id?(@object)
+
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
