@@ -452,6 +452,47 @@ RSpec.describe Enterprise do
         expect(e).not_to be_valid
       end
     end
+
+    describe "attachment validation" do
+      let(:enterprise) { create(:enterprise) }
+      let(:valid_image) { Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', 'image/png') }
+      let(:invalid_file) { Rack::Test::UploadedFile.new('spec/fixtures/files/logo.bmp', 'image/bmp') }
+
+      # An invalid file (BMP) is rejected by all four attachments: it fails the
+      # image content type for logo/promo_image/white_label_logo and the PDF
+      # content type for terms_and_conditions.
+      shared_examples "an attachment validated only when changed" do |attachment|
+        context "when the #{attachment} has not changed" do
+          before do
+            # Persist an already-invalid attachment, bypassing validation, to
+            # mimic a pre-existing problematic blob
+            enterprise.public_send(attachment).attach(invalid_file)
+            enterprise.save!(validate: false)
+            enterprise.reload
+          end
+
+          it "does not re-validate the unchanged #{attachment} on an unrelated update" do
+            expect(enterprise.attachment_changes).to be_empty
+            expect(enterprise.update(name: 'New name')).to be true
+          end
+        end
+
+        context "when the #{attachment} is changed" do
+          it "runs the #{attachment} validation on the new file" do
+            enterprise.public_send(attachment).attach(invalid_file)
+
+            expect(enterprise.attachment_changes).to have_key(attachment.to_s)
+            expect(enterprise).not_to be_valid
+            expect(enterprise.errors[attachment]).to be_present
+          end
+        end
+      end
+
+      it_behaves_like "an attachment validated only when changed", :logo
+      it_behaves_like "an attachment validated only when changed", :promo_image
+      it_behaves_like "an attachment validated only when changed", :white_label_logo
+      it_behaves_like "an attachment validated only when changed", :terms_and_conditions
+    end
   end
 
   describe "serialisation" do
