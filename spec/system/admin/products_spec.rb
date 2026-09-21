@@ -473,7 +473,7 @@ RSpec.describe '
           expect(page).to have_content /Image has been successfully created/
           expect(product.reload.image).to be_present
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, product.image)
+            "/admin/products/#{product.id}/images/#{product.image.id}/edit"
           )
         end
 
@@ -510,7 +510,7 @@ RSpec.describe '
           find("img[alt='White logo']").click
 
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, image)
+            "/admin/products/#{product.id}/images/#{image.id}/edit"
           )
           expect(page).to have_content "Edit image for"
         end
