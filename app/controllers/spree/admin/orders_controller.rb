@@ -200,7 +200,7 @@ module Spree
       def bulk_action_feedback(i18n_key, count)
         flash.now[:success] = t(i18n_key, count:)
         render turbo_stream: [
-          turbo_stream.dispatch_event("modal:close"),
+          turbo_stream.dispatch_event("body", "modal:close"),
           turbo_stream.append(
             "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
           )
