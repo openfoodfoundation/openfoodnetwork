@@ -418,8 +418,7 @@ RSpec.describe Spree::Admin::OrdersController do
 
       expect(response).to have_http_status :ok
       expect(response.body).to include("modal:close")
-      # Matches the count of orders requested, not the count actually resent
-      expect(flash[:success]).to eq "Confirmation emails sent for 2 orders."
+      expect(flash[:success]).to eq "Confirmation email sent for 1 order."
     end
 
     context "when the user cannot manage the order" do
