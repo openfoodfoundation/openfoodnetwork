@@ -181,7 +181,7 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(response.media_type).to eq Mime[:turbo_stream]
       expect(response.body).to include 'action="redirect_to"'
       expect(response.body).to include(
-        spree.edit_admin_product_image_path(product, product.image)
+        "/admin/products/#{product.id}/images/#{product.image.id}/edit"
       )
     end
 
@@ -231,7 +231,7 @@ RSpec.describe "/admin/products/:product_id/images" do
       expect(variant.image.viewable_id).to eq variant.id
       expect(response.body).to include 'action="redirect_to"'
       expect(response.body).to include CGI.escapeHTML(
-        spree.edit_admin_product_image_path(product, variant.image, variant_id: variant.id)
+        "/admin/products/#{product.id}/images/#{variant.image.id}/edit?variant_id=#{variant.id}"
       )
     end
   end
