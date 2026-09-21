@@ -1535,6 +1535,7 @@ fr:
         enterprise_fees: Marges et commissions
         enterprise_fees_tip: Cette entreprise n'a pas paramétré de marges et commissions
       admin_index:
+        search_legend: Recherche d'entreprises
         name: Nom
         role: Role
         sells: Produits vendus
@@ -1543,6 +1544,8 @@ fr:
         producer: Producteur
         search: Rechercher
         clear: Annuler
+        owner_email: Email gestionnaire principal
+        manager_email: Email gestionnaire
         sells_options:
           unspecified: non spécifié
           none: aucun
@@ -3717,6 +3720,7 @@ fr:
           invalid: "invalide"
         quantity_unavailable: "Stock disponible insuffisant. La ligne produit ne peut pas être sauvegardée."
         quantity_unchanged: "La quantité n'a pas été modifiée."
+        could_not_add_item: "Impossible de mettre à jour la commande. Veuillez réessayer."
         cancel_the_order_html: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
         restock_item: "Recharger le stock de ce produit"
@@ -3813,7 +3817,7 @@ fr:
       manage_products: "modifier les produits"
       edit_profile: "modifier le profil"
       add_products_to_inventory: "ajouter les produits au catalogue boutique"
-      create_linked_variants: "créer des produits associés [BÊTA]"
+      create_linked_variants: "créer des produits associés"
     resources:
       could_not_delete_customer: 'L''acheteur n''a pas pu être supprimé'
     product_import:
@@ -5126,7 +5130,12 @@ fr:
         order_cycle_opened: Cycle de vente ouvert
         payment_status_changed: Poster webhook sur le changement du statut de paiement
       test_endpoint: Tester le point de terminaison du webhook
+    shop_variant_modal:
+      select: Sélectionner
+      from_producer: "De %{name}"
     product_tile:
+      multiple_producers: "Plusieurs producteurs"
+      multiple_options: "plusieurs options"
       from_price: "de"
   invisible_captcha:
     sentence_for_humans: "Merci de laisser ce champ libre"

@@ -3406,6 +3406,9 @@ eu:
         add_to_cart: "Gehitu"
         in_cart: "saskian"
         quantity_in_cart: " %{quantity} saskian"
+        remaining_in_stock:
+          one: "%{count} bakarrik geratzen da"
+          other: "%{count} bakarrik geratzen dira"
       bulk_buy_modal:
         min_quantity: "Gutxieneko kopurua"
         max_quantity: "Gehieneko kopurua"

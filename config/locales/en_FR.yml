@@ -274,6 +274,10 @@ en_FR:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: is already a manager
   card_details: "Card details"
   card_type: "Card type"
   card_type_is: "Card type is"
@@ -325,6 +329,7 @@ en_FR:
     oidc:
       failure: "Could not sign in: %{error}"
       record_not_unique: "%{uid} is already associated with another account"
+  home_page_url: "Home page URL (leave blank to use the built-in home page)"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -667,8 +672,11 @@ en_FR:
         delete: Delete
         remove: Remove
         preview: Preview
+        create_linked_variant: Create linked variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -759,6 +767,8 @@ en_FR:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
+    address_display:
+      address_display_settings: "Address Display Settings"
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -810,6 +820,7 @@ en_FR:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         balance: "Balance"
+        credit: "Available Credit"
         update_address_success: "Address updated successfully."
         update_address_error: "Sorry! Please input all of the required fields!"
         edit_bill_address: "Edit Billing Address"
@@ -821,15 +832,21 @@ en_FR:
         update_address: "Update Address"
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
+        filter_by_tag: "Filter by tag"
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        id: Id
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
+        available_credit: "Available credit: %{available_credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
+        created_by: Created by
         running_balance: Running balance
     column_preferences:
       bulk_update:
@@ -956,6 +973,9 @@ en_FR:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
+        search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
@@ -1015,6 +1035,8 @@ en_FR:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      create_linked_variant:
+        success: "Successfully created linked variant"
       tag_rules:
         rules_per_tag:
           one: "%{tag} has 1 rule"
@@ -1418,10 +1440,12 @@ en_FR:
           show_hide_payment: 'Show or Hide payment methods at checkout'
           show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
+          description: The users with permission to manage this enterprise.
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           contact: "Contact"
+          manager: "Manager"
           owner: 'Owner'
           contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
@@ -1432,6 +1456,8 @@ en_FR:
           invite_manager: "Invite Manager"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+          set_as_contact: "Set %{email} as contact"
+          set_as_owner: "Set %{email} as owner"
         vouchers:
           legend: Vouchers
           voucher_code: Voucher Code
@@ -1504,6 +1530,7 @@ en_FR:
         enterprise_fees: Enterprise Fees
         enterprise_fees_tip: This enterprise has no fees
       admin_index:
+        search_legend: Search Enterprises
         name: Name
         role: Role
         sells: Sells
@@ -1512,6 +1539,8 @@ en_FR:
         producer: Producer
         search: Search
         clear: Clear
+        owner_email: Owner Email
+        manager_email: Manager Email
         sells_options:
           unspecified: unspecified
           none: none
@@ -1782,6 +1811,11 @@ en_FR:
           images: "Images"
           contact: "Contact"
           web: "Web Resources"
+      stimulus_pagination:
+        navigation: Pagination
+        page: "Page %{number}"
+        previous: Previous page
+        next: Next page
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -2011,7 +2045,10 @@ en_FR:
     user_invitations:
       new:
         back: Back
+        description: "Invite a user to sign up and become a manager of this enterprise."
+        eg_email_address: e.g. email address of a new or existing user
         email: Email
+        invite_new_user: Invite a new user
         invite: Invite
     vouchers:
       new:
@@ -2397,6 +2434,7 @@ en_FR:
   brandstory_part6: "We all love food. Now we can love our food system too."
   system_headline: "Shopping - here's how it works."
   system_step1_html: "1. Search"
+  system_step1_text_html: <a href="/shops">Search</a> our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup.
   system_step2_html: "2. Shop"
   system_step2_text_html: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
   system_step3_html: "3. Pick-up / Delivery"
@@ -2437,6 +2475,7 @@ en_FR:
   order_total: Total order
   order_payment: "Paying via:"
   no_payment_required: "No payment required"
+  credit_used: "Credit used: %{amount}"
   customer_credit: Credit
   order_billing_address: Billing address
   order_delivery_on: Delivery on
@@ -3337,6 +3376,8 @@ en_FR:
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
+  report_header_balance_due: "Balance Due (%{currency_symbol})"
+  report_header_credit_due: "Available Credit (%{currency_symbol})"
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3423,6 +3464,7 @@ en_FR:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  credit_customer: Credit customer
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -3596,6 +3638,7 @@ en_FR:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3642,9 +3685,11 @@ en_FR:
           invalid: "invalid"
         quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
+        could_not_add_item: "Could not update order. Please try again."
         cancel_the_order_html: "This will cancel the current order. <br /> Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
@@ -3697,6 +3742,9 @@ en_FR:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -3731,6 +3779,7 @@ en_FR:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
+      create_linked_variants: "create linked variants"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:
@@ -4011,6 +4060,7 @@ en_FR:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
+    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
@@ -4108,6 +4158,9 @@ en_FR:
     hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
+    address_display_format: "Address display format"
+    address_display_format_default: "Default"
+    address_display_format_postal_code_first: "Postal code first"
     mail_method_settings: "Mail Method Settings"
     mail_settings_notice_html: "<b>Changes made here will be temporary </b>  for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a> ."
     general: "General"
@@ -4178,6 +4231,12 @@ en_FR:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
+    instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4235,8 +4294,12 @@ en_FR:
     admin:
       images:
         edit:
+          title: 'Edit image for "%{resource_name}"'
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+        new:
+          use_uploader: "Please use the image uploader on this page to add an image."
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -4352,6 +4415,7 @@ en_FR:
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br /> Are you sure you want to proceed?"
           send_invoice: "Send Invoices"
           send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
+          credit_orders: Credit orders
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4388,6 +4452,8 @@ en_FR:
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+        bulk_credit:
+          could_not_credit: "Order #%{order_number} could not be credited : %{message}"
       invoices:
         index:
           order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
@@ -4497,6 +4563,7 @@ en_FR:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe"
           taler: "Taler"
+          customercredit: "Customer Credit"
       payments:
         source_forms:
           stripe:
@@ -4504,9 +4571,12 @@ en_FR:
             submitting_payment: Submitting payment...
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
+        customer_credit_successful: Customer has been successfully credited!
       products:
         image:
           label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
           edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
@@ -4514,6 +4584,7 @@ en_FR:
           title: "New Product"
           new_product: "New Product"
           enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
@@ -4798,6 +4869,7 @@ en_FR:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
+        no_payment_found: "No pending Paypal payment found"
     users:
       api_keys:
         regenerate_key: "Regenerate Key"
@@ -4819,6 +4891,7 @@ en_FR:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
+          customer_account_transactions: Customer Transactions
           settings: Account Settings
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
@@ -4829,6 +4902,9 @@ en_FR:
         authorisation_required: Authorisation Required
         authorise: Authorize
       customer_account_transactions:
+        title: Customer Transactions
+        credit_available: "Credit available: %{credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
         running_balance: Running balance
@@ -4968,8 +5044,31 @@ en_FR:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
     product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
       from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
+  api_customer_credit: "API credit: %{description}"
+  credit_payment_method:
+    name: Customer credit
+    description: Allow customer to pay with credit
+    success: Payment with credit was sucessful
+    void_success: Credit void was sucessful
+    order_payment_description: "Customer credit: Payment for order: %{order_number}"
+    order_void_description: "Customer credit: Refund for order: %{order_number}"
+    errors:
+      customer_not_found: Customer not found
+      missing_payment: Missing payment
+      credit_payment_method_missing: Credit payment method is missing
+      no_credit_available: No credit available
+      not_enough_credit_available: Not enough credit available
+  customer_credit_service:
+    no_credit_owed: No credit owed
+    credit_payment_method_missing: Customer credit payment method is missing, please check configuration
+    refund_sucessful: Refund successful!

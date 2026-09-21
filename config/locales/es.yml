@@ -118,6 +118,8 @@ es:
         too_short: "es demasiado corto (el mínimo es %{count}caracteres)"
   errors:
     messages:
+      limit_max_exceeded:
+        zero: "No se a adjuntado ningún fichero (el máximo de ficheros a adjuntar es %{max})"
       attachment_missing: "Falta el adjunto"
       media_metadata_missing: "No es formato media valido"
       dimension_height_not_less_than_or_equal_to: "La altura debe ser menor o igual a %{length} píxeles"
@@ -194,6 +196,9 @@ es:
       disconnect_failure: "No hemos podido desconectar Stripe."
     success_code:
       disconnected: "Cuenta de Stripe desconectada."
+  taler:
+    order_status:
+      claimed: "La petición de pago ha caducado. Intente de nuevo"
   activemodel:
     errors:
       messages:
@@ -370,6 +375,8 @@ es:
     authorization_required:
       subject: "Un pago requiere autorización del cliente"
       message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
+    refund_available:
+      subject: "Devolución de %{shop}"
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
@@ -459,7 +466,7 @@ es:
   ongoing: En marcha
   bill_address: Dirección de facturación
   ship_address: Dirección de envío
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Pedidos en Tienda por"
+  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Pedidos en escaparate por"
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Selecciona y Continua
   remove: Eliminar
@@ -479,7 +486,7 @@ es:
   enterprises: Organizaciones
   enterprise_groups: Redes
   reports: Informes
-  listing_reports: Listado de reportes
+  listing_reports: Listado de informes
   variant_overrides: Inventario
   import: Importar
   spree_products: Productos Spree
@@ -492,7 +499,7 @@ es:
   admin_and_handling: Administración y Manejo
   profile: Perfil
   supplier_only: Sólo Proveedor
-  has_shopfront: Tiene tienda
+  has_shopfront: Tiene escaparate
   weight: Peso
   volume: Volumen
   items: Elementos
@@ -685,7 +692,7 @@ es:
     accept_terms_of_service: Aceptar los terminos de servicio
     shopfront_settings:
       embedded_shopfront_settings: "Configuración de la tienda integrada"
-      enable_embedded_shopfronts: "Habilitar tiendas integradas"
+      enable_embedded_shopfronts: "Habilitar escaparates integrados"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
     terms_of_service_files:
       create:
@@ -702,6 +709,8 @@ es:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la lógica internacional separador miles/decimales"
+    address_display:
+      address_display_settings: "Configuración de la visualización de la dirección"
     invoice_settings:
       edit:
         title: "Configuración de Factura"
@@ -764,6 +773,7 @@ es:
         update_address: "Actualizar Dirección"
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por email/código"
+        filter_by_tag: "Filtrar por etiqueta"
         guest_label: "Pedido hecho como invitada"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
@@ -1274,7 +1284,7 @@ es:
         shop_preferences:
           legend: "Configuración de la tienda"
           shopfront_requires_login: "¿Quieres que la tienda sea visible y pública?"
-          shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
+          shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver el escaparate o si es visible para todos."
           shopfront_requires_login_false: "Pública"
           shopfront_requires_login_true: "Visible solo para consumidores registrados"
           recommend_require_login: "Recomendamos requerir a los usuarios que accedan cuando sus pedidos puedan cambiar."
@@ -1302,13 +1312,13 @@ es:
           customer_contacts_true: "Habilitado"
           producers_edit_orders_false: "Deshabilitado"
           producers_edit_orders_true: "Habilitado"
-          shopfront_message: "Mensaje de la Tienda"
+          shopfront_message: "Mensaje del escaparate"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
               en el sitio. si el texto se agrega en este campo, va a ser mostrado
               en la pestaña de inicio cuando los clientes ingresen por primera vez
               a la tienda.
-          shopfront_closed_message: "Mensaje de tienda cerrada"
+          shopfront_closed_message: "Mensaje de escaparate cerrado"
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué
               tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra
@@ -1354,10 +1364,10 @@ es:
             add_new_button: '+ Añadir una nueva regla por defecto'
           no_tags_yet: No hay etiquetas para esta organización
           add_new_tag: '+ Añadir una nueva etiqueta'
-          show_hide_variants: 'Mostrar u ocultar variantes en mi tienda'
+          show_hide_variants: 'Mostrar u ocultar variantes en mi escaparate'
           show_hide_shipping: 'Mostrar u ocultar los métodos de envío al comprar'
           show_hide_payment: 'Mostrar u ocultar los métodos de pago al comprar'
-          show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi tienda'
+          show_hide_order_cycles: 'Mostrar u ocultar ciclos de pedido en mi escaparate'
         users:
           description: Los usuarios con permiso para administrar esta organización .
           legend: "Usuarias"
@@ -1391,7 +1401,7 @@ es:
         white_label:
           legend: "Etiqueta blanca"
           hide_ofn_navigation: "Ocultar la navegación de OFN"
-          white_label_logo_link_label: "Enlace para el log que se usara en el escaparate"
+          white_label_logo_link_label: "Enlace para el logo que se usara en el escaparate"
           hide_groups_tab: "Ocultar la pestaña de grupos en el escaparate"
           create_custom_tab: "Crear pestaña personalizada en el escaparate"
           custom_tab_title: "Título de la pestaña personalizada"
@@ -1777,8 +1787,8 @@ es:
       enterprise_fees_with_tax_report_by_order: "Tarifas organización con informe de impuestos por pedido"
       enterprise_fees_with_tax_report_by_producer: "Honorarios organización con informe de impuestos por productor"
       errors:
-        no_report_type: "Por favor especifique un tipo de reporte"
-        report_not_found: "El reporte no fue encontrado"
+        no_report_type: "Por favor especifique un tipo de informe"
+        report_not_found: "El informe no fue encontrado"
         missing_ransack_params: "Por favor proporcione los parámetros de búsqueda de Ransack en la solicitud"
       summary_row:
         total: "TOTAL"
@@ -1895,7 +1905,7 @@ es:
       confirm_unpause_msg: "Si tiene un ciclo de pedido abierto en la programación de esta suscripción, se creará un pedido para esta consumidora. ¿Estás seguro de que deseas anular la pausa de esta suscripción?"
       unpause_failure_msg: "Lo sentimos, ¡no se pudo reanudar!"
       confirm_cancel_open_orders_msg: "Algunas órdenes para esta suscripción están actualmente abiertas. El cliente ya ha sido notificado de que se realizará el pedido. ¿Desea cancelar estos pedidos o conservarlos?"
-      resume_canceled_orders_msg: "Algunos pedidos de esta suscripción se pueden reanudar en este momento. Puede reanudarlos desde el menú desplegable de pedidos."
+      resume_canceled_orders_msg: "Algunos pedidos de esta suscripción se pueden reabrir en este momento. Puede reabrirlos desde el menú desplegable de pedidos."
       yes_cancel_them: Cancelarlos
       no_keep_them: Guárdalos
       yes_i_am_sure: Sí estoy seguro
@@ -2133,6 +2143,7 @@ es:
   invoice_shipping_category_pickup: "Recoger"
   total_excl_tax: "Total (Sin Impuestos):"
   total_incl_tax: "Total (Impuestos incl.)"
+  total_all_tax: "Impuestos totales: "
   abn: "NIF:"
   acn: "ACN:"
   invoice_issued_on: "Factura emitida el:"
@@ -2321,6 +2332,7 @@ es:
   order_not_paid: NO PAGADO
   order_total: Pedido total
   order_payment: "Pagando con:"
+  no_payment_required: "No se requiere pago"
   credit_used: "Saldo usado: %{amount}"
   customer_credit: Crédito
   order_billing_address: Dirección de cobro
@@ -2494,7 +2506,7 @@ es:
   products_no_results_html: "Lo sentimos, no se han encontrado resultados para %{query}"
   products_clear_search: "Limpiar la búsqueda"
   search_no_results_html: "Lo sentimos, no hay resultados para %{query}. ¿Intentar otra búsqueda?"
-  components_profiles_popover: "Los perfiles no tienen una tienda en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
+  components_profiles_popover: "Los perfiles no tienen un escaparate en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
@@ -3464,13 +3476,13 @@ es:
           awaiting_return: "Esperando retorno"
           canceled: "cancelado"
           cart: "carrito"
-          complete: "completar"
+          complete: "completado"
           confirm: "Confirmar"
           delivery: "Entrega"
           paused: "pausado"
           payment: "pago"
           pending: "pendiente"
-          resumed: "resumido"
+          resumed: "reabierto"
           returned: "devuelto"
           confirmation: "confirmación"
         shipment_states:
@@ -3543,6 +3555,10 @@ es:
         add_to_cart: "Añadir"
         in_cart: "en el carrito"
         quantity_in_cart: "%{quantity} en el carrito"
+        remaining_in_stock:
+          one: "Sólo queda %{count}"
+          many: "Sólo quedan %{count}"
+          other: "Sólo quedan %{count}"
       bulk_buy_modal:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
@@ -3954,6 +3970,9 @@ es:
     hide_cents: "Ocultar céntimos"
     display_currency: "Mostrar moneda"
     choose_currency: "Elegir moneda"
+    address_display_format: "Formato de dirección"
+    address_display_format_default: "Por defecto"
+    address_display_format_postal_code_first: "Poner el código postal primero"
     mail_method_settings: "Configuración del método de correo"
     general: "General"
     enable_mail_delivery: "Habilitar entrega de correo"
@@ -4023,6 +4042,11 @@ es:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Importe de descuento"
+    filename: "Nombre de fichero"
+    caption: "Pie de foto"
+    replace_image: "Reemplazar la imagen"
+    delete_permanently: "Borrar definitivamente"
+    alt_text: "Texto alternativo"
     email: Email
     account_updated: "Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -4347,6 +4371,7 @@ es:
       products:
         image:
           label: "Imagen"
+          upload: "Subir imagen"
           edit: "Editar"
         image_upload_error: "Por favor, sube la imagen en formato JPG, PNG, GIF, SVG o WEBP."
         image_not_processable: "La imagen adjunta no es una imagen válida."
@@ -4601,13 +4626,13 @@ es:
       canceled: cancelado
       cart: carrito
       confirmation: "confirmación"
-      complete: completar
+      complete: completado
       confirm: Confirmar
       delivery: Entrega
       paused: pausado
       payment: pago
       pending: pendiente
-      resumed: resumido
+      resumed: reabierto
       returned: devuelto
     subscription_state:
       active: activo
@@ -4810,6 +4835,7 @@ es:
       event_types:
         order_cycle_opened: Ciclo de pedidos abierto
     product_tile:
+      multiple_options: "varias opciones"
       from_price: "desde"
   invisible_captcha:
     sentence_for_humans: "Por favor, dejalo vacio"

@@ -329,6 +329,7 @@ en_CA:
     oidc:
       failure: "Could not sign in: %{error}"
       record_not_unique: "%{uid} is already associated with another account"
+  home_page_url: "Home page URL (leave blank to use the built-in home page)"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -623,6 +624,10 @@ en_CA:
     paste: "Paste"
     destroy: "Destroy"
     rename: "Rename"
+  cart_sidebar_component:
+    items_in_cart:
+      one: "%{count} item in your cart"
+      other: "%{count} items in your cart"
   admin:
     products_page:
       title: Products
@@ -766,6 +771,8 @@ en_CA:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
+    address_display:
+      address_display_settings: "Address Display Settings"
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -1527,6 +1534,7 @@ en_CA:
         enterprise_fees: Enterprise Fees
         enterprise_fees_tip: This enterprise has no fees
       admin_index:
+        search_legend: Search Enterprises
         name: Name
         role: Role
         sells: Sells
@@ -1535,6 +1543,8 @@ en_CA:
         producer: Producer
         search: Search
         clear: Clear
+        owner_email: Owner Email
+        manager_email: Manager Email
         sells_options:
           unspecified: unspecified
           none: none
@@ -3631,6 +3641,7 @@ en_CA:
           select_all_variants: "Select All  %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants}  Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3677,6 +3688,7 @@ en_CA:
           invalid: "invalid"
         quantity_unavailable: "Insufficient stock available.  Item not saved."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        could_not_add_item: "Could not update order. Please try again."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
         restock_item: "Restock Items: Return this item to stock"
@@ -3711,6 +3723,7 @@ en_CA:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+          customer_already_exists: "%{email} is already a customer of %{shop_name}. You can find them in the customer list."
       subscriptions:
         error_saving: "Error saving subscription"
         new:
@@ -4149,6 +4162,9 @@ en_CA:
     hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
+    address_display_format: "Address display format"
+    address_display_format_default: "Default"
+    address_display_format_postal_code_first: "Postal code first"
     mail_method_settings: "Mail Method Settings"
     mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details. "
     general: "General"
@@ -4219,6 +4235,11 @@ en_CA:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
     instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
@@ -4277,8 +4298,12 @@ en_CA:
     admin:
       images:
         edit:
+          title: 'Edit image for "%{resource_name}"'
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+        new:
+          use_uploader: "Please use the image uploader on this page to add an image."
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -4554,6 +4579,8 @@ en_CA:
       products:
         image:
           label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
           edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
@@ -5021,7 +5048,12 @@ en_CA:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
     product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
       from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"

@@ -1391,6 +1391,7 @@ hu:
         enterprise_fees: Vállalkozási díjak
         enterprise_fees_tip: Ennek a vállalkozásnak nincsenek díjai
       admin_index:
+        search_legend: Vállalkozások keresése
         name: Név
         role: Szerep
         sells: Értékesít
@@ -1399,6 +1400,8 @@ hu:
         producer: Termelő
         search: Keresés
         clear: Mégsem
+        owner_email: Tulajdonos e-mail címe
+        manager_email: Kapcsolattartó e-mail címe
         sells_options:
           none: n.a.
           own: saját
@@ -3536,6 +3539,7 @@ hu:
           invalid: "érvénytelen"
         quantity_unavailable: "Nem áll rendelkezésre elegendő készlet. A tétel nem menthető!"
         quantity_unchanged: "A mennyiség nem változott az előző mennyiséghez képest."
+        could_not_add_item: "Nem sikerült frissíteni a rendelést. Kérjük, próbáld újra."
         cancel_the_order_html: "Ezzel a teljes rendelés törlésre kerül.<br />\nBiztosan folytatod?"
         cancel_the_order_send_cancelation_email: "Törlésről szóló email küldése a vásárlónak"
         restock_item: "A törölt tételek visszarakása a készletbe"

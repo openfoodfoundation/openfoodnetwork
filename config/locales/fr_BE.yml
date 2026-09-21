@@ -1536,6 +1536,7 @@ fr_BE:
         enterprise_fees: Marges et commissions
         enterprise_fees_tip: Cette entreprise n'a pas paramétré de marges et commissions
       admin_index:
+        search_legend: Recherche d'entreprises
         name: Nom
         role: Role
         sells: Produits vendus
@@ -1544,6 +1545,8 @@ fr_BE:
         producer: Producteur
         search: Rechercher
         clear: Annuler
+        owner_email: Email gestionnaire principal
+        manager_email: Email gestionnaire
         sells_options:
           unspecified: indéterminé
           none: aucun
@@ -3702,6 +3705,7 @@ fr_BE:
           invalid: "invalide"
         quantity_unavailable: "Stock disponible insuffisant. Cet article n'a pas été enregistré!"
         quantity_unchanged: "Quantité inchangée par rapport au montant précédent."
+        could_not_add_item: "Impossible de mettre à jour la commande. Veuillez réessayer."
         cancel_the_order_html: "Cela annulera la commande en cours.<br /> Êtes-vous sur de vouloir continuer?"
         cancel_the_order_send_cancelation_email: "Envoyer un e-mail d'annulation au client"
         restock_item: "Recharger le stock de ce produit"
@@ -3798,7 +3802,7 @@ fr_BE:
       manage_products: "modifier les produits"
       edit_profile: "modifier le profil"
       add_products_to_inventory: "ajouter les produits au catalogue comptoir"
-      create_linked_variants: "créer des produits associés [BÊTA]"
+      create_linked_variants: "créer des produits associés"
     resources:
       could_not_delete_customer: 'L''acheteur·euse n''a pas pu être supprimé'
     product_import:
@@ -5111,7 +5115,12 @@ fr_BE:
         order_cycle_opened: Cycle de vente ouvert
         payment_status_changed: Post-webhook lors d'un changement de statut de paiement
       test_endpoint: Tester le point de terminaison du webhook
+    shop_variant_modal:
+      select: Sélectionner
+      from_producer: "De %{name}"
     product_tile:
+      multiple_producers: "Plusieurs producteurs"
+      multiple_options: "plusieurs options"
       from_price: "de"
   invisible_captcha:
     sentence_for_humans: "Veuillez laisser vide"
