@@ -349,11 +349,12 @@ module Spree
           user.enterprises.distributors.where(enable_producers_to_edit_orders: true).exist?
       end
 
-      can [:create], Spree::Order
+      # We just need to check if we can `:resend_confirmation_emails` and `:send_invoices`,
+      # loaded orders will be scoped in the controller
+      can [:create, :resend_confirmation_emails, :send_invoices], Spree::Order
 
       # Spree::Admin::PaymentController need to load the order to credit_customer
-      can [:read, :update, :credit_customer, :bulk_credit,
-           :resend_confirmation_emails, :send_invoices], Spree::Order do |order|
+      can [:read, :update, :credit_customer, :bulk_credit], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
