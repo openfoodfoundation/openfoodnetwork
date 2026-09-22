@@ -27,19 +27,19 @@ module JsonApiPagination
       # it via Pagy::Offset#assign_and_check instead (raising Pagy::OptionError on eg. page=0),
       # preserving the v1 API's existing "informs about invalid pages" contract.
       page: current_page,
-      # JSON:API-shaped pagination links (page[number]/page[size]), scoped to this call only -
-      # Pagy::OPTIONS is shared by every other paginated endpoint (admin views, ProductsRenderer,
-      # the v0 API), none of which are JSON:API responses.
+      # JSON:API-shaped pagination params/links (page[number]/page[per_page]), scoped to this
+      # call only - Pagy::OPTIONS is shared by every other paginated endpoint (admin views,
+      # ProductsRenderer, the v0 API), none of which are JSON:API responses.
       jsonapi: true,
       page_key: 'number',
-      limit_key: 'size',
+      limit_key: 'per_page',
       # Pagy::OffsetPaginator always calls Pagy::Request#resolve_limit itself, even though we
-      # already pass :limit above - and resolve_limit does params.dig('page', 'size'). With the
-      # v1 API's existing flat ?page=/?per_page= params left in place, params['page'] is a
-      # String, and String has no #dig, so the request blows up. Building our own :request hash
-      # with those two legacy keys stripped keeps flat requests working (current_page/
-      # final_per_page_value above still read them directly) while leaving pagy nothing but
-      # already-nested page[number]/page[size] params to (safely) not find.
+      # already pass :limit above - and resolve_limit does params.dig('page', 'per_page'). A
+      # pre-existing flat ?page=/?per_page= request leaves params['page'] as a String, and
+      # String has no #dig, so the request blows up. Building our own :request hash strips
+      # those two legacy keys, but only when 'page' isn't already the nested Hash a proper
+      # page[number]/page[per_page] request produces (current_page/final_per_page_value above
+      # read the parsed params directly either way).
       request: pagy_request,
     }
   end
@@ -54,9 +54,17 @@ module JsonApiPagination
       # keys wraps it in a new HashWithIndifferentAccess rather than storing it as-is, so pagy's
       # in-place mutation of the page[] container it just wrote there is silently lost. #to_h
       # converts to a plain Hash first, same as Pagy::Request's own default request handling.
-      params: request.GET.merge(request.POST).to_h.except('page', 'per_page'),
+      params: pagy_request_params,
       cookie: request.cookies['pagy'],
     }
+  end
+
+  def pagy_request_params
+    raw = request.GET.merge(request.POST).to_h
+
+    return raw if raw['page'].is_a?(Hash)
+
+    raw.except('page', 'per_page')
   end
 
   def meta_options
@@ -84,10 +92,16 @@ module JsonApiPagination
 
   # User-specified value, or DEFAULT_PER_PAGE, capped at MAX_PER_PAGE
   def final_per_page_value
-    (params[:per_page] || DEFAULT_PER_PAGE).to_i.clamp(1, MAX_PER_PAGE)
+    (page_param[:per_page] || DEFAULT_PER_PAGE).to_i.clamp(1, MAX_PER_PAGE)
   end
 
   def current_page
-    (params[:page] || 1).to_i
+    (page_param[:number] || 1).to_i
+  end
+
+  # JSON:API-shaped page[number]/page[per_page] params. A pre-existing flat ?page=/?per_page=
+  # isn't a Hash, so it's treated the same as no page param at all rather than raising.
+  def page_param
+    params[:page].is_a?(ActionController::Parameters) ? params[:page] : {}
   end
 end
