@@ -6,7 +6,7 @@
 # NOTE: Data instances are frozen, so these readers can't memoise. They only fold over the
 # handful of variants a product has, which is cheap enough to repeat.
 ViewData::Product = Data.define(:id, :name, :description, :image, :images, :variant_images,
-                                :properties_including_inherited, :variants) do
+                                :properties_including_inherited, :variants, :group_buy) do
   def single_variant?
     variants.one?
   end
