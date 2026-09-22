@@ -3,6 +3,20 @@
 .product-header {
   padding-left: 1.5rem;
 
+  .bulk-label {
+    display: inline-block;
+    background-color: $white;
+    border: 1px solid $light-grey;
+    color: $dark-grey;
+    border-radius: 8px;
+    padding: 2px 10px;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
   h1,
   h2,
   h3,

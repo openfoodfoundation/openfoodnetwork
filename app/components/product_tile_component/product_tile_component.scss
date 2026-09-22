@@ -55,6 +55,8 @@
 .product-link {
   display: block;
   color: inherit;
+  // Containing block for .bulk-label, positioned over the image below.
+  position: relative;
 
   &:hover,
   &:focus {
@@ -68,6 +70,20 @@
     display: block;
     border-radius: $radius-image; // 8px
     margin-bottom: $padding-tbl-cell;
+  }
+
+  .bulk-label {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background-color: b.$white;
+    color: b.$dark-grey;
+    border-radius: $radius;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   .producer {
