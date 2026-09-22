@@ -72,7 +72,7 @@ module JsonApiPagination
       pagination: {
         results: @pagy.count,
         pages: @pagy.pages,
-        page: @pagy.page,
+        number: @pagy.page,
         per_page: @pagy.limit
       }
     }
