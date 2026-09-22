@@ -425,6 +425,101 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
             expect(li.variant).to eq(variant)
           end
         end
+
+        context "with a group buy product" do
+          let(:group_buy_product) { create(:simple_product, group_buy: true, on_hand: 15) }
+          let(:group_buy_variant) { group_buy_product.variants.first }
+
+          before do
+            add_variant_to_order_cycle(exchange, group_buy_variant)
+          end
+
+          # Scenarios 1, 2 and 4 of #14276
+          it "shows a bulk label and lets us set min and max quantity, then remove" do
+            visit shop_path
+
+            within ".product-item", text: group_buy_product.name do
+              # The label reads "Bulk" but is displayed as "BULK" (text-transform: uppercase).
+              expect(page).to have_selector ".bulk-label", text: "BULK"
+            end
+
+            # Adding shows the min/max controls and adds 1 item
+            component_add(group_buy_variant)
+
+            within_variant(group_buy_variant) do
+              expect(page).to have_content "Min quantity"
+              expect(page).to have_content "Max quantity"
+            end
+
+            li = order.reload.line_items.order(:created_at).last
+            expect(li.quantity).to eq(1)
+            expect(li.max_quantity).to eq(1)
+
+            # Raising the min pushes the max up with it
+            component_add_to_cart(group_buy_variant)
+
+            li.reload
+            expect(li.quantity).to eq(2)
+            expect(li.max_quantity).to eq(2)
+
+            # The max can be raised independently, above the min
+            component_add_bulk_max(group_buy_variant)
+
+            li.reload
+            expect(li.quantity).to eq(2)
+            expect(li.max_quantity).to eq(3)
+
+            # Dropping the min back to 0 removes the item and hides the controls
+            component_remove_from_cart(group_buy_variant)
+            component_remove_from_cart(group_buy_variant)
+
+            within_variant(group_buy_variant) do
+              expect(page).to have_button "Add"
+              expect(page).not_to have_content "Min quantity"
+            end
+            expect(Spree::LineItem.where(id: li)).to be_empty
+          end
+
+          context "with multiple variants" do
+            let!(:group_buy_variant2) { create(:variant, product: group_buy_product) }
+
+            before do
+              add_variant_to_order_cycle(exchange, group_buy_variant2)
+            end
+
+            # Scenario 3 of #14276
+            it "shows the group buy controls in the variant overlay" do
+              visit shop_path
+
+              # Scoped to this product's tile: the outer describe's own multi-variant product
+              # also shows a "Select" button.
+              within ".product-item", text: group_buy_product.name do
+                click_button "Select"
+              end
+
+              within ".variant-modal" do
+                expect(page).not_to have_selector ".bulk-label"
+
+                within_variant(group_buy_variant) do
+                  click_button "Add"
+                  expect(page).to have_content "Min quantity"
+                  expect(page).to have_content "Max quantity"
+                end
+
+                click_button "Close"
+              end
+
+              toggle_cart
+              within(".cart-sidebar") { expect(page).to have_content "1 item in your cart" }
+              toggle_cart
+
+              li = order.reload.line_items.order(:created_at).last
+              expect(li.variant).to eq(group_buy_variant)
+              expect(li.quantity).to eq(1)
+              expect(li.max_quantity).to eq(1)
+            end
+          end
+        end
       end
     end
 
