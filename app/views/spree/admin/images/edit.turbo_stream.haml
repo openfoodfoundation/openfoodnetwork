@@ -5,11 +5,10 @@
     %h2= t(".title", resource_name: image_modal_resource_name(@variant, @product))
     %p{ style: "margin-bottom: 1em;" }
       = t(".subtitle")
-    - error_target = @error_target || @image
 
     -# Display image in the same way it appears in the shopfront popup
-    - if error_target&.errors&.any?
-      - error_target.errors.full_messages.each do |error|
+    - if @image.errors.any?
+      - @image.errors.full_messages.each do |error|
         %p
           = error
     - else
