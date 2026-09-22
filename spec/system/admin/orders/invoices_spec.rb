@@ -313,7 +313,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
 
           it "displays a warning that an ABN is required when it's clicked" do
             visit spree.admin_order_invoices_path(order1)
-            message = accept_prompt { click_link "Create or Update Invoice" }
+            message = accept_confirm { click_link "Create or Update Invoice" }
             distributor = order1.distributor
             expect(message)
               .to eq "#{distributor.name} must have a valid ABN before invoices can be used."

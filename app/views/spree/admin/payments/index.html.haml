@@ -4,7 +4,7 @@
 - content_for :page_actions do
   - if @order.payment_state == "credit_owed"
     %li#credit_customer_section
-      = button_link_to t(:credit_customer), admin_order_payments_credit_customer_url(@order), data: { method: :post }
+      = button_link_to t(:credit_customer), admin_order_payments_credit_customer_url(@order), data: { turbo: true, turbo_method: :post }
 
   - if @order.outstanding_balance?
     %li#new_payment_section
