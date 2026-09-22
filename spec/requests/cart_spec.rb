@@ -118,6 +118,29 @@ RSpec.describe "Cart" do
       expect(line_item.max_quantity).to eq 4
     end
 
+    it "does not cap the max quantity of group buy variants at the available stock" do
+      variant.product.update!(group_buy: true)
+      variant.update!(on_demand: false, on_hand: 3)
+
+      update_variant(variant, { quantity: 2, max_quantity: 10 })
+
+      line_item = order.line_items.reload.first
+      expect(line_item.quantity).to eq 2
+      expect(line_item.max_quantity).to eq 10
+    end
+
+    it "keeps the saved max quantity when re-rendering a capped group buy widget" do
+      variant.product.update!(group_buy: true)
+      variant.update!(on_demand: false, on_hand: 3)
+      update_variant(variant, { quantity: 2, max_quantity: 10 })
+
+      update_variant(variant, { quantity: 5, max_quantity: 10 })
+
+      expect(order.line_items.reload.first.quantity).to eq 3
+      expect(response.body).to include "target=\"variant-#{variant.id}\""
+      expect(response.body).to match(/data-add-to-cart-target=.maxQuantity.[^>]*value=.10./)
+    end
+
     it "recalculates enterprise fees" do
       add_enterprise_fee create(:enterprise_fee, amount: 5)
 
