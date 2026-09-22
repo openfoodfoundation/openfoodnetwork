@@ -6,7 +6,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
   end
 
   let(:producer) { build_stubbed(:enterprise, name: "Fred's Farm") }
-  let(:variants_in_cart) { {} }
+  let(:variants_in_cart) { Hash.new(ViewData::CartItem.empty) }
 
   def build_variant(**overrides)
     ViewData::Variant.new(
@@ -72,7 +72,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
 
   describe "the add to cart widget" do
     let(:product) { build_product([build_variant(id: 7)]) }
-    let(:variants_in_cart) { { 7 => 2 } }
+    let(:variants_in_cart) { { 7 => ViewData::CartItem.new(quantity: 2, max_quantity: nil) } }
 
     it "starts with the quantity already in the cart" do
       render_list
