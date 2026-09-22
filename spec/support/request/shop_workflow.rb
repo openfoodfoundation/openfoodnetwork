@@ -112,25 +112,42 @@ module ShopWorkflow
     component_wait_for_cart
   end
 
+  # Scoped to the "add-to-cart#add" action rather than the material icon, because a group buy
+  # widget has a second (max quantity) "+" button too.
   def component_add_to_cart(variant)
     within_variant(variant) do
-      page.find("img[src*='add']").click
+      page.find("[data-action='add-to-cart#add']").click
     end
     component_wait_for_cart
   end
 
   def component_remove_from_cart(variant)
     within_variant(variant) do
-      page.find("img[src*='remove']").click
+      page.find("[data-action='add-to-cart#remove']").click
     end
     component_wait_for_cart
   end
 
   def component_manual_add_to_cart(variant, quantity: 1)
     within_variant(variant) do
-      input = page.find("input.variant-quantity")
+      input = page.find("[data-add-to-cart-target='quantity']")
       input.send_keys(:backspace)
       input.send_keys(quantity.to_s)
+    end
+    component_wait_for_cart
+  end
+
+  # Group buy: the max quantity stepper, next to the (min) quantity one above.
+  def component_add_bulk_max(variant, quantity: 1)
+    within_variant(variant) do
+      quantity.times { page.find("[data-action='add-to-cart#addMax']").click }
+    end
+    component_wait_for_cart
+  end
+
+  def component_remove_bulk_max(variant, quantity: 1)
+    within_variant(variant) do
+      quantity.times { page.find("[data-action='add-to-cart#removeMax']").click }
     end
     component_wait_for_cart
   end
