@@ -14,10 +14,20 @@ module DfcProvider
     rescue_from Unauthorized, with: :unauthorized
 
     before_action :check_authorization
+    before_action :record_api_user
 
     respond_to :json
 
     private
+
+    # Tell ApiLogger who is making this request. current_user may be nil on the
+    # controllers which skip authorization, or an ApiUser representing a DFC
+    # platform client, which has no Spree::User record to point at.
+    def record_api_user
+      return unless current_user.is_a?(Spree::User) && current_user.persisted?
+
+      request.env[::ApiLogger::USER_ID_KEY] = current_user.id
+    end
 
     def require_permission(scope)
       return if current_user.is_a? Spree::User

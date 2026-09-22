@@ -14,6 +14,7 @@ module Api
       attr_accessor :current_api_user
 
       before_action :authenticate_user
+      before_action :record_api_user
 
       rescue_from StandardError, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
@@ -36,6 +37,15 @@ module Api
         return if (@current_api_user = Spree::User.find_by(spree_api_key: api_key.to_s))
 
         invalid_api_key
+      end
+
+      # Tell ApiLogger who is making this request. Anonymous requests get an
+      # unsaved Spree::User, and a request with an invalid key never gets here
+      # because authenticate_user halts the chain: both are logged with no user.
+      def record_api_user
+        return unless current_api_user.is_a?(Spree::User) && current_api_user.persisted?
+
+        request.env[::ApiLogger::USER_ID_KEY] = current_api_user.id
       end
 
       def current_ability
