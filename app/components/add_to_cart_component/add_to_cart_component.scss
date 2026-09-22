@@ -11,6 +11,20 @@
     width: v.$shop-button-width;
   }
 
+  // Group buy: min and max steppers stacked vertically, each with a label above it.
+  .variant-quantity-labelled {
+    & + .variant-quantity-labelled {
+      margin-top: 0.5rem;
+    }
+
+    .variant-quantity-label {
+      display: block;
+      font-size: 0.75rem;
+      color: b.$grey-650;
+      margin-bottom: 0.25rem;
+    }
+  }
+
   // override existing border radius
   button.add-variant,
   button.variant-quantity {
