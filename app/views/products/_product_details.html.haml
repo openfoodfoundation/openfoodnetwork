@@ -1,42 +1,28 @@
--# locals: (product:)
+-# locals: (product:, product_view:)
+- available_variant_ids = product_view&.variants&.map(&:id)
 .row
   .columns.product-header
     %h3= product.name
-    %span
-      %em
-        = t("products_from")
+    - if product_view
       %span
-        = product.variants.first.enterprise.name # TODO: only display if same for all variants
+        %em
+          = t("products_from")
+        %span= product_producer_name(product_view)
     %br
     - if product.description
       .product-description{ 'data-controller': "add-blank-to-link" }
         %p.text-small
+          -# description is sanitized in Spree::Product#description method
           = product.description.html_safe
-.row.footer-pad
-  .columns.product-body
-    .product-images{ style: "width: 146px" }
-      .product-img
-        - carousel_images = product_carousel_images_data(product)
-        = render ThumbnailCarouselComponent.new(images: carousel_images, class: (product.images.any? ? nil : "placeholder"))
-    .product-variants
-      %ul
-        - product.variants.each do |variant| # TODO: use OC variants
-          %li
-            .row
-              .small-8.columns
-                - if variant.display_name.present?
-                  .variant-columns.variant-name
-                    = "#{variant.name_to_display}"
-                .variant-columns.variant-unit
-                  = variant.unit_to_display
-                .variant-producer
-                  - # TODO: unless same_producers?
-                  = t("components.shop_variant_overlay.from_producer", name: variant.enterprise.name)
-                .prices
-                  = variant.display_price
-                  %span.unit-price
-                    = # TODO: "#{variant.display_unit_price}"
-                    &nbsp;/&nbsp;
-                    = # TODO: "#{variant.unit_price.unit}"
-              .small-4.columns
-                = render AddToCartComponent.new(variant: variant, quantity: @variants_in_cart[variant.id], low_stock_display: @low_stock_display)
+.row.product-body
+  .columns.small-12.medium-4.large-3.product-images
+    - carousel_images = product_carousel_images_data(product, available_variant_ids:)
+    - has_images = product_carousel_images?(product, available_variant_ids:)
+    = render ThumbnailCarouselComponent.new(images: carousel_images, class: (has_images ? nil : "placeholder"))
+  .columns.small-12.medium-8.large-9.product-variants
+    - if product_view
+      = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
+    - elsif @order_cycles.many?
+      %p.no-variants= t("products_choose_order_cycle")
+    - else
+      %p.no-variants= t("products_unavailable")

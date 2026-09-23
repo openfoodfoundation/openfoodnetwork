@@ -2780,6 +2780,9 @@ en:
   products_cart_empty: "Cart empty"
   products_edit_cart: "Edit your cart"
   products_from: from
+  products_multiple_producers: "Multiple producers"
+  products_unavailable: "This product is currently unavailable."
+  products_choose_order_cycle: "Please choose an order cycle to see what's available."
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
   products_update_error_msg: "Saving failed."
@@ -5238,7 +5241,6 @@ en:
     shop_variant_modal:
       select: Select
     product_tile:
-      multiple_producers: "Multiple producers"
       multiple_options: "multiple options"
       from_price: "from"
   # Gem to prevent bot form submissions

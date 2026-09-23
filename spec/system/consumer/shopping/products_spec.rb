@@ -8,11 +8,18 @@ RSpec.describe "As a consumer I want to view products" do
   include ShopWorkflow
   include UIComponentHelper
 
-  describe "on their own pages" do
+  describe "on their own pages", feature: :product_grid_view do
     let(:enterprise) {
       create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
     }
+    let(:producer) { create(:supplier_enterprise, name: "Onion Orchard") }
     let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let!(:big_bag) {
+      create(:variant, product:, enterprise:, display_name: "Big bag", unit_value: 2000)
+    }
+    let!(:other_farm_bag) {
+      create(:variant, product:, enterprise: producer, display_name: "Neighbour's bag")
+    }
     let!(:order_cycle) {
       create(
         :simple_order_cycle,
@@ -22,25 +29,55 @@ RSpec.describe "As a consumer I want to view products" do
       )
     }
 
+    it "lists all variants of the product" do
+      visit enterprise_product_path(enterprise, product)
+
+      expect(page).to have_content "Garlic"
+      expect(page).to have_selector ".variant-list li", count: 3
+      expect(page).to have_selector ".variant-name", text: "Big bag"
+      expect(page).to have_selector ".variant-unit", text: "2kg"
+
+      # Variants of several producers name their producer, the shared header doesn't.
+      expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
+      expect(page).to have_selector ".product-header", text: "Multiple producers"
+    end
+
     # smoke test
+    #
+    # Adding to the cart needs an order cycle on the cart, which only the shop page
+    # assigns so far. Visiting the product page directly is the next step.
     it "and add a variant to the cart" do
-      # Current code expects the user to have a cart already
       visit enterprise_shop_path(enterprise)
-      sleep 3
+      expect(page).to have_content "Garlic"
 
       visit enterprise_product_path(enterprise, product)
 
       expect(page).to have_content "Garlic"
-      expect(page).to have_content "from The Garlic Guru"
-      expect(page).to have_content "1g"
 
-      click_button "Add"
+      within ".variant-list li", text: "Big bag" do
+        click_button "Add"
 
-      expect(page).to have_content "1 in cart"
+        expect(page).to have_content "1 in cart"
 
-      page.find("img[src*='add']").click
+        find("img[src*='add']").click
 
-      expect(page).to have_content "2 in cart"
+        expect(page).to have_content "2 in cart"
+      end
+
+      # The cart is saved for this shop, not just displayed.
+      expect(page).to have_selector ".cart-span", text: "2"
+      expect(Spree::LineItem.where(variant: big_bag).sum(:quantity)).to eq 2
+    end
+
+    context "when the shop has no open order cycle" do
+      before { order_cycle.update!(orders_close_at: 1.day.ago) }
+
+      it "says that the product is unavailable" do
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_content "This product is currently unavailable."
+        expect(page).not_to have_selector ".variant-list"
+      end
     end
   end
 

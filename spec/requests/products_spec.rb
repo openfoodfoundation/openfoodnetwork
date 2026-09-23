@@ -4,15 +4,77 @@ RSpec.describe ProductsController do
   include_context "session helper"
 
   describe "GET /:enterprise_permalink/products/:id" do
-    let(:enterprise) { create(:enterprise, name: "The Garlic Guru") }
-    let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:product) {
+      create(:product, enterprise_id: enterprise.id, name: "Garlic", price: 3.21)
+    }
     let(:page) { Capybara::Node::Simple.new(response.body) }
 
-    it "shows one product with its variants" do
-      get enterprise_product_path(enterprise, product)
-      expect(response).to have_http_status :ok
-      expect(page.title).to eq "Garlic from The Garlic Guru\n - Open Food Network"
-      expect(response.body).to include "Garlic"
+    context "with one order cycle on offer" do
+      let!(:order_cycle) {
+        create(:simple_order_cycle, distributors: [enterprise], coordinator: enterprise,
+                                    variants: product.variants)
+      }
+
+      it "shows one product with its variants" do
+        get enterprise_product_path(enterprise, product)
+
+        expect(response).to have_http_status :ok
+        expect(page.title).to eq "Garlic from The Garlic Guru\n - Open Food Network"
+        expect(page).to have_selector ".product-header", text: "Garlic"
+        expect(page).to have_selector ".product-header", text: /from\s+The Garlic Guru/
+      end
+
+      # Smoke test over the ProductsRenderer -> ViewData -> ShopVariantListComponent chain,
+      # which a component spec can't cover because it builds its own value objects.
+      it "lists each variant with its price and an add to cart widget" do
+        get enterprise_product_path(enterprise, product)
+
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).to have_content "$3.21"
+        expect(page).to have_selector ".unit-price"
+        expect(page).to have_selector "#variant-#{product.variants.first.id}"
+      end
+
+      # A variant of another shop's order cycle isn't on offer here.
+      it "leaves out variants that aren't distributed by this shop" do
+        other_variant = create(:variant, product:)
+        create(:simple_order_cycle, variants: [other_variant])
+
+        get enterprise_product_path(enterprise, product)
+
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).not_to have_selector "#variant-#{other_variant.id}"
+      end
+    end
+
+    context "without an order cycle on offer" do
+      it "says that the product is unavailable" do
+        get enterprise_product_path(enterprise, product)
+
+        expect(response).to have_http_status :ok
+        expect(page).to have_content "Garlic"
+        expect(page).to have_content "This product is currently unavailable."
+        expect(page).not_to have_selector ".variant-list"
+      end
+    end
+
+    context "with several order cycles to choose from" do
+      before do
+        2.times do
+          create(:simple_order_cycle, distributors: [enterprise], coordinator: enterprise,
+                                      variants: product.variants)
+        end
+      end
+
+      it "asks the shopper to choose one first" do
+        get enterprise_product_path(enterprise, product)
+
+        expect(page).to have_content "Please choose an order cycle"
+        expect(page).not_to have_selector ".variant-list"
+      end
     end
   end
 
