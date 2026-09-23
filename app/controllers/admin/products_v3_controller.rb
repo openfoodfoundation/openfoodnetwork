@@ -148,6 +148,8 @@ module Admin
 
     def init_pagination_params
       # prority is given to element dataset (if present) over url params
+      # Set the page to 1 if page lower than 1, replicated pagy logic
+      params[:page] = 1 if params[:page].presence && params[:page].to_i < 1
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }

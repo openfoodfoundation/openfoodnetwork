@@ -316,6 +316,15 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       expect_per_page_to_be 50
       expect_products_count_to_be 50
     end
+
+    it "disaplay first page when page params lower than 1" do
+      create_products 16
+
+      visit admin_products_url(params: { page: 0 })
+
+      expect(page).to have_selector ".pagination"
+      expect_page_to_be 1
+    end
   end
 
   describe "search" do
