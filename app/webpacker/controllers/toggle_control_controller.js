@@ -52,12 +52,15 @@ export default class extends Controller {
     this.#toggleDisplay(inputValue == this.matchValue);
   }
 
-  // Make the control read-only unless the actioning input's value matches
-  // the value in data-toggle-control-match-value="<value>"
+  // Make each control read-only unless the actioning input's value matches
+  // the control's own data-toggle-control-match-value
   disableUnlessMatch(event) {
     const inputValue = this.#inputValue(event.currentTarget);
 
-    this.#toggleReadonly(inputValue != this.matchValue);
+    this.controlTargets.forEach((target) => {
+      const match = target.dataset.toggleControlMatchValue;
+      target.readOnly = inputValue != match;
+    });
   }
 
   // private
