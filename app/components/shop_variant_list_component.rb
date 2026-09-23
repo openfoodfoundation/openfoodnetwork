@@ -11,15 +11,16 @@
 class ShopVariantListComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
-  def initialize(product:, variants_in_cart:, low_stock_display:)
+  def initialize(product:, variants_in_cart:, low_stock_display:, cart_params: {})
     @product = product
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
+    @cart_params = cart_params
   end
 
   private
 
-  attr_reader :product, :variants_in_cart, :low_stock_display
+  attr_reader :product, :variants_in_cart, :low_stock_display, :cart_params
 
   delegate :variants, :single_producer?, to: :product
 

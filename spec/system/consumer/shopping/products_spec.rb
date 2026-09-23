@@ -43,14 +43,7 @@ RSpec.describe "As a consumer I want to view products" do
     end
 
     # smoke test
-    #
-    # Adding to the cart needs an order cycle on the cart. Choosing one assigns it, but
-    # with only one on offer there is nothing to choose, so the shop page has to do it.
-    # Visiting the product page directly is the next step.
     it "and add a variant to the cart" do
-      visit enterprise_shop_path(enterprise)
-      expect(page).to have_content "Garlic"
-
       visit enterprise_product_path(enterprise, product)
 
       expect(page).to have_content "Garlic"
@@ -68,6 +61,35 @@ RSpec.describe "As a consumer I want to view products" do
       # The cart is saved for this shop, not just displayed.
       expect(page).to have_selector ".cart-span", text: "2"
       expect(Spree::LineItem.where(variant: big_bag).sum(:quantity)).to eq 2
+    end
+
+    context "when the shopper is already shopping at another shop" do
+      let(:other_shop) {
+        create(:distributor_enterprise, name: "The Onion Outlet",
+                                        with_payment_and_shipping: true)
+      }
+      let(:other_product) { create(:product, enterprise_id: other_shop.id, name: "Onions") }
+      let!(:other_order_cycle) {
+        create(:simple_order_cycle, distributors: [other_shop], coordinator: other_shop,
+                                    variants: other_product.variants)
+      }
+
+      it "leaves their cart alone" do
+        visit enterprise_product_path(other_shop, other_product)
+        within ".variant-list li", text: "1g" do
+          click_button "Add"
+          expect(page).to have_content "1 in cart"
+        end
+        expect(page).to have_selector ".cart-span", text: "1"
+
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_selector ".variant-list"
+        expect(page).to have_selector ".cart-span", text: "1"
+        expect(Spree::Order.last).to have_attributes(
+          distributor: other_shop, order_cycle: other_order_cycle
+        )
+      end
     end
 
     context "with several order cycles to choose from" do

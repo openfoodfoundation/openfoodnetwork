@@ -12,4 +12,4 @@
             = variant.display_price_with_fees
             %span.unit-price= helpers.unit_price_with_unit(variant)
         .small-4.columns
-          = render AddToCartComponent.new(variant:, quantity: variants_in_cart[variant.id], low_stock_display:, css_class: "right")
+          = render AddToCartComponent.new(variant:, quantity: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)

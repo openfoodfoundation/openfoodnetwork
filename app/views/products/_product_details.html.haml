@@ -21,7 +21,7 @@
     = render ThumbnailCarouselComponent.new(images: carousel_images, class: (has_images ? nil : "placeholder"))
   .columns.small-12.medium-8.large-9.product-variants
     - if product_view
-      = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
+      = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display, cart_params: { enterprise_permalink: @enterprise.permalink, order_cycle_id: @order_cycle.id })
     - elsif @order_cycles.many?
       %p.no-variants= t("products_choose_order_cycle")
     - else

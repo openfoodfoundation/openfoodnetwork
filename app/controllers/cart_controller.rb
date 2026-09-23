@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CartController < BaseController
+  include StartsShopping
+
   before_action :check_authorization
 
   def populate
@@ -25,6 +27,7 @@ class CartController < BaseController
   # of the product grid view instead of #populate.
   def update_variant
     order = current_order(true)
+    adopt_shop(order)
     variant = Spree::Variant.find(params[:variant_id])
     cart_service = CartService.new(order)
 

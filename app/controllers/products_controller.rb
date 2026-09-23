@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProductsController < BaseController
+  include StartsShopping
+
   def index
     @products = product_renderer.products_view
 
@@ -37,26 +39,14 @@ class ProductsController < BaseController
   # the way the shopfront does, emptying it when either of them changes.
   def select_order_cycle
     @enterprise = Enterprise.find_by!(permalink: params[:enterprise_permalink])
-    order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@enterprise, customer)
-    chosen = order_cycles.find { |order_cycle| order_cycle.id == params[:order_cycle_id].to_i }
+    chosen = order_cycle_on_offer(@enterprise, params[:order_cycle_id])
 
-    start_shopping(chosen) if chosen
+    start_shopping(current_order(true), @enterprise, chosen) if chosen
 
     redirect_to enterprise_product_path(@enterprise, params[:id])
   end
 
   private
-
-  def start_shopping(order_cycle)
-    order = current_order(true)
-
-    # reset_distributor must be called before any call to current_customer
-    cart_reset = Orders::CartResetService.new(order, @enterprise.permalink)
-    cart_reset.reset_distributor
-    cart_reset.reset_other!(spree_current_user, customer)
-
-    order.assign_order_cycle!(order_cycle)
-  end
 
   def product_renderer(args = search_params)
     ProductsRenderer.new(

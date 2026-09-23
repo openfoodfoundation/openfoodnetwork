@@ -38,6 +38,20 @@ RSpec.describe ProductsController do
         expect(page).to have_selector "#variant-#{product.variants.first.id}"
       end
 
+      # Looking is not shopping. The add buttons carry the shop and order cycle instead,
+      # so that the first add can start the cart off.
+      it "doesn't start a cart for a visitor who only looks" do
+        expect { get enterprise_product_path(enterprise, product) }
+          .not_to change { Spree::Order.count }
+
+        expect(page).to have_selector(
+          "[data-add-to-cart-url-value*='order_cycle_id=#{order_cycle.id}']"
+        )
+        expect(page).to have_selector(
+          "[data-add-to-cart-url-value*='enterprise_permalink=#{enterprise.permalink}']"
+        )
+      end
+
       # A variant of another shop's order cycle isn't on offer here.
       it "leaves out variants that aren't distributed by this shop" do
         other_variant = create(:variant, product:)
@@ -74,6 +88,12 @@ RSpec.describe ProductsController do
 
         expect(page).to have_content "Please choose an order cycle"
         expect(page).not_to have_selector ".variant-list"
+      end
+
+      # There's nothing to point the cart at until the shopper chooses.
+      it "doesn't start shopping here" do
+        expect { get enterprise_product_path(enterprise, product) }
+          .not_to change { Spree::Order.count }
       end
     end
   end

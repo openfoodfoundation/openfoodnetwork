@@ -118,6 +118,55 @@ RSpec.describe "Cart" do
       expect(line_item.max_quantity).to eq 4
     end
 
+    # A product page can be a shopper's first visit to a shop, so its add buttons name
+    # the shop and order cycle they belong to.
+    context "when the request names a shop and order cycle" do
+      # Only order cycles the shop is ready to take orders in count, the same ones the
+      # product page lists.
+      before do
+        create(:payment_method, distributors: [distributor])
+        create(:shipping_method, distributors: [distributor])
+      end
+
+      def add_at_shop(variant, shop, order_cycle)
+        update_variant(variant, { quantity: 1, enterprise_permalink: shop.permalink,
+                                  order_cycle_id: order_cycle.id })
+      end
+
+      it "starts an empty cart off at that shop" do
+        order.update!(distributor: nil, order_cycle: nil)
+
+        add_at_shop(variant, distributor, order_cycle)
+
+        expect(order.reload).to have_attributes(distributor:, order_cycle:)
+        expect(order.line_items.first.quantity).to eq 1
+      end
+
+      # Someone else's shop can't take over a cart that's being filled.
+      it "leaves a cart with something in it where it is" do
+        add_product_to_cart(order, variant.product, quantity: 1)
+        other_order_cycle = create(:order_cycle)
+        other_shop = other_order_cycle.distributors.first
+        other_variant = other_order_cycle.variants_distributed_by(other_shop).first
+
+        add_at_shop(other_variant, other_shop, other_order_cycle)
+
+        expect(order.reload).to have_attributes(distributor:, order_cycle:)
+        expect(response.body)
+          .to include "That product is not available from the chosen distributor or order cycle."
+      end
+
+      it "ignores an order cycle that the shop doesn't offer" do
+        order.update!(distributor: nil, order_cycle: nil)
+        other_order_cycle = create(:order_cycle)
+
+        add_at_shop(variant, distributor, other_order_cycle)
+
+        expect(order.reload.order_cycle).to be_nil
+        expect(order.line_items).to be_empty
+      end
+    end
+
     it "recalculates enterprise fees" do
       add_enterprise_fee create(:enterprise_fee, amount: 5)
 
