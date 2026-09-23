@@ -562,6 +562,31 @@ RSpec.describe '
       expect(supplier1.producer_properties.reload).to be_empty
     end
 
+    describe "shop preferences: display ordering in shopfront" do
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+      end
+
+      it "disables the inactive ordering box and keeps it active for the chosen method" do
+        choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
+
+        # visible Select2 widget greys out
+        expect(page).to have_css("#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled")
+        expect(page).not_to have_css("#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled")
+
+        # source textarea read-only but still present (keeps its value on submit)
+        expect(page.find("#enterprise_preferred_shopfront_producer_order",
+                         visible: false)[:readonly]).to be_present
+        expect(page.find("#enterprise_preferred_shopfront_taxon_order",
+                         visible: false)[:readonly]).to be_nil
+
+        choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
+        expect(page).to have_css("#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled")
+        expect(page).not_to have_css("#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled")
+      end
+    end
+
     describe "setting ordering preferences" do
       let(:taxon) { create(:taxon, name: "Tricky Taxon") }
       let(:property) { create(:property, presentation: "Fresh and Fine") }
