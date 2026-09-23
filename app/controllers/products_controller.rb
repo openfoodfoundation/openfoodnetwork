@@ -32,7 +32,31 @@ class ProductsController < BaseController
     @current_order_cycle = @order_cycle
   end
 
+  # Choosing an order cycle is the shopper saying that they want to shop here, so unlike
+  # viewing the page this does change the cart: it points it at this shop and order cycle
+  # the way the shopfront does, emptying it when either of them changes.
+  def select_order_cycle
+    @enterprise = Enterprise.find_by!(permalink: params[:enterprise_permalink])
+    order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@enterprise, customer)
+    chosen = order_cycles.find { |order_cycle| order_cycle.id == params[:order_cycle_id].to_i }
+
+    start_shopping(chosen) if chosen
+
+    redirect_to enterprise_product_path(@enterprise, params[:id])
+  end
+
   private
+
+  def start_shopping(order_cycle)
+    order = current_order(true)
+
+    # reset_distributor must be called before any call to current_customer
+    cart_reset = Orders::CartResetService.new(order, @enterprise.permalink)
+    cart_reset.reset_distributor
+    cart_reset.reset_other!(spree_current_user, customer)
+
+    order.assign_order_cycle!(order_cycle)
+  end
 
   def product_renderer(args = search_params)
     ProductsRenderer.new(

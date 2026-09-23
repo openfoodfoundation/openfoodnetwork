@@ -6,7 +6,7 @@
           .page
             %a{ href: "../shop##{tab[:name]}_panel", class: ("selected" if tab[:default]) }=tab[:title]
       .columns.large-4.show-for-large-up
-        = render partial: "shopping_shared/order_cycles"
+        = render partial: "order_cycles"
 
 .order-cycle-bar.hide-for-large-up
-  = render partial: "shopping_shared/order_cycles"
+  = render partial: "order_cycles"

@@ -7,6 +7,12 @@ module ShopHelper
     order_cycles.map { |oc| { time: pickup_time(oc), id: oc.id } }
   end
 
+  # Mirrors the shopfront's `closesInLessThan3Months()`: a cycle closing further out than
+  # that reads as simply open rather than as closing soon.
+  def closing_soon?(order_cycle)
+    order_cycle.orders_close_at.present? && order_cycle.orders_close_at < 75.days.from_now
+  end
+
   def require_customer?
     @require_customer ||= current_distributor.require_login? && !user_is_related_to_distributor?
   end

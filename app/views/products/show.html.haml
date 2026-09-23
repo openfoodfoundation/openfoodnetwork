@@ -6,9 +6,6 @@
   = @product.description
 - content_for(:image) do
   = @product.image.url(:small) if @product.image.present?
-- content_for :order_cycle_form do
-  = render partial: "enterprises/change_order_cycle"
-
 - content_for :injection_data do
   - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
     = inject_enterprise_shopfront(@enterprise)

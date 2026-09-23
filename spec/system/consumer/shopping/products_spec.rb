@@ -44,8 +44,9 @@ RSpec.describe "As a consumer I want to view products" do
 
     # smoke test
     #
-    # Adding to the cart needs an order cycle on the cart, which only the shop page
-    # assigns so far. Visiting the product page directly is the next step.
+    # Adding to the cart needs an order cycle on the cart. Choosing one assigns it, but
+    # with only one on offer there is nothing to choose, so the shop page has to do it.
+    # Visiting the product page directly is the next step.
     it "and add a variant to the cart" do
       visit enterprise_shop_path(enterprise)
       expect(page).to have_content "Garlic"
@@ -67,6 +68,68 @@ RSpec.describe "As a consumer I want to view products" do
       # The cart is saved for this shop, not just displayed.
       expect(page).to have_selector ".cart-span", text: "2"
       expect(Spree::LineItem.where(variant: big_bag).sum(:quantity)).to eq 2
+    end
+
+    context "with several order cycles to choose from" do
+      let!(:later_order_cycle) {
+        create(
+          :simple_order_cycle,
+          distributors: [enterprise], coordinator: enterprise,
+          variants: [big_bag],
+          orders_close_at: 4.days.from_now
+        )
+      }
+
+      before do
+        order_cycle.exchanges.to_enterprises(enterprise).outgoing.first
+          .update!(pickup_time: "this week")
+        later_order_cycle.exchanges.to_enterprises(enterprise).outgoing.first
+          .update!(pickup_time: "next week")
+      end
+
+      it "lists the variants of the order cycle the shopper chooses" do
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_content "Please choose an order cycle"
+        expect(page).not_to have_selector ".variant-list"
+
+        select "next week", from: "order_cycle_id"
+
+        expect(page).to have_content "Next order closing in 4 days"
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).to have_selector ".variant-name", text: "Big bag"
+
+        # The choice belongs to the cart, so the shopper can go on to fill it.
+        expect(Spree::Order.last.distributor).to eq enterprise
+        expect(Spree::Order.last.order_cycle).to eq later_order_cycle
+      end
+
+      it "asks before emptying the cart to change order cycle" do
+        visit enterprise_product_path(enterprise, product)
+        select "this week", from: "order_cycle_id"
+
+        within ".variant-list li", text: "Big bag" do
+          click_button "Add"
+          expect(page).to have_content "1 in cart"
+        end
+        expect(page).to have_selector ".cart-span", text: "1"
+
+        handle_js_confirm(false) do
+          select "next week", from: "order_cycle_id"
+
+          expect(page).to have_select "order_cycle_id", selected: "this week"
+          expect(Spree::Order.last.order_cycle).to eq order_cycle
+          expect(Spree::Order.last.line_items).to be_present
+        end
+
+        handle_js_confirm(true) do
+          select "next week", from: "order_cycle_id"
+
+          expect(page).to have_content "Next order closing in 4 days"
+          expect(Spree::Order.last.order_cycle).to eq later_order_cycle
+          expect(Spree::Order.last.line_items).to be_empty
+        end
+      end
     end
 
     context "when the shop has no open order cycle" do

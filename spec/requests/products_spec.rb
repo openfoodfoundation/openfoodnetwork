@@ -78,6 +78,51 @@ RSpec.describe ProductsController do
     end
   end
 
+  describe "POST /:enterprise_permalink/products/:id/order_cycle" do
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, distributors: [enterprise], coordinator: enterprise,
+                                  variants: product.variants)
+    }
+
+    it "starts shopping at this shop in the chosen order cycle" do
+      post order_cycle_enterprise_product_path(enterprise, product),
+           params: { order_cycle_id: order_cycle.id }
+
+      expect(response).to redirect_to enterprise_product_path(enterprise, product)
+      expect(Spree::Order.last).to have_attributes(
+        distributor: enterprise, order_cycle:
+      )
+    end
+
+    it "ignores an order cycle that this shop doesn't offer" do
+      other_order_cycle = create(:simple_order_cycle)
+
+      post order_cycle_enterprise_product_path(enterprise, product),
+           params: { order_cycle_id: other_order_cycle.id }
+
+      expect(response).to redirect_to enterprise_product_path(enterprise, product)
+      expect(Spree::Order.last&.order_cycle).to be_nil
+    end
+
+    # Shopping at another shop starts a new cart there, as it does on the shopfront.
+    it "empties a cart of another shop" do
+      other_shop = create(:distributor_enterprise)
+      other_order = create(:order_with_line_items, distributor: other_shop, line_items_count: 1)
+      session_hash[:order_id] = other_order.id
+
+      post order_cycle_enterprise_product_path(enterprise, product),
+           params: { order_cycle_id: order_cycle.id }
+
+      expect(other_order.reload).to have_attributes(
+        distributor: enterprise, order_cycle:, line_items: []
+      )
+    end
+  end
+
   describe "GET /order_cycle/:order_cycle_id/products" do
     let(:distributor) {
       create(:distributor_enterprise, preferred_shopfront_product_sorting_method: "by_producer")

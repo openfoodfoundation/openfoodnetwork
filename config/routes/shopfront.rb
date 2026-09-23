@@ -14,6 +14,9 @@ Openfoodnetwork::Application.routes.draw do
     #get :shop, on: :member
 
     get :products, on: :member, to: redirect("/%{permalink}/shop")
-    resources :products, only: [:show]
+    resources :products, only: [:show] do
+      # Choosing an order cycle is a shopper action, not a view, so it's a POST.
+      post :order_cycle, on: :member, action: :select_order_cycle
+    end
   end
 end

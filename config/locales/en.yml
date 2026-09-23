@@ -2730,6 +2730,7 @@ en:
   shopping_producers_of_hub: "%{hub}'s producers:"
 
   enterprises_next_closing: "Next order closing"
+  enterprises_next_closing_html: "Next order closing <strong>in %{distance_of_time}</strong>"
   enterprises_currently_open: "Orders are currently open"
   enterprises_ready_for: "Ready for"
   enterprises_choose: "Choose when you want your order:"
