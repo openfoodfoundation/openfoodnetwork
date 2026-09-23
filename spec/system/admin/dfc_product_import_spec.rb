@@ -39,6 +39,9 @@ RSpec.describe "DFC Product Import" do
     expect(page).to have_content "Saucy preserves"
     expect(page).to have_content "Sauce - 1g New"
 
+    # No product was removed from the catalog, so no stock will be reset.
+    expect(page).not_to have_content "no longer in the catalog"
+
     # By feeding our own catalog to the import, we are effectively cloning the
     # products. But the DFC product references the spree_product_id which
     # make the importer create a variant for that product instead of creating
