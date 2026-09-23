@@ -62,14 +62,14 @@ class ProductsRenderer
   end
 
   # Spree::Variant#on_hand sums stock in the database on every call, because stock is live and
-  # the caller may have just changed it. Rendering the shop doesn't write stock, so read the
-  # preloaded rows instead of querying once per variant.
+  # the caller may have just changed it. Rendering the shop doesn't write stock, so use the
+  # loaded data instead of querying once per variant.
   #
   # Variant overrides replace the producer's stock entirely, so leave those to the variant.
   def on_hand(variant)
     return variant.on_hand if inventory_enabled?
 
-    variant.stock_items.sum { |stock_item| stock_item.count_on_hand.to_i }
+    variant.loaded_on_hand
   end
 
   def products
