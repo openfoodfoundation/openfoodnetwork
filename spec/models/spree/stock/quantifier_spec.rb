@@ -5,6 +5,10 @@ RSpec.describe Spree::Stock::Quantifier do
   let(:variant) { create(:variant, on_hand: 99) }
 
   describe "#total_on_hand" do
+    it "sums stock items" do
+      expect(quantifier.total_on_hand).to eq 99
+    end
+
     context "with a soft-deleted variant" do
       before do
         variant.delete
