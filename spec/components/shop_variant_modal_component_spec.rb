@@ -57,7 +57,7 @@ RSpec.describe ShopVariantModalComponent, type: :component do
       build_product([build_variant(id: 1), build_variant(id: 2, producer: other)])
     }
 
-    it "names each producer on its own row instead of in the header" do
+    it "leaves naming the producers to the variant rows" do
       render_modal
 
       expect(page).not_to have_selector ".header .producer"
