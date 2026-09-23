@@ -241,10 +241,6 @@ module Spree
       can_supply?(quantity)
     end
 
-    def total_on_hand
-      Spree::Stock::Quantifier.new(self).total_on_hand
-    end
-
     # Format as per WeightsAndMeasures
     def variant_unit_with_scale
       # Our code is based upon English based number formatting with a period `.`
