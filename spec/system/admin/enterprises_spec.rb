@@ -572,18 +572,31 @@ RSpec.describe '
         choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
 
         # visible Select2 widget greys out
-        expect(page).to have_css("#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled")
-        expect(page).not_to have_css("#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled")
+        expect(page).to have_css(
+          "#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled"
+        )
+        expect(page).not_to have_css(
+          "#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled"
+        )
 
         # source textarea read-only but still present (keeps its value on submit)
         expect(page.find("#enterprise_preferred_shopfront_producer_order",
-                         visible: false)[:readonly]).to be_present
+                         visible: false)[:readonly]).to eq ""
         expect(page.find("#enterprise_preferred_shopfront_taxon_order",
                          visible: false)[:readonly]).to be_nil
 
         choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-        expect(page).to have_css("#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled")
-        expect(page).not_to have_css("#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled")
+        expect(page).to have_css(
+          "#s2id_enterprise_preferred_shopfront_taxon_order.select2-container-disabled"
+        )
+        expect(page).not_to have_css(
+          "#s2id_enterprise_preferred_shopfront_producer_order.select2-container-disabled"
+        )
+
+        expect(page.find("#enterprise_preferred_shopfront_taxon_order",
+                         visible: false)[:readonly]).to eq ""
+        expect(page.find("#enterprise_preferred_shopfront_producer_order",
+                         visible: false)[:readonly]).to be_nil
       end
     end
 
