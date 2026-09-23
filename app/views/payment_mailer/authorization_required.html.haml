@@ -1,2 +1,9 @@
-= t(".message", order_number: @order.number)
-= link_to spree.edit_admin_order_url(@order), spree.edit_admin_order_url(@order)
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: enterprise_greeting(@order.distributor.contact_name),
+                   intro: t(".intro_html", order_number: @order.number, distributor: @order.distributor.name),
+                   enterprise_for_logo: @order.distributor }
+
+%p
+  = t(".instructions")
+%p
+  = link_to spree.edit_admin_order_url(@order), spree.edit_admin_order_url(@order)

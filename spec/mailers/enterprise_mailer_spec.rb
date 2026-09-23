@@ -38,5 +38,9 @@ RSpec.describe EnterpriseMailer do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
     end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :enterprise
+    end
   end
 end

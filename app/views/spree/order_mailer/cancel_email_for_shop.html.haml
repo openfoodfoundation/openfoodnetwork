@@ -1,7 +1,6 @@
-%p
-  = t('spree.order_mailer.cancel_email_for_shop.greeting', name: @order.distributor.name)
-
-%p
-  = t('spree.order_mailer.cancel_email_for_shop.intro', number: @order.number)
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: enterprise_greeting(@order.distributor.contact_name),
+                   intro: t(".intro", number: @order.number),
+                   enterprise_for_logo: @order.distributor }
 
 = link_to t('spree.order_mailer.cancel_email_for_shop.view_cancelled_order'), spree.edit_admin_order_url(@order)
