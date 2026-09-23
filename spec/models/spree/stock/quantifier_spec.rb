@@ -19,4 +19,27 @@ RSpec.describe Spree::Stock::Quantifier do
       end
     end
   end
+
+  describe "loaded_on_hand" do
+    it "sums stock items" do
+      # Preload data
+      variant.stock_items.reload
+
+      expect {
+        expect(quantifier.loaded_on_hand).to eq 99
+      }.not_to query_database
+    end
+
+    context "with a soft-deleted variant" do
+      it "returns zero stock for the variant" do
+        # Preload data
+        variant.stock_items.reload
+        variant.delete
+
+        expect {
+          expect(quantifier.loaded_on_hand).to eq 0
+        }.not_to query_database
+      end
+    end
+  end
 end
