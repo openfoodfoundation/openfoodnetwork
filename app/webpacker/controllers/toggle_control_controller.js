@@ -52,6 +52,14 @@ export default class extends Controller {
     this.#toggleDisplay(inputValue == this.matchValue);
   }
 
+  // Make the control read-only unless the actioning input's value matches
+  // the value in data-toggle-control-match-value="<value>"
+  disableUnlessMatch(event) {
+    const inputValue = this.#inputValue(event.currentTarget);
+
+    this.#toggleReadonly(inputValue != this.matchValue);
+  }
+
   // private
 
   #toggleDisabled(disable) {
@@ -61,6 +69,12 @@ export default class extends Controller {
 
     // Focus first when enabled and it's not a button
     if (!disable) this.#focusFieldControl();
+  }
+
+  #toggleReadonly(readonly) {
+    this.controlTargets.forEach((target) => {
+      target.readOnly = readonly;
+    });
   }
 
   #toggleDisplay(show) {
@@ -73,11 +87,12 @@ export default class extends Controller {
   }
 
   // Return input's value, but only if it would be submitted by a form
-  // Radio buttons not supported (yet)
+  // Radio buttons are supported
   #inputValue(input) {
-    if (input.type != "checkbox" || input.checked) {
-      return input.value;
+    if ((input.type == "checkbox" || input.type == "radio") && !input.checked) {
+      return;
     }
+    return input.value;
   }
 
   #focusFieldControl() {
