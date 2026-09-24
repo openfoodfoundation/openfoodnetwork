@@ -13,14 +13,15 @@
 
   // Group buy: min and max steppers stacked vertically, each with a label above it.
   .variant-quantity-labelled {
+    flex-direction: column;
+
     & + .variant-quantity-labelled {
       margin-top: 0.5rem;
     }
 
     .variant-quantity-label {
+      margin-left: 0.5rem;
       display: block;
-      font-size: 0.75rem;
-      color: b.$grey-650;
       margin-bottom: 0.25rem;
     }
   }
