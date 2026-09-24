@@ -166,7 +166,7 @@ module Spree
         render turbo_stream: streams
       end
 
-      def cancel_orders
+      def bulk_cancel
         cancelled_orders = ::Orders::BulkCancelService.new(params, spree_current_user).call
 
         render turbo_stream: [
