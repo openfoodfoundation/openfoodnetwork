@@ -669,6 +669,14 @@ RSpec.describe Spree::Ability do
                                     for: Spree::Payment)
       end
 
+      it "is able to bulk resend confirmation email" do
+        is_expected.to have_ability([:resend_confirmation_emails], for: Spree::Order)
+      end
+
+      it "is able to bulk send invoice" do
+        is_expected.to have_ability([:send_invoices], for: Spree::Order)
+      end
+
       it "is able to credit a customer" do
         is_expected.to have_ability([:credit_customer], for: Spree::Order)
         is_expected.to have_ability([:bulk_credit], for: Spree::Order)
