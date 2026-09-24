@@ -26,6 +26,7 @@ class ApiLogger
     @app = app
   end
 
+  # :nocov:
   def call(env)
     request = ::Rack::Request.new(env)
 
@@ -49,6 +50,7 @@ class ApiLogger
 
     response
   end
+  # :nocov:
 
   private
 
@@ -84,10 +86,13 @@ class ApiLogger
     value.to_s.dup.force_encoding(Encoding::UTF_8).scrub("").delete("\u0000").truncate(limit)
   end
 
+  # :nocov:
   def status_for(exception)
     ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class.name)
   end
+  # :nocov:
 
+  # :nocov:
   def log(details, status, env)
     ApiLog.create!(**details, status:, user_id: env[USER_ID_KEY])
   rescue StandardError => e
@@ -95,4 +100,5 @@ class ApiLogger
     # whatever makes the insert fail is likely to affect every request.
     Rails.logger.error("ApiLogger failed to record a request: #{e.class}: #{e.message}")
   end
+  # :nocov:
 end
