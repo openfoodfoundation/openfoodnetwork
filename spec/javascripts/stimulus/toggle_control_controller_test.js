@@ -215,7 +215,7 @@ describe("ToggleControlController", () => {
       expect(content.style.display).toBe("block");
       expect(chevron.className).toBe("icon-chevron-down");
     });
-  
+
     describe("#disableUnlessMatch", () => {
       beforeEach(() => {
         document.body.innerHTML = `
