@@ -16,7 +16,7 @@ module OpenFoodNetwork
           description: I18n.t('admin.enterprise_issues.has_no_shipping_methods',
                               enterprise: @enterprise.name),
           link: "<a class='button fullwidth' " \
-                "href='#{spree_routes_helper.new_admin_shipping_method_path}'>" \
+                "href='#{new_admin_shipping_method_path}'>" \
                 "#{I18n.t('admin.enterprise_issues.create_new')}</a>"
         }
       end
@@ -26,7 +26,7 @@ module OpenFoodNetwork
           description: I18n.t('admin.enterprise_issues.has_no_payment_methods',
                               enterprise: @enterprise.name),
           link: "<a class='button fullwidth' " \
-                "href='#{spree_routes_helper.new_admin_payment_method_path}'>" \
+                "href='#{new_admin_payment_method_path}'>" \
                 "#{I18n.t('admin.enterprise_issues.create_new')}</a>"
         }
       end
@@ -71,10 +71,6 @@ module OpenFoodNetwork
       return true unless @enterprise.is_distributor
 
       @enterprise.payment_methods.available.any?
-    end
-
-    def spree_routes_helper
-      Spree::Core::Engine.routes.url_helpers
     end
   end
 end

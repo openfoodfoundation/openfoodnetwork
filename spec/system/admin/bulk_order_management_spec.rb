@@ -1303,7 +1303,7 @@ RSpec.describe '
   end
 
   def visit_bulk_order_management
-    visit spree.admin_bulk_order_management_path
+    visit admin_bulk_order_management_path
     expect(page).not_to have_text 'Loading orders'
   end
 

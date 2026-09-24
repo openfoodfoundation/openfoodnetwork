@@ -9,12 +9,12 @@
 
     - if admin_user? or enterprise_user?
       %li
-        %a{href: spree.admin_dashboard_path, **new_tab_option}
+        %a{href: admin_dashboard_path, **new_tab_option}
           %i.ofn-i_021-tools
           = t 'label_administration'
 
     %li
-      %a{href: spree.account_path}
+      %a{href: account_path}
         %i.ofn-i_015-user
         = t 'label_account'
         = "(" + spree_current_user.email + ")"

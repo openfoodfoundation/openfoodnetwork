@@ -20,12 +20,12 @@ RSpec.describe Spree::Admin::ProductsController do
 
     it "redirects to products when the user hits 'create'" do
       spree_post :create, product: product_attrs, button: 'create'
-      expect(response).to redirect_to spree.admin_products_path
+      expect(response).to redirect_to admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do
       spree_post :create, product: product_attrs, button: 'add_another'
-      expect(response).to redirect_to spree.new_admin_product_path
+      expect(response).to redirect_to new_admin_product_path
     end
 
     describe "when user uploads an image in an unsupported format" do

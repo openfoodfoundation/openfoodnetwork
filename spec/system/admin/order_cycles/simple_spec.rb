@@ -232,7 +232,7 @@ RSpec.describe '
         oc_for_other_user = create(:simple_order_cycle, coordinator: supplier_unmanaged,
                                                         name: 'Order Cycle 2' )
 
-        visit spree.admin_dashboard_path
+        visit admin_dashboard_path
         click_link "Order cycles"
 
         # I should see only the order cycle I am coordinating

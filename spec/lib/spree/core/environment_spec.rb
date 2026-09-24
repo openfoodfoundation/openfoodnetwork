@@ -11,7 +11,7 @@ RSpec.describe Spree::Core::Environment do
   end
 
   it "used by Spree" do
-    file = Spree::Core::Engine.config.spree.method(:initialize).source_location.first
+    file = Rails.application.config.spree.method(:initialize).source_location.first
     expect(file).to eq our_file
   end
 end

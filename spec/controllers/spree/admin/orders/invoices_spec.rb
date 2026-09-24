@@ -39,7 +39,7 @@ RSpec.describe Spree::Admin::OrdersController do
             expect do
               spree_get :invoice, params
             end.not_to change{ Spree::OrderMailer.deliveries.count }
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
             expect(flash[:error])
               .to eq "#{distributor.name} must have a valid ABN before invoices can be used."
           end
@@ -56,7 +56,7 @@ RSpec.describe Spree::Admin::OrdersController do
           it "should allow me to send order invoices" do
             spree_get :invoice, params
 
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
             expect(Spree::OrderMailer).to have_received(:invoice_email)
             expect(mail_mock).to have_received(:deliver_later)
           end
@@ -250,7 +250,7 @@ RSpec.describe Spree::Admin::InvoicesController do
             spree_get :generate, params
           end.to change{ Invoice.count }.by(1)
 
-          expect(response).to redirect_to spree.admin_dashboard_path
+          expect(response).to redirect_to admin_dashboard_path
         end
 
         context "distributor didn't set an ABN" do
@@ -263,7 +263,7 @@ RSpec.describe Spree::Admin::InvoicesController do
               spree_get :generate, params
             end.to change{ Invoice.count }.by(0)
 
-            expect(response).to redirect_to spree.admin_dashboard_path
+            expect(response).to redirect_to admin_dashboard_path
             expect(flash[:error])
               .to eq "#{distributor.name} must have a valid ABN before invoices can be used."
           end

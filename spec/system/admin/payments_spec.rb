@@ -14,7 +14,7 @@ RSpec.describe '
   describe "payments/new" do
     it "displays the order balance as the default payment amount" do
       login_as_admin
-      visit spree.new_admin_order_payment_path order
+      visit new_admin_order_payment_path order
 
       expect(page).to have_content 'New Payment'
       expect(page).to have_field(:payment_amount, with: order.outstanding_balance.to_f)
@@ -33,7 +33,7 @@ RSpec.describe '
 
     it "renders the new payment page" do
       login_as_admin
-      visit spree.new_admin_order_payment_path order
+      visit new_admin_order_payment_path order
 
       expect(page).to have_content 'New Payment'
     end
@@ -51,7 +51,7 @@ RSpec.describe '
 
     it "creates the payment, completes the order, and updates payment and shipping states" do
       login_as_admin
-      visit spree.new_admin_order_payment_path order
+      visit new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
 
@@ -74,7 +74,7 @@ RSpec.describe '
   describe 'Capture & complete order' do
     it 'completes order when capturing payment' do
       login_as_admin
-      visit spree.admin_order_payments_path confirmed_order
+      visit admin_order_payments_path confirmed_order
       expect(page).to have_content "CHECKOUT"
       page.find('a.icon-capture_and_complete_order').click
       expect(confirmed_order.reload.state).to eq 'complete'

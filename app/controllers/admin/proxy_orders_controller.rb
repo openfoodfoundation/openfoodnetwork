@@ -6,7 +6,7 @@ module Admin
 
     def edit
       @proxy_order.initialise_order! unless @proxy_order.order
-      redirect_to spree.edit_admin_order_path(@proxy_order.order)
+      redirect_to edit_admin_order_path(@proxy_order.order)
     end
 
     def cancel

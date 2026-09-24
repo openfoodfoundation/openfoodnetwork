@@ -78,7 +78,9 @@ Openfoodnetwork::Application.routes.draw do
 
     # This might be easier to arrange once we rename the controller to plain old "products"
     post '/products/bulk_update', to: 'products_v3#bulk_update', as: 'products_bulk_update'
-    get '/products', to: 'products_v3#index', as: 'products'
+    # The `admin_products` route name is already defined by `spree/admin/products#create`
+    # in config/routes/spree.rb with the same path.
+    get '/products', to: 'products_v3#index'
     delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
     delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
     post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'

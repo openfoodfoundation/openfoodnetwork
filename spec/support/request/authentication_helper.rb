@@ -9,7 +9,7 @@ module AuthenticationHelper
 
   def login_to_admin_section
     login_as_admin
-    visit spree.admin_dashboard_path
+    visit admin_dashboard_path
   end
 
   def fill_in_and_submit_login_form(user)

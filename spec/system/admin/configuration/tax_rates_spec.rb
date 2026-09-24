@@ -14,7 +14,7 @@ RSpec.describe "Tax Rates" do
 
   before do
     login_as_admin
-    visit spree.edit_admin_general_settings_path
+    visit edit_admin_general_settings_path
   end
 
   # Regression test for Spree #535
@@ -38,7 +38,7 @@ RSpec.describe "Tax Rates" do
   # Adds further CRUD operations: editing, deleting
   context "while editing" do
     it "fields can be filled in and dropfdowns retains changes" do
-      visit spree.edit_admin_tax_rate_path(tax_rate.id)
+      visit edit_admin_tax_rate_path(tax_rate.id)
       fill_in "Rate", with: "0.23"
       fill_in "Name", with: "GST"
 
@@ -52,7 +52,7 @@ RSpec.describe "Tax Rates" do
     # See #6554: in order to set a Tax Rate as included in the price,
     # there must be at least one Zone set the "Default Tax Zone"
     it "checkboxes can be ticked" do
-      visit spree.edit_admin_tax_rate_path(tax_rate.id)
+      visit edit_admin_tax_rate_path(tax_rate.id)
       uncheck("tax_rate[show_rate_in_label]")
       check("tax_rate[included_in_price]")
       click_button "Update"

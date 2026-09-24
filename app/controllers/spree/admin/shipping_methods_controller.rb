@@ -76,7 +76,7 @@ module Spree
       end
 
       def location_after_save
-        spree.edit_admin_shipping_method_path(@shipping_method)
+        edit_admin_shipping_method_path(@shipping_method)
       end
 
       def load_data

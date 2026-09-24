@@ -17,7 +17,7 @@ RSpec.describe '
     amount = fee.calculator.preferred_amount
 
     login_as_admin
-    visit spree.edit_admin_general_settings_path
+    visit edit_admin_general_settings_path
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "#{prefix}_enterprise_id"

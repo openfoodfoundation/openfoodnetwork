@@ -96,7 +96,7 @@ RSpec.describe '
     context "as a super admin" do
       before do
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
       end
 
       context "can bulk send invoices per email" do
@@ -496,7 +496,7 @@ RSpec.describe '
     context "for a hub manager" do
       before do
         login_as owner2
-        visit spree.admin_orders_path
+        visit admin_orders_path
       end
 
       it "displays the orders for the respective distributor" do

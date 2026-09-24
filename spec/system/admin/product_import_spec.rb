@@ -664,7 +664,7 @@ RSpec.describe "Product Import" do
 
       default_variant_selector = "tr:has(input[aria-label=Name][value='Carrots'])"
 
-      visit spree.admin_products_path
+      visit admin_products_path
 
       carrots = Spree::Product.find_by(name: 'Carrots')
 
@@ -709,7 +709,7 @@ RSpec.describe "Product Import" do
       expect(page).to have_content "Go To Products Page"
       expect(page).to have_content "Upload Another File"
 
-      visit spree.admin_products_path
+      visit admin_products_path
 
       expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
                                  text: "Cupcake")

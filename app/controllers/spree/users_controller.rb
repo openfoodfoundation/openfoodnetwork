@@ -44,7 +44,7 @@ module Spree
           Spree::User.reset_password_by_token(params[:user])
           bypass_sign_in(@user)
         end
-        redirect_to spree.account_url, notice: Spree.t(:account_updated)
+        redirect_to account_url, notice: Spree.t(:account_updated)
       else
         render :edit
       end

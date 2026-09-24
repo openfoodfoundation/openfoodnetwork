@@ -7,7 +7,7 @@ RSpec.describe "General Settings" do
 
   before do
     login_as_admin
-    visit spree.admin_dashboard_path
+    visit admin_dashboard_path
     click_link "Configuration"
     click_link "General Settings"
   end

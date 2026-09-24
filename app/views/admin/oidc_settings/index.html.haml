@@ -25,7 +25,7 @@
       %br
       %br
       = button_to t(".refresh"),
-        Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
+        spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
         data: { method: :post, "ujs-navigate": "false" }
 
   - else
@@ -33,5 +33,5 @@
     %br
     %br
     = button_to t(".link_account_button"),
-      Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
+      spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
       data: { method: :post, "ujs-navigate": "false" }

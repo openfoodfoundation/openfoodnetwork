@@ -32,7 +32,7 @@ RSpec.describe '
   end
 
   def new_order_with_distribution(distributor, order_cycle)
-    visit spree.new_admin_order_path
+    visit new_admin_order_path
     expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
@@ -44,7 +44,7 @@ RSpec.describe '
     create(:simple_order_cycle, name: 'Two')
 
     login_as_admin
-    visit spree.admin_orders_path
+    visit admin_orders_path
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
@@ -86,7 +86,7 @@ RSpec.describe '
   context "can't create an order without selecting a distributor nor an order cycle" do
     before do
       login_as_admin
-      visit spree.admin_orders_path
+      visit admin_orders_path
       click_link 'New Order'
     end
 
@@ -119,7 +119,7 @@ RSpec.describe '
 
     before do
       login_as_admin
-      visit spree.admin_order_customer_path(order)
+      visit admin_order_customer_path(order)
     end
 
     it "sets the customer on the order" do
@@ -144,7 +144,7 @@ RSpec.describe '
           ship_address: customer2.ship_address,
           bill_address: customer2.bill_address
         )
-        visit spree.admin_order_customer_path(order)
+        visit admin_order_customer_path(order)
       end
 
       it "should update the order customer (not only its details)" do
@@ -165,7 +165,7 @@ RSpec.describe '
 
   it "can add a product to an existing order" do
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
@@ -181,7 +181,7 @@ RSpec.describe '
 
     it "recalculates transaction fee and order total" do
       login_as_admin
-      visit spree.edit_admin_order_path(order_with_fees)
+      visit edit_admin_order_path(order_with_fees)
 
       # Fee is $5 per item and we have two line items
       expect(page).to have_css("#order_adjustments", text: 10.00)
@@ -262,7 +262,7 @@ RSpec.describe '
     before do
       order.line_items << line_item
       login_as_admin
-      visit spree.edit_admin_order_path(order)
+      visit edit_admin_order_path(order)
     end
 
     context "when using the cancel button" do
@@ -296,7 +296,7 @@ RSpec.describe '
     order.save
 
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     click_button 'Dismiss'
 
@@ -313,7 +313,7 @@ RSpec.describe '
     product = create(:simple_product)
 
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
@@ -325,7 +325,7 @@ RSpec.describe '
       before do
         order.line_items << line_item
         login_as_admin
-        visit spree.edit_admin_order_path(order)
+        visit edit_admin_order_path(order)
         find("a.delete-item").click
         expect(page).to have_content "Are you sure?"
       end
@@ -354,7 +354,7 @@ RSpec.describe '
         # specify that order has only one line item
         order.line_items = [order.line_items.first]
         login_as_admin
-        visit spree.edit_admin_order_path(order)
+        visit edit_admin_order_path(order)
         find("a.delete-item").click
       end
 
@@ -367,7 +367,7 @@ RSpec.describe '
         order.line_items = [order.line_items.first]
         order.line_items.first.variant.delete
         login_as_admin
-        visit spree.edit_admin_order_path(order)
+        visit edit_admin_order_path(order)
         find("a.delete-item").click
       end
 
@@ -385,7 +385,7 @@ RSpec.describe '
     order.completed_at = nil
 
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     item = order.line_items.first
     quantity = item.quantity
@@ -417,7 +417,7 @@ RSpec.describe '
     order.line_items.first.variant.update_attribute(:on_demand, true)
 
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     within("tr.stock-item", text: order.products.first.name) do
       find("a.edit-item").click
@@ -507,7 +507,7 @@ RSpec.describe '
 
   it "can't change distributor or order cycle once order has been finalized" do
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'
@@ -565,7 +565,7 @@ RSpec.describe '
 
     it 'checks order may proceed to payments' do
       login_as_admin
-      visit spree.edit_admin_order_path(order)
+      visit edit_admin_order_path(order)
 
       click_link "Payments"
       expect(page).to have_content "New Payment"

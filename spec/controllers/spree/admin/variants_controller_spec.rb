@@ -144,7 +144,7 @@ RSpec.describe Spree::Admin::VariantsController do
         it 'redirects to admin_product_variants_url' do
           spree_delete :destroy, id: variant.id, product_id: variant.product.id,
                                  format: 'html'
-          expect(response).to redirect_to spree.admin_product_variants_url(variant.product.id)
+          expect(response).to redirect_to admin_product_variants_url(variant.product.id)
         end
 
         it 'destroys all its exchanges' do
