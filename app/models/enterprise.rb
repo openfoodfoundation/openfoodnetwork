@@ -111,17 +111,22 @@ class Enterprise < ApplicationRecord
 
   validates :logo,
             processable_file: true,
-            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES,
+            if: -> { attachment_changed?(:logo) }
   validates :promo_image,
             processable_file: true,
-            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES,
+            if: -> { attachment_changed?(:promo_image) }
   validates :white_label_logo,
             processable_file: true,
-            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES
-  validates :terms_and_conditions, content_type: {
-    in: "application/pdf",
-    message: I18n.t(:enterprise_terms_and_conditions_type_error),
-  }
+            content_type: ::Spree::Image::ACCEPTED_CONTENT_TYPES,
+            if: -> { attachment_changed?(:white_label_logo) }
+  validates :terms_and_conditions,
+            content_type: {
+              in: "application/pdf",
+              message: I18n.t(:enterprise_terms_and_conditions_type_error),
+            },
+            if: -> { attachment_changed?(:terms_and_conditions) }
 
   validates :name, presence: true
   validate :name_is_unique
@@ -505,6 +510,13 @@ class Enterprise < ApplicationRecord
   end
 
   private
+
+  # True when the named attachment was added, replaced or removed in the current
+  # save. Used to skip validation (and the blob download it triggers) for
+  # attachments that have not changed. See issue #14801.
+  def attachment_changed?(name)
+    attachment_changes.key?(name.to_s)
+  end
 
   def validate_white_label_logo_link
     return if white_label_logo.blank?
