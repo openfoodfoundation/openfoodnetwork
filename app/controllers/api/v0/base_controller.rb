@@ -6,7 +6,7 @@ require "spree/api/controller_setup"
 module Api
   module V0
     class BaseController < ActionController::Metal
-      include Pagy::Backend
+      include Pagy::Method
       include RawParams
       include ActionController::StrongParameters
       include ActionController::RespondWith

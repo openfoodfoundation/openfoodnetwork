@@ -7,6 +7,7 @@ module Admin
 
     before_action :init_filters_params
     before_action :init_pagination_params
+    before_action :apply_on_hand_sorting
     before_action :init_none_tag
 
     def index
@@ -148,10 +149,14 @@ module Admin
 
     def init_pagination_params
       # prority is given to element dataset (if present) over url params
+      # Set the page to 1 if page lower than 1, replicated pagy logic
+      params[:page] = 1 if params[:page].presence && params[:page].to_i < 1
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
       @q = params.permit(q: {})[:q] || { s: 'name asc' }
+    end
 
+    def apply_on_hand_sorting
       # Transform on_hand sorting to properly handle On-Demand products:
       #   - On-Demand products should ignore on_hand completely and sort alphabetically.
       #   - Non-On-Demand products should continue sorting by on_hand as usual.
@@ -216,8 +221,7 @@ module Admin
       @pagy, @products = pagy(
         product_query.order(:name),
         limit: @per_page,
-        page: @page,
-        size: [1, 2, 2, 1]
+        page: @page
       )
     end
 
