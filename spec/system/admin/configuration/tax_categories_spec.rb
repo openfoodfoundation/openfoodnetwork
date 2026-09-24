@@ -8,7 +8,7 @@ RSpec.describe "Tax Categories" do
 
   before(:each) do
     login_as_admin
-    visit spree.edit_admin_general_settings_path
+    visit edit_admin_general_settings_path
   end
 
   context "admin visiting tax categories list" do

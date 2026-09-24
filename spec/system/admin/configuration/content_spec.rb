@@ -12,7 +12,7 @@ RSpec.describe "
 
   before do
     login_as_admin
-    visit spree.edit_admin_general_settings_path
+    visit edit_admin_general_settings_path
     click_link "Content"
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "
 
     expect(page).to have_content "Your content has been successfully updated!"
 
-    visit spree.admin_dashboard_path
+    visit admin_dashboard_path
 
     expect(page).to have_link("User Guide", href: "http://www.openfoodnetwork.org/platform/user-guide/")
     expect(find_link("User Guide")[:target]).to eq("_blank")

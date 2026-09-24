@@ -59,7 +59,7 @@ RSpec.describe Spree::Admin::Orders::CustomerDetailsController do
 
           order.reload
 
-          expect(response).to redirect_to spree.admin_order_customer_path(order)
+          expect(response).to redirect_to admin_order_customer_path(order)
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe Spree::Admin::Orders::CustomerDetailsController do
 
           order.reload
 
-          expect(response).to redirect_to spree.admin_order_customer_path(order)
+          expect(response).to redirect_to admin_order_customer_path(order)
         end
       end
     end

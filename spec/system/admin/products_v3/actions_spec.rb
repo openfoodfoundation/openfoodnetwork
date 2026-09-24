@@ -160,15 +160,15 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
       it "shows an actions menu with an edit link for product and variant" do
         within row_containing_name("Apples") do
           page.find(".vertical-ellipsis-menu").click
-          expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
+          expect(page).to have_link "Edit", href: edit_admin_product_path(product_a)
         end
         close_action_menu
 
         within row_containing_name("Medium box") do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Edit",
-                                    href: spree.edit_admin_product_variant_path(product_a,
-                                                                                variant_a1)
+                                    href: edit_admin_product_variant_path(product_a,
+                                                                          variant_a1)
         end
       end
     end
@@ -541,7 +541,7 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             end
 
             it 'keeps the line item on the order (admin)' do
-              visit spree.edit_admin_order_path(order)
+              visit edit_admin_order_path(order)
 
               expect(page).to have_content(line_item.product.name.to_s)
             end

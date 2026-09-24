@@ -72,7 +72,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
                            type: payment_method.class.to_s,
                            preferred_password: ""
                          }
-      expect(response).to redirect_to spree.edit_admin_payment_method_path(payment_method)
+      expect(response).to redirect_to edit_admin_payment_method_path(payment_method)
 
       payment_method.reload
       expect(payment_method.preferred_password).to eq "haxme"
@@ -94,8 +94,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       }.to change { Spree::PaymentMethod.count }.by(1)
 
       expect(response).to be_redirect
-      expect(response).to redirect_to spree
-        .edit_admin_payment_method_path(assigns(:payment_method))
+      expect(response).to redirect_to edit_admin_payment_method_path(assigns(:payment_method))
     end
 
     it "can not create a payment method of an invalid type" do
@@ -106,7 +105,7 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       }.to change { Spree::PaymentMethod.count }.by(0)
 
       expect(response).to be_redirect
-      expect(response).to redirect_to spree.new_admin_payment_method_path
+      expect(response).to redirect_to new_admin_payment_method_path
     end
   end
 

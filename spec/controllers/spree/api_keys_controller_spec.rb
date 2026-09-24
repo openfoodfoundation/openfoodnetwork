@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Spree::ApiKeysController, performance: true do
-  routes { Spree::Core::Engine.routes }
-
   include AuthenticationHelper
   include ControllerRequestsHelper
 
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
-  let(:redirect_path) { "#{spree.account_path}#/developer_settings" }
+  let(:redirect_path) { "#{account_path}#/developer_settings" }
 
   before do
     allow(controller).to receive(:spree_current_user) { user }

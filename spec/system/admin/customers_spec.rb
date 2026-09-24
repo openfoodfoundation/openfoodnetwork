@@ -177,7 +177,7 @@ RSpec.describe 'Customers' do
           end
 
           it "displays an updated customer balance" do
-            visit spree.admin_order_payments_path order1
+            visit admin_order_payments_path order1
             expect(page).to have_content "$#{payment2.amount}"
 
             visit admin_customers_path

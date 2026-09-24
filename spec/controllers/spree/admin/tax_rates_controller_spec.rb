@@ -27,7 +27,7 @@ module Spree
                 spree_put :update, id: tax_rate.id, tax_rate: params
               }.not_to change{ Spree::TaxRate.with_deleted.count }
 
-              expect(response).to redirect_to spree.admin_tax_rates_url
+              expect(response).to redirect_to admin_tax_rates_url
               expect(tax_rate.reload.name).to eq "Updated Rate"
               expect(tax_rate.amount).to eq 0.1
             end
@@ -40,7 +40,7 @@ module Spree
                                    tax_rate: { name: "Changed Rate", amount: "0.5" }
               }.to change{ Spree::TaxRate.with_deleted.count }.by(1)
 
-              expect(response).to redirect_to spree.admin_tax_rates_url
+              expect(response).to redirect_to admin_tax_rates_url
 
               deprecated_rate = tax_rate.reload
               expect(deprecated_rate.name).to eq "Original Rate"
@@ -61,7 +61,7 @@ module Spree
                                    tax_rate: { name: "Changed Rate", included_in_price: "1" }
               }.to change{ Spree::TaxRate.with_deleted.count }.by(1)
 
-              expect(response).to redirect_to spree.admin_tax_rates_url
+              expect(response).to redirect_to admin_tax_rates_url
 
               deprecated_rate = tax_rate.reload
               expect(deprecated_rate.name).to eq "Original Rate"

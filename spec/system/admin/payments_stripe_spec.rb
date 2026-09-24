@@ -40,7 +40,7 @@ RSpec.describe '
 
           it "adds a payment with state complete" do
             login_as_admin
-            visit spree.new_admin_order_payment_path order
+            visit new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
             fill_in_card_details_in_backoffice
@@ -59,7 +59,7 @@ RSpec.describe '
 
           it "fails to add a payment due to card error" do
             login_as_admin
-            visit spree.new_admin_order_payment_path order
+            visit new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
             fill_in_card_details_in_backoffice
@@ -80,7 +80,7 @@ RSpec.describe '
 
         it "adds the payment and it is in the requires_authorization state" do
           login_as_admin
-          visit spree.new_admin_order_payment_path order
+          visit new_admin_order_payment_path order
 
           fill_in "payment_amount", with: order.total.to_s
           fill_in_card_details_in_backoffice
@@ -106,7 +106,7 @@ RSpec.describe '
 
       it "adds a payment with state complete" do
         login_as_admin
-        visit spree.new_admin_order_payment_path order
+        visit new_admin_order_payment_path order
 
         fill_in "payment_amount", with: order.total.to_s
         fill_in_card_details_in_backoffice
@@ -126,7 +126,7 @@ RSpec.describe '
 
     it "renders the payment details" do
       login_as_admin
-      visit spree.admin_order_payments_path order
+      visit admin_order_payments_path order
 
       page.click_link("StripeSCA")
       expect(page).to have_content order.payments.last.source.last_digits
@@ -139,7 +139,7 @@ RSpec.describe '
 
       it "renders the payment details" do
         login_as_admin
-        visit spree.admin_order_payments_path order
+        visit admin_order_payments_path order
 
         page.click_link("StripeSCA")
         expect(page).to have_content order.payments.last.amount
@@ -198,7 +198,7 @@ RSpec.describe '
 
       it "allows to refund the payment" do
         login_as_admin
-        visit spree.admin_order_payments_path order
+        visit admin_order_payments_path order
 
         expect(page).to have_link "StripeSCA"
         expect(page).to have_content "COMPLETED"

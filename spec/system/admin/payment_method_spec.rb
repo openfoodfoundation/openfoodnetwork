@@ -16,7 +16,7 @@ RSpec.describe '
   describe "creating a payment method" do
     it "assigning a distributor to the payment method" do
       login_as_admin
-      visit spree.edit_admin_general_settings_path
+      visit edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -70,7 +70,7 @@ RSpec.describe '
 
       it "communicates the status of the stripe connection to the user" do
         login_as user
-        visit spree.new_admin_payment_method_path
+        visit new_admin_payment_method_path
 
         select2_select "Stripe", from: "payment_method_type"
 
@@ -118,14 +118,14 @@ RSpec.describe '
         enterprise.destroy!
       end
       login_as_admin
-      visit spree.new_admin_payment_method_path
+      visit new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
                                  checked: true
     end
 
     it "checking more than a distributor displays no default choice" do
       login_as_admin
-      visit spree.new_admin_payment_method_path
+      visit new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
                                  checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}",
@@ -136,7 +136,7 @@ RSpec.describe '
 
     it "retains and displays data that was just submitted" do
       login_as_admin
-      visit spree.edit_admin_general_settings_path
+      visit edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -178,7 +178,7 @@ RSpec.describe '
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
     login_as_admin
-    visit spree.edit_admin_payment_method_path payment_method
+    visit edit_admin_payment_method_path payment_method
 
     select2_select "PayPal Express", from: "payment_method_type"
     expect(page).to have_field 'Login'
@@ -192,7 +192,7 @@ RSpec.describe '
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
     login_as_admin
-    visit spree.edit_admin_payment_method_path payment_method
+    visit edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'
     find(:css, "tags-input .tags input").set "member\n"
@@ -258,11 +258,11 @@ RSpec.describe '
         click_link "Payment Methods"
       end
       click_link 'Create One Now'
-      expect(page).to have_current_path spree.new_admin_payment_method_path
+      expect(page).to have_current_path new_admin_payment_method_path
     end
 
     it "creates payment methods" do
-      visit spree.new_admin_payment_method_path
+      visit new_admin_payment_method_path
       fill_in 'payment_method_name', with: 'Cheque payment method'
       cash_name = "Cash/EFT/etc. (payments for which automatic validation is not required)"
       select2_select cash_name, from: "payment_method_type"
@@ -287,7 +287,7 @@ RSpec.describe '
       payment_method2
       payment_method3
 
-      visit spree.admin_payment_methods_path
+      visit admin_payment_methods_path
 
       expect(page).to     have_content payment_method1.name
       expect(page).to     have_content payment_method2.name
@@ -298,7 +298,7 @@ RSpec.describe '
       payment_method1
       payment_method2
 
-      visit spree.admin_payment_methods_path
+      visit admin_payment_methods_path
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end
 
@@ -334,7 +334,7 @@ RSpec.describe '
 
     before {
       login_as_admin
-      visit spree.edit_admin_payment_method_path payment_method
+      visit edit_admin_payment_method_path payment_method
     }
 
     it "set by default 'None' as calculator" do
@@ -439,7 +439,7 @@ RSpec.describe '
     before do
       Spree::Preferences::Store.instance.persistence = true
       login_as_admin
-      visit spree.edit_admin_payment_method_path payment_method
+      visit edit_admin_payment_method_path payment_method
       fill_in "payment_method_name", with: ""
       fill_in "payment_method_description", with: "Edited description"
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
@@ -484,7 +484,7 @@ RSpec.describe '
 
     it 'displays data fetched from the database after navigating away from the page' do
       click_link 'Back To Payment Methods List'
-      click_link href: /#{spree.edit_admin_payment_method_path(payment_method)}/
+      click_link href: /#{edit_admin_payment_method_path(payment_method)}/
 
       expect(page).to have_field 'Amount', with: '10.0'
       expect(page).not_to have_field 'payment_method_name', with: ''
@@ -501,7 +501,7 @@ RSpec.describe '
     before do
       Spree::Preferences::Store.instance.persistence = true
       login_as_admin
-      visit spree.edit_admin_payment_method_path payment_method
+      visit edit_admin_payment_method_path payment_method
       fill_in 'payment_method_name', with: ''
       fill_in 'payment_method_description', with: 'Edited description'
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
@@ -552,7 +552,7 @@ RSpec.describe '
 
     it 'displays data fetched from the database after navigating away from the page' do
       click_link 'Back To Payment Methods List'
-      click_link href: /#{spree.edit_admin_payment_method_path(payment_method)}/
+      click_link href: /#{edit_admin_payment_method_path(payment_method)}/
 
       expect(page).to have_field 'Amount', with: '10.0'
       expect(page).not_to have_field 'payment_method_name', with: ''

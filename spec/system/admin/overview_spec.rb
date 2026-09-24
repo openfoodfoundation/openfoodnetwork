@@ -123,7 +123,7 @@ RSpec.describe '
 
         it 'should only display the order cycle warning once after login' do
           # First visit the page after login
-          visit spree.admin_dashboard_path
+          visit admin_dashboard_path
           expected_oc_warning = I18n.t(
             :active_distributors_not_ready_for_checkout_message_singular,
             distributor_names: d1.name
@@ -131,7 +131,7 @@ RSpec.describe '
           expect(page).to have_content(expected_oc_warning)
 
           # Reload the page
-          visit spree.admin_dashboard_path
+          visit admin_dashboard_path
           expect(page).not_to have_content(expected_oc_warning)
         end
       end

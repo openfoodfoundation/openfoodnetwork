@@ -42,7 +42,7 @@ module Spree
     end
 
     def redirect_path
-      if request.referer.blank? || request.referer.include?(spree.account_path)
+      if request.referer.blank? || request.referer.include?(account_path)
         developer_settings_path
       else
         request.referer
@@ -50,7 +50,7 @@ module Spree
     end
 
     def developer_settings_path
-      "#{spree.account_path}#/developer_settings"
+      "#{account_path}#/developer_settings"
     end
   end
 end

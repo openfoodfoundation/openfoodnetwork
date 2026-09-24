@@ -31,7 +31,7 @@ RSpec.describe 'Schedules' do
       it "shows a schedule with special characters immediately and after reloading" do
         schedule_name = "wöchentlich"
 
-        visit spree.admin_dashboard_path
+        visit admin_dashboard_path
         click_link 'Order cycles'
         expect(page).to have_selector ".order-cycle-#{oc1.id}"
         find('a', text: 'New Schedule').click

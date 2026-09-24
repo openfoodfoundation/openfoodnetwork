@@ -17,7 +17,7 @@ RSpec.describe "Managing users" do
 
     context "searching users" do
       it "should display the correct results for a user search" do
-        visit spree.admin_dashboard_path
+        visit admin_dashboard_path
         click_link "Users"
         fill_in "q_email_cont", with: "a@example"
         click_button "Search"
@@ -30,29 +30,29 @@ RSpec.describe "Managing users" do
 
     context "editing users" do
       it "should allow editing the user password" do
-        visit spree.admin_users_path
+        visit admin_users_path
         click_link("a@example.com")
         fill_in "user_password", with: "welcome"
         fill_in "user_password_confirmation", with: "welcome"
         click_button "Update"
 
         expect(page).to have_content("Account updated")
-        expect(current_path).to eq spree.edit_admin_user_path(user_a)
+        expect(current_path).to eq edit_admin_user_path(user_a)
       end
 
       it "allows to change your own password without logging you out" do
-        visit spree.edit_admin_user_path(admin_user)
+        visit edit_admin_user_path(admin_user)
 
         fill_in "user_password", with: "welcome"
         fill_in "user_password_confirmation", with: "welcome"
         click_button "Update"
 
         expect(page).to have_content("Account updated")
-        expect(current_path).to eq spree.edit_admin_user_path(admin_user)
+        expect(current_path).to eq edit_admin_user_path(admin_user)
       end
 
       it "should let me edit the user email" do
-        visit spree.edit_admin_user_path(user_a)
+        visit edit_admin_user_path(user_a)
 
         fill_in "Email", with: "newemail@example.org"
         click_button "Update"
@@ -62,7 +62,7 @@ RSpec.describe "Managing users" do
       end
 
       it "should allow to generate, regenarate and clear the user api key" do
-        visit spree.edit_admin_user_path(user_a)
+        visit edit_admin_user_path(user_a)
 
         expect(page).to have_content "NO KEY"
 
@@ -80,7 +80,7 @@ RSpec.describe "Managing users" do
       end
 
       it "should allow to disable the user and to enable it" do
-        visit spree.edit_admin_user_path(user_a)
+        visit edit_admin_user_path(user_a)
 
         expect(page).to have_unchecked_field "Disabled"
         check "Disabled"
@@ -96,7 +96,7 @@ RSpec.describe "Managing users" do
       end
 
       it "should toggle the api key generation view" do
-        visit spree.edit_admin_user_path(user_a)
+        visit edit_admin_user_path(user_a)
 
         expect(page).to have_content "NO KEY"
         expect {
@@ -125,7 +125,7 @@ RSpec.describe "Managing users" do
         # creates 8 more users
         8.times { create(:user) }
         expect(Spree::User.count).to eq 11
-        visit spree.admin_users_path
+        visit admin_users_path
       end
 
       it "displays pagination" do
@@ -152,7 +152,7 @@ RSpec.describe "Managing users" do
 
   describe "creating a user" do
     it "confirms successful creation" do
-      visit spree.new_admin_user_path
+      visit new_admin_user_path
 
       # shows no confirmation message to start with
       expect(page).not_to have_text "Email confirmation is pending"
@@ -184,7 +184,7 @@ RSpec.describe "Managing users" do
     let(:user) { create :user, confirmed_at: nil }
 
     it "displays success" do
-      visit spree.edit_admin_user_path user
+      visit edit_admin_user_path user
 
       expect do
         # The `a` element doesn't have an href, so we can't use click_link.

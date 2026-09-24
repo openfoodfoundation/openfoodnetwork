@@ -1,15 +1,13 @@
-Openfoodnetwork::Application.routes.draw do
-  scope module: 'spree' do
-    resources :orders, only: [:show, :edit, :update] do
-      put :cancel, on: :member
-    end
-  end
-end
+# frozen_string_literal: true
 
-# Overriding Devise routes to use our own controller
-Spree::Core::Engine.routes.draw do
+# Spree's routes. This file is drawn from config/routes.rb.
+scope module: 'spree' do
+  resources :orders, only: [:show, :edit, :update] do
+    put :cancel, on: :member
+  end
+
+  # Overriding Devise routes to use our own controller
   devise_for :spree_user,
-             :router_name => "spree",
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',

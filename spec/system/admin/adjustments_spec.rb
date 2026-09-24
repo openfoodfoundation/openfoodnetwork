@@ -35,7 +35,7 @@ RSpec.describe '
     order.finalize!
     create(:check_payment, order:, amount: order.total)
     login_as_admin
-    visit spree.admin_orders_path
+    visit admin_orders_path
   end
 
   shared_examples "when the enable_localized_number preference" \
@@ -172,7 +172,7 @@ RSpec.describe '
     before do
       order.cancel!
       login_as_admin
-      visit spree.edit_admin_order_path(order)
+      visit edit_admin_order_path(order)
     end
 
     it "displays adjustments" do

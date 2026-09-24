@@ -42,7 +42,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
     let(:user) { supplier1_ent_user }
 
     describe 'orders index page' do
-      before { visit spree.admin_orders_path }
+      before { visit admin_orders_path }
 
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }
@@ -96,7 +96,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
     end
 
     describe 'orders edit page' do
-      before { visit spree.edit_admin_order_path(order) }
+      before { visit edit_admin_order_path(order) }
 
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }

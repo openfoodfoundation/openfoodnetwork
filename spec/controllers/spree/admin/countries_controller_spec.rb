@@ -13,7 +13,7 @@ module Spree
           spree_put :update, id: country.id,
                              country: { name: "Kyrgyzstan" }
 
-          expect(response).to redirect_to spree.admin_countries_url
+          expect(response).to redirect_to admin_countries_url
           expect(country.reload.name).to eq "Kyrgyzstan"
         end
       end

@@ -24,7 +24,7 @@ RSpec.describe '
       it "setting the enterprise ownership limit" do
         expect(user.enterprise_limit).to eq 5
         login_as_admin
-        visit spree.admin_users_path
+        visit admin_users_path
         click_link user.email
 
         fill_in "user_enterprise_limit", with: 2
@@ -43,12 +43,12 @@ RSpec.describe '
     end
 
     it "should not be able to see system configuration" do
-      visit spree.edit_admin_general_settings_path
+      visit edit_admin_general_settings_path
       expect(page).to have_content 'Unauthorized'
     end
 
     it "should not be able to see user management" do
-      visit spree.admin_users_path
+      visit admin_users_path
       expect(page).to have_content 'Unauthorized'
     end
   end

@@ -5,7 +5,7 @@ RSpec.describe "spree/admin/payment_methods/index.html.haml" do
 
   helper Spree::Admin::NavigationHelper
   helper Spree::Admin::BaseHelper
-  helper Spree::Core::Engine.routes.url_helpers
+  helper Rails.application.routes.url_helpers
 
   before do
     ActionView::Base.class_eval do

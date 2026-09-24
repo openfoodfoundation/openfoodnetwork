@@ -13,7 +13,7 @@ RSpec.describe Spree::Admin::ProductsController do
 
   describe "GET /admin/products/:id/edit" do
     it "redirects to current URL" do
-      get spree.edit_admin_product_path("#{product.id}-old-apples")
+      get edit_admin_product_path("#{product.id}-old-apples")
 
       expect(response).to have_http_status :moved_permanently
       expect(response).to redirect_to("/admin/products/#{product.id}-apples/edit")

@@ -24,7 +24,7 @@
   %td.align-left
     - if order.payment_state
       %span.state{ class: order.payment_state.to_s }
-        %a{href: spree.admin_order_payments_path(order) }
+        %a{href: admin_order_payments_path(order) }
           = t('js.admin.orders.payment_states.' + order.payment_state.to_s)
           - if order.display_outstanding_balance
             %span
