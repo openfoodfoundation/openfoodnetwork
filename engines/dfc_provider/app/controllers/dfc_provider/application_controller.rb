@@ -6,6 +6,7 @@ module DfcProvider
     class Unauthorized < StandardError; end
 
     include ActiveStorage::SetCurrent
+    include RecordApiUser
 
     protect_from_forgery with: :null_session
 
@@ -20,13 +21,10 @@ module DfcProvider
 
     private
 
-    # Tell ApiLogger who is making this request. current_user may be nil on the
-    # controllers which skip authorization, or an ApiUser representing a DFC
-    # platform client, which has no Spree::User record to point at.
-    def record_api_user
-      return unless current_user.is_a?(Spree::User) && current_user.persisted?
-
-      request.env[::ApiLogger::USER_ID_KEY] = current_user.id
+    # current_user may be nil on the controllers which skip authorization, or an ApiUser
+    # representing a DFC platform client, which has no Spree::User record to point at.
+    def api_user_for_logging
+      current_user
     end
 
     def require_permission(scope)

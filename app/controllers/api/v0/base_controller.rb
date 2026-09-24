@@ -15,6 +15,7 @@ module Api
       include ::ActionController::ConditionalGet
       include ActionView::Layouts
       include RequestTimeouts
+      include RecordApiUser
 
       layout false
 
@@ -64,15 +65,6 @@ module Api
 
       def set_content_type
         headers["Content-Type"] = "application/json"
-      end
-
-      # Tell ApiLogger who is making this request. Anonymous requests get an
-      # unsaved Spree::User, and a request with an invalid key never gets here
-      # because authenticate_user halts the chain: both are logged with no user.
-      def record_api_user
-        return unless current_api_user.is_a?(Spree::User) && current_api_user.persisted?
-
-        request.env[::ApiLogger::USER_ID_KEY] = current_api_user.id
       end
 
       def error_during_processing(exception)
