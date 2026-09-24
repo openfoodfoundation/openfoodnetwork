@@ -1,0 +1,71 @@
+= pdf_stylesheet_pack_tag "mail"
+
+- if @order.distributor.logo.variable?
+  %table.social.white-bg{width: "100%"}
+    %tr
+      %td{align: "right"}
+        = image_tag @order.distributor.logo_url(:medium), class: "float-right"
+  %span.clear
+
+%h4
+  = t :email_confirm_customer_number_html, number: @order.number
+%p
+  = t :date_of_transaction
+  = l @order.completed_at.to_date
+%p
+  = t :email_confirm_customer_details_html, distributor: @order.distributor.name
+
+%table{width: "100%"}
+  %tbody
+    %tr{valign: "top"}
+      %td{align: "left"}
+        %strong= "#{t('spree.admin.orders.invoice.to')}:"
+        - if @order.bill_address
+          %br
+          = @order.bill_address.full_name
+          %br
+          = @order.bill_address.full_address
+        - contact = [@order.email, @order.bill_address&.phone].select(&:present?)
+        - if contact.any?
+          %br
+          = contact.join(", ")
+      %td{width: "8%"}
+        &nbsp;
+      %td{align: "left", style: "border-left: .1em solid #e2e2e2; padding-left: 1em"}
+        %strong
+          = "#{t('spree.admin.orders.invoice.shipping')}: #{@order.shipping_method&.name}"
+        - if @order.shipping_method&.require_ship_address
+          %br
+          = @order.ship_address.full_name
+          %br
+          = @order.ship_address.full_address
+          %br
+          = @order.ship_address.phone
+        - if @order.special_instructions.present?
+          %br
+          %br
+          %strong= t :customer_instructions
+          %br
+          = @order.special_instructions
+
+= render 'spree/order_mailer/order_summary'
+
+-# Deliberately not spree/shared/payment: that partial is shared with the admin invoice
+-# templates and also renders the paid/unpaid badge and the checkout payment description,
+-# neither of which belongs on the customer's copy.
+%p.callout
+  %strong
+    = t :email_payment_summary
+- if @order.payments.any?
+  = render partial: 'spree/shared/payments_list', locals: { payments: @order.payments }
+
+-# Not spree/order_mailer/_special_instructions: the customer's instructions are shown
+-# beside the shipping details above, so only the shop's note to the customer is left here.
+- if @order.note.present?
+  %br
+  %p
+    %small
+      %strong
+        = t :email_order_note
+      %br
+      = @order.note
