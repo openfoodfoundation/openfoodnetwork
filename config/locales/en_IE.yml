@@ -83,6 +83,8 @@ en_IE:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
+        enterprise_relationship:
+          inventory_vs_linked_variants: "Cannot grant both inventory and linked variants permissions."
         spree/image:
           attributes:
             attachment:
@@ -115,6 +117,67 @@ en_IE:
         blank: "can't be blank"
         too_short: "is too short (minimum is %{count} characters)"
   errors:
+    messages:
+      content_type_invalid:
+        one: "has an invalid content type (authorized content type is %{authorized_human_content_types})"
+        other: "has an invalid content type (authorized content types are %{authorized_human_content_types})"
+      content_type_spoofed:
+        one: "has a content type that is not equivalent to the one that is detected through its content (authorized content type is %{authorized_human_content_types})"
+        other: "has a content type that is not equivalent to the one that is detected through its content (authorized content types are %{authorized_human_content_types})"
+      file_size_not_less_than: "file size must be less than %{max} (current size is %{file_size})"
+      file_size_not_less_than_or_equal_to: "file size must be less than or equal to %{max} (current size is %{file_size})"
+      file_size_not_greater_than: "file size must be greater than %{min} (current size is %{file_size})"
+      file_size_not_greater_than_or_equal_to: "file size must be greater than or equal to %{min} (current size is %{file_size})"
+      file_size_not_between: "file size must be between %{min} and %{max} (current size is %{file_size})"
+      file_size_not_equal_to: "file size must be equal to %{exact} (current size is %{file_size})"
+      total_file_size_not_less_than: "total file size must be less than %{max} (current size is %{total_file_size})"
+      total_file_size_not_less_than_or_equal_to: "total file size must be less than or equal to %{max} (current size is %{total_file_size})"
+      total_file_size_not_greater_than: "total file size must be greater than %{min} (current size is %{total_file_size})"
+      total_file_size_not_greater_than_or_equal_to: "total file size must be greater than or equal to %{min} (current size is %{total_file_size})"
+      total_file_size_not_between: "total file size must be between %{min} and %{max} (current size is %{total_file_size})"
+      total_file_size_not_equal_to: "total file size must be equal to %{exact} (current size is %{total_file_size})"
+      duration_not_less_than: "duration must be less than %{max} (current duration is %{duration})"
+      duration_not_less_than_or_equal_to: "duration must be less than or equal to %{max} (current duration is %{duration})"
+      duration_not_greater_than: "duration must be greater than %{min} (current duration is %{duration})"
+      duration_not_greater_than_or_equal_to: "duration must be greater than or equal to %{min} (current duration is %{duration})"
+      duration_not_between: "duration must be between %{min} and %{max} (current duration is %{duration})"
+      duration_not_equal_to: "duration must be equal to %{exact} (current duration is %{duration})"
+      limit_out_of_range:
+        zero: "no files attached (must have between %{min} and %{max} files)"
+        one: "only 1 file attached (must have between %{min} and %{max} files)"
+        other: "total number of files must be between %{min} and %{max} files (there are %{count} files attached)"
+      limit_min_not_reached:
+        zero: "no files attached (must have at least %{min} files)"
+        one: "only 1 file attached (must have at least %{min} files)"
+        other: "%{count} files attached (must have at least %{min} files)"
+      limit_max_exceeded:
+        zero: "no files attached (maximum is %{max} files)"
+        one: "too many files attached (maximum is %{max} files, got %{count})"
+        other: "too many files attached (maximum is %{max} files, got %{count})"
+      attachment_missing: "is missing its attachment"
+      media_metadata_missing: "is not a valid media file"
+      dimension_min_not_included_in: "must be greater than or equal to %{width} x %{height} pixels"
+      dimension_max_not_included_in: "must be less than or equal to %{width} x %{height} pixels"
+      dimension_width_not_included_in: "width is not included between %{min} and %{max} pixels"
+      dimension_height_not_included_in: "height is not included between %{min} and %{max} pixels"
+      dimension_width_not_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels"
+      dimension_height_not_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels"
+      dimension_width_not_less_than_or_equal_to: "width must be less than or equal to %{length} pixels"
+      dimension_height_not_less_than_or_equal_to: "height must be less than or equal to %{length} pixels"
+      dimension_width_not_equal_to: "width must be equal to %{length} pixels"
+      dimension_height_not_equal_to: "height must be equal to %{length} pixels"
+      aspect_ratio_not_square: "must be square (current file is %{width}x%{height}px)"
+      aspect_ratio_not_portrait: "must be portrait (current file is %{width}x%{height}px)"
+      aspect_ratio_not_landscape: "must be landscape (current file is %{width}x%{height}px)"
+      aspect_ratio_not_x_y: "must be %{authorized_aspect_ratios} (current file is %{width}x%{height}px)"
+      aspect_ratio_invalid: "has an invalid aspect ratio (valid aspect ratios are %{authorized_aspect_ratios})"
+      file_not_processable: "is not identified as a valid media file"
+      pages_not_less_than: "page count must be less than %{max} (current page count is %{pages})"
+      pages_not_less_than_or_equal_to: "page count must be less than or equal to %{max} (current page count is %{pages})"
+      pages_not_greater_than: "page count must be greater than %{min} (current page count is %{pages})"
+      pages_not_greater_than_or_equal_to: "page count must be greater than or equal to %{min} (current page count is %{pages})"
+      pages_not_between: "page count must be between %{min} and %{max} (current page count is %{pages})"
+      pages_not_equal_to: "page count must be equal to %{exact} (current page count is %{pages})"
     not_found:
       title: "The page you were looking for doesn't exist (404)"
       message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
@@ -126,6 +189,10 @@ en_IE:
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
     general_error:
       message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    unauthorized:
+      message: "You are not authorised to perform that action."
+    network_error:
+      message: "Network error: please try again later."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -181,6 +248,9 @@ en_IE:
       disconnect_failure: "Failed to disconnect Stripe."
     success_code:
       disconnected: "Stripe account disconnected."
+  taler:
+    order_status:
+      claimed: "The payment request expired. Please try again."
   activemodel:
     errors:
       messages:
@@ -204,6 +274,10 @@ en_IE:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+        user_invitation:
+          attributes:
+            email:
+              is_already_manager: is already a manager
   card_details: "Card details"
   card_type: "Card type"
   card_type_is: "Card type is"
@@ -254,6 +328,8 @@ en_IE:
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
     oidc:
       failure: "Could not sign in: %{error}"
+      record_not_unique: "%{uid} is already associated with another account"
+  home_page_url: "Home page URL (leave blank to use the built-in home page)"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -287,6 +363,8 @@ en_IE:
   sku: "Product Code"
   subtotal: "Subtotal"
   tax_rate: "Tax rate"
+  with_tax_incl: "%{amount} tax incl."
+  producer_mail_qty: QTY
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -350,6 +428,11 @@ en_IE:
     authorization_required:
       subject: "A payment requires authorization from the customer"
       message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+    refund_available:
+      subject: "Refund from %{shop}"
+      message: |
+          Your payment of %{amount} to %{shop} is being refunded.
+          Accept your refund following the link below.
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -516,6 +599,16 @@ en_IE:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "There was an error communicating with the API, please try again later."
+      invalid_voucher: "The voucher is not valid"
+      expired: "The voucher has expired"
+      not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -531,6 +624,10 @@ en_IE:
     paste: "Paste"
     destroy: "Destroy"
     rename: "Rename"
+  cart_sidebar_component:
+    items_in_cart:
+      one: "%{count} item in your cart"
+      other: "%{count} items in your cart"
   admin:
     products_page:
       title: Products
@@ -579,8 +676,11 @@ en_IE:
         delete: Delete
         remove: Remove
         preview: Preview
+        create_linked_variant: Create linked variant
       image:
         edit: Edit
+      variant_row:
+        sourced_from: "Sourced from: %{source_name} (%{source_id}); Producer: %{producer_name}"
       product_preview:
         product_preview: Product preview
         shop_tab: Shop
@@ -671,6 +771,8 @@ en_IE:
     number_localization:
       number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
+    address_display:
+      address_display_settings: "Address Display Settings"
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -722,6 +824,7 @@ en_IE:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         balance: "Balance"
+        credit: "Available Credit"
         update_address_success: "Address updated successfully."
         update_address_error: "Sorry! Please input all of the required fields!"
         edit_bill_address: "Edit Billing Address"
@@ -733,15 +836,21 @@ en_IE:
         update_address: "Update Address"
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
+        filter_by_tag: "Filter by tag"
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        id: Id
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+        has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
     customer_account_transaction:
       index:
+        available_credit: "Available credit: %{available_credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
+        created_by: Created by
         running_balance: Running balance
     column_preferences:
       bulk_update:
@@ -760,12 +869,35 @@ en_IE:
         user_guide: User Guide
         map: Map
     dfc_product_imports:
+      connection_invalid_html: |
+          Connecting with your OIDC account failed.
+          Please refresh your OIDC connection at: %{oidc_settings_link}
+      absent_variant:
+        reset: "Reset stock"
       index:
+        title: "DFC product catalog"
+        catalog_url: "%{count} products to be imported from: %{catalog_url}"
+        absent_products:
+          one: |
+              One product is no longer in the catalog.
+              It will be marked as unavailable by resetting stock to zero.
+          other: |
+              %{count} products are no longer in the catalog.
+              They will be marked as unavailable by resetting stock to zero.
+        enterprise: "Import to enterprise: %{enterprise_name}"
+        select_all: "Select/deselect all"
         update: Update
         new: New
         selected:
+          zero: "0 selected"
+          one: "1 selected"
           other: "%{count} selected"
         import: Import
+        invalid_url: This catalog URL is not valid.
+      import:
+        title: "DFC product catalog import"
+        imported_products: "Imported products: %{count}"
+        reset_products: "Stock reset for absent products: %{count}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -845,9 +977,13 @@ en_IE:
           cancellation_text: "Keep variant"
       filters:
         search_products: Search for products
+        search_for_enterprises: Search for enterprises
+        select_enterprise: Select enterprise
+        all_enterprises: All enterprises
         search_for_categories: Search for categories
         select_category: Select category
         all_categories: All categories
+        select_tag: Select tag
         enterprises:
           label: Enterprises
         categories:
@@ -898,10 +1034,17 @@ en_IE:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         enterprise_field_name: "Enterprise"
+        select_unit_scale: Select unit scale
         add_a_tag: Add a tag
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
+      create_linked_variant:
+        success: "Successfully created linked variant"
+      tag_rules:
+        rules_per_tag:
+          one: "%{tag} has 1 rule"
+          other: "%{tag} has %{count} rules"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -945,6 +1088,7 @@ en_IE:
         shipping_categories: Shipping Categories
       dfc_import_form:
         title: "Import from DFC catalog"
+        enterprise: "Create products for enterprise"
         catalog_url: "DFC catalog URL"
         preview: Preview
       import:
@@ -966,6 +1110,7 @@ en_IE:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -1186,11 +1331,15 @@ en_IE:
           own: Own
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          external_billing_id: External Billing ID
+          external_billing_id_placeholder: eg. INV-2024-123456
+          external_billing_id_tip: "This is the ID used by the external billing system to identify this enterprise."
           visible_in_search: Visible in search?
           visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+          admin_only_legend: Admin only
         properties:
           legend: "Properties"
         permalink:
@@ -1229,8 +1378,12 @@ en_IE:
           enable_subscriptions_true: "Enabled"
           customer_names_in_reports: "Customer Names in Reports"
           customer_names_tip: "Enable your suppliers to see your customers names in reports"
+          producers_to_edit_orders: "Ability for producers to edit orders"
+          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
+          customer_contacts_in_reports: "Customer contact details in reports"
+          customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
           customer_contacts_false: "Disabled"
           customer_contacts_true: "Enabled"
           producers_edit_orders_false: "Disabled"
@@ -1291,10 +1444,12 @@ en_IE:
           show_hide_payment: 'Show or Hide payment methods at checkout'
           show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
+          description: The users with permission to manage this enterprise.
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           contact: "Contact"
+          manager: "Manager"
           owner: 'Owner'
           contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
@@ -1305,6 +1460,8 @@ en_IE:
           invite_manager: "Invite Manager"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+          set_as_contact: "Set %{email} as contact"
+          set_as_owner: "Set %{email} as owner"
         vouchers:
           legend: Vouchers
           voucher_code: Voucher Code
@@ -1330,10 +1487,14 @@ en_IE:
           legend: "Connected apps"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously."
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
             need_to_be_manager: "Only managers can connect apps."
+            description: "INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project."
+            link_label_html: "Learn more about this research project <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
@@ -1345,6 +1506,9 @@ en_IE:
                 Your Open Food Network account is connected to Discover Regenerative.
                 Add or update information on your Discover Regenerative listing here.
             link_label: "Manage listing"
+            description: "Eligible producers can showcase their regenerative credentials, farming practices and more through a profile listing. Simplifying how buyers can find regenerative produce and connect with producers of interest."
+            link_label_html: "Learn more about Discover Regenerative <i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Allow redemption of VINE vouchers in your shopfront."
@@ -1353,6 +1517,9 @@ en_IE:
             need_to_be_manager: "Only managers can connect apps."
             vine_api_key: "VINE API Key"
             vine_secret: "VINE secret"
+            description: "To enable VINE for your enterprise, enter your API key and secret."
+            link_label_html: "VINE <i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
@@ -1367,6 +1534,7 @@ en_IE:
         enterprise_fees: Enterprise Fees
         enterprise_fees_tip: This enterprise has no fees
       admin_index:
+        search_legend: Search Enterprises
         name: Name
         role: Role
         sells: Sells
@@ -1375,6 +1543,13 @@ en_IE:
         producer: Producer
         search: Search
         clear: Clear
+        owner_email: Owner Email
+        manager_email: Manager Email
+        sells_options:
+          unspecified: unspecified
+          none: none
+          own: own
+          any: any
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
@@ -1422,6 +1597,10 @@ en_IE:
         choose_starting_point: 'Choose your package:'
         profile: 'Profile'
         producer_profile: 'Producer Profile'
+    tag_rules:
+      not_supported_type: Tag rule type not supported
+      confirm_delete: Are you sure you want to delete this rule ?
+      destroy_error: There was an issue when removing the Tag rule
     order_cycles:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
@@ -1589,6 +1768,7 @@ en_IE:
         logo_hint: 300 x 300 pixels
         logo_remove: "Remove Image"
         logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_label: "Promo image"
         promo_image_note1: 'PLEASE NOTE:'
         promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
         promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
@@ -1596,6 +1776,7 @@ en_IE:
         promo_image_remove: "Remove Image"
         promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
         white_label_logo_label: "Logo used in shopfront"
+        white_label_logo_hint: 217 x 44 pixels
         white_label_logo_remove: "Remove Image"
         white_label_logo_remove_confirm: "Are you sure you want to remove this logo?"
       user_guide_link:
@@ -1634,6 +1815,11 @@ en_IE:
           images: "Images"
           contact: "Contact"
           web: "Web Resources"
+      stimulus_pagination:
+        navigation: Pagination
+        page: "Page %{number}"
+        previous: Previous page
+        next: Next page
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -1642,6 +1828,9 @@ en_IE:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      none: none
+      metadata:
+        report_title: Report Title
       deprecated: "This report is deprecated and will be removed in a future release."
       hidden_field: "< Hidden >"
       unitsize: UNITSIZE
@@ -1666,6 +1855,7 @@ en_IE:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      pay_your_suppliers: Pay your suppliers
       display:
         report_is_big: "This report is big and may slow down your device."
         display_anyway: "Display anyway"
@@ -1711,6 +1901,8 @@ en_IE:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      suppliers:
+        name: Suppliers
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
@@ -1740,6 +1932,7 @@ en_IE:
         display: Display
         summary_row: Summary Row
         header_row: Header Row
+        metadata_rows: Metadata Rows
         raw_data: Raw Data
         formatted_data: Formatted Data
       packing:
@@ -1856,7 +2049,10 @@ en_IE:
     user_invitations:
       new:
         back: Back
+        description: "Invite a user to sign up and become a manager of this enterprise."
+        eg_email_address: e.g. email address of a new or existing user
         email: Email
+        invite_new_user: Invite a new user
         invite: Invite
     vouchers:
       new:
@@ -2006,7 +2202,11 @@ en_IE:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
+      voucher_code_blank: Please enter a valid voucher code
+      voucher_code_not_found: invalid. It either doesn't exist or has been redeemed fully
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2238,6 +2438,7 @@ en_IE:
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
   system_headline: "Selling on OFN - 3 easy steps"
   system_step1_html: "1. Create Your Enterprise"
+  system_step1_text_html: <a href="/shops">Search</a> our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup.
   system_step2_html: "2. Add Your Products"
   system_step2_text_html: "Add products to your shop - your own and/or from other producers around you. Set images, descriptions, prices, stock levels and flexible weights and measures."
   system_step3_html: "3. Plan your Deliveries"
@@ -2278,6 +2479,7 @@ en_IE:
   order_total: Total order
   order_payment: "Paying via:"
   no_payment_required: "No payment required"
+  credit_used: "Credit used: %{amount}"
   customer_credit: Credit
   order_billing_address: Billing address
   order_delivery_on: Delivery on
@@ -2309,8 +2511,15 @@ en_IE:
   email_confirmed: "Thank you for confirming your email address."
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
+  email_confirmation_profile_created: >
+      A profile for %{name} has been successfully created!  To activate your Profile
+      we need to confirm this email address.
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
+  email_confirmation_help_html: >
+      After confirming your email you can access your administration account for this
+      enterprise. See the %{link} to find out more about %{sitename}'s features and
+      to start using your profile or online store."
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
@@ -2331,6 +2540,7 @@ en_IE:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(includes tax):"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_description: Payment Description at Checkout
@@ -2611,6 +2821,7 @@ en_IE:
   confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
   confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
   location_placeholder: "Type in a location..."
+  gmap_load_failure: "Unable to load map. Please check your browser settings and allow 3rd party cookies for this website."
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"
@@ -2905,6 +3116,7 @@ en_IE:
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
+  spree_admin_enterprises_showing: "Showing %{count} of %{total}"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_supplier: Supplier
@@ -2984,6 +3196,8 @@ en_IE:
   report_render_options: Rendering Options
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
+  report_header_order_cycle_start_date: OC Start Date
+  report_header_order_cycle_end_date: OC End Date
   report_header_user: User
   report_header_email: Email
   report_header_status: Status
@@ -3001,9 +3215,11 @@ en_IE:
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
   report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_external_billing_id: "Hub External Billing Id"
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
+  report_header_hub_contact_email: Hub Contact Email
   report_header_hub_owner_email: Hub Owner Email
   report_header_hub_phone: "Hub Phone Number"
   report_header_hub_address_line1: "Hub Address Line 1"
@@ -3075,6 +3291,8 @@ en_IE:
   report_header_producer_suburb: Producer Town
   report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: VAT Registered
+  report_header_producer_abn_acn: Producer ABN/ACN
+  report_header_producer_address: Producer Address
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -3119,6 +3337,8 @@ en_IE:
   report_header_item_fees_price: "Item + Fees (%{currency})"
   report_header_admin_handling_fees: "Admin & Handling (%{currency})"
   report_header_ship_price: "Ship (%{currency})"
+  report_header_producer_charges_gst: Producer charges VAT?
+  report_header_total_tax_on_product: "Total tax on product (%{currency})"
   report_header_pay_fee_price: "Pay fee (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Product Total (%{currency})"
@@ -3135,7 +3355,11 @@ en_IE:
   report_header_total_units: Total Units
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total fees excl. tax (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total tax on fees (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_shipment_state: "Shipment County"
   report_header_shipping_method: "Shipping Method"
@@ -3156,6 +3380,8 @@ en_IE:
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
+  report_header_balance_due: "Balance Due (%{currency_symbol})"
+  report_header_credit_due: "Available Credit (%{currency_symbol})"
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3190,6 +3416,8 @@ en_IE:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  payment_method_taler:
+    order_summary: "Open Food Network order"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
   tag_rules: "Tag Rules"
@@ -3212,6 +3440,7 @@ en_IE:
   product_importer_products_save_error: did not save any products successfully
   product_import_file_not_found_notice: 'File not found or could not be opened'
   product_import_no_data_in_spreadsheet_notice: 'No data found in spreadsheet'
+  product_import_inventory_disable: Importing into inventories is not available
   order_choosing_hub_notice: Your hub has been selected.
   order_cycle_selecting_notice: Your order cycle has been selected.
   adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
@@ -3234,10 +3463,12 @@ en_IE:
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
+  order_cycle_closed_next_steps: "The order cycle you've selected has just closed. Please contact us to complete your order #%{order_number}!"
   back_to_orders_list: "Back To Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  credit_customer: Credit customer
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -3417,6 +3648,7 @@ en_IE:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product."
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3463,9 +3695,11 @@ en_IE:
           invalid: "invalid"
         quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
+        could_not_add_item: "Could not update order. Please try again."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
+        restock_item_deleted_tooltip: "This product has been deleted and cannot be restocked"
         restock_items: "Restock Items: return all items to stock"
         delete_line_items_html:
           one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
@@ -3496,6 +3730,7 @@ en_IE:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+          customer_already_exists: "%{email} is already a customer of %{shop_name}. You can find them in the customer list."
       subscriptions:
         error_saving: "Error saving subscription"
         new:
@@ -3518,6 +3753,9 @@ en_IE:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock:
+          one: "Only %{count} left"
+          other: "Only %{count} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -3552,6 +3790,7 @@ en_IE:
       manage_products: "manage products"
       edit_profile: "edit profile"
       add_products_to_inventory: "add products to inventory"
+      create_linked_variants: "create linked variants [BETA]"
     resources:
       could_not_delete_customer: 'Could not delete customer'
     product_import:
@@ -3676,9 +3915,39 @@ en_IE:
     sack:
       one: "sack"
       other: "sacks"
+    bucket:
+      one: "bucket"
+      other: "buckets"
+    pail:
+      one: pail
+      other: pails
+    stem:
+      one: "stem"
+      other: "stems"
+    plug:
+      one: "plug"
+      other: "plugs"
+    plant:
+      one: "plant"
+      other: "plants"
     bundle:
       one: "bundle"
       other: "bundles"
+    bulb:
+      one: "bulb"
+      other: "bulbs"
+    root:
+      one: "root"
+      other: "roots"
+    tuber:
+      one: "tuber"
+      other: "tubers"
+    corm:
+      one: "corm"
+      other: "corms"
+    crate:
+      one: "crate"
+      other: "crates"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -3775,8 +4044,11 @@ en_IE:
     destroy:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
+    test:
+      success: Some test data will be sent to the webhook url
   spree:
     order_updated: "Order Updated"
+    cannot_perform_operation: "Can not perform this operation"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"
@@ -3799,6 +4071,7 @@ en_IE:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
+    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
@@ -3880,6 +4153,7 @@ en_IE:
     logourl: "Logourl"
     are_you_sure_delete: "Are you sure you want to delete this record?"
     confirm_delete: "Confirm Deletion"
+    tag_rule: "Tag Rule"
     voucher: "Voucher"
     configurations: "Configurations"
     general_settings: "General Settings"
@@ -3895,6 +4169,9 @@ en_IE:
     hide_cents: "Hide pence"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
+    address_display_format: "Address display format"
+    address_display_format_default: "Default"
+    address_display_format_postal_code_first: "Postal code first"
     mail_method_settings: "Mail Method Settings"
     mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
@@ -3965,6 +4242,12 @@ en_IE:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    filename: "File name"
+    caption: "Caption"
+    replace_image: "Replace image"
+    delete_permanently: "Delete permanently"
+    alt_text: "Alternative text"
+    instance_url: "Instance URL"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -4022,8 +4305,12 @@ en_IE:
     admin:
       images:
         edit:
+          title: 'Edit image for "%{resource_name}"'
+          subtitle: A square size starting from 440px by 440px is recommended.
           close: Back
           upload: Upload photo
+        new:
+          use_uploader: "Please use the image uploader on this page to add an image."
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -4112,6 +4399,7 @@ en_IE:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          cannot_add_item_to_shipped_order: "Cannot add item to shipped order"
           include_out_of_stock_variants: "Include variants with no available stock"
         shipment:
           mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
@@ -4138,6 +4426,7 @@ en_IE:
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
           send_invoice: "Send Invoices"
           send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
+          credit_orders: Credit orders
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4174,6 +4463,8 @@ en_IE:
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+        bulk_credit:
+          could_not_credit: "Order #%{order_number} could not be credited : %{message}"
       invoices:
         index:
           order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
@@ -4282,6 +4573,8 @@ en_IE:
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
           paypalexpress: "PayPal Express"
           stripesca: "Stripe"
+          taler: "Taler"
+          customercredit: "Customer Credit"
       payments:
         source_forms:
           stripe:
@@ -4289,9 +4582,12 @@ en_IE:
             submitting_payment: Submitting payment...
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
+        customer_credit_successful: Customer has been successfully credited!
       products:
         image:
           label: "Image"
+          subtitle: "A square size starting from 440px by 440px is recommended."
+          upload: "Upload image"
           edit: "Edit"
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         image_not_processable: "Image attachment is not a valid image."
@@ -4299,6 +4595,7 @@ en_IE:
           title: "New Product"
           new_product: "New Product"
           enterprise: "Enterprise"
+          search_for_enterprises: "Search for enterprises"
           search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
@@ -4345,6 +4642,7 @@ en_IE:
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
+        hidden_customer_details_tip: "If customer names and/or contact details are hidden, you can ask the distributor to update their shop preferences to allow their suppliers to view customer details in reports."
         products_and_inventory:
           all_products:
             message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
@@ -4363,6 +4661,7 @@ en_IE:
         form:
           disabled: "Disabled?"
           email: "Email"
+          admin: "Super admin?"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
@@ -4514,6 +4813,7 @@ en_IE:
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
+        dear_customer: "Dear customer,"
         request_sent_text: |
             A request to reset your password has been made.
             If you did not make this request, simply ignore this email.
@@ -4580,6 +4880,7 @@ en_IE:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
+        no_payment_found: "No pending Paypal payment found"
     users:
       api_keys:
         regenerate_key: "Regenerate Key"
@@ -4601,6 +4902,7 @@ en_IE:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
+          customer_account_transactions: Customer Transactions
           settings: Account Settings
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
@@ -4611,6 +4913,9 @@ en_IE:
         authorisation_required: Authorisation Required
         authorise: Authorize
       customer_account_transactions:
+        title: Customer Transactions
+        credit_available: "Credit available: %{credit}"
+        transaction_date: Transaction Date
         description: Description
         amount: Amount
         running_balance: Running balance
@@ -4732,6 +5037,7 @@ en_IE:
         order_cycle_tagged_bottom: "are:"
         inventory_tagged_top: "Inventory variants tagged"
         inventory_tagged_bottom: "are:"
+        variant_tagged_top: "Variants tagged"
         variant_tagged_bottom: "are:"
         visible: VISIBLE
         not_visible: NOT VISIBLE
@@ -4747,8 +5053,33 @@ en_IE:
         create_placeholder: Enter the URL of the remote webhook endpoint
       event_types:
         order_cycle_opened: Order Cycle Opened
+        payment_status_changed: Post webhook on Payment status change
+      test_endpoint: Test webhook endpoint
+    shop_variant_modal:
+      select: Select
+      from_producer: "From %{name}"
     product_tile:
+      multiple_producers: "Multiple producers"
+      multiple_options: "multiple options"
       from_price: "from"
   invisible_captcha:
     sentence_for_humans: "Please leave empty"
     timestamp_error_message: "Please try again after 5 seconds."
+  api_customer_credit: "API credit: %{description}"
+  credit_payment_method:
+    name: Customer credit
+    description: Allow customer to pay with credit
+    success: Payment with credit was sucessful
+    void_success: Credit void was sucessful
+    order_payment_description: "Customer credit: Payment for order: %{order_number}"
+    order_void_description: "Customer credit: Refund for order: %{order_number}"
+    errors:
+      customer_not_found: Customer not found
+      missing_payment: Missing payment
+      credit_payment_method_missing: Credit payment method is missing
+      no_credit_available: No credit available
+      not_enough_credit_available: Not enough credit available
+  customer_credit_service:
+    no_credit_owed: No credit owed
+    credit_payment_method_missing: Customer credit payment method is missing, please check configuration
+    refund_sucessful: Refund successful!

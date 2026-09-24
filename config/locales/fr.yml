@@ -625,6 +625,11 @@ fr:
     paste: "Coller"
     destroy: "Détruire"
     rename: "Renommer"
+  cart_sidebar_component:
+    items_in_cart:
+      one: "%{count} élément dans le panier"
+      many: "%{count} éléments dans le panier"
+      other: "%{count} éléments dans le panier"
   admin:
     products_page:
       title: Produits
@@ -3756,6 +3761,7 @@ fr:
           add_a_new_customer_for: "Ajouter un nouvel acheteur pour %{shop_name}"
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
+          customer_already_exists: "%{email} est déjà client de %{shop_name} . Vous pouvez le trouver dans la liste des clients."
       subscriptions:
         error_saving: "Une erreur est survenue à la sauvegarde"
         new:
@@ -4107,6 +4113,7 @@ fr:
       error: Le webhook n'a pas pu être supprimé.
     test:
       success: Des données test vont être envoyées à l'URL du webhook
+      unsupported: Il n'existe pas de données de test pour ce type de webhook.
   spree:
     order_updated: "La commande a été mise à jour"
     cannot_perform_operation: "Cette opération ne peut pas être réalisée"
@@ -5129,6 +5136,7 @@ fr:
       event_types:
         order_cycle_opened: Cycle de vente ouvert
         payment_status_changed: Poster webhook sur le changement du statut de paiement
+        order_balance_due: Webhook de post sur une commande passée avec un solde dû
       test_endpoint: Tester le point de terminaison du webhook
     shop_variant_modal:
       select: Sélectionner

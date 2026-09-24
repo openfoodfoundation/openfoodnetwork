@@ -529,6 +529,10 @@ hu:
     paste: "Beillesztés"
     destroy: "Megszüntet"
     rename: "Átnevezés"
+  cart_sidebar_component:
+    items_in_cart:
+      one: "%{count} termék a kosarában"
+      other: "%{count} termék a kosaradban"
   admin:
     products_page:
       title: Termékek
@@ -3574,6 +3578,7 @@ hu:
           add_a_new_customer_for: "Új vásárló hozzáadása a  %{shop_name}számára"
           customer_placeholder: "ügyfél@example.org"
           valid_email_error: "Kérjük, valós e-mail címet adj meg"
+          customer_already_exists: "%{email} már ügyfele a %{shop_name} vállalkozásnak. Megtalálod az ügyfelek listában."
       subscriptions:
         error_saving: "Hiba az előfizetés mentése közben"
         new:
@@ -4844,6 +4849,9 @@ hu:
         create_placeholder: Add meg a távoli webhook végpont URL-címét
       event_types:
         order_cycle_opened: Rendelési ciklus megnyitva
+    shop_variant_modal:
+      select: Válassz
+      from_producer: "%{name} fájlból"
     product_tile:
       from_price: "termelő"
   invisible_captcha:
