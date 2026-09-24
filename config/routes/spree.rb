@@ -74,7 +74,7 @@ scope module: 'spree' do
     post "orders/bulk_credit", to: "orders#bulk_credit"
     post "orders/resend_confirmation_emails", to: "orders#resend_confirmation_emails"
     post "orders/send_invoices", to: "orders#send_invoices"
-    post "orders/cancel_orders", to: "orders#cancel_orders"
+    post "orders/bulk_cancel", to: "orders#bulk_cancel"
 
     resources :orders, except: [:show, :destroy] do
       member do

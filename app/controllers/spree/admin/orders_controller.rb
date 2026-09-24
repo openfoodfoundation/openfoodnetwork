@@ -191,7 +191,7 @@ module Spree
         bulk_action_feedback("admin.send_invoice_feedback", count)
       end
 
-      def cancel_orders
+      def bulk_cancel
         cancelled_orders = ::Orders::BulkCancelService.new(params, spree_current_user).call
 
         render turbo_stream: [

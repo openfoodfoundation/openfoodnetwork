@@ -485,7 +485,7 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
-  describe "#cancel_orders" do
+  describe "#bulk_cancel" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) { create(:completed_order_with_totals, distributor:) }
     let(:other_order) {
@@ -497,7 +497,7 @@ RSpec.describe Spree::Admin::OrdersController do
     it "cancels editable orders and closes the modal" do
       expect {
         post(
-          "/admin/orders/cancel_orders",
+          "/admin/orders/bulk_cancel",
           params: { bulk_ids: [order.id, other_order.id], format: :turbo_stream }
         )
       }.to change { order.reload.state }.to("canceled")
@@ -518,7 +518,7 @@ RSpec.describe Spree::Admin::OrdersController do
         end
 
       post(
-        "/admin/orders/cancel_orders",
+        "/admin/orders/bulk_cancel",
         params: { bulk_ids: [order.id], restock_items: "1", format: :turbo_stream }
       )
 
@@ -530,7 +530,7 @@ RSpec.describe Spree::Admin::OrdersController do
         sign_in create(:user)
 
         post(
-          "/admin/orders/cancel_orders",
+          "/admin/orders/bulk_cancel",
           params: { bulk_ids: [order.id], format: :turbo_stream }
         )
 
