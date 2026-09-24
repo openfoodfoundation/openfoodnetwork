@@ -117,10 +117,6 @@ module Spree
         order.user == user || (order.token && token == order.token)
       end
 
-      can :bulk_cancel, Spree::Order do |order|
-        order.user == user
-      end
-
       can [:update, :destroy], Spree::CreditCard do |credit_card|
         credit_card.user == user
       end
@@ -349,10 +345,11 @@ module Spree
           user.enterprises.distributors.where(enable_producers_to_edit_orders: true).exist?
       end
 
-      can [:create], Spree::Order
+      # BulkCancelService will load scoped order
+      can [:create, :bulk_cancel], Spree::Order
 
       # Spree::Admin::PaymentController need to load the order to credit_customer
-      can [:read, :update, :credit_customer, :bulk_credit, :cancel_orders], Spree::Order do |order|
+      can [:read, :update, :credit_customer, :bulk_credit], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||
