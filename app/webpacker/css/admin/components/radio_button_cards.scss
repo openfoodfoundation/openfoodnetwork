@@ -4,7 +4,7 @@
 
   label.radio-button-card {
     background-color: $spree-light-blue;
-    border-radius: 4px;
+    border-radius: $border-radius;
     display: flex;
     flex-basis: 0;
     flex-direction: column;
@@ -12,10 +12,10 @@
 
     span.header {
       background-color: $teal;
-      border-radius: 4px;
+      border-radius: $border-radius;
       color: white;
       display: block;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       outline: 1px solid black;
       padding: 0.2rem 0;
       position: relative;
@@ -29,13 +29,13 @@
 
       span.title {
         display: block;
-        font-size: 22px;
+        font-size: $h3-size;
         line-height: 28px;
       }
 
       span.subtitle {
         display: block;
-        font-size: 14px;
+        font-size: $body-font-size;
         padding: 0.2rem 0;
       }
     }
