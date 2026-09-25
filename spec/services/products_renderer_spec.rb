@@ -36,6 +36,24 @@ RSpec.describe ProductsRenderer do
     end
 
     context "filtering" do
+      it "only renders the variants matching the taxon filter" do
+        # product_apples has one variant in the fruits taxon; add a second in cakes
+        apple_cake = create(:variant, product: product_apples, primary_taxon_id: cakes.id)
+        exchange.variants << apple_cake
+
+        products_renderer = described_class.new(
+          distributor, order_cycle, customer,
+          { q: { "variants_primary_taxon_id_in_any" => [fruits.id] } }
+        )
+
+        products = products_renderer.products_view
+        expect(products.map(&:id)).to eq([product_apples.id, product_cherries.id])
+
+        apples_variant_ids = products.find { |p| p.id == product_apples.id }.variants.map(&:id)
+        expect(apples_variant_ids).to eq([product_apples.variants.first.id])
+        expect(apples_variant_ids).not_to include(apple_cake.id)
+      end
+
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
          "variants_display_name_or_variants_enterprise_name_cont" do
         params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
