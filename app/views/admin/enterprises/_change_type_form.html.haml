@@ -13,8 +13,9 @@
               %span.title= t('.producer_profile')
               %span.subtitle
                 = t('.connect_ofn')
-              %span.tertiary
-                = t('.always_free')
+              - if t('.always_free').strip.present? # Avoids empty white background if set to blank e.g. in :fr locale
+                %span.tertiary
+                  = t('.always_free')
             %span.description= t('.producer_description_text')
           = f.label :sells, value: "own", class: "radio-button-card" do
             %span.header
@@ -37,8 +38,9 @@
               %span.title= t('.profile')
               %span.subtitle
                 = t('.get_listing')
-              %span.tertiary
-                = t('.always_free')
+              - if t('.always_free').strip.present? # Avoids empty white background if set to blank e.g. in :fr locale
+                %span.tertiary
+                  = t('.always_free')
             %span.description= t('.profile_description_text')
           = f.label :sells, value: "any", class: "radio-button-card" do
             %span.header
