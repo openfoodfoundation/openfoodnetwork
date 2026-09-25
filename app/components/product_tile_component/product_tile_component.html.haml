@@ -3,6 +3,8 @@
 .product-item
   .product-content
     %a.product-link{ href: "#", "aria-haspopup": "dialog", "data-controller": "modal-link", "data-action": "modal-link#open:prevent", "data-modal-link-target-value": modal_id }
+      - if product.group_buy
+        %span.bulk-label= t("components.product_tile.bulk")
       - if product.image
         = image_tag(product.image.url(:small), alt: product.image.alt, title: product.image.alt)
       - else
@@ -18,7 +20,7 @@
 
     .variant
       - if product.single_variant?
-        = render AddToCartComponent.new(variant: product.variant, quantity: variants_in_cart[product.variant.id], low_stock_display:)
+        = render AddToCartComponent.new(variant: product.variant, cart_item: variants_in_cart[product.variant.id], low_stock_display:)
       - else
         = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:)
 

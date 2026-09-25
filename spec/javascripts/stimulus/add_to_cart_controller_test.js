@@ -204,4 +204,99 @@ describe("AddToCartController", () => {
       expect(document.getElementById("plus").disabled).toEqual(false);
     });
   });
+
+  describe("group buy", () => {
+    const groupBuyTemplate = (quantity = 0, maxQuantity = 0, onHand = 10) => `
+      <div
+        data-controller="add-to-cart"
+        data-add-to-cart-variant-id-value="10"
+        data-add-to-cart-variant-on-hand-value="${onHand}"
+        data-add-to-cart-low-stock-display-value="true"
+        data-add-to-cart-group-buy-value="true"
+        data-add-to-cart-url-value="http://example.com/cart/variants/10"
+      >
+        <div id="add_container" class="variant-quantity-inputs" data-add-to-cart-target="addButton">
+          <button id="add" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
+        </div>
+        <div id="quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="quantityButton" style="display: none;">
+          <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">-</button>
+          <input id="quantity" class="variant-quantity" data-add-to-cart-target="quantity" data-action="keyup->add-to-cart#manual" min="0" type="number" value="${quantity}">
+          <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">+</button>
+        </div>
+        <div id="max_quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="maxQuantityButton" style="display: none;">
+          <button id="maxMinus" class="variant-quantity" data-action="add-to-cart#removeMax" data-add-to-cart-target="maxMinusButton" type="button">-</button>
+          <input id="maxQuantity" class="variant-quantity" data-add-to-cart-target="maxQuantity" data-action="keyup->add-to-cart#manualMax" min="0" type="number" value="${maxQuantity}">
+          <button id="maxPlus" class="variant-quantity" data-action="add-to-cart#addMax" data-add-to-cart-target="maxPlusButton" type="button">+</button>
+        </div>
+      </div>`;
+
+    const maxInput = () => document.getElementById("maxQuantity");
+
+    beforeEach(async () => {
+      document.body.innerHTML = groupBuyTemplate();
+      await flushPromises();
+    });
+
+    it("sets both min and max to 1 on the first add", () => {
+      document.getElementById("add").click();
+
+      expect(input().value).toEqual("1");
+      expect(maxInput().value).toEqual("1");
+      expect(document.getElementById("max_quantity_buttons").style.display).toEqual("flex");
+    });
+
+    it("raises the max when the min is pushed above it", () => {
+      document.getElementById("add").click();
+      document.getElementById("plus").click();
+      document.getElementById("plus").click();
+
+      expect(input().value).toEqual("3");
+      expect(maxInput().value).toEqual("3");
+    });
+
+    it("does not let the max go below the min", () => {
+      document.getElementById("add").click();
+      document.getElementById("plus").click(); // min = 2, max follows to 2
+
+      document.getElementById("maxMinus").click();
+      document.getElementById("maxMinus").click();
+
+      expect(maxInput().value).toEqual("2");
+      expect(document.getElementById("maxMinus").disabled).toEqual(true);
+    });
+
+    it("caps the max at the stock on hand", () => {
+      document.getElementById("add").click();
+      for (let i = 0; i < 15; i++) document.getElementById("maxPlus").click();
+
+      expect(maxInput().value).toEqual("10");
+      expect(document.getElementById("maxPlus").disabled).toEqual(true);
+    });
+
+    it("saves both quantity and max_quantity after the debounce", () => {
+      document.getElementById("add").click();
+      document.getElementById("maxPlus").click();
+
+      jest.advanceTimersByTime(1000);
+
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(JSON.parse(global.fetch.mock.calls[0][1].body)).toEqual({
+        quantity: 1,
+        max_quantity: 2,
+      });
+    });
+
+    it("resets min and max and restores the Add button when min drops to 0", () => {
+      document.getElementById("add").click();
+      document.getElementById("plus").click();
+      document.getElementById("minus").click();
+      document.getElementById("minus").click();
+
+      expect(input().value).toEqual("0");
+      expect(maxInput().value).toEqual("0");
+      expect(document.getElementById("add_container").style.display).toEqual("block");
+      expect(document.getElementById("quantity_buttons").style.display).toEqual("none");
+      expect(document.getElementById("max_quantity_buttons").style.display).toEqual("none");
+    });
+  });
 });

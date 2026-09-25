@@ -2,6 +2,7 @@
 @use "../../webpacker/css/darkswarm/branding" as b;
 @use "../../webpacker/css/darkswarm/mixins" as m;
 @use "../../webpacker/css/darkswarm/shop_partials/price";
+@use "../../webpacker/css/darkswarm/shop_partials/bulk";
 
 .product-item {
   width: 100%;
@@ -55,6 +56,8 @@
 .product-link {
   display: block;
   color: inherit;
+  // Containing block for .bulk-label, positioned over the image below.
+  position: relative;
 
   &:hover,
   &:focus {
@@ -68,6 +71,13 @@
     display: block;
     border-radius: $radius-image; // 8px
     margin-bottom: $padding-tbl-cell;
+  }
+
+  .bulk-label {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    @include bulk.bulk-label;
   }
 
   .producer {

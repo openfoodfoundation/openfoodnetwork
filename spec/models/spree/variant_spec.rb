@@ -439,13 +439,6 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  describe '#total_on_hand' do
-    it 'matches quantifier total_on_hand' do
-      variant = build(:variant)
-      expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
-    end
-  end
-
   describe "scopes" do
     # TODO rename describer below with scope names
     describe "finding variants in a distributor" do

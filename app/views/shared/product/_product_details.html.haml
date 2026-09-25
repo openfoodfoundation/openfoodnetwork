@@ -1,6 +1,8 @@
 -# locals: (product:, available_variant_ids: nil)
 .row
   .columns.small-12.medium-6.large-6.product-header
+    - if product.group_buy
+      %span.bulk-label= t("components.product_tile.bulk")
     %h3
       = product.name
     %span

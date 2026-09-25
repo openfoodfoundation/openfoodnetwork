@@ -98,12 +98,14 @@ class CartController < BaseController
   end
 
   def add_to_cart_stream(order, variant)
-    quantity = order.find_line_item_by_variant(variant)&.quantity || 0
+    line_item = order.find_line_item_by_variant(variant)
+    cart_item = ViewData::CartItem.new(quantity: line_item&.quantity || 0,
+                                       max_quantity: line_item&.max_quantity)
 
     turbo_stream.replace(
       "variant-#{variant.id}",
       AddToCartComponent.new(
-        variant:, quantity:,
+        variant:, cart_item:,
         low_stock_display: !!order.distributor&.preferred_product_low_stock_display
       )
     )

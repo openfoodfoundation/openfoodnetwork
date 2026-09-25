@@ -4,7 +4,7 @@ class ProductsController < BaseController
   def index
     @products = product_renderer.products_view
 
-    @variants_in_cart = current_order.line_items.to_h { |li| [li.variant.id, li.quantity] }
+    @variants_in_cart = ViewData::CartItem.index(current_order.line_items)
     @low_stock_display = distributor.preferred_product_low_stock_display
   end
 

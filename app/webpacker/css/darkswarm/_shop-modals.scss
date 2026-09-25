@@ -1,7 +1,15 @@
 @use "shop_partials/property-selector-base" as base;
+@use "shop_partials/bulk";
 
 .product-header {
   padding-left: 1.5rem;
+
+  .bulk-label {
+    display: inline-block;
+    border: 1px solid $light-grey;
+    color: $dark-grey;
+    @include bulk.bulk-label;
+  }
 
   h1,
   h2,
