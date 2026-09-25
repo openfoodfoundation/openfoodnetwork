@@ -453,7 +453,6 @@ RSpec.describe Enterprise do
       end
     end
 
-<<<<<<< HEAD
     describe "attachment validation" do
       let(:enterprise) { create(:enterprise) }
       let(:valid_image) { Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', 'image/png') }
