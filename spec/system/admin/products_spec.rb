@@ -349,12 +349,15 @@ RSpec.describe '
         login_as_admin
         visit spree.edit_admin_product_path product
 
+        fill_in :product_name, with: "An Edited Product"
         fill_in_trix_editor 'product_description', with: 'A description...'
 
         click_button 'Update'
 
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        expect(flash_message).to eq('Product "An Edited Product" has been successfully updated!')
+        expect(current_path).to eq("/admin/products/#{product.id}-an-edited-product/edit")
         product.reload
+        expect(product.name).to eq("An Edited Product")
         expect(product.description).to eq("<div>A description...</div>")
 
         # Product preview
@@ -362,7 +365,7 @@ RSpec.describe '
 
         within "#product-preview-modal" do
           expect(page).to have_content("Product preview")
-          expect(page).to have_selector("h3 a span", text: "a product")
+          expect(page).to have_selector("h3 a span", text: "An Edited Product")
 
           click_button "Close"
         end
@@ -470,7 +473,7 @@ RSpec.describe '
           expect(page).to have_content /Image has been successfully created/
           expect(product.reload.image).to be_present
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, product.image)
+            "/admin/products/#{product.id}/images/#{product.image.id}/edit"
           )
         end
 
@@ -507,7 +510,7 @@ RSpec.describe '
           find("img[alt='White logo']").click
 
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, image)
+            "/admin/products/#{product.id}/images/#{image.id}/edit"
           )
           expect(page).to have_content "Edit image for"
         end

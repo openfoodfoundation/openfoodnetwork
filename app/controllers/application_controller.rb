@@ -56,6 +56,16 @@ class ApplicationController < ActionController::Base
 
   respond_to :html
 
+  # Some models call add_to_param for prettier URLs.
+  # These URLs may be wrong after an update or if tempered with.
+  # Always direct authorised users to the current correct URL.
+  def redirect_to_canonical_id?(record)
+    return false if params[:id] == record.to_param
+
+    redirect_to(id: record.to_param, status: :moved_permanently)
+    true
+  end
+
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{begin
       caller(1).first
