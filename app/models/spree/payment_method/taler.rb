@@ -131,11 +131,23 @@ module Spree
         taler_amount = "#{currency(payment)}:#{payment.amount}"
         urls = Rails.application.routes.url_helpers
         fulfillment_url = urls.payment_gateways_confirm_taler_url(payment_id: payment.id)
-        taler_order.create(
-          amount: taler_amount,
-          summary: I18n.t("payment_method_taler.order_summary"),
-          fulfillment_url:,
-        )
+        begin
+          taler_order.create(
+            amount: taler_amount,
+            summary: I18n.t("payment_method_taler.order_summary"),
+            fulfillment_url:,
+          )
+        # taler 0.4.0 does not check the HTTP status, so an error reply from the backend surfaces
+        # as a KeyError (JSON error body) or JSON::ParserError (HTML page). Drop KeyError and
+        # JSON::ParserError once taler-ruby raises Taler::RequestError; ::Taler::Error is rescued
+        # for that future version. The network errors stay: the gem does not handle them either.
+        rescue KeyError, JSON::ParserError, ::Taler::Error, SocketError, Timeout::Error,
+               Errno::ECONNREFUSED, Errno::ECONNRESET, OpenSSL::SSL::SSLError => e
+          response = e.respond_to?(:receiver) ? e.receiver : e.message
+          Rails.logger.error("Taler order creation failed: #{response.inspect}")
+          Alert.raise(e, { taler: { instance_url: preferred_instance_url, response: } })
+          raise Spree::Core::GatewayError, I18n.t("payment_method_taler.order_creation_failed")
+        end
       end
 
       def taler_order(id: nil)
