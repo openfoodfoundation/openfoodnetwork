@@ -41,7 +41,7 @@ module Spree
         can [:index, :read], ProductProperty
         can [:index, :read], Property
         can :create, Spree::User
-        can [:read, :update, :destroy], Spree::User, id: user.id
+        can [:admin, :read, :update, :destroy, :accept_terms_of_service], Spree::User, id: user.id
         can [:index, :read], State
         can [:index, :read], StockItem
         can [:index, :read], Taxon
