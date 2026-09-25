@@ -4,6 +4,7 @@
 @use 'components/tooltip';
 @use 'add_to_cart_component/add_to_cart_component';
 @use 'product_tile_component/product_tile_component';
+@use 'shop_variant_list_component/shop_variant_list_component';
 @use 'shop_variant_modal_component/shop_variant_modal_component';
 
 @import 'assets/stylesheets/autocomplete';
@@ -62,6 +63,7 @@
 @import 'producer_node';
 @import 'producers';
 @import 'product_table';
+@import 'product_page';
 @import 'registration';
 @import 'shop';
 @import 'shop_search';

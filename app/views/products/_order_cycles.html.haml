@@ -1,0 +1,31 @@
+-# The shopfront's order cycle selector is AngularJS and posts to the shop the visitor
+-# is already shopping at. A product page may be their first visit to this shop, so it
+-# posts here instead and re-renders the page with the variants of the chosen cycle.
+- content_for :injection_data do
+  = inject_current_order_cycle
+
+- unless no_open_order_cycles?(@order_cycles) || require_customer?
+  %ordercycle{ class: ("requires-selection" unless @order_cycle) }
+    = form_with(url: order_cycle_enterprise_product_path(@enterprise, @product), class: "custom", data: { controller: "order-cycle-select", "order-cycle-select-confirm-value": t(:confirm_oc_change) }) do |form|
+      .select-and-closing-container
+        %closing
+          - if @order_cycle.nil?
+            = t :enterprises_choose
+          - elsif closing_soon?(@order_cycle)
+            = t :enterprises_next_closing_html,
+              distance_of_time: distance_of_time_in_words_to_now(@order_cycle.orders_close_at)
+          - else
+            = t :enterprises_currently_open
+
+        .order-cycle-select
+          .select-label
+            %span= t :enterprises_ready_for
+
+          - options = oc_select_options(@order_cycles)
+          - if options.one?
+            %p= options.first[:time]
+          - else
+            = form.select :order_cycle_id,
+              options.map { |option| [option[:time], option[:id]] },
+              { selected: @order_cycle&.id, include_blank: t(:shopping_oc_select) },
+              { class: "avenir", data: { action: "change->order-cycle-select#submit" } }

@@ -8,6 +8,164 @@ RSpec.describe "As a consumer I want to view products" do
   include ShopWorkflow
   include UIComponentHelper
 
+  describe "on their own pages", feature: :product_grid_view do
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:producer) { create(:supplier_enterprise, name: "Onion Orchard") }
+    let(:product) { create(:product, enterprise_id: enterprise.id, name: "Garlic") }
+    let!(:big_bag) {
+      create(:variant, product:, enterprise:, display_name: "Big bag", unit_value: 2000)
+    }
+    let!(:other_farm_bag) {
+      create(:variant, product:, enterprise: producer, display_name: "Neighbour's bag")
+    }
+    let!(:order_cycle) {
+      create(
+        :simple_order_cycle,
+        distributors: [enterprise], coordinator: enterprise,
+        variants: product.variants,
+        orders_close_at: 2.days.from_now
+      )
+    }
+
+    it "lists all variants of the product" do
+      visit enterprise_product_path(enterprise, product)
+
+      expect(page).to have_content "Garlic"
+      expect(page).to have_selector ".variant-list li", count: 3
+      expect(page).to have_selector ".variant-name", text: "Big bag"
+      expect(page).to have_selector ".variant-unit", text: "2kg"
+
+      # Variants of several producers name their producer, the shared header doesn't.
+      expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
+      expect(page).to have_selector ".product-header", text: "Multiple producers"
+    end
+
+    # smoke test
+    it "and add a variant to the cart" do
+      visit enterprise_product_path(enterprise, product)
+
+      expect(page).to have_content "Garlic"
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "Add"
+
+        expect(page).to have_content "1 in cart"
+
+        find("img[src*='add']").click
+
+        expect(page).to have_content "2 in cart"
+      end
+
+      # The cart is saved for this shop, not just displayed.
+      expect(page).to have_selector ".cart-span", text: "2"
+      expect(Spree::LineItem.where(variant: big_bag).sum(:quantity)).to eq 2
+    end
+
+    context "when the shopper is already shopping at another shop" do
+      let(:other_shop) {
+        create(:distributor_enterprise, name: "The Onion Outlet",
+                                        with_payment_and_shipping: true)
+      }
+      let(:other_product) { create(:product, enterprise_id: other_shop.id, name: "Onions") }
+      let!(:other_order_cycle) {
+        create(:simple_order_cycle, distributors: [other_shop], coordinator: other_shop,
+                                    variants: other_product.variants)
+      }
+
+      it "leaves their cart alone" do
+        visit enterprise_product_path(other_shop, other_product)
+        within ".variant-list li", text: "1g" do
+          click_button "Add"
+          expect(page).to have_content "1 in cart"
+        end
+        expect(page).to have_selector ".cart-span", text: "1"
+
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_selector ".variant-list"
+        expect(page).to have_selector ".cart-span", text: "1"
+        expect(Spree::Order.last).to have_attributes(
+          distributor: other_shop, order_cycle: other_order_cycle
+        )
+      end
+    end
+
+    context "with several order cycles to choose from" do
+      let!(:later_order_cycle) {
+        create(
+          :simple_order_cycle,
+          distributors: [enterprise], coordinator: enterprise,
+          variants: [big_bag],
+          orders_close_at: 4.days.from_now
+        )
+      }
+
+      before do
+        order_cycle.exchanges.to_enterprises(enterprise).outgoing.first
+          .update!(pickup_time: "this week")
+        later_order_cycle.exchanges.to_enterprises(enterprise).outgoing.first
+          .update!(pickup_time: "next week")
+      end
+
+      it "lists the variants of the order cycle the shopper chooses" do
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_content "Please choose an order cycle"
+        expect(page).not_to have_selector ".variant-list"
+
+        select "next week", from: "order_cycle_id"
+
+        expect(page).to have_content "Next order closing in 4 days"
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).to have_selector ".variant-name", text: "Big bag"
+
+        # The choice belongs to the cart, so the shopper can go on to fill it.
+        expect(Spree::Order.last.distributor).to eq enterprise
+        expect(Spree::Order.last.order_cycle).to eq later_order_cycle
+      end
+
+      it "asks before emptying the cart to change order cycle" do
+        visit enterprise_product_path(enterprise, product)
+        select "this week", from: "order_cycle_id"
+
+        within ".variant-list li", text: "Big bag" do
+          click_button "Add"
+          expect(page).to have_content "1 in cart"
+        end
+        expect(page).to have_selector ".cart-span", text: "1"
+
+        handle_js_confirm(false) do
+          select "next week", from: "order_cycle_id"
+
+          expect(page).to have_select "order_cycle_id", selected: "this week"
+          expect(Spree::Order.last.order_cycle).to eq order_cycle
+          expect(Spree::Order.last.line_items).to be_present
+        end
+
+        handle_js_confirm(true) do
+          select "next week", from: "order_cycle_id"
+
+          expect(page).to have_content "Next order closing in 4 days"
+          expect(Spree::Order.last.order_cycle).to eq later_order_cycle
+          expect(Spree::Order.last.line_items).to be_empty
+        end
+      end
+    end
+
+    context "when the shop has no open order cycle" do
+      before { order_cycle.update!(orders_close_at: 1.day.ago) }
+
+      it "says that the product is unavailable" do
+        visit enterprise_product_path(enterprise, product)
+
+        expect(page).to have_content "This product is currently unavailable."
+        expect(page).not_to have_selector ".variant-list"
+      end
+    end
+  end
+
   describe "Viewing a product" do
     let(:taxon) { create(:taxon, name: "Tricky Taxon") }
     let(:property) { create(:property, presentation: "Fresh and Fine") }
