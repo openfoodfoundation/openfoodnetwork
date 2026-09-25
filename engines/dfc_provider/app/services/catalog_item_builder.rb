@@ -15,7 +15,12 @@ class CatalogItemBuilder < DfcBuilder
           stockLimitation: stock_limitation(variant),
           offers: [OfferBuilder.build(variant)],
           managedBy: supplier_url,
-    )
+    ).tap do |item|
+      # Record the inverse relation (dfc-b:referencedBy) as well. Without it,
+      # an importer reading our catalog can't find the stock and price of a
+      # product because it can only follow links from the product onwards.
+      product.catalogItems = [item]
+    end
   end
 
   def self.apply_stock(item, variant)
