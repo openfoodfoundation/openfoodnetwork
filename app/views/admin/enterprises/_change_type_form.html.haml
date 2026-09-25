@@ -14,7 +14,8 @@
               %span.title= t('.producer_profile')
               %span.subtitle
                 = t('.connect_ofn')
-                = "(#{t('.always_free')})"
+              %span.tertiary
+                = t('.always_free')
             %span.description= t('.producer_description_text')
           = f.label :sells, value: "own", class: "radio-button-card" do
             %span.header
@@ -37,7 +38,8 @@
               %span.title= t('.profile')
               %span.subtitle
                 = t('.get_listing')
-                = "(#{t('.always_free')})"
+              %span.tertiary
+                = t('.always_free')
             %span.description= t('.profile_description_text')
           = f.label :sells, value: "any", class: "radio-button-card" do
             %span.header

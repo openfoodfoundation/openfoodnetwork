@@ -13,11 +13,10 @@
     span.header {
       background-color: $teal;
       border-radius: $border-radius;
-      color: white;
       display: block;
       font-weight: $font-weight-bold;
       outline: 1px solid black;
-      padding: 0.2rem 0;
+      padding: 0.2rem 0 0 0;
       position: relative;
       text-align: center;
 
@@ -28,14 +27,23 @@
       }
 
       span.title {
+        color: white;
         display: block;
         font-size: $h3-size;
         line-height: 28px;
       }
 
       span.subtitle {
+        color: white;
         display: block;
         font-size: $body-font-size;
+        padding: 0.2rem 0;
+      }
+
+      span.tertiary {
+        background: white;
+        display: block;
+        font-size: $h6-size;
         padding: 0.2rem 0;
       }
     }
