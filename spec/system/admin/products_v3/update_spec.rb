@@ -809,6 +809,47 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       include_examples "updating image"
     end
+
+    describe "editing images on a small screen" do
+      let!(:apples) { create(:product, name: "Apples") }
+      let!(:pears) { create(:product, name: "Pears") }
+
+      before do
+        Capybara.current_session.current_window.resize_to(400, 800)
+        visit admin_products_url
+      end
+
+      def open_image_modal_for(product_name)
+        within row_containing_name(product_name) do
+          click_on "Edit"
+        end
+      end
+
+      it "can open another image after closing the overlay" do
+        open_image_modal_for("Apples")
+        expect(page).to have_content 'Edit image for "Apples"'
+
+        click_on "Back"
+        expect(page).not_to have_content 'Edit image for "Apples"'
+
+        open_image_modal_for("Pears")
+        expect(page).to have_content 'Edit image for "Pears"'
+      end
+
+      it "can upload an image after reopening the overlay" do
+        open_image_modal_for("Apples")
+        click_on "Back"
+        expect(page).not_to have_content 'Edit image for "Apples"'
+
+        open_image_modal_for("Pears")
+        within ".reveal-modal" do
+          attach_file 'image[attachment]', white_logo_path, visible: false
+        end
+
+        expect(page).to have_content "Image has been successfully created!"
+        expect(pears.reload.image.attachment.filename.to_s).to eq("logo-white.png")
+      end
+    end
   end
 
   describe "edit variant image" do
