@@ -131,11 +131,21 @@ module Spree
         taler_amount = "#{currency(payment)}:#{payment.amount}"
         urls = Rails.application.routes.url_helpers
         fulfillment_url = urls.payment_gateways_confirm_taler_url(payment_id: payment.id)
-        taler_order.create(
-          amount: taler_amount,
-          summary: I18n.t("payment_method_taler.order_summary"),
-          fulfillment_url:,
-        )
+        begin
+          taler_order.create(
+            amount: taler_amount,
+            summary: I18n.t("payment_method_taler.order_summary"),
+            fulfillment_url:,
+          )
+        # The gem raises Taler::RequestError with the status and body of an error reply from
+        # the backend. Network errors are not handled by the gem and are rescued here as well.
+        rescue ::Taler::Error, SocketError, Timeout::Error,
+               Errno::ECONNREFUSED, Errno::ECONNRESET, OpenSSL::SSL::SSLError => e
+          response = e.respond_to?(:body) ? e.body : e.message
+          Rails.logger.error("Taler order creation failed: #{response.inspect}")
+          Alert.raise(e, { taler: { instance_url: preferred_instance_url, response: } })
+          raise Spree::Core::GatewayError, I18n.t("payment_method_taler.order_creation_failed")
+        end
       end
 
       def taler_order(id: nil)

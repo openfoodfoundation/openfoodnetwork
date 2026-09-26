@@ -3564,6 +3564,7 @@ en:
   payment_updated: "Payment Updated"
   payment_method_taler:
     order_summary: "Open Food Network order"
+    order_creation_failed: "The Taler payment backend could not create the order. Please try again or contact the shop."
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
   tag_rules: "Tag Rules"

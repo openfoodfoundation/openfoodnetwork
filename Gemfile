@@ -59,7 +59,7 @@ gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant'
 gem 'stripe'
-gem "taler"
+gem "taler", github: "dan1d/taler-ruby", branch: "raise-on-error-responses"
 
 gem 'devise'
 gem 'devise-encryptable'

@@ -43,6 +43,100 @@ RSpec.describe Spree::PaymentMethod::Taler do
       url = taler.external_payment_url(order:)
       expect(url).to eq "#{instance_url}/orders/one"
     end
+
+    context "when the backend rejects the order" do
+      let(:instance_url) { "https://taler.example.com" }
+      let(:order_url) { "#{instance_url}/private/orders" }
+      let(:order) { create(:order_ready_for_confirmation, payment_method: taler) }
+      let(:error_message) {
+        "The Taler payment backend could not create the order. " \
+          "Please try again or contact the shop."
+      }
+
+      before do
+        stub_request(:post, token_url).to_return(body: { token: "1234" }.to_json)
+      end
+
+      it "raises a GatewayError when the backend returns 401 Unauthorized" do
+        stub_request(:post, order_url).to_return(
+          status: 401,
+          body: { code: 2015, hint: "Unauthorized", detail: "Check credentials" }.to_json,
+        )
+        expect(Alert).to receive(:raise).with(
+          kind_of(Taler::RequestError),
+          hash_including(taler: hash_including(
+            instance_url:,
+            response: hash_including("hint" => "Unauthorized"),
+          )),
+        )
+
+        expect { taler.external_payment_url(order:) }.to raise_error(
+          Spree::Core::GatewayError, error_message
+        )
+        expect(order.payments.last.reload.response_code).to be_nil
+      end
+
+      it "raises a GatewayError when the backend returns 404 Not Found" do
+        stub_request(:post, order_url).to_return(
+          status: 404,
+          body: { code: 2000, hint: "instance unknown" }.to_json,
+        )
+        expect(Alert).to receive(:raise).with(
+          kind_of(Taler::RequestError),
+          hash_including(taler: hash_including(
+            instance_url:,
+            response: hash_including("hint" => "instance unknown"),
+          )),
+        )
+
+        expect { taler.external_payment_url(order:) }.to raise_error(
+          Spree::Core::GatewayError, error_message
+        )
+        expect(order.payments.last.reload.response_code).to be_nil
+      end
+
+      it "raises a GatewayError when the backend returns a non-JSON response" do
+        stub_request(:post, order_url).to_return(status: 502, body: "<html>Bad Gateway</html>")
+        expect(Alert).to receive(:raise).with(
+          kind_of(Taler::RequestError),
+          hash_including(taler: hash_including(
+            instance_url:,
+            response: "<html>Bad Gateway</html>",
+          )),
+        )
+
+        expect { taler.external_payment_url(order:) }.to raise_error(
+          Spree::Core::GatewayError, error_message
+        )
+        expect(order.payments.last.reload.response_code).to be_nil
+      end
+
+      it "raises a GatewayError when the connection times out" do
+        stub_request(:post, order_url).to_timeout
+        expect(Alert).to receive(:raise).with(
+          kind_of(Timeout::Error),
+          hash_including(taler: hash_including(instance_url:)),
+        )
+
+        expect { taler.external_payment_url(order:) }.to raise_error(
+          Spree::Core::GatewayError, error_message
+        )
+        expect(order.payments.last.reload.response_code).to be_nil
+      end
+
+      it "raises a GatewayError when the connection fails" do
+        stub_request(:post, order_url).to_raise(SocketError)
+        expect(Alert).to receive(:raise).with(
+          kind_of(SocketError),
+          hash_including(taler: hash_including(instance_url:)),
+        )
+
+        expect { taler.external_payment_url(order:) }.to raise_error(
+          Spree::Core::GatewayError, error_message
+        )
+        expect(order.payments.last.reload.response_code).to be_nil
+      end
+    end
   end
 
   describe "#purchase" do
