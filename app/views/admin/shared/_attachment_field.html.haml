@@ -1,3 +1,4 @@
+- attached = f.object.public_send("#{attachment_name}_attachment").present?
 .row{ class: "page-admin-enterprises-form__#{attachment_name.to_s.dasherize}-field-group" }
   .three.columns.alpha
     = f.label attachment_name, t(".#{attachment_name}_label")
@@ -7,15 +8,15 @@
     - else
       = t(".#{attachment_name}_hint")
   .thirteen.columns
-    - if f.object.send(attachment_name).present? && attachment_url.present?
+    - if attached && attachment_url.present?
       = image_tag attachment_url, class: "image-field-group__preview-image"
     %br
     = f.file_field attachment_name, accept: "image/*"
-    - if f.object.send(attachment_name).present?
+    - if attached
       %button.button.small.red{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_#{attachment_name}" }
         = t(".#{attachment_name}_remove")
 
-- if f.object.send(attachment_name).present?
+- if attached
   - # add to admin footer to avoid nesting forms
   - content_for :admin_footer do
     = render ModalComponent.new(id: "remove_#{attachment_name}", close_button: false, modal_class: "tiny") do
