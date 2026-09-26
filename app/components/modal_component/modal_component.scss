@@ -1,4 +1,11 @@
 // class name 'modal' is already taken by 'custom-alert' and 'custom-confirm'.
+
+// Image upload overlay variables.
+$image-upload-modal-margin: 24px;
+$image-upload-modal-radius: 8px;
+$image-upload-modal-preview-size: 433px;
+$image-upload-modal-preview-max-height: 55vh;
+
 .modal-component {
   visibility: visible;
   position: fixed;
@@ -46,6 +53,94 @@
 
   .gap-2 {
     gap: 2rem;
+  }
+}
+
+// Mobile treatment for the image upload overlay. The `.is-mobile` modifier is
+// toggled by the image-modal-responsive controller (JS, not a media query,
+// because admin has no viewport meta tag).
+.modal-component.image-upload-modal {
+  .image-upload-modal__preview img {
+    width: $image-upload-modal-preview-size;
+    max-width: 100%;
+    height: auto;
+  }
+
+  &.is-mobile {
+    h2.modal-title {
+      margin-top: 1rem;
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    p.modal-subtitle {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+    }
+
+    // Full-width card with a side gutter, vertically centred.
+    top: 50%;
+    right: $image-upload-modal-margin;
+    left: $image-upload-modal-margin;
+    transform: translateY(-50%);
+    width: auto;
+    max-width: none;
+    margin: 0;
+    height: 50vh;
+    overflow-y: auto;
+    border-radius: $image-upload-modal-radius;
+
+    .image-upload-modal__preview {
+      margin: auto 0;
+    }
+
+    // Preview at natural aspect ratio, centred and height-capped.
+    .image-upload-modal__preview img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: $image-upload-modal-preview-max-height;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    // Pin the actions to the bottom of the card.
+    form {
+      margin-top: auto;
+    }
+
+    // Keep the actions side-by-side, overriding the generic stacking rule below.
+    .modal-actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+
+      // Larger tap targets.
+      input[type="button"],
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 80px;
+        min-width: 120px;
+        font-size: 30px;
+
+        padding: 0.5rem 1rem;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+  }
+
+  // Flex column so the actions can be pinned to the bottom. `!important` overrides
+  // the inline `display: block` the modal controller sets on open; gating on `.in`
+  // lets the controller's `display: none` win on close, so the closed overlay
+  // doesn't stay on top swallowing clicks.
+  &.is-mobile.in {
+    display: flex !important;
+    flex-direction: column;
   }
 }
 
