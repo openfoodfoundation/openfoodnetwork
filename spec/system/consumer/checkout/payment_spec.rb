@@ -463,9 +463,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
             before do
               allow_any_instance_of(Taler::Order).to receive(:create).and_raise(
-                KeyError.new(
-                  'key not found: "order_id"',
-                  receiver: { "code" => 2015 }, key: "order_id",
+                Taler::RequestError.new(
+                  status: 401, body: { "code" => 2015, "hint" => "Unauthorized" }
                 )
               )
               allow(Alert).to receive(:raise)

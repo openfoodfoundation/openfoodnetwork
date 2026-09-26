@@ -63,7 +63,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
           body: { code: 2015, hint: "Unauthorized", detail: "Check credentials" }.to_json,
         )
         expect(Alert).to receive(:raise).with(
-          kind_of(KeyError),
+          kind_of(Taler::RequestError),
           hash_including(taler: hash_including(
             instance_url:,
             response: hash_including("hint" => "Unauthorized"),
@@ -82,8 +82,11 @@ RSpec.describe Spree::PaymentMethod::Taler do
           body: { code: 2000, hint: "instance unknown" }.to_json,
         )
         expect(Alert).to receive(:raise).with(
-          kind_of(KeyError),
-          hash_including(taler: hash_including(instance_url:)),
+          kind_of(Taler::RequestError),
+          hash_including(taler: hash_including(
+            instance_url:,
+            response: hash_including("hint" => "instance unknown"),
+          )),
         )
 
         expect { taler.external_payment_url(order:) }.to raise_error(
@@ -95,8 +98,11 @@ RSpec.describe Spree::PaymentMethod::Taler do
       it "raises a GatewayError when the backend returns a non-JSON response" do
         stub_request(:post, order_url).to_return(status: 502, body: "<html>Bad Gateway</html>")
         expect(Alert).to receive(:raise).with(
-          kind_of(JSON::ParserError),
-          hash_including(taler: hash_including(instance_url:)),
+          kind_of(Taler::RequestError),
+          hash_including(taler: hash_including(
+            instance_url:,
+            response: "<html>Bad Gateway</html>",
+          )),
         )
 
         expect { taler.external_payment_url(order:) }.to raise_error(
