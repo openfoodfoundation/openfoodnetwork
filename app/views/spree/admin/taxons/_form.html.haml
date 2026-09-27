@@ -1,11 +1,14 @@
 .row
   .alpha.five.columns
-    = f.field_container :name do
-      = f.label :name, t(".name")
-      %span.required *
-      %br/
-      = error_message_on :taxon, :name
-      = text_field :taxon, :name, class: 'fullwidth'
+    = f.field_container :name_i18n do
+      - OpenFoodNetwork::I18nConfig.selectable_locales.each do |locale|
+        = f.label "name_i18n[#{locale}]", "#{t('.name')} (#{locale})"
+        - if locale == I18n.default_locale.to_s
+          %span.required *
+        %br/
+        = f.text_field "name_i18n[#{locale}]", value: f.object.name_i18n[locale.to_s], class: 'fullwidth'
+        %br/
+      = error_message_on :taxon, :name_i18n
     = f.field_container :meta_title do
       = f.label :meta_title, t(".meta_title")
       %br/
