@@ -171,6 +171,30 @@ RSpec.describe Api::V0::ShipmentsController do
         end
       end
 
+      context "for a subscription order, which skips payment and completes" do
+        include ActiveJob::TestHelper
+
+        before do
+          order_cycle = create(:simple_order_cycle,
+                               coordinator: order.distributor,
+                               distributors: [order.distributor],
+                               variants: [variant],
+                               orders_close_at: 1.day.from_now)
+          order.update!(order_cycle:)
+          subscription = create(:subscription, shop: order.distributor)
+          ProxyOrder.create!(subscription:, order:, order_cycle:)
+        end
+
+        it "treats reaching complete as success and amends the backorder" do
+          expect {
+            spree_post :create, params
+          }.to have_enqueued_job(AmendBackorderJob)
+
+          expect_valid_response
+          expect(order.reload.state).to eq("complete")
+        end
+      end
+
       context "when the order can't advance past cart" do
         context "because the order has no ship address yet" do
           before { order.update_columns(ship_address_id: nil) }
@@ -187,6 +211,30 @@ RSpec.describe Api::V0::ShipmentsController do
 
     context '#add on a cart-state order' do
       let(:add_params) { params.merge(id: shipment.to_param) }
+
+      context "for a subscription order, which skips payment and completes" do
+        include ActiveJob::TestHelper
+
+        before do
+          order_cycle = create(:simple_order_cycle,
+                               coordinator: order.distributor,
+                               distributors: [order.distributor],
+                               variants: [variant],
+                               orders_close_at: 1.day.from_now)
+          order.update!(order_cycle:)
+          subscription = create(:subscription, shop: order.distributor)
+          ProxyOrder.create!(subscription:, order:, order_cycle:)
+        end
+
+        it "treats reaching complete as success and amends the backorder" do
+          expect {
+            spree_put :add, add_params
+          }.to have_enqueued_job(AmendBackorderJob)
+
+          expect_valid_response
+          expect(order.reload.state).to eq("complete")
+        end
+      end
 
       it "advances the order out of the cart state, as #create already does" do
         expect(order.state).to eq("cart")
@@ -551,7 +599,8 @@ RSpec.describe Api::V0::ShipmentsController do
             }
             allow(fee_order).to receive(:recreate_all_fees!)
             allow(fee_order).to receive(:completed?).and_return(false)
-            allow(fee_order).to receive(:before_payment_state?).and_return(true)
+            # before payment when checked, then past it once advanced
+            allow(fee_order).to receive(:before_payment_state?).and_return(true, false)
             allow(fee_order).to receive(:line_items) { [instance_double(Spree::LineItem)] }
             allow(fee_order).to receive(:reload) { fee_order }
             allow(fee_order).to receive(:shipment) { fee_order_shipment }

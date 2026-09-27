@@ -97,26 +97,29 @@ module Api
         # at that moment — if fees aren't applied yet, the credit payment is
         # created short.
         @order.recreate_all_fees!
-        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         # Only orders still before payment need advancing; doing this
         # unconditionally would also refresh shipping rates/cost on
-        # completed-but-unshipped orders, and calling advance_to_payment on an
-        # order already at/past payment returns nil (not true), which the
-        # return-value check below would otherwise misread as a stall.
+        # completed-but-unshipped orders.
         if @order.before_payment_state?
           @shipment.refresh_rates
           @shipment.save!
 
           if @order.line_items.any?
-            advanced = Orders::WorkflowService.new(@order).advance_to_payment
+            Orders::WorkflowService.new(@order).advance_to_payment
             # A stall with no ship address yet is normal mid-construction state
             # (e.g. an admin adding products before visiting Customer Details) —
             # only treat a stall as an error once there's an address to actually
             # fail shipping against, i.e. a genuine shipping-method misconfiguration.
-            return invalid_resource!(@order) if !advanced && @order.ship_address.present?
+            # Check the state rather than advance_to_payment's return value: an
+            # order that skips payment (e.g. a subscription order) can go straight
+            # past payment to complete, which is not a stall.
+            return invalid_resource!(@order) if @order.before_payment_state? &&
+                                                @order.ship_address.present?
           end
         end
+
+        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         # advance_to_payment can rebuild the order's shipments from scratch
         # (Spree::Order::Checkout's before_transition to: :delivery), which
