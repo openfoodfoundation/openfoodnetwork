@@ -75,10 +75,12 @@ module Api
       end
 
       def product_properties
-        Spree::Property.
+        properties = Spree::Property.
           joins(:products).
           where(spree_products: { id: distributed_products }).
           select('DISTINCT spree_properties.*')
+
+        sort_properties(properties)
       end
 
       def load_producer_properties
@@ -86,10 +88,16 @@ module Api
           joins(:products).
           where(spree_products: { id: distributed_products })
 
-        Spree::Property.
+        properties = Spree::Property.
           joins(:producer_properties).
           where(producer_properties: { producer_id: producers }).
           select('DISTINCT spree_properties.*')
+
+        sort_properties(properties)
+      end
+
+      def sort_properties(properties)
+        properties.sort_by { |property| property.presentation.to_s.downcase }
       end
 
       def search_params
