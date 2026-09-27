@@ -8,12 +8,14 @@ module Api
       include Pagy::Method
       include JsonApiPagination
       include RaisingParameters
+      include RecordApiUser
 
       check_authorization
 
       attr_accessor :current_api_user
 
       before_action :authenticate_user
+      before_action :record_api_user
 
       rescue_from StandardError, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
