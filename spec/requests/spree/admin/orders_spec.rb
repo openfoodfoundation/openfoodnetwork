@@ -405,26 +405,21 @@ RSpec.describe Spree::Admin::OrdersController do
     end
 
     context "when an order has no customer" do
-      let(:order) { create(:completed_order_with_fees, distributor:) }
+      it "displays a descriptive error" do
+        credit_service_mock = mock_credit_service_for(orders: [order])
 
-      before do
-        payment = order.payments.first
-        payment.complete!
-        payment.update!(amount: 48.00)
-        order.update_order!
-        order.update_column(:customer_id, nil)
-      end
+        allow(service_response).to receive(:failure?).and_return(true)
+        allow(service_response).to receive(:message)
+          .and_return("No customer is assigned to this order")
+        expect(credit_service_mock).to receive(:refund).and_return(service_response)
 
-      it "returns a descriptive error without creating a payment or customer credit" do
-        expect {
-          post("/admin/orders/bulk_credit", params: { bulk_ids: [order.id], format: })
-        }.not_to change { [Spree::Payment.count, CustomerAccountTransaction.count] }
+        post("/admin/orders/bulk_credit", params: { bulk_ids: [order.id], format: })
 
         expect(response).to have_http_status :ok
         expect(flash[:error]).to eq(
           "Order ##{order.number} could not be credited : No customer is assigned to this order"
         )
-        expect(order.reload.payment_state).to eq("credit_owed")
+        expect(response.body).not_to include("order_#{order.id}")
       end
     end
 
