@@ -1,9 +1,16 @@
 #!/usr/bin/env ruby
 
-# Bump the patch version for the next release and create the tag.
+# Bump the version for the next release and create the tag.
 #
-# This supports only patch releases at the moment but can be developed
-# further.
+# Usage: script/release/tag [major|minor|patch|hotfix]
+# Defaults to a patch bump when no argument is given.
+
+BUMP_TYPES = %w[major minor patch hotfix].freeze
+
+bump_type = ARGV[0] || "patch"
+unless BUMP_TYPES.include?(bump_type)
+  abort "Usage: #{$PROGRAM_NAME} [#{BUMP_TYPES.join('|')}]"
+end
 
 puts "\n*** Fetching latest release tag... ***\n"
 
@@ -16,12 +23,18 @@ latest_tag = `git tag --list 'v*' --sort v:refname | tail -1`.chomp
 # Parse version without the "v" at the start:
 latest_version = Gem::Version.new(latest_tag[1..-1])
 
-# Bump the patch version:
-major, minor, patch = latest_version.segments
-next_tag = "v#{major}.#{minor}.#{patch.succ}"
+# Bump the requested version segment:
+major, minor, patch, hotfix = latest_version.segments
+next_tag =
+  case bump_type
+  when "major" then "v#{major.succ}.0.0"
+  when "minor" then "v#{major}.#{minor.succ}.0"
+  when "hotfix" then "v#{major}.#{minor}.#{patch}.#{(hotfix || 0).succ}"
+  else "v#{major}.#{minor}.#{patch.succ}"
+  end
 
 # Push the new tag
-puts "\n*** Pushing new release tag #{next_tag}... ***\n"
+puts "\n*** Pushing new #{bump_type} release tag #{next_tag}... ***\n"
 puts `git push upstream 'HEAD:refs/tags/#{next_tag}'`
 
 # Shortcuts
