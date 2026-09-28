@@ -118,24 +118,73 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml" do
 
     describe "pagination" do
       it "renders the first page" do
-        get "/api/v1/customers", params: { page: "1" }
+        get "/api/v1/customers", params: { page: { number: "1" } }
         expect(json_response_ids).to eq [customer1.id.to_s, customer2.id.to_s]
       end
 
       it "renders the second page" do
-        get "/api/v1/customers", params: { page: "2", per_page: "1" }
+        get "/api/v1/customers", params: { page: { number: "2", per_page: "1" } }
         expect(json_response_ids).to eq [customer2.id.to_s]
       end
 
       it "renders beyond the available pages" do
-        get "/api/v1/customers", params: { page: "2" }
+        get "/api/v1/customers", params: { page: { number: "2" } }
         expect(json_response_ids).to eq []
       end
 
       it "informs about invalid pages" do
-        get "/api/v1/customers", params: { page: "0" }
+        get "/api/v1/customers", params: { page: { number: "0" } }
         expect(json_response_ids).to eq nil
         expect(json_error_detail).to eq "expected :page >= 1; got 0"
+      end
+
+      # The API used to accept flat ?page=/?per_page=, which isn't JSON:API-shaped. Rather than
+      # erroring on the old shape, it's now silently ignored and defaults apply - same as if no
+      # pagination params were given at all.
+      it "ignores the legacy flat page/per_page params" do
+        get "/api/v1/customers", params: { page: "2", per_page: "1" }
+        expect(json_response_ids).to eq [customer1.id.to_s, customer2.id.to_s]
+      end
+
+      it "builds JSON:API-shaped pagination links" do
+        get "/api/v1/customers", params: { page: { number: "1", per_page: "1" } }
+
+        links = json_response[:links]
+        expect(links[:self]).to include("page%5Bnumber%5D=1", "page%5Bper_page%5D=1")
+        expect(links[:next]).to include("page%5Bnumber%5D=2", "page%5Bper_page%5D=1")
+        expect(links[:prev]).to eq nil
+        # pagy omits page[number] for the first page - its absence implies page 1
+        expect(links[:first]).to include("page%5Bper_page%5D=1")
+        expect(links[:first]).not_to include("page%5Bnumber%5D")
+        expect(links[:last]).to include("page%5Bnumber%5D=2", "page%5Bper_page%5D=1")
+      end
+
+      # Regression for #14789: pagy_options used to pass `items:`, an option pagy dropped
+      # (renamed to `limit:`) several major versions ago, so the number of records actually
+      # returned came from the app-wide Pagy::OPTIONS[:limit]/:max_limit rather than from
+      # DEFAULT_PER_PAGE/MAX_PER_PAGE below - silently disagreeing with the per_page this
+      # concern reports in meta.pagination and uses to build links.
+      describe "the actual number of records returned" do
+        it "matches the default per_page reported in the metadata" do
+          stub_const("JsonApiPagination::DEFAULT_PER_PAGE", 1)
+
+          get "/api/v1/customers"
+
+          expect(json_response_ids.length).to eq 1
+          expect(json_response.dig(:meta, :pagination, :per_page)).to eq 1
+        end
+
+        it "is capped at this endpoint's own MAX_PER_PAGE, not the app-wide pagy max_limit" do
+          # The app-wide cap used by every other paginated endpoint (admin pages, etc.) -
+          # deliberately set below the number of customers in the fixtures, and below the
+          # requested per_page, so a leftover use of it here would trim the results.
+          stub_const("Pagy::OPTIONS", Pagy::OPTIONS.merge(max_limit: 1))
+
+          get "/api/v1/customers",
+              params: { page: { per_page: JsonApiPagination::MAX_PER_PAGE.to_s } }
+
+          expect(json_response_ids).to match_array [customer1.id.to_s, customer2.id.to_s]
+        end
       end
     end
 
