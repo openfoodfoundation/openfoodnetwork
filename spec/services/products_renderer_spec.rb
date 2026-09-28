@@ -261,6 +261,15 @@ RSpec.describe ProductsRenderer do
       )
     end
 
+    it "exposes group_buy on the product and on its variants' simple product" do
+      product.update!(group_buy: true)
+
+      view = products_renderer.products_view.first
+
+      expect(view.group_buy).to eq true
+      expect(view.variants.first.product.group_buy).to eq true
+    end
+
     context "when product doesn't have any variants" do
       # In exchange, but out of stock
       let(:v1) { create(:variant, product:, on_hand: 0) }

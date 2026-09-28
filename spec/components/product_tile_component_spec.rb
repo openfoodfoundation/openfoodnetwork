@@ -2,11 +2,12 @@
 
 RSpec.describe ProductTileComponent, type: :component do
   subject(:render_tile) do
-    render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+    render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
   end
 
   let(:producer) { build_stubbed(:enterprise, name: "Fred's Farm") }
   let(:product) { build_product([build_variant]) }
+  let(:variants_in_cart) { Hash.new(ViewData::CartItem.empty) }
 
   def build_variant(**overrides)
     ViewData::Variant.new(
@@ -14,14 +15,14 @@ RSpec.describe ProductTileComponent, type: :component do
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
       display_unit_price: "$12.00", enterprise: producer, producer:,
-      product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
+      product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy: false)
     ).with(**overrides)
   end
 
-  def build_product(variants)
+  def build_product(variants, group_buy: false)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: Spree::Image.none,
                           variant_images: Spree::Image.none, properties_including_inherited: [],
-                          variants:)
+                          variants:, group_buy:)
   end
 
   describe "producer" do
@@ -34,7 +35,7 @@ RSpec.describe ProductTileComponent, type: :component do
     it "says multiple producers when they differ" do
       other = build_stubbed(:enterprise, name: "Another Farm")
       product = build_product([build_variant(id: 1), build_variant(id: 2, producer: other)])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
 
       expect(page).to have_selector ".producer", text: "Multiple producers"
     end
@@ -44,7 +45,7 @@ RSpec.describe ProductTileComponent, type: :component do
   # computed unit otherwise, so the rules only branch on whether the variant is named.
   describe "name and unit" do
     def tile_name_for(product)
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
       page.find(".product-name").text
     end
 
@@ -106,7 +107,7 @@ RSpec.describe ProductTileComponent, type: :component do
                                 build_variant(id: 2, price: 12, price_with_fees: 15,
                                               display_price_with_fees: "$15.00")
                               ])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
 
       expect(page).to have_selector ".price", text: "$15.00"
     end
@@ -125,16 +126,31 @@ RSpec.describe ProductTileComponent, type: :component do
     # The variant modal still shows one per row, so only the tile itself is checked.
     it "is hidden when the product has several variants" do
       product = build_product([build_variant(id: 1), build_variant(id: 2)])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
 
       expect(page).not_to have_selector ".product-link .unit-price"
+    end
+  end
+
+  describe "bulk label" do
+    it "is shown when the product has group buy enabled" do
+      product = build_product([build_variant], group_buy: true)
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
+
+      expect(page).to have_selector ".product-link .bulk-label", text: "Bulk"
+    end
+
+    it "is hidden otherwise" do
+      render_tile
+
+      expect(page).not_to have_selector ".bulk-label"
     end
   end
 
   describe "rendering" do
     it "renders nothing when no variant is available in this shop" do
       product = build_product([])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
 
       expect(page).not_to have_selector ".product-item"
     end
