@@ -46,7 +46,7 @@ module Reporting
               last_name: mask_customer_name(bill_address_alias[:lastname]),
               first_name: mask_customer_name(bill_address_alias[:firstname]),
               phone: mask_contact_data(bill_address_alias[:phone]),
-              supplier: supplier_alias[:name],
+              supplier: coalesce(producer_name_field, supplier_alias[:name]),
               product: product_table[:name],
               variant: variant_full_name,
               weight: line_item_table[:weight],

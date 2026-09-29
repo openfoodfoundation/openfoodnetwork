@@ -33,7 +33,7 @@ module Reporting
             end.group_by do |hash|
             [
               hash[:tax_rate_id],
-              hash[:line_item].supplier_id,
+              hash[:line_item].variant.producer.id,
               hash[:line_item].order.distributor_id,
               hash[:line_item].order.order_cycle_id
             ]
@@ -103,11 +103,11 @@ module Reporting
         end
 
         def producer(query_result_row)
-          first_line_item(query_result_row).supplier.name
+          first_line_item(query_result_row).variant.producer.name
         end
 
         def producer_tax_status(query_result_row)
-          first_line_item(query_result_row).supplier.charges_sales_tax
+          first_line_item(query_result_row).variant.producer.charges_sales_tax
         end
 
         def order_cycle(query_result_row)
