@@ -47,8 +47,6 @@ module Spree
     has_many :stock_items, through: :variants
     has_many :variant_images, -> { order(:created_at) }, source: :images,
                                                          through: :variants
-
-    validates_lengths_from_database
     validates :name, presence: true
     validate :validate_image
     validates :price, numericality: { greater_than_or_equal_to: 0, if: ->{ new_record? } }
