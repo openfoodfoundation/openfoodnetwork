@@ -1,0 +1,33 @@
+!!!
+%html{ lang: I18n.locale.to_s.tr("_", "-") }
+  %head
+    %meta{ charset: "utf-8" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    %title= t("doorkeeper.layouts.application.title")
+    = csrf_meta_tags
+    :css
+      body {
+        background-color: #fff;
+        color: #333;
+        font-family: arial, sans-serif;
+      }
+      main {
+        max-width: 480px;
+        margin: 4em auto;
+        padding: 0 16px;
+      }
+      h1 {
+        font-size: 1.6em;
+      }
+      .actions form {
+        display: inline-block;
+        margin-right: 1em;
+      }
+      .actions input[type=submit] {
+        font-size: 1em;
+        padding: 0.5em 1.5em;
+        cursor: pointer;
+      }
+  %body
+    %main
+      = yield

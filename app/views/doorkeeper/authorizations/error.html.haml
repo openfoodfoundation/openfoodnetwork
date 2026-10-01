@@ -1,0 +1,3 @@
+%h1= t("doorkeeper.authorizations.error.title")
+
+%p= (local_assigns[:error_response] || @pre_auth.error_response).body[:error_description]

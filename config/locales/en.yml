@@ -332,6 +332,22 @@ en:
   additional_information: "Additional Information"
   connect_app:
     url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
+  doorkeeper:
+    layouts:
+      application:
+        title: "Open Food Network authorization"
+    scopes:
+      profile: "See your email address"
+    authorizations:
+      buttons:
+        authorize: "Authorize"
+        deny: "Deny"
+      error:
+        title: "An error has occurred"
+      new:
+        title: "Authorization required"
+        prompt_html: "Authorize <strong>%{client_name}</strong> to use your account?"
+        able_to: "This application will be able to:"
   devise:
     passwords:
       spree_user:
@@ -884,6 +900,27 @@ en:
       update:
         resource: Connected app settings
 
+    oauth_applications:
+      index:
+        title: "OAuth applications"
+        new: "New OAuth application"
+        none: "No OAuth application yet."
+        name: "Name"
+        redirect_uri: "Redirect URI"
+      new:
+        title: "New OAuth application"
+      edit:
+        title: "Editing OAuth application %{name}"
+        credentials: "Credentials"
+        uid: "Client ID"
+        secret: "Client secret"
+        endpoints: "Authorization URL: %{authorize} / Token URL: %{token} / User info URL: %{userinfo}"
+      form:
+        name: "Name"
+        redirect_uri: "Redirect URI"
+        redirect_uri_hint: "One URI per line. The application sends users back there after they log in."
+        confidential: "Confidential"
+        confidential_hint: "Check if the application can keep its client secret private, like a server-side application. Uncheck for mobile or browser applications, which must then use PKCE."
     customers:
       index:
         new_customer: "New Customer"

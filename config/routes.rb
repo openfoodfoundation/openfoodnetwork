@@ -31,6 +31,13 @@ Openfoodnetwork::Application.routes.draw do
   # Well known paths
   get "/.well-known/dfc/", to: "well_known#dfc"
 
+  # OAuth2 provider for external applications. Applications are managed in
+  # admin/oauth_applications instead of Doorkeeper's own pages.
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+  get "/oauth/userinfo", to: "oauth/userinfo#show", as: :oauth_userinfo
+
   resource :cart, controller: "cart", only: [] do
     post :populate
     patch "variants/:variant_id", action: :update_variant, as: :variant
