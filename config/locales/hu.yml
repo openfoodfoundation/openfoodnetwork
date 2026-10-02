@@ -1470,9 +1470,9 @@ hu:
         cancel: "Mégsem"
         back_to_list: "Vissza a listához"
       create:
-        success: 'Rendelési ciklusa létrejött.'
+        success: 'Rendelési ciklusod létrejött.'
       update:
-        success: 'Megrendelési ciklusa frissült.'
+        success: 'Megrendelési ciklusod frissült.'
       clone:
         success: "Rendelési ciklusát %{name} klónozásra került."
       notify_producers:
