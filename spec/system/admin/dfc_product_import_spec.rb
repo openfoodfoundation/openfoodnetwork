@@ -19,6 +19,8 @@ RSpec.describe "DFC Product Import" do
   end
 
   it "imports from given catalog" do
+    source_product.variants.first.update!(price: 14.99, on_demand: false, on_hand: 7)
+
     visit admin_product_import_path
 
     fill_in "catalog_url", with: "invalid url"
@@ -49,6 +51,10 @@ RSpec.describe "DFC Product Import" do
     }.to change {
       source_product.variants.count
     }.by(1)
+
+    imported_variant = source_product.variants.reload.last
+    expect(imported_variant.price).to eq 14.99
+    expect(imported_variant.on_hand).to eq 7
   end
 
   it "imports from a FDC catalog", vcr: true do
