@@ -28,9 +28,7 @@ class ProductTileComponent < ViewComponent::Base
   end
 
   def producer_name
-    return t("components.product_tile.multiple_producers") unless product.single_producer?
-
-    product.producers.first.name
+    helpers.product_producer_name(product)
   end
 
   # Single variant: {product name} | [{variant name} |] {unit or custom unit label}

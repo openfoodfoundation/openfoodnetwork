@@ -2730,6 +2730,7 @@ en:
   shopping_producers_of_hub: "%{hub}'s producers:"
 
   enterprises_next_closing: "Next order closing"
+  enterprises_next_closing_html: "Next order closing <strong>in %{distance_of_time}</strong>"
   enterprises_currently_open: "Orders are currently open"
   enterprises_ready_for: "Ready for"
   enterprises_choose: "Choose when you want your order:"
@@ -2780,6 +2781,9 @@ en:
   products_cart_empty: "Cart empty"
   products_edit_cart: "Edit your cart"
   products_from: from
+  products_multiple_producers: "Multiple producers"
+  products_unavailable: "This product is currently unavailable."
+  products_choose_order_cycle: "Please choose an order cycle to see what's available."
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
   products_update_error_msg: "Saving failed."
@@ -5233,11 +5237,11 @@ en:
         payment_status_changed: Post webhook on Payment status change
         order_balance_due: Post webhook on Order placed with balance due
       test_endpoint: Test webhook endpoint 
+    shop_variant_list:
+      from_producer: "From %{name}"
     shop_variant_modal:
       select: Select
-      from_producer: "From %{name}"
     product_tile:
-      multiple_producers: "Multiple producers"
       multiple_options: "multiple options"
       from_price: "from"
   # Gem to prevent bot form submissions

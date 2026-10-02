@@ -13,6 +13,15 @@ module SharedHelper
     "#{main_app.enterprise_shop_path(current_distributor)}#/shop_panel"
   end
 
+  # Names the producer of a ViewData::Product's variants, or says that there are several.
+  # Linked variants are produced by their source variant's enterprise, not by the reselling
+  # hub that owns them, so this can name one producer where the variants have two owners.
+  def product_producer_name(product)
+    return t("products_multiple_producers") unless product.single_producer?
+
+    product.producers.first.name
+  end
+
   def product_carousel_images_data(product, available_variant_ids: nil, size: :large)
     images = carousel_images(product, available_variant_ids)
 
