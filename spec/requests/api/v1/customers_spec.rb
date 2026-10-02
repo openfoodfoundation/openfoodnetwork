@@ -137,6 +137,33 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml" do
         expect(json_response_ids).to eq nil
         expect(json_error_detail).to eq "expected :page >= 1; got 0"
       end
+
+      # Regression for #14789: pagy_options used to pass `items:`, an option pagy dropped
+      # (renamed to `limit:`) several major versions ago, so the number of records actually
+      # returned came from the app-wide Pagy::OPTIONS[:limit]/:max_limit rather than from
+      # DEFAULT_PER_PAGE/MAX_PER_PAGE below - silently disagreeing with the per_page this
+      # concern reports in meta.pagination and uses to build links.
+      describe "the actual number of records returned" do
+        it "matches the default per_page reported in the metadata" do
+          stub_const("JsonApiPagination::DEFAULT_PER_PAGE", 1)
+
+          get "/api/v1/customers"
+
+          expect(json_response_ids.length).to eq 1
+          expect(json_response.dig(:meta, :pagination, :per_page)).to eq 1
+        end
+
+        it "is capped at this endpoint's own MAX_PER_PAGE, not the app-wide pagy max_limit" do
+          # The app-wide cap used by every other paginated endpoint (admin pages, etc.) -
+          # deliberately set below the number of customers in the fixtures, and below the
+          # requested per_page, so a leftover use of it here would trim the results.
+          stub_const("Pagy::OPTIONS", Pagy::OPTIONS.merge(max_limit: 1))
+
+          get "/api/v1/customers", params: { per_page: JsonApiPagination::MAX_PER_PAGE.to_s }
+
+          expect(json_response_ids).to match_array [customer1.id.to_s, customer2.id.to_s]
+        end
+      end
     end
 
     describe "query parameters" do
