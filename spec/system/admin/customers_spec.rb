@@ -37,6 +37,28 @@ RSpec.describe 'Customers' do
         visit admin_customers_path
       end
 
+      it "lets a hub manager add credit to a customer from the credit popup" do
+        select2_select managed_distributor1.name, from: "shop_id"
+
+        find("td.balance a", match: :first).click
+
+        within "#customer-account-transactions-modal" do
+          click_link "Add Credit"
+
+          fill_in "customer_account_transaction_amount", with: "15.00"
+          fill_in "customer_account_transaction_description", with: "Goodwill credit"
+
+          accept_confirm do
+            click_button "Add Credit"
+          end
+        end
+
+        within "#customer-account-transactions-modal" do
+          expect(page).to have_content("Available credit: $15.00")
+          expect(page).to have_content("Goodwill credit")
+        end
+      end
+
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
         expect(page).to have_select2(

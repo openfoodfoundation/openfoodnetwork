@@ -100,7 +100,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :inventory_items, only: [:create, :update]
 
     resources :customers, only: [:index, :create, :update, :destroy, :show] do
-      resources :customer_account_transaction, only: [:index]
+      resources :customer_account_transaction, only: [:index, :new, :create]
     end
 
     resources :tag_rules, only: [] do
