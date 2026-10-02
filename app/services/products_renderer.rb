@@ -146,6 +146,10 @@ class ProductsRenderer
     args[:q]&.dig("with_properties")
   end
 
+  def taxon_ids
+    args[:q]&.dig("variants_primary_taxon_id_in_any")
+  end
+
   def paginate(results)
     # ProductsRenderer is a PORO, not a controller: pagy always builds a Pagy::Request from
     # the :request option (falling back to #request otherwise), so it needs an explicit
@@ -171,6 +175,11 @@ class ProductsRenderer
         includes(:default_price, :product, :enterprise, :stock_items,
                  source_variants: :enterprise).
         where(product_id: products)
+
+      # The taxon filter is applied to products via ransack, but a product is matched as soon
+      # as any of its variants has the taxon. Apply the same filter to the variants so that
+      # only the variants in the requested categories are rendered.
+      variants = variants.where(primary_taxon_id: taxon_ids) if taxon_ids.present?
 
       if inventory_enabled?
         # Scope results with variant_overrides
