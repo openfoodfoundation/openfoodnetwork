@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Execute preparation tasks for a regular patch release. Requires admin permission on the repo.
+# Execute preparation tasks for a release. Requires admin permission on the repo.
 #
+# Usage: script/release/prepare [major|minor|patch|hotfix]
+# Defaults to a patch bump when no argument is given.
 set -e
 
 # todo: ask to confirm, and remind to check the ready to go column.
@@ -9,5 +11,5 @@ set -e
 # Download translations and push to master
 $(dirname "$0")/update_locales
 
-# Bump the patch version and push the tag
-$(dirname "$0")/tag
+# Bump the version and push the tag
+$(dirname "$0")/tag "${1:-patch}"
