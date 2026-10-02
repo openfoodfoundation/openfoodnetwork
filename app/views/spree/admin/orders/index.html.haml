@@ -21,11 +21,11 @@
 
 = render 'spree/admin/shared/custom-confirm'
 
-= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#resend_confirmation_emails") do
+= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->bulk-actions#turboPerform", controller: "bulk-actions", url: "orders/resend_confirmation_emails") do
   .margin-bottom-30
     = t('.resend_confirmation_confirm_html')
 
-= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#send_invoices") do
+= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->bulk-actions#turboPerform", controller: "bulk-actions", url: "orders/send_invoices") do
   .margin-bottom-30
     = t('.send_invoice_confirm_html')
 

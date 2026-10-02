@@ -166,7 +166,46 @@ module Spree
         render turbo_stream: streams
       end
 
+      def resend_confirmation_emails
+        count = 0
+        editable_orders.where(id: params[:bulk_ids]).find_each do |order|
+          next unless can? :resend, order
+
+          Spree::OrderMailer.confirm_email_for_customer(order.id, true).deliver_later
+          count += 1
+        end
+
+        bulk_action_feedback("admin.resend_confirmation_emails_feedback", count)
+      end
+
+      def send_invoices
+        count = 0
+        editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |order|
+          next unless order.distributor.can_invoice?
+
+          Spree::OrderMailer.invoice_email(order.id, current_user_id: spree_current_user.id).
+            deliver_later
+          count += 1
+        end
+
+        bulk_action_feedback("admin.send_invoice_feedback", count)
+      end
+
       private
+
+      def editable_orders
+        Permissions::Order.new(spree_current_user).editable_orders
+      end
+
+      def bulk_action_feedback(i18n_key, count)
+        flash.now[:success] = t(i18n_key, count:)
+        render turbo_stream: [
+          turbo_stream.dispatch_event("body", "modal:close"),
+          turbo_stream.append(
+            "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
+          )
+        ]
+      end
 
       def line_items_present?
         return true if @order.line_items.any?
