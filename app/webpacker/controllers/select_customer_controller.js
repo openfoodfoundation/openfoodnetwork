@@ -51,6 +51,19 @@ export default class extends TomSelectController {
     });
     document.querySelector("#order_email").value = customer.email;
     document.querySelector("#customer_id").value = customer.id;
+    this.fillCustomerFields(customer);
+  }
+
+  fillCustomerFields(customer) {
+    ["enterprise_name", "enterprise_acn", "enterprise_abn"].forEach((field) => {
+      document.querySelector("#customer_" + field).value = customer[field] || "";
+    });
+    document.querySelector("#customer_enterprise_charges_sales_tax").checked =
+      !!customer.enterprise_charges_sales_tax;
+
+    const typeSelect = document.querySelector("#customer_customer_type");
+    typeSelect.value = customer.customer_type;
+    typeSelect.dispatchEvent(new Event("change"));
   }
 
   setValueOnTomSelectController = (element, value) => {
