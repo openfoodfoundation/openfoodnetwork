@@ -18,7 +18,7 @@ module Spree
         end
 
         def update
-          if @order.update(order_params)
+          if update_order_and_customer
             if params[:guest_checkout] == "false"
               @order.associate_user!(Spree::User.find_by(email: @order.email))
             end
@@ -41,6 +41,21 @@ module Spree
 
         private
 
+        # The customer is updated after the order so it applies to the customer
+        # selected in the form. Cart orders don't have one yet: create it now.
+        def update_order_and_customer
+          Order.transaction do
+            (@order.update(order_params) && update_customer) || raise(ActiveRecord::Rollback)
+          end
+        end
+
+        def update_customer
+          return true if params[:customer].blank?
+
+          @order.customer ||= CustomerSyncer.create_customer(@order)
+          @order.customer.update(customer_params) && @order.save
+        end
+
         def build_addresses
           country_id = Address.default.country.id
           @order.build_bill_address(country_id:) if @order.bill_address.nil?
@@ -58,6 +73,13 @@ module Spree
             :customer_id,
             bill_address_attributes: ::PermittedAttributes::Address.attributes,
             ship_address_attributes: ::PermittedAttributes::Address.attributes
+          )
+        end
+
+        def customer_params
+          params.require(:customer).permit(
+            :customer_type, :enterprise_name, :enterprise_acn, :enterprise_abn,
+            :enterprise_charges_sales_tax
           )
         end
 

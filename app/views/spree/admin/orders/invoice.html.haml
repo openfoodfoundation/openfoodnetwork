@@ -39,7 +39,9 @@
       %td{ align: "left" }
         %strong= "#{t('.to')}:"
         %br
-        - if @order.bill_address
+        - if @order.customer&.enterprise?
+          = @order.customer.full_name
+        - elsif @order.bill_address
           = @order.bill_address.full_name
         - if @order&.customer&.code.present?
           %br
@@ -52,6 +54,12 @@
           = "#{@order.customer.email},"
         - if @order.bill_address
           = "#{@order.bill_address.phone}"
+        - if @order&.customer&.enterprise?
+          %br
+          - if @order&.customer&.enterprise_acn
+            = "#{t :acn} #{@order.customer.enterprise_acn}"
+          - if @order&.customer&.enterprise_abn
+            = "#{t :abn} #{@order.customer.enterprise_abn}"
       %td
         &nbsp;
       %td{ align: "left", style: "border-left: .1em solid black; padding-left: 1em" }
