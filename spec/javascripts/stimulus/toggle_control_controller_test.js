@@ -215,5 +215,36 @@ describe("ToggleControlController", () => {
       expect(content.style.display).toBe("block");
       expect(chevron.className).toBe("icon-chevron-down");
     });
+
+    describe("#disableUnlessMatch", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <div data-controller="toggle-control">
+            <input id="radio_category" type="radio" name="sorting" value="by_category" checked
+                  data-action="change->toggle-control#disableUnlessMatch" />
+            <input id="radio_producer" type="radio" name="sorting" value="by_producer"
+                  data-action="change->toggle-control#disableUnlessMatch" />
+            <textarea id="taxon_box" data-toggle-control-target="control"
+                      data-toggle-control-match-value="by_category"></textarea>
+            <textarea id="producer_box" data-toggle-control-target="control"
+                      data-toggle-control-match-value="by_producer"></textarea>
+          </div>`;
+      });
+
+      it("disables the box whose match value does not correspond to the selected radio", () => {
+        radio_producer.click();
+
+        expect(taxon_box.readOnly).toBe(true);
+        expect(producer_box.readOnly).toBe(false);
+      });
+
+      it("updates both boxes when switching back", () => {
+        radio_producer.click();
+        radio_category.click();
+
+        expect(taxon_box.readOnly).toBe(false);
+        expect(producer_box.readOnly).toBe(true);
+      });
+    });
   });
 });
