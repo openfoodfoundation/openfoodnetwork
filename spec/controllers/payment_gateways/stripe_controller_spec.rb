@@ -14,6 +14,7 @@ RSpec.describe PaymentGateways::StripeController do
 
   before do
     exchange.variants << order.line_items.first.variant
+    create(:shipment, order:)
     allow(controller).to receive(:current_order).and_return(order)
   end
 

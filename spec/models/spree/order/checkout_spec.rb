@@ -85,6 +85,25 @@ RSpec.describe Spree::Order::Checkout do
     end
   end
 
+  describe "transition to complete" do
+    let(:order) { create(:order_ready_for_confirmation) }
+
+    it "cannot complete without a shipping method" do
+      allow(order).to receive(:shipping_method) { nil }
+
+      expect { order.next! }.to raise_error(
+        StateMachines::InvalidTransition, /Items cannot be shipped/
+      )
+      expect(order.reload.state).to eq "confirmation"
+    end
+
+    it "completes when a shipping method is attached" do
+      order.next!
+
+      expect(order.state).to eq "complete"
+    end
+  end
+
   describe 'event :restart_checkout' do
     let(:order) { build_stubbed(:order) }
 
