@@ -92,7 +92,7 @@ RSpec.describe Spree::Order::Checkout do
       allow(order).to receive(:shipping_method) { nil }
 
       expect { order.next! }.to raise_error(
-        StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/
+        StateMachines::InvalidTransition, /Items cannot be shipped/
       )
       expect(order.reload.state).to eq "confirmation"
     end

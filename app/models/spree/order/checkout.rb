@@ -159,6 +159,13 @@ module Spree
             errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
             throw :halt
           end
+
+          def ensure_shipping_method
+            return if shipping_method.present?
+
+            errors.add(:base, Spree.t(:items_cannot_be_shipped))
+            false
+          end
         end
       end
     end
