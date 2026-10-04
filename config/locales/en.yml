@@ -5263,3 +5263,11 @@ en:
     no_credit_owed: No credit owed
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
+  pay_with_credit_service:
+    success: "%{amount} of customer credit used to pay this order"
+    errors:
+      no_customer: This order has no customer
+      order_not_complete: Only complete orders can be paid with credit
+      nothing_to_pay: There is no balance due on this order
+      no_credit_available: The customer has no credit available
+      pending_gateway_payment: "This order has a pending %{payment_method} payment. Void it before paying with credit."
