@@ -465,6 +465,55 @@ RSpec.describe Spree::Admin::PaymentsController do
     end
   end
 
+  describe "POST /admin/orders/:order_number/payments/pay_with_credit" do
+    let(:pay_with_credit_mock) { instance_double(Orders::PayWithCreditService) }
+
+    before do
+      allow(Orders::PayWithCreditService).to receive(:new).and_return(pay_with_credit_mock)
+    end
+
+    it "pays the order with credit, on behalf of the current user" do
+      success_response = Orders::PayWithCreditService::Response.new(
+        success: true, message: "$10.00 of customer credit used to pay this order"
+      )
+      expect(pay_with_credit_mock).to receive(:call).with(user:)
+        .and_return(success_response)
+
+      post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+      expect(response).to redirect_to(spree.admin_order_payments_path(order))
+      expect(flash[:success]).to eq "$10.00 of customer credit used to pay this order"
+    end
+
+    context "when the payment fails" do
+      it "redirects to payments page with the error" do
+        failure_response = Orders::PayWithCreditService::Response.new(
+          success: false, message: "Some error"
+        )
+        expect(pay_with_credit_mock).to receive(:call).and_return(failure_response)
+
+        post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(flash[:error]).to eq "Some error"
+      end
+    end
+
+    context "when the user doesn't manage the order's shop" do
+      # Created after the order, so the order's products don't use its enterprise as producer
+      let(:other_user) { create(:enterprise_user) }
+
+      it "doesn't pay the order" do
+        sign_in other_user
+        expect(pay_with_credit_mock).not_to receive(:call)
+
+        post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+        expect(response).to redirect_to(unauthorized_path)
+      end
+    end
+  end
+
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
     OrderManagement::Order::Updater.new(order).update_voucher

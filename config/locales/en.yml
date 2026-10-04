@@ -4759,6 +4759,10 @@ en:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
         customer_credit_successful: Customer has been successfully credited!
+        index:
+          pay_with_credit: Pay with credit
+          pay_with_credit_confirm: "Pay this order with the customer's credit? If the credit doesn't cover it all, a payment for the remaining amount is kept."
+          available_credit: Available credit
 
       products:
         image:
