@@ -61,6 +61,25 @@ RSpec.describe Invoice::DataPresenter::Customer do
     end
   end
 
+  context "with data from a generated invoice" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, :with_line_item, :completed, distributor:) }
+    let(:data) { create(:invoice, order:).reload.data[:customer] }
+
+    it "exposes the enterprise details of an enterprise customer" do
+      order.customer.update!(customer_type: "enterprise", enterprise_name: "Da Box",
+                             enterprise_abn: "123", enterprise_acn: "456")
+
+      expect(presenter).to be_enterprise
+      expect(presenter).to have_attributes(enterprise_name: "Da Box", enterprise_abn: "123",
+                                           enterprise_acn: "456")
+    end
+
+    it "is not an enterprise for an individual customer" do
+      expect(presenter).not_to be_enterprise
+    end
+  end
+
   context "when attributes are missing from data" do
     let(:data) { {} }
 

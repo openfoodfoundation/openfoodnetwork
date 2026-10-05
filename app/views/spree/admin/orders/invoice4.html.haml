@@ -64,7 +64,7 @@
         = t :invoice_billing_address
         %br
         - if @order.customer&.enterprise?
-          %strong= @order.customer.full_name
+          %strong= @order.customer.enterprise_name
         - elsif @order.bill_address
           %strong= @order.bill_address.full_name
         - if @order&.customer&.code.present?

@@ -40,7 +40,7 @@
         %strong= "#{t('.to')}:"
         %br
         - if @order.customer&.enterprise?
-          = @order.customer.full_name
+          = @order.customer.enterprise_name
         - elsif @order.bill_address
           = @order.bill_address.full_name
         - if @order&.customer&.code.present?
