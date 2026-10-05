@@ -81,6 +81,11 @@ module OpenFoodNetwork
       "fdc-staging" => <<~DESC,
         Show DFC Permissions interface to share data with the FDC staging platform.
       DESC
+      "oauth_provider" => <<~DESC,
+        Let external applications log users in with their account (OAuth2).
+        Activate globally only: it enables the <code>/oauth/*</code> endpoints,
+        the OAuth admin pages and the users' Connected Apps tab.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

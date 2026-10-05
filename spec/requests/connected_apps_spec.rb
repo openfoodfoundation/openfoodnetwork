@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "Connected apps" do
+RSpec.describe "Connected apps", feature: :oauth_provider do
   let(:user) { create(:user) }
   let(:application) {
     create(:oauth_application, name: "Delivery planner",

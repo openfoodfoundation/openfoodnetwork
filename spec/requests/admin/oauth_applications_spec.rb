@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "/admin/oauth_applications" do
+RSpec.describe "/admin/oauth_applications", feature: :oauth_provider do
   let(:admin) { create(:admin_user) }
   let!(:application) { create(:oauth_application, name: "Delivery planner") }
 

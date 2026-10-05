@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe "Connected Apps" do
+RSpec.describe "Connected Apps", feature: :oauth_provider do
   include AuthenticationHelper
 
   let(:user) { create(:user) }

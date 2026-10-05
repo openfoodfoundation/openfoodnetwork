@@ -21,7 +21,7 @@ module Spree
         .where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
 
       @unconfirmed_email = spree_current_user.unconfirmed_email
-      @connected_apps = Doorkeeper::Application.authorized_for(spree_current_user).order(:name)
+      @connected_apps = connected_apps if OpenFoodNetwork::FeatureToggle.enabled?(:oauth_provider)
     end
 
     def create
@@ -52,6 +52,10 @@ module Spree
     end
 
     private
+
+    def connected_apps
+      Doorkeeper::Application.authorized_for(spree_current_user).order(:name)
+    end
 
     def orders_collection
       CompleteOrdersWithBalanceQuery.new(@user).call

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "OAuth2 provider" do
+RSpec.describe "OAuth2 provider", feature: :oauth_provider do
   let(:user) { create(:user, email: "farmer@example.com") }
   let(:application) { create(:oauth_application) }
   let(:code_verifier) { "a" * 64 }

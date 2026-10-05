@@ -33,10 +33,12 @@ Openfoodnetwork::Application.routes.draw do
 
   # OAuth2 provider for external applications. Applications are managed in
   # admin/oauth_applications instead of Doorkeeper's own pages.
-  use_doorkeeper do
-    skip_controllers :applications, :authorized_applications
+  constraints ->(_) { OpenFoodNetwork::FeatureToggle.enabled?(:oauth_provider) } do
+    use_doorkeeper do
+      skip_controllers :applications, :authorized_applications
+    end
+    get "/oauth/userinfo", to: "oauth/userinfo#show", as: :oauth_userinfo
   end
-  get "/oauth/userinfo", to: "oauth/userinfo#show", as: :oauth_userinfo
 
   resource :cart, controller: "cart", only: [] do
     post :populate

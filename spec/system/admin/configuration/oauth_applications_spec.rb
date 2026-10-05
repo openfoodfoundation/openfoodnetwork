@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe "OAuth applications" do
+RSpec.describe "OAuth applications", feature: :oauth_provider do
   include AuthenticationHelper
 
   before do

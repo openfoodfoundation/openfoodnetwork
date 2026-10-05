@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe "OAuth tokens" do
+RSpec.describe "OAuth tokens", feature: :oauth_provider do
   include AuthenticationHelper
 
   let(:user) { create(:user, email: "farmer@example.com") }
