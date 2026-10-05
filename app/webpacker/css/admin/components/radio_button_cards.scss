@@ -1,0 +1,66 @@
+.radio-button-cards {
+  display: flex;
+  gap: 2rem;
+
+  label.radio-button-card {
+    background-color: $spree-light-blue;
+    border-radius: $border-radius;
+    display: flex;
+    flex-basis: 0;
+    flex-direction: column;
+    flex-grow: 1;
+
+    span.header {
+      background-color: $teal;
+      border-radius: $border-radius;
+      display: block;
+      font-weight: $font-weight-bold;
+      outline: 1px solid black;
+      padding: 0.2rem 0 0 0;
+      position: relative;
+      text-align: center;
+
+      input {
+        left: 14px;
+        position: absolute;
+        top: 14px;
+      }
+
+      span.title {
+        color: white;
+        display: block;
+        font-size: $h3-size;
+        line-height: 28px;
+      }
+
+      span.subtitle {
+        color: white;
+        display: block;
+        font-size: $body-font-size;
+        padding: 0.2rem 0;
+      }
+
+      span.tertiary {
+        background: white;
+        display: block;
+        font-size: $h6-size;
+        padding: 0.2rem 0;
+      }
+    }
+
+    span.description {
+      display: block;
+      font-weight: normal;
+      padding: 1rem;
+    }
+
+    &:hover,
+    &:has(input[type="radio"]:checked) {
+      outline: 1px solid black;
+
+      .header {
+        background-color: black;
+      }
+    }
+  }
+}

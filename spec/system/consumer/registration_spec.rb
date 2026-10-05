@@ -152,7 +152,7 @@ RSpec.describe "Registration" do
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
 
-      page.find('.full_hub h3').click
+      choose "Producer Hub"
       click_button "Select and Continue"
       expect(page).to have_content "Your profile live"
       click_link "Manage My Awesome Enterprise"
