@@ -254,6 +254,37 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).not_to have_content variant2.name.to_s
         end
 
+        context "when a product has variants in different taxons" do
+          let!(:variant_in_taxon2) {
+            create(:variant, product:, primary_taxon: taxon2, display_name: "Dandelion Beans")
+          }
+
+          before do
+            add_variant_to_order_cycle(exchange1, variant_in_taxon2)
+            visit shop_path
+          end
+
+          it "only shows the variants matching the selected taxon" do
+            expect(page).to have_content "Dandelion Beans"
+
+            within "#shop-tabs .taxon-selectors" do
+              toggle_filter taxon.name
+            end
+
+            expect(page).to have_content "Beans"
+            expect(page).not_to have_content "Dandelion Beans"
+            expect(page).not_to have_content "Chickpeas"
+
+            within "#shop-tabs .taxon-selectors" do
+              toggle_filter taxon.name
+              toggle_filter taxon2.name
+            end
+
+            expect(page).to have_content "Dandelion Beans"
+            expect(page).to have_content "Chickpeas"
+          end
+        end
+
         it "filters out variants according to the selected property" do
           expect(page).to have_content variant.name.to_s
           expect(page).to have_content variant2.name.to_s
