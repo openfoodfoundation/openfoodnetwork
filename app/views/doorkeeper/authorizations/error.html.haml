@@ -1,3 +1,7 @@
+%p.eyebrow= t("doorkeeper.authorizations.new.eyebrow", site_name: Spree::Config[:site_name])
 %h1= t("doorkeeper.authorizations.error.title")
 
-%p= (local_assigns[:error_response] || @pre_auth.error_response).body[:error_description]
+%p.error-description
+  = (local_assigns[:error_response] || @pre_auth.error_response).body[:error_description]
+
+%p= link_to t("doorkeeper.authorizations.error.back_home"), main_app.root_path

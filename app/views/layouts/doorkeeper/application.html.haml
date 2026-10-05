@@ -3,31 +3,16 @@
   %head
     %meta{ charset: "utf-8" }
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
-    %title= t("doorkeeper.layouts.application.title")
+    %meta{ name: "robots", content: "noindex" }
+    %title= t("doorkeeper.layouts.application.title", site_name: Spree::Config[:site_name])
+    = favicon_link_tag Rails.env.production? ? "/favicon.ico" : "/favicon-staging.ico"
+    %link{ href: "https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap", rel: "stylesheet" }
+    = stylesheet_pack_tag "oauth", media: "screen"
     = csrf_meta_tags
-    :css
-      body {
-        background-color: #fff;
-        color: #333;
-        font-family: arial, sans-serif;
-      }
-      main {
-        max-width: 480px;
-        margin: 4em auto;
-        padding: 0 16px;
-      }
-      h1 {
-        font-size: 1.6em;
-      }
-      .actions form {
-        display: inline-block;
-        margin-right: 1em;
-      }
-      .actions input[type=submit] {
-        font-size: 1em;
-        padding: 0.5em 1.5em;
-        cursor: pointer;
-      }
   %body
+    %header.site-header
+      = link_to main_app.root_path do
+        = image_tag ContentConfig.url_for(:logo), alt: Spree::Config[:site_name]
     %main
-      = yield
+      .card
+        = yield

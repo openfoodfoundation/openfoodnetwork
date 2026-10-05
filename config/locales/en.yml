@@ -335,19 +335,24 @@ en:
   doorkeeper:
     layouts:
       application:
-        title: "Open Food Network authorization"
+        title: "Authorize an application - %{site_name}"
     scopes:
       profile: "See your email address"
     authorizations:
       buttons:
         authorize: "Authorize"
-        deny: "Deny"
+        deny: "Cancel"
       error:
-        title: "An error has occurred"
+        title: "This authorization request is invalid"
+        back_home: "Go to the home page"
       new:
-        title: "Authorization required"
-        prompt_html: "Authorize <strong>%{client_name}</strong> to use your account?"
-        able_to: "This application will be able to:"
+        eyebrow: "Log in with %{site_name}"
+        heading: "%{client_name} wants to access your %{site_name} account"
+        signed_in_as: "Signed in as"
+        not_you: "Not you? Log out"
+        able_to: "This will allow %{client_name} to:"
+        redirect_notice_html: "After your choice, you will go to %{host}."
+        trust_notice: "Only authorize applications you trust."
   devise:
     passwords:
       spree_user:

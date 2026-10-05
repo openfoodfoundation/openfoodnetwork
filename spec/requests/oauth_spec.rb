@@ -57,6 +57,17 @@ RSpec.describe "OAuth2 provider" do
       expect(response.body).to include application.name
     end
 
+    it "shows the OFN instance branding, the account and where the user goes next" do
+      Spree::Config[:site_name] = "Coop Market"
+      sign_in user
+
+      get oauth_authorization_path(authorize_params)
+
+      expect(response.body).to include(
+        "Coop Market", ContentConfig.url_for(:logo), user.email, "app.example.com"
+      )
+    end
+
     it "doesn't authorize a disabled user" do
       user.update!(disabled_at: Time.zone.now)
       sign_in user

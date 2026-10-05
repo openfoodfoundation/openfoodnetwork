@@ -1,16 +1,29 @@
-%h1= t(".title")
+- site_name = Spree::Config[:site_name]
+- client_name = @pre_auth.client.name
 
-%p= t(".prompt_html", client_name: @pre_auth.client.name)
+%p.eyebrow= t(".eyebrow", site_name:)
+%h1= t(".heading", client_name:, site_name:)
+
+.account
+  .avatar= current_resource_owner.email.first
+  %div
+    %small= t(".signed_in_as")
+    .account-email= current_resource_owner.email
+    %small= link_to t(".not_you"), spree.logout_path
 
 - if @pre_auth.scopes.any?
-  %p= t(".able_to")
-  %ul
+  %p= t(".able_to", client_name:)
+  %ul.permissions
     - @pre_auth.scopes.each do |scope|
       %li= t(scope, scope: [:doorkeeper, :scopes])
 
+%p.notice
+  = t(".redirect_notice_html", host: tag.strong(URI(@pre_auth.redirect_uri).host))
+  = t(".trust_notice")
+
 .actions
   - [[:post, :authorize], [:delete, :deny]].each do |method, button|
-    = form_tag oauth_authorization_path, method: do
+    = form_tag oauth_authorization_path, method:, class: button do
       = hidden_field_tag :client_id, @pre_auth.client.uid, id: nil
       = hidden_field_tag :redirect_uri, @pre_auth.redirect_uri, id: nil
       = hidden_field_tag :state, @pre_auth.state, id: nil
