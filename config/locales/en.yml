@@ -921,6 +921,26 @@ en:
         redirect_uri_hint: "One URI per line. The application sends users back there after they log in."
         confidential: "Confidential"
         confidential_hint: "Check if the application can keep its client secret private, like a server-side application. Uncheck for mobile or browser applications, which must then use PKCE."
+    oauth_tokens:
+      index:
+        title: "OAuth tokens"
+        application: "Application"
+        all_applications: "All applications"
+        show_revoked: "Show revoked tokens"
+        filter: "Filter"
+        none: "No OAuth token found."
+        user: "User"
+        scopes: "Scopes"
+        created_at: "Created"
+        expires_at: "Expires"
+        status: "Status"
+        active_status: "Active"
+        expired_status: "Expired (refreshable)"
+        revoked_status: "Revoked"
+        revoke: "Revoke"
+        revoke_confirm: "The application will lose access with this token and its refresh token. Continue?"
+      revoke:
+        success: "The token has been revoked."
     customers:
       index:
         new_customer: "New Customer"

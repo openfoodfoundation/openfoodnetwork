@@ -125,6 +125,9 @@ Openfoodnetwork::Application.routes.draw do
     resource :connected_app_settings, only: [:edit, :update]
 
     resources :oauth_applications, except: :show
+    resources :oauth_tokens, only: :index do
+      put :revoke, on: :member
+    end
 
     resources :stripe_accounts, only: [:destroy] do
       get :connect, on: :collection
