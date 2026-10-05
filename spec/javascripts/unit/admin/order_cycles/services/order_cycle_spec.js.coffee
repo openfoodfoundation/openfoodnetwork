@@ -105,6 +105,35 @@ describe 'OrderCycle service', ->
         OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
         expect(exchange.variants).toEqual {2: false}
 
+    describe "on an incoming exchange", ->
+      Enterprise = null
+      exchange = null
+      outgoing = null
+
+      beforeEach ->
+        inject ($injector) ->
+          Enterprise = $injector.get('Enterprise')
+        OrderCycle.order_cycle["editable_variants_for_incoming_exchanges"] = { 1: [1, 2] }
+        OrderCycle.order_cycle["editable_variants_for_outgoing_exchanges"] = { 3: [1, 2] }
+        exchange = { enterprise_id: 1, incoming: true, variants: {}}
+        outgoing = { enterprise_id: 3, incoming: false, variants: {}}
+        OrderCycle.order_cycle.outgoing_exchanges = [outgoing]
+
+      it "selects the variants in outgoing when there is a single distributor", ->
+        Enterprise.hub_enterprises = [{id: 3}]
+        OrderCycle.setExchangeVariants(exchange, [1, 2], true)
+        expect(outgoing.variants).toEqual {1: true, 2: true}
+
+      it "does not select the variants in outgoing when there are several distributors", ->
+        Enterprise.hub_enterprises = [{id: 3}, {id: 4}]
+        OrderCycle.setExchangeVariants(exchange, [1, 2], true)
+        expect(outgoing.variants).toEqual {}
+
+      it "deselects the variants in outgoing", ->
+        outgoing.variants = {1: true, 2: true}
+        OrderCycle.setExchangeVariants(exchange, [1, 2], false)
+        expect(outgoing.variants).toEqual {1: false, 2: false}
+
   describe 'adding suppliers', ->
     exchange = null
 
@@ -264,6 +293,34 @@ describe 'OrderCycle service', ->
     it 'returns false for variants that are not supplied', ->
       expect(OrderCycle.variantSuppliedToOrderCycle({id: 999})).toBeFalsy()
 
+
+  describe 'add distribution of a variant', ->
+    Enterprise = null
+
+    beforeEach ->
+      inject ($injector) ->
+        Enterprise = $injector.get('Enterprise')
+      OrderCycle.order_cycle.editable_variants_for_outgoing_exchanges = { 1: [123] }
+      OrderCycle.order_cycle.outgoing_exchanges = [
+        {enterprise_id: 1, variants: {234: true}}
+        {enterprise_id: 2, variants: {}}
+      ]
+
+    it 'selects the variant in outgoing exchanges where it is editable', ->
+      Enterprise.hub_enterprises = [{id: 1}]
+      OrderCycle.addDistributionOfVariant('123')
+      expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+        {enterprise_id: 1, variants: {123: true, 234: true}}
+        {enterprise_id: 2, variants: {}}
+      ]
+
+    it 'does nothing when there are several distributors', ->
+      Enterprise.hub_enterprises = [{id: 1}, {id: 2}]
+      OrderCycle.addDistributionOfVariant('123')
+      expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+        {enterprise_id: 1, variants: {234: true}}
+        {enterprise_id: 2, variants: {}}
+      ]
 
   describe 'remove all distribution of a variant', ->
     it 'removes the variant from every outgoing exchange', ->
