@@ -21,6 +21,7 @@ module Spree
         .where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
 
       @unconfirmed_email = spree_current_user.unconfirmed_email
+      @connected_apps = Doorkeeper::Application.authorized_for(spree_current_user).order(:name)
     end
 
     def create

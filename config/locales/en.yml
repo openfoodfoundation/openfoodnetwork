@@ -4253,6 +4253,9 @@ en:
   previous: "Previous"
   last: "Last"
 
+  connected_apps:
+    destroy:
+      success: "%{name} can no longer access your account."
   webhook_endpoints:
     create:
       success: Webhook endpoint successfully created
@@ -5121,6 +5124,14 @@ en:
         generic_error: "PayPal failed. %{reasons}"
         no_payment_found: "No pending Paypal payment found"
     users:
+      connected_apps:
+        title: Connected Apps
+        description: "External applications you authorized to use your %{site_name} account."
+        none: "You haven't connected any application yet."
+        application: Application
+        website: Website
+        revoke: Revoke
+        revoke_confirm: "%{name} will no longer be able to access your account. Continue?"
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
@@ -5143,6 +5154,7 @@ en:
           transactions: Transactions
           customer_account_transactions: Customer Transactions
           settings: Account Settings
+          connected_apps: Connected Apps
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
         open_orders: Open Orders
