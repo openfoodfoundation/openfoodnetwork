@@ -37,7 +37,7 @@ Openfoodnetwork::Application.routes.draw do
     use_doorkeeper do
       skip_controllers :applications, :authorized_applications
     end
-    get "/oauth/userinfo", to: "oauth/userinfo#show", as: :oauth_userinfo
+    use_doorkeeper_openid_connect
   end
 
   resource :cart, controller: "cart", only: [] do

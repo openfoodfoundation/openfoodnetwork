@@ -17,6 +17,9 @@ RSpec.describe "OAuth provider feature toggle" do
       get "/oauth/userinfo"
       expect(response).to have_http_status :not_found
 
+      get "/.well-known/openid-configuration"
+      expect(response).to have_http_status :not_found
+
       delete "/account/connected_apps/#{application.id}"
       expect(response).to have_http_status :not_found
     end

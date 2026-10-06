@@ -52,6 +52,7 @@ RSpec.describe "/admin/oauth_applications", feature: :oauth_provider do
 
       expect(response.body).to include application.uid
       expect(response.body).to include application.secret
+      expect(response.body).to include "http://test.host/.well-known/openid-configuration"
     end
 
     it "updates an application" do

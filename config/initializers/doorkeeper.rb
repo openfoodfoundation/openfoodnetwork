@@ -23,8 +23,21 @@ Doorkeeper.configure do
   force_pkce
   pkce_code_challenge_methods %w[S256]
 
-  default_scopes :profile
+  # OpenID Connect scopes, see config/initializers/doorkeeper_openid_connect.rb.
+  default_scopes :openid
+  optional_scopes :email
   enforce_configured_scopes
+
+  # The time the user logged in, for OpenID Connect. It's always taken from the
+  # session, never from the authorization request.
+  custom_access_token_attributes [:auth_time]
+  after_successful_authorization do |controller, context|
+    grant = context.auth.try(:auth).try(:token)
+    next unless grant.is_a?(Doorkeeper::AccessGrant)
+
+    auth_time = controller.session.dig("warden.user.spree_user.session", "auth_time")
+    grant.update_columns(auth_time: auth_time && Time.zone.at(auth_time))
+  end
 
   access_token_expires_in 2.hours
   use_refresh_token

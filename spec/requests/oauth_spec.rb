@@ -12,8 +12,9 @@ RSpec.describe "OAuth2 provider", feature: :oauth_provider do
       client_id: application.uid,
       redirect_uri: application.redirect_uri,
       response_type: "code",
-      scope: "profile",
+      scope: "openid email",
       state: "xyz",
+      nonce: "n-0S6_WzA2Mj",
       code_challenge:,
       code_challenge_method: "S256",
     }
@@ -103,19 +104,21 @@ RSpec.describe "OAuth2 provider", feature: :oauth_provider do
       }
     end
 
-    it "gives an access token identifying the user" do
+    it "gives tokens identifying the user" do
       exchange_code(authorize_and_get_code)
 
       expect(response).to have_http_status :ok
-      access_token = response.parsed_body.fetch("access_token")
-      expect(response.parsed_body["refresh_token"]).to be_present
+      tokens = response.parsed_body
+      expect(tokens.keys).to include "access_token", "refresh_token", "id_token"
+      id_token_sub = JWT.decode(tokens["id_token"], nil, false).first["sub"]
 
-      get oauth_userinfo_path, headers: { "Authorization" => "Bearer #{access_token}" }
+      get oauth_userinfo_path, headers: { "Authorization" => "Bearer #{tokens['access_token']}" }
 
       expect(response).to have_http_status :ok
       expect(response.parsed_body).to eq(
-        "sub" => user.id.to_s,
+        "sub" => id_token_sub,
         "email" => "farmer@example.com",
+        "email_verified" => true,
       )
     end
 
@@ -129,7 +132,8 @@ RSpec.describe "OAuth2 provider", feature: :oauth_provider do
 
   describe "GET /oauth/userinfo" do
     let(:token) {
-      Doorkeeper::AccessToken.create!(application:, resource_owner_id: user.id, scopes: "profile")
+      Doorkeeper::AccessToken.create!(application:, resource_owner_id: user.id,
+                                      scopes: "openid email")
     }
 
     def get_userinfo(token)

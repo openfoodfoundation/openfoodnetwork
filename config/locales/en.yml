@@ -337,7 +337,8 @@ en:
       application:
         title: "Authorize an application - %{site_name}"
     scopes:
-      profile: "See your email address"
+      openid: "Know that you are logged in with this account"
+      email: "See your email address"
     authorizations:
       buttons:
         authorize: "Authorize"
@@ -919,7 +920,8 @@ en:
         credentials: "Credentials"
         uid: "Client ID"
         secret: "Client secret"
-        endpoints: "Authorization URL: %{authorize} / Token URL: %{token} / User info URL: %{userinfo}"
+        discovery_url: "OpenID Connect discovery URL"
+        discovery_hint: "OpenID Connect applications find all the endpoints and signing keys from this URL. Scopes: openid (required) and email."
       form:
         name: "Name"
         redirect_uri: "Redirect URI"

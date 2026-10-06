@@ -11,6 +11,9 @@
   .field
     = label_tag :oauth_application_secret, t(".secret")
     = text_field_tag :oauth_application_secret, @application.secret, readonly: true, class: "fullwidth"
-  %p.text-muted= t(".endpoints", authorize: main_app.oauth_authorization_url, token: main_app.oauth_token_url, userinfo: main_app.oauth_userinfo_url)
+  .field
+    = label_tag :oauth_discovery_url, t(".discovery_url")
+    = text_field_tag :oauth_discovery_url, main_app.oauth_discovery_provider_url, readonly: true, class: "fullwidth"
+  %p.text-muted= t(".discovery_hint")
 
 = render "form", url: main_app.admin_oauth_application_path(@application), submit_label: t(:update)

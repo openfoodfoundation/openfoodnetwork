@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_01_000000) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_06_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -348,6 +348,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_01_000000) do
     t.string "code_challenge_method"
     t.datetime "created_at", null: false
     t.datetime "revoked_at"
+    t.datetime "auth_time"
     t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
     t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
@@ -363,6 +364,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_01_000000) do
     t.datetime "created_at", null: false
     t.datetime "revoked_at"
     t.string "previous_refresh_token", default: "", null: false
+    t.datetime "auth_time"
     t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
@@ -379,6 +381,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_01_000000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "oauth_openid_requests", force: :cascade do |t|
+    t.bigint "access_grant_id", null: false
+    t.string "nonce", null: false
+    t.index ["access_grant_id"], name: "index_oauth_openid_requests_on_access_grant_id"
   end
 
   create_table "oidc_accounts", force: :cascade do |t|
@@ -1257,6 +1265,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_01_000000) do
   add_foreign_key "oauth_access_grants", "spree_users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "spree_users", column: "resource_owner_id"
+  add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
   add_foreign_key "oidc_accounts", "spree_users", column: "user_id"
   add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"

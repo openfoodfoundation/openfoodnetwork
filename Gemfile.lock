@@ -284,6 +284,10 @@ GEM
     digest (3.2.1)
     doorkeeper (5.9.9)
       railties (>= 5)
+    doorkeeper-openid_connect (2.0.0)
+      doorkeeper (>= 5.5, < 7.0)
+      jwt (>= 2.5)
+      ostruct (>= 0.5)
     dotenv (3.2.0)
     drb (2.2.3)
     em-http-request (1.1.7)
@@ -988,6 +992,7 @@ DEPENDENCIES
   dfc_provider!
   digest
   doorkeeper
+  doorkeeper-openid_connect
   dotenv
   factory_bot_rails (= 6.2.0)
   faraday
@@ -1182,6 +1187,7 @@ CHECKSUMS
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   digest (3.2.1) sha256=ab3312b4e272d7d5dc41c564c86a25861a1f34ac5153374199a0b74861395947
   doorkeeper (5.9.9) sha256=691fc87815c2ea7c075518be26855c2343bb3cf6a41400a92a5782f62786ec86
+  doorkeeper-openid_connect (2.0.0) sha256=9d36d8e8470a3ef232585d36e5f453e72917faa0840d8f36653db600c69c87e5
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   em-http-request (1.1.7) sha256=16fbc72b2a6e20c804c564ac5d12e98668c6fcef8c3b1dd2387dff505f2efdab
