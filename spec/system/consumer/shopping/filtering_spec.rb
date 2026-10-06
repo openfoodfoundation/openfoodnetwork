@@ -274,6 +274,55 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).to have_content "Bananas"
       end
     end
+
+    context "product_grid_view", feature: :product_grid_view do
+      context "a product doesn't inherit producer properties" do
+        let(:product2a) {
+          create(:simple_product, enterprise_id: supplier2.id, name: "Avocados",
+                                  inherits_properties: false)
+        }
+
+        before do
+          add_variant_to_order_cycle(exchange, product2a.variants.first)
+          visit shop_path
+          expect(page).to have_content "Avocados"
+        end
+
+        it "filters products by producer property" do
+          check "Aromatic producer"
+          click_button "Filter"
+
+          expect(page).to have_content "Apples"
+          expect(page).not_to have_content "Avocados"
+          expect(page).not_to have_content "Bananas"
+          expect(page).to have_field "Aromatic producer", checked: true
+          pending; expect(page).to have_field "Bountiful product", checked: false
+        end
+      end
+
+      it "filters products by product property" do
+        visit shop_path
+        check "Bountiful product"
+        click_button "Filter"
+
+        expect(page).not_to have_content "Apples"
+        expect(page).to have_content "Bananas"
+        pending; expect(page).to have_field "Aromatic producer", checked: false
+        expect(page).to have_field "Bountiful product", checked: true
+      end
+
+      it "shows products from all selected properties" do
+        visit shop_path
+        check "Aromatic producer"
+        check "Bountiful product"
+        click_button "Filter"
+
+        expect(page).to have_content "Apples"
+        expect(page).to have_content "Bananas"
+        expect(page).to have_field "Aromatic producer", checked: true
+        expect(page).to have_field "Bountiful product", checked: true
+      end
+    end
   end
 end
 
