@@ -7,33 +7,33 @@
           = f.label :email, Spree.t(:email) + ':'
           = f.email_field :email, :class => 'fullwidth'
 
-  - customer = @order.customer || Customer.new
-  %fieldset.no-border-bottom{ "data-controller": "toggle-control", "data-toggle-control-match-value": "enterprise" }
-    %legend{ align: "center" }= t("admin.customer")
-    = fields_for :customer, customer do |cf|
-      - enterprise_column = { "data-toggle-control-target": "control", style: ("display: none" unless customer.enterprise?) }
-      .row
-        .alpha.three.columns
-          .field
-            = cf.label :customer_type, t("admin.customers.index.customer_type")
-            = cf.select :customer_type, Customer.customer_types.keys.map { |type| [t("admin.customers.index.#{type}"), type] }, {},
-              class: "fullwidth", "data-action": "change->toggle-control#displayIfMatch"
-        .six.columns{ enterprise_column }
-          .field
-            = cf.label :enterprise_name, t("admin.customers.index.enterprise_name")
-            = cf.text_field :enterprise_name, class: "fullwidth"
-        .three.columns{ enterprise_column }
-          .field
-            = cf.label :enterprise_acn, t("admin.customers.index.enterprise_acn")
-            = cf.text_field :enterprise_acn, class: "fullwidth"
-        .three.columns{ enterprise_column }
-          .field
-            = cf.label :enterprise_abn, t("admin.customers.index.enterprise_abn")
-            = cf.text_field :enterprise_abn, class: "fullwidth"
-        .one.columns.omega{ enterprise_column }
-          .field
-            = cf.label :enterprise_charges_sales_tax, t("admin.customers.index.enterprise_charges_sales_tax")
-            = cf.check_box :enterprise_charges_sales_tax
+  - if @order.customer
+    %fieldset.no-border-bottom{ "data-controller": "toggle-control", "data-toggle-control-match-value": "enterprise" }
+      %legend{ align: "center" }= t("admin.customer")
+      = f.fields_for :customer, include_id: false do |cf|
+        - enterprise_column = { "data-toggle-control-target": "control", style: ("display: none" unless @order.customer.enterprise?) }
+        .row
+          .alpha.three.columns
+            .field
+              = cf.label :customer_type, t("admin.customers.index.customer_type")
+              = cf.select :customer_type, Customer.customer_types.keys.map { |type| [t("admin.customers.index.#{type}"), type] }, {},
+                class: "fullwidth", "data-action": "change->toggle-control#displayIfMatch"
+          .six.columns{ enterprise_column }
+            .field
+              = cf.label :enterprise_name, t("admin.customers.index.enterprise_name")
+              = cf.text_field :enterprise_name, class: "fullwidth"
+          .three.columns{ enterprise_column }
+            .field
+              = cf.label :enterprise_acn, t("admin.customers.index.enterprise_acn")
+              = cf.text_field :enterprise_acn, class: "fullwidth"
+          .three.columns{ enterprise_column }
+            .field
+              = cf.label :enterprise_abn, t("admin.customers.index.enterprise_abn")
+              = cf.text_field :enterprise_abn, class: "fullwidth"
+          .one.columns.omega{ enterprise_column }
+            .field
+              = cf.label :enterprise_charges_sales_tax, t("admin.customers.index.enterprise_charges_sales_tax")
+              = cf.check_box :enterprise_charges_sales_tax
 
   .alpha.eight.columns
     %fieldset.no-border-bottom

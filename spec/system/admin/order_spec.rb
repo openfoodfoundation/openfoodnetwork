@@ -165,12 +165,13 @@ RSpec.describe '
         customer3.update!(customer_type: "enterprise", enterprise_name: "ACME",
                           enterprise_abn: "456")
 
-        expect(page).not_to have_field "customer_enterprise_name"
+        expect(page).not_to have_field "order_customer_attributes_enterprise_name"
         tomselect_search_and_select customer3.email, from: 'customer_search_override'
-        expect(page).to have_select "customer_customer_type", selected: "Enterprise"
-        expect(page).to have_field "customer_enterprise_name", with: "ACME"
+        expect(page).to have_select "order_customer_attributes_customer_type",
+                                    selected: "Enterprise"
+        expect(page).to have_field "order_customer_attributes_enterprise_name", with: "ACME"
 
-        fill_in "customer_enterprise_name", with: "ACME Ltd"
+        fill_in "order_customer_attributes_enterprise_name", with: "ACME Ltd"
         check 'order_use_billing'
         click_button "Update"
 

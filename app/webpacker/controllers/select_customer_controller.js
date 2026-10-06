@@ -54,14 +54,18 @@ export default class extends TomSelectController {
     this.fillCustomerFields(customer);
   }
 
+  // The customer section is only rendered when the order already has a customer
   fillCustomerFields(customer) {
+    const prefix = "#order_customer_attributes_";
+    const typeSelect = document.querySelector(prefix + "customer_type");
+    if (!typeSelect) return;
+
     ["enterprise_name", "enterprise_acn", "enterprise_abn"].forEach((field) => {
-      document.querySelector("#customer_" + field).value = customer[field] || "";
+      document.querySelector(prefix + field).value = customer[field] || "";
     });
-    document.querySelector("#customer_enterprise_charges_sales_tax").checked =
+    document.querySelector(prefix + "enterprise_charges_sales_tax").checked =
       !!customer.enterprise_charges_sales_tax;
 
-    const typeSelect = document.querySelector("#customer_customer_type");
     typeSelect.value = customer.customer_type;
     typeSelect.dispatchEvent(new Event("change"));
   }
