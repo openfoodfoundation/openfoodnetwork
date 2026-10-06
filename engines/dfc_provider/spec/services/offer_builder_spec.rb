@@ -24,8 +24,6 @@ RSpec.describe OfferBuilder do
 
       offer = OfferBuilder.build(variant)
 
-      # A missing value says nothing in the semantic web.
-      # So unlimited stock is expressed as a negative number.
       expect(offer.stockLimitation).to eq(-1)
     end
 

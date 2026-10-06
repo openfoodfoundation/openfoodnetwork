@@ -7,6 +7,8 @@ class DfcBuilder
   # data contains no information. So we can't leave the limitation out to say
   # that stock is unlimited. The negative number is what the DFC came up with
   # and it's used by the Shopify integration (FDC).
+  #
+  # https://github.com/openfoodfoundation/openfoodnetwork/issues/14798#issuecomment-5986714439
   def self.stock_limitation(variant)
     variant.on_demand ? -1 : variant.total_on_hand
   end

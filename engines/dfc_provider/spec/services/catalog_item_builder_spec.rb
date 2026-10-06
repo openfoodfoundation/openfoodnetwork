@@ -52,8 +52,6 @@ RSpec.describe CatalogItemBuilder do
 
       item = CatalogItemBuilder.catalog_item(variant)
 
-      # A missing value says nothing in the semantic web.
-      # So unlimited stock is expressed as a negative number.
       expect(item.stockLimitation).to eq(-1)
     end
   end
