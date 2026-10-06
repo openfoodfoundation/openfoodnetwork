@@ -12,11 +12,12 @@ assignees: ''
 - [ ] Merge pull requests in the [Ready To Go] column
 - [ ] Include translations: `script/release/update_locales`
     - You need the [Transifex Client] installed on your local dev environement to run the script.
-- [ ] Increment version number: `git push upstream HEAD:refs/tags/vX.Y.Z`
+- [ ] Increment version number: `script/release/tag [major|minor|patch|hotfix]` (defaults to patch)
     Check for [minor or major breaking changes]
-    - Major: if server changes are required (eg. provision with ofn-install)
-    - Minor: larger change that is irreversible (eg. migration deleting data)
-    - Patch: all others. Shortcut: `script/release/tag`
+    - Major: if server changes are required (eg. provision with ofn-install). `script/release/tag major`
+    - Minor: larger change that is irreversible (eg. migration deleting data). `script/release/tag minor`
+    - Patch: all others. `script/release/tag` or `script/release/tag patch`
+    - Hotfix: urgent fix on top of the current release (adds a 4th segment, eg. vX.Y.Z.1). `script/release/tag hotfix`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and check to ensure all items are arranged in the right category.
