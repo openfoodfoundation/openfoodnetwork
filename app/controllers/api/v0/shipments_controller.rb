@@ -107,13 +107,14 @@ module Api
 
           if @order.line_items.any?
             Orders::WorkflowService.new(@order).advance_to_payment
-            # A stall with no ship address yet is normal mid-construction state
-            # (e.g. an admin adding products before visiting Customer Details) —
-            # only treat a stall as an error once there's an address to actually
-            # fail shipping against, i.e. a genuine shipping-method misconfiguration.
+            # There is are legitimate reasons for an order not to advance to payment state,
+            # ie an admin user adding products before adding Customer Details.
+            # Only treat an order not advancing to payment as an error when there is a
+            # shipping address to actually fail shipping against, i.e. a genuine shipping-method
+            # misconfiguration.
             # Check the state rather than advance_to_payment's return value: an
             # order that skips payment (e.g. a subscription order) can go straight
-            # past payment to complete, which is not a stall.
+            # past payment to complete, which is not an error.
             return invalid_resource!(@order) if @order.before_payment_state? &&
                                                 @order.ship_address.present?
           end
