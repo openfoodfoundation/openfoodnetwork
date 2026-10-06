@@ -1,26 +1,27 @@
-= render ModalComponent.new id: "#modal_edit_image", instant: true, close_button: false, modal_class: "fit image-upload-modal", "data-controller": "image-modal-responsive" do
-  %h2.modal-title= t("spree.admin.images.edit.title", resource_name:)
-  %p.modal-subtitle{ style: "margin-bottom: 1em;" }
-    = t("spree.admin.images.edit.subtitle")
+= render ModalComponent.new id: "#modal_edit_image", instant: true, close_button: false, modal_class: "fit image-upload-modal" do
+  .image-upload-modal__content
+    %h2.modal-title= t("spree.admin.images.edit.title", resource_name:)
+    %p.modal-subtitle{ style: "margin-bottom: 1em;" }
+      = t("spree.admin.images.edit.subtitle")
 
-  -# Display image in the same way it appears in the shopfront popup
-  - if image.errors.any?
-    - image.errors.full_messages.each do |error|
-      %p
-        = error
-  - else
-    %p.image-upload-modal__preview{ style: "text-align: center;" }= image_tag preview_url
+    -# Display image in the same way it appears in the shopfront popup
+    - if image.errors.any?
+      - image.errors.full_messages.each do |error|
+        %p
+          = error
+    - else
+      %p.image-upload-modal__preview{ style: "text-align: center;" }= image_tag preview_url
 
-  -# Submit as turbo stream to avoid full page reload.
-  -# TODO: show loading indicator.
-  = form_for image, url: helpers.polymorphic_path([:admin, product, image]),
-      html: { multipart: true }, data: { controller: "form" } do |f|
-    %input{ type: :hidden, name: :return_url, value: request.referer }
-    = hidden_field_tag :variant_id, variant.id if variant
-    = f.hidden_field :viewable_id, value: viewable.id
+    -# Submit as turbo stream to avoid full page reload.
+    -# TODO: show loading indicator.
+    = form_for image, url: helpers.polymorphic_path([:admin, product, image]),
+        html: { multipart: true }, data: { controller: "form" } do |f|
+      %input{ type: :hidden, name: :return_url, value: request.referer }
+      = hidden_field_tag :variant_id, variant.id if variant
+      = f.hidden_field :viewable_id, value: viewable.id
 
-    .modal-actions.justify-end
-      %input{ class: "secondary relaxed", type: 'button', value: t("spree.admin.images.edit.close"), "data-action": "click->modal#close" }
-      -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
-      = f.label :attachment, t("spree.admin.images.edit.upload"), class: "button primary relaxed icon-upload-alt"
-      = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit change->modal#close"
+      .modal-actions.justify-end
+        %input{ class: "secondary relaxed", type: 'button', value: t("spree.admin.images.edit.close"), "data-action": "click->modal#close" }
+        -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
+        = f.label :attachment, t("spree.admin.images.edit.upload"), class: "button primary relaxed icon-upload-alt"
+        = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit change->modal#close"
