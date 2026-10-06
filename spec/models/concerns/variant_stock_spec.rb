@@ -61,6 +61,28 @@ RSpec.describe VariantStock do
     end
   end
 
+  describe '#total_on_hand' do
+    it 'calls the quantifier total_on_hand' do
+      variant = build(:variant)
+      quantifier_mock = instance_double(Spree::Stock::Quantifier)
+      expect(Spree::Stock::Quantifier).to receive(:new).with(variant).and_return(quantifier_mock)
+      expect(quantifier_mock).to receive(:total_on_hand).and_return(5)
+
+      expect(variant.total_on_hand).to eq(5)
+    end
+  end
+
+  describe '#loaded_on_hand' do
+    it 'calls the quantifier loaded_on_hand' do
+      variant = build(:variant)
+      quantifier_mock = instance_double(Spree::Stock::Quantifier)
+      expect(Spree::Stock::Quantifier).to receive(:new).with(variant).and_return(quantifier_mock)
+      expect(quantifier_mock).to receive(:loaded_on_hand).and_return(5)
+
+      expect(variant.loaded_on_hand).to eq(5)
+    end
+  end
+
   describe '#on_demand' do
     context 'when the variant has a stock item' do
       let(:variant) { create(:variant) }
