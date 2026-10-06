@@ -33,7 +33,26 @@ def http_get(url, headers = {})
   end
 end
 
-DISCOVERY = JSON.parse(http_get("#{OFN_URL}/.well-known/openid-configuration").body)
+# JSON body, or the raw body when OFN answers with something else (error page).
+def parse(body)
+  JSON.parse(body)
+rescue JSON::ParserError
+  body.to_s[0, 500]
+end
+
+# Fetched on first use, so the client starts even if OFN isn't ready yet.
+def discovery
+  @discovery ||= begin
+    response = http_get("#{OFN_URL}/.well-known/openid-configuration")
+    unless response.is_a?(Net::HTTPOK)
+      raise "Discovery answered HTTP #{response.code}. Is the oauth_provider feature " \
+            "enabled, and was OFN restarted after the last bundle install?"
+    end
+    JSON.parse(response.body)
+  end
+rescue SystemCallError, IOError => e
+  raise "Can't reach OFN at #{OFN_URL} (#{e.message}). Is it running?"
+end
 
 pending = {} # state => { verifier:, nonce: }
 session = {} # last token response
@@ -50,15 +69,16 @@ end
 
 def token_request(params)
   response = Net::HTTP.post_form(
-    URI(DISCOVERY["token_endpoint"]),
+    URI(discovery["token_endpoint"]),
     params.merge(client_id: CLIENT_ID, client_secret: CLIENT_SECRET)
   )
-  [response.code, JSON.parse(response.body)]
+  body = parse(response.body)
+  [response.code, body.is_a?(Hash) ? body : { "body" => body }]
 end
 
 def userinfo(access_token)
-  response = http_get(DISCOVERY["userinfo_endpoint"], "Authorization" => "Bearer #{access_token}")
-  { status: response.code, body: response.body.empty? ? nil : JSON.parse(response.body) }
+  response = http_get(discovery["userinfo_endpoint"], "Authorization" => "Bearer #{access_token}")
+  { status: response.code, body: response.body.empty? ? nil : parse(response.body) }
 end
 
 # Builds an RSA public key from its JWK modulus and exponent.
@@ -72,19 +92,24 @@ def rsa_public_key(jwk)
   OpenSSL::PKey::RSA.new(OpenSSL::ASN1::Sequence([algorithm, key]).to_der)
 end
 
-def check_id_token(id_token, nonce)
+# Checks the signature against the key published under the token's key id.
+def valid_signature?(id_token)
   header, payload, signature = id_token.split(".")
   kid = JSON.parse(Base64.urlsafe_decode64(header))["kid"]
-  claims = JSON.parse(Base64.urlsafe_decode64(payload))
-  jwks = JSON.parse(http_get(DISCOVERY["jwks_uri"]).body)["keys"]
-  jwk = jwks.find { |key| key["kid"] == kid }
+  jwk = JSON.parse(http_get(discovery["jwks_uri"]).body)["keys"].find { |key| key["kid"] == kid }
+  return false unless jwk
+
+  rsa_public_key(jwk).verify("SHA256", Base64.urlsafe_decode64(signature), "#{header}.#{payload}")
+end
+
+def check_id_token(id_token, nonce)
+  claims = JSON.parse(Base64.urlsafe_decode64(id_token.split(".")[1]))
 
   {
     claims:,
     checks: {
-      signature: !!jwk && rsa_public_key(jwk).verify("SHA256", Base64.urlsafe_decode64(signature),
-                                                     "#{header}.#{payload}"),
-      issuer: claims["iss"] == DISCOVERY["issuer"],
+      signature: valid_signature?(id_token),
+      issuer: claims["iss"] == discovery["issuer"],
       audience: claims["aud"] == CLIENT_ID,
       nonce: nonce.nil? || claims["nonce"] == nonce,
       not_expired: claims["exp"].to_i > Time.now.to_i,
@@ -103,7 +128,17 @@ end
 
 server = WEBrick::HTTPServer.new(Port: 8000, BindAddress: "localhost")
 
-server.mount_proc "/" do |_req, res|
+# Shows a readable page instead of a server error when something goes wrong.
+def mount(server, path)
+  server.mount_proc(path) do |req, res|
+    res.content_type = "text/html"
+    res.body = page(yield(req))
+  rescue RuntimeError => e
+    res.body = page("<p><strong>#{CGI.escapeHTML(e.message)}</strong></p>")
+  end
+end
+
+mount(server, "/") do
   state = SecureRandom.hex(16)
   pending[state] = { verifier: SecureRandom.urlsafe_base64(48), nonce: SecureRandom.hex(16) }
   query = URI.encode_www_form(
@@ -113,35 +148,31 @@ server.mount_proc "/" do |_req, res|
                                             padding: false),
     code_challenge_method: "S256"
   )
-  res.content_type = "text/html"
-  res.body = page("<p><a href='#{DISCOVERY['authorization_endpoint']}?#{query}'>" \
-                  "Log in with OFN</a></p>")
+  "<p><a href='#{discovery['authorization_endpoint']}?#{query}'>Log in with OFN</a></p>"
 end
 
-server.mount_proc "/callback" do |req, res|
-  res.content_type = "text/html"
+mount(server, "/callback") do |req|
   request = pending.delete(req.query["state"])
 
-  res.body = if req.query["error"]
-               page(show("Authorization refused", req.query))
-             elsif request.nil?
-               page("<p>Unknown state: start again.</p>")
-             else
-               status, tokens = token_request(
-                 grant_type: "authorization_code", code: req.query["code"],
-                 redirect_uri: REDIRECT_URI, code_verifier: request[:verifier]
-               )
-               session.replace(tokens)
-               page(token_result(status, tokens, nonce: request[:nonce]))
-             end
+  if req.query["error"]
+    show("Authorization refused", req.query)
+  elsif request.nil?
+    "<p>Unknown state: start again.</p>"
+  else
+    status, tokens = token_request(
+      grant_type: "authorization_code", code: req.query["code"],
+      redirect_uri: REDIRECT_URI, code_verifier: request[:verifier]
+    )
+    session.replace(tokens)
+    token_result(status, tokens, nonce: request[:nonce])
+  end
 end
 
-server.mount_proc "/refresh" do |_req, res|
+mount(server, "/refresh") do
   status, tokens = token_request(grant_type: "refresh_token",
                                  refresh_token: session["refresh_token"])
   session.replace(tokens) if tokens["access_token"]
-  res.content_type = "text/html"
-  res.body = page(token_result(status, tokens))
+  token_result(status, tokens)
 end
 
 trap("INT") { server.shutdown }
