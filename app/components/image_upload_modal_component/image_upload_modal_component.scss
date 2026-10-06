@@ -34,7 +34,6 @@ body.is-mobile .modal-component.image-upload-modal {
   width: auto;
   max-width: none;
   margin: 0;
-  height: 50vh;
   overflow-y: auto;
   border-radius: $image-upload-modal-radius;
 
@@ -43,7 +42,7 @@ body.is-mobile .modal-component.image-upload-modal {
   .image-upload-modal__content {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 50vh;
   }
 
   .image-upload-modal__preview {
