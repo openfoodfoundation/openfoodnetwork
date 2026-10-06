@@ -38,7 +38,8 @@ class ProductsRenderer
 
   # List all properties attached to these products (whether directly or by enterprise)
   def properties
-    #todo: check if there's a more efficient way to do this.
+    #todo: ~~check if there's a more efficient way to do this.~~
+    # todo: get two separate lists.?
     products_view.flat_map do |product|
       product.properties_including_inherited
     end.uniq
