@@ -8,6 +8,7 @@
 //
 .add-to-cart-component {
   .variant-quantity-inputs {
+    display: flex;
     width: v.$shop-button-width;
   }
 
