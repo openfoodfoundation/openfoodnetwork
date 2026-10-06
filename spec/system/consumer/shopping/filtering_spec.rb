@@ -115,45 +115,11 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).to have_content variant2.display_name
       end
     end
-
-    context "when supplier uses property" do
-      let(:product3) {
-        create(:simple_product, enterprise_id: supplier.id, inherits_properties: false)
-      }
-
-      before do
-        pick_order order
-      end
-
-      before do
-        add_variant_to_order_cycle(exchange, product3.variants.first)
-        property = create(:property, presentation: 'certified')
-        supplier.update!(properties: [property])
-      end
-
-      it "filters product by properties" do
-        visit shop_path
-
-        expect(page).to have_content product2.name
-        expect(page).to have_content product3.name
-
-        expect(page).to have_selector(
-          ".sticky-shop-filters-container .property-selectors span", text: "certified"
-        )
-        find(".sticky-shop-filters-container .property-selectors span", text: 'certified').click
-        expect(page).to have_content "Results for certified"
-
-        expect(page).to have_content product2.name
-        expect(page).not_to have_content product3.name
-      end
-    end
   end
 
-  describe "product taxons" do
+  describe "product taxons (categories)" do
     let(:taxon) { create(:taxon, name: "Tricky Taxon") }
-    let(:property) { create(:property, presentation: "Fresh and Fine") }
     let(:taxon2) { create(:taxon, name: "Delicious Dandelion") }
-    let(:property2) { create(:property, presentation: "Berry Bio") }
     let(:user) { create(:user, enterprise_limit: 1) }
     let(:distributor) {
       create(:distributor_enterprise, with_payment_and_shipping: true, owner: user,
@@ -166,12 +132,10 @@ RSpec.describe "As a consumer I want to view products" do
                                   orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, enterprise_id: supplier.id, primary_taxon: taxon,
-                              properties: [property], name: "Beans")
+      create(:simple_product, enterprise_id: supplier.id, primary_taxon: taxon, name: "Beans")
     }
     let(:product2) {
-      create(:product, enterprise_id: supplier.id, primary_taxon: taxon2, properties: [property2],
-                       name: "Chickpeas")
+      create(:product, enterprise_id: supplier.id, primary_taxon: taxon2, name: "Chickpeas")
     }
     let(:variant) { product.variants.first }
     let(:variant2) { product2.variants.first }
@@ -236,18 +200,86 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).to have_content "Chickpeas"
       end
     end
+  end
 
-    it "filters out variants according to the selected property" do
-      expect(page).to have_content variant.name.to_s
-      expect(page).to have_content variant2.name.to_s
+  describe "properties" do
+    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier2) { create(:supplier_enterprise, properties: [producer_property]) }
+    let(:oc1) {
+      create(:simple_order_cycle, distributors: [distributor],
+                                  coordinator: create(:distributor_enterprise),
+                                  orders_close_at: 2.days.from_now)
+    }
+    let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+    let(:order) { create(:order, distributor:) }
 
-      within "#shop-tabs .sticky-shop-filters-container .property-selectors" do
-        expect(page).to have_content "Fresh and Fine"
-        toggle_filter property.presentation
+    let(:product_property) { create(:property, presentation: "Bountiful product") }
+    let(:product) {
+      create(:simple_product, enterprise_id: supplier.id, name: "Bananas",
+                              properties: [product_property])
+    }
+    let(:variant) { product.variants.first }
+
+    let(:producer_property) { create(:property, presentation: "Aromatic producer") }
+    let(:product2) {
+      create(:simple_product, enterprise_id: supplier2.id, name: "Apples",
+                              inherits_properties: true)
+    }
+    let(:variant2) { product2.variants.first }
+
+    before do
+      add_variant_to_order_cycle(exchange, variant)
+      add_variant_to_order_cycle(exchange, variant2)
+      order.order_cycle = oc1
+      pick_order order
+    end
+
+    context "old angular view" do
+      context "a product doesn't inherit producer properties" do
+        let(:product2a) {
+          create(:simple_product, enterprise_id: supplier2.id, name: "Avocados",
+                                  inherits_properties: false)
+        }
+        let(:variant2a) { product2a.variants.first }
+
+        before do
+          add_variant_to_order_cycle(exchange, variant2a)
+          visit shop_path
+        end
+
+        it "filters products by producer property" do
+          click_filter "Aromatic producer"
+
+          expect(page).to have_content "Apples"
+          expect(page).not_to have_content "Avocados"
+          expect(page).not_to have_content "Bananas"
+        end
       end
 
-      expect(page).to have_content variant.name.to_s
-      expect(page).not_to have_content variant2.name.to_s
+      it "filters products by product property" do
+        visit shop_path
+        click_filter "Bountiful product"
+
+        expect(page).not_to have_content "Apples"
+        expect(page).to have_content "Bananas"
+      end
+
+      it "shows products from all selected properties" do
+        visit shop_path
+        click_filter "Aromatic producer"
+        click_filter "Bountiful product"
+
+        expect(page).to have_content "Apples"
+        expect(page).to have_content "Bananas"
+      end
     end
+  end
+end
+
+def click_filter(name)
+  # For now, look for `a` element inside the "Filter by" area.
+  within find(".sticky-shop-filters-container", text: "Filter by") do
+    find("a", text: name).click
   end
 end
