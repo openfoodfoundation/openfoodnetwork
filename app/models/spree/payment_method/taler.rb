@@ -138,9 +138,8 @@ module Spree
             fulfillment_url:,
           )
         # The gem raises Taler::RequestError with the status and body of an error reply from
-        # the backend. Network errors are not handled by the gem and are rescued here as well.
-        rescue ::Taler::Error, SocketError, Timeout::Error,
-               Errno::ECONNREFUSED, Errno::ECONNRESET, OpenSSL::SSL::SSLError => e
+        # the backend. Network errors are raised as Taler::Error.
+        rescue ::Taler::Error => e
           response = e.respond_to?(:body) ? e.body : e.message
           Rails.logger.error("Taler order creation failed: #{response.inspect}")
           Alert.raise(e, { taler: { instance_url: preferred_instance_url, response: } })

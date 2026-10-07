@@ -114,7 +114,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
       it "raises a GatewayError when the connection times out" do
         stub_request(:post, order_url).to_timeout
         expect(Alert).to receive(:raise).with(
-          kind_of(Timeout::Error),
+          kind_of(Taler::Error),
           hash_including(taler: hash_including(instance_url:)),
         )
 
@@ -127,7 +127,7 @@ RSpec.describe Spree::PaymentMethod::Taler do
       it "raises a GatewayError when the connection fails" do
         stub_request(:post, order_url).to_raise(SocketError)
         expect(Alert).to receive(:raise).with(
-          kind_of(SocketError),
+          kind_of(Taler::Error),
           hash_including(taler: hash_including(instance_url:)),
         )
 
