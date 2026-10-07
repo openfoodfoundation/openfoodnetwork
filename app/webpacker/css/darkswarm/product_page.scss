@@ -1,0 +1,8 @@
+// The shopper facing page of a single product (ProductsController#show).
+//
+// The page paints no panel of its own like the shop tabs do, so its last
+// section keeps the room for the logo poking out of the footer below.
+// See footer.scss.
+.product-body {
+  padding-bottom: $footer-clearance;
+}

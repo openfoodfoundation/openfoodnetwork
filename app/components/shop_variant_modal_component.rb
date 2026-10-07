@@ -11,15 +11,9 @@ class ShopVariantModalComponent < ViewComponent::Base
 
   private
 
-  delegate :variants, :producers, :single_producer?, to: :product
+  delegate :producers, :single_producer?, to: :product
 
   def product_name
     product.name
-  end
-
-  def unit_to_display(variant)
-    text = ""
-    text = " | " if variant.display_name.present?
-    text.dup << variant.unit_to_display
   end
 end
