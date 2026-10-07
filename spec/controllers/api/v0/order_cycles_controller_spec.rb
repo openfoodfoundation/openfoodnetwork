@@ -335,6 +335,14 @@ RSpec.describe Api::V0::OrderCyclesController do
 
       expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
     end
+
+    it "returns a property only once when it is shared by several products" do
+      product2.properties << property1
+
+      api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+      expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
+    end
   end
 
   describe "#producer_properties" do
@@ -360,6 +368,16 @@ RSpec.describe Api::V0::OrderCyclesController do
     end
 
     it "returns producer properties in alphabetical order by presentation" do
+      api_get :producer_properties, id: order_cycle.id, distributor: distributor.id
+
+      expect(json_response.pluck(:name)).to eq ['Bee-Friendly', 'Organic']
+    end
+
+    it "returns a producer property only once when it is shared by several producers" do
+      supplier2 = create(:supplier_enterprise)
+      create(:producer_property, producer_id: supplier2.id, property: property4)
+      product2.variants.first.update!(enterprise: supplier2)
+
       api_get :producer_properties, id: order_cycle.id, distributor: distributor.id
 
       expect(json_response.pluck(:name)).to eq ['Bee-Friendly', 'Organic']
