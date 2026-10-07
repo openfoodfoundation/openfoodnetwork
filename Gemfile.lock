@@ -865,7 +865,7 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     sysexits (1.2.0)
-    taler (0.4.0)
+    taler (0.5.0)
     temple (0.10.7)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
@@ -1392,7 +1392,7 @@ CHECKSUMS
   stripe (19.6.2) sha256=9a614976a25aba0adbef9ce770c1e242b0e7fcb20d61924fed5e79e1e10dd49c
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
   sysexits (1.2.0) sha256=598241c4ae57baa403c125182dfdcc0d1ac4c0fb606dd47fbed57e4aaf795662
-  taler (0.4.0) sha256=6cfd452c4da36ccf28aa4bd477cb91d18ff1f1673270a9625d08fb0ad2973375
+  taler (0.5.0) sha256=f420b1f2b3cfa5d88e508dacab1e3f9f89836b800c9e485d2bea0e87a04e1a89
   temple (0.10.7) sha256=369fe560adb6534674ce232899c2232df614bcb29c5359b05efedff7a57ed9c0
   terminal-table (4.0.0) sha256=f504793203f8251b2ea7c7068333053f0beeea26093ec9962e62ea79f94301d2
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73

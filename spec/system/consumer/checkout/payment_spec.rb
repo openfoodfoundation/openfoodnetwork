@@ -450,6 +450,42 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
             it_behaves_like "different payment methods", "Taler"
           end
+
+          context "Taler backend error" do
+            let!(:taler) do
+              Spree::PaymentMethod::Taler.create!(
+                name: "Taler",
+                environment: "test",
+                preferred_instance_url: "https://taler.example.com/",
+                distributors: [distributor]
+              )
+            end
+
+            before do
+              stub_request(:post, "https://taler.example.com/").to_return(
+                status: 401,
+                body: { "code" => 2015, "hint" => "Unauthorized" }.to_json
+              )
+              allow(Alert).to receive(:raise)
+
+              visit checkout_step_path(:payment)
+            end
+
+            it "shows an error and returns to the payment step" do
+              choose "Taler"
+              proceed_to_summary
+
+              click_on "Complete order"
+
+              expect(page).to have_content(
+                "There was a problem with your payment information: " \
+                "The Taler payment backend could not create the order. " \
+                "Please try again or contact the shop."
+              )
+              expect(page).to have_current_path checkout_step_path(:payment)
+              expect(order.reload.state).to eq "payment"
+            end
+          end
         end
       end
 
