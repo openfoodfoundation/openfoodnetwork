@@ -88,7 +88,6 @@ module Spree
     accepts_nested_attributes_for :line_items
     accepts_nested_attributes_for :bill_address
     accepts_nested_attributes_for :ship_address
-    accepts_nested_attributes_for :customer, update_only: true
     accepts_nested_attributes_for :payments
     accepts_nested_attributes_for :shipments
 

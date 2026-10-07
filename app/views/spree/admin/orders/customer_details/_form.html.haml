@@ -7,10 +7,10 @@
           = f.label :email, Spree.t(:email) + ':'
           = f.email_field :email, :class => 'fullwidth'
 
-  - if @order.customer
+  - if @order.customer&.user
     %fieldset.no-border-bottom{ "data-controller": "toggle-control", "data-toggle-control-match-value": "enterprise" }
       %legend{ align: "center" }= t("admin.customer")
-      = f.fields_for :customer, include_id: false do |cf|
+      = f.fields_for :customer_attributes, @order.customer do |cf|
         - enterprise_column = { "data-toggle-control-target": "control", style: ("display: none" unless @order.customer.enterprise?) }
         .row
           .alpha.three.columns

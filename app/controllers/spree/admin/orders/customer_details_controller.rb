@@ -18,7 +18,7 @@ module Spree
         end
 
         def update
-          if @order.update(order_params)
+          if update_order_and_customer
             if params[:guest_checkout] == "false"
               @order.associate_user!(Spree::User.find_by(email: @order.email))
             end
@@ -40,6 +40,22 @@ module Spree
         end
 
         private
+
+        # The customer is updated after the order, so it applies to the customer
+        # selected in the form.
+        def update_order_and_customer
+          Order.transaction do
+            @order.update!(order_params.except(:customer_attributes))
+            @order.customer.update!(customer_attributes) if customer_attributes
+          end
+          true
+        rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
+          false
+        end
+
+        def customer_attributes
+          order_params[:customer_attributes] unless params[:order][:guest_checkout]
+        end
 
         def build_addresses
           country_id = Address.default.country.id
