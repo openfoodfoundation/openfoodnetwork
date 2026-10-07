@@ -347,6 +347,7 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).to have_content("Beans")
           expect(page).to have_content("Chickpeas")
           expect(page).to have_content("Tomatoes")
+          expect(page).not_to have_selector("#shop-products-pagination")
 
           within(".product-item", text: "Beans") do
             expect(page).to have_selector(".producer", text: "Test Farm")
@@ -380,6 +381,33 @@ RSpec.describe "As a consumer I want to view products" do
 
             # Product properties
             expect(page).to have_selector("span", text: "Fresh and Fine")
+          end
+        end
+
+        it "pages through products" do
+          stub_const("ProductsController::PER_PAGE", 1)
+
+          visit shop_path
+
+          within "#shop-products" do
+            seen = [find(".product-item .product-name").text]
+
+            within "#shop-products-pagination" do
+              expect(page).to have_selector("a[aria-current=page]", text: "1")
+              expect(page).to have_selector("a[aria-label=Previous][aria-disabled]")
+              expect(page).to have_link("3")
+
+              click_link "2"
+            end
+            expect(page).to have_selector("a[aria-current=page]", text: "2")
+            seen << find(".product-item .product-name").text
+
+            find("a[aria-label=Next]").click
+            expect(page).to have_selector("a[aria-current=page]", text: "3")
+            expect(page).to have_selector("a[aria-label=Next][aria-disabled]")
+            seen << find(".product-item .product-name").text
+
+            expect(seen).to match_array [/Beans/, /Chickpeas/, /Tomatoes/]
           end
         end
       end

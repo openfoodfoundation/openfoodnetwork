@@ -3,8 +3,15 @@
 class ProductsController < BaseController
   include StartsShopping
 
+  PER_PAGE = 30
+
   def index
-    @products = product_renderer.products_view
+    renderer = product_renderer
+    @products = renderer.products_view
+    @pagy = renderer.pagination
+    # Pagy translates its own labels (e.g. aria-labels in the page links) and doesn't read
+    # the Rails locale.
+    Pagy::I18n.locale = I18n.locale
 
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
@@ -102,9 +109,7 @@ class ProductsController < BaseController
   end
 
   def search_params
-    # params.slice :q, :page, :per_page
-    # TODO For experimentation purposed we limit to 1 page and 10 products
-    { page: 1, per_page: 10 }
+    { page: [params[:page].to_i, 1].max, per_page: PER_PAGE }
   end
 
   def inventory_enabled?
