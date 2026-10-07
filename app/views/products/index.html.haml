@@ -5,3 +5,9 @@
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       = render ProductTileComponent.new(product:, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
+
+  - if @pagy.last > 1
+    .shop-pagination{ "data-controller": "pagy" }
+      -# haml-lint:disable UnescapedHtml
+      -# series_nav_js returns html, which pagy.mjs turns into page links
+      != @pagy.series_nav_js(id: "shop-products-pagination", path: order_cycle_products_path(params[:order_cycle_id]))
