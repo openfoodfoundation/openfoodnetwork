@@ -130,11 +130,17 @@ module Spree
             partial: "spree/admin/orders/table_row", locals: { order: @order.reload, success: true }
           )
         else
-          flash.now[:error] = payment_capture.gateway_error || t(:payment_processing_failed)
-          render turbo_stream: turbo_stream.append(
-            "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
-          )
+          flash.now[:error] = capture_failure_message(payment_capture)
+          render_capture_flashes
         end
+      rescue StandardError => e
+        logger.error "#{e.class}: #{e.message}"
+        Alert.raise(
+          e,
+          order: { number: @order.number }, context: { action: "capture" }
+        )
+        flash.now[:error] = t(:payment_processing_failed)
+        render_capture_flashes unless performed?
       end
 
       def bulk_credit
@@ -192,6 +198,19 @@ module Spree
       end
 
       private
+
+      def capture_failure_message(payment_capture)
+        return payment_capture.gateway_error if payment_capture.gateway_error
+        return t("admin.orders.nothing_to_capture") if payment_capture.error == :nothing_to_capture
+
+        t(:payment_processing_failed)
+      end
+
+      def render_capture_flashes
+        render turbo_stream: turbo_stream.append(
+          "flashes", partial: "admin/shared/flashes", locals: { flashes: flash }
+        )
+      end
 
       def editable_orders
         Permissions::Order.new(spree_current_user).editable_orders
