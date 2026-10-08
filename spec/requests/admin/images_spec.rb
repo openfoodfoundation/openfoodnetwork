@@ -249,7 +249,7 @@ RSpec.describe "/admin/products/:product_id/images" do
 
       it "redirects to the image's edit page with the error in a flash" do
         expect(response).to redirect_to spree.edit_admin_product_image_path(
-          product, product.image
+          product.id, product.image
         )
         expect(flash[:error]).to include "Attachment has an invalid content type"
       end
@@ -494,7 +494,7 @@ RSpec.describe "/admin/products/:product_id/images" do
         subject
 
         expect(response).to redirect_to spree.edit_admin_product_image_path(
-          product, variant_image, variant_id: variant.id
+          product.id, variant_image, variant_id: variant.id
         )
         expect(flash[:error]).to include "Attachment has an invalid content type"
       end
