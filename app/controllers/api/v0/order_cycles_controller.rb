@@ -97,6 +97,8 @@ module Api
       end
 
       def sort_properties(properties)
+        # Sorting in the DB requires extra code on the DISTINCT query and can vary depending on
+        # collation, so in-memory sorting was chosen for this small list.
         properties.sort_by { |property| property.presentation.to_s.downcase }
       end
 
