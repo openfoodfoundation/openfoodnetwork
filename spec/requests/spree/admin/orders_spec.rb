@@ -387,6 +387,18 @@ RSpec.describe Spree::Admin::OrdersController do
         expect(response.body).to include("flashes")
         expect(flash[:error]).to eq "Card declined"
       end
+
+      it "displays a generic failure message when no specific error is available" do
+        allow(capture_service).to receive(:call).and_return(false)
+        allow(capture_service).to receive(:gateway_error).and_return(nil)
+        allow(capture_service).to receive(:error).and_return(nil)
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+      end
     end
 
     context "when the capture service raises an unexpected error" do
