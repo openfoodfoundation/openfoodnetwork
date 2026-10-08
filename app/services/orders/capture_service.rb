@@ -4,18 +4,27 @@
 
 module Orders
   class CaptureService
-    attr_reader :gateway_error
+    attr_reader :gateway_error, :error
 
     def initialize(order)
       @order = order
       @gateway_error = nil
+      @error = nil
     end
 
     def call
-      return false unless @order.payment_required?
-      return false unless (pending_payment = @order.pending_payments.first)
+      unless @order.payment_required?
+        @error = :nothing_to_capture
+        return false
+      end
 
-      pending_payment.capture!
+      payment = @order.capturable_pending_payments.max_by(&:created_at)
+      if payment.nil?
+        @error = :nothing_to_capture
+        return false
+      end
+
+      payment.capture!
     rescue Spree::Core::GatewayError => e
       @gateway_error = e
       false
