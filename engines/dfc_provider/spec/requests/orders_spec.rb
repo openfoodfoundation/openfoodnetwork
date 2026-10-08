@@ -22,6 +22,25 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
   before { login_as user }
 
+  # Rswag records the response body as documentation. The order factory builds
+  # line items and variants with auto-increment ids, which would change
+  # swagger/dfc.yaml on every regeneration, so replace them with fixed ones.
+  #
+  # Offers and supplied products are built from the variant, so their ids come
+  # from the same list.
+  def normalise_ids(ofn_order)
+    body = response.body
+
+    ofn_order.line_items.each_with_index do |line_item, index|
+      line_item_id = line_item.id
+      variant_id = line_item.variant_id
+
+      body.gsub!("OrderLines/#{line_item_id}", "OrderLines/1000#{index + 1}")
+      body.gsub!("offers/#{variant_id}", "offers/2000#{index + 1}")
+      body.gsub!("supplied_products/#{variant_id}", "supplied_products/2000#{index + 1}")
+    end
+  end
+
   path "/api/dfc/enterprises/{enterprise_id}/orders/{order_id}" do
     parameter name: :enterprise_id, in: :path, type: :string
 
@@ -29,10 +48,14 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
       produces "application/json"
       parameter name: :order_id, in: :path
 
+      # A single line item for the variant of this spec. The factory would add
+      # line items with randomly allocated variants, which the generated
+      # documentation would then record with different ids on every run.
       let(:order) {
-        variant.save
+        product # a product with a fixed name and id, so that the response is stable
         variant.update! on_hand: 1
         create(:completed_order_with_totals, :with_line_item, id: 11_000,
+                                                              line_items_count: 0,
                                                               distributor: enterprise, variant:)
       }
 
@@ -41,10 +64,12 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
         let(:order_id) { order.id }
 
         run_test! {
+          normalise_ids(order)
+
           expect(response.body).to include "dfc-b:Order",       "orders/11000"
-          expect(response.body).to include "dfc-b:OrderLine",   "OrderLines/"
-          expect(response.body).to include "dfc-b:Offer",       "offers/", "dfc-b:offeredItem"
-          expect(response.body).to include "dfc-b:SuppliedProduct", "supplied_products/10001"
+          expect(response.body).to include "dfc-b:OrderLine",   "OrderLines/1000"
+          expect(response.body).to include "dfc-b:Offer",       "offers/2000", "dfc-b:offeredItem"
+          expect(response.body).to include "dfc-b:SuppliedProduct", "supplied_products/2000"
         }
       end
 
@@ -313,8 +338,13 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           let(:enterprise_id) { enterprise.id }
 
           run_test! {
-            expect(enterprise.distributed_orders.count).to eq 1
             ofn_order = enterprise.distributed_orders.first
+
+            # Rswag records the body as documentation and the id of the new
+            # order is allocated by the database:
+            response.body.gsub!("orders/#{ofn_order.id}", "orders/10001")
+
+            expect(enterprise.distributed_orders.count).to eq 1
             expect(ofn_order.created_by).to eq user
             expect(ofn_order.email).to eq "user@example.com"
             expect(ofn_order.customer.email).to eq user.email
@@ -324,13 +354,12 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             expect(ofn_order.line_items.first.variant).to eq variant
             expect(ofn_order.line_items.first.quantity).to eq 1
 
-            response.body.gsub!(
-              "orders/#{ofn_order.id}",
-              "orders/10001"
-            )
-
             expect(response.body).to include "dfc-b:Order"
             expect(response.body).to include "/api/dfc/enterprises/10000/orders/10001"
+
+            # The client can then fetch the order from there:
+            expect(response.headers["Location"])
+              .to eq "http://test.host/api/dfc/enterprises/10000/orders/#{ofn_order.id}"
           }
         end
       end

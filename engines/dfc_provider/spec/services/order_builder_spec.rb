@@ -42,8 +42,12 @@ RSpec.describe OrderBuilder do
     end
   end
 
-  describe ".apply" do
-    subject { described_class.apply(ofn_order, dfc_order) }
+  describe ".apply and .finalise" do
+    subject(:apply_and_finalise) {
+      described_class.apply(ofn_order, dfc_order) &&
+        described_class.finalise(ofn_order, dfc_order) &&
+        ofn_order.save!
+    }
     let!(:ofn_order) { create(:order, id: 1) }
     let(:dfc_order) {
       DataFoodConsortium::ConnectorV1::Order.new(
@@ -53,8 +57,8 @@ RSpec.describe OrderBuilder do
     }
 
     it "doesn't complete an order without line items" do
-      expect(subject).to be true
-      expect(ofn_order.state).to eq "cart"
+      apply_and_finalise
+      expect(ofn_order.reload.state).to eq "cart"
     end
 
     context "with OrderLines" do
@@ -81,7 +85,7 @@ RSpec.describe OrderBuilder do
       end
 
       it "completes the order" do
-        expect(subject).to be true
+        apply_and_finalise
 
         ofn_order.reload
         expect(ofn_order.state).to eq "complete"
@@ -93,7 +97,7 @@ RSpec.describe OrderBuilder do
       end
 
       it "creates line items" do
-        expect(subject).to be true
+        apply_and_finalise
 
         expect(ofn_order.line_items.count).to eq 2
         li1 = ofn_order.line_items.find_by!(variant:)
@@ -103,15 +107,39 @@ RSpec.describe OrderBuilder do
       end
 
       it "updates the quantity of an existing line item" do
-        expect(subject).to be true
+        apply_and_finalise
         li = ofn_order.line_items.find_by!(variant:)
         expect(li.quantity).to eq 3
       end
 
       it "deletes omitted line items" do
         dfc_order.lines = []
-        expect(subject).to be true
+        apply_and_finalise
         expect(ofn_order.line_items.reload.count).to eq 0
+      end
+
+      it "only changes the order in memory, the caller persists it" do
+        described_class.apply(ofn_order, dfc_order)
+
+        # Neither the extra line item nor the new quantity is in the database:
+        expect(ofn_order.line_items.reload.count).to eq 1
+        expect(ofn_order.line_items.first.quantity).to eq 2
+      end
+
+      it "rejects unknown products without touching the order" do
+        dfc_order.lines = [
+          DataFoodConsortium::ConnectorV1::OrderLine.new(
+            nil,
+            offer: DataFoodConsortium::ConnectorV1::Offer.new(
+              nil, offeredItem: "http://test.host/api/dfc/enterprises/blah/supplied_products/99999"
+            ),
+            quantity: 1
+          ),
+        ]
+
+        expect(described_class.apply(ofn_order, dfc_order)).to be false
+        expect(ofn_order.errors[:line_items]).to be_present
+        expect(ofn_order.line_items.reload.map(&:quantity)).to eq [2]
       end
     end
   end

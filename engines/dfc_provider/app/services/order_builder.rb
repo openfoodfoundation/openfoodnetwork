@@ -32,45 +32,56 @@ class OrderBuilder < DfcBuilder
 
   # Applies a DFC order to an OFN order.
   #
-  # Line items are applied before the order status because completing an order
-  # changes how line items are saved: `Spree::OrderInventory` only assigns
-  # inventory units for orders that are already complete.
+  # Nothing is written to the database here: the order and its line items are
+  # only changed in memory, so that several `apply` calls can be composed into
+  # a single save. The caller persists the result with `finalise`, which also
+  # runs inside the caller's transaction.
   #
   # Returns false and leaves the order untouched if the payload is invalid.
+  #
+  # rubocop:disable Naming/PredicateMethod
   def self.apply(ofn_order, dfc_order, variant_scope: Spree::Variant)
-    attrs, stale_ids, unknown =
-      OrderLineItemsBuilder.attributes(ofn_order, dfc_order, variant_scope)
+    attrs, unknown = OrderLineItemsBuilder.attributes(ofn_order, dfc_order, variant_scope)
 
     if unknown.any?
       ofn_order.errors.add(:line_items, "reference unknown products: #{unknown.join(', ')}")
       return false
     end
 
-    ofn_order.transaction do
-      ofn_order.update!(line_items_attributes: attrs)
-      destroy_stale_line_items(ofn_order, stale_ids)
-      apply_order_status(ofn_order, dfc_order)
-    end
+    ofn_order.line_items_attributes = attrs
 
     true
-  rescue ActiveRecord::RecordInvalid
-    false
   end
+  # rubocop:enable Naming/PredicateMethod
 
-  def self.apply_order_status(ofn_order, dfc_order)
-    case dfc_order.orderStatus
-    when order_states.HELD, order_states.COMPLETE
+  # Persists an order that `apply` has already changed in memory, and gives it
+  # the state the client asked for. This writes to the database, so it is the
+  # controller's responsibility to wrap it in a transaction.
+  def self.finalise(ofn_order, dfc_order)
+    if cancels?(dfc_order)
+      ofn_order.send_cancellation_email = false
+      ofn_order.cancel! if ofn_order.allow_cancel?
+    elsif completes?(dfc_order)
       complete(ofn_order)
-    when order_states.CANCELLED
-      cancel(ofn_order)
     end
   end
 
-  # An order we received is a real order: it needs a shipment so that stock is
+  def self.completes?(dfc_order)
+    [order_states.HELD, order_states.COMPLETE].include?(dfc_order.orderStatus)
+  end
+
+  def self.cancels?(dfc_order)
+    dfc_order.orderStatus == order_states.CANCELLED
+  end
+
+  # A backorder is a real order: it needs a shipment so that stock is
   # reserved, and `completed_at` so that the rest of OFN treats it as placed.
   # Without `completed_at` it would show up as the ordering user's shopping
   # cart (`Spree::User#last_incomplete_spree_order`) and could never be
   # cancelled (`Spree::Order#allow_cancel?`).
+  #
+  # The shipment has to be built from saved line items, which is why this runs
+  # after the order has been persisted.
   def self.complete(ofn_order)
     return if ofn_order.completed?
     return if ofn_order.line_items.empty?
@@ -78,24 +89,6 @@ class OrderBuilder < DfcBuilder
     ofn_order.create_proposed_shipments
     ofn_order.state = "complete"
     ofn_order.finalize!
-  end
-
-  def self.cancel(ofn_order)
-    ofn_order.send_cancellation_email = false
-    ofn_order.cancel! if ofn_order.allow_cancel?
-  end
-
-  def self.destroy_stale_line_items(ofn_order, stale_ids)
-    # `accepts_nested_attributes_for :line_items` does not permit `:_destroy`,
-    # so remove line items that are no longer present explicitly.
-    return if stale_ids.empty?
-
-    ofn_order.line_items.where(id: stale_ids).destroy_all
-
-    # `destroy_all` on the association relation doesn't update the parent's
-    # loaded collection. Tax adjustments would then be recalculated against
-    # deleted line items.
-    ofn_order.line_items.reload
   end
 
   def self.order_states

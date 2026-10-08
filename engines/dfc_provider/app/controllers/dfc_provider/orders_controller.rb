@@ -24,11 +24,11 @@ module DfcProvider
         customer: current_user.customers.find_by(enterprise: current_enterprise),
       )
 
-      if @order.save && apply(@order)
-        @order.update_order!
-        render_dfc(OrderBuilder.build(@order), status: :created)
+      if save_order(@order)
+        subject = OrderBuilder.build(@order)
+        response.headers["Location"] = subject.semanticId
+        render_dfc(subject, status: :created)
       else
-        @order.destroy if @order.persisted?
         render_error(@order)
       end
     end
@@ -36,10 +36,7 @@ module DfcProvider
     def update
       return head :bad_request unless dfc_order
 
-      if apply(order)
-        order.recreate_all_fees!
-        order.create_tax_charge!
-        order.update_order!
+      if save_order(order)
         render_dfc(OrderBuilder.build(order))
       else
         render_error(order)
@@ -65,6 +62,31 @@ module DfcProvider
 
     def apply(ofn_order)
       OrderBuilder.apply(ofn_order, dfc_order, variant_scope: current_enterprise.variants)
+    end
+
+    # Applies the DFC order and writes it, recalculating everything that depends
+    # on it. All of it happens in one transaction, so a payload we reject leaves
+    # the order exactly as it was.
+    #
+    # The order record is saved before the payload is applied: the validation
+    # that checks the products are available compares line items against the
+    # distributor or order cycle, and only `distributor_id_changed?` or
+    # `order_cycle_id_changed?` triggers it.
+    def save_order(ofn_order)
+      ActiveRecord::Base.transaction do
+        ofn_order.save!
+        raise ActiveRecord::Rollback unless apply(ofn_order)
+
+        ofn_order.save!
+        OrderBuilder.finalise(ofn_order, dfc_order)
+        ofn_order.recreate_all_fees!
+        ofn_order.create_tax_charge!
+        ofn_order.update_order!
+      end
+
+      ofn_order.errors.empty?
+    rescue ActiveRecord::RecordInvalid
+      false
     end
 
     # `DfcIo.import` returns a bare object when the payload contains only one

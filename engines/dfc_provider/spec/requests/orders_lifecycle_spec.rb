@@ -93,6 +93,13 @@ RSpec.describe "Orders lifecycle" do
       expect(response).to have_http_status :unprocessable_entity
       expect(enterprise.distributed_orders).to be_empty
     end
+
+    it "leaves no order behind when the order can't be saved" do
+      post orders_url, headers:, params: order_payload(quantity: 999)
+
+      expect(response).to have_http_status :unprocessable_entity
+      expect(enterprise.distributed_orders).to be_empty
+    end
   end
 
   describe "completing an order" do
@@ -185,6 +192,23 @@ RSpec.describe "Orders lifecycle" do
       expect(response).to have_http_status :unprocessable_entity
       expect(response.body).to include "is out of stock"
       expect(order.reload.line_items.first.quantity).to eq 1
+    end
+
+    it "rolls back the line items it removed when the update fails" do
+      order = create_order!
+      original = order.line_items.map { |li| [li.variant_id, li.quantity] }
+
+      # A line for another product, which replaces the existing one, but with
+      # a quantity we can't supply. The removal must not survive the failure.
+      other_variant = create(:variant, enterprise:, on_demand: false, on_hand: 1)
+
+      other_url = supplied_product_url(other_variant)
+
+      put "#{orders_url}/#{order.id}", headers:,
+                                       params: order_payload(quantity: 999, product_id: other_url)
+
+      expect(response).to have_http_status :unprocessable_entity
+      expect(order.reload.line_items.map { |li| [li.variant_id, li.quantity] }).to eq original
     end
   end
 end

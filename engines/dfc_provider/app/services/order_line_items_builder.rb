@@ -2,14 +2,15 @@
 
 # Translates the order lines of a DFC order into OFN line item attributes.
 class OrderLineItemsBuilder < DfcBuilder
-  # Returns the nested attributes to apply, the ids of line items that are no
-  # longer part of the order, and the semantic ids of any products we couldn't
-  # recognise.
+  # Returns the nested attributes to apply and the semantic ids of any products
+  # we couldn't recognise. Line items that are no longer part of the order are
+  # marked for destruction in the same attribute list, so that a single save
+  # reconciles the order.
   def self.attributes(ofn_order, dfc_order, variant_scope)
     incoming, unknown = incoming_quantities(dfc_order, variant_scope)
-    attrs, stale_ids = reconcile(ofn_order, incoming)
+    attrs = reconcile(ofn_order, incoming)
 
-    [attrs, stale_ids, unknown]
+    [attrs, unknown]
   end
 
   def self.incoming_quantities(dfc_order, variant_scope)
@@ -43,22 +44,20 @@ class OrderLineItemsBuilder < DfcBuilder
   end
 
   def self.reconcile(ofn_order, incoming)
-    attrs = []
-    stale_ids = []
+    existing, stale = ofn_order.line_items.partition { |li| incoming.key?(li.variant_id) }
 
-    ofn_order.line_items.each do |line_item|
-      if incoming.key?(line_item.variant_id)
-        attrs << { id: line_item.id, quantity: incoming.delete(line_item.variant_id) }
-      else
-        stale_ids << line_item.id
-      end
+    # Update existing line items
+    attrs = existing.map do |line_item|
+      { id: line_item.id, quantity: incoming.delete(line_item.variant_id) }
     end
 
-    incoming.each do |variant_id, quantity|
-      attrs << { variant_id:, quantity: }
-    end
+    # Delete line items that weren't provided
+    attrs += stale.map { |line_item| { id: line_item.id, _destroy: true } }
 
-    [attrs, stale_ids]
+    # Create any new line items
+    attrs += incoming.map { |variant_id, quantity| { variant_id:, quantity: } }
+
+    attrs
   end
 
   private_class_method :incoming_quantities, :find_variant, :reconcile
