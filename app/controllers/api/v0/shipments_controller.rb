@@ -19,15 +19,7 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
-        @shipment.refresh_rates
-        @shipment.save!
-
-        Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
-
-        @order.recreate_all_fees!
-        AmendBackorderJob.perform_later(@order) if @order.completed?
-
-        render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
+        finalize_shipment_addition
       end
 
       def update
@@ -76,10 +68,7 @@ module Api
         line_item = @order.contents.add(variant, quantity, @shipment)
         return invalid_resource!(line_item) unless line_item.errors.empty?
 
-        @order.recreate_all_fees!
-        AmendBackorderJob.perform_later(@order) if @order.completed?
-
-        render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
+        finalize_shipment_addition
       end
 
       def remove
@@ -97,6 +86,48 @@ module Api
       end
 
       private
+
+      # Shared tail of #create and #add, once a line item has been added
+      # successfully: recreates fees, advances the order toward payment when
+      # possible, and renders the order's current shipment.
+      def finalize_shipment_addition
+        # Fees must be recreated before advancing to payment: advancing runs
+        # apply_customer_credit (Spree::Order::Checkout's before_transition to:
+        # :payment), which sizes the credit payment off order.total as it stands
+        # at that moment — if fees aren't applied yet, the credit payment is
+        # created short.
+        @order.recreate_all_fees!
+
+        # Only orders still before payment need advancing; doing this
+        # unconditionally would also refresh shipping rates/cost on
+        # completed-but-unshipped orders.
+        if @order.before_payment_state?
+          @shipment.refresh_rates
+          @shipment.save!
+
+          if @order.line_items.any?
+            Orders::WorkflowService.new(@order).advance_to_payment
+            # There is are legitimate reasons for an order not to advance to payment state,
+            # ie an admin user adding products before adding Customer Details.
+            # Only treat an order not advancing to payment as an error when there is a
+            # shipping address to actually fail shipping against, i.e. a genuine shipping-method
+            # misconfiguration.
+            # Check the state rather than advance_to_payment's return value: an
+            # order that skips payment (e.g. a subscription order) can go straight
+            # past payment to complete, which is not an error.
+            return invalid_resource!(@order) if @order.before_payment_state? &&
+                                                @order.ship_address.present?
+          end
+        end
+
+        AmendBackorderJob.perform_later(@order) if @order.completed?
+
+        # advance_to_payment can rebuild the order's shipments from scratch
+        # (Spree::Order::Checkout's before_transition to: :delivery), which
+        # destroys @shipment — re-resolve the current one rather than
+        # rendering a stale/deleted record. See #14787.
+        render json: @order.reload.shipment, serializer: Api::ShipmentSerializer, status: :ok
+      end
 
       def find_order
         @order = Spree::Order.find_by!(number: params[:order_id])
