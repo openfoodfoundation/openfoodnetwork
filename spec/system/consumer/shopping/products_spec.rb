@@ -39,7 +39,7 @@ RSpec.describe "As a consumer I want to view products" do
 
       # Variants of several producers name their producer, the shared header doesn't.
       expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
-      expect(page).to have_selector ".product-header", text: "Multiple producers"
+      expect(page).not_to have_selector ".product-producer"
     end
 
     # smoke test
@@ -112,7 +112,7 @@ RSpec.describe "As a consumer I want to view products" do
       it "lists the variants of the order cycle the shopper chooses" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "Please choose an order cycle"
+        expect(page).to have_content "Please choose when you want your order"
         expect(page).not_to have_selector ".variant-list"
 
         select "next week", from: "order_cycle_id"
@@ -160,7 +160,7 @@ RSpec.describe "As a consumer I want to view products" do
       it "says that the product is unavailable" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "This product is currently unavailable."
+        expect(page).to have_content "Product unavailable"
         expect(page).not_to have_selector ".variant-list"
       end
     end

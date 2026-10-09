@@ -28,8 +28,8 @@ RSpec.describe ProductsController do
 
         expect(response).to have_http_status :ok
         expect(page.title).to eq "Garlic from The Garlic Guru\n - Open Food Network"
-        expect(page).to have_selector ".product-header", text: "Garlic"
-        expect(page).to have_selector ".product-header", text: /from\s+The Garlic Guru/
+        expect(page).to have_selector ".product-page-header", text: "Garlic"
+        expect(page).to have_selector ".product-page-header", text: /from\s+The Garlic Guru/
       end
 
       # Smoke test over the ProductsRenderer -> ViewData -> ShopVariantListComponent chain,
@@ -75,7 +75,7 @@ RSpec.describe ProductsController do
 
         expect(response).to have_http_status :ok
         expect(page).to have_content "Garlic"
-        expect(page).to have_content "This product is currently unavailable."
+        expect(page).to have_content "Product unavailable"
         expect(page).not_to have_selector ".variant-list"
       end
     end
@@ -91,7 +91,7 @@ RSpec.describe ProductsController do
       it "asks the shopper to choose one first" do
         get enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "Please choose an order cycle"
+        expect(page).to have_content "Please choose when you want your order"
         expect(page).not_to have_selector ".variant-list"
       end
 

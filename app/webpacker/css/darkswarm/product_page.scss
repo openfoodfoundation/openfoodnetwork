@@ -1,8 +1,140 @@
+@use "shop_partials/property-selector-base" as base;
+
 // The shopper facing page of a single product (ProductsController#show).
 //
+// A narrow, centred column with the images on the left and everything to
+// order and read about the product on the right, stacked on small screens.
+.product-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 0;
+
+  h3,
+  h4,
+  h5 {
+    font-family: $body-font;
+    font-weight: 600;
+    color: $grey-800;
+  }
+
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.product-page-header {
+  margin-bottom: 1.5rem;
+
+  h3 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .product-producer {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+
+    span {
+      color: $orange-500;
+    }
+  }
+}
+
 // The page paints no panel of its own like the shop tabs do, so its last
 // section keeps the room for the logo poking out of the footer below.
 // See footer.scss.
 .product-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
   padding-bottom: $footer-clearance;
+
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.product-images,
+.product-info {
+  flex: 1 1 50%;
+  min-width: 0;
+
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
+}
+
+.product-info {
+  font-size: 0.875rem;
+
+  section + section,
+  .product-unavailable + section {
+    margin-top: 2rem;
+  }
+
+  .variant-list li {
+    padding-top: 0.75rem;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  .no-variants strong {
+    color: $red-700;
+  }
+}
+
+.product-unavailable {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: $grey-050;
+  border-radius: $radius-medium;
+
+  i {
+    color: $red-500;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  h5 {
+    font-size: 0.875rem;
+    margin: 0 0 0.25rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+}
+
+.product-details {
+  .product-properties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    list-style: none;
+
+    li > span,
+    li > div > span {
+      @include base.property-selector($grey-700, $grey-300);
+      border-radius: 1em;
+      font-size: 0.8rem;
+    }
+  }
+
+  .product-description {
+    line-height: 1.6;
+    color: $grey-700;
+
+    div {
+      margin-bottom: 1rem; // Trix separates paragraphs with divs, see _shop-modals.scss
+    }
+
+    @include trix-styles;
+  }
 }
