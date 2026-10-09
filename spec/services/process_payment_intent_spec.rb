@@ -9,6 +9,7 @@ RSpec.describe ProcessPaymentIntent do
       create(:order_with_totals, customer:, distributor: customer.enterprise,
                                  state: "confirmation")
     }
+    let!(:shipment) { create(:shipment, order:) }
     let(:payment_method) { create(:stripe_sca_payment_method) }
 
     let!(:payment) {
