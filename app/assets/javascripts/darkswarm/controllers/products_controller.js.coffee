@@ -42,25 +42,19 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
       ).filter (t) -> t?
 
     OrderCycleResource.properties params, (data)=>
-      $scope.supplied_properties = {}
-      data.map( (property) ->
-        $scope.supplied_properties[property.id] = Properties.properties_by_id[property.id]
-      )
+      # Keep as an array so the API sort order is preserved by the filter-selector.
+      $scope.supplied_properties = data.map( (property) ->
+        Properties.properties_by_id[property.id]
+      ).filter (p) -> p?
 
       # Fetch Producer Properties ONLY after Product Properties have loaded
       OrderCycleResource.producerProperties params, (producer_data)=>
-        $scope.supplied_producer_properties = {}
-        
-        # Extract an array of all names currently in the product properties bucket
-        existing_names = (p.name for k, p of $scope.supplied_properties)
-        
-        producer_data.map( (property) ->
-          prop_obj = Properties.properties_by_id[property.id]
-          
-          # Only add to the UI if the name isn't already in existing_names
-          if prop_obj.name not in existing_names
-            $scope.supplied_producer_properties[property.id] = prop_obj
-        )
+        existing_names = $scope.supplied_properties.map (p) -> p.name
+
+        # Skip producer properties whose name is already shown in product properties.
+        $scope.supplied_producer_properties = producer_data.map( (property) ->
+          Properties.properties_by_id[property.id]
+        ).filter (p) -> p? and p.name not in existing_names
 
   $scope.loadMore = ->
     if ($scope.page * $scope.per_page) <= Products.products.length
