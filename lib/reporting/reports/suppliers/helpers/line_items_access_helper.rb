@@ -14,7 +14,7 @@ module Reporting
           end
 
           def supplier(line_item)
-            variant(line_item).enterprise
+            variant(line_item).producer
           end
 
           def distributor(line_item)
