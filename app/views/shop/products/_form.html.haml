@@ -1,7 +1,7 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
 - cache_key = feature?(:product_grid_view, @current_user) ? [current_order_cycle&.id, true] : false
 = cache_with_locale cache_key do
-  %form{action: main_app.cart_path}
+  %form{action: main_app.cart_path, "data-turbo": "true" }
     %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
       = render partial: "shop/products/searchbar"
