@@ -39,7 +39,7 @@ class OrderBuilder < DfcBuilder
   #
   # Returns false and leaves the order untouched if the payload is invalid.
   #
-  # rubocop:disable Naming/PredicateMethod
+  # rubocop:disable-next Naming/PredicateMethod
   def self.apply(ofn_order, dfc_order, variant_scope: Spree::Variant)
     attrs, unknown = OrderLineItemsBuilder.attributes(ofn_order, dfc_order, variant_scope)
 
@@ -52,7 +52,6 @@ class OrderBuilder < DfcBuilder
 
     true
   end
-  # rubocop:enable Naming/PredicateMethod
 
   # Persists an order that `apply` has already changed in memory, and gives it
   # the state the client asked for. This writes to the database, so it is the

@@ -19,7 +19,10 @@ class CatalogItemBuilder < DfcBuilder
       # Record the inverse relation (dfc-b:referencedBy) as well. Without it,
       # an importer reading our catalog can't find the stock and price of a
       # product because it can only follow links from the product onwards.
-      product.catalogItems = [item]
+      #
+      # Callers that asked us not to build the product (to avoid recursing
+      # back into this method) can't have the inverse set.
+      product.catalogItems = [item] if product
     end
   end
 
