@@ -62,8 +62,11 @@ Doorkeeper::OpenidConnect.configure do
   end
 end
 
-# A login from the remember me cookie isn't an authentication of the user.
+# Records when the user typed their password. Logins without a session (API,
+# `login_as nil` in specs) have nowhere to record it, and a login from the
+# remember me cookie isn't an authentication of the user.
 Warden::Manager.after_authentication(scope: :spree_user) do |_user, warden, options|
+  next unless warden.authenticated?(options[:scope])
   next if warden.winning_strategy.is_a?(Devise::Strategies::Rememberable)
 
   warden.session(options[:scope])["auth_time"] = Time.zone.now.to_i
