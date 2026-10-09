@@ -283,6 +283,35 @@ RSpec.describe '
     end
   end
 
+  context "resuming a canceled order" do
+    let(:resume_confirm_message) do
+      "Are you sure you want to Resume this order?"
+    end
+
+    before do
+      order.cancel!
+      login_as_admin
+      visit spree.edit_admin_order_path(order)
+    end
+
+    it "shows a confirmation dialog before resuming the order" do
+      accept_alert resume_confirm_message do
+        find_button("Resume").click
+      end
+
+      expect(order.reload.state).to eq "resumed"
+      expect(page).to have_content "Order Updated"
+    end
+
+    it "does not resume the order when the confirmation is dismissed" do
+      dismiss_confirm resume_confirm_message do
+        find_button("Resume").click
+      end
+
+      expect(order.reload.state).to eq "canceled"
+    end
+  end
+
   it "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
