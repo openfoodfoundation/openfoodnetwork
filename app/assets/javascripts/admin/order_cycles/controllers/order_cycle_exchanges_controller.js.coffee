@@ -44,6 +44,9 @@ angular.module('admin.orderCycles')
         pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
         $scope.order_cycle_form[pickup_time_field_name].$setDirty()
 
+    $scope.addDistributionOfVariant = (variant_id) ->
+      OrderCycle.addDistributionOfVariant(variant_id)
+
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
