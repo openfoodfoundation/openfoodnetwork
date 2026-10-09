@@ -4,7 +4,7 @@
   - if use_turbo_cart?
     #out-of-stock-modal
 
-  %form{action: main_app.cart_path}
+  %form{action: main_app.cart_path, "data-turbo": "true" }
     %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
       = render partial: "shop/products/searchbar"

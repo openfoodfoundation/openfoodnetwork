@@ -10,4 +10,4 @@
     .shop-pagination
       -# haml-lint:disable UnescapedHtml
       -# series_nav_js returns html, which pagy.mjs turns into page links
-      != @pagy.series_nav_js(id: "shop-products-pagination", path: order_cycle_products_path(params[:order_cycle_id]))
+      != @pagy.series_nav_js(id: "shop-products-pagination", path: order_cycle_products_path(params[:order_cycle_id]), anchor_string: 'data-turbo-frame="_self"')
