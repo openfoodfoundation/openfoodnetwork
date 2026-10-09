@@ -2,9 +2,13 @@
 
 module Admin
   class CustomerAccountTransactionController < Admin::ResourceController
+    MAX_AMOUNT = 100_000_000
+
     skip_before_action :load_resource, only: [:new, :create]
     before_action :authorize_customer_access, only: [:index, :new, :create]
     before_action :load_customer, only: [:index, :new, :create]
+
+    helper_method :negative_amount_allowed?
 
     def index
       @available_credit = @collection.first&.balance || 0.00
@@ -30,8 +34,7 @@ module Admin
       @object = @customer.customer_account_transactions.new(permitted_resource_params)
       @object.created_by = spree_current_user
       @object.currency = CurrentConfig.get(:currency)
-      @object.errors.add(:amount, :greater_than, count: 0) if non_positive_amount?
-      @object.errors.add(:amount, :less_than, count: 100_000_000) if amount_too_large?
+      validate_amount
       @object.errors.add(:description, :blank) if @object.description.blank?
 
       if @object.errors.empty? && @object.save
@@ -73,12 +76,40 @@ module Admin
       @customer = Customer.find(params[:customer_id])
     end
 
-    def non_positive_amount?
-      @object.amount.nil? || @object.amount <= 0
+    # Only super admins may enter a negative amount, to deduct credit from a customer.
+    # Hub managers are limited to adding credit.
+    def validate_amount
+      amount = @object.amount
+      return add_amount_sign_error if amount.nil? || amount.zero?
+
+      if amount.negative? && !negative_amount_allowed?
+        add_amount_sign_error
+      elsif amount.negative?
+        validate_deduction(amount)
+      elsif amount >= MAX_AMOUNT
+        @object.errors.add(:amount, :less_than, count: MAX_AMOUNT)
+      end
     end
 
-    def amount_too_large?
-      @object.amount.present? && @object.amount >= 100_000_000
+    # A deduction must not leave the customer with a negative credit balance.
+    def validate_deduction(amount)
+      available_credit = @customer.credit_balance
+      return if available_credit + amount >= 0
+
+      @object.errors.add(:amount, :exceeds_available_credit,
+                         available_credit: Spree::Money.new(available_credit).to_s)
+    end
+
+    def add_amount_sign_error
+      if negative_amount_allowed?
+        @object.errors.add(:amount, :other_than, count: 0)
+      else
+        @object.errors.add(:amount, :greater_than, count: 0)
+      end
+    end
+
+    def negative_amount_allowed?
+      spree_current_user.admin?
     end
 
     def permitted_resource_params

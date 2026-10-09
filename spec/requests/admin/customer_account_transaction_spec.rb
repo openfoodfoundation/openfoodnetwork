@@ -43,6 +43,24 @@ RSpec.describe Admin::CustomerAccountTransactionController do
       expect(response).to render_template("admin/customer_account_transaction/new")
     end
 
+    it "does not show the negative amount hint to a hub manager" do
+      get new_admin_customer_customer_account_transaction_path(customer),
+          params: { format: :turbo_stream }
+
+      expect(response.body).not_to include("enter a negative amount")
+    end
+
+    context "as a super admin" do
+      before { login_as create(:admin_user) }
+
+      it "shows the negative amount hint" do
+        get new_admin_customer_customer_account_transaction_path(customer),
+            params: { format: :turbo_stream }
+
+        expect(response.body).to include("enter a negative amount to deduct credit")
+      end
+    end
+
     context "with a non authorized customer" do
       let(:customer) { create(:customer) }
 
@@ -144,6 +162,101 @@ RSpec.describe Admin::CustomerAccountTransactionController do
 
         expect(response).to render_template("admin/customer_account_transaction/new")
         expect(response.body).to include("can&#39;t be blank")
+      end
+    end
+
+    context "as a super admin" do
+      let(:admin_user) { create(:admin_user) }
+      let(:params) do
+        {
+          customer_account_transaction: { amount: "-5", description: "Correction" },
+          format: :turbo_stream
+        }
+      end
+
+      let(:existing_credit) { 20 }
+
+      before do
+        login_as admin_user
+        create(:customer_account_transaction, customer:, amount: existing_credit)
+      end
+
+      it "allows a negative amount to deduct credit" do
+        expect {
+          post admin_customer_customer_account_transaction_index_path(customer), params:
+        }.to change { customer.customer_account_transactions.count }.by(1)
+
+        transaction = customer.customer_account_transactions.order(:id).last
+        expect(transaction.amount).to eq(-5)
+        expect(transaction.balance).to eq(15)
+        expect(transaction.created_by).to eq(admin_user)
+        expect(response).to render_template("admin/customer_account_transaction/index")
+      end
+
+      context "with a zero amount" do
+        let(:params) do
+          {
+            customer_account_transaction: { amount: "0", description: "Correction" },
+            format: :turbo_stream
+          }
+        end
+
+        it "does not create a transaction and re-renders the form with an error message" do
+          expect {
+            post admin_customer_customer_account_transaction_index_path(customer), params:
+          }.not_to change { customer.customer_account_transactions.count }
+
+          expect(response).to render_template("admin/customer_account_transaction/new")
+          expect(response.body).to include("must be other than 0")
+        end
+      end
+
+      context "with a deduction equal to the available credit" do
+        let(:params) do
+          {
+            customer_account_transaction: { amount: "-20", description: "Correction" },
+            format: :turbo_stream
+          }
+        end
+
+        it "brings the balance down to zero" do
+          post(admin_customer_customer_account_transaction_index_path(customer), params:)
+
+          expect(customer.credit_balance).to eq(0)
+          expect(response).to render_template("admin/customer_account_transaction/index")
+        end
+      end
+
+      context "with a deduction larger than the available credit" do
+        let(:params) do
+          {
+            customer_account_transaction: { amount: "-20.01", description: "Correction" },
+            format: :turbo_stream
+          }
+        end
+
+        it "does not create a transaction and re-renders the form with an error message" do
+          expect {
+            post admin_customer_customer_account_transaction_index_path(customer), params:
+          }.not_to change { customer.customer_account_transactions.count }
+
+          expect(response).to render_template("admin/customer_account_transaction/new")
+          expect(response.body).to include(
+            "cannot deduct more than the available credit ($20.00)"
+          )
+        end
+      end
+
+      context "when the customer has no credit" do
+        let(:existing_credit) { 0 }
+
+        it "does not allow any deduction" do
+          expect {
+            post admin_customer_customer_account_transaction_index_path(customer), params:
+          }.not_to change { customer.customer_account_transactions.count }
+
+          expect(response.body).to include("cannot deduct more than the available credit ($0.00)")
+        end
       end
     end
 

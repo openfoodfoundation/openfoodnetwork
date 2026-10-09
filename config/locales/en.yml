@@ -133,6 +133,10 @@ en:
         connected_apps:
           vine:
             api_request_error: "An error occured when connecting to Vine API"
+        customer_account_transaction:
+          attributes:
+            amount:
+              exceeds_available_credit: "cannot deduct more than the available credit (%{available_credit})"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -927,6 +931,8 @@ en:
         submit: "Add Credit"
         cancel: Cancel
         confirm: "Are you sure you want to apply %{currency}%{amount} of credit?"
+        confirm_deduct: "Are you sure you want to deduct %{currency}%{amount} of credit?"
+        negative_amount_hint: "As a super admin, you can enter a negative amount to deduct credit."
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
