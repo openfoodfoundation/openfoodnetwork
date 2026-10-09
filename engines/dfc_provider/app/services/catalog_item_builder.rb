@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class CatalogItemBuilder < DfcBuilder
-  def self.catalog_item(variant)
+  def self.catalog_item(variant, include_product: true)
     id = urls.enterprise_catalog_item_url(
       enterprise_id: variant.enterprise_id,
       id: variant.id,
     )
     supplier_url = urls.enterprise_url(variant.enterprise_id)
-    product = SuppliedProductBuilder.supplied_product(variant)
+    product = SuppliedProductBuilder.supplied_product(variant) if include_product
 
     DfcProvider::CatalogItem.new(
       id, product:,
@@ -19,7 +19,10 @@ class CatalogItemBuilder < DfcBuilder
       # Record the inverse relation (dfc-b:referencedBy) as well. Without it,
       # an importer reading our catalog can't find the stock and price of a
       # product because it can only follow links from the product onwards.
-      product.catalogItems = [item]
+      #
+      # Callers that asked us not to build the product (to avoid recursing
+      # back into this method) can't have the inverse set.
+      product.catalogItems = [item] if product
     end
   end
 
