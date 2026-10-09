@@ -73,28 +73,6 @@
         color: b.$disabled-bright;
         cursor: default;
       }
-
-      // Previous and Next: replace pagy's "<" and ">" with the Material chevrons
-      &:first-child,
-      &:last-child {
-        font-size: 0;
-
-        &::before {
-          content: "";
-          width: 1.5rem;
-          height: 1.5rem;
-          background-color: currentColor;
-          mask: var(--chevron) center / contain no-repeat;
-        }
-      }
-
-      &:first-child {
-        --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E");
-      }
-
-      &:last-child {
-        --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/%3E%3C/svg%3E");
-      }
     }
   }
 }
