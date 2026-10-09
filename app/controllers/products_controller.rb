@@ -9,9 +9,6 @@ class ProductsController < BaseController
     renderer = product_renderer
     @products = renderer.products_view
     @pagy = renderer.pagination
-    # Pagy translates its own labels (e.g. aria-labels in the page links) and doesn't read
-    # the Rails locale.
-    Pagy::I18n.locale = I18n.locale
 
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
