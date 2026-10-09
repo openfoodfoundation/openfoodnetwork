@@ -11,6 +11,9 @@ class UserLocaleSetter
     save_locale_from_params
 
     I18n.locale = valid_current_locale
+    # Pagy translates its own labels (e.g. aria-labels in the page links) and doesn't read
+    # the Rails locale.
+    Pagy::I18n.locale = I18n.locale
   end
 
   def ensure_valid_locale_persisted
