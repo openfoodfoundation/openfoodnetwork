@@ -1,28 +1,49 @@
 -# locals: (product:, product_view:)
 - available_variant_ids = product_view&.variants&.map(&:id)
-.row
-  .columns.product-header
+.product-page
+  .product-page-header
     %h3= product.name
-    - if product_view
-      %span
-        %em
-          = t("products_from")
+    -# With several producers, each variant names its own.
+    - if product_view&.single_producer?
+      %p.product-producer
+        = t("products_from")
         %span= product_producer_name(product_view)
-    %br
-    - if product.description
-      .product-description{ 'data-controller': "add-blank-to-link" }
-        %p.text-small
-          -# description is sanitized in Spree::Product#description method
-          = product.description.html_safe
-.row.product-body
-  .columns.small-12.medium-4.large-3.product-images
-    - carousel_images = product_carousel_images_data(product, available_variant_ids:)
-    - has_images = product_carousel_images?(product, available_variant_ids:)
-    = render ThumbnailCarouselComponent.new(images: carousel_images, class: (has_images ? nil : "placeholder"))
-  .columns.small-12.medium-8.large-9.product-variants
-    - if product_view
-      = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display, cart_params: { enterprise_permalink: @enterprise.permalink, order_cycle_id: @order_cycle.id })
-    - elsif @order_cycles.many?
-      %p.no-variants= t("products_choose_order_cycle")
-    - else
-      %p.no-variants= t("products_unavailable")
+
+  .product-body
+    .product-images
+      - carousel_images = product_carousel_images_data(product, available_variant_ids:)
+      - has_images = product_carousel_images?(product, available_variant_ids:)
+      = render ThumbnailCarouselComponent.new(images: carousel_images, class: (has_images ? nil : "placeholder"), show_captions: true)
+
+    .product-info
+      - if product_view
+        %section.product-variants
+          %h4= t("products_order_product")
+          = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display, cart_params: { enterprise_permalink: @enterprise.permalink, order_cycle_id: @order_cycle.id })
+      - elsif @order_cycles.many?
+        %section.product-variants
+          %h4= t("products_order_product")
+          %p.no-variants= t("products_choose_order_cycle_html")
+      - else
+        .product-unavailable
+          %i.ofn-i_012-warning
+          %div
+            %h5= t("products_unavailable_title")
+            %p= t("products_unavailable")
+
+      - properties = product.properties_including_inherited
+      - if properties.any? || product.description.present?
+        %section.product-details
+          %h4= t("products_product_details")
+          - if properties.any?
+            %ul.product-properties
+              - properties.each do |property|
+                %li
+                  - if property[:value].present?
+                    = render TooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom-start")
+                  - else
+                    %span= property[:name]
+          - if product.description.present?
+            .product-description{ 'data-controller': "add-blank-to-link" }
+              -# description is sanitized in Spree::Product#description method
+              = product.description.html_safe

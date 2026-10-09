@@ -2782,8 +2782,11 @@ en:
   products_edit_cart: "Edit your cart"
   products_from: from
   products_multiple_producers: "Multiple producers"
-  products_unavailable: "This product is currently unavailable."
-  products_choose_order_cycle: "Please choose an order cycle to see what's available."
+  products_order_product: "Order product"
+  products_product_details: "Product details"
+  products_unavailable_title: "Product unavailable"
+  products_unavailable: "This product might be sold out, or not available in the current active order cycles."
+  products_choose_order_cycle_html: "Please <strong>choose when you want your order</strong> to see if this product is available."
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
   products_update_error_msg: "Saving failed."
