@@ -64,6 +64,16 @@ RSpec.describe "/admin/oauth_applications", feature: :oauth_provider do
       expect(application.reload.name).to eq "Route planner"
     end
 
+    it "shows the form again with errors on an invalid update" do
+      patch admin_oauth_application_path(application), params: {
+        oauth_application: { name: "" }
+      }
+
+      expect(response).to have_http_status :unprocessable_entity
+      expect(response).to render_template "admin/oauth_applications/edit"
+      expect(application.reload.name).to eq "Delivery planner"
+    end
+
     it "deletes an application and its tokens" do
       Doorkeeper::AccessToken.create!(application:, resource_owner_id: admin.id)
 

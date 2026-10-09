@@ -26,13 +26,17 @@ RSpec.describe OpenFoodNetwork::OidcSecrets do
       expect { described_class.signing_keys }.to raise_error ArgumentError, /RSA private/
     end
 
-    it "uses a generated key in development and test" do
+    it "generates a key once in development and test" do
       stub_const("ENV", env_without_secrets)
+      key_path = Pathname(Dir.mktmpdir).join("oidc_signing_key.pem")
+      stub_const("#{described_class}::LOCAL_KEY_PATH", key_path)
 
       keys = described_class.signing_keys
 
       expect(keys.size).to eq 1
       expect(OpenSSL::PKey::RSA.new(keys.first)).to be_private
+      expect(key_path.read).to eq keys.first
+      expect(described_class.signing_keys).to eq keys
     end
 
     it "has no key in production without configuration" do
@@ -40,6 +44,14 @@ RSpec.describe OpenFoodNetwork::OidcSecrets do
       allow(Rails.env).to receive(:local?).and_return(false)
 
       expect(described_class.signing_keys).to be_empty
+    end
+  end
+
+  describe ".missing" do
+    it "lists the secrets that production needs and doesn't have" do
+      stub_const("ENV", env_without_secrets.merge("OIDC_PAIRWISE_SECRET" => "s3cret"))
+
+      expect(described_class.missing).to eq ["OIDC_SIGNING_KEY"]
     end
   end
 
