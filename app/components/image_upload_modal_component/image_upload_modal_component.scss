@@ -1,0 +1,97 @@
+// Image upload overlay variables.
+$image-upload-modal-radius: 8px;
+$image-upload-modal-preview-size: 433px;
+$image-upload-modal-preview-max-height: 55vh;
+
+$image-upload-modal-mobile-margin: 2.5vw;
+$image-upload-modal-mobile-spacing: 1.5vw;
+$image-upload-modal-mobile-title-size: 5vw;
+$image-upload-modal-mobile-text-size: 3vw;
+$image-upload-modal-mobile-button-height: 8vw;
+$image-upload-modal-mobile-button-min-width: 12vw;
+$image-upload-modal-mobile-button-gap: 1vw;
+
+.modal-component.image-upload-modal {
+  .image-upload-modal__preview img {
+    width: $image-upload-modal-preview-size;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Mobile treatment for the image upload overlay. `body.is-mobile` is toggled by
+// the is-mobile controller.
+body.is-mobile .modal-component.image-upload-modal {
+  h2.modal-title {
+    margin-top: $image-upload-modal-mobile-spacing;
+    font-size: $image-upload-modal-mobile-title-size;
+    line-height: 1;
+  }
+
+  p.modal-subtitle {
+    margin-bottom: $image-upload-modal-mobile-spacing;
+    font-size: $image-upload-modal-mobile-text-size;
+  }
+
+  // Full-width card with a side gutter, vertically centred.
+  top: 50%;
+  right: $image-upload-modal-mobile-margin;
+  left: $image-upload-modal-mobile-margin;
+  transform: translateY(-50%);
+  width: auto;
+  max-width: none;
+  margin: 0;
+  overflow-y: auto;
+  border-radius: $image-upload-modal-radius;
+
+  // Flex column on an inner wrapper so the modal controller keeps sole control of
+  // the modal's `display`, and the actions can be pinned to the bottom.
+  .image-upload-modal__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+  }
+
+  .image-upload-modal__preview {
+    margin: auto 0;
+  }
+
+  // Preview at natural aspect ratio, centred and height-capped.
+  .image-upload-modal__preview img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: $image-upload-modal-preview-max-height;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  // Pin the actions to the bottom of the card.
+  form {
+    margin-top: auto;
+  }
+
+  // Keep the actions side-by-side, overriding the generic stacking rule in the modal component.
+  .modal-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: $image-upload-modal-mobile-button-gap;
+
+    // Larger tap targets.
+    input[type="button"],
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: $image-upload-modal-mobile-button-height;
+      min-width: $image-upload-modal-mobile-button-min-width;
+      font-size: $image-upload-modal-mobile-text-size;
+
+      padding: $image-upload-modal-mobile-button-gap ($image-upload-modal-mobile-button-gap * 2);
+      line-height: 1.2;
+      text-align: center;
+    }
+  }
+}
