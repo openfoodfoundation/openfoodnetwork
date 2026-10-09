@@ -37,6 +37,60 @@ RSpec.describe 'Customers' do
         visit admin_customers_path
       end
 
+      it "lets a hub manager add credit to a customer from the credit popup" do
+        select2_select managed_distributor1.name, from: "shop_id"
+
+        find("td.balance a", match: :first).click
+
+        within "#customer-account-transactions-modal" do
+          click_link "Add Credit"
+
+          fill_in "customer_account_transaction_amount", with: "15.00"
+          fill_in "customer_account_transaction_description", with: "Goodwill credit"
+
+          accept_confirm do
+            click_button "Add Credit"
+          end
+        end
+
+        within "#customer-account-transactions-modal" do
+          expect(page).to have_content("Available credit: $15.00")
+          expect(page).to have_content("Goodwill credit")
+        end
+      end
+
+      context "as a super admin" do
+        before do
+          create(:customer_account_transaction, customer: customer1, amount: 20)
+          login_as_admin
+          visit admin_customers_path
+        end
+
+        it "lets a super admin deduct credit with a negative amount" do
+          select2_select managed_distributor1.name, from: "shop_id"
+
+          within("tr#c_#{customer1.id}") { find("td.balance a").click }
+
+          within "#customer-account-transactions-modal" do
+            click_link "Add Credit"
+
+            expect(page).to have_content("enter a negative amount to deduct credit")
+
+            fill_in "customer_account_transaction_amount", with: "-5.00"
+            fill_in "customer_account_transaction_description", with: "Correction"
+
+            accept_confirm("Are you sure you want to deduct $5.00 of credit?") do
+              click_button "Add Credit"
+            end
+          end
+
+          within "#customer-account-transactions-modal" do
+            expect(page).to have_content("Available credit: $15.00")
+            expect(page).to have_content("Correction")
+          end
+        end
+      end
+
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
         expect(page).to have_select2(
