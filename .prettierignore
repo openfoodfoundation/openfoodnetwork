@@ -11,6 +11,7 @@
 # Enabled: app/webpacker/controllers/*.js and app/webpacker/packs/*.js
 babel.config.js
 postcss.config.js
+/app/webpacker/js/pagy.mjs
 
 # SCSS
 # Enabled: most of admin

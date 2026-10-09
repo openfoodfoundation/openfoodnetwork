@@ -183,5 +183,45 @@ RSpec.describe ProductsController do
       expect(response.body).to include "unit-price"
       expect(response.body).to include "$19.99"
     end
+
+    describe "pagination" do
+      let(:page) { Capybara::Node::Simple.new(response.body) }
+
+      it "shows all products on one page, without page links" do
+        get order_cycle_products_path(order_cycle.id)
+
+        expect(page).to have_selector ".product-item", count: 5
+        expect(page).not_to have_selector "#shop-products-pagination"
+      end
+
+      context "with more products than fit on a page" do
+        before { stub_const("ProductsController::PER_PAGE", 2) }
+
+        it "shows the first page of products, with page links" do
+          get order_cycle_products_path(order_cycle.id)
+
+          expect(page).to have_selector ".product-item", count: 2
+          expect(page).to have_selector(
+            ".shop-pagination[data-controller=pagy] nav#shop-products-pagination[data-pagy]"
+          )
+        end
+
+        it "shows the requested page" do
+          get order_cycle_products_path(order_cycle.id, page: 3)
+
+          expect(page).to have_selector ".product-item", count: 1
+        end
+
+        it "links pages to the products of the order cycle" do
+          get order_cycle_products_path(order_cycle.id)
+
+          # series_nav_js encodes the links for pagy.mjs to render
+          data = page.find("#shop-products-pagination")["data-pagy"]
+          next_link = JSON.parse(Base64.urlsafe_decode64(data))[1].last
+
+          expect(next_link).to include %(href="#{order_cycle_products_path(order_cycle.id)}?page=2")
+        end
+      end
+    end
   end
 end

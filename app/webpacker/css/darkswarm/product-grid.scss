@@ -1,4 +1,5 @@
 @use "modern-variables" as *;
+@use "branding" as b;
 @use "shop_partials/spinner";
 
 .loading {
@@ -24,4 +25,76 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, max(var(--column-width), 100%/4)), 1fr));
   overflow: hidden;
   margin-top: $padding-tbl-cell; // 12px
+}
+
+// Page links rendered by pagy's series_nav_js, see app/views/products/index.html.haml
+.shop-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 $product-grid-margin-bottom;
+
+  .pagy {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.5rem;
+      height: 2.5rem;
+      padding: 0 0.5rem;
+      border-radius: $radius-button;
+      color: b.$dark-grey;
+      font-weight: 600;
+      text-decoration: none;
+
+      &[href]:hover {
+        background-color: b.$grey-100;
+      }
+
+      // Current page
+      &[aria-current] {
+        background-color: b.$clr-turquoise;
+        color: b.$white;
+        cursor: default;
+      }
+
+      // Gap
+      &[role="separator"] {
+        min-width: auto;
+        padding: 0;
+        cursor: default;
+      }
+
+      // Previous and Next, disabled on the first and last page
+      &[role="link"][aria-disabled]:not([aria-current]) {
+        color: b.$disabled-bright;
+        cursor: default;
+      }
+
+      // Previous and Next: replace pagy's "<" and ">" with the Material chevrons
+      &:first-child,
+      &:last-child {
+        font-size: 0;
+
+        &::before {
+          content: "";
+          width: 1.5rem;
+          height: 1.5rem;
+          background-color: currentColor;
+          mask: var(--chevron) center / contain no-repeat;
+        }
+      }
+
+      &:first-child {
+        --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E");
+      }
+
+      &:last-child {
+        --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/%3E%3C/svg%3E");
+      }
+    }
+  }
 }
