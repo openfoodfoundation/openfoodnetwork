@@ -2,6 +2,8 @@
   .row.field
     = f.label :amount, t(".amount")
     = f.text_field :amount, class: "fullwidth", required: true, data: { "add-credit-confirm-target": "amount", action: "input->add-credit-confirm#updateConfirmMessage" }
+    - if negative_amount_allowed?
+      %span.info= t(".negative_amount_hint")
     = error_message_on @object, :amount
   .row.field
     = f.label :description, t(".description")

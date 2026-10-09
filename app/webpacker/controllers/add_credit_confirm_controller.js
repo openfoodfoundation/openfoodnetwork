@@ -12,9 +12,14 @@ export default class extends Controller {
   }
 
   updateConfirmMessage() {
+    // Only super admins can submit a negative amount; the server enforces it.
+    const amount = this.amountTarget.value.trim();
+    const deduct = amount.startsWith("-");
+    const key = deduct ? "confirm_deduct" : "confirm";
+
     this.submitTarget.dataset.turboConfirm = I18n.t(
-      "admin.customer_account_transaction.form.confirm",
-      { currency: this.currencyValue, amount: this.amountTarget.value },
+      `admin.customer_account_transaction.form.${key}`,
+      { currency: this.currencyValue, amount: deduct ? amount.slice(1) : amount },
     );
   }
 }
