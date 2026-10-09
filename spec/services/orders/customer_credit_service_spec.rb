@@ -149,6 +149,25 @@ RSpec.describe Orders::CustomerCreditService do
       end
     end
 
+    context "when the order has no customer" do
+      before do
+        order.update_column(:customer_id, nil)
+        order.reload
+      end
+
+      it "returns a descriptive failure without changing payments or customer credit" do
+        expect {
+          response = subject.refund(user:)
+
+          expect(response.failure?).to eq(true)
+          expect(response.message).to eq("No customer is assigned to this order")
+        }.not_to change { [order.payments.count, CustomerAccountTransaction.count] }
+
+        expect(order.reload.payment_state).to eq("credit_owed")
+        expect(order.new_outstanding_balance).to eq(-12.00)
+      end
+    end
+
     context "when payment creation fails" do
       before do
         failed_response = ActiveMerchant::Billing::Response.new(false, "Void error")
