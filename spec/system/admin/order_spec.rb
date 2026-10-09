@@ -160,6 +160,25 @@ RSpec.describe '
           expect(page).to have_content 'Customer Details updated'
         end.to change { order.reload.customer }.from(customer2).to(customer3)
       end
+
+      it "edits the enterprise details of the selected customer" do
+        customer3.update!(email: customer3.user.email, customer_type: "enterprise",
+                          enterprise_name: "ACME", enterprise_abn: "456")
+
+        expect(page).not_to have_field "order_customer_attributes_enterprise_name"
+        tomselect_search_and_select customer3.email, from: 'customer_search_override'
+        expect(page).to have_select "order_customer_attributes_customer_type",
+                                    selected: "Enterprise"
+        expect(page).to have_field "order_customer_attributes_enterprise_name", with: "ACME"
+
+        fill_in "order_customer_attributes_enterprise_name", with: "ACME Ltd"
+        check 'order_use_billing'
+        click_button "Update"
+
+        expect(page).to have_content 'Customer Details updated'
+        expect(customer3.reload.enterprise_name).to eq "ACME Ltd"
+        expect(customer2.reload.enterprise_name).to be_nil
+      end
     end
   end
 

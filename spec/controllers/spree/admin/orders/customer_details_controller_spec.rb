@@ -61,6 +61,24 @@ RSpec.describe Spree::Admin::Orders::CustomerDetailsController do
 
           expect(response).to redirect_to spree.admin_order_customer_path(order)
         end
+
+        it "saves nothing when the customer is invalid" do
+          order.update!(customer: create(:customer, enterprise: distributor, user:,
+                                                    email: user.email))
+
+          expect {
+            spree_post :update,
+                       order: {
+                         email: user.email,
+                         bill_address_attributes: address_params,
+                         ship_address_attributes: address_params,
+                         customer_attributes: { customer_type: "enterprise", enterprise_name: "" }
+                       },
+                       order_id: order.number
+          }.not_to change { order.reload.email }
+
+          expect(response).to render_template :edit
+        end
       end
 
       context "when adding details of an unregistered user" do
@@ -76,6 +94,23 @@ RSpec.describe Spree::Admin::Orders::CustomerDetailsController do
           order.reload
 
           expect(response).to redirect_to spree.admin_order_customer_path(order)
+        end
+
+        it "does not update the customer" do
+          customer = create(:customer, enterprise: distributor, user: nil)
+          order.update!(customer:)
+
+          spree_post :update,
+                     order: {
+                       email: 'unregistered@email.com',
+                       bill_address_attributes: address_params,
+                       ship_address_attributes: address_params,
+                       customer_attributes: { customer_type: "enterprise", enterprise_name: "X",
+                                              enterprise_abn: "1" }
+                     },
+                     order_id: order.number
+
+          expect(customer.reload).to be_individual
         end
       end
     end
