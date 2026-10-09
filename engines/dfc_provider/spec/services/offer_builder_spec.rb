@@ -16,7 +16,7 @@ RSpec.describe OfferBuilder do
       expect(offer.stockLimitation).to eq 5
     end
 
-    it "has no stock limitation when on demand" do
+    it "has a negative stock limitation when on demand" do
       # Assigning stock only works with persisted records:
       variant.save!
       variant.on_hand = 5
@@ -24,7 +24,7 @@ RSpec.describe OfferBuilder do
 
       offer = OfferBuilder.build(variant)
 
-      expect(offer.stockLimitation).to eq nil
+      expect(offer.stockLimitation).to eq(-1)
     end
 
     it "assigns a price with mapped currency" do

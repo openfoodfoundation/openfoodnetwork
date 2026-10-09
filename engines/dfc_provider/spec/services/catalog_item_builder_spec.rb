@@ -36,6 +36,26 @@ RSpec.describe CatalogItemBuilder do
     end
   end
 
+  describe ".catalog_item stock limitation" do
+    let(:variant) { create(:variant) }
+
+    it "is the stock level" do
+      variant.on_hand = 5
+
+      item = CatalogItemBuilder.catalog_item(variant)
+
+      expect(item.stockLimitation).to eq 5
+    end
+
+    it "is negative when on demand" do
+      variant.on_demand = true
+
+      item = CatalogItemBuilder.catalog_item(variant)
+
+      expect(item.stockLimitation).to eq(-1)
+    end
+  end
+
   describe ".apply_stock" do
     let(:item) { CatalogItemBuilder.catalog_item(variant) }
 
