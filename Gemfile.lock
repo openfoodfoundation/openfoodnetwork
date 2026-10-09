@@ -249,8 +249,10 @@ GEM
       bigdecimal
       rexml
     crass (1.0.7)
-    css_parser (2.1.0)
+    css_parser (3.2.0)
       addressable
+      base64
+      ssrf_filter (~> 1.5)
     csv (3.3.5)
     cuprite (0.18)
       capybara (~> 3.0)
@@ -695,8 +697,8 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.4.4)
-    roadie (5.3.0)
-      css_parser (>= 1.4, < 3.0)
+    roadie (5.3.1)
+      css_parser (>= 1.4, < 4.0)
       nokogiri (~> 1.15)
     roadie-rails (3.4.0)
       railties (>= 5.1, < 8.2)
@@ -836,6 +838,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    ssrf_filter (1.6.0)
     state_machines (0.201.0)
     state_machines-activemodel (0.200.0)
       activemodel (>= 7.2)
@@ -1161,7 +1164,7 @@ CHECKSUMS
   cookiejar (0.3.4) sha256=11b16acfc4baf7a0f463c21a6212005e04e25f5554d4d9f24d97f3492dfda0df
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
   crass (1.0.7) sha256=94868719948664c89ddcaf0a37c65048413dfcb1c869470a5f7a7ceb5390b295
-  css_parser (2.1.0) sha256=bfb7c9cf3896426b53337e34b4ad391c3cfe8c2f2c839e72f2cdccf615fb5247
+  css_parser (3.2.0) sha256=e2d9d76164246d4d5d0b96e22fcbf581e1c65368ec3e52e056d4154e42eaac65
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   cuprite (0.18) sha256=32c3203a492f25dbd5a3525716ae09610bcef8936ddd32ff39f34477a98062b2
   database_cleaner (2.1.0) sha256=1dcba26e3b1576da692fc6bac10136a4744da5bcc293d248aae19640c65d89cd
@@ -1337,7 +1340,7 @@ CHECKSUMS
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
   responders (3.2.1) sha256=c2772970cbda654c0e772d852e5a851e82cd8e96f5fa958650861ba75b8ffa84
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  roadie (5.3.0) sha256=a4140389ca28e1a0d373e1363fce8dec0a8950f2f6913f3b537a615130ed9fca
+  roadie (5.3.1) sha256=665a6a8df15fbc805583b341331cbd43b9717f014a8e46dac799266af62c1cc1
   roadie-rails (3.4.0) sha256=f7b02bd3b74051eaa51ebb636049c4c9fc54cf2a68234eafc5a5fb78ad1f9aa9
   rodf (1.2.0) sha256=0c10b48c57033473f7bfca8d825e04296b13642cfaacca470121bbd28d1e2991
   roo (3.0.0) sha256=6fdd7a9158d657c69768b4168754ff2110cc21fdc01a1bec1010820cb05c91b1
@@ -1383,6 +1386,7 @@ CHECKSUMS
   spring-watcher-listen (2.1.0) sha256=e958bcd956d1026eb95d16b2ef0e241d1ca35a754628bd45040e3d9954a61949
   sprockets (3.7.5) sha256=72c20f256548f8a37fe7db41d96be86c3262fddaf4ebe9d69ec8317394fed383
   sprockets-rails (3.5.2) sha256=a9e88e6ce9f8c912d349aa5401509165ec42326baf9e942a85de4b76dbc4119e
+  ssrf_filter (1.6.0) sha256=78d15bc26d0385c931f46f12a9c1cbb90e6556bd96b95f25e5a5f786c8dcf999
   state_machines (0.201.0) sha256=807bafdd5d7dbfb3e23d77897edfe38e505b6e0738a2b7259dab566f46b9d319
   state_machines-activemodel (0.200.0) sha256=c0216f5730b00ee240a6370d59138e8d5d966752089a749ae015410185ec953e
   state_machines-activerecord (0.200.0) sha256=a53a1c09b478f05be9385af59e09a7a84a818c6a66651e432bfa4650d5917d85
