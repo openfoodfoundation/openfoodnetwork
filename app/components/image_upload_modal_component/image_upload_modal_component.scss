@@ -1,8 +1,15 @@
 // Image upload overlay variables.
-$image-upload-modal-margin: 24px;
 $image-upload-modal-radius: 8px;
 $image-upload-modal-preview-size: 433px;
 $image-upload-modal-preview-max-height: 55vh;
+
+$image-upload-modal-mobile-margin: 2.5vw;
+$image-upload-modal-mobile-spacing: 1.5vw;
+$image-upload-modal-mobile-title-size: 5vw;
+$image-upload-modal-mobile-text-size: 3vw;
+$image-upload-modal-mobile-button-height: 8vw;
+$image-upload-modal-mobile-button-min-width: 12vw;
+$image-upload-modal-mobile-button-gap: 1vw;
 
 .modal-component.image-upload-modal {
   .image-upload-modal__preview img {
@@ -16,20 +23,20 @@ $image-upload-modal-preview-max-height: 55vh;
 // the is-mobile controller.
 body.is-mobile .modal-component.image-upload-modal {
   h2.modal-title {
-    margin-top: 1rem;
-    font-size: 3rem;
+    margin-top: $image-upload-modal-mobile-spacing;
+    font-size: $image-upload-modal-mobile-title-size;
     line-height: 1;
   }
 
   p.modal-subtitle {
-    margin-bottom: 1rem;
-    font-size: 1.75rem;
+    margin-bottom: $image-upload-modal-mobile-spacing;
+    font-size: $image-upload-modal-mobile-text-size;
   }
 
   // Full-width card with a side gutter, vertically centred.
   top: 50%;
-  right: $image-upload-modal-margin;
-  left: $image-upload-modal-margin;
+  right: $image-upload-modal-mobile-margin;
+  left: $image-upload-modal-mobile-margin;
   transform: translateY(-50%);
   width: auto;
   max-width: none;
@@ -70,7 +77,7 @@ body.is-mobile .modal-component.image-upload-modal {
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px;
+    gap: $image-upload-modal-mobile-button-gap;
 
     // Larger tap targets.
     input[type="button"],
@@ -78,11 +85,11 @@ body.is-mobile .modal-component.image-upload-modal {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 80px;
-      min-width: 120px;
-      font-size: 30px;
+      height: $image-upload-modal-mobile-button-height;
+      min-width: $image-upload-modal-mobile-button-min-width;
+      font-size: $image-upload-modal-mobile-text-size;
 
-      padding: 0.5rem 1rem;
+      padding: $image-upload-modal-mobile-button-gap ($image-upload-modal-mobile-button-gap * 2);
       line-height: 1.2;
       text-align: center;
     }
