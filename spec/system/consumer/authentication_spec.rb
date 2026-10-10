@@ -75,7 +75,7 @@ RSpec.describe "Authentication" do
               expect(page).to have_content 'You will receive an email with instructions about ' \
                                            'how to confirm your account in a few minutes.'
 
-              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              visit spree_user_confirmation_path(confirmation_token: user.confirmation_token)
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
             end
@@ -187,7 +187,7 @@ RSpec.describe "Authentication" do
               expect(page).to have_content 'You will receive an email with instructions about ' \
                                            'how to confirm your account in a few minutes.'
 
-              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              visit spree_user_confirmation_path(confirmation_token: user.confirmation_token)
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
 

@@ -115,7 +115,7 @@ RSpec.describe '
 
     it "lets me access enterprise groups" do
       login_as user
-      visit spree.admin_dashboard_path
+      visit admin_dashboard_path
       click_link 'Groups'
       expect(page).to have_content 'My Group'
     end

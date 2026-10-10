@@ -69,7 +69,7 @@ RSpec.describe Spree::Admin::PaymentsController do
     it "redirect to payments page" do
       post("/admin/orders/#{order.number}/payments.json", params:)
 
-      expect(response).to redirect_to(spree.admin_order_payments_path(order))
+      expect(response).to redirect_to(admin_order_payments_path(order))
       expect(flash[:success]).to eq "Payment has been successfully created!"
     end
 
@@ -81,7 +81,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
         post("/admin/orders/#{order.number}/payments.json", params:)
 
-        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(response).to redirect_to(admin_order_payments_path(order))
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
         post("/admin/orders/#{order.number}/payments.json", params:)
 
-        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(response).to redirect_to(admin_order_payments_path(order))
         expect(flash[:error]).to eq("Authorization Failure")
       end
     end
@@ -126,7 +126,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
         post("/admin/orders/#{order.number}/payments.json", params:)
 
-        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(response).to redirect_to(admin_order_payments_path(order))
         expect(flash[:success]).to eq "Payment has been successfully created!"
 
         expect(order.reload.state).to eq "complete"
@@ -141,7 +141,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
           post("/admin/orders/#{order.number}/payments.json", params:)
 
-          expect(response).to redirect_to(spree.admin_order_payments_path(order))
+          expect(response).to redirect_to(admin_order_payments_path(order))
           expect(flash[:error]).to match "Redeeming the voucher failed"
         end
       end
@@ -155,7 +155,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
           post("/admin/orders/#{order.number}/payments.json", params:)
 
-          expect(response).to redirect_to(spree.admin_order_payments_path(order))
+          expect(response).to redirect_to(admin_order_payments_path(order))
           expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
         end
       end
@@ -176,7 +176,7 @@ RSpec.describe Spree::Admin::PaymentsController do
     let(:stripe_payment_method) do
       create(:stripe_sca_payment_method, distributors: [order.distributor])
     end
-    let(:headers) { { HTTP_REFERER: spree.admin_order_payments_url(order) } }
+    let(:headers) { { HTTP_REFERER: admin_order_payments_url(order) } }
 
     before do
       order.update(payments: [])
@@ -191,7 +191,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           headers:
         )
 
-        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(response).to redirect_to(admin_order_payments_url(order))
       end
     end
 
@@ -203,7 +203,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           headers:
         )
 
-        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(response).to redirect_to(admin_order_payments_url(order))
       end
     end
 
@@ -254,7 +254,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           headers:
         )
 
-        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(response).to redirect_to(admin_order_payments_url(order))
         expect(flash[:success]).to eq "Payment Updated"
       end
 
@@ -268,7 +268,7 @@ RSpec.describe Spree::Admin::PaymentsController do
             headers:
           )
 
-          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+          expect(response).to redirect_to(admin_order_payments_url(order))
           expect(flash[:error]).to eq "Could not update the payment"
         end
       end
@@ -300,7 +300,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           headers:
         )
 
-        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(response).to redirect_to(admin_order_payments_url(order))
         expect(flash[:success]).to eq "Payment Updated"
       end
 
@@ -315,7 +315,7 @@ RSpec.describe Spree::Admin::PaymentsController do
             headers:
           )
 
-          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+          expect(response).to redirect_to(admin_order_payments_url(order))
           expect(flash[:error]).to eq "Could not update the payment"
         end
       end
@@ -342,7 +342,7 @@ RSpec.describe Spree::Admin::PaymentsController do
             headers:
           )
 
-          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+          expect(response).to redirect_to(admin_order_payments_url(order))
           expect(flash[:success]).to eq "Payment Updated"
 
           expect(order.reload.state).to eq "complete"
@@ -362,7 +362,7 @@ RSpec.describe Spree::Admin::PaymentsController do
               headers:
             )
 
-            expect(response).to redirect_to(spree.admin_order_payments_url(order))
+            expect(response).to redirect_to(admin_order_payments_url(order))
             expect(flash[:error]).to match "Redeeming the voucher failed"
           end
         end
@@ -381,7 +381,7 @@ RSpec.describe Spree::Admin::PaymentsController do
               headers:
             )
 
-            expect(response).to redirect_to(spree.admin_order_payments_url(order))
+            expect(response).to redirect_to(admin_order_payments_url(order))
             expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
         end
@@ -403,7 +403,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         put(
           "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/fire?e=void",
           params: {},
-          headers: { HTTP_REFERER: spree.admin_order_payments_url(order) }
+          headers: { HTTP_REFERER: admin_order_payments_url(order) }
         )
 
         expect(flash[:error]).to eq "Unexpected !"
@@ -416,7 +416,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           headers:
         )
 
-        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(response).to redirect_to(admin_order_payments_url(order))
       end
     end
   end
@@ -445,7 +445,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       post("/admin/orders/#{order.number}/payments/credit_customer")
 
-      expect(response).to redirect_to(spree.admin_order_payments_path(order))
+      expect(response).to redirect_to(admin_order_payments_path(order))
       expect(flash[:success]).to eq "Customer has been successfully credited!"
     end
 
@@ -459,7 +459,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
         post("/admin/orders/#{order.number}/payments/credit_customer")
 
-        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(response).to redirect_to(admin_order_payments_path(order))
         expect(flash[:error]).to eq "Some error"
       end
     end

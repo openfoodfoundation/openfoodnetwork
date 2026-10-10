@@ -6,10 +6,10 @@
     Spree.routes = {}
   }
   Spree.routes = <%== {
-    :variants_search       => spree.admin_search_variants_url(:format => 'json'),
+    :variants_search       => admin_search_variants_url(:format => 'json'),
     :taxons_search         => main_app.api_v0_taxons_url(:format => 'json'),
     :orders_api            => main_app.api_v0_orders_url,
     :states_search         => main_app.api_v0_states_url(:format => 'json'),
-    :cancel_order          => spree.fire_admin_order_url(id: @order&.number.to_s, e: 'cancel')
+    :cancel_order          => fire_admin_order_url(id: @order&.number.to_s, e: 'cancel')
   }.to_json %>;
 </script>

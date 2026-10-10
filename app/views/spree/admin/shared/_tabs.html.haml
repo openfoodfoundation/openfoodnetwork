@@ -1,4 +1,4 @@
-= tab :overview, label: 'dashboard', url: spree.admin_dashboard_path
+= tab :overview, label: 'dashboard', url: admin_dashboard_path
 = tab :products, :properties, :inventory, :product_import, :images, :variants, :product_properties, :group_buy_options, :seo, :products_v3, :variant_overrides, url: admin_products_path
 = tab :order_cycles, url: main_app.admin_order_cycles_path
 = tab :orders, :subscriptions, :customer_details, :adjustments, :payments, :return_authorizations, url: admin_orders_path
@@ -8,4 +8,4 @@
 = tab :customers, url: main_app.admin_customers_path
 = tab :enterprise_groups, url: main_app.admin_enterprise_groups_path, label: 'groups'
 - if can? :admin, Spree::User
-  = tab(:users, :enterprise_roles, url: spree.admin_users_path)
+  = tab(:users, :enterprise_roles, url: admin_users_path)

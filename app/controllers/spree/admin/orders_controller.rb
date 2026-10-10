@@ -36,7 +36,7 @@ module Spree
         @order = Spree::Order.new(order_params.merge(created_by: spree_current_user))
 
         if @order.save(context: :require_distribution)
-          redirect_to spree.admin_order_customer_path(@order)
+          redirect_to admin_order_customer_path(@order)
         else
           render :new
         end
@@ -49,16 +49,16 @@ module Spree
 
         unless order_updated && line_items_present?
           flash[:error] = @order.errors.full_messages.join(', ') if @order.errors.present?
-          return redirect_to spree.edit_admin_order_path(@order)
+          return redirect_to edit_admin_order_path(@order)
         end
 
         ::Orders::WorkflowService.new(@order).advance_to_payment
 
         if @order.complete?
-          redirect_to spree.edit_admin_order_path(@order)
+          redirect_to edit_admin_order_path(@order)
         else
           # Jump to next step if order is not complete
-          redirect_to spree.admin_order_payments_path(@order)
+          redirect_to admin_order_payments_path(@order)
         end
       end
 
@@ -80,7 +80,7 @@ module Spree
       rescue Spree::Core::GatewayError => e
         flash[:error] = e.message.to_s
       ensure
-        redirect_back_or_to(spree.admin_dashboard_path)
+        redirect_back_or_to(admin_dashboard_path)
       end
 
       def resend
@@ -88,7 +88,7 @@ module Spree
         flash[:success] = t('admin.orders.order_email_resent')
 
         respond_with(@order) do |format|
-          format.html { redirect_back_or_to(spree.admin_dashboard_path) }
+          format.html { redirect_back_or_to(admin_dashboard_path) }
         end
       end
 
@@ -98,7 +98,7 @@ module Spree
         flash[:success] = t('admin.orders.invoice_email_sent')
 
         respond_with(@order) { |format|
-          format.html { redirect_back_or_to spree.edit_admin_order_path(@order) }
+          format.html { redirect_back_or_to edit_admin_order_path(@order) }
         }
       end
 
@@ -257,7 +257,7 @@ module Spree
         return unless @order.shipped?
 
         flash[:error] = I18n.t("spree.admin.orders.add_product.cannot_add_item_to_shipped_order")
-        redirect_to spree.edit_admin_order_path(@order)
+        redirect_to edit_admin_order_path(@order)
       end
 
       def order_params
@@ -284,7 +284,7 @@ module Spree
         flash[:error] = t(:must_have_valid_business_number,
                           enterprise_name: @order.distributor.name)
         respond_with(@order) { |format|
-          format.html { redirect_to spree.edit_admin_order_path(@order) }
+          format.html { redirect_to edit_admin_order_path(@order) }
         }
       end
 

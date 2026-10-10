@@ -19,7 +19,7 @@ RSpec.describe '
 
     before do
       login_as_admin
-      visit spree.new_admin_product_path
+      visit new_admin_product_path
     end
 
     it "display all attributes when submitting with error: no name" do
@@ -106,7 +106,7 @@ RSpec.describe '
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq admin_products_path
       expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
 
       product = Spree::Product.find_by(name: 'A new product !!!')
@@ -144,7 +144,7 @@ RSpec.describe '
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq admin_products_path
       product = Spree::Product.find_by(name: 'Hot Cakes')
       expect(product.variants.count).to eq(1)
       variant = product.variants.first
@@ -165,7 +165,7 @@ RSpec.describe '
                           with: 'In demand, and on_demand! The hottest cakes in town.'
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq admin_products_path
       expect(page).to have_content "Unit value can't be blank"
     end
 
@@ -182,7 +182,7 @@ RSpec.describe '
                           with: 'In demand, and on_demand! The hottest cakes in town.'
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq admin_products_path
       expect(page).to have_content "Product Category can't be blank"
     end
 
@@ -199,7 +199,7 @@ RSpec.describe '
                           with: 'In demand, and on_demand! The hottest cakes in town.'
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq admin_products_path
       expect(page).to have_content "Enterprise can't be blank"
     end
 
@@ -223,7 +223,7 @@ RSpec.describe '
 
             click_button 'Create'
 
-            expect(current_path).to eq spree.admin_products_path
+            expect(current_path).to eq admin_products_path
 
             if price.eql?("0.0")
               product = Spree::Product.find_by(name: 'Priceless Mangoes')
@@ -278,7 +278,7 @@ RSpec.describe '
         create(:enterprise_relationship, parent: supplier_permitted, child: supplier2,
                                          permissions_list: [:manage_products])
 
-        visit spree.new_admin_product_path
+        visit new_admin_product_path
 
         fill_in 'product_name', with: 'A new product !!!'
         fill_in 'product_price', with: '19.99'
@@ -322,7 +322,7 @@ RSpec.describe '
             products_page_url = current_url
             within row_containing_name('a product') do
               page.find(".vertical-ellipsis-menu").click
-              click_link('Edit', href: spree.edit_admin_product_path(product))
+              click_link('Edit', href: edit_admin_product_path(product))
             end
 
             expect(page).to have_link('Back To Products List',
@@ -335,7 +335,7 @@ RSpec.describe '
         context "directly navigates to the edit page" do
           it "should navigate back to all the products page" do
             # Navigating to a searched URL
-            visit spree.edit_admin_product_path(product)
+            visit edit_admin_product_path(product)
 
             expect(page).to have_link('Back To Products List',
                                       href: admin_products_url)
@@ -347,7 +347,7 @@ RSpec.describe '
 
       it "editing a product" do
         login_as_admin
-        visit spree.edit_admin_product_path product
+        visit edit_admin_product_path product
 
         fill_in_trix_editor 'product_description', with: 'A description...'
 
@@ -371,7 +371,7 @@ RSpec.describe '
       end
 
       it "editing product group buy options" do
-        visit spree.edit_admin_product_path product
+        visit edit_admin_product_path product
         within('#sidebar') { click_link 'Group Buy Options' }
         choose('product_group_buy_1')
         fill_in 'Bulk unit size', with: '10'
@@ -385,26 +385,26 @@ RSpec.describe '
       end
 
       it "loading editing product group buy options with url filters" do
-        visit spree.group_buy_options_admin_product_path(product, filter)
+        visit group_buy_options_admin_product_path(product, filter)
 
-        expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product,
-                                                                                      filter)))
+        expected_cancel_link = Regexp.new(Regexp.escape(edit_admin_product_path(product,
+                                                                                filter)))
         expect(page).to have_link('Cancel', href: expected_cancel_link)
       end
 
       it "editing product group buy options with url filter" do
-        visit spree.group_buy_options_admin_product_path(product, filter)
+        visit group_buy_options_admin_product_path(product, filter)
         choose('product_group_buy_1')
         fill_in 'Bulk unit size', with: '10'
 
         click_button 'Update'
 
         uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+        expect("#{uri.path}?#{uri.query}").to eq edit_admin_product_path(product, filter)
       end
 
       it "editing product Search" do
-        visit spree.edit_admin_product_path product
+        visit edit_admin_product_path product
 
         within('#sidebar') { click_link 'Search' }
         fill_in 'Product Search Keywords', with: 'Product Search Keywords'
@@ -417,15 +417,15 @@ RSpec.describe '
       end
 
       it "loading editing product Search with url filters" do
-        visit spree.seo_admin_product_path(product, filter)
+        visit seo_admin_product_path(product, filter)
 
-        expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product,
-                                                                                      filter)))
+        expected_cancel_link = Regexp.new(Regexp.escape(edit_admin_product_path(product,
+                                                                                filter)))
         expect(page).to have_link('Cancel', href: expected_cancel_link)
       end
 
       it "editing product Search with url filter" do
-        visit spree.seo_admin_product_path(product, filter)
+        visit seo_admin_product_path(product, filter)
 
         fill_in 'Product Search Keywords', with: 'Product Search Keywords'
         fill_in 'Notes', with: 'Just testing Notes'
@@ -433,20 +433,20 @@ RSpec.describe '
         click_button 'Update'
 
         uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+        expect("#{uri.path}?#{uri.query}").to eq edit_admin_product_path(product, filter)
       end
 
       it "loading product properties page including url filters" do
-        visit spree.admin_product_product_properties_path(product, filter)
+        visit admin_product_product_properties_path(product, filter)
 
         uri = URI.parse(current_url)
         # we stay on the same url as the new image content is loaded via an ajax call
         expect("#{uri.path}?#{uri.query}").to eq(
-          spree.admin_product_product_properties_path(product, filter)
+          admin_product_product_properties_path(product, filter)
         )
 
         expected_cancel_link = Regexp.new(
-          Regexp.escape(spree.admin_product_product_properties_path(product, filter))
+          Regexp.escape(admin_product_product_properties_path(product, filter))
         )
         expect(page).to have_link('Cancel', href: expected_cancel_link)
       end
@@ -456,33 +456,33 @@ RSpec.describe '
         let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
 
         it "shows the image upload prompt when no image is present" do
-          visit spree.edit_admin_product_path(product)
+          visit edit_admin_product_path(product)
 
           expect(page).to have_content image_subtitle
           expect(page).to have_content "Upload image"
         end
 
         it "uploads the image and navigates to the image edit page" do
-          visit spree.edit_admin_product_path(product)
+          visit edit_admin_product_path(product)
 
           attach_file "image[attachment]", white_logo_path, visible: false
 
           expect(page).to have_content /Image has been successfully created/
           expect(product.reload.image).to be_present
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, product.image)
+            edit_admin_product_image_path(product, product.image)
           )
         end
 
         it "shows an error and stays on the page for an invalid file" do
-          visit spree.edit_admin_product_path(product)
+          visit edit_admin_product_path(product)
 
           attach_file "image[attachment]",
                       Rails.public_path.join('invalid_image.jpg'),
                       visible: false
 
           expect(Spree::Image.count).to eq 0
-          expect(page).to have_current_path(spree.edit_admin_product_path(product))
+          expect(page).to have_current_path(edit_admin_product_path(product))
           expect(page).to have_content "not identified as a valid media file"
         end
 
@@ -490,7 +490,7 @@ RSpec.describe '
           Spree::Image.create!(viewable_id: product.id, viewable_type: 'Spree::Product',
                                attachment: white_logo_file, alt: "White logo")
 
-          visit spree.edit_admin_product_path(product)
+          visit edit_admin_product_path(product)
 
           find("img[alt='White logo']").hover
 
@@ -502,12 +502,12 @@ RSpec.describe '
           image = Spree::Image.create!(viewable_id: product.id, viewable_type: 'Spree::Product',
                                        attachment: white_logo_file, alt: "White logo")
 
-          visit spree.edit_admin_product_path(product)
+          visit edit_admin_product_path(product)
 
           find("img[alt='White logo']").click
 
           expect(page).to have_current_path(
-            spree.edit_admin_product_image_path(product, image)
+            edit_admin_product_image_path(product, image)
           )
           expect(page).to have_content "Edit image for"
         end
@@ -524,7 +524,7 @@ RSpec.describe '
 
       it "deleting product properties" do
         # When I navigate to the product properties page
-        visit spree.admin_product_product_properties_path(product)
+        visit admin_product_product_properties_path(product)
         expect(page).to have_select2 'product_product_properties_attributes_0_property_name',
                                      selected: 'fooprop'
         expect(page).to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
@@ -545,7 +545,7 @@ RSpec.describe '
 
       it "deleting product properties including url filters" do
         # When I navigate to the product properties page
-        visit spree.admin_product_product_properties_path(product, filter)
+        visit admin_product_product_properties_path(product, filter)
 
         # And I delete the property
         accept_alert do
@@ -554,13 +554,13 @@ RSpec.describe '
 
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq(
-          spree.admin_product_product_properties_path(product, filter)
+          admin_product_product_properties_path(product, filter)
         )
       end
 
       it "adding product properties including url filters" do
         # When I navigate to the product properties page
-        visit spree.admin_product_product_properties_path(product, filter)
+        visit admin_product_product_properties_path(product, filter)
 
         # And I add a property
         select 'fooprop', from: 'product_product_properties_attributes_0_property_name'
@@ -569,7 +569,7 @@ RSpec.describe '
         click_button 'Update'
 
         uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+        expect("#{uri.path}?#{uri.query}").to eq edit_admin_product_path(product, filter)
       end
     end
 
@@ -578,7 +578,7 @@ RSpec.describe '
       let(:image_subtitle) { "A square size starting from 440px by 440px is recommended." }
 
       it "has no images entry in the product edit menu" do
-        visit spree.edit_admin_product_path(product)
+        visit edit_admin_product_path(product)
 
         expect(page).to have_link "Product Details"
         expect(page).not_to have_link "Images"
@@ -590,9 +590,9 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product', alt: "position 1",
                                             attachment: image, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object, filter)
+        visit edit_admin_product_image_path(product, image_object, filter)
 
-        expect(page).to have_link('Cancel', href: spree.edit_admin_product_path(product))
+        expect(page).to have_link('Cancel', href: edit_admin_product_path(product))
         expect(page).to have_content "Edit image for \"Product A\""
         expect(page).to have_button "Save"
       end
@@ -602,7 +602,7 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product', alt: "position 1",
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
 
         expect(page).to have_content "logo-white.png"
 
@@ -613,13 +613,13 @@ RSpec.describe '
         # The blob: preview must actually render; a missing CSP img-src would silently block it.
         expect(wait_until { preview_image_rendered? }).to be true
         expect(page).to have_current_path(
-          spree.edit_admin_product_image_path(product, image_object)
+          edit_admin_product_image_path(product, image_object)
         )
         expect(product.reload.image.attachment.filename.to_s).to eq "logo-white.png"
 
         click_button "Save"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
       end
 
@@ -629,12 +629,12 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product', alt: "position 1",
                                             attachment: image, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object, filter)
+        visit edit_admin_product_image_path(product, image_object, filter)
 
         attach_file('image_attachment', image_file_path, make_visible: true)
         click_button "Save"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image.attachment.filename.to_s).to eq "thinking-cat.jpg"
       end
 
@@ -647,7 +647,7 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product', alt: "position 1",
                                             attachment: image, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
         attach_file('image_attachment', unsupported_image_file_path, make_visible: true)
         click_button "Save"
 
@@ -660,7 +660,7 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product',
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
 
         expect(page).to have_field "image[caption]", with: product.name
       end
@@ -670,12 +670,12 @@ RSpec.describe '
                                             viewable_type: 'Spree::Product',
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
 
         # No confirmation dialog: the link deletes straight away.
         click_link "Delete permanently"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image).to be_nil
         expect(page).to have_content image_subtitle
         expect(page).to have_content "Upload image"
@@ -687,14 +687,14 @@ RSpec.describe '
                                             alt: "position 1",
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
 
         expect(page).to have_field "image[caption]"
         fill_in "image[caption]", with: "Fresh asparagus"
         fill_in "image[alt]", with: "Bunch of asparagus spears"
         click_button "Save"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image.caption).to eq "Fresh asparagus"
         expect(product.reload.image.alt).to eq "Bunch of asparagus spears"
       end
@@ -706,16 +706,16 @@ RSpec.describe '
                                             caption: "Fresh asparagus",
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object)
+        visit edit_admin_product_image_path(product, image_object)
 
         fill_in "image[caption]", with: ""
         click_button "Save"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image.caption).to eq ""
 
         # The cleared caption must not be re-prefilled with the product name.
-        visit spree.edit_admin_product_image_path(product, product.reload.image)
+        visit edit_admin_product_image_path(product, product.reload.image)
 
         expect(page).to have_field "image[caption]", with: ""
       end
@@ -726,11 +726,11 @@ RSpec.describe '
                                             alt: "position 1",
                                             attachment: white_logo_file, position: 1)
 
-        visit spree.edit_admin_product_image_path(product, image_object, filter)
+        visit edit_admin_product_image_path(product, image_object, filter)
 
         click_link "Delete permanently"
 
-        expect(page).to have_current_path spree.edit_admin_product_path(product)
+        expect(page).to have_current_path edit_admin_product_path(product)
         expect(product.reload.image).to be_nil
       end
     end

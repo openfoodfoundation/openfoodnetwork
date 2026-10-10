@@ -31,7 +31,7 @@ module Spree
 
         if @payment_method.save
           flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
-          redirect_to spree.edit_admin_payment_method_path(@payment_method)
+          redirect_to edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)
         end
@@ -51,7 +51,7 @@ module Spree
 
         if @payment_method.update(update_params)
           flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
-          redirect_to spree.edit_admin_payment_method_path(@payment_method)
+          redirect_to edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)
           clear_preference_cache
@@ -122,7 +122,7 @@ module Spree
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
-        redirect_to spree.new_admin_payment_method_path
+        redirect_to new_admin_payment_method_path
       end
 
       def load_hubs

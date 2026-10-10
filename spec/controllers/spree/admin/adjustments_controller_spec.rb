@@ -59,7 +59,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
       context "when no tax category is specified" do
         it "doesn't apply tax" do
           spree_post :create, params
-          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(response).to redirect_to admin_order_adjustments_path(order)
 
           new_adjustment = Spree::Adjustment.admin.last
 
@@ -78,7 +78,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
 
         it "applies tax" do
           spree_post :create, params
-          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(response).to redirect_to admin_order_adjustments_path(order)
 
           new_adjustment = Spree::Adjustment.admin.last
 
@@ -114,7 +114,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
 
         it "applies both rates" do
           spree_post :create, params
-          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(response).to redirect_to admin_order_adjustments_path(order)
 
           new_adjustment = Spree::Adjustment.admin.last
 
@@ -149,7 +149,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
       context "when no tax category is specified" do
         it "doesn't apply tax" do
           spree_put :update, params
-          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(response).to redirect_to admin_order_adjustments_path(order)
 
           adjustment = Spree::Adjustment.admin.last
 
@@ -168,7 +168,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
 
         it "applies tax" do
           spree_put :update, params
-          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(response).to redirect_to admin_order_adjustments_path(order)
 
           adjustment = Spree::Adjustment.admin.last
 
@@ -199,7 +199,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
       it "deletes the adjustment" do
         spree_delete :destroy, order_id: order.number, id: payment_fee.id
 
-        expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+        expect(response).to redirect_to admin_order_adjustments_path(order)
         expect(order.reload.all_adjustments.count).to be_zero
       end
     end
@@ -236,7 +236,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
                             adjustment: { label: "Testing", amount: "110" }
       }.not_to change { [Spree::Adjustment.count, order.reload.total] }
 
-      expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+      expect(response).to redirect_to admin_order_adjustments_path(order)
     end
 
     it "doesn't change adjustments" do
@@ -245,7 +245,7 @@ RSpec.describe Spree::Admin::AdjustmentsController do
                            adjustment: { label: "Testing", amount: "110" }
       }.not_to change { [adjustment.reload.amount, order.reload.total] }
 
-      expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+      expect(response).to redirect_to admin_order_adjustments_path(order)
     end
   end
 end

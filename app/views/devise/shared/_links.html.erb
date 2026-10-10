@@ -1,11 +1,7 @@
 <%# Override Devise partial
 
 While this partial is unused in our app, Devise still renders it during
-password reset and it fails to find `omniauth_authorize_path` which tries
-to call `spree_user_openid_connect_omniauth_authorize_path` on our main app
-while that helper is only defined on `Spree::Core::Engine.routes.url_helpers`.
-
-This is just a workaround and the proper solution would be to include all Spree
-routes in our main Rails app instead of having a separate Spree::Core engine.
+password reset. We don't want Devise's default links there, so this override
+renders nothing.
 
 %>

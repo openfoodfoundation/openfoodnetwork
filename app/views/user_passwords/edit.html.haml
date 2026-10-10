@@ -1,4 +1,4 @@
-= form_for @spree_user, :as => :spree_user, :url => spree.spree_user_password_path, :method => :put do |f|
+= form_for @spree_user, :as => :spree_user, :url => spree_user_password_path, :method => :put do |f|
   .row
     .small-12.medium-10.large-6.columns.medium-centered.large-centered
       = render :partial => 'spree/shared/error_messages', :locals => { :target => @spree_user }

@@ -296,7 +296,7 @@ RSpec.describe "full-page cart" do
         expect(page).not_to have_content item1.variant.name
         expect(page).not_to have_content item2.variant.name
 
-        expect(page).to have_link 'Edit confirmed items', href: spree.account_path
+        expect(page).to have_link 'Edit confirmed items', href: account_path
         find("td.toggle-bought").click
 
         expect(page).to have_content item1.variant.name

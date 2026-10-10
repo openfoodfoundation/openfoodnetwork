@@ -40,7 +40,7 @@ RSpec.describe "Admin -> Order -> Payments" do
     stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
     stub_request(:post, refund_endpoint).to_return(body: "{}")
 
-    visit spree.admin_order_payments_path(order.number)
+    visit admin_order_payments_path(order.number)
 
     within row_containing("Taler") do
       expect(page).to have_text "COMPLETED"
@@ -67,7 +67,7 @@ RSpec.describe "Admin -> Order -> Payments" do
     stub_request(:get, order_endpoint).to_return(body: order_status.to_json)
     stub_request(:post, refund_endpoint).to_return(body: "{}")
 
-    visit spree.admin_order_payments_path(order.number)
+    visit admin_order_payments_path(order.number)
 
     expect(page).to have_content "CREDIT OWED : $-19.75"
 

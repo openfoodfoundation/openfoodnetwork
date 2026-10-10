@@ -23,7 +23,7 @@ RSpec.describe Spree::Admin::UsersController do
 
       it "allows admins to update a user's show api key view" do
         spree_put :update, id: test_user.id, user: { show_api_key_view: true }
-        expect(response).to redirect_to spree.edit_admin_user_path(test_user)
+        expect(response).to redirect_to edit_admin_user_path(test_user)
       end
 
       it "re-renders the edit form if error" do

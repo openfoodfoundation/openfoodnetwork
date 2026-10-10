@@ -56,7 +56,7 @@ module Spree
           if @object.update(permitted_resource_params)
             flash[:success] = flash_message_for(@object, :successfully_updated)
           end
-          redirect_to spree.edit_admin_product_url(@object, @url_filters)
+          redirect_to edit_admin_product_url(@object, @url_filters)
         end
       end
 
@@ -75,7 +75,7 @@ module Spree
       end
 
       def location_after_save
-        spree.edit_admin_product_url(@product)
+        edit_admin_product_url(@product)
       end
 
       def load_data
@@ -96,9 +96,9 @@ module Spree
 
       def redirect_after_save
         if params[:button] == "add_another"
-          redirect_to spree.new_admin_product_path
+          redirect_to new_admin_product_path
         else
-          redirect_to spree.admin_products_path
+          redirect_to admin_products_path
         end
       end
 

@@ -33,7 +33,7 @@ RSpec.describe 'As a producer who have the ability to update orders' do
     let(:user) { supplier1_ent_user }
 
     describe 'bulk orders index page' do
-      before { visit spree.admin_bulk_order_management_path }
+      before { visit admin_bulk_order_management_path }
 
       context "when no distributor allow the producer to edit orders" do
         let(:distributor) { create(:distributor_enterprise) }

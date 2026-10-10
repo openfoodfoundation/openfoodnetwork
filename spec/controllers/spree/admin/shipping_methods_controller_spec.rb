@@ -41,7 +41,7 @@ RSpec.describe Spree::Admin::ShippingMethodsController do
 
         expect(flash[:error]).to match "Invalid input. \
 Please use only numbers. For example: 10, 5.5, -20"
-        expect(response).to redirect_to spree.edit_admin_shipping_method_path(shipping_method)
+        expect(response).to redirect_to edit_admin_shipping_method_path(shipping_method)
       end
     end
 

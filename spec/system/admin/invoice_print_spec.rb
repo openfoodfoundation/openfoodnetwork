@@ -54,7 +54,7 @@ RSpec.describe '
     context "with no payment" do
       it "do not display the payment description information" do
         login_as_admin
-        visit spree.print_admin_order_path(order, params: url_params)
+        visit print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).not_to have_content 'Payment Description at Checkout'
       end
@@ -70,7 +70,7 @@ RSpec.describe '
 
       it "display the payment description section" do
         login_as_admin
-        visit spree.print_admin_order_path(order, params: url_params)
+        visit print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -91,7 +91,7 @@ RSpec.describe '
 
       it "display the payment description section and use the one from the completed payment" do
         login_as_admin
-        visit spree.print_admin_order_path(order, params: url_params)
+        visit print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -117,7 +117,7 @@ RSpec.describe '
 
       it "display the payment description section and use the one from the last payment" do
         login_as_admin
-        visit spree.print_admin_order_path(order, params: url_params)
+        visit print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'Customer credit'
@@ -135,7 +135,7 @@ RSpec.describe '
     before do
       allow(Spree::Config).to receive(:invoice_style2?).and_return(alternative_invoice)
       login_as_admin
-      visit spree.print_admin_order_path(completed_order, params: url_params)
+      visit print_admin_order_path(completed_order, params: url_params)
       convert_pdf_to_page
     end
 
@@ -237,7 +237,7 @@ RSpec.describe '
           before do
             allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
             login_as_admin
-            visit spree.print_admin_order_path(order1, params: url_params)
+            visit print_admin_order_path(order1, params: url_params)
             convert_pdf_to_page
           end
 
@@ -274,7 +274,7 @@ RSpec.describe '
           before do
             allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
             login_as_admin
-            visit spree.print_admin_order_path(order1, params: url_params)
+            visit print_admin_order_path(order1, params: url_params)
             convert_pdf_to_page
           end
 
@@ -311,7 +311,7 @@ RSpec.describe '
             line_item1.variant.update!(variant_unit: "items", display_as: "1 bucket",
                                        variant_unit_name: "bucket")
             login_as_admin
-            visit spree.print_admin_order_path(order1, params: url_params)
+            visit print_admin_order_path(order1, params: url_params)
             convert_pdf_to_page
           end
 
@@ -394,7 +394,7 @@ RSpec.describe '
           before do
             allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
             login_as_admin
-            visit spree.print_admin_order_path(order2)
+            visit print_admin_order_path(order2)
             convert_pdf_to_page
           end
           it "displays $0.0 when a line item has no tax" do
@@ -432,7 +432,7 @@ RSpec.describe '
           before do
             allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
             login_as_admin
-            visit spree.print_admin_order_path(order2)
+            visit print_admin_order_path(order2)
             convert_pdf_to_page
           end
           it "displays the taxes correctly" do
@@ -548,7 +548,7 @@ RSpec.describe '
           end
           order1.invoices.create!
           login_as_admin
-          visit spree.print_admin_order_path(order1, params: url_params)
+          visit print_admin_order_path(order1, params: url_params)
           convert_pdf_to_page
         end
 
@@ -652,7 +652,7 @@ RSpec.describe '
             break if !order2.next!
           end
           login_as_admin
-          visit spree.print_admin_order_path(order2)
+          visit print_admin_order_path(order2)
           convert_pdf_to_page
         end
 
@@ -692,7 +692,7 @@ RSpec.describe '
       context "Order doesn't have previous invoices" do
         it "should display the invoice number" do
           login_as_admin
-          visit spree.print_admin_order_path(order, params: {})
+          visit print_admin_order_path(order, params: {})
 
           convert_pdf_to_page
           expect(page).to have_content "#{order.distributor_id}-#{order.invoices.first.number}"
@@ -708,7 +708,7 @@ RSpec.describe '
 
         it "should display the invoice number along with the latest invoice number" do
           login_as_admin
-          visit spree.print_admin_order_path(order, params: {})
+          visit print_admin_order_path(order, params: {})
 
           expect(order.invoices.count).to eq(2)
 

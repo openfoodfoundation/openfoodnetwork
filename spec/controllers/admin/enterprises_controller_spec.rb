@@ -535,7 +535,7 @@ RSpec.describe Admin::EnterprisesController do
       context "setting 'sells' to 'none'" do
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'none'
-          expect(response).to redirect_to spree.admin_dashboard_path
+          expect(response).to redirect_to admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'none'
@@ -545,7 +545,7 @@ RSpec.describe Admin::EnterprisesController do
       context "setting producer_profile_only" do
         it "is ignored" do
           spree_post :register, id: enterprise, sells: 'none', producer_profile_only: true
-          expect(response).to redirect_to spree.admin_dashboard_path
+          expect(response).to redirect_to admin_dashboard_path
           expect(enterprise.reload.producer_profile_only).to be false
         end
       end
@@ -558,7 +558,7 @@ RSpec.describe Admin::EnterprisesController do
 
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'own'
-          expect(response).to redirect_to spree.admin_dashboard_path
+          expect(response).to redirect_to admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'own'
@@ -568,7 +568,7 @@ RSpec.describe Admin::EnterprisesController do
       context "setting 'sells' to any" do
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'any'
-          expect(response).to redirect_to spree.admin_dashboard_path
+          expect(response).to redirect_to admin_dashboard_path
           expect(flash[:success])
             .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'any'
