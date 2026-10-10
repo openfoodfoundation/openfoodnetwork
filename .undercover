@@ -6,4 +6,4 @@
 # This shouldn't be needed in undercover > 0.7.4
 #
 # * https://github.com/grodowski/undercover/issues/233
---exclude-files "bin/*,db/*,config/*,spec/*,engines/*/config/*,engines/*/spec/*"
+--exclude-files "bin/*,db/*,config/*,script/*,spec/*,engines/*/config/*,engines/*/spec/*"

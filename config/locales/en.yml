@@ -332,6 +332,28 @@ en:
   additional_information: "Additional Information"
   connect_app:
     url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
+  doorkeeper:
+    layouts:
+      application:
+        title: "Authorize an application - %{site_name}"
+    scopes:
+      openid: "Know that you are logged in with this account"
+      email: "See your email address"
+    authorizations:
+      buttons:
+        authorize: "Authorize"
+        deny: "Cancel"
+      error:
+        title: "This authorization request is invalid"
+        back_home: "Go to the home page"
+      new:
+        eyebrow: "Log in with %{site_name}"
+        heading: "%{client_name} wants to access your %{site_name} account"
+        signed_in_as: "Signed in as"
+        not_you: "Not you? Log out"
+        able_to: "This will allow %{client_name} to:"
+        redirect_notice_html: "After your choice, you will go to %{host}."
+        trust_notice: "Only authorize applications you trust."
   devise:
     passwords:
       spree_user:
@@ -884,6 +906,48 @@ en:
       update:
         resource: Connected app settings
 
+    oauth_applications:
+      index:
+        title: "OAuth applications"
+        new: "New OAuth application"
+        none: "No OAuth application yet."
+        name: "Name"
+        redirect_uri: "Redirect URI"
+      new:
+        title: "New OAuth application"
+      edit:
+        title: "Editing OAuth application %{name}"
+        credentials: "Credentials"
+        uid: "Client ID"
+        secret: "Client secret"
+        discovery_url: "OpenID Connect discovery URL"
+        discovery_hint: "OpenID Connect applications find all the endpoints and signing keys from this URL. Scopes: openid (required) and email."
+      form:
+        name: "Name"
+        redirect_uri: "Redirect URI"
+        redirect_uri_hint: "One URI per line. The application sends users back there after they log in."
+        confidential: "Confidential"
+        confidential_hint: "Check if the application can keep its client secret private, like a server-side application. Uncheck for mobile or browser applications, which must then use PKCE."
+    oauth_tokens:
+      index:
+        title: "OAuth tokens"
+        application: "Application"
+        all_applications: "All applications"
+        show_revoked: "Show revoked tokens"
+        filter: "Filter"
+        none: "No OAuth token found."
+        user: "User"
+        scopes: "Scopes"
+        created_at: "Created"
+        expires_at: "Expires"
+        status: "Status"
+        active_status: "Active"
+        expired_status: "Expired (refreshable)"
+        revoked_status: "Revoked"
+        revoke: "Revoke"
+        revoke_confirm: "The application will lose access with this token and its refresh token. Continue?"
+      revoke:
+        success: "The token has been revoked."
     customers:
       index:
         new_customer: "New Customer"
@@ -4196,6 +4260,9 @@ en:
   previous: "Previous"
   last: "Last"
 
+  connected_apps:
+    destroy:
+      success: "%{name} can no longer access your account."
   webhook_endpoints:
     create:
       success: Webhook endpoint successfully created
@@ -5064,6 +5131,14 @@ en:
         generic_error: "PayPal failed. %{reasons}"
         no_payment_found: "No pending Paypal payment found"
     users:
+      connected_apps:
+        title: Connected Apps
+        description: "External applications you authorized to use your %{site_name} account."
+        none: "You haven't connected any application yet."
+        application: Application
+        website: Website
+        revoke: Revoke
+        revoke_confirm: "%{name} will no longer be able to access your account. Continue?"
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
@@ -5086,6 +5161,7 @@ en:
           transactions: Transactions
           customer_account_transactions: Customer Transactions
           settings: Account Settings
+          connected_apps: Connected Apps
         unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
         open_orders: Open Orders

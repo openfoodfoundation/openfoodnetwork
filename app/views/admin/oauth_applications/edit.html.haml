@@ -1,0 +1,19 @@
+= render "spree/admin/shared/configuration_menu"
+
+- content_for :page_title do
+  = t(".title", name: @application.name)
+
+%fieldset.no-border-bottom
+  %legend{ align: "center" }= t(".credentials")
+  .field
+    = label_tag :oauth_application_uid, t(".uid")
+    = text_field_tag :oauth_application_uid, @application.uid, readonly: true, class: "fullwidth"
+  .field
+    = label_tag :oauth_application_secret, t(".secret")
+    = text_field_tag :oauth_application_secret, @application.secret, readonly: true, class: "fullwidth"
+  .field
+    = label_tag :oauth_discovery_url, t(".discovery_url")
+    = text_field_tag :oauth_discovery_url, main_app.oauth_discovery_provider_url, readonly: true, class: "fullwidth"
+  %p.text-muted= t(".discovery_hint")
+
+= render "form", url: main_app.admin_oauth_application_path(@application), submit_label: t(:update)

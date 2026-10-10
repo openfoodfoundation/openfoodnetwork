@@ -4,6 +4,8 @@ RSpec.describe Spree::User do
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }
     it { is_expected.to have_many(:webhook_endpoints).dependent(:destroy) }
+    it { is_expected.to have_many(:oauth_access_grants).dependent(:delete_all) }
+    it { is_expected.to have_many(:oauth_access_tokens).dependent(:delete_all) }
 
     describe "addresses" do
       let(:user) { create(:user, bill_address: create(:address)) }
@@ -250,6 +252,21 @@ RSpec.describe Spree::User do
         user.disabled = '0'
         expect(user.disabled_at).to be_nil
       end
+    end
+
+    it "revokes OAuth access of a disabled user" do
+      user = create(:user)
+      application = create(:oauth_application)
+      token = Doorkeeper::AccessToken.create!(application:, resource_owner_id: user.id)
+      grant = Doorkeeper::AccessGrant.create!(
+        application:, resource_owner_id: user.id,
+        redirect_uri: application.redirect_uri, expires_in: 600,
+      )
+
+      user.update!(disabled: '1')
+
+      expect(token.reload).to be_revoked
+      expect(grant.reload).to be_revoked
     end
   end
 
