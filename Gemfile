@@ -94,7 +94,6 @@ gem 'bigdecimal'
 gem 'bootsnap', require: false
 gem 'geocoder'
 gem 'gmaps4rails'
-gem 'mimemagic', '> 0.3.5'
 gem 'paper_trail'
 gem 'rack-rewrite'
 gem 'rack-timeout'
@@ -185,16 +184,16 @@ end
 group :development do
   gem 'foreman'
   gem 'haml_lint', require: false
-  gem 'i18n-tasks'
+  gem 'i18n-tasks', require: false
   gem 'listen'
   gem 'pry'
   gem 'rails-erd'
-  gem 'rubocop'
-  gem 'rubocop-capybara'
-  gem 'rubocop-factory_bot'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
-  gem 'rubocop-rspec_rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-factory_bot', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
