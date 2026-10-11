@@ -34,6 +34,7 @@ module Reporting
       # The producer is the first enterprise in the chain of linked variants, if
       # any, otherwise the variant's own enterprise. Mirrors Spree::Variant#producer,
       # but resolved as a correlated subquery so it can be used in report SQL.
+      # We are assuming the depth of the source variant chain is one.
       def producer_name_field
         Arel.sql(<<~SQL.squish)
           (
