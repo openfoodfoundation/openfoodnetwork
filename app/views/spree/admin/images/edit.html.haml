@@ -1,6 +1,5 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-<<<<<<< HEAD
 -# The admin layout has no viewport meta tag, so phones lay this page out at
 -# ~980px and scale it down. Opt this page in so its small-screen styles apply.
 - content_for :head do
@@ -18,12 +17,6 @@
 -# which is also where Cancel goes.
 - owner_edit_path = image_owner_edit_path(@product, @variant)
 
-=======
--# Saving, replacing or deleting from this page all return to the page that owns the image,
--# which is also where Cancel goes.
-- owner_edit_path = image_owner_edit_path(@product, @variant)
-
->>>>>>> e1b97b60f4 (Use Turbo method delete on image delete link)
 -# A replacement file is only previewed here; it's persisted when the form is saved.
 .image-edit{ data: { controller: "image-preview" } }
   .image-edit__preview
