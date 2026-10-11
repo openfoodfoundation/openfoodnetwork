@@ -83,6 +83,7 @@ module Admin
           format.turbo_stream
         end
       else
+        discard_attachment_changes
         load_tag_rule_types
         load_tag_rules
         respond_with(@object) do |format|
@@ -219,6 +220,13 @@ module Admin
       end
     end
     helper_method :attachment_removal_parameter
+
+    # When an update fails, any attachments assigned in that update were not saved.
+    # Revert them so the re-rendered form shows the saved files instead of trying to
+    # link to unsaved ones.
+    def discard_attachment_changes
+      @object.attachment_changes.clear
+    end
 
     def load_enterprise_set_on_index
       return unless spree_current_user.admin?
