@@ -4849,9 +4849,10 @@ hu:
         create_placeholder: Add meg a távoli webhook végpont URL-címét
       event_types:
         order_cycle_opened: Rendelési ciklus megnyitva
+    shop_variant_list:
+      from_producer: "%{name} fájlból"
     shop_variant_modal:
       select: Válassz
-      from_producer: "%{name} fájlból"
     product_tile:
       from_price: "termelő"
   invisible_captcha:

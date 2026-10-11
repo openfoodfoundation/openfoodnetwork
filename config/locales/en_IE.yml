@@ -2653,6 +2653,7 @@ en_IE:
   products_cart_empty: "Cart empty"
   products_edit_cart: "Edit your cart"
   products_from: from
+  products_multiple_producers: "Multiple producers"
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
   products_update_error_msg: "Saving failed."
@@ -5055,11 +5056,11 @@ en_IE:
         order_cycle_opened: Order Cycle Opened
         payment_status_changed: Post webhook on Payment status change
       test_endpoint: Test webhook endpoint
+    shop_variant_list:
+      from_producer: "From %{name}"
     shop_variant_modal:
       select: Select
-      from_producer: "From %{name}"
     product_tile:
-      multiple_producers: "Multiple producers"
       multiple_options: "multiple options"
       from_price: "from"
   invisible_captcha:

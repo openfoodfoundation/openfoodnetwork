@@ -2616,6 +2616,7 @@ fr_BE:
   shopping_groups_part_of: "fait partie de:"
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes pour ce cycle"
+  enterprises_next_closing_html: "Prochaine clôture de la commande <strong>dans %{distance_of_time}</strong>"
   enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
@@ -2662,6 +2663,9 @@ fr_BE:
   products_cart_empty: "Panier vide"
   products_edit_cart: "Valider votre panier"
   products_from: de
+  products_multiple_producers: "Plusieurs producteurs"
+  products_unavailable: "Ce produit est actuellement indisponible."
+  products_choose_order_cycle: "Veuillez choisir un cycle de commande pour voir les produits disponibles."
   products_change: "Aucun changement à sauvegarder."
   products_update_error: "Échec de l'enregistrement dû à:"
   products_update_error_msg: "Échec de l'enregistrement."
@@ -3427,6 +3431,7 @@ fr_BE:
   payment_updated: "Paiement mis à jour "
   payment_method_taler:
     order_summary: "Commande Open Food Network"
+    order_creation_failed: "Le système de paiement Taler n'a pas pu créer la commande. Veuillez réessayer ou contacter la boutique."
   cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Action requise"
   tag_rules: "Règles de tag"
@@ -5123,11 +5128,11 @@ fr_BE:
         payment_status_changed: Post-webhook lors d'un changement de statut de paiement
         order_balance_due: Webhook de post sur une commande passée avec un solde dû
       test_endpoint: Tester le point de terminaison du webhook
+    shop_variant_list:
+      from_producer: "De %{name}"
     shop_variant_modal:
       select: Sélectionner
-      from_producer: "De %{name}"
     product_tile:
-      multiple_producers: "Plusieurs producteurs"
       multiple_options: "plusieurs options"
       from_price: "de"
   invisible_captcha:
