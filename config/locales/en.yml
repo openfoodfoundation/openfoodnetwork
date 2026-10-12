@@ -4259,6 +4259,7 @@ en:
     back_to_payments_list: "Back To Payments List"
     back_to_states_list: "Back To States List"
     return_authorizations: "Return Authorizations"
+    return_authorization_updated: "Return authorization updated"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
     location: "Location"
