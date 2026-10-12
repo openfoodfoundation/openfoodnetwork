@@ -182,12 +182,9 @@ module Admin
     end
 
     # URL helpers
+    # Only used by views of resources without a parent.
     def new_object_url(options = {})
-      if parent_data.present?
-        new_polymorphic_url([:admin, parent, model_class], options)
-      else
-        new_polymorphic_url([:admin, model_class], options)
-      end
+      new_polymorphic_url([:admin, model_class], options)
     end
 
     def edit_object_url(object, options = {})
