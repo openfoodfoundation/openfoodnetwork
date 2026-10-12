@@ -46,22 +46,6 @@ module Admin
       morph :nothing
     end
 
-    def cancel_orders(params)
-      cancelled_orders = Orders::BulkCancelService.new(params, current_user).call
-
-      cable_ready.dispatch_event(name: "modal:close")
-
-      cancelled_orders.each do |order|
-        cable_ready.replace(
-          selector: dom_id(order),
-          html: render(partial: "spree/admin/orders/table_row", locals: { order: })
-        )
-      end
-
-      cable_ready.broadcast
-      morph :nothing
-    end
-
     private
 
     def authorize_order
