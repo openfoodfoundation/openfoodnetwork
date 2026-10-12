@@ -28,7 +28,7 @@
         %td
           = render 'spree/shared/variant_thumbnail', variant: line_item.variant
         %td
-          = line_item.variant.product_and_full_name
+          = line_item.full_product_name
         %td.align-center
           = line_item.single_money.to_html
         %td.align-center
