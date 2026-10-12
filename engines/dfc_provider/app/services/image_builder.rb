@@ -4,17 +4,25 @@ require "private_address_check"
 require "private_address_check/tcpsocket_ext"
 
 class ImageBuilder < DfcBuilder
-  def self.apply(image_url, spree_product)
+  # Works with anything that has one image: a product or a variant.
+  def self.apply(image_url, imageable)
     return if image_url.blank?
 
-    return if image_url == current_image_url(spree_product)
+    return if image_url == current_image_url(imageable)
 
     image = ImageBuilder.import(image_url)
-    spree_product.image = image if image
+    imageable.image = image if image
   end
 
-  def self.current_image_url(spree_product)
-    spree_product.image&.attachment&.blob&.custom_metadata&.fetch("origin", nil)
+  def self.apply_supplied_product_image(supplied_product, variant)
+    # The image of the product group takes precedence.
+    return if supplied_product.isVariantOf.first.try(:image).present?
+
+    apply(supplied_product.image, variant.product)
+  end
+
+  def self.current_image_url(imageable)
+    imageable.image&.attachment&.blob&.custom_metadata&.fetch("origin", nil)
   end
 
   def self.import(image_link)

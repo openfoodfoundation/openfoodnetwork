@@ -112,6 +112,7 @@ class SuppliedProductImporter < DfcBuilder
 
   def self.apply(supplied_product, variant)
     ProductGroupBuilder.apply(supplied_product, variant.product)
+    ImageBuilder.apply_supplied_product_image(supplied_product, variant)
 
     variant.display_name = supplied_product.name
     variant.primary_taxon = taxon(supplied_product)
