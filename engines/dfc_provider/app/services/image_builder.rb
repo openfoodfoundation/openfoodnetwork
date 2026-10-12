@@ -8,21 +8,34 @@ class ImageBuilder < DfcBuilder
   def self.apply(image_url, imageable)
     return if image_url.blank?
 
-    return if image_url == current_image_url(imageable)
+    return if current_image?(image_url, imageable.image)
 
     image = ImageBuilder.import(image_url)
     imageable.image = image if image
   end
 
+  # A supplied product is a variant. It shows its own image or its product's.
+  # Shops list products with the product image, so a product's only variant
+  # keeps using it. Other variants get their own image, leaving the shared
+  # product image alone.
   def self.apply_supplied_product_image(supplied_product, variant)
-    # The image of the product group takes precedence.
-    return if supplied_product.isVariantOf.first.try(:image).present?
+    image_url = supplied_product.image
+    return if current_image?(image_url, SuppliedProductBuilder.image(variant))
 
-    apply(supplied_product.image, variant.product)
+    if variant.image || other_variants?(variant)
+      apply(image_url, variant)
+    elsif supplied_product.isVariantOf.first.try(:image).blank?
+      # The image of the product group takes precedence.
+      apply(image_url, variant.product)
+    end
   end
 
-  def self.current_image_url(imageable)
-    imageable.image&.attachment&.blob&.custom_metadata&.fetch("origin", nil)
+  def self.other_variants?(variant)
+    variant.product.variants.any? { |other| other != variant }
+  end
+
+  def self.current_image?(image_url, image)
+    image_url == image&.attachment&.blob&.custom_metadata&.fetch("origin", nil)
   end
 
   def self.import(image_link)
