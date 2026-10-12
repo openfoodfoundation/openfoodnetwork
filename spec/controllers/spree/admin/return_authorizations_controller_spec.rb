@@ -42,6 +42,16 @@ module Spree
 
           expect(response).to redirect_to admin_order_return_authorizations_url(order.number)
         end
+
+        it "fires an event and redirects back" do
+          return_authorization.update!(state: "authorized")
+
+          spree_put :fire, id: return_authorization.id, order_id: order.number, e: "cancel"
+
+          expect(return_authorization.reload.state).to eq "canceled"
+          expect(flash[:success]).to eq "Return authorization updated"
+          expect(response).to redirect_to admin_dashboard_path
+        end
       end
     end
   end

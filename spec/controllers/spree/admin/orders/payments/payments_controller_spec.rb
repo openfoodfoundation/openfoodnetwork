@@ -33,6 +33,21 @@ RSpec.describe Spree::Admin::PaymentsController do
                                                     completed_at: Time.zone.now)
       end
 
+      context "when the payment can't be saved" do
+        before do
+          allow_any_instance_of(Spree::Payment).to receive(:save).and_return(false)
+        end
+
+        it "redirects to list of payments without creating a payment" do
+          expect {
+            spree_post :create, payment: params, order_id: order.number
+          }.not_to change { order.reload.payments.count }
+
+          expect_redirect_to admin_order_payments_url(order)
+          expect(flash[:success]).to be_nil
+        end
+      end
+
       context "with Check payment (payment.process! does nothing)" do
         it "redirects to list of payments with success flash" do
           spree_post :create, payment: params, order_id: order.number
