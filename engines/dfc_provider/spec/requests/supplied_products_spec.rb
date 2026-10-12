@@ -306,6 +306,52 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
             .and change { variant.unit_value }.to(17)
             .and change { variant.primary_taxon }.to(drink_taxon)
         end
+
+        context "with an image for one of several variants" do
+          let!(:other_variant) {
+            create(:variant, product:, primary_taxon: taxon, enterprise:)
+          }
+          let(:supplied_product) { |example|
+            example.metadata[:operation][:parameters].first[:schema][:example]
+              .merge("dfc-b:image" => image_url)
+          }
+          let(:image_url) { "https://cd.net/apple.png" }
+
+          before do
+            stub_request(:get, %r{^https://cd.net/}).to_return(
+              status: 200, body: Rails.root.join("app/webpacker/images/logo-black.png").read,
+            )
+          end
+
+          it "gives the variant its own image" do |example|
+            ImageBuilder.apply("https://cd.net/pear.png", other_variant)
+            other_image = other_variant.reload.image
+            product_image = product.image
+
+            submit_request(example.metadata)
+
+            expect(variant.reload.image.attachment.filename).to eq "apple.png"
+            expect(other_variant.reload.image).to eq other_image
+            expect(product.reload.image).to eq product_image
+          end
+
+          context "when the client sends back the image it read" do
+            let(:image_url) { product.image.url(:product) }
+
+            it "keeps the product image" do |example|
+              stub_request(:get, image_url).to_return(
+                status: 200, body: Rails.root.join("app/webpacker/images/logo-black.png").read,
+              )
+
+              expect {
+                submit_request(example.metadata)
+              }.not_to change { Spree::Image.count }
+
+              expect(variant.reload.image).to eq nil
+              expect(a_request(:get, image_url)).not_to have_been_made
+            end
+          end
+        end
       end
     end
   end
