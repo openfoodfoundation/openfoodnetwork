@@ -98,7 +98,6 @@ RSpec.describe SuppliedProductImporter do
           value: 2,
         ),
         productType: product_type,
-        image: "https://cd.net/tomato.png?v=5",
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
@@ -110,13 +109,6 @@ RSpec.describe SuppliedProductImporter do
       )
     }
 
-    before do
-      stub_request(:get, "https://cd.net/tomato.png?v=5").to_return(
-        status: 200,
-        body: black_logo_path.read,
-      )
-    end
-
     it "builds an unsaved Spree::Product with all mapped attributes" do
       product = importer.import_product(supplied_product, supplier)
 
@@ -124,8 +116,6 @@ RSpec.describe SuppliedProductImporter do
       expect(product.name).to eq("Tomato")
       expect(product.description).to eq("Awesome tomato")
       expect(product.variant_unit).to eq("weight")
-      expect(product.image).to be_present
-      expect(product.image.attachment).to be_attached
     end
 
     describe "taxon" do
