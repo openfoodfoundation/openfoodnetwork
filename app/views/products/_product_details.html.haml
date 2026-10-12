@@ -18,23 +18,23 @@
     .product-info
       - if product_view
         %section.product-variants
-          %h4= t("products_order_product")
+          %h4= t(".order_product")
           = render ShopVariantListComponent.new(product: product_view, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display, cart_params: { enterprise_permalink: @enterprise.permalink, order_cycle_id: @order_cycle.id })
       - elsif @order_cycles.many?
         %section.product-variants
-          %h4= t("products_order_product")
-          %p.no-variants= t("products_choose_order_cycle_html")
+          %h4= t(".order_product")
+          %p.no-variants= t(".choose_order_cycle_html")
       - else
         .product-unavailable
           %i.ofn-i_012-warning
           %div
-            %h5= t("products_unavailable_title")
-            %p= t("products_unavailable")
+            %h5= t(".unavailable_title")
+            %p= t(".unavailable")
 
       - properties = product.properties_including_inherited
       - if properties.any? || product.description.present?
         %section.product-details
-          %h4= t("products_product_details")
+          %h4= t(".product_details")
           - if properties.any?
             %ul.product-properties
               - properties.each do |property|
