@@ -1,12 +1,9 @@
-%h3
-  = t('.dear_customer')
+- intro_key = @delivery ? ".shipped_intro_html" : ".picked_up_intro_html"
 
-- if @delivery
-  %p.lead
-    = t('.instructions', distributor: @shipment.order.distributor.name)
-- else
-  %p.lead
-    = t('.picked_up_instructions', distributor: @shipment.order.distributor.name)
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t("mailers_shared.customer_greeting", name: @shipment.order.bill_address.firstname),
+                   intro: t(intro_key, distributor: @shipment.order.distributor.name),
+                   enterprise_for_logo: @shipment.order.distributor }
 
 %p
   %strong

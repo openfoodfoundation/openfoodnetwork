@@ -23,11 +23,15 @@ RSpec.describe Spree::ShipmentMailer do
     end
   end
 
-  context "white labelling" do
-    it_behaves_like 'email with inactive white labelling', :shipment_email
-    it_behaves_like 'customer facing email with active white labelling', :shipment_email
-    it_behaves_like 'email with inactive white labelling', :picked_up_email
-    it_behaves_like 'customer facing email with active white labelling', :picked_up_email
+  [:shipment_email, :picked_up_email].each do |mail_method|
+    context "white labelling for #{mail_method}" do
+      it_behaves_like 'email with inactive white labelling', mail_method
+      it_behaves_like 'customer facing email with active white labelling', mail_method
+    end
+
+    context "enterprise logo for #{mail_method}" do
+      it_behaves_like "enterprise logo rendering", mail_method, :distributor
+    end
   end
 
   # Regression test for #2196
@@ -47,11 +51,12 @@ RSpec.describe Spree::ShipmentMailer do
   end
 
   it "includes the distributor's name in the body" do
-    expect(shipment_email.body).to include("Your order from #{distributor.name} has been shipped")
+    text = "Your order from <strong>#{distributor.name}</strong> has been shipped"
+    expect(shipment_email.body).to include(text)
   end
 
   it "picked_up email includes different text in body" do
-    text = "Your order from #{distributor.name} has been picked-up"
+    text = "Your order from <strong>#{distributor.name}</strong> has been picked-up"
     expect(picked_up_email.body).to include(text)
   end
 
