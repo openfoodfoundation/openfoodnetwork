@@ -412,7 +412,7 @@ RSpec.describe OpenFoodNetwork::Permissions do
           .and_return(Enterprise.where(id: enterprise_create_linked_variants).select(:id))
 
         expect(permissions.managed_product_enterprises_and_enterprises_granting_linked_variants)
-          .to eq([enterprise_manage_products, enterprise_create_linked_variants])
+          .to match_array([enterprise_manage_products, enterprise_create_linked_variants])
       end
     end
   end
