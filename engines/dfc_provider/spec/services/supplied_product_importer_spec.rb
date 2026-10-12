@@ -87,6 +87,85 @@ RSpec.describe SuppliedProductImporter do
     end
   end
 
+  describe "images" do
+    let(:supplied_product) { supplied_product_with_image("https://cd.net/tomato.png?v=1") }
+    let(:only_variant) { spree_product.variants.first }
+    let(:other_variant) { spree_product.variants.find { |v| v != variant } }
+
+    def supplied_product_with_image(image)
+      DfcProvider::SuppliedProduct.new(
+        "https://example.net/tomato",
+        name: "Tomato",
+        quantity: DataFoodConsortium::ConnectorV1::QuantitativeValue.new(
+          unit: DfcLoader.connector.MEASURES.KILOGRAM,
+          value: 2,
+        ),
+        productType: DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK,
+        image:,
+      )
+    end
+
+    def origin(image)
+      image.attachment.blob.custom_metadata["origin"]
+    end
+
+    before do
+      taxon.save!
+      stub_request(:get, %r{^https://cd.net/tomato.png}).to_return(
+        status: 200, body: black_logo_path.read,
+      )
+    end
+
+    it "updates the product image through the product's only variant" do
+      importer.update_product(supplied_product, only_variant)
+
+      expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(only_variant.reload.image).to eq nil
+    end
+
+    it "gives each variant of a product its own image" do
+      importer.update_product(supplied_product, variant)
+      importer.update_product(
+        supplied_product_with_image("https://cd.net/tomato.png?v=2"), other_variant
+      )
+
+      expect(origin(variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(origin(other_variant.reload.image)).to eq "https://cd.net/tomato.png?v=2"
+      expect(spree_product.reload.image).to eq nil
+    end
+
+    it "doesn't copy the product image to its variants" do
+      ImageBuilder.apply("https://cd.net/tomato.png?v=1", spree_product)
+
+      importer.update_product(supplied_product, variant)
+      importer.update_product(supplied_product, other_variant)
+
+      expect(variant.reload.image).to eq nil
+      expect(other_variant.reload.image).to eq nil
+      expect(a_request(:get, "https://cd.net/tomato.png?v=1")).to have_been_made.once
+    end
+
+    it "replaces the variant's own image" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: only_variant)
+
+      importer.update_product(supplied_product, only_variant.reload)
+
+      expect(origin(only_variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(spree_product.reload.image).to eq nil
+    end
+
+    it "imports a new variant of an existing product with its own image" do
+      variant # The supplier's variant links the product to the supplier.
+      supplied_product.spree_product_id = spree_product.id
+
+      imported_variant = importer.store_product(supplied_product, supplier)
+
+      expect(imported_variant.product).to eq spree_product
+      expect(origin(imported_variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(spree_product.reload.image).to eq nil
+    end
+  end
+
   describe ".import_product" do
     let(:supplied_product) do
       DfcProvider::SuppliedProduct.new(
