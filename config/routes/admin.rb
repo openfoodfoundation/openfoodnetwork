@@ -92,6 +92,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :product_preview, only: [:show]
 
+    patch 'terms_of_service/accept', to: 'users#accept_terms_of_service',
+                                     as: 'accept_terms_of_service'
+
     resources :variant_overrides, except: [:show] do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection
