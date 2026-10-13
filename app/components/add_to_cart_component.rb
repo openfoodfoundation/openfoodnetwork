@@ -42,12 +42,7 @@ class AddToCartComponent < ViewComponent::Base
 
   # The buttons only say "Add" or show an icon, so their labels name the variant they're for.
   def label(action)
-    t("components.add_to_cart.#{action}", name: variant_name)
-  end
-
-  def variant_name
-    [variant.product.name, variant.display_name.presence, variant.unit_to_display]
-      .compact.join(" - ")
+    t("components.add_to_cart.#{action}", name: helpers.variant_label_name(variant))
   end
 
   def component_css
