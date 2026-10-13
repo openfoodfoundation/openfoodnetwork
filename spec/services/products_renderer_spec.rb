@@ -282,6 +282,10 @@ RSpec.describe ProductsRenderer do
       )
     end
 
+    it "links products to their pages like the records do" do
+      expect(products_renderer.products_view.first.to_param).to eq product.to_param
+    end
+
     it "breaks down the fees of each variant" do
       fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
       order_cycle.exchanges.outgoing.first.enterprise_fees << fee

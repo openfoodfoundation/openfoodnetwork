@@ -386,9 +386,10 @@ RSpec.describe "As a consumer I want to view products" do
           # Add button is only displayed for single variant product
           expect(page).to have_selector(".add-variant", count: 2)
 
-          # Product modal
+          # Product page
           click_link product.name
-          within(".reveal-modal") do
+          expect(page).to have_current_path enterprise_product_path(distributor, product)
+          within(".product-page") do
             expect(page).to have_content product.name
 
             # No insecure HTML
