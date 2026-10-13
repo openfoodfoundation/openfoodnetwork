@@ -9,7 +9,7 @@
           - unless single_producer?
             .variant-producer= producer_name(variant)
           .prices
-            %span.price
+            .price
               = variant.display_price_with_fees
               = render InfoPopoverComponent.new(id: "price-breakdown-#{variant.id}", label: t("js.shopfront.price_breakdown"), css_class: "price-breakdown") do
                 %h6= t("js.shopfront.price_breakdown")
@@ -24,7 +24,7 @@
                   .total
                     %dt
                     %dd= "= #{variant.display_price_with_fees}"
-            %span.unit-price
+            .unit-price
               = helpers.unit_price_with_unit(variant)
               = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: t("components.shop_variant_list.unit_price_info"), placement: "top") do
                 = t("js.shopfront.unit_price_tooltip")

@@ -51,7 +51,12 @@
           padding-bottom: 0;
         }
 
-        span.unit-price {
+        // Divs, to hold their popovers, but in line with each other.
+        .price {
+          display: inline;
+        }
+
+        .unit-price {
           @include price.unit-price;
         }
       }
