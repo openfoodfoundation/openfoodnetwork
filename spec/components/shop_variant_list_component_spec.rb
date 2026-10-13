@@ -13,9 +13,13 @@ RSpec.describe ShopVariantListComponent, type: :component do
       id: 1, on_demand: false, on_hand: 3, display_name: "Borlotti", name_to_display: "Borlotti",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", fees: {}, fee_names: {}, enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy: false)
     ).with(**overrides)
+  end
+
+  def fee_amount(fee_type, name, amount)
+    OpenFoodNetwork::EnterpriseFeeCalculator::FeeAmount.new(fee_type:, name:, amount:)
   end
 
   def build_product(variants)
@@ -74,7 +78,11 @@ RSpec.describe ShopVariantListComponent, type: :component do
     let(:product) {
       build_product([build_variant(
         id: 7, price: 10, price_with_fees: 12, display_price_with_fees: "$12.00",
-        fees: { sales: 0.5, admin: 1.5 }, fee_names: { sales: "Markup", admin: "Hub admin" }
+        fees: [
+          fee_amount(:sales, "Markup", 0.5),
+          fee_amount(:admin, "Hub admin", 1.0),
+          fee_amount(:admin, "Coordinator admin", 0.5),
+        ]
       )])
     }
 
@@ -83,7 +91,8 @@ RSpec.describe ShopVariantListComponent, type: :component do
 
       breakdown = page.find("#price-breakdown-7[popover]")
       expect(breakdown.all("dl > div").map { |row| row.text.squish }).to eq [
-        "Item cost $10.00", "Hub admin $1.50", "Markup $0.50", "= $12.00"
+        "Item cost $10.00", "Hub admin $1.00", "Coordinator admin $0.50", "Markup $0.50",
+        "= $12.00"
       ]
       expect(page).to have_selector(
         "button[popovertarget='price-breakdown-7']" \
