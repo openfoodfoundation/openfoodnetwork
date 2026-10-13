@@ -50,5 +50,11 @@ RSpec.describe "DFC catalog round trip" do
     it "preserves the price" do
       expect(imported_variant.price).to eq 3.50
     end
+
+    it "preserves the on-demand setting" do
+      imported_variant.save!
+
+      expect(imported_variant.on_demand).to eq true
+    end
   end
 end
