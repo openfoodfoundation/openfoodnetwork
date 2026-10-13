@@ -177,6 +177,13 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
       end
 
       describe "indexed computation" do
+        it "returns the fees names" do
+          expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+            .indexed_fees_name_by_type_for(product1.variants.first))
+            .to eq({ admin: "Admin", fundraising: "Fundraising", packing: "Packing",
+                     sales: "Sales", transport: "Transport" })
+        end
+
         it "returns a breakdown of fees" do
           expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
             .indexed_fees_by_type_for(product1.variants.first))

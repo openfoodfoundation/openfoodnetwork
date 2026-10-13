@@ -42,6 +42,26 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).not_to have_selector ".product-producer"
     end
 
+    it "explains the price and the unit price" do
+      fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
+      order_cycle.exchanges.outgoing.first.enterprise_fees << fee
+
+      visit enterprise_product_path(enterprise, product)
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "Price breakdown"
+      end
+      expect(page).to have_content "Hub admin $1.50"
+
+      find("body").send_keys(:escape)
+      expect(page).not_to have_content "Hub admin"
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "About the unit price"
+      end
+      expect(page).to have_content "This is the unit price of this product."
+    end
+
     # smoke test
     it "and add a variant to the cart" do
       visit enterprise_product_path(enterprise, product)

@@ -13,7 +13,7 @@ RSpec.describe ProductTileComponent, type: :component do
       id: 1, on_demand: true, on_hand: 0, display_name: "", name_to_display: "Beans",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: {}, fee_names: {}, enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end

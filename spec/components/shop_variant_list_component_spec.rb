@@ -13,7 +13,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
       id: 1, on_demand: false, on_hand: 3, display_name: "Borlotti", name_to_display: "Borlotti",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: {}, fee_names: {}, enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end
@@ -66,6 +66,32 @@ RSpec.describe ShopVariantListComponent, type: :component do
       expect(page).not_to have_selector ".variant-name"
       expect(page).to have_selector ".variant-unit", text: "1kg"
       expect(page).not_to have_content "|"
+    end
+  end
+
+  describe "the price breakdown" do
+    let(:product) {
+      build_product([build_variant(
+        id: 7, price: 10, price_with_fees: 12, display_price_with_fees: "$12.00",
+        fees: { sales: 0.5, admin: 1.5 }, fee_names: { sales: "Markup", admin: "Hub admin" }
+      )])
+    }
+
+    it "lists the item cost and the fees in the shopfront's order" do
+      render_list
+
+      breakdown = page.find("#price-breakdown-7[popover]")
+      expect(breakdown.all("dl > div").map { |row| row.text.squish }).to eq [
+        "Item cost $10.00", "Hub admin $1.50", "Markup $0.50", "= $12.00"
+      ]
+      expect(page).to have_selector "button[popovertarget='price-breakdown-7']"
+    end
+
+    it "explains the unit price" do
+      render_list
+
+      expect(page).to have_selector "button[popovertarget='unit-price-info-7']"
+      expect(page).to have_selector "#unit-price-info-7[popover]", text: "compare the price"
     end
   end
 

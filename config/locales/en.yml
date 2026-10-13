@@ -5247,6 +5247,7 @@ en:
       test_endpoint: Test webhook endpoint 
     shop_variant_list:
       from_producer: "From %{name}"
+      unit_price_info: "About the unit price"
     shop_variant_modal:
       select: Select
     product_tile:
