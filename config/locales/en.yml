@@ -5250,6 +5250,14 @@ en:
       for_customers_tagged: 'For customers tagged:'
       add_new_rule: '+ Add A New Rule'
       no_rules_yet: No rules apply to this tag yet
+    add_to_cart:
+      add: "Add %{name} to cart"
+      decrease: "Decrease quantity of %{name}"
+      increase: "Increase quantity of %{name}"
+      quantity: "Quantity of %{name}"
+      decrease_max: "Decrease maximum quantity of %{name}"
+      increase_max: "Increase maximum quantity of %{name}"
+      max_quantity: "Maximum quantity of %{name}"
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
