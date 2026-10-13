@@ -403,26 +403,27 @@ RSpec.describe "As a consumer I want to view products" do
           end
         end
 
-        it "pages through products" do
+        it "displays pagination" do
           stub_const("ProductsController::PER_PAGE", 1)
 
           visit shop_path
 
           within "#shop-products" do
+            expect(page).to have_content("Viewing 1 - 1 of 3 products")
             seen = [find(".product-item .product-name").text]
 
             within "#shop-products-pagination" do
-              expect(page).to have_selector("a[aria-current=page]", text: "1")
+              expect(page).to have_selector("a[aria-current=Page]", text: "1")
               expect(page).to have_selector("a[aria-label=Previous][aria-disabled]")
               expect(page).to have_link("3")
 
               click_link "2"
             end
-            expect(page).to have_selector("a[aria-current=page]", text: "2")
+            expect(page).to have_selector("a[aria-current=Page]", text: "2")
             seen << find(".product-item .product-name").text
 
             find("a[aria-label=Next]").click
-            expect(page).to have_selector("a[aria-current=page]", text: "3")
+            expect(page).to have_selector("a[aria-current=Page]", text: "3")
             expect(page).to have_selector("a[aria-label=Next][aria-disabled]")
             seen << find(".product-item .product-name").text
 

@@ -2815,6 +2815,7 @@ en:
   products_pagination:
     previous: Previous 
     next: Next
+    info_tag: Viewing %{from} - %{to} of %{count} products
 
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
 
