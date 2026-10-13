@@ -18,6 +18,11 @@ RSpec.describe ProductsController do
                                     variants: product.variants)
       }
 
+      it "redirects to the current pretty URL" do
+        get enterprise_product_path(enterprise, product.id)
+        expect(response).to redirect_to "/the-garlic-guru/products/#{product.id}-garlic"
+      end
+
       it "shows one product with its variants" do
         get enterprise_product_path(enterprise, product)
 

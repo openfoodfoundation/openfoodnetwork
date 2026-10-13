@@ -19,6 +19,8 @@ class ProductsController < BaseController
     @enterprise = Enterprise.find_by!(permalink: params[:enterprise_permalink])
     @product = Spree::Product.find(params[:id])
 
+    return if redirect_to_canonical_id?(@product)
+
     @order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@enterprise, customer)
     @order_cycle = selected_order_cycle
 

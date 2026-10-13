@@ -250,7 +250,7 @@ RSpec.describe Admin::ProductsHelper do
     context 'without a variant' do
       it 'returns the product edit path' do
         expect(helper.image_owner_edit_path(product))
-          .to eq "/admin/products/#{product.id}/edit"
+          .to eq "/admin/products/#{product.to_param}/edit"
       end
     end
 
@@ -259,7 +259,7 @@ RSpec.describe Admin::ProductsHelper do
 
       it 'returns the variant edit path' do
         expect(helper.image_owner_edit_path(product, variant))
-          .to eq "/admin/products/#{product.id}/variants/#{variant.id}/edit"
+          .to eq "/admin/products/#{product.to_param}/variants/#{variant.id}/edit"
       end
     end
   end
