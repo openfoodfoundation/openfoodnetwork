@@ -16,14 +16,19 @@ export default class extends Controller {
     // requests (e.g. changing page) replace the products
     if (ev?.target && ev.target !== this.element) return;
 
-    this.loadingTarget.style.display = "block";
-    if (this.hasProductsTarget) {
-      this.productsTarget.style.display = "none";
-    }
+    // Wait for 100ms to display the loading spinner, if request load faster than 100ms
+    // it won't show the loading spinner making the page feel snappy
+    this.timeoutID = setTimeout(() => {
+      this.loadingTarget.style.display = "block";
+      if (this.hasProductsTarget) {
+        this.productsTarget.style.display = "none";
+      }
+    }, 100);
   }
 
   // Bring the start of the list back into view after changing page
   scrollToTop() {
+    clearTimeout(this.timeoutID);
     // use window.scrollTo instead of element.scrollIntoView, so we can apply an offset to take into
     // account the <nav> top bar's height
     if (this.element.getBoundingClientRect().top < 0) {
