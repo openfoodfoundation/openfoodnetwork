@@ -22,6 +22,13 @@ module SharedHelper
     product.producers.first.name
   end
 
+  # Names a variant on buttons which act on it but only say "Add" or show an icon, like
+  # "Garlic - Big bag - 2kg". Takes a Spree::Variant or a ViewData::Variant.
+  def variant_label_name(variant)
+    [variant.product.name, variant.display_name.presence, variant.unit_to_display]
+      .compact.join(" - ")
+  end
+
   def product_carousel_images_data(product, available_variant_ids: nil, size: :large)
     images = carousel_images(product, available_variant_ids)
 

@@ -11,7 +11,7 @@
           .prices
             .price
               = variant.display_price_with_fees
-              = render InfoPopoverComponent.new(id: "price-breakdown-#{variant.id}", label: t("js.shopfront.price_breakdown"), css_class: "price-breakdown") do
+              = render InfoPopoverComponent.new(id: "price-breakdown-#{variant.id}", label: label(:price_breakdown, variant), css_class: "price-breakdown") do
                 %h6= t("js.shopfront.price_breakdown")
                 %dl
                   %div
@@ -26,7 +26,7 @@
                     %dd= "= #{variant.display_price_with_fees}"
             .unit-price
               = helpers.unit_price_with_unit(variant)
-              = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: t("components.shop_variant_list.unit_price_info"), placement: "top") do
+              = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: label(:unit_price_info, variant), placement: "top") do
                 = t("js.shopfront.unit_price_tooltip")
         .small-4.columns
           = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)
