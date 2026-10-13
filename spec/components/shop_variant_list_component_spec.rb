@@ -84,13 +84,19 @@ RSpec.describe ShopVariantListComponent, type: :component do
       expect(breakdown.all("dl > div").map { |row| row.text.squish }).to eq [
         "Item cost $10.00", "Hub admin $1.50", "Markup $0.50", "= $12.00"
       ]
-      expect(page).to have_selector "button[popovertarget='price-breakdown-7']"
+      expect(page).to have_selector(
+        "button[popovertarget='price-breakdown-7']" \
+        "[aria-label='Price breakdown of Beans - Borlotti - 1kg']"
+      )
     end
 
     it "explains the unit price" do
       render_list
 
-      expect(page).to have_selector "button[popovertarget='unit-price-info-7']"
+      expect(page).to have_selector(
+        "button[popovertarget='unit-price-info-7']" \
+        "[aria-label='About the unit price of Beans - Borlotti - 1kg']"
+      )
       expect(page).to have_selector "#unit-price-info-7[popover]", text: "compare the price"
     end
   end
