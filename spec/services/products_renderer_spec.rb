@@ -238,8 +238,11 @@ RSpec.describe ProductsRenderer do
 
     it "returns price including fees" do
       # Price is 19.99
+      fee = OpenFoodNetwork::EnterpriseFeeCalculator::FeeAmount.new(
+        fee_type: :admin, name: "Admin", amount: 978.01
+      )
       allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
-        to receive(:indexed_fees_for).and_return 978.01
+        to receive(:indexed_fee_breakdown_for).and_return [fee]
 
       expect(products_renderer.products_json).to include "998.0"
     end
@@ -285,8 +288,10 @@ RSpec.describe ProductsRenderer do
 
       variant = products_renderer.products_view.first.variants.first
 
-      expect(variant.fees).to eq(admin: 1.5)
-      expect(variant.fee_names).to eq(admin: "Hub admin")
+      expect(variant.fees.map(&:to_h)).to eq [
+        { fee_type: :admin, name: "Hub admin", amount: 1.5 }
+      ]
+      expect(variant.price_with_fees).to eq variant.price + 1.5
     end
 
     context "when product doesn't have any variants" do

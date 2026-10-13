@@ -38,11 +38,9 @@ class ShopVariantListComponent < ViewComponent::Base
     t("components.shop_variant_list.from_producer", name: variant.producer.name)
   end
 
-  # Pairs of fee name and amount.
   def fee_breakdown(variant)
-    FEE_TYPES.filter_map do |fee_type|
-      amount = variant.fees[fee_type]
-      [variant.fee_names[fee_type], amount] if amount
+    variant.fees.sort_by.with_index do |fee, index|
+      [FEE_TYPES.index(fee.fee_type) || FEE_TYPES.size, index]
     end
   end
 
