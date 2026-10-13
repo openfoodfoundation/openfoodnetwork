@@ -288,6 +288,16 @@ RSpec.describe ProductsRenderer do
       expect(view.variants.first.product.group_buy).to eq true
     end
 
+    it "breaks down the fees of each variant" do
+      fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
+      order_cycle.exchanges.outgoing.first.enterprise_fees << fee
+
+      variant = products_renderer.products_view.first.variants.first
+
+      expect(variant.fees).to eq(admin: 1.5)
+      expect(variant.fee_names).to eq(admin: "Hub admin")
+    end
+
     context "when product doesn't have any variants" do
       # In exchange, but out of stock
       let(:v1) { create(:variant, product:, on_hand: 0) }

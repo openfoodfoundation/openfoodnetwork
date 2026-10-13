@@ -26,6 +26,14 @@ module OpenFoodNetwork
       end.reject { |_fee_type, amount| amount.zero? }
     end
 
+    def indexed_fees_name_by_type_for(variant)
+      load_enterprise_fees unless @indexed_enterprise_fees
+
+      indexed_enterprise_fees_for(variant).to_h do |enterprise_fee|
+        [enterprise_fee.fee_type.to_sym, enterprise_fee.name]
+      end
+    end
+
     def fees_for(variant)
       per_item_enterprise_fee_applicators_for(variant).sum do |applicator|
         calculate_fee_for variant, applicator.enterprise_fee

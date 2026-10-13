@@ -62,3 +62,43 @@
     }
   }
 }
+
+// Like the shopfront's price breakdown, see _shop-popovers.scss
+.price-breakdown {
+  width: 16rem;
+
+  h6 {
+    color: white;
+    font-size: 0.937rem;
+    line-height: 1;
+    padding-bottom: 0.625rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid b.$grey-700;
+  }
+
+  dl {
+    margin: 0;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid b.$grey-700;
+    }
+
+    .total {
+      font-weight: $product-grid-price-font-weight;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  dt,
+  dd {
+    margin: 0;
+    font-weight: inherit;
+    color: inherit;
+    font-size: inherit;
+  }
+}
