@@ -273,6 +273,13 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).to have_content "Apples"
         expect(page).to have_content "Bananas"
       end
+
+      def click_filter(name)
+        # For now, look for `a` element inside the "Filter by" area.
+        within find(".sticky-shop-filters-container", text: "Filter by") do
+          find("a", text: name).click
+        end
+      end
     end
 
     context "product_grid_view", feature: :product_grid_view do
@@ -289,43 +296,36 @@ RSpec.describe "As a consumer I want to view products" do
         end
 
         it "filters products by producer property" do
-          check "Aromatic producer"
+          check "Aromatic producer", allow_label_click: true
 
           expect(page).to have_content "Apples"
           expect(page).not_to have_content "Avocados"
           expect(page).not_to have_content "Bananas"
-          expect(page).to have_field "Aromatic producer", checked: true
-          expect(page).to have_field "Bountiful product", checked: false
+          expect(page).to have_field "Aromatic producer", visible: false, checked: true
+          expect(page).to have_field "Bountiful product", visible: false, checked: false
         end
       end
 
       it "filters products by product property" do
         visit shop_path
-        check "Bountiful product"
+        check "Bountiful product", allow_label_click: true
 
         expect(page).not_to have_content "Apples"
         expect(page).to have_content "Bananas"
-        expect(page).to have_field "Aromatic producer", checked: false
-        expect(page).to have_field "Bountiful product", checked: true
+        expect(page).to have_field "Aromatic producer", visible: false, checked: false
+        expect(page).to have_field "Bountiful product", visible: false, checked: true
       end
 
       it "shows products from all selected properties" do
         visit shop_path
-        check "Aromatic producer"
-        check "Bountiful product"
+        check "Aromatic producer", allow_label_click: true
+        check "Bountiful product", allow_label_click: true
 
         expect(page).to have_content "Apples"
         expect(page).to have_content "Bananas"
-        expect(page).to have_field "Aromatic producer", checked: true
-        expect(page).to have_field "Bountiful product", checked: true
+        expect(page).to have_field "Aromatic producer", visible: false, checked: true
+        expect(page).to have_field "Bountiful product", visible: false, checked: true
       end
     end
-  end
-end
-
-def click_filter(name)
-  # For now, look for `a` element inside the "Filter by" area.
-  within find(".sticky-shop-filters-container", text: "Filter by") do
-    find("a", text: name).click
   end
 end
