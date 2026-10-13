@@ -13,6 +13,7 @@
         - a_lambda = @pagy.send(:a_lambda, **options)
         %nav{ id: "shop-products-pagination", "aria-label": Pagy::I18n.translate("pagy.aria_label.nav", count: @pagy.last), class: "pagy" }
           - previous_text = "#{image_pack_tag("material-icons/chevron_left.svg", class: "material-icons")}&nbsp;#{t("products_pagination.previous")}"
+          -# haml-lint:disable UnescapedHtml
           != @pagy.previous_tag(text: previous_text, **options)
 
           - @pagy.send(:series).each do |item|
@@ -26,5 +27,5 @@
 
           - next_text = "#{t("products_pagination.next")}&nbsp;#{image_pack_tag("material-icons/chevron_right.svg", class: "material-icons")}"
           != @pagy.next_tag(text: next_text, **options)
-
+          -# haml-lint:enable UnescapedHtml
       .pagination-info= t("products_pagination.info_tag",from: @pagy.from, to: @pagy.to, count: @pagy.count)
