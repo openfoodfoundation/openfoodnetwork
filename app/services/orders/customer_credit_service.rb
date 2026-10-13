@@ -17,6 +17,12 @@ module Orders
         )
       end
 
+      if order.customer.nil?
+        return Response.new(
+          success: false, message: I18n.t(:customer_missing, scope: translation_scope)
+        )
+      end
+
       amount = order.new_outstanding_balance
       order.customer.with_lock do
         payment = order.payments.create!( payment_method: credit_payment_method, amount: amount,
