@@ -1,4 +1,5 @@
 @use "modern-variables" as *;
+@use "../shared/variables/variables" as shared;
 @use "branding" as b;
 @use "shop_partials/spinner";
 
@@ -27,52 +28,73 @@
   margin-top: $padding-tbl-cell; // 12px
 }
 
-// Page links rendered by pagy's series_nav_js, see app/views/products/index.html.haml
 .shop-pagination {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0 $product-grid-margin-bottom;
-
-  .pagy {
+  .pagination-content {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    margin: 2rem 0 $product-grid-margin-bottom;
 
-    a {
+    .pagy {
       display: flex;
       align-items: center;
-      justify-content: center;
-      min-width: 2.5rem;
-      height: 2.5rem;
-      padding: 0 0.5rem;
-      border-radius: $radius-button;
-      color: b.$dark-grey;
-      font-weight: 600;
-      text-decoration: none;
+      gap: 0.5rem;
 
-      &[href]:hover {
-        background-color: b.$grey-100;
-      }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 0.5rem;
+        border-radius: $radius-button;
+        border: 1px solid b.$grey-200;
+        box-shadow: shared.$box-shadow; 
+        color: b.$dark-grey;
 
-      // Current page
-      &[aria-current] {
-        background-color: b.$clr-turquoise;
-        color: b.$white;
-        cursor: default;
-      }
+        &[href]:hover {
+          background-color: b.$grey-100;
+        }
 
-      // Gap
-      &[role="separator"] {
-        min-width: auto;
-        padding: 0;
-        cursor: default;
-      }
+        // Current page
+        &[aria-current] {
+          background-color: b.$orange-500;
+          color: b.$white;
+          cursor: default;
+          border: none;
+        }
 
-      // Previous and Next, disabled on the first and last page
-      &[role="link"][aria-disabled]:not([aria-current]) {
-        color: b.$disabled-bright;
-        cursor: default;
+        // Gap
+        &[role="separator"] {
+          min-width: auto;
+          padding: 0;
+          cursor: default;
+          border: none;
+          box-shadow: none;
+        }
+
+        // Previous and Next, disabled on the first and last page
+        &[role="link"][aria-disabled]:not([aria-current]) {
+          color: b.$disabled-bright;
+          cursor: default;
+          img {
+            opacity: 0.2;
+          }
+        }
+
+        &:first-child {
+          padding-right: 1rem;
+        }
+
+        &:last-child {
+          padding-left: 1rem;
+        }
       }
     }
+  }
+
+  .pagination-info {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
   }
 }
