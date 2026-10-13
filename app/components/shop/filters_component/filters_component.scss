@@ -1,0 +1,30 @@
+@use "../../webpacker/css/darkswarm/branding" as *;
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
+
+.shop__filters_component {
+  display: flex;
+  gap: 8px;
+  margin: 30px 0;
+
+  .property {
+    display: inline-block;
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: 24px;
+    background-color: $light-grey;
+
+    input {
+      opacity: 0; // Invisble, but still part of the DOM accessibility tree
+      position: absolute;
+    }
+
+    &:has(input:checked) {
+      color: $white;
+      background-color: $darker-grey;
+    }
+
+    &:has(input:focus) {
+      outline: 1px solid $black;
+    }
+  }
+}
