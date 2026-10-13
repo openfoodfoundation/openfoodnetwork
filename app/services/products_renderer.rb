@@ -43,12 +43,13 @@ class ProductsRenderer
       product_properties: { product_id: distributed_products.stocked_products }
     ).select("DISTINCT spree_properties.*")
 
-    # todo: exclude properties where inherits_properties: false. Why isn't that field on variant?
-    # wait: check this again, is it necessary?
+    # Excluding producers where inherits_properties: false.
+    # Why isn't that field on variant? It's related to the variant.enterprise, so really should be.
+    enterprises = distributed_products.variants_relation.joins(:product).where(
+      spree_products: { inherits_properties: true }
+    ).pluck(:enterprise_id)
     producer_properties = Spree::Property.joins(:producer_properties).where(
-      producer_properties: {
-        producer_id: distributed_products.variants_relation.pluck(:enterprise_id)
-      }
+      producer_properties: { producer_id: enterprises }
     ).select("DISTINCT spree_properties.*")
 
     product_properties + producer_properties

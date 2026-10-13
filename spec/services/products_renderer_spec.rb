@@ -533,6 +533,8 @@ RSpec.describe ProductsRenderer do
       end
     end
 
+    # If all of the producer's products in the order cycle don't inherit properties,
+    # then the producer's properties shouldn't show here.
     context "when a product doesn't inherit properties" do
       before do
         product_bananas.update!(inherits_properties: false)
@@ -544,8 +546,8 @@ RSpec.describe ProductsRenderer do
         add_product_properties(product_bananas, bountiful)
 
         expect(subject).to include organic
-        pending; expect(subject).not_to include biodynamic
-        expect(subject).to include bountiful # still includes product properties though
+        expect(subject).not_to include biodynamic
+        expect(subject).to include bountiful # still includes product properties
       end
     end
 
