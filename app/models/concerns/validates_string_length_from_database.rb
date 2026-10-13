@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Validates string/text columns against their database length limits.
-# Decimal columns are excluded: validating them as a numericality magnitude
-# cap (less_than: 10^precision/10^scale) rather than a length check produces
-# "must be less than N" errors on legitimate values.
+# Validates string/text columns against their database length limits,
+# replacing validates_lengths_from_database gem which also validates
+# decimal columns with a numericality magnitude cap instead of a length
+# limit check, which is not what we want.
 
 module ValidatesStringLengthFromDatabase
   extend ActiveSupport::Concern
