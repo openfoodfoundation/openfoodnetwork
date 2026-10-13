@@ -2,7 +2,10 @@
 
 class Api::TaxonSerializer < ActiveModel::Serializer
   cached
-  delegate :cache_key, to: :object
+
+  def cache_key
+    [object.cache_key, I18n.locale].join("/")
+  end
 
   attributes :id, :name, :permalink, :position
 end
