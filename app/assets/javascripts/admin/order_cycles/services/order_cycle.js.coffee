@@ -41,7 +41,8 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
       editable = @order_cycle["editable_variants_for_#{direction}_exchanges"][exchange.enterprise_id] || []
       for variant in variants when variant in editable
         exchange.variants[variant] = selected
-        @removeDistributionOfVariant(variant.id) if exchange.incoming
+        if exchange.incoming
+          if selected then @addDistributionOfVariant(variant) else @removeDistributionOfVariant(variant)
 
 
     addSupplier: (new_supplier_id, callback) ->
@@ -102,6 +103,15 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
         this.order_cycle.incoming_exchanges
       else
         this.order_cycle.outgoing_exchanges
+
+    # With a single distributor, variants selected in incoming are also selected in outgoing
+    addDistributionOfVariant: (variant_id) ->
+      return unless Enterprise.hub_enterprises.length == 1
+
+      variant_id = parseInt(variant_id)
+      for exchange in this.order_cycle.outgoing_exchanges
+        editable = this.order_cycle["editable_variants_for_outgoing_exchanges"][exchange.enterprise_id] || []
+        exchange.variants[variant_id] = true if variant_id in editable
 
     removeDistributionOfVariant: (variant_id) ->
       for exchange in this.order_cycle.outgoing_exchanges

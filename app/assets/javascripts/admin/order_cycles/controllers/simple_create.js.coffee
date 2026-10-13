@@ -29,6 +29,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
     OrderCycle.setExchangeVariants($scope.incoming_exchange,
       Enterprise.suppliedVariants($scope.incoming_exchange.enterprise_id), true)
 
+  $scope.addDistributionOfVariant = angular.noop
   $scope.removeDistributionOfVariant = angular.noop
 
   $scope.submit = ($event, destination) ->

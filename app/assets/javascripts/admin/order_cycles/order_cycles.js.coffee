@@ -7,6 +7,9 @@ angular.module('admin.orderCycles', ['ngTagsInput', 'admin.indexUtils', 'admin.e
   .directive 'ofnSyncDistributions', ->
     (scope, element, attrs) ->
       element.bind 'change', ->
-        if !$(this).is(':checked')
-          scope.$apply ->
+        checked = $(this).is(':checked')
+        scope.$apply ->
+          if checked
+            scope.addDistributionOfVariant(attrs.ofnSyncDistributions)
+          else
             scope.removeDistributionOfVariant(attrs.ofnSyncDistributions)

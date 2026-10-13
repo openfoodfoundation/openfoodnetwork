@@ -18,6 +18,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     ExchangeProduct.index { exchange_id: exchange.id }, (products) ->
       $scope.enterprises[exchange.enterprise_id].products = products
 
+  $scope.addDistributionOfVariant = angular.noop
   $scope.removeDistributionOfVariant = angular.noop
 
   $scope.submit = ($event, destination) ->
