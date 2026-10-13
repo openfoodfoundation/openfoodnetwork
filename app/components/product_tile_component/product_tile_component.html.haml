@@ -2,7 +2,8 @@
 
 .product-item
   .product-content
-    %a.product-link{ href: "#", "aria-haspopup": "dialog", "data-controller": "modal-link", "data-action": "modal-link#open:prevent", "data-modal-link-target-value": modal_id }
+    -# The grid is a turbo frame, which would load the product page into itself.
+    %a.product-link{ href: product_path, "data-turbo": "false" }
       - if product.group_buy
         %span.bulk-label= t("components.product_tile.bulk")
       - if product.image
@@ -23,6 +24,3 @@
         = render AddToCartComponent.new(variant: product.variant, cart_item: variants_in_cart[product.variant.id], low_stock_display:)
       - else
         = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:)
-
-    = render ModalComponent.new(id: modal_id, modal_class: "big") do
-      = render partial: "shared/product/product_details", locals: { product:, available_variant_ids: product.variants.map(&:id) }

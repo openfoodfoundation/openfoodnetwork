@@ -25,7 +25,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
   def build_product(variants)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
                           variant_images: [], properties_including_inherited: [], variants:,
-                          group_buy: false)
+                          group_buy: false, to_param: "1-beans")
   end
 
   context "when the variants come from one producer" do
