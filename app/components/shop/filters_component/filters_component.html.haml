@@ -1,14 +1,11 @@
 .shop__filters_component
   = form_with url: @url, scope: :q, method: :get do |f|
     - selected = Array(@q&.fetch(:with_properties)).reject(&:blank?).map(&:to_i)
-    = f.collection_check_boxes :with_properties,
-                               @properties,
-                               ->(p) { p[:id] },
-                               ->(p) { p[:name] },
+    = f.collection_check_boxes :with_properties, @properties, :id, :presentation,
                                { checked: selected } do |b|
       = b.label do
         = b.check_box
-        = b.object[:name]
+        = b.object[:presentation]
 
     -# temporary submit button; will add turbo soon
     %button Filter

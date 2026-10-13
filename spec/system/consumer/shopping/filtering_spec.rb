@@ -296,7 +296,7 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).not_to have_content "Avocados"
           expect(page).not_to have_content "Bananas"
           expect(page).to have_field "Aromatic producer", checked: true
-          pending; expect(page).to have_field "Bountiful product", checked: false
+          expect(page).to have_field "Bountiful product", checked: false
         end
       end
 
@@ -307,7 +307,7 @@ RSpec.describe "As a consumer I want to view products" do
 
         expect(page).not_to have_content "Apples"
         expect(page).to have_content "Bananas"
-        pending; expect(page).to have_field "Aromatic producer", checked: false
+        expect(page).to have_field "Aromatic producer", checked: false
         expect(page).to have_field "Bountiful product", checked: true
       end
 
