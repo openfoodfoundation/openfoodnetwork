@@ -11,6 +11,9 @@
 class ShopVariantListComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
+  # The order of the shopfront's price breakdown.
+  FEE_TYPES = %i[admin sales packing transport fundraising].freeze
+
   def initialize(product:, variants_in_cart:, low_stock_display:, cart_params: {})
     @product = product
     @variants_in_cart = variants_in_cart
@@ -33,5 +36,17 @@ class ShopVariantListComponent < ViewComponent::Base
 
   def producer_name(variant)
     t("components.shop_variant_list.from_producer", name: variant.producer.name)
+  end
+
+  # Pairs of fee name and amount.
+  def fee_breakdown(variant)
+    FEE_TYPES.filter_map do |fee_type|
+      amount = variant.fees[fee_type]
+      [variant.fee_names[fee_type], amount] if amount
+    end
+  end
+
+  def display_money(amount)
+    Spree::Money.new(amount).to_s
   end
 end

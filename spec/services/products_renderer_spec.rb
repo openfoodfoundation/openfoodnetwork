@@ -279,6 +279,16 @@ RSpec.describe ProductsRenderer do
       )
     end
 
+    it "breaks down the fees of each variant" do
+      fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
+      order_cycle.exchanges.outgoing.first.enterprise_fees << fee
+
+      variant = products_renderer.products_view.first.variants.first
+
+      expect(variant.fees).to eq(admin: 1.5)
+      expect(variant.fee_names).to eq(admin: "Hub admin")
+    end
+
     it "exposes group_buy on the product and on its variants' simple product" do
       product.update!(group_buy: true)
 
