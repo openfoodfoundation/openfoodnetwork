@@ -4,8 +4,6 @@ export default class extends Controller {
   static targets = ["loading", "products"];
 
   updateProducts(ev) {
-    this.showLoading();
-
     const orderCycleId = ev.detail.orderCycleId;
     // Updating the turbo-frame source will reload the frame
     this.element.src = `/order_cycles/${orderCycleId}/products`;
