@@ -68,15 +68,13 @@ RSpec.describe "As a consumer I want to view products" do
 
       expect(page).to have_content "Garlic"
 
-      within ".variant-list li", text: "Big bag" do
-        click_button "Add"
+      click_button "Add Garlic - Big bag - 2kg to cart"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "1"
+      expect(page).to have_content "1 in cart"
 
-        expect(page).to have_content "1 in cart"
-
-        find("img[src*='add']").click
-
-        expect(page).to have_content "2 in cart"
-      end
+      click_button "Increase quantity of Garlic - Big bag - 2kg"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "2"
+      expect(page).to have_content "2 in cart"
 
       # The cart is saved for this shop, not just displayed.
       expect(page).to have_selector ".cart-span", text: "2"

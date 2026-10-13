@@ -114,21 +114,21 @@ module ShopWorkflow
 
   def component_add_to_cart(variant)
     within_variant(variant) do
-      page.find("img[src*='add']").click
+      click_button "Increase quantity"
     end
     component_wait_for_cart
   end
 
   def component_remove_from_cart(variant)
     within_variant(variant) do
-      page.find("img[src*='remove']").click
+      click_button "Decrease quantity"
     end
     component_wait_for_cart
   end
 
   def component_manual_add_to_cart(variant, quantity: 1)
     within_variant(variant) do
-      input = page.find("input.variant-quantity")
+      input = find_field "Quantity"
       input.send_keys(:backspace)
       input.send_keys(quantity.to_s)
     end
