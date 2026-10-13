@@ -36,13 +36,22 @@ class ProductsRenderer
     end
   end
 
-  # List all properties attached to these products (whether directly or by enterprise)
+  # List all properties attached to these products (whether directly or by enterprise).
+  # This is intended to replace the dual lists used in the Angular JS.
   def properties
-    #todo: ~~check if there's a more efficient way to do this.~~
-    # todo: get two separate lists.?
-    products_view.flat_map do |product|
-      product.properties_including_inherited
-    end.uniq
+    product_properties = Spree::Property.joins(:product_properties).where(
+      product_properties: { product_id: distributed_products.stocked_products }
+    ).select("DISTINCT spree_properties.*")
+
+    # todo: exclude properties where inherits_properties: false. Why isn't that field on variant?
+    # wait: check this again, is it necessary?
+    producer_properties = Spree::Property.joins(:producer_properties).where(
+      producer_properties: {
+        producer_id: distributed_products.variants_relation.pluck(:enterprise_id)
+      }
+    ).select("DISTINCT spree_properties.*")
+
+    product_properties + producer_properties
   end
 
   private
@@ -175,7 +184,8 @@ class ProductsRenderer
   end
 
   def distributed_products
-    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer, **options)
+    @distributed_products ||= OrderCycles::DistributedProductsService.new(distributor, order_cycle,
+                                                                          customer, **options)
   end
 
   def variants_for_shop
