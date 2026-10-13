@@ -27,10 +27,17 @@ export default class extends Controller {
   // Bring the start of the list back into view after changing page
   scrollToTop() {
     clearTimeout(this.timeoutID);
-    // use window.scrollTo instead of element.scrollIntoView, so we can apply an offset to take into
-    // account the <nav> top bar's height
+    // use window.scrollTo to applay an offset to take into account the <nav> top bar's height
+    // when present
     if (this.element.getBoundingClientRect().top < 0) {
-      const headerOffset = document.getElementsByTagName("nav")[0].offsetHeight;
+      const navElement = document.getElementsByTagName("nav")[0];
+
+      if (navElement === undefined) {
+        this.element.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      const headerOffset = navElement.offsetHeight;
       const elementPosition = this.element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
