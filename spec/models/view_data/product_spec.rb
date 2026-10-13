@@ -15,7 +15,8 @@ RSpec.describe ViewData::Product do
 
   def build_product(variants)
     described_class.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                        variant_images: [], properties_including_inherited: [], variants:)
+                        variant_images: [], properties_including_inherited: [], variants:,
+                        to_param: "1-beans")
   end
 
   describe "#single_variant? and #variant" do
