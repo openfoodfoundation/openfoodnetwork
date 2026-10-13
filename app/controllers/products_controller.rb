@@ -11,7 +11,7 @@ class ProductsController < BaseController
     @q = params[:q]
     renderer = product_renderer
     @products = renderer.products_view
-    @properties = product_renderer.properties # rebase: obviously this should use the renderer variable; will be fixed in a future commit.
+    @properties = product_renderer.properties.sort_by(&:presentation) # rebase: obviously this should use the renderer variable; will be fixed in a future commit.
     @pagy = renderer.pagination
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
