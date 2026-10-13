@@ -98,6 +98,7 @@ Spree::Core::Engine.routes.draw do
       end
 
       post "payments/credit_customer", to: "payments#credit_customer"
+      post "payments/pay_with_credit", to: "payments#pay_with_credit"
 
       resources :payments, only: [:index, :show, :new, :create] do
         member do

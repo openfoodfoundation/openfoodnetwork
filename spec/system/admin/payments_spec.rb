@@ -80,4 +80,82 @@ RSpec.describe '
       expect(confirmed_order.reload.state).to eq 'complete'
     end
   end
+
+  describe "Pay with credit" do
+    # Order total is $36.00, including a $10.00 fee for the pending cash payment
+    let(:customer) { order.customer }
+
+    before do
+      login_as_admin
+    end
+
+    context "when the customer has enough credit" do
+      before { create(:customer_account_transaction, amount: 100, customer:) }
+
+      it "pays the order with the customer's credit" do
+        visit spree.admin_order_payments_path(order)
+
+        expect(page).to have_content "AVAILABLE CREDIT : $100.00"
+
+        accept_confirm do
+          click_link "Pay with credit"
+        end
+
+        expect(page).to have_content "$26.00 of customer credit used to pay this order"
+        expect(page).to have_content "AVAILABLE CREDIT : $74.00"
+        expect(page).not_to have_link "Pay with credit"
+        within "table.index" do
+          expect(page).to have_content "Customer credit"
+          expect(page).to have_content "COMPLETED"
+          expect(page).to have_content "INVALID"
+        end
+        expect(order.reload.payment_state).to eq "paid"
+      end
+    end
+
+    context "when the customer has less credit than the balance due" do
+      before { create(:customer_account_transaction, amount: 20, customer:) }
+
+      it "keeps a cash payment for the remaining amount" do
+        visit spree.admin_order_payments_path(order)
+
+        accept_confirm do
+          click_link "Pay with credit"
+        end
+
+        expect(page).to have_content "$20.00 of customer credit used to pay this order"
+        expect(page).to have_content "BALANCE DUE : $16.00"
+        expect(page).not_to have_content "AVAILABLE CREDIT"
+        expect(page).to have_link "New Payment"
+        expect(page).not_to have_link "Pay with credit"
+      end
+    end
+
+    context "when a card payment is pending" do
+      before do
+        create(:customer_account_transaction, amount: 100, customer:)
+        stripe = create(:stripe_sca_payment_method, distributors: [order.distributor])
+        create(:payment, order:, payment_method: stripe, amount: order.total, state: "pending")
+      end
+
+      it "asks to void the card payment first" do
+        visit spree.admin_order_payments_path(order)
+
+        expect(page).to have_content "AVAILABLE CREDIT : $100.00"
+        expect(page).to have_content "This order has a pending StripeSCA payment. " \
+                                     "Void it before paying with credit."
+        expect(page).not_to have_link "Pay with credit"
+      end
+    end
+
+    context "when the customer has no credit" do
+      it "doesn't offer to pay with credit" do
+        visit spree.admin_order_payments_path(order)
+
+        expect(page).to have_content "BALANCE DUE : $36.00"
+        expect(page).not_to have_content "AVAILABLE CREDIT"
+        expect(page).not_to have_link "Pay with credit"
+      end
+    end
+  end
 end

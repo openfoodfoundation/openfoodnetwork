@@ -5,7 +5,7 @@ module Spree
     class PaymentsController < Spree::Admin::BaseController
       before_action :load_order
       before_action :load_payment, only: [:fire, :show]
-      before_action :load_data, except: [:credit_customer]
+      before_action :load_data, except: [:credit_customer, :pay_with_credit]
       before_action :can_transition_to_payment
       # We ensure that items are in stock before all screens if the order is in the Payment state.
       # This way, we don't allow someone to enter credit card details for an order only to be told
@@ -16,7 +16,9 @@ module Spree
 
       def index
         @payments = @order.payments
-        redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
+        return redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
+
+        load_customer_credit
       end
 
       def new
@@ -104,7 +106,30 @@ module Spree
         redirect_to admin_order_payments_path(@order)
       end
 
+      def pay_with_credit
+        response = ::Orders::PayWithCreditService.new(@order).call(user: spree_current_user)
+
+        if response.success?
+          flash[:success] = response.message
+        else
+          flash[:error] = response.message
+        end
+
+        redirect_to admin_order_payments_path(@order)
+      end
+
       private
+
+      def load_customer_credit
+        @available_credit = @order.customer&.credit_balance
+
+        pay_with_credit = ::Orders::PayWithCreditService.new(@order)
+        blocker = pay_with_credit.blocker
+        @can_pay_with_credit = blocker.nil?
+        return unless blocker == :pending_gateway_payment
+
+        @pay_with_credit_hint = pay_with_credit.blocker_message(blocker)
+      end
 
       def load_payment_source
         if @payment.payment_method.is_a?(Gateway::StripeSCA) &&

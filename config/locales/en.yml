@@ -4304,6 +4304,7 @@ en:
     capture: "Capture"
     capture_and_complete_order: "Capture and complete order"
     void: "Void"
+    internal_void: "Void"
     login: "Login"
     password: "Password"
     signature: "Signature"
@@ -4763,6 +4764,10 @@ en:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
         customer_credit_successful: Customer has been successfully credited!
+        index:
+          pay_with_credit: Pay with credit
+          pay_with_credit_confirm: "Pay this order with the customer's credit? If the credit doesn't cover it all, a payment for the remaining amount is kept."
+          available_credit: Available credit
 
       products:
         image:
@@ -5267,3 +5272,11 @@ en:
     no_credit_owed: No credit owed
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
+  pay_with_credit_service:
+    success: "%{amount} of customer credit used to pay this order"
+    errors:
+      no_customer: This order has no customer
+      order_not_complete: Only complete orders can be paid with credit
+      nothing_to_pay: There is no balance due on this order
+      no_credit_available: The customer has no credit available
+      pending_gateway_payment: "This order has a pending %{payment_method} payment. Void it before paying with credit."
