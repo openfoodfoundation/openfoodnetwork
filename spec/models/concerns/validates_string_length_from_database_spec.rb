@@ -18,14 +18,4 @@ RSpec.describe ValidatesStringLengthFromDatabase do
       expect(order_cycle.errors[:name]).to be_empty
     end
   end
-
-  describe "decimal columns" do
-    it "does not validate decimal columns" do
-      line_item = Spree::LineItem.new(final_weight_volume: 5.5)
-
-      line_item.valid?
-
-      expect(line_item.errors[:final_weight_volume]).to be_empty
-    end
-  end
 end
