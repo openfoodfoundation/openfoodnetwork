@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-class Shop::FiltersComponent < ViewComponent::Base
-  def initialize(properties:, url:, q:)
-    @properties = properties
-    @url = url
-    @q = q
+module Shop
+  class FiltersComponent < ViewComponent::Base
+    def initialize(properties:, url:, q:) # rubocop:disable Naming/MethodParameterName
+      @properties = properties
+      @url = url
+      @q = q
+    end
   end
 end
