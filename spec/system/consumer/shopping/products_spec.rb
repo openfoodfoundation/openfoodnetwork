@@ -413,17 +413,17 @@ RSpec.describe "As a consumer I want to view products" do
             seen = [find(".product-item .product-name").text]
 
             within "#shop-products-pagination" do
-              expect(page).to have_selector("a[aria-current=Page]", text: "1")
+              expect(page).to have_selector("a[aria-current=page]", text: "1")
               expect(page).to have_selector("a[aria-label=Previous][aria-disabled]")
               expect(page).to have_link("3")
 
               click_link "2"
             end
-            expect(page).to have_selector("a[aria-current=Page]", text: "2")
+            expect(page).to have_selector("a[aria-current=page]", text: "2")
             seen << find(".product-item .product-name").text
 
             find("a[aria-label=Next]").click
-            expect(page).to have_selector("a[aria-current=Page]", text: "3")
+            expect(page).to have_selector("a[aria-current=page]", text: "3")
             expect(page).to have_selector("a[aria-label=Next][aria-disabled]")
             seen << find(".product-item .product-name").text
 

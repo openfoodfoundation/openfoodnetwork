@@ -20,7 +20,7 @@
             - if item.is_a?(Integer)
               != a_lambda.(item)
             - elsif item.is_a?(String)
-              %a{ role:"link", "aria-disabled": "true", "aria-current":"Page"}=item
+              %a{ role:"link", "aria-disabled": "true", "aria-current":"page"}=item
             - elsif item == :gap
               %a{ role:"separator", "aria-disabled": "true"}
                 &hellip;
