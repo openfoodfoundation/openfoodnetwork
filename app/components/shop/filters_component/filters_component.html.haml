@@ -1,8 +1,7 @@
-.shop__filters_component
-  = form_with url: @url, scope: :q, method: :get, html: { 'data-controller': "form", 'data-turbo-frame': "shop-products" } do |f|
-    - selected = Array(@q&.fetch(:with_properties)).reject(&:blank?).map(&:to_i)
-    = f.collection_check_boxes :with_properties, @properties, :id, :presentation,
-                               { checked: selected } do |b|
-      = b.label do
-        = b.check_box 'data-action': "form#submit"
-        = b.object[:presentation]
+= form_with url: @url, scope: :q, method: :get, html: { class: "shop__filters_component", 'data-controller': "form", 'data-turbo-frame': "shop-products" } do |f|
+  - selected = Array(@q&.fetch(:with_properties)).reject(&:blank?).map(&:to_i)
+  = f.collection_check_boxes :with_properties, @properties, :id, :presentation,
+                             { checked: selected } do |b|
+    = b.label class: 'property' do
+      = b.check_box 'data-action': "form#submit"
+      = b.object[:presentation]
