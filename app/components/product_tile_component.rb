@@ -27,10 +27,6 @@ class ProductTileComponent < ViewComponent::Base
     "product-modal-#{product.id}"
   end
 
-  def producer_name
-    helpers.product_producer_name(product)
-  end
-
   # Single variant: {product name} | [{variant name} |] {unit or custom unit label}
   # Several:        {product name} | multiple options
   #
