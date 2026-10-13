@@ -315,7 +315,6 @@ RSpec.describe "As a consumer I want to view products" do
 
         it "filters products by producer property" do
           check "Aromatic producer"
-          click_button "Filter"
 
           expect(page).to have_content "Apples"
           expect(page).not_to have_content "Avocados"
@@ -328,7 +327,6 @@ RSpec.describe "As a consumer I want to view products" do
       it "filters products by product property" do
         visit shop_path
         check "Bountiful product"
-        click_button "Filter"
 
         expect(page).not_to have_content "Apples"
         expect(page).to have_content "Bananas"
@@ -340,7 +338,6 @@ RSpec.describe "As a consumer I want to view products" do
         visit shop_path
         check "Aromatic producer"
         check "Bountiful product"
-        click_button "Filter"
 
         expect(page).to have_content "Apples"
         expect(page).to have_content "Bananas"
