@@ -4,6 +4,8 @@ class ProductsController < BaseController
   include StartsShopping
 
   PER_PAGE = 30
+  SEARCH_PARAM = "name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_" \
+                 "variants_enterprise_name_cont"
 
   def index
     renderer = product_renderer
@@ -106,7 +108,17 @@ class ProductsController < BaseController
   end
 
   def search_params
-    { page: [params[:page].to_i, 1].max, per_page: PER_PAGE }
+    { page: [params[:page].to_i, 1].max, per_page: PER_PAGE, q: search_query }.compact_blank
+  end
+
+  # The shop's search and filters, see ProductsCtrl in Darkswarm
+  def search_query
+    params.fetch(:q, {}).permit(
+      SEARCH_PARAM,
+      with_properties: [],
+      with_variants_enterprise_properties: [],
+      variants_primary_taxon_id_in_any: []
+    ).to_h
   end
 
   def inventory_enabled?

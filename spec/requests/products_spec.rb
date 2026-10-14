@@ -203,5 +203,54 @@ RSpec.describe ProductsController do
         end
       end
     end
+
+    describe "search and filters" do
+      let(:search_param) {
+        "name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_" \
+          "variants_enterprise_name_cont"
+      }
+
+      it "filters by name" do
+        get order_cycle_products_path(order_cycle.id), params: { q: { search_param => "#3" } }
+
+        expect(response.body).to include "Grid product #3"
+        expect(response.body).not_to include "Grid product #1"
+      end
+
+      it "filters by taxon" do
+        taxon = create(:taxon)
+        variants.first.update!(primary_taxon: taxon)
+
+        get order_cycle_products_path(order_cycle.id),
+            params: { q: { variants_primary_taxon_id_in_any: [taxon.id] } }
+
+        expect(response.body).to include "Grid product #0"
+        expect(response.body).not_to include "Grid product #1"
+      end
+
+      it "filters by product property" do
+        property = create(:property)
+        variants.second.product.update!(properties: [property])
+
+        get order_cycle_products_path(order_cycle.id),
+            params: { q: { with_properties: [property.id] } }
+
+        expect(response.body).to include "Grid product #1"
+        expect(response.body).not_to include "Grid product #0"
+      end
+
+      it "filters by producer property" do
+        property = create(:property)
+        supplier = create(:supplier_enterprise, properties: [property])
+        # The filter matches the product's "first variant" supplier, any of its variants
+        variants.third.product.variants.each { |variant| variant.update!(enterprise: supplier) }
+
+        get order_cycle_products_path(order_cycle.id),
+            params: { q: { with_variants_enterprise_properties: [property.id] } }
+
+        expect(response.body).to include "Grid product #2"
+        expect(response.body).not_to include "Grid product #0"
+      end
+    end
   end
 end
