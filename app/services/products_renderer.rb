@@ -161,16 +161,25 @@ class ProductsRenderer
     # the :request option (falling back to #request otherwise), so it needs an explicit
     # params hash here rather than reading from an actual Rack request.
     # The limit is set by the caller, so keep `per_page` (Pagy's :limit_key) out of page links.
+    # The search is kept so page links stay filtered.
     @pagination, paginated_results = pagy(
       :offset,
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
       max_limit: nil,
-      request: { params: {} }
+      request: { params: pagination_params }
     )
 
     paginated_results
+  end
+
+  # Only the shop passes an already permitted search (a Hash), the API passes unpermitted
+  # params and doesn't use page links.
+  def pagination_params
+    return {} unless args[:q].is_a?(Hash) && args[:q].present?
+
+    { "q" => args[:q] }
   end
 
   def distributed_products
