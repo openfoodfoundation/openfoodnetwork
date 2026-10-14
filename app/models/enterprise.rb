@@ -260,11 +260,6 @@ class Enterprise < ApplicationRecord
     !attributes_exists && attributes_empty
   end
 
-  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
-  def self.distinct_count
-    count(distinct: true)
-  end
-
   def long_description=(html)
     super(HtmlSanitizer.sanitize_and_enforce_link_target_blank(html))
   end

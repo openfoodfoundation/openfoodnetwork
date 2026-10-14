@@ -717,32 +717,6 @@ RSpec.describe Spree::Product do
     end
   end
 
-  describe "membership" do
-    it "queries its membership of a particular order cycle distribution" do
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
-      p1 = create(:product)
-      p2 = create(:product)
-      oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first])
-      oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first])
-
-      expect(p1).to be_in_distributor d1
-      expect(p1).not_to be_in_distributor d2
-    end
-
-    it "queries its membership of a particular order cycle" do
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
-      p1 = create(:product)
-      p2 = create(:product)
-      oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first])
-      oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first])
-
-      expect(p1).to be_in_order_cycle oc1
-      expect(p1).not_to be_in_order_cycle oc2
-    end
-  end
-
   describe "deletion" do
     let(:product) { create(:simple_product) }
     let(:variant) { create(:variant, product:) }

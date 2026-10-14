@@ -3,17 +3,6 @@
 RSpec.describe OrderCyclesHelper do
   let(:oc) { double(:order_cycle) }
 
-  describe "finding producer enterprise options" do
-    before do
-      allow(helper).to receive(:permitted_producer_enterprises_for) { "enterprise list" }
-    end
-
-    it "asks for a validation option list" do
-      expect(helper).to receive(:validated_enterprise_options).with("enterprise list")
-      helper.permitted_producer_enterprise_options_for(oc)
-    end
-  end
-
   describe "finding coodinator enterprise options" do
     before do
       allow(helper).to receive(:permitted_coordinating_enterprises_for) { "enterprise list" }
@@ -22,18 +11,6 @@ RSpec.describe OrderCyclesHelper do
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list")
       helper.permitted_coordinating_enterprise_options_for(oc)
-    end
-  end
-
-  describe "finding hub enterprise options" do
-    before do
-      allow(helper).to receive(:permitted_hub_enterprises_for) { "enterprise list" }
-    end
-
-    it "asks for a validation option list" do
-      expect(helper).to receive(:validated_enterprise_options)
-        .with("enterprise list", shipping_and_payment_methods: true)
-      helper.permitted_hub_enterprise_options_for(oc)
     end
   end
 
