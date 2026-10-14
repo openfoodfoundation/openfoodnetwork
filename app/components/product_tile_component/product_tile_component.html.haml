@@ -3,7 +3,7 @@
 .product-item
   .product-content
     -# The grid is a turbo frame, which would load the product page into itself.
-    %a.product-link{ href: product_path, "data-turbo": "false" }
+    %a.product-link{ href: product_path, "data-turbo-frame": "_top" }
       - if product.group_buy
         %span.bulk-label= t("components.product_tile.bulk")
       - if product.image
