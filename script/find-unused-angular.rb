@@ -11,6 +11,9 @@
 #
 # The search is textual. Names built at runtime are not found, so check each
 # result by hand before deleting it.
+#
+# When deleting a file that declares a module, like `angular.module('x', [])`,
+# remove that module from the dependency lists of other modules too.
 
 Dir.chdir(File.expand_path("..", __dir__))
 
