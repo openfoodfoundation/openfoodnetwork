@@ -6,6 +6,10 @@
     - @products.each do |product|
       = render ProductTileComponent.new(product:, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
 
+  - if @products.empty?
+    .no-results-bar
+      %p.no-results= t(:products_no_results)
+
   - if @pagy.last > 1
     .shop-pagination
       .pagination-content

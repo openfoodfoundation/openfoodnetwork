@@ -262,6 +262,13 @@ RSpec.describe ProductsController do
         expect(response.body).to include "Grid product #2"
         expect(response.body).not_to include "Grid product #0"
       end
+
+      it "says when nothing matches" do
+        get order_cycle_products_path(order_cycle.id), params: { q: { search_param => "Nope" } }
+
+        expect(response.body).to include "Sorry, no results found"
+        expect(response.body).not_to include "Grid product"
+      end
     end
   end
 end
