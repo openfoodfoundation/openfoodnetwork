@@ -122,7 +122,7 @@
     li > span,
     li > div > span {
       @include base.property-selector($grey-700, $grey-300);
-      border-radius: 1em;
+      border-radius: 999px;
       font-size: 0.8rem;
     }
   }
