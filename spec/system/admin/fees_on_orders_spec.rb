@@ -44,13 +44,10 @@ RSpec.describe '
     let(:coordinator2) { create(:distributor_enterprise) }
     let!(:order_cycle1) { create(:order_cycle, coordinator: coordinator1) }
     let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
-    let!(:supplier1) { order_cycle1.suppliers.first }
-    let!(:supplier2) { order_cycle1.suppliers.last }
-    let!(:distributor1) { order_cycle1.distributors.first }
-    let!(:distributor2) do
-      order_cycle1.distributors.reject{ |d| d == distributor1 }.last # ensure d1 != d2
-    end
-    let(:product) { order_cycle1.products.first }
+    let!(:supplier1) { order_cycle1.suppliers[0] }
+    let!(:supplier2) { order_cycle1.suppliers[1] }
+    let!(:distributor1) { order_cycle1.distributors[0] }
+    let!(:distributor2) { order_cycle1.distributors[1] }
 
     before(:each) do
       enterprise_user = create(:user)
@@ -654,11 +651,13 @@ RSpec.describe '
       click_link "Order Details"
 
       expect(page).to have_content 'Add Product'
-      select2_select product.name, from: 'add_variant_id', search: true
+
+      supplier1_product = (order_cycle1.products & supplier1.products).first
+      select2_select supplier1_product.name, from: 'add_variant_id', search: true
 
       find('button.add_variant').click
       page.has_selector? "table.index tbody tr"
-      expect(page).to have_selector 'td', text: product.name
+      expect(page).to have_selector 'td', text: supplier1_product.name
 
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
       expect(page).not_to have_select2 'order_distributor_id', with_options: [distributor2.name]
