@@ -13,6 +13,12 @@
   }
 }
 
+.pagination-info {
+  font-weight: bold;
+  margin-left: $padding-tbl-cell * 2;
+  margin-top: $padding-tbl-cell;
+}
+
 // product grid view layout. The tiles themselves are styled by ProductTileComponent.
 .products-container {
   // Locally scoped variables
@@ -29,6 +35,8 @@
 }
 
 .shop-pagination {
+  --button-width: 7.25rem;
+
   .pagination-content {
     display: flex;
     justify-content: center;
@@ -82,10 +90,12 @@
         }
 
         &:first-child {
+          min-width: var(--button-width);
           padding-right: 1rem;
         }
 
         &:last-child {
+          min-width: var(--button-width);
           padding-left: 1rem;
         }
       }
