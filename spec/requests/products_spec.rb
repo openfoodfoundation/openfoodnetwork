@@ -206,6 +206,17 @@ RSpec.describe ProductsController do
           expect(response.body).to include "Next"
           expect(response.body).to include "1-2 of 5 products"
         end
+
+        it "keeps the search in the page links" do
+          search = { "name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_" \
+                     "variants_enterprise_name_cont" => "Grid" }
+          get order_cycle_products_path(order_cycle.id), params: { q: search }
+
+          page = Capybara::Node::Simple.new(response.body)
+          next_link = page.find("#shop-products-pagination a", text: "Next")
+          expect(next_link[:href]).to include "page=2"
+          expect(CGI.unescape(next_link[:href])).to include "_cont]=Grid"
+        end
       end
     end
 
