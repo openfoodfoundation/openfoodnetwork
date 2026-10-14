@@ -13,6 +13,6 @@
         %h5= product_name
         - # All variants share a producer, so name it once here instead of on every row
         - if single_producer?
-          %span.producer= t("components.shop_variant_list.from_producer", name: producers.first.name)
+          %span.producer= helpers.from_producer(producers.first)
 
       = render ShopVariantListComponent.new(product:, variants_in_cart:, low_stock_display:)
