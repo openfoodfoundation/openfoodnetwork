@@ -75,15 +75,13 @@ RSpec.describe Spree::Address do
       expect(address).not_to be_valid
     end
 
-    it "full state name is in state_name and country does contain that state" do
-      allow(country).to receive_message_chain(:states, :find_all_by_name_or_abbr) do
-        [build_stubbed(:state, name: 'alabama', abbr: 'al')]
-      end
+    it "keeps a valid state without looking it up by name" do
+      expect(country).not_to receive(:states)
 
       address.state_name = 'alabama'
       expect(address).to be_valid
-      expect(address.state.name).to eq 'alabama'
-      expect(address.state_name).to eq 'alabama'
+      expect(address.state).to eq state
+      expect(address.state_name).to eq 'maryland'
     end
 
     it "state abbr is in state_name and country does contain that state" do
