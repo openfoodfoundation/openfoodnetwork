@@ -29,7 +29,7 @@ RSpec.describe ShopVariantModalComponent, type: :component do
     it "names the producer once, in the header" do
       render_modal
 
-      expect(page).to have_selector ".producer", text: "From Fred's Farm"
+      expect(page).to have_selector ".producer", text: "from Fred's Farm"
       expect(page).not_to have_selector ".variant-producer"
     end
   end
@@ -46,7 +46,7 @@ RSpec.describe ShopVariantModalComponent, type: :component do
     it "still names the single producer once" do
       render_modal
 
-      expect(page).to have_selector ".producer", text: "From Fred's Farm"
+      expect(page).to have_selector ".producer", text: "from Fred's Farm"
       expect(page).not_to have_selector ".variant-producer"
       expect(page).not_to have_content "Reselling Hub"
     end
@@ -62,8 +62,8 @@ RSpec.describe ShopVariantModalComponent, type: :component do
       render_modal
 
       expect(page).not_to have_selector ".header .producer"
-      expect(page).to have_selector ".variant-producer", text: "From Fred's Farm"
-      expect(page).to have_selector ".variant-producer", text: "From Another Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Fred's Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Another Farm"
     end
   end
 end

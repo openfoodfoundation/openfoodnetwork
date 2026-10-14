@@ -3,6 +3,16 @@
 RSpec.describe SharedHelper do
   include FileHelper
 
+  describe "#from_producer" do
+    it "names the producer and escapes the name" do
+      producer = build_stubbed(:enterprise, name: "Fred's <b>Farm</b>")
+
+      expect(helper.from_producer(producer)).to eq(
+        'from <span class="producer-name">Fred&#39;s &lt;b&gt;Farm&lt;/b&gt;</span>'
+      )
+    end
+  end
+
   describe '#product_carousel_images_data' do
     let(:product) { create(:simple_product, name: "Test Product") }
 

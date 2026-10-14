@@ -38,7 +38,7 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).to have_selector ".variant-unit", text: "2kg"
 
       # Variants of several producers name their producer, the shared header doesn't.
-      expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
+      expect(page).to have_selector ".variant-producer", text: "from Onion Orchard"
       expect(page).not_to have_selector ".product-producer"
     end
 

@@ -5251,7 +5251,7 @@ en:
         order_balance_due: Post webhook on Order placed with balance due
       test_endpoint: Test webhook endpoint 
     shop_variant_list:
-      from_producer: "From %{name}"
+      from_producer_html: "from %{name}"
       price_breakdown: "Price breakdown of %{name}"
       unit_price_info: "About the unit price of %{name}"
     shop_variant_modal:
