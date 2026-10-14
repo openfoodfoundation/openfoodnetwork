@@ -76,12 +76,7 @@ class ProductsRenderer
     return unless order_cycle
 
     @products ||= begin
-      results = if enterprise_properties.present?
-                  distributed_products.products_relation_incl_enterprise_properties
-                else
-                  distributed_products.products_relation
-                end
-      results = filter(results)
+      results = filter(distributed_products.products_relation)
 
       paginated_products = paginate(results)
 
@@ -105,45 +100,7 @@ class ProductsRenderer
   end
 
   def filter(query)
-    ransack_results = query.ransack(args[:q]).result.to_a
-
-    return ransack_results if enterprise_properties.blank?
-
-    enterprise_properties_results = []
-    if enterprise_properties.present?
-      # We can't search on an association's scope with ransack, a work around is to define
-      # the a scope on the parent (Spree::Product) but because we are joining on "first_variant"
-      # to get the supplier it doesn't work, so we do the filtering manually here
-      # see:
-      #   OrderCycleDistributedProducts#products_relation
-      enterprise_properties_results = query.
-        where(producer_properties: { property_id: enterprise_property_ids }).
-        where(inherits_properties: true)
-    end
-
-    if enterprise_properties_results.present? && with_properties.present?
-      # apply "OR" between property search
-      return ransack_results | enterprise_properties_results
-    end
-
-    # Intersect the result to apply "AND" with other search criteria
-    return ransack_results.intersection(enterprise_properties_results) \
-      unless enterprise_properties_results.empty?
-
-    # We should get here but just in case we return the ransack results
-    ransack_results
-  end
-
-  def enterprise_properties
-    args[:q]&.slice("with_variants_enterprise_properties")
-  end
-
-  def enterprise_property_ids
-    enterprise_properties["with_variants_enterprise_properties"]
-  end
-
-  def with_properties
-    args[:q]&.dig("with_properties")
+    query.ransack(args[:q]).result.to_a
   end
 
   def paginate(results)

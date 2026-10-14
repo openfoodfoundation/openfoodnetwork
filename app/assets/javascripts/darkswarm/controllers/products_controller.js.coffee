@@ -4,18 +4,15 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
   $scope.query = ""
   $scope.taxonSelectors = FilterSelectorsService.createSelectors()
   $scope.propertySelectors = FilterSelectorsService.createSelectors()
-  $scope.producerPropertySelectors = FilterSelectorsService.createSelectors()
   $scope.filtersActive = true
   $scope.page = 1
   $scope.per_page = 10
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.supplied_taxons = null
   $scope.supplied_properties = null
-  $scope.supplied_producer_properties = null
   $scope.showFilterSidebar = false
   $scope.activeTaxons = []
   $scope.activeProperties = []
-  $scope.activeProducerProperties = []
 
   # Update filters after initial load of shop tab
   $timeout =>
@@ -47,15 +44,6 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
         Properties.properties_by_id[property.id]
       ).filter (p) -> p?
 
-      # Fetch Producer Properties ONLY after Product Properties have loaded
-      OrderCycleResource.producerProperties params, (producer_data)=>
-        existing_names = $scope.supplied_properties.map (p) -> p.name
-
-        # Skip producer properties whose name is already shown in product properties.
-        $scope.supplied_producer_properties = producer_data.map( (property) ->
-          Properties.properties_by_id[property.id]
-        ).filter (p) -> p? and p.name not in existing_names
-
   $scope.loadMore = ->
     if ($scope.page * $scope.per_page) <= Products.products.length
       $scope.loadMoreProducts()
@@ -63,7 +51,6 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
   $scope.$watch 'query', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
   $scope.$watchCollection 'activeTaxons', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
   $scope.$watchCollection 'activeProperties', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
-  $scope.$watchCollection 'activeProducerProperties', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
 
   $scope.loadProducts = ->
     $scope.page = 1
@@ -80,7 +67,6 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
       per_page: $scope.per_page,
       'q[name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_variants_enterprise_name_cont]': $scope.query,
       'q[with_properties][]': $scope.activeProperties,
-      'q[with_variants_enterprise_properties][]': $scope.activeProducerProperties,
       'q[variants_primary_taxon_id_in_any][]': $scope.activeTaxons
     }
 
@@ -99,11 +85,6 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
       Properties.properties_by_id[property_id].name
     ).join($scope.filtersJoinWord()) if $scope.activeProperties?
 
-  $scope.appliedProducerPropertiesList = ->
-    $scope.activeProducerProperties.map( (property_id) ->
-      Properties.properties_by_id[property_id].name
-    ).join($scope.filtersJoinWord()) if $scope.activeProducerProperties?
-
 
   $scope.filtersJoinWord = ->
     $sce.trustAsHtml(" <span class='join-word'>#{t('products_or')}</span> ")
@@ -118,7 +99,6 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
   $scope.clearFilters = ->
     $scope.taxonSelectors.clearAll()
     $scope.propertySelectors.clearAll()
-    $scope.producerPropertySelectors.clearAll()
 
   $scope.refreshStaleData = ->
     # If the products template has already been loaded but the controller is being initialized
@@ -129,7 +109,7 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
       $scope.loadProducts()
 
   $scope.filtersCount = () ->
-    $scope.taxonSelectors.totalActive() + $scope.propertySelectors.totalActive() + $scope.producerPropertySelectors.totalActive()
+    $scope.taxonSelectors.totalActive() + $scope.propertySelectors.totalActive()
 
   $scope.toggleFilterSidebar = ->
     $scope.showFilterSidebar = !$scope.showFilterSidebar
