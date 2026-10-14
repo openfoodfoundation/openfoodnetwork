@@ -35,7 +35,7 @@ class ShopVariantListComponent < ViewComponent::Base
   end
 
   def producer_name(variant)
-    t("components.shop_variant_list.from_producer", name: variant.producer.name)
+    helpers.from_producer(variant.producer)
   end
 
   def fee_breakdown(variant)

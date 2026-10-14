@@ -39,6 +39,10 @@
 
       .variant-producer {
         clear: both;
+
+        .producer-name {
+          color: b.$orange-500;
+        }
       }
 
       .prices {

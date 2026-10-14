@@ -57,8 +57,8 @@ RSpec.describe ShopVariantListComponent, type: :component do
     it "names each producer on its own row" do
       render_list
 
-      expect(page).to have_selector ".variant-producer", text: "From Fred's Farm"
-      expect(page).to have_selector ".variant-producer", text: "From Another Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Fred's Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Another Farm"
     end
   end
 
