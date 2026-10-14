@@ -13,7 +13,7 @@ RSpec.describe "Shipping Categories" do
       category = create(:shipping_category)
 
       login_as_admin
-      visit spree.edit_admin_shipping_category_path(category)
+      visit edit_admin_shipping_category_path(category)
 
       expect(page).to have_content "Editing Shipping Category"
     end
@@ -22,7 +22,7 @@ RSpec.describe "Shipping Categories" do
   context 'user adds a new shipping category with temperature control' do
     it 'user sees new shipping category with temperature control' do
       login_as_admin
-      visit spree.admin_shipping_categories_path
+      visit admin_shipping_categories_path
       click_link "New Shipping Category"
 
       fill_in "shipping_category_name", with: "freeze"
@@ -43,7 +43,7 @@ RSpec.describe "Shipping Categories" do
       category = create(:shipping_category, name: "Regular", temperature_controlled: false)
 
       login_as_admin
-      visit spree.edit_admin_shipping_category_path(category)
+      visit edit_admin_shipping_category_path(category)
 
       fill_in "shipping_category_name", with: "Express"
       check "shipping_category_temperature_controlled"
@@ -67,7 +67,7 @@ RSpec.describe "Shipping Categories" do
       create(:shipping_category, name: "To Be Deleted")
 
       login_as_admin
-      visit spree.admin_shipping_categories_path
+      visit admin_shipping_categories_path
 
       accept_confirm do
         within find('tr', text: 'To Be Deleted') do

@@ -963,7 +963,7 @@ RSpec.describe '
 
     context "via admin path, for a producer" do
       before do
-        visit spree.admin_dashboard_path
+        visit admin_dashboard_path
       end
 
       it "changes user role" do
@@ -1031,7 +1031,7 @@ RSpec.describe '
     context "via admin path, for a non-producer" do
       before do
         enterprise.update!(is_primary_producer: false)
-        visit spree.admin_dashboard_path
+        visit admin_dashboard_path
       end
 
       it "changes user role" do

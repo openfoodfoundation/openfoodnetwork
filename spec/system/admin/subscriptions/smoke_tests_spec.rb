@@ -20,7 +20,7 @@ RSpec.describe 'Subscriptions' do
     describe "with subscriptions" do
       context "enabled" do
         before do
-          visit spree.admin_dashboard_path
+          visit admin_dashboard_path
           click_link 'Orders'
         end
         it "the subscriptions tab is visible" do
@@ -49,7 +49,7 @@ RSpec.describe 'Subscriptions' do
       context "disabled" do
         let(:enable_subscriptions) { false }
         before do
-          visit spree.admin_dashboard_path
+          visit admin_dashboard_path
           click_link 'Orders'
         end
         it "the subscriptions tab is not visible" do

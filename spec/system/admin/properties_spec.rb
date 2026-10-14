@@ -10,7 +10,7 @@ RSpec.describe '
 
   it "creating and editing a property" do
     login_as_admin
-    visit spree.admin_properties_path
+    visit admin_properties_path
 
     click_link 'New Property'
     fill_in 'property_name', with: 'New property!'

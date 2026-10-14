@@ -29,7 +29,7 @@ RSpec.describe "Request-scoped Warden test login" do
     # logged in.
     fire_stray_request
 
-    visit spree.edit_admin_tax_settings_path
+    visit edit_admin_tax_settings_path
 
     expect(page).to have_css("body.admin")
   end
@@ -41,7 +41,7 @@ RSpec.describe "Request-scoped Warden test login" do
     # example's own (now stale) token value — never our fresh one.
     fire_stray_request(RequestScopedLogin::HEADER => "stale-token-from-previous-example")
 
-    visit spree.edit_admin_tax_settings_path
+    visit edit_admin_tax_settings_path
 
     expect(page).to have_css("body.admin")
   end

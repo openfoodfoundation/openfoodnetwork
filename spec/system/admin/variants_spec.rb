@@ -19,7 +19,7 @@ RSpec.describe '
 
       # When I create a variant on the product
       login_as_admin
-      visit spree.admin_product_variants_path product
+      visit admin_product_variants_path product
       click_link 'New Variant'
 
       tomselect_select("Volume (L)", from: "Unit scale")
@@ -51,16 +51,16 @@ RSpec.describe '
 
       # When I create a variant on the product
       login_as_admin
-      visit spree.admin_product_variants_path(product, filter)
+      visit admin_product_variants_path(product, filter)
 
       click_link 'New Variant'
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.new_admin_product_variant_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq new_admin_product_variant_path(product, filter)
 
       # Cancel link should include product filter
       expected_cancel_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, filter))
+        Regexp.escape(admin_product_variants_path(product, filter))
       )
       expect(page).to have_link('Cancel', href: expected_cancel_url)
     end
@@ -71,7 +71,7 @@ RSpec.describe '
 
       # When I create a variant on the product
       login_as_admin
-      visit spree.admin_product_variants_path product
+      visit admin_product_variants_path product
 
       click_link 'New Variant'
 
@@ -94,7 +94,7 @@ RSpec.describe '
     it "show validation errors if present" do
       product = create(:simple_product)
       login_as_admin
-      visit spree.admin_product_variants_path product
+      visit admin_product_variants_path product
       click_link 'New Variant'
 
       tomselect_select("Volume (L)", from: "Unit scale")
@@ -120,15 +120,15 @@ RSpec.describe '
 
       # When I create a variant on the product
       login_as_admin
-      visit spree.admin_product_variants_path(product, filter)
+      visit admin_product_variants_path(product, filter)
 
       expected_new_url = Regexp.new(
-        Regexp.escape(spree.new_admin_product_variant_path(product, filter))
+        Regexp.escape(new_admin_product_variant_path(product, filter))
       )
       expect(page).to have_link("New Variant", href: expected_new_url)
 
       expected_show_delete_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, { deleted: 'on' }.merge(filter)))
+        Regexp.escape(admin_product_variants_path(product, { deleted: 'on' }.merge(filter)))
       )
       expect(page).to have_link("Show Deleted", href: expected_show_delete_url)
 
@@ -136,12 +136,12 @@ RSpec.describe '
       variant = product.variants.first
 
       expected_edit_url = Regexp.new(
-        Regexp.escape(spree.edit_admin_product_variant_path(product, variant, filter))
+        Regexp.escape(edit_admin_product_variant_path(product, variant, filter))
       )
       expect(page).to have_link(class: 'icon-edit', href: expected_edit_url)
 
       expected_delete_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variant_path(product, variant, filter))
+        Regexp.escape(admin_product_variant_path(product, variant, filter))
       )
       expect(page).to have_link(class: 'icon-trash', href: expected_delete_url)
     end
@@ -154,12 +154,12 @@ RSpec.describe '
 
       # When I create a variant on the product
       login_as_admin
-      visit spree.admin_product_variants_path(product, filter)
+      visit admin_product_variants_path(product, filter)
       page.find('table.index .icon-edit').click
 
       # Cancel link should include product filter
       expected_cancel_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, filter))
+        Regexp.escape(admin_product_variants_path(product, filter))
       )
       expect(page).to have_link('Cancel', href: expected_cancel_url)
     end
@@ -173,7 +173,7 @@ RSpec.describe '
 
       # When I view the variant
       login_as_admin
-      visit spree.admin_product_variants_path product
+      visit admin_product_variants_path product
 
       page.find('table.index .icon-edit').click
 
@@ -201,7 +201,7 @@ RSpec.describe '
       variant.update(unit_description: 'foo', variant_unit: "items", variant_unit_name: "bunches")
 
       login_as_admin
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit edit_admin_product_variant_path(product, variant)
 
       expect(page).to have_field "variant_weight"
       click_on "Unit" # activate popout
@@ -228,7 +228,7 @@ RSpec.describe '
 
         # When I view the variant
         login_as_admin
-        visit spree.admin_product_variants_path product
+        visit admin_product_variants_path product
       end
 
       shared_examples "with localization" do |localized, decimal_mark, thousands_separator|
@@ -277,7 +277,7 @@ RSpec.describe '
 
     it "updates the supplier" do
       new_supplier = create(:supplier_enterprise)
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit edit_admin_product_variant_path(product, variant)
 
       select2_select new_supplier.name, from: "variant_enterprise_id"
 
@@ -297,7 +297,7 @@ RSpec.describe '
     end
 
     it "allows changing the on_hand value" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit edit_admin_product_variant_path(product, variant)
 
       expect(page).to have_field "variant_on_hand", with: variant.on_hand
       expect(page).to have_unchecked_field "variant_on_demand"
@@ -308,7 +308,7 @@ RSpec.describe '
     end
 
     it "allows changing the on_demand value" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit edit_admin_product_variant_path(product, variant)
       check "variant_on_demand"
 
       # on_hand reflects the change in on_demand
@@ -319,7 +319,7 @@ RSpec.describe '
     end
 
     it "memorizes on_hand value previously entered if enabling and disabling on_demand" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit edit_admin_product_variant_path(product, variant)
       fill_in "variant_on_hand", with: "123"
       check "variant_on_demand"
       uncheck "variant_on_demand"
@@ -334,7 +334,7 @@ RSpec.describe '
     variant = create(:variant, product:)
 
     login_as_admin
-    visit spree.admin_product_variants_path product
+    visit admin_product_variants_path product
 
     within "tr#spree_variant_#{variant.id}" do
       accept_alert do
@@ -353,7 +353,7 @@ RSpec.describe '
 
     before do
       login_as_admin
-      visit spree.edit_admin_product_variant_path product, variant
+      visit edit_admin_product_variant_path product, variant
     end
 
     it "editing display name for a variant" do
@@ -406,7 +406,7 @@ RSpec.describe '
 
     before do
       login_as_admin
-      visit spree.edit_admin_product_variant_path product, variant
+      visit edit_admin_product_variant_path product, variant
     end
 
     it "shows the image upload prompt when no image is present" do
@@ -427,7 +427,7 @@ RSpec.describe '
     it "shows the image preview when an image is present" do
       Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
 
-      visit spree.edit_admin_product_variant_path product, variant
+      visit edit_admin_product_variant_path product, variant
 
       find("img[alt='White logo']").hover
 
@@ -438,7 +438,7 @@ RSpec.describe '
     it "opens the image edit page when the image tile itself is clicked" do
       Spree::Image.create!(attachment: white_logo_file, viewable: variant, alt: "White logo")
 
-      visit spree.edit_admin_product_variant_path product, variant
+      visit edit_admin_product_variant_path product, variant
 
       find("img[alt='White logo']").click
 
@@ -451,14 +451,14 @@ RSpec.describe '
     it "keeps the image on the variant when updated from the image edit page" do
       Spree::Image.create!(attachment: white_logo_file, viewable: variant)
 
-      visit spree.edit_admin_product_image_path(
+      visit edit_admin_product_image_path(
         product, variant.reload.image, variant_id: variant.id
       )
 
       fill_in "image[alt]", with: "Updated alt text"
       click_button "Save"
 
-      expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+      expect(page).to have_current_path edit_admin_product_variant_path(product, variant)
       expect(variant.reload.image.alt).to eq "Updated alt text"
       expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
       expect(variant.reload.image.viewable_id).to eq variant.id
@@ -468,7 +468,7 @@ RSpec.describe '
       before { Spree::Image.create!(attachment: white_logo_file, viewable: variant) }
 
       def visit_image_edit_page
-        visit spree.edit_admin_product_image_path(
+        visit edit_admin_product_image_path(
           product, variant.reload.image, variant_id: variant.id
         )
       end
@@ -504,7 +504,7 @@ RSpec.describe '
 
         click_button "Save"
 
-        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(page).to have_current_path edit_admin_product_variant_path(product, variant)
         expect(variant.reload.image.attachment.filename.to_s).to eq "logo-black.png"
         expect(variant.reload.image.viewable_type).to eq "Spree::Variant"
       end
@@ -514,7 +514,7 @@ RSpec.describe '
 
         click_link "Delete permanently"
 
-        expect(page).to have_current_path spree.edit_admin_product_variant_path(product, variant)
+        expect(page).to have_current_path edit_admin_product_variant_path(product, variant)
         expect(variant.reload.image).to be_nil
         expect(page).to have_content image_subtitle
         expect(page).to have_content "Upload image"
@@ -526,7 +526,7 @@ RSpec.describe '
     context "on the new variant page" do
       it "does not offer an image upload until the variant exists" do
         login_as_admin
-        visit spree.new_admin_product_variant_path(product)
+        visit new_admin_product_variant_path(product)
 
         expect(page).to have_content "New Variant"
         expect(page).not_to have_selector "[data-controller='upload-image']"
@@ -537,7 +537,7 @@ RSpec.describe '
 
       it "keeps the form intact and creates no orphaned image, then allows upload" do
         login_as_admin
-        visit spree.new_admin_product_variant_path(product)
+        visit new_admin_product_variant_path(product)
 
         tomselect_select("Weight (g)", from: "Unit scale")
         click_on "Unit" # activate popout
@@ -558,7 +558,7 @@ RSpec.describe '
         expect(Spree::Image.count).to eq 0
 
         new_variant = product.variants.reload.order(:id).last
-        visit spree.edit_admin_product_variant_path(product, new_variant)
+        visit edit_admin_product_variant_path(product, new_variant)
 
         expect(page).to have_content image_subtitle
         expect(page).to have_content "Upload image"

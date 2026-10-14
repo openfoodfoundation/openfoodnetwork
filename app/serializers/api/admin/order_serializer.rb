@@ -46,13 +46,13 @@ module Api
       def edit_path
         return '' unless object.id
 
-        spree_routes_helper.edit_admin_order_path(object)
+        url_helpers.edit_admin_order_path(object)
       end
 
       def payments_path
         return '' unless object.payment_state
 
-        spree_routes_helper.admin_order_payments_path(object)
+        url_helpers.admin_order_payments_path(object)
       end
 
       # This methods requires to eager load the payment association (with its required WHERE
@@ -97,8 +97,8 @@ module Api
 
       private
 
-      def spree_routes_helper
-        Spree::Core::Engine.routes.url_helpers
+      def url_helpers
+        Rails.application.routes.url_helpers
       end
 
       def display_value_for_producer(order, value)

@@ -21,7 +21,7 @@ module Reporting
 
         def order_number_column(order)
           if html_render?
-            url = Spree::Core::Engine.routes.url_helpers.edit_admin_order_path(order.number)
+            url = Rails.application.routes.url_helpers.edit_admin_order_path(order.number)
             <<-HTML
               <a href=#{url} class="edit-order" target="_blank">#{order.number}</a>
             HTML

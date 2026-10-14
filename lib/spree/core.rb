@@ -23,9 +23,18 @@ module Spree
   def self.config
     yield(Spree::Config)
   end
-end
 
-require 'spree/core/engine'
+  # Spree models live in the `spree_` tables, e.g. Spree::Order uses `spree_orders`.
+  def self.table_name_prefix
+    "spree_"
+  end
+
+  # Model names are relative to this namespace, e.g. Spree::Order has the
+  # param key `order` and routes like `order_path`.
+  def self.use_relative_model_naming?
+    true
+  end
+end
 
 require 'spree/i18n'
 require 'spree/money'

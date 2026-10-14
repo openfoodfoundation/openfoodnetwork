@@ -16,7 +16,7 @@ module Spree
 
       def index
         @payments = @order.payments
-        redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
+        redirect_to new_admin_order_payment_url(@order) if @payments.empty?
       end
 
       def new
@@ -26,13 +26,13 @@ module Spree
       def create
         # Try to redeem VINE voucher first as we don't want to create a payment and complete
         # the order if it fails
-        return redirect_to spree.admin_order_payments_path(@order) unless redeem_vine_voucher
+        return redirect_to admin_order_payments_path(@order) unless redeem_vine_voucher
 
         @payment = @order.payments.build(object_params)
         load_payment_source
         begin
           unless @payment.save
-            redirect_to spree.admin_order_payments_path(@order)
+            redirect_to admin_order_payments_path(@order)
             return
           end
 
@@ -41,10 +41,10 @@ module Spree
           authorize_stripe_sca_payment
           @payment.process_offline!
           flash[:success] = flash_message_for(@payment, :successfully_created)
-          redirect_to spree.admin_order_payments_path(@order)
+          redirect_to admin_order_payments_path(@order)
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
-          redirect_to spree.admin_order_payments_path(@order)
+          redirect_to admin_order_payments_path(@order)
         end
       end
 
@@ -158,7 +158,7 @@ module Spree
                   @order.awaiting_return? || @order.returned?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
-        redirect_to spree.edit_admin_order_customer_url(@order)
+        redirect_to edit_admin_order_customer_url(@order)
       end
 
       def ensure_sufficient_stock_lines
@@ -166,7 +166,7 @@ module Spree
 
         flash[:error] = I18n.t("spree.orders.line_item.insufficient_stock",
                                on_hand: "0 #{out_of_stock_item_names}")
-        redirect_to spree.edit_admin_order_url(@order)
+        redirect_to edit_admin_order_url(@order)
       end
 
       def out_of_stock_item_names

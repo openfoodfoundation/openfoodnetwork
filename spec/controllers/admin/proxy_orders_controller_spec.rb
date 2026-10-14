@@ -3,6 +3,40 @@
 RSpec.describe Admin::ProxyOrdersController do
   include AuthenticationHelper
 
+  describe 'edit' do
+    let!(:user) { create(:user, enterprise_limit: 10) }
+    let!(:shop) { create(:distributor_enterprise, owner: user) }
+    let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
+    let!(:subscription) { create(:subscription, shop:, with_items: true) }
+    let!(:proxy_order) { create(:proxy_order, subscription:, order_cycle:) }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { user }
+    end
+
+    context "when the proxy order has no order yet" do
+      it "creates the order and redirects to it" do
+        expect {
+          spree_get :edit, id: proxy_order.id
+        }.to change { proxy_order.reload.order }.from(nil)
+
+        expect(response).to redirect_to edit_admin_order_path(proxy_order.order)
+      end
+    end
+
+    context "when the proxy order has an order" do
+      before { proxy_order.initialise_order! }
+
+      it "redirects to the existing order" do
+        expect {
+          spree_get :edit, id: proxy_order.id
+        }.not_to change { proxy_order.reload.order }
+
+        expect(response).to redirect_to edit_admin_order_path(proxy_order.order)
+      end
+    end
+  end
+
   describe 'cancel' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }

@@ -5,7 +5,7 @@
 
 - content_for :page_actions do
   %li
-    = button_link_to t(".new_taxon"), spree.new_admin_taxon_url, icon: 'icon-plus', id: 'admin_new_taxon_link'
+    = button_link_to t(".new_taxon"), new_admin_taxon_url, icon: 'icon-plus', id: 'admin_new_taxon_link'
 
 %table#listing_taxons.index
   %colgroup

@@ -21,7 +21,7 @@ RSpec.describe 'shipping methods' do
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Shop')
 
       # Shows appropriate fields when logged in as admin
-      visit spree.new_admin_shipping_method_path
+      visit new_admin_shipping_method_path
       expect(page).to have_field 'shipping_method_name'
       expect(page).to have_field 'shipping_method_description'
       expect(page).to have_select 'shipping_method_display_on'
@@ -46,7 +46,7 @@ RSpec.describe 'shipping methods' do
     end
 
     it "deleting a shipping method" do
-      visit spree.admin_shipping_methods_path
+      visit admin_shipping_methods_path
 
       accept_alert 'Are you sure?' do
         page.find('a.delete-resource').click
@@ -57,7 +57,7 @@ RSpec.describe 'shipping methods' do
 
     it "checking a single distributor is checked by default" do
       first_distributor = Enterprise.first
-      visit spree.new_admin_shipping_method_path
+      visit new_admin_shipping_method_path
       expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}",
                                  checked: true
     end
@@ -65,7 +65,7 @@ RSpec.describe 'shipping methods' do
     it "checking more than a distributor displays no default choice" do
       distributor1 = create(:distributor_enterprise, name: 'Alice Farm Shop')
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Hub')
-      visit spree.new_admin_shipping_method_path
+      visit new_admin_shipping_method_path
       expect(page).to have_field "shipping_method_distributor_ids_#{distributor1.id}",
                                  checked: false
       expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}",
@@ -73,7 +73,7 @@ RSpec.describe 'shipping methods' do
     end
 
     it "handle when updating calculator type for Weight to Flat Rate" do
-      visit spree.edit_admin_shipping_method_path(@shipping_method)
+      visit edit_admin_shipping_method_path(@shipping_method)
 
       select2_select 'Weight (per kg or lb)', from: 'calc_type'
       click_button 'Update'
@@ -85,7 +85,7 @@ RSpec.describe 'shipping methods' do
     end
 
     it "handle when updating calculator type to 'None'" do
-      visit spree.edit_admin_shipping_method_path(@shipping_method)
+      visit edit_admin_shipping_method_path(@shipping_method)
 
       select2_select 'None', from: 'calc_type'
       click_button 'Update'
@@ -156,7 +156,7 @@ RSpec.describe 'shipping methods' do
       shipping_method2
       sm3
 
-      visit spree.admin_shipping_methods_path
+      visit admin_shipping_methods_path
 
       expect(page).to     have_content shipping_method1.name
       expect(page).to     have_content shipping_method2.name
@@ -167,7 +167,7 @@ RSpec.describe 'shipping methods' do
       shipping_method1
       shipping_method2
 
-      visit spree.admin_shipping_methods_path
+      visit admin_shipping_methods_path
 
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end

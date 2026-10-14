@@ -2,7 +2,7 @@
   = t(:new_order)
 
 - content_for :page_actions do
-  %li= button_link_to t(:back_to_orders_list), spree.admin_orders_path, :icon => 'icon-arrow-left'
+  %li= button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
 
 = admin_inject_shops(@shops, module: 'admin.orders')
 = admin_inject_order_cycles(@order_cycles)
@@ -13,7 +13,7 @@
   = render 'spree/shared/error_messages', target: @order
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}
-  = form_for @order, url: spree.admin_orders_path, method: :post do
+  = form_for @order, url: admin_orders_path, method: :post do
     = render 'spree/admin/orders/_form/distribution_fields'
     = button_tag class: 'secondary radius expand small', id: 'update-button' do
       %i.icon-arrow-right

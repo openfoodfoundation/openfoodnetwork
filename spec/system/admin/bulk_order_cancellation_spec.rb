@@ -22,7 +22,7 @@ RSpec.describe '
 
     before :each do
       login_as_admin
-      visit spree.admin_orders_path
+      visit admin_orders_path
     end
 
     it "deletes orders" do

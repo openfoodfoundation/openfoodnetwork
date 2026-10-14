@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Spree::UsersController do
-  routes { Spree::Core::Engine.routes }
-
   include AuthenticationHelper
 
   describe "#show" do

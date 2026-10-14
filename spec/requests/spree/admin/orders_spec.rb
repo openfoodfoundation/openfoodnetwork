@@ -57,7 +57,7 @@ RSpec.describe Spree::Admin::OrdersController do
 
           put("/admin/orders/#{order.id}", params:)
 
-          expect(response).to redirect_to spree.edit_admin_order_path(order)
+          expect(response).to redirect_to edit_admin_order_path(order)
         end
       end
 
@@ -213,7 +213,7 @@ RSpec.describe Spree::Admin::OrdersController do
           put("/admin/orders/#{order.number}", params:)
 
           expect(flash[:error]).to eq "Line items can't be blank"
-          expect(response).to redirect_to spree.edit_admin_order_path(order)
+          expect(response).to redirect_to edit_admin_order_path(order)
         end
       end
 
@@ -224,7 +224,7 @@ RSpec.describe Spree::Admin::OrdersController do
           put("/admin/orders/#{order.number}")
 
           expect(flash[:error]).to eq "Cannot add item to shipped order"
-          expect(response).to redirect_to spree.edit_admin_order_path(order)
+          expect(response).to redirect_to edit_admin_order_path(order)
         end
       end
 
@@ -257,7 +257,7 @@ RSpec.describe Spree::Admin::OrdersController do
             expect {
               put("/admin/orders/#{order.number}", params:)
             }.to change { order.reload.state }.from("cart").to("payment")
-            expect(response).to redirect_to spree.admin_order_payments_path(order)
+            expect(response).to redirect_to admin_order_payments_path(order)
           end
         end
 
@@ -269,7 +269,7 @@ RSpec.describe Spree::Admin::OrdersController do
 
             expect(flash[:error])
               .to eq "Distributor or order cycle cannot supply the products in your cart"
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
           end
         end
       end
@@ -302,7 +302,7 @@ RSpec.describe Spree::Admin::OrdersController do
 
   describe "#fire" do
     let(:order) { create(:completed_order_with_totals) }
-    let(:headers) { { HTTP_REFERER: spree.edit_admin_order_path(order) } }
+    let(:headers) { { HTTP_REFERER: edit_admin_order_path(order) } }
 
     before do
       sign_in admin
@@ -316,7 +316,7 @@ RSpec.describe Spree::Admin::OrdersController do
 
         get("/admin/orders/#{order.number}/fire", params: { e: event }, headers:)
 
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+        expect(response).to redirect_to edit_admin_order_path(order)
       end
     end
 
@@ -339,7 +339,7 @@ RSpec.describe Spree::Admin::OrdersController do
         get("/admin/orders/#{order.number}/fire", params: { e: "state" }, headers:)
 
         expect(flash[:error]).to eq "Can not perform this operation"
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+        expect(response).to redirect_to edit_admin_order_path(order)
       end
     end
 
@@ -350,7 +350,7 @@ RSpec.describe Spree::Admin::OrdersController do
         get("/admin/orders/#{order.number}/fire", params: { e: "cancel" }, headers:)
 
         expect(flash[:error]).to eq "Some error"
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+        expect(response).to redirect_to edit_admin_order_path(order)
       end
     end
   end

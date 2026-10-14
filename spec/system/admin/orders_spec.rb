@@ -98,7 +98,7 @@ RSpec.describe '
     describe "filters" do
       before do
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
       end
 
       it "order cycles appear in descending order by close date on orders page" do
@@ -281,7 +281,7 @@ RSpec.describe '
 
       before do
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
         uncheck 'Only show complete orders'
         tomselect_search_and_select "cart", from: 'q[state_eq]'
         page.find('.filter-actions .button[type=submit]').click
@@ -314,7 +314,7 @@ RSpec.describe '
           order4.update!(completed_at: 4.weeks.ago)
           order5.update!(completed_at: 5.weeks.ago)
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
         it "orders by completion date" do
           find("a", text: 'Completed At').click # sets ascending ordering
@@ -335,7 +335,7 @@ RSpec.describe '
           order4.update!(number: "R333333333")
           order5.update!(number: "R222222222")
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by order number" do
@@ -357,7 +357,7 @@ RSpec.describe '
           order4.update!(state: "cart")
           order5.cancel
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
           uncheck 'Only show complete orders'
           page.find('.filter-actions .button[type=submit]').click
         end
@@ -380,7 +380,7 @@ RSpec.describe '
           Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
           Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by payment state" do
@@ -398,7 +398,7 @@ RSpec.describe '
           Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
           order2.ship
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by shipment state" do
@@ -416,7 +416,7 @@ RSpec.describe '
           order4.update!(email: "def@def.com")
           order5.update!(email: "abc@abc.com")
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by customer email" do
@@ -438,7 +438,7 @@ RSpec.describe '
           billing_address4.update!(firstname: "Cheshire", lastname: "Cat")
           billing_address5.update!(firstname: "Bob", lastname: "Smith")
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by last name then first name" do
@@ -457,7 +457,7 @@ RSpec.describe '
         before do
           order3.update(special_instructions: "Leave it next to the porch. Thanks!")
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "displays a note with order instructions" do
@@ -477,7 +477,7 @@ RSpec.describe '
           order5.contents.update_item(Spree::LineItem.find_by(order_id: order5.id), { quantity: 2 })
 
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "orders by order total" do
@@ -496,7 +496,7 @@ RSpec.describe '
     context "select/unselect all orders" do
       before do
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
       end
 
       it "by clicking on the checkbox in the table header" do
@@ -525,7 +525,7 @@ RSpec.describe '
         # creates 15 orders additional to the 4 orders
         15.times { create(:order_ready_to_ship) }
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
       end
 
       it "displays pagination options" do
@@ -567,8 +567,8 @@ RSpec.describe '
 
       it "capture payment" do
         login_as_admin
-        visit spree.admin_orders_path
-        expect(page).to have_current_path spree.admin_orders_path
+        visit admin_orders_path
+        expect(page).to have_current_path admin_orders_path
 
         # click the 'capture' link for the order
         page.find("button.icon-capture").click
@@ -580,13 +580,13 @@ RSpec.describe '
         expect(order.reload.payment_state).to eq "paid"
 
         # we should still be on the same page
-        expect(page).to have_current_path spree.admin_orders_path
+        expect(page).to have_current_path admin_orders_path
       end
 
       it "ship order from the orders index page and send email" do
         order.payments.first.capture!
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
 
         page.find("button.icon-road").click
 
@@ -603,7 +603,7 @@ RSpec.describe '
       it "ship order from the orders index page and do not send email" do
         order.payments.first.capture!
         login_as_admin
-        visit spree.admin_orders_path
+        visit admin_orders_path
 
         page.find("button.icon-road").click
 
@@ -621,7 +621,7 @@ RSpec.describe '
       context "mouse-hovering" do
         before do
           login_as_admin
-          visit spree.admin_orders_path
+          visit admin_orders_path
         end
 
         it "displays Ship and Capture tooltips" do
@@ -692,13 +692,13 @@ RSpec.describe '
                                                         line_items_count: 1)
 
       login_as_admin
-      visit spree.admin_orders_path
+      visit admin_orders_path
       uncheck 'Only show complete orders'
       page.find('button[type=submit]').click
 
       find(".icon-edit").click
 
-      expect(page).to have_current_path spree.edit_admin_order_path(incomplete_order)
+      expect(page).to have_current_path edit_admin_order_path(incomplete_order)
     end
   end
 
@@ -732,7 +732,7 @@ RSpec.describe '
       empty_order = create(:order, distributor:, order_cycle:)
 
       login_as_admin
-      visit spree.admin_orders_path
+      visit admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_content empty_complete_order.number
       expect(page).not_to have_content incomplete_order.number
@@ -764,7 +764,7 @@ RSpec.describe '
     end
     before :each do
       login_as_admin
-      visit spree.admin_orders_path
+      visit admin_orders_path
 
       # Specify each filters
       uncheck 'Only show complete orders'

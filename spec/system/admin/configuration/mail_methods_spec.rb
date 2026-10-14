@@ -7,7 +7,7 @@ RSpec.describe "Mail Methods" do
 
   before do
     login_as_admin
-    visit spree.edit_admin_general_settings_path
+    visit edit_admin_general_settings_path
   end
 
   context "edit" do

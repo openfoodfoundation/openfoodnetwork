@@ -321,7 +321,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         visit admin_products_url
         expect {
           click_link("New Product")
-        }.to change { current_path }.to(spree.new_admin_product_path)
+        }.to change { current_path }.to(new_admin_product_path)
       end
     end
 

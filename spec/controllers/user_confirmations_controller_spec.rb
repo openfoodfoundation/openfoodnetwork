@@ -53,7 +53,7 @@ RSpec.describe UserConfirmationsController do
         unconfirmed_user.save!
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to be_redirect
-        expect(response.headers["Location"]).to include spree.edit_spree_user_password_path
+        expect(response.headers["Location"]).to include edit_spree_user_password_path
       end
     end
   end

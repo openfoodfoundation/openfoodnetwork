@@ -64,7 +64,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       before do
         variant1.update!(display_name: "Variant1", on_hand: 0, on_demand: true)
         variant2a.update!(display_name: "Variant2a", on_hand: 16, on_demand: false)
-        visit spree.admin_products_path
+        visit admin_products_path
       end
 
       it "displays an on hand count in a span for each product" do
@@ -85,7 +85,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
 
       describe "Enterprise column" do
         it "when I have one enterprise" do
-          visit spree.admin_products_path
+          visit admin_products_path
 
           expect(page).not_to have_select "Enterprise"
         end
@@ -100,7 +100,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
             variant1.update!(enterprise: enterprise1)
             variant2a.update!(enterprise: enterprise2)
 
-            visit spree.admin_products_path
+            visit admin_products_path
 
             within row_containing_name "Variant1" do
               expect_tomselect_existing_with_selected_options(
@@ -125,7 +125,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     it "displays a select box for the unit of measure for the product's variants" do
       p1.variants.first.update! variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: ''
 
-      visit spree.admin_products_path
+      visit admin_products_path
 
       expect(page).to have_select "Unit scale", selected: "Weight (g)"
     end
@@ -134,7 +134,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       p1.variants.first.update! variant_unit: 'items', variant_unit_scale: nil,
                                 variant_unit_name: 'packet'
 
-      visit spree.admin_products_path
+      visit admin_products_path
 
       expect(page).to have_select "Unit scale", selected: "Items"
       expect(page).to have_field "Items", with: "packet"
@@ -605,7 +605,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     end
 
     it "shows only products that I supply" do
-      visit spree.admin_products_path
+      visit admin_products_path
 
       # displays permitted product list only
       expect(page).to have_selector row_containing_name(product_supplied.name)
@@ -614,7 +614,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     end
 
     it "shows only suppliers that I manage or have permission to" do
-      visit spree.admin_products_path
+      visit admin_products_path
       existing_options = [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name]
 
       within row_containing_placeholder(product_supplied.name) do
@@ -637,13 +637,13 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
     it "shows inactive products that I supply" do
       product_supplied_inactive
 
-      visit spree.admin_products_path
+      visit admin_products_path
 
       expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
     end
 
     it "allows me to update a product" do
-      visit spree.admin_products_path
+      visit admin_products_path
 
       within row_containing_name(product_supplied.name) do
         fill_in "Name", with: "Pommes"

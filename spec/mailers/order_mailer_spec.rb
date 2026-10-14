@@ -138,7 +138,7 @@ RSpec.describe Spree::OrderMailer do
   describe "#cancel_email_for_shop" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) { create(:order, distributor:, state: "canceled") }
-    let(:admin_order_link_href) { "href=\"#{spree.edit_admin_order_url(order)}\"" }
+    let(:admin_order_link_href) { "href=\"#{edit_admin_order_url(order)}\"" }
     let(:mail) { Spree::OrderMailer.cancel_email_for_shop(order) }
 
     it "sends an email to the distributor" do

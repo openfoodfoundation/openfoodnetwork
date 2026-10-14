@@ -122,8 +122,8 @@ Openfoodnetwork::Application.routes.draw do
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
-  # Mount Spree's routes
-  mount Spree::Core::Engine, :at => '/'
+  # Spree's routes
+  draw :spree
 
   # Errors controller
   match '/404' => 'errors#not_found', via: :all

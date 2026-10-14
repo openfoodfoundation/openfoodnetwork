@@ -68,13 +68,13 @@ module Spree
 
       def edit_order_link(order)
         { name: t(:edit_order),
-          url: spree.edit_admin_order_path(order),
+          url: edit_admin_order_path(order),
           icon: 'icon-edit' }
       end
 
       def resend_confirmation_link(order)
         { name: t(:resend_confirmation),
-          url: spree.resend_admin_order_path(order),
+          url: resend_admin_order_path(order),
           icon: 'icon-email',
           confirm: t(:confirm_resend_order_confirmation) }
       end
@@ -95,7 +95,7 @@ module Spree
 
       def print_invoice_link_with_url(order)
         { name: t(:print_invoice),
-          url: spree.print_admin_order_path(order),
+          url: print_admin_order_path(order),
           icon: 'icon-print',
           target: "_blank" }
       end
@@ -115,7 +115,7 @@ module Spree
 
       def cancel_order_link(order)
         { name: t(:cancel_order),
-          url: spree.fire_admin_order_path(order.number, e: 'cancel'),
+          url: fire_admin_order_path(order.number, e: 'cancel'),
           icon: 'icon-trash' }
       end
 

@@ -32,7 +32,7 @@ RSpec.describe '
   end
 
   def new_order_with_distribution(distributor, order_cycle)
-    visit spree.new_admin_order_path
+    visit new_admin_order_path
     expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
@@ -112,7 +112,7 @@ RSpec.describe '
       before do
         distributor1.update_attribute(:abn, '12345678')
 
-        visit spree.edit_admin_order_path(order)
+        visit edit_admin_order_path(order)
       end
 
       it "verifying page contents" do
@@ -177,19 +177,19 @@ RSpec.describe '
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
           expect(page).to have_link "Resend Confirmation",
-                                    href: spree.resend_admin_order_path(order)
+                                    href: resend_admin_order_path(order)
         end
       end
 
       context "Resending confirmation email" do
         before do
-          visit spree.edit_admin_order_path(order)
+          visit edit_admin_order_path(order)
           find("#links-dropdown .ofn-drop-down").click
         end
 
         it "shows the link" do
           expect(page).to have_link "Resend Confirmation",
-                                    href: spree.resend_admin_order_path(order)
+                                    href: resend_admin_order_path(order)
         end
 
         it "resends the confirmation email" do
@@ -204,7 +204,7 @@ RSpec.describe '
         shared_examples "canceling an order" do
           it "shows the link" do
             expect(page).to have_link "Cancel Order",
-                                      href: spree.fire_admin_order_path(order, e: 'cancel')
+                                      href: fire_admin_order_path(order, e: 'cancel')
           end
           it 'cancels the order' do
             within ".ofn-drop-down .menu" do
@@ -221,7 +221,7 @@ RSpec.describe '
 
         context "from order details page" do
           before do
-            visit spree.edit_admin_order_path(order)
+            visit edit_admin_order_path(order)
             find("#links-dropdown .ofn-drop-down").click
           end
           it_behaves_like "canceling an order"
@@ -229,7 +229,7 @@ RSpec.describe '
 
         context "from order's payments" do
           before do
-            visit spree.admin_order_payments_path(order)
+            visit admin_order_payments_path(order)
             find("#links-dropdown .ofn-drop-down").click
           end
           it_behaves_like "canceling an order"
@@ -237,7 +237,7 @@ RSpec.describe '
 
         context "from order's adjustments" do
           before do
-            visit spree.admin_order_adjustments_path(order)
+            visit admin_order_adjustments_path(order)
             find("#links-dropdown .ofn-drop-down").click
           end
           it_behaves_like "canceling an order"
@@ -247,13 +247,13 @@ RSpec.describe '
       context "Check send/print invoice links" do
         shared_examples_for 'can send/print invoices' do
           before do
-            visit spree.edit_admin_order_path(order)
+            visit edit_admin_order_path(order)
             find("#links-dropdown .ofn-drop-down").click
           end
 
           it 'shows the right links' do
-            expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-            expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
+            expect(page).to have_link "Send Invoice", href: invoice_admin_order_path(order)
+            expect(page).to have_link "Print Invoice", href: print_admin_order_path(order)
           end
 
           it 'can send invoices' do
@@ -293,7 +293,7 @@ RSpec.describe '
             end
 
             it "should not display links but a js alert" do
-              visit spree.edit_admin_order_path(order)
+              visit edit_admin_order_path(order)
 
               find("summary", text: "Actions").click
               expect(page).to have_link "Send Invoice", href: "#"
@@ -326,7 +326,7 @@ RSpec.describe '
         end
 
         it "can edit shipping method" do
-          visit spree.edit_admin_order_path(order)
+          visit edit_admin_order_path(order)
 
           expect(page).not_to have_content different_shipping_method_for_distributor1.name
 
@@ -369,7 +369,7 @@ RSpec.describe '
             end
 
             it "should not change the shipping method" do
-              visit spree.edit_admin_order_path(order)
+              visit edit_admin_order_path(order)
               expect(page).to have_content(
                 "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
               )
@@ -385,7 +385,7 @@ RSpec.describe '
               end
 
               it "should not update the shipping cost" do
-                visit spree.edit_admin_order_path(order)
+                visit edit_admin_order_path(order)
                 expect(page).to have_content(
                   "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
                 )
@@ -403,7 +403,7 @@ RSpec.describe '
             end
 
             it "should not replace the selected shipment method" do
-              visit spree.edit_admin_order_path(order)
+              visit edit_admin_order_path(order)
               expect(page).to have_content(
                 "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
               )
@@ -420,7 +420,7 @@ RSpec.describe '
 
               it "should not update the shipping cost" do
                 # Since the order is completed, the price is not supposed to be updated
-                visit spree.edit_admin_order_path(order)
+                visit edit_admin_order_path(order)
                 expect(page).to have_content(
                   "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
                 )
@@ -499,7 +499,7 @@ RSpec.describe '
           order.finalize! # ensure order has a payment to capture
           order.payments << create(:check_payment, order:, amount: order.total)
           order.payments.first.capture!
-          visit spree.edit_admin_order_path(order)
+          visit edit_admin_order_path(order)
         end
 
         it "ships the order and shipment email is sent" do
@@ -610,7 +610,7 @@ RSpec.describe '
       context "and the order has been canceled" do
         it "does not allow modifying line items" do
           order.cancel!
-          visit spree.edit_admin_order_path(order)
+          visit edit_admin_order_path(order)
           within("tr.stock-item", text: order.products.first.name) do
             expect(page).not_to have_selector("a.edit-item")
           end
@@ -626,7 +626,7 @@ RSpec.describe '
         it "displays the out of stock line items and they can be deleted from the order" do
           incomplete_order.line_items.first.variant.update!(on_demand: false, on_hand: 0)
 
-          visit spree.edit_admin_order_path(incomplete_order)
+          visit edit_admin_order_path(incomplete_order)
 
           expect(page).to have_content "Out of Stock"
 

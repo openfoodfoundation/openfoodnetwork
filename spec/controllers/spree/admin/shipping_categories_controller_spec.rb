@@ -13,7 +13,7 @@ module Spree
             spree_post :create, shipping_category: { name: "Frozen" }
           }.to change { Spree::ShippingCategory.count }.by(1)
 
-          expect(response).to redirect_to spree.admin_shipping_categories_url
+          expect(response).to redirect_to admin_shipping_categories_url
         end
 
         it "updates an existing shipping category" do
@@ -21,7 +21,7 @@ module Spree
           spree_put :update, id: shipping_category.id,
                              shipping_category: { name: "Super Frozen" }
 
-          expect(response).to redirect_to spree.admin_shipping_categories_url
+          expect(response).to redirect_to admin_shipping_categories_url
           expect(shipping_category.reload.name).to eq "Super Frozen"
         end
 
@@ -31,7 +31,7 @@ module Spree
             spree_delete :destroy, id: shipping_category.id
           }.to change { Spree::ShippingCategory.count }.by(-1)
 
-          expect(response).to redirect_to spree.admin_shipping_categories_url
+          expect(response).to redirect_to admin_shipping_categories_url
         end
       end
     end

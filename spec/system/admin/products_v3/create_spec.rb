@@ -30,7 +30,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       select taxon.name, from: 'product_primary_taxon_id' # ...instead of tom-select
       select shipping_category.name, from: 'product_shipping_category_id' # ...instead of tom-select
       click_button 'Create'
-      expect(URI.parse(current_url).path).to eq spree.admin_products_path
+      expect(URI.parse(current_url).path).to eq admin_products_path
       expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
       expect(page).to have_field "_products_0_name", with: 'Big Bag Of Apples'
     end
@@ -144,7 +144,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
   def visit_products_page_as_admin
     login_as_admin
-    visit spree.admin_products_path
+    visit admin_products_path
   end
 
   def new_variant_button(visible: false)

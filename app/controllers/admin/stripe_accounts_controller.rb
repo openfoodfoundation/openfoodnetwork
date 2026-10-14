@@ -24,7 +24,7 @@ module Admin
       redirect_to main_app.edit_admin_enterprise_path(stripe_account.enterprise)
     rescue ActiveRecord::RecordNotFound
       flash[:error] = I18n.t('stripe.error_code.disconnect_failure')
-      redirect_to spree.admin_dashboard_path
+      redirect_to admin_dashboard_path
     end
 
     def status

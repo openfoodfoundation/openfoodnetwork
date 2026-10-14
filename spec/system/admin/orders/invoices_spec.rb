@@ -30,7 +30,7 @@ RSpec.describe '
   before do
     order.finalize!
     login_as_admin
-    visit spree.edit_admin_order_path(order)
+    visit edit_admin_order_path(order)
   end
 
   describe 'creating invoices' do
@@ -243,7 +243,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
 
     context "editing the order" do
       before do
-        visit spree.edit_admin_order_path(order1)
+        visit edit_admin_order_path(order1)
       end
 
       it "displays the invoice tab" do
@@ -274,12 +274,12 @@ RSpec.describe "Invoice order states", feature: :invoices do
         ].join(" ")
       }
       let(:download_href) {
-        "#{spree.print_admin_order_path(order1)}?invoice_id=#{Invoice.last.id}"
+        "#{print_admin_order_path(order1)}?invoice_id=#{Invoice.last.id}"
       }
 
       before do
         Spree::Config[:enterprise_number_required_on_invoices?] = false
-        visit spree.admin_order_invoices_path(order1)
+        visit admin_order_invoices_path(order1)
       end
 
       it "displays the invoices table" do
@@ -312,7 +312,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
           end
 
           it "displays a warning that an ABN is required when it's clicked" do
-            visit spree.admin_order_invoices_path(order1)
+            visit admin_order_invoices_path(order1)
             message = accept_prompt { click_link "Create or Update Invoice" }
             distributor = order1.distributor
             expect(message)
@@ -330,7 +330,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
                                                   payment_state: 'balance_due')
     }
     before do
-      visit spree.edit_admin_order_path(order2)
+      visit edit_admin_order_path(order2)
     end
 
     it "displays the invoice tab" do
@@ -346,7 +346,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
                                                   payment_state: 'balance_due')
     }
     before do
-      visit spree.edit_admin_order_path(order3)
+      visit edit_admin_order_path(order3)
     end
 
     it "displays the invoice tab" do
@@ -361,7 +361,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
                                      line_items_count: 0)
     }
     before do
-      visit spree.edit_admin_order_path(order_empty)
+      visit edit_admin_order_path(order_empty)
     end
 
     it "should not display the invoice tab" do
@@ -377,7 +377,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
                                        payment_state: 'balance_due')
     end
     before do
-      visit spree.edit_admin_order_path(order4)
+      visit edit_admin_order_path(order4)
     end
 
     it "should not display the invoice tab" do

@@ -91,14 +91,6 @@ module Openfoodnetwork
     config.x.git_version = GitUtils.git_version
 
     config.after_initialize do
-      # We need this here because the test env file loads before the Spree engine is loaded
-      if Rails.env.test?
-        Spree::Core::Engine.routes.default_url_options[:host] =
-          ENV.fetch("SITE_URL", nil)
-      end
-    end
-
-    config.after_initialize do
       # We reload the routes here
       #   so that the appended/prepended routes are available to the application.
       Rails.application.routes_reloader.reload!
@@ -185,7 +177,6 @@ module Openfoodnetwork
       config/routes/api.rb
       config/routes.rb
       config/routes/admin.rb
-      config/routes/spree.rb
       config/routes/shopfront.rb
     ).map { |relative_path| Rails.root.join(relative_path) }
 
