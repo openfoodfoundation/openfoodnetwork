@@ -193,7 +193,7 @@ RSpec.describe ProductsController do
       it "shows all products on one page, without page links" do
         get order_cycle_products_path(order_cycle.id)
 
-        expect(response.body).not_to match "Viewing"
+        expect(response.body).not_to match "Previous"
       end
 
       context "with more products than fit on a page" do
@@ -204,7 +204,7 @@ RSpec.describe ProductsController do
 
           expect(response.body).to include "Previous"
           expect(response.body).to include "Next"
-          expect(response.body).to include "Viewing"
+          expect(response.body).to include "1-2 of 5 products"
         end
       end
     end

@@ -409,7 +409,7 @@ RSpec.describe "As a consumer I want to view products" do
           visit shop_path
 
           within "#shop-products" do
-            expect(page).to have_content("Viewing 1 - 1 of 3 products")
+            expect(page).to have_content("1-1 of 3 products")
             seen = [find(".product-item .product-name").text]
 
             within "#shop-products-pagination" do
