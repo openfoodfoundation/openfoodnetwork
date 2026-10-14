@@ -1,4 +1,5 @@
 @use "../../webpacker/css/darkswarm/branding" as b;
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
 
 .info-popover {
   display: inline-block;
@@ -33,7 +34,7 @@
   max-width: min(16rem, calc(100vw - 1rem));
   padding: 0.625rem;
   border: none;
-  border-radius: 0.25em;
+  border-radius: $radius;
   background-color: b.$grey-800;
   color: white;
   font-size: 0.875rem;
