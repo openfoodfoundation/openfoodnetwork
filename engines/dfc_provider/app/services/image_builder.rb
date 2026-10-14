@@ -4,17 +4,51 @@ require "private_address_check"
 require "private_address_check/tcpsocket_ext"
 
 class ImageBuilder < DfcBuilder
-  def self.apply(image_url, spree_product)
+  # Works with anything that has one image: a product or a variant.
+  def self.apply(image_url, imageable)
     return if image_url.blank?
 
-    return if image_url == current_image_url(spree_product)
+    return if current_image?(image_url, imageable.image)
 
     image = ImageBuilder.import(image_url)
-    spree_product.image = image if image
+    imageable.image = image if image
   end
 
-  def self.current_image_url(spree_product)
-    spree_product.image&.attachment&.blob&.custom_metadata&.fetch("origin", nil)
+  # A supplied product is a variant. It shows its own image or its product's.
+  # Shops list products with the product image, so a product's only variant
+  # keeps using it. Other variants get their own image, leaving the shared
+  # product image alone.
+  def self.apply_supplied_product_image(supplied_product, variant)
+    image_url = supplied_product.image
+    return if current_image?(image_url, SuppliedProductBuilder.image(variant))
+
+    if variant.image || other_variants?(variant)
+      apply(image_url, variant)
+    elsif supplied_product.isVariantOf.first.try(:image).blank?
+      # The image of the product group takes precedence.
+      apply(image_url, variant.product)
+    end
+  end
+
+  def self.other_variants?(variant)
+    variant.product.variants.any? { |other| other != variant }
+  end
+
+  # Clients send either the URL we imported the image from or the URL we
+  # serve it at, see SuppliedProductBuilder.
+  def self.current_image?(image_url, image)
+    return false if image.nil?
+
+    image_url == origin_url(image) || image_url == served_url(image)
+  end
+
+  def self.origin_url(image)
+    image.attachment&.blob&.custom_metadata&.fetch("origin", nil)
+  end
+
+  # A new image doesn't have a URL yet.
+  def self.served_url(image)
+    image.url(:product) if image.persisted?
   end
 
   def self.import(image_link)

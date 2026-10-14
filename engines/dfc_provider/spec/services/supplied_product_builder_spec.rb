@@ -75,6 +75,21 @@ RSpec.describe SuppliedProductBuilder do
       expect(product.image).to eq variant.product.image.url(:product)
     end
 
+    it "assigns the variant's own image if present" do
+      Spree::Image.create!(
+        attachment: white_logo_file,
+        viewable: variant.product,
+      )
+      Spree::Image.create!(
+        attachment: black_logo_file,
+        viewable: variant,
+      )
+      product = builder.supplied_product(variant.reload)
+
+      expect(product.image).to eq variant.image.url(:product)
+      expect(product.image).to include "logo-black.png"
+    end
+
     it "assigns the product uri" do
       product = builder.supplied_product(variant)
 
