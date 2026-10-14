@@ -2,7 +2,7 @@
   .row.animate-slide{ "ng-show" => "query || appliedPropertiesList() || appliedProducerPropertiesList() || appliedTaxonsList()" }
     .small-12.columns
       .alert-box.search-alert.ng-scope
-        %div{"ng-show" => "Products.products.length > 0"}
+        %div{"ng-show" => "productGridViewFeature || Products.products.length > 0"}
 
           %a.clear-all.right{"ng-click" => "clearAll()"}
             = t :products_clear
@@ -15,7 +15,7 @@
                 {{ query }}
             = render partial: 'shop/products/applied_filters_feedback'
 
-        .no-results-bar{"ng-show" => "Products.products.length == 0 && !Products.loading"}
+        .no-results-bar{"ng-show" => "!productGridViewFeature && Products.products.length == 0 && !Products.loading"}
           .row.summary
             .small-12.columns
               %p.no-results

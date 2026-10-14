@@ -485,6 +485,56 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).not_to have_content variant2.name.to_s
         end
       end
+
+      context "product grid view", feature: :product_grid_view do
+        before { visit shop_path }
+
+        it "searches products" do
+          expect(page).to have_selector(".product-item", count: 2)
+
+          fill_in "search", with: "Chick"
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Chickpeas")
+
+          find("#search ~ a.clear").click
+
+          expect(page).to have_selector(".product-item", count: 2)
+        end
+
+        it "says when no products match the search" do
+          fill_in "search", with: "Nothing like this"
+
+          expect(page).to have_content "Sorry, no results found"
+          expect(page).not_to have_selector(".product-item")
+        end
+
+        it "filters products by taxon and property, then clears all" do
+          within "#shop-tabs .sticky-shop-filters-container .taxon-selectors" do
+            toggle_filter taxon.name
+          end
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Beans")
+
+          within "#shop-tabs .sticky-shop-filters-container .taxon-selectors" do
+            toggle_filter taxon.name
+          end
+          within "#shop-tabs .sticky-shop-filters-container .property-selectors" do
+            toggle_filter property2.presentation
+          end
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Chickpeas")
+
+          fill_in "search", with: "Beans"
+          expect(page).not_to have_selector(".product-item")
+
+          find(".search-alert a.clear-all").click
+
+          expect(page).to have_selector(".product-item", count: 2)
+        end
+      end
     end
   end
 
