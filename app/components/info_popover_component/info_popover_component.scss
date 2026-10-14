@@ -66,8 +66,10 @@ $pointer-clearance: 2px; // between the button and the tip of the pointer
     position-area: bottom;
   }
 
-  // A pointer from the popover to its button. CSS can't tell yet which side a popover
-  // flipped to, so the pointer gets the same placement as the popover and the same size, which
+  // A little triangle arrow on one popover edge pointing to its button.
+  //
+  // CSS can't tell yet which side a popover flipped to,
+  // so the pointer gets the same placement as the popover and the same size, which
   // makes the browser flip it the same way. It's narrow though, and pointed at both ends: the
   // end at the button shows in the gap, the other end is hidden in the popover.
   //
