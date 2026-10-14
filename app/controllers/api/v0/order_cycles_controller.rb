@@ -8,10 +8,10 @@ module Api
 
       skip_authorization_check
       skip_before_action :authenticate_user, :ensure_api_key, only: [
-        :taxons, :properties, :producer_properties
+        :taxons, :properties
       ]
 
-      caches_action :taxons, :properties, :producer_properties,
+      caches_action :taxons, :properties,
                     expires_in: CacheService::FILTERS_EXPIRY,
                     cache_path: proc { |controller| controller.request.url }
 
@@ -49,12 +49,6 @@ module Api
         ).to_json
       end
 
-      def producer_properties
-        render plain: ActiveModel::ArraySerializer.new(
-          load_producer_properties, each_serializer: Api::PropertySerializer
-        ).to_json
-      end
-
       private
 
       # Sort first by shopfront_taxon_order if set, then alphabetically.
@@ -74,22 +68,17 @@ module Api
         render status: :not_found, json: {}
       end
 
+      # Product properties and producer properties, as both are filtered with q[with_properties].
       def product_properties
-        Spree::Property.
-          joins(:products).
-          where(spree_products: { id: distributed_products }).
-          select('DISTINCT spree_properties.*')
-      end
-
-      def load_producer_properties
-        producers = Enterprise.
-          joins(:products).
-          where(spree_products: { id: distributed_products })
+        product_ids = distributed_products
+        producers = Enterprise.joins(:products).where(spree_products: { id: product_ids })
 
         Spree::Property.
-          joins(:producer_properties).
-          where(producer_properties: { producer_id: producers }).
-          select('DISTINCT spree_properties.*')
+          where(id: Spree::ProductProperty.where(product_id: product_ids).select(:property_id)).
+          or(Spree::Property.where(
+               id: ProducerProperty.where(producer_id: producers).select(:property_id)
+             )).
+          order(Arel.sql("LOWER(spree_properties.presentation)"))
       end
 
       def search_params

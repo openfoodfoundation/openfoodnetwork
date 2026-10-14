@@ -16,14 +16,6 @@ module OrderCycles
       relation_by_sorting.order(Arel.sql(order))
     end
 
-    def products_relation_incl_enterprise_properties
-      query = relation_by_sorting
-
-      query = supplier_property_join(query)
-
-      query.order(Arel.sql(order))
-    end
-
     def variants_relation
       order_cycle.
         variants_distributed_by(distributor).
@@ -81,13 +73,6 @@ module OrderCycles
     def sorting_by_category?
       sorting == "by_category" &&
         distributor.preferred_shopfront_taxon_order.present?
-    end
-
-    def supplier_property_join(query)
-      query.joins("
-        JOIN enterprises ON enterprises.id = first_variant.enterprise_id
-        LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
-      ")
     end
 
     def order
