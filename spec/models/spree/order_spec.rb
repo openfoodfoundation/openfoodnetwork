@@ -338,6 +338,25 @@ RSpec.describe Spree::Order do
     end
   end
 
+  describe "#capturable_pending_payments" do
+    let(:credit_payment) { double("credit payment", requires_authorization?: false) }
+    let(:check_payment) { double("check payment", requires_authorization?: false) }
+    let(:authorized_payment) { double("authorized payment", requires_authorization?: true) }
+
+    before do
+      allow(credit_payment).to receive(:payment_method).
+        and_return(Spree::PaymentMethod::CustomerCredit.new)
+      allow(check_payment).to receive(:payment_method).
+        and_return(Spree::PaymentMethod::Check.new)
+      allow(order).to receive(:pending_payments).
+        and_return([credit_payment, check_payment, authorized_payment])
+    end
+
+    it "returns only pending payments that a payment method can capture" do
+      expect(order.capturable_pending_payments).to eq [check_payment]
+    end
+  end
+
   context "#completed?" do
     it "should indicate if order is completed" do
       order.completed_at = nil
