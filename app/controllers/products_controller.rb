@@ -8,7 +8,7 @@ class ProductsController < BaseController
   before_action :order_cycle, only: :index
 
   def index
-    @q = params[:q]
+    @q = search_params[:q]
     renderer = product_renderer
     @products = renderer.products_view
     @properties = renderer.properties
