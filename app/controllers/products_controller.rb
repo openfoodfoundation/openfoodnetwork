@@ -94,9 +94,9 @@ class ProductsController < BaseController
   # A shopper may have a cart at another shop. Those quantities don't apply here.
   def variants_in_cart
     order = current_order(false)
-    return {} unless order&.distributor == distributor
+    return ViewData::CartItem.index([]) unless order&.distributor == distributor
 
-    order.line_items.to_h { |line_item| [line_item.variant_id, line_item.quantity] }
+    ViewData::CartItem.index(order.line_items)
   end
 
   def customer
