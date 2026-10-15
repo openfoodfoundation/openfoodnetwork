@@ -306,6 +306,30 @@ RSpec.describe "As a consumer I want to view products" do
         end
       end
 
+      context "a product has variants from different enterprises" do
+        let(:other_property) { create(:property, presentation: "Another producer") }
+        let(:other_enterprise) { create(:supplier_enterprise, properties: [other_property]) }
+        let(:variant2a) {
+          create(:variant, display_name: "Other apples", product: product2,
+                           enterprise: other_enterprise)
+        }
+
+        before do
+          add_variant_to_order_cycle(exchange, variant2a)
+          visit shop_path
+        end
+
+        it "filters products by producer property from second variant" do
+          check "Another producer", allow_label_click: true
+
+          expect(page).to have_content "Apples | multiple options"
+          expect(page).not_to have_content "Bananas"
+          expect(page).to have_field "Another producer", visible: false, checked: true
+          expect(page).to have_field "Aromatic producer", visible: false, checked: false
+          expect(page).to have_field "Bountiful product", visible: false, checked: false
+        end
+      end
+
       it "filters products by product property" do
         visit shop_path
         check "Bountiful product", allow_label_click: true

@@ -505,6 +505,19 @@ RSpec.describe ProductsRenderer do
       ]
     end
 
+    it "provides only distributed producer properties for a subsequent variant" do
+      # Product has a second variant, from other enterprise. Only second variant is in order cycle.
+      other_property = Spree::Property.create!(name: "other", presentation: "other")
+      other_enterprise = create(:supplier_enterprise)
+      other_variant = create(:variant, product: product_apples, enterprise: other_enterprise)
+      exchange.variants = [other_variant]
+
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(other_enterprise, shared, other_property)
+
+      expect(subject).to match_array [other_property, shared]
+    end
+
     it "provides no properties when none are set" do
       expect(subject).to match_array []
     end
