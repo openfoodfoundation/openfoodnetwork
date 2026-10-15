@@ -39,6 +39,12 @@ RSpec.describe UserLocaleSetter do
 
             expect(I18n.locale).to eq :es
           end
+
+          it "updates Pagy's locale" do
+            service.set_locale
+
+            expect(Pagy::I18n.locale).to eq "es"
+          end
         end
 
         context "and has an invalid locale saved" do
