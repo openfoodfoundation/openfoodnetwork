@@ -52,7 +52,7 @@ class ProductsRenderer
       producer_properties: { producer_id: enterprises }
     ).select("DISTINCT spree_properties.*")
 
-    product_properties + producer_properties
+    (product_properties + producer_properties).uniq
   end
 
   private

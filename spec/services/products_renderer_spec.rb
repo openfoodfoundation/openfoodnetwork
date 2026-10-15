@@ -456,13 +456,13 @@ RSpec.describe ProductsRenderer do
                        inherits_properties: true)
     }
 
-    let(:product_property)  { Spree::Property.create!(name: "shared", presentation: "shared") }
-    let(:aromatic)          { Spree::Property.create!(name: "aromatic", presentation: "aromatic") }
-    let(:bountiful)         { Spree::Property.create!(name: "bountiful", presentation: "bountiful") }
-    let(:producer_property) { Spree::Property.create!(name: "shared", presentation: "shared") }
-    let(:organic)           { Spree::Property.create!(name: "organic", presentation: "organic") }
-    let(:biodynamic)        { Spree::Property.create!(name: "biodynamic", presentation: "biodynamic") }
-    let(:unrelated)         { Spree::Property.create!(name: "unrelated", presentation: "unrelated") }
+    let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
+    let(:aromatic)    { Spree::Property.create!(name: "aromatic", presentation: "aromatic") }
+    let(:bountiful)   { Spree::Property.create!(name: "bountiful", presentation: "bountiful") }
+    let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
+    let(:organic)     { Spree::Property.create!(name: "organic", presentation: "organic") }
+    let(:biodynamic)  { Spree::Property.create!(name: "biodynamic", presentation: "biodynamic") }
+    let(:unrelated)   { Spree::Property.create!(name: "unrelated", presentation: "unrelated") }
     subject { products_renderer.properties }
 
     before do
@@ -479,27 +479,29 @@ RSpec.describe ProductsRenderer do
     end
 
     it "provides all product properties" do
-      add_product_properties(product_apples, product_property, aromatic)
-      add_product_properties(product_bananas, product_property, bountiful)
+      add_product_properties(product_apples, shared, aromatic)
+      add_product_properties(product_bananas, shared, bountiful)
 
-      expect(subject).to match_array [product_property, aromatic, bountiful]
+      expect(subject).to match_array [shared, aromatic, bountiful]
     end
 
     it "provides all producer properties" do
-      add_producer_properties(apples_supplier, producer_property, organic)
-      add_producer_properties(bananas_supplier, producer_property, biodynamic)
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(bananas_supplier, shared, biodynamic)
 
-      expect(subject).to match_array [producer_property, organic, biodynamic]
+      expect(subject).to match_array [shared, organic, biodynamic]
     end
 
     it "provides all product and producer properties" do
-      add_product_properties(product_apples, product_property, aromatic)
-      add_product_properties(product_bananas, product_property, bountiful)
-      add_producer_properties(apples_supplier, producer_property, organic)
-      add_producer_properties(bananas_supplier, producer_property, biodynamic)
+      add_product_properties(product_apples, shared, aromatic)
+      add_product_properties(product_bananas, shared, bountiful)
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(bananas_supplier, shared, biodynamic)
+
+      expect{ subject }.to query_database 74
 
       expect(subject).to match_array [
-        product_property, producer_property, aromatic, bountiful, organic, biodynamic
+        shared, aromatic, bountiful, organic, biodynamic
       ]
     end
 
