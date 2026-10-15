@@ -11,7 +11,7 @@
     font-size: 15px;
     padding: $label-tag-padding;
     border-radius: $label-tag-border-radius;
-    background-color: $light-grey;
+    background-color: $grey-075;
 
     input {
       opacity: 0; // Invisble, but still part of the DOM accessibility tree
