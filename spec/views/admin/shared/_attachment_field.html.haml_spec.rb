@@ -30,4 +30,51 @@ RSpec.describe "admin/shared/_attachment_field.html.haml" do
 
     expect(rendered).not_to include("<img class=\"image-field-group__preview-image\"")
   end
+
+  it "does not offer removal when a rejected upload is pending and nothing is stored" do
+    enterprise.logo = terms_pdf_file
+    enterprise.valid?
+
+    allow(view).to receive_messages(
+      attachment_name: :logo,
+      attachment_url: nil,
+      f:
+    )
+
+    render
+
+    expect(rendered).not_to include("Remove Image")
+    expect(view.content_for(:admin_footer).to_s).not_to include('id="remove_logo"')
+  end
+
+  it "offers removal of a stored logo" do
+    enterprise.update!(logo: black_logo_file)
+
+    allow(view).to receive_messages(
+      attachment_name: :logo,
+      attachment_url: enterprise.logo_url(:thumb),
+      f:
+    )
+
+    render
+
+    expect(rendered).to include("Remove Image")
+    expect(view.content_for(:admin_footer)).to include('id="remove_logo"')
+  end
+
+  it "still offers removal of the stored logo when a rejected replacement is pending" do
+    enterprise.update!(logo: black_logo_file)
+    enterprise.logo = terms_pdf_file
+    enterprise.valid?
+
+    allow(view).to receive_messages(
+      attachment_name: :logo,
+      attachment_url: nil,
+      f:
+    )
+
+    render
+
+    expect(rendered).to include("Remove Image")
+  end
 end
