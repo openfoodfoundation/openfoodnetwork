@@ -85,7 +85,7 @@ module Spree
     has_one :proxy_order, dependent: :destroy
     has_one :subscription, through: :proxy_order
 
-    accepts_nested_attributes_for :line_items
+    accepts_nested_attributes_for :line_items, allow_destroy: true
     accepts_nested_attributes_for :bill_address
     accepts_nested_attributes_for :ship_address
     accepts_nested_attributes_for :payments

@@ -1124,6 +1124,284 @@ paths:
                 "@type": dfc-b:Offer
                 dfc-b:hasPrice: 9.99
                 dfc-b:stockLimitation: 7
+  "/api/dfc/enterprises/{enterprise_id}/orders/{order_id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: success
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                      "@type": dfc-b:Order
+                      dfc-b:hasPart: http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/10001
+                      dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:hasOrderStatus: dfc-v:Held
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/10001
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/10000/offers/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/20001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10000/supplied_products/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/20001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/SalesSession/#
+                      "@type": dfc-b:SaleSession
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+    put:
+      summary: Update Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: order completed
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+                order completed:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                unprocessable entity:
+                  value:
+                    error: 'Line items reference unknown products: http://test.host/api/dfc/enterprises/10000/supplied_products/99999'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: |
+                {
+                  "@context": "https://www.datafoodconsortium.org",
+                  "@graph": [
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders",
+                      "@type": "dfc-b:Order",
+                      "dfc-b:belongsTo": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "dfc-b:hasPart": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "dfc-b:orderedBy": "http://test.host/api/dfc/enterprises/11000",
+                      "dfc-b:hasOrderStatus": "dfc-v:Held"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "@type": "dfc-b:OrderLine",
+                      "dfc-b:quantity": 5,
+                      "dfc-b:concerns": "http://test.host/api/dfc/enterprises/10000/offers/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/offers/10001",
+                      "@type": "dfc-b:Offer",
+                      "dfc-b:hasPrice": {
+                        "@type": "dfc-b:Price",
+                        "dfc-b:value": 19.99,
+                        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+                      },
+                      "dfc-b:stockLimitation": 0,
+                      "dfc-b:offeredItem": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001",
+                      "@type": "dfc-b:SuppliedProduct",
+                      "dfc-b:name": "Apple",
+                      "dfc-b:description": "Red",
+                      "dfc-b:hasQuantity": {
+                        "@type": "dfc-b:QuantitativeValue",
+                        "dfc-b:hasUnit": "dfc-m:Gram",
+                        "dfc-b:value": 1
+                      },
+                      "dfc-b:referencedBy": "http://test.host/api/dfc/enterprises/10000/catalog_items/10001",
+                      "dfc-b:isVariantOf": "http://test.host/api/dfc/product_groups/90000",
+                      "ofn:spree_product_id": 90000,
+                      "ofn:spree_product_uri": "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "@type": "dfc-b:SaleSession",
+                      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+                      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+                    }
+                  ]
+                }
+    delete:
+      summary: Cancel Order
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Orders
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                unprocessable entity:
+                  value:
+                    error: Cannot cancel order in state 'cart'
+  "/api/dfc/enterprises/{enterprise_id}/orders":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create Order
+      parameters: []
+      tags:
+      - Orders
+      responses:
+        '201':
+          description: created
+          content:
+            application/json; charset=utf-8:
+              examples:
+                with line items:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@id": http://test.host/api/dfc/enterprises/10000/orders/10001
+                    "@type": dfc-b:Order
+                    dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                    dfc-b:hasOrderStatus: dfc-v:Held
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+        '422':
+          description: unprocessable entity
+          content:
+            application/json; charset=utf-8:
+              examples:
+                variant not found:
+                  value:
+                    error: 'Line items reference unknown products: http://test.host/api/dfc/enterprises/10000/supplied_products/10001'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: |
+                {
+                  "@context": "https://www.datafoodconsortium.org",
+                  "@graph": [
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders",
+                      "@type": "dfc-b:Order",
+                      "dfc-b:belongsTo": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "dfc-b:hasPart": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "dfc-b:orderedBy": "http://test.host/api/dfc/enterprises/11000",
+                      "dfc-b:hasOrderStatus": "dfc-v:Held"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/orders/OrderLines/1",
+                      "@type": "dfc-b:OrderLine",
+                      "dfc-b:quantity": 1,
+                      "dfc-b:concerns": "http://test.host/api/dfc/enterprises/10000/offers/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/offers/10001",
+                      "@type": "dfc-b:Offer",
+                      "dfc-b:hasPrice": {
+                        "@type": "dfc-b:Price",
+                        "dfc-b:value": 19.99,
+                        "dfc-b:hasUnit": "dfc-m:AustralianDollar"
+                      },
+                      "dfc-b:stockLimitation": 0,
+                      "dfc-b:offeredItem": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products/10001",
+                      "@type": "dfc-b:SuppliedProduct",
+                      "dfc-b:name": "Apple",
+                      "dfc-b:description": "Red",
+                      "dfc-b:hasQuantity": {
+                        "@type": "dfc-b:QuantitativeValue",
+                        "dfc-b:hasUnit": "dfc-m:Gram",
+                        "dfc-b:value": 1
+                      },
+                      "dfc-b:referencedBy": "http://test.host/api/dfc/enterprises/10000/catalog_items/10001",
+                      "dfc-b:isVariantOf": "http://test.host/api/dfc/product_groups/90000",
+                      "ofn:spree_product_id": 90000,
+                      "ofn:spree_product_uri": "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+                    },
+                    {
+                      "@id": "http://test.host/api/dfc/enterprises/10000/supplied_products",
+                      "@type": "dfc-b:SaleSession",
+                      "dfc-b:beginDate": "Wed Mar 19 2025 04:40:16 UTC",
+                      "dfc-b:endDate": "Thu Mar 27 2025 04:40:16 UTC"
+                    }
+                  ]
+                }
   "/api/dfc/organizations":
     get:
       summary: List organizations
@@ -1618,6 +1896,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
@@ -1633,6 +1912,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
@@ -1693,6 +1973,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 1.0
+                    dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
                     dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000

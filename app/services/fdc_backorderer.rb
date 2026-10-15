@@ -62,15 +62,17 @@ class FdcBackorderer
     # Suggested by FDC team:
     next_id = order.lines.count + 1
 
-    OrderLineBuilder.build(offer, 0).tap do |line|
+    OrderLineBuilder.build_from_offer(offer, 0).tap do |line|
       line.semanticId = "#{order.semanticId}/OrderLines/#{next_id}"
       order.lines << line
     end
   end
 
   def find_order_line(order, offer)
+    offered_item_id = DfcBuilder.extract_semantic_id(offer.offeredItem)
+
     order.lines.find do |line|
-      line.offer.offeredItem.semanticId == offer.offeredItem.semanticId
+      DfcBuilder.extract_semantic_id(line.offer.offeredItem) == offered_item_id
     end
   end
 
