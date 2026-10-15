@@ -38,8 +38,28 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).to have_selector ".variant-unit", text: "2kg"
 
       # Variants of several producers name their producer, the shared header doesn't.
-      expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
-      expect(page).to have_selector ".product-header", text: "Multiple producers"
+      expect(page).to have_selector ".variant-producer", text: "from Onion Orchard"
+      expect(page).not_to have_selector ".product-producer"
+    end
+
+    it "explains the price and the unit price" do
+      fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
+      order_cycle.exchanges.outgoing.first.enterprise_fees << fee
+
+      visit enterprise_product_path(enterprise, product)
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "Price breakdown"
+      end
+      expect(page).to have_content "Hub admin $1.50"
+
+      find("body").send_keys(:escape)
+      expect(page).not_to have_content "Hub admin"
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "About the unit price"
+      end
+      expect(page).to have_content "This is the unit price of this product."
     end
 
     # smoke test
@@ -48,15 +68,13 @@ RSpec.describe "As a consumer I want to view products" do
 
       expect(page).to have_content "Garlic"
 
-      within ".variant-list li", text: "Big bag" do
-        click_button "Add"
+      click_button "Add Garlic - Big bag - 2kg to cart"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "1"
+      expect(page).to have_content "1 in cart"
 
-        expect(page).to have_content "1 in cart"
-
-        find("img[src*='add']").click
-
-        expect(page).to have_content "2 in cart"
-      end
+      click_button "Increase quantity of Garlic - Big bag - 2kg"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "2"
+      expect(page).to have_content "2 in cart"
 
       # The cart is saved for this shop, not just displayed.
       expect(page).to have_selector ".cart-span", text: "2"
@@ -112,7 +130,7 @@ RSpec.describe "As a consumer I want to view products" do
       it "lists the variants of the order cycle the shopper chooses" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "Please choose an order cycle"
+        expect(page).to have_content "Please choose when you want your order"
         expect(page).not_to have_selector ".variant-list"
 
         select "next week", from: "order_cycle_id"
@@ -160,7 +178,7 @@ RSpec.describe "As a consumer I want to view products" do
       it "says that the product is unavailable" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "This product is currently unavailable."
+        expect(page).to have_content "Product unavailable"
         expect(page).not_to have_selector ".variant-list"
       end
     end
@@ -368,9 +386,10 @@ RSpec.describe "As a consumer I want to view products" do
           # Add button is only displayed for single variant product
           expect(page).to have_selector(".add-variant", count: 2)
 
-          # Product modal
+          # Product page
           click_link product.name
-          within(".reveal-modal") do
+          expect(page).to have_current_path enterprise_product_path(distributor, product)
+          within(".product-page") do
             expect(page).to have_content product.name
 
             # No insecure HTML

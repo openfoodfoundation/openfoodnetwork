@@ -1,18 +1,9 @@
 - content_for(:title) do
-  -# We have a key collision in the locale for the global `products` key.
-  -# = t(".title", enterprise: @enterprise.name, product: @product.name)
-  = [@product.name, t("products_from"), @enterprise.name].join(" ")
+  = t(".title", enterprise: @enterprise.name, product: @product.name)
 - content_for(:description) do
   = @product.description
 - content_for(:image) do
   = @product.image.url(:small) if @product.image.present?
-- content_for :injection_data do
-  - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
-    = inject_enterprise_shopfront(@enterprise)
-  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
-    = inject_taxons
-  - cache(*CacheService::FragmentCaching.ams_all_properties) do
-    = inject_properties
 
 %shop.darkswarm
   = render partial: "shopping_shared/header"

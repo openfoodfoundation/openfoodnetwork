@@ -13,14 +13,19 @@ RSpec.describe ShopVariantListComponent, type: :component do
       id: 1, on_demand: false, on_hand: 3, display_name: "Borlotti", name_to_display: "Borlotti",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end
 
+  def fee_amount(fee_type, name, amount)
+    OpenFoodNetwork::EnterpriseFeeCalculator::FeeAmount.new(fee_type:, name:, amount:)
+  end
+
   def build_product(variants)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                          variant_images: [], properties_including_inherited: [], variants:)
+                          variant_images: [], properties_including_inherited: [], variants:,
+                          to_param: "1-beans")
   end
 
   context "when the variants come from one producer" do
@@ -52,8 +57,8 @@ RSpec.describe ShopVariantListComponent, type: :component do
     it "names each producer on its own row" do
       render_list
 
-      expect(page).to have_selector ".variant-producer", text: "From Fred's Farm"
-      expect(page).to have_selector ".variant-producer", text: "From Another Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Fred's Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Another Farm"
     end
   end
 
@@ -66,6 +71,43 @@ RSpec.describe ShopVariantListComponent, type: :component do
       expect(page).not_to have_selector ".variant-name"
       expect(page).to have_selector ".variant-unit", text: "1kg"
       expect(page).not_to have_content "|"
+    end
+  end
+
+  describe "the price breakdown" do
+    let(:product) {
+      build_product([build_variant(
+        id: 7, price: 10, price_with_fees: 12, display_price_with_fees: "$12.00",
+        fees: [
+          fee_amount(:sales, "Markup", 0.5),
+          fee_amount(:admin, "Hub admin", 1.0),
+          fee_amount(:admin, "Coordinator admin", 0.5),
+        ]
+      )])
+    }
+
+    it "lists the item cost and the fees in the shopfront's order" do
+      render_list
+
+      breakdown = page.find("#price-breakdown-7[popover]")
+      expect(breakdown.all("dl > div").map { |row| row.text.squish }).to eq [
+        "Item cost $10.00", "Hub admin $1.00", "Coordinator admin $0.50", "Markup $0.50",
+        "= $12.00"
+      ]
+      expect(page).to have_selector(
+        "button[popovertarget='price-breakdown-7']" \
+        "[aria-label='Price breakdown of Beans - Borlotti - 1kg']"
+      )
+    end
+
+    it "explains the unit price" do
+      render_list
+
+      expect(page).to have_selector(
+        "button[popovertarget='unit-price-info-7']" \
+        "[aria-label='About the unit price of Beans - Borlotti - 1kg']"
+      )
+      expect(page).to have_selector "#unit-price-info-7[popover]", text: "compare the price"
     end
   end
 

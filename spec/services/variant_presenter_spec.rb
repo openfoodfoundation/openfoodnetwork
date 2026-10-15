@@ -31,10 +31,26 @@ RSpec.describe VariantPresenter do
       let(:enterprise_fee_calculator) { instance_double(OpenFoodNetwork::EnterpriseFeeCalculator) }
 
       it "calculates the price using the enterprise_fee_calculaltor" do
-        expect(enterprise_fee_calculator).to receive(:indexed_fees_for).with(variant)
-          .and_return(5.00)
+        expect(enterprise_fee_calculator).to receive(:indexed_fee_breakdown_for).with(variant)
+          .and_return([fee_amount(3.00), fee_amount(2.00)])
 
         expect(presenter.price_with_fees).to eq(15.00)
+      end
+
+      it "calculates the fees only once" do
+        expect(enterprise_fee_calculator).to receive(:indexed_fee_breakdown_for).with(variant)
+          .once.and_return([fee_amount(5.00)])
+
+        presenter.price_with_fees
+        presenter.display_price_with_fees
+        presenter.unit_price_price
+        expect(presenter.fee_breakdown.sum(&:amount)).to eq(5.00)
+      end
+
+      def fee_amount(amount)
+        OpenFoodNetwork::EnterpriseFeeCalculator::FeeAmount.new(
+          fee_type: :admin, name: "Admin", amount:
+        )
       end
     end
   end

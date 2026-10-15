@@ -26,6 +26,11 @@ class AddToCartComponent < ViewComponent::Base
     variant.on_demand ? "Infinity" : variant.on_hand
   end
 
+  # The buttons only say "Add" or show an icon, so their labels name the variant they're for.
+  def label(action)
+    t("components.add_to_cart.#{action}", name: helpers.variant_label_name(variant))
+  end
+
   def component_css
     "add-to-cart-component #{@css_class}"
   end
