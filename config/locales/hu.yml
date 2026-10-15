@@ -440,7 +440,7 @@ hu:
   show_all_with_more: "Az összes megjelenítése (további %{num})"
   cancel: Mégsem
   edit: Szerkesztés
-  clone: Klón
+  clone: Klónozás
   distributors: Elosztók
   distribution: Forgalmazás
   order_cycles: Rendelési ciklusok
@@ -577,7 +577,7 @@ hu:
         import_date: "Importálás dátuma"
       actions:
         edit: Szerkesztés
-        clone: Klón
+        clone: Klónozás
         delete: Törlés
         remove: Eltávolítás
         preview: Előnézet
@@ -2464,6 +2464,7 @@ hu:
   shopping_groups_part_of: "része:"
   shopping_producers_of_hub: "%{hub} termelői:"
   enterprises_next_closing: "Rendelés zárása"
+  enterprises_next_closing_html: "Következő rendelés lezárása <strong>%{distance_of_time} múlva</strong>"
   enterprises_currently_open: "A rendelések jelenleg nyitva vannak"
   enterprises_ready_for: "Átvétel"
   enterprises_choose: "Válaszd ki, hogy mikor szeretnéd átvenni:"
@@ -2510,6 +2511,9 @@ hu:
   products_cart_empty: "Kosár üres"
   products_edit_cart: "Kosár szerkesztése"
   products_from: termelő
+  products_multiple_producers: "Több termelő"
+  products_unavailable: "Ez a termék jelenleg nem elérhető."
+  products_choose_order_cycle: "Kérjük, válassz egy rendelési ciklust a termékkínálathoz."
   products_change: "Nincs mentendő módosítás."
   products_update_error: "A mentés a következő hibá(k) miatt nem sikerült:"
   products_update_error_msg: "A mentés nem sikerült."
