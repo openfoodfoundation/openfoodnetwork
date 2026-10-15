@@ -11,7 +11,7 @@ class ProductsController < BaseController
     @q = search_params[:q]
     renderer = product_renderer
     @products = renderer.products_view
-    @properties = product_renderer.properties # rebase: obviously this should use the renderer variable; will be fixed in a future commit.
+    @properties = renderer.properties
     @pagy = renderer.pagination
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
@@ -58,7 +58,7 @@ class ProductsController < BaseController
   private
 
   def product_renderer(args = search_params)
-    @product_renderer ||= ProductsRenderer.new(
+    ProductsRenderer.new(
       distributor,
       order_cycle,
       customer,
