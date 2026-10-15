@@ -9,8 +9,8 @@
   .property {
     display: inline-block;
     font-size: 15px;
-    padding: 10px 18px;
-    border-radius: 24px;
+    padding: $label-tag-padding;
+    border-radius: $label-tag-border-radius;
     background-color: $light-grey;
 
     input {
