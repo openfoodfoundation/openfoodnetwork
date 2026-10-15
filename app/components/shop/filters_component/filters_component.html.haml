@@ -1,5 +1,5 @@
 = form_with url: @url, scope: :q, method: :get, html: { class: "shop__filters_component", 'data-controller': "form", 'data-turbo-frame': "shop-products" } do |f|
-  - selected = Array(@q&.fetch(:with_properties)).reject(&:blank?).map(&:to_i)
+  - selected = @q&.fetch(:with_properties, [])&.compact_blank&.map(&:to_i)
   = f.collection_check_boxes :with_properties, @properties, :id, :presentation,
                              { checked: selected } do |b|
     = b.label class: 'property' do
