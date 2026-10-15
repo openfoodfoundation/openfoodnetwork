@@ -947,7 +947,6 @@ en:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
         absent_products:
-          zero: ""
           one: |
             One product is no longer in the catalog.
             It will be marked as unavailable by resetting stock to zero.
