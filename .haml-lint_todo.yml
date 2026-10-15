@@ -151,3 +151,4 @@ linters:
       - "app/views/spree/admin/orders/invoice4.html.haml"
       - "app/views/spree/admin/products/new.html.haml"
       - "app/views/spree/admin/variants/_form.html.haml"
+      - "app/views/spree/admin/orders/invoice2.html.haml"
