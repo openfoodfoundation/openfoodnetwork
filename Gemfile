@@ -64,6 +64,8 @@ gem "taler"
 gem 'devise'
 gem 'devise-encryptable'
 gem 'devise-i18n'
+gem 'doorkeeper'
+gem 'doorkeeper-openid_connect'
 gem 'jwt'
 
 gem 'datafoodconsortium-connector'

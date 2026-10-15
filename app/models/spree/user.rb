@@ -22,6 +22,7 @@ module Spree
     before_validation :set_login
     after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
+    after_save :revoke_oauth_access, if: -> { saved_change_to_disabled_at? && disabled }
 
     scope :admin, -> { where(admin: true) }
     scope :confirmed, -> { where.not(confirmed_at: nil) }
@@ -40,6 +41,14 @@ module Spree
     has_many :webhook_endpoints, dependent: :destroy
     has_many :column_preferences, dependent: :destroy
     has_one :oidc_account, dependent: :destroy
+    has_many :oauth_access_grants, class_name: "Doorkeeper::AccessGrant",
+                                   foreign_key: :resource_owner_id,
+                                   inverse_of: false,
+                                   dependent: :delete_all
+    has_many :oauth_access_tokens, class_name: "Doorkeeper::AccessToken",
+                                   foreign_key: :resource_owner_id,
+                                   inverse_of: false,
+                                   dependent: :delete_all
 
     accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
     accepts_nested_attributes_for :webhook_endpoints
@@ -175,6 +184,11 @@ module Spree
     end
 
     private
+
+    def revoke_oauth_access
+      oauth_access_grants.where(revoked_at: nil).update_all(revoked_at: Time.zone.now)
+      oauth_access_tokens.where(revoked_at: nil).update_all(revoked_at: Time.zone.now)
+    end
 
     def check_completed_orders
       raise DestroyWithOrdersError if orders.complete.present?
