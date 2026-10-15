@@ -2,7 +2,7 @@
 
 class Invoice
   class DataPresenter
-    class Supplier < Invoice::DataPresenter::Base
+    class Producer < Invoice::DataPresenter::Base
       attributes :name
     end
   end
