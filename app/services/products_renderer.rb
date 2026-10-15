@@ -41,7 +41,7 @@ class ProductsRenderer
   def properties
     product_properties = Spree::Property.joins(:product_properties).where(
       product_properties: { product_id: distributed_products.stocked_products }
-    ).select("DISTINCT spree_properties.*")
+    )
 
     # Excluding producers where inherits_properties: false.
     # Why isn't that field on variant? It's related to the variant.enterprise, so really should be.
@@ -50,9 +50,11 @@ class ProductsRenderer
     ).pluck(:enterprise_id)
     producer_properties = Spree::Property.joins(:producer_properties).where(
       producer_properties: { producer_id: enterprises }
-    ).select("DISTINCT spree_properties.*")
+    )
 
-    (product_properties + producer_properties).uniq
+    Spree::Property.where(id: product_properties).
+      or(Spree::Property.where(id: producer_properties)).
+      order(:presentation)
   end
 
   private

@@ -8,7 +8,7 @@ class ProductsController < BaseController
   def index
     @q = params[:q]
     @products = product_renderer.products_view
-    @properties = product_renderer.properties.sort_by(&:presentation)
+    @properties = product_renderer.properties
 
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display

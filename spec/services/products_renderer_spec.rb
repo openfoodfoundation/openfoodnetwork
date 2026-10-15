@@ -492,16 +492,16 @@ RSpec.describe ProductsRenderer do
       expect(subject).to match_array [shared, organic, biodynamic]
     end
 
-    it "provides all product and producer properties" do
+    it "provides all product and producer properties, alphabetically" do
       add_product_properties(product_apples, shared, aromatic)
       add_product_properties(product_bananas, shared, bountiful)
       add_producer_properties(apples_supplier, shared, organic)
       add_producer_properties(bananas_supplier, shared, biodynamic)
 
-      expect{ subject }.to query_database 74
+      expect{ subject }.to query_database 72
 
-      expect(subject).to match_array [
-        shared, aromatic, bountiful, organic, biodynamic
+      expect(subject).to eq [
+        aromatic, biodynamic, bountiful, organic, shared
       ]
     end
 
