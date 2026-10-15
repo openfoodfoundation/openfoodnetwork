@@ -1,6 +1,9 @@
 = turbo_frame_tag "shop-products" do
-  .loading{ style: "display: none;", "data-product-grid-view-target": "loading" }
+  .loading
     = render partial: "shop/products/product_spinner"
+
+  - if @properties.any?
+    = render Shop::FiltersComponent.new(properties: @properties, url: order_cycle_products_path(@order_cycle), q: @q)
 
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
