@@ -17,16 +17,3 @@ angular.module("admin.productImport").filter 'entriesFilterValid', ->
         filtered[line_number] = entry
 
     filtered
-
-angular.module("admin.productImport").filter 'entriesFilterEnterprise', ->
-  (entries, enterprise) ->
-    if enterprise == 'all'
-      return entries
-
-    filtered = {}
-
-    angular.forEach entries, (entry, line_number) ->
-      if enterprise == entry.attributes['enterprise']
-        filtered[line_number] = entry
-
-    filtered
