@@ -11,12 +11,4 @@ module AngularFormHelper
         #{html_attributes}>#{ERB::Util.html_escape(text)}</option>)
     end.join("\n").html_safe # rubocop:disable Rails/OutputSafety
   end
-
-  def ng_options_from_collection_for_select(collection, value_method, text_method, angular_field)
-    options = collection.map do |element|
-      [element.public_send(text_method), element.public_send(value_method)]
-    end
-
-    ng_options_for_select(options, angular_field)
-  end
 end

@@ -48,13 +48,6 @@ module ProductImport
       @entries.count > 0
     end
 
-    def valid_entries?
-      @entries.each do |entry|
-        return true if entry.validates_as.present?
-      end
-      false
-    end
-
     def item_count
       @sheet ? @sheet.last_row - 1 : 0
     end

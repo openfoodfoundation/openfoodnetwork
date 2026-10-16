@@ -354,13 +354,6 @@ module Admin
       Voucher.restore(vouchers_to_restore) if vouchers_to_restore.present?
     end
 
-    def create_calculator_for(rule, attrs)
-      return unless attrs[:calculator_type].present? && attrs[:calculator_attributes].present?
-
-      rule.update(calculator_type: attrs[:calculator_type])
-      attrs[:calculator_attributes].merge!( id: rule.calculator.id )
-    end
-
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
