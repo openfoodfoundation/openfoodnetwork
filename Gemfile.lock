@@ -904,8 +904,6 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    validates_lengths_from_database (0.8.0)
-      activerecord (>= 4)
     vcr (6.4.0)
     view_component (4.15.0)
       actionview (>= 7.1.0)
@@ -1083,7 +1081,6 @@ DEPENDENCIES
   turbo_power
   undercover
   valid_email2
-  validates_lengths_from_database
   vcr
   view_component
   view_component_reflex (= 3.1.14.pre9)
@@ -1411,7 +1408,6 @@ CHECKSUMS
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
   valid_email2 (7.1.0) sha256=eb0e0f035e91d9fa147acfd5762b07a895b46e6ec2779300bff6ca38bcd40518
   validate_url (1.0.15) sha256=72fe164c0713d63a9970bd6700bea948babbfbdcec392f2342b6704042f57451
-  validates_lengths_from_database (0.8.0) sha256=a4cfbbd49673da331c4f098ade90893dde531cae7ca37da41b8f79e15bc0538b
   vcr (6.4.0) sha256=077ac92cc16efc5904eb90492a18153b5e6ca5398046d8a249a7c96a9ea24ae6
   view_component (4.15.0) sha256=2924e207b102c04ab51c4d318535f03f1c3aab3c81ecff99b1cc631b43e14eac
   view_component_reflex (3.1.14.pre9) sha256=d1f9e61fdeb2f949fe292aba263b4c05a81e531b0ce2cd58297ad55353bbbaa7
