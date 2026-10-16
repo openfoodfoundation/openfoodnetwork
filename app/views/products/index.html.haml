@@ -5,3 +5,31 @@
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       = render ProductTileComponent.new(product:, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)
+
+  - if @products.empty?
+    .no-results-bar
+      %p.no-results= t(:products_no_results)
+
+  - if @pagy.last > 1
+    .shop-pagination
+      .pagination-content
+        - options = { path: order_cycle_products_path(params[:order_cycle_id]), anchor_string: 'data-turbo-frame="_self"' }
+        - a_lambda = @pagy.send(:a_lambda, **options)
+        %nav{ id: "shop-products-pagination", "aria-label": Pagy::I18n.translate("pagy.aria_label.nav", count: @pagy.last), class: "pagy" }
+          - previous_text = "#{image_pack_tag("material-icons/chevron_left.svg", class: "material-icons")}&nbsp;#{t("products_pagination.previous")}"
+          -# haml-lint:disable UnescapedHtml
+          != @pagy.previous_tag(text: previous_text, **options)
+
+          - @pagy.send(:series).each do |item|
+            - if item.is_a?(Integer)
+              != a_lambda.(item)
+            - elsif item.is_a?(String)
+              %a{ role:"link", "aria-disabled": "true", "aria-current":"page"}=item
+            - elsif item == :gap
+              %a{ role:"separator", "aria-disabled": "true"}
+                &hellip;
+
+          - next_text = "#{t("products_pagination.next")}&nbsp;#{image_pack_tag("material-icons/chevron_right.svg", class: "material-icons")}"
+          != @pagy.next_tag(text: next_text, **options)
+          -# haml-lint:enable UnescapedHtml
+      .pagination-info= t("products_pagination.info_tag",from: @pagy.from, to: @pagy.to, count: @pagy.count)
