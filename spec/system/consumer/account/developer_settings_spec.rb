@@ -51,6 +51,7 @@ RSpec.describe "Developer Settings" do
             end
             expect(page.document).to have_content "Webhook endpoint successfully deleted"
             expect(page).not_to have_content "https://url"
+            expect(page).to have_field "order_cycle_opened_webhook_endpoint_url"
 
             within(:table_row, ["Post webhook on Payment status change"]) do
               fill_in "payment_status_changed_webhook_endpoint_url", with: "https://url/payment"
@@ -65,6 +66,7 @@ RSpec.describe "Developer Settings" do
 
             expect(page.document).to have_content "Webhook endpoint successfully deleted"
             expect(page).not_to have_content "https://url/payment"
+            expect(page).to have_field "payment_status_changed_webhook_endpoint_url"
           end
         end
       end

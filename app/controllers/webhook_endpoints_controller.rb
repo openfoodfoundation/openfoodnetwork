@@ -17,12 +17,16 @@ class WebhookEndpointsController < BaseController
 
   def destroy
     id = @webhook_endpoint.id
+    webhook_type = @webhook_endpoint.webhook_type
     if @webhook_endpoint.destroy
       flash.now[:success] = t('.success')
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("webhook-endpoint-#{id}"),
+            turbo_stream.replace(
+              "webhook-endpoint-#{id}",
+              WebhookEndpointFormComponent.new(webhooks: [], webhook_type:)
+            ),
             turbo_stream.replace(:flashes, partial: "shared/flashes", locals: { flashes: flash })
           ]
         end
