@@ -911,7 +911,7 @@ RSpec.describe '
     login_as_admin
     visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
-    accept_alert do
+    accept_confirm do
       first('a.delete-order-cycle').click
     end
     expect(page).not_to have_selector "tr.order-cycle-#{order_cycle.id}"

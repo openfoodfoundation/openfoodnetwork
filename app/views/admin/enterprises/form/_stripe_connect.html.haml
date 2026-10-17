@@ -5,7 +5,11 @@
       = t('.stripe_account_connected')
     .row
 
-      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), data: { turbo: true, turbo_method: :delete}, class: 'button'
+      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), class: 'button',
+        data: { controller: "fetch-redirect",
+                fetch_redirect_method_value: "delete",
+                fetch_redirect_redirect_to_value: main_app.edit_admin_enterprise_path(@enterprise),
+                action: "click->fetch-redirect#request" }
 - else
   .row.stripe-info
     .six.columns.alpha

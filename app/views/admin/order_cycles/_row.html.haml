@@ -36,4 +36,8 @@
   %td.actions{ "ng-if": 'orderCycle.viewing_as_coordinator' }
     %a.clone-order-cycle.icon-copy.no-text{ "ofn-with-tip": t(:clone), "ng-href": '{{orderCycle.clone_path}}' }
   %td.actions{ "ng-if": 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }
-    %a.delete-order-cycle.icon-trash.no-text{ data: { turbo: true, turbo_method: :delete, turbo_confirm: t(:are_you_sure) }, "ofn-with-tip": t(:remove), "ng-href": '{{orderCycle.delete_path}}' }
+    %a.delete-order-cycle.icon-trash.no-text{ "ofn-with-tip": t(:remove), "ng-href": '{{orderCycle.delete_path}}',
+                                              data: { controller: "fetch-redirect",
+                                                      fetch_redirect_method_value: "delete",
+                                                      fetch_redirect_confirm_message_value: t(:are_you_sure),
+                                                      action: "click->fetch-redirect#request" } }
