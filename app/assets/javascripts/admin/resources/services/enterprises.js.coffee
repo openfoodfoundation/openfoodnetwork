@@ -1,4 +1,4 @@
-angular.module("admin.resources").factory 'Enterprises', ($q, $filter, EnterpriseResource) ->
+angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource) ->
   new class Enterprises
     byID: {}
     pristineByID: {}
@@ -38,15 +38,5 @@ angular.module("admin.resources").factory 'Enterprises', ($q, $filter, Enterpris
 
     resetAttribute: (enterprise, attribute) ->
       enterprise[attribute] = @pristineByID[enterprise.id][attribute]
-
-    findByID: (id) ->
-      @byID[id]
-
-    # For finding multiple Enterprises represented by comma delimited string
-    findByIDs: (ids) ->
-      @byID[id] for id in ids.split(",") when @byID[id]
-
-    findByTerm: (enterprises, term) ->
-      $filter('filter')(enterprises, term)
 
 
