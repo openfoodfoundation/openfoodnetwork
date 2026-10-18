@@ -185,6 +185,41 @@ describe("ToggleControlController", () => {
     });
   });
 
+  describe("#readOnlyUnlessChecked", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `<div data-controller="toggle-control">
+        <input type="radio" name="a" id="a_yes" data-action="change->toggle-control#readOnlyUnlessChecked">
+        <input type="radio" name="a" id="a_no" data-action="change->toggle-control#readOnlyUnlessChecked">
+        <input id="control" data-toggle-control-target="control" data-toggle-control-editable-if-checked="#a_yes">
+      </div>`;
+    });
+
+    const check = (input) => {
+      input.checked = true;
+      input.dispatchEvent(new Event("change"));
+    };
+
+    it("makes the control editable when the input is checked", () => {
+      check(a_yes);
+      expect(control.readOnly).toBe(false);
+
+      check(a_no);
+      expect(control.readOnly).toBe(true);
+    });
+
+    it("locks a TomSelect control", () => {
+      control.tomselect = { setReadOnly: jest.fn(), lock: jest.fn(), unlock: jest.fn() };
+
+      check(a_no);
+      expect(control.tomselect.setReadOnly).toHaveBeenCalledWith(true);
+      expect(control.tomselect.lock).toHaveBeenCalled();
+
+      check(a_yes);
+      expect(control.tomselect.setReadOnly).toHaveBeenCalledWith(false);
+      expect(control.tomselect.unlock).toHaveBeenCalled();
+    });
+  });
+
   describe("#toggleDisplay", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="toggle-control">

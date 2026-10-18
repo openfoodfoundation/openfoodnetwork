@@ -92,6 +92,15 @@ module Admin
       end
     end
 
+    def shopfront_category_options
+      Spree::Taxon.order(:name).pluck(:name, :id)
+    end
+
+    def shopfront_producer_options
+      OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises
+        .is_primary_producer.order(:name).pluck(:name, :id)
+    end
+
     # Translation for the current locale only, without falling back to English.
     # Instances can hide an optional text by not translating it.
     def translation_without_fallback(key)

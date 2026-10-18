@@ -621,48 +621,79 @@ RSpec.describe '
         add_variant_to_order_cycle(exchange1, variant)
       end
 
-      context "sorting by category" do
-        before do
-          visit edit_admin_enterprise_path(distributor1)
-
-          within(".side_menu") do
-            find(:link, "Shop Preferences").trigger("click")
-          end
-
-          choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_enterprise_preferred_shopfront_taxon_order").click
-          find(".select2-result-label", text: "Tricky Taxon").click
-          click_button 'Update'
-          expect(flash_message)
-            .to eq('Enterprise "First Distributor" has been successfully updated!')
-        end
-
-        it "sets the preference correctly" do
-          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_category")
-          expect(distributor1.preferred_shopfront_taxon_order).to eql(taxon.id.to_s)
-        end
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
       end
 
-      context "sorting by producer" do
+      it "sorts by category" do
+        choose "By category"
+        select_in_picker "Tricky Taxon", from: "Category"
+        click_button 'Update'
+
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.preferred_shopfront_product_sorting_method)
+          .to eq "by_category"
+        expect(distributor1.preferred_shopfront_taxon_order).to eq taxon.id.to_s
+      end
+
+      it "sorts by producer" do
+        choose "By producer"
+        select_in_picker "First Supplier", from: "Producer"
+        click_button 'Update'
+
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.preferred_shopfront_product_sorting_method)
+          .to eq "by_producer"
+        expect(distributor1.preferred_shopfront_producer_order).to eq supplier1.id.to_s
+      end
+
+      it "only allows changing the order of the selected sorting method" do
+        producer_picker = find_field("Producer").sibling(".ts-wrapper")
+
+        choose "By category"
+        producer_picker.click
+        expect(producer_picker).not_to have_content "First Supplier"
+
+        choose "By producer"
+        select_in_picker "First Supplier", from: "Producer"
+        expect(producer_picker).to have_content "First Supplier"
+      end
+
+      def select_in_picker(option, from:)
+        picker = find_field(from).sibling(".ts-wrapper")
+        picker.find(".ts-control").click
+        picker.find(".option", text: option).click
+        # Close the dropdown without clicking somewhere that could toggle an option again
+        picker.find(".ts-control input").send_keys(:escape)
+      end
+
+      context "with categories already in order" do
+        let!(:other_taxon) { create(:taxon, name: "Another Taxon") }
+
         before do
+          distributor1.update!(preferred_shopfront_taxon_order: "#{taxon.id},#{other_taxon.id}")
           visit edit_admin_enterprise_path(distributor1)
-
-          within(".side_menu") do
-            find(:link, "Shop Preferences").trigger("click")
-          end
-
-          choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          scroll_to(:bottom)
-          find("#s2id_enterprise_preferred_shopfront_producer_order").click
-          find(".select2-result-label", text: "First Supplier").click
-          click_button 'Update'
-          expect(flash_message)
-            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
         end
 
-        it "sets the preference correctly" do
-          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_producer")
-          expect(distributor1.preferred_shopfront_producer_order).to eql(supplier1.id.to_s)
+        it "changes the order by dragging" do
+          selected = find_field("Category").sibling(".ts-wrapper").find(".ts-control")
+          expect(selected).to have_content(/Tricky Taxon.*Another Taxon/m)
+
+          # TomSelect stops the mousedown event Cuprite uses to detect HTML5 dragging.
+          selected.find("[data-ts-item]", text: "Another Taxon")
+            .drag_to(selected.find("[data-ts-item]", text: "Tricky Taxon"), html5: true)
+          expect(selected).to have_content(/Another Taxon.*Tricky Taxon/m)
+
+          click_button 'Update'
+
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.preferred_shopfront_taxon_order)
+            .to eq "#{other_taxon.id},#{taxon.id}"
         end
       end
     end

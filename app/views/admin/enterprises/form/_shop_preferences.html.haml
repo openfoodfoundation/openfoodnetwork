@@ -1,5 +1,7 @@
-- toggle_action = { action: "change->toggle-control#displayIfAllChecked" }
-- require_login_warning = !@enterprise.require_login && @enterprise.allow_guest_orders && @enterprise.allow_order_changes
+:ruby
+  toggle_action = { action: "change->toggle-control#displayIfAllChecked" }
+  picker_action = { action: "change->toggle-control#readOnlyUnlessChecked" }
+  require_login_warning = !@enterprise.require_login && @enterprise.allow_guest_orders && @enterprise.allow_order_changes
 
 .shop-preferences{ data: { controller: "toggle-control" } }
   = render SettingsSectionComponent.new(id: "shop_preferences_shopfront", title: t('.sections.shopfront')) do
@@ -21,15 +23,16 @@
 
   = render SettingsSectionComponent.new(id: "shop_preferences_product_display", title: t('.sections.product_display')) do
     = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: translation_without_fallback('.product_order.description')) do
-      -# The ordering pickers still use AngularJS. They will be replaced by a reorderable picker.
+      - sorting_method = @enterprise.preferred_shopfront_product_sorting_method
       .settings-row-option
-        = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-        = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.product_order.by_category')
-      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.product_order.category_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_taxon_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }
+        = f.radio_button :preferred_shopfront_product_sorting_method, :by_category, data: picker_action
+        = f.label :preferred_shopfront_product_sorting_method, t('.product_order.by_category'), value: :by_category
+      = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_taxon_order]", id: "enterprise_preferred_shopfront_taxon_order", options: shopfront_category_options, value: @enterprise.preferred_shopfront_taxon_order, placeholder: t('.product_order.category_placeholder'), readonly: sorting_method != "by_category", data: { "toggle-control-target": "control", "toggle-control-editable-if-checked": "#enterprise_preferred_shopfront_product_sorting_method_by_category" })
       .settings-row-option
-        = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-        = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.product_order.by_producer')
-      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6, "ofn-producer-autocomplete": '', "multiple-selection": 'true', placeholder: t('.product_order.producer_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_producer_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }
+        = f.radio_button :preferred_shopfront_product_sorting_method, :by_producer, data: picker_action
+        = f.label :preferred_shopfront_product_sorting_method, t('.product_order.by_producer'), value: :by_producer
+      = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_producer_order]", id: "enterprise_preferred_shopfront_producer_order", options: shopfront_producer_options, value: @enterprise.preferred_shopfront_producer_order, placeholder: t('.product_order.producer_placeholder'), readonly: sorting_method != "by_producer", data: { "toggle-control-target": "control", "toggle-control-editable-if-checked": "#enterprise_preferred_shopfront_product_sorting_method_by_producer" })
+      = image_pack_tag "product-order-preview.svg", alt: "", class: "settings-row-preview"
 
     = render SettingsRowComponent.new(id: "low_stock_warning", title: t('.low_stock_warning.title'), description: translation_without_fallback('.low_stock_warning.description')) do
       .settings-row-option
