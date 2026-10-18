@@ -562,6 +562,43 @@ RSpec.describe '
       expect(supplier1.producer_properties.reload).to be_empty
     end
 
+    describe "shop preferences" do
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+      end
+
+      it "groups settings in sections" do
+        expect(page).to have_content "Product display"
+        expect(page).to have_content "Supplier access"
+        expect(page).to have_content "Shopfront visibility"
+
+        # The test locale doesn't translate descriptions and they don't fall back to English.
+        expect(page).not_to have_content "Choose whether customers must login"
+      end
+
+      it "shows guest orders and the login recommendation when relevant" do
+        recommendation = "We recommend requiring customers to log in"
+        expect(page).to have_field "Allow guest checkout"
+        expect(page).not_to have_content recommendation
+
+        choose "Customers can change / cancel orders while order cycle is open"
+        expect(page).to have_content recommendation
+
+        choose "Require login to order"
+        expect(page).not_to have_content recommendation
+
+        choose "Allow guest checkout"
+        choose "Visible to registered customers only"
+        expect(page).not_to have_field "Allow guest checkout"
+        expect(page).not_to have_content recommendation
+
+        choose "Public"
+        expect(page).to have_field "Allow guest checkout"
+        expect(page).to have_content recommendation
+      end
+    end
+
     describe "setting ordering preferences" do
       let(:taxon) { create(:taxon, name: "Tricky Taxon") }
       let(:property) { create(:property, presentation: "Fresh and Fine") }

@@ -1,129 +1,102 @@
-.row
-  .eleven.columns.alpha
-    = f.label "enterprise_preferred_shopfront_message", t('.shopfront_message')
-    = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message"
-    %trix-editor{ input: "enterprise_preferred_shopfront_message", "data-controller": "trixeditor", placeholder: t('.shopfront_message_placeholder') }
-.row
-  .eleven.columns.alpha
-    = f.label "enterprise_preferred_shopfront_closed_message", t('.shopfront_closed_message')
-    = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message"
-    %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message_placeholder') }
+- toggle_action = { action: "change->toggle-control#displayIfAllChecked" }
+- require_login_warning = !@enterprise.require_login && @enterprise.allow_guest_orders && @enterprise.allow_order_changes
 
-.row
-  .text-normal
-    = t('.display_ordering_in_shopfront')
-    %br
-    = t('.shopfront_category_ordering_note')
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_category_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_taxon_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6, "ofn-producer-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_producer_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_producer_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }
+.shop-preferences{ data: { controller: "toggle-control" } }
+  = render SettingsSectionComponent.new(id: "shop_preferences_shopfront", title: t('.sections.shopfront')) do
+    = render SettingsRowComponent.new(id: "shopfront_visibility", title: t('.shopfront_visibility.title'), description: translation_without_fallback('.shopfront_visibility.description')) do
+      .settings-row-option
+        = f.radio_button :require_login, false, data: toggle_action
+        = f.label :require_login, t('.shopfront_visibility.public'), value: :false
+      .settings-row-option
+        = f.radio_button :require_login, true, data: toggle_action
+        = f.label :require_login, t('.shopfront_visibility.registered_only'), value: :true
 
-.row
-  .three.columns.alpha
-    = f.label "enterprise_preferred_shopfront_order_cycle_order", t(:sort_order_cycles_on_shopfront_by)
-  .three.columns
-    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_open_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
-    = label :enterprise, :preferred_shopfront_order_cycle_order_orders_open_at, t('.open_date')
-  .five.columns.omega
-    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
-    = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, t('.close_date')
-.row
-  .three.columns.alpha
-    %label= t '.shopfront_requires_login'
-    = render WhatsThisTooltipComponent.new(text: t('.shopfront_requires_login_tip'))
-  .three.columns
-    = f.radio_button :require_login, false, "ng-model" => "Enterprise.require_login", "ng-value" => "false"
-    = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
-  .five.columns.omega
-    = f.radio_button :require_login, true, "ng-model" => "Enterprise.require_login", "ng-value" => "true"
-    = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
+    = render SettingsRowComponent.new(id: "shopfront_message", title: t('.home_message.title'), description: translation_without_fallback('.home_message.description')) do
+      = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message"
+      %trix-editor{ input: "enterprise_preferred_shopfront_message", "data-controller": "trixeditor", placeholder: t('.home_message.placeholder'), "aria-labelledby": "shopfront_message_title" }
 
-.row{ "ng-if": "!Enterprise.require_login" }
-  .three.columns.alpha
-    %label= t '.allow_guest_orders'
-    = render WhatsThisTooltipComponent.new(text: t('.allow_guest_orders_tip'))
-  .three.columns
-    = f.radio_button :allow_guest_orders, true, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "true"
-    = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
-  .five.columns.omega
-    = f.radio_button :allow_guest_orders, false, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "false"
-    = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
-  .row.warning{ "ng-show": 'Enterprise.allow_guest_orders && Enterprise.allow_order_changes' }
-    .eight.columns.alpha.omega
-      %i.icon-warning-sign
-      = t '.recommend_require_login'
+    = render SettingsRowComponent.new(id: "shopfront_closed_message", title: t('.shopfront_closed_message.title'), description: translation_without_fallback('.shopfront_closed_message.description')) do
+      = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message"
+      %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message.placeholder'), "aria-labelledby": "shopfront_closed_message_title" }
 
-.row
-  .three.columns.alpha
-    %label= t '.display_remaining_stock'
-    = render WhatsThisTooltipComponent.new(text: t('.display_remaining_stock_tip'))
-  .three.columns
-    = f.radio_button :preferred_product_low_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'true'
-    = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
-  .five.columns.omega
-    = f.radio_button :preferred_product_low_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'false'
-    = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
+  = render SettingsSectionComponent.new(id: "shop_preferences_product_display", title: t('.sections.product_display')) do
+    = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: translation_without_fallback('.product_order.description')) do
+      -# The ordering pickers still use AngularJS. They will be replaced by a reorderable picker.
+      .settings-row-option
+        = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
+        = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.product_order.by_category')
+      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.product_order.category_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_taxon_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }
+      .settings-row-option
+        = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
+        = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.product_order.by_producer')
+      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6, "ofn-producer-autocomplete": '', "multiple-selection": 'true', placeholder: t('.product_order.producer_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_producer_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }
 
-.row
-  .three.columns.alpha
-    %label= t '.allow_order_changes'
-    = render WhatsThisTooltipComponent.new(text: t('.allow_order_changes_tip'))
-  .three.columns
-    = f.radio_button :allow_order_changes, false, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "false"
-    = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
-  .five.columns.omega
-    = f.radio_button :allow_order_changes, true, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "true"
-    = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
+    = render SettingsRowComponent.new(id: "low_stock_warning", title: t('.low_stock_warning.title'), description: translation_without_fallback('.low_stock_warning.description')) do
+      .settings-row-option
+        = f.radio_button :preferred_product_low_stock_display, true
+        = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
+      .settings-row-option
+        = f.radio_button :preferred_product_low_stock_display, false
+        = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
 
-.row
-  .three.columns.alpha
-    %label= t '.enable_subscriptions'
-    = render WhatsThisTooltipComponent.new(text: t('.enable_subscriptions_tip'))
-  .three.columns
-    = f.radio_button :enable_subscriptions, true
-    = f.label :enable_subscriptions, t('.enable_subscriptions_true'), value: :true
-  .five.columns.omega
-    = f.radio_button :enable_subscriptions, false
-    = f.label :enable_subscriptions, t('.enable_subscriptions_false'), value: :false
+  = render SettingsSectionComponent.new(id: "shop_preferences_order_cycles", title: t('.sections.order_cycles')) do
+    = render SettingsRowComponent.new(id: "order_cycle_order", title: t('.order_cycle_order.title'), description: translation_without_fallback('.order_cycle_order.description')) do
+      .settings-row-option
+        = f.radio_button :preferred_shopfront_order_cycle_order, :orders_open_at
+        = f.label :preferred_shopfront_order_cycle_order, t('.order_cycle_order.open_date'), value: :orders_open_at
+      .settings-row-option
+        = f.radio_button :preferred_shopfront_order_cycle_order, :orders_close_at
+        = f.label :preferred_shopfront_order_cycle_order, t('.order_cycle_order.close_date'), value: :orders_close_at
 
-.row
-  .three.columns.alpha
-    %label= t '.customer_names_in_reports'
-    = render WhatsThisTooltipComponent.new(text: t('.customer_names_tip'))
-  .three.columns
-    = f.radio_button :show_customer_names_to_suppliers, true
-    = f.label :show_customer_names_to_suppliers, t('.customer_names_true'), value: :true
-  .five.columns.omega
-    = f.radio_button :show_customer_names_to_suppliers, false
-    = f.label :show_customer_names_to_suppliers, t('.customer_names_false'), value: :false
+  = render SettingsSectionComponent.new(id: "shop_preferences_orders", title: t('.sections.orders')) do
+    = render SettingsRowComponent.new(id: "guest_orders", title: t('.guest_orders.title'), description: translation_without_fallback('.guest_orders.description'), style: ("display: none" if @enterprise.require_login), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false" }) do
+      .settings-row-option
+        = f.radio_button :allow_guest_orders, true, data: toggle_action
+        = f.label :allow_guest_orders, t('.guest_orders.allow'), value: :true
+      .settings-row-option
+        = f.radio_button :allow_guest_orders, false, data: toggle_action
+        = f.label :allow_guest_orders, t('.guest_orders.require_login'), value: :false
 
-.row
-  .three.columns.alpha
-    %label= t '.customer_contacts_in_reports'
-    = render WhatsThisTooltipComponent.new(text: t('.customer_contacts_tip'))
-  .three.columns
-    = f.radio_button :show_customer_contacts_to_suppliers, true
-    = f.label :show_customer_contacts_to_suppliers, t('.customer_contacts_true'), value: :true
-  .five.columns.omega
-    = f.radio_button :show_customer_contacts_to_suppliers, false
-    = f.label :show_customer_contacts_to_suppliers, t('.customer_contacts_false'), value: :false
+    = render SettingsRowComponent.new(id: "change_orders", title: t('.change_orders.title'), description: translation_without_fallback('.change_orders.description')) do
+      .settings-row-option
+        = f.radio_button :allow_order_changes, false, data: toggle_action
+        = f.label :allow_order_changes, t('.change_orders.not_allowed'), value: :false
+      .settings-row-option
+        = f.radio_button :allow_order_changes, true, data: toggle_action
+        = f.label :allow_order_changes, t('.change_orders.allowed'), value: :true
+      .settings-row-warning.warning{ style: ("display: none" unless require_login_warning), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false, #enterprise_allow_guest_orders_true, #enterprise_allow_order_changes_true" } }
+        %i.icon-warning-sign
+        = t('.change_orders.require_login_warning')
 
-.row
-  .three.columns.alpha
-    %label= t('.producers_to_edit_orders')
-    = render WhatsThisTooltipComponent.new(text: t('.producers_to_edit_orders_tip'))
-  .three.columns
-    = radio_button :enterprise, :enable_producers_to_edit_orders, true
-    = label :enterprise_enable_producers_to_edit_orders, t('.producers_edit_orders_true'), value: :true
-  .five.columns.omega
-    = radio_button :enterprise, :enable_producers_to_edit_orders, false
-    = label :enterprise_enable_producers_to_edit_orders, t('.producers_edit_orders_false'), value: :false
+    = render SettingsRowComponent.new(id: "subscriptions", title: t('.subscriptions.title'), description: translation_without_fallback('.subscriptions.description')) do
+      .settings-row-option
+        = f.radio_button :enable_subscriptions, true
+        = f.label :enable_subscriptions, t('.enabled'), value: :true
+      .settings-row-option
+        = f.radio_button :enable_subscriptions, false
+        = f.label :enable_subscriptions, t('.disabled'), value: :false
+
+  = render SettingsSectionComponent.new(id: "shop_preferences_supplier_access", title: t('.sections.supplier_access')) do
+    = render SettingsRowComponent.new(id: "customer_names_in_reports", title: t('.customer_names_in_reports.title'), description: translation_without_fallback('.customer_names_in_reports.description')) do
+      .settings-row-option
+        = f.radio_button :show_customer_names_to_suppliers, true
+        = f.label :show_customer_names_to_suppliers, t('.enabled'), value: :true
+      .settings-row-option
+        = f.radio_button :show_customer_names_to_suppliers, false
+        = f.label :show_customer_names_to_suppliers, t('.disabled'), value: :false
+
+    = render SettingsRowComponent.new(id: "customer_contacts_in_reports", title: t('.customer_contacts_in_reports.title'), description: translation_without_fallback('.customer_contacts_in_reports.description')) do
+      .settings-row-option
+        = f.radio_button :show_customer_contacts_to_suppliers, true
+        = f.label :show_customer_contacts_to_suppliers, t('.enabled'), value: :true
+      .settings-row-option
+        = f.radio_button :show_customer_contacts_to_suppliers, false
+        = f.label :show_customer_contacts_to_suppliers, t('.disabled'), value: :false
+
+    = render SettingsRowComponent.new(id: "producers_edit_orders", title: t('.producers_edit_orders.title'), description: translation_without_fallback('.producers_edit_orders.description')) do
+      .settings-row-option
+        = f.radio_button :enable_producers_to_edit_orders, true
+        = f.label :enable_producers_to_edit_orders, t('.enabled'), value: :true
+      .settings-row-option
+        = f.radio_button :enable_producers_to_edit_orders, false
+        = f.label :enable_producers_to_edit_orders, t('.disabled'), value: :false

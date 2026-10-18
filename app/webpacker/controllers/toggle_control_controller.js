@@ -52,6 +52,18 @@ export default class extends Controller {
     this.#toggleDisplay(inputValue == this.matchValue);
   }
 
+  // Display each control if all inputs matching its
+  // data-toggle-control-checked-selector="<css selector list>" are checked
+  displayIfAllChecked() {
+    this.controlTargets.forEach((target) => {
+      const selector = target.dataset.toggleControlCheckedSelector;
+      if (!selector) return;
+
+      const inputs = [...this.element.querySelectorAll(selector)];
+      target.style.display = inputs.every((input) => input.checked) ? "" : "none";
+    });
+  }
+
   // private
 
   #toggleDisabled(disable) {

@@ -92,6 +92,12 @@ module Admin
       end
     end
 
+    # Translation for the current locale only, without falling back to English.
+    # Instances can hide an optional text by not translating it.
+    def translation_without_fallback(key)
+      t(key, fallback: false, default: "").presence
+    end
+
     private
 
     def find_match(tag_groups, tags)

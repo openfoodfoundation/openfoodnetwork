@@ -150,6 +150,41 @@ describe("ToggleControlController", () => {
     });
   });
 
+  describe("#displayIfAllChecked", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `<div data-controller="toggle-control">
+        <input type="radio" name="a" id="a_yes" data-action="change->toggle-control#displayIfAllChecked">
+        <input type="radio" name="a" id="a_no" data-action="change->toggle-control#displayIfAllChecked">
+        <input type="radio" name="b" id="b_yes" data-action="change->toggle-control#displayIfAllChecked">
+        <div id="one" data-toggle-control-target="control" data-toggle-control-checked-selector="#a_yes"></div>
+        <div id="both" data-toggle-control-target="control" data-toggle-control-checked-selector="#a_yes, #b_yes"></div>
+      </div>`;
+    });
+
+    const check = (input) => {
+      input.checked = true;
+      input.dispatchEvent(new Event("change"));
+    };
+
+    it("shows each control when all of its inputs are checked", () => {
+      check(a_yes);
+      expect(one.style.display).toBe("");
+      expect(both.style.display).toBe("none");
+
+      check(b_yes);
+      expect(both.style.display).toBe("");
+    });
+
+    it("hides the controls when an input is unchecked", () => {
+      check(a_yes);
+      check(b_yes);
+      check(a_no);
+
+      expect(one.style.display).toBe("none");
+      expect(both.style.display).toBe("none");
+    });
+  });
+
   describe("#toggleDisplay", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="toggle-control">

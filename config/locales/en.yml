@@ -568,7 +568,6 @@ en:
   ongoing: Ongoing
   bill_address: Billing Address
   ship_address: Shipping Address
-  sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
   remove: Remove
@@ -1435,57 +1434,71 @@ en:
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
           legend: "Shop Preferences"
-          shopfront_requires_login: "Publicly visible shopfront?"
-          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
-          shopfront_requires_login_false: "Public"
-          shopfront_requires_login_true: "Visible to registered customers only"
-          recommend_require_login: "We recommend to require users to login when orders can be changed."
-          allow_guest_orders: "Guest orders"
-          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
-          allow_guest_orders_false: "Require login to order"
-          allow_guest_orders_true: "Allow guest checkout"
-          allow_order_changes: "Change orders"
-          allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
-          allow_order_changes_false: "Placed orders cannot be changed / cancelled"
-          allow_order_changes_true: "Customers can change / cancel orders while order cycle is open"
-          enable_subscriptions: "Subscriptions"
-          enable_subscriptions_tip: "Enable subscriptions functionality?"
-          enable_subscriptions_false: "Disabled"
-          enable_subscriptions_true: "Enabled"
-          customer_names_in_reports: "Customer Names in Reports"
-          customer_names_tip: "Enable your suppliers to see your customers names in reports"
-          producers_to_edit_orders: "Ability for producers to edit orders"
-          producers_to_edit_orders_tip: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
-          customer_names_false: "Disabled"
-          customer_names_true: "Enabled"
-          customer_contacts_in_reports: "Customer contact details in reports"
-          customer_contacts_tip: "Enable your suppliers to see your customer email and phone numbers in reports"
-          customer_contacts_false: "Disabled"
-          customer_contacts_true: "Enabled"
-          producers_edit_orders_false: "Disabled"
-          producers_edit_orders_true: "Enabled"
-          shopfront_message: "Shopfront Message"
-          shopfront_message_placeholder: >
-            An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront.
-          shopfront_closed_message: "Shopfront Closed Message"
-          shopfront_closed_message_placeholder: >
-            A message which provides a more detailed explanation about why your shop is
-            closed and/or when customers can expect it to open again. This is displayed
-            on your shop only when you have no active order cycles (ie. shop is closed).
-          shopfront_category_ordering: "Shopfront Category Ordering"
-          shopfront_category_ordering_note: "(top to bottom)"
-          open_date: "Open Date"
-          close_date: "Close Date"
-          display_ordering_in_shopfront: "Display ordering in shopfront:"
-          shopfront_sort_by_product: "By product"
-          shopfront_sort_by_category: "By category"
-          shopfront_sort_by_producer: "By producer"
-          shopfront_sort_by_category_placeholder: "Category"
-          shopfront_sort_by_producer_placeholder: "Producer"
-          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
-          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
           enabled: "Enabled"
           disabled: "Disabled"
+          sections:
+            shopfront: "Shopfront"
+            product_display: "Product display"
+            order_cycles: "Order cycles"
+            orders: "Orders"
+            supplier_access: "Supplier access"
+          shopfront_visibility:
+            title: "Shopfront visibility"
+            description: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
+            public: "Public"
+            registered_only: "Visible to registered customers only"
+          home_message:
+            title: "Home message"
+            placeholder: >
+              Create your home page content to welcome customers and explain how people can shop
+              with you. Include details about your delivery and pick up options, how often you open
+              the shop for orders, and all the details your customers will need to understand the
+              process of buying from you. You can also include links to your newsletter sign up, so
+              that people can connect with you to hear when your next order cycle opens.
+          shopfront_closed_message:
+            title: "Shopfront closed message"
+            placeholder: >
+              A message which provides a more detailed explanation about why your shop is
+              closed and/or when customers can expect it to open again. This is displayed
+              on your shop only when you have no active order cycles (ie. shop is closed).
+          product_order:
+            title: "Product order"
+            description: "Sets the order products appear in your shop, from top to bottom. When ordering by category, the category filters follow the same order."
+            by_category: "By category"
+            by_producer: "By producer"
+            category_placeholder: "Category"
+            producer_placeholder: "Producer"
+          low_stock_warning:
+            title: "Low stock warning"
+            description: "Let shoppers know when there are only 3 or fewer items left."
+          order_cycle_order:
+            title: "Sort order cycles by"
+            description: "Sets the order of order cycles in the dropdown shoppers use to pick when they'll receive their order."
+            open_date: "Open date"
+            close_date: "Close date"
+          guest_orders:
+            title: "Guest orders"
+            description: "Allow checkout as guest or require a registered user."
+            allow: "Allow guest checkout"
+            require_login: "Require login to order"
+          change_orders:
+            title: "Change orders"
+            description: "Allow customers to change their order as long as the order cycle is open."
+            not_allowed: "Placed orders cannot be changed / cancelled"
+            allowed: "Customers can change / cancel orders while order cycle is open"
+            require_login_warning: "We recommend requiring customers to log in if they can change their orders."
+          subscriptions:
+            title: "Subscriptions"
+            description: "Let customers set up orders that repeat automatically each order cycle."
+          customer_names_in_reports:
+            title: "Customer names in reports"
+            description: "Enable your suppliers to see your customers' names in reports"
+          customer_contacts_in_reports:
+            title: "Customer contact details in reports"
+            description: "Enable your suppliers to see your customer email and phone numbers in reports"
+          producers_edit_orders:
+            title: "Producers can edit orders"
+            description: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
         social:
           legend: "Social"
           twitter_placeholder: "eg. @the_prof"
