@@ -1,0 +1,14 @@
+.settings-section {
+  margin-top: $layout-gap-min;
+
+  &:first-child {
+    margin-top: 1rem;
+  }
+}
+
+.settings-section-title {
+  margin: 0;
+  padding-bottom: 0.75rem;
+  font-size: $h3-size;
+  border-bottom: 1px solid $medium-light-grey;
+}

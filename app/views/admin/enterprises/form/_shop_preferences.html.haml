@@ -22,7 +22,7 @@
       %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message.placeholder'), "aria-labelledby": "shopfront_closed_message_title" }
 
   = render SettingsSectionComponent.new(id: "shop_preferences_product_display", title: t('.sections.product_display')) do
-    = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: translation_without_fallback('.product_order.description')) do
+    = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: translation_without_fallback('.product_order.description'), class: "settings-row-with-preview") do
       - sorting_method = @enterprise.preferred_shopfront_product_sorting_method
       .settings-row-option
         = f.radio_button :preferred_shopfront_product_sorting_method, :by_category, data: picker_action
@@ -67,7 +67,7 @@
       .settings-row-option
         = f.radio_button :allow_order_changes, true, data: toggle_action
         = f.label :allow_order_changes, t('.change_orders.allowed'), value: :true
-      .settings-row-warning.warning{ style: ("display: none" unless require_login_warning), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false, #enterprise_allow_guest_orders_true, #enterprise_allow_order_changes_true" } }
+      .settings-row-warning{ style: ("display: none" unless require_login_warning), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false, #enterprise_allow_guest_orders_true, #enterprise_allow_order_changes_true" } }
         %i.icon-warning-sign
         = t('.change_orders.require_login_warning')
 
