@@ -459,6 +459,13 @@ RSpec.describe Admin::OrderCyclesController do
         get :destroy, params: { id: oc.id }
         expect(OrderCycle.find_by(id: oc.id)).to be nil
       end
+
+      it "reloads the page when requested by Turbo" do
+        delete :destroy, params: { id: oc.id }, format: :turbo_stream
+        expect(OrderCycle.find_by(id: oc.id)).to be nil
+        expect(response.body).to include 'action="reload"'
+        expect(flash[:success]).to eq "Successfully Removed"
+      end
     end
 
     describe "when an order cycle becomes non-deletable due to the presence of an order" do
@@ -479,6 +486,14 @@ RSpec.describe Admin::OrderCyclesController do
       it "displays an error message when we attempt to delete it" do
         get :destroy, params: { id: oc.id }
         expect(response).to redirect_to admin_order_cycles_path
+        expect(flash[:error])
+          .to eq 'That order cycle is linked to a schedule and cannot be deleted. ' \
+                 'Please unlink or delete the schedule first.'
+      end
+
+      it "reloads the page with an error message when requested by Turbo" do
+        delete :destroy, params: { id: oc.id }, format: :turbo_stream
+        expect(response.body).to include 'action="reload"'
         expect(flash[:error])
           .to eq 'That order cycle is linked to a schedule and cannot be deleted. ' \
                  'Please unlink or delete the schedule first.'

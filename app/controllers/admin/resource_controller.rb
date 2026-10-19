@@ -65,10 +65,12 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to collection_url, status: :see_other }
           format.js   { render partial: "spree/admin/shared/destroy" }
+          format.turbo_stream { render turbo_stream: turbo_stream.reload }
         end
       else
         respond_with(@object) do |format|
           format.html { redirect_to collection_url, status: :see_other }
+          format.turbo_stream { render turbo_stream: turbo_stream.reload }
         end
       end
     end

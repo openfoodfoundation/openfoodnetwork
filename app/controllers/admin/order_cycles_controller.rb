@@ -238,15 +238,22 @@ module Admin
     def protect_invalid_destroy
       # Can't delete if OC is linked to any orders or schedules
       if @order_cycle.schedules.any?
-        redirect_to main_app.admin_order_cycles_url, status: :see_other
-        flash[:error] = I18n.t('admin.order_cycles.destroy_errors.schedule_present')
+        invalid_destroy I18n.t('admin.order_cycles.destroy_errors.schedule_present')
       else
         begin
           yield
         rescue ActiveRecord::InvalidForeignKey, ActiveRecord::DeleteRestrictionError
-          redirect_to main_app.admin_order_cycles_url, status: :see_other
-          flash[:error] = I18n.t('admin.order_cycles.destroy_errors.orders_present')
+          invalid_destroy I18n.t('admin.order_cycles.destroy_errors.orders_present')
         end
+      end
+    end
+
+    def invalid_destroy(message)
+      flash[:error] = message
+      if request.format.turbo_stream?
+        render turbo_stream: turbo_stream.reload
+      else
+        redirect_to main_app.admin_order_cycles_url, status: :see_other
       end
     end
 
