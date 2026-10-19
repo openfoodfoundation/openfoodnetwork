@@ -448,6 +448,15 @@ RSpec.describe Admin::OrderCyclesController do
         'Emails to be sent to producers have been queued for sending.'
       )
     end
+
+    it "redirects with a full page load when requested by Turbo" do
+      spree_post :notify_producers, id: order_cycle.id, format: :turbo_stream
+      expect(response.body).to include 'action="redirect_to"', 'turbo="false"',
+                                       admin_order_cycles_path
+      expect(flash[:success]).to eq(
+        'Emails to be sent to producers have been queued for sending.'
+      )
+    end
   end
 
   describe "destroy" do

@@ -6,11 +6,8 @@
       - url = main_app.notify_producers_admin_order_cycle_path
       - confirm_msg = "#{t('.notify_producers_tip')} #{t(:are_you_sure)}"
 
-      %a.button.icon-email.with-tip{ href: url, data: { controller: "fetch-redirect",
-                                                         fetch_redirect_method_value: "post",
-                                                         fetch_redirect_confirm_message_value: confirm_msg,
-                                                         fetch_redirect_redirect_to_value: main_app.admin_order_cycles_path,
-                                                         action: "click->fetch-redirect#request" }, 'data-powertip': t('.notify_producers_tip') }
+      %a.button.icon-email.with-tip{ href: url, data: { turbo: true, turbo_method: :post, turbo_stream: true,
+                                                         turbo_confirm: confirm_msg }, 'data-powertip': t('.notify_producers_tip') }
         = mails_sent ? t('.re_notify_producers') : t(:notify_producers)
         - if mails_sent
           .badge.icon-ok.success

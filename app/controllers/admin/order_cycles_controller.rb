@@ -135,8 +135,13 @@ module Admin
     def notify_producers
       OrderCycleNotificationJob.perform_later params[:id].to_i
 
-      redirect_to main_app.admin_order_cycles_path,
-                  flash: { success: t('.success') }
+      flash[:success] = t('.success')
+      url = main_app.admin_order_cycles_path
+      if request.format.turbo_stream?
+        render turbo_stream: turbo_stream.redirect_to(url, turbo: false)
+      else
+        redirect_to url
+      end
     end
 
     protected
