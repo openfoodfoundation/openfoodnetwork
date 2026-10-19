@@ -6,12 +6,4 @@ const locationPathName = (pathName) => {
   window.location.pathname = pathName;
 };
 
-const reloadLocation = () => {
-  window.location.reload();
-};
-
-const navigateToLocation = (path) => {
-  window.location.href = path;
-};
-
-export { locationPathName, navigateToLocation, reloadLocation };
+export { locationPathName };
