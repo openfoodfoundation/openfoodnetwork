@@ -40,7 +40,7 @@ RSpec.describe 'Customers' do
       it "lets a hub manager add credit to a customer from the credit popup" do
         select2_select managed_distributor1.name, from: "shop_id"
 
-        find("td.balance a", match: :first).click
+        within("tr#c_#{customer1.id}") { find("td.balance a").click }
 
         within "#customer-account-transactions-modal" do
           click_link "Add Credit"
@@ -56,6 +56,25 @@ RSpec.describe 'Customers' do
         within "#customer-account-transactions-modal" do
           expect(page).to have_content("Available credit: $15.00")
           expect(page).to have_content("Goodwill credit")
+
+          click_button "Close"
+        end
+
+        # The customer's available credit in the list updates without a page refresh.
+        expect(find("#customer-credit-#{customer1.id}")).to have_content("$15.00")
+      end
+
+      it "shows a tooltip explaining the available credit column" do
+        select2_select managed_distributor1.name, from: "shop_id"
+
+        find("th.credit .icon-question-sign").click
+
+        within "#available_credit_info_modal" do
+          expect(page).to have_content("Available Credit")
+          expect(page).to have_content(
+            "Clicking the available credit amount displays a popup record of credits applied " \
+            "and/or deducted from the customer's credit balance."
+          )
         end
       end
 

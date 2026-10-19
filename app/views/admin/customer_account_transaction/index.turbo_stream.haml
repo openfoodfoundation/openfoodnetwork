@@ -1,3 +1,6 @@
+= turbo_stream.update "customer-credit-#{@customer.id}" do
+  = Spree::Money.new(@available_credit)
+
 = turbo_stream.update "customer-account-transactions-modal-container" do
   = render ModalComponent.new(id: "customer-account-transactions-modal", instant: true, modal_class: "big") do
     %h3
