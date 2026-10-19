@@ -42,6 +42,20 @@ RSpec.describe CapQuantity do
           expect(changes[line_item2.id]).to be 3
           expect(changes[line_item3.id]).to be 3
         end
+
+        it "updates per-item enterprise fees to reflect the new quantities" do
+          enterprise_fee = create(:enterprise_fee, amount: 0.5)
+          fee2 = enterprise_fee.create_adjustment("fee2", line_item2, true)
+          fee3 = enterprise_fee.create_adjustment("fee3", line_item3, true)
+
+          expect(fee2.amount).to eq 1.5 # 0.5 * original quantity of 3
+          expect(fee3.amount).to eq 1.5 # 0.5 * original quantity of 3
+
+          CapQuantity.new.call(order)
+
+          expect(fee2.reload.amount).to eq 1.0 # 0.5 * capped quantity of 2
+          expect(fee3.reload.amount).to eq 0.0 # 0.5 * capped quantity of 0
+        end
       end
     end
 
