@@ -31,7 +31,7 @@ describe("AddToCartController", () => {
         <div id="add_container" class="variant-quantity-inputs" data-add-to-cart-target="addButton">
           <button id="add" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
         </div>
-        <div id="quantity_buttons" class="variant-quantity-inputs" data-add-to-cart-target="quantityButton" style="display: none;">
+        <div id="quantity_buttons" class="variant-quantity-inputs" data-add-to-cart-target="buttonContainer" style="display: none;">
           <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">-</button>
           <input id="quantity" class="variant-quantity" data-add-to-cart-target="quantity" data-action="keyup->add-to-cart#manual" min="0" type="number" value="${quantity}">
           <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">+</button>
@@ -218,12 +218,12 @@ describe("AddToCartController", () => {
         <div id="add_container" class="variant-quantity-inputs" data-add-to-cart-target="addButton">
           <button id="add" type="button" class="add-variant" data-action="add-to-cart#addEmpty">Add</button>
         </div>
-        <div id="quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="quantityButton" style="display: none;">
+        <div id="quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="buttonContainer" style="display: none;">
           <button id="minus" class="variant-quantity" data-action="add-to-cart#remove" type="button">-</button>
           <input id="quantity" class="variant-quantity" data-add-to-cart-target="quantity" data-action="keyup->add-to-cart#manual" min="0" type="number" value="${quantity}">
           <button id="plus" class="variant-quantity" data-action="add-to-cart#add" data-add-to-cart-target="plusButton" type="button">+</button>
         </div>
-        <div id="max_quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="maxQuantityButton" style="display: none;">
+        <div id="max_quantity_buttons" class="variant-quantity-labelled" data-add-to-cart-target="maxQuantityContainer" style="display: none;">
           <button id="maxMinus" class="variant-quantity" data-action="add-to-cart#removeMax" data-add-to-cart-target="maxMinusButton" type="button">-</button>
           <input id="maxQuantity" class="variant-quantity" data-add-to-cart-target="maxQuantity" data-action="keyup->add-to-cart#manualMax" min="0" type="number" value="${maxQuantity}">
           <button id="maxPlus" class="variant-quantity" data-action="add-to-cart#addMax" data-add-to-cart-target="maxPlusButton" type="button">+</button>

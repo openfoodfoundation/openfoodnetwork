@@ -20,12 +20,12 @@ import showHttpError from "js/services/show_http_error";
 export default class extends Controller {
   static targets = [
     "addButton",
-    "quantityButton",
+    "buttonContainer",
     "quantity",
     "plusButton",
     "nbItemInCart",
     "stock",
-    "maxQuantityButton",
+    "maxQuantityContainer",
     "maxQuantity",
     "maxPlusButton",
     "maxMinusButton",
@@ -140,12 +140,12 @@ export default class extends Controller {
 
     if (quantity > 0) {
       this.addButtonTarget.style.display = "none";
-      this.quantityButtonTarget.style.display = "flex";
-      if (this.groupBuyValue) this.maxQuantityButtonTarget.style.display = "flex";
+      this.buttonContainerTarget.style.display = "flex";
+      if (this.groupBuyValue) this.maxQuantityContainerTarget.style.display = "flex";
     } else {
       this.addButtonTarget.style.display = "block";
-      this.quantityButtonTarget.style.display = "none";
-      if (this.groupBuyValue) this.maxQuantityButtonTarget.style.display = "none";
+      this.buttonContainerTarget.style.display = "none";
+      if (this.groupBuyValue) this.maxQuantityContainerTarget.style.display = "none";
     }
 
     // disable button when we reach the stock on hand
