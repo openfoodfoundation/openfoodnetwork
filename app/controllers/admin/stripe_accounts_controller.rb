@@ -21,11 +21,10 @@ module Admin
         flash[:error] = I18n.t('stripe.error_code.disconnect_failure')
       end
 
-      redirect_to main_app.edit_admin_enterprise_path(stripe_account.enterprise),
-                  status: :see_other
+      redirect_after_destroy main_app.edit_admin_enterprise_path(stripe_account.enterprise)
     rescue ActiveRecord::RecordNotFound
       flash[:error] = I18n.t('stripe.error_code.disconnect_failure')
-      redirect_to admin_dashboard_path, status: :see_other
+      redirect_after_destroy admin_dashboard_path
     end
 
     def status
@@ -49,6 +48,14 @@ module Admin
 
     def model_class
       StripeAccount
+    end
+
+    def redirect_after_destroy(url)
+      if request.format.turbo_stream?
+        render turbo_stream: turbo_stream.redirect_to(url, turbo: false)
+      else
+        redirect_to url, status: :see_other
+      end
     end
   end
 end
