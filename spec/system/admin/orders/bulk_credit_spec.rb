@@ -19,7 +19,7 @@ RSpec.describe "Bulk crediting orders" do
     order_without_customer.update_column(:customer_id, nil)
 
     login_as distributor.owner
-    visit spree.admin_orders_path
+    visit admin_orders_path
   end
 
   it "reports the missing customer and credits only the valid order in a mixed selection" do
