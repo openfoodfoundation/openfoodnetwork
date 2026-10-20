@@ -83,8 +83,8 @@ module OpenFoodNetwork
       DESC
       "api_logging" => <<~DESC,
         Record every request to <code>/api/*</code> in the <code>api_logs</code> table,
-        to report on API usage in Metabase. The table grows without bound while
-        this is active.
+        to report on API usage in Metabase. Logs older than three months are
+        deleted by the monthly RemoveTransientData job.
       DESC
     }.merge(conditional_features).freeze;
 
