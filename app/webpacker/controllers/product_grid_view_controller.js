@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["loading", "products"];
+  static targets = ["loading", "products", "noResults"];
 
   updateProducts(ev) {
     const orderCycleId = ev.detail.orderCycleId;
@@ -20,6 +20,9 @@ export default class extends Controller {
       this.loadingTarget.style.display = "block";
       if (this.hasProductsTarget) {
         this.productsTarget.style.display = "none";
+      }
+      if (this.hasNoResultsTarget) {
+        this.noResultsTarget.style.display = "none";
       }
     }, 100);
   }
