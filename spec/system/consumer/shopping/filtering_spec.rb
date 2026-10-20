@@ -282,7 +282,7 @@ RSpec.describe "As a consumer I want to view products" do
       end
     end
 
-    context "product_grid_view", feature: :product_grid_view do
+    context "product_grid_view & product_grid_view_navigation", feature: [:product_grid_view, :product_grid_view_navigation] do
       context "a product doesn't inherit producer properties" do
         let(:product2a) {
           create(:simple_product, enterprise_id: supplier2.id, name: "Avocados",
