@@ -47,6 +47,34 @@ RSpec.describe UserLocaleSetter do
           end
         end
 
+        describe "Pagy's locale for a regional locale" do
+          before do
+            allow(Rails.application.config.i18n).to receive(:available_locales)
+              .and_return(["en_TST", "pt_BR", "de_DE", "cy_GB"])
+          end
+
+          it "uses Pagy's dictionary for the full locale when there is one" do
+            user.update(locale: "pt_BR")
+            service.set_locale
+
+            expect(Pagy::I18n.locale).to eq "pt-BR"
+          end
+
+          it "falls back to the base locale when Pagy has no dictionary for the full locale" do
+            user.update(locale: "de_DE")
+            service.set_locale
+
+            expect(Pagy::I18n.locale).to eq "de"
+          end
+
+          it "falls back to English when Pagy has no dictionary for the base locale either" do
+            user.update(locale: "cy_GB")
+            service.set_locale
+
+            expect(Pagy::I18n.locale).to eq "en"
+          end
+        end
+
         context "and has an invalid locale saved" do
           before { user.update(locale: "xx") }
 

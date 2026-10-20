@@ -13,7 +13,7 @@ class UserLocaleSetter
     I18n.locale = valid_current_locale
     # Pagy translates its own labels (e.g. aria-labels in the page links) and doesn't read
     # the Rails locale.
-    Pagy::I18n.locale = I18n.locale
+    Pagy::I18n.locale = pagy_locale(I18n.locale)
   end
 
   def ensure_valid_locale_persisted
@@ -49,5 +49,19 @@ class UserLocaleSetter
 
   def current_user_locale
     current_user&.locale
+  end
+
+  # Pagy only accepts hyphenated locale names (e.g. "pt-BR"): it ignores OFN's "pt_BR" and falls
+  # back to English. Use Pagy's dictionary for the full locale when it has one (pt_BR -> pt-BR),
+  # otherwise the base language's (de_DE -> de). Pagy falls back to English for nil.
+  def pagy_locale(locale)
+    full_locale = locale.to_s.tr("_", "-")
+    base_locale = full_locale.split("-").first
+
+    [full_locale, base_locale].find { |candidate| pagy_dictionary?(candidate) }
+  end
+
+  def pagy_dictionary?(locale)
+    Pagy::I18n.pathnames.any? { |path| path.join("#{locale}.yml").exist? }
   end
 end
