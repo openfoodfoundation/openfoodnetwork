@@ -70,14 +70,7 @@ module Api
 
       # Product properties and producer properties, as both are filtered with q[with_properties].
       def product_properties
-        product_ids = distributed_products
-        producers = Enterprise.joins(:products).where(spree_products: { id: product_ids })
-
-        Spree::Property.
-          where(id: Spree::ProductProperty.where(product_id: product_ids).select(:property_id)).
-          or(Spree::Property.where(
-               id: ProducerProperty.where(producer_id: producers).select(:property_id)
-             )).
+        distributed_products_service.properties_relation.
           order(Arel.sql("LOWER(spree_properties.presentation)"))
       end
 
@@ -98,9 +91,13 @@ module Api
       end
 
       def distributed_products
+        distributed_products_service.products_relation.pluck(:id)
+      end
+
+      def distributed_products_service
         OrderCycles::DistributedProductsService.new(
           distributor, order_cycle, customer, inventory_enabled:, variant_tag_enabled:,
-        ).products_relation.pluck(:id)
+        )
       end
 
       def inventory_enabled

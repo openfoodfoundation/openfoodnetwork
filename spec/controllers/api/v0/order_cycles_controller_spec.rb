@@ -373,6 +373,14 @@ RSpec.describe Api::V0::OrderCyclesController do
         )
       end
 
+      it "excludes producer properties of products that don't inherit properties" do
+        product1.update!(inherits_properties: false)
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
+      end
+
       it "returns a producer property only once when it is shared by several producers" do
         supplier2 = create(:supplier_enterprise)
         create(:producer_property, producer_id: supplier2.id, property: property4)

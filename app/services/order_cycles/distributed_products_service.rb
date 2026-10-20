@@ -23,6 +23,23 @@ module OrderCycles
         select("DISTINCT spree_variants.*")
     end
 
+    # Properties set on the distributed products, plus properties of their producers when the
+    # product inherits_properties. This matches what Spree::Product.with_properties filters on.
+    def properties_relation
+      product_property_ids = Spree::ProductProperty.
+        where(product_id: stocked_products).
+        select(:property_id)
+
+      producer_ids = variants_relation.
+        joins(:product).
+        where(spree_products: { inherits_properties: true }).
+        reselect(:enterprise_id)
+      producer_property_ids = ProducerProperty.where(producer_id: producer_ids).select(:property_id)
+
+      Spree::Property.where(id: product_property_ids).
+        or(Spree::Property.where(id: producer_property_ids))
+    end
+
     private
 
     attr_reader :distributor, :order_cycle, :customer, :options
