@@ -12,6 +12,8 @@
 #
 # The authenticated user can only be resolved by the controllers (each API
 # version uses a different token header), so they leave it in env[USER_ID_KEY].
+#
+# Logging is switched on with the "api_logging" feature toggle.
 class ApiLogger
   # Matches /api/v0, /api/v1 and the DFC engine mounts (/api/dfc,
   # /api/dfc-v1.6, /api/dfc-v1.7). Anchored so that /api-docs is excluded.
@@ -30,7 +32,7 @@ class ApiLogger
   def call(env)
     request = ::Rack::Request.new(env)
 
-    return @app.call(env) unless API_PATH.match?(request.path)
+    return @app.call(env) unless API_PATH.match?(request.path) && logging_enabled?
 
     # Read the request details up front. Middleware and controllers further
     # down the stack may rewrite the path while rendering an error response.
@@ -53,6 +55,12 @@ class ApiLogger
   # :nocov:
 
   private
+
+  # ApiLogger sits outside Flipper's memoizer middleware, so this is one extra
+  # query per API request. Only API paths get here.
+  def logging_enabled?
+    OpenFoodNetwork::FeatureToggle.enabled?(:api_logging)
+  end
 
   def request_details(request)
     {

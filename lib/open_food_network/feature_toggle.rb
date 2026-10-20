@@ -81,6 +81,11 @@ module OpenFoodNetwork
       "fdc-staging" => <<~DESC,
         Show DFC Permissions interface to share data with the FDC staging platform.
       DESC
+      "api_logging" => <<~DESC,
+        Record every request to <code>/api/*</code> in the <code>api_logs</code> table,
+        to report on API usage in Metabase. The table grows without bound while
+        this is active.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

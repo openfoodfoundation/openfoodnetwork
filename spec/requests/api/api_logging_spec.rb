@@ -4,8 +4,23 @@
 #
 # These have to be request specs: controller specs bypass the Rack stack, so
 # the middleware never runs in them.
-RSpec.describe "API logging" do
+RSpec.describe "API logging", feature: :api_logging do
   let(:user) { create(:user) }
+
+  describe "when the api_logging feature is disabled" do
+    before do
+      Flipper.disable(:api_logging)
+      login_as user
+    end
+
+    it "doesn't record the request" do
+      expect {
+        get "/api/v0/customers.json"
+      }.not_to change { ApiLog.count }
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
 
   describe "a successful v0 request" do
     before { login_as user }
