@@ -166,7 +166,6 @@ class ProductsRenderer
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
-      max_limit: nil,
       request: { params: {} }
     )
 
