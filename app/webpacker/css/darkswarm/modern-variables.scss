@@ -14,3 +14,5 @@ $product-grid-price-font-weight: 600;
 // foundation-rails components/_reveal.scss uses 1005 for modal
 $variant-modal-bg-z-index: 1005;
 $variant-modal-z-index: 1006;
+// We want the out of stock modal to be above the variant modal
+$out-of-stock-modal-z-index: 1010;
