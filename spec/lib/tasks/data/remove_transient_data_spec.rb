@@ -37,6 +37,17 @@ RSpec.describe RemoveTransientData do
       expect(RemoveTransientData::Session.all).to be_empty
     end
 
+    it 'deletes API logs older than retention period' do
+      remover = RemoveTransientData.new
+      ApiLog.create!(path: "/api/v0/old", request_method: "GET", status: 200,
+                     created_at: remover.expiration_date - 1.day)
+      recent_log = ApiLog.create!(path: "/api/v0/recent", request_method: "GET", status: 200)
+
+      remover.call
+
+      expect(ApiLog.all).to eq [recent_log]
+    end
+
     describe "deleting old carts" do
       let(:product) { create(:product) }
       let(:variant) { product.variants.first }
