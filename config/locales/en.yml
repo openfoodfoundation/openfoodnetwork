@@ -133,6 +133,10 @@ en:
         connected_apps:
           vine:
             api_request_error: "An error occured when connecting to Vine API"
+        customer_account_transaction:
+          attributes:
+            amount:
+              exceeds_available_credit: "cannot deduct more than the available credit (%{available_credit})"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -920,6 +924,15 @@ en:
         amount: Amount
         created_by: Created by
         running_balance: Running balance
+        add_credit: "Add Credit"
+      form:
+        amount: Amount
+        description: Description
+        submit: "Add Credit"
+        cancel: Cancel
+        confirm: "Are you sure you want to apply %{currency}%{amount} of credit?"
+        confirm_deduct: "Are you sure you want to deduct %{currency}%{amount} of credit?"
+        negative_amount_hint: "As a super admin, you can enter a negative amount to deduct credit."
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
@@ -3693,6 +3706,9 @@ en:
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
         business_address_info:
           message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
+        available_credit_info:
+          title: "Available Credit"
+          message: "Clicking the available credit amount displays a popup record of credits applied and/or deducted from the customer's credit balance. Enterprise managers can also add credits to a customer's account using the 'add credit' button which displays above the credit record"
       panels:
         save: SAVE
         saved: SAVED
