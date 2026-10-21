@@ -36,7 +36,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def thumb_url
-    object.product.image&.url(:mini) || Spree::Image.default_image_url(:mini)
+    (object.image || object.product.image)&.url(:mini) || Spree::Image.default_image_url(:mini)
   end
 
   delegate :unit, to: :unit_price, prefix: true
