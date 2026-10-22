@@ -184,11 +184,24 @@ module ProductImport
 
       if variant.valid? && variant.save
         @updated_ids.push variant.id
-        true
+        save_product_only_attributes(variant, entry)
       else
         assign_errors variant.errors.full_messages, entry.line_number
         false
       end
+    end
+
+    # Saving a variant doesn't save changes to its existing product, so do it explicitly
+    def save_product_only_attributes(variant, entry)
+      product_attributes = entry.product_only_attributes
+      return true if product_attributes.empty?
+
+      product = variant.product
+      product.assign_attributes(product_attributes)
+      return true if product.save
+
+      assign_errors product.errors.full_messages, entry.line_number
+      false
     end
 
     def assign_errors(errors, line_number)

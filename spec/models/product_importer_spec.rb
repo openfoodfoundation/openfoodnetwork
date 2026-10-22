@@ -1026,6 +1026,193 @@ RSpec.describe ProductImport::ProductImporter do
     end
   end
 
+  describe "importing group buy fields" do
+    let(:headers) {
+      ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+       "display_name", "shipping_category", "group_buy", "group_buy_unit_size"]
+    }
+    let(:importer) { import_data csv_data }
+
+    describe "creating a new product with several variants" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "1", "10"]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "kg",
+                  "Big Bag", shipping_category.name, "true", "10"]
+        end
+      }
+
+      it "validates entries" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter('valid', entries)).to eq 2
+        expect(filter('invalid', entries)).to eq 0
+      end
+
+      it "saves group buy settings on the product" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 2
+        potatoes = Spree::Product.find_by(name: "Potatoes")
+        expect(potatoes.variants.count).to eq 2
+        expect(potatoes.group_buy).to eq true
+        expect(potatoes.group_buy_unit_size).to eq 10
+      end
+    end
+
+    describe "creating a new product where only a later row sets group buy" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "", ""]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "kg",
+                  "Big Bag", shipping_category.name, "1", "10"]
+        end
+      }
+
+      it "saves group buy settings on the product" do
+        importer.save_entries
+
+        potatoes = Spree::Product.find_by(name: "Potatoes")
+        expect(potatoes.variants.count).to eq 2
+        expect(potatoes.group_buy).to eq true
+        expect(potatoes.group_buy_unit_size).to eq 10
+      end
+    end
+
+    describe "adding a new variant to an existing product" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "6", "3.50", "500", "g",
+                  "Emergent Coffee", shipping_category.name, "1", "5"]
+        end
+      }
+
+      it "saves group buy settings on the product" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 1
+        expect(product.reload.group_buy).to eq true
+        expect(product.group_buy_unit_size).to eq 5
+      end
+    end
+
+    describe "updating an existing variant" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, "true", "5"]
+        end
+      }
+
+      it "validates entries" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter('valid', entries)).to eq 1
+        expect(filter('update_product', entries)).to eq 1
+      end
+
+      it "saves group buy settings on the product" do
+        importer.save_entries
+
+        expect(importer.products_updated_count).to eq 1
+        expect(product.reload.group_buy).to eq true
+        expect(product.group_buy_unit_size).to eq 5
+      end
+    end
+
+    describe "turning group buy off" do
+      before { product.update!(group_buy: true, group_buy_unit_size: 5) }
+
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, "0", ""]
+        end
+      }
+
+      it "updates group buy and leaves the blank unit size unchanged" do
+        importer.save_entries
+
+        expect(product.reload.group_buy).to eq false
+        expect(product.group_buy_unit_size).to eq 5
+      end
+    end
+
+    describe "when group buy cells are blank" do
+      before { product.update!(group_buy: true, group_buy_unit_size: 5) }
+
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, "", ""]
+        end
+      }
+
+      it "leaves the existing settings unchanged" do
+        importer.save_entries
+
+        expect(importer.products_updated_count).to eq 1
+        expect(product.reload.group_buy).to eq true
+        expect(product.group_buy_unit_size).to eq 5
+      end
+    end
+
+    describe "when rows for the same product have conflicting values" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "1", "10"]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "kg",
+                  "Big Bag", shipping_category.name, "0", "20"]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "22.00", "10", "kg",
+                  "Small Sack", shipping_category.name, "", ""]
+        end
+      }
+
+      it "marks the conflicting rows as invalid" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter('invalid', entries)).to eq 2
+        expect(entries['2']['errors'].keys).to include "group_buy", "group_buy_unit_size"
+        expect(entries['3']['errors']['group_buy']).to include "must be the same"
+        expect(entries['4']['errors']).to be_empty
+      end
+    end
+
+    describe "when values are not recognised" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, "maybe", "lots"]
+          csv << ["Lettuce", enterprise2.name, "Vegetables", "5", "5.50", "500", "g",
+                  "", shipping_category.name, "1", "0"]
+        end
+      }
+
+      it "marks the entries as invalid" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter('invalid', entries)).to eq 2
+        expect(entries['2']['errors'].keys).to include "group_buy", "group_buy_unit_size"
+        expect(entries['3']['errors'].keys).to eq ["group_buy_unit_size"]
+      end
+    end
+  end
+
   def find_variant(name)
     Spree::Product.find_by(name:).variants.first
   end
