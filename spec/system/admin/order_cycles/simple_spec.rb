@@ -908,13 +908,20 @@ RSpec.describe '
 
   it "deleting an order cycle" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
+    create(:simple_order_cycle, name: "Opaque Berries")
+
     login_as_admin
     visit admin_order_cycles_path
+
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
-    accept_alert do
-      first('a.delete-order-cycle').click
+    accept_confirm do
+      first('a.delete-order-cycle').click # assuming in order of creation
     end
+
+    expect(page).to have_content "Successfully Removed"
     expect(page).not_to have_selector "tr.order-cycle-#{order_cycle.id}"
+    expect(page).not_to have_field "Name", with: "Translusent Berries"
+    expect(page).to have_field "Name", with: "Opaque Berries"
   end
 
   private
