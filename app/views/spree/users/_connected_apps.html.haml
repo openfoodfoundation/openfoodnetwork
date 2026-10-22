@@ -1,0 +1,25 @@
+%script{ type: "text/ng-template", id: "account/connected_apps.html" }
+  -# Reuses the orders list styles so both tabs look alike.
+  .orders.connected-apps
+    %h3= t('.title')
+    %p= t('.description', site_name: Spree::Config[:site_name])
+
+    - if @connected_apps.empty?
+      .message= t('.none')
+    - else
+      .row
+        .small-12.columns
+          %table
+            %tr
+              %th= t('.application')
+              %th= t('.website')
+              %th
+            - @connected_apps.each do |application|
+              %tbody.transaction-group{ class: cycle("odd", "even") }
+                %tr{ id: "connected_app_#{application.id}" }
+                  %td= application.name
+                  %td= URI(application.redirect_uri.split.first).host
+                  %td.text-right
+                    = button_to t('.revoke'), spree.account_connected_app_path(application),
+                      method: :delete, class: "tiny alert no-margin",
+                      data: { confirm: t('.revoke_confirm', name: application.name) }
