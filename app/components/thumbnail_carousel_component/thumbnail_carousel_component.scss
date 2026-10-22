@@ -53,6 +53,9 @@
   .ofn-thumbnail-carousel__button {
     @extend %ofn-carousel-button;
     pointer-events: auto;
+    // The shopfront styles all buttons with padding and a margin, stretching these into pills.
+    padding: 0;
+    margin: 0;
   }
 
   .ofn-thumbnail-carousel__button--prev {
@@ -93,16 +96,25 @@
   }
 
   .ofn-thumbnail-carousel__thumb {
-    border: 2px solid transparent;
+    border: none;
+    // Not the margin of shopfront buttons, which made the thumbnails overflow and scroll.
     padding: 0;
+    margin: 0;
     background: transparent;
     cursor: pointer;
     flex: 0 0 $carousel-thumbnail-thumb-size;
+    height: $carousel-thumbnail-thumb-size;
+    border-radius: $carousel-thumbnail-image-border-radius;
+    overflow: hidden;
     opacity: $carousel-thumbnail-thumb-opacity;
 
     &.is-active {
-      border-color: $carousel-thumbnail-active-color;
       opacity: $carousel-thumbnail-thumb-active-opacity;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $carousel-thumbnail-active-color;
+      outline-offset: 2px;
     }
   }
 

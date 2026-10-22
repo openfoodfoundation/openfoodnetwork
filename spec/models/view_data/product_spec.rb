@@ -8,14 +8,15 @@ RSpec.describe ViewData::Product do
       id: 1, on_demand: false, on_hand: 5, display_name: "", name_to_display: "Beans",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: nil, display_unit_price: "$12.00",
-      enterprise: producer, producer:,
+      fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end
 
   def build_product(variants)
     described_class.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                        variant_images: [], properties_including_inherited: [], variants:)
+                        variant_images: [], properties_including_inherited: [], variants:,
+                        to_param: "1-beans")
   end
 
   describe "#single_variant? and #variant" do

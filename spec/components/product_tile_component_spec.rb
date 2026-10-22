@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 RSpec.describe ProductTileComponent, type: :component do
-  subject(:render_tile) do
-    render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
-  end
+  subject(:render_tile) { render_tile_of(product) }
 
   let(:producer) { build_stubbed(:enterprise, name: "Fred's Farm") }
+  let(:shop) { build_stubbed(:distributor_enterprise, permalink: "freds-shop") }
   let(:product) { build_product([build_variant]) }
+
+  def render_tile_of(product)
+    render_inline(described_class.new(product:, shop:, variants_in_cart: {}, low_stock_display: 0))
+  end
 
   def build_variant(**overrides)
     ViewData::Variant.new(
       id: 1, on_demand: true, on_hand: 0, display_name: "", name_to_display: "Beans",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end
@@ -21,7 +24,7 @@ RSpec.describe ProductTileComponent, type: :component do
   def build_product(variants)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: Spree::Image.none,
                           variant_images: Spree::Image.none, properties_including_inherited: [],
-                          variants:)
+                          variants:, to_param: "1-beans")
   end
 
   describe "producer" do
@@ -34,7 +37,7 @@ RSpec.describe ProductTileComponent, type: :component do
     it "says multiple producers when they differ" do
       other = build_stubbed(:enterprise, name: "Another Farm")
       product = build_product([build_variant(id: 1), build_variant(id: 2, producer: other)])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_tile_of(product)
 
       expect(page).to have_selector ".producer", text: "Multiple producers"
     end
@@ -44,7 +47,7 @@ RSpec.describe ProductTileComponent, type: :component do
   # computed unit otherwise, so the rules only branch on whether the variant is named.
   describe "name and unit" do
     def tile_name_for(product)
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_tile_of(product)
       page.find(".product-name").text
     end
 
@@ -106,7 +109,7 @@ RSpec.describe ProductTileComponent, type: :component do
                                 build_variant(id: 2, price: 12, price_with_fees: 15,
                                               display_price_with_fees: "$15.00")
                               ])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_tile_of(product)
 
       expect(page).to have_selector ".price", text: "$15.00"
     end
@@ -125,7 +128,7 @@ RSpec.describe ProductTileComponent, type: :component do
     # The variant modal still shows one per row, so only the tile itself is checked.
     it "is hidden when the product has several variants" do
       product = build_product([build_variant(id: 1), build_variant(id: 2)])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_tile_of(product)
 
       expect(page).not_to have_selector ".product-link .unit-price"
     end
@@ -134,13 +137,19 @@ RSpec.describe ProductTileComponent, type: :component do
   describe "rendering" do
     it "renders nothing when no variant is available in this shop" do
       product = build_product([])
-      render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+      render_tile_of(product)
 
       expect(page).not_to have_selector ".product-item"
     end
 
+    it "links to the product page" do
+      render_tile
+
+      expect(page).to have_link href: "/freds-shop/products/1-beans"
+    end
+
     # The add to cart control must stay outside the link, otherwise clicking it would also
-    # open the product details.
+    # open the product page.
     it "keeps the add to cart control outside the product link" do
       render_tile
 

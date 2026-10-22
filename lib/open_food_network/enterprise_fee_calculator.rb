@@ -4,6 +4,9 @@ require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork
   class EnterpriseFeeCalculator
+    # One enterprise fee on the price of one item.
+    FeeAmount = Data.define(:fee_type, :name, :amount)
+
     def initialize(distributor = nil, order_cycle = nil)
       @distributor = distributor
       @order_cycle = order_cycle
@@ -24,6 +27,19 @@ module OpenFoodNetwork
         fees[enterprise_fee.fee_type.to_sym] ||= 0
         fees[enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, enterprise_fee
       end.reject { |_fee_type, amount| amount.zero? }
+    end
+
+    # Each fee on its own, unlike `indexed_fees_by_type_for`, so that two fees of the same
+    # type keep their names. Leaves out fees amounting to nothing.
+    def indexed_fee_breakdown_for(variant)
+      load_enterprise_fees unless @indexed_enterprise_fees
+
+      indexed_enterprise_fees_for(variant).filter_map do |enterprise_fee|
+        amount = calculate_fee_for(variant, enterprise_fee)
+        next if amount.zero?
+
+        FeeAmount.new(fee_type: enterprise_fee.fee_type.to_sym, name: enterprise_fee.name, amount:)
+      end
     end
 
     def fees_for(variant)

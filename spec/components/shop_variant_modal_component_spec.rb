@@ -12,14 +12,15 @@ RSpec.describe ShopVariantModalComponent, type: :component do
       id: 1, on_demand: true, on_hand: 0, display_name: "Borlotti", name_to_display: "Borlotti",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
     ).with(**overrides)
   end
 
   def build_product(variants)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                          variant_images: [], properties_including_inherited: [], variants:)
+                          variant_images: [], properties_including_inherited: [], variants:,
+                          to_param: "1-beans")
   end
 
   context "when the variants come from one producer" do
@@ -28,7 +29,7 @@ RSpec.describe ShopVariantModalComponent, type: :component do
     it "names the producer once, in the header" do
       render_modal
 
-      expect(page).to have_selector ".producer", text: "From Fred's Farm"
+      expect(page).to have_selector ".producer", text: "from Fred's Farm"
       expect(page).not_to have_selector ".variant-producer"
     end
   end
@@ -45,7 +46,7 @@ RSpec.describe ShopVariantModalComponent, type: :component do
     it "still names the single producer once" do
       render_modal
 
-      expect(page).to have_selector ".producer", text: "From Fred's Farm"
+      expect(page).to have_selector ".producer", text: "from Fred's Farm"
       expect(page).not_to have_selector ".variant-producer"
       expect(page).not_to have_content "Reselling Hub"
     end
@@ -61,8 +62,8 @@ RSpec.describe ShopVariantModalComponent, type: :component do
       render_modal
 
       expect(page).not_to have_selector ".header .producer"
-      expect(page).to have_selector ".variant-producer", text: "From Fred's Farm"
-      expect(page).to have_selector ".variant-producer", text: "From Another Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Fred's Farm"
+      expect(page).to have_selector ".variant-producer", text: "from Another Farm"
     end
   end
 end

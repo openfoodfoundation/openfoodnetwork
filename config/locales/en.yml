@@ -2631,7 +2631,16 @@ en:
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
 
-  products: "Products"
+  products_title: "Products"
+  products:
+    show:
+      title: "%{product} from %{enterprise}"
+    product_details:
+      order_product: "Order product"
+      product_details: "Product details"
+      unavailable_title: "Product unavailable"
+      unavailable: "This product might be sold out, or not available in the current active order cycles."
+      choose_order_cycle_html: "Please <strong>choose when you want your order</strong> to see if this product is available."
   products_in: "in %{oc}"
   products_at: "at %{distributor}"
   products_elsewhere: "Products found elsewhere"
@@ -2795,8 +2804,6 @@ en:
   products_edit_cart: "Edit your cart"
   products_from: from
   products_multiple_producers: "Multiple producers"
-  products_unavailable: "This product is currently unavailable."
-  products_choose_order_cycle: "Please choose an order cycle to see what's available."
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
   products_update_error_msg: "Saving failed."
@@ -5244,6 +5251,11 @@ en:
       for_customers_tagged: 'For customers tagged:'
       add_new_rule: '+ Add A New Rule'
       no_rules_yet: No rules apply to this tag yet
+    add_to_cart:
+      add: "Add %{name} to cart"
+      decrease: "Decrease quantity of %{name}"
+      increase: "Increase quantity of %{name}"
+      quantity: "Quantity of %{name}"
     add_tag_rule_modal:
       select_rule_type: "Select a rule type:"
       add_rule: "Add Rule"
@@ -5256,7 +5268,9 @@ en:
         order_balance_due: Post webhook on Order placed with balance due
       test_endpoint: Test webhook endpoint 
     shop_variant_list:
-      from_producer: "From %{name}"
+      from_producer_html: "from %{name}"
+      price_breakdown: "Price breakdown of %{name}"
+      unit_price_info: "About the unit price of %{name}"
     shop_variant_modal:
       select: Select
     product_tile:
