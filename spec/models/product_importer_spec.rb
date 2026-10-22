@@ -1026,6 +1026,65 @@ RSpec.describe ProductImport::ProductImporter do
     end
   end
 
+  describe "validating entries without saving them" do
+    let(:csv_data) {
+      CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "on_demand", "price", "units",
+                "unit_type", "display_name", "shipping_category"]
+        csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "1", "5.50", "500", "g",
+                "Preexisting Banana", shipping_category.name]
+        csv << ["Hypothetical Cake", enterprise2.name, "Cake", "6", "", "3.50", "500", "g",
+                "Emergent Coffee", shipping_category.name]
+      end
+    }
+
+    it "doesn't change stock or create variants" do
+      expect {
+        import_data(csv_data).validate_entries
+      }.not_to change { Spree::Variant.count }
+
+      expect(variant.reload.on_hand).to eq 100
+      expect(variant.on_demand).to eq false
+    end
+
+    # In the UI, validating and saving happen in separate requests
+    it "creates and updates variants when saved in a later request" do
+      import_data(csv_data).validate_entries
+
+      importer = import_data(csv_data)
+      importer.save_entries
+
+      expect(importer.products_created_count).to eq 1
+      expect(importer.products_updated_count).to eq 1
+
+      expect(variant.reload.on_hand).to eq 5
+      expect(variant.on_demand).to eq true
+
+      added_coffee = Spree::Variant.find_by(display_name: "Emergent Coffee")
+      expect(added_coffee.on_hand).to eq 6
+      expect(added_coffee.on_demand).to eq false
+    end
+
+    describe "when the import has errors" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                  "display_name", "shipping_category"]
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name]
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "6", "not a price", "500", "g",
+                  "Emergent Coffee", shipping_category.name]
+        end
+      }
+
+      it "doesn't create the invalid variant" do
+        expect {
+          import_data(csv_data).save_entries
+        }.not_to change { Spree::Variant.where(display_name: "Emergent Coffee").count }
+      end
+    end
+  end
+
   describe "importing group buy fields" do
     let(:headers) {
       ["name", "producer", "category", "on_hand", "price", "units", "unit_type",

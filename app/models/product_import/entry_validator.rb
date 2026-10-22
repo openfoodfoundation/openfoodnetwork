@@ -70,17 +70,7 @@ module ProductImport
       # delegate to work. name= will fail otherwise.
       new_variant = Spree::Variant.new(product_id:, **variant_attributes)
       new_variant.enterprise_id = entry.producer_id
-
-      new_variant.save
-      if new_variant.persisted?
-        if entry.attributes['on_demand'].present?
-          new_variant.on_demand = entry.attributes['on_demand']
-        end
-        if entry.attributes['on_hand'].present?
-          new_variant.on_hand = entry.attributes['on_hand']
-        end
-        check_on_hand_nil(entry, new_variant)
-      end
+      check_on_hand_nil(entry)
 
       if new_variant.valid?
         entry.product_object = new_variant
@@ -377,11 +367,13 @@ module ProductImport
       end
     end
 
+    # Stock levels are saved to the database as soon as they're assigned, so they're left out
+    # here and only assigned when the entry is saved (see EntryProcessor#save_stock_levels)
     def mark_as_existing_variant(entry, existing_variant)
       existing_variant.assign_attributes(
-        entry.variant_assignable_attributes.except('id', 'product_id')
+        entry.variant_assignable_attributes.except('id', 'product_id', 'on_hand', 'on_demand')
       )
-      check_on_hand_nil(entry, existing_variant)
+      check_on_hand_nil(entry)
 
       if existing_variant.valid?
         entry.product_object = existing_variant
@@ -496,11 +488,8 @@ module ProductImport
       end
     end
 
-    def check_on_hand_nil(entry, object)
-      return if entry.on_hand.present?
-
-      object.on_hand = 0 if object.respond_to?(:on_hand)
-      entry.on_hand_nil = true
+    def check_on_hand_nil(entry)
+      entry.on_hand_nil = true if entry.on_hand.blank?
     end
 
     def check_variant_override_stock_settings(entry, object)
