@@ -219,6 +219,7 @@ RSpec.describe ProductImport::EntryProcessor do
 
       expect(product.reload.group_buy).to eq true
       expect(product.group_buy_unit_size).to eq 10
+      expect(variant.reload.on_hand).to eq 5
     end
 
     context "when the product can't be saved" do
