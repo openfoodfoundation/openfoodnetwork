@@ -485,6 +485,27 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         it_behaves_like "reveal all right tabs", default_tabs + ["Home"], "Home"
       end
 
+      it "shows list markers on the home and about tabs" do
+        oc1
+        content = "<ul><li>Apples</li></ul><ol><li>First step</li></ol>"
+        distributor.update!(preferred_shopfront_message: content, long_description: content)
+        visit shop_path
+
+        { "Home" => ".open-shop-message", "About" => ".about-description" }.each do |tab, container|
+          within ".tab-buttons" do
+            click_link tab
+          end
+          within container do
+            unordered_item = find("ul li", text: "Apples")
+            ordered_item = find("ol li", text: "First step")
+            expect(unordered_item.evaluate_script("getComputedStyle(this).listStyleType"))
+              .to eq("disc")
+            expect(ordered_item.evaluate_script("getComputedStyle(this).listStyleType"))
+              .to eq("decimal")
+          end
+        end
+      end
+
       context "when the distributor has a custom tab" do
         let(:custom_tab) { create(:custom_tab, title: "Custom") }
 
