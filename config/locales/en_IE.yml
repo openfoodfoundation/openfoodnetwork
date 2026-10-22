@@ -852,6 +852,10 @@ en_IE:
         amount: Amount
         created_by: Created by
         running_balance: Running balance
+      form:
+        amount: Amount
+        description: Description
+        cancel: Cancel
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
@@ -3544,6 +3548,8 @@ en_IE:
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
         business_address_info:
           message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
+        available_credit_info:
+          title: "Available Credit"
       panels:
         save: SAVE
         saved: SAVED

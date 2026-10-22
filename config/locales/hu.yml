@@ -747,6 +747,10 @@ hu:
         description: Leírás
         amount: Összeg
         running_balance: Futó egyenleg
+      form:
+        amount: Összeg
+        description: Leírás
+        cancel: Törlés
     column_preferences:
       bulk_update:
         success: "Oszlop preferenciák mentve"

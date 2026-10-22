@@ -628,6 +628,10 @@ fr_CH:
         description: Description
         amount: Montant
         running_balance: Solde courant
+      form:
+        amount: Montant
+        description: Description
+        cancel: Annuler
     contents:
       edit:
         title: Contenu

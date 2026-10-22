@@ -855,6 +855,10 @@ fr_CA:
         amount: Montant
         created_by: Créé par
         running_balance: Solde courant
+      form:
+        amount: Montant
+        description: Description
+        cancel: Annuler
     column_preferences:
       bulk_update:
         success: "Préférences colonnes sauvegardées"
@@ -3558,6 +3562,8 @@ fr_CA:
           message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
         business_address_info:
           message: "Ces informations légales seront utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
+        available_credit_info:
+          title: "Crédit disponible"
       panels:
         save: Enregistrer
         saved: Enregistré

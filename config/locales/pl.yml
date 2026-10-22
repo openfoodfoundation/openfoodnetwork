@@ -463,6 +463,10 @@ pl:
         description: Opis
         amount: Kwota
         running_balance: Narastająco
+      form:
+        amount: Kwota
+        description: Opis
+        cancel: Anuluj
     contents:
       edit:
         title: Zawartość

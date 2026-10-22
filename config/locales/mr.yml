@@ -665,6 +665,9 @@ mr:
     customer_account_transaction:
       index:
         amount: रक्कम
+      form:
+        amount: रक्कम
+        cancel: रद्द करा
     contents:
       edit:
         title: सामग्री

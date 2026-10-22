@@ -678,6 +678,10 @@ ml:
         description: വിവരണം
         amount: തുക
         running_balance: റണ്ണിംഗ് ബാലൻസ്
+      form:
+        amount: തുക
+        description: വിവരണം
+        cancel: റദ്ദാക്കുക
     contents:
       edit:
         title: ഉള്ളടക്കം

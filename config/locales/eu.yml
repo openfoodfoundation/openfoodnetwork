@@ -738,6 +738,10 @@ eu:
         description: Deskribapena
         amount: Kopurua
         running_balance: Egungo saldoa
+      form:
+        amount: Kopurua
+        description: Deskribapena
+        cancel: Ezeztatu
     contents:
       edit:
         title: Edukia

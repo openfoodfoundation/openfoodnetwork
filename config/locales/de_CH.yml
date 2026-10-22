@@ -746,6 +746,10 @@ de_CH:
         amount: Betrag
         created_by: Erstellt von
         running_balance: Fortlaufender Saldo
+      form:
+        amount: Betrag
+        description: Beschreibung
+        cancel: Abbrechen
     column_preferences:
       bulk_update:
         success: "Spalteneinstellungen gespeichert"
@@ -3364,6 +3368,8 @@ de_CH:
           message_2: "Zu beachten bei Abonnements: Bitte senden Sie Käufern von Abonnements vorerst die Allgemeinen Geschäftsbedingungen (oder die Änderungen dieser) direkt per E-Mail zu. Sie werden nicht automatisch über diese Änderungen informiert."
         business_address_info:
           message: "Möchten Sie auf Rechnungen Ihren Unternehmensnamen sowie die zugehörige Adresse und Telefonnummer abweichend von den bei Ihrer Registrierung hinterlegten Daten angeben, tragen Sie diese hier ein. Diese Daten werden NUR auf Rechnungen verwendet. Wenn diese Felder leer sind, werden Ihre unter \"Adresse\" und \"Kontakt\" angegebenen Daten zu Name, Adresse und Telefonnummer verwendet."
+        available_credit_info:
+          title: "Verfügbares Guthaben"
       panels:
         save: SPEICHERN
         saved: GESPEICHERT

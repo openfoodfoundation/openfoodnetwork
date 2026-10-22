@@ -605,6 +605,10 @@ en_NZ:
         description: Description
         amount: Amount
         running_balance: Running balance
+      form:
+        amount: Amount
+        description: Description
+        cancel: Cancel
     contents:
       edit:
         title: Content

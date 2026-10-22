@@ -638,6 +638,10 @@ ar:
         description: وصف
         amount: القيمة
         running_balance: 'الرصيد القائم '
+      form:
+        amount: القيمة
+        description: وصف
+        cancel: إلغاء
     contents:
       edit:
         title: المحتوى

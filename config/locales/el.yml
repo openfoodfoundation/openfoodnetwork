@@ -697,6 +697,10 @@ el:
         description: Περιγραφή
         amount: Ποσό
         running_balance: Τρέξιμο ισορροπίας
+      form:
+        amount: Ποσό
+        description: Περιγραφή
+        cancel: Ακύρωση
     column_preferences:
       bulk_update:
         success: "Οι προτιμήσεις στήλης αποθηκεύτηκαν"

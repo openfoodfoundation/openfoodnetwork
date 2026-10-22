@@ -663,6 +663,10 @@ ca:
         description: Descripció
         amount: Quantitat
         running_balance: Balanç corrent
+      form:
+        amount: Quantitat
+        description: Descripció
+        cancel: Cancel·lar
     contents:
       edit:
         title: Contingut

@@ -510,6 +510,10 @@ pt:
         description: Descrição
         amount: Quantia
         running_balance: Saldo corrente
+      form:
+        amount: Quantia
+        description: Descrição
+        cancel: Cancelar
     contents:
       edit:
         title: Conteúdo

@@ -839,6 +839,10 @@ pt_BR:
         amount: Montante
         created_by: Criado por
         running_balance: Balanço corrente
+      form:
+        amount: Montante
+        description: Descrição
+        cancel: Cancelar
     column_preferences:
       bulk_update:
         success: "Preferências de colunas salvas"
@@ -3510,6 +3514,8 @@ pt_BR:
           message_2: "Para compradores por assinatura, você precisará enviar os Termos e Condições (ou suas atualizações) por email."
         business_address_info:
           message: "Nome legal da empresa, endereço legal e telefone legal são usados por empresas que emitem notas por uma pessoa jurídica com dados diferentes das informações comerciais públicas. Esses dados serão usados APENAS em notas fiscais. Se estiverem em branco, seu nome, endereço e telefone públicos serão usados nas notas."
+        available_credit_info:
+          title: "Crédito disponível"
       panels:
         save: SALVAR
         saved: SALVO

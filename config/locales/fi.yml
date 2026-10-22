@@ -822,6 +822,10 @@ fi:
         description: Kuvaus
         amount: Määrä
         running_balance: Juokseva saldo
+      form:
+        amount: Määrä
+        description: Kuvaus
+        cancel: Peruuta
     column_preferences:
       bulk_update:
         success: "Sarakemääritykset tallennettu"

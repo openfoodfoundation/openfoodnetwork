@@ -675,6 +675,10 @@ hi:
         description: विवरण
         amount: राशि
         running_balance: रनिंग बैलेंस
+      form:
+        amount: राशि
+        description: विवरण
+        cancel: रद्द करें
     contents:
       edit:
         title: कंटेन्ट

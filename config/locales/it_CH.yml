@@ -599,6 +599,10 @@ it_CH:
         description: Descrizione
         amount: Quantità
         running_balance: Bilancio corrente
+      form:
+        amount: Quantità
+        description: Descrizione
+        cancel: Annulla
     contents:
       edit:
         title: Contenuto

@@ -599,6 +599,10 @@ es_CR:
         description: Descripción
         amount: Cantidad
         running_balance: Saldo actual
+      form:
+        amount: Cantidad
+        description: Descripción
+        cancel: Cancelar
     contents:
       edit:
         title: Contenido

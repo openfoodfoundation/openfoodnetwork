@@ -686,6 +686,10 @@ ru:
         description: Описание
         amount: Количество
         running_balance: Текущий баланс
+      form:
+        amount: Количество
+        description: Описание
+        cancel: Выход
     contents:
       edit:
         title: Содержание

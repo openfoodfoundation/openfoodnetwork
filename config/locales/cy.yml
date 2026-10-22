@@ -832,6 +832,10 @@ cy:
         amount: Nifer
         created_by: Wedi ei creu gan
         running_balance: Cydbwysedd rhedeg
+      form:
+        amount: Nifer
+        description: Disgrifiad
+        cancel: Canslo
     column_preferences:
       bulk_update:
         success: "Cadwyd dewisiadau’r colofnau"
@@ -3528,6 +3532,8 @@ cy:
           message_2: "Ar gyfer prynwyr sydd â thanysgrifiadau, mae angen i chi e-bostio'r Telerau ac Amodau (neu'r newidiadau iddynt) am y tro, ni fydd unrhyw beth yn eu hysbysu am y Telerau ac Amodau newydd hyn."
         business_address_info:
           message: "Defnyddir Enw Cyfreithiol y Cwmni, y Cyfeiriad Cyfreithiol a'r Rhif Ffôn Cyfreithiol ar gyfer busnesau sy'n anfonebu o endid cyfreithiol a gofrestrwyd gyda manylion sy'n wahanol i'w gwybodaeth masnachu cyhoeddus. Defnyddir y manylion hyn YN UNIG ar anfonebau. Os gadewir y manylion hyn yn wag, defnyddir eich Enw , eich Cyfeiriad a'ch Rhif ffôn cyhoeddus ar anfonebau."
+        available_credit_info:
+          title: "Credyd ar gael "
       panels:
         save: CADW
         saved: CADWYD

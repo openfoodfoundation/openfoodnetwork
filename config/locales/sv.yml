@@ -833,6 +833,10 @@ sv:
         amount: Belopp
         created_by: Skapad av
         running_balance: Saldo
+      form:
+        amount: Belopp
+        description: Beskrivning
+        cancel: Avbryt
     column_preferences:
       bulk_update:
         success: "Kolumninställningar har sparats"
@@ -3521,6 +3525,8 @@ sv:
           message_2: "För köpare med prenumerationer måste du mejla dem villkoren (eller ändringarna av dem) för nu, ingenting kommer att meddela dem om dessa nya villkor."
         business_address_info:
           message: "Företagets juridiska namn, juridiska adress och juridiska telefonnummer används för företag som fakturerar från en juridisk person som är registrerad med andra uppgifter till deras offentliga handelsinformation. Dessa uppgifter kommer ENDAST att användas på fakturor. Om dessa uppgifter är tomma kommer ditt offentliga namn, adress och telefonnummer att användas på fakturor."
+        available_credit_info:
+          title: "Tillgänglig kredit"
       panels:
         save: SPARA
         saved: SPARAT

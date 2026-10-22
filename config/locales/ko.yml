@@ -600,6 +600,10 @@ ko:
         description: 설명
         amount: 수량
         running_balance: 계좌 실행
+      form:
+        amount: 수량
+        description: 설명
+        cancel: 취소
     contents:
       edit:
         title: 콘텐트

@@ -788,6 +788,10 @@ es:
         amount: Cantidad
         created_by: Creado por
         running_balance: Saldo actual
+      form:
+        amount: Cantidad
+        description: Descripción
+        cancel: Cancelar
     column_preferences:
       bulk_update:
         success: "Preferencias de columna guardadas"
@@ -3358,6 +3362,8 @@ es:
           message_2: "Para los compradores con suscripciones, debe enviarles por correo electrónico los Términos y condiciones (o los cambios en ellos) por ahora, nada les notificará sobre estos nuevos Términos y condiciones."
         business_address_info:
           message: "El nombre legal de la empresa, la dirección legal y el número de teléfono legal se utilizan para las empresas que facturan a una entidad legal registrada con detalles diferentes a su información comercial pública. Estos datos SÓLO se utilizarán en las facturas. Si estos detalles están en blanco, su nombre público, dirección y número de teléfono se utilizarán en las facturas."
+        available_credit_info:
+          title: "Saldo disponible"
       panels:
         save: GUARDAR
         saved: GUARDADO

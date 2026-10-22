@@ -540,6 +540,10 @@ tr:
         description: Açıklama
         amount: Tutar
         running_balance: Güncel Bakiye
+      form:
+        amount: Tutar
+        description: Açıklama
+        cancel: İptal et
     contents:
       edit:
         title: İÇERİK

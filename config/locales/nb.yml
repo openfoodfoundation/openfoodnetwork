@@ -759,6 +759,10 @@ nb:
         description: Beskrivelse
         amount: Antall
         running_balance: Løpende balanse
+      form:
+        amount: Antall
+        description: Beskrivelse
+        cancel: Avbryt
     column_preferences:
       bulk_update:
         success: "Kolonnepreferansene er lagret"

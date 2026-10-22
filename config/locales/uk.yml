@@ -605,6 +605,10 @@ uk:
         description: Опис
         amount: Кількість
         running_balance: Поточний баланс
+      form:
+        amount: Кількість
+        description: Опис
+        cancel: Скасувати
     contents:
       edit:
         title: Контент

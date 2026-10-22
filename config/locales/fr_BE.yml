@@ -112,6 +112,10 @@ fr_BE:
         connected_apps:
           vine:
             api_request_error: "Une erreur s'est produite lors de la connexion à l'API VINE"
+        customer_account_transaction:
+          attributes:
+            amount:
+              exceeds_available_credit: "ne peut pas déduire plus que le crédit disponible ( %{available_credit} )"
       messages:
         confirmation: "ne correspond pas à %{attribute}"
         blank: "Champ obligatoire"
@@ -855,6 +859,15 @@ fr_BE:
         amount: Quantité
         created_by: Créé par
         running_balance: Avoir disponible
+        add_credit: "Ajouter du crédit"
+      form:
+        amount: Montant
+        description: Description
+        submit: "Ajouter du crédit"
+        cancel: Annuler
+        confirm: "Êtes-vous sûr de vouloir appliquer %{currency} %{amount} de crédit ?"
+        confirm_deduct: "Êtes-vous sûr de vouloir déduire %{currency}%{amount} de crédit ?"
+        negative_amount_hint: "En tant que super administrateur, vous pouvez saisir un montant négatif pour déduire le crédit."
     column_preferences:
       bulk_update:
         success: "Préférences de colonne enregistrées"
@@ -3559,6 +3572,9 @@ fr_BE:
           message_2: "Pour les acheteurs abonnés, vous devez leur envoyer par e-mail les conditions générales (ou leurs modifications) pour le moment, rien ne les informera de ces nouvelles conditions générales."
         business_address_info:
           message: "Ces informations légales seront uniquement utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
+        available_credit_info:
+          title: "Avoir disponible"
+          message: "Cliquer sur le montant du crédit disponible affiche un récapitulatif des crédits appliqués et/ou déduits du solde créditeur du client. Les responsables d'entreprise peuvent également ajouter des crédits au compte d'un client à l'aide du bouton « Ajouter un crédit » situé au-dessus du relevé de crédit."
       panels:
         save: Enregistrer
         saved: Enregistré
@@ -4156,6 +4172,7 @@ fr_BE:
     back_to_payments_list: "Retour à la liste des paiements"
     back_to_states_list: "Retour à la liste des provinces"
     return_authorizations: "Autorisations de retour"
+    return_authorization_updated: "Autorisation de retour mise à jour"
     cannot_create_returns: "Impossible de créer des retours car cette commande n'a pas d'unités expédiées."
     select_stock: "Selectionner stock"
     location: "Site"
@@ -5154,5 +5171,6 @@ fr_BE:
       not_enough_credit_available: Avoir insuffisant
   customer_credit_service:
     no_credit_owed: Aucun avoir dû
+    customer_missing: Aucun client n'est associé à cette commande.
     credit_payment_method_missing: Le mode de paiement par avoir client est manquant. Veuillez vérifier la configuration.
     refund_sucessful: Remboursement effectué avec succès !

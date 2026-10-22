@@ -667,6 +667,10 @@ pa:
         description: ਵਰਣਨ
         amount: ਰਕਮ
         running_balance: ਚਲ ਰਹੀ ਬਕਾਇਆ ਰਕਮ
+      form:
+        amount: ਰਕਮ
+        description: ਵਰਣਨ
+        cancel: ਰੱਦ ਕਰੋ
     contents:
       edit:
         title: ਕੰਟੇਂਟ

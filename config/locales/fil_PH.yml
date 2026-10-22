@@ -458,6 +458,10 @@ fil_PH:
         description: paglalarawan
         amount: Halaga
         running_balance: tumatakbong balanse
+      form:
+        amount: Halaga
+        description: paglalarawan
+        cancel: kanselahin
     contents:
       edit:
         title: nilalaman
