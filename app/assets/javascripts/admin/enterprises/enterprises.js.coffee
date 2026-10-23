@@ -4,7 +4,6 @@ angular.module("admin.enterprises", [
   "admin.shippingMethods",
   "admin.users",
   "admin.side_menu",
-  "admin.taxons",
   'admin.indexUtils',
   'admin.dropdown',
   'ngSanitize']

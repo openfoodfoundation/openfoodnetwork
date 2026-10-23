@@ -35,6 +35,9 @@ export default class extends Controller {
     }
 
     this.control = new TomSelect(this.element, tomSelectOptions);
+
+    // A read-only input is locked by TomSelect, but its items could still be dragged.
+    if (this.element.readOnly) this.control.lock();
   }
 
   disconnect() {
@@ -47,6 +50,9 @@ export default class extends Controller {
   // rest of the selection on a multiple select. Options with a blank value are
   // ignored so an unselected select stays empty.
   #selectedValues() {
+    // A text input holds its values as text, TomSelect reads them itself.
+    if (!this.element.selectedOptions) return [];
+
     return [...this.element.selectedOptions].map((option) => option.value).filter(Boolean);
   }
 

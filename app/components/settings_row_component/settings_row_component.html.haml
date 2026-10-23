@@ -1,0 +1,7 @@
+.settings-row{ id: @id, **@options }
+  .settings-row-header
+    %span.settings-row-title{ id: "#{@id}_title" }= @title
+    - if @description.present?
+      %p.settings-row-description= @description
+  .settings-row-controls{ role: "group", "aria-labelledby": "#{@id}_title" }
+    = content
