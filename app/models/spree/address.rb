@@ -11,7 +11,9 @@ module Spree
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    has_one :enterprise, dependent: :restrict_with_exception
+    # The enterprise saves its address, not the other way around. Autosaving
+    # here would validate and save a new enterprise a second time.
+    has_one :enterprise, dependent: :restrict_with_exception, autosave: false
     has_many :shipments, dependent: :restrict_with_exception
 
     validates :address1, :city, :phone, presence: true
@@ -157,6 +159,10 @@ module Spree
       if state.present?
         if state.country == country
           self.state_name = nil # not required as we have a valid state and country combo
+
+          # We have a valid state. Don't look it up again by name: `state_name`
+          # is delegated to the state, so it would always be present.
+          return
         elsif state_name.present?
           self.state = nil
         else
