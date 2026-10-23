@@ -1,10 +1,12 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
-- product_pages = product_pages?(current_distributor)
-- if product_pages
-  -# AngularJS fills in the product id. Path helpers would escape its braces.
-  - product_link = { "ng-href" => main_app.enterprise_product_path(current_distributor, "PRODUCT_ID").sub("PRODUCT_ID", "{{::product.id}}") }
-- else
-  - product_link = { "data-controller" => "shop-product-modal", "data-action" => "click->shop-product-modal#open", "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}" }
+:ruby
+  product_pages = product_pages?(current_distributor)
+  product_link = if product_pages
+    # AngularJS fills in the product id. Path helpers would escape its braces.
+    { "ng-href" => main_app.enterprise_product_path(current_distributor, "PRODUCT_ID").sub("PRODUCT_ID", "{{::product.id}}") }
+  else
+    { "data-controller" => "shop-product-modal", "data-action" => "click->shop-product-modal#open", "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}" }
+  end
 
 = cache_with_locale(([:product_pages, current_distributor.permalink] if product_pages)) do
   .product-thumb
