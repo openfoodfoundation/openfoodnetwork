@@ -476,7 +476,7 @@ module Spree
       all_adjustments.destroy_all
       payments.clear
       shipments.destroy_all
-      restart_checkout_flow if state.in?(["payment", "confirmation"])
+      restart_checkout_flow unless cart? || completed?
     end
 
     def shipped?

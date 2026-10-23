@@ -16,6 +16,7 @@ RSpec.describe Spree::Order do
         order.run_callbacks(:create)
         allow(order).to receive_messages payment_required?: true
         allow(order).to receive_messages process_payments!: true
+        allow(order).to receive_messages shipping_method: build(:shipping_method)
       end
 
       context "when payment processing succeeds" do
