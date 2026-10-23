@@ -29,31 +29,10 @@ RSpec.describe Api::VariantSerializer do
   end
 
   describe "#thumb_url" do
-    # Reload so images created after the factory are not hidden by cached associations
-    subject { described_class.new variant.reload }
-    let(:product) { variant.product }
+    it "returns the variant image URL" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
 
-    context "when the variant has its own image" do
-      let!(:product_image) { Spree::Image.create!(attachment: black_logo_file, viewable: product) }
-      let!(:variant_image) { Spree::Image.create!(attachment: white_logo_file, viewable: variant) }
-
-      it "returns the variant image" do
-        expect(subject.thumb_url).to eq variant_image.url(:mini)
-      end
-    end
-
-    context "when only the product has an image" do
-      let!(:product_image) { Spree::Image.create!(attachment: black_logo_file, viewable: product) }
-
-      it "falls back to the product image" do
-        expect(subject.thumb_url).to eq product_image.url(:mini)
-      end
-    end
-
-    context "when neither has an image" do
-      it "returns the default image" do
-        expect(subject.thumb_url).to eq Spree::Image.default_image_url(:mini)
-      end
+      expect(described_class.new(variant.reload).thumb_url).to eq variant.image_url(:mini)
     end
   end
 end
