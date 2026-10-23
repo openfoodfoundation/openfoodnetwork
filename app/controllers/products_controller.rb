@@ -36,6 +36,10 @@ class ProductsController < BaseController
     # the same order cycle that the variants below it come from.
     @current_distributor = @enterprise
     @current_order_cycle = @order_cycle
+
+    # The shop's product list shows the page over itself, without the page's header and footer.
+    # See product_page_overlay_controller.js.
+    render :overlay, layout: false if params[:overlay]
   end
 
   # Choosing an order cycle is the shopper saying that they want to shop here, so unlike

@@ -184,6 +184,86 @@ RSpec.describe "As a consumer I want to view products" do
     end
   end
 
+  describe "from the shop's product list", feature: "product-pages" do
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:products) {
+      Array.new(12) { |i|
+        create(:product, enterprise_id: enterprise.id, name: format("Garlic %02d", i + 1))
+      }
+    }
+    let(:product) { products[8] }
+    let(:variant) { product.variants.first }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, distributors: [enterprise], coordinator: enterprise,
+                                  variants: products.map(&:variants).flatten)
+    }
+
+    it "shows the product's page over the list and goes back to the same place" do
+      visit enterprise_shop_path(enterprise)
+      link = find("#product-#{product.id} h3 a")
+      page.execute_script(<<~JS)
+        window.listStillInMemory = true;
+        document.addEventListener("click", () => { window.listPosition = scrollY }, true);
+      JS
+
+      link.click
+
+      within "dialog.product-page-overlay" do
+        expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+        expect(page).to have_selector ".variant-list li", count: 1
+      end
+      expect(page).to have_current_path enterprise_product_path(enterprise, product)
+      expect(page).to have_title "Garlic 09 from The Garlic Guru - Open Food Network"
+
+      find("button[aria-label='Close']").click
+
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      expect(page).to have_current_path enterprise_shop_path(enterprise), ignore_query: true
+      expect(page.evaluate_script("window.listStillInMemory")).to be true
+      list_position = page.evaluate_script("window.listPosition")
+      expect(list_position).to be > 0
+      expect(page.evaluate_script("window.scrollY")).to eq list_position
+
+      # The browser's buttons go back and forth too.
+      link.click
+      expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+      page.go_back
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      page.go_forward
+      expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+      expect(page).to have_current_path enterprise_product_path(enterprise, product)
+    end
+
+    it "adds to the shop's cart from the product's page" do
+      visit enterprise_shop_path(enterprise)
+      find("#product-#{product.id} h3 a").click
+
+      within "dialog.product-page-overlay .variant-list li" do
+        click_button "Add"
+        expect(page).to have_content "1 in cart"
+        find("img[src*='add']").click
+        expect(page).to have_content "2 in cart"
+      end
+      find("dialog.product-page-overlay").send_keys(:escape)
+
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      expect(page).to have_selector ".cart-span", text: "2"
+      within "#variant-#{variant.id}" do
+        expect(page).to have_content "2 in cart"
+      end
+      wait_for_cart
+      expect(Spree::LineItem.find_by(variant:)&.quantity).to eq 2
+
+      # The page shows what's in the cart when it opens again.
+      find("#product-#{product.id} h3 a").click
+      within "dialog.product-page-overlay .variant-list li" do
+        expect(page).to have_content "2 in cart"
+      end
+    end
+  end
+
   describe "Viewing a product" do
     let(:taxon) { create(:taxon, name: "Tricky Taxon") }
     let(:property) { create(:property, presentation: "Fresh and Fine") }
@@ -333,28 +413,6 @@ RSpec.describe "As a consumer I want to view products" do
 
         close_modal(within_selector: '#shop-product-modal-container')
         expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
-      end
-
-      context "with product pages", feature: "product-pages" do
-        it "opens the product page instead of the product modal" do
-          visit shop_path
-
-          within "#product-#{product.id}" do
-            expect(page).not_to have_selector "[data-controller~='shop-product-modal']"
-            click_link "Beans"
-          end
-
-          expect(page).to have_current_path enterprise_product_path(distributor, product)
-          expect(page).to have_selector ".product-page-header", text: "Beans"
-          expect(page).not_to have_selector ".reveal-modal"
-
-          # The product page brings its Turbo cart along to the AngularJS shopfront.
-          within ".variant-list li" do
-            click_button "Add"
-            expect(page).to have_content "1 in cart"
-          end
-          expect(page).to have_selector ".cart-span", text: "1"
-        end
       end
 
       context "product grid view", feature: :product_grid_view do
