@@ -212,14 +212,6 @@ module Spree
       duplicator.duplicate
     end
 
-    def self.like_any(fields, values)
-      where fields.map { |field|
-        values.map { |value|
-          arel_table[field].matches("%#{value}%")
-        }.inject(:or)
-      }.inject(:or)
-    end
-
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
 
@@ -250,14 +242,6 @@ module Spree
       ps.
         sort_by(&:position).
         map { |pp| { id: pp.property.id, name: pp.property.presentation, value: pp.value } }
-    end
-
-    def in_distributor?(distributor)
-      self.class.in_distributor(distributor).include? self
-    end
-
-    def in_order_cycle?(order_cycle)
-      self.class.in_order_cycle(order_cycle).include? self
     end
 
     def variants_distributed_by(order_cycle, distributor)

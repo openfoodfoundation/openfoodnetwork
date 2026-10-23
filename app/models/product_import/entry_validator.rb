@@ -414,16 +414,6 @@ module ProductImport
       entry.product_validations = options[:product_validations] if options[:product_validations]
     end
 
-    def mark_as_not_updatable(entry, attribute)
-      mark_as_invalid(entry, attribute:,
-                             error: I18n.t("admin.product_import.model.not_updatable"))
-    end
-
-    def mark_as_values_must_be_same(entry, attribute)
-      mark_as_invalid(entry, attribute:,
-                             error: I18n.t("admin.product_import.model.values_must_be_same"))
-    end
-
     def import_into_inventory?
       @import_settings.dig(:settings, 'import_into') == 'inventories'
     end
@@ -477,20 +467,6 @@ module ProductImport
       object.count_on_hand = entry.on_hand.presence
       object.on_demand = object.count_on_hand.blank? if entry.on_demand.blank?
       entry.on_hand_nil = object.count_on_hand.blank?
-    end
-
-    def all_entries_for_product(entry)
-      all_entries_by_product[entries_by_product_key(entry)]
-    end
-
-    def all_entries_by_product
-      @all_entries_by_product ||= @all_entries.group_by do |entry|
-        entries_by_product_key(entry)
-      end
-    end
-
-    def entries_by_product_key(entry)
-      [entry.producer.to_s, entry.name.to_s]
     end
   end
 end
