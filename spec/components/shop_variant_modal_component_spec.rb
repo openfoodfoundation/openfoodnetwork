@@ -2,10 +2,11 @@
 
 RSpec.describe ShopVariantModalComponent, type: :component do
   subject(:render_modal) do
-    render_inline(described_class.new(product:, variants_in_cart: {}, low_stock_display: 0))
+    render_inline(described_class.new(product:, variants_in_cart:, low_stock_display: 0))
   end
 
   let(:producer) { build_stubbed(:enterprise, name: "Fred's Farm") }
+  let(:variants_in_cart) { Hash.new(ViewData::CartItem.empty) }
 
   def build_variant(**overrides)
     ViewData::Variant.new(
@@ -13,13 +14,14 @@ RSpec.describe ShopVariantModalComponent, type: :component do
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
       display_unit_price: "$12.00", enterprise: producer, producer:,
-      product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
+      product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy: false)
     ).with(**overrides)
   end
 
-  def build_product(variants)
+  def build_product(variants, group_buy: false)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                          variant_images: [], properties_including_inherited: [], variants:)
+                          variant_images: [], properties_including_inherited: [], variants:,
+                          group_buy:)
   end
 
   context "when the variants come from one producer" do

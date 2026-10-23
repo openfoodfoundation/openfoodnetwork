@@ -5262,6 +5262,7 @@ en:
     product_tile:
       multiple_options: "multiple options"
       from_price: "from"
+      bulk: "Bulk"
   # Gem to prevent bot form submissions
   invisible_captcha:
     sentence_for_humans: "Please leave empty"

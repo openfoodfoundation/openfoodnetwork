@@ -55,6 +55,10 @@
           @include price.unit-price;
         }
       }
+
+      .add-to-cart-component {
+        margin-bottom: $product-grid-margin-bottom;
+      }
     }
   }
 }

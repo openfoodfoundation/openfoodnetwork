@@ -39,6 +39,11 @@ module VariantStock
     overwrite_stock_levels(new_level)
   end
 
+  delegate :total_on_hand, to: :quantifier
+
+  # Calculate on_hand using in memory stock items
+  delegate :loaded_on_hand, to: :quantifier
+
   # Checks whether this variant is produced on demand.
   def on_demand
     # A variant that has not been saved yet or has been soft-deleted doesn't have a stock item
@@ -142,5 +147,9 @@ module VariantStock
   # Overwrites stock_item.count_on_hand
   def overwrite_stock_levels(new_level)
     stock_item.adjust_count_on_hand(new_level.to_i - stock_item.count_on_hand)
+  end
+
+  def quantifier
+    Spree::Stock::Quantifier.new(self)
   end
 end
