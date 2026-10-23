@@ -8,10 +8,10 @@ module Api
 
       skip_authorization_check
       skip_before_action :authenticate_user, :ensure_api_key, only: [
-        :taxons, :properties, :producer_properties
+        :taxons, :properties
       ]
 
-      caches_action :taxons, :properties, :producer_properties,
+      caches_action :taxons, :properties,
                     expires_in: CacheService::FILTERS_EXPIRY,
                     cache_path: proc { |controller| controller.request.url }
 
@@ -49,12 +49,6 @@ module Api
         ).to_json
       end
 
-      def producer_properties
-        render plain: ActiveModel::ArraySerializer.new(
-          load_producer_properties, each_serializer: Api::PropertySerializer
-        ).to_json
-      end
-
       private
 
       # Sort first by shopfront_taxon_order if set, then alphabetically.
@@ -74,22 +68,10 @@ module Api
         render status: :not_found, json: {}
       end
 
+      # Product properties and producer properties, as both are filtered with q[with_properties].
       def product_properties
-        Spree::Property.
-          joins(:products).
-          where(spree_products: { id: distributed_products }).
-          select('DISTINCT spree_properties.*')
-      end
-
-      def load_producer_properties
-        producers = Enterprise.
-          joins(:products).
-          where(spree_products: { id: distributed_products })
-
-        Spree::Property.
-          joins(:producer_properties).
-          where(producer_properties: { producer_id: producers }).
-          select('DISTINCT spree_properties.*')
+        distributed_products_service.properties_relation.
+          order(Arel.sql("LOWER(spree_properties.presentation)"))
       end
 
       def search_params
@@ -109,9 +91,13 @@ module Api
       end
 
       def distributed_products
+        distributed_products_service.products_relation.pluck(:id)
+      end
+
+      def distributed_products_service
         OrderCycles::DistributedProductsService.new(
           distributor, order_cycle, customer, inventory_enabled:, variant_tag_enabled:,
-        ).products_relation.pluck(:id)
+        )
       end
 
       def inventory_enabled
