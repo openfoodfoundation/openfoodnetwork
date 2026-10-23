@@ -329,6 +329,42 @@ RSpec.describe ProductsRenderer do
 
         expect(products_renderer.products_view).to eq([])
       end
+
+      it "describes the pagination of the products" do
+        args[:per_page] = 2
+        args[:page] = 2
+
+        pagination = products_renderer.pagination
+        expect(pagination.count).to eq 3
+        expect(pagination.page).to eq 2
+        expect(pagination.last).to eq 2
+      end
+
+      it "doesn't add the page size to page links, the caller sets it" do
+        args[:per_page] = 2
+
+        expect(products_renderer.pagination.page_url(:next)).to eq "?page=2"
+      end
+
+      it "keeps a permitted search in page links" do
+        args[:per_page] = 1
+        args[:q] = { search_param => "a" }
+
+        url = CGI.unescape(products_renderer.pagination.page_url(:next))
+        expect(url).to eq "?q[#{search_param}]=a&page=2"
+      end
+
+      it "leaves unpermitted params, as used by the API, out of page links" do
+        args[:per_page] = 1
+        args[:q] = ActionController::Parameters.new(search_param => "a")
+
+        expect(products_renderer.pagination.page_url(:next)).to eq "?page=2"
+      end
+
+      def search_param
+        "name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_" \
+          "variants_enterprise_name_cont"
+      end
     end
 
     describe "preloading" do
