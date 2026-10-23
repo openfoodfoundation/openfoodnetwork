@@ -6,7 +6,8 @@
 
   %p= t('.catalog_url', count: @items.count, catalog_url: @catalog_url)
   %p= t('.enterprise', enterprise_name: @enterprise.name)
-  %p= t('.absent_products', count: @absent_items.count)
+  - if @absent_items.any?
+    %p= t('.absent_products', count: @absent_items.count)
   %br
 
   = form_with url: main_app.import_admin_dfc_product_imports_path, html: { "data-controller": "checked" } do |form|
