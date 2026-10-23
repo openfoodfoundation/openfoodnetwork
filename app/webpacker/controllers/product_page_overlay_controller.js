@@ -8,6 +8,10 @@ import { Controller } from "stimulus";
 // browser history: the back button closes the page and the URL can be shared. The links still
 // point at the product page, so opening one in a new tab works as before.
 //
+// The page looks like the product page: it fills the window below the shop's top menu, which
+// stays in use, and shows the shop's header and tabs. Choosing a tab goes back to the list's
+// page and shows that tab.
+//
 // The shop's AngularJS cart stays in charge of the cart. See productPageOverlayCart.
 //
 // The shop's AngularJS watches the URL too. It can't make sense of a product's URL and would
@@ -46,11 +50,24 @@ export default class extends Controller {
 
   // Closing goes back in history, to the list's URL, which closes the page.
   close() {
+    if (!this.dialogTarget.open) return;
+
     if (history.state?.productPageOverlay) {
       history.back();
     } else {
       this.hide();
     }
+  }
+
+  // The shop's tabs on the page link to the shop's page with the list. They show their tab there
+  // instead of loading the page again.
+  followLink(event) {
+    const link = event.target.closest("a[href]");
+    if (!link || !this.isShopPage(link)) return;
+
+    event.preventDefault();
+    this.tabToShow = link.hash;
+    this.close();
   }
 
   async onPopState(event) {
@@ -99,6 +116,7 @@ export default class extends Controller {
 
     this.contentTarget.replaceChildren(content);
     this.title = content.dataset.title;
+    this.shopUrl = new URL(content.dataset.shopUrl, window.location.href);
     return true;
   }
 
@@ -121,7 +139,8 @@ export default class extends Controller {
 
     if (!dialog.open) {
       this.listTitle = document.title;
-      dialog.showModal();
+      // Not modal, so that the top menu above it stays in use.
+      dialog.show();
     }
     dialog.setAttribute("aria-label", this.title);
     dialog.scrollTop = 0;
@@ -137,5 +156,25 @@ export default class extends Controller {
     dialog.close();
     document.title = this.listTitle;
     this.contentTarget.replaceChildren();
+    this.showTab();
+  }
+
+  isShopPage(link) {
+    return link.origin === this.shopUrl.origin && link.pathname === this.shopUrl.pathname;
+  }
+
+  // Clicks the shop page's own link to the tab, now that the overlay's is gone. The list's own
+  // tab is showing already, where the shopper left it.
+  showTab() {
+    const hash = this.tabToShow;
+    this.tabToShow = null;
+    if (!hash) return;
+
+    const tab = document.querySelector(`#shop-tabs a[href="${CSS.escape(hash)}"]`);
+    if (!tab || tab.classList.contains("selected")) return;
+
+    tab.click();
+    // From the top, like going to the shop's page would.
+    window.scrollTo(0, 0);
   }
 }
