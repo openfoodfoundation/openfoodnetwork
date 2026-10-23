@@ -22,6 +22,10 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :open_street_map_provider_options, :text, default: "{}"
   preference :open_street_map_default_latitude, :string, default: "-37.4713077"
   preference :open_street_map_default_longitude, :string, default: "144.7851531"
+  preference :open_street_map_default_zoom, :integer, default: 6
+  # When set, the map opens framed on the geocoded enterprises instead of the
+  # default centre and zoom.
+  preference :open_street_map_fit_to_enterprises, :boolean, default: true
 
   # Producer sign-up page
   # All the following defaults using I18n don't work.

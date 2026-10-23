@@ -40,10 +40,13 @@ angular.module('Darkswarm').directive 'ofnOpenStreetMap', ($window, MapCentreCal
 
     displayMap = ->
       setMapDimensions()
-      zoomLevel = 6
-      map = L.map('open-street-map')
+      map = L.map('open-street-map', zoomSnap: 0.25)
       L.tileLayer.provider(openStreetMapProviderName, openStreetMapProviderOptions).addTo(map)
-      map.setView([MapCentreCalculator.initialLatitude(), MapCentreCalculator.initialLongitude()], zoomLevel)
+      bounds = MapCentreCalculator.initialBounds()
+      if bounds && openStreetMapConfig.open_street_map_fit_to_enterprises
+        map.fitBounds(bounds, padding: [20, 20], maxZoom: 12)
+      else
+        map.setView(MapCentreCalculator.defaultCentre(), openStreetMapConfig.open_street_map_default_zoom)
 
     displayEnterprises = ->
       for enterprise in Enterprises.geocodedEnterprises()
