@@ -29,4 +29,8 @@
               = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: label(:unit_price_info, variant), placement: "top") do
                 = t("js.shopfront.unit_price_tooltip")
         .small-4.columns
-          = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)
+          - if preview
+            .text-right
+              %button.add-variant{ type: "button", disabled: true }= t("js.shopfront.variant.add_to_cart")
+          - else
+            = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)

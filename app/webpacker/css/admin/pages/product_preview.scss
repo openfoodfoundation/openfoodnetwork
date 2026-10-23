@@ -103,6 +103,14 @@
     width: 25%;
   }
 
+  .small-4 {
+    width: 33.33333%;
+  }
+
+  .small-8 {
+    width: 66.66667%;
+  }
+
   .small-12 {
     width: 100%;
   }
@@ -122,6 +130,35 @@
   @media only screen and (min-width: 64.0625em) {
     .large-6 {
       width: 50%;
+    }
+  }
+
+  // The product page preview (feature: product-pages) is laid out like the product page.
+  &.product-page-preview {
+    @media only screen and (min-width: 40.0625em) {
+      .medium-4 {
+        width: 33.33333%;
+      }
+
+      .medium-8 {
+        width: 66.66667%;
+      }
+    }
+
+    @media only screen and (min-width: 64.0625em) {
+      .large-9 {
+        width: 75%;
+      }
+    }
+
+    .product-body .columns {
+      float: left;
+    }
+
+    .variant-list .row::after {
+      content: "";
+      display: table;
+      clear: both;
     }
   }
 
@@ -191,7 +228,8 @@
 
   // Carousel overrides: base styles come from the shared carousel component
   // (imported in admin/all.scss). Only admin-preview-specific overrides live here.
-  .product-img {
+  .product-img,
+  .product-images {
     .ofn-thumbnail-carousel {
       // Center images within each slide
       .swiper-slide {

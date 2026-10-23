@@ -8,22 +8,26 @@
 #
 # When all variants share a producer, the caller names it once above the list and this
 # component leaves it off the rows.
+#
+# The admin preview of a product page shows the list with inert add to cart buttons.
 class ShopVariantListComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
   # The order of the shopfront's price breakdown.
   FEE_TYPES = %i[admin sales packing transport fundraising].freeze
 
-  def initialize(product:, variants_in_cart:, low_stock_display:, cart_params: {})
+  def initialize(product:, variants_in_cart:, low_stock_display:, cart_params: {},
+                 preview: false)
     @product = product
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
     @cart_params = cart_params
+    @preview = preview
   end
 
   private
 
-  attr_reader :product, :variants_in_cart, :low_stock_display, :cart_params
+  attr_reader :product, :variants_in_cart, :low_stock_display, :cart_params, :preview
 
   delegate :variants, :single_producer?, to: :product
 

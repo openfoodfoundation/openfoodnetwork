@@ -120,5 +120,20 @@ RSpec.describe ShopVariantListComponent, type: :component do
 
       expect(page).to have_selector "#variant-7", text: "2 in cart"
     end
+
+    context "in the admin preview" do
+      subject(:render_list) do
+        render_inline(described_class.new(product:, variants_in_cart: {},
+                                          low_stock_display: nil, preview: true))
+      end
+
+      it "can't add to the cart" do
+        render_list
+
+        expect(page).to have_button "Add", disabled: true
+        expect(page).not_to have_selector "#variant-7"
+        expect(page).not_to have_selector "[data-controller='add-to-cart']"
+      end
+    end
   end
 end
