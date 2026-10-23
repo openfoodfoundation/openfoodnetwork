@@ -3,6 +3,8 @@
 require 'spree/localized_number'
 
 RSpec.describe Spree::Variant do
+  include FileHelper
+
   subject(:variant) { build(:variant) }
 
   it { is_expected.to have_many :semantic_links }
@@ -1031,6 +1033,37 @@ RSpec.describe Spree::Variant do
           pending "not yet supported"
           expect(variant.producer).to eq source_enterprise
         end
+      end
+    end
+  end
+
+  describe "#image_url" do
+    let(:variant) { create(:variant) }
+    let(:product) { variant.product }
+
+    # Reload so images created after the factory are not hidden by cached associations
+    subject { variant.reload.image_url(:mini) }
+
+    context "when the variant has its own image" do
+      let!(:product_image) { Spree::Image.create!(attachment: black_logo_file, viewable: product) }
+      let!(:variant_image) { Spree::Image.create!(attachment: white_logo_file, viewable: variant) }
+
+      it "returns the variant image" do
+        expect(subject).to eq variant_image.url(:mini)
+      end
+    end
+
+    context "when only the product has an image" do
+      let!(:product_image) { Spree::Image.create!(attachment: black_logo_file, viewable: product) }
+
+      it "falls back to the product image" do
+        expect(subject).to eq product_image.url(:mini)
+      end
+    end
+
+    context "when neither has an image" do
+      it "returns the default image" do
+        expect(subject).to eq Spree::Image.default_image_url(:mini)
       end
     end
   end

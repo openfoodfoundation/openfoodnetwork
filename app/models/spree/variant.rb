@@ -279,6 +279,11 @@ module Spree
       source_variants.any? ? source_variants.first.enterprise : enterprise
     end
 
+    # A variant may have its own image, otherwise it shows its product's image.
+    def image_url(size)
+      (image || product.image)&.url(size) || Spree::Image.default_image_url(size)
+    end
+
     # Clone this variant, retaining a 'source' link to it
     def create_linked_variant(user)
       # Variant owned by enterprise which has permission to create variant sourced from the producer
