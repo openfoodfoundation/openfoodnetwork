@@ -29,12 +29,10 @@
   = render partial: "shopping_shared/tabs"
   #shop-product-modal-container
 
-  -# Products open their page over the product list, which stays as it is underneath.
+  -# Products open their page over the product list, which stays as it is underneath. The top
+  -# menu stays on top of both.
   - if product_pages
-    %dialog.product-page-overlay{ "product-page-overlay-cart": true, "data-product-page-overlay-target": "dialog", "data-action": "cancel->product-page-overlay#close:prevent" }
-      .product-page-overlay-bar
-        %button.product-page-overlay-close{ type: "button", "aria-label": t(:close), "data-action": "product-page-overlay#close" }
-          %i.ofn-i_009-close
+    %dialog.product-page-overlay{ "product-page-overlay-cart": true, "data-product-page-overlay-target": "dialog", "data-action": "keydown.esc@window->product-page-overlay#close click->product-page-overlay#followLink" }
       %div{ "data-product-page-overlay-target": "content" }
 
 = render partial: "shared/footer"

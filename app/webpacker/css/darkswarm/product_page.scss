@@ -139,11 +139,14 @@
   }
 }
 
-// The product page shown over the shop's product list, filling the window.
+// The product page shown over the shop's product list, filling the window below the top menu.
 // See product_page_overlay_controller.js.
 .product-page-overlay {
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: $mobile-nav-height 0 0;
+  z-index: 98; // Below the top menu and the cart sidebar
+  width: auto;
+  height: auto;
   max-width: none;
   max-height: none;
   margin: 0;
@@ -153,43 +156,17 @@
   overflow-y: auto;
   overscroll-behavior: contain;
 
-  &::backdrop {
-    background: $white;
+  @media #{$large-up} {
+    top: $topbar-height;
   }
 
-  // No footer to keep clear of here.
-  .product-body {
-    padding-bottom: 2.5rem;
+  // Like on the product page, which doesn't shade the shop's header. See distributor_header.scss.
+  navigation {
+    box-shadow: none;
   }
 }
 
 // The list underneath keeps its scroll position while the page is open.
 html:has(.product-page-overlay[open]) {
   overflow: hidden;
-}
-
-.product-page-overlay-bar {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.5rem 1rem;
-  background: $white;
-  border-bottom: 1px solid $grey-200;
-}
-
-.product-page-overlay-close {
-  margin: 0;
-  padding: 0.5rem;
-  background: none;
-  color: $grey-700;
-  font-size: 1.25rem;
-  line-height: 1;
-
-  &:hover,
-  &:focus {
-    background: $grey-100;
-    color: $grey-700;
-  }
 }

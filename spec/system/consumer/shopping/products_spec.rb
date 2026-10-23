@@ -217,7 +217,8 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).to have_current_path enterprise_product_path(enterprise, product)
       expect(page).to have_title "Garlic 09 from The Garlic Guru - Open Food Network"
 
-      find("button[aria-label='Close']").click
+      # The page shows the shop's tabs like the product page. The list's tab goes back to it.
+      within("dialog.product-page-overlay") { click_link "Shop" }
 
       expect(page).not_to have_selector "dialog.product-page-overlay[open]"
       expect(page).to have_current_path enterprise_shop_path(enterprise), ignore_query: true
@@ -236,6 +237,19 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).to have_current_path enterprise_product_path(enterprise, product)
     end
 
+    it "shows the shop's other tabs from the product's page" do
+      visit enterprise_shop_path(enterprise)
+      find("#product-#{product.id} h3 a").click
+      expect(page).to have_selector "dialog.product-page-overlay[open]"
+
+      within("dialog.product-page-overlay") { click_link "About" }
+
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      expect(page).to have_current_path enterprise_shop_path(enterprise), ignore_query: true
+      expect(page).to have_selector "#shop-tabs a.selected", text: "About"
+      expect(page.evaluate_script("window.scrollY")).to eq 0
+    end
+
     it "adds to the shop's cart from the product's page" do
       visit enterprise_shop_path(enterprise)
       find("#product-#{product.id} h3 a").click
@@ -246,7 +260,7 @@ RSpec.describe "As a consumer I want to view products" do
         find("img[src*='add']").click
         expect(page).to have_content "2 in cart"
       end
-      find("dialog.product-page-overlay").send_keys(:escape)
+      page.driver.browser.keyboard.type(:escape)
 
       expect(page).not_to have_selector "dialog.product-page-overlay[open]"
       expect(page).to have_selector ".cart-span", text: "2"

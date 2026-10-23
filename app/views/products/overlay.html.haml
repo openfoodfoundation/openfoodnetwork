@@ -1,5 +1,10 @@
--# The content of the product page, shown over the shop's product list.
--# See product_page_overlay_controller.js.
+-# The product page without the top menu, shown over the shop's product list below the shop's
+-# own menu. See product_page_overlay_controller.js.
 - title = "#{t('products.show.title', enterprise: @enterprise.name, product: @product.name)} - #{t(:title)}"
-.product-page-overlay-content{ data: { title: } }
-  = render partial: "product_details", locals: { product: @product, product_view: @product_view }
+.product-page-overlay-content{ data: { title:, shop_url: main_app.enterprise_shop_path(@enterprise) } }
+  %shop.darkswarm
+    = render partial: "shopping_shared/header"
+    = render partial: "tabs"
+    = render partial: "product_details", locals: { product: @product, product_view: @product_view }
+
+  = render partial: "shared/footer"
