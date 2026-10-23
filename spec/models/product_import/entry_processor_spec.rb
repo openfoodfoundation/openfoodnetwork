@@ -194,4 +194,48 @@ RSpec.describe ProductImport::EntryProcessor do
       end
     end
   end
+
+  describe "#save_all" do
+    let(:settings) { instance_double(ProductImport::Settings, importing_into_inventory?: false) }
+    let(:importer) { double(:importer, errors: ActiveModel::Errors.new(nil)) }
+    let(:import_time) { Time.zone.now }
+    let(:updated_ids) { [] }
+    let(:variant) { create(:variant, on_hand: 10) }
+    let(:product) { variant.product }
+    let(:entry) do
+      ProductImport::SpreadsheetEntry.new(
+        'on_hand' => '5', 'group_buy' => '1', 'group_buy_unit_size' => '10'
+      ).tap do |entry|
+        entry.line_number = 3
+        entry.validates_as = 'existing_variant'
+        entry.product_object = variant
+      end
+    end
+
+    before { allow(ProductImport::Settings).to receive(:new) { settings } }
+
+    it "saves group buy settings on the variant's product" do
+      entry_processor.save_all([entry])
+
+      expect(product.reload.group_buy).to eq true
+      expect(product.group_buy_unit_size).to eq 10
+      expect(variant.reload.on_hand).to eq 5
+    end
+
+    context "when the product can't be saved" do
+      before do
+        allow(product).to receive(:save) do
+          product.errors.add(:base, "Product is broken")
+          false
+        end
+      end
+
+      it "reports the error for that line" do
+        entry_processor.save_all([entry])
+
+        expect(importer.errors.messages).to eq('Line 3:': [["Product is broken"]])
+        expect(product.reload.group_buy).to be_nil
+      end
+    end
+  end
 end

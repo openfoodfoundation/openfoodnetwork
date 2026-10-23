@@ -47,6 +47,8 @@ module ProductImport
                                       entry.shipping_category,
                                       @spreadsheet_data.shipping_index)
           shipping_presence_validation(entry)
+          group_buy_validation(entry)
+          product_only_attributes_validation(entry)
           product_validation(entry)
         end
       end
@@ -61,24 +63,14 @@ module ProductImport
     end
 
     def mark_as_new_variant(entry, product_id)
-      variant_attributes = entry.assignable_attributes.except(
+      variant_attributes = entry.variant_assignable_attributes.except(
         'id', 'product_id', 'on_hand', 'on_demand'
       )
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
       new_variant = Spree::Variant.new(product_id:, **variant_attributes)
       new_variant.enterprise_id = entry.producer_id
-
-      new_variant.save
-      if new_variant.persisted?
-        if entry.attributes['on_demand'].present?
-          new_variant.on_demand = entry.attributes['on_demand']
-        end
-        if entry.attributes['on_hand'].present?
-          new_variant.on_hand = entry.attributes['on_hand']
-        end
-        check_on_hand_nil(entry, new_variant)
-      end
+      check_on_hand_nil(entry)
 
       if new_variant.valid?
         entry.product_object = new_variant
@@ -225,6 +217,34 @@ module ProductImport
       value.blank? || value.to_s.strip == "-"
     end
 
+    def group_buy_validation(entry)
+      unless entry.group_buy.nil? || [true, false].include?(entry.group_buy)
+        mark_as_invalid(entry, attribute: 'group_buy',
+                               error: I18n.t('admin.product_import.model.incorrect_value'))
+      end
+
+      return if entry.group_buy_unit_size.nil? ||
+                (entry.group_buy_unit_size.is_a?(Float) && entry.group_buy_unit_size > 0)
+
+      mark_as_invalid(entry, attribute: 'group_buy_unit_size',
+                             error: I18n.t('admin.product_import.model.incorrect_value'))
+    end
+
+    # Product-only attributes are shared by all variants of a product, so all rows for the
+    # same product must agree. Blank cells don't count as a conflict.
+    def product_only_attributes_validation(entry)
+      return if entry.producer.blank? || entry.name.blank?
+
+      entry.product_only_attributes.each do |attribute, value|
+        conflicting = all_entries_for_product(entry).any? do |other_entry|
+          other_value = other_entry.public_send(attribute)
+          !other_value.nil? && other_value != value
+        end
+
+        mark_as_values_must_be_same(entry, attribute) if conflicting
+      end
+    end
+
     def producer_validation(entry)
       producer_name = entry.producer
 
@@ -347,11 +367,13 @@ module ProductImport
       end
     end
 
+    # Stock levels are saved to the database as soon as they're assigned, so they're left out
+    # here and only assigned when the entry is saved (see EntryProcessor#save_stock_levels)
     def mark_as_existing_variant(entry, existing_variant)
       existing_variant.assign_attributes(
-        entry.assignable_attributes.except('id', 'product_id')
+        entry.variant_assignable_attributes.except('id', 'product_id', 'on_hand', 'on_demand')
       )
-      check_on_hand_nil(entry, existing_variant)
+      check_on_hand_nil(entry)
 
       if existing_variant.valid?
         entry.product_object = existing_variant
@@ -466,11 +488,8 @@ module ProductImport
       end
     end
 
-    def check_on_hand_nil(entry, object)
-      return if entry.on_hand.present?
-
-      object.on_hand = 0 if object.respond_to?(:on_hand)
-      entry.on_hand_nil = true
+    def check_on_hand_nil(entry)
+      entry.on_hand_nil = true if entry.on_hand.blank?
     end
 
     def check_variant_override_stock_settings(entry, object)

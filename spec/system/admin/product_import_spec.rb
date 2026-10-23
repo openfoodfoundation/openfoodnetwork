@@ -160,6 +160,37 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.created-count', text: '2'
     end
 
+    it "imports group buy settings for new and existing products" do
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, display_name, shipping_category_id, group_buy, group_buy_unit_size
+        Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, , #{shipping_category_id_str}, yes, 10
+        Beans, User Enterprise, Vegetables, 5, 5.50, 500, g, , #{shipping_category_id_str}, 1, 4
+      CSV
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).not_to have_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to have_selector '.update-count', text: "1"
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.updated-count', text: '1'
+
+      carrots = Spree::Product.find_by(name: 'Carrots')
+      expect(carrots.group_buy).to eq true
+      expect(carrots.group_buy_unit_size).to eq 10
+      expect(product2.reload.group_buy).to eq true
+      expect(product2.group_buy_unit_size).to eq 4
+    end
+
     it "handles saving of named tax and shipping categories" do
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, tax_category, shipping_category
