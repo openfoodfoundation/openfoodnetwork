@@ -3,8 +3,13 @@
 class ProductsController < BaseController
   include StartsShopping
 
+  before_action :order_cycle, only: :index
+
   def index
-    @products = product_renderer.products_view
+    @q = search_params[:q]
+    @product_renderer = product_renderer
+    @products = @product_renderer.products_view
+    @properties = @product_renderer.properties
 
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
@@ -104,9 +109,10 @@ class ProductsController < BaseController
   end
 
   def search_params
-    # params.slice :q, :page, :per_page
-    # TODO For experimentation purposed we limit to 1 page and 10 products
-    { page: 1, per_page: 10 }
+    # TODO For experimentation purposed we start with 1 page and 10 products
+    { page: 1, per_page: 10 }.merge(
+      params.permit(:page, :per_page, q: [{ with_properties: [] }])
+    ).with_indifferent_access
   end
 
   def inventory_enabled?

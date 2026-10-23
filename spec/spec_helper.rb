@@ -181,13 +181,15 @@ RSpec.configure do |config|
   end
 
   config.before(:each, :feature) do |example|
-    feature = example.metadata[:feature].to_s
+    features = [*example.metadata[:feature]]
 
-    unless OpenFoodNetwork::FeatureToggle::CURRENT_FEATURES.key?(feature)
-      raise "Unkown feature: #{feature}"
+    features.each do |feature|
+      unless OpenFoodNetwork::FeatureToggle::CURRENT_FEATURES.key?(feature.to_s)
+        raise "Unkown feature: #{feature}"
+      end
+
+      Flipper.enable(feature)
     end
-
-    Flipper.enable(feature)
   end
 
   # Enable caching in any specs tagged with `caching: true`.

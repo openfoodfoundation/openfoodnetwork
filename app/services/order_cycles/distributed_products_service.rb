@@ -31,6 +31,13 @@ module OrderCycles
         select("DISTINCT spree_variants.*")
     end
 
+    def stocked_products
+      order_cycle.
+        variants_distributed_by(distributor).
+        merge(variants).
+        select("DISTINCT spree_variants.product_id")
+    end
+
     private
 
     attr_reader :distributor, :order_cycle, :customer, :options
@@ -108,13 +115,6 @@ module OrderCycles
       else
         "spree_products.name ASC, spree_products.id"
       end
-    end
-
-    def stocked_products
-      order_cycle.
-        variants_distributed_by(distributor).
-        merge(variants).
-        select("DISTINCT spree_variants.product_id")
     end
 
     def variants
