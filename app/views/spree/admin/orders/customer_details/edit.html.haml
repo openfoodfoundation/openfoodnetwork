@@ -21,6 +21,7 @@
       %select{name: "customer_search_override", "data-controller": "select-customer", "data-select-customer-distributor-value": @order.distributor_id, class: "primary", placeholder: Spree.t(:choose_a_customer) }
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
+= render partial: 'spree/shared/error_messages', locals: { target: @order.customer }
 
 = form_for @order, :url => admin_order_customer_path(@order) do |f|
   = render 'form', :f => f
