@@ -2,8 +2,9 @@
 :ruby
   product_pages = product_pages?(current_distributor)
   product_link = if product_pages
-    # AngularJS fills in the product id. Path helpers would escape its braces.
-    { "ng-href" => main_app.enterprise_product_path(current_distributor, "PRODUCT_ID").sub("PRODUCT_ID", "{{::product.id}}") }
+    # AngularJS fills in the product. Path helpers would escape its braces.
+    { "ng-href" => main_app.enterprise_product_path(current_distributor, "PRODUCT").sub("PRODUCT", "{{::product.to_param}}"),
+      "data-action" => "product-page-overlay#open" }
   else
     { "data-controller" => "shop-product-modal", "data-action" => "click->shop-product-modal#open", "ng-attr-data-shop-product-modal-url-value" => "/shop/product_modal?product_id={{::product.id}}&order_cycle_id={{order_cycle.order_cycle_id}}" }
   end
