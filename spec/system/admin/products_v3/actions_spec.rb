@@ -581,6 +581,33 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
         expect(page).not_to have_content("Product preview")
       end
+
+      context "with product pages", feature: "product-pages" do
+        it "shows a preview of the product page" do
+          variant.update!(display_name: "Big box")
+
+          visit admin_products_url
+
+          within row_containing_name("Apples") do
+            open_action_menu
+            click_link "Preview"
+          end
+
+          within "#product-preview-modal" do
+            expect(page).to have_content("Product preview")
+            expect(page).to have_selector(".product-page-header h3", text: "Apples")
+            expect(page).to have_selector(".product-images")
+            expect(page).to have_selector(".variant-list li", count: 2)
+            expect(page).to have_selector(".variant-name", text: "Big box")
+            expect(page).to have_button("Add", disabled: true, count: 2)
+            expect(page).not_to have_link("Product details")
+
+            click_button "Close"
+          end
+
+          expect(page).not_to have_content("Product preview")
+        end
+      end
     end
   end
 

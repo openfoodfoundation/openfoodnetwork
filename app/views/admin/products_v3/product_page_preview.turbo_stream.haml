@@ -1,0 +1,7 @@
+-# The preview of a product page, for shops with the "product-pages" feature.
+= turbo_stream.update "product-preview-modal-container" do
+  = render ModalComponent.new(id: "product-preview-modal", instant: true, modal_class: "big") do
+    #product-preview.product-page-preview
+      %h1
+        = t("admin.products_page.product_preview.product_preview")
+      = render partial: "products/product_details", locals: { product: @product, product_view: @product_view, preview: true }

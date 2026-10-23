@@ -335,6 +335,28 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).not_to have_selector("#shop-product-modal-container .reveal-modal")
       end
 
+      context "with product pages", feature: "product-pages" do
+        it "opens the product page instead of the product modal" do
+          visit shop_path
+
+          within "#product-#{product.id}" do
+            expect(page).not_to have_selector "[data-controller~='shop-product-modal']"
+            click_link "Beans"
+          end
+
+          expect(page).to have_current_path enterprise_product_path(distributor, product)
+          expect(page).to have_selector ".product-page-header", text: "Beans"
+          expect(page).not_to have_selector ".reveal-modal"
+
+          # The product page brings its Turbo cart along to the AngularJS shopfront.
+          within ".variant-list li" do
+            click_button "Add"
+            expect(page).to have_content "1 in cart"
+          end
+          expect(page).to have_selector ".cart-span", text: "1"
+        end
+      end
+
       context "product grid view", feature: :product_grid_view do
         let(:other_supplier) { create(:supplier_enterprise, name: "Other Farm") }
         let(:product3) {
