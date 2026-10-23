@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
 @import "../../darkswarm/shop_partials/property-selector-base";
@@ -135,6 +137,9 @@
 
   // The product page preview (feature: product-pages) is laid out like the product page.
   &.product-page-preview {
+    // Its variables would clash with the admin ones if imported globally.
+    @include meta.load-css("shop_variant_list_component/shop_variant_list_component");
+
     @media only screen and (min-width: 40.0625em) {
       .medium-4 {
         width: 33.33333%;
