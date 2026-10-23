@@ -50,7 +50,7 @@
                               %span
                                 = property[:name] 
             .shop-variants
-              - @product.variants.sort { |v1, v2| v1.name_to_display <=> v2.name_to_display }.sort { |v1, v2| v1.unit_value <=> v2.unit_value }.each do |variant|
+              - @product.variants.sort_by { |v| [v.name_to_display.downcase, v.unit_value.to_f] }.each do |variant|
                 .variants.row
                   .small-3.columns.variant-name
                     - if variant.display_name.present?
