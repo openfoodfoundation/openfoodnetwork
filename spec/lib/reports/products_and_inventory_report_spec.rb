@@ -51,6 +51,18 @@ RSpec.describe Reporting::Reports::ProductsAndInventory::Base do
                                        ]])
     end
 
+    it "renders taxon names in the current locale" do
+      taxon = create(:taxon, name: "Vegetables")
+      taxon.update_column(:name_i18n, { "en" => "Vegetables", "es" => "Verduras" })
+      product = create(:simple_product, primary_taxon: taxon)
+      variant = product.variants.first
+      allow(subject).to receive(:query_result).and_return [variant]
+
+      I18n.with_locale(:es) do
+        expect(subject.table_rows.first[4]).to eq("Verduras")
+      end
+    end
+
     it "fetches variants for some params" do
       expect(subject).to receive(:child_variants).and_return ["children"]
       expect(subject).to receive(:filter).with(['children']).and_return ["filter_children"]
