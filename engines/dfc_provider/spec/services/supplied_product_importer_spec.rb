@@ -123,15 +123,32 @@ RSpec.describe SuppliedProductImporter do
       expect(only_variant.reload.image).to eq nil
     end
 
-    it "gives each variant of a product its own image" do
+    it "gives a product without image the first image of its variants" do
+      importer.update_product(supplied_product, variant)
+
+      expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(variant.reload.image).to eq nil
+    end
+
+    it "gives the other variants of a product their own image" do
       importer.update_product(supplied_product, variant)
       importer.update_product(
         supplied_product_with_image("https://cd.net/tomato.png?v=2"), other_variant
       )
 
-      expect(origin(variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=1"
       expect(origin(other_variant.reload.image)).to eq "https://cd.net/tomato.png?v=2"
-      expect(spree_product.reload.image).to eq nil
+      expect(variant.reload.image).to eq nil
+    end
+
+    it "gives a variant its own image when it changes from the product image" do
+      importer.update_product(supplied_product, variant)
+      importer.update_product(
+        supplied_product_with_image("https://cd.net/tomato.png?v=2"), variant
+      )
+
+      expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+      expect(origin(variant.reload.image)).to eq "https://cd.net/tomato.png?v=2"
     end
 
     it "doesn't copy the product image to its variants" do
@@ -154,15 +171,27 @@ RSpec.describe SuppliedProductImporter do
       expect(spree_product.reload.image).to eq nil
     end
 
-    it "imports a new variant of an existing product with its own image" do
-      variant # The supplier's variant links the product to the supplier.
-      supplied_product.spree_product_id = spree_product.id
+    describe "a new variant of an existing product" do
+      let(:imported_variant) { importer.store_product(supplied_product, supplier) }
 
-      imported_variant = importer.store_product(supplied_product, supplier)
+      before do
+        variant # The supplier's variant links the product to the supplier.
+        supplied_product.spree_product_id = spree_product.id
+      end
 
-      expect(imported_variant.product).to eq spree_product
-      expect(origin(imported_variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
-      expect(spree_product.reload.image).to eq nil
+      it "gives its image to a product without image" do
+        expect(imported_variant.product).to eq spree_product
+        expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+        expect(imported_variant.reload.image).to eq nil
+      end
+
+      it "gets its own image when the product has one" do
+        ImageBuilder.apply("https://cd.net/tomato.png?v=0", spree_product)
+
+        expect(imported_variant.product).to eq spree_product
+        expect(origin(imported_variant.reload.image)).to eq "https://cd.net/tomato.png?v=1"
+        expect(origin(spree_product.reload.image)).to eq "https://cd.net/tomato.png?v=0"
+      end
     end
   end
 

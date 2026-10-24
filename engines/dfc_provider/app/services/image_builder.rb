@@ -15,14 +15,14 @@ class ImageBuilder < DfcBuilder
   end
 
   # A supplied product is a variant. It shows its own image or its product's.
-  # Shops list products with the product image, so a product's only variant
-  # keeps using it. Other variants get their own image, leaving the shared
-  # product image alone.
+  # Shops list products with the product image. So the product gets the image
+  # when it doesn't have one yet or when this is its only variant. Otherwise
+  # the variant gets its own image, leaving the shared product image alone.
   def self.apply_supplied_product_image(supplied_product, variant)
     image_url = supplied_product.image
     return if current_image?(image_url, SuppliedProductBuilder.image(variant))
 
-    if variant.image || other_variants?(variant)
+    if variant.image || (other_variants?(variant) && variant.product.image)
       apply(image_url, variant)
     elsif supplied_product.isVariantOf.first.try(:image).blank?
       # The image of the product group takes precedence.
