@@ -1440,6 +1440,7 @@ en:
             shopfront: "Shopfront"
             product_display: "Product display"
             order_cycles: "Order cycles"
+            filters: "Filters"
             orders: "Orders"
             supplier_access: "Supplier access"
           shopfront_visibility:
@@ -1468,6 +1469,10 @@ en:
             by_producer: "By producer"
             category_placeholder: "Category"
             producer_placeholder: "Producer"
+          property_order:
+            title: "Property filter order"
+            description: "Properties you add here appear first in your shop's filters, in this order. This doesn't change the order of products."
+            placeholder: "Property"
           low_stock_warning:
             title: "Low stock warning"
             description: "Let shoppers know when there are only 3 or fewer items left."

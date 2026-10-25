@@ -51,6 +51,11 @@
         = f.radio_button :preferred_shopfront_order_cycle_order, :orders_close_at
         = f.label :preferred_shopfront_order_cycle_order, t('.order_cycle_order.close_date'), value: :orders_close_at
 
+  = render SettingsSectionComponent.new(id: "shop_preferences_filters", title: t('.sections.filters')) do
+    = render SettingsRowComponent.new(id: "property_order", title: t('.property_order.title'), description: translation_without_fallback('.property_order.description'), class: "settings-row-with-preview") do
+      = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_property_order]", id: "enterprise_preferred_shopfront_property_order", options: shopfront_property_options(@enterprise), value: @enterprise.preferred_shopfront_property_order, placeholder: t('.property_order.placeholder'))
+      = image_pack_tag "property-filter-order-preview.svg", alt: "", class: "settings-row-preview"
+
   = render SettingsSectionComponent.new(id: "shop_preferences_orders", title: t('.sections.orders')) do
     = render SettingsRowComponent.new(id: "guest_orders", title: t('.guest_orders.title'), description: translation_without_fallback('.guest_orders.description'), style: ("display: none" if @enterprise.require_login), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false" }) do
       .settings-row-option

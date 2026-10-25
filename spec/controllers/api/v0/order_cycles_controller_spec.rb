@@ -392,6 +392,24 @@ RSpec.describe Api::V0::OrderCyclesController do
           ['Bee-Friendly', 'Dairy-Free', 'Organic', 'plastic-free']
         )
       end
+
+      it "returns properties in the shop's property order, then the others alphabetically" do
+        distributor.update!(preferred_shopfront_property_order: "#{property5.id},#{property1.id}")
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq(
+          ['plastic-free', 'Organic', 'Bee-Friendly', 'Dairy-Free']
+        )
+      end
+    end
+
+    it "ignores properties in the shop's property order which aren't in the shop" do
+      distributor.update!(preferred_shopfront_property_order: "#{property3.id},#{property1.id}")
+
+      api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+      expect(json_response.pluck(:name)).to eq ['Organic', 'Dairy-Free']
     end
   end
 

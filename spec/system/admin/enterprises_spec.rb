@@ -696,6 +696,65 @@ RSpec.describe '
             .to eq "#{other_taxon.id},#{taxon.id}"
         end
       end
+
+      describe "property filter order" do
+        let(:other_property) { create(:property, presentation: "Bee-Friendly") }
+        let(:property_picker) { find_field("Property").sibling(".ts-wrapper") }
+
+        before do
+          create(:producer_property, producer_id: supplier1.id, property: other_property)
+          visit edit_admin_enterprise_path(distributor1)
+          within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+        end
+
+        it "saves the properties in the order they were selected" do
+          within find("h3", text: "Filters").ancestor("section") do
+            expect(page).to have_content "Property filter order"
+          end
+
+          select_in_picker "Fresh and Fine", from: "Property"
+          select_in_picker "Bee-Friendly", from: "Property"
+          expect(property_picker.find(".ts-control"))
+            .to have_content(/Fresh and Fine.*Bee-Friendly/m)
+
+          click_button 'Update'
+
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.preferred_shopfront_property_order)
+            .to eq "#{property.id},#{other_property.id}"
+        end
+
+        it "searches the properties" do
+          property_picker.find(".ts-control input").send_keys("bee")
+
+          expect(property_picker).to have_selector ".option", text: "Bee-Friendly"
+          expect(property_picker).not_to have_selector ".option", text: "Fresh and Fine"
+
+          property_picker.find(".ts-control input").send_keys("zzz")
+          expect(property_picker).to have_content "No results found"
+        end
+
+        context "with properties already in order" do
+          before do
+            distributor1.update!(
+              preferred_shopfront_property_order: "#{property.id},#{other_property.id}"
+            )
+            visit edit_admin_enterprise_path(distributor1)
+            within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+          end
+
+          it "removes a property" do
+            property_picker.find("[data-ts-item]", text: "Fresh and Fine").find(".remove").click
+            click_button 'Update'
+
+            expect(flash_message)
+              .to eq('Enterprise "First Distributor" has been successfully updated!')
+            expect(distributor1.reload.preferred_shopfront_property_order)
+              .to eq other_property.id.to_s
+          end
+        end
+      end
     end
 
     describe "check users tab" do

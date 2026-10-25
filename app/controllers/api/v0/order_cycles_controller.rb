@@ -45,7 +45,7 @@ module Api
 
       def properties
         render plain: ActiveModel::ArraySerializer.new(
-          product_properties, each_serializer: Api::PropertySerializer
+          sort_properties(product_properties), each_serializer: Api::PropertySerializer
         ).to_json
       end
 
@@ -62,6 +62,16 @@ module Api
       def preferred_taxon_order?
         distributor.preferred_shopfront_product_sorting_method == "by_category" &&
           distributor.preferred_shopfront_taxon_order.present?
+      end
+
+      # Properties in shopfront_property_order come first, the others stay alphabetical.
+      def sort_properties(properties)
+        ordered_ids = distributor.preferred_shopfront_property_order.split(',').map(&:to_i)
+        return properties if ordered_ids.empty?
+
+        properties.sort_by.with_index do |property, index|
+          [ordered_ids.index(property.id) || ordered_ids.length, index]
+        end
       end
 
       def render_no_products
