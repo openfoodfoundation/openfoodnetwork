@@ -18,11 +18,5 @@ angular.module('Darkswarm').factory 'OrderCycleResource', ($resource) ->
       url: '/api/v0/order_cycles/:id/properties.json'
       params:
         id: '@id'
-    'producerProperties':
-      method: 'GET'
-      isArray: true
-      url: '/api/v0/order_cycles/:id/producer_properties.json'
-      params:
-        id: '@id'
 
   })
