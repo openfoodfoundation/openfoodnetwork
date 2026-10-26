@@ -40,7 +40,7 @@ class JsonApiSchema
                 properties: {
                   results: { type: :integer, example: 250 },
                   pages: { type: :integer, example: 5 },
-                  page: { type: :integer, example: 2 },
+                  number: { type: :integer, example: 2 },
                   per_page: { type: :integer, example: 50 },
                 }
               }
