@@ -32,6 +32,8 @@ scope module: 'spree' do
 
   resource :account, :controller => 'users', :only => [:show, :edit, :create, :update] do
     resources :webhook_endpoints, only: [:create, :destroy], controller: '/webhook_endpoints'
+    resources :connected_apps, only: [:destroy], controller: '/connected_apps',
+                               constraints: ->(_) { OpenFoodNetwork::FeatureToggle.enabled?(:oauth_provider) }
     post '/webhook_endpoints/:id/test', to: "/webhook_endpoints#test", as: "webhook_endpoint_test"
   end
 
