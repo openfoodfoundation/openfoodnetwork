@@ -24,7 +24,7 @@ module ValidatesStringLengthFromDatabase
   def validated_length_column?(column)
     return false unless column.type.in?(%i[string text]) # MySQL `text` is limited.
     return false if column.try(:array?) # It's not a PostgreSQL array of strings.
-    
+
     column.limit.present?
   end
 
