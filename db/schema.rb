@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_31_000001) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_22_103000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -51,6 +51,18 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_31_000001) do
     t.string "enterprise_role", limit: 255
     t.index ["adjustment_id"], name: "index_adjustment_metadata_on_adjustment_id"
     t.index ["enterprise_id"], name: "index_adjustment_metadata_on_enterprise_id"
+  end
+
+  create_table "api_logs", force: :cascade do |t|
+    t.string "path", limit: 255, null: false
+    t.string "request_method", limit: 10, null: false
+    t.integer "status", null: false
+    t.bigint "user_id"
+    t.string "user_agent", limit: 512
+    t.boolean "internal", default: false, null: false
+    t.datetime "created_at", null: false
+    t.index ["created_at"], name: "index_api_logs_on_created_at"
+    t.index ["user_id"], name: "index_api_logs_on_user_id"
   end
 
   create_table "column_preferences", id: :serial, force: :cascade do |t|
@@ -1169,6 +1181,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_31_000001) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", column: "adjustment_id", name: "adjustment_metadata_adjustment_id_fk", on_delete: :cascade
+  add_foreign_key "api_logs", "spree_users", column: "user_id", on_delete: :nullify
   add_foreign_key "connected_apps", "enterprises"
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
