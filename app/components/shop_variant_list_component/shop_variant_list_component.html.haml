@@ -17,7 +17,7 @@
                   %div
                     %dt= t(:item_cost)
                     %dd= display_money(variant.price)
-                  - fee_breakdown(variant).each do |fee|
+                  - variant.fees.each do |fee|
                     %div
                       %dt= fee.name
                       %dd= display_money(fee.amount)

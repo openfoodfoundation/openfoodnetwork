@@ -183,14 +183,14 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
               .indexed_fee_breakdown_for(product1.variants.first)
           }
 
-          it "lists each fee with its type, name and amount" do
-            expect(breakdown.map(&:to_h)).to contain_exactly(
-              { fee_type: :admin, name: "Admin", amount: 1.23 },
-              { fee_type: :sales, name: "Sales", amount: 4.56 },
+          it "lists each fee with its type, name and amount in the order of fee types" do
+            expect(breakdown.map(&:to_h)).to eq [
               { fee_type: :packing, name: "Packing", amount: 7.89 },
               { fee_type: :transport, name: "Transport", amount: 0.12 },
+              { fee_type: :admin, name: "Admin", amount: 1.23 },
+              { fee_type: :sales, name: "Sales", amount: 4.56 },
               { fee_type: :fundraising, name: "Fundraising", amount: 3.45 },
-            )
+            ]
           end
 
           it "keeps the names of two fees of the same type" do

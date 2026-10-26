@@ -79,14 +79,14 @@ RSpec.describe ShopVariantListComponent, type: :component do
       build_product([build_variant(
         id: 7, price: 10, price_with_fees: 12, display_price_with_fees: "$12.00",
         fees: [
-          fee_amount(:sales, "Markup", 0.5),
           fee_amount(:admin, "Hub admin", 1.0),
           fee_amount(:admin, "Coordinator admin", 0.5),
+          fee_amount(:sales, "Markup", 0.5),
         ]
       )])
     }
 
-    it "lists the item cost and the fees in the shopfront's order" do
+    it "lists the item cost and each fee" do
       render_list
 
       breakdown = page.find("#price-breakdown-7[popover]")

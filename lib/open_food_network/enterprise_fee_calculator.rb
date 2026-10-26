@@ -30,11 +30,15 @@ module OpenFoodNetwork
     end
 
     # Each fee on its own, unlike `indexed_fees_by_type_for`, so that two fees of the same
-    # type keep their names. Leaves out fees amounting to nothing.
+    # type keep their names. Ordered by fee type and leaving out fees amounting to nothing.
     def indexed_fee_breakdown_for(variant)
       load_enterprise_fees unless @indexed_enterprise_fees
 
-      indexed_enterprise_fees_for(variant).filter_map do |enterprise_fee|
+      enterprise_fees = indexed_enterprise_fees_for(variant).sort_by.with_index do |fee, index|
+        [EnterpriseFee::FEE_TYPES.index(fee.fee_type), index]
+      end
+
+      enterprise_fees.filter_map do |enterprise_fee|
         amount = calculate_fee_for(variant, enterprise_fee)
         next if amount.zero?
 

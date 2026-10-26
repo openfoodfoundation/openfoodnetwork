@@ -11,9 +11,6 @@
 class ShopVariantListComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
-  # The order of the shopfront's price breakdown.
-  FEE_TYPES = %i[admin sales packing transport fundraising].freeze
-
   def initialize(product:, variants_in_cart:, low_stock_display:, cart_params: {})
     @product = product
     @variants_in_cart = variants_in_cart
@@ -36,12 +33,6 @@ class ShopVariantListComponent < ViewComponent::Base
 
   def producer_name(variant)
     helpers.from_producer(variant.producer)
-  end
-
-  def fee_breakdown(variant)
-    variant.fees.sort_by.with_index do |fee, index|
-      [FEE_TYPES.index(fee.fee_type) || FEE_TYPES.size, index]
-    end
   end
 
   # The info buttons of each variant look the same, so their labels name the variant.
