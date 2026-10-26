@@ -17,3 +17,6 @@ import "moment/locale/ru";
 import "moment/locale/sv";
 import "moment/locale/tr";
 import "moment/locale/pl";
+
+// Create a event called moment:ready when moments loads in the webpage
+document.dispatchEvent(new Event("moment:ready"));

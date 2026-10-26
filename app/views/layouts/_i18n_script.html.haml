@@ -1,6 +1,27 @@
 :javascript
-  I18n.default_locale = "#{I18n.default_locale}";
-  I18n.base_locale = "#{I18n.locale.to_s.split('_').first}";
-  I18n.locale = "#{I18n.locale}";
-  I18n.fallbacks = true;
-  moment.locale([I18n.locale, 'en']);
+  // Only write to I18n once the global exists.
+  function configureOfnI18n() {
+    if (!window.I18n) { return false; }
+    I18n.default_locale = "#{I18n.default_locale}";
+    I18n.base_locale = "#{I18n.locale.to_s.split('_').first}";
+    I18n.locale = "#{I18n.locale}";
+    I18n.fallbacks = true;
+    return true;
+  }
+
+  // Applies only when BOTH I18n and moment are ready.
+  function applyMomentLocale() {
+    if (configureOfnI18n() && window.moment) {
+      moment.locale([I18n.locale, 'en']);
+    }
+  }
+
+  if (window.moment) {
+    applyMomentLocale();
+  } else {
+    document.addEventListener("moment:ready", applyMomentLocale);
+  }
+
+  if (!window.I18n) {
+    document.addEventListener("i18n:ready", applyMomentLocale);
+  }

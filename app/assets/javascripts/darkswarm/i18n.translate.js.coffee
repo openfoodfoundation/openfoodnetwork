@@ -6,3 +6,7 @@ window.translate = (key, options = {}) ->
     return key
   I18n.t(key, options)
 window.t = window.translate
+
+# Notify dependent scripts that the I18n global is available, in case it was
+# loaded asynchronously after scripts that write to it.
+document.dispatchEvent(new Event('i18n:ready')) if 'I18n' of window
