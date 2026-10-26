@@ -22,9 +22,10 @@ module ValidatesStringLengthFromDatabase
 
   # Whether a column is a string/text column with a length limit.
   def validated_length_column?(column)
-    %i[string text].include?(column.type) &&
-      !(column.respond_to?(:array) && column.array) &&
-      !column.limit.nil?
+    return false unless column.type.in?(%i[string text]) # MySQL `text` is limited.
+    return false if column.try(:array?) # It's not a PostgreSQL array of strings.
+    
+    column.limit.present?
   end
 
   def add_too_long_error(column)
