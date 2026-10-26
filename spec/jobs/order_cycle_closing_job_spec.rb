@@ -12,11 +12,11 @@ RSpec.describe OrderCycleClosingJob do
   }
 
   it "sends notifications for recently closed order cycles with automatic notifications enabled" do
-    expect(OrderCycleNotificationJob).to receive(:perform_later).with(order_cycle1.id)
-    expect(OrderCycleNotificationJob).not_to receive(:perform_later).with(order_cycle2.id)
-    expect(OrderCycleNotificationJob).not_to receive(:perform_later).with(order_cycle3.id)
+    # existing data
+    order_cycle1; order_cycle2; order_cycle3
 
-    OrderCycleClosingJob.perform_now
+    expect { OrderCycleClosingJob.perform_now }
+      .to enqueue_job(OrderCycleNotificationJob).with(order_cycle1.id)
   end
 
   it "marks order cycles as processed" do

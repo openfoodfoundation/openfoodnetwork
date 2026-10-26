@@ -327,9 +327,9 @@ RSpec.describe Spree::Admin::OrdersController do
     end
 
     it "amends back order" do
-      expect(AmendBackorderJob).to receive(:perform_later)
-
-      get("/admin/orders/#{order.number}/fire", params: { e: "cancel" }, headers:)
+      expect {
+        get("/admin/orders/#{order.number}/fire", params: { e: "cancel" }, headers:)
+      }.to enqueue_job(AmendBackorderJob)
     end
 
     context "with a non allowed event" do
