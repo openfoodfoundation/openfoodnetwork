@@ -6,7 +6,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
   end
 
   let(:producer) { build_stubbed(:enterprise, name: "Fred's Farm") }
-  let(:variants_in_cart) { {} }
+  let(:variants_in_cart) { Hash.new(ViewData::CartItem.empty) }
 
   def build_variant(**overrides)
     ViewData::Variant.new(
@@ -14,13 +14,14 @@ RSpec.describe ShopVariantListComponent, type: :component do
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
       display_unit_price: "$12.00", enterprise: producer, producer:,
-      product: ViewData::SimpleProduct.new(id: 1, name: "Beans")
+      product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy: false)
     ).with(**overrides)
   end
 
   def build_product(variants)
     ViewData::Product.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
-                          variant_images: [], properties_including_inherited: [], variants:)
+                          variant_images: [], properties_including_inherited: [], variants:,
+                          group_buy: false)
   end
 
   context "when the variants come from one producer" do
@@ -71,7 +72,7 @@ RSpec.describe ShopVariantListComponent, type: :component do
 
   describe "the add to cart widget" do
     let(:product) { build_product([build_variant(id: 7)]) }
-    let(:variants_in_cart) { { 7 => 2 } }
+    let(:variants_in_cart) { { 7 => ViewData::CartItem.new(quantity: 2, max_quantity: nil) } }
 
     it "starts with the quantity already in the cart" do
       render_list

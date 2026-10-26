@@ -2,8 +2,6 @@
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
   .reveal-modal.fade.modal-component{ "data-modal-target": "modal", class: @modal_class }
     - # please update app/assets/javascripts/templates/out_of_stock.html.haml if updating this view
-    %a.close-reveal-modal{"data-action": "click->modal#close" }
-      %i.ofn-i_009-close
     %h3
       = t("js.out_of_stock.reduced_stock_available")
     %p

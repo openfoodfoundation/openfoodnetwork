@@ -1,4 +1,5 @@
 @use "shop_partials/spinner";
+@use "modern-variables" as v;
 
 // Shop partials
 @import "shop-inputs";
@@ -7,6 +8,18 @@
 @import "shop-popovers";
 
 .darkswarm {
+
+  #out-of-stock-modal {
+    position: relative;
+    z-index: v.$out-of-stock-modal-z-index;
+
+    .reveal-modal {
+      border-radius: v.$radius;
+      overflow: auto;
+      border-bottom: none;
+    }
+  }
+
   .product-listing {
     @include breakpoint(desktop) {
       padding-right: 0;

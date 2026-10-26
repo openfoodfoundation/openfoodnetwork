@@ -25,6 +25,17 @@ module Spree
       def can_supply?(required)
         total_on_hand >= required || backorderable?
       end
+
+      # Doesn't trigger a request if stock items are already loaded in memory
+      # It can be use instead of on_hand when data has been preloaded,
+      # and prevent an extra query per variant.
+      def loaded_on_hand
+        # Associated stock_items no longer exist if the variant has been soft-deleted. A variant
+        # may still be in an active cart after it's deleted, so this will mark it as out of stock.
+        return 0 if @variant.deleted?
+
+        stock_items.sum { |stock_item| stock_item.count_on_hand.to_i }
+      end
     end
   end
 end
