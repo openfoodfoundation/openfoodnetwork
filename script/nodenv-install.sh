@@ -34,7 +34,8 @@ else
   nodenv install
 fi
 
-if ! command -v yarn > /dev/null; then
+# The yarn shim exists if any Node version has yarn, so check the selected one.
+if ! nodenv which yarn > /dev/null 2>&1; then
   npm install -g yarn
   nodenv rehash
 fi
