@@ -347,6 +347,7 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).to have_content("Beans")
           expect(page).to have_content("Chickpeas")
           expect(page).to have_content("Tomatoes")
+          expect(page).not_to have_selector("#shop-products-pagination")
 
           within(".product-item", text: "Beans") do
             expect(page).to have_selector(".producer", text: "Test Farm")
@@ -380,6 +381,34 @@ RSpec.describe "As a consumer I want to view products" do
 
             # Product properties
             expect(page).to have_selector("span", text: "Fresh and Fine")
+          end
+        end
+
+        it "displays pagination" do
+          stub_const("ProductsController::PER_PAGE", 1)
+
+          visit shop_path
+
+          within "#shop-products" do
+            expect(page).to have_content("Viewing 1 - 1 of 3 products")
+            seen = [find(".product-item .product-name").text]
+
+            within "#shop-products-pagination" do
+              expect(page).to have_selector("a[aria-current=page]", text: "1")
+              expect(page).to have_selector("a[aria-label=Previous][aria-disabled]")
+              expect(page).to have_link("3")
+
+              click_link "2"
+            end
+            expect(page).to have_selector("a[aria-current=page]", text: "2")
+            seen << find(".product-item .product-name").text
+
+            find("a[aria-label=Next]").click
+            expect(page).to have_selector("a[aria-current=page]", text: "3")
+            expect(page).to have_selector("a[aria-label=Next][aria-disabled]")
+            seen << find(".product-item .product-name").text
+
+            expect(seen).to match_array [/Beans/, /Chickpeas/, /Tomatoes/]
           end
         end
       end
@@ -454,6 +483,56 @@ RSpec.describe "As a consumer I want to view products" do
 
           expect(page).to have_content variant.name.to_s
           expect(page).not_to have_content variant2.name.to_s
+        end
+      end
+
+      context "product grid view", feature: :product_grid_view do
+        before { visit shop_path }
+
+        it "searches products" do
+          expect(page).to have_selector(".product-item", count: 2)
+
+          fill_in "search", with: "Chick"
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Chickpeas")
+
+          find("#search ~ a.clear").click
+
+          expect(page).to have_selector(".product-item", count: 2)
+        end
+
+        it "says when no products match the search" do
+          fill_in "search", with: "Nothing like this"
+
+          expect(page).to have_content "Sorry, no results found"
+          expect(page).not_to have_selector(".product-item")
+        end
+
+        it "filters products by taxon and property, then clears all" do
+          within "#shop-tabs .sticky-shop-filters-container .taxon-selectors" do
+            toggle_filter taxon.name
+          end
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Beans")
+
+          within "#shop-tabs .sticky-shop-filters-container .taxon-selectors" do
+            toggle_filter taxon.name
+          end
+          within "#shop-tabs .sticky-shop-filters-container .property-selectors" do
+            toggle_filter property2.presentation
+          end
+
+          expect(page).to have_selector(".product-item", count: 1)
+          expect(page).to have_selector(".product-item", text: "Chickpeas")
+
+          fill_in "search", with: "Beans"
+          expect(page).not_to have_selector(".product-item")
+
+          find(".search-alert a.clear-all").click
+
+          expect(page).to have_selector(".product-item", count: 2)
         end
       end
     end

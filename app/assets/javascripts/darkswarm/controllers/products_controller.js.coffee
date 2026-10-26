@@ -1,4 +1,4 @@
-angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
+angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout, productGridViewFeature) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.query = ""
@@ -16,6 +16,7 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
   $scope.activeTaxons = []
   $scope.activeProperties = []
   $scope.activeProducerProperties = []
+  $scope.productGridViewFeature = productGridViewFeature.enabled
 
   # Update filters after initial load of shop tab
   $timeout =>
@@ -73,7 +74,33 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
 
   $scope.loadProducts = ->
     $scope.page = 1
-    Products.update($scope.queryParams())
+    if $scope.productGridViewFeature
+      $scope.updateProductGrid()
+    else
+      Products.update($scope.queryParams())
+
+  # Reload the product grid turbo frame with the current search and filters
+  $scope.updateProductGrid = ->
+    frame = document.getElementById("shop-products")
+    url = $scope.productGridUrl()
+    return unless frame? && url?
+
+    # The order cycle selection already reloads the frame, avoid loading it twice
+    frame.setAttribute("src", url) if frame.getAttribute("src") != url
+
+  $scope.productGridUrl = ->
+    order_cycle_id = $scope.order_cycle.order_cycle_id
+    return unless order_cycle_id
+
+    params = new URLSearchParams()
+    params.append('q[name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_variants_enterprise_name_cont]', $scope.query) if $scope.query
+    params.append('q[with_properties][]', id) for id in $scope.activeProperties
+    params.append('q[with_variants_enterprise_properties][]', id) for id in $scope.activeProducerProperties
+    params.append('q[variants_primary_taxon_id_in_any][]', id) for id in $scope.activeTaxons
+
+    query_string = params.toString()
+    url = "/order_cycles/#{order_cycle_id}/products"
+    if query_string then "#{url}?#{query_string}" else url
 
   $scope.loadMoreProducts = ->
     Products.update($scope.queryParams($scope.page + 1), true)

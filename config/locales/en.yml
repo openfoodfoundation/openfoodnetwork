@@ -2801,8 +2801,13 @@ en:
   products_update_error_msg: "Saving failed."
   products_update_error_data: "Save failed due to invalid data:"
   products_changes_saved: "Changes saved."
+  products_no_results: "Sorry, no results found"
   products_no_results_html: "Sorry, no results found for %{query}"
   products_clear_search: "Clear search"
+  products_pagination:
+    previous: Previous 
+    next: Next
+    info_tag: Viewing %{from} - %{to} of %{count} products
 
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
 

@@ -27,6 +27,12 @@ class ProductsRenderer
                                      enterprise_fee_calculator:).to_json
   end
 
+  # The Pagy object for the current page of products, e.g. to render page links
+  def pagination
+    products
+    @pagination
+  end
+
   # Generate read only data, with variants filtered for shop
   def products_view
     products.map do |product|
@@ -154,15 +160,26 @@ class ProductsRenderer
     # ProductsRenderer is a PORO, not a controller: pagy always builds a Pagy::Request from
     # the :request option (falling back to #request otherwise), so it needs an explicit
     # params hash here rather than reading from an actual Rack request.
-    _pagy, paginated_results = pagy(
+    # The limit is set by the caller, so keep `per_page` (Pagy's :limit_key) out of page links.
+    # The search is kept so page links stay filtered.
+    @pagination, paginated_results = pagy(
       :offset,
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
-      request: { params: {} }
+      max_limit: nil,
+      request: { params: pagination_params }
     )
 
     paginated_results
+  end
+
+  # Only the shop passes an already permitted search (a Hash), the API passes unpermitted
+  # params and doesn't use page links.
+  def pagination_params
+    return {} unless args[:q].is_a?(Hash) && args[:q].present?
+
+    { "q" => args[:q] }
   end
 
   def distributed_products
