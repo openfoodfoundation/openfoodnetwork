@@ -34,7 +34,7 @@ else
   nodenv install
 fi
 
-if ! command -v yarn > /dev/null; then
+if ! ./bin/yarn --version 2> /dev/null; then
   npm install -g yarn
   nodenv rehash
 fi
