@@ -2,8 +2,8 @@
 
 class ProductTypeImporter < DfcBuilder
   # Try to find the taxon closest matching the given product type.
-  # If we don't find any matching taxon, we return a random one.
-  def self.taxon(product_type)
+  # If we don't find any matching taxon, we return the fallback or a random one.
+  def self.taxon(product_type, fallback = nil)
     priority_list = [product_type, *list_broaders(product_type)].compact
 
     # Optimistic querying.
@@ -14,7 +14,7 @@ class ProductTypeImporter < DfcBuilder
       Spree::Taxon.find_by(dfc_id: type.semanticId)
     end.compact
 
-    taxons.first || Spree::Taxon.first
+    taxons.first || fallback || Spree::Taxon.first
   end
 
   def self.list_broaders(type)
