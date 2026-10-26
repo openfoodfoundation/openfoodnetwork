@@ -33,7 +33,7 @@ export default class extends ApplicationController {
     })
       .then((response) => {
         if (!response.ok) {
-          showHttpError(response.status);
+          showHttpError(response);
           throw response;
         }
         return response.text();
