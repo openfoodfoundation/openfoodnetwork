@@ -125,6 +125,7 @@ RSpec.describe '
       # the report via web socket.
       breakpoint = Mutex.new
       breakpoint.lock
+      # rubocop:disable-next RSpecRails/ReceivePerformLater
       expect(ReportJob).to receive(:perform_later) do |**args|
         ReportJob.perform_now(**args)
         breakpoint.synchronize { "continue after unlocked" }
