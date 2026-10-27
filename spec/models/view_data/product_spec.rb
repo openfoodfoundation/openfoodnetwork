@@ -8,7 +8,7 @@ RSpec.describe ViewData::Product do
       id: 1, on_demand: false, on_hand: 5, display_name: "", name_to_display: "Beans",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: nil, display_unit_price: "$12.00",
-      enterprise: producer, producer:,
+      fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy: false)
     ).with(**overrides)
   end
@@ -16,7 +16,7 @@ RSpec.describe ViewData::Product do
   def build_product(variants, group_buy: false)
     described_class.new(id: 1, name: "Beans", description: nil, image: nil, images: [],
                         variant_images: [], properties_including_inherited: [], variants:,
-                        group_buy:)
+                        group_buy:, to_param: "1-beans")
   end
 
   describe "#single_variant? and #variant" do

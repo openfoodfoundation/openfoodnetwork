@@ -32,6 +32,15 @@ class ShopVariantListComponent < ViewComponent::Base
   end
 
   def producer_name(variant)
-    t("components.shop_variant_list.from_producer", name: variant.producer.name)
+    helpers.from_producer(variant.producer)
+  end
+
+  # The info buttons of each variant look the same, so their labels name the variant.
+  def label(key, variant)
+    t("components.shop_variant_list.#{key}", name: helpers.variant_label_name(variant))
+  end
+
+  def display_money(amount)
+    Spree::Money.new(amount).to_s
   end
 end

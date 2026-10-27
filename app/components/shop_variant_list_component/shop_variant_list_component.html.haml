@@ -9,7 +9,24 @@
           - unless single_producer?
             .variant-producer= producer_name(variant)
           .prices
-            = variant.display_price_with_fees
-            %span.unit-price= helpers.unit_price_with_unit(variant)
+            .price
+              = variant.display_price_with_fees
+              = render InfoPopoverComponent.new(id: "price-breakdown-#{variant.id}", label: label(:price_breakdown, variant), css_class: "price-breakdown") do
+                %h6= t("js.shopfront.price_breakdown")
+                %dl
+                  %div
+                    %dt= t(:item_cost)
+                    %dd= display_money(variant.price)
+                  - variant.fees.each do |fee|
+                    %div
+                      %dt= fee.name
+                      %dd= display_money(fee.amount)
+                  .total
+                    %dt
+                    %dd= "= #{variant.display_price_with_fees}"
+            .unit-price
+              = helpers.unit_price_with_unit(variant)
+              = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: label(:unit_price_info, variant), placement: "top") do
+                = t("js.shopfront.unit_price_tooltip")
         .small-4.columns
           = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)

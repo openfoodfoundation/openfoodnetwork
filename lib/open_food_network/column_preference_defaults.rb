@@ -127,7 +127,7 @@ module OpenFoodNetwork
         producers: { name: I18n.t("label_producers"), visible: false },
         coordinator: { name: I18n.t("coordinator"), visible: true },
         shops: { name: I18n.t("label_shops"), visible: false },
-        products: { name: I18n.t("products"), visible: true }
+        products: { name: I18n.t("products_title"), visible: true }
       }
     end
 
