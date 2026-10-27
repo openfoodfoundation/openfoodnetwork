@@ -183,12 +183,34 @@ module ProductImport
       variant.import_date = @import_time
 
       if variant.valid? && variant.save
+        save_stock_levels(variant, entry)
         @updated_ids.push variant.id
-        true
+        save_product_only_attributes(variant, entry)
       else
         assign_errors variant.errors.full_messages, entry.line_number
         false
       end
+    end
+
+    # Stock levels are saved as soon as they're assigned, so they're assigned here rather than
+    # during validation. A new variant needs to be saved before it has stock. A blank on_hand
+    # sets stock to zero.
+    def save_stock_levels(variant, entry)
+      variant.on_demand = entry.on_demand.presence || false if entry.attributes.key?('on_demand')
+      variant.on_hand = entry.on_hand.presence || 0
+    end
+
+    # Saving a variant doesn't save changes to its existing product, so do it explicitly
+    def save_product_only_attributes(variant, entry)
+      product_attributes = entry.product_only_attributes
+      return true if product_attributes.empty?
+
+      product = variant.product
+      product.assign_attributes(product_attributes)
+      return true if product.save
+
+      assign_errors product.errors.full_messages, entry.line_number
+      false
     end
 
     def assign_errors(errors, line_number)

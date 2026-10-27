@@ -1250,6 +1250,8 @@ en:
         on_demand: On Demand
         shipping_category: Shipping Category
         tax_category: Tax Category
+        group_buy: Group Buy
+        group_buy_unit_size: Bulk Unit Size
 
     variant_overrides:
       loading_flash:

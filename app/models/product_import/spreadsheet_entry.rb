@@ -16,7 +16,8 @@ module ProductImport
                   :distributor_id, :name, :display_name, :sku, :unit_value, :unit_description,
                   :variant_unit, :variant_unit_scale, :variant_unit_name, :display_as, :category,
                   :primary_taxon_id, :price, :on_hand, :on_demand, :tax_category_id,
-                  :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id
+                  :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id,
+                  :group_buy, :group_buy_unit_size
 
     NON_DISPLAY_ATTRIBUTES = ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
                               'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
@@ -32,10 +33,13 @@ module ProductImport
                                  'tax_category', 'units', 'unscaled_units', 'unit_type',
                                  'enterprise', 'enterprise_id'].freeze
 
+    # These are stored on the product, so they can't be assigned to a variant
+    PRODUCT_ONLY_ATTRIBUTES = ['group_buy', 'group_buy_unit_size'].freeze
+
     def initialize(attrs)
       @validates_as = ''
       remove_empty_skus attrs
-      assign_units attrs
+      assign_units GroupBuyConverter.new(attrs).converted_attributes
     end
 
     def persisted?
@@ -60,6 +64,14 @@ module ProductImport
 
     def assignable_attributes
       attributes.except(*NON_ASSIGNABLE_ATTRIBUTES)
+    end
+
+    def variant_assignable_attributes
+      assignable_attributes.except(*PRODUCT_ONLY_ATTRIBUTES)
+    end
+
+    def product_only_attributes
+      attributes.slice(*PRODUCT_ONLY_ATTRIBUTES)
     end
 
     def displayable_attributes
