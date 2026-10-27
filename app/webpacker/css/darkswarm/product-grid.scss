@@ -2,6 +2,21 @@
 @use "shop_partials/spinner";
 
 .loading {
+  display: none;
+
+  // Temp styling for overlay to appear on subsequent loading
+  &:has(~ .products-container) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: white;
+  }
+
+  turbo-frame[busy] & {
+    display: block;
+  }
+
   .spinner-summary {
     @include spinner.summary;
   }

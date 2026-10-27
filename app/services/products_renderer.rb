@@ -29,11 +29,32 @@ class ProductsRenderer
 
   # Generate read only data, with variants filtered for shop
   def products_view
-    products.map do |product|
+    @products_view ||= products.map do |product|
       attrs = product.slice(*ViewData::Product.members)
       attrs[:variants] = variants_view(product)
       ViewData::Product.new(**attrs)
     end
+  end
+
+  # List all properties attached to these products (whether directly or by enterprise).
+  # This is intended to replace the dual lists used in the Angular JS.
+  def properties
+    product_properties = Spree::Property.joins(:product_properties).where(
+      product_properties: { product_id: distributed_products.stocked_products }
+    )
+
+    # Excluding producers where inherits_properties: false.
+    # Why isn't that field on variant? It's related to the variant.enterprise, so really should be.
+    enterprises = distributed_products.variants_relation.joins(:product).where(
+      spree_products: { inherits_properties: true }
+    ).pluck(:enterprise_id)
+    producer_properties = Spree::Property.joins(:producer_properties).where(
+      producer_properties: { producer_id: enterprises }
+    )
+
+    Spree::Property.where(id: product_properties).
+      or(Spree::Property.where(id: producer_properties)).
+      order(:presentation)
   end
 
   private
@@ -167,7 +188,8 @@ class ProductsRenderer
   end
 
   def distributed_products
-    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer, **options)
+    @distributed_products ||= OrderCycles::DistributedProductsService.new(distributor, order_cycle,
+                                                                          customer, **options)
   end
 
   def variants_for_shop

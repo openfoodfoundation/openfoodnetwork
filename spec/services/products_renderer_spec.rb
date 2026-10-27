@@ -469,4 +469,169 @@ RSpec.describe ProductsRenderer do
       end
     end
   end
+
+  describe "#properties" do
+    let(:products_renderer) { described_class.new(distributor, order_cycle, customer, args) }
+    let(:args) { {} }
+    let(:apples_supplier) { create(:supplier_enterprise) }
+    let(:bananas_supplier) { create(:supplier_enterprise) }
+    let!(:product_apples) {
+      create(:product, name: "apples", enterprise_id: apples_supplier.id,
+                       inherits_properties: true)
+    }
+    let!(:product_bananas) {
+      create(:product, name: "bananas", enterprise_id: bananas_supplier.id,
+                       inherits_properties: true)
+    }
+
+    let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
+    let(:aromatic)    { Spree::Property.create!(name: "aromatic", presentation: "aromatic") }
+    let(:bountiful)   { Spree::Property.create!(name: "bountiful", presentation: "bountiful") }
+    let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
+    let(:organic)     { Spree::Property.create!(name: "organic", presentation: "organic") }
+    let(:biodynamic)  { Spree::Property.create!(name: "biodynamic", presentation: "biodynamic") }
+    let(:unrelated)   { Spree::Property.create!(name: "unrelated", presentation: "unrelated") }
+    subject { products_renderer.properties }
+
+    before do
+      exchange.variants << product_apples.variants.first
+      exchange.variants << product_bananas.variants.first
+    end
+
+    def add_product_properties(product, *properties)
+      properties.each { |property| product.product_properties.create! property: }
+    end
+
+    def add_producer_properties(enterprise, *properties)
+      properties.each { |property| enterprise.producer_properties.create! property: }
+    end
+
+    it "provides all product properties" do
+      add_product_properties(product_apples, shared, aromatic)
+      add_product_properties(product_bananas, shared, bountiful)
+
+      expect(subject).to match_array [shared, aromatic, bountiful]
+    end
+
+    it "provides all producer properties" do
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(bananas_supplier, shared, biodynamic)
+
+      expect(subject).to match_array [shared, organic, biodynamic]
+    end
+
+    it "provides all product and producer properties, alphabetically" do
+      add_product_properties(product_apples, shared, aromatic)
+      add_product_properties(product_bananas, shared, bountiful)
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(bananas_supplier, shared, biodynamic)
+
+      expect{ subject }.to query_database 72
+
+      expect(subject).to eq [
+        aromatic, biodynamic, bountiful, organic, shared
+      ]
+    end
+
+    it "provides only distributed producer properties for a subsequent variant" do
+      # Product has a second variant, from other enterprise. Only second variant is in order cycle.
+      other_property = Spree::Property.create!(name: "other", presentation: "other")
+      other_enterprise = create(:supplier_enterprise)
+      other_variant = create(:variant, product: product_apples, enterprise: other_enterprise)
+      exchange.variants = [other_variant]
+
+      add_producer_properties(apples_supplier, shared, organic)
+      add_producer_properties(other_enterprise, shared, other_property)
+
+      expect(subject).to match_array [other_property, shared]
+    end
+
+    it "provides no properties when none are set" do
+      expect(subject).to match_array []
+    end
+
+    context "with products that aren't distributed" do
+      let(:other_supplier) { create(:supplier_enterprise) }
+      let!(:product_other) {
+        create(:product, name: "other", enterprise_id: other_supplier.id,
+                         inherits_properties: true)
+      }
+
+      before do
+        add_product_properties(product_apples, aromatic)
+        add_product_properties(product_other, unrelated)
+        add_producer_properties(other_supplier, biodynamic)
+      end
+
+      it "excludes properties of products that aren't in the order cycle" do
+        expect(subject).to eq [aromatic]
+      end
+
+      it "excludes properties of products that are out of stock" do
+        variant = product_other.variants.first
+        variant.update!(on_demand: false, on_hand: 0)
+        exchange.variants << variant
+
+        expect(subject).to eq [aromatic]
+      end
+    end
+
+    # If all of the producer's products in the order cycle don't inherit properties,
+    # then the producer's properties shouldn't show here.
+    context "when a product doesn't inherit properties" do
+      before do
+        product_bananas.update!(inherits_properties: false)
+      end
+
+      it "excludes its producer properties" do
+        add_producer_properties(apples_supplier, organic)
+        add_producer_properties(bananas_supplier, biodynamic)
+        add_product_properties(product_bananas, bountiful)
+
+        expect(subject).to include organic
+        expect(subject).not_to include biodynamic
+        expect(subject).to include bountiful # still includes product properties
+      end
+    end
+
+    context "when filtering args are given" do
+      let(:all_properties) { [aromatic, bountiful, organic, biodynamic] }
+
+      before do
+        add_product_properties(product_apples, aromatic)
+        add_product_properties(product_bananas, bountiful)
+        add_producer_properties(apples_supplier, organic)
+        add_producer_properties(bananas_supplier, biodynamic)
+      end
+
+      it "ignores a product property filter" do
+        args[:q] = { with_properties: [aromatic.id] }
+
+        expect(products_renderer.products_view.count).to eq 1
+        expect(subject).to match_array all_properties
+      end
+
+      it "ignores pagination" do
+        args[:per_page] = "1"
+
+        expect(products_renderer.products_view.count).to eq 1
+        expect(subject).to match_array all_properties
+      end
+
+      it "is narrowed down by a search parameter" do
+        args[:q] = { name_cont: "apples" }
+
+        expect(products_renderer.products_view.count).to eq 1
+        pending; expect(subject).to match_array [aromatic, organic]
+      end
+
+      it "is narrowed down by a category parameter" do
+        pending
+        # args[:q] = { name_cont: "apples" }
+
+        expect(products_renderer.products_view.count).to eq 1
+        expect(subject).to match_array [aromatic, organic]
+      end
+    end
+  end
 end
