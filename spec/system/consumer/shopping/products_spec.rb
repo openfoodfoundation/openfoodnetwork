@@ -250,6 +250,28 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page.evaluate_script("window.scrollY")).to eq 0
     end
 
+    it "keeps the product's page in view with the phone menu open" do
+      page.driver.resize(400, 850)
+      visit enterprise_shop_path(enterprise)
+      find("#product-#{product.id} h3 a").click
+      expect(page).to have_selector "dialog.product-page-overlay[open]"
+      page.execute_script("document.querySelector('dialog.product-page-overlay').scrollTop = 300")
+
+      find(".left-off-canvas-toggle").click
+
+      expect(page).to have_selector ".off-canvas-wrap.move-right"
+      expect(page).to have_link "Shops"
+      overlay = page.evaluate_script(<<~JS)
+        (() => {
+          const dialog = document.querySelector("dialog.product-page-overlay");
+          const { top, left } = dialog.getBoundingClientRect();
+          return { top: Math.round(top), left: Math.round(left), scrollTop: dialog.scrollTop };
+        })()
+      JS
+      # Below the top menu and next to the side menu, still showing the same part of the page.
+      expect(overlay).to eq("top" => 45, "left" => 250, "scrollTop" => 300)
+    end
+
     it "adds to the shop's cart from the product's page" do
       visit enterprise_shop_path(enterprise)
       find("#product-#{product.id} h3 a").click
