@@ -1,0 +1,110 @@
+@use "../../webpacker/css/darkswarm/branding" as b;
+@use "../../webpacker/css/darkswarm/modern-variables" as *;
+
+.info-popover {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.info-popover-button {
+  display: inline-flex;
+  margin: 0 0 0 0.25rem;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: b.$orange-500;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background: transparent;
+    color: b.$orange-600;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+  }
+}
+
+.info-popover-content {
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 1rem));
+  padding: 0.625rem;
+  border: none;
+  border-radius: $radius;
+  background-color: b.$grey-800;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: normal;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+$popover-gap: 0.5rem;
+$pointer-tip: 0.375rem;
+$pointer-clearance: 2px; // between the button and the tip of the pointer
+
+// Place the popover next to its button instead of the browser's default, the middle of the
+// screen. Browsers without anchor positioning keep that default.
+@supports (position-area: bottom) {
+  .info-popover-content {
+    inset: auto;
+    margin: $popover-gap;
+    // Flip to the other side when there's no room, and stay on screen at its edges.
+    position-try-fallbacks: flip-block;
+    justify-self: anchor-center;
+  }
+
+  .info-popover-top {
+    position-area: top;
+  }
+
+  .info-popover-bottom {
+    position-area: bottom;
+  }
+
+  // A little triangle arrow on one popover edge pointing to its button.
+  //
+  // CSS can't tell yet which side a popover flipped to,
+  // so the pointer gets the same placement as the popover and the same size, which
+  // makes the browser flip it the same way. It's narrow though, and pointed at both ends: the
+  // end at the button shows in the gap, the other end is hidden in the popover.
+  //
+  // Only the button places it. Another anchor wouldn't follow when the page scrolls, so the
+  // popover only lends its height.
+  .info-popover-content::before {
+    content: "";
+    position: fixed;
+    position-anchor: inherit;
+    position-try-fallbacks: flip-block;
+    z-index: -1; // Behind the content of the popover, but still above its background
+    width: $pointer-tip * 2;
+    // Up to the far edge of the popover, which takes the same room with its margins.
+    height: calc(
+      anchor-size(var(--info-popover-content) height) + #{$popover-gap} - #{$pointer-clearance}
+    );
+    background-color: inherit;
+    clip-path: polygon(
+      50% 0,
+      100% $pointer-tip,
+      100% calc(100% - #{$pointer-tip}),
+      50% 100%,
+      0 calc(100% - #{$pointer-tip}),
+      0 $pointer-tip
+    );
+  }
+
+  // Not inherited from the popover, which would pass on the side it flipped to.
+  .info-popover-top::before {
+    position-area: top;
+    margin: $popover-gap 0 $pointer-clearance;
+  }
+
+  .info-popover-bottom::before {
+    position-area: bottom;
+    margin: $pointer-clearance 0 $popover-gap;
+  }
+}

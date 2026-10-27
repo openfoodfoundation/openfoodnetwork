@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
 @import "../../darkswarm/shop_partials/property-selector-base";
@@ -103,6 +105,14 @@
     width: 25%;
   }
 
+  .small-4 {
+    width: 33.33333%;
+  }
+
+  .small-8 {
+    width: 66.66667%;
+  }
+
   .small-12 {
     width: 100%;
   }
@@ -191,7 +201,8 @@
 
   // Carousel overrides: base styles come from the shared carousel component
   // (imported in admin/all.scss). Only admin-preview-specific overrides live here.
-  .product-img {
+  .product-img,
+  .product-images {
     .ofn-thumbnail-carousel {
       // Center images within each slide
       .swiper-slide {
@@ -227,5 +238,18 @@
         overflow: hidden;
       }
     }
+  }
+
+  // The product page preview (feature: product-pages) is styled like the product page.
+  &.product-page-preview {
+    // Their variables would clash with the admin ones if imported globally.
+    @include meta.load-css("shop_variant_list_component/shop_variant_list_component");
+    @include meta.load-css("info_popover_component/info_popover_component");
+
+    // Layout variables of the shop that the admin doesn't have. The modal has no footer
+    // to keep clear of.
+    $footer-clearance: 0;
+    $radius-medium: 0.5em;
+    @import "../../darkswarm/product_page";
   }
 }

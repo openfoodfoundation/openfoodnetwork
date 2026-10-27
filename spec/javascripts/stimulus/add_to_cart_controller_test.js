@@ -192,6 +192,47 @@ describe("AddToCartController", () => {
     });
   });
 
+  // The AngularJS shopfront keeps the cart while it shows a product page over its list.
+  describe("on a page with a cart of its own", () => {
+    const takeOver = (event) => {
+      if (event.type === "add-to-cart:connect") event.detail.quantity = 2;
+      if (event.type === "add-to-cart:change") event.preventDefault();
+    };
+
+    beforeEach(async () => {
+      document.addEventListener("add-to-cart:connect", takeOver);
+      document.addEventListener("add-to-cart:change", takeOver);
+      document.body.innerHTML = htmlTemplate();
+      await flushPromises();
+    });
+
+    afterEach(() => {
+      document.removeEventListener("add-to-cart:connect", takeOver);
+      document.removeEventListener("add-to-cart:change", takeOver);
+    });
+
+    it("starts with the quantity that cart has", () => {
+      expect(input().value).toEqual("2");
+      expect(document.getElementById("itemInCart").textContent).toEqual("2 in cart");
+    });
+
+    it("leaves saving to that cart", async () => {
+      const changes = [];
+      const recordChange = (event) => changes.push(event.detail);
+      document.addEventListener("add-to-cart:change", recordChange);
+
+      document.getElementById("plus").click();
+      jest.advanceTimersByTime(1000);
+      await flushPromises();
+
+      expect(changes).toEqual([{ variantId: 10, quantity: 3 }]);
+      expect(input().value).toEqual("3");
+      expect(global.fetch).not.toHaveBeenCalled();
+
+      document.removeEventListener("add-to-cart:change", recordChange);
+    });
+  });
+
   describe("on demand variants", () => {
     it("allows any quantity", async () => {
       document.body.innerHTML = htmlTemplate(0, "Infinity");
@@ -297,6 +338,51 @@ describe("AddToCartController", () => {
       expect(document.getElementById("add_container").style.display).toEqual("block");
       expect(document.getElementById("quantity_buttons").style.display).toEqual("none");
       expect(document.getElementById("max_quantity_buttons").style.display).toEqual("none");
+    });
+
+    describe("on a page with a cart of its own", () => {
+      const changes = [];
+      const takeOver = (event) => {
+        if (event.type === "add-to-cart:connect") {
+          event.detail.quantity = 2;
+          event.detail.maxQuantity = 4;
+        }
+        if (event.type === "add-to-cart:change") {
+          changes.push(event.detail);
+          event.preventDefault();
+        }
+      };
+
+      beforeEach(async () => {
+        changes.length = 0;
+        document.addEventListener("add-to-cart:connect", takeOver);
+        document.addEventListener("add-to-cart:change", takeOver);
+        document.body.innerHTML = groupBuyTemplate();
+        await flushPromises();
+      });
+
+      afterEach(() => {
+        document.removeEventListener("add-to-cart:connect", takeOver);
+        document.removeEventListener("add-to-cart:change", takeOver);
+      });
+
+      it("starts with the quantities that cart has", () => {
+        expect(input().value).toEqual("2");
+        expect(maxInput().value).toEqual("4");
+      });
+
+      it("leaves saving the max quantity to that cart", async () => {
+        document.getElementById("maxPlus").click();
+        document.getElementById("plus").click();
+        jest.advanceTimersByTime(1000);
+        await flushPromises();
+
+        expect(changes).toEqual([
+          { variantId: 10, quantity: 2, maxQuantity: 5 },
+          { variantId: 10, quantity: 3, maxQuantity: 5 },
+        ]);
+        expect(global.fetch).not.toHaveBeenCalled();
+      });
     });
   });
 });

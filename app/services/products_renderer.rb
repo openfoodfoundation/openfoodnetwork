@@ -56,6 +56,7 @@ class ProductsRenderer
         display_price_with_fees: presenter.display_price_with_fees,
         unit_price: presenter.unit_price,
         display_unit_price: presenter.display_unit_price,
+        fees: presenter.fee_breakdown,
         product: simple_product
       )
     end

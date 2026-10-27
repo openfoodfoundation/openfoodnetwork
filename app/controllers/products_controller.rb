@@ -3,6 +3,8 @@
 class ProductsController < BaseController
   include StartsShopping
 
+  helper_method :use_turbo_cart?
+
   def index
     @products = product_renderer.products_view
 
@@ -34,6 +36,10 @@ class ProductsController < BaseController
     # the same order cycle that the variants below it come from.
     @current_distributor = @enterprise
     @current_order_cycle = @order_cycle
+
+    # The shop's product list shows the page over itself, without the page's header and footer.
+    # See product_page_overlay_controller.js.
+    render :overlay, layout: false if params[:overlay]
   end
 
   # Choosing an order cycle is the shopper saying that they want to shop here, so unlike
@@ -49,6 +55,12 @@ class ProductsController < BaseController
   end
 
   private
+
+  # The variants on a product page add to the cart with Turbo, so the page header shows the
+  # Turbo cart even when the shopfront still has the AngularJS one.
+  def use_turbo_cart?
+    true
+  end
 
   def product_renderer(args = search_params)
     ProductsRenderer.new(

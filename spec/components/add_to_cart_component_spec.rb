@@ -14,7 +14,7 @@ RSpec.describe AddToCartComponent, type: :component do
       id: 1, on_demand: false, on_hand: 10, display_name: "", name_to_display: "Beans",
       unit_to_display: "1kg", price: 10, price_with_fees: 12,
       display_price_with_fees: "$12.00", unit_price: UnitPrice.new(build_stubbed(:variant)),
-      display_unit_price: "$12.00", enterprise: producer, producer:,
+      display_unit_price: "$12.00", fees: [], enterprise: producer, producer:,
       product: ViewData::SimpleProduct.new(id: 1, name: "Beans", group_buy:)
     ).with(**overrides)
   end
@@ -78,6 +78,54 @@ RSpec.describe AddToCartComponent, type: :component do
 
       expect(page).not_to have_selector "[data-add-to-cart-target='nbItemInCart']", visible: :all
       expect(page).not_to have_selector "[data-add-to-cart-target='stock']", visible: :all
+    end
+  end
+
+  # Capybara matches aria labels only in system specs, see capybara_setup.rb.
+  describe "labels" do
+    let(:variant) { build_variant(display_name: "Big bag", unit_to_display: "2kg") }
+    let(:name) { "Beans - Big bag - 2kg" }
+
+    it "names the variant on its buttons and its quantity field" do
+      render_component
+
+      expect(page).to have_selector "button[aria-label='Add #{name} to cart']"
+
+      # The quantity controls show once there's some in the cart.
+      expect(page).to have_selector "button[aria-label='Decrease quantity of #{name}']",
+                                    visible: :all
+      expect(page).to have_selector "button[aria-label='Increase quantity of #{name}']",
+                                    visible: :all
+      expect(page).to have_selector "input[aria-label='Quantity of #{name}']", visible: :all
+    end
+
+    context "of a group buy variant" do
+      let(:variant) {
+        build_variant(group_buy: true, display_name: "Big bag", unit_to_display: "2kg")
+      }
+
+      it "names the variant on its max quantity controls too" do
+        render_component
+
+        expect(page).to have_selector(
+          "button[aria-label='Decrease maximum quantity of #{name}']", visible: :all
+        )
+        expect(page).to have_selector(
+          "button[aria-label='Increase maximum quantity of #{name}']", visible: :all
+        )
+        expect(page).to have_selector "input[aria-label='Maximum quantity of #{name}']",
+                                      visible: :all
+      end
+    end
+
+    context "when the variant has no name of its own" do
+      let(:variant) { build_variant(display_name: "", unit_to_display: "2kg") }
+
+      it "names the product and the unit" do
+        render_component
+
+        expect(page).to have_selector "button[aria-label='Add Beans - 2kg to cart']"
+      end
     end
   end
 end

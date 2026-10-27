@@ -17,6 +17,11 @@ import showHttpError from "js/services/show_http_error";
 //
 // Dispatches "cart:updating" and "cart:settled" window events so the
 // cart-sidebar controller can show the busy state while saving.
+//
+// A page with a cart of its own, like the AngularJS shopfront showing a
+// product page over its list, can take over: it answers "add-to-cart:connect"
+// with the quantity (and group buy max quantity) it has and cancels
+// "add-to-cart:change" to save the change itself.
 export default class extends Controller {
   static targets = [
     "addButton",
@@ -46,6 +51,14 @@ export default class extends Controller {
   }
 
   connect() {
+    const { detail } = this.dispatch("connect", {
+      detail: { variantId: this.variantIdValue, quantity: null, maxQuantity: null },
+    });
+    if (detail.quantity !== null) this.quantityTarget.value = detail.quantity;
+    if (this.groupBuyValue && detail.maxQuantity !== null) {
+      this.maxQuantityTarget.value = detail.maxQuantity;
+    }
+
     this.lastQuantity = this.quantity;
     if (this.groupBuyValue) this.lastMaxQuantity = this.maxQuantity;
     this.render();
@@ -109,7 +122,7 @@ export default class extends Controller {
 
     this.lastQuantity = clamped;
     this.render();
-    this.scheduleSave();
+    this.changed();
   }
 
   // Group buy invariant: max is never below min. Raising min above max pulls max up with
@@ -132,7 +145,7 @@ export default class extends Controller {
 
     this.lastMaxQuantity = clamped;
     this.render();
-    this.scheduleSave();
+    this.changed();
   }
 
   render() {
@@ -166,6 +179,17 @@ export default class extends Controller {
     // display low stock if enabled and stock less than 3
     const showStock = quantity === 0 && this.lowStockDisplayValue && this.variantOnHandValue <= 3;
     this.stockTarget.style.display = showStock ? "block" : "none";
+  }
+
+  // Saves the change, unless a cart of the page's own takes it.
+  changed() {
+    const detail = { variantId: this.variantIdValue, quantity: this.quantity };
+    if (this.groupBuyValue) detail.maxQuantity = this.maxQuantity;
+
+    const change = this.dispatch("change", { detail, cancelable: true });
+    if (change.defaultPrevented) return;
+
+    this.scheduleSave();
   }
 
   scheduleSave() {
