@@ -41,6 +41,8 @@ RSpec.describe ProductsController do
         expect(page).to have_content "$3.21"
         expect(page).to have_selector ".unit-price"
         expect(page).to have_selector "#variant-#{product.variants.first.id}"
+        # Where the cart tells when stock runs short.
+        expect(page).to have_selector "#out-of-stock-modal", visible: :all
       end
 
       # Looking is not shopping. The add buttons carry the shop and order cycle instead,

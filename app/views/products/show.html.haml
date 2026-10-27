@@ -6,6 +6,8 @@
   = @product.image.url(:small) if @product.image.present?
 
 %shop.darkswarm
+  -# Tells about stock running short when adding to the cart. See CartController#stock_streams.
+  #out-of-stock-modal
   = render partial: "shopping_shared/header"
   = render partial: "tabs"
   = render partial: "product_details", locals: { product: @product, product_view: @product_view }
