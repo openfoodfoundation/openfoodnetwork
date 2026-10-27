@@ -3,7 +3,7 @@
 .dashboard_item.seven.columns.alpha#products
   .header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
-      = t "products"
+      = t "products_title"
     - if @product_count.positive?
       %a.six.columns.omega.icon-plus.button{ href: new_admin_product_path }
         = t "spree_admin_enterprises_create_new"

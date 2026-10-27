@@ -1,0 +1,5 @@
+-# The content of the product page, shown over the shop's product list.
+-# See product_page_overlay_controller.js.
+- title = "#{t('products.show.title', enterprise: @enterprise.name, product: @product.name)} - #{t(:title)}"
+.product-page-overlay-content{ data: { title: } }
+  = render partial: "product_details", locals: { product: @product, product_view: @product_view }

@@ -8,8 +8,9 @@
 class ProductTileComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
-  def initialize(product:, variants_in_cart:, low_stock_display:)
+  def initialize(product:, shop:, variants_in_cart:, low_stock_display:)
     @product = product
+    @shop = shop
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
   end
@@ -21,14 +22,10 @@ class ProductTileComponent < ViewComponent::Base
 
   private
 
-  attr_reader :product, :variants_in_cart, :low_stock_display
+  attr_reader :product, :shop, :variants_in_cart, :low_stock_display
 
-  def modal_id
-    "product-modal-#{product.id}"
-  end
-
-  def producer_name
-    helpers.product_producer_name(product)
+  def product_path
+    helpers.main_app.enterprise_product_path(shop, product)
   end
 
   # Single variant: {product name} | [{variant name} |] {unit or custom unit label}

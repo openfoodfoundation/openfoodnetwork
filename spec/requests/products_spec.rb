@@ -28,8 +28,8 @@ RSpec.describe ProductsController do
 
         expect(response).to have_http_status :ok
         expect(page.title).to eq "Garlic from The Garlic Guru\n - Open Food Network"
-        expect(page).to have_selector ".product-header", text: "Garlic"
-        expect(page).to have_selector ".product-header", text: /from\s+The Garlic Guru/
+        expect(page).to have_selector ".product-page-header", text: "Garlic"
+        expect(page).to have_selector ".product-page-header", text: /from\s+The Garlic Guru/
       end
 
       # Smoke test over the ProductsRenderer -> ViewData -> ShopVariantListComponent chain,
@@ -67,6 +67,18 @@ RSpec.describe ProductsController do
         expect(page).to have_selector ".variant-list li", count: 1
         expect(page).not_to have_selector "#variant-#{other_variant.id}"
       end
+
+      # The shop's product list shows the page over itself. See product_page_overlay_controller.js.
+      it "renders only the content of the page for the product list" do
+        get enterprise_product_path(enterprise, product, overlay: true)
+
+        expect(response).to have_http_status :ok
+        content = page.find(".product-page-overlay-content")
+        expect(content["data-title"]).to eq "Garlic from The Garlic Guru - Open Food Network"
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).not_to have_selector "#shop-tabs"
+        expect(page).not_to have_selector "footer"
+      end
     end
 
     context "without an order cycle on offer" do
@@ -75,7 +87,7 @@ RSpec.describe ProductsController do
 
         expect(response).to have_http_status :ok
         expect(page).to have_content "Garlic"
-        expect(page).to have_content "This product is currently unavailable."
+        expect(page).to have_content "Product unavailable"
         expect(page).not_to have_selector ".variant-list"
       end
     end
@@ -91,7 +103,7 @@ RSpec.describe ProductsController do
       it "asks the shopper to choose one first" do
         get enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "Please choose an order cycle"
+        expect(page).to have_content "Please choose when you want your order"
         expect(page).not_to have_selector ".variant-list"
       end
 

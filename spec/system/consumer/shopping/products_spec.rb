@@ -38,8 +38,28 @@ RSpec.describe "As a consumer I want to view products" do
       expect(page).to have_selector ".variant-unit", text: "2kg"
 
       # Variants of several producers name their producer, the shared header doesn't.
-      expect(page).to have_selector ".variant-producer", text: "From Onion Orchard"
-      expect(page).to have_selector ".product-header", text: "Multiple producers"
+      expect(page).to have_selector ".variant-producer", text: "from Onion Orchard"
+      expect(page).not_to have_selector ".product-producer"
+    end
+
+    it "explains the price and the unit price" do
+      fee = create(:enterprise_fee, fee_type: "admin", amount: 1.5, name: "Hub admin")
+      order_cycle.exchanges.outgoing.first.enterprise_fees << fee
+
+      visit enterprise_product_path(enterprise, product)
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "Price breakdown"
+      end
+      expect(page).to have_content "Hub admin $1.50"
+
+      find("body").send_keys(:escape)
+      expect(page).not_to have_content "Hub admin"
+
+      within ".variant-list li", text: "Big bag" do
+        click_button "About the unit price"
+      end
+      expect(page).to have_content "This is the unit price of this product."
     end
 
     # smoke test
@@ -48,15 +68,13 @@ RSpec.describe "As a consumer I want to view products" do
 
       expect(page).to have_content "Garlic"
 
-      within ".variant-list li", text: "Big bag" do
-        click_button "Add"
+      click_button "Add Garlic - Big bag - 2kg to cart"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "1"
+      expect(page).to have_content "1 in cart"
 
-        expect(page).to have_content "1 in cart"
-
-        find("img[src*='add']").click
-
-        expect(page).to have_content "2 in cart"
-      end
+      click_button "Increase quantity of Garlic - Big bag - 2kg"
+      expect(page).to have_field "Quantity of Garlic - Big bag - 2kg", with: "2"
+      expect(page).to have_content "2 in cart"
 
       # The cart is saved for this shop, not just displayed.
       expect(page).to have_selector ".cart-span", text: "2"
@@ -112,7 +130,7 @@ RSpec.describe "As a consumer I want to view products" do
       it "lists the variants of the order cycle the shopper chooses" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "Please choose an order cycle"
+        expect(page).to have_content "Please choose when you want your order"
         expect(page).not_to have_selector ".variant-list"
 
         select "next week", from: "order_cycle_id"
@@ -160,8 +178,88 @@ RSpec.describe "As a consumer I want to view products" do
       it "says that the product is unavailable" do
         visit enterprise_product_path(enterprise, product)
 
-        expect(page).to have_content "This product is currently unavailable."
+        expect(page).to have_content "Product unavailable"
         expect(page).not_to have_selector ".variant-list"
+      end
+    end
+  end
+
+  describe "from the shop's product list", feature: "product-pages" do
+    let(:enterprise) {
+      create(:distributor_enterprise, name: "The Garlic Guru", with_payment_and_shipping: true)
+    }
+    let(:products) {
+      Array.new(12) { |i|
+        create(:product, enterprise_id: enterprise.id, name: format("Garlic %02d", i + 1))
+      }
+    }
+    let(:product) { products[8] }
+    let(:variant) { product.variants.first }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, distributors: [enterprise], coordinator: enterprise,
+                                  variants: products.map(&:variants).flatten)
+    }
+
+    it "shows the product's page over the list and goes back to the same place" do
+      visit enterprise_shop_path(enterprise)
+      link = find("#product-#{product.id} h3 a")
+      page.execute_script(<<~JS)
+        window.listStillInMemory = true;
+        document.addEventListener("click", () => { window.listPosition = scrollY }, true);
+      JS
+
+      link.click
+
+      within "dialog.product-page-overlay" do
+        expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+        expect(page).to have_selector ".variant-list li", count: 1
+      end
+      expect(page).to have_current_path enterprise_product_path(enterprise, product)
+      expect(page).to have_title "Garlic 09 from The Garlic Guru - Open Food Network"
+
+      find("button[aria-label='Close']").click
+
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      expect(page).to have_current_path enterprise_shop_path(enterprise), ignore_query: true
+      expect(page.evaluate_script("window.listStillInMemory")).to be true
+      list_position = page.evaluate_script("window.listPosition")
+      expect(list_position).to be > 0
+      expect(page.evaluate_script("window.scrollY")).to eq list_position
+
+      # The browser's buttons go back and forth too.
+      link.click
+      expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+      page.go_back
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      page.go_forward
+      expect(page).to have_selector ".product-page-header", text: "Garlic 09"
+      expect(page).to have_current_path enterprise_product_path(enterprise, product)
+    end
+
+    it "adds to the shop's cart from the product's page" do
+      visit enterprise_shop_path(enterprise)
+      find("#product-#{product.id} h3 a").click
+
+      within "dialog.product-page-overlay .variant-list li" do
+        click_button "Add"
+        expect(page).to have_content "1 in cart"
+        find("img[src*='add']").click
+        expect(page).to have_content "2 in cart"
+      end
+      find("dialog.product-page-overlay").send_keys(:escape)
+
+      expect(page).not_to have_selector "dialog.product-page-overlay[open]"
+      expect(page).to have_selector ".cart-span", text: "2"
+      within "#variant-#{variant.id}" do
+        expect(page).to have_content "2 in cart"
+      end
+      wait_for_cart
+      expect(Spree::LineItem.find_by(variant:)&.quantity).to eq 2
+
+      # The page shows what's in the cart when it opens again.
+      find("#product-#{product.id} h3 a").click
+      within "dialog.product-page-overlay .variant-list li" do
+        expect(page).to have_content "2 in cart"
       end
     end
   end
@@ -368,9 +466,10 @@ RSpec.describe "As a consumer I want to view products" do
           # Add button is only displayed for single variant product
           expect(page).to have_selector(".add-variant", count: 2)
 
-          # Product modal
+          # Product page
           click_link product.name
-          within(".reveal-modal") do
+          expect(page).to have_current_path enterprise_product_path(distributor, product)
+          within(".product-page") do
             expect(page).to have_content product.name
 
             # No insecure HTML

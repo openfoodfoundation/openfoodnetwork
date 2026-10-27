@@ -23,12 +23,15 @@ class VariantPresenter < SimpleDelegator
   end
 
   def price_with_fees
-    if @enterprise_fee_calculator
-      return variant.price + @enterprise_fee_calculator.indexed_fees_for(variant)
-    end
+    return variant.price + fee_breakdown.sum(&:amount) if @enterprise_fee_calculator
 
     # TODO should leave outside the variant model
     variant.price_with_fees(distributor, order_cycle)
+  end
+
+  # The fees on the price, each on its own. Needs an enterprise fee calculator.
+  def fee_breakdown
+    @fee_breakdown ||= @enterprise_fee_calculator.indexed_fee_breakdown_for(variant)
   end
 
   def display_price_with_fees

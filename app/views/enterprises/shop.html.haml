@@ -13,7 +13,8 @@
   - cache(*CacheService::FragmentCaching.ams_all_properties) do
     = inject_properties
 
-%shop.darkswarm
+- product_pages = product_pages?(current_distributor)
+%shop.darkswarm{ "data-controller": ("product-page-overlay" if product_pages) }
   - if @shopfront_layout == 'embedded'
     = render partial: 'shop/blocked_cookies'
 
@@ -27,5 +28,13 @@
   = render partial: "shopping_shared/header"
   = render partial: "shopping_shared/tabs"
   #shop-product-modal-container
+
+  -# Products open their page over the product list, which stays as it is underneath.
+  - if product_pages
+    %dialog.product-page-overlay{ "product-page-overlay-cart": true, "data-product-page-overlay-target": "dialog", "data-action": "cancel->product-page-overlay#close:prevent" }
+      .product-page-overlay-bar
+        %button.product-page-overlay-close{ type: "button", "aria-label": t(:close), "data-action": "product-page-overlay#close" }
+          %i.ofn-i_009-close
+      %div{ "data-product-page-overlay-target": "content" }
 
 = render partial: "shared/footer"

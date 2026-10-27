@@ -73,6 +73,11 @@ module OpenFoodNetwork
       "product_grid_view" => <<~DESC,
         Display shop products as a grid.
       DESC
+      "product-pages" => <<~DESC,
+        Link products in the shop's product list to their own page instead of
+        opening them in a modal. The admin product preview shows the product page too.
+        Activate it for a shop or for a user.
+      DESC
       "bulk_coop_filters" => <<~DESC,
         Filter non-bulk products from bulk co-op reports.
         When enabled for an enterprise, only products with 'group buy' enabled

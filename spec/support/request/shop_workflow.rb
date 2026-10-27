@@ -116,21 +116,21 @@ module ShopWorkflow
   # widget has a second (max quantity) "+" button too.
   def component_add_to_cart(variant)
     within_variant(variant) do
-      page.find("[data-action='add-to-cart#add']").click
+      click_button "Increase quantity"
     end
     component_wait_for_cart
   end
 
   def component_remove_from_cart(variant)
     within_variant(variant) do
-      page.find("[data-action='add-to-cart#remove']").click
+      click_button "Decrease quantity"
     end
     component_wait_for_cart
   end
 
   def component_manual_add_to_cart(variant, quantity: 1)
     within_variant(variant) do
-      input = page.find("[data-add-to-cart-target='quantity']")
+      input = find_field "Quantity"
       input.send_keys(:backspace)
       input.send_keys(quantity.to_s)
     end

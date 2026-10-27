@@ -177,6 +177,41 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
       end
 
       describe "indexed computation" do
+        describe "#indexed_fee_breakdown_for" do
+          subject(:breakdown) {
+            OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+              .indexed_fee_breakdown_for(product1.variants.first)
+          }
+
+          it "lists each fee with its type, name and amount" do
+            expect(breakdown.map(&:to_h)).to contain_exactly(
+              { fee_type: :admin, name: "Admin", amount: 1.23 },
+              { fee_type: :sales, name: "Sales", amount: 4.56 },
+              { fee_type: :packing, name: "Packing", amount: 7.89 },
+              { fee_type: :transport, name: "Transport", amount: 0.12 },
+              { fee_type: :fundraising, name: "Fundraising", amount: 3.45 },
+            )
+          end
+
+          it "keeps the names of two fees of the same type" do
+            exchange.enterprise_fees << create(
+              :enterprise_fee, fee_type: "admin", amount: 0.5, name: "Hub admin"
+            )
+
+            expect(breakdown.select { |fee| fee.fee_type == :admin }.map(&:name))
+              .to contain_exactly("Admin", "Hub admin")
+          end
+
+          it "leaves out zero fees but keeps negative ones" do
+            ef_admin.calculator.update_attribute :preferred_amount, -1.23
+            ef_sales.calculator.update_attribute :preferred_amount, 0
+
+            expect(breakdown.map(&:name)).to contain_exactly(
+              "Admin", "Packing", "Transport", "Fundraising"
+            )
+          end
+        end
+
         it "returns a breakdown of fees" do
           expect(OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
             .indexed_fees_by_type_for(product1.variants.first))
