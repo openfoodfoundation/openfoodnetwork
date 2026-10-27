@@ -83,8 +83,6 @@ module Spree
     has_many :target_variants, through: :variant_links_as_source, source: :target_variant
 
     localize_number :price, :weight
-
-    validates_lengths_from_database
     validate :check_currency
     validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
     validates :tax_category, presence: true,
