@@ -2,16 +2,16 @@
 // While in feature-toggle, we inherit all files from old admin design.
 // Individual files may be copied in order to replace the old files.
 
-@import "assets/stylesheets/normalize";
-@import "assets/stylesheets/responsive-tables";
-@import "assets/stylesheets/jquery.powertip";
+@import "stylesheets/normalize";
+@import "stylesheets/responsive-tables";
+@import "stylesheets/jquery.powertip";
 @import "jquery-ui/themes/base/core";
 @import "jquery-ui/themes/base/button";
 @import "jquery-ui/themes/base/resizable";
-@import "assets/stylesheets/jquery-ui-theme";
+@import "stylesheets/jquery-ui-theme";
 @import "jquery-ui/themes/base/dialog";
 @import "../shared/ng-tags-input.min";
-@import "assets/stylesheets/select2";
+@import "stylesheets/select2";
 @import "flatpickr/dist/flatpickr";
 @import "flatpickr/dist/themes/material_blue";
 @import "shortcut-buttons-flatpickr/dist/themes/light";
