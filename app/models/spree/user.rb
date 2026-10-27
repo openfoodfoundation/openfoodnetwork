@@ -82,14 +82,6 @@ module Spree
       end
     end
 
-    def build_enterprise_roles
-      Enterprise.find_each do |enterprise|
-        unless enterprise_roles.find_by enterprise_id: enterprise.id
-          enterprise_roles.build(enterprise:)
-        end
-      end
-    end
-
     def customer_of(enterprise)
       return nil unless enterprise
 
@@ -191,14 +183,6 @@ module Spree
       errors.add(:owned_enterprises, I18n.t(:spree_user_enterprise_limit_error,
                                             email:,
                                             enterprise_limit:))
-    end
-
-    def remove_payments_in_checkout(enterprises)
-      enterprises.each do |enterprise|
-        enterprise.distributed_orders.each do |order|
-          order.payments.keep_if { |payment| payment.state != "checkout" }
-        end
-      end
     end
   end
 end

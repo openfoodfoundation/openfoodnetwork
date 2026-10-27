@@ -29,17 +29,6 @@ module EnterprisesHelper
       order('is_primary_producer ASC, name')
   end
 
-  def enterprises_options(enterprises)
-    enterprises.map { |enterprise|
-      ["#{enterprise.name}: #{enterprise.address.address1}, #{enterprise.address.city}",
-       enterprise.id.to_i]
-    }
-  end
-
-  def enterprises_to_names(enterprises)
-    enterprises.map(&:name).sort.join(', ')
-  end
-
   def enterprise_type_name(enterprise)
     if enterprise.sells == 'none'
       enterprise.producer_profile_only ? I18n.t(:profile) : I18n.t(:supplier_only)

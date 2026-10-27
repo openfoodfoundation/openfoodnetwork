@@ -118,16 +118,6 @@ module Spree
 
     private
 
-    def no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
-      return true if new_record?
-
-      distributors.
-        with_order_cycles_as_distributor_outer.
-        merge(OrderCycle.active.or(OrderCycle.upcoming)).none? do |distributor|
-        distributor.shipping_method_ids.one?
-      end
-    end
-
     def at_least_one_shipping_category
       return unless shipping_categories.empty?
 
