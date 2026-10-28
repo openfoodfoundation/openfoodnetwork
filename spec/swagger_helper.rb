@@ -86,9 +86,22 @@ RSpec.configure do |config|
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
 
+  # Database ids end up in the documented examples. Ids keep counting up between
+  # test runs because rolled back transactions don't reset id sequences. Restart
+  # them so that the documentation is the same on every run.
+  config.before(:each, swagger_doc: "v1.yaml") do
+    next unless generating_docs.call
+
+    connection = ActiveRecord::Base.connection
+    connection.tables.each { |table| connection.reset_pk_sequence!(table) }
+  end
+
   # Take example responses from Rswag specs for API documentation.
   # https://github.com/rswag/rswag#enable-auto-generation-examples-from-responses
-  config.after(:each, swagger_doc: "dfc.yaml") do |example|
+  config.after(:each, swagger_doc: ->(doc) { ["dfc.yaml", "v1.yaml"].include?(doc) }) do |example|
+    # Some specs test details without documenting a response.
+    next unless example.metadata[:response]
+
     # Categories and group operations of the same API endpoint.
     example.metadata[:operation][:tags] ||= [self.class.top_level_description]
 
