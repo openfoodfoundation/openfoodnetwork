@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.configure do |config|
+  # True when rswag is writing documentation, see `script/rswag`.
+  # Call it while running specs. Formatters aren't set up yet when this file loads.
+  generating_docs = lambda do
+    defined?(Rswag::Specs::SwaggerFormatter) &&
+      config.formatters.any?(Rswag::Specs::SwaggerFormatter)
+  end
+
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include OpenFoodNetwork::ApiHelper, type: :request
 
@@ -65,6 +72,13 @@ RSpec.configure do |config|
       }
     }
   }
+
+  # The legacy v0 specs need the entry above to run. But the v0 documentation
+  # is written by hand, and rswag overwrites every document listed, so we leave
+  # it out when generating documentation.
+  config.before(:suite) do
+    config.openapi_specs.delete('v0.yaml') if generating_docs.call
+  end
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
   # The swagger_docs configuration option has the filename including format in
