@@ -2813,6 +2813,10 @@ en:
   products_changes_saved: "Changes saved."
   products_no_results_html: "Sorry, no results found for %{query}"
   products_clear_search: "Clear search"
+  products_pagination:
+    previous: Previous 
+    next: Next
+    info_tag: "%{from}-%{to} of %{count} products"
 
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
 

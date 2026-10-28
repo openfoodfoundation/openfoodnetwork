@@ -357,6 +357,16 @@ RSpec.describe ProductsRenderer do
 
         expect(products_renderer.products_view).to eq([])
       end
+
+      it "describes the pagination of the products" do
+        args[:per_page] = 2
+        args[:page] = 2
+
+        pagination = products_renderer.pagination
+        expect(pagination.count).to eq 3
+        expect(pagination.page).to eq 2
+        expect(pagination.last).to eq 2
+      end
     end
 
     describe "preloading" do
