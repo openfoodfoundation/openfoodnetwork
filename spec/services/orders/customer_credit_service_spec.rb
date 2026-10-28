@@ -34,7 +34,6 @@ RSpec.describe Orders::CustomerCreditService do
       it "doesn't add a customer credit payment" do
         subject.apply
 
-        credit_payment = order.payments.where(payment_method: credit_payment_method)
         expect(order.payments.where(payment_method: credit_payment_method)).to be_empty
       end
     end
@@ -79,7 +78,7 @@ RSpec.describe Orders::CustomerCreditService do
       end
     end
 
-    context "when no enought credit available" do
+    context "when not enought credit available" do
       it "adds credit payment using all credit" do
         # Add credit
         create(
@@ -91,6 +90,26 @@ RSpec.describe Orders::CustomerCreditService do
 
         credit_payment = order.payments.find_by(payment_method: credit_payment_method)
         expect(credit_payment.amount).to eq(5.00)
+      end
+    end
+
+    context "with an order with a guest checkout" do
+      let(:order) {
+        create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:, customer:)
+      }
+      let(:customer) { create(:customer, enterprise: distributor, user: nil) }
+
+      it "doesn't add credit even if the customer has credit available" do
+        # Add credit
+        create(
+          :customer_account_transaction,
+          amount: 100.00,
+          customer: order.customer
+        )
+
+        subject.apply
+
+        expect(order.payments.where(payment_method: credit_payment_method)).to be_empty
       end
     end
   end
