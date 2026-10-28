@@ -62,6 +62,12 @@ class Customer < ApplicationRecord
     customer_account_transactions.order(:id).last&.balance || 0.00
   end
 
+  def guest?
+    return true if user_id.nil?
+
+    false
+  end
+
   private
 
   def downcase_email

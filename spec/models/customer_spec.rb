@@ -153,6 +153,18 @@ RSpec.describe Customer do
     end
   end
 
+  describe "#guest?" do
+    subject(:customer) { create(:customer, user: nil) }
+
+    it { expect(customer.guest?).to be(true) }
+
+    context "wiht an associated user" do
+      subject(:customer) { create(:customer) }
+
+      it { expect(customer.guest?).to be(false) }
+    end
+  end
+
   describe "#destroy" do
     let(:customer) { create(:customer) }
 
