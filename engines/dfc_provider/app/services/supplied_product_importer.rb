@@ -102,7 +102,7 @@ class SuppliedProductImporter < DfcBuilder
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
       enterprise_id: supplier.id,
-      primary_taxon_id: taxon(supplied_product).id,
+      primary_taxon_id: ProductTypeImporter.taxon(supplied_product.productType).id,
       image: ImageBuilder.import(supplied_product.image),
       semantic_link: semantic_link(supplied_product),
     ).tap do |product|
@@ -115,7 +115,10 @@ class SuppliedProductImporter < DfcBuilder
     ProductGroupBuilder.apply(supplied_product, variant.product)
 
     variant.display_name = supplied_product.name
-    variant.primary_taxon = taxon(supplied_product)
+    # Keep the existing category when the product type can't be mapped,
+    # for example when the exported category has no DFC id.
+    fallback = variant.primary_taxon || variant.product.variants.first&.primary_taxon
+    variant.primary_taxon = ProductTypeImporter.taxon(supplied_product.productType, fallback)
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant)
 
     catalog_item = supplied_product&.catalogItems&.first
@@ -130,9 +133,4 @@ class SuppliedProductImporter < DfcBuilder
 
     SemanticLink.new(semantic_id:) if semantic_id.present?
   end
-
-  def self.taxon(supplied_product)
-    ProductTypeImporter.taxon(supplied_product.productType)
-  end
-  private_class_method :taxon
 end
