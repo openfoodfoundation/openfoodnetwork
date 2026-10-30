@@ -402,6 +402,8 @@ en:
   open_street_map_enabled: "Open Street Map enabled"
   open_street_map_default_latitude: "Open Street Map default latitude"
   open_street_map_default_longitude: "Open Street Map default longitude"
+  open_street_map_default_zoom: "Open Street Map default zoom (1 = whole world, 18 = street level; only used when the box above is unticked)"
+  open_street_map_fit_to_enterprises: "Open the map zoomed to show all enterprises (when unticked, the map opens at the default latitude, longitude and zoom)"
   open_street_map_provider_name: "Open Street Map provider name"
   open_street_map_provider_options: "Open Street Map provider options"
   producer_signup_case_studies_html: "Producer signup case studies HTML"
