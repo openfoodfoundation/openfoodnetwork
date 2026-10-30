@@ -18,8 +18,8 @@ RSpec.describe Payments::WebhookPayload do
           quantity: li.quantity,
           price: li.price,
           tax_category_name: li.tax_category&.name,
-          product_name: li.product.name,
-          name_to_display: li.display_name,
+          product_name: li.full_product_name,
+          name_to_display: li.name_to_display,
           unit_to_display: li.unit_presentation
         }
       end
@@ -50,6 +50,14 @@ RSpec.describe Payments::WebhookPayload do
       }.with_indifferent_access
 
       expect(subject.to_hash).to eq(payload)
+    end
+
+    it "uses the snapshotted product name when the product is renamed" do
+      line_item = order.line_items.first
+      line_item.product.update!(name: "Zebra")
+
+      expect(subject.to_hash[:order][:line_items].first[:product_name])
+        .to eq line_item.product_name
     end
   end
 
@@ -82,7 +90,7 @@ RSpec.describe Payments::WebhookPayload do
               price: 20.00.to_d,
               tax_category_name: "VAT",
               product_name: "Test product",
-              name_to_display: nil,
+              name_to_display: "Test product",
               unit_to_display: "1kg"
             }
           ]

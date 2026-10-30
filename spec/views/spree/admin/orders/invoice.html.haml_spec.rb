@@ -89,4 +89,36 @@ RSpec.describe "spree/admin/orders/invoice.html.haml" do
     render
     expect(rendered).to have_content "Test note"
   end
+
+  context "line item names" do
+    let(:product) { create(:simple_product, name: "Apple") }
+    let(:variant) {
+      create(:variant, product:, display_name: "Pink Lady",
+                       variant_unit: "weight", variant_unit_scale: 1, unit_value: 500)
+    }
+    let!(:line_item) { create(:line_item, order:, variant:, quantity: 1, price: 1) }
+
+    before { order.line_items.reload }
+
+    let(:line_item_names) do
+      Nokogiri::HTML(rendered).css(".inline-header").map { |node| node.text.gsub(/\s+/, " ").strip }
+    end
+
+    it "renders the name with the unit once" do
+      render
+
+      expect(line_item_names).to include "Apple - Pink Lady"
+      expect(rendered).to match(/\(500g\)/)
+      expect(rendered).not_to have_content "(500g) (500g)"
+    end
+
+    it "keeps the snapshotted product name when the product is renamed" do
+      product.update!(name: "Changed Apple")
+
+      render
+
+      expect(line_item_names).to include "Apple - Pink Lady"
+      expect(rendered).not_to have_content "Changed Apple"
+    end
+  end
 end

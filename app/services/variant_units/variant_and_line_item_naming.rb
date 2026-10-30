@@ -19,11 +19,27 @@ module VariantUnits
         variant.respond_to?(:display_as) && variant.display_as.present?
     end
 
-    def product_and_full_name
-      return product.name if full_name.blank?
-      return "#{product.name} - #{full_name}" unless full_name.start_with?(product.name)
+    def full_variant_name
+      return variant_name if has_attribute?(:variant_name) && !variant_name.nil?
+      return variant.full_name if respond_to?(:variant) && variant.present?
 
       full_name
+    end
+
+    def full_product_name
+      return product_name if has_attribute?(:product_name) && !product_name.nil?
+
+      product.name
+    end
+
+    def product_and_full_name
+      return full_product_name if full_variant_name.blank?
+
+      if full_variant_name.downcase.start_with?(full_product_name.downcase)
+        full_variant_name
+      else
+        "#{full_product_name} - #{full_variant_name}"
+      end
     end
 
     # Used like "product.name - full_name", preferably using product_and_full_name method above.
@@ -34,14 +50,24 @@ module VariantUnits
     # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
     #     Bread - Spelt Sourdough (1kg)
     def full_name
-      return unit_to_display if display_name.blank?
-      return display_name    if display_name.downcase.include? unit_to_display.downcase
-      return unit_to_display if unit_to_display.downcase.include? display_name.downcase
+      display = display_name_for_naming
+      return unit_to_display if display.blank?
+      return display         if display.downcase.include? unit_to_display.downcase
+      return unit_to_display if unit_to_display.downcase.include? display.downcase
 
-      "#{display_name} (#{unit_to_display})"
+      "#{display} (#{unit_to_display})"
     end
 
     def name_to_display
+      if has_attribute?(:variant_display_name)
+        return variant_display_name unless variant_display_name.nil?
+
+        legacy_display_name = display_name_for_naming
+        return legacy_display_name if legacy_display_name.present?
+
+        return full_product_name
+      end
+
       return product.name if display_name.blank?
 
       display_name
@@ -74,6 +100,18 @@ module VariantUnits
     end
 
     private
+
+    def display_name_for_naming
+      if has_attribute?(:variant_display_name) && !variant_display_name.nil?
+        variant_display_name
+      elsif respond_to?(:display_name)
+        display_name
+      elsif respond_to?(:variant)
+        variant&.display_name.to_s
+      else
+        ""
+      end
+    end
 
     def option_value_name
       return display_as if has_attribute?(:display_as) && display_as.present?

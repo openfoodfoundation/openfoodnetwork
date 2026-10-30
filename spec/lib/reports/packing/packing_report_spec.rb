@@ -40,6 +40,15 @@ RSpec.describe "Packing Reports" do
       it "does not fetch line items for cancelled orders" do
         expect(report_contents).not_to include line_item2.product.name
       end
+
+      context "when the product is renamed after the order" do
+        it "uses the snapshotted product name" do
+          line_item.product.update!(name: "Renamed")
+
+          expect(report_contents).to include line_item.product_name
+          expect(report_contents).not_to include "Renamed"
+        end
+      end
     end
 
     context "as a manager of a supplier" do

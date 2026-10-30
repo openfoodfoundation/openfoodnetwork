@@ -139,4 +139,102 @@ RSpec.describe Invoice::DataPresenter::LineItem do
       end
     end
   end
+
+  describe "#full_product_name" do
+    let(:data) do
+      {
+        product_name:,
+        variant: {
+          display_name: "Changed Display",
+          product: { name: "Changed Product" }
+        }
+      }
+    end
+
+    context "with a snapshotted product name" do
+      let(:product_name) { "Apple" }
+
+      it "returns the snapshotted product name" do
+        expect(presenter.full_product_name).to eq("Apple")
+      end
+    end
+
+    context "without a snapshotted product name" do
+      let(:data) do
+        {
+          variant: {
+            display_name: "Pink Lady",
+            product: { name: "Apple" }
+          }
+        }
+      end
+
+      it "falls back to the invoice's product name" do
+        expect(presenter.full_product_name).to eq("Apple")
+      end
+    end
+  end
+
+  describe "#name_to_display" do
+    let(:data) do
+      {
+        product_name:,
+        variant_display_name:,
+        variant: {
+          display_name:,
+          product: { name: "Changed Product" }
+        }
+      }
+    end
+
+    context "when a variant display name was snapshotted" do
+      let(:product_name) { "Apple" }
+      let(:variant_display_name) { "Pink Lady" }
+      let(:display_name) { "Renamed Variant" }
+
+      it "returns the snapshotted variant display name, not the renamed one" do
+        expect(presenter.name_to_display).to eq("Pink Lady")
+      end
+    end
+
+    context "when a blank variant display name was snapshotted" do
+      let(:product_name) { "Apple" }
+      let(:variant_display_name) { "" }
+      let(:display_name) { "Renamed Variant" }
+
+      it "returns the blank snapshot, not the renamed variant" do
+        expect(presenter.name_to_display).to eq("")
+      end
+    end
+
+    context "when no variant display name was snapshotted and the variant has a display name" do
+      let(:product_name) { "Apple" }
+      let(:variant_display_name) { nil }
+      let(:display_name) { "Pink Lady" }
+
+      it "returns the variant display name" do
+        expect(presenter.name_to_display).to eq("Pink Lady")
+      end
+    end
+
+    context "when no variant display name was snapshotted and the variant display name is blank" do
+      let(:product_name) { "Apple" }
+      let(:variant_display_name) { nil }
+      let(:display_name) { "" }
+
+      it "returns the snapshotted product name, not the renamed product" do
+        expect(presenter.name_to_display).to eq("Apple")
+      end
+    end
+
+    context "when nothing was snapshotted and the variant display name is blank" do
+      let(:product_name) { nil }
+      let(:variant_display_name) { nil }
+      let(:display_name) { "" }
+
+      it "falls back to the product name" do
+        expect(presenter.name_to_display).to eq("Changed Product")
+      end
+    end
+  end
 end

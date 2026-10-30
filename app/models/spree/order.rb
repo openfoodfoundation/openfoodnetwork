@@ -623,9 +623,9 @@ module Spree
 
     def sorted_line_items
       if distributor.preferred_invoice_order_by_supplier
-        line_items.sort_by { |li| [li.supplier.name, li.product.name] }
+        line_items.sort_by { |li| [li.supplier.name, li.full_product_name] }
       else
-        line_items.sort_by { |li| [li.product.name] }
+        line_items.sort_by { |li| [li.full_product_name] }
       end
     end
 

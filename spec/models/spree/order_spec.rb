@@ -1570,6 +1570,17 @@ RSpec.describe Spree::Order do
         ]
       end
     end
+
+    context "when a product is renamed after the order was placed" do
+      it "sorts the line items by the snapshotted product name" do
+        distributor.update_attribute(:preferred_invoice_order_by_supplier, false)
+        order
+        aaron_apple.update!(name: "Zebra")
+
+        expect(order.sorted_line_items.map(&:product_name))
+          .to eq ["Apple", "Apple", "Banana", "Banana"]
+      end
+    end
   end
 
   describe "#voucher_adjustments" do
