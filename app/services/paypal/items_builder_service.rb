@@ -32,7 +32,7 @@ module Paypal
 
     def line_item_data(item)
       {
-        Name: item.product.name,
+        Name: item.full_product_name,
         Number: item.variant.sku,
         Quantity: item.quantity,
         Amount: {

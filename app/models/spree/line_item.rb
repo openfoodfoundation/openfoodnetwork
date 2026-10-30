@@ -26,6 +26,7 @@ module Spree
     before_validation :copy_dimensions
     before_validation :copy_product_name, on: :create
     before_validation :copy_variant_name, on: :create
+    before_validation :copy_variant_display_as, on: :create
 
     validates :quantity, numericality: {
       only_integer: true,
@@ -47,8 +48,16 @@ module Spree
     after_destroy :update_order
     after_save :update_order
 
-    delegate :product, :variant_unit, :unit_description, :display_name, :display_as,
+    delegate :product, :variant_unit, :unit_description, :display_as,
              :variant_unit_scale, :variant_unit_name, to: :variant
+
+    # Returns the snapshotted variant display name without falling back to the
+    # product name. Legacy rows use the live variant display name.
+    def display_name
+      return variant_display_name unless variant_display_name.nil?
+
+      variant&.display_name
+    end
 
     # Allows manual skipping of Stock::AvailabilityValidator
     attr_accessor :skip_stock_check, :target_shipment
@@ -64,8 +73,8 @@ module Spree
     scope :sorted_by_name_and_unit_value, -> {
       joins(variant: :product).
         reorder(Arel.sql("
-          lower(spree_products.name) asc,
-            lower(spree_variants.display_name) asc,
+          lower(COALESCE(spree_line_items.product_name, spree_products.name)) asc,
+            lower(COALESCE(spree_line_items.variant_display_name, spree_variants.display_name)) asc,
             spree_variants.unit_value asc"))
     }
 
@@ -241,18 +250,6 @@ module Spree
       adjustments.enterprise_fee
     end
 
-    def full_variant_name
-      return variant_name if variant_name.present?
-
-      variant.full_name
-    end
-
-    def full_product_name
-      return product_name if product_name.present?
-
-      variant.product.name
-    end
-
     private
 
     def computed_weight_from_variant
@@ -287,6 +284,13 @@ module Spree
       return if variant.nil?
 
       self.variant_name = variant.full_name
+      self.variant_display_name = variant.display_name.to_s
+    end
+
+    def copy_variant_display_as
+      return if variant.nil?
+
+      self.variant_display_as = variant.display_as.to_s
     end
 
     def update_inventory_before_destroy
