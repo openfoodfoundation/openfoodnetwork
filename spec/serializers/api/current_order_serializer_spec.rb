@@ -25,6 +25,20 @@ RSpec.describe Api::CurrentOrderSerializer do
     expect(serializer).to match line_item.variant.name
   end
 
+  it "includes the snapshotted product name of line items" do
+    item = create(:line_item)
+    snapshot = item.product_name
+    item.product.update!(name: "Zebra")
+
+    json = described_class.new(
+      create(:order, line_items: [item]),
+      current_distributor: distributor,
+      current_order_cycle: order_cycle
+    ).to_json
+
+    expect(json).to include "\"product_name\":\"#{snapshot}\""
+  end
+
   context 'when there is no shipment' do
     it 'includes the shipping method of the order' do
       expect(serializer).to match('\"shipping_method_id\":null')

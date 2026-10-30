@@ -13,7 +13,7 @@ module Reporting
             supplier: :variant_supplier_name,
             product: :variant_product_name,
             bulk_unit_size: :variant_product_group_buy_unit_size_f,
-            variant: :full_name,
+            variant: :full_variant_name,
             variant_value: :option_value_value,
             variant_unit: :option_value_unit,
             weight: :weight_from_unit_value,

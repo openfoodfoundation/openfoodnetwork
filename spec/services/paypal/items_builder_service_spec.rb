@@ -16,6 +16,13 @@ RSpec.describe Paypal::ItemsBuilderService do
     expect(items.first[:ItemCategory]).to eq "Physical"
   end
 
+  it "uses the snapshotted product name when the product is renamed" do
+    line_item = order.line_items.first
+    line_item.product.update!(name: "Zebra")
+
+    expect(items.first[:Name]).to eq line_item.product_name
+  end
+
   context "listing adjustments" do
     let!(:admin_adjustment) {
       create(:adjustment, label: "Admin Adjustment", order:, adjustable: order,

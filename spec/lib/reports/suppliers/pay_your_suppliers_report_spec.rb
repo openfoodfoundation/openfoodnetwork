@@ -45,6 +45,17 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.total_tax.to_f).to eq(0.0)
       expect(table_row.total.to_f).to eq(10.0)
     end
+
+    context "when the product is renamed after the order" do
+      it "uses the snapshotted product name" do
+        product.update!(name: "Zebra")
+
+        table_row = report_table_rows.first
+
+        expect(table_row.product).to eq order.line_items.first.product_name
+        expect(table_row.product).not_to eq "Zebra"
+      end
+    end
   end
 
   context "with taxes and fees" do
