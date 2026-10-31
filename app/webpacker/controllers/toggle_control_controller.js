@@ -52,6 +52,39 @@ export default class extends Controller {
     this.#toggleDisplay(inputValue == this.matchValue);
   }
 
+  // Display each control if all inputs matching its
+  // data-toggle-control-checked-selector="<css selector list>" are checked
+  displayIfAllChecked() {
+    this.controlTargets.forEach((target) => {
+      const selector = target.dataset.toggleControlCheckedSelector;
+      if (!selector) return;
+
+      const inputs = [...this.element.querySelectorAll(selector)];
+      target.style.display = inputs.every((input) => input.checked) ? "" : "none";
+    });
+  }
+
+  // Make each control read-only unless the input matching its
+  // data-toggle-control-editable-if-checked="<css selector>" is checked.
+  // A read-only input is still submitted, unlike a disabled one.
+  readOnlyUnlessChecked() {
+    this.controlTargets.forEach((target) => {
+      const selector = target.dataset.toggleControlEditableIfChecked;
+      if (!selector) return;
+
+      const readOnly = !this.element.querySelector(selector)?.checked;
+      const tomSelect = target.tomselect;
+
+      if (tomSelect) {
+        tomSelect.setReadOnly(readOnly);
+        // Locking also stops items being reordered by dragging.
+        readOnly ? tomSelect.lock() : tomSelect.unlock();
+      } else {
+        target.readOnly = readOnly;
+      }
+    });
+  }
+
   // private
 
   #toggleDisabled(disable) {

@@ -55,6 +55,22 @@ RSpec.describe Admin::EnterprisesHelper do
     end
   end
 
+  describe "#translation_without_fallback" do
+    let(:key) { "admin.enterprises.form.shop_preferences.shopfront_visibility.description" }
+
+    it "returns the translation of the current locale" do
+      I18n.with_locale(:en) do
+        expect(helper.translation_without_fallback(key)).to start_with "Choose whether"
+      end
+    end
+
+    it "doesn't fall back to English" do
+      I18n.with_locale(:en_TST) do
+        expect(helper.translation_without_fallback(key)).to be_nil
+      end
+    end
+  end
+
   describe "#tag_groups" do
     subject { helper.tag_groups(tag_rules) }
 
