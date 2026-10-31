@@ -6990,13 +6990,13 @@ webidl-conversions@^7.0.0:
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
 
 webpack-assets-manifest@*:
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-6.5.4.tgz#a8bb730001b0018bc556d238b23868863dad92c3"
-  integrity sha512-gkj2bkHKvUfu8FHqlXiVPCUfX6Fd/CAOZfl3PZFCZVx64xNCTDOxSEkqvmd6HxFcToo+2vpnpVI0ZZGRFGv9Qg==
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-6.5.5.tgz#ee45df9112182c2969310ec49ed062687616dc2a"
+  integrity sha512-903fXlc3OljGFVwb7+67QvanQChsgVsRoIDDtKw1ioVjRi8C+vprl4lAHDVZ6nKbdO4oPobg0cvPcI8UdDDmHA==
   dependencies:
     deepmerge "^4.3.1"
     proper-lockfile "^4.1.2"
-    schema-utils "^4.5.0"
+    schema-utils "^4.8.1"
     tapable "^2.3.3"
 
 webpack-cli@*:
