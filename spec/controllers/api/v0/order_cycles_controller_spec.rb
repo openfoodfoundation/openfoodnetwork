@@ -111,7 +111,7 @@ RSpec.describe Api::V0::OrderCyclesController do
 
         it "filter out the product that don't inherits from supplier properties" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { with_variants_enterprise_properties: [supplier_property.id] }
+                             q: { with_properties: [supplier_property.id] }
 
           expect(response).to have_http_status :ok
           expect(product_ids).to match_array [product1.id, product2.id]
@@ -329,24 +329,87 @@ RSpec.describe Api::V0::OrderCyclesController do
       expect(json_response.length).to be 2
       expect(properties).to include property1.presentation, property2.presentation
     end
-  end
 
-  describe "#producer_properties" do
-    let!(:property4) { create(:property) }
-    let!(:supplier) { create(:supplier_enterprise) }
-    let!(:producer_property) {
-      create(:producer_property, producer_id: supplier.id, property: property4)
-    }
+    it "returns properties in alphabetical order by presentation" do
+      api_get :properties, id: order_cycle.id, distributor: distributor.id
 
-    before { product1.variants.first.update(enterprise: supplier) }
+      expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
+    end
 
-    it "loads producer properties for distributed products in the order cycle" do
-      api_get :producer_properties, id: order_cycle.id, distributor: distributor.id
+    it "returns a property only once when it is shared by several products" do
+      product2.properties << property1
 
-      properties = json_response.pluck(:name)
+      api_get :properties, id: order_cycle.id, distributor: distributor.id
 
-      expect(json_response.length).to be 1
-      expect(properties).to include producer_property.property.presentation
+      expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
+    end
+
+    context "with producer properties" do
+      let!(:property4) { create(:property, presentation: 'Bee-Friendly') }
+      let!(:property5) { create(:property, presentation: 'plastic-free') }
+      let!(:supplier) { create(:supplier_enterprise) }
+
+      before do
+        create(:producer_property, producer_id: supplier.id, property: property4)
+        create(:producer_property, producer_id: supplier.id, property: property5)
+        product1.variants.first.update!(enterprise: supplier)
+      end
+
+      it "returns product and producer properties in one alphabetical list" do
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq(
+          ['Bee-Friendly', 'Dairy-Free', 'Organic', 'plastic-free']
+        )
+      end
+
+      it "returns a property only once when it is both a product and a producer property" do
+        create(:producer_property, producer_id: supplier.id, property: property2)
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq(
+          ['Bee-Friendly', 'Dairy-Free', 'Organic', 'plastic-free']
+        )
+      end
+
+      it "excludes producer properties of products that don't inherit properties" do
+        product1.update!(inherits_properties: false)
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq ['Dairy-Free', 'Organic']
+      end
+
+      it "returns a producer property only once when it is shared by several producers" do
+        supplier2 = create(:supplier_enterprise)
+        create(:producer_property, producer_id: supplier2.id, property: property4)
+        product2.variants.first.update!(enterprise: supplier2)
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq(
+          ['Bee-Friendly', 'Dairy-Free', 'Organic', 'plastic-free']
+        )
+      end
+
+      it "returns properties in the shop's property order, then the others alphabetically" do
+        distributor.update!(preferred_shopfront_property_order: "#{property5.id},#{property1.id}")
+
+        api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+        expect(json_response.pluck(:name)).to eq(
+          ['plastic-free', 'Organic', 'Bee-Friendly', 'Dairy-Free']
+        )
+      end
+    end
+
+    it "ignores properties in the shop's property order which aren't in the shop" do
+      distributor.update!(preferred_shopfront_property_order: "#{property3.id},#{property1.id}")
+
+      api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+      expect(json_response.pluck(:name)).to eq ['Organic', 'Dairy-Free']
     end
   end
 

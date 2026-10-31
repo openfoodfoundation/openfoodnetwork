@@ -55,6 +55,42 @@ RSpec.describe Admin::EnterprisesHelper do
     end
   end
 
+  describe "#shopfront_property_options" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:organic) { create(:property, presentation: "Organic") }
+    let(:dairy_free) { create(:property, presentation: "dairy-free") }
+
+    before do
+      product = create(:product, properties: [organic, dairy_free])
+      order_cycle.exchanges.to_enterprises(distributor).outgoing.first
+        .variants << product.variants.first
+      create(:property, presentation: "Not distributed")
+    end
+
+    it "returns the shop's properties alphabetically, labelled as in the shopfront" do
+      expect(helper.shopfront_property_options(distributor)).to eq [
+        ["dairy-free", dairy_free.id], ["Organic", organic.id]
+      ]
+    end
+  end
+
+  describe "#translation_without_fallback" do
+    let(:key) { "admin.enterprises.form.shop_preferences.shopfront_visibility.description" }
+
+    it "returns the translation of the current locale" do
+      I18n.with_locale(:en) do
+        expect(helper.translation_without_fallback(key)).to start_with "Choose whether"
+      end
+    end
+
+    it "doesn't fall back to English" do
+      I18n.with_locale(:en_TST) do
+        expect(helper.translation_without_fallback(key)).to be_nil
+      end
+    end
+  end
+
   describe "#tag_groups" do
     subject { helper.tag_groups(tag_rules) }
 

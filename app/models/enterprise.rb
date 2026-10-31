@@ -19,6 +19,7 @@ class Enterprise < ApplicationRecord
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
   preference :shopfront_producer_order, :string, default: ""
+  preference :shopfront_property_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
   preference :shopfront_product_sorting_method, :string, default: "by_category"
   preference :invoice_order_by_supplier, :boolean, default: false
@@ -135,6 +136,7 @@ class Enterprise < ApplicationRecord
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :shopfront_producers
+  validate :shopfront_properties
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates :instagram,
             format: {
@@ -639,6 +641,12 @@ class Enterprise < ApplicationRecord
     return if preferred_shopfront_producer_order =~ /\A((\d+,)*\d+)?\z/
 
     errors.add(:shopfront_category_ordering, "must contain a list of producers.")
+  end
+
+  def shopfront_properties
+    return if preferred_shopfront_property_order =~ /\A((\d+,)*\d+)?\z/
+
+    errors.add(:shopfront_property_ordering, "must contain a list of properties.")
   end
 
   def restore_permalink

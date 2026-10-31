@@ -562,6 +562,43 @@ RSpec.describe '
       expect(supplier1.producer_properties.reload).to be_empty
     end
 
+    describe "shop preferences" do
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+      end
+
+      it "groups settings in sections" do
+        expect(page).to have_content "Product display"
+        expect(page).to have_content "Supplier access"
+        expect(page).to have_content "Shopfront visibility"
+
+        # The test locale doesn't translate descriptions and they don't fall back to English.
+        expect(page).not_to have_content "Choose whether customers must login"
+      end
+
+      it "shows guest orders and the login recommendation when relevant" do
+        recommendation = "We recommend requiring customers to log in"
+        expect(page).to have_field "Allow guest checkout"
+        expect(page).not_to have_content recommendation
+
+        choose "Customers can change / cancel orders while order cycle is open"
+        expect(page).to have_content recommendation
+
+        choose "Require login to order"
+        expect(page).not_to have_content recommendation
+
+        choose "Allow guest checkout"
+        choose "Visible to registered customers only"
+        expect(page).not_to have_field "Allow guest checkout"
+        expect(page).not_to have_content recommendation
+
+        choose "Public"
+        expect(page).to have_field "Allow guest checkout"
+        expect(page).to have_content recommendation
+      end
+    end
+
     describe "setting ordering preferences" do
       let(:taxon) { create(:taxon, name: "Tricky Taxon") }
       let(:property) { create(:property, presentation: "Fresh and Fine") }
@@ -584,48 +621,138 @@ RSpec.describe '
         add_variant_to_order_cycle(exchange1, variant)
       end
 
-      context "sorting by category" do
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+      end
+
+      it "sorts by category" do
+        choose "By category"
+        select_in_picker "Tricky Taxon", from: "Category"
+        click_button 'Update'
+
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.preferred_shopfront_product_sorting_method)
+          .to eq "by_category"
+        expect(distributor1.preferred_shopfront_taxon_order).to eq taxon.id.to_s
+      end
+
+      it "sorts by producer" do
+        choose "By producer"
+        select_in_picker "First Supplier", from: "Producer"
+        click_button 'Update'
+
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.preferred_shopfront_product_sorting_method)
+          .to eq "by_producer"
+        expect(distributor1.preferred_shopfront_producer_order).to eq supplier1.id.to_s
+      end
+
+      it "only allows changing the order of the selected sorting method" do
+        producer_picker = find_field("Producer").sibling(".ts-wrapper")
+
+        choose "By category"
+        producer_picker.click
+        expect(producer_picker).not_to have_content "First Supplier"
+
+        choose "By producer"
+        select_in_picker "First Supplier", from: "Producer"
+        expect(producer_picker).to have_content "First Supplier"
+      end
+
+      def select_in_picker(option, from:)
+        picker = find_field(from).sibling(".ts-wrapper")
+        picker.find(".ts-control").click
+        picker.find(".option", text: option).click
+        # Close the dropdown without clicking somewhere that could toggle an option again
+        picker.find(".ts-control input").send_keys(:escape)
+      end
+
+      context "with categories already in order" do
+        let!(:other_taxon) { create(:taxon, name: "Another Taxon") }
+
         before do
+          distributor1.update!(preferred_shopfront_taxon_order: "#{taxon.id},#{other_taxon.id}")
           visit edit_admin_enterprise_path(distributor1)
-
-          within(".side_menu") do
-            find(:link, "Shop Preferences").trigger("click")
-          end
-
-          choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_enterprise_preferred_shopfront_taxon_order").click
-          find(".select2-result-label", text: "Tricky Taxon").click
-          click_button 'Update'
-          expect(flash_message)
-            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
         end
 
-        it "sets the preference correctly" do
-          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_category")
-          expect(distributor1.preferred_shopfront_taxon_order).to eql(taxon.id.to_s)
+        it "changes the order by dragging" do
+          selected = find_field("Category").sibling(".ts-wrapper").find(".ts-control")
+          expect(selected).to have_content(/Tricky Taxon.*Another Taxon/m)
+
+          # TomSelect stops the mousedown event Cuprite uses to detect HTML5 dragging.
+          selected.find("[data-ts-item]", text: "Another Taxon")
+            .drag_to(selected.find("[data-ts-item]", text: "Tricky Taxon"), html5: true)
+          expect(selected).to have_content(/Another Taxon.*Tricky Taxon/m)
+
+          click_button 'Update'
+
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.preferred_shopfront_taxon_order)
+            .to eq "#{other_taxon.id},#{taxon.id}"
         end
       end
 
-      context "sorting by producer" do
+      describe "property filter order" do
+        let(:other_property) { create(:property, presentation: "Bee-Friendly") }
+        let(:property_picker) { find_field("Property").sibling(".ts-wrapper") }
+
         before do
+          create(:producer_property, producer_id: supplier1.id, property: other_property)
           visit edit_admin_enterprise_path(distributor1)
-
-          within(".side_menu") do
-            find(:link, "Shop Preferences").trigger("click")
-          end
-
-          choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          scroll_to(:bottom)
-          find("#s2id_enterprise_preferred_shopfront_producer_order").click
-          find(".select2-result-label", text: "First Supplier").click
-          click_button 'Update'
-          expect(flash_message)
-            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
         end
 
-        it "sets the preference correctly" do
-          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_producer")
-          expect(distributor1.preferred_shopfront_producer_order).to eql(supplier1.id.to_s)
+        it "saves the properties in the order they were selected" do
+          within find("h3", text: "Filters").ancestor("section") do
+            expect(page).to have_content "Property filter order"
+          end
+
+          select_in_picker "Fresh and Fine", from: "Property"
+          select_in_picker "Bee-Friendly", from: "Property"
+          expect(property_picker.find(".ts-control"))
+            .to have_content(/Fresh and Fine.*Bee-Friendly/m)
+
+          click_button 'Update'
+
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.preferred_shopfront_property_order)
+            .to eq "#{property.id},#{other_property.id}"
+        end
+
+        it "searches the properties" do
+          property_picker.find(".ts-control input").send_keys("bee")
+
+          expect(property_picker).to have_selector ".option", text: "Bee-Friendly"
+          expect(property_picker).not_to have_selector ".option", text: "Fresh and Fine"
+
+          property_picker.find(".ts-control input").send_keys("zzz")
+          expect(property_picker).to have_content "No results found"
+        end
+
+        context "with properties already in order" do
+          before do
+            distributor1.update!(
+              preferred_shopfront_property_order: "#{property.id},#{other_property.id}"
+            )
+            visit edit_admin_enterprise_path(distributor1)
+            within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+          end
+
+          it "removes a property" do
+            property_picker.find("[data-ts-item]", text: "Fresh and Fine").find(".remove").click
+            click_button 'Update'
+
+            expect(flash_message)
+              .to eq('Enterprise "First Distributor" has been successfully updated!')
+            expect(distributor1.reload.preferred_shopfront_property_order)
+              .to eq other_property.id.to_s
+          end
         end
       end
     end
