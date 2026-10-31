@@ -92,14 +92,14 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
+          search_param = { q: { with_properties: [property_organic.id] } }
           products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
           product_ids = products_renderer.products_view.map(&:id)
           expect(product_ids).to eq([product_apples.id, product_cherries.id])
         end
 
-        it "includes products inheriting the property when it is sent via with_properties" do
+        it "filters products with a property set directly or inherited from a producer" do
           # Regression for #14405: when one producer sets the property at producer level (inherited
           # by its products) and another producer sets the same property directly on a product, the
           # shopfront deduplicates the property into the product bucket and sends only
@@ -123,11 +123,7 @@ RSpec.describe ProductsRenderer do
           product_apples.product_properties.create!({ property_id: property_conventional.id,
                                                       value: '1', position: 1 })
 
-          search_param = { q:
-            {
-              "with_variants_enterprise_properties" => [property_organic.id],
-              "with_properties" => [property_conventional.id]
-            } }
+          search_param = { q: { with_properties: [property_organic.id, property_conventional.id] } }
           products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
           product_ids = products_renderer.products_view.map(&:id)
@@ -147,8 +143,8 @@ RSpec.describe ProductsRenderer do
 
           search_param = { q:
             {
-              "with_variants_enterprise_properties" => [property_organic.id],
-              "variants_primary_taxon_id_in_any" => [stone_fruit.id],
+              with_properties: [property_organic.id],
+              variants_primary_taxon_id_in_any: [stone_fruit.id],
             } }
 
           products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
@@ -164,7 +160,7 @@ RSpec.describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
 
-          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
+          search_param = { q: { with_properties: [property_organic.id] } }
           products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
           product_ids = products_renderer.products_view.map(&:id)
@@ -199,7 +195,7 @@ RSpec.describe ProductsRenderer do
           }
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          search_param = { q: { "with_variants_enterprise_properties" => [property_organic.id] } }
+          search_param = { q: { with_properties: [property_organic.id] } }
           products_renderer = described_class.new(distributor, order_cycle, customer, search_param)
 
           product_ids = products_renderer.products_view.map(&:id)
