@@ -122,7 +122,9 @@
         margin-bottom: 2px;
       }
 
-      .custom-tab {
+      .custom-tab,
+      .open-shop-message,
+      .about-description {
         @include trix-styles;
       }
     }
