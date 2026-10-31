@@ -28,7 +28,10 @@ export default class extends Controller {
 
   toggleCheckbox() {
     this.countValue = this.#checkedCount();
-    this.allTarget.checked = this.#allChecked();
+
+    if (this.hasAllTarget) {
+      this.allTarget.checked = this.#allChecked();
+    }
 
     this.#toggleDisabled();
   }
