@@ -695,6 +695,24 @@ RSpec.describe '
           expect(distributor1.reload.preferred_shopfront_taxon_order)
             .to eq "#{other_taxon.id},#{taxon.id}"
         end
+
+        it "keeps the order of the sorting method that isn't selected" do
+          choose "By producer"
+          selected = find_field("Category").sibling(".ts-wrapper").find(".ts-control")
+          within(selected.find("[data-ts-item]", text: "Tricky Taxon")) do
+            click_button "Remove", enable_aria_role: true
+          end
+          expect(selected).to have_content(/Tricky Taxon.*Another Taxon/m)
+
+          select_in_picker "First Supplier", from: "Producer"
+          click_button 'Update'
+
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.preferred_shopfront_taxon_order)
+            .to eq "#{taxon.id},#{other_taxon.id}"
+          expect(distributor1.preferred_shopfront_producer_order).to eq supplier1.id.to_s
+        end
       end
     end
 
