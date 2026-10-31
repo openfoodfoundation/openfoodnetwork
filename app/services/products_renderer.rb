@@ -180,7 +180,7 @@ class ProductsRenderer
   def variants_for_shop
     @variants_for_shop ||= begin
       variants = distributed_products.variants_relation.
-        includes(:default_price, :product, :enterprise, :stock_items,
+        includes(:default_price, :product, :enterprise, :stock_items, :image,
                  source_variants: :enterprise).
         where(product_id: products)
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Api::VariantSerializer do
+  include FileHelper
+
   subject { described_class.new variant }
   let(:variant) { create(:variant, price: 10.00) }
 
@@ -24,5 +26,13 @@ RSpec.describe Api::VariantSerializer do
         :unit_price_price,
         :unit_price_unit
       )
+  end
+
+  describe "#thumb_url" do
+    it "returns the variant image URL" do
+      Spree::Image.create!(attachment: white_logo_file, viewable: variant)
+
+      expect(described_class.new(variant.reload).thumb_url).to eq variant.image_url(:mini)
+    end
   end
 end
