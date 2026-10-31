@@ -18,6 +18,7 @@ module Admin
     before_action :require_enterprise, only: [:edit, :update]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
+    before_action :load_shopfront_order_options, only: [:edit, :update]
     before_action :check_can_change_sells, only: :update
     before_action :check_can_change_bulk_sells, only: :bulk_update
     before_action :check_can_change_owner, only: :update
@@ -320,6 +321,18 @@ module Admin
 
     def load_groups
       @groups = EnterpriseGroup.managed_by(spree_current_user) | @enterprise.groups
+    end
+
+    # Only the selected options, the pickers search for others on demand.
+    def load_shopfront_order_options
+      @shopfront_category_options = Spree::Taxon
+        .where(id: @enterprise.preferred_shopfront_taxon_order.split(","))
+        .pluck(:name, :id)
+      @shopfront_producer_options = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .visible_enterprises
+        .is_primary_producer
+        .where(id: @enterprise.preferred_shopfront_producer_order.split(","))
+        .pluck(:name, :id)
     end
 
     def update_tag_rules(tag_rules_attributes)
