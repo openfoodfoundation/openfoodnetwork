@@ -5,7 +5,7 @@
 
 .shop-preferences{ data: { controller: "toggle-control" } }
   = render SettingsSectionComponent.new(id: "shop_preferences_shopfront", title: t('.sections.shopfront')) do
-    = render SettingsRowComponent.new(id: "shopfront_visibility", title: t('.shopfront_visibility.title'), description: translation_without_fallback('.shopfront_visibility.description')) do
+    = render SettingsRowComponent.new(id: "shopfront_visibility", title: t('.shopfront_visibility.title'), description: t_without_fallback('.shopfront_visibility.description')) do
       .settings-row-option
         = f.radio_button :require_login, false, data: toggle_action
         = f.label :require_login, t('.shopfront_visibility.public'), value: :false
@@ -13,16 +13,16 @@
         = f.radio_button :require_login, true, data: toggle_action
         = f.label :require_login, t('.shopfront_visibility.registered_only'), value: :true
 
-    = render SettingsRowComponent.new(id: "shopfront_message", title: t('.home_message.title'), description: translation_without_fallback('.home_message.description')) do
+    = render SettingsRowComponent.new(id: "shopfront_message", title: t('.home_message.title'), description: t_without_fallback('.home_message.description')) do
       = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message"
       %trix-editor{ input: "enterprise_preferred_shopfront_message", "data-controller": "trixeditor", placeholder: t('.home_message.placeholder'), "aria-labelledby": "shopfront_message_title" }
 
-    = render SettingsRowComponent.new(id: "shopfront_closed_message", title: t('.shopfront_closed_message.title'), description: translation_without_fallback('.shopfront_closed_message.description')) do
+    = render SettingsRowComponent.new(id: "shopfront_closed_message", title: t('.shopfront_closed_message.title'), description: t_without_fallback('.shopfront_closed_message.description')) do
       = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message"
       %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message.placeholder'), "aria-labelledby": "shopfront_closed_message_title" }
 
   = render SettingsSectionComponent.new(id: "shop_preferences_product_display", title: t('.sections.product_display')) do
-    = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: translation_without_fallback('.product_order.description'), class: "settings-row-with-preview") do
+    = render SettingsRowComponent.new(id: "product_order", title: t('.product_order.title'), description: t_without_fallback('.product_order.description'), class: "settings-row-with-preview") do
       - sorting_method = @enterprise.preferred_shopfront_product_sorting_method
       .settings-row-option
         = f.radio_button :preferred_shopfront_product_sorting_method, :by_category, data: picker_action
@@ -34,7 +34,7 @@
       = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_producer_order]", id: "enterprise_preferred_shopfront_producer_order", options: @shopfront_producer_options, remote_url: admin_ajax_search_visible_producers_url, value: @enterprise.preferred_shopfront_producer_order, placeholder: t('.product_order.producer_placeholder'), readonly: sorting_method != "by_producer", data: { "toggle-control-target": "control", "toggle-control-editable-if-checked": "#enterprise_preferred_shopfront_product_sorting_method_by_producer" })
       = image_pack_tag "product-order-preview.svg", alt: "", class: "settings-row-preview"
 
-    = render SettingsRowComponent.new(id: "low_stock_warning", title: t('.low_stock_warning.title'), description: translation_without_fallback('.low_stock_warning.description')) do
+    = render SettingsRowComponent.new(id: "low_stock_warning", title: t('.low_stock_warning.title'), description: t_without_fallback('.low_stock_warning.description')) do
       .settings-row-option
         = f.radio_button :preferred_product_low_stock_display, true
         = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
@@ -43,7 +43,7 @@
         = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
 
   = render SettingsSectionComponent.new(id: "shop_preferences_order_cycles", title: t('.sections.order_cycles')) do
-    = render SettingsRowComponent.new(id: "order_cycle_order", title: t('.order_cycle_order.title'), description: translation_without_fallback('.order_cycle_order.description')) do
+    = render SettingsRowComponent.new(id: "order_cycle_order", title: t('.order_cycle_order.title'), description: t_without_fallback('.order_cycle_order.description')) do
       .settings-row-option
         = f.radio_button :preferred_shopfront_order_cycle_order, :orders_open_at
         = f.label :preferred_shopfront_order_cycle_order, t('.order_cycle_order.open_date'), value: :orders_open_at
@@ -52,7 +52,7 @@
         = f.label :preferred_shopfront_order_cycle_order, t('.order_cycle_order.close_date'), value: :orders_close_at
 
   = render SettingsSectionComponent.new(id: "shop_preferences_orders", title: t('.sections.orders')) do
-    = render SettingsRowComponent.new(id: "guest_orders", title: t('.guest_orders.title'), description: translation_without_fallback('.guest_orders.description'), style: ("display: none" if @enterprise.require_login), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false" }) do
+    = render SettingsRowComponent.new(id: "guest_orders", title: t('.guest_orders.title'), description: t_without_fallback('.guest_orders.description'), style: ("display: none" if @enterprise.require_login), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false" }) do
       .settings-row-option
         = f.radio_button :allow_guest_orders, true, data: toggle_action
         = f.label :allow_guest_orders, t('.guest_orders.allow'), value: :true
@@ -60,7 +60,7 @@
         = f.radio_button :allow_guest_orders, false, data: toggle_action
         = f.label :allow_guest_orders, t('.guest_orders.require_login'), value: :false
 
-    = render SettingsRowComponent.new(id: "change_orders", title: t('.change_orders.title'), description: translation_without_fallback('.change_orders.description')) do
+    = render SettingsRowComponent.new(id: "change_orders", title: t('.change_orders.title'), description: t_without_fallback('.change_orders.description')) do
       .settings-row-option
         = f.radio_button :allow_order_changes, false, data: toggle_action
         = f.label :allow_order_changes, t('.change_orders.not_allowed'), value: :false
@@ -71,7 +71,7 @@
         %i.icon-warning-sign
         = t('.change_orders.require_login_warning')
 
-    = render SettingsRowComponent.new(id: "subscriptions", title: t('.subscriptions.title'), description: translation_without_fallback('.subscriptions.description')) do
+    = render SettingsRowComponent.new(id: "subscriptions", title: t('.subscriptions.title'), description: t_without_fallback('.subscriptions.description')) do
       .settings-row-option
         = f.radio_button :enable_subscriptions, true
         = f.label :enable_subscriptions, t('.enabled'), value: :true
@@ -80,7 +80,7 @@
         = f.label :enable_subscriptions, t('.disabled'), value: :false
 
   = render SettingsSectionComponent.new(id: "shop_preferences_supplier_access", title: t('.sections.supplier_access')) do
-    = render SettingsRowComponent.new(id: "customer_names_in_reports", title: t('.customer_names_in_reports.title'), description: translation_without_fallback('.customer_names_in_reports.description')) do
+    = render SettingsRowComponent.new(id: "customer_names_in_reports", title: t('.customer_names_in_reports.title'), description: t_without_fallback('.customer_names_in_reports.description')) do
       .settings-row-option
         = f.radio_button :show_customer_names_to_suppliers, true
         = f.label :show_customer_names_to_suppliers, t('.enabled'), value: :true
@@ -88,7 +88,7 @@
         = f.radio_button :show_customer_names_to_suppliers, false
         = f.label :show_customer_names_to_suppliers, t('.disabled'), value: :false
 
-    = render SettingsRowComponent.new(id: "customer_contacts_in_reports", title: t('.customer_contacts_in_reports.title'), description: translation_without_fallback('.customer_contacts_in_reports.description')) do
+    = render SettingsRowComponent.new(id: "customer_contacts_in_reports", title: t('.customer_contacts_in_reports.title'), description: t_without_fallback('.customer_contacts_in_reports.description')) do
       .settings-row-option
         = f.radio_button :show_customer_contacts_to_suppliers, true
         = f.label :show_customer_contacts_to_suppliers, t('.enabled'), value: :true
@@ -96,7 +96,7 @@
         = f.radio_button :show_customer_contacts_to_suppliers, false
         = f.label :show_customer_contacts_to_suppliers, t('.disabled'), value: :false
 
-    = render SettingsRowComponent.new(id: "producers_edit_orders", title: t('.producers_edit_orders.title'), description: translation_without_fallback('.producers_edit_orders.description')) do
+    = render SettingsRowComponent.new(id: "producers_edit_orders", title: t('.producers_edit_orders.title'), description: t_without_fallback('.producers_edit_orders.description')) do
       .settings-row-option
         = f.radio_button :enable_producers_to_edit_orders, true
         = f.label :enable_producers_to_edit_orders, t('.enabled'), value: :true
