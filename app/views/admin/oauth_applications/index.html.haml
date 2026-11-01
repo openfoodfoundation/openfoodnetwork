@@ -1,0 +1,26 @@
+= render "spree/admin/shared/configuration_menu"
+
+- content_for :page_title do
+  = t(".title")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t(".new"), main_app.new_admin_oauth_application_path, icon: "icon-plus"
+
+- if @applications.empty?
+  %p= t(".none")
+- else
+  %table.index
+    %thead
+      %tr
+        %th= t(".name")
+        %th= t(".redirect_uri")
+        %th.actions
+    %tbody
+      - @applications.each do |application|
+        %tr{ id: "oauth_application_#{application.id}" }
+          %td= application.name
+          %td= simple_format(application.redirect_uri)
+          %td.actions
+            = link_to_with_icon "icon-edit", t(:edit), main_app.edit_admin_oauth_application_path(application), no_text: true
+            = link_to_delete application, url: main_app.admin_oauth_application_path(application), no_text: true
