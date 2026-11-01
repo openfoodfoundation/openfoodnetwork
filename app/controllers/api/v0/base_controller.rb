@@ -15,6 +15,7 @@ module Api
       include ::ActionController::ConditionalGet
       include ActionView::Layouts
       include RequestTimeouts
+      include RecordApiUser
 
       layout false
 
@@ -22,6 +23,7 @@ module Api
 
       before_action :set_content_type
       before_action :authenticate_user
+      before_action :record_api_user
 
       rescue_from Exception, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
