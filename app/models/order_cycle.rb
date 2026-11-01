@@ -140,10 +140,6 @@ class OrderCycle < ApplicationRecord
     with_distributor(distributor).soonest_opening.first
   end
 
-  def self.first_closing_for(distributor)
-    with_distributor(distributor).soonest_closing.first
-  end
-
   def self.most_recently_closed_for(distributor)
     with_distributor(distributor).most_recently_closed.first
   end
@@ -220,10 +216,6 @@ class OrderCycle < ApplicationRecord
 
   def has_distributor?(distributor)
     distributors.include? distributor
-  end
-
-  def has_variant?(variant)
-    variants.include? variant
   end
 
   def dated?

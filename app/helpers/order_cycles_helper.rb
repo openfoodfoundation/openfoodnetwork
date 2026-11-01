@@ -11,29 +11,12 @@ module OrderCyclesHelper
     OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
   end
 
-  def permitted_producer_enterprises_for(order_cycle)
-    permitted_enterprises_for(order_cycle).is_primary_producer.by_name
-  end
-
-  def permitted_producer_enterprise_options_for(order_cycle)
-    validated_enterprise_options permitted_producer_enterprises_for(order_cycle)
-  end
-
   def permitted_coordinating_enterprises_for(_order_cycle)
     Enterprise.managed_by(spree_current_user).is_distributor.by_name
   end
 
   def permitted_coordinating_enterprise_options_for(order_cycle)
     validated_enterprise_options permitted_coordinating_enterprises_for(order_cycle)
-  end
-
-  def permitted_hub_enterprises_for(order_cycle)
-    permitted_enterprises_for(order_cycle).is_hub.by_name
-  end
-
-  def permitted_hub_enterprise_options_for(order_cycle)
-    validated_enterprise_options permitted_hub_enterprises_for(order_cycle),
-                                 shipping_and_payment_methods: true
   end
 
   def distributors_with_editable_shipping_and_payment_methods(order_cycle)

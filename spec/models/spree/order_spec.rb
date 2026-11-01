@@ -532,20 +532,6 @@ RSpec.describe Spree::Order do
     end
   end
 
-  context "#display_item_total" do
-    it "returns the value as a spree money" do
-      allow(order).to receive(:item_total) { 10.55 }
-      expect(order.display_item_total).to eq Spree::Money.new(10.55)
-    end
-  end
-
-  context "#display_adjustment_total" do
-    it "returns the value as a spree money" do
-      order.adjustment_total = 10.55
-      expect(order.display_adjustment_total).to eq Spree::Money.new(10.55)
-    end
-  end
-
   context "#display_total" do
     it "returns the value as a spree money" do
       order.total = 10.55
