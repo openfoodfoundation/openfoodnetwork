@@ -6245,7 +6245,7 @@ saxes@^6.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-schema-utils@^4.0.0, schema-utils@^4.2.0, schema-utils@^4.3.0, schema-utils@^4.3.3, schema-utils@^4.5.0, schema-utils@^4.6.0, schema-utils@^4.8.1:
+schema-utils@^4.0.0, schema-utils@^4.2.0, schema-utils@^4.3.0, schema-utils@^4.3.3, schema-utils@^4.6.0, schema-utils@^4.8.1:
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-4.8.1.tgz#d005632a0ca18522d903d82e1dcccbddcd57e7bb"
   integrity sha512-x39pYlJPyH7Uge5QO64B9XGP9zLDc9WNmiQZc+CE3IzZPvMu3lHOuAMGpYNoPixEL7MSWlGhYTg5UlLSL8G6iw==
@@ -7079,9 +7079,9 @@ webpack-sources@^3.3.3, webpack-sources@^3.6.0:
   integrity sha512-EIMmPVvNI0CYXyRPp34F2Qk7W37/BZVZIofS6LAUnrNjCVahS+hO4mxwFJDjQjODTGZDtVzLYoN2+1dYkhk9qA==
 
 webpack@*:
-  version "5.112.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.112.1.tgz#8838d62eef7a69e0e77617b22c6bf13ea58693ab"
-  integrity sha512-DsEgOfaY5XrvTTEU7QvktlOpYEipgNUyXQY4rQO4KtFmr71IwjMoRWyv9rJNo6qwqctRzh9sO9VIwMgnWmiBVg==
+  version "5.112.2"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.112.2.tgz#6548b28310dc57d971aadb31a582c8aadb9ec880"
+  integrity sha512-B2tp1LI9D8GVpPDqprdt12ukTkXXahj9MzqSWJq4faSPgOUM7CdZaGAB6HrL/8E6UwbBpdj4vzWDbKoFnVoU6g==
   dependencies:
     "@types/estree" "^1.0.8"
     "@types/json-schema" "^7.0.15"
