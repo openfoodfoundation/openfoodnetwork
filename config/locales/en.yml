@@ -436,8 +436,7 @@ en:
   backorder_mailer:
     backorder_failed:
       subject: "An automatic backorder failed"
-      headline: "Backordering failed"
-      description: |
+      intro: |
         We tried to place or update a backorder for out-of-stock items but
         something went wrong. You may have negative stock and need to resolve
         the issue to order more stock in.
@@ -451,7 +450,7 @@ en:
       product: "Product"
     backorder_incomplete:
       subject: "An automatic backorder failed to complete"
-      headline: "Your backorder is still a draft"
+      intro: "Your backorder is still a draft!"
       description: |
         We tried to complete a backorder for out-of-stock items but
         something went wrong. The backorder quantities may be too high if
