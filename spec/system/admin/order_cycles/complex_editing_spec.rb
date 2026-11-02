@@ -175,6 +175,41 @@ RSpec.describe '
     end
   end
 
+  context "as a producer editing an order cycle they don't coordinate" do
+    let(:user) { create(:user) }
+    let(:hub) { create(:distributor_enterprise, name: 'My hub', with_payment_and_shipping: true) }
+    let(:producer) { create(:supplier_enterprise, name: 'My farm') }
+    let!(:variant) { create(:variant, enterprise: producer) }
+    let!(:oc) {
+      create(:simple_order_cycle, coordinator: hub, suppliers: [producer], distributors: [hub])
+    }
+
+    before do
+      create(:enterprise_relationship, parent: producer, child: hub,
+                                       permissions_list: [:add_to_order_cycle])
+      user.enterprise_roles.create!(enterprise: producer)
+
+      login_as user
+    end
+
+    it "notifies the coordinator when the product selection changes" do
+      visit admin_order_cycle_incoming_path(oc)
+      select_incoming_variant(producer, variant)
+
+      perform_enqueued_jobs do
+        click_button 'Save'
+        expect(page).to have_content 'Your order cycle has been updated.'
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq [hub.contact.email]
+      expect(mail.subject).to eq "A producer has updated their product selection"
+      expect(mail.body).to have_content(
+        "My farm has updated their product selection for the current order cycle."
+      )
+    end
+  end
+
   private
 
   def wait_for_edit_form_to_load_order_cycle(order_cycle)
