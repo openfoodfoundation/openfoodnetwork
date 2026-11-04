@@ -208,6 +208,39 @@ RSpec.describe '
         "My farm has updated their product selection for the current order cycle."
       )
     end
+
+    context "with several distributors" do
+      let(:other_hub) {
+        create(:distributor_enterprise, name: 'Other hub', with_payment_and_shipping: true)
+      }
+      let!(:oc) {
+        create(:simple_order_cycle, coordinator: hub, suppliers: [producer],
+                                    distributors: [hub, other_hub])
+      }
+
+      before do
+        # The hubs also grant the producer permission, so the producer can edit outgoing
+        create(:enterprise_relationship, parent: producer, child: other_hub,
+                                         permissions_list: [:add_to_order_cycle])
+        [hub, other_hub].each do |distributor|
+          create(:enterprise_relationship, parent: distributor, child: producer,
+                                           permissions_list: [:add_to_order_cycle])
+        end
+      end
+
+      it "selects newly added incoming variants in every outgoing exchange" do
+        visit admin_order_cycle_incoming_path(oc)
+        select_incoming_variant(producer, variant)
+
+        click_button 'Save and Next'
+        expect(page).to have_content 'Your order cycle has been updated.'
+
+        open_outgoing_products(hub)
+        open_outgoing_products(other_hub)
+        expect(page).to have_checked_field outgoing_variant_field(variant, 0)
+        expect(page).to have_checked_field outgoing_variant_field(variant, 1)
+      end
+    end
   end
 
   private
@@ -228,7 +261,7 @@ RSpec.describe '
     expect(page).to have_selector ".exchange-products"
   end
 
-  def outgoing_variant_field(variant)
-    "order_cycle_outgoing_exchange_0_variants_#{variant.id}"
+  def outgoing_variant_field(variant, exchange_index = 0)
+    "order_cycle_outgoing_exchange_#{exchange_index}_variants_#{variant.id}"
   end
 end
