@@ -339,21 +339,34 @@ RSpec.describe Spree::Order do
   end
 
   describe "#capturable_pending_payments" do
-    let(:credit_payment) { double("credit payment", requires_authorization?: false) }
-    let(:check_payment) { double("check payment", requires_authorization?: false) }
-    let(:authorized_payment) { double("authorized payment", requires_authorization?: true) }
+    let(:order) { create(:order_with_totals) }
 
-    before do
-      allow(credit_payment).to receive(:payment_method).
-        and_return(Spree::PaymentMethod::CustomerCredit.new)
-      allow(check_payment).to receive(:payment_method).
-        and_return(Spree::PaymentMethod::Check.new)
-      allow(order).to receive(:pending_payments).
-        and_return([credit_payment, check_payment, authorized_payment])
+    # The credit payment must be created first: creating it invalidates other
+    # incomplete non-credit payments.
+    let!(:credit_payment) do
+      create(:payment, order:, amount: 5, source: nil,
+                       payment_method: Spree::PaymentMethod.customer_credit)
+    end
+    let!(:check_payment) do
+      create(:payment, order:, amount: 5, source: nil, payment_method: create(:payment_method))
     end
 
-    it "returns only pending payments that a payment method can capture" do
-      expect(order.capturable_pending_payments).to eq [check_payment]
+    it "returns pending payments, excluding Customer Credit" do
+      expect(order.reload.capturable_pending_payments).to eq [check_payment]
+    end
+
+    it "excludes payments whose payment method can't capture, such as Taler" do
+      taler = Spree::PaymentMethod::Taler.new(name: "Taler", environment: "test")
+      taler.save!(validate: false)
+      check_payment.update_columns(payment_method_id: taler.id)
+
+      expect(order.reload.capturable_pending_payments).to be_empty
+    end
+
+    it "excludes payments requiring authorization" do
+      check_payment.update_columns(state: "requires_authorization")
+
+      expect(order.reload.capturable_pending_payments).to be_empty
     end
   end
 

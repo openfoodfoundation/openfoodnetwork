@@ -16,8 +16,7 @@ class SearchOrders
 
   def fetch_orders
     search = search_query.
-      includes(:subscription, :shipments, :bill_address, :distributor, :order_cycle,
-               payments: :payment_method).
+      includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
       ransack(params[:q]).
       result(distinct: true)
 

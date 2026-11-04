@@ -201,7 +201,7 @@ module Spree
 
       def capture_failure_message(payment_capture)
         return payment_capture.gateway_error if payment_capture.gateway_error
-        return t("admin.orders.nothing_to_capture") if payment_capture.error == :nothing_to_capture
+        return t("admin.orders.#{payment_capture.error}") if payment_capture.error.present?
 
         t(:payment_processing_failed)
       end

@@ -437,14 +437,12 @@ module Spree
         payments.select(&:checkout?)).uniq
     end
 
-    # Pending payments that a payment method can actually capture.
-    # Mirrors the admin capture button's eligibility and
-    # Payment::Processing#capture! dispatch, which requires the payment method
-    # to respond to :capture (e.g. Customer Credit payments cannot be captured).
+    # Pending payments that can be captured. Customer Credit payments are
+    # excluded: they are redeemed when the order is processed, not captured.
+    # Payment methods without a `capture` method (e.g. Taler) can't be captured either.
     def capturable_pending_payments
-      pending_payments.reject(&:requires_authorization?).select do |payment|
-        payment.payment_method.respond_to?(:capture)
-      end
+      (pending_payments & payments.not_customer_credit).reject(&:requires_authorization?).
+        select { |payment| payment.payment_method.respond_to?(:capture) }
     end
 
     # processes any pending payments and must return a boolean as it's
