@@ -158,7 +158,7 @@ RSpec.describe Customer do
 
     it { expect(customer.guest?).to be(true) }
 
-    context "wiht an associated user" do
+    context "with an associated user" do
       subject(:customer) { create(:customer) }
 
       it { expect(customer.guest?).to be(false) }
