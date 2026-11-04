@@ -218,6 +218,34 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       end
     end
 
+    context "with customer credit" do
+      it "doesn't use credit to pay the order" do
+        # Update order total, so we can calculate credit to apply
+        order.update(total: 10.00)
+
+        guest_customer = create(:customer, enterprise: order.distributor, user: nil)
+        # Add credit to the customer
+        create(:customer_account_transaction, amount: 100, customer: guest_customer )
+
+        click_on "Checkout as guest"
+        fill_in "Email", with: guest_customer.email
+        fill_in "First Name", with: "Jane"
+        fill_in "Last Name", with: "Doe"
+        fill_in "Phone number", with: "07987654321"
+        fill_in "Address (Street + House Number)", with: "Flat 1 Elm apartments"
+        fill_in "City", with: "London"
+        fill_in "Postcode", with: "SW1A 1AA"
+        choose free_shipping.name
+
+        click_button "Next - Payment method"
+
+        expect(page).not_to have_content "Credit used: $10.00"
+        expect(
+          order.payments.where(payment_method: Spree::PaymentMethod.customer_credit)
+        ).to be_empty
+      end
+    end
+
     context "on the 'payment' step" do
       before do
         order.update(state: "payment")
