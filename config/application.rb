@@ -52,11 +52,6 @@ module Openfoodnetwork
                                                           ActiveSupport::TimeZone]
     config.active_support.cache_format_version = 7.1
 
-    # this used to migrate cookie from :mashal serializer to :json serializer,
-    # default in rails 7 is :json
-    # TODO to remove once we are sure all cookies have been migrated
-    config.action_dispatch.cookies_serializer = :hybrid
-
     config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA256
     # This allows rails to decrypt data previously encrypted with SHA-1, new default encryption
     # for rails 7.1 is SHA-256
