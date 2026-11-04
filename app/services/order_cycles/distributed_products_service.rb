@@ -16,19 +16,28 @@ module OrderCycles
       relation_by_sorting.order(Arel.sql(order))
     end
 
-    def products_relation_incl_enterprise_properties
-      query = relation_by_sorting
-
-      query = supplier_property_join(query)
-
-      query.order(Arel.sql(order))
-    end
-
     def variants_relation
       order_cycle.
         variants_distributed_by(distributor).
         merge(variants).
         select("DISTINCT spree_variants.*")
+    end
+
+    # Properties set on the distributed products, plus properties of their producers when the
+    # product inherits_properties. This matches what Spree::Product.with_properties filters on.
+    def properties_relation
+      product_property_ids = Spree::ProductProperty.
+        where(product_id: stocked_products).
+        select(:property_id)
+
+      producer_ids = variants_relation.
+        joins(:product).
+        where(spree_products: { inherits_properties: true }).
+        reselect(:enterprise_id)
+      producer_property_ids = ProducerProperty.where(producer_id: producer_ids).select(:property_id)
+
+      Spree::Property.where(id: product_property_ids).
+        or(Spree::Property.where(id: producer_property_ids))
     end
 
     private
@@ -81,13 +90,6 @@ module OrderCycles
     def sorting_by_category?
       sorting == "by_category" &&
         distributor.preferred_shopfront_taxon_order.present?
-    end
-
-    def supplier_property_join(query)
-      query.joins("
-        JOIN enterprises ON enterprises.id = first_variant.enterprise_id
-        LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
-      ")
     end
 
     def order

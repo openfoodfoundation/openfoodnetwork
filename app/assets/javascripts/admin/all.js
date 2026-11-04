@@ -55,7 +55,6 @@
 //= require ./side_menu/side_menu
 //= require ./subscriptions/subscriptions
 //= require ./tag_rules/tag_rules
-//= require ./taxons/taxons
 //= require ./utils/utils
 //= require ./users/users
 //= require ./variant_overrides/variant_overrides

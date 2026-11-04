@@ -18,7 +18,6 @@ module Admin
     before_action :require_enterprise, only: [:edit, :update]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
-    before_action :load_taxons, only: [:new, :edit, :update, :create]
     before_action :check_can_change_sells, only: :update
     before_action :check_can_change_bulk_sells, only: :bulk_update
     before_action :check_can_change_owner, only: :update
@@ -312,10 +311,6 @@ module Admin
 
     def load_groups
       @groups = EnterpriseGroup.managed_by(spree_current_user) | @enterprise.groups
-    end
-
-    def load_taxons
-      @taxons = Spree::Taxon.order(:name)
     end
 
     def update_tag_rules(tag_rules_attributes)
