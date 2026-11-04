@@ -66,4 +66,20 @@ RSpec.describe Spree::ShipmentMailer do
   it "shipment_email has as the reply to email as the distributor" do
     expect(shipment_email.reply_to).to eq([distributor.contact.email])
   end
+
+  context "with a persisted order and shipment" do
+    let(:order) { create(:order_with_distributor) }
+    let(:product) { create(:product, name: "Apple") }
+    let(:variant) { create(:variant, product:) }
+    let!(:line_item) { create(:line_item, order:, variant:, quantity: 1, price: 5) }
+    let(:shipment) { create(:shipment, order:) }
+    let(:shipment_email) { described_class.shipped_email(shipment, delivery: true) }
+
+    it "shows the snapshotted product name after the product is renamed" do
+      product.update!(name: "Zebra")
+
+      expect(shipment_email.body).to include line_item.product_name
+      expect(shipment_email.body).not_to include("Zebra")
+    end
+  end
 end

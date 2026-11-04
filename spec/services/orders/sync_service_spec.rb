@@ -458,6 +458,29 @@ RSpec.describe Orders::SyncService do
       end
     end
 
+    context "when the product is renamed after the order was initialised" do
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
+      let(:syncer) { Orders::SyncService.new(subscription) }
+
+      before do
+        expect(order.reload.total.to_f).to eq 59.97
+        subscription.assign_attributes(params)
+      end
+
+      it "uses the snapshotted product name in the issue description" do
+        Orders::WorkflowService.new(order).complete
+        variant.product.update!(name: "Zebra")
+
+        expect(syncer.sync!).to be true
+
+        line_item = order.line_items.find_by(variant_id: sli.variant_id)
+        expect(syncer.order_update_issues[order.id])
+          .to include "#{line_item.product_name} - #{line_item.full_variant_name} - " \
+                      "Insufficient stock available"
+        expect(syncer.order_update_issues[order.id]).not_to include "Zebra"
+      end
+    end
+
     context "where the quantity of the item on an initialised order has already been changed" do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { Orders::SyncService.new(subscription) }

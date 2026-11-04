@@ -6,8 +6,15 @@ module Api
       attributes :id, :full_name, :unit_value, :variant_unit, :variant_unit_scale
 
       def full_name
-        full_name = object.full_name
-        object.product.name + (full_name.blank? ? "" : ": #{full_name}")
+        product_name = line_item&.full_product_name || object.product.name
+        variant_name = line_item&.full_variant_name || object.full_name
+        product_name + (variant_name.blank? ? "" : ": #{variant_name}")
+      end
+
+      private
+
+      def line_item
+        options[:line_item]
       end
     end
   end

@@ -315,7 +315,7 @@ RSpec.describe '
             convert_pdf_to_page
           end
 
-          it 'should have correct display as value' do
+          it 'keeps the unit snapshotted when the order was placed' do
             # first line item
             expect(page).to have_content Spree::Product.first.name.to_s
             expect(page).to have_content "(1 bucket)" # display as
@@ -581,6 +581,20 @@ RSpec.describe '
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
           expect(page).to have_content "Total (Excl. tax): $1,458.67"
+        end
+
+        it "displays the snapshotted product name when the product is renamed" do
+          original_name = product1.name
+          product1.update!(name: "Renamed Product")
+          order1.invoices.create!
+
+          visit print_admin_order_path(
+            order1, params: { invoice_id: order1.invoices.reload.last.id }
+          )
+          convert_pdf_to_page
+
+          expect(page).to have_content original_name
+          expect(page).not_to have_content "Renamed Product"
         end
       end
 

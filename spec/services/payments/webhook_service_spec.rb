@@ -32,8 +32,8 @@ RSpec.describe Payments::WebhookService do
             quantity: li.quantity,
             price: li.price,
             tax_category_name: li.tax_category&.name,
-            product_name: li.product.name,
-            name_to_display: li.display_name,
+            product_name: li.full_product_name,
+            name_to_display: li.name_to_display,
             unit_to_display: li.unit_presentation
           }
         end
