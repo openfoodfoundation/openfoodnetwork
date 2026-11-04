@@ -74,9 +74,9 @@ module Orders
     end
 
     def credit_available?
-      return false if order.customer.guest?
-
       return false if order.customer.nil?
+
+      return false if order.customer.guest?
 
       available_credit > 0
     end
