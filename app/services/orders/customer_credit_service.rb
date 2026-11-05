@@ -45,7 +45,7 @@ module Orders
     end
 
     def process_pending_payments!
-      order.payments.customer_credit.incomplete.each(&:internal_purchase!)
+      order.payments.customer_credit.incomplete.lock.each(&:internal_purchase!)
     end
 
     private

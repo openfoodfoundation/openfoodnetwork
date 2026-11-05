@@ -963,6 +963,7 @@ RSpec.describe Spree::Payment do
         payment = create(:payment, :completed)
         payment.order = order
         payment.payment_method = payment_method
+        payment.save!
         payment
       end
 
