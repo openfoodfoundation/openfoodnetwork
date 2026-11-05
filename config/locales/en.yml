@@ -4340,6 +4340,7 @@ en:
     capture: "Capture"
     capture_and_complete_order: "Capture and complete order"
     void: "Void"
+    internal_void: "Void"
     login: "Login"
     password: "Password"
     signature: "Signature"
@@ -5307,6 +5308,7 @@ en:
     errors:
       customer_not_found: Customer not found 
       missing_payment: Missing payment
+      missing_payment_state: Missing payment state
       credit_payment_method_missing: Credit payment method is missing
       no_credit_available: No credit available
       not_enough_credit_available: Not enough credit available 

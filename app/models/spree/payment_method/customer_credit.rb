@@ -16,10 +16,8 @@ module Spree
         %w{internal_void}
       end
 
-      # We should only void complete payment, otherwise we will be refunding credit that was
-      # not used in the first place.
       def can_internal_void?(payment)
-        payment.state == "completed"
+        payment.pending? || payment.completed? || payment.checkout?
       end
 
       # Main method called by Spree::Payment::Processing during checkout
@@ -59,7 +57,7 @@ module Spree
       # Main method called by Spree::Payment::Processing for void
       # - amount is in cents
       # - options: {
-      #     customer_id:, payment_id:, order_number:, user_id: (optional)
+      #     customer_id:, payment_id:, payment_state:, order_number:, user_id: (optional)
       #   }
       def void(amount, _source, options)
         calculated_amount = amount / 100.00
@@ -67,6 +65,11 @@ module Spree
         customer = Customer.find_by(id: options[:customer_id])
         return error_response("customer_not_found") if customer.nil?
         return error_response("missing_payment") if options[:payment_id].nil?
+        return error_response("missing_payment_state") if options[:payment_state].nil?
+
+        # we don't give credit back to customer if payment is not completed,
+        # ie the credit has not actually left the customer account
+        return success_response unless options[:payment_state] == "completed"
 
         customer.with_lock do
           description = I18n.t(
@@ -83,8 +86,7 @@ module Spree
           )
         end
 
-        message = I18n.t("void_success", scope: "credit_payment_method")
-        ActiveMerchant::Billing::Response.new(true, message)
+        success_response
       end
 
       def method_type
@@ -104,6 +106,11 @@ module Spree
 
       def currency
         CurrentConfig.get(:currency)
+      end
+
+      def success_response
+        message = I18n.t("void_success", scope: "credit_payment_method")
+        ActiveMerchant::Billing::Response.new(true, message)
       end
     end
   end
