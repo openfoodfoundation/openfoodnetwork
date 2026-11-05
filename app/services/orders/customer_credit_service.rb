@@ -44,6 +44,10 @@ module Orders
       Response.new(success: false, message: e.to_s)
     end
 
+    def process_pending_payments!
+      order.payments.customer_credit.incomplete.each(&:internal_purchase!)
+    end
+
     private
 
     attr_reader :order
