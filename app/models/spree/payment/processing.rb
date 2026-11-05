@@ -22,9 +22,11 @@ module Spree
         end
       end
 
-      def internal_purchase!
+      # user_id: the user who made the payment on behalf of the customer, if any
+      def internal_purchase!(user_id: nil)
         started_processing!
-        options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
+        options = { customer_id: order.customer_id, payment_id: id, order_number: order.number,
+                    user_id: }.compact
         response = payment_method.purchase(
           (amount * 100).round,
           nil,
