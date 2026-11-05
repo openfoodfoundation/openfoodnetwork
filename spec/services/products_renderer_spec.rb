@@ -497,7 +497,6 @@ RSpec.describe ProductsRenderer do
     let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
     let(:aromatic)    { Spree::Property.create!(name: "aromatic", presentation: "aromatic") }
     let(:bountiful)   { Spree::Property.create!(name: "bountiful", presentation: "bountiful") }
-    let(:shared)      { Spree::Property.create!(name: "shared", presentation: "shared") }
     let(:organic)     { Spree::Property.create!(name: "organic", presentation: "organic") }
     let(:biodynamic)  { Spree::Property.create!(name: "biodynamic", presentation: "biodynamic") }
     let(:unrelated)   { Spree::Property.create!(name: "unrelated", presentation: "unrelated") }
