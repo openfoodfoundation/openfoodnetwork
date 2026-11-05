@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["loading", "products"];
+  static targets = ["products"];
 
   updateProducts(ev) {
     const orderCycleId = ev.detail.orderCycleId;

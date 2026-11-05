@@ -2,8 +2,11 @@
   - if @pagy.last > 1
     .pagination-info= t("products_pagination.info_tag",from: @pagy.from, to: @pagy.to, count: @pagy.count)
 
-  .loading{ style: "display: none;", "data-product-grid-view-target": "loading" }
+  .loading
     = render partial: "shop/products/product_spinner"
+
+  - if feature?(:product_grid_view_navigation, spree_current_user) && @properties.any?
+    = render Shop::FiltersComponent.new(properties: @properties, url: order_cycle_products_path(@order_cycle), q: @q)
 
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
