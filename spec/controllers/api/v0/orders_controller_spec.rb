@@ -357,6 +357,32 @@ RSpec.describe Api::V0::OrdersController do
             .to eq 'Payment could not be processed, please check the details you entered'
         end
       end
+
+      context "when the order also has a customer credit payment" do
+        before do
+          order.payments.destroy_all
+          create(
+            :payment,
+            order:,
+            amount: order.total / 2.0,
+            payment_method: Spree::PaymentMethod.customer_credit,
+            source: nil
+          )
+          create(:check_payment, order:, amount: order.total / 2.0)
+        end
+
+        it "captures the check payment and returns an updated order object" do
+          put :capture, params: { id: order.number }
+
+          expect(response).to have_http_status :ok
+          credit_payment = order.reload.payments.find_by(
+            payment_method: Spree::PaymentMethod.customer_credit
+          )
+          expect(credit_payment.state).to eq "checkout"
+          expect(order.payment_state).to eq "paid"
+          expect_order
+        end
+      end
     end
 
     describe "#ship" do
