@@ -250,7 +250,7 @@ module Spree
         :create_linked_variant
       ], :products_v3
 
-      can [:admin, :producers, :categories, :tax_categories], :ajax_search
+      can [:admin, :producers, :visible_producers, :categories, :tax_categories], :ajax_search
 
       can [:create], Spree::Variant
       can [:admin, :index, :read, :edit,

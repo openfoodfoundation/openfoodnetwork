@@ -7,7 +7,6 @@ angular.module("ofn.admin", [
   "admin.indexUtils",
   "admin.dropdown",
   "admin.products",
-  "admin.taxons",
   "infinite-scroll",
   "admin.orders"
 ]).config ($httpProvider, $locationProvider, $qProvider) ->

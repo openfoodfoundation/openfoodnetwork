@@ -1,0 +1,24 @@
+.ordering-picker {
+  .ts-wrapper.multi .ts-control > .item {
+    cursor: grab;
+  }
+
+  .ts-dragging {
+    opacity: 0.5;
+  }
+
+  .tomselect-checkbox {
+    margin: 0 $padding-small 0 0;
+  }
+
+  // The picker of a sorting method that isn't selected
+  .ts-wrapper.locked .ts-control {
+    background-color: $light-grey;
+    cursor: default;
+
+    > .item {
+      cursor: default;
+      background-color: $medium-grey;
+    }
+  }
+}

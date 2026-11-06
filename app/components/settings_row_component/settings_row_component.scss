@@ -1,0 +1,83 @@
+.settings-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem $layout-gap-min;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid $color-border;
+
+  @media all and (min-width: $tablet_breakpoint) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 5fr);
+  }
+}
+
+.settings-row-title {
+  display: block;
+  font-weight: $font-weight-bold;
+  color: $color-headers;
+}
+
+.settings-row-description {
+  margin: 0.25rem 0 0;
+  font-size: $body-font-size;
+  line-height: 1.4;
+  color: $color-body-text;
+}
+
+.settings-row-controls {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-small;
+  min-width: 0;
+}
+
+.settings-row-option {
+  display: flex;
+  align-items: center;
+  gap: $padding-small;
+
+  input[type="radio"] {
+    margin: 0;
+  }
+
+  label {
+    margin: 0;
+    font-size: $body-font-size;
+    font-weight: $font-weight-normal;
+    color: $color-body-text;
+  }
+}
+
+.settings-row-warning {
+  padding: $padding-small 0.75rem;
+  border-radius: $border-radius;
+  background-color: $fair-pink;
+  color: $color-warning;
+
+  i {
+    margin-right: $padding-small;
+  }
+}
+
+// Controls with a preview image on the side, hidden on small screens
+.settings-row-with-preview .settings-row-controls {
+  .settings-row-preview {
+    display: none;
+  }
+
+  @media all and (min-width: $tablet_breakpoint) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: $padding-small 1.5rem;
+    align-content: start;
+
+    > * {
+      grid-column: 1;
+    }
+
+    .settings-row-preview {
+      display: block;
+      grid-column: 2;
+      grid-row: 1 / span 4;
+    }
+  }
+}
