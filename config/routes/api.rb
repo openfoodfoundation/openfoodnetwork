@@ -61,7 +61,6 @@ Openfoodnetwork::Application.routes.draw do
         get :products, on: :member
         get :taxons, on: :member
         get :properties, on: :member
-        get :producer_properties, on: :member
       end
 
       resources :exchanges, only: [:show], to: 'exchange_products#index' do
