@@ -849,6 +849,13 @@ fr:
         credit_owed: "Avoir"
         balance_due: "Solde dû"
         id: Id
+        customer_type: "Catégorie"
+        individual: "Personne"
+        enterprise: "Entreprise"
+        enterprise_name: "Nom de l'entreprise :"
+        enterprise_acn: "SIREN"
+        enterprise_abn: "SIRET"
+        enterprise_charges_sales_tax: "TVA ?"
       destroy:
         has_associated_subscriptions: "La suppression a échoué : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
         has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."

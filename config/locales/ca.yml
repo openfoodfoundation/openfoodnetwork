@@ -658,6 +658,8 @@ ca:
         guest_label: "Fer comanda com a convidat"
         credit_owed: "Crèdit a deure"
         balance_due: "A pagar"
+        customer_type: "Tipus"
+        enterprise: "Organització"
       destroy:
         has_associated_subscriptions: "No es pot esborrar: aquest client té subscripcions actives. Cancel·leu-les primer."
     customer_account_transaction:

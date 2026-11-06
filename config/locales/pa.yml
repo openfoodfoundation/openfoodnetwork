@@ -662,6 +662,8 @@ pa:
         guest_label: "ਗੈਸਟ ਚੈਕਆਉਟ"
         credit_owed: "ਬਕਾਇਆ ਕਰਜ਼ਾ"
         balance_due: "ਬਕਾਇਆ ਰਕਮ"
+        customer_type: "ਕਿਸਮ"
+        enterprise: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
       destroy:
         has_associated_subscriptions: "ਹਟਾਉਣਾ ਅਸਫਲ ਰਿਹਾ: ਇਸ ਗਾਹਕ ਕੋਲ ਕਿਰਿਆਸ਼ੀਲ ਗਾਹਕੀਆਂ ਹਨ। ਪਹਿਲਾਂ ਉਹਨਾਂ ਨੂੰ ਰੱਦ ਕਰੋ।"
     customer_account_transaction:

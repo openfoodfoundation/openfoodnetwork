@@ -743,6 +743,13 @@ hu:
         guest_label: "Vendég kijelentkezés"
         credit_owed: "Hiteltartozás"
         balance_due: "Fennálló tartozás"
+        customer_type: "Típusa"
+        individual: "Magánszemély"
+        enterprise: "Vállalkozás"
+        enterprise_name: "Vállalkozás neve"
+        enterprise_acn: "ACN-szám"
+        enterprise_abn: "ABN-szám"
+        enterprise_charges_sales_tax: "Adó?"
       destroy:
         has_associated_subscriptions: "A törlés sikertelen. A felhasználónak aktív előjegyzései vannak. Törölje őket előbb."
     customer_account_transaction:

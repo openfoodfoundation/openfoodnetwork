@@ -824,6 +824,8 @@ sv:
         credit_owed: "Kredit skyldig"
         balance_due: "Förfallna saldo"
         id: ID
+        customer_type: "Typ"
+        enterprise: "Företag"
       destroy:
         has_associated_subscriptions: "Det gick inte att ta bort: Den här kunden har aktiva prenumerationer. Avbryt dem först."
         has_outstanding_credit: "Raderingen misslyckades: Den här kunden har ett utestående saldo. Vänligen återbetala innan du tar bort."

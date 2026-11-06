@@ -692,6 +692,8 @@ el:
         guest_label: "Ολοκλήρωση παραγγελίας επισκέπτη"
         credit_owed: "Χρωστούμενη Πίστωση"
         balance_due: "Οφειλόμενο υπόλοιπο"
+        customer_type: "Τύπος"
+        enterprise: "Επιχείρηση"
       destroy:
         has_associated_subscriptions: "Η διαγραφή απέτυχε: Αυτός ο πελάτης έχει ενεργές συνδρομές. Ακυρώστε τις πρώτα."
     customer_account_transaction:

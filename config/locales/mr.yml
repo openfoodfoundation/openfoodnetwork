@@ -662,6 +662,7 @@ mr:
         guest_label: "गेस्ट चेकआउट"
         credit_owed: "थकीत कर्ज "
         balance_due: "शिल्लक देय"
+        enterprise: "एंटरप्राइझ"
       destroy:
         has_associated_subscriptions: "हटवणे अयशस्वी: या ग्राहकाकडे सक्रिय सबस्क्रिप्शन्स आहेत. त्यांना आधी रद्द करा."
     customer_account_transaction:

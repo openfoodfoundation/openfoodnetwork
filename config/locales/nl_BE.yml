@@ -468,6 +468,8 @@ nl_BE:
         search_by_email: "Zoeken per e-mail/code..."
         guest_label: "Gasten afrekenen"
         credit_owed: "Krediet tegoed"
+        customer_type: "Type"
+        enterprise: "Onderneming"
     customer_account_transaction:
       index:
         description: Beschrijving

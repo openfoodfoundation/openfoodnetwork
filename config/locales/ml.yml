@@ -673,6 +673,8 @@ ml:
         guest_label: "ഗസ്റ്റ് ചെക്ക്ഔട്ട്"
         credit_owed: "കടപ്പെട്ടിരിക്കുന്നു"
         balance_due: "മിച്ച കടം"
+        customer_type: "ഇനം"
+        enterprise: "എന്റർപ്രൈസ്"
       destroy:
         has_associated_subscriptions: "ഡിലീറ്റ് പരാജയപ്പെട്ടു: ഈ ഉപഭോക്താവിന് സജീവമായ സബ്‌സ്‌ക്രിപ്‌ഷനുകളുണ്ട്. ആദ്യം അവ റദ്ദാക്കുക."
     customer_account_transaction:

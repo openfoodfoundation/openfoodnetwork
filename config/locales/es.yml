@@ -780,6 +780,8 @@ es:
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
         id: Id
+        customer_type: "Tipo"
+        enterprise: "Organización"
       destroy:
         has_associated_subscriptions: "Eliminación fallida: este consumidor tiene suscripciones activas. Cancélelas primero."
     customer_account_transaction:

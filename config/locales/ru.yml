@@ -681,6 +681,8 @@ ru:
         guest_label: "Оформить как Гость"
         credit_owed: "Кредит"
         balance_due: "Задолжность"
+        customer_type: "Тип"
+        enterprise: "Предприятие"
       destroy:
         has_associated_subscriptions: "Не удалось удалить: у этого клиента есть активные подписки. Сначала отмените их."
     customer_account_transaction:

@@ -850,6 +850,13 @@ fr_BE:
         credit_owed: "Crédit redevable"
         balance_due: "Solde dû"
         id: Id
+        customer_type: "Catégorie"
+        individual: "Personne"
+        enterprise: "Entreprise"
+        enterprise_name: "Nom de l'entreprise :"
+        enterprise_acn: "SIREN"
+        enterprise_abn: "SIRET"
+        enterprise_charges_sales_tax: "TVA ?"
       destroy:
         has_associated_subscriptions: "Échec de la suppression : ce client a des abonnements actifs. Annulez-les d'abord."
         has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."
@@ -895,6 +902,16 @@ fr_BE:
       index:
         title: "Catalogue produit DFC"
         catalog_url: "%{count}produits à importer de :  %{catalog_url}"
+        absent_products:
+          one: |
+              Un produit ne figure plus au catalogue.
+              Il sera indiqué comme indisponible en réinitialisant le stock à zéro.
+          many: |
+              Les produits %{count} ne figurent plus au catalogue.
+              Ils seront marqués comme indisponibles en réinitialisant le stock à zéro.
+          other: |
+              Les produits %{count} ne figurent plus au catalogue.
+              Ils seront marqués comme indisponibles en réinitialisant le stock à zéro.
         enterprise: "Importation vers l'entreprise : %{enterprise_name}"
         select_all: "Sélectionner / désélectionner tout"
         update: Mettre à jour

@@ -670,6 +670,8 @@ hi:
         guest_label: "गेस्ट चेकआउट"
         credit_owed: "क्रेडिट बकाया"
         balance_due: "बैलेंस बकाया"
+        customer_type: "टाइप करें"
+        enterprise: "एंटरप्राइज़"
       destroy:
         has_associated_subscriptions: "हटाने में विफल: इस ग्राहक के पास सक्रिय सब्सक्रिप्शन हैं। पहले उन्हें रद्द करें।"
     customer_account_transaction:

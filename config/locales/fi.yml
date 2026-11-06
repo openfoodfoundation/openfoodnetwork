@@ -817,6 +817,8 @@ fi:
         guest_label: "Vierailijan kassa"
         credit_owed: "Luottoa"
         balance_due: "Erääntynyt saldo"
+        customer_type: "Tyyppi"
+        enterprise: "Yritys"
       destroy:
         has_associated_subscriptions: "Poisto epäonnistui: Tällä asiakkaalla on aktiivisia tilauksia. Peruuta ne ensin."
     customer_account_transaction:

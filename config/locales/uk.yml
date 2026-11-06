@@ -602,6 +602,8 @@ uk:
         guest_label: "Реєстрація гостя"
         credit_owed: "Кредитна заборгованість"
         balance_due: "Баланс через"
+        customer_type: "Тип"
+        enterprise: "Підприємство"
     customer_account_transaction:
       index:
         description: Опис

@@ -455,6 +455,8 @@ fil_PH:
         confirm_delete: "siguradong tatanggalin na?"
         search_by_email: "hanapin gamit ang email/code..."
         guest_label: "Guest checkout"
+        customer_type: "uri"
+        enterprise: "Enterprise"
     customer_account_transaction:
       index:
         description: paglalarawan

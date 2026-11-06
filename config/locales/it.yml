@@ -633,6 +633,8 @@ it:
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
         balance_due: "Da pagare"
+        customer_type: "Tipo"
+        enterprise: "Azienda"
       destroy:
         has_associated_subscriptions: "Cancellazione fallita: questo cliente ha abbonamenti attivi. Eliminali prima."
     customer_account_transaction:

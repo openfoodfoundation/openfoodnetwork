@@ -597,6 +597,8 @@ ko:
         guest_label: "게스트 체크아웃"
         credit_owed: "외상값"
         balance_due: "잔액 만기"
+        customer_type: "타입"
+        enterprise: "회사"
     customer_account_transaction:
       index:
         description: 설명

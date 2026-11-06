@@ -635,6 +635,8 @@ en_US:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        customer_type: "Type"
+        enterprise: "Enterprise"
     customer_account_transaction:
       index:
         description: Description

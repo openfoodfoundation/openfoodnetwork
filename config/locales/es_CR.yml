@@ -594,6 +594,8 @@ es_CR:
         guest_label: "Retirar como invitado"
         credit_owed: "Crédito adeudado"
         balance_due: "Saldo adeudado"
+        customer_type: "Tipo"
+        enterprise: "Organización"
       destroy:
         has_associated_subscriptions: "Error al eliminar: este cliente tiene suscripciones activas. Cancelarlos primero."
     customer_account_transaction:

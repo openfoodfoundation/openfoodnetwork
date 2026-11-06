@@ -754,6 +754,8 @@ nb:
         guest_label: "Gjesteutsjekk"
         credit_owed: "Kreditt skyldig"
         balance_due: "Til Forfall"
+        customer_type: "Type"
+        enterprise: "Bedrift"
       destroy:
         has_associated_subscriptions: "Sletting mislyktes: Denne kunden har aktive abonnementer. Avbryt dem først."
     customer_account_transaction:

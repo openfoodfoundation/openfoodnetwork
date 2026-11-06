@@ -624,6 +624,8 @@ fr_CH:
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
+        customer_type: "Catégorie"
+        enterprise: "Entreprise"
     customer_account_transaction:
       index:
         available_credit: "Crédit disponible : %{available_credit}"

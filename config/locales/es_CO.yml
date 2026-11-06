@@ -482,6 +482,8 @@ es_CO:
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
         guest_label: "Retirar como invitado"
+        customer_type: "Tipo"
+        enterprise: "Organización"
     customer_account_transaction:
       index:
         description: Descripción

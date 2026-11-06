@@ -633,6 +633,8 @@ ar:
         guest_label: "الخروج كضيف"
         credit_owed: "الائتمان مدين"
         balance_due: "الرصيد المستحق"
+        customer_type: "نوع"
+        enterprise: "الشركة"
       destroy:
         has_associated_subscriptions: "فشل الحذف: هذا العميل لديه اشتراكات نشطة. قم بإلغائها أولاً."
     customer_account_transaction:

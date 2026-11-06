@@ -537,6 +537,8 @@ tr:
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
         balance_due: "Ödenmesi Gereken Bakiye"
+        customer_type: "Ürün Çeşidi"
+        enterprise: "İşletme"
     customer_account_transaction:
       index:
         description: Açıklama

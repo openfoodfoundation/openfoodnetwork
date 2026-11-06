@@ -596,6 +596,8 @@ it_CH:
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
         balance_due: "Da pagare"
+        customer_type: "Tipo"
+        enterprise: "Azienda"
     customer_account_transaction:
       index:
         description: Descrizione

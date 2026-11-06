@@ -824,6 +824,8 @@ cy:
         credit_owed: "Credyd yn ddyledus"
         balance_due: "Balans sy'n ddyledus"
         id: Id
+        customer_type: "Math"
+        enterprise: "Menter"
       destroy:
         has_associated_subscriptions: "Wedi methu dileu: Mae gan y cwsmer hwn danysgrifiadau gweithredol. Mae angen eu canslo'n gyntaf."
     customer_account_transaction:

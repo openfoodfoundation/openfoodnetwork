@@ -735,6 +735,8 @@ eu:
         guest_label: "Gonbidatu gisa eskaera egitea"
         credit_owed: "Zor den kreditua"
         balance_due: "Zor den saldoa"
+        customer_type: "Mota"
+        enterprise: "Antolaketa"
     customer_account_transaction:
       index:
         description: Deskribapena

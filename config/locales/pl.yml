@@ -458,6 +458,7 @@ pl:
         confirm_delete: "Na pewno chcesz usunąć?"
         search_by_email: "Szukaj według adresu e-mail / kodu ..."
         guest_label: "Kasa dla gości"
+        enterprise: "Podmiot"
     customer_account_transaction:
       index:
         description: Opis

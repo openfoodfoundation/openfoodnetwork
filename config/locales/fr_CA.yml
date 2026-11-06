@@ -850,6 +850,8 @@ fr_CA:
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
         id: Id
+        customer_type: "Catégorie"
+        enterprise: "Entreprise"
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
         has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."

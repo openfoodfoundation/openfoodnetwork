@@ -830,6 +830,8 @@ pt_BR:
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Devedor"
         id: ID
+        customer_type: "Tipo"
+        enterprise: "Iniciativas"
       destroy:
         has_associated_subscriptions: "Falha ao excluir: este cliente tem assinaturas ativas. Cancele-as primeiro."
         has_outstanding_credit: "Falha ao excluir: este cliente tem saldo de crédito. Reembolse antes de excluir."

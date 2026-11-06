@@ -507,6 +507,8 @@ pt:
         guest_label: "Finalizar compra como convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Pendente"
+        customer_type: "Tipo"
+        enterprise: "Organização"
     customer_account_transaction:
       index:
         description: Descrição

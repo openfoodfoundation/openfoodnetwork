@@ -601,6 +601,8 @@ es_US:
         guest_label: "Hacer pedido como invitado"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
+        customer_type: "Tipo"
+        enterprise: "Organización"
     customer_account_transaction:
       index:
         description: Descripción
