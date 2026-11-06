@@ -2,7 +2,7 @@ import "controllers";
 import "swiper/css/bundle";
 import "../js/turbo";
 import "../js/hotkeys";
-import "../js/mrujs";
+import "../js/cable_ready_responses";
 import "../js/matomo";
 import "../js/moment";
 
