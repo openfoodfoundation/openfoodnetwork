@@ -523,6 +523,34 @@ RSpec.describe Spree::Order do
 
       order.empty!
     end
+
+    it "restarts the checkout flow when shipments are wiped on an incomplete order" do
+      order = create(:order_with_line_items, line_items_count: 1)
+      order.update_column(:state, "delivery")
+
+      order.empty!
+
+      expect(order.reload.state).to eq "address"
+      expect(order.shipments).to be_empty
+    end
+
+    it "does not restart the checkout flow for a cart-state order" do
+      order = create(:order)
+
+      expect(order).not_to receive(:restart_checkout_flow)
+      order.empty!
+
+      expect(order.reload.state).to eq "cart"
+    end
+
+    it "does not restart the checkout flow for a completed order" do
+      order = create(:completed_order_with_totals)
+
+      expect(order).not_to receive(:restart_checkout_flow)
+      order.empty!
+
+      expect(order.reload.state).to eq "complete"
+    end
   end
 
   context "#display_outstanding_balance" do
