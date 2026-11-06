@@ -160,22 +160,98 @@ RSpec.describe Spree::Admin::PaymentsController do
         end
       end
     end
+
+    context "with an existing customer credit payment" do
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:order) do
+        create(:order_with_line_items, line_items_count: 1, distributor:,
+                                       customer: create(:customer, enterprise: distributor),
+                                       state: "confirmation")
+      end
+      let(:params) do
+        {
+          payment: {
+            payment_method_id: payment_method.id, amount: (order.total - 5.00)
+          }
+        }
+      end
+
+      it "process customer credit, completes the order and redirects to payment page" do
+        # Add payment
+        create(
+          :customer_account_transaction,
+          amount: 100.00,
+          customer: order.customer
+        )
+
+        credit_payment = order.payments.create!(
+          payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "checkout",
+          skip_source_validation: true
+        )
+
+        expect { post("/admin/orders/#{order.number}/payments.json", params:) }.to change {
+          credit_payment.reload.state
+        }.to("completed")
+
+        expect(response).to redirect_to(admin_order_payments_path(order))
+        expect(flash[:success]).to eq "Payment has been successfully created!"
+
+        expect(order.reload.state).to eq "complete"
+        expect(credit_payment.reload.state).to eq "completed"
+        expect(order.customer.customer_account_transactions.last.balance).to eq(95.00)
+      end
+
+      context "when credit payment already processed" do
+        it "completes the order and redirect to payments page" do
+          credit_payment = order.payments.create!(
+            payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "completed",
+            skip_source_validation: true
+          )
+
+          expect { post("/admin/orders/#{order.number}/payments.json", params:) }.not_to change{
+            credit_payment.reload.state
+          }
+
+          expect(response).to redirect_to(admin_order_payments_path(order))
+          expect(flash[:success]).to eq "Payment has been successfully created!"
+
+          expect(order.reload.state).to eq "complete"
+        end
+      end
+
+      context "when credit payment processing fails" do
+        it "redirect to payments page" do
+          # Add customer credit payment with no available credit
+          credit_payment = order.payments.create!(
+            payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "checkout",
+            skip_source_validation: true
+          )
+
+          post("/admin/orders/#{order.number}/payments.json", params:)
+
+          expect(response).to redirect_to(admin_order_payments_path(order))
+          expect(flash[:error]).to match "No credit available"
+          expect(order.reload.state).to eq "confirmation"
+        end
+      end
+    end
   end
 
   describe "PUT /admin/orders/:order_number/payments/:id/fire" do
     let(:payment) do
       create(
         :payment,
-        payment_method: stripe_payment_method,
+        payment_method: payment_method,
         order:,
         response_code: "pi_123",
         amount: order.total,
-        state: "completed"
+        state: "checkout"
       )
     end
-    let(:stripe_payment_method) do
-      create(:stripe_sca_payment_method, distributors: [order.distributor])
+    let(:payment_method) do
+      create(:payment_method, distributors: [order.distributor])
     end
+
     let(:headers) { { HTTP_REFERER: admin_order_payments_url(order) } }
 
     before do
@@ -211,7 +287,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       let(:other_payment) do
         create(
           :payment,
-          payment_method: stripe_payment_method,
+          payment_method: payment_method,
           response_code: "pi_123",
           amount: 250.00,
           state: "completed"
@@ -384,6 +460,42 @@ RSpec.describe Spree::Admin::PaymentsController do
             expect(response).to redirect_to(admin_order_payments_url(order))
             expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
+        end
+      end
+
+      context "with a pending customer credit payment" do
+        let(:order) {
+          create(:order_with_line_items, line_items_count: 1, distributor:,
+                                         customer: create(:customer, enterprise: distributor),
+                                         state: "confirmation")
+        }
+        let(:distributor) { create(:distributor_enterprise) }
+
+        it "process credit payment, capture payment and complete the order" do
+          # Add payment
+          create(
+            :customer_account_transaction,
+            amount: 100.00,
+            customer: order.customer
+          )
+
+          credit_payment = order.payments.create!(
+            payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "checkout",
+            skip_source_validation: true
+          )
+
+          put(
+            "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+            "fire?e=capture_and_complete_order",
+            params: {},
+            headers:
+          )
+
+          expect(response).to redirect_to(admin_order_payments_url(order))
+          expect(flash[:success]).to eq "Payment Updated"
+          expect(order.reload.state).to eq("complete")
+          expect(payment.reload.state).to eq("completed")
+          expect(credit_payment.reload.state).to eq("completed")
         end
       end
     end
