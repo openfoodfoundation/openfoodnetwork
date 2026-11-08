@@ -1,0 +1,51 @@
+= render "spree/admin/shared/configuration_menu"
+
+- content_for :page_title do
+  = t(".title")
+
+= form_tag main_app.admin_oauth_tokens_path, method: :get do
+  .row
+    .alpha.six.columns
+      = label_tag :application_id, t(".application")
+      = select_tag :application_id,
+        options_from_collection_for_select(@applications, :id, :name, params[:application_id]),
+        include_blank: t(".all_applications"), class: "fullwidth"
+    .four.columns
+      %br
+      = check_box_tag :revoked, "1", params[:revoked] == "1"
+      = label_tag :revoked, t(".show_revoked")
+    .two.columns.omega
+      %br
+      = button t(".filter"), "icon-search"
+
+- if @tokens.empty?
+  %p= t(".none")
+- else
+  %table.index
+    %thead
+      %tr
+        %th= t(".user")
+        %th= t(".application")
+        %th= t(".scopes")
+        %th= t(".created_at")
+        %th= t(".expires_at")
+        %th= t(".status")
+        %th.actions
+    %tbody
+      - @tokens.each do |token|
+        %tr{ id: "oauth_token_#{token.id}" }
+          %td= @users[token.resource_owner_id]&.email
+          %td= token.application.name
+          %td= token.scopes.to_s
+          %td= l(token.created_at, format: :long)
+          %td= token.expires_at && l(token.expires_at, format: :long)
+          - if token.revoked?
+            %td= t(".revoked_status")
+            %td.actions
+          - else
+            %td= token.expired? ? t(".expired_status") : t(".active_status")
+            %td.actions
+              = link_to t(".revoke"), main_app.revoke_admin_oauth_token_path(token),
+                  data: { turbo: true, turbo_method: :put, turbo_confirm: t(".revoke_confirm") }
+
+  = render partial: "admin/shared/pagy_links", locals: { pagy: @pagy }

@@ -1,0 +1,19 @@
+= render "spree/shared/error_messages", target: @application
+
+= form_with model: @application, scope: :oauth_application, url: do |f|
+  %fieldset.no-border-top
+    .field
+      = f.label :name, t(".name")
+      = f.text_field :name, class: "fullwidth"
+    .field
+      = f.label :redirect_uri, t(".redirect_uri")
+      = f.text_area :redirect_uri, rows: 3, class: "fullwidth"
+      %p.text-muted= t(".redirect_uri_hint")
+    .field
+      = f.check_box :confidential
+      = f.label :confidential, t(".confidential")
+      %p.text-muted= t(".confidential_hint")
+
+    .form-buttons.filter-actions.actions
+      = button submit_label, "icon-ok"
+      = button_link_to t(:cancel), main_app.admin_oauth_applications_path, icon: "icon-remove"

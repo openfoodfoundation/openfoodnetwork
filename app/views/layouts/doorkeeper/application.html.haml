@@ -1,0 +1,18 @@
+!!!
+%html{ lang: I18n.locale.to_s.tr("_", "-") }
+  %head
+    %meta{ charset: "utf-8" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    %meta{ name: "robots", content: "noindex" }
+    %title= t("doorkeeper.layouts.application.title", site_name: Spree::Config[:site_name])
+    = favicon_link_tag Rails.env.production? ? "/favicon.ico" : "/favicon-staging.ico"
+    %link{ href: "https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap", rel: "stylesheet" }
+    = stylesheet_pack_tag "oauth", media: "screen"
+    = csrf_meta_tags
+  %body
+    %header.site-header
+      = link_to main_app.root_path do
+        = image_tag ContentConfig.url_for(:logo), alt: Spree::Config[:site_name]
+    %main
+      .card
+        = yield
