@@ -62,19 +62,15 @@ module TomSelectHelper
   end
 
   def expect_tomselect_selected_options(from, *options)
-    tomselect_control = page
-      .find("[name='#{from}']")
-      .sibling(".ts-wrapper")
-      .find('.ts-control')
+    # Use a single selector instead of finding the control first and scoping
+    # with `within`. The page may be re-rendered (eg. after a search), which
+    # would leave a previously found node obsolete. A single selector is
+    # re-queried from the page on each retry.
+    selector = "[name='#{from}'] ~ .ts-wrapper .ts-control div[data-ts-item]"
 
-    within(tomselect_control) do
-      # options in case of we want to expect multiselect options
-      options.each do |option|
-        expect(page).to have_css(
-          "div[data-ts-item]",
-          text: option
-        )
-      end
+    # options in case of we want to expect multiselect options
+    options.each do |option|
+      expect(page).to have_css(selector, text: option)
     end
   end
 
