@@ -9,11 +9,6 @@ module Spree
 
     validates :name, presence: true
 
-    # Indicate which filters should be used for this taxon
-    def applicable_filters
-      []
-    end
-
     # Return meta_title if set otherwise generates from root name and/or taxon name
     def seo_title
       if meta_title

@@ -213,20 +213,8 @@ module Spree
       self[:currency] || CurrentConfig.get(:currency)
     end
 
-    def display_item_total
-      Spree::Money.new(item_total, currency:)
-    end
-
-    def display_adjustment_total
-      Spree::Money.new(adjustment_total, currency:)
-    end
-
     def display_total
       Spree::Money.new(total, currency:)
-    end
-
-    def display_payment_total
-      Spree::Money.new(payment_total, currency:)
     end
 
     def to_param

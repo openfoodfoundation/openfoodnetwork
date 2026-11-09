@@ -174,10 +174,6 @@ module OrderManagement
         payments.to_a.select(&:requires_authorization?).each(&:void_transaction!)
       end
 
-      def round_money(value)
-        (value * 100).round / 100.0
-      end
-
       def infer_payment_state
         if failed_payments?
           'failed'

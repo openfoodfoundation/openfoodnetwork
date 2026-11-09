@@ -32,9 +32,5 @@ module Spree
         self[:value]
       end
     end
-
-    def raw_value
-      self[:value]
-    end
   end
 end

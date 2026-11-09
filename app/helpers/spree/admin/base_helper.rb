@@ -148,12 +148,6 @@ module Spree
       def inventory_enabled?(enterprises)
         !feature?(:variant_tag, *enterprises) && feature?(:inventory, *enterprises)
       end
-
-      private
-
-      def attribute_name_for(field_name)
-        field_name.tr(' ', '_').downcase
-      end
     end
   end
 end
