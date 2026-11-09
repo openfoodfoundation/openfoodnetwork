@@ -49,11 +49,11 @@ module Reporting
         end
 
         def supplier_name
-          proc { |line_items| line_items.first.supplier.name }
+          proc { |line_items| line_items.first.variant.producer.name }
         end
 
         def supplier_charges_sales_tax?
-          proc { |line_items| line_items.first.supplier.charges_sales_tax }
+          proc { |line_items| line_items.first.variant.producer.charges_sales_tax }
         end
 
         def product_name
