@@ -150,7 +150,7 @@ RSpec.describe "DFC Product Import" do
     select enterprise.name, from: "Create products for enterprise"
     fill_in "catalog_url", with: ""
     click_button "Preview"
-    expect(page).to have_content "param is missing or the value is empty: catalog_url"
+    expect(page).to have_content "param is missing or the value is empty or invalid: catalog_url"
   end
 
   it "prompts to refresh OIDC connection", vcr: true do
