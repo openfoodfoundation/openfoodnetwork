@@ -5,8 +5,9 @@ RSpec.describe ContentSanitizer do
 
   context "#strip_content" do
     it "strips disallowed tags" do
-      expect(service.strip_content("I'm friendly!<script>alert('hello! I'm malicious');</script>"))
-        .to eq("I'm friendly!alert('hello! I'm malicious');")
+      input = " I am friendly!<script>alert('hello! I am malicious');</script>"
+      output = "I am friendly!alert(&#39;hello! I am malicious&#39;);"
+      expect(service.strip_content(input)).to eq(output)
     end
 
     it "replaces spaces" do
