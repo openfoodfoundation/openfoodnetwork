@@ -913,10 +913,6 @@ GEM
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
       concurrent-ruby (~> 1)
-    view_component_reflex (3.1.14.pre9)
-      rails (>= 5.2, < 8.0)
-      stimulus_reflex (>= 3.5.0.pre2)
-      view_component (>= 2.28.0)
     virtual_assembly-semantizer (1.1.1)
       json-ld (~> 3.2, >= 3.2.3)
     warden (1.2.9)
@@ -1088,7 +1084,6 @@ DEPENDENCIES
   validates_lengths_from_database
   vcr
   view_component
-  view_component_reflex (= 3.1.14.pre9)
   web!
   web-console
   webmock
@@ -1416,7 +1411,6 @@ CHECKSUMS
   validates_lengths_from_database (0.8.0) sha256=a4cfbbd49673da331c4f098ade90893dde531cae7ca37da41b8f79e15bc0538b
   vcr (6.4.0) sha256=077ac92cc16efc5904eb90492a18153b5e6ca5398046d8a249a7c96a9ea24ae6
   view_component (4.15.0) sha256=2924e207b102c04ab51c4d318535f03f1c3aab3c81ecff99b1cc631b43e14eac
-  view_component_reflex (3.1.14.pre9) sha256=d1f9e61fdeb2f949fe292aba263b4c05a81e531b0ce2cd58297ad55353bbbaa7
   virtual_assembly-semantizer (1.1.1) sha256=a8ce46cd525ce7875a07da7f513c7045cb9c2ee6c32980f7245ffd0d718ba94f
   warden (1.2.9) sha256=46684f885d35a69dbb883deabf85a222c8e427a957804719e143005df7a1efd0
   web (0.0.1)
