@@ -25,12 +25,14 @@ class Invoice
     array_attribute :payments, class_name: 'Payment'
 
     # if any of the following attributes is updated, a new invoice should be generated
+    # A decrease of payment_total (refund) also generates a new invoice, see
+    # Orders::CompareInvoiceService
     invoice_generation_attributes :additional_tax_total, :all_eligible_adjustments, :bill_address,
-                                  :included_tax_total, :payments, :payment_total, :ship_address,
+                                  :included_tax_total, :payments, :ship_address,
                                   :shipping_method_id, :sorted_line_items, :total
 
     # if any of the following attributes is updated, the latest invoice should be updated
-    invoice_update_attributes :note, :special_instructions, :state,
+    invoice_update_attributes :note, :special_instructions, :state, :payment_total,
                               :all_eligible_adjustments, :payments
 
     def initialize(invoice)

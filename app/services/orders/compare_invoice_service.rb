@@ -10,6 +10,7 @@ module Orders
 
     def can_generate_new_invoice?
       return true if invoices.empty?
+      return true if refunded?
 
       # We'll use a recursive BFS algorithm to find if the invoice is outdated
       # the root will be the order
@@ -24,6 +25,12 @@ module Orders
     end
 
     private
+
+    # Capturing a payment increases the payment total and only requires an update of the latest
+    # invoice, but a refund decreases it and requires a new invoice
+    def refunded?
+      current_state_invoice.payment_total.to_d < latest_invoice.payment_total.to_d
+    end
 
     def different?(node1, node2, attributes_selector)
       simple_values1, presenters1 = attributes_selector.call(node1)

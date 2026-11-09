@@ -11,6 +11,31 @@ RSpec.shared_examples "attribute changes - payment total" do |boolean, type|
   end
 end
 
+RSpec.shared_examples "attribute changes - payment total decreases (refund)" do |boolean, type|
+  before do
+    Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total - 10)
+  end
+
+  it "returns #{boolean} if a #{type} attribute changes" do
+    order.reload
+    expect(subject).to be boolean
+  end
+end
+
+RSpec.shared_examples "payment capture" do |boolean, type|
+  let(:payment) { order.payments.first }
+
+  it "returns #{boolean} if a payment is captured (#{type})" do
+    expect {
+      payment.capture!
+      order.reload
+    }.to change { payment.state }.to("completed")
+      .and change { order.payment_total }
+
+    expect(subject).to be boolean
+  end
+end
+
 RSpec.shared_examples "attribute changes - order total" do |boolean, type|
   before do
     Spree::Order.where(id: order.id).update_all(total: order.total + 10)
@@ -332,12 +357,13 @@ RSpec.describe Orders::CompareInvoiceService do
         it_behaves_like "associated attribute changes - payments", true, "relevant"
         # order-state change is relevant both for generate and update comparator
         it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
+        # a refund reduces the amount paid, so it needs a new invoice
+        it_behaves_like "attribute changes - payment total decreases (refund)", true, "relevant"
       end
 
       describe "detecting non-relevant" do
-        it_behaves_like "attribute changes - payment total", false, "relevant" do
-          before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
-        end
+        it_behaves_like "attribute changes - payment total", false, "non-relevant"
+        it_behaves_like "payment capture", false, "non-relevant"
         it_behaves_like "no attribute changes"
         it_behaves_like "attribute changes - special insctructions", false, "non-relevant"
         it_behaves_like "attribute changes - note", false, "non-relevant"
@@ -357,9 +383,8 @@ RSpec.describe Orders::CompareInvoiceService do
 
     context "changes on the order object" do
       describe "detecting relevant" do
-        it_behaves_like "attribute changes - payment total", true, "relevant" do
-          before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
-        end
+        it_behaves_like "attribute changes - payment total", true, "relevant"
+        it_behaves_like "payment capture", true, "relevant"
         # order-state change is relevant both for generate and update comparator
         it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
         it_behaves_like "attribute changes - special insctructions", true, "relevant"
