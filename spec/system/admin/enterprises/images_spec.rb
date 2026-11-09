@@ -80,6 +80,18 @@ RSpec.describe "Managing enterprise images" do
         end
       end
 
+      it "rejects a non-image logo without offering removal" do
+        attach_file "enterprise[logo]", Rails.public_path.join("Terms-of-service.pdf")
+        click_button "Update"
+
+        expect(page).to have_content "invalid content type"
+
+        go_to_images
+        within ".page-admin-enterprises-form__logo-field-group" do
+          expect(page).not_to have_button "Remove Image"
+        end
+      end
+
       it "editing promo image" do
         # Adding image
         attach_file "enterprise[promo_image]", white_logo_path
