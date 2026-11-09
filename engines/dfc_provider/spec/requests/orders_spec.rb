@@ -22,22 +22,22 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
   before { login_as user }
 
-  # Rswag records the response body as documentation. The order factory builds
-  # line items and variants with auto-increment ids, which would change
-  # swagger/dfc.yaml on every regeneration, so replace them with fixed ones.
+  # The order factory builds line items and variants with auto-increment ids,
+  # which would change swagger/dfc.yaml on every regeneration, so document them
+  # with fixed ones.
   #
   # Offers and supplied products are built from the variant, so their ids come
   # from the same list.
   def normalise_ids(ofn_order)
-    body = response.body
-
     ofn_order.line_items.each_with_index do |line_item, index|
       line_item_id = line_item.id
       variant_id = line_item.variant_id
 
-      body.gsub!("OrderLines/#{line_item_id}", "OrderLines/1000#{index + 1}")
-      body.gsub!("offers/#{variant_id}", "offers/2000#{index + 1}")
-      body.gsub!("supplied_products/#{variant_id}", "supplied_products/2000#{index + 1}")
+      replace_in_docs(
+        "OrderLines/#{line_item_id}" => "OrderLines/1000#{index + 1}",
+        "offers/#{variant_id}" => "offers/2000#{index + 1}",
+        "supplied_products/#{variant_id}" => "supplied_products/2000#{index + 1}",
+      )
     end
   end
 
@@ -66,10 +66,13 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
         run_test! {
           normalise_ids(order)
 
-          expect(response.body).to include "dfc-b:Order",       "orders/11000"
-          expect(response.body).to include "dfc-b:OrderLine",   "OrderLines/1000"
-          expect(response.body).to include "dfc-b:Offer",       "offers/2000", "dfc-b:offeredItem"
-          expect(response.body).to include "dfc-b:SuppliedProduct", "supplied_products/2000"
+          expect(response.body).to include "dfc-b:Order", "orders/11000"
+          line_item = order.line_items.first
+          expect(response.body).to include "dfc-b:OrderLine", "OrderLines/#{line_item.id}"
+          expect(response.body).to include "dfc-b:Offer", "offers/#{line_item.variant_id}",
+                                           "dfc-b:offeredItem"
+          expect(response.body).to include "dfc-b:SuppliedProduct",
+                                           "supplied_products/#{line_item.variant_id}"
         }
       end
 
@@ -340,9 +343,8 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
           run_test! {
             ofn_order = enterprise.distributed_orders.first
 
-            # Rswag records the body as documentation and the id of the new
-            # order is allocated by the database:
-            response.body.gsub!("orders/#{ofn_order.id}", "orders/10001")
+            # The id of the new order is allocated by the database:
+            replace_in_docs("orders/#{ofn_order.id}" => "orders/10001")
 
             expect(enterprise.distributed_orders.count).to eq 1
             expect(ofn_order.created_by).to eq user
@@ -355,7 +357,7 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
             expect(ofn_order.line_items.first.quantity).to eq 1
 
             expect(response.body).to include "dfc-b:Order"
-            expect(response.body).to include "/api/dfc/enterprises/10000/orders/10001"
+            expect(response.body).to include "/api/dfc/enterprises/10000/orders/#{ofn_order.id}"
 
             # The client can then fetch the order from there:
             expect(response.headers["Location"])

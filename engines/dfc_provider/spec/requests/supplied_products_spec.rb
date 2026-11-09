@@ -194,23 +194,13 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
 
           # Insert static value to keep documentation deterministic:
           supplied_product[:'ofn:spree_product_id'] = 90_000
-          response.body.gsub!(
-            "supplied_products/#{variant_id}",
-            "supplied_products/10001"
+          replace_in_docs(
+            "supplied_products/#{variant_id}" => "supplied_products/10001",
+            %r{catalog_items/\d+} => "catalog_items/10001",
+            "product_groups/#{spree_product_id}" => "product_groups/90000",
+            "\"ofn:spree_product_id\":#{spree_product_id}" => '"ofn:spree_product_id":90000',
+            "spree_product_id=#{spree_product_id}\"" => 'spree_product_id=90000"',
           )
-            .gsub!(%r{catalog_items/\d+}, "catalog_items/10001")
-            .gsub!(
-              "product_groups/#{spree_product_id}",
-              "product_groups/90000"
-            )
-            .gsub!(
-              "\"ofn:spree_product_id\":#{spree_product_id}",
-              '"ofn:spree_product_id":90000'
-            )
-            .gsub!(
-              "\"ofn:spree_product_uri\":\"http://test.host/api/dfc/enterprises/10000?spree_product_id=#{spree_product_id}\"",
-              "\"ofn:spree_product_uri\":\"http://test.host/api/dfc/enterprises/10000?spree_product_id=90000\""
-            )
         end
 
         context "when supplying spree_product_uri matching the host" do
@@ -232,12 +222,9 @@ RSpec.describe "SuppliedProducts", swagger_doc: "dfc.yaml" do
             expect(new_variant.unit_value).to eq 6
 
             # Insert static value to keep documentation deterministic:
-            response.body.gsub!(
-              "supplied_products/#{variant_id}",
-              "supplied_products/10001"
-            ).gsub!(
-              %r{catalog_items/\d+},
-              "catalog_items/10001"
+            replace_in_docs(
+              "supplied_products/#{variant_id}" => "supplied_products/10001",
+              %r{catalog_items/\d+} => "catalog_items/10001",
             )
           end
         end
