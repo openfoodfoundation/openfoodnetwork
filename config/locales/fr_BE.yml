@@ -524,7 +524,6 @@ fr_BE:
   ongoing: En cours
   bill_address: Adresse de facturation
   ship_address: Adresse de livraison
-  sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
@@ -1366,61 +1365,55 @@ fr_BE:
           no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
           legend: "Préférences comptoir"
-          shopfront_requires_login: "Comptoir visible par tous?"
-          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le comptoir est visible par tout le monde."
-          shopfront_requires_login_false: "Visible par tous"
-          shopfront_requires_login_true: "Visible uniquement pour les acheteurs logués"
-          recommend_require_login: "Nous recommandons de demander aux utilisateur·trice·s de se connecter si vous souhaitez leur permettre de modifier leur commande."
-          allow_guest_orders: "Commandes des invité·e·s"
-          allow_guest_orders_tip: "Autoriser la commande en tant qu'invité·e ou demander que la personne qui achète soit logué."
-          allow_guest_orders_false: "Demander que la personne qui achète se logue pour pouvoir commander"
-          allow_guest_orders_true: "Autoriser les commandes en mode invité·e"
-          allow_order_changes: "Modifier la commande"
-          allow_order_changes_tip: "Permettre aux personnes qui achètent de modifier leur commande tant que le cycle de vente est ouvert."
-          allow_order_changes_false: "Les commandes validées ne peuvent plus être modifiées / annulées"
-          allow_order_changes_true: "Les acheteurs peuvent modifier / valider leurs commandes tant que le cycle de vente est ouvert"
-          enable_subscriptions: "Abonnement / commande récurente"
-          enable_subscriptions_tip: "Activer la fonction abonnements?"
-          enable_subscriptions_false: "Désactivé"
-          enable_subscriptions_true: "Activé"
-          customer_names_in_reports: "Nom de client dans le rapport"
-          customer_names_tip: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport "
-          producers_to_edit_orders: "Possibilité pour les producteurs de modifier les commandes"
-          producers_to_edit_orders_tip: "Permettre à vos fournisseurs de visualiser les commandes comprenant leurs produits et de modifier la quantité et le poids de leurs produits seulement."
-          customer_names_false: "Désactivé"
-          customer_names_true: "Activé"
-          customer_contacts_in_reports: "Coordonnées du client dans les rapports"
-          customer_contacts_tip: "Autoriser vos fournisseurs de voir l'adresse mail et le téléphone des clients dans les rapports"
-          customer_contacts_false: "Désactivé"
-          customer_contacts_true: "Activé"
-          producers_edit_orders_false: "Désactivé"
-          producers_edit_orders_true: "Activé"
-          shopfront_message: "Message d'accueil comptoir ouvert"
-          shopfront_message_placeholder: >
-              Un message facultatif pour souhaiter la bienvenue aux clients et leur
-              expliquer comment faire leurs achats avec vous. Si le texte est saisi
-              ici, il sera affiché dans un onglet d'accueil lorsque les clients arriveront
-              pour la première fois à votre vitrine.
-          shopfront_closed_message: "Message d'accueil comptoir fermé"
-          shopfront_closed_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs pourquoi votre comptoir est
-              fermé et/ou quand il ouvrira. Ce texte s'affiche uniquement quand il
-              n'y a pas de cycle de vente en cours (donc quand votre comptoir est
-              fermé).
-          shopfront_category_ordering: "Ordre d'affichage des catégories"
-          shopfront_category_ordering_note: "(de haut en bas)"
-          open_date: "Date d'ouverture"
-          close_date: "Date de fermeture"
-          display_ordering_in_shopfront: "Ordre d'affichage sur le comptoir :"
-          shopfront_sort_by_product: "Par produit"
-          shopfront_sort_by_category: "Par catégorie"
-          shopfront_sort_by_producer: "Par producteur"
-          shopfront_sort_by_category_placeholder: "Catégorie"
-          shopfront_sort_by_producer_placeholder: "Producteur·trice"
-          display_remaining_stock: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
-          display_remaining_stock_tip: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           enabled: "Activé"
           disabled: "Désactivé"
+          shopfront_visibility:
+            title: "Comptoir visible par tous?"
+            description: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le comptoir est visible par tout le monde."
+            public: "Visible par tous"
+            registered_only: "Visible uniquement pour les acheteurs logués"
+          home_message:
+            title: "Message d'accueil comptoir ouvert"
+            placeholder: "Un message facultatif pour souhaiter la bienvenue aux clients et leur expliquer comment faire leurs achats avec vous. Si le texte est saisi ici, il sera affiché dans un onglet d'accueil lorsque les clients arriveront pour la première fois à votre vitrine."
+          shopfront_closed_message:
+            title: "Message d'accueil comptoir fermé"
+            placeholder: "Vous pouvez ici expliquer à vos acheteurs pourquoi votre comptoir est fermé et/ou quand il ouvrira. Ce texte s'affiche uniquement quand il n'y a pas de cycle de vente en cours (donc quand votre comptoir est fermé)."
+          product_order:
+            title: "Ordre d'affichage sur le comptoir"
+            by_category: "Par catégorie"
+            by_producer: "Par producteur"
+            category_placeholder: "Catégorie"
+            producer_placeholder: "Producteur·trice"
+          low_stock_warning:
+            title: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+            description: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
+          order_cycle_order:
+            title: "Trier les cycles de vente par"
+            open_date: "Date d'ouverture"
+            close_date: "Date de fermeture"
+          guest_orders:
+            title: "Commandes des invité·e·s"
+            description: "Autoriser la commande en tant qu'invité·e ou demander que la personne qui achète soit logué."
+            allow: "Autoriser les commandes en mode invité·e"
+            require_login: "Demander que la personne qui achète se logue pour pouvoir commander"
+          change_orders:
+            title: "Modifier la commande"
+            description: "Permettre aux personnes qui achètent de modifier leur commande tant que le cycle de vente est ouvert."
+            not_allowed: "Les commandes validées ne peuvent plus être modifiées / annulées"
+            allowed: "Les acheteurs peuvent modifier / valider leurs commandes tant que le cycle de vente est ouvert"
+            require_login_warning: "Nous recommandons de demander aux utilisateur·trice·s de se connecter si vous souhaitez leur permettre de modifier leur commande."
+          subscriptions:
+            title: "Abonnement / commande récurente"
+            description: "Activer la fonction abonnements?"
+          customer_names_in_reports:
+            title: "Nom de client dans le rapport"
+            description: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport"
+          customer_contacts_in_reports:
+            title: "Coordonnées du client dans les rapports"
+            description: "Autoriser vos fournisseurs de voir l'adresse mail et le téléphone des clients dans les rapports"
+          producers_edit_orders:
+            title: "Possibilité pour les producteurs de modifier les commandes"
+            description: "Permettre à vos fournisseurs de visualiser les commandes comprenant leurs produits et de modifier la quantité et le poids de leurs produits seulement."
         social:
           legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet"

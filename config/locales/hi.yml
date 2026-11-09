@@ -392,7 +392,6 @@ hi:
   ongoing: चालू
   bill_address: बिलिंग पता
   ship_address: शिपिंग का पता
-  sort_order_cycles_on_shopfront_by: "इसके द्वारा शॉपफ्रन्ट पर ऑर्डर साइकल को सॉर्ट करें"
   required_fields: आवश्यक फ़ील्ड को तारांकन चिह्न से दर्शाया जाता है
   select_continue: चुनें और जारी रखें
   remove: मिटाएँ
@@ -1105,55 +1104,49 @@ hi:
           no_method_yet: "आपके पास अभी तक शिपिंग का कोई तरीका नहीं है।"
         shop_preferences:
           legend: "दुकान की प्राथमिकताएं"
-          shopfront_requires_login: "सार्वजनिक रूप से दिखाई देने वाला शॉपफ्रन्ट?"
-          shopfront_requires_login_tip: "चुनें कि ग्राहकों को शॉपफ्रन्ट के लिए लॉग-इन करना होगा या यह सभी को दिखाई दे रहा है या नहीं।"
-          shopfront_requires_login_false: "सार्वजनिक"
-          shopfront_requires_login_true: "सिर्फ़ रजिस्टर्ड ग्राहकों के लिए दृश्यमान"
-          recommend_require_login: "हम सुझाव देते हैं कि जब ऑर्डर्स बदले जा सकते हैं, तो यूज़र को लॉग-इन करना होगा।"
-          allow_guest_orders: "मेहमानों के ऑर्डर्स"
-          allow_guest_orders_tip: "मेहमान के रूप में चेकआउट की अनुमति दें या रजिस्टर यूज़र्स की आवश्यकता है।"
-          allow_guest_orders_false: "ऑर्डर के लिए लॉग-इन की आवश्यकता है"
-          allow_guest_orders_true: "मेहमान के चेकआउट की अनुमति दें"
-          allow_order_changes: "ऑर्डर्स बदलें"
-          allow_order_changes_tip: "जब तक ऑर्डर का साइकल खुला/ओपन रहता है तब तक ग्राहकों को अपना ऑर्डर बदलने की अनुमति दें।"
-          allow_order_changes_false: "लगाए गए ऑर्डर बदले/रद्द नहीं किए जा सकते"
-          allow_order_changes_true: "ऑर्डर साइकल खुला/ओपन रहने पर ग्राहक ऑर्डर बदल/रद्द कर सकते हैं"
-          enable_subscriptions: "सब्सक्रिप्शन्स"
-          enable_subscriptions_tip: "सब्सक्रिप्शन्स की कार्यक्षमता सक्षम करें?"
-          enable_subscriptions_false: "अक्षम किया गया"
-          enable_subscriptions_true: "सक्षम किया गया"
-          customer_names_in_reports: "रिपोर्ट्स में ग्राहक के नाम"
-          customer_names_tip: "रिपोर्ट्स में अपने ग्राहकों के नाम देखने के लिए अपने आपूर्तिकर्ताओं को सक्षम करें"
-          customer_names_false: "अक्षम किया गया"
-          customer_names_true: "सक्षम किया गया"
-          customer_contacts_false: "अक्षम किया गया"
-          customer_contacts_true: "सक्षम किया गया"
-          producers_edit_orders_false: "अक्षम किया गया"
-          producers_edit_orders_true: "सक्षम किया गया"
-          shopfront_message: "शॉपफ्रन्ट संदेश"
-          shopfront_message_placeholder: >
-              ग्राहकों का स्वागत करने और कैसे आपके साथ खरीदारी करें यह समझाने लिए
-              एक वैकल्पिक संदेश। यदि टेक्स्ट यहां एंटर किया गया है, तो जब ग्राहक पहली
-              बार आपके शॉपफ्रन्ट पर पहुंचेंगे यह होम टैब में तब प्रदर्शित होगा
-          shopfront_closed_message: "शॉपफ्रन्ट बंद किए गए संदेश"
-          shopfront_closed_message_placeholder: >
-              एक संदेश जो इस बारे में अधिक विस्तृत विवरण प्रदान करता है कि आपकी दुकान
-              क्यों बंद है और/या ग्राहक इसके फिर से खुलने की उम्मीद कब कर सकते हैं।
-              यह आपकी दुकान पर तभी प्रदर्शित होता है जब आपके पास कोई सक्रिय ऑर्डर
-              साइकल नहीं होता है (यानी दुकान बंद है)।
-          shopfront_category_ordering: "शॉपफ्रन्ट श्रेणी ऑर्डरिंग"
-          shopfront_category_ordering_note: "(ऊपर से नीचे)"
-          open_date: "खुलने की तिथि"
-          close_date: "बंद होने की तिथि"
-          display_ordering_in_shopfront: "शॉपफ्रन्ट में ऑर्डर प्रदर्शित करें:"
-          shopfront_sort_by_category: "श्रेणी द्वारा"
-          shopfront_sort_by_producer: "उत्पादक द्वारा"
-          shopfront_sort_by_category_placeholder: "श्रेणी"
-          shopfront_sort_by_producer_placeholder: "उत्पादक"
-          display_remaining_stock: "यदि हाथ में कम हो तो शेष स्टॉक को शॉपफ्रन्ट में प्रदर्शित करें"
-          display_remaining_stock_tip: "दुकानदारों को बताएं कि केवल 3 या उससे कम आइटम कब बचे हैं।"
           enabled: "सक्षम किया गया"
           disabled: "अक्षम किया गया"
+          shopfront_visibility:
+            title: "सार्वजनिक रूप से दिखाई देने वाला शॉपफ्रन्ट?"
+            description: "चुनें कि ग्राहकों को शॉपफ्रन्ट के लिए लॉग-इन करना होगा या यह सभी को दिखाई दे रहा है या नहीं।"
+            public: "सार्वजनिक"
+            registered_only: "सिर्फ़ रजिस्टर्ड ग्राहकों के लिए दृश्यमान"
+          home_message:
+            title: "शॉपफ्रन्ट संदेश"
+            placeholder: "ग्राहकों का स्वागत करने और कैसे आपके साथ खरीदारी करें यह समझाने लिए एक वैकल्पिक संदेश। यदि टेक्स्ट यहां एंटर किया गया है, तो जब ग्राहक पहली बार आपके शॉपफ्रन्ट पर पहुंचेंगे यह होम टैब में तब प्रदर्शित होगा"
+          shopfront_closed_message:
+            title: "शॉपफ्रन्ट बंद किए गए संदेश"
+            placeholder: "एक संदेश जो इस बारे में अधिक विस्तृत विवरण प्रदान करता है कि आपकी दुकान क्यों बंद है और/या ग्राहक इसके फिर से खुलने की उम्मीद कब कर सकते हैं। यह आपकी दुकान पर तभी प्रदर्शित होता है जब आपके पास कोई सक्रिय ऑर्डर साइकल नहीं होता है (यानी दुकान बंद है)।"
+          product_order:
+            title: "शॉपफ्रन्ट में ऑर्डर प्रदर्शित करें"
+            by_category: "श्रेणी द्वारा"
+            by_producer: "उत्पादक द्वारा"
+            category_placeholder: "श्रेणी"
+            producer_placeholder: "उत्पादक"
+          low_stock_warning:
+            title: "यदि हाथ में कम हो तो शेष स्टॉक को शॉपफ्रन्ट में प्रदर्शित करें"
+            description: "दुकानदारों को बताएं कि केवल 3 या उससे कम आइटम कब बचे हैं।"
+          order_cycle_order:
+            title: "इसके द्वारा शॉपफ्रन्ट पर ऑर्डर साइकल को सॉर्ट करें"
+            open_date: "खुलने की तिथि"
+            close_date: "बंद होने की तिथि"
+          guest_orders:
+            title: "मेहमानों के ऑर्डर्स"
+            description: "मेहमान के रूप में चेकआउट की अनुमति दें या रजिस्टर यूज़र्स की आवश्यकता है।"
+            allow: "मेहमान के चेकआउट की अनुमति दें"
+            require_login: "ऑर्डर के लिए लॉग-इन की आवश्यकता है"
+          change_orders:
+            title: "ऑर्डर्स बदलें"
+            description: "जब तक ऑर्डर का साइकल खुला/ओपन रहता है तब तक ग्राहकों को अपना ऑर्डर बदलने की अनुमति दें।"
+            not_allowed: "लगाए गए ऑर्डर बदले/रद्द नहीं किए जा सकते"
+            allowed: "ऑर्डर साइकल खुला/ओपन रहने पर ग्राहक ऑर्डर बदल/रद्द कर सकते हैं"
+            require_login_warning: "हम सुझाव देते हैं कि जब ऑर्डर्स बदले जा सकते हैं, तो यूज़र को लॉग-इन करना होगा।"
+          subscriptions:
+            title: "सब्सक्रिप्शन्स"
+            description: "सब्सक्रिप्शन्स की कार्यक्षमता सक्षम करें?"
+          customer_names_in_reports:
+            title: "रिपोर्ट्स में ग्राहक के नाम"
+            description: "रिपोर्ट्स में अपने ग्राहकों के नाम देखने के लिए अपने आपूर्तिकर्ताओं को सक्षम करें"
         social:
           legend: "सोशल"
           twitter_placeholder: "उदाहरण @the_prof"

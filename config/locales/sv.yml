@@ -509,7 +509,6 @@ sv:
   ongoing: Pågår
   bill_address: Faktureringsadress
   ship_address: Leveransadress
-  sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
   required_fields: Obligatoriska fält är märkta med en asterisk
   select_continue: Markera och fortsätt
   remove: Ta bort
@@ -1341,60 +1340,55 @@ sv:
           no_method_yet: "Du har inte bestämt leveransmetod ännu."
         shop_preferences:
           legend: "Butiksinställningar"
-          shopfront_requires_login: "Offentligt visat skyltfönster?"
-          shopfront_requires_login_tip: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
-          shopfront_requires_login_false: "Offentlig"
-          shopfront_requires_login_true: "Endast synlig för registrerade kunder"
-          recommend_require_login: "Vi rekommenderar att användare måste logga in när beställningar kan ändras."
-          allow_guest_orders: "Gästbeställningar"
-          allow_guest_orders_tip: "Tillåt köp som gäst eller registrerad kund"
-          allow_guest_orders_false: "Kräv inloggning för att beställa"
-          allow_guest_orders_true: "Tillåt gästköp"
-          allow_order_changes: "Ändra beställning"
-          allow_order_changes_tip: "Tillåt kunder att ändra sin beställning så länge beställningsomgången är öppen."
-          allow_order_changes_false: "Lagda beställningar kan inte ändras/avbrytas"
-          allow_order_changes_true: "Kunder kan ändra/avbryta beställningar medan beställningsomgången är öppen"
-          enable_subscriptions: "Prenumerationer"
-          enable_subscriptions_tip: "Aktivera prenumerationsfunktioner?"
-          enable_subscriptions_false: "Inaktiverad"
-          enable_subscriptions_true: "Aktiverad"
-          customer_names_in_reports: "Kundnamn i rapporter"
-          customer_names_tip: "Gör det möjligt för dina leverantörer att se dina kunders namn i rapporter"
-          producers_to_edit_orders: "Möjlighet för producenter att redigera beställningar"
-          producers_to_edit_orders_tip: "Gör det möjligt för dina leverantörer att se beställningar som innehåller deras produkter och redigera kvantitet och vikt endast för deras egna produkter."
-          customer_names_false: "Inaktiverad"
-          customer_names_true: "Aktiverad"
-          customer_contacts_in_reports: "Kundkontaktuppgifter i rapporter"
-          customer_contacts_tip: "Gör det möjligt för dina leverantörer att se dina kunders e-post och telefonnummer i rapporter"
-          customer_contacts_false: "Inaktiverad"
-          customer_contacts_true: "Aktiverad"
-          producers_edit_orders_false: "Inaktiverad"
-          producers_edit_orders_true: "Aktiverad"
-          shopfront_message: "Butiksmeddelande"
-          shopfront_message_placeholder: >
-              Ett valfritt meddelande för att välkomna kunder och förklara hur man
-              handlar med dig. Om text skrivs in här kommer den att visas på en hemflik
-              när kunderna först anländer till din butik.
-          shopfront_closed_message: "Meddelande för stängd butik"
-          shopfront_closed_message_placeholder: >
-              Ett meddelande som ger en mer detaljerad förklaring varför din affär
-              är stängd/eller när kunder kan förvänta att den öppnar igen. Detta visas
-              i din affär endast när du inte har en aktiv beställningsomgång (dvs
-              när affären är stängd).
-          shopfront_category_ordering: "Sorteringsordning av kategorier i butik"
-          shopfront_category_ordering_note: "(uppifrån och ned)"
-          open_date: "Öppningsdatum"
-          close_date: "Stängningsdatum"
-          display_ordering_in_shopfront: "Visa beställning i butiksfronten:"
-          shopfront_sort_by_product: "Per produkt"
-          shopfront_sort_by_category: "Efter kategori"
-          shopfront_sort_by_producer: "Av producent"
-          shopfront_sort_by_category_placeholder: "Kategori"
-          shopfront_sort_by_producer_placeholder: "Producent"
-          display_remaining_stock: "Visa återstående lager i butiksfronten om det är lite tillgängligt"
-          display_remaining_stock_tip: "Låt kunderna veta när det bara finns 3 eller färre varor kvar."
           enabled: "Aktiverad"
           disabled: "Inaktiverad"
+          shopfront_visibility:
+            title: "Offentligt visat skyltfönster?"
+            description: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
+            public: "Offentlig"
+            registered_only: "Endast synlig för registrerade kunder"
+          home_message:
+            title: "Butiksmeddelande"
+            placeholder: "Ett valfritt meddelande för att välkomna kunder och förklara hur man handlar med dig. Om text skrivs in här kommer den att visas på en hemflik när kunderna först anländer till din butik."
+          shopfront_closed_message:
+            title: "Meddelande för stängd butik"
+            placeholder: "Ett meddelande som ger en mer detaljerad förklaring varför din affär är stängd/eller när kunder kan förvänta att den öppnar igen. Detta visas i din affär endast när du inte har en aktiv beställningsomgång (dvs när affären är stängd)."
+          product_order:
+            title: "Visa beställning i butiksfronten"
+            by_category: "Efter kategori"
+            by_producer: "Av producent"
+            category_placeholder: "Kategori"
+            producer_placeholder: "Producent"
+          low_stock_warning:
+            title: "Visa återstående lager i butiksfronten om det är lite tillgängligt"
+            description: "Låt kunderna veta när det bara finns 3 eller färre varor kvar."
+          order_cycle_order:
+            title: "Sortera butikens beställningsomgångar efter"
+            open_date: "Öppningsdatum"
+            close_date: "Stängningsdatum"
+          guest_orders:
+            title: "Gästbeställningar"
+            description: "Tillåt köp som gäst eller registrerad kund"
+            allow: "Tillåt gästköp"
+            require_login: "Kräv inloggning för att beställa"
+          change_orders:
+            title: "Ändra beställning"
+            description: "Tillåt kunder att ändra sin beställning så länge beställningsomgången är öppen."
+            not_allowed: "Lagda beställningar kan inte ändras/avbrytas"
+            allowed: "Kunder kan ändra/avbryta beställningar medan beställningsomgången är öppen"
+            require_login_warning: "Vi rekommenderar att användare måste logga in när beställningar kan ändras."
+          subscriptions:
+            title: "Prenumerationer"
+            description: "Aktivera prenumerationsfunktioner?"
+          customer_names_in_reports:
+            title: "Kundnamn i rapporter"
+            description: "Gör det möjligt för dina leverantörer att se dina kunders namn i rapporter"
+          customer_contacts_in_reports:
+            title: "Kundkontaktuppgifter i rapporter"
+            description: "Gör det möjligt för dina leverantörer att se dina kunders e-post och telefonnummer i rapporter"
+          producers_edit_orders:
+            title: "Möjlighet för producenter att redigera beställningar"
+            description: "Gör det möjligt för dina leverantörer att se beställningar som innehåller deras produkter och redigera kvantitet och vikt endast för deras egna produkter."
         social:
           legend: "Social"
           twitter_placeholder: "t.ex. @the_prof"

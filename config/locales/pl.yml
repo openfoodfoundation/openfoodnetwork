@@ -225,7 +225,6 @@ pl:
   ongoing: Trwający
   bill_address: Adres rozliczeniowy
   ship_address: Adres dostawy
-  sort_order_cycles_on_shopfront_by: "Sortuj cykle zamówień w sklepie według"
   required_fields: Wymagane pola są oznaczone gwiazdką
   select_continue: Wybierz i kontynuuj
   remove: Usuń
@@ -799,43 +798,41 @@ pl:
           create_one_button: "Utwórz je teraz"
           no_method_yet: "Nie masz jeszcze żadnych metod dostaw.."
         shop_preferences:
-          shopfront_requires_login: "Widoczna publicznie witryna sklepowa?"
-          shopfront_requires_login_tip: "Wybierz, czy klienci muszą się zalogować, aby wyświetlić witrynę sklepu, czy też jest ona widoczna dla wszystkich."
-          shopfront_requires_login_false: "Publiczny"
-          shopfront_requires_login_true: "Widoczne tylko dla zarejestrowanych klientów"
-          recommend_require_login: "Zalecamy wymaganie od użytkowników logowania się, gdy można zmienić zamówienia."
-          allow_guest_orders: "Zamówienia gości"
-          allow_guest_orders_tip: "Zezwól na płatność jako gość lub wymagaj zarejestrowanego użytkownika."
-          allow_guest_orders_false: "Wymagaj logowania do zamówienia"
-          allow_guest_orders_true: "Zezwalaj na kasę gościa"
-          allow_order_changes: "Zmienić zamówienia"
-          allow_order_changes_tip: "Pozwól klientom zmieniać zamówienie, dopóki cykl zamówień jest otwarty."
-          allow_order_changes_false: "Złożonych zamówień nie można zmienić / anulować"
-          allow_order_changes_true: "Klienci mogą zmieniać / anulować zamówienia, gdy cykl zamówień jest otwarty"
-          enable_subscriptions: "Subskrypcje"
-          enable_subscriptions_tip: "Włączyć funkcję subskrypcji?"
-          enable_subscriptions_false: "Wyłączone"
-          enable_subscriptions_true: "Włączono"
-          customer_names_in_reports: "Nazwy klientów w raportach"
-          customer_names_tip: "Umożliwiaj swoim dostawcom wyświetlanie nazw klientów w raportach"
-          customer_names_false: "Wyłączone"
-          customer_names_true: "Włączono"
-          shopfront_message: "Wiadomość dotycząca sklepu"
-          shopfront_message_placeholder: >
-              Opcjonalna wiadomość witająca klientów i wyjaśniająca, jak robić u Ciebie
-              zakupy. Jeśli tu wprowadzisz tekst, zostanie on wyświetlony na karcie
-              głównej, gdy klienci po raz pierwszy pojawią się w Twoim sklepie.
-          shopfront_closed_message: "Komunikat o zamknięciu witryny sklepowej"
-          shopfront_closed_message_placeholder: >
-              Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego
-              Twój sklep jest zamknięty i / lub kiedy klienci mogą spodziewać się
-              ponownego otwarcia. Jest to wyświetlane w Twoim sklepie tylko wtedy,
-              gdy nie masz aktywnych cykli zamówień (tj. Sklep jest zamknięty).
-          shopfront_category_ordering: "Zamawianie kategorii sklepu"
-          open_date: "Data otwarcia"
-          close_date: "Data zamknięcia"
-          shopfront_sort_by_category_placeholder: "Kategoria"
-          shopfront_sort_by_producer_placeholder: "Producent"
+          shopfront_visibility:
+            title: "Widoczna publicznie witryna sklepowa?"
+            description: "Wybierz, czy klienci muszą się zalogować, aby wyświetlić witrynę sklepu, czy też jest ona widoczna dla wszystkich."
+            public: "Publiczny"
+            registered_only: "Widoczne tylko dla zarejestrowanych klientów"
+          home_message:
+            title: "Wiadomość dotycząca sklepu"
+            placeholder: "Opcjonalna wiadomość witająca klientów i wyjaśniająca, jak robić u Ciebie zakupy. Jeśli tu wprowadzisz tekst, zostanie on wyświetlony na karcie głównej, gdy klienci po raz pierwszy pojawią się w Twoim sklepie."
+          shopfront_closed_message:
+            title: "Komunikat o zamknięciu witryny sklepowej"
+            placeholder: "Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego Twój sklep jest zamknięty i / lub kiedy klienci mogą spodziewać się ponownego otwarcia. Jest to wyświetlane w Twoim sklepie tylko wtedy, gdy nie masz aktywnych cykli zamówień (tj. Sklep jest zamknięty)."
+          product_order:
+            category_placeholder: "Kategoria"
+            producer_placeholder: "Producent"
+          order_cycle_order:
+            title: "Sortuj cykle zamówień w sklepie według"
+            open_date: "Data otwarcia"
+            close_date: "Data zamknięcia"
+          guest_orders:
+            title: "Zamówienia gości"
+            description: "Zezwól na płatność jako gość lub wymagaj zarejestrowanego użytkownika."
+            allow: "Zezwalaj na kasę gościa"
+            require_login: "Wymagaj logowania do zamówienia"
+          change_orders:
+            title: "Zmienić zamówienia"
+            description: "Pozwól klientom zmieniać zamówienie, dopóki cykl zamówień jest otwarty."
+            not_allowed: "Złożonych zamówień nie można zmienić / anulować"
+            allowed: "Klienci mogą zmieniać / anulować zamówienia, gdy cykl zamówień jest otwarty"
+            require_login_warning: "Zalecamy wymaganie od użytkowników logowania się, gdy można zmienić zamówienia."
+          subscriptions:
+            title: "Subskrypcje"
+            description: "Włączyć funkcję subskrypcji?"
+          customer_names_in_reports:
+            title: "Nazwy klientów w raportach"
+            description: "Umożliwiaj swoim dostawcom wyświetlanie nazw klientów w raportach"
         social:
           legend: "Społeczności"
           twitter_placeholder: "np. @profesor"

@@ -398,7 +398,6 @@ ru:
   ongoing: Постоянный
   bill_address: Платежный Адрес
   ship_address: Адрес доставки
-  sort_order_cycles_on_shopfront_by: "Сортировать Циклы Заказов На Витрине Магазина По"
   required_fields: Обязательные поля отмечены звёздочкой
   select_continue: Выбрать и Продолжить
   remove: Удалить
@@ -1142,56 +1141,49 @@ ru:
           no_method_yet: "У Вас еще нет способов доставки."
         shop_preferences:
           legend: "Параметры Магазина"
-          shopfront_requires_login: "Публично видимая витрина?"
-          shopfront_requires_login_tip: "Выберите, должны ли клиенты входить в систему для просмотра витрины магазина или она будет видна всем."
-          shopfront_requires_login_false: "Доступно всем"
-          shopfront_requires_login_true: "Только зарегистрированным клиентам"
-          recommend_require_login: "Мы рекомендуем требовать от пользователей входа в систему, когда разрешено отменять заказы."
-          allow_guest_orders: "Гостевые заказы"
-          allow_guest_orders_tip: "Разрешить оформление заказа в качестве гостя или требовать от пользователя регистрации."
-          allow_guest_orders_false: "Требуется логин для заказа"
-          allow_guest_orders_true: "Разрешить гостям оформлять заказ"
-          allow_order_changes: "Изменить заказы"
-          allow_order_changes_tip: "Разрешить клиентам изменять свой заказ, пока открыт цикл заказа."
-          allow_order_changes_false: "Размещенные заказы не могут быть изменены / отменены"
-          allow_order_changes_true: "Клиенты могут изменять / отменять заказы, пока открыт цикл заказа"
-          enable_subscriptions: "Подписки"
-          enable_subscriptions_tip: "Включить функцию подписки?"
-          enable_subscriptions_false: "Выключено"
-          enable_subscriptions_true: "Включено"
-          customer_names_in_reports: "Имена Клиентов в Отчётах"
-          customer_names_tip: "Разрешите поставщикам видеть имена клиентов в отчетах"
-          customer_names_false: "Выключено"
-          customer_names_true: "Включено"
-          customer_contacts_false: "Выключено"
-          customer_contacts_true: "Включено"
-          producers_edit_orders_false: "Выключено"
-          producers_edit_orders_true: "Включено"
-          shopfront_message: "Сообщение Витрины"
-          shopfront_message_placeholder: >
-              Дополнительное сообщение, чтобы приветствовать клиентов и объяснить,
-              как у Вас делать покупки. Если текст введен здесь, он будет отображаться
-              на главной вкладке, когда клиенты впервые придут в Ваш магазин.
-          shopfront_closed_message: "Сообщение при Закрытии Витрины"
-          shopfront_closed_message_placeholder: >
-              Сообщение, которое содержит более подробное объяснение того, почему
-              Ваш магазин закрыт и/или когда клиенты могут ожидать его открытия. Это
-              отображается в Вашем магазине, только когда у Вас нет активных циклов
-              заказов (т.е. Магазин закрыт).
-          shopfront_category_ordering: "Порядок Расположения Категорий на Витрине"
-          shopfront_category_ordering_note: "(сверху вниз)"
-          open_date: "Время Открытия"
-          close_date: "Время Закрытия"
-          display_ordering_in_shopfront: "Отображение заказа на витрине:"
-          shopfront_sort_by_product: "По товару"
-          shopfront_sort_by_category: "По категории"
-          shopfront_sort_by_producer: "По производителю"
-          shopfront_sort_by_category_placeholder: "Категория"
-          shopfront_sort_by_producer_placeholder: "Производитель"
-          display_remaining_stock: "Отображать остатки товаров на витрине магазина, если их мало"
-          display_remaining_stock_tip: "Сообщить покупателям, когда товара останется 3 или меньше."
           enabled: "Включено"
           disabled: "Выключено"
+          shopfront_visibility:
+            title: "Публично видимая витрина?"
+            description: "Выберите, должны ли клиенты входить в систему для просмотра витрины магазина или она будет видна всем."
+            public: "Доступно всем"
+            registered_only: "Только зарегистрированным клиентам"
+          home_message:
+            title: "Сообщение Витрины"
+            placeholder: "Дополнительное сообщение, чтобы приветствовать клиентов и объяснить, как у Вас делать покупки. Если текст введен здесь, он будет отображаться на главной вкладке, когда клиенты впервые придут в Ваш магазин."
+          shopfront_closed_message:
+            title: "Сообщение при Закрытии Витрины"
+            placeholder: "Сообщение, которое содержит более подробное объяснение того, почему Ваш магазин закрыт и/или когда клиенты могут ожидать его открытия. Это отображается в Вашем магазине, только когда у Вас нет активных циклов заказов (т.е. Магазин закрыт)."
+          product_order:
+            title: "Отображение заказа на витрине"
+            by_category: "По категории"
+            by_producer: "По производителю"
+            category_placeholder: "Категория"
+            producer_placeholder: "Производитель"
+          low_stock_warning:
+            title: "Отображать остатки товаров на витрине магазина, если их мало"
+            description: "Сообщить покупателям, когда товара останется 3 или меньше."
+          order_cycle_order:
+            title: "Сортировать Циклы Заказов На Витрине Магазина По"
+            open_date: "Время Открытия"
+            close_date: "Время Закрытия"
+          guest_orders:
+            title: "Гостевые заказы"
+            description: "Разрешить оформление заказа в качестве гостя или требовать от пользователя регистрации."
+            allow: "Разрешить гостям оформлять заказ"
+            require_login: "Требуется логин для заказа"
+          change_orders:
+            title: "Изменить заказы"
+            description: "Разрешить клиентам изменять свой заказ, пока открыт цикл заказа."
+            not_allowed: "Размещенные заказы не могут быть изменены / отменены"
+            allowed: "Клиенты могут изменять / отменять заказы, пока открыт цикл заказа"
+            require_login_warning: "Мы рекомендуем требовать от пользователей входа в систему, когда разрешено отменять заказы."
+          subscriptions:
+            title: "Подписки"
+            description: "Включить функцию подписки?"
+          customer_names_in_reports:
+            title: "Имена Клиентов в Отчётах"
+            description: "Разрешите поставщикам видеть имена клиентов в отчетах"
         social:
           legend: "Социальные сети"
           twitter_placeholder: "напр. @the_prof"

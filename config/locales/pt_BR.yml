@@ -515,7 +515,6 @@ pt_BR:
   ongoing: Em progresso
   bill_address: Endereço de Cobrança
   ship_address: Endereço de Entrega
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Pedidos na Loja Virtual Por"
   required_fields: Campos obrigatórios são indicados com um asterisco
   select_continue: Selecionar e continuar
   remove: Remover
@@ -1336,59 +1335,55 @@ pt_BR:
           no_method_yet: "Você ainda não tem nenhum método de envio."
         shop_preferences:
           legend: "Preferências da loja"
-          shopfront_requires_login: "Loja virtual visível ao público?"
-          shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
-          shopfront_requires_login_false: "Publico"
-          shopfront_requires_login_true: "Disponível somente para clientes registrados"
-          recommend_require_login: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
-          allow_guest_orders: "Pedidos de convidados"
-          allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
-          allow_guest_orders_false: "Requisitar o login para fazer pedidos"
-          allow_guest_orders_true: "Permitir checkout de convidados"
-          allow_order_changes: "Mudar pedidos"
-          allow_order_changes_tip: "Permitir que os compradores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
-          allow_order_changes_false: "Pedidos enviados não podem ser mudados ou cancelados."
-          allow_order_changes_true: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
-          enable_subscriptions: "Assinaturas"
-          enable_subscriptions_tip: "Ativar funcionalidade de inscrições?"
-          enable_subscriptions_false: "Desativado"
-          enable_subscriptions_true: "ativado"
-          customer_names_in_reports: "Nomes dos Clientes nos Relatórios"
-          customer_names_tip: "Permitir que seus fornecedores vejam os nomes dos clientes nos relatórios"
-          producers_to_edit_orders: "Permitir que produtores editem pedidos"
-          producers_to_edit_orders_tip: "Permitir que seus fornecedores vejam os pedidos com seus produtos e editem quantidade e peso apenas dos próprios produtos."
-          customer_names_false: "Desativado"
-          customer_names_true: "Ativado"
-          customer_contacts_in_reports: "Dados de contato dos clientes nos relatórios"
-          customer_contacts_tip: "Permitir que os fornecedores vejam e-mail e telefone dos clientes nos relatórios"
-          customer_contacts_false: "Desativado"
-          customer_contacts_true: "Ativado"
-          producers_edit_orders_false: "Desativado"
-          producers_edit_orders_true: "Ativado"
-          shopfront_message: "Mensagem da loja virtual"
-          shopfront_message_placeholder: >
-              Uma mensagem opcional para dar as boas-vindas aos clientes e explicar
-              como comprar com você. Se o texto for inserido aqui, ele será exibido
-              em uma guia inicial quando os clientes chegarem à sua loja virtual.
-          shopfront_closed_message: "Mensagem de loja virtual fechada"
-          shopfront_closed_message_placeholder: >
-              Uma mensagem que forneça uma explicação detalhada sobre o porque de
-              a loja estar fechada e quando os compradores podem esperar que abra
-              novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo.
-          shopfront_category_ordering: "Organização da Loja Virtual por Categorias"
-          shopfront_category_ordering_note: "(de cima para baixo)"
-          open_date: "Dia de abertura"
-          close_date: "Dia de fechamento"
-          display_ordering_in_shopfront: "Exibição da ordem na vitrine:"
-          shopfront_sort_by_product: "Por produto"
-          shopfront_sort_by_category: "Por categoria"
-          shopfront_sort_by_producer: "Por produtor"
-          shopfront_sort_by_category_placeholder: "Categoria"
-          shopfront_sort_by_producer_placeholder: "Produtor"
-          display_remaining_stock: "Exibir estoque restante na vitrine quando estiver baixo"
-          display_remaining_stock_tip: "Avise os compradores quando restarem 3 ou menos itens."
           enabled: "Ativado"
           disabled: "Desativado"
+          shopfront_visibility:
+            title: "Loja virtual visível ao público?"
+            description: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
+            public: "Publico"
+            registered_only: "Disponível somente para clientes registrados"
+          home_message:
+            title: "Mensagem da loja virtual"
+            placeholder: "Uma mensagem opcional para dar as boas-vindas aos clientes e explicar como comprar com você. Se o texto for inserido aqui, ele será exibido em uma guia inicial quando os clientes chegarem à sua loja virtual."
+          shopfront_closed_message:
+            title: "Mensagem de loja virtual fechada"
+            placeholder: "Uma mensagem que forneça uma explicação detalhada sobre o porque de a loja estar fechada e quando os compradores podem esperar que abra novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo."
+          product_order:
+            title: "Exibição da ordem na vitrine"
+            by_category: "Por categoria"
+            by_producer: "Por produtor"
+            category_placeholder: "Categoria"
+            producer_placeholder: "Produtor"
+          low_stock_warning:
+            title: "Exibir estoque restante na vitrine quando estiver baixo"
+            description: "Avise os compradores quando restarem 3 ou menos itens."
+          order_cycle_order:
+            title: "Ordenar Ciclos de Pedidos na Loja Virtual Por"
+            open_date: "Dia de abertura"
+            close_date: "Dia de fechamento"
+          guest_orders:
+            title: "Pedidos de convidados"
+            description: "Permitir o checkout como convidado, ou requisitar um usuário registrado."
+            allow: "Permitir checkout de convidados"
+            require_login: "Requisitar o login para fazer pedidos"
+          change_orders:
+            title: "Mudar pedidos"
+            description: "Permitir que os compradores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
+            not_allowed: "Pedidos enviados não podem ser mudados ou cancelados."
+            allowed: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
+            require_login_warning: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
+          subscriptions:
+            title: "Assinaturas"
+            description: "Ativar funcionalidade de inscrições?"
+          customer_names_in_reports:
+            title: "Nomes dos Clientes nos Relatórios"
+            description: "Permitir que seus fornecedores vejam os nomes dos clientes nos relatórios"
+          customer_contacts_in_reports:
+            title: "Dados de contato dos clientes nos relatórios"
+            description: "Permitir que os fornecedores vejam e-mail e telefone dos clientes nos relatórios"
+          producers_edit_orders:
+            title: "Permitir que produtores editem pedidos"
+            description: "Permitir que seus fornecedores vejam os pedidos com seus produtos e editem quantidade e peso apenas dos próprios produtos."
         social:
           legend: "Social"
           twitter_placeholder: "ex:  @o_prof"

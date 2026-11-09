@@ -322,7 +322,6 @@ es_CR:
   ongoing: En marcha
   bill_address: Dirección de facturación
   ship_address: Dirección de envío
-  sort_order_cycles_on_shopfront_by: "Ordenar ciclos de pedidos en tienda por"
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Seleccione y Continue
   remove: Eliminar
@@ -999,56 +998,49 @@ es_CR:
           no_method_yet: "Todavía no tienes ningún método de envío."
         shop_preferences:
           legend: "Configuración de la tienda"
-          shopfront_requires_login: "¿Quieres que la tienda sea visible y pública?"
-          shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
-          shopfront_requires_login_false: "Pública"
-          shopfront_requires_login_true: "Visible solo para consumidores registrados"
-          recommend_require_login: "Recomendamos requerir a los usuarios que accedan cuando sus pedidos puedan cambiar."
-          allow_guest_orders: "Pedidos de invitados"
-          allow_guest_orders_tip: "Permitir pedidos como invitado o solo como usuarios registrados."
-          allow_guest_orders_false: "Se necesita hacer login para realizar un pedido"
-          allow_guest_orders_true: "Permitir pedidos a invitados"
-          allow_order_changes: "Cambiar pedidos"
-          allow_order_changes_tip: "Permitir a los clientes cambiar sus pedidos mientras que el ciclo de pedido siga abierto."
-          allow_order_changes_false: "Los pedidos efectuados no pueden ser cambiados / cancelados"
-          allow_order_changes_true: "Los clientes pueden cambiar / cancelar pedidos mientras el ciclo de pedido está abierto"
-          enable_subscriptions: "Suscripciones"
-          enable_subscriptions_tip: "¿Habilitar la funcionalidad de suscripciones?"
-          enable_subscriptions_false: "Deshabilitado"
-          enable_subscriptions_true: "Habilitado"
-          customer_names_in_reports: "Nombres de clientes en informes"
-          customer_names_tip: "Permita que sus proveedores vean los nombres de sus clientes en los informes"
-          customer_names_false: "Deshabilitado"
-          customer_names_true: "Habilitado"
-          customer_contacts_false: "Deshabilitado"
-          customer_contacts_true: "Habilitado"
-          producers_edit_orders_false: "Deshabilitado"
-          producers_edit_orders_true: "Habilitado"
-          shopfront_message: "Mensaje de la tienda"
-          shopfront_message_placeholder: >
-              Mensaje de bienvenida opcional para compradores, explica como comprar
-              en el sitio. Si el texto se agrega en este campo, va a ser mostrado
-              en la pestaña de inicio cuando los clientes ingresen por primera vez
-              a la tienda.
-          shopfront_closed_message: "Mensaje de tienda cerrada"
-          shopfront_closed_message_placeholder: >
-              Un mensaje que proporciona una explicación más detallada sobre por qué
-              tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra
-              en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la
-              tienda está cerrada).
-          shopfront_category_ordering: "Orden de las categorías de la tienda"
-          shopfront_category_ordering_note: "(de arriba hacia abajo)"
-          open_date: "Fecha de Inicio"
-          close_date: "Fecha de Finalización"
-          display_ordering_in_shopfront: "Mostrar pedidos en el escaparate:"
-          shopfront_sort_by_category: "Por categoría"
-          shopfront_sort_by_producer: "Por productor"
-          shopfront_sort_by_category_placeholder: "Categoría"
-          shopfront_sort_by_producer_placeholder: "Productor"
-          display_remaining_stock: "Muestre el stock restante en el escaparate si hay poco disponible"
-          display_remaining_stock_tip: "Informe a los compradores cuando solo queden 3 artículos o menos."
           enabled: "Habilitado"
           disabled: "Deshabilitado"
+          shopfront_visibility:
+            title: "¿Quieres que la tienda sea visible y pública?"
+            description: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
+            public: "Pública"
+            registered_only: "Visible solo para consumidores registrados"
+          home_message:
+            title: "Mensaje de la tienda"
+            placeholder: "Mensaje de bienvenida opcional para compradores, explica como comprar en el sitio. Si el texto se agrega en este campo, va a ser mostrado en la pestaña de inicio cuando los clientes ingresen por primera vez a la tienda."
+          shopfront_closed_message:
+            title: "Mensaje de tienda cerrada"
+            placeholder: "Un mensaje que proporciona una explicación más detallada sobre por qué tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la tienda está cerrada)."
+          product_order:
+            title: "Mostrar pedidos en el escaparate"
+            by_category: "Por categoría"
+            by_producer: "Por productor"
+            category_placeholder: "Categoría"
+            producer_placeholder: "Productor"
+          low_stock_warning:
+            title: "Muestre el stock restante en el escaparate si hay poco disponible"
+            description: "Informe a los compradores cuando solo queden 3 artículos o menos."
+          order_cycle_order:
+            title: "Ordenar ciclos de pedidos en tienda por"
+            open_date: "Fecha de Inicio"
+            close_date: "Fecha de Finalización"
+          guest_orders:
+            title: "Pedidos de invitados"
+            description: "Permitir pedidos como invitado o solo como usuarios registrados."
+            allow: "Permitir pedidos a invitados"
+            require_login: "Se necesita hacer login para realizar un pedido"
+          change_orders:
+            title: "Cambiar pedidos"
+            description: "Permitir a los clientes cambiar sus pedidos mientras que el ciclo de pedido siga abierto."
+            not_allowed: "Los pedidos efectuados no pueden ser cambiados / cancelados"
+            allowed: "Los clientes pueden cambiar / cancelar pedidos mientras el ciclo de pedido está abierto"
+            require_login_warning: "Recomendamos requerir a los usuarios que accedan cuando sus pedidos puedan cambiar."
+          subscriptions:
+            title: "Suscripciones"
+            description: "¿Habilitar la funcionalidad de suscripciones?"
+          customer_names_in_reports:
+            title: "Nombres de clientes en informes"
+            description: "Permita que sus proveedores vean los nombres de sus clientes en los informes"
         social:
           legend: "Social"
           twitter_placeholder: "ej: the_prof"

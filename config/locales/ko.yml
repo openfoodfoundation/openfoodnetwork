@@ -327,7 +327,6 @@ ko:
   ongoing: 진행중
   bill_address: 청구서 발송지
   ship_address: 배송지 주소
-  sort_order_cycles_on_shopfront_by: "매장 내 주문 주기 정렬 기준"
   required_fields: 필수 필드는 별도로 표기됩니다.
   select_continue: 선택 후 계속
   remove: 제거
@@ -991,52 +990,49 @@ ko:
           no_method_yet: "아직 배송 방법이 없습니다."
         shop_preferences:
           legend: "상점 기본 설정"
-          shopfront_requires_login: "눈에 보이는 상점으로 공개할까요?"
-          shopfront_requires_login_tip: "고객이 상점을 보도록 로그인하거나 모든 사람이 볼 수 있도록 할 지 선택해야 합니다."
-          shopfront_requires_login_false: "공용"
-          shopfront_requires_login_true: "등록된 고객만 볼 수 있습니다."
-          recommend_require_login: "주문을 변경할 수 있을 때 사용자에게 로그인을 요구하는 것이 좋습니다."
-          allow_guest_orders: "고객 주문"
-          allow_guest_orders_tip: "고객의 체크아웃을 허용하거나 등록된 사용자가 필요합니다."
-          allow_guest_orders_false: "주문을 위해서는 로그인이 필요합니다"
-          allow_guest_orders_true: "고객의 체크아웃 허용"
-          allow_order_changes: "주문 전환"
-          allow_order_changes_tip: "주문 주기가 열려 있는 동안 고객이 주문을 변경할 수 있도록 허용합니다."
-          allow_order_changes_false: "배치된 주문은 변경 / 취소 할 수 없습니다."
-          allow_order_changes_true: "고객은 주문 주기가 열려 있는 동안 주문을 변경 / 취소할 수 있습니다."
-          enable_subscriptions: "구독"
-          enable_subscriptions_tip: "구독 기능을 사용하시겠습니까?"
-          enable_subscriptions_false: "비활성화"
-          enable_subscriptions_true: "활성화"
-          customer_names_in_reports: "보고서내 고객 이름"
-          customer_names_tip: "공급업체가 보고서에서 고객 이름을 볼 수 있도록 지원"
-          customer_names_false: "비활성화"
-          customer_names_true: "활성화"
-          customer_contacts_false: "비활성화"
-          customer_contacts_true: "활성화"
-          producers_edit_orders_false: "비활성화"
-          producers_edit_orders_true: "활성화"
-          shopfront_message: "상점 메세지"
-          shopfront_message_placeholder: >
-              고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
-              때 홈 탭에 표시됩니다.
-          shopfront_closed_message: "매장 폐쇄 메시지"
-          shopfront_closed_message_placeholder: >
-              가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는
-              메시지입니다. 활성화된 주문 주기가 없는 경우에만 해당 가게에 표시됩니다. (예. 가게가 문을 닫았습니다. )
-          shopfront_category_ordering: "매장 카테고리 주문"
-          shopfront_category_ordering_note: "(상하정렬)"
-          open_date: "개업일"
-          close_date: "휴무일"
-          display_ordering_in_shopfront: "매장 내 주문 표시 :"
-          shopfront_sort_by_category: "카테고리별 정렬"
-          shopfront_sort_by_producer: "생산자별 정렬"
-          shopfront_sort_by_category_placeholder: "목록"
-          shopfront_sort_by_producer_placeholder: "제공자"
-          display_remaining_stock: "재고가 부족할 경우 매장 전면에 남은 재고 표시"
-          display_remaining_stock_tip: "3개 이하의 물건만 남아 있을 때 손님들에게 알려주세요."
           enabled: "활성화"
           disabled: "비활성화"
+          shopfront_visibility:
+            title: "눈에 보이는 상점으로 공개할까요?"
+            description: "고객이 상점을 보도록 로그인하거나 모든 사람이 볼 수 있도록 할 지 선택해야 합니다."
+            public: "공용"
+            registered_only: "등록된 고객만 볼 수 있습니다."
+          home_message:
+            title: "상점 메세지"
+            placeholder: "고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을 때 홈 탭에 표시됩니다."
+          shopfront_closed_message:
+            title: "매장 폐쇄 메시지"
+            placeholder: "가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는 메시지입니다. 활성화된 주문 주기가 없는 경우에만 해당 가게에 표시됩니다. (예. 가게가 문을 닫았습니다. )"
+          product_order:
+            title: "매장 내 주문 표시"
+            by_category: "카테고리별 정렬"
+            by_producer: "생산자별 정렬"
+            category_placeholder: "목록"
+            producer_placeholder: "제공자"
+          low_stock_warning:
+            title: "재고가 부족할 경우 매장 전면에 남은 재고 표시"
+            description: "3개 이하의 물건만 남아 있을 때 손님들에게 알려주세요."
+          order_cycle_order:
+            title: "매장 내 주문 주기 정렬 기준"
+            open_date: "개업일"
+            close_date: "휴무일"
+          guest_orders:
+            title: "고객 주문"
+            description: "고객의 체크아웃을 허용하거나 등록된 사용자가 필요합니다."
+            allow: "고객의 체크아웃 허용"
+            require_login: "주문을 위해서는 로그인이 필요합니다"
+          change_orders:
+            title: "주문 전환"
+            description: "주문 주기가 열려 있는 동안 고객이 주문을 변경할 수 있도록 허용합니다."
+            not_allowed: "배치된 주문은 변경 / 취소 할 수 없습니다."
+            allowed: "고객은 주문 주기가 열려 있는 동안 주문을 변경 / 취소할 수 있습니다."
+            require_login_warning: "주문을 변경할 수 있을 때 사용자에게 로그인을 요구하는 것이 좋습니다."
+          subscriptions:
+            title: "구독"
+            description: "구독 기능을 사용하시겠습니까?"
+          customer_names_in_reports:
+            title: "보고서내 고객 이름"
+            description: "공급업체가 보고서에서 고객 이름을 볼 수 있도록 지원"
         social:
           legend: "사회성"
           twitter_placeholder: "예. @the_prof"

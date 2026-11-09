@@ -389,7 +389,6 @@ mr:
   ongoing: चालू आहे
   bill_address: बिलिंग पत्ता
   ship_address: शिपिंग पत्ता
-  sort_order_cycles_on_shopfront_by: "यानुसार शॉपफ्रंटवर ऑर्डर सायकल क्रमवारी लावा"
   required_fields: आवश्यक फील्ड तारकाने दर्शविले जातात
   select_continue: निवडा आणि पुढे जा
   remove: काढा
@@ -1086,55 +1085,49 @@ mr:
           no_method_yet: "तुमच्याकडे अद्याप कोणत्याही शिपिंग पद्धती नाहीत."
         shop_preferences:
           legend: "शॉप प्राधान्ये"
-          shopfront_requires_login: "सर्वांना दिसणारी शॉपफ्रंट ?"
-          shopfront_requires_login_tip: "ग्राहकांनी शॉपफ्रंट पाहण्यासाठी लॉग इन करणे आवश्यक आहे की ते प्रत्येकासाठी दृश्यमान असेल ते निवडा."
-          shopfront_requires_login_false: "सार्वजनिक"
-          shopfront_requires_login_true: "केवळ नोंदणीकृत ग्राहकांसाठी दृश्यमान"
-          recommend_require_login: "जेव्हा ऑर्डर्स बदलल्या जाऊ शकतात तेव्हा वापरकर्त्यांनी लॉग इन करण्याची आम्ही शिफारस करतो."
-          allow_guest_orders: "गेस्ट ऑर्डर्स"
-          allow_guest_orders_tip: "गेस्ट म्हणून चेकआउटला अनुमती द्यावी किंवा नोंदणीकृत वापरकर्ता बंधनकारक करावा. "
-          allow_guest_orders_false: "ऑर्डर करण्यासाठी लॉगिन बंधनकारक करावे"
-          allow_guest_orders_true: "गेस्ट चेकआऊटला अनुमति द्यावी"
-          allow_order_changes: "ऑर्डर्स बदलण्यात याव्यात"
-          allow_order_changes_tip: "जोपर्यंत ऑर्डर सायकल खुली आहे तोपर्यंत ग्राहकांना त्यांची ऑर्डर बदलण्याची परवानगी द्यावी."
-          allow_order_changes_false: "दिलेल्या ऑर्डर्स बदलल्या / रद्द केल्या जाऊ शकत नाहीत"
-          allow_order_changes_true: "ऑर्डर सायकल चालू असताना ग्राहक ऑर्डर बदलू/रद्द करू शकतात"
-          enable_subscriptions: "सबस्क्रिप्शन्स"
-          enable_subscriptions_tip: "सबस्क्रिप्शन्स सक्षम करायची?"
-          enable_subscriptions_false: "डिसेबल्ड आहे"
-          enable_subscriptions_true: "सक्रिय केले"
-          customer_names_in_reports: "रिपोर्टस् मधील ग्राहकांची नावे"
-          customer_names_tip: "रिपोर्टस् मध्ये तुमच्या ग्राहकांची नावे पाहण्यासाठी तुमच्या पुरवठादारांना सक्षम करा"
-          customer_names_false: "डिसेबल्ड आहे"
-          customer_names_true: "सक्रिय केले"
-          customer_contacts_false: "डिसेबल्ड आहे"
-          customer_contacts_true: "सक्रिय केले"
-          producers_edit_orders_false: "डिसेबल्ड आहे"
-          producers_edit_orders_true: "सक्रिय केले"
-          shopfront_message: "शॉपफ्रंट संदेश"
-          shopfront_message_placeholder: >
-              ग्राहकांसाठी स्वागतपर तसेच तुमच्याकडे खरेदी कशी करावी हे स्पष्ट करणारा
-              पर्यायी संदेश. येथे मजकूर लिहिल्यास, जेव्हा ग्राहक प्रथम तुमच्या शॉपफ्रंटवर
-              येतील तेव्हा तो होम टॅबमध्ये दर्शवला जाईल.
-          shopfront_closed_message: "शॉपफ्रंट बंद संदेश"
-          shopfront_closed_message_placeholder: >
-              तुमचे शॉप का बंद आहे आणि/किंवा ते पुन्हा कधी उघडेल याबद्दल अधिक तपशीलवार
-              स्पष्टीकरण देणारा संदेश. हे तुमच्या दुकानावर फक्त तेव्हाच दाखवले जाते
-              जेव्हा तुमच्याकडे कोणतीही सक्रिय ऑर्डर सायकल नसते (म्हणजे दुकान बंद
-              असते).
-          shopfront_category_ordering: "शॉपफ्रंट श्रेणी ऑर्डरिंग"
-          shopfront_category_ordering_note: "(वरपासून खालपर्यंत)"
-          open_date: "उघडण्याची तारीख"
-          close_date: "बंद करण्याची तारीख"
-          display_ordering_in_shopfront: "शॉपफ्रंटमध्ये ऑर्डरिंग दर्शवा. "
-          shopfront_sort_by_category: "श्रेणीनुसार"
-          shopfront_sort_by_producer: "उत्पादकानुसार"
-          shopfront_sort_by_category_placeholder: "श्रेणी"
-          shopfront_sort_by_producer_placeholder: "उत्पादक"
-          display_remaining_stock: "उपलब्धता कमी असल्यास उपलब्ध स्टॉक दुकानात प्रदर्शित करा"
-          display_remaining_stock_tip: "फक्त 3 किंवा त्यापेक्षा कमी वस्तू शिल्लक असल्यास खरेदीदारांना सूचित करा. "
           enabled: "सक्रिय केले"
           disabled: "डिसेबल्ड आहे"
+          shopfront_visibility:
+            title: "सर्वांना दिसणारी शॉपफ्रंट ?"
+            description: "ग्राहकांनी शॉपफ्रंट पाहण्यासाठी लॉग इन करणे आवश्यक आहे की ते प्रत्येकासाठी दृश्यमान असेल ते निवडा."
+            public: "सार्वजनिक"
+            registered_only: "केवळ नोंदणीकृत ग्राहकांसाठी दृश्यमान"
+          home_message:
+            title: "शॉपफ्रंट संदेश"
+            placeholder: "ग्राहकांसाठी स्वागतपर तसेच तुमच्याकडे खरेदी कशी करावी हे स्पष्ट करणारा पर्यायी संदेश. येथे मजकूर लिहिल्यास, जेव्हा ग्राहक प्रथम तुमच्या शॉपफ्रंटवर येतील तेव्हा तो होम टॅबमध्ये दर्शवला जाईल."
+          shopfront_closed_message:
+            title: "शॉपफ्रंट बंद संदेश"
+            placeholder: "तुमचे शॉप का बंद आहे आणि/किंवा ते पुन्हा कधी उघडेल याबद्दल अधिक तपशीलवार स्पष्टीकरण देणारा संदेश. हे तुमच्या दुकानावर फक्त तेव्हाच दाखवले जाते जेव्हा तुमच्याकडे कोणतीही सक्रिय ऑर्डर सायकल नसते (म्हणजे दुकान बंद असते)."
+          product_order:
+            title: "शॉपफ्रंटमध्ये ऑर्डरिंग दर्शवा."
+            by_category: "श्रेणीनुसार"
+            by_producer: "उत्पादकानुसार"
+            category_placeholder: "श्रेणी"
+            producer_placeholder: "उत्पादक"
+          low_stock_warning:
+            title: "उपलब्धता कमी असल्यास उपलब्ध स्टॉक दुकानात प्रदर्शित करा"
+            description: "फक्त 3 किंवा त्यापेक्षा कमी वस्तू शिल्लक असल्यास खरेदीदारांना सूचित करा."
+          order_cycle_order:
+            title: "यानुसार शॉपफ्रंटवर ऑर्डर सायकल क्रमवारी लावा"
+            open_date: "उघडण्याची तारीख"
+            close_date: "बंद करण्याची तारीख"
+          guest_orders:
+            title: "गेस्ट ऑर्डर्स"
+            description: "गेस्ट म्हणून चेकआउटला अनुमती द्यावी किंवा नोंदणीकृत वापरकर्ता बंधनकारक करावा."
+            allow: "गेस्ट चेकआऊटला अनुमति द्यावी"
+            require_login: "ऑर्डर करण्यासाठी लॉगिन बंधनकारक करावे"
+          change_orders:
+            title: "ऑर्डर्स बदलण्यात याव्यात"
+            description: "जोपर्यंत ऑर्डर सायकल खुली आहे तोपर्यंत ग्राहकांना त्यांची ऑर्डर बदलण्याची परवानगी द्यावी."
+            not_allowed: "दिलेल्या ऑर्डर्स बदलल्या / रद्द केल्या जाऊ शकत नाहीत"
+            allowed: "ऑर्डर सायकल चालू असताना ग्राहक ऑर्डर बदलू/रद्द करू शकतात"
+            require_login_warning: "जेव्हा ऑर्डर्स बदलल्या जाऊ शकतात तेव्हा वापरकर्त्यांनी लॉग इन करण्याची आम्ही शिफारस करतो."
+          subscriptions:
+            title: "सबस्क्रिप्शन्स"
+            description: "सबस्क्रिप्शन्स सक्षम करायची?"
+          customer_names_in_reports:
+            title: "रिपोर्टस् मधील ग्राहकांची नावे"
+            description: "रिपोर्टस् मध्ये तुमच्या ग्राहकांची नावे पाहण्यासाठी तुमच्या पुरवठादारांना सक्षम करा"
         social:
           legend: "सामाजिक"
           twitter_placeholder: "उदा. @the_prof"

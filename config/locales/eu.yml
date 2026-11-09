@@ -432,7 +432,6 @@ eu:
   ongoing: Martxan
   bill_address: Fakturazio-helbidea
   ship_address: Bidalketa-helbidea
-  sort_order_cycles_on_shopfront_by: "Dendako eskaeren zikloak ordenatzea"
   required_fields: Nahitaezko eremuak izartxo batekin adierazten dira
   select_continue: Hautatu eta jarraitu
   remove: Ezabatu
@@ -1182,56 +1181,49 @@ eu:
           no_method_yet: "Oraindik ez duzu bidaltzeko metodorik."
         shop_preferences:
           legend: "Dendaren konfigurazioa"
-          shopfront_requires_login: "Denda ikusgai eta publikoa izatea nahi duzu?"
-          shopfront_requires_login_tip: "Aukeratu bezeroek saioa hasi behar duten denda ikusteko edo denek ikusteko modukoa den."
-          shopfront_requires_login_false: "Publikoa"
-          shopfront_requires_login_true: "Erregistratutako kontsumitzaileentzat bakarrik ikus daiteke"
-          recommend_require_login: "Gomendatzen dugu erabiltzaileei sartzeko eskatzea beren eskaerak alda daitezkeenean."
-          allow_guest_orders: "Gonbidatuen eskaerak"
-          allow_guest_orders_tip: "Gonbidatu gisa edo erregistratutako erabiltzaile gisa bakarrik egin daitezkeen eskaerak baimentzea."
-          allow_guest_orders_false: "Eskaera bat egiteko logina egin behar da"
-          allow_guest_orders_true: "Gonbidatuei eskaerak baimentzea"
-          allow_order_changes: "Eskaerak aldatu"
-          allow_order_changes_tip: "Bezeroei eskaerak aldatzen uztea, eskaera-zikloak irekita jarraitzen duen bitartean."
-          allow_order_changes_false: "Egindako eskaerak ezin dira aldatu/ezeztatu"
-          allow_order_changes_true: "Bezeroek eskaerak alda/bertan behera utz ditzakete eskaera-zikloa irekita dagoen bitartean"
-          enable_subscriptions: "Harpidetzak"
-          enable_subscriptions_tip: "Harpidetzen funtzionaltasuna gaitu?"
-          enable_subscriptions_false: "Desgaitua"
-          enable_subscriptions_true: "Gaituta"
-          customer_names_in_reports: "Kontsumitzaileen izenak txostenetan"
-          customer_names_tip: "Utzi hornitzaileei txostenetan kontsumitzaileen izenak ikusten"
-          customer_names_false: "Desgaitua"
-          customer_names_true: "Gaituta"
-          customer_contacts_false: "Desgaitua"
-          customer_contacts_true: "Gaituta"
-          producers_edit_orders_false: "Desgaitua"
-          producers_edit_orders_true: "Gaituta"
-          shopfront_message: "Dendaren mezua"
-          shopfront_message_placeholder: >
-              Erosleentzako aukerako ongietorri-mezua, gunean nola erosi  behar den
-              azaltzen du. Testua eremu horretan gehitzen bada,  hasierako erlaitzean
-              erakutsiko da bezeroak dendara lehen aldiz  sartzen direnean.
-          shopfront_closed_message: "Dendako mezua itxita"
-          shopfront_closed_message_placeholder: >
-              Mezu horrek azalpen zehatzagoa ematen du zure denda zergatik dagoen
-              itxita eta/edo noiz irekiko den berriro azaltzeko. Hori zure  dendan
-              erakusten da soilik eskaera-ziklo aktiborik ez duzunean  (adibidez,
-              denda itxita dagoenean).
-          shopfront_category_ordering: "Dendako kategorien ordena"
-          shopfront_category_ordering_note: "(goitik behera)"
-          open_date: "Hasiera-data"
-          close_date: "Amaiera-data"
-          display_ordering_in_shopfront: "Erakutsi eskaerak dendan:"
-          shopfront_sort_by_product: "Produktuaren arabera"
-          shopfront_sort_by_category: "Kategoriaren arabera"
-          shopfront_sort_by_producer: "Produktore bakoitzeko"
-          shopfront_sort_by_category_placeholder: "Kategoria"
-          shopfront_sort_by_producer_placeholder: "Ekoizlea"
-          display_remaining_stock: "Erakusleihoan dauden gainerako izakinak erakutsi, gutxi badaude"
-          display_remaining_stock_tip: "Jakinarazi erosleei 3 artikulu edo gutxiago geratzen direnean."
           enabled: "Gaituta"
           disabled: "Desgaitua"
+          shopfront_visibility:
+            title: "Denda ikusgai eta publikoa izatea nahi duzu?"
+            description: "Aukeratu bezeroek saioa hasi behar duten denda ikusteko edo denek ikusteko modukoa den."
+            public: "Publikoa"
+            registered_only: "Erregistratutako kontsumitzaileentzat bakarrik ikus daiteke"
+          home_message:
+            title: "Dendaren mezua"
+            placeholder: "Erosleentzako aukerako ongietorri-mezua, gunean nola erosi  behar den azaltzen du. Testua eremu horretan gehitzen bada,  hasierako erlaitzean erakutsiko da bezeroak dendara lehen aldiz  sartzen direnean."
+          shopfront_closed_message:
+            title: "Dendako mezua itxita"
+            placeholder: "Mezu horrek azalpen zehatzagoa ematen du zure denda zergatik dagoen itxita eta/edo noiz irekiko den berriro azaltzeko. Hori zure  dendan erakusten da soilik eskaera-ziklo aktiborik ez duzunean  (adibidez, denda itxita dagoenean)."
+          product_order:
+            title: "Erakutsi eskaerak dendan"
+            by_category: "Kategoriaren arabera"
+            by_producer: "Produktore bakoitzeko"
+            category_placeholder: "Kategoria"
+            producer_placeholder: "Ekoizlea"
+          low_stock_warning:
+            title: "Erakusleihoan dauden gainerako izakinak erakutsi, gutxi badaude"
+            description: "Jakinarazi erosleei 3 artikulu edo gutxiago geratzen direnean."
+          order_cycle_order:
+            title: "Dendako eskaeren zikloak ordenatzea"
+            open_date: "Hasiera-data"
+            close_date: "Amaiera-data"
+          guest_orders:
+            title: "Gonbidatuen eskaerak"
+            description: "Gonbidatu gisa edo erregistratutako erabiltzaile gisa bakarrik egin daitezkeen eskaerak baimentzea."
+            allow: "Gonbidatuei eskaerak baimentzea"
+            require_login: "Eskaera bat egiteko logina egin behar da"
+          change_orders:
+            title: "Eskaerak aldatu"
+            description: "Bezeroei eskaerak aldatzen uztea, eskaera-zikloak irekita jarraitzen duen bitartean."
+            not_allowed: "Egindako eskaerak ezin dira aldatu/ezeztatu"
+            allowed: "Bezeroek eskaerak alda/bertan behera utz ditzakete eskaera-zikloa irekita dagoen bitartean"
+            require_login_warning: "Gomendatzen dugu erabiltzaileei sartzeko eskatzea beren eskaerak alda daitezkeenean."
+          subscriptions:
+            title: "Harpidetzak"
+            description: "Harpidetzen funtzionaltasuna gaitu?"
+          customer_names_in_reports:
+            title: "Kontsumitzaileen izenak txostenetan"
+            description: "Utzi hornitzaileei txostenetan kontsumitzaileen izenak ikusten"
         social:
           legend: "Soziala"
           twitter_placeholder: "ej: the_prof"

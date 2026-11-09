@@ -378,7 +378,6 @@ ca:
   ongoing: En marxa
   bill_address: Adreça de facturació
   ship_address: Adreça d'enviament
-  sort_order_cycles_on_shopfront_by: "Ordenar Cicles de Comanda de la Botiga per"
   required_fields: Els camps obligatoris estan marcats amb un asterisc
   select_continue: Seleccionar i Continuar
   remove: Eliminar
@@ -1100,57 +1099,49 @@ ca:
           no_method_yet: "Encara no teniu cap mètode d'enviament."
         shop_preferences:
           legend: "Preferències de la botiga"
-          shopfront_requires_login: "Botiga visible públicament?"
-          shopfront_requires_login_tip: "Trieu si les consumidores han d'iniciar sessió per veure la botiga o si és visible per a tothom."
-          shopfront_requires_login_false: "Públic"
-          shopfront_requires_login_true: "Només visible per a usuaris registrats"
-          recommend_require_login: "Recomanem que es requeireixi inici de sessió quan l'opció de poder modificar les comandes estigui habilitada."
-          allow_guest_orders: "Comandes de convidats"
-          allow_guest_orders_tip: "Permet fer comanda com a convidat o requereix un usuari registrat."
-          allow_guest_orders_false: "Demana un inici de sessió per realitzar la comanda"
-          allow_guest_orders_true: "Permet comandes de convidats"
-          allow_order_changes: "Canviar les comandes"
-          allow_order_changes_tip: "Permetre que les consumidores canviïn o cancel·lin la seva comanda mentre el cicle de comanda estigui obert."
-          allow_order_changes_false: "Les comandes realitzades no es poden canviar / cancel·lar."
-          allow_order_changes_true: "Les consumidores poden canviar o cancel·lar les comandes mentre el cicle de comanda està obert."
-          enable_subscriptions: "Subscripcions"
-          enable_subscriptions_tip: "Habilitar la funcionalitat de subscripcions?"
-          enable_subscriptions_false: "Deshabilitat"
-          enable_subscriptions_true: "Habilitat"
-          customer_names_in_reports: "Noms de consumidores als informes"
-          customer_names_tip: "Habiliteu als proveïdors veure els noms dels vostres clients als informes"
-          customer_names_false: "Deshabilitat"
-          customer_names_true: "Habilitat"
-          customer_contacts_false: "Deshabilitat"
-          customer_contacts_true: "Habilitat"
-          producers_edit_orders_false: "Deshabilitat"
-          producers_edit_orders_true: "Habilitat"
-          shopfront_message: "Missatge de la botiga"
-          shopfront_message_placeholder: >
-              Un missatge opcional per donar la benvinguda als clients i explicar
-              com comprar amb vosaltres. Si s'introdueix text aquí, es mostrarà a
-              la pestanya d'inici quan els clients arribin per primera vegada a la
-              vostra botiga.
-          shopfront_closed_message: "Missatge de tancament de la botiga"
-          shopfront_closed_message_placeholder: >
-              Un missatge que proporciona una explicació més detallada sobre per què
-              la vostra botiga està tancada i / o quan poden esperar les consumidores
-              que es tornarà a obrir. Això només es mostrarà a la vostra botiga quan
-              no hi hagi cicles de comanda actius (és a dir, quan la botiga estigui
-              tancada).
-          shopfront_category_ordering: "Ordre de les categories de la botiga"
-          shopfront_category_ordering_note: "(de dalt a baix)"
-          open_date: "Data d'obertura"
-          close_date: "Data de tancament"
-          display_ordering_in_shopfront: "Mostra les comandes a la botiga:"
-          shopfront_sort_by_category: "Per categoria"
-          shopfront_sort_by_producer: "Per productora"
-          shopfront_sort_by_category_placeholder: "Categoria"
-          shopfront_sort_by_producer_placeholder: "Productora"
-          display_remaining_stock: "Mostra l'estoc restant a la botiga si és baix (3 unitats)"
-          display_remaining_stock_tip: "Avisa els compradors quan només quedin 3 unitats o menys d'un producte."
           enabled: "Habilitat"
           disabled: "Deshabilitat"
+          shopfront_visibility:
+            title: "Botiga visible públicament?"
+            description: "Trieu si les consumidores han d'iniciar sessió per veure la botiga o si és visible per a tothom."
+            public: "Públic"
+            registered_only: "Només visible per a usuaris registrats"
+          home_message:
+            title: "Missatge de la botiga"
+            placeholder: "Un missatge opcional per donar la benvinguda als clients i explicar com comprar amb vosaltres. Si s'introdueix text aquí, es mostrarà a la pestanya d'inici quan els clients arribin per primera vegada a la vostra botiga."
+          shopfront_closed_message:
+            title: "Missatge de tancament de la botiga"
+            placeholder: "Un missatge que proporciona una explicació més detallada sobre per què la vostra botiga està tancada i / o quan poden esperar les consumidores que es tornarà a obrir. Això només es mostrarà a la vostra botiga quan no hi hagi cicles de comanda actius (és a dir, quan la botiga estigui tancada)."
+          product_order:
+            title: "Mostra les comandes a la botiga"
+            by_category: "Per categoria"
+            by_producer: "Per productora"
+            category_placeholder: "Categoria"
+            producer_placeholder: "Productora"
+          low_stock_warning:
+            title: "Mostra l'estoc restant a la botiga si és baix (3 unitats)"
+            description: "Avisa els compradors quan només quedin 3 unitats o menys d'un producte."
+          order_cycle_order:
+            title: "Ordenar Cicles de Comanda de la Botiga per"
+            open_date: "Data d'obertura"
+            close_date: "Data de tancament"
+          guest_orders:
+            title: "Comandes de convidats"
+            description: "Permet fer comanda com a convidat o requereix un usuari registrat."
+            allow: "Permet comandes de convidats"
+            require_login: "Demana un inici de sessió per realitzar la comanda"
+          change_orders:
+            title: "Canviar les comandes"
+            description: "Permetre que les consumidores canviïn o cancel·lin la seva comanda mentre el cicle de comanda estigui obert."
+            not_allowed: "Les comandes realitzades no es poden canviar / cancel·lar."
+            allowed: "Les consumidores poden canviar o cancel·lar les comandes mentre el cicle de comanda està obert."
+            require_login_warning: "Recomanem que es requeireixi inici de sessió quan l'opció de poder modificar les comandes estigui habilitada."
+          subscriptions:
+            title: "Subscripcions"
+            description: "Habilitar la funcionalitat de subscripcions?"
+          customer_names_in_reports:
+            title: "Noms de consumidores als informes"
+            description: "Habiliteu als proveïdors veure els noms dels vostres clients als informes"
         social:
           legend: "Social"
           twitter_placeholder: "p. ex: @horta_josepribes"
