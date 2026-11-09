@@ -3,6 +3,7 @@
 class CapQuantity
   def initialize
     @changes = {}
+    @affected_line_items = []
   end
 
   def call(order)
@@ -18,12 +19,13 @@ class CapQuantity
 
   private
 
-  attr_reader :order, :changes
+  attr_reader :order, :changes, :affected_line_items
 
   def cap_insufficient_stock!
     order.insufficient_stock_lines.each do |line_item|
       changes[line_item.id] = line_item.quantity
       line_item.cap_quantity_at_stock!
+      affected_line_items << line_item
     end
   end
 
@@ -33,11 +35,18 @@ class CapQuantity
       line_item.update(quantity: 0)
 
       Spree::OrderInventory.new(order).verify(line_item, order.shipment)
+      affected_line_items << line_item
     end
   end
 
   def reload_order
     order.line_items.reload
+    # Line item quantities may have changed above, which can change the amount
+    # of any per-item enterprise fees applied to them (eg to zero, when a line
+    # item's quantity has been capped to zero because it is out of stock).
+    # `update_order_fees!` only updates fees applied to the order as a whole,
+    # so line item fees need to be refreshed separately here.
+    affected_line_items.each { |line_item| order.update_line_item_fees!(line_item) }
     order.update_order_fees!
   end
 
