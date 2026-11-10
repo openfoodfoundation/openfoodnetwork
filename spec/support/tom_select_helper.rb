@@ -66,7 +66,7 @@ module TomSelectHelper
     # with `within`. The page may be re-rendered (eg. after a search), which
     # would leave a previously found node obsolete. A single selector is
     # re-queried from the page on each retry.
-    selector = "[name='#{from}'] ~ .ts-wrapper .ts-control div[data-ts-item]"
+    selector = "#{tomselect_wrapper_selector(from)} .ts-control div[data-ts-item]"
 
     # options in case of we want to expect multiselect options
     options.each do |option|
@@ -86,33 +86,29 @@ module TomSelectHelper
   #     selected_options: ["Fruit"]
   #   )
   def expect_tomselect_existing_with_selected_options(from:, existing_options:, selected_options:)
-    tomselect_wrapper = page.find_field(from).sibling(".ts-wrapper")
-    tomselect_control = tomselect_wrapper.find('.ts-control')
+    # Only keep the field name, not the found nodes. Like in
+    # `expect_tomselect_selected_options`, nodes can become obsolete when the
+    # page is re-rendered, while selectors are re-queried on each retry.
+    wrapper = tomselect_wrapper_selector(page.find_field(from)[:name])
 
-    tomselect_control.click # open the dropdown (would work for remote vs non-remote dropdowns)
+    # open the dropdown (would work for remote vs non-remote dropdowns)
+    find("#{wrapper} .ts-control").click
 
     # validate existing options are present in the dropdown
-    within(tomselect_wrapper) do
-      existing_options.each do |option|
-        expect(page).to have_css(
-          ".ts-dropdown .ts-dropdown-content .option",
-          text: option
-        )
-      end
+    existing_options.each do |option|
+      expect(page).to have_css(
+        "#{wrapper} .ts-dropdown .ts-dropdown-content .option",
+        text: option
+      )
     end
 
     # validate selected options are selected in the dropdown
-    within(tomselect_wrapper) do
-      selected_options.each do |option|
-        expect(page).to have_css(
-          "div[data-ts-item]",
-          text: option
-        )
-      end
+    selected_options.each do |option|
+      expect(page).to have_css("#{wrapper} div[data-ts-item]", text: option)
     end
 
     # close the dropdown by clicking on the already selected option
-    tomselect_wrapper.find(".ts-dropdown .ts-dropdown-content .option.active").click
+    find("#{wrapper} .ts-dropdown .ts-dropdown-content .option.active").click
   end
 
   def expect_tomselect_loading_completion(tomselect_wrapper, options)
@@ -120,5 +116,13 @@ module TomSelectHelper
 
     expect(tomselect_wrapper).to have_css(".spinner")
     expect(tomselect_wrapper).not_to have_css(".spinner")
+  end
+
+  private
+
+  # CSS selector for the TomSelect wrapper of the select with the given name.
+  # TomSelect inserts the wrapper directly after the original select element.
+  def tomselect_wrapper_selector(name)
+    "[name='#{name}'] + .ts-wrapper"
   end
 end
