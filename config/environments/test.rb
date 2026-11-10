@@ -77,7 +77,6 @@ Rails.application.configure do
     allowed_warnings = [
       # List strings here to allow matching deprecations.
       #
-      'Using semicolon as a query string separator is deprecated', # spec/system/admin/product_import_spec.rb:350
     ]
     unless allowed_warnings.any? { |pattern| message.match(pattern) }
       ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:raise].call(message, callstack, deprecator)
