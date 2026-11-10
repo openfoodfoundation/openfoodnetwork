@@ -220,60 +220,55 @@ RSpec.describe Orders::CustomerCreditService do
                                      state: "confirmation")
     }
 
-    it "completes pending customer credit payment" do
-      # Add payment
-      create(
-        :customer_account_transaction,
-        amount: 100.00,
-        customer: order.customer
-      )
-      payment = order.payments.create!( payment_method: credit_payment_method, amount: 5.00,
-                                        state: "checkout", skip_source_validation: true)
-
-      expect { subject.process_pending_payments! }.to change { order.reload.payment_total }
-      expect(payment.reload.state).to eq("completed")
-    end
-
-    context "with completed payments" do
-      it "does nothing" do
-        # Add payment
+    context "customer has credit" do
+      before do
         create(
           :customer_account_transaction,
           amount: 100.00,
           customer: order.customer
         )
+      end
+
+      it "completes pending customer credit payment" do
+        # Add payment
         payment = order.payments.create!( payment_method: credit_payment_method, amount: 5.00,
-                                          state: "completed", skip_source_validation: true)
+                                          state: "checkout", skip_source_validation: true)
 
-        expect { subject.process_pending_payments! }.not_to change { order.reload.payment_total }
+        expect { subject.process_pending_payments! }.to change { order.reload.payment_total }
+        expect(payment.reload.state).to eq("completed")
       end
-    end
 
-    context "with no pending payments" do
-      it "does nothing" do
-        expect { subject.process_pending_payments! }.not_to change { order.reload.payment_total }
+      context "with completed payments" do
+        it "does nothing" do
+          # Add payment
+          payment = order.payments.create!( payment_method: credit_payment_method, amount: 5.00,
+                                            state: "completed", skip_source_validation: true)
+
+          expect { subject.process_pending_payments! }.not_to change { order.reload.payment_total }
+        end
       end
-    end
 
-    context "with non customer credit payments" do
-      it "doesn't affect no customer credit payments" do
-        # Add payment
-        create(
-          :customer_account_transaction,
-          amount: 100.00,
-          customer: order.customer
-        )
-        credit_payment = order.payments.create!(payment_method: credit_payment_method, amount: 5.00,
-                                                state: "checkout", skip_source_validation: true)
+      context "with no pending payments" do
+        it "does nothing" do
+          expect { subject.process_pending_payments! }.not_to change { order.reload.payment_total }
+        end
+      end
 
-        payment = order.payments.create!(
-          payment_method: create(:payment_method, distributors: [order.distributor]),
-          amount: 9.00, state: "checkout", skip_source_validation: true
-        )
+      context "with non customer credit payments" do
+        it "doesn't affect no customer credit payments" do
+          # Add payment
+          credit_payment = order.payments.create!(payment_method: credit_payment_method, amount: 5.00,
+                                                  state: "checkout", skip_source_validation: true)
 
-        expect { subject.process_pending_payments! }
-          .not_to change { payment.reload.state }
-        expect(credit_payment.reload.state).to eq("completed")
+          payment = order.payments.create!(
+            payment_method: create(:payment_method, distributors: [order.distributor]),
+            amount: 9.00, state: "checkout", skip_source_validation: true
+          )
+
+          expect { subject.process_pending_payments! }
+            .not_to change { payment.reload.state }
+          expect(credit_payment.reload.state).to eq("completed")
+        end
       end
     end
 
