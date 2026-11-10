@@ -53,7 +53,7 @@
 
   = render SettingsSectionComponent.new(id: "shop_preferences_filters", title: t('.sections.filters')) do
     = render SettingsRowComponent.new(id: "property_order", title: t('.property_order.title'), description: t_without_fallback('.property_order.description'), class: "settings-row-with-preview") do
-      = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_property_order]", id: "enterprise_preferred_shopfront_property_order", options: shopfront_property_options(@enterprise), value: @enterprise.preferred_shopfront_property_order, placeholder: t('.property_order.placeholder'))
+      = render OrderingPickerComponent.new(name: "enterprise[preferred_shopfront_property_order]", id: "enterprise_preferred_shopfront_property_order", options: @shopfront_property_options, value: @enterprise.preferred_shopfront_property_order, placeholder: t('.property_order.placeholder'))
       = image_pack_tag "property-filter-order-preview.svg", alt: "", class: "settings-row-preview"
 
   = render SettingsSectionComponent.new(id: "shop_preferences_orders", title: t('.sections.orders')) do

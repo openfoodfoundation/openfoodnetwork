@@ -92,12 +92,6 @@ module Admin
       end
     end
 
-    def shopfront_property_options(enterprise)
-      Spree::Property.distributed_by(enterprise)
-        .order(Arel.sql("LOWER(spree_properties.presentation)"))
-        .pluck(:presentation, :id)
-    end
-
     # Translation for the current locale only, without falling back to English.
     # Instances can hide an optional text by not translating it.
     def t_without_fallback(key)

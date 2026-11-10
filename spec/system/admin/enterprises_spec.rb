@@ -743,6 +743,14 @@ RSpec.describe '
             .to eq "#{property.id},#{other_property.id}"
         end
 
+        it "lists the shop's properties alphabetically" do
+          property_picker.find(".ts-control").click
+
+          expect(property_picker).to have_selector ".option", count: 2
+          expect(property_picker.all(".option").map(&:text))
+            .to eq ["Bee-Friendly", "Fresh and Fine"]
+        end
+
         it "searches the properties" do
           property_picker.find(".ts-control input").send_keys("bee")
 

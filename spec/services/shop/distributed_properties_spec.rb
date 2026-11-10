@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Spree::Property do
-  describe ".distributed_by" do
+RSpec.describe Shop::DistributedProperties do
+  describe "#relation" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:producer) { create(:supplier_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
@@ -17,7 +17,7 @@ RSpec.describe Spree::Property do
     it "returns properties of distributed products and of their producers" do
       outgoing_exchange.variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor))
+      expect(described_class.new(distributor).relation)
         .to contain_exactly(product_property, producer_property)
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Spree::Property do
       closed_order_cycle.exchanges.to_enterprises(distributor).outgoing.first
         .variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor))
+      expect(described_class.new(distributor).relation)
         .to contain_exactly(product_property, producer_property)
     end
 
@@ -34,14 +34,14 @@ RSpec.describe Spree::Property do
       product.update!(inherits_properties: false)
       outgoing_exchange.variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor)).to contain_exactly(product_property)
+      expect(described_class.new(distributor).relation).to contain_exactly(product_property)
     end
 
     it "returns a property once when it is both a product and a producer property" do
       product.properties << producer_property
       outgoing_exchange.variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor).to_a)
+      expect(described_class.new(distributor).relation.to_a)
         .to contain_exactly(product_property, producer_property)
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Spree::Property do
       other_order_cycle.exchanges.to_enterprises(other_distributor).outgoing.first
         .variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor)).to be_empty
+      expect(described_class.new(distributor).relation).to be_empty
     end
 
     it "excludes products only coming into the order cycle" do
@@ -59,7 +59,7 @@ RSpec.describe Spree::Property do
                                             receiver: order_cycle.coordinator, incoming: true)
       incoming_exchange.variants << product.variants.first
 
-      expect(described_class.distributed_by(distributor)).to be_empty
+      expect(described_class.new(distributor).relation).to be_empty
     end
   end
 end
