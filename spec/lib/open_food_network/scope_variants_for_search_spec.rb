@@ -79,7 +79,9 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           "Enterprise Load",
           "Enterprise Load",
           "VariantOverride Load",
-          "SQL"
+          "SQL",
+          "Spree::Image Load",
+          "Spree::Image Load"
         ]
 
         expect(result).to include v4
