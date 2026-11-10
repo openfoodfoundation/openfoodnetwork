@@ -58,6 +58,18 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
 - DFC stock semantics: empty `stockLimitation` = unlimited (on demand); FDC uses `-1`.
 - Many queries (`.or`, `SELECT DISTINCT`) have no `ORDER BY`. Specs comparing them
   with `eq([a, b])` or `.first` are flaky — use `match_array` / explicit records.
+- Engines: `catalog`, `order_management` and `web` hold their domains; each engine
+  is isolated with `isolate_namespace` in `engines/<name>/lib/<name>/engine.rb`. New
+  engines are added as path gems in the `Gemfile`. See the wiki page "How OFN is
+  organized in Domains using Rails Engines" (linked from each engine's README).
+- DFC API auth (`AuthorizationControl`) resolves the user in this order: OIDC bearer
+  JWT (verified against per-issuer public keys), OFN API token (`X-Api-Token`), then
+  the Warden/Devise session. API docs are served at `/api-docs`.
+- ActiveJob runs on Sidekiq; Redis is required in every environment.
+- Reporting (`lib/reporting`) has its own Zeitwerk loader (the `ofn.reports`
+  initializer in `config/application.rb`), separate from the main autoloader.
+- Payment/shipping calculators (`Calculator::*`) are registered explicitly in
+  `config/application.rb`, not auto-discovered: register new ones there.
 
 ## Conventions
 
@@ -122,7 +134,17 @@ bundle exec rspec spec/path/to_spec.rb
   ```
   Always pass `--force-exclusion` when giving explicit files (especially with `-a`),
   or RuboCop rewrites excluded files like `config/routes.rb`.
+  Shortcuts: `./script/rubocop-diff.sh` (RuboCop on files changed vs `HEAD`; `-a` to
+  autocorrect) and `./script/reviewdog.sh` (RuboCop, haml-lint and Prettier, as CI's
+  Linters workflow runs them).
 - `npx prettier --check <files>`, `npx jest`, Karma via `script/karma`.
+- After changing locale files, run `bin/rake tmp:cache:clear` to reload i18n-js
+  translations.
+- `spec/spec_helper.rb` wires up FactoryBot, DatabaseCleaner, Shoulda Matchers and
+  transactional fixtures. WebMock blocks external network calls (localhost and the
+  chromedriver host are allowed). Files in `spec/support/**/*.rb` are auto-required:
+  look there before adding a new shared helper or matcher.
+- The time zone used in specs must match `TIMEZONE` in the relevant `.env[.*]` file.
 - i18n: `bundle exec i18n-tasks missing -l en`, `i18n-tasks unused` (~50 pre-existing
   issues: compare before/after rather than expecting zero).
 - Ignore the "StimulusReflex requires caching" banner printed on every boot.
