@@ -1,5 +1,8 @@
 - # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
-- cache_key = feature?(:product_grid_view, @current_user) ? [current_order_cycle&.id, true] : false
+- # Cache based on feature, and if feature enabled, order cycle
+- product_grid_view = feature?(:product_grid_view, @current_user)
+- order_cycle = product_grid_view ? current_order_cycle&.id : true
+- cache_key = [product_grid_view, order_cycle]
 = cache_with_locale cache_key do
   - if use_turbo_cart?
     #out-of-stock-modal
