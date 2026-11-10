@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe Orders::CaptureService do
   subject(:service) { described_class.new(order.reload) }
 
@@ -13,13 +11,7 @@ RSpec.describe Orders::CaptureService do
   # The credit payment must be created before any other incomplete payment:
   # creating it invalidates other incomplete non-credit payments.
   let!(:credit_payment) do
-    create(
-      :payment,
-      order:,
-      amount: order.total / 2.0,
-      payment_method: Spree::PaymentMethod.customer_credit,
-      source: nil
-    )
+    create(:credit_payment, order:, state: "checkout")
   end
 
   describe "#call" do
@@ -42,8 +34,7 @@ RSpec.describe Orders::CaptureService do
 
       context "with completed customer credit payment" do
         let!(:credit_payment) do
-          Spree::Payment.create!(order: order, payment_method: Spree::PaymentMethod.customer_credit,
-                                 amount: 5.00, state: "completed", skip_source_validation: true)
+          create(:credit_payment, order:, state: "completed")
         end
 
         it "ignores the customer credit payment" do

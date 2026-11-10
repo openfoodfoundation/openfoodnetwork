@@ -231,8 +231,7 @@ RSpec.describe Orders::CustomerCreditService do
 
       it "completes pending customer credit payment" do
         # Add payment
-        payment = order.payments.create!( payment_method: credit_payment_method, amount: 5.00,
-                                          state: "checkout", skip_source_validation: true)
+        payment = create(:credit_payment, order:, state: "checkout")
 
         expect { subject.process_pending_payments! }.to change { order.reload.payment_total }
         expect(payment.reload.state).to eq("completed")
@@ -241,8 +240,7 @@ RSpec.describe Orders::CustomerCreditService do
       context "with completed payments" do
         it "does nothing" do
           # Add payment
-          payment = order.payments.create!( payment_method: credit_payment_method, amount: 5.00,
-                                            state: "completed", skip_source_validation: true)
+          payment = create(:credit_payment, order:, state: "completed")
 
           expect { subject.process_pending_payments! }.not_to change { order.reload.payment_total }
         end
@@ -257,8 +255,7 @@ RSpec.describe Orders::CustomerCreditService do
       context "with non customer credit payments" do
         it "doesn't affect no customer credit payments" do
           # Add payment
-          credit_payment = order.payments.create!(payment_method: credit_payment_method, amount: 5.00,
-                                                  state: "checkout", skip_source_validation: true)
+          credit_payment = create(:credit_payment, order:, state: "checkout")
 
           payment = order.payments.create!(
             payment_method: create(:payment_method, distributors: [order.distributor]),
@@ -275,8 +272,7 @@ RSpec.describe Orders::CustomerCreditService do
     context "when payment processing fails" do
       it "raises an error" do
         # Add payment with no credit available
-        order.payments.create!(payment_method: credit_payment_method, amount: 5.00,
-                               state: "checkout", skip_source_validation: true)
+        create(:credit_payment, order:, state: "checkout")
 
         expect { subject.process_pending_payments! }.to raise_error(Spree::Core::GatewayError)
       end
