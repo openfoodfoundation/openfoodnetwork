@@ -184,10 +184,7 @@ RSpec.describe Spree::Admin::PaymentsController do
           customer: order.customer
         )
 
-        credit_payment = order.payments.create!(
-          payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "checkout",
-          skip_source_validation: true
-        )
+        credit_payment = create(:credit_payment, order:, amount: 5.00, state: "checkout")
 
         expect { post("/admin/orders/#{order.number}/payments.json", params:) }.to change {
           credit_payment.reload.state
@@ -203,10 +200,7 @@ RSpec.describe Spree::Admin::PaymentsController do
 
       context "when credit payment already processed" do
         it "completes the order and redirect to payments page" do
-          credit_payment = order.payments.create!(
-            payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "completed",
-            skip_source_validation: true
-          )
+          credit_payment = create(:credit_payment, order:, amount: 5.00, state: "completed")
 
           expect { post("/admin/orders/#{order.number}/payments.json", params:) }.not_to change{
             credit_payment.reload.state
@@ -222,10 +216,7 @@ RSpec.describe Spree::Admin::PaymentsController do
       context "when credit payment processing fails" do
         it "redirect to payments page" do
           # Add customer credit payment with no available credit
-          credit_payment = order.payments.create!(
-            payment_method: Spree::PaymentMethod.customer_credit, amount: 5.00, state: "checkout",
-            skip_source_validation: true
-          )
+          credit_payment = create(:credit_payment, order:, amount: 5.00, state: "checkout")
 
           post("/admin/orders/#{order.number}/payments.json", params:)
 

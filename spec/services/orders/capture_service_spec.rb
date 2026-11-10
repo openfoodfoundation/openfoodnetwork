@@ -43,30 +43,18 @@ RSpec.describe Orders::CaptureService do
     end
   end
 
-  context "with pending customer credit payment" do
-    let(:credit_payment) do
-      Spree::Payment.create!(order: order, payment_method: Spree::PaymentMethod.customer_credit,
-                             amount: 5.00, state: "checkout", skip_source_validation: true)
-    end
-
-    it "ignores the customer credit payment" do
-      order.payments << credit_payment
+  describe "with credit payments" do
+    it "ignores a pending customer credit payment" do
+      order.payments << create(:credit_payment, order:, state: "checkout")
       order.payments << payment
 
       expect(subject.call).to eq(true)
 
       expect(payment.reload.state).to eq("completed")
     end
-  end
 
-  context "with completed customer credit payment" do
-    let(:credit_payment) do
-      Spree::Payment.create!(order: order, payment_method: Spree::PaymentMethod.customer_credit,
-                             amount: 5.00, state: "completed", skip_source_validation: true)
-    end
-
-    it "ignores the customer credit payment" do
-      order.payments << credit_payment
+    it "ignores a completed customer credit payment" do
+      order.payments << create(:credit_payment, order:, state: "completed")
       order.payments << payment
 
       expect(subject.call).to eq(true)
