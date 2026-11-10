@@ -312,10 +312,10 @@ module Admin
     # Similar to spree/admin/products_controller
     def product_set_from_params
       # Form field names:
-      #   '[products][0][id]' (hidden field)
-      #   '[products][0][name]'
-      #   '[products][0][variants_attributes][0][id]' (hidden field)
-      #   '[products][0][variants_attributes][0][display_name]'
+      #   'products[0][id]' (hidden field)
+      #   'products[0][name]'
+      #   'products[0][variants_attributes][0][id]' (hidden field)
+      #   'products[0][variants_attributes][0][display_name]'
       #
       # Resulting in params:
       #     "products" => {

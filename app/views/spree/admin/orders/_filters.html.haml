@@ -2,7 +2,7 @@
   = form_with url: admin_orders_url, id: "orders_form", method: :get, data: { remote: true, "search-target": "form" } do
     = hidden_field_tag :page, 1, class: "page"
     = hidden_field_tag :per_page, 15, class: "per-page"
-    = hidden_field_tag "[q][s]", params.dig(:q, :s) || "completed_at desc", class: "sort", "data-default": "completed_at desc"
+    = hidden_field_tag "q[s]", params.dig(:q, :s) || "completed_at desc", class: "sort", "data-default": "completed_at desc"
 
     .field-block.alpha.four.columns
       .date-range-filter.field

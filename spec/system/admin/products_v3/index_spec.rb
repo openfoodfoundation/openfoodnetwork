@@ -49,8 +49,8 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
         expect(page).to have_selector "th", text: "Actions"
 
         # displays product list
-        expect(page).to have_field("_products_0_name", with: "Product1")
-        expect(page).to have_field("_products_1_name", with: "Product2")
+        expect(page).to have_field("products_0_name", with: "Product1")
+        expect(page).to have_field("products_1_name", with: "Product2")
       end
     end
 
@@ -620,7 +620,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       within row_containing_placeholder(product_supplied.name) do
         expect_tomselect_existing_with_selected_options(
           existing_options:,
-          from: '_products_0_variants_attributes_0_enterprise_id',
+          from: 'products_0_variants_attributes_0_enterprise_id',
           selected_options: [supplier_managed1.name]
         )
       end
@@ -628,7 +628,7 @@ RSpec.describe 'As an enterprise user, I can browse my products' do
       within row_containing_placeholder(product_supplied_permitted.name) do
         expect_tomselect_existing_with_selected_options(
           existing_options:,
-          from: '_products_1_variants_attributes_0_enterprise_id',
+          from: 'products_1_variants_attributes_0_enterprise_id',
           selected_options: [supplier_permitted.name]
         )
       end

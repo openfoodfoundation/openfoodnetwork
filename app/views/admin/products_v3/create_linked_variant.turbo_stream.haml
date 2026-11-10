@@ -1,7 +1,7 @@
 -# locals: (variant:, linked_variant:, product_index:, variant_index:, allowed_source_producers: )
 -# Pre-render the form, because you can't do it inside turbo stream block
 - variant_row = nil
-- fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |f|
+- fields_for("products[#{product_index}][variants_attributes]", variant, index: variant_index) do |f|
   - variant_row = render(partial: 'variant_row', formats: :html,
                          locals: { f:, variant:, allowed_source_producers: })
 = turbo_stream.after dom_id(linked_variant) do

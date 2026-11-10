@@ -77,7 +77,6 @@ Rails.application.configure do
     allowed_warnings = [
       # List strings here to allow matching deprecations.
       #
-      'Skipping over leading brackets in parameter name', # spec/system/admin/orders_spec.rb:483
       'Using semicolon as a query string separator is deprecated', # spec/system/admin/product_import_spec.rb:350
     ]
     unless allowed_warnings.any? { |pattern| message.match(pattern) }

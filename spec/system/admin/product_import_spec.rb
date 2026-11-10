@@ -103,8 +103,8 @@ RSpec.describe "Product Import" do
       expect(page).to have_content 'Bulk Edit Products'
 
       # displays product list
-      expect(page).to have_field("_products_2_name", with: carrots.name.to_s)
-      expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
+      expect(page).to have_field("products_2_name", with: carrots.name.to_s)
+      expect(page).to have_field("products_5_name", with: potatoes.name.to_s)
     end
 
     it "displays info about invalid entries and no save button if any items are invalid" do
@@ -249,8 +249,8 @@ RSpec.describe "Product Import" do
       click_link 'Go To Products Page'
 
       # displays product list
-      expect(page).to have_field("_products_2_name", with: carrots.name.to_s)
-      expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
+      expect(page).to have_field("products_2_name", with: carrots.name.to_s)
+      expect(page).to have_field("products_5_name", with: potatoes.name.to_s)
 
       click_button "Save changes"
 
@@ -700,9 +700,9 @@ RSpec.describe "Product Import" do
       carrots = Spree::Product.find_by(name: 'Carrots')
 
       within "#product_#{carrots.id}" do
-        expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+        expect(page).to have_input("products[2][variants_attributes][0][display_name]",
                                    text: "Carrots")
-        expect(page).to have_input("[products][2][variants_attributes][0][unit_to_display]",
+        expect(page).to have_input("products[2][variants_attributes][0][unit_to_display]",
                                    text: "1 lb")
         within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
           expect(page).to have_content("5")
@@ -742,11 +742,11 @@ RSpec.describe "Product Import" do
 
       visit admin_products_path
 
-      expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+      expect(page).to have_input("products[2][variants_attributes][0][display_name]",
                                  text: "Cupcake")
-      expect(page).to have_select("_products_2_variants_attributes_0_variant_unit_with_scale",
+      expect(page).to have_select("products_2_variants_attributes_0_variant_unit_with_scale",
                                   selected: "Items")
-      expect(page).to have_input("[products][2][variants_attributes][0][variant_unit_name]",
+      expect(page).to have_input("products[2][variants_attributes][0][variant_unit_name]",
                                  text: "Bunch")
       within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
         expect(page).to have_content("5")
