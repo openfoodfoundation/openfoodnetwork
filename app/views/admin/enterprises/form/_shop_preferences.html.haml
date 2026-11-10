@@ -14,18 +14,19 @@
     = t('.display_ordering_in_shopfront')
     %br
     = t('.shopfront_category_ordering_note')
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_category_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_taxon_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6, "ofn-producer-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_producer_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_producer_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }
+%div{ "data-controller": "toggle-control" }
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { "data-action": "change->toggle-control#disableUnlessMatch" }
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
+    .eight.columns.omega
+      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_category_placeholder'), readonly: @enterprise.preferred_shopfront_product_sorting_method != "by_category", "data-toggle-control-target": "control", "data-toggle-control-match-value": "by_category" }
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { "data-action": "change->toggle-control#disableUnlessMatch" }
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
+    .eight.columns.omega
+      %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6, "ofn-producer-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_producer_placeholder'), readonly: @enterprise.preferred_shopfront_product_sorting_method != "by_producer", "data-toggle-control-target": "control", "data-toggle-control-match-value": "by_producer" }
 
 .row
   .three.columns.alpha
