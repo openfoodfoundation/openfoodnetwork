@@ -4,10 +4,13 @@
 #
 # API v0: these are not yet documented by specs and a swagger file was generated using AI instead.
 #
-# API v1: you can call one of these for a dry run (much faster because it assumes the specs pass):
+# API v1: spec/requests/api/v1/documentation_spec.rb calls this for you and
+# fails if the documentation changed. To call it yourself:
 #
-#   ./bin/rake rswag spec/requests/api/v1/
-#   ./script/rswag --dry-run spec/requests/api/v1/
+#   ./script/rswag spec/requests/api/v1/
+#
+# Don't use a dry run. The documentation includes example responses recorded
+# while the specs run.
 #
 # DFC API: you need to call
 #

@@ -376,23 +376,71 @@ paths:
         '201':
           description: Customer transaction created
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customer transaction created:
+                  value:
+                    data:
+                      id: '1'
+                      type: customer_account_transaction
+                      attributes:
+                        id: 1
+                        customer_id: 1
+                        amount: '10.25'
+                        currency: AUD
+                        description: 'API credit: Payment processed by POS'
+                        balance: '10.25'
             application/json:
               schema:
                 "$ref": "#/components/schemas/customer_account_transaction"
         '422':
           description: Missing required parameter
           content:
+            application/json; charset=utf-8:
+              examples:
+                Unpermitted parameter:
+                  value:
+                    errors:
+                    - detail: 'Parameters not allowed in this request: id, created_by_id'
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - detail: 'A required parameter is missing or empty: customer_account_transaction'
+                Missing required parameter:
+                  value:
+                    errors:
+                    - detail: Invalid resource. Please fix errors and try again.
+                    meta:
+                      validation_errors:
+                      - Amount can't be blank
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '404':
           description: Invalid customer ID
           content:
+            application/json; charset=utf-8:
+              examples:
+                Invalid customer ID:
+                  value:
+                    errors:
+                    - detail: The resource you were looking for could not be found.
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '401':
           description: Unauthorized
+          content:
+            application/json; charset=utf-8:
+              examples:
+                Access forbidden:
+                  value:
+                    errors:
+                    - detail: You are not authorized to perform that action.
+                Unauthorized:
+                  value:
+                    errors:
+                    - detail: You are not authorized to perform that action.
       requestBody:
         content:
           application/json:
@@ -432,6 +480,113 @@ paths:
         '200':
           description: Customers list
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customers list:
+                  value:
+                    data:
+                    - id: '1'
+                      type: customer
+                      attributes:
+                        id: 1
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER1
+                        email: nga@beckerprosacco.co.uk
+                        allow_charges: false
+                        terms_and_conditions_accepted_at: '2000-01-01T00:00:00.000+11:00'
+                        tags:
+                        - long-term
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        balance: 0.0
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
+                    - id: '2'
+                      type: customer
+                      attributes:
+                        id: 2
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER2
+                        email: alissa@hintz.info
+                        allow_charges: false
+                        terms_and_conditions_accepted_at:
+                        tags: []
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                        balance: 0.0
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
+                    meta:
+                      pagination:
+                        results: 2
+                        pages: 1
+                        page: 1
+                        per_page: 50
+                    links:
+                      self: http://test.host/api/v1/customers?enterprise_id=1&extra_fields%5Bcustomer%5D=balance&page=1
+                      first: http://test.host/api/v1/customers?enterprise_id=1&extra_fields%5Bcustomer%5D=balance&page=1
+                      prev:
+                      next:
+                      last: http://test.host/api/v1/customers?enterprise_id=1&extra_fields%5Bcustomer%5D=balance&page=1
             application/json:
               schema:
                 "$ref": "#/components/schemas/customers_collection"
@@ -444,12 +599,89 @@ paths:
         '201':
           description: Example customer created
           content:
+            application/json; charset=utf-8:
+              examples:
+                Minimal customer created:
+                  value:
+                    data:
+                      id: '4'
+                      type: customer
+                      attributes:
+                        id: 4
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code:
+                        email: test@example.com
+                        allow_charges: false
+                        terms_and_conditions_accepted_at:
+                        tags: []
+                        billing_address:
+                        shipping_address:
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
+                Example customer created:
+                  value:
+                    data:
+                      id: '4'
+                      type: customer
+                      attributes:
+                        id: 4
+                        enterprise_id: 1
+                        first_name: Alice
+                        last_name: Springs
+                        code: BUYER1
+                        email: alice@example.com
+                        allow_charges: false
+                        terms_and_conditions_accepted_at:
+                        tags:
+                        - staff
+                        - discount
+                        billing_address:
+                        shipping_address:
+                          phone: 0404 333 222 111
+                          latitude: -37.8173751
+                          longitude: 144.964803195704
+                          first_name: Alice
+                          last_name: Springs
+                          street_address_1: 1 Flinders Street
+                          street_address_2: ''
+                          postal_code: '1234'
+                          locality: Melbourne
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
             application/json:
               schema:
                 "$ref": "#/components/schemas/customer"
         '422':
           description: Unprocessable entity
           content:
+            application/json; charset=utf-8:
+              examples:
+                Unpermitted parameter:
+                  value:
+                    errors:
+                    - detail: 'Parameters not allowed in this request: allow_charges'
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - detail: 'A required parameter is missing or empty: customer'
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
@@ -525,6 +757,64 @@ paths:
         '200':
           description: Customer
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customer:
+                  value:
+                    data:
+                      id: '1'
+                      type: customer
+                      attributes:
+                        id: 1
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER1
+                        email: nga@beckerprosacco.co.uk
+                        allow_charges: false
+                        terms_and_conditions_accepted_at: '2000-01-01T00:00:00.000+11:00'
+                        tags:
+                        - long-term
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        balance: 0.0
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
             application/json:
               schema:
                 type: object
@@ -644,12 +934,24 @@ paths:
         '404':
           description: Not found
           content:
+            application/json; charset=utf-8:
+              examples:
+                Not found:
+                  value:
+                    errors:
+                    - detail: The resource you were looking for could not be found.
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '401':
           description: Unauthorized
           content:
+            application/json; charset=utf-8:
+              examples:
+                Unauthorized:
+                  value:
+                    errors:
+                    - detail: You are not authorized to perform that action.
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
@@ -667,12 +969,75 @@ paths:
         '200':
           description: Customer updated
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customer updated:
+                  value:
+                    data:
+                      id: '1'
+                      type: customer
+                      attributes:
+                        id: 1
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER1
+                        email: test@example.com
+                        allow_charges: false
+                        terms_and_conditions_accepted_at: '2000-01-01T00:00:00.000+11:00'
+                        tags:
+                        - long-term
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
             application/json:
               schema:
                 "$ref": "#/components/schemas/customer"
         '422':
           description: Unprocessable entity
           content:
+            application/json; charset=utf-8:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - detail: 'A required parameter is missing or empty: customer'
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
@@ -744,6 +1109,62 @@ paths:
         '200':
           description: Customer deleted
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customer deleted:
+                  value:
+                    data:
+                      id: '1'
+                      type: customer
+                      attributes:
+                        id: 1
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER1
+                        email: nga@beckerprosacco.co.uk
+                        allow_charges: false
+                        terms_and_conditions_accepted_at: '2000-01-01T00:00:00.000+11:00'
+                        tags: []
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
             application/json:
               schema:
                 "$ref": "#/components/schemas/customer"
@@ -763,6 +1184,111 @@ paths:
         '200':
           description: Customers list
           content:
+            application/json; charset=utf-8:
+              examples:
+                Customers list:
+                  value:
+                    data:
+                    - id: '1'
+                      type: customer
+                      attributes:
+                        id: 1
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER1
+                        email: nga@beckerprosacco.co.uk
+                        allow_charges: false
+                        terms_and_conditions_accepted_at: '2000-01-01T00:00:00.000+11:00'
+                        tags:
+                        - long-term
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
+                    - id: '2'
+                      type: customer
+                      attributes:
+                        id: 2
+                        enterprise_id: 1
+                        first_name: ''
+                        last_name: ''
+                        code: CUSTOMER2
+                        email: alissa@hintz.info
+                        allow_charges: false
+                        terms_and_conditions_accepted_at:
+                        tags: []
+                        billing_address:
+                          phone: 123-456-7890
+                          latitude:
+                          longitude:
+                          first_name: John
+                          last_name: Doe
+                          street_address_1: 10 Lovely Street
+                          street_address_2: Northwest
+                          postal_code: '20170'
+                          locality: Herndon
+                          region:
+                            name: Victoria
+                            code: Vic
+                          country:
+                            name: Australia
+                            code: AU
+                        shipping_address:
+                      relationships:
+                        enterprise:
+                          data:
+                            id: '1'
+                            type: enterprise
+                          links:
+                            related: http://test.host/api/v1/enterprises/1
+                    meta:
+                      pagination:
+                        results: 2
+                        pages: 1
+                        page: 1
+                        per_page: 50
+                    links:
+                      self: http://test.host/api/v1/enterprises/1/customers?page=1
+                      first: http://test.host/api/v1/enterprises/1/customers?page=1
+                      prev:
+                      next:
+                      last: http://test.host/api/v1/enterprises/1/customers?page=1
             application/json:
               schema:
                 "$ref": "#/components/schemas/customers_collection"
