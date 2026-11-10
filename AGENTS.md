@@ -199,8 +199,14 @@ RAILS_ENV=test NODE_ENV=test bin/shakapacker
 
 ### GitHub access
 
-- `origin` = `maikels-agent/openfoodnetwork` (fork). Branches: `claude/<slug>`.
-  Clones are shallow; deepen with a bounded `git fetch --depth=N`.
+- `origin` = `maikels-agent/openfoodnetwork` (fork). Clones are shallow; deepen
+  with a bounded `git fetch --depth=N`.
+- **Branch names:** ignore the auto-generated session branch name (e.g.
+  `claude/practical-newton-r9g0ao`). Before pushing code, create a meaningful
+  branch named after the change (e.g. `fix-flaky-permissions-spec`,
+  `remove-dead-angular-services`, `issue-14865-tax-category-export`) and push that.
+  If an existing branch already holds the work (e.g. one the user named or an open
+  PR's branch), keep using it.
 - Upstream is **git-read-only** from the session: GitHub MCP tools, `gh api` and
   curl to `api.github.com` for `openfoodfoundation/*` return 403 / "not configured",
   and it can't be attached next to the same-named fork. Say so up front instead of
