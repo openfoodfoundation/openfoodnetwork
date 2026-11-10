@@ -766,5 +766,187 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/customers_collection"
+  "/api/v1/reports/{report_type}":
+    get:
+      summary: Retrieve report rows
+      tags:
+      - Reports
+      security:
+      - api_key_header: []
+      - api_key_param: []
+      - session: []
+      description: |
+        Returns report rows using the current user's existing report permissions.
+
+        Supply at least one of order_cycle_id or distributor_id. When both are
+        supplied, both filters apply. The selected report determines the row
+        fields, available subtypes and visibility rules.
+
+        Pagination is applied after generating the complete report, preserving
+        its grouping and calculations. It limits the response size, not the
+        work needed to generate the report.
+      parameters:
+      - name: report_type
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - packing
+          - customers
+          - order_cycle_management
+          - xero_invoices
+          - products_and_inventory
+          - enterprise_fee_summary
+          - orders_and_distributors
+          - orders_and_fulfillment
+          - sales_tax
+          - payments
+          - suppliers
+          - bulk_coop
+          - revenues_by_hub
+      - name: report_subtype
+        in: query
+        required: false
+        schema:
+          type: string
+        description: A subtype supported by the selected report. Defaults to that
+          report's first subtype.
+      - name: order_cycle_id
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+        description: Restricts results to an order cycle. Required unless distributor_id
+          is supplied.
+      - name: distributor_id
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+        description: Restricts results to a distributing enterprise. Required unless
+          order_cycle_id is supplied.
+      - name: q[completed_at_gt]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Lower completion-date filter, for example 2026-10-01. Uses the
+          selected report's date handling; does not filter products_and_inventory.
+      - name: q[completed_at_lt]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Upper completion-date filter, for example 2026-11-01. Uses the
+          selected report's date handling; does not filter products_and_inventory.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page of report rows.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 200
+          default: 50
+        description: Rows per page. Values above 200 are capped at 200.
+      responses:
+        '200':
+          description: Report rows, including an empty result
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                - links
+                properties:
+                  data:
+                    type: array
+                    description: Row fields vary by report and subtype.
+                    items:
+                      type: object
+                      additionalProperties: true
+                  meta:
+                    type: object
+                    required:
+                    - pagination
+                    properties:
+                      pagination:
+                        type: object
+                        required:
+                        - results
+                        - pages
+                        - page
+                        - per_page
+                        properties:
+                          results:
+                            type: integer
+                            minimum: 0
+                          pages:
+                            type: integer
+                            minimum: 1
+                          page:
+                            type: integer
+                            minimum: 1
+                          per_page:
+                            type: integer
+                            minimum: 1
+                            maximum: 200
+                  links:
+                    type: object
+                    required:
+                    - self
+                    - first
+                    - prev
+                    - next
+                    - last
+                    properties:
+                      self:
+                        type: string
+                      first:
+                        type: string
+                      prev:
+                        type: string
+                        nullable: true
+                      next:
+                        type: string
+                        nullable: true
+                      last:
+                        type: string
+        '401':
+          description: Missing or invalid authentication, or no report permission
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '403':
+          description: The enterprise fee report rejects access to a requested filter
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '404':
+          description: An order cycle or distributor does not exist
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '422':
+          description: Invalid report, subtype, filters or pagination
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
 servers:
 - url: "/"

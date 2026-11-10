@@ -35,29 +35,7 @@ RSpec.describe "Enterprise fee tax reports", swagger_doc: "v1.yaml" do
   def create_fee_order(hub, cycle, fee_name)
     shipping_method = create(:shipping_method, distributors: [hub])
     variant = create(:variant, enterprise: hub)
-    fee = create(
-      :enterprise_fee,
-      :per_item,
-      enterprise: hub,
-      amount: 15,
-      name: fee_name,
-      fee_type: "transport"
-    )
-
-    incoming = cycle.exchanges.create!(
-      incoming: true,
-      sender: hub,
-      receiver: cycle.coordinator
-    )
-    outgoing = cycle.exchanges.create!(
-      incoming: false,
-      sender: cycle.coordinator,
-      receiver: hub
-    )
-
-    incoming.exchange_fees.create!(enterprise_fee: fee)
-    incoming.exchange_variants.create!(variant:)
-    outgoing.exchange_variants.create!(variant:)
+    add_fee_to_cycle(hub, cycle, variant, fee_name)
 
     create(
       :order,
@@ -73,10 +51,33 @@ RSpec.describe "Enterprise fee tax reports", swagger_doc: "v1.yaml" do
     end
   end
 
+  def add_fee_to_cycle(hub, cycle, variant, fee_name)
+    fee = create(
+      :enterprise_fee,
+      :per_item,
+      enterprise: hub,
+      amount: 15,
+      name: fee_name,
+      fee_type: "transport"
+    )
+    incoming = cycle.exchanges.create!(
+      incoming: true,
+      sender: hub,
+      receiver: cycle.coordinator
+    )
+    outgoing = cycle.exchanges.create!(
+      incoming: false,
+      sender: cycle.coordinator,
+      receiver: hub
+    )
+
+    incoming.exchange_fees.create!(enterprise_fee: fee)
+    incoming.exchange_variants.create!(variant:)
+    outgoing.exchange_variants.create!(variant:)
+  end
+
   def returned_fee_names
-    json_response[:data].
-      map { |row| row[:enterprise_fee_name] }.
-      compact
+    json_response[:data].pluck(:enterprise_fee_name).compact
   end
 
   %w[

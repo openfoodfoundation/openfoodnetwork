@@ -164,7 +164,7 @@ RSpec.describe "Enterprise fee reports", swagger_doc: "v1.yaml" do
 
     expect(response).to have_http_status(:ok)
 
-    fee_names = json_response[:data].map { |row| row[:fee_name] }
+    fee_names = json_response[:data].pluck(:fee_name)
     expect(fee_names).to include(shipping_method.name)
     expect(fee_names).not_to include(other_shipping_method.name)
   end

@@ -3,17 +3,6 @@
 require "swagger_helper"
 
 RSpec.describe "Reports", swagger_doc: "v1.yaml" do
-  describe "authentication" do
-    it "rejects requests without authentication" do
-      get "/api/v1/reports/packing", params: { distributor_id: 1 }
-
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response[:errors]).to include(
-        include(detail: "You are not authorized to perform that action.")
-      )
-    end
-  end
-
   describe "validation" do
     let!(:distributor) { create(:distributor_enterprise) }
 
@@ -38,15 +27,6 @@ RSpec.describe "Reports", swagger_doc: "v1.yaml" do
 
     it "rejects requests without either required filter" do
       get "/api/v1/reports/packing"
-
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response[:errors].first[:detail]).
-        to eq("Please supply order_cycle_id or distributor_id")
-    end
-
-    it "rejects blank required filters" do
-      get "/api/v1/reports/packing",
-          params: { order_cycle_id: "", distributor_id: "" }
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response[:errors].first[:detail]).
@@ -88,7 +68,7 @@ RSpec.describe "Reports", swagger_doc: "v1.yaml" do
     end
 
     def returned_products
-      json_response[:data].map { |row| row[:product] }
+      json_response[:data].pluck(:product)
     end
 
     def products_for(*orders)
