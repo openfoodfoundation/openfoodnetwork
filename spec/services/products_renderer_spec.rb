@@ -531,7 +531,7 @@ RSpec.describe ProductsRenderer do
       add_producer_properties(apples_supplier, shared, organic)
       add_producer_properties(bananas_supplier, shared, biodynamic)
 
-      expect{ subject }.to query_database 46
+      expect{ subject }.to query_database 45
 
       expect(subject).to eq [
         aromatic, biodynamic, bountiful, organic, shared
