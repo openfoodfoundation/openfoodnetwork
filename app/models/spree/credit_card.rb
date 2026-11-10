@@ -109,8 +109,8 @@ module Spree
     def expiry_not_in_the_past
       return unless year.present? && month.present?
 
-      time = "#{year}-#{month}-1".to_time
-      return unless time < Time.zone.now.to_time.beginning_of_month
+      date = Date.new(year.to_i, month.to_i)
+      return unless date < Date.current.beginning_of_month
 
       errors.add(:base, :card_expired)
     end
