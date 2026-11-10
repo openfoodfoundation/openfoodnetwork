@@ -2,7 +2,8 @@
 - # Cache based on feature, and if feature enabled, order cycle
 - product_grid_view = feature?(:product_grid_view, @current_user)
 - order_cycle = product_grid_view ? current_order_cycle&.id : true
-- cache_key = [product_grid_view, order_cycle]
+- product_grid_view_navigation = feature?(:product_grid_view_navigation, @current_user)
+- cache_key = [product_grid_view, order_cycle, product_grid_view_navigation]
 = cache_with_locale cache_key do
   - if use_turbo_cart?
     #out-of-stock-modal
