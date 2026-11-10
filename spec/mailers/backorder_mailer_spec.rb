@@ -6,6 +6,8 @@ RSpec.describe BackorderMailer do
   describe "#backorder_failed" do
     subject(:mail) { described_class.backorder_failed(order) }
 
+    let(:enterprise) { order.distributor }
+
     it "notifies the owner" do
       order.distributor.owner.email = "jane@example.net"
 
@@ -20,6 +22,15 @@ RSpec.describe BackorderMailer do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
     end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :enterprise
+    end
+
+    context "enterprise greeting" do
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
+    end
   end
 
   describe "#backorder_incomplete" do
@@ -30,6 +41,7 @@ RSpec.describe BackorderMailer do
     }
     let(:user) { build(:user, email: "jane@example.net") }
     let(:distributor) { build(:enterprise) }
+    let(:enterprise) { distributor }
     let(:order_cycle) { build(:order_cycle) }
     let(:order_id) { "https://null" }
 
@@ -44,6 +56,15 @@ RSpec.describe BackorderMailer do
     context "white labelling" do
       it_behaves_like 'email with inactive white labelling', :mail
       it_behaves_like 'non-customer facing email with active white labelling', :mail
+    end
+
+    context "enterprise logo" do
+      it_behaves_like "enterprise logo rendering", :mail, :enterprise
+    end
+
+    context "enterprise greeting" do
+      it_behaves_like 'for an enterprise with contact name present', :mail
+      it_behaves_like 'for an enterprise with no contact name present', :mail
     end
   end
 end

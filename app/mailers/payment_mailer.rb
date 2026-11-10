@@ -23,7 +23,8 @@ class PaymentMailer < ApplicationMailer
   end
 
   def refund_available(amount, payment, taler_order_status_url)
-    @order = payment.order
+    @payment = payment
+    @order = @payment.order
     @shop = @order.distributor.name
     @amount = amount
     @taler_order_status_url = taler_order_status_url
