@@ -126,6 +126,21 @@ RSpec.describe "Enterprise fee reports", swagger_doc: "v1.yaml" do
     )
     expect(json_response).not_to have_key(:data)
   end
+
+  it "rejects an invalid date filter" do
+    get "/api/v1/reports/enterprise_fee_summary", params: {
+      report_subtype: "fee_summary",
+      order_cycle_id: order_cycle.id,
+      q: { completed_at_gt: "not-a-date" }
+    }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(json_response[:errors]).to include(
+      include(detail: kind_of(String))
+    )
+    expect(json_response).not_to have_key(:data)
+  end
+
   it "excludes fees from another order cycle" do
     other_cycle = create(:simple_order_cycle, coordinator: distributor)
     other_shipping_method = create(

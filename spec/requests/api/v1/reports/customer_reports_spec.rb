@@ -70,4 +70,18 @@ RSpec.describe "Customer reports", swagger_doc: "v1.yaml" do
     expect(response).to have_http_status(:ok)
     expect(returned_emails).to match_array([order.email, other_cycle_order.email])
   end
+
+  it "does not expose another hub's order cycle" do
+    unmanaged_cycle = create(
+      :simple_order_cycle,
+      coordinator: create(:distributor_enterprise)
+    )
+
+    get "/api/v1/reports/customers", params: {
+      order_cycle_id: unmanaged_cycle.id
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(json_response[:data]).to eq([])
+  end
 end

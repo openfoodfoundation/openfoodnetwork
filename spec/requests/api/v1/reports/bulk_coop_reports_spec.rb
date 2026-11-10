@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-RSpec.describe "Bulk co-op and revenue reports", swagger_doc: "v1.yaml" do
+RSpec.describe "Bulk co-op reports", swagger_doc: "v1.yaml" do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:other_distributor) { create(:distributor_enterprise) }
   let!(:coordinator) { create(:distributor_enterprise) }
@@ -147,74 +147,6 @@ RSpec.describe "Bulk co-op and revenue reports", swagger_doc: "v1.yaml" do
 
       expect(response).to have_http_status(:ok)
       expect(json_response[:data]).to eq([])
-    end
-  end
-
-  describe "revenues by hub" do
-    context "as a superadmin" do
-      before do
-        login_as create(:admin_user)
-      end
-
-      it "filters by both order cycle and distributor" do
-        get "/api/v1/reports/revenues_by_hub", params: {
-          order_cycle_id: order_cycle.id,
-          distributor_id: distributor.id
-        }
-
-        expect(response).to have_http_status(:ok)
-        expect(order_counts_by_hub).to eq(distributor.name => 1)
-
-        row = json_response[:data].first
-        expect(BigDecimal(row[:total_incl_tax].to_s)).to eq(order.total)
-      end
-
-      it "filters by order cycle alone" do
-        get "/api/v1/reports/revenues_by_hub",
-            params: { order_cycle_id: order_cycle.id }
-
-        expect(response).to have_http_status(:ok)
-        expect(order_counts_by_hub).to eq(
-          distributor.name => 1,
-          other_distributor.name => 1
-        )
-      end
-
-      it "filters by distributor alone" do
-        get "/api/v1/reports/revenues_by_hub",
-            params: { distributor_id: distributor.id }
-
-        expect(response).to have_http_status(:ok)
-        expect(order_counts_by_hub).to eq(distributor.name => 2)
-      end
-
-      it "applies date filters" do
-        order.update!(completed_at: Time.zone.parse("2026-10-15 12:00:00"))
-
-        get "/api/v1/reports/revenues_by_hub", params: {
-          order_cycle_id: order_cycle.id,
-          distributor_id: distributor.id,
-          q: {
-            completed_at_gt: "2026-10-16",
-            completed_at_lt: "2026-10-17"
-          }
-        }
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response[:data]).to eq([])
-      end
-    end
-
-    it "rejects an ordinary hub manager" do
-      login_as distributor.owner
-
-      get "/api/v1/reports/revenues_by_hub",
-          params: { distributor_id: distributor.id }
-
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response[:errors]).to include(
-        include(detail: "You are not authorized to perform that action.")
-      )
     end
   end
 end

@@ -3,8 +3,6 @@
 require "swagger_helper"
 
 RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
-  around { |example| skip("Api::V1::ReportsController is not implemented yet") && example.run }
-
   def report_get(report_type, params = {})
     get "/api/v1/reports/#{report_type}", params:
   end

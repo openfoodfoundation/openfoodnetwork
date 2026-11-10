@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-RSpec.describe "Order-based reports", swagger_doc: "v1.yaml" do
+RSpec.describe "Xero invoices reports", swagger_doc: "v1.yaml" do
   let(:distributor) { create(:distributor_enterprise) }
   let(:other_distributor) { create(:distributor_enterprise) }
   let(:coordinator) { create(:distributor_enterprise) }
@@ -86,100 +86,6 @@ RSpec.describe "Order-based reports", swagger_doc: "v1.yaml" do
       end
     end
   end
-
-  {
-    "orders_and_fulfillment" => "order_cycle_customer_totals",
-    "sales_tax" => "sales_tax_totals_by_order",
-    "suppliers" => "pay_your_suppliers"
-  }.each do |report_type, subtype|
-    context report_type do
-      include_examples "order filters", report_type, subtype, :order_number, :number
-
-      it "excludes orders from an unrelated hub and order cycle" do
-        unrelated_hub = create(:distributor_enterprise)
-        unrelated_cycle = create(
-          :simple_order_cycle,
-          coordinator: unrelated_hub
-        )
-        completed_order(unrelated_hub, unrelated_cycle)
-
-        get "/api/v1/reports/#{report_type}", params: {
-          report_subtype: subtype,
-          distributor_id: unrelated_hub.id
-        }
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response[:data]).to eq([])
-      end
-
-      it "excludes orders outside the requested date range" do
-        order.update!(completed_at: Time.zone.parse("2026-10-15 12:00:00"))
-
-        get "/api/v1/reports/#{report_type}", params: {
-          report_subtype: subtype,
-          order_cycle_id: order_cycle.id,
-          distributor_id: distributor.id,
-          q: {
-            completed_at_gt: "2026-10-16",
-            completed_at_lt: "2026-10-17"
-          }
-        }
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response[:data]).to eq([])
-      end
-    end
-  end
-
-  context "orders_and_distributors" do
-    include_examples "order filters", "orders_and_distributors", nil, :order_id, :id
-
-    it "excludes orders from an unmanaged hub" do
-      other_hub_order
-
-      get "/api/v1/reports/orders_and_distributors",
-          params: { order_cycle_id: order_cycle.id }
-
-      expect(response).to have_http_status(:ok)
-      expect(returned_values(:order_id)).to eq([order.id.to_s])
-    end
-
-    it "preserves customer detail masking for a supplier" do
-      supplier = order.line_items.first.supplier
-
-      create(
-        :enterprise_relationship,
-        parent: supplier,
-        child: distributor,
-        permissions_list: [:add_to_order_cycle]
-      )
-
-      distributor.update!(
-        enable_producers_to_edit_orders: false,
-        show_customer_names_to_suppliers: false,
-        show_customer_contacts_to_suppliers: false
-      )
-
-      login_as supplier.owner
-
-      get "/api/v1/reports/orders_and_distributors", params: {
-        order_cycle_id: order_cycle.id,
-        distributor_id: distributor.id
-      }
-
-      expect(response).to have_http_status(:ok)
-      expect(returned_values(:order_id)).to eq([order.id.to_s])
-      expect(json_response[:data]).to all(
-        include(
-          customer_name: "< Hidden >",
-          customer_email: "< Hidden >",
-          customer_phone: "",
-          customer_city: ""
-        )
-      )
-    end
-  end
-
   context "xero_invoices" do
     include_examples "order filters", "xero_invoices", nil, :Reference, :number
 
