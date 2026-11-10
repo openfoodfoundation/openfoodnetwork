@@ -1,15 +1,13 @@
 -# locals: (product:, cloned_product:, product_index:, allowed_producers:, allowed_source_producers:)
 - unless flash[:error]
-    - product_body = nil
-    - form_with do |form|
-        - product_body = render(partial: 'product_variant_row',
-            locals: { form:,
-            product: cloned_product,
-            product_index:,
-            allowed_producers:,
-            allowed_source_producers:, 
-            should_slide_in: true },
-            formats: :html)
+    -# Pre-render the form, because you can't do it inside turbo stream block
+    - product_body = render(partial: 'product_variant_row',
+        locals: { product: cloned_product,
+        product_index:,
+        allowed_producers:,
+        allowed_source_producers:,
+        should_slide_in: true },
+        formats: :html)
     = turbo_stream.after dom_id(product) do
         = product_body
 
