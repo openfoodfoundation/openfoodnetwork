@@ -430,7 +430,6 @@ hu:
   ongoing: Folyamatban lévő
   bill_address: Számlázási cím
   ship_address: Szállítási cím
-  sort_order_cycles_on_shopfront_by: "Rendelési ciklusok rendezése az alábbi szerint:"
   required_fields: A kötelező mezőket csillag jelöli
   select_continue: Válassz és Folytasd
   remove: Eltávolítás
@@ -1260,59 +1259,55 @@ hu:
           no_method_yet: "Még nincs áruátadási mód beállítva."
         shop_preferences:
           legend: "Átvételi ponti beállítások"
-          shopfront_requires_login: "Nyilvánosan látható kirakat?"
-          shopfront_requires_login_tip: "Válaszd ki, hogy az ügyfeleknek be kell-e jelentkezniük a profilod megtekintéséhez, vagy azt mindenki láthatja."
-          shopfront_requires_login_false: "Nyilvános"
-          shopfront_requires_login_true: "Csak regisztrált és jóváhagyott vásárlók számára látható"
-          recommend_require_login: "Javasoljuk, hogy a felhasználóktól bejelentkezést kérj, amennyiben a rendelési tételek módosíthatók."
-          allow_guest_orders: "Vendégrendelések"
-          allow_guest_orders_tip: "Engedélyezd a vendégként való fizetést, vagy kérj felhasználói regisztrációt."
-          allow_guest_orders_false: "A megrendeléshez bejelentkezés szükséges"
-          allow_guest_orders_true: "Vendég fizetés engedélyezése"
-          allow_order_changes: "Megrendelések módosítása"
-          allow_order_changes_tip: "Lehetővé teszi az ügyfeleknek, hogy módosítsák rendelésüket, amíg a rendelési ciklus nyitva van."
-          allow_order_changes_false: "A leadott rendelések nem módosíthatók/törölhetők"
-          allow_order_changes_true: "A fogyasztók módosíthatják / törölhetik rendeléseiket, amíg a rendelési ciklus nyitva van"
-          enable_subscriptions: "Előfizetések"
-          enable_subscriptions_tip: "Engedélyezi az előfizetések funkciót?"
-          enable_subscriptions_false: "Tiltva"
-          enable_subscriptions_true: "Engedélyezve"
-          customer_names_in_reports: "Ügyfélnevek a jelentésekben"
-          customer_names_tip: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
-          producers_to_edit_orders: "Lehetőség a termelők számára a megrendelések szerkesztésére"
-          producers_to_edit_orders_tip: "Engedélyezd a beszállítók számára, hogy láthassák a termékeiket tartalmazó megrendeléseket, és csak a saját termékeik mennyiségét és súlyát szerkeszthessék."
-          customer_names_false: "Tiltva"
-          customer_names_true: "Engedélyezve"
-          customer_contacts_in_reports: "Ügyfelek elérhetőségei a jelentésekben"
-          customer_contacts_tip: "Engedélyezd a beszállítók számára, hogy láthassák az ügyfelek e-mail címét és telefonszámát a jelentésekben."
-          customer_contacts_false: "Tiltva"
-          customer_contacts_true: "Engedélyezve"
-          producers_edit_orders_false: "Tiltva"
-          producers_edit_orders_true: "Engedélyezve"
-          shopfront_message: "Nyitott átadópont üzenete"
-          shopfront_message_placeholder: >
-              Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
-              vásárolhatnak Nálad. Ha itt szöveget írsz be, az megjelenik a kezdőlapon,
-              amikor az ügyfelek először érkeznek az oldaladra.
-          shopfront_closed_message: "Zárt átadópont üzenete"
-          shopfront_closed_message_placeholder: >
-              Információk a fogyasztóknak az oldaladon, ha nincs aktív rendelési ciklus
-              (azaz zárva van). Írd le, hogy mikor várható a következő rendelési ciklus
-              megnyitása.
-          shopfront_category_ordering: "Kirakati kategória rendelése"
-          shopfront_category_ordering_note: "(fentről lefelé)"
-          open_date: "Nyitás dátuma"
-          close_date: "Zárás dátuma"
-          display_ordering_in_shopfront: "Termékek megjelenítése:"
-          shopfront_sort_by_product: "Termékek szerint"
-          shopfront_sort_by_category: "Kategória szerint"
-          shopfront_sort_by_producer: "A termelő szerint"
-          shopfront_sort_by_category_placeholder: "Kategória"
-          shopfront_sort_by_producer_placeholder: "Termelő"
-          display_remaining_stock: "Mutassa az elérhető készletet az oldalon, ha már kifogyóban van"
-          display_remaining_stock_tip: "Tudassa a vásárlókkal, amikor háromnál kevesebb darab van már csak."
           enabled: "Engedélyezve"
           disabled: "Tiltva"
+          shopfront_visibility:
+            title: "Nyilvánosan látható kirakat?"
+            description: "Válaszd ki, hogy az ügyfeleknek be kell-e jelentkezniük a profilod megtekintéséhez, vagy azt mindenki láthatja."
+            public: "Nyilvános"
+            registered_only: "Csak regisztrált és jóváhagyott vásárlók számára látható"
+          home_message:
+            title: "Nyitott átadópont üzenete"
+            placeholder: "Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan vásárolhatnak Nálad. Ha itt szöveget írsz be, az megjelenik a kezdőlapon, amikor az ügyfelek először érkeznek az oldaladra."
+          shopfront_closed_message:
+            title: "Zárt átadópont üzenete"
+            placeholder: "Információk a fogyasztóknak az oldaladon, ha nincs aktív rendelési ciklus (azaz zárva van). Írd le, hogy mikor várható a következő rendelési ciklus megnyitása."
+          product_order:
+            title: "Termékek megjelenítése"
+            by_category: "Kategória szerint"
+            by_producer: "A termelő szerint"
+            category_placeholder: "Kategória"
+            producer_placeholder: "Termelő"
+          low_stock_warning:
+            title: "Mutassa az elérhető készletet az oldalon, ha már kifogyóban van"
+            description: "Tudassa a vásárlókkal, amikor háromnál kevesebb darab van már csak."
+          order_cycle_order:
+            title: "Rendelési ciklusok rendezése az alábbi szerint:"
+            open_date: "Nyitás dátuma"
+            close_date: "Zárás dátuma"
+          guest_orders:
+            title: "Vendégrendelések"
+            description: "Engedélyezd a vendégként való fizetést, vagy kérj felhasználói regisztrációt."
+            allow: "Vendég fizetés engedélyezése"
+            require_login: "A megrendeléshez bejelentkezés szükséges"
+          change_orders:
+            title: "Megrendelések módosítása"
+            description: "Lehetővé teszi az ügyfeleknek, hogy módosítsák rendelésüket, amíg a rendelési ciklus nyitva van."
+            not_allowed: "A leadott rendelések nem módosíthatók/törölhetők"
+            allowed: "A fogyasztók módosíthatják / törölhetik rendeléseiket, amíg a rendelési ciklus nyitva van"
+            require_login_warning: "Javasoljuk, hogy a felhasználóktól bejelentkezést kérj, amennyiben a rendelési tételek módosíthatók."
+          subscriptions:
+            title: "Előfizetések"
+            description: "Engedélyezi az előfizetések funkciót?"
+          customer_names_in_reports:
+            title: "Ügyfélnevek a jelentésekben"
+            description: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
+          customer_contacts_in_reports:
+            title: "Ügyfelek elérhetőségei a jelentésekben"
+            description: "Engedélyezd a beszállítók számára, hogy láthassák az ügyfelek e-mail címét és telefonszámát a jelentésekben."
+          producers_edit_orders:
+            title: "Lehetőség a termelők számára a megrendelések szerkesztésére"
+            description: "Engedélyezd a beszállítók számára, hogy láthassák a termékeiket tartalmazó megrendeléseket, és csak a saját termékeik mennyiségét és súlyát szerkeszthessék."
         social:
           legend: "Közösségi média"
           twitter_placeholder: "pl. @the_prof"

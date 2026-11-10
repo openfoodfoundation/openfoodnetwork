@@ -226,7 +226,6 @@ nl_BE:
   ongoing: Lopend
   bill_address: Factuuradres
   ship_address: Verzendadres
-  sort_order_cycles_on_shopfront_by: "Sorteer ordercycli op winkelpromenade per"
   required_fields: Verplichte velden zijn aangegeven met een sterretje
   select_continue: Kiezen en doorgaan
   remove: Verwijderen
@@ -851,49 +850,43 @@ nl_BE:
           no_method_yet: "Je hebt nog geen verzendmethodes."
         shop_preferences:
           legend: "Voorkeuren winkel"
-          shopfront_requires_login: "Publiekelijk zichtbare etalage"
-          shopfront_requires_login_tip: "Kies of je klanten ingelogd moeten zijn om je etalage te bekijken of kies om je etalage zichtbaar te maken voor iedereen."
-          shopfront_requires_login_false: "Openbaar"
-          shopfront_requires_login_true: "Zichtbaar voor geregistreerde klanten alleen"
-          recommend_require_login: "We raden aan dat gebruikers ingelogd moet zijn wanneer ze bestellingen willen aanpassen."
-          allow_guest_orders: "Gastbestellingen"
-          allow_guest_orders_tip: "Sta uitchecken toe als gast of maak dit enkel mogelijk voor geregistreerde gebruikers."
-          allow_guest_orders_false: "Maak login noodzakelijk om te bestellen"
-          allow_guest_orders_true: "Sta uitchecken voor gasten toe"
-          allow_order_changes: "Pas bestellingen aan"
-          allow_order_changes_tip: "Sta klanten toe om aanpassingen te maken aan hun bestelling zolang hun bestellingscyclus open is."
-          allow_order_changes_false: "Plaats bestellingen die niet aangepast / geannuleerd kunnen worden."
-          allow_order_changes_true: "Klanten kunnen bestellingen aanpassen/ annuleren zolang hun bestellingscyclus open is."
-          enable_subscriptions: "Abonnementen"
-          enable_subscriptions_tip: "Activeer Abonneermogelijkheid"
-          enable_subscriptions_false: "Deactiveer"
-          enable_subscriptions_true: "Activeer"
-          customer_names_in_reports: "Klanten naam in rapporten"
-          customer_names_tip: "Schakel in dat je leveranciers de namen van de klanten kunnen zien in rapporten"
-          customer_names_false: "Deactiveer"
-          customer_names_true: "Activeer"
-          customer_contacts_false: "Deactiveer"
-          customer_contacts_true: "Activeer"
-          producers_edit_orders_false: "Deactiveer"
-          producers_edit_orders_true: "Activeer"
-          shopfront_message: "Etalage Boodschap"
-          shopfront_message_placeholder: >
-              Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met
-              jouw te shoppen. Als tekst hier is ingevuld gaat het zichtbaar zijn
-              in de home tab waneer klanten eerst aankomen in je online vitrine.
-          shopfront_closed_message: "Bericht Gesloten Etalage"
-          shopfront_closed_message_placeholder: >
-              Een boodschap die een gedetailleerdere verklaring voorziet over waarom
-              je winkel gesloten is en/of wanneer klanten kunnen verwachten dat deze
-              terug opent. Dit wordt weergegeven in je winkelpagina alleen wanneer
-              er geen actieve bestellingscyclus is. (bv. de winkel is gesloten).
-          shopfront_category_ordering: "Etalage Categorie Bestelling"
-          open_date: "Open Datum"
-          close_date: "Sluiten Datum"
-          shopfront_sort_by_category_placeholder: "Categorie"
-          shopfront_sort_by_producer_placeholder: "Producent"
           enabled: "Activeer"
           disabled: "Deactiveer"
+          shopfront_visibility:
+            title: "Publiekelijk zichtbare etalage"
+            description: "Kies of je klanten ingelogd moeten zijn om je etalage te bekijken of kies om je etalage zichtbaar te maken voor iedereen."
+            public: "Openbaar"
+            registered_only: "Zichtbaar voor geregistreerde klanten alleen"
+          home_message:
+            title: "Etalage Boodschap"
+            placeholder: "Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met jouw te shoppen. Als tekst hier is ingevuld gaat het zichtbaar zijn in de home tab waneer klanten eerst aankomen in je online vitrine."
+          shopfront_closed_message:
+            title: "Bericht Gesloten Etalage"
+            placeholder: "Een boodschap die een gedetailleerdere verklaring voorziet over waarom je winkel gesloten is en/of wanneer klanten kunnen verwachten dat deze terug opent. Dit wordt weergegeven in je winkelpagina alleen wanneer er geen actieve bestellingscyclus is. (bv. de winkel is gesloten)."
+          product_order:
+            category_placeholder: "Categorie"
+            producer_placeholder: "Producent"
+          order_cycle_order:
+            title: "Sorteer ordercycli op winkelpromenade per"
+            open_date: "Open Datum"
+            close_date: "Sluiten Datum"
+          guest_orders:
+            title: "Gastbestellingen"
+            description: "Sta uitchecken toe als gast of maak dit enkel mogelijk voor geregistreerde gebruikers."
+            allow: "Sta uitchecken voor gasten toe"
+            require_login: "Maak login noodzakelijk om te bestellen"
+          change_orders:
+            title: "Pas bestellingen aan"
+            description: "Sta klanten toe om aanpassingen te maken aan hun bestelling zolang hun bestellingscyclus open is."
+            not_allowed: "Plaats bestellingen die niet aangepast / geannuleerd kunnen worden."
+            allowed: "Klanten kunnen bestellingen aanpassen/ annuleren zolang hun bestellingscyclus open is."
+            require_login_warning: "We raden aan dat gebruikers ingelogd moet zijn wanneer ze bestellingen willen aanpassen."
+          subscriptions:
+            title: "Abonnementen"
+            description: "Activeer Abonneermogelijkheid"
+          customer_names_in_reports:
+            title: "Klanten naam in rapporten"
+            description: "Schakel in dat je leveranciers de namen van de klanten kunnen zien in rapporten"
         social:
           legend: "Sociaal"
           twitter_placeholder: "bv. @de_prof"

@@ -387,7 +387,6 @@ pa:
   ongoing: ਜਾਰੀ
   bill_address: ਬਿਲਿੰਗ ਪਤਾ
   ship_address: ਸ਼ਿਪਿੰਗ ਪਤਾ
-  sort_order_cycles_on_shopfront_by: "ਸ਼ਾਪਫ੍ਰੰਟ ਤੇ ਇਸਦੇ ਅਧਾਰ ਤੇ ਆਰਡਰ ਸਾਈਕਲ ਨੂੰ ਕ੍ਰਮਬੱਧ ਕਰੋ"
   required_fields: ਲੋੜੀਂਦੇ ਖੇਤਰਾਂ ਨੂੰ ਤਾਰੇ ਨਾਲ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਹੈ
   select_continue: ਚੁਣੋ ਅਤੇ ਜਾਰੀ ਰੱਖੋ
   remove: Remove
@@ -1098,55 +1097,49 @@ pa:
           no_method_yet: "ਤੁਹਾਡੇ ਕੋਲ ਹਾਲੇ ਤੱਕ ਕੋਈ ਵੀ ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗ ਨਹੀਂ ਹਨ।"
         shop_preferences:
           legend: "ਸ਼ਾਪ ਤਰਜੀਹਾਂ"
-          shopfront_requires_login: "ਇੱਕ ਪਬਲਿਕ ਤੌਰ ਉਤੇ ਵਿਖਾਈ ਦੇਣ ਵਾਲੀ ਸ਼ਾਪ?"
-          shopfront_requires_login_tip: "ਚੁਣੋ ਕਿ ਕੀ ਗਾਹਕਾਂ ਨੂੰ ਸ਼ਾਪਫ੍ਰੰਟ ਵੇਖਣ ਲਈ ਲੌਗਇਨ ਕਰਨਾ ਪਵੇਗਾ ਜਾਂ ਇਹ ਸਾਰਿਆਂ ਨੂੰ ਖਾਈ ਵਿਖਾਈ ਦਵੇਗੀ।"
-          shopfront_requires_login_false: "ਪਬਲਿਕ"
-          shopfront_requires_login_true: "ਸਿਰਫ਼ ਰਜਿਸਟਰਡ ਗਾਹਕਾਂ ਨੂੰ ਵਿਖੇਗਾ"
-          recommend_require_login: "ਆਰਡਰ ਬਦਲੇ ਜਾਣ ਲਈ ਅਸੀਂ ਉਪਭੋਗਤਾਵਾਂ ਦੇ ਲੌਗਇਨ ਕਰਨ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ।"
-          allow_guest_orders: "ਗੈਸਟ ਆਰਡਰ"
-          allow_guest_orders_tip: "ਇੱਕ ਗੈਸਟ ਵਜੋਂ ਚੈਕਆਉਟ ਦੀ ਆਗਿਆ ਦਿਓ ਜਾਂ ਇੱਕ ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਦੀ ਲੋੜ ਹੈ।"
-          allow_guest_orders_false: "ਆਰਡਰ ਕਰਨ ਲਈ ਲੌਗਇਨ ਦੀ ਲੋੜ ਹੈ"
-          allow_guest_orders_true: "ਗੈਸਟ ਚੈਕਆਉਟ ਦੀ ਆਗਿਆ ਦਿਓ"
-          allow_order_changes: "ਆਰਡਰ ਬਦਲੋ"
-          allow_order_changes_tip: "ਜਦ ਤੱਕ ਆਰਡਰ ਸਾਈਕਲ ਖੁੱਲਾ ਹੈ, ਗਾਹਕਾਂ ਨੂੰ ਆਪਣਾ ਆਰਡਰ ਬਦਲਣ ਦੀ ਆਗਿਆ ਦਿਓ।"
-          allow_order_changes_false: "ਕੀਤੇ ਗਏ ਆਰਡਰ ਨੂੰ ਬਦਲਿਆ/ਰੱਦ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
-          allow_order_changes_true: "ਆਰਡਰ ਸਾਈਕਲ ਖੁੱਲੇ ਹੋਣ ਤੇ ਗਾਹਕ ਆਰਡਰ ਬਦਲ/ਰੱਦ ਕਰ ਸਕਦੇ ਹਨ"
-          enable_subscriptions: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ"
-          enable_subscriptions_tip: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਕਾਰਜਕੁਸ਼ਲਤਾ ਨੂੰ ਸਮਰੱਥ ਕਰੋ?"
-          enable_subscriptions_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          enable_subscriptions_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          customer_names_in_reports: "ਰਿਪੋਰਟਾਂ ਵਿੱਚ ਗਾਹਕ ਦੇ ਨਾਮ"
-          customer_names_tip: "ਰਿਪੋਰਟਾਂ ਵਿੱਚ ਆਪਣੇ ਗਾਹਕਾਂ ਦੇ ਨਾ ਵੇਖਣ ਲਈ ਆਪਣੇ ਸਪਲਾਇਰਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ"
-          customer_names_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          customer_names_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          customer_contacts_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          customer_contacts_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          producers_edit_orders_false: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          producers_edit_orders_true: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
-          shopfront_message: "ਸ਼ਾਪਫਰੰਟ ਸੰਦੇਸ਼"
-          shopfront_message_placeholder: >
-              ਗਾਹਕਾਂ ਦਾ ਸੁਆਗਤ ਕਰਨ ਅਤੇ ਤੁਹਾਡੇ ਨਾਲ ਖਰੀਦਦਾਰੀ ਕਰਨ ਦਾ ਢੰਗ ਦੱਸਣ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ
-              ਸੰਦੇਸ਼। ਜੇਕਰ ਟੈਕਸਟ ਇੱਥੇ ਦਰਜ ਕੀਤਾ ਗਿਆ ਹੈ ਤਾਂ ਉਹ ਹੋਮ ਟੈਬ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ
-              ਹੋਵੇਗਾ ਜਦੋਂ ਗਾਹਕ ਪਹਿਲੀ ਵਾਰ ਤੁਹਾਡੇ ਸ਼ਾਪ ਦੇ ਸਾਹਮਣੇ ਆਉਂਦੇ ਹਨ।
-          shopfront_closed_message: "ਸ਼ਾਪਫ੍ਰੰਟ ਦੇ ਬੰਦ ਹੋਣ ਦਾ ਸੰਦੇਸ਼"
-          shopfront_closed_message_placeholder: >
-              ਇੱਕ ਸੰਦੇਸ਼ ਜੋ ਇਸ ਬਾਰੇ ਵਧੇਰੇ ਵਿਸਤ੍ਰਿਤ ਵਿਆਖਿਆ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ ਕਿ ਤੁਹਾਡੀ
-              ਸ਼ਾਪ ਕਿਉਂ ਬੰਦ ਹੈ ਅਤੇ/ਜਾਂ ਗਾਹਕ ਇਸ ਦੇ ਦੁਬਾਰਾ ਖੁੱਲ੍ਹਣ ਦੀ ਉਮੀਦ ਕਦੋਂ ਕਰ ਸਕਦੇ
-              ਹਨ। ਇਹ ਤੁਹਾਡੀ ਸ਼ਾਪ ਤੇ ਉਦੋਂ ਹੀ ਪ੍ਰਦਰਸ਼ਿਤ ਹੁੰਦਾ ਹੈ ਜਦੋਂ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ
-              ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਨਹੀਂ ਹੁੰਦਾ ਹੈ (ਯਾਨੀ ਜਦੋਂ ਸ਼ਾਪ ਬੰਦ ਹੈ)।
-          shopfront_category_ordering: "ਸ਼ਾਪਫਰੰਟ ਸ਼੍ਰੇਣੀ ਦੇ ਅਧਾਰ ਤੇ ਆਰਡਰ"
-          shopfront_category_ordering_note: "(ਉਪਰ ਤੋਂ ਥੱਲੇ)"
-          open_date: "ਖੁੱਲਣ ਦੀ ਮਿਤੀ"
-          close_date: "ਬੰਦ ਹੋਣ ਦੀ ਮਿਤੀ"
-          display_ordering_in_shopfront: "ਸ਼ਾਪਫਰੰਟ ਵਿੱਚ ਆਰਡਰ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ:"
-          shopfront_sort_by_category: "ਸ਼੍ਰੇਣੀ ਦੁਆਰਾ"
-          shopfront_sort_by_producer: "ਉਤਪਾਦਕ ਦੁਆਰਾ"
-          shopfront_sort_by_category_placeholder: "ਸ਼੍ਰੇਣੀ"
-          shopfront_sort_by_producer_placeholder: "ਉਤਪਾਦਕ"
-          display_remaining_stock: "ਜੇਕਰ ਹੱਥ ਵਿੱਚ ਸਟਾਕ ਘੱਟ ਹੈ ਤਾਂ ਬਾਕੀ ਬਚੇ ਸਟਾਕ ਨੂੰ ਸ਼ਾਪਫਰੰਟ ਤੇ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ"
-          display_remaining_stock_tip: "ਜਦੋਂ ਸਿਰਫ 3 ਜਾਂ ਉਸਤੋਂ ਘੱਟ ਚੀਜ਼ਾਂ ਬਚੀਆਂ ਹੋਣ ਤਾਂ ਖਰੀਦਦਾਰਾਂ ਨੂੰ ਸੂਚਿਤ ਕਰੋ।"
           enabled: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           disabled: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
+          shopfront_visibility:
+            title: "ਇੱਕ ਪਬਲਿਕ ਤੌਰ ਉਤੇ ਵਿਖਾਈ ਦੇਣ ਵਾਲੀ ਸ਼ਾਪ?"
+            description: "ਚੁਣੋ ਕਿ ਕੀ ਗਾਹਕਾਂ ਨੂੰ ਸ਼ਾਪਫ੍ਰੰਟ ਵੇਖਣ ਲਈ ਲੌਗਇਨ ਕਰਨਾ ਪਵੇਗਾ ਜਾਂ ਇਹ ਸਾਰਿਆਂ ਨੂੰ ਖਾਈ ਵਿਖਾਈ ਦਵੇਗੀ।"
+            public: "ਪਬਲਿਕ"
+            registered_only: "ਸਿਰਫ਼ ਰਜਿਸਟਰਡ ਗਾਹਕਾਂ ਨੂੰ ਵਿਖੇਗਾ"
+          home_message:
+            title: "ਸ਼ਾਪਫਰੰਟ ਸੰਦੇਸ਼"
+            placeholder: "ਗਾਹਕਾਂ ਦਾ ਸੁਆਗਤ ਕਰਨ ਅਤੇ ਤੁਹਾਡੇ ਨਾਲ ਖਰੀਦਦਾਰੀ ਕਰਨ ਦਾ ਢੰਗ ਦੱਸਣ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ ਸੰਦੇਸ਼। ਜੇਕਰ ਟੈਕਸਟ ਇੱਥੇ ਦਰਜ ਕੀਤਾ ਗਿਆ ਹੈ ਤਾਂ ਉਹ ਹੋਮ ਟੈਬ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ ਹੋਵੇਗਾ ਜਦੋਂ ਗਾਹਕ ਪਹਿਲੀ ਵਾਰ ਤੁਹਾਡੇ ਸ਼ਾਪ ਦੇ ਸਾਹਮਣੇ ਆਉਂਦੇ ਹਨ।"
+          shopfront_closed_message:
+            title: "ਸ਼ਾਪਫ੍ਰੰਟ ਦੇ ਬੰਦ ਹੋਣ ਦਾ ਸੰਦੇਸ਼"
+            placeholder: "ਇੱਕ ਸੰਦੇਸ਼ ਜੋ ਇਸ ਬਾਰੇ ਵਧੇਰੇ ਵਿਸਤ੍ਰਿਤ ਵਿਆਖਿਆ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ ਕਿ ਤੁਹਾਡੀ ਸ਼ਾਪ ਕਿਉਂ ਬੰਦ ਹੈ ਅਤੇ/ਜਾਂ ਗਾਹਕ ਇਸ ਦੇ ਦੁਬਾਰਾ ਖੁੱਲ੍ਹਣ ਦੀ ਉਮੀਦ ਕਦੋਂ ਕਰ ਸਕਦੇ ਹਨ। ਇਹ ਤੁਹਾਡੀ ਸ਼ਾਪ ਤੇ ਉਦੋਂ ਹੀ ਪ੍ਰਦਰਸ਼ਿਤ ਹੁੰਦਾ ਹੈ ਜਦੋਂ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਨਹੀਂ ਹੁੰਦਾ ਹੈ (ਯਾਨੀ ਜਦੋਂ ਸ਼ਾਪ ਬੰਦ ਹੈ)।"
+          product_order:
+            title: "ਸ਼ਾਪਫਰੰਟ ਵਿੱਚ ਆਰਡਰ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ"
+            by_category: "ਸ਼੍ਰੇਣੀ ਦੁਆਰਾ"
+            by_producer: "ਉਤਪਾਦਕ ਦੁਆਰਾ"
+            category_placeholder: "ਸ਼੍ਰੇਣੀ"
+            producer_placeholder: "ਉਤਪਾਦਕ"
+          low_stock_warning:
+            title: "ਜੇਕਰ ਹੱਥ ਵਿੱਚ ਸਟਾਕ ਘੱਟ ਹੈ ਤਾਂ ਬਾਕੀ ਬਚੇ ਸਟਾਕ ਨੂੰ ਸ਼ਾਪਫਰੰਟ ਤੇ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ"
+            description: "ਜਦੋਂ ਸਿਰਫ 3 ਜਾਂ ਉਸਤੋਂ ਘੱਟ ਚੀਜ਼ਾਂ ਬਚੀਆਂ ਹੋਣ ਤਾਂ ਖਰੀਦਦਾਰਾਂ ਨੂੰ ਸੂਚਿਤ ਕਰੋ।"
+          order_cycle_order:
+            title: "ਸ਼ਾਪਫ੍ਰੰਟ ਤੇ ਇਸਦੇ ਅਧਾਰ ਤੇ ਆਰਡਰ ਸਾਈਕਲ ਨੂੰ ਕ੍ਰਮਬੱਧ ਕਰੋ"
+            open_date: "ਖੁੱਲਣ ਦੀ ਮਿਤੀ"
+            close_date: "ਬੰਦ ਹੋਣ ਦੀ ਮਿਤੀ"
+          guest_orders:
+            title: "ਗੈਸਟ ਆਰਡਰ"
+            description: "ਇੱਕ ਗੈਸਟ ਵਜੋਂ ਚੈਕਆਉਟ ਦੀ ਆਗਿਆ ਦਿਓ ਜਾਂ ਇੱਕ ਰਜਿਸਟਰਡ ਉਪਭੋਗਤਾ ਦੀ ਲੋੜ ਹੈ।"
+            allow: "ਗੈਸਟ ਚੈਕਆਉਟ ਦੀ ਆਗਿਆ ਦਿਓ"
+            require_login: "ਆਰਡਰ ਕਰਨ ਲਈ ਲੌਗਇਨ ਦੀ ਲੋੜ ਹੈ"
+          change_orders:
+            title: "ਆਰਡਰ ਬਦਲੋ"
+            description: "ਜਦ ਤੱਕ ਆਰਡਰ ਸਾਈਕਲ ਖੁੱਲਾ ਹੈ, ਗਾਹਕਾਂ ਨੂੰ ਆਪਣਾ ਆਰਡਰ ਬਦਲਣ ਦੀ ਆਗਿਆ ਦਿਓ।"
+            not_allowed: "ਕੀਤੇ ਗਏ ਆਰਡਰ ਨੂੰ ਬਦਲਿਆ/ਰੱਦ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
+            allowed: "ਆਰਡਰ ਸਾਈਕਲ ਖੁੱਲੇ ਹੋਣ ਤੇ ਗਾਹਕ ਆਰਡਰ ਬਦਲ/ਰੱਦ ਕਰ ਸਕਦੇ ਹਨ"
+            require_login_warning: "ਆਰਡਰ ਬਦਲੇ ਜਾਣ ਲਈ ਅਸੀਂ ਉਪਭੋਗਤਾਵਾਂ ਦੇ ਲੌਗਇਨ ਕਰਨ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ।"
+          subscriptions:
+            title: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ"
+            description: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਕਾਰਜਕੁਸ਼ਲਤਾ ਨੂੰ ਸਮਰੱਥ ਕਰੋ?"
+          customer_names_in_reports:
+            title: "ਰਿਪੋਰਟਾਂ ਵਿੱਚ ਗਾਹਕ ਦੇ ਨਾਮ"
+            description: "ਰਿਪੋਰਟਾਂ ਵਿੱਚ ਆਪਣੇ ਗਾਹਕਾਂ ਦੇ ਨਾ ਵੇਖਣ ਲਈ ਆਪਣੇ ਸਪਲਾਇਰਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ"
         social:
           legend: "ਸਮਾਜਿਕ"
           twitter_placeholder: "ਜਿਵੇਂ - @the_prof"

@@ -430,7 +430,6 @@ sr:
   ongoing: У току, сталан
   bill_address: Адреса за наплату
   ship_address: Достава Адреса
-  sort_order_cycles_on_shopfront_by: "Сортирај циклусе редоследа на излогу по"
   required_fields: Обавезна поља су означена звездицом
   select_continue: Изаберите и Настави
   remove: Уклони
@@ -1181,52 +1180,49 @@ sr:
           no_method_yet: "Још увек немате ниједан начин испоруке."
         shop_preferences:
           legend: "Подешавања продавнице"
-          shopfront_requires_login: "Јавно видљив излог?"
-          shopfront_requires_login_tip: "Одаберите да ли се купци морају пријавити да би видели излог или да ли је видљив свима."
-          shopfront_requires_login_false: "Јавно"
-          shopfront_requires_login_true: "Видљиво само регистрованим купцима"
-          recommend_require_login: "Препоручујемо да се од корисника захтева да се пријаве када се поруџбине могу променити."
-          allow_guest_orders: "Наруџбине гостију"
-          allow_guest_orders_tip: "Дозволите одјаву као гост или захтевајте регистрованог корисника."
-          allow_guest_orders_false: "Захтевајте пријаву да бисте наручили"
-          allow_guest_orders_true: "Дозволи одјаву госта"
-          allow_order_changes: "Промените наредбе"
-          allow_order_changes_tip: "Дозволите купцима да промене своју поруџбину све док је циклус поруџбине отворен."
-          allow_order_changes_false: "Постављене поруџбине се не могу мењати / отказати"
-          allow_order_changes_true: "Купци могу да мењају/откажу поруџбине док је циклус поруџбине отворен"
-          enable_subscriptions: "Претплате"
-          enable_subscriptions_tip: "Омогућити функцију претплате?"
-          enable_subscriptions_false: "Онемогућено"
-          enable_subscriptions_true: "Омогућено"
-          customer_names_in_reports: "Имена клијената у извештајима"
-          customer_names_tip: "Омогућите својим добављачима да виде имена ваших клијената у извештајима"
-          customer_names_false: "Онемогућено"
-          customer_names_true: "Омогућено"
-          shopfront_message: "Схопфронт Мессаге"
-          shopfront_message_placeholder: >
-              Опциона порука за добродошлицу купцима и објашњење како да купујете
-              са вама. Ако се овде унесе текст, он ће бити приказан на почетној картици
-              када купци први пут стигну у вашу продавницу.
-          shopfront_closed_message: "Схопфронт Цлосед Мессаге"
-          shopfront_closed_message_placeholder: >
-              Порука која пружа детаљније објашњење зашто је ваша продавница затворена
-              и/или када купци могу очекивати да ће се поново отворити. Ово се приказује
-              на вашој продавници само када немате активних циклуса наруџби (тј. продавница
-              је затворена).
-          shopfront_category_ordering: "Наручивање категорија из продавнице"
-          shopfront_category_ordering_note: "(од врха до дна)"
-          open_date: "Опен Дате"
-          close_date: "Датум затварања"
-          display_ordering_in_shopfront: "Прикажите наруџбу на излогу:"
-          shopfront_sort_by_product: "По производу"
-          shopfront_sort_by_category: "По категорији"
-          shopfront_sort_by_producer: "Од произвођача"
-          shopfront_sort_by_category_placeholder: "Категорија"
-          shopfront_sort_by_producer_placeholder: "Произвођач"
-          display_remaining_stock: "Прикажите преостале залихе на излогу ако имате мало"
-          display_remaining_stock_tip: "Обавестите купце када су преостала само 3 или мање артикла."
           enabled: "Омогућено"
           disabled: "Онемогућено"
+          shopfront_visibility:
+            title: "Јавно видљив излог?"
+            description: "Одаберите да ли се купци морају пријавити да би видели излог или да ли је видљив свима."
+            public: "Јавно"
+            registered_only: "Видљиво само регистрованим купцима"
+          home_message:
+            title: "Схопфронт Мессаге"
+            placeholder: "Опциона порука за добродошлицу купцима и објашњење како да купујете са вама. Ако се овде унесе текст, он ће бити приказан на почетној картици када купци први пут стигну у вашу продавницу."
+          shopfront_closed_message:
+            title: "Схопфронт Цлосед Мессаге"
+            placeholder: "Порука која пружа детаљније објашњење зашто је ваша продавница затворена и/или када купци могу очекивати да ће се поново отворити. Ово се приказује на вашој продавници само када немате активних циклуса наруџби (тј. продавница је затворена)."
+          product_order:
+            title: "Прикажите наруџбу на излогу"
+            by_category: "По категорији"
+            by_producer: "Од произвођача"
+            category_placeholder: "Категорија"
+            producer_placeholder: "Произвођач"
+          low_stock_warning:
+            title: "Прикажите преостале залихе на излогу ако имате мало"
+            description: "Обавестите купце када су преостала само 3 или мање артикла."
+          order_cycle_order:
+            title: "Сортирај циклусе редоследа на излогу по"
+            open_date: "Опен Дате"
+            close_date: "Датум затварања"
+          guest_orders:
+            title: "Наруџбине гостију"
+            description: "Дозволите одјаву као гост или захтевајте регистрованог корисника."
+            allow: "Дозволи одјаву госта"
+            require_login: "Захтевајте пријаву да бисте наручили"
+          change_orders:
+            title: "Промените наредбе"
+            description: "Дозволите купцима да промене своју поруџбину све док је циклус поруџбине отворен."
+            not_allowed: "Постављене поруџбине се не могу мењати / отказати"
+            allowed: "Купци могу да мењају/откажу поруџбине док је циклус поруџбине отворен"
+            require_login_warning: "Препоручујемо да се од корисника захтева да се пријаве када се поруџбине могу променити."
+          subscriptions:
+            title: "Претплате"
+            description: "Омогућити функцију претплате?"
+          customer_names_in_reports:
+            title: "Имена клијената у извештајима"
+            description: "Омогућите својим добављачима да виде имена ваших клијената у извештајима"
         social:
           legend: "Социал"
           twitter_placeholder: "на пример. @тхе_проф"

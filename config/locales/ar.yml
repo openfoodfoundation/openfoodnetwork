@@ -358,7 +358,6 @@ ar:
   ongoing: جاري التنفيذ
   bill_address: عنوان وصول الفواتير
   ship_address: عنوان الشحن
-  sort_order_cycles_on_shopfront_by: "ترتيب دورات الطلب على واجهة المتجر حسب"
   required_fields: تتم الإشارة إلى الحقول المطلوبة بعلامة النجمة
   select_continue: اختيار وتابع
   remove: إزالة
@@ -1051,54 +1050,49 @@ ar:
           no_method_yet: "ليس لديك أي طرق شحن حتى الآن."
         shop_preferences:
           legend: "تفضيلات المتجر"
-          shopfront_requires_login: "واجهة المتجر مرئية للعام؟"
-          shopfront_requires_login_tip: "اختر ما إذا كان يجب على العملاء تسجيل الدخول لعرض واجهة المحل أو إذا كان مرئيًا للجميع."
-          shopfront_requires_login_false: "عام"
-          shopfront_requires_login_true: "مرئي للعملاء المسجلين فقط"
-          recommend_require_login: "نوصي مطالبة المستخدمين بتسجيل الدخول عندما يمكن تغيير الطلبات."
-          allow_guest_orders: "طلبات الضيف"
-          allow_guest_orders_tip: "اسمح بالخروج كضيف أو قم بالتسجيل كمستخدم."
-          allow_guest_orders_false: "تتطلب تسجيل الدخول لطلب"
-          allow_guest_orders_true: "السماح للضيف للخروج"
-          allow_order_changes: "تغيير الطلبات"
-          allow_order_changes_tip: "اسمح للعملاء بتغيير طلباتهم طالما كانت دورة الطلب مفتوحة."
-          allow_order_changes_false: "الطلبات المقدمة لا يمكن تغييرها / إلغاؤها"
-          allow_order_changes_true: "يمكن للعملاء تغيير / إلغاء طلباتهم أثناء فتح دورة الطلب"
-          enable_subscriptions: "الاشتراكات"
-          enable_subscriptions_tip: "تمكين الاشتراكات وظيفيا ؟"
-          enable_subscriptions_false: "تعليق"
-          enable_subscriptions_true: "تمكين"
-          customer_names_in_reports: "أسماء العملاء في التقارير"
-          customer_names_tip: "قم بتمكين مورديك من رؤية أسماء عملائك في التقارير"
-          customer_names_false: "تعليق"
-          customer_names_true: "تمكين"
-          customer_contacts_false: "تعليق"
-          customer_contacts_true: "تمكين"
-          producers_edit_orders_false: "تعليق"
-          producers_edit_orders_true: "تمكين"
-          shopfront_message: "رسالة واجهة المتجر"
-          shopfront_message_placeholder: >
-              رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال
-              النص هنا ، فسيتم عرضه في علامة تبويب الصفحة الرئيسية عندما يصل العملاء
-              إلى واجهة المتجر الخاصة بك.
-          shopfront_closed_message: "واجهة المتجر رسالة مغلقة"
-          shopfront_closed_message_placeholder: >
-              الرسالة تقدم شرحًا أكثر تفصيلًا حول سبب إغلاق متجرك و / أو متى يمكن
-              للعملاء توقع فتحه مرة أخرى. يتم عرض هذا في متجرك فقط عندما لا يكون لديك
-              دورات طلبات نشطة (على سبيل المثال ، المتجر مغلق).
-          shopfront_category_ordering: "ترتيب فئة واجهة المتجر"
-          shopfront_category_ordering_note: "(من اعلى لاسفل)"
-          open_date: "تاريخ الفتح "
-          close_date: "تاريخ الاغلاق"
-          display_ordering_in_shopfront: "عرض الطلب في واجهة المتجر:"
-          shopfront_sort_by_category: "حسب التصنيف"
-          shopfront_sort_by_producer: "حسب المنتج"
-          shopfront_sort_by_category_placeholder: "الفئة"
-          shopfront_sort_by_producer_placeholder: "المنتج"
-          display_remaining_stock: "عرض المخزون المتبقي في واجهة المتجر إذا كان منخفضًا في المتناول"
-          display_remaining_stock_tip: "دع المتسوقين يعرفون عندما لا يتبقى سوى 3 عناصر أو أقل."
           enabled: "تمكين"
           disabled: "تعليق"
+          shopfront_visibility:
+            title: "واجهة المتجر مرئية للعام؟"
+            description: "اختر ما إذا كان يجب على العملاء تسجيل الدخول لعرض واجهة المحل أو إذا كان مرئيًا للجميع."
+            public: "عام"
+            registered_only: "مرئي للعملاء المسجلين فقط"
+          home_message:
+            title: "رسالة واجهة المتجر"
+            placeholder: "رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال النص هنا ، فسيتم عرضه في علامة تبويب الصفحة الرئيسية عندما يصل العملاء إلى واجهة المتجر الخاصة بك."
+          shopfront_closed_message:
+            title: "واجهة المتجر رسالة مغلقة"
+            placeholder: "الرسالة تقدم شرحًا أكثر تفصيلًا حول سبب إغلاق متجرك و / أو متى يمكن للعملاء توقع فتحه مرة أخرى. يتم عرض هذا في متجرك فقط عندما لا يكون لديك دورات طلبات نشطة (على سبيل المثال ، المتجر مغلق)."
+          product_order:
+            title: "عرض الطلب في واجهة المتجر"
+            by_category: "حسب التصنيف"
+            by_producer: "حسب المنتج"
+            category_placeholder: "الفئة"
+            producer_placeholder: "المنتج"
+          low_stock_warning:
+            title: "عرض المخزون المتبقي في واجهة المتجر إذا كان منخفضًا في المتناول"
+            description: "دع المتسوقين يعرفون عندما لا يتبقى سوى 3 عناصر أو أقل."
+          order_cycle_order:
+            title: "ترتيب دورات الطلب على واجهة المتجر حسب"
+            open_date: "تاريخ الفتح"
+            close_date: "تاريخ الاغلاق"
+          guest_orders:
+            title: "طلبات الضيف"
+            description: "اسمح بالخروج كضيف أو قم بالتسجيل كمستخدم."
+            allow: "السماح للضيف للخروج"
+            require_login: "تتطلب تسجيل الدخول لطلب"
+          change_orders:
+            title: "تغيير الطلبات"
+            description: "اسمح للعملاء بتغيير طلباتهم طالما كانت دورة الطلب مفتوحة."
+            not_allowed: "الطلبات المقدمة لا يمكن تغييرها / إلغاؤها"
+            allowed: "يمكن للعملاء تغيير / إلغاء طلباتهم أثناء فتح دورة الطلب"
+            require_login_warning: "نوصي مطالبة المستخدمين بتسجيل الدخول عندما يمكن تغيير الطلبات."
+          subscriptions:
+            title: "الاشتراكات"
+            description: "تمكين الاشتراكات وظيفيا ؟"
+          customer_names_in_reports:
+            title: "أسماء العملاء في التقارير"
+            description: "قم بتمكين مورديك من رؤية أسماء عملائك في التقارير"
         social:
           legend: "اجتماعي"
           twitter_placeholder: "على سبيل المثال. the_prof"

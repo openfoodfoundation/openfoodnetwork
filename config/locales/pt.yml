@@ -258,7 +258,6 @@ pt:
   ongoing: A decorrer
   bill_address: Morada de Faturação
   ship_address: Morada de Envio
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Encomendas na Loja Por"
   required_fields: Os campos obrigatórios estão indicados com um asterisco
   select_continue: Seleccionar e continuar
   remove: Remover
@@ -897,43 +896,39 @@ pt:
           no_method_yet: "Ainda não tem nenhuma forma de envio."
         shop_preferences:
           legend: "Preferências da Loja"
-          shopfront_requires_login: "Loja visível publicamente?"
-          shopfront_requires_login_tip: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
-          shopfront_requires_login_false: "Público"
-          shopfront_requires_login_true: "Visível somente para consumidores registados"
-          recommend_require_login: "Recomendamos que peça login dos utilizadores quando é permitido que as encomendas sejam alteradas. "
-          allow_guest_orders: "Encomendas de convidados"
-          allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um utilizador registado. "
-          allow_guest_orders_false: "Exigir o registo para fazer encomendas"
-          allow_guest_orders_true: "Permitir checkout de convidados"
-          allow_order_changes: "Alterar encomendas"
-          allow_order_changes_tip: "Permitir que os consumidores alterem as suas encomendas enquanto o ciclo de encomendas estiver aberto."
-          allow_order_changes_false: "Encomendas submetidas não podem ser alteradas / canceladas."
-          allow_order_changes_true: "Os consumidores podem alterar / cancelar encomendas enquanto o ciclo de encomendas estiver aberto."
-          enable_subscriptions: "Subscrições"
-          enable_subscriptions_tip: "Activar a funcionalidade das subscrições?"
-          enable_subscriptions_false: "Desactivado"
-          enable_subscriptions_true: "Activo"
-          customer_names_false: "Desactivado"
-          customer_names_true: "Activo"
-          customer_contacts_false: "Desactivado"
-          customer_contacts_true: "Activo"
-          producers_edit_orders_false: "Desactivado"
-          producers_edit_orders_true: "Activo"
-          shopfront_message: "Mensagem da Loja"
-          shopfront_closed_message: "Mensagem de Loja Fechada"
-          shopfront_closed_message_placeholder: >
-              Uma mensagem que forneça uma explicação mais detalhada sobre o motivo
-              da sua loja estar fechada e quando é que os consumidores podem esperar
-              que abra novamente. A ser exibida quando não houver nenhum ciclo de
-              encomendas activo.
-          shopfront_category_ordering: "Ordem das Categorias da Loja"
-          open_date: "Dia de Abertura"
-          close_date: "Data de fecho"
-          shopfront_sort_by_category_placeholder: "Categoria"
-          shopfront_sort_by_producer_placeholder: "Produtor/a"
           enabled: "Activo"
           disabled: "Desactivado"
+          shopfront_visibility:
+            title: "Loja visível publicamente?"
+            description: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
+            public: "Público"
+            registered_only: "Visível somente para consumidores registados"
+          home_message:
+            title: "Mensagem da Loja"
+          shopfront_closed_message:
+            title: "Mensagem de Loja Fechada"
+            placeholder: "Uma mensagem que forneça uma explicação mais detalhada sobre o motivo da sua loja estar fechada e quando é que os consumidores podem esperar que abra novamente. A ser exibida quando não houver nenhum ciclo de encomendas activo."
+          product_order:
+            category_placeholder: "Categoria"
+            producer_placeholder: "Produtor/a"
+          order_cycle_order:
+            title: "Ordenar Ciclos de Encomendas na Loja Por"
+            open_date: "Dia de Abertura"
+            close_date: "Data de fecho"
+          guest_orders:
+            title: "Encomendas de convidados"
+            description: "Permitir o checkout como convidado, ou requisitar um utilizador registado."
+            allow: "Permitir checkout de convidados"
+            require_login: "Exigir o registo para fazer encomendas"
+          change_orders:
+            title: "Alterar encomendas"
+            description: "Permitir que os consumidores alterem as suas encomendas enquanto o ciclo de encomendas estiver aberto."
+            not_allowed: "Encomendas submetidas não podem ser alteradas / canceladas."
+            allowed: "Os consumidores podem alterar / cancelar encomendas enquanto o ciclo de encomendas estiver aberto."
+            require_login_warning: "Recomendamos que peça login dos utilizadores quando é permitido que as encomendas sejam alteradas."
+          subscriptions:
+            title: "Subscrições"
+            description: "Activar a funcionalidade das subscrições?"
         social:
           legend: "Social"
           twitter_placeholder: "ex:  @o_prof"

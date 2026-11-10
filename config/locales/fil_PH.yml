@@ -221,7 +221,6 @@ fil_PH:
   ongoing: Nagaganap
   bill_address: Billing Address
   ship_address: Shipping Address
-  sort_order_cycles_on_shopfront_by: "Uriin ang mga order cycle sa shopfront gamit ang"
   required_fields: ang mga kailangang sagutan ay may nakalagay na asterisk
   select_continue: Pumili at Magpatuloy
   remove: Tanggalin
@@ -830,48 +829,40 @@ fil_PH:
           no_method_yet: "wala ka pang inilagay na paraan ng pagpapadala."
         shop_preferences:
           legend: "mga kagustuhan sa shop"
-          shopfront_requires_login: "nakikita sa publiko ang shopfront?"
-          shopfront_requires_login_tip: "pumili kung nais na maglog-in muna ang customer bago makita ang shopfront o nakikita ito ng lahat."
-          shopfront_requires_login_false: "publiko"
-          shopfront_requires_login_true: "nakikita lamang ng rehistradong mga customer"
-          recommend_require_login: "nirerekomenda namin na kailangang maglog-in muna ang Users kapag ang mga order ay maaaring baguhin."
-          allow_guest_orders: "mga order ng guest"
-          allow_guest_orders_tip: "pahintulutang mag-checkout bilang guest o kailangang rehistrado ang user."
-          allow_guest_orders_false: "kailangang maglog-in para makapag-order"
-          allow_guest_orders_true: "pahintulutan ang guest checkout"
-          allow_order_changes: "palitan ang mga order"
-          allow_order_changes_tip: "pahintulutan ang mga customer na palitan ang kanilang order hangga't bukas pa ang order cycle"
-          allow_order_changes_false: "ang na-place na mga order ay hindi na maaaring palitan/kanselahin"
-          allow_order_changes_true: "maaari pang palitan/kanselahin ng mga customer ang kanilang mga order hangga't ang order cycle ay bukas pa."
-          enable_subscriptions: "mga nauulit na order"
-          enable_subscriptions_tip: "paganahina ng paggamit ng mga subscription?"
-          enable_subscriptions_false: "huwag paganahin"
-          enable_subscriptions_true: "pinagana"
-          customer_names_false: "huwag paganahin"
-          customer_names_true: "pinagana"
-          customer_contacts_false: "huwag paganahin"
-          customer_contacts_true: "pinagana"
-          producers_edit_orders_false: "huwag paganahin"
-          producers_edit_orders_true: "pinagana"
-          shopfront_message: "mensahe sa Shopfront"
-          shopfront_message_placeholder: >
-              opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag
-              kung paano mamili sa inyong shop. kung ang teksto ay ipinasok dito,
-              ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
-              shopfront.
-          shopfront_closed_message: "pagsasarang mensahe ng Shopfront"
-          shopfront_closed_message_placeholder: >
-              isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit
-              ang iyong shop ay sarado at/o kung ang mga customer ay makakaasang magbubukas
-              ito muli. Ito ay makikita sa iyong shop kapag ikaw ay walang aktibong
-              order cycle (hal. sarado ang shop).
-          shopfront_category_ordering: "kategorya ng pag-order sa Shopfront"
-          open_date: "petsa ng pagbubukas"
-          close_date: "petsa ng pagsasara"
-          shopfront_sort_by_category_placeholder: "kategorya"
-          shopfront_sort_by_producer_placeholder: "Producer"
           enabled: "pinagana"
           disabled: "huwag paganahin"
+          shopfront_visibility:
+            title: "nakikita sa publiko ang shopfront?"
+            description: "pumili kung nais na maglog-in muna ang customer bago makita ang shopfront o nakikita ito ng lahat."
+            public: "publiko"
+            registered_only: "nakikita lamang ng rehistradong mga customer"
+          home_message:
+            title: "mensahe sa Shopfront"
+            placeholder: "opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag kung paano mamili sa inyong shop. kung ang teksto ay ipinasok dito, ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong shopfront."
+          shopfront_closed_message:
+            title: "pagsasarang mensahe ng Shopfront"
+            placeholder: "isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit ang iyong shop ay sarado at/o kung ang mga customer ay makakaasang magbubukas ito muli. Ito ay makikita sa iyong shop kapag ikaw ay walang aktibong order cycle (hal. sarado ang shop)."
+          product_order:
+            category_placeholder: "kategorya"
+            producer_placeholder: "Producer"
+          order_cycle_order:
+            title: "Uriin ang mga order cycle sa shopfront gamit ang"
+            open_date: "petsa ng pagbubukas"
+            close_date: "petsa ng pagsasara"
+          guest_orders:
+            title: "mga order ng guest"
+            description: "pahintulutang mag-checkout bilang guest o kailangang rehistrado ang user."
+            allow: "pahintulutan ang guest checkout"
+            require_login: "kailangang maglog-in para makapag-order"
+          change_orders:
+            title: "palitan ang mga order"
+            description: "pahintulutan ang mga customer na palitan ang kanilang order hangga't bukas pa ang order cycle"
+            not_allowed: "ang na-place na mga order ay hindi na maaaring palitan/kanselahin"
+            allowed: "maaari pang palitan/kanselahin ng mga customer ang kanilang mga order hangga't ang order cycle ay bukas pa."
+            require_login_warning: "nirerekomenda namin na kailangang maglog-in muna ang Users kapag ang mga order ay maaaring baguhin."
+          subscriptions:
+            title: "mga nauulit na order"
+            description: "paganahina ng paggamit ng mga subscription?"
         social:
           legend: "Social"
           twitter_placeholder: "hal. @the_prof"

@@ -448,7 +448,6 @@ nb:
   ongoing: Pågående
   bill_address: Fakturaadresse
   ship_address: Leveringssadresse
-  sort_order_cycles_on_shopfront_by: "Sorter Bestillingsrunder i Butikkvindu etter"
   required_fields: Obligatoriske felt er merket med en stjerne
   select_continue: Velg og fortsett
   remove: Fjern
@@ -1257,60 +1256,55 @@ nb:
           no_method_yet: "Du har ingen leveringsmetoder ennå."
         shop_preferences:
           legend: "Butikkvalg"
-          shopfront_requires_login: "Offentlig synlig butikk?"
-          shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
-          shopfront_requires_login_false: "Offentlig"
-          shopfront_requires_login_true: "Synlig kun for registrerte kunder."
-          recommend_require_login: "Vi anbefaler at brukerne logger på når bestillinger kan endres."
-          allow_guest_orders: "Gjestebestillinger"
-          allow_guest_orders_tip: "Tillat gjestebestillinger eller krev brukerregistrering."
-          allow_guest_orders_false: "Krev innlogging for å bestille"
-          allow_guest_orders_true: "Tillat gjestebestilling"
-          allow_order_changes: "Endre bestillinger"
-          allow_order_changes_tip: "Tillat at kundene kan endre bestillingen så lenge bestillingsrunden er åpen."
-          allow_order_changes_false: "Fullførte bestillinger kan ikke endres / kanselleres"
-          allow_order_changes_true: "Kunder kan endre / avbestille bestillinger mens bestillingsrunden er åpen"
-          enable_subscriptions: "Abonnement"
-          enable_subscriptions_tip: "Aktiver abonnementsfunksjonalitet?"
-          enable_subscriptions_false: "Deaktivert"
-          enable_subscriptions_true: "Aktivert"
-          customer_names_in_reports: "Kundenavn i rapporter"
-          customer_names_tip: "La leverandørene dine se kundenes navn i rapporter"
-          producers_to_edit_orders: "Mulighet for produsenter til å redigere bestillinger"
-          producers_to_edit_orders_tip: "Gjør det mulig for leverandørene dine å se bestillinger som inneholder produktene deres, og redigere mengde og vekt kun for sine egne produkter."
-          customer_names_false: "Deaktivert"
-          customer_names_true: "Aktivert"
-          customer_contacts_in_reports: "Kundekontaktdetaljer i rapporter"
-          customer_contacts_tip: "Gjør det mulig for leverandørene dine å se kundenes e-postadresser og telefonnumre i rapporter"
-          customer_contacts_false: "Deaktivert"
-          customer_contacts_true: "Aktivert"
-          producers_edit_orders_false: "Deaktivert"
-          producers_edit_orders_true: "Aktivert"
-          shopfront_message: "Melding Butikk"
-          shopfront_message_placeholder: >
-              En valgfri melding for å ønske kunder velkommen og forklare hvordan
-              de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane
-              når kundene først ankommer butikken din.
-          shopfront_closed_message: "Melding Butikk Stengt"
-          shopfront_closed_message_placeholder: >
-              En melding som gir en mer detaljert forklaring om hvorfor din butikk
-              er stengt og/eller når kunder kan forvente at den åpner igjen. Dette
-              vises på din butikk kun når du ikke har noen aktive bestillingsrunder
-              (dvs. butikk er stengt).
-          shopfront_category_ordering: "Kategorisortering Butikk"
-          shopfront_category_ordering_note: "(topp til bunn)"
-          open_date: "Åpningsdato"
-          close_date: "Stengedato"
-          display_ordering_in_shopfront: "Vis sortering i butikken:"
-          shopfront_sort_by_product: "Etter produkt"
-          shopfront_sort_by_category: "Etter kategori"
-          shopfront_sort_by_producer: "Etter produsent"
-          shopfront_sort_by_category_placeholder: "Kategori"
-          shopfront_sort_by_producer_placeholder: "Produsent"
-          display_remaining_stock: "Vis gjenværende lager i butikkfronten hvis det er lite tilgjengelig"
-          display_remaining_stock_tip: "Gi kunder beskjed når det bare er 3 eller færre varer igjen."
           enabled: "Aktivert"
           disabled: "Deaktivert"
+          shopfront_visibility:
+            title: "Offentlig synlig butikk?"
+            description: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
+            public: "Offentlig"
+            registered_only: "Synlig kun for registrerte kunder."
+          home_message:
+            title: "Melding Butikk"
+            placeholder: "En valgfri melding for å ønske kunder velkommen og forklare hvordan de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane når kundene først ankommer butikken din."
+          shopfront_closed_message:
+            title: "Melding Butikk Stengt"
+            placeholder: "En melding som gir en mer detaljert forklaring om hvorfor din butikk er stengt og/eller når kunder kan forvente at den åpner igjen. Dette vises på din butikk kun når du ikke har noen aktive bestillingsrunder (dvs. butikk er stengt)."
+          product_order:
+            title: "Vis sortering i butikken"
+            by_category: "Etter kategori"
+            by_producer: "Etter produsent"
+            category_placeholder: "Kategori"
+            producer_placeholder: "Produsent"
+          low_stock_warning:
+            title: "Vis gjenværende lager i butikkfronten hvis det er lite tilgjengelig"
+            description: "Gi kunder beskjed når det bare er 3 eller færre varer igjen."
+          order_cycle_order:
+            title: "Sorter Bestillingsrunder i Butikkvindu etter"
+            open_date: "Åpningsdato"
+            close_date: "Stengedato"
+          guest_orders:
+            title: "Gjestebestillinger"
+            description: "Tillat gjestebestillinger eller krev brukerregistrering."
+            allow: "Tillat gjestebestilling"
+            require_login: "Krev innlogging for å bestille"
+          change_orders:
+            title: "Endre bestillinger"
+            description: "Tillat at kundene kan endre bestillingen så lenge bestillingsrunden er åpen."
+            not_allowed: "Fullførte bestillinger kan ikke endres / kanselleres"
+            allowed: "Kunder kan endre / avbestille bestillinger mens bestillingsrunden er åpen"
+            require_login_warning: "Vi anbefaler at brukerne logger på når bestillinger kan endres."
+          subscriptions:
+            title: "Abonnement"
+            description: "Aktiver abonnementsfunksjonalitet?"
+          customer_names_in_reports:
+            title: "Kundenavn i rapporter"
+            description: "La leverandørene dine se kundenes navn i rapporter"
+          customer_contacts_in_reports:
+            title: "Kundekontaktdetaljer i rapporter"
+            description: "Gjør det mulig for leverandørene dine å se kundenes e-postadresser og telefonnumre i rapporter"
+          producers_edit_orders:
+            title: "Mulighet for produsenter til å redigere bestillinger"
+            description: "Gjør det mulig for leverandørene dine å se bestillinger som inneholder produktene deres, og redigere mengde og vekt kun for sine egne produkter."
         social:
           legend: "Sosial"
           twitter_placeholder: "f.eks. @the_prof"

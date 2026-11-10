@@ -438,7 +438,6 @@ de_CH:
   ongoing: Laufend
   bill_address: Rechnungsadresse
   ship_address: Lieferadresse
-  sort_order_cycles_on_shopfront_by: "Sortiere die Bestellzyklen des Ladens nach"
   required_fields: Pflichtangaben sind mit * markiert
   select_continue: Auswählen und fortfahren
   remove: Löschen
@@ -1243,61 +1242,55 @@ de_CH:
           no_method_yet: "Sie haben noch keine Lieferoption angelegt. Bitte erstellen Sie eine."
         shop_preferences:
           legend: "Laden"
-          shopfront_requires_login: "Geöffnet für alle Nutzer?"
-          shopfront_requires_login_tip: "Wählen Sie aus, ob nur Kunden, die Sie Ihrer Kundenliste hinzugefügt haben, einkaufen können oder ob der Laden für alle Nutzer geöffnet ist."
-          shopfront_requires_login_false: "Alle Nutzer"
-          shopfront_requires_login_true: "Nur Kunden auf der Kundenliste"
-          recommend_require_login: "Wenn Bestellungen nachträglich geändert werden dürfen, empfehlen wir Ihnen, den Einkauf nur für eingeloggte Nutzer zu ermöglichen."
-          allow_guest_orders: "Gasteinkauf"
-          allow_guest_orders_tip: "Wählen Sie aus, ob nicht eingeloggte Kunden als Gäste einkaufen dürfen oder ob nur eingeloggten Nutzern der Einkauf möglich ist."
-          allow_guest_orders_false: "Einkauf nur für eingeloggte Nutzer"
-          allow_guest_orders_true: "Gasteinkauf erlauben"
-          allow_order_changes: "Bestellungen nachträglich ändern"
-          allow_order_changes_tip: "Wählen Sie aus, ob Kunden ihre Bestellung ändern können, solange der Bestellzyklus geöffnet ist."
-          allow_order_changes_false: "Kunden können Bestellungen nicht ändern oder stornieren "
-          allow_order_changes_true: "Kunden können Bestellungen ändern oder stornieren, solange der Bestellzyklus geöffnet ist"
-          enable_subscriptions: "Abonnements"
-          enable_subscriptions_tip: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmässige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
-          enable_subscriptions_false: "deaktiviert"
-          enable_subscriptions_true: "aktiviert"
-          customer_names_in_reports: "Kundennamen in Berichten anzeigen"
-          customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
-          producers_to_edit_orders: "Möglichkeit für Produzenten, Bestellungen zu bearbeiten"
-          producers_to_edit_orders_tip: "Ermöglichen Sie Ihren Lieferanten, Bestellungen mit ihren Produkten anzuzeigen und Menge und Gewicht nur für ihre eigenen Produkte zu bearbeiten."
-          customer_names_false: "deaktiviert"
-          customer_names_true: "aktiviert"
-          customer_contacts_in_reports: "Kundenkontaktdetails in Berichten"
-          customer_contacts_tip: "Ermöglichen Sie Ihren Lieferanten, die E-Mail-Adressen und Telefonnummern Ihrer Kunden in Berichten anzuzeigen"
-          customer_contacts_false: "deaktiviert"
-          customer_contacts_true: "aktiviert"
-          producers_edit_orders_false: "deaktiviert"
-          producers_edit_orders_true: "aktiviert"
-          shopfront_message: "'Willkommen'-Nachricht im Laden"
-          shopfront_message_placeholder: >
-              Eine optionale Nachricht, um Kunden willkommen zu heissen und zu erklären,
-              wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
-              wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
-              ihn zum ersten Mal besuchen.
-          shopfront_closed_message: "'Laden geschlossen'-Nachricht im Laden"
-          shopfront_closed_message_placeholder: >
-              Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr
-              Laden geschlossen ist und/oder wann Kunden erwarten können, dass er
-              wieder geöffnet wird. Dies wird in Ihrem Laden nur angezeigt, wenn Sie
-              gerade keine aktiven Bestellzyklen haben.
-          shopfront_category_ordering: "Sortierung der Produktkategorien im Laden"
-          shopfront_category_ordering_note: "(von oben nach unten)"
-          open_date: "Öffnungszeitpunkt"
-          close_date: "Schliesszeitpunkt"
-          display_ordering_in_shopfront: "Reihenfolge der Anzeige im Online-Shop:"
-          shopfront_sort_by_product: "Nach Produkt"
-          shopfront_sort_by_category: "Nach Kategorie"
-          shopfront_sort_by_producer: "Nach Produzent"
-          shopfront_sort_by_category_placeholder: "Kategorie"
-          shopfront_sort_by_producer_placeholder: "Produzent"
-          display_remaining_stock: "Restbestand anzeigen"
-          display_remaining_stock_tip: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt. "
           enabled: "aktiviert"
           disabled: "deaktiviert"
+          shopfront_visibility:
+            title: "Geöffnet für alle Nutzer?"
+            description: "Wählen Sie aus, ob nur Kunden, die Sie Ihrer Kundenliste hinzugefügt haben, einkaufen können oder ob der Laden für alle Nutzer geöffnet ist."
+            public: "Alle Nutzer"
+            registered_only: "Nur Kunden auf der Kundenliste"
+          home_message:
+            title: "'Willkommen'-Nachricht im Laden"
+            placeholder: "Eine optionale Nachricht, um Kunden willkommen zu heissen und zu erklären, wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird, wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden ihn zum ersten Mal besuchen."
+          shopfront_closed_message:
+            title: "'Laden geschlossen'-Nachricht im Laden"
+            placeholder: "Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr Laden geschlossen ist und/oder wann Kunden erwarten können, dass er wieder geöffnet wird. Dies wird in Ihrem Laden nur angezeigt, wenn Sie gerade keine aktiven Bestellzyklen haben."
+          product_order:
+            title: "Reihenfolge der Anzeige im Online-Shop"
+            by_category: "Nach Kategorie"
+            by_producer: "Nach Produzent"
+            category_placeholder: "Kategorie"
+            producer_placeholder: "Produzent"
+          low_stock_warning:
+            title: "Restbestand anzeigen"
+            description: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt."
+          order_cycle_order:
+            title: "Sortiere die Bestellzyklen des Ladens nach"
+            open_date: "Öffnungszeitpunkt"
+            close_date: "Schliesszeitpunkt"
+          guest_orders:
+            title: "Gasteinkauf"
+            description: "Wählen Sie aus, ob nicht eingeloggte Kunden als Gäste einkaufen dürfen oder ob nur eingeloggten Nutzern der Einkauf möglich ist."
+            allow: "Gasteinkauf erlauben"
+            require_login: "Einkauf nur für eingeloggte Nutzer"
+          change_orders:
+            title: "Bestellungen nachträglich ändern"
+            description: "Wählen Sie aus, ob Kunden ihre Bestellung ändern können, solange der Bestellzyklus geöffnet ist."
+            not_allowed: "Kunden können Bestellungen nicht ändern oder stornieren"
+            allowed: "Kunden können Bestellungen ändern oder stornieren, solange der Bestellzyklus geöffnet ist"
+            require_login_warning: "Wenn Bestellungen nachträglich geändert werden dürfen, empfehlen wir Ihnen, den Einkauf nur für eingeloggte Nutzer zu ermöglichen."
+          subscriptions:
+            title: "Abonnements"
+            description: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmässige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
+          customer_names_in_reports:
+            title: "Kundennamen in Berichten anzeigen"
+            description: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
+          customer_contacts_in_reports:
+            title: "Kundenkontaktdetails in Berichten"
+            description: "Ermöglichen Sie Ihren Lieferanten, die E-Mail-Adressen und Telefonnummern Ihrer Kunden in Berichten anzuzeigen"
+          producers_edit_orders:
+            title: "Möglichkeit für Produzenten, Bestellungen zu bearbeiten"
+            description: "Ermöglichen Sie Ihren Lieferanten, Bestellungen mit ihren Produkten anzuzeigen und Menge und Gewicht nur für ihre eigenen Produkte zu bearbeiten."
         social:
           legend: "Soziale Medien"
           twitter_placeholder: "z. B. @the_prof"

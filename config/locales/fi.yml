@@ -510,7 +510,6 @@ fi:
   ongoing: Jatkuva
   bill_address: Laskutusosoite
   ship_address: Toimitusosoite
-  sort_order_cycles_on_shopfront_by: "Järjestä tilausjaksot kaupan etusivulla"
   required_fields: Pakolliset kentät on merkitty tähdellä
   select_continue: Valitse ja jatka
   remove: Poista
@@ -1326,60 +1325,55 @@ fi:
           no_method_yet: "Sinulla ei ole vielä toimitustapoja."
         shop_preferences:
           legend: "Kaupan asetukset"
-          shopfront_requires_login: "Julkisesti näkyvä myymälä?"
-          shopfront_requires_login_tip: "Valitse, onko asiakkaiden kirjauduttava sisään nähdäkseen myymälän vai näkyykö se kaikille."
-          shopfront_requires_login_false: "Julkinen"
-          shopfront_requires_login_true: "Näkyy vain rekisteröityneille asiakkaille"
-          recommend_require_login: "Suosittelemme vaatimaan käyttäjiä kirjautumaan sisään, jotta tilauksia voidaan muuttaa."
-          allow_guest_orders: "Vierastilaukset"
-          allow_guest_orders_tip: "Salli tilaaminen vieraana tai vaadi rekisteröitynyt käyttäjä."
-          allow_guest_orders_false: "Tilaaminen edellyttää kirjautumista"
-          allow_guest_orders_true: "Salli vieraiden tilata"
-          allow_order_changes: "Muuta tilauksia"
-          allow_order_changes_tip: "Salli asiakkaiden muuttaa tilauksiaan niin kauan kuin tilausjakso on auki."
-          allow_order_changes_false: "Tehtyjä tilauksia ei voi muuttaa/peruuttaa"
-          allow_order_changes_true: "Asiakkaat voivat muuttaa / peruuttaa tilauksia tilausjakson ollessa auki"
-          enable_subscriptions: "Tilaukset"
-          enable_subscriptions_tip: "Otetaanko tilaustoiminto käyttöön?"
-          enable_subscriptions_false: "Pois käytöstä"
-          enable_subscriptions_true: "Käytössä"
-          customer_names_in_reports: "Asiakkaiden nimet raporteissa"
-          customer_names_tip: "Salli toimittajasi nähdä asiakkaidesi nimet raporteissa"
-          producers_to_edit_orders: "Tuottajien mahdollisuus muokata tilauksia"
-          producers_to_edit_orders_tip: "Salli toimittajasi nähdä heidän tuotteitaan sisältävät tilaukset ja muokata vain omien tuotteidensa määrää ja painoa."
-          customer_names_false: "Pois käytöstä"
-          customer_names_true: "Käytössä"
-          customer_contacts_in_reports: "Asiakkaiden yhteystiedot raporteissa"
-          customer_contacts_tip: "Salli toimittajiesi nähdä asiakkaiden sähköpostiosoitteet ja puhelinnumerot raporteissa"
-          customer_contacts_false: "Pois käytöstä"
-          customer_contacts_true: "Käytössä"
-          producers_edit_orders_false: "Pois käytöstä"
-          producers_edit_orders_true: "Käytössä"
-          shopfront_message: "Myymälän viesti"
-          shopfront_message_placeholder: >
-              Valinnainen viesti toivottaa asiakkaat tervetulleiksi ja selittää, kuinka
-              tehdä ostoksia kanssasi. Jos tekstiä kirjoitetaan tähän, se näytetään
-              etusivulla, kun asiakkaat saapuvat ensimmäistä kertaa myymälään.
-          shopfront_closed_message: "Viesti kun myymälä on suljettuna"
-          shopfront_closed_message_placeholder: >
-              Viesti, jossa kerrotaan tarkemmin, miksi myymäläsi on suljettu ja/tai
-              milloin asiakkaat voivat odottaa sen avautuvan uudelleen. Tämä näkyy
-              kaupassasi vain, kun sinulla ei ole aktiivisia tilausjaksoja (eli kauppa
-              on suljettu).
-          shopfront_category_ordering: "Myymälän kategoria tilaaminen"
-          shopfront_category_ordering_note: "(ylhäältä alas)"
-          open_date: "Avauspäivä"
-          close_date: "Sulkemispäivä"
-          display_ordering_in_shopfront: "Näytä tilaaminen myymälässä:"
-          shopfront_sort_by_product: "Tuotteen mukaan"
-          shopfront_sort_by_category: "Luokan mukaan"
-          shopfront_sort_by_producer: "Tuottajan mukaan"
-          shopfront_sort_by_category_placeholder: "Luokka"
-          shopfront_sort_by_producer_placeholder: "Tuottaja"
-          display_remaining_stock: "Näytä jäljellä olevat varastot liikkeessä, jos niitä on vähän"
-          display_remaining_stock_tip: "Kerro ostajille, kun tuotteita on jäljellä vain 3 tai vähemmän."
           enabled: "Käytössä"
           disabled: "Pois käytöstä"
+          shopfront_visibility:
+            title: "Julkisesti näkyvä myymälä?"
+            description: "Valitse, onko asiakkaiden kirjauduttava sisään nähdäkseen myymälän vai näkyykö se kaikille."
+            public: "Julkinen"
+            registered_only: "Näkyy vain rekisteröityneille asiakkaille"
+          home_message:
+            title: "Myymälän viesti"
+            placeholder: "Valinnainen viesti toivottaa asiakkaat tervetulleiksi ja selittää, kuinka tehdä ostoksia kanssasi. Jos tekstiä kirjoitetaan tähän, se näytetään etusivulla, kun asiakkaat saapuvat ensimmäistä kertaa myymälään."
+          shopfront_closed_message:
+            title: "Viesti kun myymälä on suljettuna"
+            placeholder: "Viesti, jossa kerrotaan tarkemmin, miksi myymäläsi on suljettu ja/tai milloin asiakkaat voivat odottaa sen avautuvan uudelleen. Tämä näkyy kaupassasi vain, kun sinulla ei ole aktiivisia tilausjaksoja (eli kauppa on suljettu)."
+          product_order:
+            title: "Näytä tilaaminen myymälässä"
+            by_category: "Luokan mukaan"
+            by_producer: "Tuottajan mukaan"
+            category_placeholder: "Luokka"
+            producer_placeholder: "Tuottaja"
+          low_stock_warning:
+            title: "Näytä jäljellä olevat varastot liikkeessä, jos niitä on vähän"
+            description: "Kerro ostajille, kun tuotteita on jäljellä vain 3 tai vähemmän."
+          order_cycle_order:
+            title: "Järjestä tilausjaksot kaupan etusivulla"
+            open_date: "Avauspäivä"
+            close_date: "Sulkemispäivä"
+          guest_orders:
+            title: "Vierastilaukset"
+            description: "Salli tilaaminen vieraana tai vaadi rekisteröitynyt käyttäjä."
+            allow: "Salli vieraiden tilata"
+            require_login: "Tilaaminen edellyttää kirjautumista"
+          change_orders:
+            title: "Muuta tilauksia"
+            description: "Salli asiakkaiden muuttaa tilauksiaan niin kauan kuin tilausjakso on auki."
+            not_allowed: "Tehtyjä tilauksia ei voi muuttaa/peruuttaa"
+            allowed: "Asiakkaat voivat muuttaa / peruuttaa tilauksia tilausjakson ollessa auki"
+            require_login_warning: "Suosittelemme vaatimaan käyttäjiä kirjautumaan sisään, jotta tilauksia voidaan muuttaa."
+          subscriptions:
+            title: "Tilaukset"
+            description: "Otetaanko tilaustoiminto käyttöön?"
+          customer_names_in_reports:
+            title: "Asiakkaiden nimet raporteissa"
+            description: "Salli toimittajasi nähdä asiakkaidesi nimet raporteissa"
+          customer_contacts_in_reports:
+            title: "Asiakkaiden yhteystiedot raporteissa"
+            description: "Salli toimittajiesi nähdä asiakkaiden sähköpostiosoitteet ja puhelinnumerot raporteissa"
+          producers_edit_orders:
+            title: "Tuottajien mahdollisuus muokata tilauksia"
+            description: "Salli toimittajasi nähdä heidän tuotteitaan sisältävät tilaukset ja muokata vain omien tuotteidensa määrää ja painoa."
         social:
           legend: "Sosiaalinen"
           twitter_placeholder: "esim. @the_prof"

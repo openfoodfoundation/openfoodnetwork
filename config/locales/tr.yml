@@ -269,7 +269,6 @@ tr:
   ongoing: Devam eden
   bill_address: Fatura Adresi
   ship_address: Teslimat Adresi
-  sort_order_cycles_on_shopfront_by: "SİPARİŞ DÖNEMLERİNİ DÜKKANIMDA ŞUNA GÖRE SIRALA"
   required_fields: Zorunlu alanlar yıldız ile belirtilmiştir
   select_continue: Seç ve Devam Et
   remove: Kaldır
@@ -923,53 +922,46 @@ tr:
           no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
           legend: "Dükkan Tercihleri"
-          shopfront_requires_login: "DÜKKANINIZ HERKESE AÇIK MI?"
-          shopfront_requires_login_tip: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
-          shopfront_requires_login_false: "Herkese açık"
-          shopfront_requires_login_true: "Yalnızca kayıtlı müşteriler tarafından görülebilir"
-          recommend_require_login: "Siparişlerin değiştirilebileceği durumlarda kullanıcıların oturum açmasını öneriyoruz."
-          allow_guest_orders: "Misafir siparişleri"
-          allow_guest_orders_tip: "Misafir olarak alışverişe yapılmasına izin verin veya kayıtlı bir kullanıcı olma şartı koyun"
-          allow_guest_orders_false: "Sipariş vermek için giriş yapmayı zorunlu kıl"
-          allow_guest_orders_true: "Misafir alışverişine izin ver"
-          allow_order_changes: "Siparişleri düzenle"
-          allow_order_changes_tip: "Sipariş dönemi açık olduğu sürece müşterilerin siparişlerini düzenlemelerine izin verin."
-          allow_order_changes_false: "Oluşturulan siparişler değiştirilemez/iptal edilemez"
-          allow_order_changes_true: "Müşteriler sipariş dönemi açıkken siparişleri değiştirebilir/iptal edebilir"
-          enable_subscriptions: "Üyelikler"
-          enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
-          enable_subscriptions_false: "Kapalı"
-          enable_subscriptions_true: "Etkin"
-          customer_names_in_reports: "Raporlardaki Müşteri İsimleri"
-          customer_names_tip: "Tedarikçilerinizin raporlardaki müşteri isimlerini görmesine izin verin"
-          customer_names_false: "Kapalı"
-          customer_names_true: "Etkin"
-          customer_contacts_false: "Kapalı"
-          customer_contacts_true: "Etkin"
-          producers_edit_orders_false: "Kapalı"
-          producers_edit_orders_true: "Etkin"
-          shopfront_message: "DÜKKAN MESAJINIZ"
-          shopfront_message_placeholder: >
-              Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
-              ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
-              ziyaret ettiğinde görünür olacak.
-          shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
-          shopfront_closed_message_placeholder: >
-              Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
-              açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş döneminiz olmadığında
-              sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
-              ve ne zaman açılacağını belirtebilirsiniz)
-          shopfront_category_ordering: "DÜKKAN KATEGORİ SIRALAMASI"
-          shopfront_category_ordering_note: "(yukarıdan aşağıya)"
-          open_date: "AÇILIŞ TARİHİ"
-          close_date: "KAPANIŞ TARİHİ"
-          display_ordering_in_shopfront: "Dükkan vitrininde siparişi göster:"
-          shopfront_sort_by_category: "Kategori"
-          shopfront_sort_by_producer: "Üretici"
-          shopfront_sort_by_category_placeholder: "Kategori"
-          shopfront_sort_by_producer_placeholder: "ÜRETİCİ"
           enabled: "Etkin"
           disabled: "Kapalı"
+          shopfront_visibility:
+            title: "DÜKKANINIZ HERKESE AÇIK MI?"
+            description: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
+            public: "Herkese açık"
+            registered_only: "Yalnızca kayıtlı müşteriler tarafından görülebilir"
+          home_message:
+            title: "DÜKKAN MESAJINIZ"
+            placeholder: "Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı ziyaret ettiğinde görünür olacak."
+          shopfront_closed_message:
+            title: "KAPALI DÜKKAN MESAJI"
+            placeholder: "Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş döneminiz olmadığında sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu ve ne zaman açılacağını belirtebilirsiniz)"
+          product_order:
+            title: "Dükkan vitrininde siparişi göster"
+            by_category: "Kategori"
+            by_producer: "Üretici"
+            category_placeholder: "Kategori"
+            producer_placeholder: "ÜRETİCİ"
+          order_cycle_order:
+            title: "SİPARİŞ DÖNEMLERİNİ DÜKKANIMDA ŞUNA GÖRE SIRALA"
+            open_date: "AÇILIŞ TARİHİ"
+            close_date: "KAPANIŞ TARİHİ"
+          guest_orders:
+            title: "Misafir siparişleri"
+            description: "Misafir olarak alışverişe yapılmasına izin verin veya kayıtlı bir kullanıcı olma şartı koyun"
+            allow: "Misafir alışverişine izin ver"
+            require_login: "Sipariş vermek için giriş yapmayı zorunlu kıl"
+          change_orders:
+            title: "Siparişleri düzenle"
+            description: "Sipariş dönemi açık olduğu sürece müşterilerin siparişlerini düzenlemelerine izin verin."
+            not_allowed: "Oluşturulan siparişler değiştirilemez/iptal edilemez"
+            allowed: "Müşteriler sipariş dönemi açıkken siparişleri değiştirebilir/iptal edebilir"
+            require_login_warning: "Siparişlerin değiştirilebileceği durumlarda kullanıcıların oturum açmasını öneriyoruz."
+          subscriptions:
+            title: "Üyelikler"
+            description: "Üyelik işlevselliği etkinleştirilsin mi?"
+          customer_names_in_reports:
+            title: "Raporlardaki Müşteri İsimleri"
+            description: "Tedarikçilerinizin raporlardaki müşteri isimlerini görmesine izin verin"
         social:
           legend: "Sosyal"
           twitter_placeholder: "Örn.  @the_usta"
