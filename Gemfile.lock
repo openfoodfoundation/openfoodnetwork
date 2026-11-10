@@ -386,7 +386,7 @@ GEM
       sysexits (~> 1.1)
     hashdiff (1.2.1)
     hashery (2.1.2)
-    hashie (5.1.0)
+    hashie (5.2.0)
       logger
     highline (3.1.2)
       reline
@@ -516,11 +516,11 @@ GEM
     nokogiri-html5-inference (0.3.0)
       nokogiri (~> 1.14)
     observer (0.1.2)
-    omniauth (2.1.4)
-      hashie (>= 3.4.6)
+    omniauth (2.2.0)
+      hashie (>= 3.5.2)
       logger
-      rack (>= 2.2.3)
-      rack-protection
+      rack (>= 2.2.8)
+      rack-protection (>= 2.2.0)
     omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
@@ -1214,7 +1214,7 @@ CHECKSUMS
   haml_lint (0.78.0) sha256=e8840e3c3b43345eced88ea2c46adcb253be8b940b095f9e0abf4512cdad40a6
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   hashery (2.1.2) sha256=d239cc2310401903f6b79d458c2bbef5bf74c46f3f974ae9c1061fb74a404862
-  hashie (5.1.0) sha256=c266471896f323c446ea8207f8ffac985d2718df0a0ba98651a3057096ca3870
+  hashie (5.2.0) sha256=357a22635195c2e3911fbbc3de9a7d528843d1f42ab0aae02171048f16332d72
   highline (3.1.2) sha256=67cbd34d19f6ef11a7ee1d82ffab5d36dfd5b3be861f450fc1716c7125f4bb4a
   htmlentities (4.4.2) sha256=bbafbdf69f2eca9262be4efef7e43e6a1de54c95eb600f26984f71d2fe96c5c3
   http_parser.rb (0.8.1) sha256=9ae8df145b39aa5398b2f90090d651c67bd8e2ebfe4507c966579f641e11097a
@@ -1271,7 +1271,7 @@ CHECKSUMS
   nokogiri (1.19.4) sha256=50c951611c92bca05c51411aef45f1cbc50f2821c4802758c5c6d34696533ab5
   nokogiri-html5-inference (0.3.0) sha256=04f078ad36843da11973773dbdd034672eb397373b0766ab11679e4a7b86c01e
   observer (0.1.2) sha256=d8a3107131ba661138d748e7be3dbafc0d82e732fffba9fccb3d7829880950ac
-  omniauth (2.1.4) sha256=42a05b0496f0d22e1dd85d42aaf602f064e36bb47a6826a27ab55e5ba608763c
+  omniauth (2.2.0) sha256=8c7a05284621a35766d39fea106ea4801d3895dee59657b86c32e1f60887f1ce
   omniauth-rails_csrf_protection (2.0.1) sha256=c6e3204d7e3925bb537cb52d50fdfc9f05293f1a9d87c5d4ab4ca3a39ba8c32d
   omniauth_openid_connect (0.8.0) sha256=1f2f3890386e2a742221cee0d2e903b78d874e6fab9ea3bfa31c1462f4793d25
   openid_connect (2.5.0) sha256=659aff8edce0907798e3f6837e5f27ae2937ae8735216f3e900ab8daa29e39c4
