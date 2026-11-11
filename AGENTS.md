@@ -7,6 +7,42 @@ starting; it should save you the first hour of every session.
 See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
 `.github/PULL_REQUEST_TEMPLATE.md`.
 
+## OFN process
+
+OFN's own contributor docs take precedence over this file:
+
+- Wiki pages: [Making a great pull request](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Making-a-great-pull-request),
+  [Making a great commit](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Making-a-great-commit),
+  [Code Conventions](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Code-Conventions) and
+  [Testing & Rspec Tips](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Testing-and-Rspec-Tips).
+- A PR needs 2 core reviewers and a staging test before merge, and releases are
+  roughly weekly
+  ([process](https://github.com/openfoodfoundation/openfoodnetwork/wiki/The-process-of-review%2C-test%2C-merge-and-deploy)).
+  Don't expect an instant merge.
+- Discuss new features on the [community forum](https://community.openfoodnetwork.org)
+  first. Before claiming OFN lacks a feature, check the
+  [user guide](https://guide.openfoodnetwork.org/), the
+  [super-admin guide](https://ofn-user-guide.gitbook.io/ofn-super-admin-guide) and the
+  [developer site](https://dev.openfoodnetwork.org/). If you can't check them, say so
+  instead of asserting it doesn't exist.
+- Issues use a template (`.github/ISSUE_TEMPLATE/`: bug, story, feature, tech-debt) and a
+  [bug-severity](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Bug-severity)
+  label.
+- Before writing code for an issue, re-read it and all its comments:
+  - Is it claimed (assignee, "in progress", "I'm on it")?
+  - Is there already an open PR
+    (`gh pr list -R openfoodfoundation/openfoodnetwork --search "#N"`)?
+  - Is it still open, and has its scope changed?
+- Reviewers are volunteers ([Code of Conduct](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/CODE_OF_CONDUCT.md)).
+  Weigh core maintainers' feedback highest (e.g. `mkllnk`, `rioug`, `dacook`); check who
+  merges with `gh pr list -R openfoodfoundation/openfoodnetwork --state merged --json mergedBy`.
+  Apply their feedback and reply showing what changed. Think through other
+  contributors' suggestions and ask if they conflict with conventions.
+- Follow a PR through to merge or an explicit handoff:
+  - Reply to review comments within about a week.
+  - Fix CI failures before anyone has to ask.
+  - If you can't continue, say so in the PR and hand it off or close it.
+
 ## Repository at a glance
 
 - Rails monolith (Ruby version in `.ruby-version`, Node in `.node-version`, Yarn 1).
@@ -30,6 +66,7 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
 | DFC (Data Food Consortium) API | `engines/dfc_provider/` (+ `app/services/fdc_*`, `dfc_catalog_importer.rb`, `app/jobs/stock_sync_job.rb`) |
 | Routes | `config/routes.rb` + `config/routes/{admin,api,spree,shopfront}.rb` (shopfront loads last) |
 | Feature toggles (Flipper) | `lib/open_food_network/feature_toggle.rb`, `config/initializers/flipper.rb` |
+| API v0 / v1 controllers (plain Rails, not Grape) | `app/controllers/api/{v0,v1}/` |
 | API v1 schema / docs | `app/json_schemas/`, `swagger/` |
 | Translations | `config/locales/en.yml` only (other locales sync via Transifex) |
 | Specs | `spec/` (RSpec), `spec/javascripts/stimulus/` (Jest), `spec/javascripts/unit` (Karma, AngularJS) |
@@ -40,6 +77,10 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
   AngularJS in many places, with `data-turbo="false"` on `<body>`. New work uses
   ViewComponents + Stimulus + Turbo (+ CableReady/StimulusReflex). Prefer the new
   stack; don't add AngularJS.
+- CableReady/StimulusReflex is slated for removal (reliability). For new work, prefer
+  Turbo Streams.
+- There is no Spree gem: `app/models/spree/` etc. are OFN's own files. Edit them
+  directly (no decorators), and treat Spree as legacy context that OFN is moving away from.
 - In component templates call view helpers via `helpers.foo`, not `foo`.
 - Feature toggles: `feature?(:name, user_or_enterprise)`. In system specs enable one
   with `RSpec.describe ..., feature: :name`. Cached partials must include toggle state
@@ -101,6 +142,15 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
   rather than using CSS `text-transform`. Only edit `en.yml`.
 - Accessibility: give controls `aria-label`s that name the item (e.g. "Add %{name} to
   cart"); specs then read naturally.
+- Never edit an existing migration: add a new one. Don't edit `vendor/`. Read
+  environment-specific config from ENV instead of hardcoding it.
+- Ask first before:
+  - changing the DB schema;
+  - changing Spree core behaviour;
+  - changing v0 API endpoints (external consumers rely on them);
+  - adding a gem.
+- Don't define constants at the top level of spec files: they leak across the suite. Use
+  local variables or `let`.
 - Rake tasks:
   - Put them under `namespace :ofn` (`ofn:data` for data tasks), with a `## Usage`
     comment and `task :name, [:arg] => :environment` (model: `lib/tasks/missing_payments.rake`).
@@ -128,6 +178,9 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
 - "What should we test?" = numbered manual steps grouped by area, with exact URLs
   (e.g. `/admin/products`, `/admin/orders/bulk_management`) and what failure looks
   like (raw `{{ }}` / `$injector` errors for Angular, `NoMethodError`, ...).
+- Confirm UI fixes in a browser: reproduce the bug, then show it fixed. Screenshots go in
+  the PR description, never in the repo. GitHub only accepts image uploads through the
+  web UI, so save them locally and ask the human to paste them in.
 - CI runs **undercover**: methods touched by a PR need coverage. If a coverage report
   is provided, cover exactly the listed items.
 - Use "Closes #N" only when the PR fixes the issue's reproduction, otherwise "Part of #N".
@@ -148,6 +201,10 @@ RAILS_ENV=test NODE_ENV=test bin/shakapacker # test packs; needed by system AND 
 bundle exec rspec spec/path/to_spec.rb
 ```
 
+- Develop natively; the `Dockerfile` setup is too slow for active work (20 s+ page loads).
+  Start the dev server with `bundle exec foreman start`: Ubuntu's system `foreman` uses
+  system Ruby and can't find `bundle`.
+- After pulling new migrations, run `bin/rails db:migrate` (and `bin/rake db:test:prepare`).
 - Set `DISABLE_SPRING=1` for reliable runs.
 - Sample data for the dev server: `bin/rake ofn:sample_data` (password `ofn123`, e.g.
   `ofn@example.com`; shops like `/fredo-s-farm-hub/shop`).
