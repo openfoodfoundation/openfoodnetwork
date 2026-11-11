@@ -15,34 +15,57 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
     let!(:hub) { create(:distributor_enterprise, owner: hub_owner) }
     let!(:other_hub) { create(:distributor_enterprise) }
     let!(:hub_owner) { create(:user) }
-    let!(:producer) { create(:supplier_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, coordinator: hub) }
     let!(:other_order_cycle) { create(:simple_order_cycle, coordinator: other_hub) }
     let!(:order) do
       create(
         :completed_order_with_totals,
         distributor: hub,
-        order_cycle:,
-        line_items: [{
-          variant: create(:variant, supplier: producer),
-          quantity: 2
-        }]
+        order_cycle:
       )
     end
     let!(:other_order) do
       create(
         :completed_order_with_totals,
         distributor: other_hub,
-        order_cycle: other_order_cycle,
-        line_items: [{ variant: create(:variant), quantity: 1 }]
+        order_cycle: other_order_cycle
       )
     end
 
     before do
-      hub_owner.enterprise_roles.build(enterprise: hub).save
       order.update!(completed_at: 2.days.ago)
       other_order.update!(completed_at: 2.days.ago)
     end
+
+    pagination_schema = {
+      type: :object,
+      required: %w[pagination],
+      properties: {
+        pagination: {
+          type: :object,
+          required: %w[results pages page per_page],
+          properties: {
+            results: { type: :integer, minimum: 0 },
+            pages: { type: :integer, minimum: 1 },
+            page: { type: :integer, minimum: 1 },
+            per_page: { type: :integer, minimum: 1, maximum: 200 }
+          }
+        }
+      }
+    }
+
+    links_schema = {
+      type: :object,
+      required: %w[self first prev next last],
+      properties: {
+        self: { type: :string },
+        first: { type: :string },
+        prev: { type: :string, nullable: true },
+        next: { type: :string, nullable: true },
+        last: { type: :string }
+      }
+    }
+
     path "/api/v1/reports/{report_type}" do
       get "Retrieve report rows" do
         tags "Reports"
@@ -69,7 +92,6 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
                       products_and_inventory enterprise_fee_summary
                       orders_and_distributors orders_and_fulfillment sales_tax
                       payments suppliers bulk_coop revenues_by_hub
-                      users_and_enterprises
                     ]
                   },
                   description: "Report type from Reporting::Reports::List."
@@ -101,6 +123,8 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
         parameter name: :per_page, in: :query, required: false,
                   schema: { type: :integer, minimum: 1, maximum: 200, default: 50 },
                   description: "Rows per page. Values above 200 are capped at 200."
+        parameter name: "X-Api-Token", in: :header, required: false,
+                  schema: { type: :string }
 
         response "200", "packing customer report with both filters" do
           let(:report_type) { "packing" }
@@ -174,9 +198,10 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           let(:report_subtype) { "customer" }
           let(:order_cycle_id) { order_cycle.id }
 
+          let(:"X-Api-Token") { "reports-test-api-key" }
+
           before do
             hub_owner.update!(spree_api_key: "reports-test-api-key")
-            header "X-Api-Token", "reports-test-api-key"
           end
 
           run_test! do |response|
@@ -201,7 +226,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
             end
           end
 
-          response "200", "user managing no enterprises receives an empty report" do
+          response "401", "user managing no enterprises is unauthorized" do
             let(:report_type) { "customers" }
             let(:order_cycle_id) { order_cycle.id }
 
@@ -209,9 +234,11 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
               login_as create(:user)
             end
 
+            schema '$ref': "#/components/schemas/error_response"
+
             run_test! do
-              expect(response.status).to eq 200
-              expect(json_response[:data]).to eq []
+              expect(response.status).to eq 401
+              expect(json_response).not_to have_key(:data)
             end
           end
 
@@ -232,43 +259,9 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
               expect(json_error_detail).to be_present
             end
           end
-        end
 
       end
     end
-  end
-
-  def pagination_schema
-    {
-      type: :object,
-      required: %w[pagination],
-      properties: {
-        pagination: {
-          type: :object,
-          required: %w[results pages page per_page],
-          properties: {
-            results: { type: :integer, minimum: 0 },
-            pages: { type: :integer, minimum: 1 },
-            page: { type: :integer, minimum: 1 },
-            per_page: { type: :integer, minimum: 1, maximum: 200 }
-          }
-        }
-      }
-    }
-  end
-
-  def links_schema
-    {
-      type: :object,
-      required: %w[self first prev next last],
-      properties: {
-        self: { type: :string },
-        first: { type: :string },
-        prev: { type: :string, nullable: true },
-        next: { type: :string, nullable: true },
-        last: { type: :string }
-      }
-    }
   end
 
   describe "validation" do
@@ -449,7 +442,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
       it "rejects a report type the user cannot access" do
         login_as distributor.owner
 
-        get "/api/v1/reports/users_and_enterprises",
+        get "/api/v1/reports/revenues_by_hub",
             params: { distributor_id: distributor.id }
 
         expect_api_error(:unauthorized)
@@ -520,6 +513,23 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
       )
       expect(json_response[:links][:prev]).to be_nil
       expect(json_response[:links][:next]).to be_nil
+    end
+  end
+
+  describe "supported report types" do
+    let(:available_report_types) do
+      Reporting::Reports::List.all.keys.map(&:to_s)
+    end
+
+    it "only exposes report types that exist in Reporting::Reports::List" do
+      expect(Api::V1::ReportsController::SUPPORTED_REPORT_TYPES).
+        to all(be_in(available_report_types))
+    end
+
+    it "documents the report types intentionally excluded from v1" do
+      expect(available_report_types -
+             Api::V1::ReportsController::SUPPORTED_REPORT_TYPES).
+        to contain_exactly("users_and_enterprises")
     end
   end
 end

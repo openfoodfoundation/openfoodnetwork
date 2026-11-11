@@ -4,7 +4,9 @@ require "swagger_helper"
 
 RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
   def report_get(report_type, params = {})
-    get "/api/v1/reports/#{report_type}", params:
+    get "/api/v1/reports/#{report_type}",
+        params:,
+        headers: { "X-Api-Token" => "reports-filter-translation-token" }
   end
 
   let(:translation_hub_owner) { create(:user) }
@@ -114,6 +116,35 @@ RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
     )
   end
 
+  it "uses an eq predicate for payments and sales tax distributor filters" do
+    {
+      "payments" => [
+        Reporting::Reports::Payments::PaymentTotals,
+        "payment_totals"
+      ],
+      "sales_tax" => [
+        Reporting::Reports::SalesTax::SalesTaxTotalsByOrder,
+        "sales_tax_totals_by_order"
+      ]
+    }.each do |report_type, (report_class, subtype)|
+      expect(report_class).to receive(:new) do |_user, params|
+        expect(params[:q]).to include(
+          order_cycle_id_in: [translation_order_cycle.id.to_s],
+          distributor_id_eq: translation_hub.id.to_s
+        )
+        expect(params[:q]).not_to include(:distributor_id_in)
+      end
+
+      report_get(
+        report_type,
+        translation_params(
+          report_subtype: subtype,
+          distributor_id: translation_hub.id
+        )
+      )
+    end
+  end
+
   it "keeps customers order-cycle and distributor IDs top-level" do
     expect(Reporting::Reports::Customers::Base).to receive(:new) do |_user, params|
       expect(params).to include(
@@ -216,10 +247,8 @@ RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
     report_get("packing", translation_params)
   end
 
-  it "preserves raw nested Ransack parameters through ReportsActions" do
-    expect(Reporting::Reports::Packing::Customer).to receive(:new) do |_user, params|
-      expect(params[:q]).to include(:supplier_id_in)
-    end
+  it "rejects nested Ransack parameters outside the public whitelist" do
+    expect(Reporting::Reports::Packing::Customer).not_to receive(:new)
 
     report_get(
       "packing",
@@ -228,10 +257,8 @@ RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
         q: { supplier_id_in: [] }
       )
     )
-  end
 
-  it "includes RawParams so the shared concern can access the original query hash" do
-    expect(Api::V1::ReportsController.included_modules).to include(RawParams)
+    expect(response).to have_http_status(:unprocessable_entity)
   end
 
   it "registers the V1 reports route without a feature flag" do
