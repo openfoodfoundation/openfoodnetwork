@@ -246,10 +246,16 @@ module Spree
     end
 
     def changes_allowed?
-      !!(complete? &&
+      !!(complete_or_resumed? &&
          !shipped? &&
          distributor&.allow_order_changes? &&
          order_cycle&.open?)
+    end
+
+    # Resumed orders should behave like complete orders in customer-facing flows,
+    # e.g. they can be edited and cancelled while their order cycle is open.
+    def complete_or_resumed?
+      complete? || resumed?
     end
 
     # Is this a free order in which case the payment step should be skipped

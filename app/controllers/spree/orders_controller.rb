@@ -75,7 +75,7 @@ module Spree
         # Re apply the voucher
         OrderManagement::Order::Updater.new(@order).update_voucher
 
-        if @order.complete?
+        if @order.complete_or_resumed?
           @order.update_payment_fees!
           @order.create_tax_charge!
         end
@@ -87,7 +87,7 @@ module Spree
             if params.key?(:checkout)
               @order.next_transition.run_callbacks if @order.cart?
               redirect_to main_app.checkout_step_path("address")
-            elsif @order.complete?
+            elsif @order.complete_or_resumed?
               redirect_to main_app.order_path(@order)
             else
               redirect_to main_app.cart_path
@@ -179,7 +179,7 @@ module Spree
     end
 
     def check_at_least_one_line_item
-      return unless order_to_update&.complete?
+      return unless order_to_update&.complete_or_resumed?
 
       items = params[:order][:line_items_attributes]
         &.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
