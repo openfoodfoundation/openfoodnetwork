@@ -23,6 +23,13 @@ module Api
         revenues_by_hub
       ].freeze
 
+      PERMITTED_PARAMS = %i[
+        controller action format token report_type report_subtype
+        order_cycle_id distributor_id page per_page
+      ].freeze
+
+      PERMITTED_QUERY_FILTERS = %i[completed_at_gt completed_at_lt].freeze
+
       rescue_from Reporting::Errors::Base, with: :render_report_error
       rescue_from Reporting::Reports::EnterpriseFeeSummary::ParameterNotAllowedError,
                   with: :render_forbidden_report
@@ -87,13 +94,32 @@ module Api
 
       # Ensures supplied order cycle and distributor IDs exist.
       def validate_filter_records
-        OrderCycle.find(params[:order_cycle_id]) if params[:order_cycle_id].present?
-        Enterprise.find(params[:distributor_id]) if params[:distributor_id].present?
+        [
+          [OrderCycle, params[:order_cycle_id]],
+          [Enterprise, params[:distributor_id]]
+        ].each do |model, id|
+          next if id.blank? || model.where(id:).exists?
+
+          raise ActiveRecord::RecordNotFound
+        end
       end
 
       # Builds the translated parameters for the report class.
       def report_params
-        ReportParameters.new(report_type, report_subtype, params).to_h
+        ReportParameters.new(report_type, report_subtype, permitted_params).to_h
+      end
+
+      # Memoizes the report registry for the current request.
+      def reports
+        @reports ||= super
+      end
+
+      # Permits only the documented top-level parameters and query filters.
+      def permitted_params
+        @permitted_params ||= params.permit(
+          *PERMITTED_PARAMS,
+          q: PERMITTED_QUERY_FILTERS
+        )
       end
 
       # Renders a forbidden response for disallowed report filters.

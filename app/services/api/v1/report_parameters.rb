@@ -53,7 +53,7 @@ module Api
       def translated_params
         case @report_type
         when "customers"
-          top_level_ids.merge(q: date_filters)
+          top_level_ids.merge(q: permitted_query_filters)
         when "products_and_inventory"
           top_level_ids
         when "order_cycle_management"
@@ -81,7 +81,7 @@ module Api
 
       # Builds the q hash with translated IDs and date filters.
       def translated_filter_params(cycle_key, distributor_key)
-        filters = date_filters
+        filters = permitted_query_filters
         dates = filters.extract!(:completed_at_gt, :completed_at_lt)
         filters.merge!(id_filters(cycle_key, distributor_key))
         filters.merge!(translated_dates(dates))
@@ -109,12 +109,10 @@ module Api
         key.to_s.end_with?("_eq") ? value : [value]
       end
 
-      # Permits only the public completed-at date filters from q.
-      def date_filters
+      # Reads the permitted public query filters from q.
+      def permitted_query_filters
         filters = @params[:q]
-        return {} unless filters.respond_to?(:permit)
-
-        filters.permit(:completed_at_gt, :completed_at_lt).to_h.symbolize_keys
+        filters.respond_to?(:to_h) ? filters.to_h.symbolize_keys : {}
       end
 
       # Maps public date keys to the report-specific date keys.

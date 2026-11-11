@@ -302,6 +302,25 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
       expect(json_response[:errors].first[:detail]).
         to eq("Please supply order_cycle_id or distributor_id")
     end
+
+    it "rejects unknown top-level parameters" do
+      get "/api/v1/reports/packing",
+          params: { distributor_id: distributor.id, unexpected: "value" }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_response[:errors].first[:detail]).to include("unexpected")
+    end
+
+    it "rejects unknown query filters for products" do
+      get "/api/v1/reports/products_and_inventory",
+          params: {
+            distributor_id: distributor.id,
+            q: { supplier_id_in: [] }
+          }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_response[:errors].first[:detail]).to include("supplier_id_in")
+    end
   end
 
   describe "request behavior" do
