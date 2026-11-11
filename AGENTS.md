@@ -70,6 +70,21 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
   initializer in `config/application.rb`), separate from the main autoloader.
 - Payment/shipping calculators (`Calculator::*`) are registered explicitly in
   `config/application.rb`, not auto-discovered: register new ones there.
+- Turbo is off at `<body>` level (`data-turbo="false"` in `spree/layouts/admin`,
+  `bare_admin`, `layouts/darkswarm`, `registration`). A `data-turbo-method` link
+  inside them also needs `data: { turbo: true }`, or it falls through to a plain GET
+  (see `app/views/spree/admin/taxons/index.html.haml`). Don't put `data-turbo="true"` on
+  a whole AngularJS form: Turbo Drive visits break the Angular app. Scope it to a frame.
+- Turbo isn't loaded in Karma, so a `<turbo-frame>` there is a plain element: set its
+  source from Angular with `setAttribute('src', url)`, not `frame.src =`.
+- Toggles: asked for an "env var toggle"? Prefer Flipper. `FeatureToggle.enabled?(:name)`
+  with no actor is a global switch that admins flip at `/admin/feature-toggle/features`
+  without a redeploy. New features must be added to `CURRENT_FEATURES` (others are
+  removed by `setup!`, and the spec `feature:` tag raises "Unkown feature"); to enable
+  everywhere, add to `ACTIVE_BY_DEFAULT` plus a migration calling `Flipper.enable`.
+  Plain `ENV.fetch` is for infrastructure switches (Sidekiq schedule, Bullet). In a
+  `feature:`-tagged group, test the off path with `Flipper.disable(:name)` in a nested
+  `before`.
 
 ## Conventions
 
@@ -86,6 +101,11 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
   rather than using CSS `text-transform`. Only edit `en.yml`.
 - Accessibility: give controls `aria-label`s that name the item (e.g. "Add %{name} to
   cart"); specs then read naturally.
+- Rake tasks:
+  - Put them under `namespace :ofn` (`ofn:data` for data tasks), with a `## Usage`
+    comment and `task :name, [:arg] => :environment` (model: `lib/tasks/missing_payments.rake`).
+  - Put non-trivial logic in a plain class under `lib/tasks/` with a spec in `spec/lib/tasks/`.
+  - Prefer one joined query (`joins` + `pluck`) over Ruby loops.
 
 ### Git
 
@@ -110,6 +130,12 @@ See also: `GETTING_STARTED.md` (local setup), `CONTRIBUTING.md`,
   like (raw `{{ }}` / `$injector` errors for Angular, `NoMethodError`, ...).
 - CI runs **undercover**: methods touched by a PR need coverage. If a coverage report
   is provided, cover exactly the listed items.
+- Use "Closes #N" only when the PR fixes the issue's reproduction, otherwise "Part of #N".
+  Replace every template placeholder.
+- Stacked work: still target `master`; list the base PR under "Dependencies" and say
+  which commits are new.
+- When later commits make the description stale, update it: `gh pr view N --json body`
+  into a file, edit it, then `gh pr edit N --body-file`.
 
 ## Running things locally
 
@@ -145,6 +171,16 @@ bundle exec rspec spec/path/to_spec.rb
   chromedriver host are allowed). Files in `spec/support/**/*.rb` are auto-required:
   look there before adding a new shared helper or matcher.
 - The time zone used in specs must match `TIMEZONE` in the relevant `.env[.*]` file.
+- System specs run on **Cuprite** (Ferrum, Chrome DevTools protocol;
+  `spec/system/support/cuprite_setup.rb`), not Selenium or chromedriver. `HEADLESS=false`
+  shows the browser, and JS errors fail specs. Ferrum is already bundled: use it for
+  ad-hoc headless-Chrome scripts instead of adding Puppeteer or Selenium.
+- Karma uses ChromeHeadless: if it reports "No binary for ChromeHeadless", set
+  `CHROME_BIN`. Grep its output for `FAILED`.
+- Flaky system specs: `./script/rspec-slow-repeat <n> spec/...:line` loads every CPU
+  core and reports a pass rate. A single plain run usually passes. It appends to
+  `tmp/rspec.log` (delete that first). Quote the pass rate before and after a fix
+  (e.g. 14/20 → 30/30).
 - i18n: `bundle exec i18n-tasks missing -l en`, `i18n-tasks unused` (~50 pre-existing
   issues: compare before/after rather than expecting zero).
 - Ignore the "StimulusReflex requires caching" banner printed on every boot.
