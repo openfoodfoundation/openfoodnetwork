@@ -108,6 +108,28 @@ RSpec.describe '
                                     href: cancel_order_path(d1o2)
         end
       end
+
+      context "when an order has been cancelled and then resumed" do
+        before do
+          distributor1.update(allow_order_changes: true)
+          d1o1.update_columns(state: 'resumed')
+        end
+
+        it "shows the resumed order in the 'Open Orders' section" do
+          visit '/account'
+          expect(page).to have_content 'Open Orders'
+
+          within('.my-open-orders') do
+            expect(page).to have_content d1o1.number.to_s
+            expect(page).to have_link 'Edit', href: order_path(d1o1)
+            expect(page).to have_link 'Cancel', href: cancel_order_path(d1o1)
+          end
+
+          within('.past-orders') do
+            expect(page).not_to have_content d1o1.number.to_s
+          end
+        end
+      end
     end
 
     context "without any completed orders" do
