@@ -126,9 +126,9 @@ class ProductsRenderer
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
-      # No params necessary for pagy links at this stage.
+      # Passing in only necessary params for pagy links.
       # per_page is always set by controller and so doesn't need to be included in links.
-      request: { params: {} }
+      request: { params: args.slice(:q) }
     )
 
     paginated_results

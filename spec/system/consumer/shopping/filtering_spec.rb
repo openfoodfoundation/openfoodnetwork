@@ -351,6 +351,31 @@ RSpec.describe "As a consumer I want to view products" do
         expect(page).to have_field "Aromatic producer", visible: false, checked: true
         expect(page).to have_field "Bountiful product", visible: false, checked: true
       end
+
+      it "retains filtering options when navigating between pages" do
+        stub_const("ProductsController::PER_PAGE", 3)
+
+        # There are 3+1 products with property "Bountiful product", and one without.
+        3.times do
+          product = create(:simple_product, enterprise_id: supplier.id, name: "Bananas",
+                                            properties: [product_property])
+          add_variant_to_order_cycle(exchange, product.variants.first)
+        end
+
+        visit shop_path
+        check "Bountiful product", allow_label_click: true
+
+        expect(page).not_to have_content "Apples"
+        expect(page).to have_content "Bananas", count: 3
+        click_link "2"
+
+        expect(page).not_to have_content "Apples"
+        expect(page).to have_content "Bananas", count: 1
+        click_link "1"
+
+        expect(page).not_to have_content "Apples"
+        expect(page).to have_content "Bananas", count: 3
+      end
     end
   end
 end
