@@ -121,15 +121,13 @@ class ProductsRenderer
   end
 
   def paginate(results)
-    # ProductsRenderer is a PORO, not a controller: pagy always builds a Pagy::Request from
-    # the :request option (falling back to #request otherwise), so it needs an explicit
-    # params hash here rather than reading from an actual Rack request.
-    # The limit is set by the caller, so keep `per_page` (Pagy's :limit_key) out of page links.
     @pagination, paginated_results = pagy(
       :offset,
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
+      # No params necessary for pagy links at this stage.
+      # per_page is always set by controller and so doesn't need to be included in links.
       request: { params: {} }
     )
 
