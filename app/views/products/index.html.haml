@@ -5,6 +5,9 @@
   .loading{ style: "display: none;", "data-product-grid-view-target": "loading" }
     = render partial: "shop/products/product_spinner"
 
+  - if feature?(:product_grid_view_navigation, spree_current_user) && @properties.any?
+    = render Shop::FiltersComponent.new(properties: @properties, url: order_cycle_products_path(@order_cycle), q: @q)
+
   .products-container{ "data-product-grid-view-target": "products" }
     - @products.each do |product|
       = render ProductTileComponent.new(product:, shop: current_distributor, variants_in_cart: @variants_in_cart, low_stock_display: @low_stock_display)

@@ -35,11 +35,17 @@ class ProductsRenderer
 
   # Generate read only data, with variants filtered for shop
   def products_view
-    products.map do |product|
+    @products_view ||= products.map do |product|
       attrs = product.slice(*ViewData::Product.members)
       attrs[:variants] = variants_view(product)
       ViewData::Product.new(**attrs)
     end
+  end
+
+  # List all properties attached to these products (whether directly or by enterprise).
+  # This is intended to replace the dual lists used in the Angular JS.
+  def properties
+    distributed_products.properties_relation.order(:presentation)
   end
 
   private
@@ -115,23 +121,22 @@ class ProductsRenderer
   end
 
   def paginate(results)
-    # ProductsRenderer is a PORO, not a controller: pagy always builds a Pagy::Request from
-    # the :request option (falling back to #request otherwise), so it needs an explicit
-    # params hash here rather than reading from an actual Rack request.
-    # The limit is set by the caller, so keep `per_page` (Pagy's :limit_key) out of page links.
     @pagination, paginated_results = pagy(
       :offset,
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
-      request: { params: {} }
+      # Passing in only necessary params for pagy links.
+      # per_page is always set by controller and so doesn't need to be included in links.
+      request: { params: args.slice(:q) }
     )
 
     paginated_results
   end
 
   def distributed_products
-    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer, **options)
+    @distributed_products ||= OrderCycles::DistributedProductsService.new(distributor, order_cycle,
+                                                                          customer, **options)
   end
 
   def variants_for_shop
