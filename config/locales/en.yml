@@ -3879,7 +3879,7 @@ en:
           requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
-          invalid: "invalid"
+          invalid: "canceled"
         quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
         could_not_add_item: "Could not update order. Please try again."
@@ -4353,6 +4353,7 @@ en:
     capture: "Capture"
     capture_and_complete_order: "Capture and complete order"
     void: "Void"
+    internal_void: "Void"
     login: "Login"
     password: "Password"
     signature: "Signature"
@@ -4812,6 +4813,10 @@ en:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
         customer_credit_successful: Customer has been successfully credited!
+        index:
+          pay_with_credit: Pay with credit
+          pay_with_credit_confirm: "Pay this order with the customer's credit? The uncaptured payment is canceled and can't be restored. If the credit doesn't cover it all, a new payment for the remaining amount is kept."
+          available_credit: Available credit
 
       products:
         image:
@@ -5019,7 +5024,7 @@ en:
       processing: processing
       requires_authorization: "authorization required"
       void: void
-      invalid: invalid
+      invalid: canceled
       authorise: authorise
     order_mailer:
       cancel_email:
@@ -5328,3 +5333,11 @@ en:
     customer_missing: No customer is assigned to this order
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
+  pay_with_credit_service:
+    success: "%{amount} of customer credit used to pay this order"
+    errors:
+      no_customer: This order has no customer
+      order_not_complete: Only complete orders can be paid with credit
+      nothing_to_pay: There is no balance due on this order
+      no_credit_available: The customer has no credit available
+      pending_gateway_payment: "This order has a pending %{payment_method} payment. Void it before paying with credit."

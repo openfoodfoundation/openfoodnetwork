@@ -13,8 +13,10 @@ module Spree
       end
 
       # Indicates whether its possible to void the payment.
+      # A canceled payment can't be voided: its money was never taken, so there is
+      # nothing to give back.
       def can_void?(payment)
-        payment.state != 'void'
+        payment.state != 'void' && payment.state != 'invalid'
       end
 
       def capture(*_args)
