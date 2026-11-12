@@ -165,7 +165,8 @@ RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
   end
 
   it "keeps products-and-inventory IDs top-level" do
-    expect(Reporting::Reports::ProductsAndInventory::AllProducts).to receive(:new) do |_user, params|
+    expect(Reporting::Reports::ProductsAndInventory::AllProducts).
+      to receive(:new) do |_user, params|
       expect(params).to include(
         order_cycle_id: translation_order_cycle.id.to_s,
         distributor_id: translation_hub.id.to_s
@@ -182,7 +183,8 @@ RSpec.describe "Reports filter translation", swagger_doc: "v1.yaml" do
   end
 
   it "translates order-cycle-management distributor filtering through q" do
-    expect(Reporting::Reports::OrderCycleManagement::PaymentMethods).to receive(:new) do |_user, params|
+    expect(Reporting::Reports::OrderCycleManagement::PaymentMethods).
+      to receive(:new) do |_user, params|
       expect(params).to include(order_cycle_id: translation_order_cycle.id.to_s)
       expect(params[:q]).to include(distributor_id_in: [translation_hub.id.to_s])
       expect(params.keys).not_to include(:distributor_id)

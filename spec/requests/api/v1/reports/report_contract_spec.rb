@@ -131,8 +131,8 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           let(:report_subtype) { "customer" }
           let(:order_cycle_id) { order_cycle.id }
           let(:distributor_id) { hub.id }
-          let(:"q[completed_at_gt]") { 3.days.ago.iso8601 }
-          let(:"q[completed_at_lt]") { Time.zone.tomorrow.iso8601 }
+          let(:'q[completed_at_gt]') { 3.days.ago.iso8601 }
+          let(:'q[completed_at_lt]') { Time.zone.tomorrow.iso8601 }
 
           before { login_as hub_owner }
 
@@ -146,7 +146,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           }, required: %w[data meta links]
 
           run_test! do
-            expect(response.status).to eq 200
+            expect(response).to have_http_status :ok
             expect(json_response[:data]).to be_an(Array)
             expect(pagination_meta).to include(:results, :pages, :page, :per_page)
             expect(pagination_meta[:results]).to eq json_response[:data].count
@@ -174,7 +174,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           schema '$ref': "#/components/schemas/error_response"
 
           run_test! do
-            expect(response.status).to eq 404
+            expect(response).to have_http_status :not_found
           end
         end
 
@@ -188,7 +188,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           schema '$ref': "#/components/schemas/error_response"
 
           run_test! do
-            expect(response.status).to eq 403
+            expect(response).to have_http_status :forbidden
             expect(json_error_detail).to include("not authorized")
           end
         end
@@ -198,7 +198,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           let(:report_subtype) { "customer" }
           let(:order_cycle_id) { order_cycle.id }
 
-          let(:"X-Api-Token") { "reports-test-api-key" }
+          let(:'X-Api-Token') { "reports-test-api-key" }
 
           before do
             hub_owner.update!(spree_api_key: "reports-test-api-key")
@@ -210,56 +210,55 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-          response "401", "unauthenticated request" do
-            let(:report_type) { "packing" }
-            let(:order_cycle_id) { order_cycle.id }
+        response "401", "unauthenticated request" do
+          let(:report_type) { "packing" }
+          let(:order_cycle_id) { order_cycle.id }
 
-            before { login_as nil }
+          before { login_as nil }
 
-            schema '$ref': "#/components/schemas/error_response"
+          schema '$ref': "#/components/schemas/error_response"
 
-            run_test! do
-              expect(response.status).to eq 401
-              expect(json_response[:errors].first[:detail]).
-                to eq("You are not authorized to perform that action.")
-              expect(json_response).not_to have_key(:data)
-            end
+          run_test! do
+            expect(response).to have_http_status :unauthorized
+            expect(json_response[:errors].first[:detail]).
+              to eq("You are not authorized to perform that action.")
+            expect(json_response).not_to have_key(:data)
+          end
+        end
+
+        response "401", "user managing no enterprises is unauthorized" do
+          let(:report_type) { "customers" }
+          let(:order_cycle_id) { order_cycle.id }
+
+          before do
+            login_as create(:user)
           end
 
-          response "401", "user managing no enterprises is unauthorized" do
-            let(:report_type) { "customers" }
-            let(:order_cycle_id) { order_cycle.id }
+          schema '$ref': "#/components/schemas/error_response"
 
-            before do
-              login_as create(:user)
-            end
+          run_test! do
+            expect(response).to have_http_status :unauthorized
+            expect(json_response).not_to have_key(:data)
+          end
+        end
 
-            schema '$ref': "#/components/schemas/error_response"
+        response "422", "a Reporting::Errors::Base subclass uses the V1 error shape" do
+          let(:report_type) { "packing" }
+          let(:order_cycle_id) { order_cycle.id }
 
-            run_test! do
-              expect(response.status).to eq 401
-              expect(json_response).not_to have_key(:data)
-            end
+          before do
+            login_as hub_owner
+            allow(Reporting::Reports::Packing::Customer).to receive(:new)
+              .and_raise(Reporting::Errors::MissingQueryParams)
           end
 
-          response "422", "a Reporting::Errors::Base subclass uses the V1 error shape" do
-            let(:report_type) { "packing" }
-            let(:order_cycle_id) { order_cycle.id }
+          schema '$ref': "#/components/schemas/error_response"
 
-            before do
-              login_as hub_owner
-              allow(Reporting::Reports::Packing::Customer).to receive(:new)
-                .and_raise(Reporting::Errors::MissingQueryParams)
-            end
-
-            schema '$ref': "#/components/schemas/error_response"
-
-            run_test! do
-              expect(response.status).to eq 422
-              expect(json_error_detail).to be_present
-            end
+          run_test! do
+            expect(response).to have_http_status :unprocessable_entity
+            expect(json_error_detail).to be_present
           end
-
+        end
       end
     end
   end
