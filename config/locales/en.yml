@@ -2200,6 +2200,8 @@ en:
 # API
 #
   api:
+    invalid_report_subtype: "Unknown report subtype"
+    missing_report_filters: "Please supply order_cycle_id or distributor_id"
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
