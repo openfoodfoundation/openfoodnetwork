@@ -1258,30 +1258,25 @@ nb:
           legend: "Butikkvalg"
           enabled: "Aktivert"
           disabled: "Deaktivert"
+          sections:
+            orders: "Bestillinger"
           shopfront_visibility:
-            title: "Offentlig synlig butikk?"
             description: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
             public: "Offentlig"
             registered_only: "Synlig kun for registrerte kunder."
-          home_message:
-            title: "Melding Butikk"
-            placeholder: "En valgfri melding for å ønske kunder velkommen og forklare hvordan de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane når kundene først ankommer butikken din."
           shopfront_closed_message:
-            title: "Melding Butikk Stengt"
-            placeholder: "En melding som gir en mer detaljert forklaring om hvorfor din butikk er stengt og/eller når kunder kan forvente at den åpner igjen. Dette vises på din butikk kun når du ikke har noen aktive bestillingsrunder (dvs. butikk er stengt)."
+            placeholder: >
+                En melding som gir en mer detaljert forklaring om hvorfor din butikk
+                er stengt og/eller når kunder kan forvente at den åpner igjen. Dette
+                vises på din butikk kun når du ikke har noen aktive bestillingsrunder
+                (dvs. butikk er stengt).
           product_order:
-            title: "Vis sortering i butikken"
             by_category: "Etter kategori"
             by_producer: "Etter produsent"
             category_placeholder: "Kategori"
             producer_placeholder: "Produsent"
-          low_stock_warning:
-            title: "Vis gjenværende lager i butikkfronten hvis det er lite tilgjengelig"
-            description: "Gi kunder beskjed når det bare er 3 eller færre varer igjen."
           order_cycle_order:
-            title: "Sorter Bestillingsrunder i Butikkvindu etter"
-            open_date: "Åpningsdato"
-            close_date: "Stengedato"
+            close_date: "Lukkedato"
           guest_orders:
             title: "Gjestebestillinger"
             description: "Tillat gjestebestillinger eller krev brukerregistrering."
@@ -1289,21 +1284,14 @@ nb:
             require_login: "Krev innlogging for å bestille"
           change_orders:
             title: "Endre bestillinger"
-            description: "Tillat at kundene kan endre bestillingen så lenge bestillingsrunden er åpen."
             not_allowed: "Fullførte bestillinger kan ikke endres / kanselleres"
             allowed: "Kunder kan endre / avbestille bestillinger mens bestillingsrunden er åpen"
-            require_login_warning: "Vi anbefaler at brukerne logger på når bestillinger kan endres."
           subscriptions:
             title: "Abonnement"
-            description: "Aktiver abonnementsfunksjonalitet?"
-          customer_names_in_reports:
-            title: "Kundenavn i rapporter"
-            description: "La leverandørene dine se kundenes navn i rapporter"
           customer_contacts_in_reports:
             title: "Kundekontaktdetaljer i rapporter"
             description: "Gjør det mulig for leverandørene dine å se kundenes e-postadresser og telefonnumre i rapporter"
           producers_edit_orders:
-            title: "Mulighet for produsenter til å redigere bestillinger"
             description: "Gjør det mulig for leverandørene dine å se bestillinger som inneholder produktene deres, og redigere mengde og vekt kun for sine egne produkter."
         social:
           legend: "Sosial"

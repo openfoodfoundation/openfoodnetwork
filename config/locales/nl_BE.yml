@@ -852,24 +852,23 @@ nl_BE:
           legend: "Voorkeuren winkel"
           enabled: "Activeer"
           disabled: "Deactiveer"
+          sections:
+            orders: "Bestellingen"
           shopfront_visibility:
-            title: "Publiekelijk zichtbare etalage"
             description: "Kies of je klanten ingelogd moeten zijn om je etalage te bekijken of kies om je etalage zichtbaar te maken voor iedereen."
             public: "Openbaar"
             registered_only: "Zichtbaar voor geregistreerde klanten alleen"
-          home_message:
-            title: "Etalage Boodschap"
-            placeholder: "Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met jouw te shoppen. Als tekst hier is ingevuld gaat het zichtbaar zijn in de home tab waneer klanten eerst aankomen in je online vitrine."
           shopfront_closed_message:
-            title: "Bericht Gesloten Etalage"
-            placeholder: "Een boodschap die een gedetailleerdere verklaring voorziet over waarom je winkel gesloten is en/of wanneer klanten kunnen verwachten dat deze terug opent. Dit wordt weergegeven in je winkelpagina alleen wanneer er geen actieve bestellingscyclus is. (bv. de winkel is gesloten)."
+            placeholder: >
+                Een boodschap die een gedetailleerdere verklaring voorziet over waarom
+                je winkel gesloten is en/of wanneer klanten kunnen verwachten dat
+                deze terug opent. Dit wordt weergegeven in je winkelpagina alleen
+                wanneer er geen actieve bestellingscyclus is. (bv. de winkel is gesloten).
           product_order:
             category_placeholder: "Categorie"
             producer_placeholder: "Producent"
           order_cycle_order:
-            title: "Sorteer ordercycli op winkelpromenade per"
-            open_date: "Open Datum"
-            close_date: "Sluiten Datum"
+            close_date: "Sluitingsdatum"
           guest_orders:
             title: "Gastbestellingen"
             description: "Sta uitchecken toe als gast of maak dit enkel mogelijk voor geregistreerde gebruikers."
@@ -877,16 +876,10 @@ nl_BE:
             require_login: "Maak login noodzakelijk om te bestellen"
           change_orders:
             title: "Pas bestellingen aan"
-            description: "Sta klanten toe om aanpassingen te maken aan hun bestelling zolang hun bestellingscyclus open is."
             not_allowed: "Plaats bestellingen die niet aangepast / geannuleerd kunnen worden."
             allowed: "Klanten kunnen bestellingen aanpassen/ annuleren zolang hun bestellingscyclus open is."
-            require_login_warning: "We raden aan dat gebruikers ingelogd moet zijn wanneer ze bestellingen willen aanpassen."
           subscriptions:
             title: "Abonnementen"
-            description: "Activeer Abonneermogelijkheid"
-          customer_names_in_reports:
-            title: "Klanten naam in rapporten"
-            description: "Schakel in dat je leveranciers de namen van de klanten kunnen zien in rapporten"
         social:
           legend: "Sociaal"
           twitter_placeholder: "bv. @de_prof"

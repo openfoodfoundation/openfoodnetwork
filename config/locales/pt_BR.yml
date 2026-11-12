@@ -1338,52 +1338,40 @@ pt_BR:
           legend: "Preferências da loja"
           enabled: "Ativado"
           disabled: "Desativado"
+          sections:
+            orders: "Encomendas"
           shopfront_visibility:
-            title: "Loja virtual visível ao público?"
             description: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
             public: "Publico"
             registered_only: "Disponível somente para clientes registrados"
-          home_message:
-            title: "Mensagem da loja virtual"
-            placeholder: "Uma mensagem opcional para dar as boas-vindas aos clientes e explicar como comprar com você. Se o texto for inserido aqui, ele será exibido em uma guia inicial quando os clientes chegarem à sua loja virtual."
           shopfront_closed_message:
-            title: "Mensagem de loja virtual fechada"
-            placeholder: "Uma mensagem que forneça uma explicação detalhada sobre o porque de a loja estar fechada e quando os compradores podem esperar que abra novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo."
+            placeholder: >
+                Uma mensagem que forneça uma explicação detalhada sobre o porque de
+                a loja estar fechada e quando os compradores podem esperar que abra
+                novamente, a ser exibida quando não houver nenhum ciclo de pedidos
+                ativo.
           product_order:
-            title: "Exibição da ordem na vitrine"
             by_category: "Por categoria"
             by_producer: "Por produtor"
             category_placeholder: "Categoria"
             producer_placeholder: "Produtor"
-          low_stock_warning:
-            title: "Exibir estoque restante na vitrine quando estiver baixo"
-            description: "Avise os compradores quando restarem 3 ou menos itens."
           order_cycle_order:
-            title: "Ordenar Ciclos de Pedidos na Loja Virtual Por"
-            open_date: "Dia de abertura"
             close_date: "Dia de fechamento"
           guest_orders:
             title: "Pedidos de convidados"
-            description: "Permitir o checkout como convidado, ou requisitar um usuário registrado."
+            description: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
             allow: "Permitir checkout de convidados"
             require_login: "Requisitar o login para fazer pedidos"
           change_orders:
             title: "Mudar pedidos"
-            description: "Permitir que os compradores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
             not_allowed: "Pedidos enviados não podem ser mudados ou cancelados."
             allowed: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
-            require_login_warning: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
           subscriptions:
             title: "Assinaturas"
-            description: "Ativar funcionalidade de inscrições?"
-          customer_names_in_reports:
-            title: "Nomes dos Clientes nos Relatórios"
-            description: "Permitir que seus fornecedores vejam os nomes dos clientes nos relatórios"
           customer_contacts_in_reports:
             title: "Dados de contato dos clientes nos relatórios"
             description: "Permitir que os fornecedores vejam e-mail e telefone dos clientes nos relatórios"
           producers_edit_orders:
-            title: "Permitir que produtores editem pedidos"
             description: "Permitir que seus fornecedores vejam os pedidos com seus produtos e editem quantidade e peso apenas dos próprios produtos."
         social:
           legend: "Social"

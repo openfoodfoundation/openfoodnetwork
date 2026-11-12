@@ -1285,30 +1285,25 @@ es:
           legend: "Configuración de la tienda"
           enabled: "Habilitado"
           disabled: "Deshabilitado"
+          sections:
+            orders: "Pedidos"
           shopfront_visibility:
-            title: "¿Quieres que la tienda sea visible y pública?"
             description: "Elije si los clientes deben iniciar sesión para ver el escaparate o si es visible para todos."
             public: "Pública"
             registered_only: "Visible solo para consumidores registrados"
-          home_message:
-            title: "Mensaje del escaparate"
-            placeholder: "Mensaje de bienvenida opcional para compradores, explica como comprar en el sitio. si el texto se agrega en este campo, va a ser mostrado en la pestaña de inicio cuando los clientes ingresen por primera vez a la tienda."
           shopfront_closed_message:
-            title: "Mensaje de escaparate cerrado"
-            placeholder: "Un mensaje que proporciona una explicación más detallada sobre por qué tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la tienda está cerrada)."
+            placeholder: >
+                Un mensaje que proporciona una explicación más detallada sobre por
+                qué tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se
+                muestra en tu tienda sólo cuando no tienes ciclos de pedidos activos
+                (p.e. la tienda está cerrada).
           product_order:
-            title: "Mostrar pedidos en la tienda"
             by_category: "Por categoria"
             by_producer: "Por productora"
             category_placeholder: "Categoría"
             producer_placeholder: "Productora"
-          low_stock_warning:
-            title: "Mostrar las existencias restantes en el escaparate si hay pocas disponibles"
-            description: "Informe a los compradores cuando solo queden 3 artículos o menos."
           order_cycle_order:
-            title: "Ordenar Ciclos de Pedidos en escaparate por"
-            open_date: "Fecha de Inicio"
-            close_date: "Fecha de Finalización"
+            close_date: "Fecha de cierre"
           guest_orders:
             title: "Pedidos de invitados"
             description: "Permitir pedidos como invitado o solo como usuarios registrados."
@@ -1316,21 +1311,14 @@ es:
             require_login: "Se necesita hacer login para realizar un pedido"
           change_orders:
             title: "Cambiar pedidos"
-            description: "Permitir a los clientes cambiar sus pedidos mientras que el ciclo de pedido siga abierto."
             not_allowed: "Los pedidos efectuados no pueden ser cambiados / cancelados"
             allowed: "Los clientes pueden cambiar / cancelar pedidos mientras el ciclo de pedido está abierto"
-            require_login_warning: "Recomendamos requerir a los usuarios que accedan cuando sus pedidos puedan cambiar."
           subscriptions:
             title: "Suscripciones"
-            description: "¿Habilitar la funcionalidad de suscripciones?"
-          customer_names_in_reports:
-            title: "Nombres de consumidoras en informes"
-            description: "Permita que sus proveedores vean los nombres de sus consumidoras en los informes"
           customer_contacts_in_reports:
             title: "Datos de contacto del cliente en los informes"
             description: "Permita que sus proveedores vean los correos electrónicos y números de teléfono de sus consumidoras en los informes."
           producers_edit_orders:
-            title: "Posibilidad de que los productores editen los pedidos."
             description: "Permita a sus proveedores ver los pedidos que contienen sus productos y editar la cantidad y el peso solo de sus propios productos."
         social:
           legend: "Social"

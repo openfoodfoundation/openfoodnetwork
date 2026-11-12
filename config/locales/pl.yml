@@ -803,41 +803,19 @@ pl:
           create_one_button: "Utwórz je teraz"
           no_method_yet: "Nie masz jeszcze żadnych metod dostaw.."
         shop_preferences:
-          shopfront_visibility:
-            title: "Widoczna publicznie witryna sklepowa?"
-            description: "Wybierz, czy klienci muszą się zalogować, aby wyświetlić witrynę sklepu, czy też jest ona widoczna dla wszystkich."
-            public: "Publiczny"
-            registered_only: "Widoczne tylko dla zarejestrowanych klientów"
-          home_message:
-            title: "Wiadomość dotycząca sklepu"
-            placeholder: "Opcjonalna wiadomość witająca klientów i wyjaśniająca, jak robić u Ciebie zakupy. Jeśli tu wprowadzisz tekst, zostanie on wyświetlony na karcie głównej, gdy klienci po raz pierwszy pojawią się w Twoim sklepie."
           shopfront_closed_message:
-            title: "Komunikat o zamknięciu witryny sklepowej"
-            placeholder: "Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego Twój sklep jest zamknięty i / lub kiedy klienci mogą spodziewać się ponownego otwarcia. Jest to wyświetlane w Twoim sklepie tylko wtedy, gdy nie masz aktywnych cykli zamówień (tj. Sklep jest zamknięty)."
+            placeholder: >
+                Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego
+                Twój sklep jest zamknięty i / lub kiedy klienci mogą spodziewać się
+                ponownego otwarcia. Jest to wyświetlane w Twoim sklepie tylko wtedy,
+                gdy nie masz aktywnych cykli zamówień (tj. Sklep jest zamknięty).
           product_order:
             category_placeholder: "Kategoria"
             producer_placeholder: "Producent"
           order_cycle_order:
-            title: "Sortuj cykle zamówień w sklepie według"
-            open_date: "Data otwarcia"
-            close_date: "Data zamknięcia"
-          guest_orders:
-            title: "Zamówienia gości"
-            description: "Zezwól na płatność jako gość lub wymagaj zarejestrowanego użytkownika."
-            allow: "Zezwalaj na kasę gościa"
-            require_login: "Wymagaj logowania do zamówienia"
+            close_date: "Data zakończenia"
           change_orders:
-            title: "Zmienić zamówienia"
-            description: "Pozwól klientom zmieniać zamówienie, dopóki cykl zamówień jest otwarty."
-            not_allowed: "Złożonych zamówień nie można zmienić / anulować"
             allowed: "Klienci mogą zmieniać / anulować zamówienia, gdy cykl zamówień jest otwarty"
-            require_login_warning: "Zalecamy wymaganie od użytkowników logowania się, gdy można zmienić zamówienia."
-          subscriptions:
-            title: "Subskrypcje"
-            description: "Włączyć funkcję subskrypcji?"
-          customer_names_in_reports:
-            title: "Nazwy klientów w raportach"
-            description: "Umożliwiaj swoim dostawcom wyświetlanie nazw klientów w raportach"
         social:
           legend: "Społeczności"
           twitter_placeholder: "np. @profesor"

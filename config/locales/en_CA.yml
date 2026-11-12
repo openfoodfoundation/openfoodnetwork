@@ -1379,30 +1379,25 @@ en_CA:
           legend: "Shop Preferences"
           enabled: "Enabled"
           disabled: "Disabled"
+          sections:
+            orders: "Orders"
           shopfront_visibility:
-            title: "Publicly visible shopfront?"
             description: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
             public: "Public"
             registered_only: "Visible to registered customers only"
-          home_message:
-            title: "Shopfront Message"
-            placeholder: "An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront."
           shopfront_closed_message:
-            title: "Shopfront Closed Message"
-            placeholder: "A message which provides a more detailed explanation about why your shop is closed and/or when customers can expect it to open again. This is displayed on your shop only when you have no active order cycles (ie. shop is closed)."
+            placeholder: >
+                A message which provides a more detailed explanation about why your
+                shop is closed and/or when customers can expect it to open again.
+                This is displayed on your shop only when you have no active order
+                cycles (ie. shop is closed).
           product_order:
-            title: "Display ordering in shopfront"
             by_category: "By  category"
             by_producer: "By producer"
             category_placeholder: "Category"
             producer_placeholder: "Producer"
-          low_stock_warning:
-            title: "Display remaining stock in shopfront if the on-hand amount is low."
-            description: "Let shoppers know when there are only 3 or fewer items left."
           order_cycle_order:
-            title: "Sort Order Cycles On Shopfront By"
-            open_date: "Open Date"
-            close_date: "Close Date"
+            close_date: "Close date"
           guest_orders:
             title: "Guest orders"
             description: "Allow checkout as guest or require a registered user."
@@ -1410,21 +1405,14 @@ en_CA:
             require_login: "Require login to order"
           change_orders:
             title: "Change orders"
-            description: "Allow customers to change their order as long the order cycle is open."
             not_allowed: "Placed orders cannot be changed / cancelled"
             allowed: "Customers can change / cancel orders while order cycle is open"
-            require_login_warning: "We recommend to require users to login when orders can be changed."
           subscriptions:
             title: "Subscriptions"
-            description: "Enable subscriptions functionality?"
-          customer_names_in_reports:
-            title: "Customer Names in Reports"
-            description: "Enable your suppliers/vendors to see your customers' names in reports."
           customer_contacts_in_reports:
             title: "Customer contact details in reports"
             description: "Enable your suppliers to see your customer email and phone numbers in reports"
           producers_edit_orders:
-            title: "Ability for producers to edit orders"
             description: "Enable your suppliers to see orders containing their products, and edit quantity and weight for their own products only."
         social:
           legend: "Social"
