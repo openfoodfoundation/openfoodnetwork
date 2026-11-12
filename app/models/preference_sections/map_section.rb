@@ -11,8 +11,10 @@ module PreferenceSections
         :open_street_map_enabled,
         :open_street_map_provider_name,
         :open_street_map_provider_options,
+        :open_street_map_fit_to_enterprises,
         :open_street_map_default_latitude,
-        :open_street_map_default_longitude
+        :open_street_map_default_longitude,
+        :open_street_map_default_zoom
       ]
     end
   end
