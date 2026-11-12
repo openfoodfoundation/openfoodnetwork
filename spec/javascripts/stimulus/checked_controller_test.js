@@ -103,5 +103,27 @@ describe("CheckedController", () => {
       const selectAllCheckbox = document.getElementById("selectAllCheckbox");
       expect(selectAllCheckbox.checked).toBe(true);
     });
+
+    it("does not log an error when the select all checkbox is missing", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+      try {
+        document.body.innerHTML = `
+          <div data-controller="checked">
+            <input type="checkbox" data-checked-target="checkbox">
+          </div>
+        `;
+
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        const checkbox = document.querySelector('input[type="checkbox"]');
+        checkbox.click();
+
+        expect(checkbox.checked).toBe(true);
+        expect(consoleError).not.toHaveBeenCalled();
+      } finally {
+        consoleError.mockRestore();
+      }
+    });
   });
 });
