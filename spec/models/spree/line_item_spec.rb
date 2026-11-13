@@ -71,6 +71,13 @@ RSpec.describe Spree::LineItem do
       line_item.variant_name = nil
       expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
     end
+
+    it "keeps the snapshotted variant_name after the variant changes" do
+      snapshotted_name = line_item.variant_name
+      line_item.variant.update!(display_name: "Changed Display")
+
+      expect(line_item.full_variant_name).to eq(snapshotted_name)
+    end
   end
 
   describe '#full_product_name' do
@@ -81,6 +88,69 @@ RSpec.describe Spree::LineItem do
     it "uses product.name when product_name is nil" do
       line_item.product_name = nil
       expect(line_item.full_product_name).to eq(line_item.product.name)
+    end
+
+    it "keeps the snapshotted product_name after the product is renamed" do
+      snapshotted_name = line_item.product_name
+      line_item.product.update!(name: "Changed Product")
+
+      expect(line_item.full_product_name).to eq(snapshotted_name)
+    end
+  end
+
+  describe '#name_to_display' do
+    it "returns the variant display name when present" do
+      line_item.update!(variant_display_name: "Pink Lady")
+
+      expect(line_item.name_to_display).to eq("Pink Lady")
+    end
+
+    it "returns the snapshotted product name when the variant display name is blank" do
+      line_item.variant.update!(display_name: "")
+      line_item.update!(variant_display_name: "")
+
+      expect(line_item.name_to_display).to eq("")
+    end
+
+    it "keeps the snapshotted product name after a rename when the display name is blank" do
+      line_item.variant.update!(display_name: "")
+      line_item.update!(variant_display_name: "")
+      snapshotted_name = line_item.product_name
+      line_item.product.update!(name: "Renamed Product")
+
+      expect(line_item.name_to_display).to eq("")
+    end
+
+    it "keeps the snapshotted variant display name after the variant is renamed" do
+      line_item.variant.update!(display_name: "Original Display")
+      line_item.update!(variant_display_name: "Original Display")
+
+      line_item.variant.update!(display_name: "Renamed Display")
+
+      expect(line_item.name_to_display).to eq("Original Display")
+    end
+
+    it "falls back to the live variant display name for legacy rows" do
+      line_item.update_columns(variant_display_name: nil)
+      line_item.variant.update!(display_name: "Pink Lady")
+
+      expect(line_item.name_to_display).to eq("Pink Lady")
+    end
+  end
+
+  describe '#display_name' do
+    it "returns the snapshotted variant display name after the variant is renamed" do
+      line_item.update_columns(variant_display_name: "Pink Lady")
+      line_item.variant.update!(display_name: "Renamed")
+
+      expect(line_item.display_name).to eq("Pink Lady")
+    end
+
+    it "falls back to the live variant display name for legacy rows" do
+      line_item.update_columns(variant_display_name: nil)
+      line_item.variant.update!(display_name: "Pink Lady")
+
+      expect(line_item.display_name).to eq("Pink Lady")
     end
   end
 
@@ -230,6 +300,18 @@ RSpec.describe Spree::LineItem do
 
         expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
         expect(o.line_items.sorted_by_name_and_unit_value.to_sql).not_to match "deleted_at"
+      end
+
+      it "uses the snapshotted names for sorting when the products are renamed" do
+        li3
+        li4
+        li5
+        li6
+
+        p3.update!(name: "Aardvark")
+        p4.update!(name: "Zebra")
+
+        expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
       end
     end
 
@@ -739,19 +821,46 @@ RSpec.describe Spree::LineItem do
       let(:p) { double(:product, name: 'product') }
       before { allow(li).to receive(:product) { p } }
 
-      context "when full_name starts with the product name" do
-        before { allow(li).to receive(:full_name) { "#{p.name} - something" } }
+      context "when the variant name starts with the product name" do
+        before { allow(li).to receive(:full_variant_name) { "#{p.name} - something" } }
 
         it "does not show the product name twice" do
           expect(li.product_and_full_name).to eq('product - something')
         end
       end
 
-      context "when full_name does not start with the product name" do
-        before { allow(li).to receive(:full_name) { "display_name (unit)" } }
+      context "when the variant name does not start with the product name" do
+        before { allow(li).to receive(:full_variant_name) { "display_name (unit)" } }
 
-        it "prepends the product name to the full name" do
+        it "prepends the product name to the variant name" do
           expect(li.product_and_full_name).to eq('product - display_name (unit)')
+        end
+      end
+
+      context "when the variant name starts with the product name in a different case" do
+        before { allow(li).to receive(:full_variant_name) { "PRODUCT - something" } }
+
+        it "does not duplicate the product name" do
+          expect(li.product_and_full_name).to eq('PRODUCT - something')
+        end
+      end
+
+      context "when the variant name is blank" do
+        before { allow(li).to receive(:full_variant_name) { "" } }
+
+        it "returns the product name only" do
+          expect(li.product_and_full_name).to eq('product')
+        end
+      end
+
+      context "when product_name is snapshotted" do
+        before do
+          li.product_name = "Snapshotted"
+          allow(li).to receive(:full_variant_name) { "Pink Lady" }
+        end
+
+        it "uses the snapshotted product name" do
+          expect(li.product_and_full_name).to eq('Snapshotted - Pink Lady')
         end
       end
     end
@@ -782,9 +891,66 @@ RSpec.describe Spree::LineItem do
         expect(li.unit_to_display).to eq("ponies")
       end
 
+      it "returns unit_presentation when present" do
+        expect(li1.unit_to_display).to eq(li1.unit_presentation)
+      end
+
       it "returns options_text based on configured units" do
         expect(li1.options_text).to eq("500g")
         expect(li2.options_text).to eq("1lb")
+      end
+
+      context "when the variant has a display_as override" do
+        let(:product) { create(:simple_product) }
+        let(:variant) do
+          create(:variant, product:, variant_unit: "weight", variant_unit_scale: 1,
+                           unit_value: 500, display_as: "1 bag")
+        end
+        let(:line_item) { create(:line_item, order: o, product:, variant:) }
+
+        it "snapshots the display_as when the line item is created" do
+          expect(line_item.variant_display_as).to eq("1 bag")
+          expect(line_item.unit_to_display).to eq("1 bag")
+        end
+
+        it "keeps the snapshotted display_as after the variant is changed" do
+          line_item
+          variant.update!(display_as: "2 bags")
+
+          expect(line_item.reload.unit_to_display).to eq("1 bag")
+        end
+      end
+
+      context "when the variant does not have a display_as override" do
+        let(:product) { create(:simple_product) }
+        let(:variant) do
+          create(:variant, product:, variant_unit: "weight", variant_unit_scale: 1,
+                           unit_value: 500, display_as: "")
+        end
+        let(:line_item) { create(:line_item, order: o, product:, variant:) }
+
+        it "keeps the computed unit after a display_as override is added" do
+          line_item
+          variant.update!(display_as: "2 bags")
+
+          expect(line_item.reload.unit_to_display).to eq("500g")
+        end
+      end
+
+      context "for a legacy line item without a display_as snapshot" do
+        let(:product) { create(:simple_product) }
+        let(:variant) do
+          create(:variant, product:, variant_unit: "weight", variant_unit_scale: 1,
+                           unit_value: 500, display_as: "")
+        end
+        let(:line_item) { create(:line_item, order: o, product:, variant:) }
+
+        it "falls back to the live display_as" do
+          line_item.update_columns(variant_display_as: nil)
+          variant.update!(display_as: "2 bags")
+
+          expect(line_item.reload.unit_to_display).to eq("2 bags")
+        end
       end
     end
 
