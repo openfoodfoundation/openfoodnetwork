@@ -11,10 +11,40 @@ RSpec.describe UserPasswordsController do
   end
 
   describe "create" do
-    it "returns 404 if user is not found" do
-      spree_post :create, spree_user: { email: "xxxxxxxxxx@example.com" }, format: :turbo_stream
-      expect(response).to have_http_status :not_found
-      expect(response.body).to match 'Email address not found'
+    # The response must not tell whether an account exists for the email
+    shared_examples "a neutral response" do
+      it "returns the same response" do
+        request_reset
+        expect(response).to have_http_status :ok
+        expect(response.body).to match "If an account with that email address exists, \
+you will receive a password reset email"
+        expect(response.body).to include 'class="alert-box success"'
+        expect(response.body).not_to match "Resend confirmation email"
+      end
+    end
+
+    let(:request_reset) {
+      spree_post :create, spree_user: { email: }, format: :turbo_stream
+    }
+
+    context "when no account has the email" do
+      let(:email) { "xxxxxxxxxx@example.com" }
+
+      it_behaves_like "a neutral response"
+
+      it "doesn't send an email" do
+        expect { request_reset }.not_to enqueue_job ActionMailer::MailDeliveryJob
+      end
+    end
+
+    context "when the email is blank" do
+      let(:email) { "" }
+
+      it_behaves_like "a neutral response"
+
+      it "doesn't send an email" do
+        expect { request_reset }.not_to enqueue_job ActionMailer::MailDeliveryJob
+      end
     end
 
     it "returns 422 if user is registered but not confirmed" do

@@ -156,10 +156,13 @@ RSpec.describe "Authentication" do
             select_login_tab "Forgot Password?"
           end
 
-          it "failing to reset password" do
+          it "requesting a reset for an unknown email" do
             fill_in "Your email", with: "notanemail@myemail.com"
-            click_reset_password_button
-            expect(page).to have_content "Email address not found"
+            expect do
+              click_reset_password_button
+              expect(page).to have_content "If an account with that email address exists, " \
+                                           "you will receive a password reset email"
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
 
           it "resetting password" do

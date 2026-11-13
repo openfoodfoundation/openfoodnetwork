@@ -3034,7 +3034,7 @@ en:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
+  password_reset_requested: "If an account with that email address exists, you will receive a password reset email"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
