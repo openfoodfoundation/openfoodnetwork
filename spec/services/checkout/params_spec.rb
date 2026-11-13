@@ -25,7 +25,8 @@ RSpec.describe Checkout::Params do
         expect(order.ship_address.phone).to eq "0123456789"
       end
 
-      it "doesn't raise when billing address attributes are missing" do
+      it "leaves the existing ship address untouched when billing address attributes are " \
+         "missing" do
         params = build_params({ email: "ada@example.com" }, pickup)
         original_ship_address = order.ship_address
 
