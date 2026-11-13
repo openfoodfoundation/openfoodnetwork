@@ -54,11 +54,15 @@ you will receive a password reset email"
 address before you can reset your password."
     end
 
-    it "returns 200 when password reset was successful" do
-      spree_post :create, spree_user: { email: user.email }, format: :turbo_stream
-      expect(response).to have_http_status :ok
-      expect(response.body).to match "An email with instructions on resetting \
-your password has been sent!"
+    context "when the account is confirmed" do
+      let(:email) { user.email }
+
+      it_behaves_like "a neutral response"
+
+      it "sends the password reset email" do
+        expect { request_reset }.to enqueue_job(ActionMailer::MailDeliveryJob)
+          .with("Spree::UserMailer", "reset_password_instructions", "deliver_now", any_args)
+      end
     end
   end
 

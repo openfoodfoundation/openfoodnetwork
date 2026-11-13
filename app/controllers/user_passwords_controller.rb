@@ -6,16 +6,14 @@ class UserPasswordsController < Spree::UserPasswordsController
   def create
     return render_unconfirmed_response if user_unconfirmed?
 
-    self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
+    resource_class.send_reset_password_instructions(raw_params[resource_name])
 
-    # Don't say when the email isn't registered, so the form can't be used to find out which
-    # email addresses are.
-    message = resource.errors.empty? ? t(:password_reset_sent) : t(:password_reset_requested)
-
+    # Respond the same way whether or not the email is registered, so the form can't be used to
+    # find out which email addresses are.
     render turbo_stream: turbo_stream.update(
       'forgot-feedback',
       partial: 'layouts/alert',
-      locals: { type: :success, message:, tab: 'forgot',
+      locals: { type: :success, message: t(:password_reset_requested), tab: 'forgot',
                 unconfirmed: false, email: params.dig(:spree_user, :email) }
     )
   end

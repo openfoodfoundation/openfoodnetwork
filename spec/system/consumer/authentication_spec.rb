@@ -160,8 +160,7 @@ RSpec.describe "Authentication" do
             fill_in "Your email", with: "notanemail@myemail.com"
             expect do
               click_reset_password_button
-              expect(page).to have_content "If an account with that email address exists, " \
-                                           "you will receive a password reset email"
+              expect(page).to have_reset_password
             end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
 

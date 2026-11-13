@@ -3043,7 +3043,6 @@ en:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot Password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
