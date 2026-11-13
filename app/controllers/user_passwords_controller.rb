@@ -3,36 +3,24 @@
 class UserPasswordsController < Spree::UserPasswordsController
   layout 'darkswarm'
 
+  # Respond the same way whether or not the email belongs to an account, so the form can't be
+  # used to find out which email addresses are registered.
   def create
-    return render_unconfirmed_response if user_unconfirmed?
+    email = raw_params.dig(resource_name, :email)
+    user = resource_class.find_for_authentication(email:) if email.present?
 
-    resource_class.send_reset_password_instructions(raw_params[resource_name])
+    if user && !user.confirmed?
+      # They can't reset their password before confirming their email, send the confirmation
+      # email again instead.
+      user.resend_confirmation_instructions
+    elsif user
+      user.send_reset_password_instructions
+    end
 
-    # Respond the same way whether or not the email is registered, so the form can't be used to
-    # find out which email addresses are.
     render turbo_stream: turbo_stream.update(
       'forgot-feedback',
       partial: 'layouts/alert',
-      locals: { type: :success, message: t(:password_reset_requested), tab: 'forgot',
-                unconfirmed: false, email: params.dig(:spree_user, :email) }
+      locals: { type: :success, message: t(:password_reset_requested) }
     )
-  end
-
-  private
-
-  def render_unconfirmed_response
-    message, type, unconfirmed, tab = [t(:email_unconfirmed), :alert, true, 'forgot']
-
-    render turbo_stream: turbo_stream.update(
-      'forgot-feedback',
-      partial: 'layouts/alert',
-      locals: { type:, message:, tab:,
-                unconfirmed:, email: params.dig(:spree_user, :email) }
-    ), status: :unprocessable_entity
-  end
-
-  def user_unconfirmed?
-    user = Spree::User.find_by(email: params.dig(:spree_user, :email))
-    user && !user.confirmed?
   end
 end

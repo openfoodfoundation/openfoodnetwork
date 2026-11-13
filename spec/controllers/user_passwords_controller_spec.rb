@@ -47,15 +47,31 @@ you will receive a password reset email"
       end
     end
 
-    it "returns 422 if user is registered but not confirmed" do
-      spree_post :create, spree_user: { email: unconfirmed_user.email }, format: :turbo_stream
-      expect(response).to have_http_status :unprocessable_entity
-      expect(response.body).to match "You must confirm your email \
-address before you can reset your password."
+    context "when the account is registered but not confirmed" do
+      let(:email) { unconfirmed_user.email }
+
+      it_behaves_like "a neutral response"
+
+      it "sends the confirmation email again instead of a password reset" do
+        expect { request_reset }.to enqueue_job(ActionMailer::MailDeliveryJob)
+          .with("Spree::UserMailer", "confirmation_instructions", "deliver_now", any_args)
+        expect(unconfirmed_user.reload.reset_password_token).to be_nil
+      end
     end
 
     context "when the account is confirmed" do
       let(:email) { user.email }
+
+      it_behaves_like "a neutral response"
+
+      it "sends the password reset email" do
+        expect { request_reset }.to enqueue_job(ActionMailer::MailDeliveryJob)
+          .with("Spree::UserMailer", "reset_password_instructions", "deliver_now", any_args)
+      end
+    end
+
+    context "when the email differs in case and whitespace" do
+      let(:email) { " #{user.email.upcase} " }
 
       it_behaves_like "a neutral response"
 

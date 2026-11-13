@@ -180,23 +180,28 @@ RSpec.describe "Authentication" do
               Spree::User.create(email:, unconfirmed_email: email, password: "secret")
             }
 
-            it "cannot reset password before confirming email" do
+            it "sends the confirmation email again instead of a password reset" do
               fill_in "Your email", with: email
-              click_reset_password_button
-              expect(page).to have_content 'You must confirm your email address before you can ' \
-                                           'reset your password.'
-              page.find("a", text: 'Resend confirmation email.').click
-              expect(page).to have_content 'You will receive an email with instructions about ' \
-                                           'how to confirm your account in a few minutes.'
+              expect do
+                click_reset_password_button
+                expect(page).to have_reset_password
+              end.to enqueue_job ActionMailer::MailDeliveryJob
 
-              visit spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
+              expect(page).not_to have_link "Resend confirmation email."
+
+              visit spree_user_confirmation_path(confirmation_token: user.reload.confirmation_token)
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
 
               select_login_tab "Forgot Password?"
               fill_in "Your email", with: email
-              click_reset_password_button
-              expect(page).to have_reset_password
+              expect do
+                click_reset_password_button
+                expect(page).to have_reset_password
+              end.to enqueue_job ActionMailer::MailDeliveryJob
+
+              expect(enqueued_jobs.last.to_s).to match "reset_password_instructions"
             end
           end
         end
