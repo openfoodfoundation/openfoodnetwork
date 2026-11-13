@@ -40,6 +40,36 @@ RSpec.describe Spree::UserSessionsController do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to include "Invalid email or password"
       end
+
+      context "with an unconfirmed email" do
+        let(:user) { create(:user, confirmed_at: nil) }
+
+        it "says the email is unconfirmed when the password is right" do
+          spree_post :create, spree_user: { email: user.email, password: user.password },
+                              format: :turbo_stream
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to include "You must confirm your email address"
+          expect(response.body).to include "Resend confirmation email"
+        end
+
+        it "returns the same error as for any other account when the password is wrong" do
+          spree_post :create, spree_user: { email: user.email, password: "wrong" },
+                              format: :turbo_stream
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to include "Invalid email or password"
+          expect(response.body).not_to include "You must confirm your email address"
+          expect(response.body).not_to include "Resend confirmation email"
+        end
+
+        it "doesn't say the email is unconfirmed without a password" do
+          spree_post :create, spree_user: { email: user.email }, format: :turbo_stream
+
+          expect(response.body).to include "Invalid email or password"
+          expect(response.body).not_to include "You must confirm your email address"
+        end
+      end
     end
   end
 

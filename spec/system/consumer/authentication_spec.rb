@@ -79,6 +79,16 @@ RSpec.describe "Authentication" do
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
             end
+
+            it "doesn't say the email is unconfirmed when the password is wrong" do
+              fill_in "Email", with: user.email
+              fill_in "Password", with: "wrong password"
+              click_login_button
+
+              expect(page).to have_content "Invalid email or password"
+              expect(page).not_to have_content "You must confirm your email address"
+              expect(page).not_to have_link "Resend confirmation email."
+            end
           end
         end
 
