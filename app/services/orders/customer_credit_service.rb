@@ -29,7 +29,7 @@ module Orders
                                           state: "completed", skip_source_validation: true)
 
         options = { customer_id: order.customer_id, payment_id: payment.id,
-                    order_number: order.number, user_id: user&.id }
+                    payment_state: payment.state, order_number: order.number, user_id: user&.id }
         response = credit_payment_method.void((-1 * amount * 100).round, nil, options)
 
         raise response.message if response.failure?
@@ -42,6 +42,10 @@ module Orders
       order.payments.reload
       log_error(e)
       Response.new(success: false, message: e.to_s)
+    end
+
+    def process_pending_payments!
+      order.payments.customer_credit.incomplete.lock.each(&:internal_purchase!)
     end
 
     private

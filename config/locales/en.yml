@@ -4282,7 +4282,6 @@ en:
     items_cannot_be_shipped: "Items cannot be shipped"
     gateway_config_unavailable: "Gateway config unavailable"
     gateway_error: "Payment failed"
-    internal_payment_not_voidable: Payment not voidable
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
@@ -4355,6 +4354,7 @@ en:
     capture: "Capture"
     capture_and_complete_order: "Capture and complete order"
     void: "Void"
+    internal_void: "Void"
     login: "Login"
     password: "Password"
     signature: "Signature"
@@ -5322,6 +5322,7 @@ en:
     errors:
       customer_not_found: Customer not found 
       missing_payment: Missing payment
+      missing_payment_state: Missing payment state
       credit_payment_method_missing: Credit payment method is missing
       no_credit_available: No credit available
       not_enough_credit_available: Not enough credit available 

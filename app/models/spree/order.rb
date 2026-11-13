@@ -740,5 +740,9 @@ module Spree
     def apply_customer_credit
       Orders::CustomerCreditService.new(self).apply
     end
+
+    def process_pending_customer_credits!
+      Orders::CustomerCreditService.new(self).process_pending_payments!
+    end
   end
 end

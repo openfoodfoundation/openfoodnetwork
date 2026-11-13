@@ -102,6 +102,7 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       {
         customer_id: customer.id,
         payment_id: payment.id,
+        payment_state: "completed",
         order_number: "R023075164"
       }
     }
@@ -129,6 +130,7 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
         {
           customer_id: customer.id,
           payment_id: payment.id,
+          payment_state: "completed",
           order_number: "R023075164",
           user_id: user.id
         }
@@ -167,6 +169,41 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       it "returns an error" do
         expect(response.success?).to be(false)
         expect(response.message).to eq("Missing payment")
+      end
+    end
+
+    context "when payment state is missing" do
+      let(:options) {
+        {
+          customer_id: customer.id,
+          payment_id: payment.id
+        }
+      }
+
+      it "returns an error" do
+        expect(response.success?).to be(false)
+        expect(response.message).to eq("Missing payment state")
+      end
+    end
+
+    context "when payment is not completed" do
+      let(:options) {
+        {
+          customer_id: customer.id,
+          payment_id: payment.id,
+          payment_state: "checkout",
+          order_number: "R023075164"
+        }
+      }
+
+      it "returns a success response" do
+        expect(response).to be_a(ActiveMerchant::Billing::Response)
+        expect(response.success?).to be(true)
+        expect(response.message).to eq("Credit void was sucessful")
+      end
+
+      it "doesn't credit payment to the customer" do
+        expect { response }.not_to change { customer.customer_account_transactions.count }
       end
     end
   end
