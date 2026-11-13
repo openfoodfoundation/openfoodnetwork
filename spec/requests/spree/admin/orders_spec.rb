@@ -387,6 +387,39 @@ RSpec.describe Spree::Admin::OrdersController do
         expect(response.body).to include("flashes")
         expect(flash[:error]).to eq "Card declined"
       end
+
+      it "displays a generic failure message when no specific error is available" do
+        allow(capture_service).to receive(:call).and_return(false)
+        allow(capture_service).to receive(:gateway_error).and_return(nil)
+        allow(capture_service).to receive(:error).and_return(nil)
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq(
+          "Payment could not be processed, please check the details you entered"
+        )
+      end
+    end
+
+    context "when the capture service raises an unexpected error" do
+      it "alerts, shows a failure flash and still renders a response" do
+        allow(capture_service).to receive(:call).and_raise("unexpected failure")
+
+        expect(Alert).to receive(:raise).with(
+          an_instance_of(RuntimeError),
+          hash_including(order: { number: order.number }, context: { action: "capture" })
+        )
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq(
+          "Payment could not be processed, please check the details you entered"
+        )
+      end
     end
 
     context "when the user cannot manage the order" do
@@ -396,6 +429,115 @@ RSpec.describe Spree::Admin::OrdersController do
         put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
 
         expect(response).to redirect_to "/unauthorized"
+      end
+    end
+  end
+
+  describe "#capture without stubbing the service" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:completed_order_with_totals, distributor:) }
+
+    # The credit payment must be created before any other incomplete payment:
+    # creating it invalidates other incomplete non-credit payments.
+    let!(:credit_payment) do
+      create(
+        :payment,
+        order:,
+        amount: 12.50,
+        payment_method: Spree::PaymentMethod.customer_credit,
+        source: nil
+      )
+    end
+
+    before { sign_in distributor.owner }
+
+    context "when the order has a customer credit payment and a check payment" do
+      let!(:check_payment) do
+        create(
+          :payment,
+          order:,
+          amount: order.total - 12.50,
+          payment_method: create(:payment_method, distributors: [distributor]),
+          source: nil
+        )
+      end
+
+      it "captures the check payment and leaves the credit payment untouched" do
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("order_#{order.id}")
+
+        expect(check_payment.reload.state).to eq "completed"
+        expect(credit_payment.reload.state).to eq "checkout"
+        expect(order.reload.payment_total).to eq check_payment.amount
+      end
+
+      # Expected behaviour, tracked in #14937: an order with a credit payment
+      # that hasn't been redeemed shouldn't be reported as paid.
+      it "doesn't mark the order as paid while the credit payment is incomplete" do
+        pending "Credit payments are not redeemed when the admin flow completes the order (#14937)"
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(order.reload.payment_state).not_to eq "paid"
+      end
+    end
+
+    context "when the only pending payment is a customer credit payment" do
+      it "returns an error flash without raising" do
+        expect(Alert).not_to receive(:raise)
+
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include("flashes")
+        expect(flash[:error]).to eq "There are no payments that can be captured for this order."
+        expect(credit_payment.reload.state).to eq "checkout"
+      end
+    end
+
+    context "when a credit payment is already stuck in processing" do
+      before { credit_payment.update_columns(state: "processing") }
+
+      let!(:check_payment) do
+        create(
+          :payment,
+          order:,
+          amount: order.total - 12.50,
+          payment_method: create(:payment_method, distributors: [distributor]),
+          source: nil
+        )
+      end
+
+      it "captures the check payment and does not alter the credit payment" do
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(check_payment.reload.state).to eq "completed"
+        expect(credit_payment.reload.state).to eq "processing"
+      end
+    end
+
+    context "when a check payment is already stuck in processing" do
+      before { check_payment.update_columns(state: "processing") }
+
+      let!(:check_payment) do
+        create(
+          :payment,
+          order:,
+          amount: order.total - 12.50,
+          payment_method: create(:payment_method, distributors: [distributor]),
+          source: nil
+        )
+      end
+
+      it "retries and completes the stuck check payment, leaving the credit payment untouched" do
+        put("/admin/orders/#{order.number}/capture", params: { format: :turbo_stream })
+
+        expect(response).to have_http_status :ok
+        expect(check_payment.reload.state).to eq "completed"
+        expect(credit_payment.reload.state).to eq "checkout"
       end
     end
   end
