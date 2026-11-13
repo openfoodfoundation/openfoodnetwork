@@ -125,15 +125,15 @@ class ProductsRenderer
       results,
       page: args[:page] || 1,
       limit: args[:per_page] || DEFAULT_PER_PAGE,
-      request: { params: pagination_params }
+      request: { params: search_params }
     )
 
     paginated_results
   end
 
-  # Only the shop passes an already permitted search (a Hash), the API passes unpermitted
-  # params and doesn't use page links.
-  def pagination_params
+  # Accept only permitted params, the API the API V0 passes unpermitted params
+  # and doesn't use page links.
+  def search_params
     return {} unless args[:q].is_a?(Hash) && args[:q].present?
 
     { "q" => args[:q] }
