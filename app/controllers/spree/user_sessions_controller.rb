@@ -12,7 +12,7 @@ module Spree
 
     helper 'spree/base'
 
-    prepend_before_action :handle_unconfirmed_email
+    prepend_before_action :handle_unconfirmed_email, only: :create
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
     skip_before_action :check_disabled_user
