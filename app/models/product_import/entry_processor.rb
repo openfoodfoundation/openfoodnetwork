@@ -164,7 +164,7 @@ module ProductImport
 
       product = Spree::Product.new(enterprise_id: entry.enterprise_id)
       product.assign_attributes(
-        entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
+        entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name', 'tag_list')
       )
 
       if product.save
@@ -246,6 +246,7 @@ module ProductImport
       # Ensure attributes are correctly copied to a new product's variant
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
+      variant.tag_list = entry.tag_list
       variant.variant_unit = entry.variant_unit if entry.variant_unit
       variant.variant_unit_name = entry.variant_unit_name if entry.variant_unit_name
       variant.variant_unit_scale = entry.variant_unit_scale if entry.variant_unit_scale

@@ -1262,6 +1262,7 @@ en:
         tax_category: Tax Category
         group_buy: Group Buy
         group_buy_unit_size: Bulk Unit Size
+        tag_list: Tags
 
     variant_overrides:
       loading_flash:
