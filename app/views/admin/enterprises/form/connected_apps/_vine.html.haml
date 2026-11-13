@@ -16,7 +16,7 @@
             %span.required *
             = f.text_field :vine_secret, { disabled: !managed_by_user?(enterprise) }
           %div 
-            - disabled = managed_by_user?(enterprise) ? {} : { disabled: true, "data-disable-with": false } 
+            - disabled = managed_by_user?(enterprise) ? {} : { disabled: true }
             = f.submit t(".enable"), disabled
 
       -# This is only seen by super-admins:

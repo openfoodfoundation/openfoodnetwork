@@ -39,7 +39,7 @@ module Spree
         @order.empty!
       end
 
-      redirect_to main_app.cart_path
+      redirect_to main_app.cart_path, status: :see_other
     end
 
     # Patching to redirect to shop if order is empty
