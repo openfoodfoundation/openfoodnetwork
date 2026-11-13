@@ -1051,21 +1051,36 @@ fr_CH:
           sections:
             orders: "Commandes"
           shopfront_visibility:
+            title: "Boutique privée (accès contrôlé) ?"
             description: "Choisissez si les acheteurs doivent être connectés pour voir la boutique ou si la boutique est visible par tout le monde."
             public: "Boutique publique (visible par tous)"
             registered_only: "Visible uniquement pour les acheteurs connectés ET figurant sur la liste \"acheteurs\" de la boutique (boutique privée)"
+          home_message:
+            title: "Message d'accueil"
+            placeholder: >-
+                Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
+                les particularités de votre boutique. Ce message s'affiche dans l'onglet
+                Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
+                Accueil n'apparaitra pas.
           shopfront_closed_message:
+            title: "Message d'accueil boutique fermée"
             placeholder: >
                 Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique
                 est fermée et/ou quand elle ouvrira. Ce texte s'affiche uniquement
                 quand il n'y a pas de cycle de vente en cours (donc quand votre boutique
                 est fermée).
           product_order:
+            title: "Ordre d'affichage sur la boutique en ligne"
             by_category: "Par catégorie"
             by_producer: "Par producteur"
             category_placeholder: "Catégorie"
             producer_placeholder: "Producteur"
+          low_stock_warning:
+            title: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+            description: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           order_cycle_order:
+            title: "Trier les cycles de vente par"
+            open_date: "Date d'ouverture"
             close_date: "Date de fermeture"
           guest_orders:
             title: "Commandes des invités"
@@ -1074,12 +1089,20 @@ fr_CH:
             require_login: "Demander que l'acheteur se connecte pour pouvoir finaliser sa commande"
           change_orders:
             title: "Modifier la commande"
+            description: "Permettre aux acheteurs de modifier leur commande tant que le cycle de vente est ouvert."
             not_allowed: "Les commandes validées ne peuvent plus être modifiées / annulées"
             allowed: "Les acheteurs peuvent modifier / valider leurs commandes tant que le cycle de vente est ouvert"
+            require_login_warning: "Nous recommandons de demander aux utilisateurs de se connecter si vous souhaitez leur permettre de modifier leur commande."
           subscriptions:
             title: "Abonnements"
+            description: "Activer la fonction abonnements?"
+          customer_names_in_reports:
+            title: "Affichage du nom des acheteurs"
+            description: "Permettre aux producteurs de voir les noms de vos acheteurs"
           customer_contacts_in_reports:
             title: "Coordonnées du client dans les rapports"
+          producers_edit_orders:
+            title: "Possibilité pour les producteurs de modifier les commandes"
         social:
           legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet_fr"

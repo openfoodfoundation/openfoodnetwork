@@ -865,10 +865,22 @@ en_AU:
           sections:
             orders: "Orders"
           shopfront_visibility:
+            title: "Publicly visible shopfront?"
             description: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
             public: "Public"
             registered_only: "Visible to registered customers only"
+          home_message:
+            title: "\"Home\" message"
+            placeholder: >-
+                Create your home page content to welcome customers and explain how
+                people can shop with you. Include details about your delivery and
+                pick up options, how often you open the shop for orders, and all the
+                details your customers will need to understand the process of buying
+                from you. You can also include links to your newsletter sign up, so
+                that people can connect with you to hear when your next order cycle
+                opens.
           shopfront_closed_message:
+            title: "Shopfront Closed Message"
             placeholder: >
                 A message which provides a more detailed explanation about why your
                 shop is closed and/or when customers can expect it to open again.
@@ -878,6 +890,8 @@ en_AU:
             category_placeholder: "Category"
             producer_placeholder: "Producer"
           order_cycle_order:
+            title: "Sort Order Cycles On Shopfront By"
+            open_date: "Open Date"
             close_date: "Close date"
           guest_orders:
             title: "Guest orders"
@@ -886,10 +900,16 @@ en_AU:
             require_login: "Require login to order"
           change_orders:
             title: "Change orders"
+            description: "Allow customers to change their order as long the order cycle is open."
             not_allowed: "Placed orders cannot be changed / cancelled"
             allowed: "Customers can change / cancel orders while order cycle is open"
+            require_login_warning: "We recommend to require users to login when orders can be changed."
           subscriptions:
             title: "Subscriptions"
+            description: "Enable subscriptions functionality?"
+          customer_names_in_reports:
+            title: "Customer Names in Reports"
+            description: "Enable your suppliers to see your customers names in reports"
         social:
           legend: "Social"
           twitter_placeholder: "eg. @the_prof"

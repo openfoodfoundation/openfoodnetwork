@@ -1347,21 +1347,35 @@ sv:
           sections:
             orders: "Beställningar"
           shopfront_visibility:
+            title: "Offentligt visat skyltfönster?"
             description: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
             public: "Offentlig"
             registered_only: "Endast synlig för registrerade kunder"
+          home_message:
+            title: "Butiksmeddelande"
+            placeholder: >-
+                Ett valfritt meddelande för att välkomna kunder och förklara hur man
+                handlar med dig. Om text skrivs in här kommer den att visas på en
+                hemflik när kunderna först anländer till din butik.
           shopfront_closed_message:
+            title: "Meddelande för stängd butik"
             placeholder: >
                 Ett meddelande som ger en mer detaljerad förklaring varför din affär
                 är stängd/eller när kunder kan förvänta att den öppnar igen. Detta
                 visas i din affär endast när du inte har en aktiv beställningsomgång
                 (dvs när affären är stängd).
           product_order:
+            title: "Visa beställning i butiksfronten"
             by_category: "Efter kategori"
             by_producer: "Av producent"
             category_placeholder: "Kategori"
             producer_placeholder: "Producent"
+          low_stock_warning:
+            title: "Visa återstående lager i butiksfronten om det är lite tillgängligt"
+            description: "Låt kunderna veta när det bara finns 3 eller färre varor kvar."
           order_cycle_order:
+            title: "Sortera butikens beställningsomgångar efter"
+            open_date: "Öppningsdatum"
             close_date: "Stängningsdatum"
           guest_orders:
             title: "Gästbeställningar"
@@ -1370,14 +1384,21 @@ sv:
             require_login: "Kräv inloggning för att beställa"
           change_orders:
             title: "Ändra beställning"
+            description: "Tillåt kunder att ändra sin beställning så länge beställningsomgången är öppen."
             not_allowed: "Lagda beställningar kan inte ändras/avbrytas"
             allowed: "Kunder kan ändra/avbryta beställningar medan beställningsomgången är öppen"
+            require_login_warning: "Vi rekommenderar att användare måste logga in när beställningar kan ändras."
           subscriptions:
             title: "Prenumerationer"
+            description: "Aktivera prenumerationsfunktioner?"
+          customer_names_in_reports:
+            title: "Kundnamn i rapporter"
+            description: "Gör det möjligt för dina leverantörer att se dina kunders namn i rapporter"
           customer_contacts_in_reports:
             title: "Kundkontaktuppgifter i rapporter"
             description: "Gör det möjligt för dina leverantörer att se dina kunders e-post och telefonnummer i rapporter"
           producers_edit_orders:
+            title: "Möjlighet för producenter att redigera beställningar"
             description: "Gör det möjligt för dina leverantörer att se beställningar som innehåller deras produkter och redigera kvantitet och vikt endast för deras egna produkter."
         social:
           legend: "Social"

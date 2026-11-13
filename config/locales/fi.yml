@@ -1330,21 +1330,35 @@ fi:
           sections:
             orders: "tilaukset"
           shopfront_visibility:
+            title: "Julkisesti näkyvä myymälä?"
             description: "Valitse, onko asiakkaiden kirjauduttava sisään nähdäkseen myymälän vai näkyykö se kaikille."
             public: "Julkinen"
             registered_only: "Näkyy vain rekisteröityneille asiakkaille"
+          home_message:
+            title: "Myymälän viesti"
+            placeholder: >-
+                Valinnainen viesti toivottaa asiakkaat tervetulleiksi ja selittää,
+                kuinka tehdä ostoksia kanssasi. Jos tekstiä kirjoitetaan tähän, se
+                näytetään etusivulla, kun asiakkaat saapuvat ensimmäistä kertaa myymälään.
           shopfront_closed_message:
+            title: "Viesti kun myymälä on suljettuna"
             placeholder: >
                 Viesti, jossa kerrotaan tarkemmin, miksi myymäläsi on suljettu ja/tai
                 milloin asiakkaat voivat odottaa sen avautuvan uudelleen. Tämä näkyy
                 kaupassasi vain, kun sinulla ei ole aktiivisia tilausjaksoja (eli
                 kauppa on suljettu).
           product_order:
+            title: "Näytä tilaaminen myymälässä"
             by_category: "Luokan mukaan"
             by_producer: "Tuottajan mukaan"
             category_placeholder: "Kategoria"
             producer_placeholder: "tuottaja"
+          low_stock_warning:
+            title: "Näytä jäljellä olevat varastot liikkeessä, jos niitä on vähän"
+            description: "Kerro ostajille, kun tuotteita on jäljellä vain 3 tai vähemmän."
           order_cycle_order:
+            title: "Järjestä tilausjaksot kaupan etusivulla"
+            open_date: "Avauspäivä"
             close_date: "Sulkeutumispäivä"
           guest_orders:
             title: "Vierastilaukset"
@@ -1353,14 +1367,21 @@ fi:
             require_login: "Tilaaminen edellyttää kirjautumista"
           change_orders:
             title: "Muuta tilauksia"
+            description: "Salli asiakkaiden muuttaa tilauksiaan niin kauan kuin tilausjakso on auki."
             not_allowed: "Tehtyjä tilauksia ei voi muuttaa/peruuttaa"
             allowed: "Asiakkaat voivat muuttaa / peruuttaa tilauksia tilausjakson ollessa auki"
+            require_login_warning: "Suosittelemme vaatimaan käyttäjiä kirjautumaan sisään, jotta tilauksia voidaan muuttaa."
           subscriptions:
             title: "Tilaukset"
+            description: "Otetaanko tilaustoiminto käyttöön?"
+          customer_names_in_reports:
+            title: "Asiakkaiden nimet raporteissa"
+            description: "Salli toimittajasi nähdä asiakkaidesi nimet raporteissa"
           customer_contacts_in_reports:
             title: "Asiakkaiden yhteystiedot raporteissa"
             description: "Salli toimittajiesi nähdä asiakkaiden sähköpostiosoitteet ja puhelinnumerot raporteissa"
           producers_edit_orders:
+            title: "Tuottajien mahdollisuus muokata tilauksia"
             description: "Salli toimittajasi nähdä heidän tuotteitaan sisältävät tilaukset ja muokata vain omien tuotteidensa määrää ja painoa."
         social:
           legend: "Sosiaalinen"

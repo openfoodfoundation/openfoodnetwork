@@ -1167,21 +1167,36 @@ de_DE:
           sections:
             orders: "Bestellungen"
           shopfront_visibility:
+            title: "Geöffnet für alle Nutzer?"
             description: "Wählen Sie aus, ob nur Kunden, die Sie Ihrer Kundenliste hinzugefügt haben, einkaufen können oder ob der Laden für alle Nutzer geöffnet ist."
             public: "öffentlich sichtbar"
             registered_only: "Nur Kunden auf der Kundenliste"
+          home_message:
+            title: "'Willkommen'-Nachricht im Laden"
+            placeholder: >-
+                Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
+                wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
+                wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
+                ihn zum ersten Mal besuchen.
           shopfront_closed_message:
+            title: "'Laden geschlossen'-Nachricht im Laden"
             placeholder: >
                 Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr
                 Laden geschlossen ist und/oder wann Kunden erwarten können, dass er
                 wieder geöffnet wird. Dies wird in Ihrem Laden nur angezeigt, wenn
                 Sie gerade keine aktiven Bestellzyklen haben.
           product_order:
+            title: "Reihenfolge der Anzeige im Online-Shop"
             by_category: "Nach Kategorie"
             by_producer: "Nach Produzent"
             category_placeholder: "Kategorie"
             producer_placeholder: "Produzent"
+          low_stock_warning:
+            title: "Restbestand anzeigen"
+            description: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt."
           order_cycle_order:
+            title: "Sortiere die Bestellzyklen des Ladens nach"
+            open_date: "Öffnungszeitpunkt"
             close_date: "Schließzeitpunkt"
           guest_orders:
             title: "Gasteinkauf"
@@ -1190,10 +1205,16 @@ de_DE:
             require_login: "Einkauf nur für eingeloggte Nutzer"
           change_orders:
             title: "Bestellungen nachträglich ändern"
+            description: "Wählen Sie aus, ob Kunden ihre Bestellung ändern können, solange der Bestellzyklus geöffnet ist."
             not_allowed: "Kunden können Bestellungen nicht ändern oder stornieren "
             allowed: "Kunden können Bestellungen ändern oder stornieren, solange der Bestellzyklus geöffnet ist"
+            require_login_warning: "Wenn Bestellungen nachträglich geändert werden dürfen, empfehlen wir Ihnen, den Einkauf nur für eingeloggte Nutzer zu ermöglichen."
           subscriptions:
             title: "Abonnements"
+            description: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmäßige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
+          customer_names_in_reports:
+            title: "Kundennamen in Berichten anzeigen"
+            description: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
         social:
           legend: "Soziale Medien"
           twitter_placeholder: "z. B. @the_prof"

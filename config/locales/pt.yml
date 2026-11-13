@@ -901,10 +901,14 @@ pt:
           sections:
             orders: "Encomendas"
           shopfront_visibility:
+            title: "Loja visível publicamente?"
             description: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
             public: "Público"
             registered_only: "Visível somente para consumidores registados"
+          home_message:
+            title: "Mensagem da Loja"
           shopfront_closed_message:
+            title: "Mensagem de Loja Fechada"
             placeholder: >
                 Uma mensagem que forneça uma explicação mais detalhada sobre o motivo
                 da sua loja estar fechada e quando é que os consumidores podem esperar
@@ -914,6 +918,8 @@ pt:
             category_placeholder: "Categoria"
             producer_placeholder: "Produtor/a"
           order_cycle_order:
+            title: "Ordenar Ciclos de Encomendas na Loja Por"
+            open_date: "Dia de Abertura"
             close_date: "Data de fecho"
           guest_orders:
             title: "Encomendas de convidados"
@@ -922,10 +928,13 @@ pt:
             require_login: "Exigir o registo para fazer encomendas"
           change_orders:
             title: "Alterar encomendas"
+            description: "Permitir que os consumidores alterem as suas encomendas enquanto o ciclo de encomendas estiver aberto."
             not_allowed: "Encomendas submetidas não podem ser alteradas / canceladas."
             allowed: "Os consumidores podem alterar / cancelar encomendas enquanto o ciclo de encomendas estiver aberto."
+            require_login_warning: "Recomendamos que peça login dos utilizadores quando é permitido que as encomendas sejam alteradas."
           subscriptions:
             title: "Subscrições"
+            description: "Activar a funcionalidade das subscrições?"
         social:
           legend: "Social"
           twitter_placeholder: "ex:  @o_prof"

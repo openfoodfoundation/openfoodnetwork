@@ -927,21 +927,32 @@ tr:
           sections:
             orders: "SİPARİŞLER"
           shopfront_visibility:
+            title: "DÜKKANINIZ HERKESE AÇIK MI?"
             description: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
             public: "Herkese açık"
             registered_only: "Yalnızca kayıtlı müşteriler tarafından görülebilir"
+          home_message:
+            title: "DÜKKAN MESAJINIZ"
+            placeholder: >-
+                Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
+                ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
+                ziyaret ettiğinde görünür olacak.
           shopfront_closed_message:
+            title: "KAPALI DÜKKAN MESAJI"
             placeholder: >
                 Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını
                 müşterilerinize açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş
                 döneminiz olmadığında sizi ziyaret edenler tarafından görülecek. (örn.
                 neden kapalı olduğunu ve ne zaman açılacağını belirtebilirsiniz)
           product_order:
+            title: "Dükkan vitrininde siparişi göster"
             by_category: "Kategori"
             by_producer: "Üretici"
             category_placeholder: "Kategori"
             producer_placeholder: "ÜRETİCİ"
           order_cycle_order:
+            title: "SİPARİŞ DÖNEMLERİNİ DÜKKANIMDA ŞUNA GÖRE SIRALA"
+            open_date: "AÇILIŞ TARİHİ"
             close_date: "BİTİŞ TARİHİ"
           guest_orders:
             title: "Misafir siparişleri"
@@ -950,10 +961,16 @@ tr:
             require_login: "Sipariş vermek için giriş yapmayı zorunlu kıl"
           change_orders:
             title: "Siparişleri düzenle"
+            description: "Sipariş dönemi açık olduğu sürece müşterilerin siparişlerini düzenlemelerine izin verin."
             not_allowed: "Oluşturulan siparişler değiştirilemez/iptal edilemez"
             allowed: "Müşteriler sipariş dönemi açıkken siparişleri değiştirebilir/iptal edebilir"
+            require_login_warning: "Siparişlerin değiştirilebileceği durumlarda kullanıcıların oturum açmasını öneriyoruz."
           subscriptions:
             title: "Üyelikler"
+            description: "Üyelik işlevselliği etkinleştirilsin mi?"
+          customer_names_in_reports:
+            title: "Raporlardaki Müşteri İsimleri"
+            description: "Tedarikçilerinizin raporlardaki müşteri isimlerini görmesine izin verin"
         social:
           legend: "Sosyal"
           twitter_placeholder: "Örn.  @the_usta"

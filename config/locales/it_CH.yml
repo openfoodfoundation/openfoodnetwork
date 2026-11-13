@@ -1003,21 +1003,35 @@ it_CH:
           sections:
             orders: "Gentili richieste"
           shopfront_visibility:
+            title: "Vetrina visibile pubblicamente?"
             description: "Scegli se i clienti devono essere registrati per poter vedere la vetrina o se è visibile a tutti."
             public: "Pubblica"
             registered_only: "Visibile solo agli utenti registrati"
+          home_message:
+            title: "Messaggio vetrina"
+            placeholder: >-
+                Un messaggio opzionale per dare il benvenuto ai clienti e spiegare
+                come acquistare. Il testo inserito qui verrà mostrato nel tab principale
+                della vetrina.
           shopfront_closed_message:
+            title: "Messaggio Chiusura Vetrina"
             placeholder: >
                 Un messaggio che fornisce una spiegazione più dettagliata sul perché
                 il tuo negozio è chiuso e/o quando i clienti potranno aspettarsi una
                 nuova apertura. Questo viene visualizzato sul tuo negozio solo quando
                 non hai cicli d'ordine attivi (es. il negozio è chiuso).
           product_order:
+            title: "Ordine di visualizzazione in vetrina"
             by_category: "Per categoria"
             by_producer: "Per produttore"
             category_placeholder: "Categoria"
             producer_placeholder: "Produttore"
+          low_stock_warning:
+            title: "Mostra le disponibilità di prodotto nella vetrina se basse"
+            description: "Fai sapere ai clienti quando ci sono solo 3 o meno articoli rimasti."
           order_cycle_order:
+            title: "Ordina Cicli di richieste in Vetrina per"
+            open_date: "Data apertura"
             close_date: "Data chiusura"
           guest_orders:
             title: "Gentili richieste ospiti"
@@ -1026,10 +1040,16 @@ it_CH:
             require_login: "Richiedi accesso per ordinare"
           change_orders:
             title: "Modifica gentili richieste"
+            description: "Permetti ai clienti di modificare i propri ordini fino a quando il ciclo degli ordini è aperto."
             not_allowed: "Le gentili richieste confermate non possono essere modificate / annullate"
             allowed: "Gli utenti possono modificare / annullare le gentili richieste mentre il ciclo di richieste è aperto"
+            require_login_warning: "Consigliamo di richiedere la registrazione quando si dà la possibilità di modificare gli ordini."
           subscriptions:
             title: "Abbonamenti"
+            description: "Abilita la funzionalità \"sottoscrizioni\"?"
+          customer_names_in_reports:
+            title: "Report con Nomi Clienti"
+            description: "Permetti ai tuoi fornitori di visualizzare i nomi dei tuoi clienti nei report."
         social:
           legend: "Social"
           twitter_placeholder: "es. @the_prof"

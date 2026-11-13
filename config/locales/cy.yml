@@ -1349,21 +1349,35 @@ cy:
           sections:
             orders: "Archebion"
           shopfront_visibility:
+            title: "Ffrynt siop sydd i'w gweld yn gyhoeddus?"
             description: "Dewiswch a oes rhaid i gwsmeriaid fewngofnodi i weld ffrynt y siop neu a yw'n weladwy i bawb."
             public: "Cyhoeddus"
             registered_only: "Yn weladwy i gwsmeriaid cofrestredig yn unig"
+          home_message:
+            title: "Neges Ffrynt y Siop"
+            placeholder: >-
+                Neges ddewisol i groesawu cwsmeriaid ac eluro sut i siopa gyda chi.
+                Os nodir testun fan hyn, caiff ei arddangos mewn tab hafan pan fydd
+                cwsmeriaid yn cyrraedd ffrynt eich siop
           shopfront_closed_message:
+            title: "Neges - Ffrynt Siop Ar Gau"
             placeholder: >
                 Neges sy'n rhoi eglurhad mwy manwl ynghylch pam mae'ch siop ar gau
                 a/neu pryd y gall cwsmeriaid ddisgwyl iddo ailagor.  Dangosir hwn
                 ar eich siop os nad oes gennych unrhyw gylchoedd archebu gweithredol
                 (i.e. mae'r siop ar gau).
           product_order:
+            title: "Arddangos archebu yn ffrynt y siop"
             by_category: "Yn ôl categori"
             by_producer: "Yn ôl cynhyrchydd"
             category_placeholder: "Categori"
             producer_placeholder: "Cynhyrchydd"
+          low_stock_warning:
+            title: "Arddangos nifer yr eitemau sy'n weddill os bydd stoc ffrynt y siop yn isel"
+            description: "Hysbysu siopwyr pan fydd 3 eitem yn unig neu lai ar ôl."
           order_cycle_order:
+            title: "Trefnu Cylchoedd Archebu ar Blaen Siop fesul"
+            open_date: "Dyddiad Agor"
             close_date: "Dyddiad cau"
           guest_orders:
             title: "Archebion gwesteion"
@@ -1372,14 +1386,21 @@ cy:
             require_login: "Mynnu mewngofnodi er mwyn archebu"
           change_orders:
             title: "Newid archebion"
+            description: "Caniatáu i gwsmeriaid newid archeb cyhyd â bod y cylch archebu ar agor."
             not_allowed: "Ni ellir newid / canslo archebion a osodwyd"
             allowed: "Gall cwsmeriaid newid / canslo archebion tra bod y cylch archebu ar agor"
+            require_login_warning: "Argymhellir ei fod yn ofynnol i ddefnyddwyr fewngofnodi er mwyn newid archebion."
           subscriptions:
             title: "Tanysgrifiadau"
+            description: "Galluogi arf tanysgrifiadau?"
+          customer_names_in_reports:
+            title: "Enwau Cwsmeriaid mewn Adroddiadau"
+            description: "Galluogi eich cyflenwyr i weld enwau eich cwsmeriaid mewn adroddiadau"
           customer_contacts_in_reports:
             title: "Manylion cyswllt cwsmer mewn adroddiadau"
             description: "Galluogi eich cyflenwyr i weld eich ebost cwsmer a rhifau ffôn mewn adroddiadau"
           producers_edit_orders:
+            title: "Galluogi cynhyrchwyr i olygu archebion"
             description: "Galluogi eich cyflenwyr i weld archebion sy'n cynnwys eu cynnyrch nhw, a golygu'r nifer a'r pwysau ar gyfer eu cynnyrch nhw'n unig."
         social:
           legend: "Cymdeithasol"
