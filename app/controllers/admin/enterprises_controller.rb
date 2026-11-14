@@ -314,7 +314,8 @@ module Admin
       @groups = EnterpriseGroup.managed_by(spree_current_user) | @enterprise.groups
     end
 
-    # Only the selected options, the pickers search for others on demand.
+    # Only the selected categories and producers, their pickers search for others on demand.
+    # A shop's properties are few, so they are all loaded.
     def load_shopfront_order_options
       @shopfront_category_options = Spree::Taxon
         .where(id: @enterprise.preferred_shopfront_taxon_order.split(","))
@@ -324,6 +325,9 @@ module Admin
         .is_primary_producer
         .where(id: @enterprise.preferred_shopfront_producer_order.split(","))
         .pluck(:name, :id)
+      @shopfront_property_options = Shop::DistributedProperties.new(@enterprise).relation
+        .order(Arel.sql("LOWER(spree_properties.presentation)"))
+        .pluck(:presentation, :id)
     end
 
     def update_tag_rules(tag_rules_attributes)
