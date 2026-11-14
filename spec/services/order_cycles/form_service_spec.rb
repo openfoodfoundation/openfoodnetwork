@@ -472,4 +472,90 @@ RSpec.describe OrderCycles::FormService do
       end
     end
   end
+
+  describe "notifying the coordinator about product selection changes" do
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:producer) { create(:supplier_enterprise) }
+    let(:producer_user) { create(:user, enterprises: [producer]) }
+    let(:variant) { create(:variant, enterprise: producer) }
+    let(:new_variant) { create(:variant, enterprise: producer) }
+    let(:order_cycle) {
+      create(:simple_order_cycle, coordinator:, suppliers: [producer], variants: [variant])
+    }
+    let(:selected_variants) { { variant.id => true, new_variant.id => true } }
+    let(:params) do
+      {
+        incoming_exchanges: [{
+          enterprise_id: producer.id,
+          incoming: true,
+          active: true,
+          variants: selected_variants,
+          enterprise_fee_ids: []
+        }]
+      }
+    end
+    let(:user) { producer_user }
+    let!(:form) { OrderCycles::FormService.new(order_cycle, params, user) }
+
+    it "notifies the coordinator when a producer adds products" do
+      expect { form.save }.to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+        .with(order_cycle, producer)
+    end
+
+    context "when a producer removes products" do
+      let(:selected_variants) { { variant.id => false } }
+
+      it "notifies the coordinator" do
+        expect { form.save }.to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+          .with(order_cycle, producer)
+      end
+    end
+
+    context "when the product selection is unchanged" do
+      let(:selected_variants) { { variant.id => true } }
+
+      it "doesn't notify the coordinator" do
+        expect { form.save }
+          .not_to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+      end
+    end
+
+    context "when the order cycle isn't open" do
+      let(:order_cycle) {
+        create(:upcoming_order_cycle, coordinator:, suppliers: [producer], variants: [variant])
+      }
+
+      it "doesn't notify the coordinator" do
+        expect { form.save }
+          .not_to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+      end
+    end
+
+    context "when the coordinator changes the product selection" do
+      let(:user) { coordinator.owner }
+
+      it "doesn't notify the coordinator" do
+        expect { form.save }
+          .not_to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+      end
+    end
+
+    context "when a super admin changes the product selection" do
+      let(:user) { create(:admin_user) }
+
+      it "doesn't notify the coordinator" do
+        expect { form.save }
+          .not_to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+      end
+    end
+
+    context "when the order cycle can't be saved" do
+      let(:params) { super().merge(orders_close_at: 2.days.ago) }
+
+      it "doesn't notify the coordinator" do
+        expect { form.save }
+          .not_to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+      end
+    end
+  end
 end
