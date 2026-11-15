@@ -23,6 +23,7 @@ require_relative '../lib/spree/core/mail_interceptor'
 require_relative "../lib/i18n_digests"
 require_relative "../lib/git_utils"
 require_relative "../lib/session_cookie_upgrader"
+require_relative "../lib/api_logger"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -83,6 +84,12 @@ module Openfoodnetwork
         attrs: { http_only: true, secure: true },
       }
     ) if Rails.env.staging? || Rails.env.production?
+
+    # Record API usage in the api_logs table. `use` appends to the middleware
+    # stack, which puts ApiLogger innermost: it wraps the router, so it sees
+    # the response the controllers produced, and it runs inside the executor
+    # and reloader, so ApiLog is safe to autoload from it.
+    config.middleware.use ApiLogger
 
     config.time_zone = ENV.fetch("TIMEZONE", nil)
     # config.eager_load_paths << Rails.root.join("extras")
