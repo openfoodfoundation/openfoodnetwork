@@ -107,9 +107,13 @@ module Spree
       end
 
       def pay_with_credit
-        response = ::Orders::PayWithCreditService.new(@order).call(user: spree_current_user)
+        # Pending payments are voided when paying with credit, we reuse their payment method for
+        # the remaining amount
+        payment_method = @order.payments.incomplete.not_customer_credit.last&.payment_method
+        response = customer_credit_service.pay_order(user: spree_current_user)
 
         if response.success?
+          add_remaining_payment(payment_method)
           flash[:success] = response.message
         else
           flash[:error] = response.message
@@ -120,15 +124,28 @@ module Spree
 
       private
 
+      def customer_credit_service
+        @customer_credit_service ||= ::Orders::CustomerCreditService.new(@order)
+      end
+
       def load_customer_credit
         @available_credit = @order.customer&.credit_balance
+        @can_pay_with_credit = customer_credit_service.can_pay?
+        return unless customer_credit_service.cannot_pay_reason == :pending_gateway_payment
 
-        pay_with_credit = ::Orders::PayWithCreditService.new(@order)
-        blocker = pay_with_credit.blocker
-        @can_pay_with_credit = blocker.nil?
-        return unless blocker == :pending_gateway_payment
+        @pay_with_credit_hint = customer_credit_service.can_pay_message
+      end
 
-        @pay_with_credit_hint = pay_with_credit.blocker_message(blocker)
+      def add_remaining_payment(payment_method)
+        @order.reload
+        return if payment_method.nil? || !@order.new_outstanding_balance.positive?
+
+        payment = @order.payments.create!(
+          payment_method:, amount: @order.new_outstanding_balance, state: "checkout"
+        )
+        # The new payment may come with a fee, which adds to the amount to pay
+        @order.update_order!
+        payment.update!(amount: @order.new_outstanding_balance)
       end
 
       def load_payment_source

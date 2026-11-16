@@ -466,50 +466,82 @@ RSpec.describe Spree::Admin::PaymentsController do
   end
 
   describe "POST /admin/orders/:order_number/payments/pay_with_credit" do
-    let(:pay_with_credit_mock) { instance_double(Orders::PayWithCreditService) }
+    let(:customer_credit_service) { instance_double(Orders::CustomerCreditService) }
 
-    before do
-      allow(Orders::PayWithCreditService).to receive(:new).and_return(pay_with_credit_mock)
-    end
+    context "with a mocked service" do
+      before do
+        allow(Orders::CustomerCreditService).to receive(:new).and_return(customer_credit_service)
+      end
 
-    it "pays the order with credit, on behalf of the current user" do
-      success_response = Orders::PayWithCreditService::Response.new(
-        success: true, message: "$10.00 of customer credit used to pay this order"
-      )
-      expect(pay_with_credit_mock).to receive(:call).with(user:)
-        .and_return(success_response)
-
-      post("/admin/orders/#{order.number}/payments/pay_with_credit")
-
-      expect(response).to redirect_to(admin_order_payments_path(order))
-      expect(flash[:success]).to eq "$10.00 of customer credit used to pay this order"
-    end
-
-    context "when the payment fails" do
-      it "redirects to payments page with the error" do
-        failure_response = Orders::PayWithCreditService::Response.new(
-          success: false, message: "Some error"
+      it "pays the order with credit, on behalf of the current user" do
+        success_response = Orders::CustomerCreditService::Response.new(
+          success: true, message: "$10.00 of customer credit used to pay this order"
         )
-        expect(pay_with_credit_mock).to receive(:call).and_return(failure_response)
+        expect(customer_credit_service).to receive(:pay_order).with(user:)
+          .and_return(success_response)
 
         post("/admin/orders/#{order.number}/payments/pay_with_credit")
 
         expect(response).to redirect_to(admin_order_payments_path(order))
-        expect(flash[:error]).to eq "Some error"
+        expect(flash[:success]).to eq "$10.00 of customer credit used to pay this order"
+      end
+
+      context "when the payment fails" do
+        it "redirects to payments page with the error" do
+          failure_response = Orders::CustomerCreditService::Response.new(
+            success: false, message: "Some error"
+          )
+          expect(customer_credit_service).to receive(:pay_order).and_return(failure_response)
+
+          post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+          expect(response).to redirect_to(admin_order_payments_path(order))
+          expect(flash[:error]).to eq "Some error"
+        end
+      end
+
+      context "when the user doesn't manage the order's shop" do
+        # Created after the order, so the order's products don't use its enterprise as producer
+        let(:other_user) { create(:enterprise_user) }
+
+        it "doesn't pay the order" do
+          sign_in other_user
+          expect(customer_credit_service).not_to receive(:pay_order)
+
+          post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+          expect(response).to redirect_to(unauthorized_path)
+        end
       end
     end
 
-    context "when the user doesn't manage the order's shop" do
-      # Created after the order, so the order's products don't use its enterprise as producer
-      let(:other_user) { create(:enterprise_user) }
+    # Order total is 36.00, including a 10.00 fee for the pending cash payment
+    context "when the credit covers part of the balance due" do
+      let(:cash_payment) { order.payments.first }
 
-      it "doesn't pay the order" do
-        sign_in other_user
-        expect(pay_with_credit_mock).not_to receive(:call)
+      before { create(:customer_account_transaction, amount: 20, customer: order.customer) }
 
+      it "adds a payment for the remaining amount, with the method of the voided payment" do
         post("/admin/orders/#{order.number}/payments/pay_with_credit")
 
-        expect(response).to redirect_to(unauthorized_path)
+        expect(cash_payment.reload.state).to eq "void"
+        remainder = order.payments.reload.incomplete.sole
+        expect(remainder.payment_method).to eq cash_payment.payment_method
+        # The cash payment fee applies again to the remaining amount
+        expect(order.reload.total).to eq 36.00
+        expect(remainder.amount).to eq 16.00
+        expect(order.new_outstanding_balance).to eq 16.00
+      end
+    end
+
+    context "when the credit covers the balance due" do
+      before { create(:customer_account_transaction, amount: 100, customer: order.customer) }
+
+      it "doesn't add another payment" do
+        post("/admin/orders/#{order.number}/payments/pay_with_credit")
+
+        expect(order.payments.reload.incomplete).to be_empty
+        expect(order.reload.payment_state).to eq "paid"
       end
     end
   end

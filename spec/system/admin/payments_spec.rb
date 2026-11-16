@@ -107,7 +107,7 @@ RSpec.describe '
         within "table.index" do
           expect(page).to have_content "Customer credit"
           expect(page).to have_content "COMPLETED"
-          expect(page).to have_content "CANCELED"
+          expect(page).to have_content "VOID"
         end
         expect(order.reload.payment_state).to eq "paid"
       end

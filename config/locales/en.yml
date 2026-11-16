@@ -4822,7 +4822,7 @@ en:
         customer_credit_successful: Customer has been successfully credited!
         index:
           pay_with_credit: Pay with credit
-          pay_with_credit_confirm: "Pay this order with the customer's credit? The uncaptured payment is canceled and can't be restored. If the credit doesn't cover it all, a new payment for the remaining amount is kept."
+          pay_with_credit_confirm: "Pay this order with the customer's credit? Pending payments are voided, this can't be undone. If the credit doesn't cover it all, a new payment for the remaining amount is added."
           available_credit: Available credit
 
       products:
@@ -5340,11 +5340,11 @@ en:
     customer_missing: No customer is assigned to this order
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
-  pay_with_credit_service:
-    success: "%{amount} of customer credit used to pay this order"
-    errors:
-      no_customer: This order has no customer
+    pay_order_successful: "%{amount} of customer credit used to pay this order"
+    pay_order_errors:
+      user_missing: A user is required to pay with credit
       order_not_complete: Only complete orders can be paid with credit
       nothing_to_pay: There is no balance due on this order
       no_credit_available: The customer has no credit available
       pending_gateway_payment: "This order has a pending %{payment_method} payment. Void it before paying with credit."
+      credit_payment_failed: The credit payment could not be added
