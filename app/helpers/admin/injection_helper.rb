@@ -123,13 +123,6 @@ module Admin
                                   Api::Admin::TaxCategorySerializer
     end
 
-    def admin_inject_taxons(taxons)
-      admin_inject_json_ams_array "admin.taxons",
-                                  "taxons",
-                                  taxons,
-                                  Api::Admin::TaxonSerializer
-    end
-
     def admin_inject_variant_overrides(variant_overrides)
       admin_inject_json_ams_array "admin.variantOverrides",
                                   "variantOverrides",

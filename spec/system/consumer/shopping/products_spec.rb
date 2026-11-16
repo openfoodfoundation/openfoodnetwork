@@ -504,6 +504,25 @@ RSpec.describe "As a consumer I want to view products" do
           expect(page).not_to have_content variant2.name.to_s
         end
       end
+
+      context "product properties" do
+        it "lists the properties alphabetically" do
+          visit shop_path
+
+          within "#shop-tabs .sticky-shop-filters-container .property-selectors" do
+            expect(page).to have_content(/Berry Bio.*Fresh and Fine/m)
+          end
+        end
+
+        it "lists the shop's chosen properties first" do
+          distributor.update!(preferred_shopfront_property_order: property.id.to_s)
+          visit shop_path
+
+          within "#shop-tabs .sticky-shop-filters-container .property-selectors" do
+            expect(page).to have_content(/Fresh and Fine.*Berry Bio/m)
+          end
+        end
+      end
     end
   end
 

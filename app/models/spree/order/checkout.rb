@@ -82,6 +82,8 @@ module Spree
 
               before_transition to: :confirmation, do: :validate_payment_method!
 
+              before_transition to: :complete, do: :ensure_shipping_method
+
               after_transition to: :payment do |order|
                 order.create_tax_charge!
                 order.update_totals_and_states
@@ -156,6 +158,13 @@ module Spree
 
             errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
             throw :halt
+          end
+
+          def ensure_shipping_method
+            return if shipping_method.present?
+
+            errors.add(:base, Spree.t(:items_cannot_be_shipped))
+            false
           end
         end
       end

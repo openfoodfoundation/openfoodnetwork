@@ -10,7 +10,6 @@ module Api
         ActiveModel::ArraySerializer.new(
           object.variants,
           each_serializer: Api::Admin::VariantSerializer,
-          image: thumb_url,
         )
       end
 

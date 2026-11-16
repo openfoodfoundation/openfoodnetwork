@@ -18,7 +18,7 @@ module Admin
     before_action :require_enterprise, only: [:edit, :update]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
-    before_action :load_taxons, only: [:new, :edit, :update, :create]
+    before_action :load_shopfront_order_options, only: [:edit, :update]
     before_action :check_can_change_sells, only: :update
     before_action :check_can_change_bulk_sells, only: :bulk_update
     before_action :check_can_change_owner, only: :update
@@ -314,8 +314,20 @@ module Admin
       @groups = EnterpriseGroup.managed_by(spree_current_user) | @enterprise.groups
     end
 
-    def load_taxons
-      @taxons = Spree::Taxon.order(:name)
+    # Only the selected categories and producers, their pickers search for others on demand.
+    # A shop's properties are few, so they are all loaded.
+    def load_shopfront_order_options
+      @shopfront_category_options = Spree::Taxon
+        .where(id: @enterprise.preferred_shopfront_taxon_order.split(","))
+        .pluck(:name, :id)
+      @shopfront_producer_options = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .visible_enterprises
+        .is_primary_producer
+        .where(id: @enterprise.preferred_shopfront_producer_order.split(","))
+        .pluck(:name, :id)
+      @shopfront_property_options = Shop::DistributedProperties.new(@enterprise).relation
+        .order(Arel.sql("LOWER(spree_properties.presentation)"))
+        .pluck(:presentation, :id)
     end
 
     def update_tag_rules(tag_rules_attributes)

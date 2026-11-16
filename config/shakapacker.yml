@@ -7,7 +7,7 @@ default: &default
   cache_path: tmp/cache/webpacker
   webpack_compile_output: false
   additional_paths: &1
-  - vendor
+  - vendor/assets
   - app/webpacker/css
   - app/webpacker/fonts
   - app/webpacker/images

@@ -590,12 +590,10 @@ RSpec.describe '
 
         page.find("button.icon-road").click
 
-        within ".reveal-modal" do
-          expect {
-            find_button("Confirm").click
-          }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
-        end
-        expect(page).to have_css "i.success"
+        expect {
+          within(".reveal-modal") { find_button("Confirm").click }
+          expect(page).to have_css "i.success"
+        }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect(order.shipment_state).to eq("shipped")
       end
@@ -609,11 +607,11 @@ RSpec.describe '
 
         within ".reveal-modal" do
           uncheck 'Send a shipment/pick up notification email to the customer.'
-          expect {
-            find_button("Confirm").click
-          }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
         end
-        expect(page).to have_css "i.success"
+        expect {
+          within(".reveal-modal") { find_button("Confirm").click }
+          expect(page).to have_css "i.success"
+        }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect(order.shipment_state).to eq("shipped")
       end

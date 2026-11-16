@@ -80,11 +80,9 @@ RSpec.configure do |config|
 
     next if response&.body.blank?
 
-    # Replace random values from generated strings for a deterministic documentation.
-    response.body.gsub!(
-      %r{/rails/active_storage/[0-9A-Za-z/=-]*/([^/.]+).png},
-      '/rails/active_storage/url/\1.png',
-    )
+    # Replace random values for a deterministic documentation.
+    # See SwaggerDocsHelper#replace_in_docs.
+    body = documented_response_body
 
     # Include response as example in the documentation.
     example.metadata[:response][:content] ||= {}
@@ -93,7 +91,7 @@ RSpec.configure do |config|
         response.headers["Content-Type"] => {
           examples: {
             self.class.description => {
-              value: JSON.parse(response.body, symbolize_names: true)
+              value: JSON.parse(body, symbolize_names: true)
             }
           }
         }

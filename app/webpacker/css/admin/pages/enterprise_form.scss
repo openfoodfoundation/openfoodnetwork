@@ -14,3 +14,16 @@ span.available {
 span.unavailable {
   color: $color-warning;
 }
+
+// Title of each enterprise settings tab
+fieldset.settings-panel {
+  border-top: none;
+
+  > legend {
+    margin: 0 0 1rem;
+    padding: 0;
+    text-align: left;
+    font-size: $h2-size;
+    color: $color-headers;
+  }
+}

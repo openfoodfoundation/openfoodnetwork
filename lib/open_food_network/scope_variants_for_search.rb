@@ -42,6 +42,7 @@ module OpenFoodNetwork
         result.
         order("spree_products.name, display_name, display_as, spree_variants.variant_unit_name").
         includes(:product).
+        preload(:image, product: :image).
         joins(:product)
     end
 

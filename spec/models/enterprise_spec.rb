@@ -389,6 +389,37 @@ RSpec.describe Enterprise do
       end
     end
 
+    describe "preferred_shopfront_property_order" do
+      it "empty strings are valid" do
+        enterprise = build(:enterprise, preferred_shopfront_property_order: "")
+        expect(enterprise).to be_valid
+      end
+
+      it "a single integer is valid" do
+        enterprise = build(:enterprise, preferred_shopfront_property_order: "11")
+        expect(enterprise).to be_valid
+      end
+
+      it "comma delimited integers are valid" do
+        enterprise = build(:enterprise, preferred_shopfront_property_order: "1,22,333")
+        expect(enterprise).to be_valid
+      end
+
+      it "commas at the beginning and end are disallowed" do
+        enterprise = build(:enterprise, preferred_shopfront_property_order: ",1,2,3")
+        expect(enterprise).not_to be_valid
+        enterprise = build(:enterprise, preferred_shopfront_property_order: "1,2,3,")
+        expect(enterprise).not_to be_valid
+      end
+
+      it "any other characters are invalid" do
+        enterprise = build(:enterprise, preferred_shopfront_property_order: "a1,2,3")
+        expect(enterprise).not_to be_valid
+        enterprise = build(:enterprise, preferred_shopfront_property_order: " 1,2,3")
+        expect(enterprise).not_to be_valid
+      end
+    end
+
     describe "white label logo" do
       let(:enterprise) { build(:enterprise) }
       let(:content_type) { 'image/png' }

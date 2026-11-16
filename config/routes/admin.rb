@@ -88,6 +88,7 @@ Openfoodnetwork::Application.routes.draw do
 
     scope :ajax_search, as: :ajax_search, controller: :ajax_search do
       get :producers
+      get :visible_producers
       get :categories
       get :tax_categories
     end

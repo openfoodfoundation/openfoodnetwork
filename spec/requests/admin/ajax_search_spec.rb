@@ -115,6 +115,55 @@ RSpec.describe "/admin/ajax_search" do
     end
   end
 
+  describe "GET /admin/ajax_search/visible_producers" do
+    context "when user is not logged in" do
+      it "redirects to login" do
+        get admin_ajax_search_visible_producers_path
+
+        expect(response).to redirect_to %r|#/login$|
+      end
+    end
+
+    context "when user is an admin" do
+      before { login_as admin_user }
+
+      let!(:producer) { create(:supplier_enterprise, name: "Apple Farm") }
+      let!(:distributor) { create(:distributor_enterprise, name: "Distributor") }
+
+      it "returns all producers" do
+        get admin_ajax_search_visible_producers_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body["results"].pluck("label")).to eq ["Apple Farm"]
+      end
+    end
+
+    context "when user manages a shop" do
+      let!(:shop) { create(:distributor_enterprise) }
+      let!(:granting_producer) { create(:supplier_enterprise, name: "Granting Farm") }
+      let!(:other_producer) { create(:supplier_enterprise, name: "Other Farm") }
+      let(:user) { create(:user, enterprises: [shop]) }
+
+      before do
+        create(:enterprise_relationship, parent: granting_producer, child: shop,
+                                         permissions_list: [:add_to_order_cycle])
+        login_as user
+      end
+
+      it "returns producers that granted adding their products to order cycles" do
+        get admin_ajax_search_visible_producers_path
+
+        expect(response.parsed_body["results"].pluck("label")).to eq ["Granting Farm"]
+      end
+
+      it "filters by search query" do
+        get admin_ajax_search_visible_producers_path, params: { q: "other" }
+
+        expect(response.parsed_body["results"]).to be_empty
+      end
+    end
+  end
+
   describe "GET /admin/ajax_search/categories" do
     context "when user is not logged in" do
       it "redirects to login" do

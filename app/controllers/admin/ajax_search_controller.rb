@@ -11,6 +11,14 @@ module Admin
       render json: build_search_response(query)
     end
 
+    def visible_producers
+      query = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .visible_enterprises
+        .is_primary_producer
+
+      render json: build_search_response(query)
+    end
+
     def categories
       query = Spree::Taxon.all
 

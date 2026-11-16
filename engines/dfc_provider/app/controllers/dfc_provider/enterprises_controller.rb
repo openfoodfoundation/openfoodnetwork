@@ -6,7 +6,7 @@ module DfcProvider
     before_action :check_enterprise, except: :index
 
     def index
-      enterprises = current_user.enterprises.map do |enterprise|
+      enterprises = current_user.enterprises.order(:id).map do |enterprise|
         EnterpriseBuilder.enterprise(enterprise)
       end
 

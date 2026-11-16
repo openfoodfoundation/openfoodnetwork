@@ -44,6 +44,3 @@ angular.module("admin.enterprises")
 
     $scope.translation = (key) ->
       t('js.admin.enterprises.form.images.' + key)
-
-    $scope.loadSuppliers = ->
-      RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")

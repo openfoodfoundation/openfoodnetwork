@@ -1,14 +1,10 @@
 describe 'MapCentreCalculator service', ->
   MapCentreCalculator = null
   Enterprises = null
-  defaultLongitude = null
-  defaultLatitude = null
 
   beforeEach ->
     module 'Darkswarm'
     module('admin.enterprises')
-    defaultLongitude = -6
-    defaultLatitude = 53
     angular.module('Darkswarm').value 'openStreetMapConfig', {
       open_street_map_default_latitude: 76.26,
       open_street_map_default_longitude: -42.66
@@ -18,70 +14,51 @@ describe 'MapCentreCalculator service', ->
       MapCentreCalculator = _MapCentreCalculator_
       Enterprises = _Enterprises_
 
-  describe "initialLatitude", ->
-    it "calculates the center latitude of any present geocoded enterprises", ->
-      Enterprises.geocodedEnterprises = -> [
-        { latitude: 53, longitude: defaultLongitude },
-        { latitude: 54, longitude: defaultLongitude }
-      ]
-
-      expect(MapCentreCalculator.initialLatitude()).toEqual 53.5
-
-    it "returns the default configured latitude when there are no geocoded enterprises present", ->
+  describe "initialBounds", ->
+    it "returns null when there are no geocoded enterprises present", ->
       Enterprises.geocodedEnterprises = -> []
 
-      expect(MapCentreCalculator.initialLatitude()).toEqual 76.26
+      expect(MapCentreCalculator.initialBounds()).toBeNull()
 
-  describe "initialLongitude", ->
-    it "calculates the center longitude of any present geocoded enterprises", ->
+    it "returns the bounds of a single geocoded enterprise", ->
       Enterprises.geocodedEnterprises = -> [
-        { latitude: defaultLatitude, longitude: -6 },
-        { latitude: defaultLatitude, longitude: -7 }
+        { latitude: 53, longitude: -6 }
       ]
 
-      expect(MapCentreCalculator.initialLongitude()).toEqual -6.5
+      expect(MapCentreCalculator.initialBounds()).toEqual [[53, -6], [53, -6]]
 
-    it "returns the default configured longitude when there are no geocoded enterprises present", ->
-      Enterprises.geocodedEnterprises = -> []
-
-      expect(MapCentreCalculator.initialLongitude()).toEqual -42.66
-
-  describe "_calculate", ->
-    it "calculates the average angle correctly when given a single angle", ->
-      coordinates = [
-        { latitude: defaultLatitude, longitude: -7 }
+    it "returns the bounds of all geocoded enterprises", ->
+      Enterprises.geocodedEnterprises = -> [
+        { latitude: 54, longitude: -7 },
+        { latitude: 53, longitude: 4 },
+        { latitude: -2, longitude: -6 }
       ]
 
-      expect(MapCentreCalculator._calculate("longitude", coordinates)).toEqual -7
+      expect(MapCentreCalculator.initialBounds()).toEqual [[-2, -7], [54, 4]]
 
-    it "calculates the centre correctly when given a set of positive angles", ->
-      coordinates = [
-        { latitude: 53, longitude: defaultLongitude },
-        { latitude: 54, longitude: defaultLongitude }
-      ]
+    it "ignores a far-away mis-geocoded enterprise when there are many enterprises", ->
+      enterprises = ({ latitude: 43 + (i % 10), longitude: -79 - (i % 20) } for i in [0...100])
+      enterprises.push { latitude: -25.25, longitude: -52.02 }
+      Enterprises.geocodedEnterprises = -> enterprises
 
-      expect(MapCentreCalculator._calculate("latitude", coordinates)).toEqual 53.5
+      expect(MapCentreCalculator.initialBounds()).toEqual [[43, -98], [52, -79]]
 
-    it "calculates the centre correctly when given a set of negative angles", ->
-      coordinates = [
-        { latitude: defaultLatitude, longitude: -6 },
-        { latitude: defaultLatitude, longitude: -7 }
-      ]
+    it "keeps remote enterprises near the edge of the network", ->
+      enterprises = ({ latitude: 43 + (i % 10), longitude: -79 - (i % 20) } for i in [0...100])
+      enterprises.push { latitude: 47.5, longitude: -72 }
+      enterprises.push { latitude: 47.6, longitude: -72 }
+      enterprises.push { latitude: -25.25, longitude: -80 }
+      Enterprises.geocodedEnterprises = -> enterprises
 
-      expect(MapCentreCalculator._calculate("longitude", coordinates)).toEqual -6.5
+      expect(MapCentreCalculator.initialBounds()).toEqual [[43, -98], [52, -72]]
 
-    it "calculates the centre correctly when given a mixture of positive and negative angles and the centre is positive", ->
-      coordinates = [
-        { latitude: defaultLatitude, longitude: 7 },
-        { latitude: defaultLatitude, longitude: -4 }
-      ]
+    it "keeps every enterprise when there are too few to tell outliers apart", ->
+      enterprises = ({ latitude: 43, longitude: -79 } for i in [0...10])
+      enterprises.push { latitude: -25.25, longitude: -52.02 }
+      Enterprises.geocodedEnterprises = -> enterprises
 
-      expect(MapCentreCalculator._calculate("longitude", coordinates)).toEqual 1.5
+      expect(MapCentreCalculator.initialBounds()).toEqual [[-25.25, -79], [43, -52.02]]
 
-    it "calculates the centre correctly when given a mixture of positive and negative angles and the centre is negative", ->
-      coordinates = [
-        { latitude: defaultLatitude, longitude: 4 },
-        { latitude: defaultLatitude, longitude: -7 }
-      ]
-
-      expect(MapCentreCalculator._calculate("longitude", coordinates)).toEqual -1.5
+  describe "defaultCentre", ->
+    it "returns the configured default latitude and longitude", ->
+      expect(MapCentreCalculator.defaultCentre()).toEqual [76.26, -42.66]

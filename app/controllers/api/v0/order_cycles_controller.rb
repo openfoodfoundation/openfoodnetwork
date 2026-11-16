@@ -8,10 +8,10 @@ module Api
 
       skip_authorization_check
       skip_before_action :authenticate_user, :ensure_api_key, only: [
-        :taxons, :properties, :producer_properties
+        :taxons, :properties
       ]
 
-      caches_action :taxons, :properties, :producer_properties,
+      caches_action :taxons, :properties,
                     expires_in: CacheService::FILTERS_EXPIRY,
                     cache_path: proc { |controller| controller.request.url }
 
@@ -45,13 +45,7 @@ module Api
 
       def properties
         render plain: ActiveModel::ArraySerializer.new(
-          product_properties, each_serializer: Api::PropertySerializer
-        ).to_json
-      end
-
-      def producer_properties
-        render plain: ActiveModel::ArraySerializer.new(
-          load_producer_properties, each_serializer: Api::PropertySerializer
+          sort_properties(product_properties), each_serializer: Api::PropertySerializer
         ).to_json
       end
 
@@ -70,26 +64,24 @@ module Api
           distributor.preferred_shopfront_taxon_order.present?
       end
 
+      # Properties in shopfront_property_order come first, the others stay alphabetical.
+      def sort_properties(properties)
+        ordered_ids = distributor.preferred_shopfront_property_order.split(',').map(&:to_i)
+        return properties if ordered_ids.empty?
+
+        properties.sort_by.with_index do |property, index|
+          [ordered_ids.index(property.id) || ordered_ids.length, index]
+        end
+      end
+
       def render_no_products
         render status: :not_found, json: {}
       end
 
+      # Product properties and producer properties, as both are filtered with q[with_properties].
       def product_properties
-        Spree::Property.
-          joins(:products).
-          where(spree_products: { id: distributed_products }).
-          select('DISTINCT spree_properties.*')
-      end
-
-      def load_producer_properties
-        producers = Enterprise.
-          joins(:products).
-          where(spree_products: { id: distributed_products })
-
-        Spree::Property.
-          joins(:producer_properties).
-          where(producer_properties: { producer_id: producers }).
-          select('DISTINCT spree_properties.*')
+        distributed_products_service.properties_relation.
+          order(Arel.sql("LOWER(spree_properties.presentation)"))
       end
 
       def search_params
@@ -109,9 +101,13 @@ module Api
       end
 
       def distributed_products
+        distributed_products_service.products_relation.pluck(:id)
+      end
+
+      def distributed_products_service
         OrderCycles::DistributedProductsService.new(
           distributor, order_cycle, customer, inventory_enabled:, variant_tag_enabled:,
-        ).products_relation.pluck(:id)
+        )
       end
 
       def inventory_enabled
