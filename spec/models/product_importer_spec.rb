@@ -1377,6 +1377,53 @@ RSpec.describe ProductImport::ProductImporter do
         expect(variant.reload.tag_list).to eq ["organic", "local"]
       end
     end
+
+    describe "when a tag is too long" do
+      let(:long_tag) { "a" * 256 }
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "organic, #{long_tag}"]
+        end
+      }
+
+      it "shows an error when validating" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(entries['2']['errors'].keys).to eq ["tag_list"]
+      end
+
+      it "doesn't create the product" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 0
+        expect(Spree::Product.find_by(name: "Potatoes")).to be_nil
+      end
+    end
+
+    describe "when the new product's variant can't be saved" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "a" * 256]
+        end
+      }
+
+      before do
+        # Skip the tag check so the save itself fails
+        allow_any_instance_of(ProductImport::EntryValidator)
+          .to receive(:tag_list_validation)
+      end
+
+      it "reports an error for that line" do
+        importer.save_entries
+
+        expect(importer.errors.messages.keys).to eq [:'Line 2:']
+      end
+    end
   end
 
   def find_variant(name)

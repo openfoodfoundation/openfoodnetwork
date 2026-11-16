@@ -6,6 +6,8 @@
 
 module ProductImport
   class EntryValidator
+    MAX_TAG_LENGTH = 255
+
     # rubocop:disable-next Metrics/ParameterLists
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises,
                    inventory_permissions, reset_counts, import_settings, all_entries)
@@ -48,6 +50,7 @@ module ProductImport
                                       @spreadsheet_data.shipping_index)
           shipping_presence_validation(entry)
           group_buy_validation(entry)
+          tag_list_validation(entry)
           product_only_attributes_validation(entry)
           product_validation(entry)
         end
@@ -228,6 +231,18 @@ module ProductImport
 
       mark_as_invalid(entry, attribute: 'group_buy_unit_size',
                              error: I18n.t('admin.product_import.model.incorrect_value'))
+    end
+
+    # Tags longer than the database allows would otherwise fail silently when saved
+    def tag_list_validation(entry)
+      return if entry.tag_list.blank?
+
+      tags = ActsAsTaggableOn.default_parser.new(entry.tag_list).parse
+      return if tags.all? { |tag| tag.length <= MAX_TAG_LENGTH }
+
+      mark_as_invalid(entry, attribute: 'tag_list',
+                             error: I18n.t('admin.product_import.model.tag_too_long',
+                                           max: MAX_TAG_LENGTH))
     end
 
     # Product-only attributes are shared by all variants of a product, so all rows for the

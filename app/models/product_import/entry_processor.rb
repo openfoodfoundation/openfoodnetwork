@@ -221,6 +221,13 @@ module ProductImport
       )
     end
 
+    # Saving can fail without adding errors to the variant, e.g. when saving its tags fails
+    def report_variant_not_saved(variant, entry)
+      errors = variant.errors.full_messages.presence ||
+               [I18n.t('admin.product_import.model.variant_not_saved')]
+      assign_errors errors, entry.line_number
+    end
+
     def display_in_inventory(variant_override, is_new = false)
       unless is_new
         existing_item = InventoryItem.where(
@@ -245,14 +252,13 @@ module ProductImport
     def ensure_variant_updated(product, entry)
       # Ensure attributes are correctly copied to a new product's variant
       variant = product.variants.first
-      variant.display_name = entry.display_name if entry.display_name
-      variant.tag_list = entry.tag_list
-      variant.variant_unit = entry.variant_unit if entry.variant_unit
-      variant.variant_unit_name = entry.variant_unit_name if entry.variant_unit_name
-      variant.variant_unit_scale = entry.variant_unit_scale if entry.variant_unit_scale
+      variant.assign_attributes(
+        entry.attributes.slice('display_name', 'tag_list', 'variant_unit', 'variant_unit_name',
+                               'variant_unit_scale').compact
+      )
       variant.import_date = @import_time
       variant.enterprise_id = entry.producer_id
-      variant.save
+      report_variant_not_saved(variant, entry) unless variant.save
 
       # on_demand and on_hand require a stock level, which is created after the variant is created
       variant.on_demand = entry.on_demand if entry.on_demand
