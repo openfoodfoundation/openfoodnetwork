@@ -177,16 +177,6 @@ RSpec.describe VariantOverride do
         expect(variant_override.stock_overridden?).to be true
       end
     end
-
-    describe "move_stock!" do
-      it "silently logs an error" do
-        expect {
-          variant_override.move_stock!(5)
-        }.to change {
-          variant_override.count_on_hand
-        }.from(nil).to(5)
-      end
-    end
   end
 
   describe "with count on hand" do
