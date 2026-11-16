@@ -107,6 +107,36 @@ RSpec.describe Orders::CustomerCreditService do
       end
     end
 
+    context "when the credit payment method is missing" do
+      before do
+        create(:customer_account_transaction, amount: 100.00, customer: order.customer)
+        allow(Spree::PaymentMethod).to receive(:customer_credit).and_return(nil)
+      end
+
+      it "logs the error and doesn't add a payment" do
+        expect(Alert).to receive(:raise).with(
+          "Customer credit payment method is missing, please check configuration"
+        )
+
+        expect(subject.apply).to be_nil
+        expect(order.payments).to be_empty
+      end
+    end
+
+    context "when the credit payment can't be created" do
+      before do
+        create(:customer_account_transaction, amount: 100.00, customer: order.customer)
+        allow(order.payments).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
+      end
+
+      it "logs the error and returns nothing" do
+        expect(Alert).to receive(:raise).with(ActiveRecord::RecordInvalid)
+
+        expect(subject.apply).to be_nil
+        expect(order.payments.reload.customer_credit).to be_empty
+      end
+    end
+
     context "with an order with a guest checkout" do
       let(:order) {
         create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:, customer:)
@@ -375,6 +405,40 @@ RSpec.describe Orders::CustomerCreditService do
         it_behaves_like "no payment with credit",
                         "This order has a pending StripeSCA payment. " \
                         "Void it before paying with credit."
+      end
+    end
+
+    context "when the order gets paid in the meantime" do
+      before do
+        create(:customer_account_transaction, amount: 100.00, customer:)
+        # Checked before locking the customer, then the order is paid by another request
+        allow(subject).to receive(:can_pay?).and_return(true)
+        cash_payment.update_columns(state: "completed")
+        order.update_order!
+      end
+
+      it "doesn't pay the order twice" do
+        response = subject.pay_order(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("There is no balance due on this order")
+        expect(order.payments.reload.customer_credit).to be_empty
+        expect(customer.credit_balance).to eq(100.00)
+      end
+    end
+
+    context "when the credit payment can't be added" do
+      before do
+        create(:customer_account_transaction, amount: 100.00, customer:)
+        allow(subject).to receive(:apply).and_return(nil)
+      end
+
+      it "returns a failed response and leaves the order unchanged" do
+        response = subject.pay_order(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("The credit payment could not be added")
+        expect(cash_payment.reload.state).to eq("checkout")
       end
     end
 
