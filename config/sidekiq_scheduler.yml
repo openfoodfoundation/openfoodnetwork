@@ -26,12 +26,12 @@ backup:
   class: "RakeJob"
   args: ["db2fog:backup"]
   cron: "0 */4 * * *" # every 4 hours
-  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false) && true %>
+  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false).present? && true %>
 backup_clean:
   class: "RakeJob"
   args: ["db2fog:clean"]
   cron: "45 2 * * *" # every day at 2:45am
-  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false) && true %>
+  enabled: <%= ENV.fetch("S3_BACKUPS_BUCKET", false).present? && true %>
 ofn_clean:
   class: "RakeJob"
   args: ["ofn:data:remove_transient_data"]
