@@ -89,6 +89,9 @@ Openfoodnetwork::Application.routes.draw do
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
 
     get "/taler/:payment_id", to: "taler#confirm", as: :confirm_taler
+
+    get "/nano/:payment_id", to: "nano#show", as: :nano
+    post "/nano/:payment_id", to: "nano#confirm", as: :confirm_nano
   end
 
   get '/checkout', to: 'checkout#edit'

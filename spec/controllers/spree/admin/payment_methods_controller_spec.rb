@@ -31,6 +31,25 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
 
       expect(providers).to include "Spree::Gateway::StripeSCA"
     end
+
+    it "allows to select Nano when the feature is enabled", feature: :nano_payments do
+      spree_get :new
+      providers = assigns(:providers).map(&:to_s)
+
+      expect(providers).to include "Spree::PaymentMethod::Nano"
+    end
+  end
+
+  describe "#create" do
+    before { allow(controller).to receive(:spree_current_user) { user } }
+
+    it "refuses Nano while the feature is disabled" do
+      expect {
+        spree_post :create, payment_method: { name: "Nano", type: "Spree::PaymentMethod::Nano" }
+      }.not_to change { Spree::PaymentMethod.count }
+
+      expect(response).to redirect_to new_admin_payment_method_path
+    end
   end
 
   describe "#edit" do

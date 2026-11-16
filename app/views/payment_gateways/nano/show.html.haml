@@ -1,0 +1,25 @@
+- amount = @payment_method.amount_xno(@payment)
+.row
+  .columns.small-12.medium-8
+    %h3= t(".title")
+    %p= t(".instructions", amount: "#{amount} XNO")
+
+    %dl
+      %dt= t(".amount")
+      %dd
+        %code= "#{amount} XNO"
+      %dt= t(".account")
+      %dd
+        %code= @payment_method.preferred_account
+      %dt= t(".representative")
+      %dd
+        %code= @payment_method.representative(@payment)
+
+    %p= t(".representative_help")
+
+    = form_tag main_app.payment_gateways_confirm_nano_path(payment_id: @payment.id), method: :post do
+      = hidden_field_tag :order_token, @order.token
+      = label_tag :block_hash, t(".block_hash")
+      = text_field_tag :block_hash, params[:block_hash], required: true,
+        pattern: "[0-9A-Fa-f]{64}", autocomplete: "off", spellcheck: false
+      = submit_tag t(".submit"), class: "button primary"
