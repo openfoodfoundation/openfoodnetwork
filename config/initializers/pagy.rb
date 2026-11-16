@@ -44,3 +44,44 @@ module PagyRequestQueryParamsOnly
 end
 
 Pagy::Request.prepend PagyRequestQueryParamsOnly
+
+require 'pagy/toolbox/helpers/support/series'
+
+module SeriesOverride
+  protected
+  # The array of page numbers and :gap e.g. [1, :gap, 8, "9", 10, :gap, 36]
+  # extra options:
+  #  - max_slots: max number of slots, default 7
+  #
+  def series(slots: @options[:slots] || Pagy::SERIES_SLOTS, compact: @options[:compact], **options)
+    raise OptionError.new(self, :slots, 'to be an Integer >= 0', slots) unless slots.is_a?(Integer) && slots >= 0
+    max_slots = options[:max_slots] || Pagy::SERIES_SLOTS
+    return [] if slots.zero?
+
+    [].tap do |series|
+      if slots >= @last
+        series.push(*1..@last)
+      else
+        half  = (slots - 1) / 2                       # even slots makes the left half shorter by 1
+        start = if @page <= half                      # @page in the first half
+                  1
+                elsif @page > (@last - slots + half)  # @page in the last half
+                  @last - slots + 1
+                else                                  # @page in the middle
+                  @page - half
+                end
+        series.push(*(start...(start + slots)))
+        unless compact || slots < max_slots            # Set first, last and :gap when needed
+          series[0]  = 1
+          series[1]  = :gap unless series[1]  == 2
+          series[-2] = :gap unless series[-2] == @last - 1
+          series[-1] = @last
+        end
+      end
+      current = series.index(@page)
+      series[current] = @page.to_s if current
+    end
+  end
+end
+
+Pagy.prepend SeriesOverride
