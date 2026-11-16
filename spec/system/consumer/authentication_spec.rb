@@ -79,6 +79,16 @@ RSpec.describe "Authentication" do
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
             end
+
+            it "doesn't say the email is unconfirmed when the password is wrong" do
+              fill_in "Email", with: user.email
+              fill_in "Password", with: "wrong password"
+              click_login_button
+
+              expect(page).to have_content "Invalid email or password"
+              expect(page).not_to have_content "You must confirm your email address"
+              expect(page).not_to have_link "Resend confirmation email."
+            end
           end
         end
 
@@ -156,10 +166,12 @@ RSpec.describe "Authentication" do
             select_login_tab "Forgot Password?"
           end
 
-          it "failing to reset password" do
+          it "requesting a reset for an unknown email" do
             fill_in "Your email", with: "notanemail@myemail.com"
-            click_reset_password_button
-            expect(page).to have_content "Email address not found"
+            expect do
+              click_reset_password_button
+              expect(page).to have_reset_password
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
 
           it "resetting password" do
@@ -178,23 +190,28 @@ RSpec.describe "Authentication" do
               Spree::User.create(email:, unconfirmed_email: email, password: "secret")
             }
 
-            it "cannot reset password before confirming email" do
+            it "sends the confirmation email again instead of a password reset" do
               fill_in "Your email", with: email
-              click_reset_password_button
-              expect(page).to have_content 'You must confirm your email address before you can ' \
-                                           'reset your password.'
-              page.find("a", text: 'Resend confirmation email.').click
-              expect(page).to have_content 'You will receive an email with instructions about ' \
-                                           'how to confirm your account in a few minutes.'
+              expect do
+                click_reset_password_button
+                expect(page).to have_reset_password
+              end.to enqueue_job ActionMailer::MailDeliveryJob
 
-              visit spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
+              expect(page).not_to have_link "Resend confirmation email."
+
+              visit spree_user_confirmation_path(confirmation_token: user.reload.confirmation_token)
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
 
               select_login_tab "Forgot Password?"
               fill_in "Your email", with: email
-              click_reset_password_button
-              expect(page).to have_reset_password
+              expect do
+                click_reset_password_button
+                expect(page).to have_reset_password
+              end.to enqueue_job ActionMailer::MailDeliveryJob
+
+              expect(enqueued_jobs.last.to_s).to match "reset_password_instructions"
             end
           end
         end

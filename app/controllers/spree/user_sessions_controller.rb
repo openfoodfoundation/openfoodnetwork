@@ -12,7 +12,7 @@ module Spree
 
     helper 'spree/base'
 
-    prepend_before_action :handle_unconfirmed_email
+    prepend_before_action :handle_unconfirmed_email, only: :create
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
     skip_before_action :check_disabled_user
@@ -52,8 +52,15 @@ module Spree
       render_unconfirmed_response if email_unconfirmed?
     end
 
+    # Only say the email is unconfirmed to someone who knows the password, otherwise anyone could
+    # find out which email addresses have an account. They get "Invalid email or password".
     def email_unconfirmed?
-      Spree::User.where(email: params.dig(:spree_user, :email), confirmed_at: nil).exists?
+      email = params.dig(:spree_user, :email)
+      password = params.dig(:spree_user, :password)
+      return false if email.blank? || password.blank?
+
+      user = Spree::User.find_for_authentication(email:)
+      user.present? && !user.confirmed? && user.valid_password?(password)
     end
 
     def render_unconfirmed_response

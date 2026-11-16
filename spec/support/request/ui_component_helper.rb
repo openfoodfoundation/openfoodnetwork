@@ -79,7 +79,8 @@ module UIComponentHelper
   end
 
   def have_reset_password
-    have_content "An email with instructions on resetting your password has been sent!"
+    have_content "If an account with that email address exists, " \
+                 "you will receive a password reset email"
   end
 
   def have_in_cart(name)

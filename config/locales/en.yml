@@ -3039,7 +3039,7 @@ en:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
+  password_reset_requested: "If an account with that email address exists, you will receive a password reset email"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
@@ -3048,7 +3048,6 @@ en:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot Password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
