@@ -6,6 +6,9 @@ class ProductsController < BaseController
   PER_PAGE = 30
 
   def index
+    @is_mobile = params.fetch("mobile", false)
+    @pagy_slots = @is_mobile ? 5 : 7
+
     renderer = product_renderer
     @products = renderer.products_view
     @pagy = renderer.pagination
