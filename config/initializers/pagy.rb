@@ -5,9 +5,9 @@
 Pagy::OPTIONS[:limit] = 100
 
 # Allow the client to request a custom number of items per page with ?per_page=N, capped at
-# :max_limit. :max_limit also acts as the switch that makes pagy read the client param at all.
+# :client_limit. :client_limit also acts as the switch that makes pagy read the client param at all.
 Pagy::OPTIONS[:limit_key] = 'per_page'
-Pagy::OPTIONS[:max_limit] = 100
+Pagy::OPTIONS[:client_limit] = 100
 
 # Handling requests for non-existant pages (eg: page 35 when there are only 4 pages of results)
 # by returning an empty page is the default behaviour in v43, so nothing to configure here.
