@@ -3886,7 +3886,7 @@ en:
           requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
-          invalid: "canceled"
+          invalid: "invalid"
         quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
         could_not_add_item: "Could not update order. Please try again."
@@ -5031,7 +5031,7 @@ en:
       processing: processing
       requires_authorization: "authorization required"
       void: void
-      invalid: canceled
+      invalid: invalid
       authorise: authorise
     order_mailer:
       cancel_email:
