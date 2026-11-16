@@ -8,6 +8,9 @@ class ProductsController < BaseController
   before_action :order_cycle, only: :index
 
   def index
+    @is_mobile = params.fetch("mobile", false)
+    @pagy_slots = @is_mobile ? 5 : 7
+
     @q = search_params[:q]
     renderer = product_renderer
     @products = renderer.products_view

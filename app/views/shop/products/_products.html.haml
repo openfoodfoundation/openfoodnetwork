@@ -1,6 +1,8 @@
 - if feature?(:product_grid_view, @current_user)
   .row
-    - frame_options = { "data-turbo": "true", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts turbo:before-fetch-request->product-grid-view#showLoading turbo:frame-load->product-grid-view#scrollToTop" }
+    - frame_options = { "data-turbo": "true",
+                        "data-controller": "product-grid-view",
+                        "data-action": "orderCycleSelected@window->product-grid-view#updateProducts DOMContentLoaded@window->product-grid-view#addMobile turbo:before-fetch-request->product-grid-view#showLoading turbo:frame-load->product-grid-view#scrollToTop" }
     - if current_order_cycle.present?
       = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), **frame_options) do
         .loading{ "data-product-grid-view-target": "loading" }
