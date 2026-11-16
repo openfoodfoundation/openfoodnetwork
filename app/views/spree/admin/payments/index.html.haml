@@ -6,6 +6,10 @@
     %li#credit_customer_section
       = button_link_to t(:credit_customer), admin_order_payments_credit_customer_url(@order), data: { method: :post }
 
+  - if @can_pay_with_credit
+    %li#pay_with_credit_section
+      = button_link_to t(".pay_with_credit"), admin_order_payments_pay_with_credit_path(@order), data: { method: :post, confirm: t(".pay_with_credit_confirm") }
+
   - if @order.outstanding_balance?
     %li#new_payment_section
       = button_link_to t(:new_payment), new_admin_order_payment_url(@order), icon: 'icon-plus'
@@ -21,6 +25,15 @@
     = outstanding_balance_label(@order)
     \:
     %strong= @order.display_outstanding_balance
+
+- if @available_credit&.positive?
+  %h5.available-credit
+    = t(".available_credit")
+    \:
+    %strong= Spree::Money.new(@available_credit, currency: @order.currency)
+
+- if @pay_with_credit_hint
+  %p.notice= @pay_with_credit_hint
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }

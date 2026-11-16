@@ -46,6 +46,27 @@ RSpec.describe Spree::PaymentMethod::CustomerCredit do
       expect(transaction.description).to eq("Customer credit: Payment for order: R023075164")
     end
 
+    context "when user_id provided" do
+      let(:user) { create(:enterprise_user) }
+      let(:options) {
+        {
+          customer_id: customer.id,
+          payment_id: payment.id,
+          order_number: "R023075164",
+          user_id: user.id
+        }
+      }
+
+      it "links the customer account transaction to the user" do
+        create(:customer_account_transaction, amount: 25.00, customer:)
+
+        expect(response.success?).to be(true)
+
+        transaction = customer.customer_account_transactions.last
+        expect(transaction.created_by).to eq(user)
+      end
+    end
+
     context "when not enough credit is available" do
       let!(:customer_credit) { create(:customer_account_transaction, amount: 5.00, customer:) }
 

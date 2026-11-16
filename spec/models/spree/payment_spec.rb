@@ -343,6 +343,14 @@ RSpec.describe Spree::Payment do
           payment.internal_purchase!
         end
 
+        it "passes on the user making the payment" do
+          expect(payment_method).to receive(:purchase).with(
+            amount_in_cents, nil, options.merge(user_id: 123)
+          ).and_return(success_response)
+
+          payment.internal_purchase!(user_id: 123)
+        end
+
         it "logs the response" do
           expect(payment).to receive(:record_response)
 

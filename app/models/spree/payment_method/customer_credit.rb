@@ -25,7 +25,7 @@ module Spree
       # Main method called by Spree::Payment::Processing during checkout
       # - amount is in cents
       # - options: {
-      #     customer_id:, payment_id:, order_number:
+      #     customer_id:, payment_id:, order_number:, user_id: (optional)
       #   }
       def purchase(amount, _source, options)
         calculated_amount = amount / 100.00
@@ -49,7 +49,8 @@ module Spree
             amount: -calculated_amount,
             currency:,
             payment_id: options[:payment_id],
-            description:
+            description:,
+            created_by_id: options[:user_id]
           )
         end
         message = I18n.t("success", scope: "credit_payment_method")
