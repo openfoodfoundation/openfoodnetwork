@@ -4,6 +4,7 @@ class ProductsController < BaseController
   include StartsShopping
 
   PER_PAGE = 30
+  MOBILE_PER_PAGE = 15
 
   before_action :order_cycle, only: :index
 
@@ -114,7 +115,7 @@ class ProductsController < BaseController
   end
 
   def search_params
-    { page: 1, per_page: PER_PAGE }.merge(
+    { page: 1, per_page: per_pate }.merge(
       params.permit(:page, :per_page, q: [{ with_properties: [] }])
     ).with_indifferent_access
   end
@@ -125,5 +126,9 @@ class ProductsController < BaseController
 
   def variant_tag_enabled?
     OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, distributor)
+  end
+
+  def per_page
+    params.fetch("mobile", false) ? MOBILE_PER_PAGE : PER_PAGE
   end
 end
