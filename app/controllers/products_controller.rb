@@ -4,6 +4,7 @@ class ProductsController < BaseController
   include StartsShopping
 
   PER_PAGE = 30
+  MOBILE_PER_PAGE = 15
 
   def index
     @is_mobile = params.fetch("mobile", false)
@@ -111,7 +112,7 @@ class ProductsController < BaseController
   end
 
   def search_params
-    { page: [params[:page].to_i, 1].max, per_page: PER_PAGE }
+    { page: [params[:page].to_i, 1].max, per_page: per_page }
   end
 
   def inventory_enabled?
@@ -120,5 +121,9 @@ class ProductsController < BaseController
 
   def variant_tag_enabled?
     OpenFoodNetwork::FeatureToggle.enabled?(:variant_tag, distributor)
+  end
+
+  def per_page
+    params.fetch("mobile", false) ? MOBILE_PER_PAGE : PER_PAGE
   end
 end
