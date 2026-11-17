@@ -39,25 +39,26 @@ export default class extends Controller {
   // Bring the start of the list back into view after changing page
   scrollToTop() {
     clearTimeout(this.timeoutID);
-    // use window.scrollTo to applay an offset to take into account the <nav> top bar's height
-    // when present
-    if (this.element.getBoundingClientRect().top < 0) {
-      const navElement = document.getElementsByTagName("nav")[0];
 
-      if (navElement === undefined) {
-        this.element.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
+    // use window.scrollTo to apply an offset to take into account the nav bar and the search bar
+    const navElement = document.getElementsByTagName("nav")[0];
+    const searchElement = document.getElementsByClassName("shop-searchbar")[0];
+    const toggleElement = document.getElementsByClassName("left-off-canvas-toggle")[0];
 
-      const headerOffset = navElement.offsetHeight;
-      const elementPosition = this.element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+    if (navElement === undefined) {
+      this.element.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
     }
+
+    const headerOffset =
+      navElement.offsetHeight + searchElement.offsetHeight + toggleElement.offsetHeight;
+    const elementPosition = this.element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
   }
 
   // private
