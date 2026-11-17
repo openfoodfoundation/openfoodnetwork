@@ -7,7 +7,53 @@ module Spree
 
     has_many :products, through: :variants, dependent: nil
 
-    validates :name, presence: true
+    validate :name_i18n_has_at_least_one_translation
+
+    # The legacy `name` column is kept for now to make rollback easy if issues
+    # arise. It will be removed in a follow-up PR once we confirm nothing still
+    # reads it directly. The `name=` setter also stays in place so the API v0
+    # endpoint can continue accepting a plain `name` parameter.
+    before_validation :sync_legacy_name_column,
+                      if: -> { self[:name].blank? && name_i18n.present? }
+
+    # The admin form (and API) only submit the currently selectable locales
+    # (OpenFoodNetwork::I18nConfig.selectable_locales), which may not include every
+    # locale already stored on the record (e.g. a locale that was later removed from
+    # AVAILABLE_LOCALES, or the default locale when it isn't itself selectable).
+    # A plain attribute assignment would replace the whole hash and silently drop
+    # those translations, so merge instead of overwriting.
+    def name_i18n=(value)
+      super((name_i18n || {}).merge(value || {}))
+    end
+
+    def sync_legacy_name_column
+      fallback = name_i18n[I18n.default_locale.to_s].presence || name_i18n.values.find(&:present?)
+      self[:name] = fallback
+    end
+
+    def name_i18n_has_at_least_one_translation
+      return if name_i18n.is_a?(Hash) && name_i18n[I18n.default_locale.to_s].present?
+
+      errors.add(:name_i18n, :blank)
+    end
+
+    def name
+      name_i18n[I18n.locale.to_s].presence ||
+        name_i18n[I18n.default_locale.to_s].presence ||
+        name_i18n.values.find(&:present?) ||
+        read_attribute(:name)
+    end
+
+    def name=(value)
+      updates = { I18n.locale.to_s => value }
+      # Validation requires the default locale. If it isn't present yet,
+      # mirror the value there so legacy usage (factory, plain `name` param)
+      # remains valid regardless of the current locale context.
+      updates[I18n.default_locale.to_s] = value if
+        name_i18n[I18n.default_locale.to_s].blank?
+      self.name_i18n = (name_i18n || {}).merge(updates)
+      write_attribute(:name, value)
+    end
 
     # Indicate which filters should be used for this taxon
     def applicable_filters
