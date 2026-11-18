@@ -77,7 +77,7 @@ module Spree
         response = ::Orders::CustomerCreditService.new(@order).refund
 
         if response.success?
-          flash[:success] = Spree.t(:customer_credit_successful, scope: "admin.payments")
+          flash[:success] = I18n.t("spree.admin.payments.customer_credit_successful")
         else
           flash[:error] = response.message
         end
@@ -138,7 +138,7 @@ module Spree
                   @order.complete? || @order.canceled? || @order.resumed? ||
                   @order.awaiting_return? || @order.returned?
 
-        flash[:notice] = Spree.t(:fill_in_customer_info)
+        flash[:notice] = I18n.t("spree.fill_in_customer_info")
         redirect_to edit_admin_order_customer_url(@order)
       end
 

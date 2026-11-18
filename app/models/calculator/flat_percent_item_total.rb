@@ -8,7 +8,7 @@ module Calculator
               numericality: true
 
     def self.description
-      Spree.t(:flat_percent)
+      I18n.t("spree.flat_percent")
     end
 
     def compute(object)

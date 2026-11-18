@@ -73,9 +73,9 @@ module Spree
 
         if allowed_events.include?(event) && @order.public_send(event.to_s)
           AmendBackorderJob.perform_later(@order) if @order.completed?
-          flash[:success] = Spree.t(:order_updated)
+          flash[:success] = I18n.t("spree.order_updated")
         else
-          flash[:error] = Spree.t(:cannot_perform_operation)
+          flash[:error] = I18n.t("spree.cannot_perform_operation")
         end
       rescue Spree::Core::GatewayError => e
         flash[:error] = e.message.to_s
@@ -223,7 +223,7 @@ module Spree
       def line_items_present?
         return true if @order.line_items.any?
 
-        @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
+        @order.errors.add(:line_items, I18n.t("spree.errors.messages.blank"))
         false
       end
 

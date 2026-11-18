@@ -3,18 +3,18 @@
 
 - content_for :page_title do
   %i.icon-arrow-right
-  = Spree.t("activerecord.models.#{@payment.class.to_s.underscore}.one")
+  = t("spree.activerecord.models.#{@payment.class.to_s.underscore}.one")
   %i.icon-arrow-right
   = payment_method_name(@payment)
 
 - content_for :page_actions do
-  %li= button_link_to Spree.t(:back_to_payments_list), admin_order_payments_url(@order), icon: 'icon-arrow-left'
+  %li= button_link_to t("spree.back_to_payments_list"), admin_order_payments_url(@order), icon: 'icon-arrow-left'
 
 - if @payment.payment_method.present?
   = render partial: "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment }
 
 .align-center
   %h5
-    %span= Spree.t(:amount)
+    %span= t("spree.amount")
     \:
     %span.green= @payment.amount

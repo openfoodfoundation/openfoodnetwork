@@ -1,17 +1,17 @@
 %fieldset
-  %legend{align: "center"}= Spree.t(:transaction, scope: :paypal)
+  %legend{align: "center"}= t("spree.paypal.transaction")
   .row
     .alpha.six.columns
       %dl
         %dt
-          = Spree.t(:payer_id, scope: :paypal)
+          = t("spree.paypal.payer_id")
           \:
         %dd= payment.source.payer_id
         %dt
-          = Spree.t(:token, scope: :paypal)
+          = t("spree.paypal.token")
           \:
         %dd= payment.source.token
         %dt
-          = Spree.t(:transaction_id)
+          = t("spree.transaction_id")
           \:
         %dd= payment.source.transaction_id

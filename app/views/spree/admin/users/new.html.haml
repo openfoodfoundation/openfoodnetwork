@@ -1,9 +1,9 @@
 - content_for :page_title do
-  = Spree.t(:new_user)
+  = t("spree.new_user")
 
 - content_for :page_actions do
   %li
-    = button_link_to Spree.t(:back_to_users_list), admin_users_path, icon: 'icon-arrow-left'
+    = button_link_to t("spree.back_to_users_list"), admin_users_path, icon: 'icon-arrow-left'
 
 %div
   = render partial: 'spree/shared/error_messages', locals: { target: @user }

@@ -655,7 +655,7 @@ RSpec.describe Spree::Payment do
           payment = build_stubbed(:payment, source: nil, payment_method:)
           expect {
             payment.process!
-          }.to raise_error(Spree::Core::GatewayError, Spree.t(:payment_processing_failed))
+          }.to raise_error(Spree::Core::GatewayError, I18n.t("spree.payment_processing_failed"))
         end
       end
     end

@@ -12,15 +12,16 @@ module Spree
           Spree::Config[name] = value
         end
 
-        flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:mail_method_settings))
+        flash[:success] = I18n.t("spree.successfully_updated",
+                                 resource: I18n.t("spree.mail_method_settings"))
         render :edit
       end
 
       def testmail
         TestMailer.test_email(spree_current_user).deliver_now
-        flash[:success] = Spree.t('admin.mail_methods.testmail.delivery_success')
+        flash[:success] = I18n.t("spree.admin.mail_methods.testmail.delivery_success")
       rescue StandardError
-        flash[:error] = Spree.t('admin.mail_methods.testmail.error')
+        flash[:error] = I18n.t("spree.admin.mail_methods.testmail.error")
       ensure
         redirect_to edit_admin_mail_methods_url
       end

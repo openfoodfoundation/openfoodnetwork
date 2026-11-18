@@ -105,7 +105,7 @@ module Spree
 
         object.preferences.keys.map { |key|
           preference_label = form.label("preferred_#{key}",
-                                        "#{Spree.t(key.to_s.gsub('_from_list', ''))}: ")
+                                        "#{t(key.to_s.gsub('_from_list', ''), scope: :spree)}: ")
           field_options = { type: object.preference_type(key), autocomplete: "off" }
           preference_field = preference_field_for(
             form,

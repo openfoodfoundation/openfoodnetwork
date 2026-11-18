@@ -14,13 +14,13 @@
 
     %thead
       %th{ :colspan => "2" }
-        = Spree.t(:item_description)
+        = t("spree.item_description")
       %th
-        = Spree.t(:price)
+        = t("spree.price")
       %th
-        = Spree.t(:quantity)
+        = t("spree.quantity")
       %th
-        = Spree.t(:total)
+        = t("spree.total")
       %th.orders-actions.actions
 
     - insufficient_stock_lines.each do |line_item|

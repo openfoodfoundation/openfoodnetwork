@@ -24,9 +24,9 @@ module Spree
         options[:route] ||= "admin_#{args.first}"
 
         destination_url = options[:url] || public_send("#{options[:route]}_path")
-        titleized_label = Spree.t(options[:label],
-                                  default: options[:label],
-                                  scope: [:admin, :tab]).capitalize
+        titleized_label = t(options[:label],
+                            default: options[:label],
+                            scope: [:spree, :admin, :tab]).capitalize
 
         css_classes = []
         link = link_to(titleized_label, destination_url)
@@ -77,7 +77,7 @@ module Spree
 
       def link_to_edit(resource, options = {})
         options[:data] = { action: 'edit' }
-        link_to_with_icon('icon-edit', Spree.t(:edit), edit_object_url(resource), options)
+        link_to_with_icon('icon-edit', t("spree.edit"), edit_object_url(resource), options)
       end
 
       def link_to_delete(resource, options = {})

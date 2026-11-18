@@ -5,7 +5,7 @@ require 'open_food_network/enterprise_fee_calculator'
 module Calculator
   class DefaultTax < Spree::Calculator
     def self.description
-      Spree.t(:default_tax)
+      I18n.t("spree.default_tax")
     end
 
     def compute(computable)

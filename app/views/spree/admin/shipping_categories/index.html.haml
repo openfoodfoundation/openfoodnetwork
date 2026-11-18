@@ -1,11 +1,11 @@
 = render :partial => 'spree/admin/shared/configuration_menu'
 
 - content_for :page_title do
-  = Spree.t(:shipping_categories)
+  = t("spree.shipping_categories")
 
 - content_for :page_actions do
   %li
-    = button_link_to Spree.t(:new_shipping_category), new_object_url, :icon => 'icon-plus'
+    = button_link_to t("spree.new_shipping_category"), new_object_url, :icon => 'icon-plus'
 
 %table.index
   %colgroup
@@ -13,7 +13,7 @@
     %col{:style => "width: 15%"}/
   %thead
     %tr
-      %th= Spree.t(:name)
+      %th= t("spree.name")
       %th
         = t(:temperature_controlled)
       %th.actions

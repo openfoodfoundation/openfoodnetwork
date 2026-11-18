@@ -34,7 +34,7 @@
 
     - if @order.line_items.empty?
       .no-objects-found
-        = Spree.t(:your_order_is_empty_add_product)
+        = t("spree.your_order_is_empty_add_product")
 
     .admin-order-edit-form
       = render partial: 'form'

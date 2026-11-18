@@ -85,9 +85,9 @@ module Spree
 
       def delete_variant
         if VariantDeleter.new.delete(@variant)
-          Spree.t('notice_messages.variant_deleted')
+          I18n.t("spree.notice_messages.variant_deleted")
         else
-          Spree.t('notice_messages.variant_not_deleted')
+          I18n.t("spree.notice_messages.variant_not_deleted")
         end
       end
 
