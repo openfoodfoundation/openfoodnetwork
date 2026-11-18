@@ -28,7 +28,7 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
 
 - Run rails test with `bundle exec rspec`
 - RAILS_ENV=test NODE_ENV=test bin/shakapacker # test packs; needed by system AND many request/controller specs
-- Run test for a specic file with `bundle exec rspec spec/path/to_spec.rb`
+- Run tests for a specific file with `bundle exec rspec spec/path/to_spec.rb`
 - Run javascript test with `npx jest` 
 - Run AngularJs test with karma 'script/karma run'
 - Add or update tests for the code you change, even if nobody asked.
@@ -40,11 +40,11 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
   ```bash
   ./script/rubocop-diff.sh
   ```
-  Use `-a` to autocorrect.
+  Use `-a` to autocorrect. It only checks uncommitted changes (diff against `HEAD`), so run it before committing.
   ```bash
   bundle exec haml-lint $(git diff --name-only --diff-filter=AM origin/master -- '*.haml')
   ```
-- Prettify javascript file with `npx prettier --check <files>`
+- Check JavaScript formatting with `npx prettier --check <files>` (use `--write` to fix)
 - System specs run on **Cuprite** (Ferrum, Chrome DevTools protocol;
   `spec/system/support/cuprite_setup.rb`), not Selenium or chromedriver. `HEADLESS=false`
   shows the browser, and JS errors fail specs. Ferrum is already bundled: use it for
