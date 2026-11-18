@@ -173,4 +173,34 @@ RSpec.describe ProductTileComponent, type: :component do
       expect(page).not_to have_selector "a.product-link .add-to-cart-component"
     end
   end
+
+  describe "in the admin product preview" do
+    def render_preview_of(product)
+      render_inline(described_class.new(product:, shop: nil, variants_in_cart:,
+                                        low_stock_display: false, preview: true))
+    end
+
+    it "doesn't link anywhere" do
+      render_preview_of(product)
+
+      expect(page).to have_selector "a.product-link"
+      expect(page).not_to have_selector "a.product-link[href]"
+    end
+
+    it "can't add a single variant to the cart" do
+      render_preview_of(product)
+
+      expect(page).to have_selector "button[aria-disabled='true']", text: "Add"
+      expect(page).not_to have_selector "[data-controller='add-to-cart']"
+    end
+
+    it "lets you select a variant, but not add it to the cart" do
+      render_preview_of(build_product([build_variant(id: 1), build_variant(id: 2)]))
+
+      expect(page).to have_button "Select"
+      expect(page).to have_selector "button[aria-disabled='true']", text: "Add", count: 2,
+                                                                    visible: :all
+      expect(page).not_to have_selector "[data-controller='add-to-cart']", visible: :all
+    end
+  end
 end

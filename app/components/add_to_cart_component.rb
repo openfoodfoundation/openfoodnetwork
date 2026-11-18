@@ -3,19 +3,24 @@
 class AddToCartComponent < ViewComponent::Base
   # `cart_params` names the shop and order cycle to add in, for pages which can't count
   # on the cart being pointed at them already. See CartController#adopt_shop.
-  def initialize(variant:, cart_item:, low_stock_display:, css_class: "", cart_params: {})
+  #
+  # `preview` shows the button as the admin product preview does: as in the shop, but adding
+  # nothing.
+  def initialize(variant:, cart_item:, low_stock_display:, css_class: "", cart_params: {},
+                 preview: false)
     @variant = variant
     @cart_item = cart_item
     @low_stock_display = low_stock_display
     @css_class = css_class
     @cart_params = cart_params
+    @preview = preview
   end
 
   attr_reader :variant, :cart_item, :low_stock_display
 
   private
 
-  attr_reader :cart_params
+  attr_reader :cart_params, :preview
 
   def cart_url
     helpers.main_app.variant_cart_path(variant.id, cart_params)
@@ -43,6 +48,16 @@ class AddToCartComponent < ViewComponent::Base
   # The buttons only say "Add" or show an icon, so their labels name the variant they're for.
   def label(action)
     t("components.add_to_cart.#{action}", name: helpers.variant_label_name(variant))
+  end
+
+  # Without its controller, the preview's button can't reach the cart.
+  def stimulus_controller
+    "add-to-cart" unless preview
+  end
+
+  # The preview's button looks like the shop's, so tell assistive technology it does nothing.
+  def aria_disabled
+    "true" if preview
   end
 
   def component_css
