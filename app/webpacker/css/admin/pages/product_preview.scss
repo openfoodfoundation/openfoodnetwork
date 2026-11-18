@@ -244,7 +244,20 @@ $shop-button-radius: 0.5em;
     justify-content: center;
     padding: 2rem 0;
     font-family: $body-font;
+    font-size: 1rem;
     color: $darker-grey;
+
+    // The admin sets these to its smaller font size (admin/shared/typography.scss), and its
+    // own font on buttons: use the shop's instead.
+    div,
+    p,
+    span,
+    ul,
+    li,
+    button {
+      font-family: inherit;
+      font-size: inherit;
+    }
 
     @include meta.load-css("product_tile_component/product_tile_component");
     @include meta.load-css("add_to_cart_component/add_to_cart_component");
@@ -267,6 +280,26 @@ $shop-button-radius: 0.5em;
       &:focus {
         background: $orange-400;
         text-shadow: 0 1px 0 $orange-450;
+      }
+    }
+
+    // The price breakdown is a description list, which the admin styles everywhere in
+    // admin/shared/typography.scss: undo that so it reads as in the shop.
+    .price-breakdown {
+      dl {
+        width: auto;
+        overflow: visible;
+        color: inherit;
+      }
+
+      dt,
+      dd {
+        float: none;
+        width: auto;
+        padding: 0;
+        line-height: inherit;
+        text-align: inherit;
+        text-transform: none;
       }
     }
 
