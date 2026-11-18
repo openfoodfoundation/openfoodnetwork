@@ -26,7 +26,6 @@ linters:
       - "app/views/admin/contents/_fieldset.html.haml"
       - "app/views/admin/enterprises/form/_tag_rules.html.haml"
       - "app/views/admin/order_cycles/edit.html.haml"
-      - "app/views/admin/products_v3/_product_preview_list.html.haml"
       - "app/views/admin/reports/_date_range_form.html.haml"
       - "app/views/shop/products/_form.html.haml"
       - "app/views/spree/admin/adjustments/_adjustments_table.html.haml"
@@ -86,7 +85,6 @@ linters:
   # Offense count: 2
   MultilineScript:
     exclude:
-      - "app/views/admin/products_v3/_product_preview_list.html.haml"
       - "app/views/checkout/_voucher_section.html.haml"
 
   # Offense count: 2
