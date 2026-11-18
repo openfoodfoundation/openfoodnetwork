@@ -1272,6 +1272,160 @@ RSpec.describe ProductImport::ProductImporter do
     end
   end
 
+  describe "importing variant tags" do
+    let(:headers) {
+      ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+       "display_name", "shipping_category", "tag_list"]
+    }
+    let(:importer) { import_data csv_data }
+
+    describe "creating a new product" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "organic, local"]
+        end
+      }
+
+      it "saves the tags on the variant" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 1
+        expect(find_variant("Potatoes").tag_list).to eq ["organic", "local"]
+      end
+    end
+
+    describe "creating a new product with several variants" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "organic"]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "kg",
+                  "Big Bag", shipping_category.name, "local"]
+        end
+      }
+
+      it "saves each row's tags on its own variant" do
+        importer.save_entries
+
+        potatoes = Spree::Product.find_by(name: "Potatoes")
+        expect(potatoes.variants.find_by(display_name: "Small Bag").tag_list).to eq ["organic"]
+        expect(potatoes.variants.find_by(display_name: "Big Bag").tag_list).to eq ["local"]
+      end
+    end
+
+    describe "adding a new variant to an existing product" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "6", "3.50", "500", "g",
+                  "Emergent Coffee", shipping_category.name, "fair trade"]
+        end
+      }
+
+      it "saves the tags on the new variant" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 1
+        expect(product.variants.find_by(display_name: "Emergent Coffee").tag_list)
+          .to eq ["fair trade"]
+      end
+    end
+
+    describe "updating an existing variant" do
+      before { variant.update!(tag_list: "old") }
+
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, "organic, local"]
+        end
+      }
+
+      it "replaces the variant's tags" do
+        importer.save_entries
+
+        expect(importer.products_updated_count).to eq 1
+        expect(variant.reload.tag_list).to eq ["organic", "local"]
+      end
+
+      it "doesn't change the tags when only validating" do
+        importer.validate_entries
+
+        expect(variant.reload.tag_list).to eq ["old"]
+      end
+    end
+
+    describe "when the tag_list cell is blank" do
+      before { variant.update!(tag_list: "organic, local") }
+
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g",
+                  "Preexisting Banana", shipping_category.name, ""]
+        end
+      }
+
+      it "leaves the existing tags unchanged" do
+        importer.save_entries
+
+        expect(importer.products_updated_count).to eq 1
+        expect(variant.reload.tag_list).to eq ["organic", "local"]
+      end
+    end
+
+    describe "when a tag is too long" do
+      let(:long_tag) { "a" * 256 }
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "organic, #{long_tag}"]
+        end
+      }
+
+      it "shows an error when validating" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(entries['2']['errors'].keys).to eq ["tag_list"]
+      end
+
+      it "doesn't create the product" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 0
+        expect(Spree::Product.find_by(name: "Potatoes")).to be_nil
+      end
+    end
+
+    describe "when the new product's variant can't be saved" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << headers
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g",
+                  "Small Bag", shipping_category.name, "a" * 256]
+        end
+      }
+
+      before do
+        # Skip the tag check so the save itself fails
+        allow_any_instance_of(ProductImport::EntryValidator)
+          .to receive(:tag_list_validation)
+      end
+
+      it "reports an error for that line" do
+        importer.save_entries
+
+        expect(importer.errors.messages.keys).to eq [:'Line 2:']
+      end
+    end
+  end
+
   def find_variant(name)
     Spree::Product.find_by(name:).variants.first
   end

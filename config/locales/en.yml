@@ -1157,6 +1157,8 @@ en:
         category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
         values_must_be_same: must be the same for products with the same name
+        tag_too_long: "tags can't be longer than %{max} characters"
+        variant_not_saved: "the product was created, but some of its details could not be saved"
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -1262,6 +1264,7 @@ en:
         tax_category: Tax Category
         group_buy: Group Buy
         group_buy_unit_size: Bulk Unit Size
+        tag_list: Tags
 
     variant_overrides:
       loading_flash:

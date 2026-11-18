@@ -17,7 +17,7 @@ module ProductImport
                   :variant_unit, :variant_unit_scale, :variant_unit_name, :display_as, :category,
                   :primary_taxon_id, :price, :on_hand, :on_demand, :tax_category_id,
                   :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id,
-                  :group_buy, :group_buy_unit_size
+                  :group_buy, :group_buy_unit_size, :tag_list
 
     NON_DISPLAY_ATTRIBUTES = ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
                               'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
@@ -39,6 +39,7 @@ module ProductImport
     def initialize(attrs)
       @validates_as = ''
       remove_empty_skus attrs
+      remove_empty_tag_list attrs
       assign_units GroupBuyConverter.new(attrs).converted_attributes
     end
 
@@ -106,6 +107,11 @@ module ProductImport
 
     def remove_empty_skus(attrs)
       attrs.delete('sku') if attrs.key?('sku') && attrs['sku'].blank?
+    end
+
+    # A blank cell leaves the variant's existing tags unchanged
+    def remove_empty_tag_list(attrs)
+      attrs.delete('tag_list') if attrs.key?('tag_list') && attrs['tag_list'].blank?
     end
 
     def assign_units(attrs)
