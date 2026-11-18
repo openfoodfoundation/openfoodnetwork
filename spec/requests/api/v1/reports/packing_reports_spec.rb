@@ -97,6 +97,18 @@ RSpec.describe "Packing reports", swagger_doc: "v1.yaml" do
     expect(response).to have_http_status(:ok)
     expect(json_response[:data]).to eq(default_rows)
   end
+  it "includes orders older than one month when dates are omitted" do
+    order.update_columns(completed_at: 2.months.ago)
+
+    get "/api/v1/reports/packing", params: {
+      report_subtype: "customer",
+      order_cycle_id: order_cycle.id,
+      distributor_id: distributor.id
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(returned_products).to match_array(products_for(order))
+  end
 
   it "translates the public date filters for packing" do
     order.update_columns(completed_at: Time.zone.parse("2026-10-15 12:00:00"))

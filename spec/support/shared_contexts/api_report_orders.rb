@@ -1,0 +1,89 @@
+# frozen_string_literal: true
+
+RSpec.shared_context "API report orders" do
+  let(:distributor) { create(:distributor_enterprise) }
+  let(:other_distributor) { create(:distributor_enterprise) }
+  let(:coordinator) { create(:distributor_enterprise) }
+  let(:order_cycle) { create(:simple_order_cycle, coordinator:) }
+  let(:other_order_cycle) { create(:simple_order_cycle, coordinator:) }
+
+  let!(:order) { completed_order(distributor, order_cycle) }
+  let(:other_hub_order) { completed_order(other_distributor, order_cycle) }
+  let(:other_cycle_order) { completed_order(distributor, other_order_cycle) }
+
+  before do
+    login_as distributor.owner
+  end
+
+  def completed_order(hub, cycle)
+    create(
+      :completed_order_with_totals,
+      distributor: hub,
+      order_cycle: cycle
+    ).tap(&:finalize!)
+  end
+
+  def returned_values(field)
+    json_response[:data].
+      filter_map { |row| row[field].presence&.to_s }.
+      uniq
+  end
+end
+
+RSpec.shared_examples "API report order filters" do |report_type, subtype, field, identifier|
+  context "when both hubs are managed by the user" do
+    before do
+      EnterpriseRole.create!(
+        user: distributor.owner,
+        enterprise: other_distributor
+      )
+      other_hub_order
+      other_cycle_order
+    end
+
+    let(:report_options) do
+      subtype ? { report_subtype: subtype } : {}
+    end
+
+    it "filters by both IDs without excluding older orders when dates are omitted" do
+      order.update_columns(completed_at: 2.months.ago)
+
+      get "/api/v1/reports/#{report_type}", params: report_options.merge(
+        order_cycle_id: order_cycle.id,
+        distributor_id: distributor.id
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(returned_values(field)).
+        to eq([order.public_send(identifier).to_s])
+    end
+
+    it "filters by order cycle alone" do
+      get "/api/v1/reports/#{report_type}", params: report_options.merge(
+        order_cycle_id: order_cycle.id
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(returned_values(field)).to match_array(
+        [
+          order.public_send(identifier).to_s,
+          other_hub_order.public_send(identifier).to_s
+        ]
+      )
+    end
+
+    it "filters by distributor alone" do
+      get "/api/v1/reports/#{report_type}", params: report_options.merge(
+        distributor_id: distributor.id
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(returned_values(field)).to match_array(
+        [
+          order.public_send(identifier).to_s,
+          other_cycle_order.public_send(identifier).to_s
+        ]
+      )
+    end
+  end
+end

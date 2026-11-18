@@ -3,44 +3,11 @@
 require "swagger_helper"
 
 RSpec.describe "Payment reports", swagger_doc: "v1.yaml" do
-  let!(:distributor) { create(:distributor_enterprise) }
-  let!(:other_distributor) { create(:distributor_enterprise) }
-  let!(:coordinator) { create(:distributor_enterprise) }
-
-  let!(:order_cycle) do
-    create(:simple_order_cycle, coordinator:)
-  end
-
-  let!(:other_order_cycle) do
-    create(:simple_order_cycle, coordinator:)
-  end
-
-  let!(:order) do
-    create(:completed_order_with_totals, distributor:, order_cycle:)
-  end
-
-  let!(:other_hub_order) do
-    create(
-      :completed_order_with_totals,
-      distributor: other_distributor,
-      order_cycle:
-    )
-  end
-
-  let!(:other_cycle_order) do
-    create(
-      :completed_order_with_totals,
-      distributor:,
-      order_cycle: other_order_cycle
-    )
-  end
+  include_context "API report orders"
 
   before do
-    order.finalize!
-    other_hub_order.finalize!
-    other_cycle_order.finalize!
-
-    login_as distributor.owner
+    other_hub_order
+    other_cycle_order
   end
 
   def product_totals_by_distributor

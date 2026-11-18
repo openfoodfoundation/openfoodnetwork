@@ -782,6 +782,10 @@ paths:
         supplied, both filters apply. The selected report determines the row
         fields, available subtypes and visibility rules.
 
+        Omitted or empty date bounds impose no date restriction for that bound.
+        Invalid date values return 422. Date filters do not affect
+        products_and_inventory.
+
         Pagination is applied after generating the complete report, preserving
         its grouping and calculations. It limits the response size, not the
         work needed to generate the report.
@@ -805,6 +809,7 @@ paths:
           - suppliers
           - bulk_coop
           - revenues_by_hub
+        description: Report type from Reporting::Reports::List.
       - name: report_subtype
         in: query
         required: false
@@ -833,15 +838,17 @@ paths:
         required: false
         schema:
           type: string
-        description: Lower completion-date filter, for example 2026-10-01. Uses the
-          selected report's date handling; does not filter products_and_inventory.
+        description: Lower completion-date filter, for example 2026-10-01. Omitted
+          or empty means no lower date bound. Uses the selected report's date handling;
+          does not filter products_and_inventory.
       - name: q[completed_at_lt]
         in: query
         required: false
         schema:
           type: string
-        description: Upper completion-date filter, for example 2026-11-01. Uses the
-          selected report's date handling; does not filter products_and_inventory.
+        description: Upper completion-date filter, for example 2026-11-01. Omitted
+          or empty means no upper date bound. Uses the selected report's date handling;
+          does not filter products_and_inventory.
       - name: page
         in: query
         required: false
@@ -859,6 +866,11 @@ paths:
           maximum: 200
           default: 50
         description: Rows per page. Values above 200 are capped at 200.
+      - name: X-Api-Token
+        in: header
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Report rows, including an empty result
@@ -866,14 +878,9 @@ paths:
             application/json:
               schema:
                 type: object
-                required:
-                - data
-                - meta
-                - links
                 properties:
                   data:
                     type: array
-                    description: Row fields vary by report and subtype.
                     items:
                       type: object
                       additionalProperties: true
@@ -924,8 +931,18 @@ paths:
                         nullable: true
                       last:
                         type: string
-        '401':
-          description: Missing or invalid authentication, or no report permission
+                required:
+                - data
+                - meta
+                - links
+        '422':
+          description: invalid parameters, missing required filters or reporting errors
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '404':
+          description: unknown report type or nonexistent filter resource
           content:
             application/json:
               schema:
@@ -936,14 +953,8 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
-        '404':
-          description: An order cycle or distributor does not exist
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/error_response"
-        '422':
-          description: Invalid report, subtype, filters or pagination
+        '401':
+          description: Missing or invalid authentication, or no report permission
           content:
             application/json:
               schema:

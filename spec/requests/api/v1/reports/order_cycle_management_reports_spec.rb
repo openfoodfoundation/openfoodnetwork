@@ -43,7 +43,9 @@ RSpec.describe "Order cycle management reports", swagger_doc: "v1.yaml" do
     json_response[:data].map { |row| row[:special_instructions] }
   end
 
-  it "filters delivery rows by both order cycle and distributor" do
+  it "filters by both IDs without excluding older orders when dates are omitted" do
+    order.update_columns(completed_at: 2.months.ago)
+
     get "/api/v1/reports/order_cycle_management", params: {
       report_subtype: "delivery",
       order_cycle_id: order_cycle.id,

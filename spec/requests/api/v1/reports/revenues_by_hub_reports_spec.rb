@@ -69,7 +69,9 @@ RSpec.describe "Revenues by hub reports", swagger_doc: "v1.yaml" do
         login_as create(:admin_user)
       end
 
-      it "filters by both order cycle and distributor" do
+      it "filters by both IDs without excluding older orders when dates are omitted" do
+        order.update_columns(completed_at: 2.months.ago)
+
         get "/api/v1/reports/revenues_by_hub", params: {
           order_cycle_id: order_cycle.id,
           distributor_id: distributor.id
