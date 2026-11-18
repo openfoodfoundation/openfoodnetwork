@@ -4298,6 +4298,7 @@ en:
     notice_messages:
       variant_deleted: "Variant deleted"
     payment_method_not_supported: "Payment method not supported"
+    unable_to_connect_to_gateway: "Unable to connect to gateway."
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
     refund: "Refund"

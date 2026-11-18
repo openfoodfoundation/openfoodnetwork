@@ -408,6 +408,16 @@ RSpec.describe Spree::Payment do
               expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
             end
           end
+
+          context "if the gateway can't be reached" do
+            it "raises a gateway error" do
+              allow(payment_method).to receive(:capture)
+                .and_raise(ActiveMerchant::ConnectionError.new("timeout", nil))
+
+              expect { payment.capture! }
+                .to raise_error(Spree::Core::GatewayError, "Unable to connect to gateway.")
+            end
+          end
         end
 
         # Regression test for #2119
