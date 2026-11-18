@@ -26,7 +26,7 @@ linters:
       - "app/views/admin/contents/_fieldset.html.haml"
       - "app/views/admin/enterprises/form/_tag_rules.html.haml"
       - "app/views/admin/order_cycles/edit.html.haml"
-      - "app/views/admin/products_v3/product_preview.turbo_stream.haml"
+      - "app/views/admin/products_v3/_product_preview_list.html.haml"
       - "app/views/admin/reports/_date_range_form.html.haml"
       - "app/views/checkout/_details.html.haml"
       - "app/views/checkout/_payment.html.haml"
@@ -89,7 +89,7 @@ linters:
   # Offense count: 2
   MultilineScript:
     exclude:
-      - "app/views/admin/products_v3/product_preview.turbo_stream.haml"
+      - "app/views/admin/products_v3/_product_preview_list.html.haml"
       - "app/views/checkout/_voucher_section.html.haml"
 
   # Offense count: 2
@@ -142,7 +142,6 @@ linters:
       - "app/views/admin/enterprises/_new_form.html.haml"
       - "app/views/admin/enterprises/form/_shop_preferences.html.haml"
       - "app/views/admin/product_import/_import_review.html.haml"
-      - "app/views/admin/products_v3/product_preview.turbo_stream.haml"
       - "app/views/checkout/_details.html.haml"
       - "app/views/groups/show.html.haml"
       - "app/views/producer_mailer/order_cycle_report.html.haml"
