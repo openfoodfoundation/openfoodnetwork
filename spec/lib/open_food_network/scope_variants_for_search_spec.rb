@@ -79,7 +79,7 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
           "Enterprise Load",
           "Enterprise Load",
           "VariantOverride Load",
-          "SQL",
+          "Spree::Variant Eager Load",
           "Spree::Image Load",
           "Spree::Image Load"
         ]
