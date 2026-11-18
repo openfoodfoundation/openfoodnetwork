@@ -3,7 +3,7 @@ The Open Food Network is an online marketplace for local food.
 ## Tech stack
 
 - Rails monolith (Ruby version in `.ruby-version`, Node in `.node-version`, Yarn 1).
-  Postgres + Redis. The Gemfile enforces the exact Ruby version.
+  The Gemfile enforces the exact Ruby version.
 - Postgres
 - Redis
 - Sidekiq (Background Jobs)
