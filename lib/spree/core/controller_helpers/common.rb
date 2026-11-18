@@ -7,37 +7,11 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          helper_method :title
-          helper_method :title=
-          helper_method :accurate_title
-
           layout :pick_layout
 
           before_action :set_user_language
 
           protected
-
-          # This can be used in views as well as controllers.
-          # e.g. <% self.title = 'This is a custom title for this view' %>
-          attr_writer :title
-
-          def title
-            title_string = @title.presence || accurate_title
-            if title_string.present?
-              [title_string, default_title].join(' - ')
-            else
-              default_title
-            end
-          end
-
-          def default_title
-            Spree::Config[:site_name]
-          end
-
-          # This is a hook for subclasses to provide title
-          def accurate_title
-            Spree::Config[:default_seo_title]
-          end
 
           def render404(_exception = nil)
             respond_to do |type|

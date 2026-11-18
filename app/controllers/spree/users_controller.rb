@@ -65,10 +65,6 @@ module Spree
       end
     end
 
-    def accurate_title
-      Spree.t(:my_account)
-    end
-
     def user_params
       ::PermittedAttributes::User.new(params).call
     end

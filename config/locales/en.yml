@@ -4376,7 +4376,6 @@ en:
     general_settings: "General Settings"
     site_name: "Site Name"
     site_url: "Site URL"
-    default_seo_title: "Default Seo Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     currency_decimal_mark: "Currency decimal mark"

@@ -44,10 +44,6 @@ module Spree
 
     attr_reader :shopfront_redirect
 
-    def accurate_title
-      Spree.t(:login)
-    end
-
     def handle_unconfirmed_email
       render_unconfirmed_response if email_unconfirmed?
     end
