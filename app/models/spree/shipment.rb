@@ -333,18 +333,6 @@ module Spree
       self.number = random
     end
 
-    def description_for_shipping_charge
-      "#{Spree.t(:shipping)} (#{shipping_method.name})"
-    end
-
-    def validate_shipping_method
-      return if shipping_method.nil?
-
-      return if shipping_method.include?(address)
-
-      errors.add :shipping_method, Spree.t(:is_not_available_to_shipment_address)
-    end
-
     def after_ship
       inventory_units.each(&:ship!)
       fee_adjustment.finalize!
