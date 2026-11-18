@@ -1,4 +1,4 @@
-- if feature?(:product_grid_view, @current_user)
+- if product_grid_view?
   .row
     - frame_options = { "data-turbo": "true", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts turbo:before-fetch-request->product-grid-view#showLoading turbo:frame-load->product-grid-view#scrollToTop" }
     - if current_order_cycle.present?

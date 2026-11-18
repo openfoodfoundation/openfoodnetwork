@@ -27,10 +27,17 @@ module ApplicationHelper
     OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
   end
 
+  # Whether shops display their products as a grid rather than a list. The shopfront and the
+  # admin product preview both ask here, so that they always agree.
+  # TODO: follow the shop's own setting once enterprises can choose it (#14001).
+  def product_grid_view?
+    feature?(:product_grid_view, spree_current_user)
+  end
+
   # The product grid view comes with the server-rendered Turbo cart,
   # which replaces the AngularJS cart in the shopfront.
   def use_turbo_cart?
-    feature?(:product_grid_view, spree_current_user)
+    product_grid_view?
   end
 
   def language_meta_tags
