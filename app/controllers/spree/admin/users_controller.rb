@@ -79,7 +79,7 @@ module Spree
 
       # handling raise from Admin::ResourceController#destroy
       def user_destroy_with_orders_error
-        render status: :forbidden, text: I18n.t("spree.error_user_destroy_with_orders")
+        render status: :forbidden, plain: I18n.t("spree.error_user_destroy_with_orders")
       end
 
       # Allow different formats of json data to suit different ajax calls
