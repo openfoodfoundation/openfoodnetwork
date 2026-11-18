@@ -581,6 +581,42 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
 
         expect(page).not_to have_content("Product preview")
       end
+
+      context "when shops display products as a grid", feature: :product_grid_view do
+        it "shows the product as a tile of the shop grid" do
+          visit admin_products_url
+
+          within row_containing_name("Apples") do
+            open_action_menu
+            click_link "Preview"
+          end
+
+          within "#product-preview-modal" do
+            expect(page).to have_content "Apples | multiple options"
+            expect(page).to have_content "from $19.99"
+            expect(page).not_to have_link "Apples"
+
+            click_button "Select"
+            within ".variant-modal" do
+              expect(page).to have_content "Apples"
+              expect(page).to have_button "Add", count: 2
+
+              # Nothing is added to the cart
+              click_button "Add", match: :first
+              expect(page).to have_button "Add", count: 2
+
+              click_button "Close"
+            end
+            expect(page).not_to have_button "Add"
+
+            # The preview itself is still open
+            expect(page).to have_content "Product preview"
+
+            find("a", text: "Product details").click
+            expect(page).to have_selector "h3", text: "Apples"
+          end
+        end
+      end
     end
   end
 

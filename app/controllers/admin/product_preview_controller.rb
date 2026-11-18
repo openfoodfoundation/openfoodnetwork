@@ -8,6 +8,9 @@ module Admin
       @product = Spree::Product.find(params[:id])
       authorize! :show, @product
 
+      @grid_view = helpers.product_grid_view?
+      @product_view = ProductPreviewRenderer.new(@product).product_view if @grid_view
+
       respond_with do |format|
         format.turbo_stream {
           render "admin/products_v3/product_preview", status: :ok

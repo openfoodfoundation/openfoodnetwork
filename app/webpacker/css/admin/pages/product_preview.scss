@@ -1,6 +1,11 @@
+@use "sass:meta";
+
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
 @import "../../darkswarm/shop_partials/property-selector-base";
+
+// The shop rounds its buttons in darkswarm/ui.scss, which the admin doesn't load
+$shop-button-radius: 0.5em;
 
 #product-preview {
   // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
@@ -226,6 +231,51 @@
       .ofn-thumbnail-carousel__thumb {
         overflow: hidden;
       }
+    }
+  }
+
+  // Grid view: the shop's product tile, centred, as wide as a column of the shop's grid.
+  // The tile and its variant modal bring their own styles, loaded here only.
+  .product-preview-grid {
+    // The tile's width, set by the shop's grid in darkswarm/product-grid.scss
+    --column-width: 250px;
+
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    font-family: $body-font;
+    color: $darker-grey;
+
+    @include meta.load-css("product_tile_component/product_tile_component");
+    @include meta.load-css("add_to_cart_component/add_to_cart_component");
+    @include meta.load-css("info_popover_component/info_popover_component");
+    @include meta.load-css("shop_variant_list_component/shop_variant_list_component");
+    @include meta.load-css("shop_variant_modal_component/shop_variant_modal_component");
+
+    // Add buttons look as they do in the shop, not faded like in the list preview below
+    button.add-variant {
+      opacity: 1;
+    }
+
+    // The select button is a primary button in the shop, from darkswarm/ui.scss
+    button.primary {
+      background: $orange-450;
+      border-radius: $shop-button-radius;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background: $orange-400;
+        text-shadow: 0 1px 0 $orange-450;
+      }
+    }
+
+    // The close button of the variant modal is a tiny one, as in the shop
+    // from foundation-sites/scss/foundations/components/_buttons.scss
+    .variant-modal .header button.tiny {
+      margin: 0;
+      padding: 0.625rem 1.25rem 0.6875rem;
+      border-radius: $shop-button-radius;
     }
   }
 }
