@@ -76,20 +76,20 @@ module Spree
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
         @variant = Spree::Variant.find(params[:id])
-        flash[:success] = delete_variant
+        if VariantDeleter.new.delete(@variant)
+          flash[:success] = I18n.t("spree.notice_messages.variant_deleted")
+        else
+          error = @variant.errors.full_messages.to_sentence
+          # The variants index deletes with Ajax and shows the response body as the error.
+          return render(plain: error, status: :unprocessable_entity) if request.xhr?
+
+          flash[:error] = error
+        end
 
         redirect_to admin_product_variants_url(params[:product_id], @url_filters)
       end
 
       protected
-
-      def delete_variant
-        if VariantDeleter.new.delete(@variant)
-          I18n.t("spree.notice_messages.variant_deleted")
-        else
-          I18n.t("spree.notice_messages.variant_not_deleted")
-        end
-      end
 
       def create_before
         @object.save
