@@ -6,13 +6,14 @@ The Open Food Network is an online marketplace for local food.
   Postgres + Redis. The Gemfile enforces the exact Ruby version.
 - Postgres
 - Redis
-- Sidequik (Background Jobs)
+- Sidekiq (Background Jobs)
 - Rspec (testing)
 
 ## Setup
 
 Ruby, gems, Postgres, Redis, Node and Chrome are all needed for specs. Setup steps for
-a typical machine are in `GETTING_STARTED.md`; `bin/setup` checks for missing tools.
+a typical machine are in `GETTING_STARTED.md`; `script/setup-debian` sets up Ubuntu
+containers as well and checks for missing tools.
 
 ```bash
 bin/rails db:create db:schema:load          # dev + test DBs (user ofn / password f00d)
@@ -20,7 +21,7 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
 
 - Develop natively; the `Dockerfile` setup is too slow for active work and not maintained
 - Start the dev server with `bundle exec foreman start`
-- After pulling new migrations, run `bin/rails db:migrate` (and `bin/rake db:test:prepare`).
+- After pulling new migrations, run `bin/setup`
 
 
 ## Testing
@@ -37,15 +38,12 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
   than adding to `.rubocop_todo.yml`.
 - Lint changed files only:
   ```bash
-  bundle exec rubocop --force-exclusion $(git diff --name-only --diff-filter=AM origin/master -- '*.rb')
+  ./script/rubocop-diff.sh
   ```
+  Use `-a` to autocorrect.
   ```bash
   bundle exec haml-lint $(git diff --name-only --diff-filter=AM origin/master -- '*.haml')
   ```
-  Always pass `--force-exclusion` when giving explicit files (especially with `-a`),
-  or RuboCop rewrites excluded files like `config/routes.rb`.
-  Shortcuts: `./script/rubocop-diff.sh` (RuboCop on files changed vs `HEAD`; `-a` to
-  autocorrect) 
 - Prettify javascript file with `npx prettier --check <files>`
 - System specs run on **Cuprite** (Ferrum, Chrome DevTools protocol;
   `spec/system/support/cuprite_setup.rb`), not Selenium or chromedriver. `HEADLESS=false`
@@ -133,8 +131,6 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
   `git diff pre-rebase-backup HEAD` / `git range-diff` afterwards. Push with
   `git push --force-with-lease=<branch>:<sha>`, only on your own branches.
 - If the maintainer pushes to your branch, re-fetch before pushing; drop duplicate fixes.
-- Never commit `dump.rdb` (Redis drops it in the repo root), `Gemfile.local*`,
-  temporary specs, or `.claude/worktrees/`.
 
 ### Pull requests
 
