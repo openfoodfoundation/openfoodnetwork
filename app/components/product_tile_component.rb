@@ -5,14 +5,18 @@
 # Takes a ViewData::Product whose variants have already been filtered for this shop's order
 # cycle and hub, so the tile can't reach back to ActiveRecord and show variants this shop
 # doesn't sell.
+#
+# The admin product preview renders it with `preview: true` and no shop: the tile then links
+# nowhere and can't add to the cart, but its variant modal still opens and closes.
 class ProductTileComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
-  def initialize(product:, shop:, variants_in_cart:, low_stock_display:)
+  def initialize(product:, shop:, variants_in_cart:, low_stock_display:, preview: false)
     @product = product
     @shop = shop
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
+    @preview = preview
   end
 
   # A product with no variant available in this shop has no producer and no price to show.
@@ -22,10 +26,14 @@ class ProductTileComponent < ViewComponent::Base
 
   private
 
-  attr_reader :product, :shop, :variants_in_cart, :low_stock_display
+  attr_reader :product, :shop, :variants_in_cart, :low_stock_display, :preview
 
-  def product_path
-    helpers.main_app.enterprise_product_path(shop, product)
+  # The preview has no shop to link to. The grid is a turbo frame, which would load the
+  # product page into itself.
+  def link_attributes
+    return {} if preview
+
+    { href: helpers.main_app.enterprise_product_path(shop, product), 'data-turbo-frame': "_top" }
   end
 
   # Single variant: {product name} | [{variant name} |] {unit or custom unit label}

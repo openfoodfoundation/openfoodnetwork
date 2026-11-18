@@ -1,9 +1,8 @@
--# locals: (product:, variants_in_cart:, low_stock_display:)
+-# locals: (product:, variants_in_cart:, low_stock_display:, preview:)
 
 .product-item
   .product-content
-    -# The grid is a turbo frame, which would load the product page into itself.
-    %a.product-link{ href: product_path, "data-turbo-frame": "_top" }
+    %a.product-link{ **link_attributes }
       - if product.group_buy
         %span.bulk-label= t("components.product_tile.bulk")
       - if product.image
@@ -21,6 +20,6 @@
 
     .variant
       - if product.single_variant?
-        = render AddToCartComponent.new(variant: product.variant, cart_item: variants_in_cart[product.variant.id], low_stock_display:)
+        = render AddToCartComponent.new(variant: product.variant, cart_item: variants_in_cart[product.variant.id], low_stock_display:, preview:)
       - else
-        = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:)
+        = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:, preview:)
