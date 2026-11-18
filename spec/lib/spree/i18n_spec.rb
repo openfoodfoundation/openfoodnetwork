@@ -24,6 +24,12 @@ RSpec.describe "i18n" do
     allow(ActionView::Helpers::TranslationHelper).
       to receive(:raise_on_missing_translations).
       and_return(false)
+
+    # Rails 8.1 reports missing translations to the I18n exception handler
+    # even when it returns a fallback. Our spec_helper installs a handler
+    # which raises, so use the default handler here.
+    allow(I18n).to receive(:exception_handler).
+      and_return(I18n::ExceptionHandler.new)
   end
 
   it "translates within the spree scope" do
