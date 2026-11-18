@@ -139,7 +139,7 @@ module InjectionHelper
 
   def inject_feature_flag
     name = "productGridViewFeature"
-    json = { enabled: feature?(:product_grid_view, spree_current_user) }.to_json
+    json = { enabled: product_grid_view? }.to_json
 
     render partial: "json/injection_ams", locals: { name:, json: }
   end
