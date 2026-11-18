@@ -17,11 +17,8 @@ module Spree
       end
 
       def testmail
-        if TestMailer.test_email(spree_current_user).deliver_now
-          flash[:success] = Spree.t('admin.mail_methods.testmail.delivery_success')
-        else
-          flash[:error] = Spree.t('admin.mail_methods.testmail.delivery_error')
-        end
+        TestMailer.test_email(spree_current_user).deliver_now
+        flash[:success] = Spree.t('admin.mail_methods.testmail.delivery_success')
       rescue StandardError
         flash[:error] = Spree.t('admin.mail_methods.testmail.error')
       ensure
