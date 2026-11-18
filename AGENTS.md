@@ -150,4 +150,3 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
   which commits are new.
 - When later commits make the description stale, update it: `gh pr view N --json body`
   into a file, edit it, then `gh pr edit N --body-file`.
-  local variables or `let`.
