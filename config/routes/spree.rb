@@ -24,8 +24,6 @@ scope module: 'spree' do
   devise_scope :spree_user do
     post '/login' => 'user_sessions#create', :as => :create_new_session
     get '/logout' => 'user_sessions#destroy', :as => :logout
-    get '/password/recover' => 'user_passwords#new', :as => :recover_password
-    post '/password/recover' => 'user_passwords#create', :as => :reset_password
     get '/password/change' => 'user_passwords#edit', :as => :edit_password
     put '/password/change' => 'user_passwords#update', :as => :update_password
   end
