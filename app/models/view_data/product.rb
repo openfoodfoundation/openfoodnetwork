@@ -10,6 +10,11 @@
 ViewData::Product = Data.define(:id, :name, :description, :image, :images, :variant_images,
                                 :properties_including_inherited, :variants, :group_buy,
                                 :to_param) do
+  # From a Spree::Product, with its variants already turned into ViewData::Variant.
+  def self.from_record(product, variants:)
+    new(**product.slice(*members), variants:)
+  end
+
   def single_variant?
     variants.one?
   end
