@@ -99,8 +99,6 @@ scope module: 'spree' do
       resources :payments, only: [:index, :show, :new, :create] do
         member do
           put :fire
-          get 'paypal_refund'
-          post 'paypal_refund'
         end
       end
 

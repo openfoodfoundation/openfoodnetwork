@@ -5100,19 +5100,11 @@ en:
       paused: paused
       canceled: cancelled
     paypal:
-      already_refunded: "This payment has been refunded and no further action can be taken on it."
       no_payment_via_admin_backend: "You cannot charge PayPal accounts through the admin backend at this time."
       transaction: "PayPal Transaction"
       payer_id: "Payer ID"
       transaction_id: "Transaction ID"
       token: "Token"
-      refund: "Refund"
-      refund_amount: "Amount"
-      original_amount: "Original amount: %{amount}"
-      refund_successful: "PayPal refund successful"
-      refund_unsuccessful: "PayPal refund unsuccessful"
-      actions:
-        refund: "Refund"
       flash:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."
