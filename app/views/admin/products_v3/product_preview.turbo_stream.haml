@@ -13,7 +13,11 @@
       .tabs-content
         .content.active
           %div{ data: { "tabs-target": "content" } }
-            = render partial: "admin/products_v3/product_preview_list", locals: { product: @product }
+            - if @grid_view
+              .product-preview-grid
+                = render ProductTileComponent.new(product: @product_view, shop: nil, variants_in_cart: ViewData::CartItem.index([]), low_stock_display: false, preview: true)
+            - else
+              = render partial: "admin/products_v3/product_preview_list", locals: { product: @product }
 
           %div{ data: { "tabs-target": "content" } }
             = render partial: "shared/product/product_details", locals: { product: @product }
