@@ -1,3 +1,4 @@
+- # NOTE: make sure that any changes to the list view in this template are reflected in app/views/admin/products_v3/_product_preview_list.html.haml
 - if product_grid_view?
   .row
     - frame_options = { "data-turbo": "true", "data-controller": "product-grid-view", "data-action": "orderCycleSelected@window->product-grid-view#updateProducts turbo:before-fetch-request->product-grid-view#showLoading turbo:frame-load->product-grid-view#scrollToTop" }

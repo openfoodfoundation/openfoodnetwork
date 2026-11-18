@@ -13,73 +13,7 @@
       .tabs-content
         .content.active
           %div{ data: { "tabs-target": "content" } }
-            .product-thumb
-              %a
-                - if @product.group_buy
-                  %span.product-thumb__bulk-label
-                    = t(".bulk")
-                = image_tag @product.image&.url(:small) || Spree::Image.default_image_url(:small)
-
-            .summary
-              .summary-header
-                %h3
-                  %a
-                    %span
-                      = @product.name
-                - if @product.description
-                  .product-description{ "data-controller": "add-blank-to-link" }
-                    - # description is sanitized in Spree::Product#description method
-                    = @product.description.html_safe
-
-                - if @product.variants.first.enterprise.visible
-                  %div
-                    .product-producer
-                      = t :products_from
-                      %span
-                        %a 
-                          = @product.variants.first.enterprise.name
-                .product-properties.filter-shopfront.property-selectors
-                  .filter-shopfront.property-selectors.inline-block
-                    %ul
-                      - @product.properties_including_inherited.each do |property|
-                        %li
-                          - if property[:value].present?
-                            = render TooltipComponent.new(text: property[:value], element_text: property[:name], placement: "bottom")
-                          - else
-                            %a
-                              %span
-                                = property[:name] 
-            .shop-variants
-              - @product.variants.sort_by { |v| [v.name_to_display.downcase, v.unit_value.to_f] }.each do |variant|
-                .variants.row
-                  .small-3.columns.variant-name
-                    - if variant.display_name.present?
-                      .inline
-                        = variant.display_name
-                    .variant-unit
-                      = variant.unit_to_display
-                  .small-4.medium-3.columns.variant-price
-                    = Spree::Money.new(variant.price)
-                    .unit-price.variant-unit-price
-                      = render TooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), element_text: "", placement: "top", element_class: "question-mark-icon")
-                      - # TODO use an helper
-                      - unit_price = UnitPrice.new(variant)
-                      - price_per_unit = variant.price / (unit_price.denominator || 1)
-                      = "#{Spree::Money.new(price_per_unit)}&nbsp;/&nbsp;#{unit_price.unit}".html_safe
-
-
-                  .medium-3.columns.total-price
-                    %span
-                      = Spree::Money.new(0.00) 
-                  .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
-                    .variant-quantity-inputs
-                      %button.add-variant
-                        = t("js.shopfront.variant.add_to_cart")
-
-                    - # TODO can't check the shop preferrence here, display by default ?
-                    - if !variant.on_demand && variant.on_hand <= 3
-                      .variant-remaining-stock
-                        = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand, count: variant.on_hand)
+            = render partial: "admin/products_v3/product_preview_list", locals: { product: @product }
 
           %div{ data: { "tabs-target": "content" } }
             = render partial: "shared/product/product_details", locals: { product: @product }
