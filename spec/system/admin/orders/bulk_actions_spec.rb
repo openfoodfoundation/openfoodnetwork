@@ -124,13 +124,12 @@ RSpec.describe '
                                          "for all selected complete orders."
             expect(page).to have_content "Are you sure you want to proceed?"
 
-            within ".reveal-modal" do
-              expect {
+            expect {
+              within ".reveal-modal" do
                 find_button("Confirm").click
-              }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
-            end
-
-            expect(page).to have_content "Invoice emails sent for 2 orders."
+              end
+              expect(page).to have_content "Invoice emails sent for 2 orders."
+            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
         end
 
