@@ -78,6 +78,7 @@ module Spree
 
               before_transition to: :delivery, do: :create_proposed_shipments
               before_transition to: :delivery, do: :ensure_available_shipping_rates
+              before_transition to: :payment, do: :apply_balance_due
               before_transition to: :payment, do: :apply_customer_credit
 
               before_transition to: :confirmation, do: :validate_payment_method!
@@ -90,6 +91,7 @@ module Spree
               end
 
               after_transition to: :complete, do: :finalize!
+              after_transition to: :complete, do: :settle_balance_due
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
             end

@@ -465,6 +465,60 @@ RSpec.describe Spree::Admin::PaymentsController do
     end
   end
 
+  describe "POST /admin/orders/:order_number/payments/carry_over_balance" do
+    let(:customer_credit_service_mock) { instance_double(Orders::CustomerCreditService) }
+
+    before do
+      expect(Orders::CustomerCreditService).to receive(:new).and_return(
+        customer_credit_service_mock
+      )
+      allow(customer_credit_service_mock).to receive(:apply)
+    end
+
+    it "carries the balance over and redirects to the payments page" do
+      success = Orders::CustomerCreditService::Response.new(
+        success: true, message: "Balance carried over to next order"
+      )
+      expect(customer_credit_service_mock).to receive(:carry_balance)
+        .with(user: anything).and_return(success)
+
+      post("/admin/orders/#{order.number}/payments/carry_over_balance")
+
+      expect(response).to redirect_to(admin_order_payments_path(order))
+      expect(flash[:success]).to eq "Balance carried over to next order"
+    end
+
+    context "when the balance can't be carried over" do
+      it "redirects to the payments page with an error" do
+        failure = Orders::CustomerCreditService::Response.new(success: false, message: "Some error")
+        expect(customer_credit_service_mock).to receive(:carry_balance).and_return(failure)
+
+        post("/admin/orders/#{order.number}/payments/carry_over_balance")
+
+        expect(response).to redirect_to(admin_order_payments_path(order))
+        expect(flash[:error]).to eq "Some error"
+      end
+    end
+  end
+
+  describe "POST /admin/orders/:order_number/payments/carry_over_balance with an underpaid order" do
+    let(:order) { create(:completed_order_with_fees) }
+
+    before do
+      payment = order.payments.first
+      payment.complete!
+      payment.update(amount: order.total - 0.57)
+      order.update_order!
+    end
+
+    it "marks the order as paid" do
+      post("/admin/orders/#{order.number}/payments/carry_over_balance")
+
+      expect(order.reload.payment_state).to eq("paid")
+      expect(order.customer.credit_balance).to eq(-0.57)
+    end
+  end
+
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
     OrderManagement::Order::Updater.new(order).update_voucher

@@ -138,7 +138,9 @@
               %span{ 'ng-bind' => '::customer.balance' }
             %td.balance.align-center{ 'ng-show' => 'columns.credit.visible', "data-turbo": true}
               %a{ "ng-href": "{{customer.available_credit_url}}", "data-turbo-stream": "" }
-                %span{ :id => "customer-credit-{{customer.id}}", 'ng-bind' => '::customer.available_credit' }
+                %span{ :id => "customer-credit-{{customer.id}}" }
+                  %span.state.balance_due.white-space-nowrap{ 'ng-show' => "customer.credit_status == 'carried_over'" }= t('.carried_over')
+                  %span{ 'ng-bind' => '::customer.available_credit' }
             %td.actions
               %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
 

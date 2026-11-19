@@ -11,17 +11,8 @@ module Orders
     end
 
     def refund(user: nil) # rubocop:disable Metrics/AbcSize
-      if order.payment_state != "credit_owed"
-        return Response.new(
-          success: false, message: I18n.t(:no_credit_owed, scope: translation_scope)
-        )
-      end
-
-      if order.customer.nil?
-        return Response.new(
-          success: false, message: I18n.t(:customer_missing, scope: translation_scope)
-        )
-      end
+      return failure(:no_credit_owed) if order.payment_state != "credit_owed"
+      return failure(:customer_missing) if order.customer.nil?
 
       amount = order.new_outstanding_balance
       order.customer.with_lock do
@@ -44,9 +35,57 @@ module Orders
       Response.new(success: false, message: e.to_s)
     end
 
+    # Settles an underpaid order by moving its balance due to the customer's account: the order is
+    # paid with a customer credit payment, and a negative account transaction records the debt,
+    # which is added to the customer's next order (see Orders::BalanceDueService).
+    # The caller needs to update the order afterwards so it's marked as paid.
+    def carry_balance(user: nil)
+      error_key = carry_balance_error_key
+      return failure(error_key) if error_key
+
+      order.customer.with_lock { create_carry_balance_records(order.new_outstanding_balance, user) }
+
+      Response.new(success: true, message: I18n.t(:carry_over_successful, scope: translation_scope))
+    rescue StandardError => e
+      order.payments.reload
+      log_error(e)
+      Response.new(success: false, message: e.to_s)
+    end
+
     private
 
     attr_reader :order
+
+    def carry_balance_error_key
+      if order.customer.nil?
+        :customer_missing
+      elsif order.payment_state != "balance_due"
+        :no_balance_due
+      elsif order.payments.completed.none?
+        :no_completed_payment
+      elsif order.customer.guest?
+        :guest_customer
+      elsif credit_payment_method.nil?
+        :credit_payment_method_missing
+      end
+    end
+
+    def failure(translation_key)
+      Response.new(success: false, message: I18n.t(translation_key, scope: translation_scope))
+    end
+
+    def create_carry_balance_records(amount, user)
+      payment = order.payments.create!(payment_method: credit_payment_method, amount:,
+                                       state: "completed", skip_source_validation: true)
+      order.customer.customer_account_transactions.create!(
+        amount: -amount,
+        currency: CurrentConfig.get(:currency),
+        payment:,
+        created_by: user,
+        description: I18n.t(:carry_over_description, scope: translation_scope,
+                                                     order_number: order.number)
+      )
+    end
 
     def add_payment_with_credit
       if credit_payment_method.nil?
@@ -96,23 +135,6 @@ module Orders
 
     def translation_scope
       "customer_credit_service"
-    end
-
-    class Response
-      attr_reader :message
-
-      def initialize(success:, message:)
-        @success = success
-        @message = message
-      end
-
-      def success?
-        @success
-      end
-
-      def failure?
-        !success?
-      end
     end
   end
 end

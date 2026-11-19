@@ -5,7 +5,7 @@ module Spree
     class PaymentsController < Spree::Admin::BaseController
       before_action :load_order
       before_action :load_payment, only: [:fire, :show]
-      before_action :load_data, except: [:credit_customer]
+      before_action :load_data, except: [:credit_customer, :carry_over_balance]
       before_action :can_transition_to_payment
       # We ensure that items are in stock before all screens if the order is in the Payment state.
       # This way, we don't allow someone to enter credit card details for an order only to be told
@@ -97,6 +97,20 @@ module Spree
 
         if response.success?
           flash[:success] = Spree.t(:customer_credit_successful, scope: "admin.payments")
+        else
+          flash[:error] = response.message
+        end
+
+        redirect_to admin_order_payments_path(@order)
+      end
+
+      def carry_over_balance
+        response = ::Orders::CustomerCreditService.new(@order)
+          .carry_balance(user: spree_current_user)
+
+        if response.success?
+          @order.update_totals_and_states
+          flash[:success] = response.message
         else
           flash[:error] = response.message
         end

@@ -915,6 +915,7 @@ en:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+        carried_over: "Carried over"
         id: Id
         customer_type: "Type"
         individual: "Individual"
@@ -926,9 +927,11 @@ en:
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
         has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
+        has_balance_due: "Delete failed: This customer has a balance due that will be added to their next order. Clear it with 'Add credit' before deleting."
     customer_account_transaction:
       index:
         available_credit: "Available credit: %{available_credit}"
+        balance_due: "Balance due: %{balance_due}"
         transaction_date: Transaction Date
         description: Description
         amount: Amount
@@ -2234,6 +2237,7 @@ en:
 # app/views/checkout/_already_ordered.html.haml.
 #
   checkout:
+    balance_due_message_html: "%{amount} balance due from order(s) %{order_numbers} has been added to this order."
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
     order_not_loaded: "No valid order found for checkout processing"
@@ -3671,6 +3675,7 @@ en:
   order_information: "Order Information"
   new_payment: "New Payment"
   credit_customer: Credit customer
+  carry_balance_to_next_order: Carry balance to next order
   create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -3746,7 +3751,7 @@ en:
           message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
         available_credit_info:
           title: "Available Credit"
-          message: "Clicking the available credit amount displays a popup record of credits applied and/or deducted from the customer's credit balance. Enterprise managers can also add credits to a customer's account using the 'add credit' button which displays above the credit record"
+          message: "Clicking the available credit amount displays a popup record of credits applied and/or deducted from the customer's credit balance. Enterprise managers can also add credits to a customer's account using the 'add credit' button which displays above the credit record. A red 'Carried over' amount is a balance due from a previous order, which will be added to the customer's next order."
       panels:
         save: SAVE
         saved: SAVED
@@ -4662,6 +4667,7 @@ en:
           send_invoice: "Send Invoices"
           send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
           credit_orders: Credit orders
+          carry_over_balance: Carry balance to next order
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4700,6 +4706,8 @@ en:
           order_total: "Order Total"
         bulk_credit:
           could_not_credit: "Order #%{order_number} could not be credited : %{message}"
+        bulk_carry_over_balance:
+          could_not_carry_over: "Order #%{order_number} could not be carried over : %{message}"
       invoices:
         index:
           order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
@@ -5334,3 +5342,11 @@ en:
     customer_missing: No customer is assigned to this order
     credit_payment_method_missing: Customer credit payment method is missing, please check configuration
     refund_sucessful: Refund successful!
+    no_balance_due: No balance due
+    no_completed_payment: Only orders with at least one completed payment can be carried over
+    guest_customer: Balances can't be carried over for guest customers
+    carry_over_description: "Balance due carried over from order %{order_number}"
+    carry_over_successful: Balance carried over to next order
+  balance_due_service:
+    label: "Balance due from previous order(s) %{order_numbers}"
+    paid_description: "Balance due paid on order %{order_number}"

@@ -212,4 +212,131 @@ RSpec.describe Orders::CustomerCreditService do
       end
     end
   end
+
+  describe "#carry_balance" do
+    let(:order) { create(:completed_order_with_fees) }
+
+    before do
+      # Underpay by 0.57 to put the order payment state in "balance_due"
+      payment = order.payments.first
+      payment.complete!
+      payment.update(amount: order.total - 0.57)
+      order.update_order!
+    end
+
+    it "settles the order with a completed customer credit payment" do
+      original_total = order.total
+
+      expect { subject.carry_balance(user:) }.to change { order.payments.count }.by(1)
+      order.update_totals_and_states
+
+      last_payment = order.payments.reload.order(:id).last
+      expect(last_payment.payment_method).to eq(credit_payment_method)
+      expect(last_payment.amount).to eq(0.57)
+      expect(last_payment.state).to eq("completed")
+
+      expect(order.reload.payment_state).to eq("paid")
+      expect(order.total).to eq(original_total)
+    end
+
+    it "records the balance due as a negative customer account transaction" do
+      subject.carry_balance(user:)
+
+      last_transaction = order.customer.customer_account_transactions.last
+      expect(last_transaction.amount).to eq(-0.57)
+      expect(last_transaction.balance).to eq(-0.57)
+      expect(last_transaction.created_by).to eq(user)
+      expect(last_transaction.payment).to eq(order.payments.order(:id).last)
+      expect(last_transaction.description).to eq(
+        "Balance due carried over from order #{order.number}"
+      )
+    end
+
+    it "returns a successful response" do
+      response = subject.carry_balance(user:)
+
+      expect(response.success?).to eq(true)
+      expect(response.message).to eq("Balance carried over to next order")
+    end
+
+    context "when the customer already has credit" do
+      before do
+        create(:customer_account_transaction, amount: 1.00, customer: order.customer)
+      end
+
+      it "deducts the balance due from the existing credit" do
+        subject.carry_balance(user:)
+
+        expect(order.customer.reload.credit_balance).to eq(0.43)
+      end
+    end
+
+    context "when the carry-over payment is voided" do
+      it "restores the balance due on the order and the customer's balance" do
+        subject.carry_balance(user:)
+        order.update_totals_and_states
+        carry_over_payment = order.payments.order(:id).last
+
+        carry_over_payment.internal_void!
+
+        expect(order.reload.payment_state).to eq("balance_due")
+        expect(order.customer.reload.credit_balance).to eq(0.00)
+      end
+    end
+
+    context "when the order payment state is not 'balance_due'" do
+      before { order.update_column(:payment_state, "paid") }
+
+      it "does nothing and returns a failed response" do
+        response = nil
+        expect { response = subject.carry_balance(user:) }
+          .not_to change { [order.payments.count, CustomerAccountTransaction.count] }
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("No balance due")
+      end
+    end
+
+    context "when the order has no completed payment" do
+      before do
+        order.payments.each { |payment| payment.update_column(:state, "pending") }
+      end
+
+      it "returns a failed response" do
+        response = subject.carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq(
+          "Only orders with at least one completed payment can be carried over"
+        )
+      end
+    end
+
+    context "when the customer is a guest" do
+      before { order.customer.update_column(:user_id, nil) }
+
+      it "returns a failed response" do
+        response = subject.carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq(
+          "Balances can't be carried over for guest customers"
+        )
+      end
+    end
+
+    context "when the order has no customer" do
+      before do
+        order.update_column(:customer_id, nil)
+        order.reload
+      end
+
+      it "returns a failed response" do
+        response = subject.carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("No customer is assigned to this order")
+      end
+    end
+  end
 end

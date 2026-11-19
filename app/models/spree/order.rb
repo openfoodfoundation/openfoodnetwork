@@ -740,5 +740,13 @@ module Spree
     def apply_customer_credit
       Orders::CustomerCreditService.new(self).apply
     end
+
+    def apply_balance_due
+      Orders::BalanceDueService.new(self).apply
+    end
+
+    def settle_balance_due
+      Orders::BalanceDueService.new(self).settle
+    end
   end
 end

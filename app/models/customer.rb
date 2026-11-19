@@ -16,6 +16,10 @@ class Customer < ApplicationRecord
 
   searchable_attributes :first_name, :last_name, :email, :code
 
+  # A customer can be the originator of a "balance due" adjustment (see Orders::BalanceDueService).
+  # Spree::Adjustment loads originators `with_deleted`, which only soft-deletable models provide.
+  scope :with_deleted, -> { all }
+
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User", optional: true
   has_many :orders, class_name: "Spree::Order", dependent: :nullify
@@ -97,8 +101,10 @@ class Customer < ApplicationRecord
   end
 
   def validate_destroy
-    if credit_balance != 0
-      errors.add(:base, I18n.t('admin.customers.destroy.has_outstanding_credit'))
+    balance = credit_balance
+    if balance != 0
+      key = balance.negative? ? 'has_balance_due' : 'has_outstanding_credit'
+      errors.add(:base, I18n.t("admin.customers.destroy.#{key}"))
       throw :abort
     end
     return unless Subscription.where(customer_id: id).not_canceled.any?
