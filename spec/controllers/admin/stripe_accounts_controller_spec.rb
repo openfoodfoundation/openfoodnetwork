@@ -34,6 +34,14 @@ RSpec.describe Admin::StripeAccountsController do
         expect(flash[:error]).to eq "Failed to disconnect Stripe."
         expect(response).to redirect_to admin_dashboard_path
       end
+
+      it "redirects to the dashboard with a full page load when requested by Turbo" do
+        spree_delete :destroy, params.merge(format: :turbo_stream)
+
+        expect(flash[:error]).to eq "Failed to disconnect Stripe."
+        expect(response.body).to include 'action="redirect_to"', 'turbo="false"',
+                                         admin_dashboard_path
+      end
     end
 
     context "when the specified stripe account exists", :vcr, :stripe_version do
