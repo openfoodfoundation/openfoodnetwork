@@ -81,6 +81,9 @@ module OpenFoodNetwork
       "fdc-staging" => <<~DESC,
         Show DFC Permissions interface to share data with the FDC staging platform.
       DESC
+      "nano_payments" => <<~DESC,
+        Offer Nano (XNO) as a payment method that shops can add and configure.
+      DESC
     }.merge(conditional_features).freeze;
 
     # Features you would like to be enabled to start with.

@@ -3621,6 +3621,33 @@ en:
   payment_method_taler:
     order_summary: "Open Food Network order"
     order_creation_failed: "The Taler payment backend could not create the order. Please try again or contact the shop."
+  payment_method_nano:
+    status:
+      paid: "Paid"
+      invalid_hash: "A block hash is 64 characters, 0-9 and A-F."
+      already_used: "This block has already been used for another payment."
+      node_unavailable: "The Nano node could not be reached. Please try again in a moment."
+      not_confirmed: "This block is not confirmed yet. Please wait a few seconds and try again."
+      not_a_send: "This block is not a Nano send."
+      wrong_destination: "This send does not go to the shop's account."
+      wrong_amount: "This send is not exactly the amount shown."
+      not_bound: "This send does not use the representative shown for this payment."
+      too_old: "This send was made before this payment was created."
+    errors:
+      account: "The Nano account is not a valid nano_ address."
+      xno_per_unit: "The XNO price per unit must be a number above zero, e.g. 1.25."
+      node_url: "The Nano node URL must start with http:// or https://."
+  payment_gateways:
+    nano:
+      show:
+        title: "Pay with Nano (XNO)"
+        instructions: "Send exactly %{amount} from your Nano wallet to the shop's account, with the representative below. Then enter the block hash of your send."
+        amount: "Amount"
+        account: "Shop account"
+        representative: "Representative"
+        representative_help: "The representative ties your send to this payment. Most Nano wallets let you set it for one send. Your order is confirmed once the node has confirmed the block."
+        block_hash: "Block hash of your send"
+        submit: "Confirm payment"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
   tag_rules: "Tag Rules"
@@ -4479,6 +4506,10 @@ en:
     # Attributes of the Taler payment gateway
     instance_url: "Instance URL"
 
+    # Attributes of the Nano payment method (account uses "account" above)
+    xno_per_unit: "XNO per unit of the shop currency"
+    node_url: "Nano node URL"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
@@ -4809,6 +4840,7 @@ en:
           paypalexpress: "PayPal Express"
           stripesca: "Stripe SCA"
           taler: "Taler"
+          nano: "Nano (XNO)"
           customercredit: "Customer Credit"
       payments:
         source_forms:
