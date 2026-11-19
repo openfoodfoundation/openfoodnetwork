@@ -82,6 +82,8 @@ module Spree
               before_transition to: :payment, do: :apply_customer_credit
 
               before_transition to: :confirmation, do: :validate_payment_method!
+              # The balance due may have changed since the payment step
+              before_transition to: :confirmation, do: :apply_balance_due
 
               before_transition to: :complete, do: :ensure_shipping_method
 
@@ -93,7 +95,9 @@ module Spree
               after_transition to: :complete, do: :finalize!
               after_transition to: :complete, do: :settle_balance_due
               after_transition to: :resumed,  do: :after_resume
+              after_transition to: :resumed,  do: :settle_balance_due
               after_transition to: :canceled, do: :after_cancel
+              after_transition to: :canceled, do: :restore_balance_due
             end
           end
 

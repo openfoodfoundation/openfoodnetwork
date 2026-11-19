@@ -132,4 +132,83 @@ RSpec.describe Orders::BalanceDueService do
       end
     end
   end
+
+  describe "through the order lifecycle" do
+    # Shopfront checkout, subscriptions (PlaceProxyOrder) and orders created in the back office
+    # all advance the order with Orders::WorkflowService.
+    let(:order) {
+      create(:order_with_totals_and_distribution, distributor:, customer:,
+                                                  bill_address: create(:address),
+                                                  ship_address: create(:address),
+                                                  payments: [create(:payment)])
+    }
+
+    before { carry_over(0.57) }
+
+    it "adds the balance due and settles it when the order completes" do
+      Orders::WorkflowService.new(order).complete!
+
+      expect(order.reload.state).to eq("complete")
+      expect(balance_due_adjustments.first.amount).to eq(0.57)
+      expect(customer.reload.credit_balance).to eq(0.00)
+    end
+
+    it "locks the balance due once the order is complete" do
+      Orders::WorkflowService.new(order).complete!
+
+      expect(balance_due_adjustments.first.state).to eq("finalized")
+    end
+
+    it "updates the balance due if it changes before confirmation" do
+      Orders::WorkflowService.new(order).advance_to_payment
+      expect(balance_due_adjustments.first.amount).to eq(0.57)
+
+      # The hub waives part of the balance while the customer is checking out
+      create(:customer_account_transaction, customer:, amount: 0.20)
+      order.next!
+
+      expect(order.state).to eq("confirmation")
+      expect(balance_due_adjustments.first.amount).to eq(0.37)
+    end
+
+    context "when the completed order is cancelled" do
+      before do
+        Orders::WorkflowService.new(order).complete!
+        order.cancel!
+      end
+
+      it "restores the balance due on the customer's account" do
+        expect(customer.reload.credit_balance).to eq(-0.57)
+        expect(customer.customer_account_transactions.last.description).to eq(
+          "Balance due restored: order #{order.number} was cancelled"
+        )
+      end
+
+      it "settles the balance again if the order is resumed" do
+        # In the app, resuming happens in a later request that loads the order afresh
+        order.reload.resume!
+
+        expect(customer.reload.credit_balance).to eq(0.00)
+      end
+    end
+  end
+
+  describe "#restore" do
+    before do
+      carry_over(0.57)
+      subject.apply
+    end
+
+    it "only restores a balance that was settled" do
+      expect { subject.restore }.not_to change { CustomerAccountTransaction.count }
+    end
+
+    it "only restores once" do
+      subject.settle
+      subject.restore
+      subject.restore
+
+      expect(customer.reload.credit_balance).to eq(-0.57)
+    end
+  end
 end

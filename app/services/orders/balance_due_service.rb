@@ -2,7 +2,8 @@
 
 module Orders
   # Adds a balance carried over from previous orders (a negative customer account balance) to the
-  # customer's next order, and clears the customer's account once that order is complete.
+  # customer's next order, clears the customer's account once that order is complete, and restores
+  # the balance if the order is cancelled.
   # See Orders::CustomerCreditService#carry_balance for how a balance gets carried over.
   class BalanceDueService
     def initialize(order)
@@ -26,17 +27,21 @@ module Orders
       order.update_order!
     end
 
+    # Called when the order completes, or is resumed after being cancelled
     def settle
       existing = adjustment
-      # Only settle once, even if the order goes through completion again
-      return if existing.nil? ||
-                customer.customer_account_transactions.where(description: paid_description).exists?
+      return if existing.nil? || settled?
 
-      customer.customer_account_transactions.create!(
-        amount: existing.amount,
-        currency: CurrentConfig.get(:currency),
-        description: paid_description
-      )
+      existing.update_columns(state: "finalized")
+      record_transaction(existing.amount, paid_description)
+    end
+
+    # Called when the order is cancelled: the customer owes the balance again
+    def restore
+      existing = adjustment
+      return if existing.nil? || !settled?
+
+      record_transaction(-existing.amount, restored_description)
     end
 
     def adjustment
@@ -77,6 +82,27 @@ module Orders
 
     def paid_description
       t(:paid_description, order_number: order.number)
+    end
+
+    # Settled if the latest transaction about this order's balance due paid it, rather than
+    # restoring it after a cancellation.
+    def settled?
+      descriptions = [paid_description, restored_description]
+      latest = customer.customer_account_transactions.where(description: descriptions)
+        .order(:id).last
+      latest&.description == paid_description
+    end
+
+    def restored_description
+      t(:restored_description, order_number: order.number)
+    end
+
+    def record_transaction(amount, description)
+      customer.with_lock do
+        customer.customer_account_transactions.create!(
+          amount:, currency: CurrentConfig.get(:currency), description:
+        )
+      end
     end
 
     def t(key, **)

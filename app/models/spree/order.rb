@@ -748,5 +748,9 @@ module Spree
     def settle_balance_due
       Orders::BalanceDueService.new(self).settle
     end
+
+    def restore_balance_due
+      Orders::BalanceDueService.new(self).restore
+    end
   end
 end

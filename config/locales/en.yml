@@ -5350,3 +5350,4 @@ en:
   balance_due_service:
     label: "Balance due from previous order(s) %{order_numbers}"
     paid_description: "Balance due paid on order %{order_number}"
+    restored_description: "Balance due restored: order %{order_number} was cancelled"
