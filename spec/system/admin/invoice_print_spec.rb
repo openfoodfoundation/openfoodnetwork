@@ -176,7 +176,7 @@ RSpec.describe '
                                   tax_category: fee_tax_category,
                                   calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
         }
-        let!(:order_cycle) {
+        let(:order_cycle) {
           create(:simple_order_cycle,
                  coordinator: distributor,
                  coordinator_fees: [enterprise_fee],
@@ -184,26 +184,25 @@ RSpec.describe '
                  variants: [product1.variants.first, product2.variants.first])
         }
 
-        let!(:order1) {
+        let(:order1) {
           create(:order, order_cycle:, distributor: user1.enterprises.first,
-                         ship_address: address, bill_address: address)
+                         ship_address: address, bill_address: address,
+                         line_items: [line_item1, line_item2])
         }
-        let!(:product1) {
+        let(:product1) {
           create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0,
                                  included_in_price: true)
         }
-        let!(:product2) {
+        let(:product2) {
           create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0.2,
                                  included_in_price: true)
         }
 
-        let!(:line_item1) {
-          create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1,
-                             order: order1)
+        let(:line_item1) {
+          create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1)
         }
-        let!(:line_item2) {
-          create(:line_item, variant: product2.variants.first, price: 500.15, quantity: 3,
-                             order: order1)
+        let(:line_item2) {
+          create(:line_item, variant: product2.variants.first, price: 500.15, quantity: 3)
         }
 
         let(:url_params) {
@@ -241,7 +240,8 @@ RSpec.describe '
             convert_pdf_to_page
           end
 
-          it "displays $0.00 when a line item has no tax" do
+          it "displays $0.00 when one line item has no tax" do
+            expect(page).to have_content "Item Qty GST Price"
             expect(page).to have_content Spree::Product.first.name
             expect(page).to have_content "(1g)"
             expect(page).to have_content "1 $0.00 $12.54"
@@ -267,6 +267,30 @@ RSpec.describe '
             expect(page).to have_content "GST Total: $274.87"
             expect(page).to have_content "Total (Excl. tax): $1,458.67"
             expect(page).to have_content "Total (Incl. tax): $1,733.54"
+          end
+
+          context "when the order has no tax" do
+            let(:shipping_method) {
+              create(:shipping_method_with, :expensive_name, distributors: [distributor],
+                                                             tax_category: nil)
+            }
+            let(:enterprise_fee) {
+              create(:enterprise_fee, enterprise: user1.enterprises.first,
+                                      tax_category: nil,
+                                      calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
+            }
+            let(:product2) {
+              create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0,
+                                     included_in_price: true)
+            }
+
+            it "doesn't show tax column" do
+              expect(page).to have_content "Item Qty Price"
+              expect(page).to have_content Spree::Product.first.name
+              expect(page).to have_content "(1g)"
+              expect(page).to have_content "1 $12.54"
+              expect(page).to have_content "3 $1,500.45"
+            end
           end
         end
 
