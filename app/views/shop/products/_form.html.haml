@@ -9,7 +9,7 @@
     #out-of-stock-modal
 
   %form{action: main_app.cart_path}
-    - if feature?(:product_grid_view_navigation)
+    - if product_grid_view_navigation
       = render partial: "shop/products/products"
 
     - else
