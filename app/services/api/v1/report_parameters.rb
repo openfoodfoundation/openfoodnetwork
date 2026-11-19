@@ -32,14 +32,12 @@ module Api
       private_constant :ID_KEYS, :SUBTYPE_ID_KEYS, :DEFAULT_ID_KEYS,
                        :DATE_KEYS, :DEFAULT_DATE_KEYS
 
-      # Captures the report selection and request parameters.
       def initialize(report_type, report_subtype, params)
         @report_type = report_type
         @report_subtype = report_subtype
         @params = params
       end
 
-      # Returns the final report parameter hash with JSON output enabled.
       def to_h
         translated_params.merge(
           report_format: "json",
@@ -49,7 +47,6 @@ module Api
 
       private
 
-      # Translates public filters into the shape expected by the selected report.
       def translated_params
         case @report_type
         when "customers"
@@ -64,7 +61,6 @@ module Api
         end
       end
 
-      # Returns IDs that the report expects outside Ransack's q hash.
       def top_level_ids
         {
           order_cycle_id: @params[:order_cycle_id],
@@ -72,14 +68,12 @@ module Api
         }
       end
 
-      # Resolves the Ransack ID keys for the report type and subtype.
       def query_id_keys
         SUBTYPE_ID_KEYS.fetch([@report_type, @report_subtype]) do
           ID_KEYS.fetch(@report_type, DEFAULT_ID_KEYS)
         end
       end
 
-      # Builds the q hash with translated IDs and date filters.
       def translated_filter_params(cycle_key, distributor_key)
         filters = permitted_query_filters
         dates = filters.extract!(:completed_at_gt, :completed_at_lt)
@@ -89,7 +83,6 @@ module Api
         { q: filters }
       end
 
-      # Adds only the supplied IDs using their report-specific Ransack keys.
       def id_filters(cycle_key, distributor_key)
         filters = {}
 
@@ -104,22 +97,20 @@ module Api
         filters
       end
 
-      # Wraps IDs in arrays except for scalar _eq filters.
       def id_filter_value(key, value)
         key.to_s.end_with?("_eq") ? value : [value]
       end
 
-      # Reads the permitted public query filters from q.
       def permitted_query_filters
         filters = @params[:q]
         filters.respond_to?(:to_h) ? filters.to_h.symbolize_keys : {}
       end
 
-      # Maps public date keys to the report-specific date keys.
+      # Explicit nil bounds prevent report defaults from adding a date window.
       def translated_dates(dates)
-        DATE_KEYS.fetch(@report_type, DEFAULT_DATE_KEYS).filter_map do |source, target|
-          [target, dates[source]] if dates[source].present?
-        end.to_h
+        DATE_KEYS.fetch(@report_type, DEFAULT_DATE_KEYS).to_h do |source, target|
+          [target, dates[source].presence]
+        end
       end
     end
   end

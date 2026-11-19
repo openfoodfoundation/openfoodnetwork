@@ -79,6 +79,10 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           supplied, both filters apply. The selected report determines the row
           fields, available subtypes and visibility rules.
 
+          Omitted or empty date bounds impose no date restriction for that bound.
+          Invalid date values return 422. Date filters do not affect
+          products_and_inventory.
+
           Pagination is applied after generating the complete report, preserving
           its grouping and calculations. It limits the response size, not the
           work needed to generate the report.
@@ -110,11 +114,13 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
         parameter name: "q[completed_at_gt]", in: :query, required: false,
                   schema: { type: :string },
                   description: "Lower completion-date filter, for example 2026-10-01. " \
+                               "Omitted or empty means no lower date bound. " \
                                "Uses the selected report's date handling; " \
                                "does not filter products_and_inventory."
         parameter name: "q[completed_at_lt]", in: :query, required: false,
                   schema: { type: :string },
                   description: "Upper completion-date filter, for example 2026-11-01. " \
+                               "Omitted or empty means no upper date bound. " \
                                "Uses the selected report's date handling; " \
                                "does not filter products_and_inventory."
         parameter name: :page, in: :query, required: false,
@@ -153,6 +159,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
             expect(pagination_links).to include(:self, :first, :prev, :next, :last)
           end
         end
+
         response "422", "neither order_cycle_id nor distributor_id" do
           let(:report_type) { "packing" }
 
@@ -178,7 +185,20 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "403", "fee-summary filter outside permitted scope" do
+        response "404", "unknown report type or nonexistent filter resource" do
+          let(:report_type) { "unknown" }
+          let(:distributor_id) { hub.id }
+
+          before { login_as hub_owner }
+
+          schema '$ref': "#/components/schemas/error_response"
+
+          run_test! do
+            expect(json_error_detail).to eq("Report not found")
+          end
+        end
+
+        response "403", "The enterprise fee report rejects access to a requested filter" do
           let(:report_type) { "enterprise_fee_summary" }
           let(:report_subtype) { "fee_summary" }
           let(:order_cycle_id) { other_order_cycle.id }
@@ -193,7 +213,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "200", "valid API token without browser session (n8n path)" do
+        response "200", "Report rows, including an empty result" do
           let(:report_type) { "packing" }
           let(:report_subtype) { "customer" }
           let(:order_cycle_id) { order_cycle.id }
@@ -226,7 +246,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "401", "user managing no enterprises is unauthorized" do
+        response "401", "Missing or invalid authentication, or no report permission" do
           let(:report_type) { "customers" }
           let(:order_cycle_id) { order_cycle.id }
 
@@ -259,6 +279,21 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
             expect(json_error_detail).to be_present
           end
         end
+
+        response "422", "invalid parameters, missing required filters or reporting errors" do
+          let(:report_type) { "packing" }
+          let(:distributor_id) { hub.id }
+          let(:'q[completed_at_gt]') { "garbage" }
+
+          before { login_as hub_owner }
+
+          schema '$ref': "#/components/schemas/error_response"
+
+          run_test! do
+            expect(json_error_detail).to include("completed_at_gt")
+            expect(json_response).not_to have_key(:data)
+          end
+        end
       end
     end
   end
@@ -273,7 +308,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
     it "rejects an unknown report type" do
       get "/api/v1/reports/unknown", params: { distributor_id: distributor.id }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:not_found)
       expect(json_response[:errors].first[:detail]).to eq("Report not found")
     end
 
@@ -320,6 +355,38 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response[:errors].first[:detail]).to include("supplier_id_in")
     end
+
+    context "with invalid dates" do
+      before do
+        login_as create(:admin_user)
+      end
+
+      Api::V1::ReportsController::SUPPORTED_REPORT_TYPES.each do |report_type|
+        %i[completed_at_gt completed_at_lt].each do |date_key|
+          it "rejects invalid #{date_key} for #{report_type}" do
+            get "/api/v1/reports/#{report_type}", params: {
+              distributor_id: distributor.id,
+              q: { date_key => "garbage" }
+            }
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(json_response[:errors].first[:detail]).to include(date_key.to_s)
+            expect(json_response).not_to have_key(:data)
+          end
+        end
+      end
+
+      it "returns 422 when parsing a date raises an error" do
+        get "/api/v1/reports/packing", params: {
+          distributor_id: distributor.id,
+          q: { completed_at_gt: "2026-13-01" }
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response[:errors].first[:detail]).to include("completed_at_gt")
+        expect(json_response).not_to have_key(:data)
+      end
+    end
   end
 
   describe "request behavior" do
@@ -347,6 +414,41 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
         include(detail: kind_of(String))
       )
       expect(json_response).not_to have_key(:data)
+    end
+
+    describe "date validation" do
+      before do
+        login_as distributor.owner
+      end
+
+      ["", "2026-10-01", "2026-10-01T12:00:00+10:00"].each do |date|
+        it "accepts date bounds #{date.inspect}" do
+          get "/api/v1/reports/packing", params: {
+            distributor_id: distributor.id,
+            q: {
+              completed_at_gt: date,
+              completed_at_lt: date
+            }
+          }
+
+          expect(response).to have_http_status(:ok)
+          expect(Reporting::Reports::Packing::Customer).
+            to have_received(:new)
+        end
+      end
+
+      it "rejects invalid dates before generating the report" do
+        login_as distributor.owner
+
+        get "/api/v1/reports/packing", params: {
+          distributor_id: distributor.id,
+          q: { completed_at_gt: "garbage" }
+        }
+
+        expect_api_error(:unprocessable_entity)
+        expect(Reporting::Reports::Packing::Customer).
+          not_to have_received(:new)
+      end
     end
 
     describe "pagination" do
