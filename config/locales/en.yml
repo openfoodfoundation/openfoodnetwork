@@ -744,6 +744,7 @@ en:
         product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
+      cannot_change_balance_due: "A balance due carried over from a previous order can't be changed. Use 'Add credit' on the Customers page to waive it."
     # Common properties / models
     begins_at: Begins At
     begins_on: Begins On
