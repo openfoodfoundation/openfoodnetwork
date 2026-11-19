@@ -338,6 +338,38 @@ RSpec.describe Spree::Order do
     end
   end
 
+  describe "#capturable_pending_payments" do
+    let(:order) { create(:order_with_totals) }
+
+    # The credit payment must be created first: creating it invalidates other
+    # incomplete non-credit payments.
+    let!(:credit_payment) do
+      create(:payment, order:, amount: 5, source: nil,
+                       payment_method: Spree::PaymentMethod.customer_credit)
+    end
+    let!(:check_payment) do
+      create(:payment, order:, amount: 5, source: nil, payment_method: create(:payment_method))
+    end
+
+    it "returns pending payments, excluding Customer Credit" do
+      expect(order.reload.capturable_pending_payments).to eq [check_payment]
+    end
+
+    it "excludes payments whose payment method can't capture, such as Taler" do
+      taler = Spree::PaymentMethod::Taler.new(name: "Taler", environment: "test")
+      taler.save!(validate: false)
+      check_payment.update_columns(payment_method_id: taler.id)
+
+      expect(order.reload.capturable_pending_payments).to be_empty
+    end
+
+    it "excludes payments requiring authorization" do
+      check_payment.update_columns(state: "requires_authorization")
+
+      expect(order.reload.capturable_pending_payments).to be_empty
+    end
+  end
+
   context "#completed?" do
     it "should indicate if order is completed" do
       order.completed_at = nil

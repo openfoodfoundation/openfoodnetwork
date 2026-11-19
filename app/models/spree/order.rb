@@ -437,6 +437,14 @@ module Spree
         payments.select(&:checkout?)).uniq
     end
 
+    # Pending payments that can be captured. Customer Credit payments are
+    # excluded: they are redeemed when the order is processed, not captured.
+    # Payment methods without a `capture` method (e.g. Taler) can't be captured either.
+    def capturable_pending_payments
+      (pending_payments & payments.not_customer_credit).reject(&:requires_authorization?).
+        select { |payment| payment.payment_method.respond_to?(:capture) }
+    end
+
     # processes any pending payments and must return a boolean as it's
     # return value is used by the checkout state_machine to determine
     # success or failure of the 'complete' event for the order
