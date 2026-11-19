@@ -29,7 +29,8 @@ module Api
         order_cycle_id distributor_id page per_page
       ].freeze
 
-      PERMITTED_QUERY_FILTERS = %i[completed_at_gt completed_at_lt].freeze
+      DATE_QUERY_FILTERS = %i[completed_at_gt completed_at_lt].freeze
+      PERMITTED_QUERY_FILTERS = DATE_QUERY_FILTERS
 
       rescue_from Reporting::Errors::Base, with: :render_report_error
       rescue_from Reporting::Reports::EnterpriseFeeSummary::ParameterNotAllowedError,

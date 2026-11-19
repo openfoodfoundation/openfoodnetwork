@@ -35,7 +35,7 @@ module Api
       end
 
       def validate_dates
-        invalid_key = ReportsController::PERMITTED_QUERY_FILTERS.find do |key|
+        invalid_key = ReportsController::DATE_QUERY_FILTERS.find do |key|
           !valid_date?(permitted_params.dig(:q, key))
         end
         return unless invalid_key
