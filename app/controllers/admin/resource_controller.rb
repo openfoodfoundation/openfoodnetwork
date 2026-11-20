@@ -33,6 +33,7 @@ module Admin
           format.js   { render layout: false }
         end
       else
+        discard_attachment_changes
         respond_with(@object)
       end
     end
@@ -45,6 +46,7 @@ module Admin
           format.js   { render layout: false }
         end
       else
+        discard_attachment_changes
         respond_with(@object)
       end
     end
@@ -74,6 +76,13 @@ module Admin
     end
 
     protected
+
+    # When a save fails, any attachments assigned in it were not saved. Revert them so the
+    # re-rendered form shows the saved files instead of trying to link to unsaved ones.
+    # Some resources are form objects (e.g. ScheduleForm) which don't have attachments.
+    def discard_attachment_changes
+      @object.attachment_changes.clear if @object.respond_to?(:attachment_changes)
+    end
 
     def resource_not_found
       flash[:error] = Spree.t(:not_found)
