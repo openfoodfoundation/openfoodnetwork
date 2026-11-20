@@ -217,6 +217,7 @@ module Openfoodnetwork
     config.active_support.escape_html_entities_in_json = true
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = :mailers
 
     config.action_controller.include_all_helpers = false
 
