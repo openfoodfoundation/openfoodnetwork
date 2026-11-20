@@ -33,6 +33,11 @@ module ApplicationHelper
     feature?(:product_grid_view, spree_current_user)
   end
 
+  # Products of the shop link to their own page instead of opening a modal.
+  def product_pages?(enterprise)
+    feature?("product-pages", spree_current_user, enterprise)
+  end
+
   def language_meta_tags
     return if I18n.available_locales.one?
 

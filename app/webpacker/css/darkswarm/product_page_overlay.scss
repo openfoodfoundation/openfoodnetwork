@@ -1,0 +1,53 @@
+// The product page shown over the shop's product list, filling the window below the top menu.
+// See product_page_overlay_controller.js.
+.product-page-overlay {
+  position: fixed;
+  inset: $mobile-nav-height 0 0;
+  z-index: 98; // Below the top menu and the cart sidebar
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: $white;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  @media #{$large-up} {
+    top: $topbar-height;
+  }
+
+  // Like on the product page, which doesn't shade the shop's header. See distributor_header.scss.
+  navigation {
+    box-shadow: none;
+  }
+}
+
+// The list underneath keeps its scroll position while the page is open.
+html:has(.product-page-overlay[open]) {
+  overflow: hidden;
+
+  // The phone menu slides the page aside with a transform, which would make the page the box
+  // the overlay is fixed to: the overlay would show some other part of the product page. So the
+  // page slides with `left` instead, like Foundation does for browsers without transforms, and
+  // the overlay slides with it.
+  .off-canvas-wrap > .inner-wrap {
+    transition: left 500ms ease;
+  }
+
+  .off-canvas-wrap.move-right > .inner-wrap {
+    transform: none;
+    left: $off-canvas-width;
+  }
+
+  .product-page-overlay {
+    transition: left 500ms ease, right 500ms ease;
+  }
+
+  .off-canvas-wrap.move-right .product-page-overlay {
+    left: $off-canvas-width;
+    right: -$off-canvas-width;
+  }
+}
