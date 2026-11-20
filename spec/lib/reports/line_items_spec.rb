@@ -75,5 +75,48 @@ RSpec.describe Reporting::LineItems do
         expect(line_items).not_to include(line_item2)
       end
     end
+
+    context "when product and variant names have changed since the order" do
+      let!(:line_item2) { create(:line_item, order:) }
+      let!(:line_item3) { create(:line_item, order:) }
+      let(:line_items) { [line_item1, line_item2, line_item3] }
+      let(:order_permissions) do
+        fake_order_permissions.new(line_items, orders_relation)
+      end
+
+      before do
+        line_items.each do |line_item|
+          line_item.variant.update_columns(enterprise_id: line_item1.variant.enterprise_id)
+        end
+      end
+
+      it "orders by the snapshotted product names" do
+        line_items.each_with_index do |line_item, index|
+          line_item.update_columns(
+            product_name: %w[Alpha Beta Gamma][index],
+            variant_display_name: "Same Variant"
+          )
+          line_item.variant.update_columns(display_name: "Same Live Variant")
+          line_item.variant.product.update_columns(name: %w[Zulu Yankee Xray][index])
+        end
+
+        expect(reports_line_items.list.map(&:id)).to eq line_items.map(&:id)
+      end
+
+      it "orders by the snapshotted variant display names" do
+        line_items.each_with_index do |line_item, index|
+          line_item.update_columns(
+            product_name: "Same Product",
+            variant_display_name: %w[Alpha Beta Gamma][index]
+          )
+          line_item.variant.update_columns(display_name: %w[Zulu Yankee Xray][index])
+          line_item.variant.product.update_columns(
+            name: %w[ZuluProduct YankeeProduct XrayProduct][index]
+          )
+        end
+
+        expect(reports_line_items.list.map(&:id)).to eq line_items.map(&:id)
+      end
+    end
   end
 end
