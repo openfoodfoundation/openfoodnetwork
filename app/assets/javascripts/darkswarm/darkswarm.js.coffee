@@ -9,7 +9,6 @@ angular.module("Darkswarm", [
   'uiGmapgoogle-maps',
   'duScroll',
   'angularFileUpload',
-  'angularSlideables',
   'OFNShared'
 ]).config ($httpProvider, $tooltipProvider, $locationProvider, $anchorScrollProvider, $qProvider) ->
   $httpProvider.defaults.headers['common']['X-Requested-With'] = 'XMLHttpRequest'

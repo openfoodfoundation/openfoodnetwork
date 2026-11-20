@@ -1,9 +1,4 @@
 angular.module('admin.orderCycles', ['ngTagsInput', 'admin.indexUtils', 'admin.enterprises'])
-  .directive 'ofnOnChange', ->
-    (scope, element, attrs) ->
-      element.bind 'change', ->
-        scope.$apply(attrs.ofnOnChange)
-
   .directive 'ofnSyncDistributions', ->
     (scope, element, attrs) ->
       element.bind 'change', ->

@@ -11,7 +11,6 @@ module.exports = function(config) {
         type: 'js'
       },
       'app/assets/javascripts/shared/ng-infinite-scroll.min.js',
-      'app/assets/javascripts/shared/angular-slideables.js',
 
       'app/assets/javascripts/admin/*.js*',
       'app/assets/javascripts/admin/*/*.js*', // Pull in top level files in each folder first (often these are module declarations)
