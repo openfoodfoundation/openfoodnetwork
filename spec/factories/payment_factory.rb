@@ -29,4 +29,11 @@ FactoryBot.define do
     payment_method
     order
   end
+
+  factory :credit_payment, class: Spree::Payment do
+    amount { 45.75 }
+    payment_method { Spree::PaymentMethod.customer_credit }
+    order
+    skip_source_validation { true }
+  end
 end

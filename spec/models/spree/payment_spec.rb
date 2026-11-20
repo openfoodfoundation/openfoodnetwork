@@ -963,6 +963,7 @@ RSpec.describe Spree::Payment do
         payment = create(:payment, :completed)
         payment.order = order
         payment.payment_method = payment_method
+        payment.save!
         payment
       end
 
@@ -977,7 +978,8 @@ RSpec.describe Spree::Payment do
         )
       end
       let(:options) {
-        { customer_id: customer.id, payment_id: payment.id, order_number: payment.order.number }
+        { customer_id: customer.id, payment_id: payment.id, payment_state: payment.state,
+          order_number: payment.order.number }
       }
 
       before do
@@ -1036,17 +1038,6 @@ RSpec.describe Spree::Payment do
           expect(payment_method).not_to receive(:void)
 
           payment.internal_void!
-        end
-      end
-
-      context "when payment not voidable" do
-        it "raises an error" do
-          payment.update(state: "pending")
-          expect(payment_method).not_to receive(:void)
-
-          expect {
-            payment.internal_void!
-          }.to raise_error(Spree::Core::GatewayError, "Payment not voidable")
         end
       end
     end

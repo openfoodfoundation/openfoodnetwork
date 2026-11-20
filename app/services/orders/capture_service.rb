@@ -18,6 +18,7 @@ module Orders
         return false
       end
 
+      # We assume there is only one pending payment per order, that is not a customer credit payment
       payment = @order.capturable_pending_payments.max_by(&:created_at)
       if payment.nil?
         @error = :nothing_to_capture
