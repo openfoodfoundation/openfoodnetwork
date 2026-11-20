@@ -32,7 +32,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       click_button 'Create'
       expect(URI.parse(current_url).path).to eq admin_products_path
       expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
-      expect(page).to have_field "_products_0_name", with: 'Big Bag Of Apples'
+      expect(page).to have_field "products_0_name", with: 'Big Bag Of Apples'
     end
   end
 

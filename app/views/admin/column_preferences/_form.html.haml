@@ -12,7 +12,7 @@
     .menu
       .menu_items
         - ColumnPreference.for(spree_current_user, action).each_with_index do |column_preference, index|
-          = f.fields_for("column_preferences", column_preference, index:) do |cp_form|
+          = fields_for("column_preferences", column_preference, index:) do |cp_form|
             = cp_form.hidden_field :id
             = cp_form.hidden_field :column_name
             %label.menu_item

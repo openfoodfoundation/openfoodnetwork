@@ -39,20 +39,20 @@ describe("VariantController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
         <div data-controller="variant">
-          <input id="variant_unit" name="[products][0][variants_attributes][0][variant_unit]" value="weight">
-          <input id="variant_unit_scale" name="[products][0][variants_attributes][0][variant_unit_scale]" value="1.0">
-          <select id="variant_unit_with_scale" name="[products][0][variants_attributes][0][variant_unit_with_scale]">
+          <input id="variant_unit" name="products[0][variants_attributes][0][variant_unit]" value="weight">
+          <input id="variant_unit_scale" name="products[0][variants_attributes][0][variant_unit_scale]" value="1.0">
+          <select id="variant_unit_with_scale" name="products[0][variants_attributes][0][variant_unit_with_scale]">
             <option selected="selected" value="weight_1">Weight (g)</option>
             <option value="weight_1000">Weight (kg)</option>
             <option value="volume_4.54609">Volume (gal)</option>
             <option value="items">Items</option>
           </select>
-          <input id="variant_unit_name" name="[products][0][variants_attributes][0][variant_unit_name]" type="text" >
-          <button id="unit_to_display" name="[products][0][variants_attributes][][0][unit_to_display]" type="submit" >2kg</button>
-          <input id="unit_value" name="[products][0][variants_attributes][0][unit_value]" value="2000.0"  >
-          <input id="unit_description" name="[products][0][variants_attributes][0][unit_description]" >
-          <input id="unit_value_with_description" name="[products][0][variants_attributes][0][unit_value_with_description]" value="2" type="text" >
-          <input id="display_as" name="[products][0][variants_attributes][0][display_as]" placeholder="2kg" type="text" >
+          <input id="variant_unit_name" name="products[0][variants_attributes][0][variant_unit_name]" type="text" >
+          <button id="unit_to_display" name="products[0][variants_attributes][][0][unit_to_display]" type="submit" >2kg</button>
+          <input id="unit_value" name="products[0][variants_attributes][0][unit_value]" value="2000.0"  >
+          <input id="unit_description" name="products[0][variants_attributes][0][unit_description]" >
+          <input id="unit_value_with_description" name="products[0][variants_attributes][0][unit_value_with_description]" value="2" type="text" >
+          <input id="display_as" name="products[0][variants_attributes][0][display_as]" placeholder="2kg" type="text" >
         </div>
       `;
     });

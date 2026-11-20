@@ -1,5 +1,6 @@
--# locals: (form:, product:, product_index:, allowed_producers:, allowed_source_producers:, should_slide_in: false)
-= form.fields_for("products", product, index: product_index) do |product_form|
+-# locals: (product:, product_index:, allowed_producers:, allowed_source_producers:, should_slide_in: false)
+-# Field names are scoped by nesting form builders: products[0][variants_attributes][0][price]
+= fields_for("products", product, index: product_index, builder: BulkFormBuilder) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
                           action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:add->bulk-form#toggleFormChanged rails-nested-form:remove->bulk-form#toggleFormChanged' },
@@ -78,11 +79,11 @@
                   = link_to t('admin.products_page.actions.create_linked_variant'), admin_create_linked_variant_path(variant_id: variant.id, product_index:), 'data-turbo-method': :post
 
       - else
-        = form.fields_for("products][#{product_index}][variants_attributes", variant, index: variant_index) do |variant_form|
+        = product_form.fields_for("variants_attributes", variant, index: variant_index) do |variant_form|
           %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
             = render partial: 'variant_row', locals: { variant:, f: variant_form, product_index: , allowed_source_producers: }
 
-    = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", prepare_new_variant(product, allowed_producers)) do |new_variant_form|
+    = product_form.fields_for("variants_attributes", prepare_new_variant(product, allowed_producers), index: "NEW_RECORD") do |new_variant_form|
       %template{ 'data-nested-form-target': "template" }
         %tr.condensed{ 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': "true" }
           = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, allowed_source_producers: }
