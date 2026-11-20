@@ -103,7 +103,6 @@ class SuppliedProductImporter < DfcBuilder
       price: 0, # will be in DFC Offer
       enterprise_id: supplier.id,
       primary_taxon_id: taxon(supplied_product).id,
-      image: ImageBuilder.import(supplied_product.image),
       semantic_link: semantic_link(supplied_product),
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
@@ -113,6 +112,7 @@ class SuppliedProductImporter < DfcBuilder
 
   def self.apply(supplied_product, variant)
     ProductGroupBuilder.apply(supplied_product, variant.product)
+    ImageBuilder.apply_supplied_product_image(supplied_product, variant)
 
     variant.display_name = supplied_product.name
     variant.primary_taxon = taxon(supplied_product)
