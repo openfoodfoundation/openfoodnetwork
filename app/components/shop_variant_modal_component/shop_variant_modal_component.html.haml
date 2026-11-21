@@ -1,4 +1,4 @@
--# locals: (product:, variants_in_cart:, low_stock_display:)
+-# locals: (product:, variants_in_cart:, low_stock_display:, preview:)
 
 %div{ "data-controller": "shop-variant-modal" }
   %button.select-variant.primary{ type:"button", "data-action": "shop-variant-modal#open" }
@@ -15,4 +15,4 @@
         - if single_producer?
           %span.producer= helpers.from_producer(producers.first)
 
-      = render ShopVariantListComponent.new(product:, variants_in_cart:, low_stock_display:)
+      = render ShopVariantListComponent.new(product:, variants_in_cart:, low_stock_display:, preview:)

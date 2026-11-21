@@ -36,9 +36,7 @@ class ProductsRenderer
   # Generate read only data, with variants filtered for shop
   def products_view
     products.map do |product|
-      attrs = product.slice(*ViewData::Product.members)
-      attrs[:variants] = variants_view(product)
-      ViewData::Product.new(**attrs)
+      ViewData::Product.from_record(product, variants: variants_view(product))
     end
   end
 
@@ -54,17 +52,8 @@ class ProductsRenderer
         variant:, distributor:, order_cycle:, enterprise_fee_calculator:
       )
 
-      ViewData::Variant.new(
-        **variant.slice(:id, :on_demand, :display_name, :name_to_display,
-                        :unit_to_display, :price, :enterprise, :producer),
-        on_hand: on_hand(variant),
-        price_with_fees: presenter.price_with_fees,
-        display_price_with_fees: presenter.display_price_with_fees,
-        unit_price: presenter.unit_price,
-        display_unit_price: presenter.display_unit_price,
-        fees: presenter.fee_breakdown,
-        product: simple_product
-      )
+      ViewData::Variant.from_presenter(presenter, on_hand: on_hand(variant),
+                                                  product: simple_product)
     end
   end
 
