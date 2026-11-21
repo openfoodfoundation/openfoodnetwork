@@ -8,6 +8,8 @@
       .checkout-title
         = t("checkout.step2.payment_method.title")
 
+      = render "checkout/balance_due_message"
+
       - if @order.outstanding_balance.zero?
         %h3= t(:no_payment_required)
         - if @order.zero_priced_order?

@@ -172,6 +172,31 @@ module Spree
         render turbo_stream: streams
       end
 
+      def bulk_carry_over_balance
+        orders = Permissions::Order.new(spree_current_user).editable_orders.where(
+          id: params[:bulk_ids]
+        )
+
+        streams = orders.map do |order|
+          carry_over_response = ::Orders::CustomerCreditService.new(order).carry_balance(
+            user: spree_current_user
+          )
+
+          if carry_over_response.failure?
+            flash[:error] = t(".could_not_carry_over", order_number: order.number,
+                                                       message: carry_over_response.message)
+            turbo_stream.append("flashes", partial: "admin/shared/flashes",
+                                           locals: { flashes: flash })
+          else
+            order.update_totals_and_states
+            turbo_stream.replace("order_#{order.id}", partial: "spree/admin/orders/table_row",
+                                                      locals: { order: })
+          end
+        end
+
+        render turbo_stream: streams
+      end
+
       def resend_confirmation_emails
         count = 0
         editable_orders.where(id: params[:bulk_ids]).find_each do |order|

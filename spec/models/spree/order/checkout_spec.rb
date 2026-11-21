@@ -56,6 +56,7 @@ RSpec.describe Spree::Order::Checkout do
       it "transitions to payment" do
         allow(order).to receive(:payment_required?).and_return(true)
         expect(order).to receive(:apply_customer_credit)
+        expect(order).to receive(:apply_balance_due)
         order.next!
 
         expect(order.state).to eq "payment"
@@ -101,6 +102,12 @@ RSpec.describe Spree::Order::Checkout do
       order.next!
 
       expect(order.state).to eq "complete"
+    end
+
+    it "settles any balance due added to the order" do
+      expect(order).to receive(:settle_balance_due)
+
+      order.next!
     end
   end
 

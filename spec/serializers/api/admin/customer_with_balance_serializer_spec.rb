@@ -29,6 +29,24 @@ RSpec.describe Api::Admin::CustomerWithBalanceSerializer do
     end
   end
 
+  describe '#credit_status' do
+    context 'when the credit_value is negative' do
+      let(:customer) { double(Customer, credit_value: -0.57) }
+
+      it 'returns carried_over' do
+        expect(serialized_customer.credit_status).to eq("carried_over")
+      end
+    end
+
+    context 'when the credit_value is zero or positive' do
+      let(:customer) { double(Customer, credit_value: 0) }
+
+      it 'returns an empty status' do
+        expect(serialized_customer.credit_status).to eq("")
+      end
+    end
+  end
+
   describe '#balance_status' do
     context 'when the balance_value is positive' do
       let(:customer) { double(Customer, balance_value: 1) }
