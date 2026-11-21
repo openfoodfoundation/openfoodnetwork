@@ -141,12 +141,6 @@ module Spree
         end
       end
 
-      def text_for_button_link(text, _html_options)
-        s = ''
-        s << text
-        raw(s) # rubocop:disable Rails/OutputSafety
-      end
-
       def configurations_sidebar_menu_item(link_text, url, options = {})
         is_active = url.ends_with?(controller.controller_name) ||
                     url.ends_with?( "#{controller.controller_name}/edit")

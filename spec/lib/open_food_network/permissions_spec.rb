@@ -192,7 +192,6 @@ RSpec.describe OpenFoodNetwork::Permissions do
     let!(:p2) { create(:simple_product, enterprise_id: create(:supplier_enterprise).id ) }
 
     before do
-      allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where('1=0') }
       allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
                               Enterprise.none.select(:id)
                             }
@@ -499,14 +498,14 @@ RSpec.describe OpenFoodNetwork::Permissions do
     end
   end
 
-  describe "finding visible subscriptions" do
+  describe "finding editable subscriptions" do
     let!(:so1) { create(:subscription) }
     let!(:so2) { create(:subscription) }
 
     it "returns subscriptions placed with managed shops" do
       expect(permissions).to receive(:managed_enterprises) { [so1.shop] }
 
-      expect(permissions.visible_subscriptions).to eq [so1]
+      expect(permissions.editable_subscriptions).to eq [so1]
     end
   end
 end

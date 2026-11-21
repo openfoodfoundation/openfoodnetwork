@@ -110,10 +110,6 @@ module OpenFoodNetwork
           .select(:child_id))).distinct
     end
 
-    def manages_one_enterprise?
-      @user.enterprises.length == 1
-    end
-
     def editable_schedules
       Schedule.
         joins(:order_cycles).
@@ -130,10 +126,6 @@ module OpenFoodNetwork
 
     def editable_subscriptions
       Subscription.where(shop_id: managed_enterprises)
-    end
-
-    def visible_subscriptions
-      editable_subscriptions
     end
 
     def managed_enterprises
@@ -195,10 +187,6 @@ module OpenFoodNetwork
           id: managed_enterprise_ids | granting_enterprise_ids | granted_enterprise_ids
         )
       end
-    end
-
-    def managed_enterprise_products
-      Spree::Product.managed_by(@user)
     end
 
     def product_with_variants

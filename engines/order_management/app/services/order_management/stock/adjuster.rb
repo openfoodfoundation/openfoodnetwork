@@ -21,10 +21,6 @@ module OrderManagement
           @need -= item.quantity
         end
       end
-
-      def fulfilled?
-        @need.zero?
-      end
     end
   end
 end

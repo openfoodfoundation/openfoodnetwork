@@ -147,16 +147,6 @@ RSpec.describe OrderCycle do
     expect(oc).not_to have_distributor(d2)
   end
 
-  it "checks for variants" do
-    variant1 = create(:variant)
-    variant2 = create(:variant)
-    order_cycle = create(:simple_order_cycle, suppliers: [variant1.enterprise],
-                                              variants: [variant1])
-
-    expect(order_cycle).to have_variant(variant1)
-    expect(order_cycle).not_to have_variant(variant2)
-  end
-
   describe "product exchanges" do
     let(:oc) { create(:simple_order_cycle) }
     let(:d1) { create(:enterprise) }
@@ -405,19 +395,6 @@ RSpec.describe OrderCycle do
     it "should return no order cycle when none are impending" do
       distributor = create(:distributor_enterprise)
       expect(OrderCycle.first_opening_for(distributor)).to eq(nil)
-    end
-  end
-
-  describe "finding open order cycles" do
-    it "should give the soonest closing order cycle for a distributor" do
-      distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor],
-                                       orders_open_at: 1.day.ago,
-                                       orders_close_at: 11.days.from_now)
-      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor],
-                                        orders_open_at: 2.days.ago,
-                                        orders_close_at: 12.days.from_now)
-      expect(OrderCycle.first_closing_for(distributor)).to eq(oc)
     end
   end
 

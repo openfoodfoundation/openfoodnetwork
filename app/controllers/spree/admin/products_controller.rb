@@ -16,7 +16,6 @@ module Spree
 
       before_action :load_data
       before_action :load_producers, only: [:new]
-      before_action :load_form_data, only: [:new, :create, :edit, :update]
       before_action :strip_new_properties, only: [:create, :update]
 
       def show
@@ -86,10 +85,6 @@ module Spree
         nil
       end
 
-      def product_includes
-        [:image, { variants: [:images] }]
-      end
-
       private
 
       def redirect_after_save
@@ -100,48 +95,15 @@ module Spree
         end
       end
 
-      def product_set_from_params
-        collection_hash = products_bulk_params[:products].each_with_index.to_h { |p, i|
-          [i, p]
-        }
-        Sets::ProductSet.new(collection_attributes: collection_hash)
-      end
-
-      def products_bulk_params
-        params.permit(products: ::PermittedAttributes::Product.attributes).
-          to_h.with_indifferent_access
-      end
-
       def permitted_resource_params
         return params[:product] if params[:product].blank?
 
         params.require(:product).permit(::PermittedAttributes::Product.attributes)
       end
 
-      def load_form_data
-        @taxons = Spree::Taxon.order(:name)
-        @import_dates = product_import_dates.uniq.to_json
-      end
-
       def load_producers
         @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
           managed_product_enterprises.is_primary_producer.by_name
-      end
-
-      def product_import_dates
-        options = [{ id: '0', name: '' }]
-        product_import_dates_query.collect(&:import_date).
-          map { |i| options.push(id: i.to_date, name: i.to_date.to_fs(:long)) }
-
-        options
-      end
-
-      def product_import_dates_query
-        Spree::Variant.
-          select('import_date').distinct.
-          where(enterprise_id: editable_enterprises.collect(&:id)).
-          where.not(spree_variants: { import_date: nil }).
-          order('import_date DESC')
       end
 
       def strip_new_properties
@@ -183,10 +145,6 @@ module Spree
           report.add_metadata(:product, :product_error, product.errors.first) unless product.valid?
           report.add_metadata(:product, :variant_error, variant.errors.first) unless variant.valid?
         end
-      end
-
-      def set_product_master_variant_price_to_zero
-        @product.price = 0 if @product.price.nil?
       end
     end
   end

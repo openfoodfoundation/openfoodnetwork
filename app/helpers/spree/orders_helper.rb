@@ -2,17 +2,8 @@
 
 module Spree
   module OrdersHelper
-    def cart_is_empty
-      order = current_order(false)
-      order.nil? || order.line_items.empty?
-    end
-
     def last_completed_order
       spree_current_user.orders.complete.last
-    end
-
-    def cart_count
-      current_order&.line_items&.count || 0
     end
 
     def changeable_orders

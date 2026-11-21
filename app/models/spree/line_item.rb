@@ -161,10 +161,6 @@ module Spree
       !sufficient_stock?
     end
 
-    def assign_stock_changes_to=(shipment)
-      @preferred_shipment = shipment
-    end
-
     # Returns true if the quantity was reduced, otherwise false.
     def cap_quantity_at_stock!
       scoper.scope(variant)
@@ -213,10 +209,6 @@ module Spree
 
     def display_amount_with_adjustments
       Spree::Money.new(amount_with_adjustments, currency:)
-    end
-
-    def display_included_tax
-      Spree::Money.new(included_tax, currency:)
     end
 
     def unit_value

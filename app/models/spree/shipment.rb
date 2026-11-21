@@ -176,10 +176,6 @@ module Spree
       line_items.map(&:amount).sum
     end
 
-    def display_item_cost
-      Spree::Money.new(item_cost, currency:)
-    end
-
     def update_amounts
       return unless fee_adjustment&.amount != cost
 
@@ -331,18 +327,6 @@ module Spree
         record = self.class.default_scoped.find_by(number: random)
       end
       self.number = random
-    end
-
-    def description_for_shipping_charge
-      "#{Spree.t(:shipping)} (#{shipping_method.name})"
-    end
-
-    def validate_shipping_method
-      return if shipping_method.nil?
-
-      return if shipping_method.include?(address)
-
-      errors.add :shipping_method, Spree.t(:is_not_available_to_shipment_address)
     end
 
     def after_ship
