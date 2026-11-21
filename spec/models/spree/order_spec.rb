@@ -164,6 +164,7 @@ RSpec.describe Spree::Order do
   context '#changes_allowed?' do
     let(:order) { create(:order_ready_for_details) }
     let(:complete) { true }
+    let(:resumed) { false }
     let(:shipped) { false }
     let(:distributor_allow_changes) { true }
     let(:order_cycle_open) { true }
@@ -172,6 +173,7 @@ RSpec.describe Spree::Order do
 
     before do
       allow(order).to receive(:complete?).and_return(complete)
+      allow(order).to receive(:resumed?).and_return(resumed)
       allow(order).to receive(:shipped?).and_return(shipped)
       allow_any_instance_of(Enterprise).to receive(:allow_order_changes?).and_return(
         distributor_allow_changes
@@ -188,14 +190,22 @@ RSpec.describe Spree::Order do
       it { is_expected.to eq(true) }
     end
 
+    context 'when the order has been resumed' do
+      let(:complete) { false }
+      let(:resumed) { true }
+
+      it { is_expected.to eq(true) }
+    end
+
     context 'already shipped' do
       let(:shipped) { true }
 
       it { is_expected.to eq(false) }
     end
 
-    context 'not complete' do
+    context 'not complete or resumed' do
       let(:complete) { false }
+      let(:resumed) { false }
 
       it { is_expected.to eq(false) }
     end
