@@ -34,15 +34,14 @@ module PaymentGateways
           )
           Alert.raise_with_record(pp_response.errors, @order)
           flash[:error] =
-            Spree.t(
-              'flash.generic_error',
-              scope: 'paypal',
+            I18n.t(
+              "spree.paypal.flash.generic_error",
               reasons: pp_response.errors.map(&:long_message).join(" "),
             )
           redirect_to main_app.checkout_step_path(:payment)
         end
       rescue SocketError
-        flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
+        flash[:error] = I18n.t("spree.paypal.flash.connection_failed")
         redirect_to main_app.checkout_step_path(:payment)
       end
     end
@@ -55,7 +54,7 @@ module PaymentGateways
       last_payment = Orders::FindPaymentService.new(@order).last_pending_paypal_payment
 
       if last_payment.nil?
-        flash[:error] = Spree.t('flash.no_payment_found', scope: 'paypal')
+        flash[:error] = I18n.t("spree.paypal.flash.no_payment_found")
         return redirect_to main_app.checkout_step_path(:payment)
       end
 
@@ -70,7 +69,7 @@ module PaymentGateways
     end
 
     def cancel
-      flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
+      flash[:notice] = I18n.t("spree.paypal.flash.cancel")
       redirect_to main_app.checkout_path
     end
 

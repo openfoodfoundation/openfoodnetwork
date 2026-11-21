@@ -9,6 +9,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/login", to: redirect("/#/login")
+  get "/password/recover", to: redirect("/#/login")
   get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
 
   get "/map", to: "map#index", as: :map

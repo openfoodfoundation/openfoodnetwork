@@ -28,7 +28,7 @@
 </script>
 <script type='text/template' id='variant_autocomplete_stock_template'>
   <fieldset>
-    <legend align="center"><%= Spree.t(:select_stock) %></legend>
+    <legend align="center"><%= t("spree.select_stock") %></legend>
       <table class="stock-levels">
         <colgroup>
           <col style="width: 60%;" />
@@ -36,15 +36,15 @@
           <col style="width: 10%;" />
         </colgroup>
         <thead>
-          <th><%= Spree.t(:on_hand) %></th>
-          <th><%= Spree.t(:quantity) %></th>
+          <th><%= t("spree.on_hand") %></th>
+          <th><%= t("spree.quantity") %></th>
           <th class="actions"></th>
         </thead>
         <tbody>
           <tr>
             {{#if variant.in_stock}}
               {{#if variant.on_demand}}
-                <td><%= Spree.t(:on_demand) %></td>
+                <td><%= t("spree.on_demand") %></td>
               {{else}}
                 <td>
                   {{variant.on_hand}}

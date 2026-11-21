@@ -2,7 +2,7 @@
 
 #add-line-item
   %fieldset.no-border-bottom
-    %legend{:align => "center"}= Spree.t(:add_product)
+    %legend{:align => "center"}= t("spree.add_product")
 
     - if @order.canceled?
       = t(".cannot_add_item_to_canceled_order")
@@ -10,7 +10,7 @@
       = t(".cannot_add_item_to_shipped_order")
     - else
       .field.nine.columns.alpha
-        = label_tag :add_variant_id, Spree.t(:name_or_sku)
+        = label_tag :add_variant_id, t("spree.name_or_sku")
         = hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth"
       .five.columns.omega
         .field

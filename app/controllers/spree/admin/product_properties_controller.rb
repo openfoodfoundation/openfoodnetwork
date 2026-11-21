@@ -16,7 +16,7 @@ module Spree
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
         if @object.destroy
-          flash[:success] = Spree.t(:successfully_removed)
+          flash[:success] = I18n.t("spree.successfully_removed")
         end
         # if destroy fails it won't show any errors to the user
         redirect_to admin_product_product_properties_url(params[:product_id], @url_filters)

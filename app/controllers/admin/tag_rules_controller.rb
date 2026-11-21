@@ -30,7 +30,7 @@ module Admin
 
       status = :ok
       if @rule.destroy
-        flash[:success] = Spree.t(:successfully_removed, resource: Spree.t(:tag_rule))
+        flash[:success] = I18n.t("spree.successfully_removed", resource: I18n.t("spree.tag_rule"))
       else
         flash.now[:error] = t(".destroy_error")
         status = :internal_server_error

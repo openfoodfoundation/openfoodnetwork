@@ -148,7 +148,7 @@ module Spree
         return true if void?
         # We should only void complete payment, otherwise we will be refunding credit that was
         # not used in the first place.
-        return gateway_error(Spree.t(:internal_payment_not_voidable)) if state != "completed"
+        return gateway_error(I18n.t("spree.internal_payment_not_voidable")) if state != "completed"
 
         options = { customer_id: order.customer_id, payment_id: id, order_number: order.number }
         response = payment_method.void(
@@ -204,13 +204,13 @@ module Spree
       def validate!
         return false unless payment_method&.source_required?
 
-        raise Core::GatewayError, Spree.t(:payment_processing_failed) unless source
+        raise Core::GatewayError, I18n.t("spree.payment_processing_failed") unless source
 
         return false if processing?
 
         unless payment_method.supports?(source)
           invalidate!
-          raise Core::GatewayError, Spree.t(:payment_method_not_supported)
+          raise Core::GatewayError, I18n.t("spree.payment_method_not_supported")
         end
         true
       end
@@ -276,11 +276,11 @@ module Spree
         text = if error.is_a? ActiveMerchant::Billing::Response
                  error_text(error)
                elsif error.is_a? ActiveMerchant::ConnectionError
-                 Spree.t(:unable_to_connect_to_gateway)
+                 I18n.t("spree.unable_to_connect_to_gateway")
                else
                  error.to_s
                end
-        logger.error(Spree.t(:gateway_error))
+        logger.error(I18n.t("spree.gateway_error"))
         logger.error("  #{error.to_yaml}")
         # TODO why is this not captured ?
         raise Core::GatewayError, text
@@ -299,7 +299,7 @@ module Spree
       def check_environment
         return if payment_method.environment == Rails.env
 
-        message = Spree.t(:gateway_config_unavailable) + " - #{Rails.env}"
+        message = I18n.t("spree.gateway_config_unavailable") + " - #{Rails.env}"
         raise Core::GatewayError, message
       end
 

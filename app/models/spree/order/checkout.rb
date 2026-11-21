@@ -163,7 +163,7 @@ module Spree
           def ensure_shipping_method
             return if shipping_method.present?
 
-            errors.add(:base, Spree.t(:items_cannot_be_shipped))
+            errors.add(:base, I18n.t("spree.items_cannot_be_shipped"))
             false
           end
         end

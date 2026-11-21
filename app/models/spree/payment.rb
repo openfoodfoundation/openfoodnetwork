@@ -214,7 +214,7 @@ module Spree
         source.errors.each do |error|
           field_name =
             I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
-          errors.add(Spree.t(source.class.to_s.demodulize.underscore),
+          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: :spree),
                      "#{field_name} #{error.message}")
         end
       end

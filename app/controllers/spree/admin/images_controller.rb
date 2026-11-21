@@ -71,7 +71,7 @@ module Spree
         destroy_before
 
         if @object.destroy
-          flash[:success] = Spree.t(:successfully_removed)
+          flash[:success] = I18n.t("spree.successfully_removed")
         end
 
         redirect_to location_after_save
@@ -85,7 +85,7 @@ module Spree
 
       # The inherited handler redirects to the images list, which no longer exists.
       def resource_not_found
-        flash[:error] = Spree.t(:not_found)
+        flash[:error] = I18n.t("spree.not_found")
         redirect_to owner_edit_path
       end
 

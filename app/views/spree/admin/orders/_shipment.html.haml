@@ -5,7 +5,7 @@
         = shipment.number
       = "-"
       %span.shipment-state
-        = Spree.t("shipment_states.#{shipment.state}")
+        = t("spree.shipment_states.#{shipment.state}")
       - if shipment.ready? and can? :update, shipment
         = "-"
         %button{"class": "ship button icon-arrow-right","data-controller": "modal-link",
@@ -24,13 +24,13 @@
 
     %thead
       %th{ :colspan => "2" }
-        = Spree.t(:item_description)
+        = t("spree.item_description")
       %th
-        = Spree.t(:price)
+        = t("spree.price")
       %th
-        = Spree.t(:quantity)
+        = t("spree.quantity")
       %th
-        = Spree.t(:total)
+        = t("spree.total")
       %th.orders-actions.actions
 
     %tbody{ "data-shipment-number" => "#{shipment.number}", "data-order-number" => "#{order.number}" }
@@ -40,7 +40,7 @@
         %tr.edit-method.hidden.total
           %td{ :colspan => "5" }
             .field.alpha.five.columns
-              = label_tag 'selected_shipping_rate_id', Spree.t(:shipping_method)
+              = label_tag 'selected_shipping_rate_id', t("spree.shipping_method")
               = select_tag :selected_shipping_rate_id, options_for_select(shipment.shipping_rates.map { |sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id), { :class => 'select2 fullwidth', :data => { 'shipment-number' => shipment.number } }
 
           %td.actions
@@ -53,7 +53,7 @@
             %strong
               = "#{shipment.fee_adjustment.label}: #{shipment.shipping_method.name}"
           - else
-            = Spree.t(:cannot_set_shipping_method_without_address)
+            = t("spree.cannot_set_shipping_method_without_address")
 
         %td.total{ :align => "center" }
           - if shipment.fee_adjustment.present?
@@ -63,12 +63,12 @@
         - if shipment.fee_adjustment.present? && shipment.can_modify?
           %td.actions
             - if can? :update, shipment.shipping_method
-              = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
+              = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => t("spree.edit")
 
       %tr.edit-tracking.hidden.total
         %td{ :colspan => "5" }
           %label
-            = "#{Spree.t(:tracking_number)}:"
+            = "#{t("spree.tracking_number")}:"
           = text_field_tag :tracking, shipment.tracking
 
         %td.actions
@@ -80,13 +80,13 @@
         %td{ :colspan => "5" }
           - if shipment.tracking.present?
             %strong
-              = "#{Spree.t(:tracking)}:"
+              = "#{t("spree.tracking")}:"
             = shipment.tracking
           - else
-            = Spree.t(:no_tracking_present)
+            = t("spree.no_tracking_present")
 
         %td.actions
           - if spree_current_user.can_manage_orders? && can?(:update, shipment) && shipment.can_modify?
-            = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
+            = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => t("spree.edit")
             - if shipment.tracking.present?
-              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
+              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => t("spree.delete")

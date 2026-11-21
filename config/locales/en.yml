@@ -4298,6 +4298,7 @@ en:
     notice_messages:
       variant_deleted: "Variant deleted"
     payment_method_not_supported: "Payment method not supported"
+    unable_to_connect_to_gateway: "Unable to connect to gateway."
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
     refund: "Refund"
@@ -4376,7 +4377,6 @@ en:
     general_settings: "General Settings"
     site_name: "Site Name"
     site_url: "Site URL"
-    default_seo_title: "Default Seo Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     currency_decimal_mark: "Currency decimal mark"
@@ -5100,19 +5100,11 @@ en:
       paused: paused
       canceled: cancelled
     paypal:
-      already_refunded: "This payment has been refunded and no further action can be taken on it."
       no_payment_via_admin_backend: "You cannot charge PayPal accounts through the admin backend at this time."
       transaction: "PayPal Transaction"
       payer_id: "Payer ID"
       transaction_id: "Transaction ID"
       token: "Token"
-      refund: "Refund"
-      refund_amount: "Amount"
-      original_amount: "Original amount: %{amount}"
-      refund_successful: "PayPal refund successful"
-      refund_unsuccessful: "PayPal refund unsuccessful"
-      actions:
-        refund: "Refund"
       flash:
         cancel: "Don't want to use PayPal? No problems."
         connection_failed: "Could not connect to PayPal."

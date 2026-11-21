@@ -28,6 +28,7 @@ RSpec.describe Spree::Admin::MailMethodsController do
     expect {
       spree_post :testmail
     }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    expect(flash[:success]).to eq "Test email sent."
   end
 
   it "reports errors" do

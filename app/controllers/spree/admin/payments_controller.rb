@@ -73,30 +73,11 @@ module Spree
         redirect_to request.referer
       end
 
-      def paypal_refund
-        if request.get?
-          if @payment.source.state == 'refunded'
-            flash[:error] = Spree.t(:already_refunded, scope: 'paypal')
-            redirect_to admin_order_payment_path(@order, @payment)
-          end
-        elsif request.post?
-          response = @payment.payment_method.refund(@payment, params[:refund_amount])
-          if response.success?
-            flash[:success] = Spree.t(:refund_successful, scope: 'paypal')
-            redirect_to admin_order_payments_path(@order)
-          else
-            flash.now[:error] = Spree.t(:refund_unsuccessful, scope: 'paypal') +
-                                " (#{response.errors.first.long_message})"
-            render
-          end
-        end
-      end
-
       def credit_customer
         response = ::Orders::CustomerCreditService.new(@order).refund
 
         if response.success?
-          flash[:success] = Spree.t(:customer_credit_successful, scope: "admin.payments")
+          flash[:success] = I18n.t("spree.admin.payments.customer_credit_successful")
         else
           flash[:error] = response.message
         end
@@ -157,7 +138,7 @@ module Spree
                   @order.complete? || @order.canceled? || @order.resumed? ||
                   @order.awaiting_return? || @order.returned?
 
-        flash[:notice] = Spree.t(:fill_in_customer_info)
+        flash[:notice] = I18n.t("spree.fill_in_customer_info")
         redirect_to edit_admin_order_customer_url(@order)
       end
 

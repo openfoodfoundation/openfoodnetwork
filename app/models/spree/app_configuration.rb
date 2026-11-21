@@ -38,7 +38,6 @@ module Spree
     preference :display_currency, :boolean, default: false
     preference :default_meta_description, :string, default: 'OFN demo site'
     preference :default_meta_keywords, :string, default: 'ofn, demo'
-    preference :default_seo_title, :string, default: ''
     preference :hide_cents, :boolean, default: false
     preference :layout, :string, default: 'darkswarm'
     preference :logo, :string, default: '/default_images/ofn-logo.png'

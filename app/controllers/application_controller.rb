@@ -182,5 +182,3 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_path
   end
 end
-
-require 'spree/i18n/initializer'

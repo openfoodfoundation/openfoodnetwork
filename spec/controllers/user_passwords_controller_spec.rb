@@ -10,6 +10,14 @@ RSpec.describe UserPasswordsController do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end
 
+  describe "new" do
+    it "redirects to the login modal" do
+      spree_get :new
+
+      expect(response).to redirect_to root_path(anchor: "/login")
+    end
+  end
+
   describe "create" do
     # The response must not tell whether an account exists for the email
     shared_examples "a neutral response" do
