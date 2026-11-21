@@ -72,4 +72,4 @@
         %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
-      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, allowed_producers:, allowed_source_producers: }
+      = render partial: 'product_variant_row', locals: { product:, product_index:, allowed_producers:, allowed_source_producers: }

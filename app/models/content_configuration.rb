@@ -95,7 +95,7 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :user_guide_link, :string, default: 'https://guide.openfoodnetwork.org/'
 
   # ContentConfig Caching
-  preference :updated_at_timestamp, :integer, default: Time.zone.today.to_time.to_i
+  preference :updated_at_timestamp, :integer, default: 0
 
   def updated_at
     Time.zone.at updated_at_timestamp
