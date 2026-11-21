@@ -1347,6 +1347,7 @@ cy:
           enabled: "Galluogwyd"
           disabled: "Analluogwyd"
           sections:
+            filters: "Hidlau"
             orders: "Archebion"
           shopfront_visibility:
             title: "Ffrynt siop sydd i'w gweld yn gyhoeddus?"
@@ -1372,6 +1373,8 @@ cy:
             by_producer: "Yn ôl cynhyrchydd"
             category_placeholder: "Categori"
             producer_placeholder: "Cynhyrchydd"
+          property_order:
+            placeholder: "Eiddo"
           low_stock_warning:
             title: "Arddangos nifer yr eitemau sy'n weddill os bydd stoc ffrynt y siop yn isel"
             description: "Hysbysu siopwyr pan fydd 3 eitem yn unig neu lai ar ôl."
@@ -2837,7 +2840,6 @@ cy:
   october: "Hydref"
   november: "Tachwedd"
   december: "Rhagfyr"
-  email_not_found: "Ni chafwyd hyd i gyfeiriad e-bost"
   email_unconfirmed: "Rhaid i chi gadarnhau eich cyfeiriad e-bost cyn y gallwch ailosod eich cyfrinair."
   email_required: "Rhaid i chi ddarparu cyfeiriad e-bost"
   logging_in: "Arhoswch eiliad, rydyn ni'n eich mewngofnodi"
@@ -2846,7 +2848,6 @@ cy:
   confirm_password: "Cadarnhau cyfrinair"
   action_signup: "Cofrestru nawr"
   forgot_password: "Wedi anghofio'r cyfrinair?"
-  password_reset_sent: "Anfonwyd e-bost gyda chyfarwyddiadau i ailosod eich cyfrinair!"
   reset_password: "Ailosod cyfrinair"
   update_and_recalculate_fees: "Diweddaru a Ail-gyfrifo'r Ffioedd"
   registration:

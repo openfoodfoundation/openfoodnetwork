@@ -1894,7 +1894,6 @@ pl:
   october: "październik"
   november: "listopad"
   december: "grudzień"
-  email_not_found: "nie znaleziono adresu e-mail"
   email_unconfirmed: "Przed zresetowaniem hasła musisz potwierdzić swój adres e-mail."
   email_required: "Musisz podać adres e-mail"
   logging_in: "Zaczekaj chwilę, logujemy Cię"
@@ -1903,7 +1902,6 @@ pl:
   confirm_password: "Potwierdź hasło"
   action_signup: "Zapisz się teraz"
   forgot_password: "Zapomniałeś hasła?"
-  password_reset_sent: "Wysłano wiadomość e-mail z instrukcjami dotyczącymi resetowania hasła!"
   reset_password: "Zresetuj hasło"
   update_and_recalculate_fees: "Zaktualizuj i ponownie oblicz opłaty"
   registration:

@@ -2561,7 +2561,6 @@ sr:
   october: "октобар"
   november: "новембра"
   december: "децембар"
-  email_not_found: "Адреса е-поште није пронађена"
   email_unconfirmed: "Морате потврдити своју адресу е-поште да бисте могли да ресетујете лозинку."
   email_required: "Морате навести адресу е-поште"
   logging_in: "Сачекај мало, пријављујемо те"
@@ -2570,7 +2569,6 @@ sr:
   confirm_password: "Потврди лозинку"
   action_signup: "Пријавите се сада"
   forgot_password: "Заборавили сте лозинку?"
-  password_reset_sent: "Послат је е-маил са упутствима за ресетовање лозинке!"
   reset_password: "Ресетуј шифру"
   update_and_recalculate_fees: "Ажурирајте и поново израчунајте накнаде"
   registration:

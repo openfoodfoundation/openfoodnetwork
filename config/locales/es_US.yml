@@ -1000,6 +1000,7 @@ es_US:
           enabled: "Habilitado"
           disabled: "Deshabilitado"
           sections:
+            filters: "Filtros"
             orders: "Pedidos"
           shopfront_visibility:
             title: "¿Quieres que la tienda sea visible y pública?"
@@ -1026,6 +1027,8 @@ es_US:
             by_producer: "Por productor"
             category_placeholder: "Categoría"
             producer_placeholder: "Productora"
+          property_order:
+            placeholder: "Propiedad"
           order_cycle_order:
             title: "Ordenar Ciclos de Pedidos en Tienda por"
             open_date: "Fecha de Inicio"
@@ -2222,7 +2225,6 @@ es_US:
   october: "Octubre"
   november: "Noviembre"
   december: "Diciembre"
-  email_not_found: "Dirección de correo electrónico no encontrada"
   email_unconfirmed: "Debe confirmar su dirección de correo electrónico antes de poder restablecer su contraseña."
   email_required: "Debe brindar una dirección de correo electrónico"
   logging_in: "Espere un momento, le vamos a iniciar una sesión"
@@ -2231,7 +2233,6 @@ es_US:
   confirm_password: "Confirmar contraseña"
   action_signup: "Registrarse ahora"
   forgot_password: "¿No recuerdas tu contraseña?"
-  password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restaurar contraseña"
   update_and_recalculate_fees: "Actualizar y recalcular comisiones"
   registration:

@@ -1100,6 +1100,7 @@ pa:
           enabled: "ਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           disabled: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           sections:
+            filters: "ਫਿਲਟਰ"
             orders: "ਆਰਡਰ"
           shopfront_visibility:
             title: "ਇੱਕ ਪਬਲਿਕ ਤੌਰ ਉਤੇ ਵਿਖਾਈ ਦੇਣ ਵਾਲੀ ਸ਼ਾਪ?"
@@ -1125,6 +1126,8 @@ pa:
             by_producer: "ਉਤਪਾਦਕ ਦੁਆਰਾ"
             category_placeholder: "ਸ਼੍ਰੇਣੀ"
             producer_placeholder: "ਉਤਪਾਦਕ"
+          property_order:
+            placeholder: "ਪ੍ਰਾਪਰਟੀ"
           low_stock_warning:
             title: "ਜੇਕਰ ਹੱਥ ਵਿੱਚ ਸਟਾਕ ਘੱਟ ਹੈ ਤਾਂ ਬਾਕੀ ਬਚੇ ਸਟਾਕ ਨੂੰ ਸ਼ਾਪਫਰੰਟ ਤੇ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ"
             description: "ਜਦੋਂ ਸਿਰਫ 3 ਜਾਂ ਉਸਤੋਂ ਘੱਟ ਚੀਜ਼ਾਂ ਬਚੀਆਂ ਹੋਣ ਤਾਂ ਖਰੀਦਦਾਰਾਂ ਨੂੰ ਸੂਚਿਤ ਕਰੋ।"
@@ -2463,7 +2466,6 @@ pa:
   october: "ਅਕਤੂਬਰ"
   november: "ਨਵੰਬਰ"
   december: "ਦਸੰਬਰ"
-  email_not_found: "ਈਮੇਲ ਪਤਾ ਨਹੀਂ ਮਿਲਿਆ"
   email_unconfirmed: "ਤੁਹਾਨੂੰ ਆਪਣਾ ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੇ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨੀ ਪਵੇਗੀ।"
   email_required: "ਤੁਹਾਨੂੰ ਇੱਕ ਈਮੇਲ ਪਤਾ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ"
   logging_in: "ਇੱਕ ਪਲ ਰੁਕੋ, ਅਸੀਂ ਤੁਹਾਨੂੰ ਲੌਗਇਨ ਕਰ ਰਹੇ ਹਾਂ"
@@ -2472,7 +2474,6 @@ pa:
   confirm_password: "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
   action_signup: "ਹੁਣੇ ਸਾਈਨ ਅੱਪ ਕਰੋ"
   forgot_password: "ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?"
-  password_reset_sent: "ਤੁਹਾਡੇ ਪਾਸਵਰਡ ਨੂੰ ਰੀਸੈਟ ਕਰਨ ਦੀਆਂ ਹਦਾਇਤਾਂ ਵਾਲੀ ਇੱਕ ਈਮੇਲ ਭੇਜੀ ਗਈ ਹੈ!"
   reset_password: "ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰੋ"
   update_and_recalculate_fees: "ਅਪਡੇਟ ਕਰੋ ਅਤੇ ਫੀਸਾਂ ਦੀ ਮੁੜ ਗਣਨਾ ਕਰੋ"
   registration:

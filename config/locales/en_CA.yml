@@ -359,6 +359,8 @@ en_CA:
   open_street_map_enabled: "Open Street Map enabled"
   open_street_map_default_latitude: "Open Street Map default latitude"
   open_street_map_default_longitude: "Open Street Map default longitude"
+  open_street_map_default_zoom: "Open Street Map default zoom (1 = whole world, 18 = street level; only used when the box above is unticked)"
+  open_street_map_fit_to_enterprises: "Open the map zoomed to show all enterprises (when unticked, the map opens at the default latitude, longitude and zoom)"
   open_street_map_provider_name: "Open Street Map provider name"
   open_street_map_provider_options: "Open Street Map provider options"
   producer_signup_case_studies_html: "Producer signup case studies HTML"
@@ -847,7 +849,12 @@ en_CA:
         balance_due: "Balance Due"
         id: Id
         customer_type: "Type"
+        individual: "Individual"
         enterprise: "Enterprise"
+        enterprise_name: "Enterprise name"
+        enterprise_acn: "Business Number"
+        enterprise_abn: "Business Number"
+        enterprise_charges_sales_tax: "Tax?"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
         has_outstanding_credit: "Delete failed: This customer has an outstanding credit balance. Please refund before deleting."
@@ -1214,6 +1221,7 @@ en_CA:
         tax_on_fees: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
+      nothing_to_capture: 'There are no payments that can be captured for this order.'
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
@@ -1380,7 +1388,12 @@ en_CA:
           enabled: "Enabled"
           disabled: "Disabled"
           sections:
+            shopfront: "Shopfront"
+            product_display: "Product display"
+            order_cycles: "Order cycles"
+            filters: "Filters"
             orders: "Orders"
+            supplier_access: "Supplier access"
           shopfront_visibility:
             title: "Publicly visible shopfront?"
             description: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
@@ -1401,15 +1414,21 @@ en_CA:
                 cycles (ie. shop is closed).
           product_order:
             title: "Display ordering in shopfront"
+            description: "Sets the order products appear in your shop, from top to bottom. When ordering by category, the category filters follow the same order."
             by_category: "By  category"
             by_producer: "By producer"
             category_placeholder: "Category"
             producer_placeholder: "Producer"
+          property_order:
+            title: "Property filter order"
+            description: "Properties you add here appear first in your shop's filters, in this order. This doesn't change the order of products."
+            placeholder: "Property"
           low_stock_warning:
             title: "Display remaining stock in shopfront if the on-hand amount is low."
             description: "Let shoppers know when there are only 3 or fewer items left."
           order_cycle_order:
             title: "Sort Order Cycles On Shopfront By"
+            description: "Sets the order of order cycles in the dropdown shoppers use to pick when they'll receive their order."
             open_date: "Open Date"
             close_date: "Close date"
           guest_orders:
@@ -2877,7 +2896,7 @@ en_CA:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
+  password_reset_requested: "If an account with that email address exists, you will receive a password reset email"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
@@ -2886,7 +2905,6 @@ en_CA:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot Password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:

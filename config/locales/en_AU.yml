@@ -863,6 +863,7 @@ en_AU:
           enabled: "Enabled"
           disabled: "Disabled"
           sections:
+            filters: "Filters"
             orders: "Orders"
           shopfront_visibility:
             title: "Publicly visible shopfront?"
@@ -889,6 +890,8 @@ en_AU:
           product_order:
             category_placeholder: "Category"
             producer_placeholder: "Producer"
+          property_order:
+            placeholder: "Property"
           order_cycle_order:
             title: "Sort Order Cycles On Shopfront By"
             open_date: "Open Date"
@@ -2074,7 +2077,6 @@ en_AU:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
@@ -2083,7 +2085,6 @@ en_AU:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot Password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:

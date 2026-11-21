@@ -1016,6 +1016,7 @@ uk:
           enabled: "Увімкнено"
           disabled: "Вимкнено"
           sections:
+            filters: "Фільтри"
             orders: "Замовлення"
           shopfront_visibility:
             title: "Загальнодоступна вітрина?"
@@ -1041,6 +1042,8 @@ uk:
             by_producer: "За виробником"
             category_placeholder: "Категорія"
             producer_placeholder: "Виробник"
+          property_order:
+            placeholder: "Власність"
           low_stock_warning:
             title: "Показати залишки на вітрині магазину, якщо їх мало"
             description: "Повідомляти покупцям, коли залишиться лише 3 або менше одиниць товару."
@@ -2299,7 +2302,6 @@ uk:
   october: "Жовтень"
   november: "Листопад"
   december: "Грудень"
-  email_not_found: "Адреса email не знайдена"
   email_unconfirmed: "Ви повинні підтвердити свою електронну адресу, перш ніж скинути пароль."
   email_required: "Ви повинні вказати електронну адресу"
   logging_in: "Зачекайте хвилинку, ми входимо в систему"
@@ -2308,7 +2310,6 @@ uk:
   confirm_password: "Підтвердьте пароль"
   action_signup: "Зареєструйся зараз"
   forgot_password: "Забули пароль?"
-  password_reset_sent: "Електронний лист з інструкціями щодо скидання пароля надіслано!"
   reset_password: "Скинути пароль"
   update_and_recalculate_fees: "Оновити та перерахувати комісії"
   registration:

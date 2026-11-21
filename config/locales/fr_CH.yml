@@ -1049,6 +1049,7 @@ fr_CH:
           enabled: "Activé"
           disabled: "Désactivé"
           sections:
+            filters: "Filtres"
             orders: "Commandes"
           shopfront_visibility:
             title: "Boutique privée (accès contrôlé) ?"
@@ -1075,6 +1076,8 @@ fr_CH:
             by_producer: "Par producteur"
             category_placeholder: "Catégorie"
             producer_placeholder: "Producteur"
+          property_order:
+            placeholder: "Propriétés / labels"
           low_stock_warning:
             title: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
             description: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
@@ -2339,7 +2342,6 @@ fr_CH:
   october: "Octobre"
   november: "Novembre"
   december: "Décembre"
-  email_not_found: "Adresse email non trouvée"
   email_unconfirmed: "Vous devez confirmer votre adresse email avant de pouvoir réinitiatliser votre mot de passe."
   email_required: "Vous devez saisir une adresse email"
   logging_in: "Veuillez patienter, connexion en cours"
@@ -2348,7 +2350,6 @@ fr_CH:
   confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
   forgot_password: "Mot de passe oublié?"
-  password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:

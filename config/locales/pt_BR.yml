@@ -1339,6 +1339,7 @@ pt_BR:
           enabled: "Ativado"
           disabled: "Desativado"
           sections:
+            filters: "Filtros"
             orders: "Encomendas"
           shopfront_visibility:
             title: "Loja virtual visível ao público?"
@@ -1364,6 +1365,8 @@ pt_BR:
             by_producer: "Por produtor"
             category_placeholder: "Categoria"
             producer_placeholder: "Produtor"
+          property_order:
+            placeholder: "Propriedade"
           low_stock_warning:
             title: "Exibir estoque restante na vitrine quando estiver baixo"
             description: "Avise os compradores quando restarem 3 ou menos itens."
@@ -2818,7 +2821,6 @@ pt_BR:
   october: "Outubro"
   november: "Novembro"
   december: "Dezembro"
-  email_not_found: "Endereço de e-mail não encontrado"
   email_unconfirmed: "Você deve confirmar seu endereço de e-mail antes de redefinir sua senha."
   email_required: "Você precisa providenciar um endereço de e-mail"
   logging_in: "Fazendo o login, aguarde um momento"
@@ -2827,7 +2829,6 @@ pt_BR:
   confirm_password: "Confirme a senha"
   action_signup: "Cadastre-se agora"
   forgot_password: "Esqueceu sua senha?"
-  password_reset_sent: "Um e-mail foi enviado com instruções para redefinir sua senha!"
   reset_password: "Redefinir senha"
   update_and_recalculate_fees: "Atualizar e recalcular taxas"
   registration:

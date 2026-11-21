@@ -1153,6 +1153,7 @@ ru:
           enabled: "Включено"
           disabled: "Выключено"
           sections:
+            filters: "Фильтры"
             orders: "Заказы"
           shopfront_visibility:
             title: "Публично видимая витрина?"
@@ -1178,6 +1179,8 @@ ru:
             by_producer: "По производителю"
             category_placeholder: "Категория"
             producer_placeholder: "Производитель"
+          property_order:
+            placeholder: "Свойство"
           low_stock_warning:
             title: "Отображать остатки товаров на витрине магазина, если их мало"
             description: "Сообщить покупателям, когда товара останется 3 или меньше."
@@ -2559,7 +2562,6 @@ ru:
   october: "Октябрь"
   november: "Ноябрь"
   december: "Декабрь"
-  email_not_found: "Email адрес не найден"
   email_unconfirmed: "Вы должны подтверить Ваш email адрес перед сбросом пароля."
   email_required: "Вы должны указать email адрес"
   logging_in: "Немного подождите, мы Вас регистрируем"
@@ -2568,7 +2570,6 @@ ru:
   confirm_password: "Введите еще раз пароль"
   action_signup: "Зарегистрироваться"
   forgot_password: "Забыли пароль?"
-  password_reset_sent: "Email с инструкциями по сбросу пароля отправлен!"
   reset_password: "Сбросить пароль"
   update_and_recalculate_fees: "Обновить И Пересчитать Сборы"
   registration:

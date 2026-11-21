@@ -853,6 +853,7 @@ nl_BE:
           enabled: "Activeer"
           disabled: "Deactiveer"
           sections:
+            filters: "Filter"
             orders: "Bestellingen"
           shopfront_visibility:
             title: "Publiekelijk zichtbare etalage"
@@ -875,6 +876,8 @@ nl_BE:
           product_order:
             category_placeholder: "Categorie"
             producer_placeholder: "Producent"
+          property_order:
+            placeholder: "Eigendom"
           order_cycle_order:
             title: "Sorteer ordercycli op winkelpromenade per"
             open_date: "Open Datum"
@@ -2042,7 +2045,6 @@ nl_BE:
   october: "oktober"
   november: "november"
   december: "december"
-  email_not_found: "E-mailadres werd niet teruggevonden"
   email_unconfirmed: "Je moet je E-mailadres bevestigen voor je je wachtwoord kan resetten."
   email_required: "Je moet je een E-mailadres beschikbaar stellen"
   logging_in: "Wacht een momentje, we loggen je in"
@@ -2051,7 +2053,6 @@ nl_BE:
   confirm_password: "Bevestig wachtwoord"
   action_signup: "Registreer nu"
   forgot_password: "Ben je wachtwoord vergeten?"
-  password_reset_sent: "Een E-mail met instructies hoe je je wachtwoord reset werden naar je gestuurd."
   reset_password: "Reset wachtwoord"
   update_and_recalculate_fees: "Update en herbereken kosten"
   registration:

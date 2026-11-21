@@ -1286,6 +1286,7 @@ es:
           enabled: "Habilitado"
           disabled: "Deshabilitado"
           sections:
+            filters: "Filtros"
             orders: "Pedidos"
           shopfront_visibility:
             title: "¿Quieres que la tienda sea visible y pública?"
@@ -1312,6 +1313,8 @@ es:
             by_producer: "Por productora"
             category_placeholder: "Categoría"
             producer_placeholder: "Productora"
+          property_order:
+            placeholder: "Propiedad"
           low_stock_warning:
             title: "Mostrar las existencias restantes en el escaparate si hay pocas disponibles"
             description: "Informe a los compradores cuando solo queden 3 artículos o menos."
@@ -2694,7 +2697,6 @@ es:
   october: "Octubre"
   november: "Noviembre"
   december: "Diciembre"
-  email_not_found: "Dirección de correo electrónico no encontrada"
   email_unconfirmed: "Debe confirmar su dirección de correo electrónico antes de poder restablecer su contraseña."
   email_required: "Debe brindar una dirección de correo electrónico"
   logging_in: "Espere un momento, le vamos a iniciar una sesión"
@@ -2703,7 +2705,6 @@ es:
   confirm_password: "Confirmar contraseña"
   action_signup: "Registrarse ahora"
   forgot_password: "¿No recuerdas tu contraseña?"
-  password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restaurar contraseña"
   update_and_recalculate_fees: "Actualizar y recalcular comisiones"
   registration:

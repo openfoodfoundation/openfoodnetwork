@@ -1328,6 +1328,7 @@ fi:
           enabled: "Käytössä"
           disabled: "Pois käytöstä"
           sections:
+            filters: "Suodattimet"
             orders: "tilaukset"
           shopfront_visibility:
             title: "Julkisesti näkyvä myymälä?"
@@ -1353,6 +1354,8 @@ fi:
             by_producer: "Tuottajan mukaan"
             category_placeholder: "Kategoria"
             producer_placeholder: "tuottaja"
+          property_order:
+            placeholder: "Ominaisuus"
           low_stock_warning:
             title: "Näytä jäljellä olevat varastot liikkeessä, jos niitä on vähän"
             description: "Kerro ostajille, kun tuotteita on jäljellä vain 3 tai vähemmän."
@@ -2802,7 +2805,6 @@ fi:
   october: "lokakuu"
   november: "marraskuu"
   december: "joulukuu"
-  email_not_found: "Sähköpostiosoitetta ei löytynyt"
   email_unconfirmed: "Sinun on vahvistettava sähköpostiosoitteesi ennen kuin voit palauttaa salasanasi."
   email_required: "Sinun on annettava sähköpostiosoite"
   logging_in: "Odota hetki, kirjaamme sinut sisään"
@@ -2811,7 +2813,6 @@ fi:
   confirm_password: "Vahvista salasana"
   action_signup: "Rekisteröidy nyt"
   forgot_password: "Unohditko salasanasi?"
-  password_reset_sent: "Sähköposti, jossa on ohjeet salasanan palauttamiseen, on lähetetty!"
   reset_password: "Palauta salasana"
   update_and_recalculate_fees: "Päivitä ja laske maksut uudelleen"
   registration:

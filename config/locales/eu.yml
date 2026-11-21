@@ -1193,6 +1193,7 @@ eu:
           enabled: "Gaituta"
           disabled: "Desgaitua"
           sections:
+            filters: "Iragazkiak"
             orders: "Eskaerak"
           shopfront_visibility:
             title: "Denda ikusgai eta publikoa izatea nahi duzu?"
@@ -1218,6 +1219,8 @@ eu:
             by_producer: "Produktore bakoitzeko"
             category_placeholder: "Kategoria"
             producer_placeholder: "Ekoizlea"
+          property_order:
+            placeholder: "Jabetza"
           low_stock_warning:
             title: "Erakusleihoan dauden gainerako izakinak erakutsi, gutxi badaude"
             description: "Jakinarazi erosleei 3 artikulu edo gutxiago geratzen direnean."
@@ -2560,7 +2563,6 @@ eu:
   october: "Urria"
   november: "Azaroa"
   december: "Abendua"
-  email_not_found: "Helbide elektronikoa ez da aurkitu"
   email_unconfirmed: "Zure helbide elektronikoa berretsi behar duzu pasahitza berrezarri aurretik."
   email_required: "Helbide elektroniko bat eman behar duzu"
   logging_in: "Itxaron pixka bat, saio bat hasiko dizugu"
@@ -2569,7 +2571,6 @@ eu:
   confirm_password: "Pasahitza berretsi"
   action_signup: "Erregistratu orain"
   forgot_password: "Ez duzu zure pasahitza gogoratzen?"
-  password_reset_sent: "Pasahitza berrezartzeko jarraibideak dituen mezu elektroniko bat bidaltzen dizugu!"
   reset_password: "Pasahitza berrezarri"
   update_and_recalculate_fees: "Komisioak eguneratzea eta birkalkulatzea"
   registration:

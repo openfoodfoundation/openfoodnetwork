@@ -925,6 +925,7 @@ tr:
           enabled: "Etkin"
           disabled: "Kapalı"
           sections:
+            filters: "Filtreler"
             orders: "SİPARİŞLER"
           shopfront_visibility:
             title: "DÜKKANINIZ HERKESE AÇIK MI?"
@@ -950,6 +951,8 @@ tr:
             by_producer: "Üretici"
             category_placeholder: "Kategori"
             producer_placeholder: "ÜRETİCİ"
+          property_order:
+            placeholder: "Özellik"
           order_cycle_order:
             title: "SİPARİŞ DÖNEMLERİNİ DÜKKANIMDA ŞUNA GÖRE SIRALA"
             open_date: "AÇILIŞ TARİHİ"
@@ -2162,7 +2165,6 @@ tr:
   october: "Ekim"
   november: "Kasım"
   december: "Aralık"
-  email_not_found: "E-posta adresi bulunamadı"
   email_unconfirmed: "Şifrenizi sıfırlayabilmeniz için e-posta adresinizi onaylamanız gerekir."
   email_required: "Bir e-posta adresi sağlamalısınız"
   logging_in: "Biraz bekleyin, giriş yapıyoruz"
@@ -2171,7 +2173,6 @@ tr:
   confirm_password: "Şifreyi Onayla"
   action_signup: "Şimdi Üye Ol"
   forgot_password: "Parolanızı mı unuttunuz?"
-  password_reset_sent: "Şifrenizi sıfırlama talimatlarını içeren bir e-posta gönderildi!"
   reset_password: "Şifreyi yenile"
   update_and_recalculate_fees: "Ücretleri Güncelle ve Yeniden Hesapla"
   registration:

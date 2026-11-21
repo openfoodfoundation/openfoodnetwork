@@ -1167,6 +1167,7 @@ el:
           enabled: "Ενεργό"
           disabled: "Απενεργοποιημένο"
           sections:
+            filters: "Φίλτρα"
             orders: "Παραγγελίες"
           shopfront_visibility:
             title: "Δημόσια ορατή βιτρίνα;"
@@ -1193,6 +1194,8 @@ el:
             by_producer: "Ανά παραγωγό"
             category_placeholder: "Κατηγορία"
             producer_placeholder: "Παραγωγός"
+          property_order:
+            placeholder: "Ιδιότητα"
           low_stock_warning:
             title: "Εμφάνιση του υπολειπόμενου αποθέματος στο κατάστημα εάν υπάρχει χαμηλό απόθεμα."
             description: "Ενημερώστε τους αγοραστές όταν έχουν απομείνει μόνο 3 ή λιγότερα αντικείμενα."
@@ -2565,7 +2568,6 @@ el:
   october: "Οκτώβρης"
   november: "Νοέμβρης"
   december: "Δεκέμβρης"
-  email_not_found: "Η διεύθυνση ηλεκτρονικού ταχυδρομείου δεν βρέθηκε"
   email_unconfirmed: "Πρέπει να επιβεβαιώσετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας προτού μπορέσετε να επαναφέρετε τον κωδικό πρόσβασής σας."
   email_required: "Πρέπει να δώσετε μια διεύθυνση ηλεκτρονικού ταχυδρομείου"
   logging_in: "Περιμένετε λίγο, σας συνδέουμε"
@@ -2574,7 +2576,6 @@ el:
   confirm_password: "Επιβεβαίωση Κωδικού"
   action_signup: "Εγγραφείτε τώρα"
   forgot_password: "Ξεχάσατε τον κωδικό;"
-  password_reset_sent: "Ένα email με οδηγίες για την επαναφορά του κωδικού σας έχει σταλεί!"
   reset_password: "Επαναφέρετε τον κωδικό πρόσβασης"
   update_and_recalculate_fees: "Ενημέρωση και επανυπολογισμός τελών"
   registration:

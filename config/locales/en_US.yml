@@ -1034,6 +1034,7 @@ en_US:
           enabled: "Enabled"
           disabled: "Disabled"
           sections:
+            filters: "Filters"
             orders: "Orders"
           shopfront_visibility:
             title: "Publicly visible shopfront?"
@@ -1059,6 +1060,8 @@ en_US:
             by_producer: "By producer"
             category_placeholder: "Category"
             producer_placeholder: "Producer"
+          property_order:
+            placeholder: "Property"
           order_cycle_order:
             title: "Sort Order Cycles On Storefront By"
             open_date: "Open Date"
@@ -2298,7 +2301,6 @@ en_US:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
@@ -2307,7 +2309,6 @@ en_US:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot password?"
-  password_reset_sent: "We have sent an email with instructions on resetting your password. If you don't see it in the next minute or two, please check your email Spam folder. If you still don't see it, please contact support-usa@openfoodnetwork.net."
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:

@@ -917,6 +917,8 @@ pt:
           product_order:
             category_placeholder: "Categoria"
             producer_placeholder: "Produtor/a"
+          property_order:
+            placeholder: "Propriedade"
           order_cycle_order:
             title: "Ordenar Ciclos de Encomendas na Loja Por"
             open_date: "Dia de Abertura"
@@ -2051,7 +2053,6 @@ pt:
   october: "Outubro"
   november: "Novembro"
   december: "Dezembro"
-  email_not_found: "Endereço de email não encontrado"
   email_unconfirmed: "Tem de confirmar o seu endereço de email antes de poder redefinir a sua palavra-passe."
   email_required: "Precisa definir um endereço de email"
   logging_in: "Fazendo o login, aguarde um momento"
@@ -2060,7 +2061,6 @@ pt:
   confirm_password: "Confirme a palavra-passe"
   action_signup: "Registe-se agora"
   forgot_password: "Esqueceu-se da sua palavra-passe?"
-  password_reset_sent: "Foi enviado um email com instruções para redefinir a sua palavra-passe!"
   reset_password: "Redefinir palavra-passe"
   update_and_recalculate_fees: "Actualizar e Recalcular Taxas"
   registration:

@@ -290,6 +290,8 @@ hu:
   open_street_map_enabled: "Az Open Street Map megnyitása engedélyezve"
   open_street_map_default_latitude: "Open Street Map alapértelmezett szélességi kör"
   open_street_map_default_longitude: "Open Street Map alapértelmezett hosszúsági fok"
+  open_street_map_default_zoom: "Open Street Map alapértelmezett nagyítása (1 = egész világ, 18 = utcaszint; csak akkor használható, ha a fenti négyzet nincs bejelölve)"
+  open_street_map_fit_to_enterprises: "Nyisd meg a térképet nagyítva, hogy az összes vállalkozás látható legyen (ha nincs bejelölve, a térkép az alapértelmezett szélességi, hosszúsági és nagyítási beállításokkal nyílik meg)"
   open_street_map_provider_name: " Open Street Map szolgáltató neve"
   open_street_map_provider_options: "Open Street Map szolgáltató beállításai"
   producer_signup_case_studies_html: "Termelői regisztrációs esettanulmányok HTML"
@@ -1262,15 +1264,20 @@ hu:
           enabled: "Engedélyezve"
           disabled: "Tiltva"
           sections:
+            shopfront: "Kínálat"
+            product_display: "Termék megjelenítés"
+            order_cycles: "Rendelési ciklusok"
+            filters: "Kategóriák"
             orders: "Megrendelések"
+            supplier_access: "Beszállítói hozzáférés"
           shopfront_visibility:
-            title: "Nyilvánosan látható kirakat?"
+            title: "Nyilvánosan látható kínálat?"
             description: "Válaszd ki, hogy az ügyfeleknek be kell-e jelentkezniük a profilod megtekintéséhez, vagy azt mindenki láthatja."
             public: "Nyilvános"
             registered_only: "Csak regisztrált és jóváhagyott vásárlók számára látható"
           home_message:
             title: "Nyitott átadópont üzenete"
-            placeholder: >-
+            placeholder: >
                 Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
                 vásárolhatnak Nálad. Ha itt szöveget írsz be, az megjelenik a kezdőlapon,
                 amikor az ügyfelek először érkeznek az oldaladra.
@@ -1282,21 +1289,27 @@ hu:
                 ciklus megnyitása.
           product_order:
             title: "Termékek megjelenítése"
+            description: "Beállítja a termékek megjelenési sorrendjét az üzletedben, felülről lefelé. Kategória szerinti rendezés esetén a kategóriaszűrők ugyanilyen sorrendet követnek."
             by_category: "Kategória szerint"
             by_producer: "A termelő szerint"
             category_placeholder: "Kategória"
             producer_placeholder: "Termelő"
+          property_order:
+            title: "Tulajdonságszűrő sorrend"
+            description: "Az itt hozzáadott tulajdonságok ebben a sorrendben jelennek meg először a termékeid szűrőiben. Ez nem változtatja meg a termékek sorrendjét."
+            placeholder: "Tulajdonság"
           low_stock_warning:
-            title: "Mutassa az elérhető készletet az oldalon, ha már kifogyóban van"
+            title: "Alacsony készlet kiírása"
             description: "Tudassa a vásárlókkal, amikor háromnál kevesebb darab van már csak."
           order_cycle_order:
             title: "Rendelési ciklusok rendezése az alábbi szerint:"
+            description: "Beállítja a rendelési ciklusok sorrendjét a legördülő menüben, amelyet a vásárlók a rendelés kézhezvételének időpontjának kiválasztásához használnak."
             open_date: "Nyitás dátuma"
             close_date: "Lezárás dátuma"
           guest_orders:
             title: "Vendégrendelések"
-            description: "Engedélyezd a vendégként való fizetést, vagy kérj felhasználói regisztrációt."
-            allow: "Vendég fizetés engedélyezése"
+            description: "Engedélyezd a vendégként való rendelést, vagy kérj felhasználói regisztrációt."
+            allow: "Vendég rendelés engedélyezése"
             require_login: "A megrendeléshez bejelentkezés szükséges"
           change_orders:
             title: "Megrendelések módosítása"
@@ -1306,7 +1319,7 @@ hu:
             require_login_warning: "Javasoljuk, hogy a felhasználóktól bejelentkezést kérj, amennyiben a rendelési tételek módosíthatók."
           subscriptions:
             title: "Előfizetések"
-            description: "Engedélyezi az előfizetések funkciót?"
+            description: "Engedélyezed az előfizetések funkciót?"
           customer_names_in_reports:
             title: "Ügyfélnevek a jelentésekben"
             description: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
@@ -2389,7 +2402,11 @@ hu:
   products_title: "Termékek"
   products:
     product_details:
+      order_product: "Termék rendelése"
       product_details: "Termék részletek"
+      unavailable_title: "A termék nem elérhető"
+      unavailable: "Lehetséges, hogy ez a termék elfogyott, vagy nem elérhető a jelenlegi aktív rendelési ciklusokban."
+      choose_order_cycle_html: "Kérjük, <strong>válaszd ki, mikor szeretnéd leadni a rendelésed</strong> , hogy megtudd, elérhető-e a termék."
   products_in: "itt: %{oc}"
   products_at: "itt: %{distributor}"
   products_elsewhere: "Máshol talált termékek"
@@ -2731,7 +2748,7 @@ hu:
   october: "október"
   november: "november"
   december: "december"
-  email_not_found: "Az email cím nem található"
+  password_reset_requested: "Ha létezik fiók az adott e-mail címmel, akkor kapni fogsz egy jelszó-visszaállító e-mailt."
   email_unconfirmed: "Bejelentkezés előtt meg kell erősítened az email címedet a kiküldött megerősítő email alapján."
   email_required: "Meg kell adnod egy email címet"
   logging_in: "Várj egy kicsit, amíg bejelentkeztetünk"
@@ -2740,7 +2757,6 @@ hu:
   confirm_password: "Jelszó megerősítése"
   action_signup: "Regisztrálok"
   forgot_password: "Elfelejtett jelszó"
-  password_reset_sent: "Elküldtük a jelszó visszaállítására vonatkozó utasításokat tartalmazó e-mailt!"
   reset_password: "Jelszó visszaállítása"
   update_and_recalculate_fees: "Díjak frissítése és újraszámítása"
   registration:
@@ -4878,6 +4894,11 @@ hu:
       for_customers_tagged: 'A következő címkével rendelkező ügyfelek számára:'
       add_new_rule: '+ Új szabály hozzáadása'
       no_rules_yet: Erre a címkére még nem vonatkoznak szabályok
+    add_to_cart:
+      add: "%{name} kosárhoz adása"
+      decrease: "%{name} mennyiségének csökkentése"
+      increase: "%{name} mennyiségének növelése"
+      quantity: "%{name} mennyisége"
     add_tag_rule_modal:
       select_rule_type: "Válassz egy szabálytípust:"
       add_rule: "Szabály hozzáadása"

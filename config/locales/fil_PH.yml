@@ -855,6 +855,8 @@ fil_PH:
           product_order:
             category_placeholder: "kategorya"
             producer_placeholder: "Producer"
+          property_order:
+            placeholder: "ari-arian"
           order_cycle_order:
             title: "Uriin ang mga order cycle sa shopfront gamit ang"
             open_date: "petsa ng pagbubukas"
@@ -1993,7 +1995,6 @@ fil_PH:
   october: "Oktubre"
   november: "Nobyembre"
   december: "Disyembre"
-  email_not_found: "hindi mahanap ang email address"
   email_unconfirmed: "kailangang kumpirmahin muna ang email address bago ma-reset ang password."
   email_required: "kailangang magbigay ng email address"
   logging_in: "maghintay sandali, ikaw ay nila-log in na namin."
@@ -2002,7 +2003,6 @@ fil_PH:
   confirm_password: "kumpirmahin ang password"
   action_signup: "magsign-up ngayon"
   forgot_password: "nakalimutan ang password?"
-  password_reset_sent: "ang email na may panuto kung paano papalitan ang inyong password ay napadala na!"
   reset_password: "i-reset ang password"
   update_and_recalculate_fees: "i-update at kuwentahin muli ang fees"
   registration:

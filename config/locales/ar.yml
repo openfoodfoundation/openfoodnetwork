@@ -1053,6 +1053,7 @@ ar:
           enabled: "تمكين"
           disabled: "تعليق"
           sections:
+            filters: "المرشحات"
             orders: "الطلبات"
           shopfront_visibility:
             title: "واجهة المتجر مرئية للعام؟"
@@ -1077,6 +1078,8 @@ ar:
             by_producer: "حسب المنتج"
             category_placeholder: "الفئة"
             producer_placeholder: "المنتج"
+          property_order:
+            placeholder: "خاصية"
           low_stock_warning:
             title: "عرض المخزون المتبقي في واجهة المتجر إذا كان منخفضًا في المتناول"
             description: "دع المتسوقين يعرفون عندما لا يتبقى سوى 3 عناصر أو أقل."
@@ -2389,7 +2392,6 @@ ar:
   october: "شهر اكتوبر"
   november: "تشرين الثاني"
   december: "ديسمبر"
-  email_not_found: "عنوان البريد الإلكتروني غير موجود"
   email_unconfirmed: "يجب تأكيد عنوان بريدك الإلكتروني قبل أن تتمكن من إعادة تعيين كلمة المرور الخاصة بك."
   email_required: "يجب تقديم عنوان بريد إلكتروني"
   logging_in: "انتظر لحظة ، نحن نقوم بتسجيل دخولك"
@@ -2398,7 +2400,6 @@ ar:
   confirm_password: "تأكيد كلمة المرور"
   action_signup: "أفتح حساب الأن"
   forgot_password: "هل نسيت كلمة المرور؟"
-  password_reset_sent: "تم إرسال بريد إلكتروني يحتوي على تعليمات حول إعادة تعيين كلمة المرور الخاصة بك!"
   reset_password: "إعادة تعيين كلمة المرور"
   update_and_recalculate_fees: "تحديث وإعادة حساب الرسوم"
   registration:

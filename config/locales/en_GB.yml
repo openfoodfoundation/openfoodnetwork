@@ -1356,6 +1356,7 @@ en_GB:
           enabled: "Enabled"
           disabled: "Disabled"
           sections:
+            filters: "Filters"
             orders: "Orders"
           shopfront_visibility:
             title: "Publicly visible shopfront?"
@@ -1381,6 +1382,8 @@ en_GB:
             by_producer: "By producer"
             category_placeholder: "Category"
             producer_placeholder: "Producer"
+          property_order:
+            placeholder: "Property"
           low_stock_warning:
             title: "Display remaining number of items in shopfront if stock is low"
             description: "Let shoppers know when there are only 3 or less items left."
@@ -2841,7 +2844,6 @@ en_GB:
   october: "October"
   november: "November"
   december: "December"
-  email_not_found: "Email address not found"
   email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
@@ -2850,7 +2852,6 @@ en_GB:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
@@ -3991,7 +3992,7 @@ en_GB:
               fee_placement: "Fee Placement"
               fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
-              total_amount: "$$ SUM"
+              total_amount: "£ Total"
           html:
             header:
               fee_type: "Fee Type"
@@ -4001,7 +4002,7 @@ en_GB:
               fee_placement: "Fee Placement"
               fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
-              total_amount: "$$ SUM"
+              total_amount: "£ Total"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
       report:
         none: "None"

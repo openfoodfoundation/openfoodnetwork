@@ -1111,6 +1111,7 @@ ca:
           enabled: "Habilitat"
           disabled: "Deshabilitat"
           sections:
+            filters: "Filtres"
             orders: "Comandes"
           shopfront_visibility:
             title: "Botiga visible públicament?"
@@ -1138,6 +1139,8 @@ ca:
             by_producer: "Per productora"
             category_placeholder: "Categoria"
             producer_placeholder: "Productora"
+          property_order:
+            placeholder: "Propietat"
           low_stock_warning:
             title: "Mostra l'estoc restant a la botiga si és baix (3 unitats)"
             description: "Avisa els compradors quan només quedin 3 unitats o menys d'un producte."
@@ -2398,7 +2401,6 @@ ca:
   october: "Octubre"
   november: "Novembre"
   december: "Desembre"
-  email_not_found: "No s'ha trobat l'adreça de correu electrònic "
   email_unconfirmed: "Has de confirmar la teva adreça de correu electrònic abans de poder restablir la contrasenya."
   email_required: "Has de proporcionar una adreça de correu electrònic"
   logging_in: "Espereu-vos un moment, estem iniciant-vos la sessió"
@@ -2407,7 +2409,6 @@ ca:
   confirm_password: "Confirma la contrassenya"
   action_signup: "Registra't ara"
   forgot_password: "Has oblidat la contrasenya?"
-  password_reset_sent: "S'ha enviat un correu electrònic amb instruccions per restablir la teva contrasenya."
   reset_password: "Restablir la contrasenya"
   update_and_recalculate_fees: "Actualitza i recalcula les comissions"
   registration:

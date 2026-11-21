@@ -1002,6 +1002,7 @@ ko:
           enabled: "활성화"
           disabled: "비활성화"
           sections:
+            filters: "필터"
             orders: "주문 내역"
           shopfront_visibility:
             title: "눈에 보이는 상점으로 공개할까요?"
@@ -1024,6 +1025,8 @@ ko:
             by_producer: "생산자별 정렬"
             category_placeholder: "목록"
             producer_placeholder: "제공자"
+          property_order:
+            placeholder: "특성"
           low_stock_warning:
             title: "재고가 부족할 경우 매장 전면에 남은 재고 표시"
             description: "3개 이하의 물건만 남아 있을 때 손님들에게 알려주세요."
@@ -2278,7 +2281,6 @@ ko:
   october: "10 월"
   november: "11 월"
   december: "12 월"
-  email_not_found: "이메일 주소를 찾을 수 없습니다"
   email_unconfirmed: "암호를 재설정하려면 먼저 이메일 주소를 확인해야 합니다."
   email_required: "이메일 주소를 제공하셔야 합니다"
   logging_in: "잠시만 기다려주십시요, 로그인 중입니다."
@@ -2287,7 +2289,6 @@ ko:
   confirm_password: "비밀번호 확인"
   action_signup: "지금 가입하기"
   forgot_password: "비밀번호를 잊으셨나요?"
-  password_reset_sent: "암호 재설정 설명이 포함된 이메일이 전송되었습니다."
   reset_password: "비밀번호 초기화"
   update_and_recalculate_fees: "수수료 업데이트 및 재계산"
   registration:

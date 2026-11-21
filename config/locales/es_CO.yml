@@ -885,6 +885,8 @@ es_CO:
           product_order:
             category_placeholder: "Categoría"
             producer_placeholder: "Productor"
+          property_order:
+            placeholder: "Propiedad"
           order_cycle_order:
             title: "Ordenar ciclos de pedidos en tienda por"
             open_date: "Fecha de Inicio"
@@ -2049,7 +2051,6 @@ es_CO:
   october: "Octubre"
   november: "Noviembre"
   december: "Diciembre"
-  email_not_found: "Dirección de correo electrónico no encontrada"
   email_unconfirmed: "Debe confirmar su dirección de correo electrónico antes de poder restablecer su contraseña."
   email_required: "Debe brindar una dirección de correo electrónico"
   logging_in: "Espere un momento, le vamos a iniciar una sesión"
@@ -2058,7 +2059,6 @@ es_CO:
   confirm_password: "Confirmar contraseña"
   action_signup: "Registrarse ahora"
   forgot_password: "¿Se le olvidó su contraseña?"
-  password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restablecer contraseña"
   update_and_recalculate_fees: "Actualizar y recalcular comisiones"
   registration:

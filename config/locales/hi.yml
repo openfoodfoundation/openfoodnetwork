@@ -1116,6 +1116,7 @@ hi:
           enabled: "सक्षम किया गया"
           disabled: "अक्षम किया गया"
           sections:
+            filters: "फिल्टर्स"
             orders: "ऑर्डर्स"
           shopfront_visibility:
             title: "सार्वजनिक रूप से दिखाई देने वाला शॉपफ्रन्ट?"
@@ -1141,6 +1142,8 @@ hi:
             by_producer: "उत्पादक द्वारा"
             category_placeholder: "श्रेणी"
             producer_placeholder: "उत्पादक"
+          property_order:
+            placeholder: "प्रॉपर्टी"
           low_stock_warning:
             title: "यदि हाथ में कम हो तो शेष स्टॉक को शॉपफ्रन्ट में प्रदर्शित करें"
             description: "दुकानदारों को बताएं कि केवल 3 या उससे कम आइटम कब बचे हैं।"
@@ -2491,7 +2494,6 @@ hi:
   october: "अक्टूबर"
   november: "नवंबर"
   december: "दिसंबर"
-  email_not_found: "ईमेल पता नहीं मिला"
   email_unconfirmed: "अपना पासवर्ड रिसेट करने से पहले आपको अपने ईमेल पते की पुष्टि करनी ही होगी।"
   email_required: "आपको एक ईमेल पता उपलब्ध कराना ही होगा"
   logging_in: "कुछ समय के लिए रुकें, हम आपको लॉग-इन कर रहे हैं"
@@ -2500,7 +2502,6 @@ hi:
   confirm_password: "पासवर्ड की पुष्टि करें"
   action_signup: "अभी साइन अप करें"
   forgot_password: "पासवर्ड भूल गए?"
-  password_reset_sent: "आपके पासवर्ड को रिसेट करने के निर्देशों वाला एक ईमेल भेजा गया है!"
   reset_password: "पासवर्ड रिसेट करें"
   update_and_recalculate_fees: "फीस को अपडेट और फिर से कैलकुलेट करें"
   registration:

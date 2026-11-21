@@ -362,6 +362,8 @@ fr_CA:
   open_street_map_enabled: "Open Street Map est activé"
   open_street_map_default_latitude: "Latitude par défaut Open Street Map"
   open_street_map_default_longitude: "Longitude par défaut Open Street Map"
+  open_street_map_default_zoom: "Niveau de zoom par défaut d'OpenStreetMap (1 = monde entier, 18 = niveau de la rue ; utilisé uniquement lorsque la case ci-dessus est décochée)"
+  open_street_map_fit_to_enterprises: "Ouvrir la carte en mode zoom pour afficher toutes les entreprises (si cette option est décochée, la carte s'ouvre aux coordonnées de latitude, de longitude et de zoom par défaut)."
   open_street_map_provider_name: "Nom du fournisseur Open Street Map"
   open_street_map_provider_options: "Options du fournisseur Open Street Map"
   producer_signup_case_studies_html: "HTML études de cas producteur"
@@ -850,7 +852,12 @@ fr_CA:
         balance_due: "Solde dû"
         id: Id
         customer_type: "Catégorie"
+        individual: "Personne"
         enterprise: "Entreprise"
+        enterprise_name: "Nom de l'entreprise :"
+        enterprise_acn: "Numéro d'entreprise"
+        enterprise_abn: "Numéro d'entreprise"
+        enterprise_charges_sales_tax: "Taxe?"
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
         has_outstanding_credit: "Suppression impossible : ce client dispose d’un solde créditeur impayé. Veuillez procéder au remboursement avant la suppression."
@@ -1390,7 +1397,12 @@ fr_CA:
           enabled: "Activée"
           disabled: "Désactivée"
           sections:
+            shopfront: "Boutique"
+            product_display: "Affichage des produits"
+            order_cycles: "Cycles de Vente"
+            filters: "Filtres"
             orders: "Commandes"
+            supplier_access: "Accès fournisseurs"
           shopfront_visibility:
             title: "Boutique visible par tous?"
             description: "Choisissez si les acheteurs doivent être logués pour voir la boutique ou si la boutique est visible par tout le monde."
@@ -1412,15 +1424,21 @@ fr_CA:
                 est fermée).
           product_order:
             title: "Ordre d'affichage sur la boutique en ligne"
+            description: "Définit l'ordre d'affichage des produits dans votre boutique, de haut en bas. Lors d'un tri par catégorie, les filtres de catégorie suivent le même ordre."
             by_category: "Par catégorie"
             by_producer: "Par producteur"
             category_placeholder: "Catégorie"
             producer_placeholder: "Producteur"
+          property_order:
+            title: "Ordre des filtres de propriétés"
+            description: "Les propriétés que vous ajoutez ici apparaissent en premier dans les filtres de votre boutique, dans cet ordre. Cela ne modifie pas l'ordre des produits."
+            placeholder: "Propriété"
           low_stock_warning:
             title: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
             description: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           order_cycle_order:
             title: "Trier les cycles de vente par"
+            description: "Définit l'ordre des cycles de commande dans le menu déroulant utilisé par les clients pour choisir la date de réception de leur commande."
             open_date: "Date d'ouverture"
             close_date: "Date de fermeture"
           guest_orders:
@@ -2892,7 +2910,7 @@ fr_CA:
   october: "Octobre"
   november: "Novembre"
   december: "Décembre"
-  email_not_found: "Adresse email non trouvée"
+  password_reset_requested: "Si un compte existe avec cette adresse e-mail, vous recevrez un e-mail de réinitialisation de mot de passe"
   email_unconfirmed: "Vous devez confirmer votre email avant de mettre à jour votre mot de passe."
   email_required: "Vous devez saisir une adresse email"
   logging_in: "Veuillez patienter, connexion en cours"
@@ -2901,7 +2919,6 @@ fr_CA:
   confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
   forgot_password: "Mot de passe oublié?"
-  password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:

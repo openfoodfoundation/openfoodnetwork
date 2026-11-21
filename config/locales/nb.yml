@@ -1259,6 +1259,7 @@ nb:
           enabled: "Aktivert"
           disabled: "Deaktivert"
           sections:
+            filters: "Filtre"
             orders: "Bestillinger"
           shopfront_visibility:
             title: "Offentlig synlig butikk?"
@@ -1284,6 +1285,8 @@ nb:
             by_producer: "Etter produsent"
             category_placeholder: "Kategori"
             producer_placeholder: "Produsent"
+          property_order:
+            placeholder: "Egenskap"
           low_stock_warning:
             title: "Vis gjenværende lager i butikkfronten hvis det er lite tilgjengelig"
             description: "Gi kunder beskjed når det bare er 3 eller færre varer igjen."
@@ -2691,7 +2694,6 @@ nb:
   october: "oktober"
   november: "november"
   december: "desember"
-  email_not_found: "epostadresse ikke funnet"
   email_unconfirmed: "Du må bekrefte epostadressen din før du kan tilbakestille passordet ditt."
   email_required: "Du må oppgi en epostadresse"
   logging_in: "Et øyeblikk, vi logger deg inn"
@@ -2700,7 +2702,6 @@ nb:
   confirm_password: "Bekreft passord"
   action_signup: "Registrer deg nå"
   forgot_password: "Glemt passord?"
-  password_reset_sent: "En epost med instruksjoner om å nullstille passordet har blitt sendt!"
   reset_password: "Tilbakestill passord"
   update_and_recalculate_fees: "Oppdater og regn avgifter på nytt"
   registration:

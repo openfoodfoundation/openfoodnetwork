@@ -1001,6 +1001,7 @@ it_CH:
           enabled: "Abilitata"
           disabled: "Disabilitata"
           sections:
+            filters: "Filtri"
             orders: "Gentili richieste"
           shopfront_visibility:
             title: "Vetrina visibile pubblicamente?"
@@ -1026,6 +1027,8 @@ it_CH:
             by_producer: "Per produttore"
             category_placeholder: "Categoria"
             producer_placeholder: "Produttore"
+          property_order:
+            placeholder: "Proprietà"
           low_stock_warning:
             title: "Mostra le disponibilità di prodotto nella vetrina se basse"
             description: "Fai sapere ai clienti quando ci sono solo 3 o meno articoli rimasti."
@@ -2270,7 +2273,6 @@ it_CH:
   october: "Ottobre"
   november: "Novembre"
   december: "Dicembre"
-  email_not_found: "Indirizzo email non trovato"
   email_unconfirmed: "Devi confermare il tuo indirizzo email prima di resettare la tua password."
   email_required: "Devi fornire un indirizzo email"
   logging_in: "Aspetta un attimo, ti stiamo facendo accedere"
@@ -2279,7 +2281,6 @@ it_CH:
   confirm_password: "Conferma la password"
   action_signup: "Registrati ora"
   forgot_password: "Dimenticata la password?"
-  password_reset_sent: "Ti abbiamo mandato una email con le istruzioni per resettare la password."
   reset_password: "Resetta la password"
   update_and_recalculate_fees: "Aggiorna e ricalcola tariffe"
   registration:

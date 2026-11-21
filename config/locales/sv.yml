@@ -1345,6 +1345,7 @@ sv:
           enabled: "Aktiverad"
           disabled: "Inaktiverad"
           sections:
+            filters: "Filter"
             orders: "Beställningar"
           shopfront_visibility:
             title: "Offentligt visat skyltfönster?"
@@ -1370,6 +1371,8 @@ sv:
             by_producer: "Av producent"
             category_placeholder: "Kategori"
             producer_placeholder: "Producent"
+          property_order:
+            placeholder: "Egenskaper"
           low_stock_warning:
             title: "Visa återstående lager i butiksfronten om det är lite tillgängligt"
             description: "Låt kunderna veta när det bara finns 3 eller färre varor kvar."
@@ -2830,7 +2833,6 @@ sv:
   october: "Oktober"
   november: "November"
   december: "December"
-  email_not_found: "E-postadress saknas"
   email_unconfirmed: "Du måste bekräfta din mejladress innan du kan återställa ditt lösenord."
   email_required: "Du måste lämna en mejladress"
   logging_in: "Vänta ett ögonblick, inloggning pågår"
@@ -2839,7 +2841,6 @@ sv:
   confirm_password: "Bekräfta lösenord"
   action_signup: "Underteckna nu"
   forgot_password: "Glömt lösenordet?"
-  password_reset_sent: "Ett e-postmeddelande med instruktioner hur lösenordet återställs har översänts!"
   reset_password: "Återställ lösenordet"
   update_and_recalculate_fees: "Uppdatera och räkna om avgifter"
   registration:

@@ -361,6 +361,8 @@ fr:
   open_street_map_enabled: "Open Street Map est activé"
   open_street_map_default_latitude: "Latitude par défaut Open Street Map"
   open_street_map_default_longitude: "Longitude par défaut Open Street Map"
+  open_street_map_default_zoom: "Niveau de zoom par défaut d'OpenStreetMap (1 = monde entier, 18 = niveau de la rue ; utilisé uniquement lorsque la case ci-dessus est décochée)"
+  open_street_map_fit_to_enterprises: "Ouvrir la carte en mode zoom pour afficher toutes les entreprises (si cette option est décochée, la carte s'ouvre aux coordonnées de latitude, de longitude et de zoom par défaut)."
   open_street_map_provider_name: "Nom du fournisseur Open Street Map"
   open_street_map_provider_options: "Options du fournisseur Open Street Map"
   producer_signup_case_studies_html: "HTML études de cas producteur"
@@ -1227,6 +1229,7 @@ fr:
         tax_on_fees: "Taxe sur les frais"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
+      nothing_to_capture: 'Aucun paiement ne peut être enregistré pour cette commande.'
       bulk_management:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
@@ -1394,7 +1397,12 @@ fr:
           enabled: "Activé"
           disabled: "Désactivé"
           sections:
+            shopfront: "Boutique"
+            product_display: "Affichage des produits"
+            order_cycles: "Cycles de vente"
+            filters: "Filtres"
             orders: "Commandes"
+            supplier_access: "Accès fournisseurs"
           shopfront_visibility:
             title: "Boutique privée ? (Restreindre les achats à la liste d'acheteurs de la boutique)"
             description: "Choisissez de restreindre l'accès de la boutique à votre liste d'acheteurs (les personnes listées dans l'onglet \"Acheteurs\" du menu principal). Les personnes non-membres de cette liste pourront trouver votre boutique, mais ne pourront accéder à la page \"produits\" et ne pourront pas passer commande.\n\nSi vous souhaitez aussi rendre votre boutique invisible sur la carte, il faut cocher l'option \"invisible\" dans l'onglet \"Informations de base\" de votre entreprise. "
@@ -1415,15 +1423,21 @@ fr:
                 s'affiche uniquement quand il n'y a pas de cycle de vente en cours.
           product_order:
             title: "Ordre d'affichage sur la boutique en ligne"
+            description: "Définit l'ordre d'affichage des produits dans votre boutique, de haut en bas. Lors d'un tri par catégorie, les filtres de catégorie suivent le même ordre."
             by_category: "Par catégorie"
             by_producer: "Par producteur"
             category_placeholder: "Catégorie"
             producer_placeholder: "Producteur"
+          property_order:
+            title: "Ordre des filtres de propriétés"
+            description: "Les propriétés que vous ajoutez ici apparaissent en premier dans les filtres de votre boutique, dans cet ordre. Cela ne modifie pas l'ordre des produits."
+            placeholder: "Propriétés / labels"
           low_stock_warning:
             title: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
             description: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           order_cycle_order:
             title: "Trier les cycles de vente par"
+            description: "Définit l'ordre des cycles de commande dans le menu déroulant utilisé par les clients pour choisir la date de réception de leur commande."
             open_date: "Date d'ouverture"
             close_date: "Date de fermeture"
           guest_orders:
@@ -2895,7 +2909,7 @@ fr:
   october: "Octobre"
   november: "Novembre"
   december: "Décembre"
-  email_not_found: "Adresse email non trouvée"
+  password_reset_requested: "Si un compte existe avec cette adresse e-mail, vous recevrez un e-mail de réinitialisation de mot de passe"
   email_unconfirmed: "Vous devez confirmer votre adresse email avant de pouvoir réinitiatliser votre mot de passe."
   email_required: "Vous devez saisir une adresse email"
   logging_in: "Veuillez patienter, connexion en cours"
@@ -2904,7 +2918,6 @@ fr:
   confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
   forgot_password: "Mot de passe oublié?"
-  password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:

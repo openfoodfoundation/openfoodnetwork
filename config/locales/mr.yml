@@ -1093,6 +1093,8 @@ mr:
           legend: "शॉप प्राधान्ये"
           enabled: "सक्रिय केले"
           disabled: "डिसेबल्ड आहे"
+          sections:
+            filters: "फिल्टर्स"
           shopfront_visibility:
             title: "सर्वांना दिसणारी शॉपफ्रंट ?"
             description: "ग्राहकांनी शॉपफ्रंट पाहण्यासाठी लॉग इन करणे आवश्यक आहे की ते प्रत्येकासाठी दृश्यमान असेल ते निवडा."
@@ -1117,6 +1119,8 @@ mr:
             by_producer: "उत्पादकानुसार"
             category_placeholder: "श्रेणी"
             producer_placeholder: "उत्पादक"
+          property_order:
+            placeholder: "गुणधर्म"
           low_stock_warning:
             title: "उपलब्धता कमी असल्यास उपलब्ध स्टॉक दुकानात प्रदर्शित करा"
             description: "फक्त 3 किंवा त्यापेक्षा कमी वस्तू शिल्लक असल्यास खरेदीदारांना सूचित करा."
@@ -2385,7 +2389,6 @@ mr:
   october: "ऑक्टोबर"
   november: "नोव्हेंबर"
   december: "डिसेंबर"
-  email_not_found: "ईमेल पत्ता सापडला नाही"
   email_unconfirmed: "तुम्ही तुमचा पासवर्ड रीसेट करण्यापूर्वी तुमच्या ईमेल पत्त्याची पुष्टी करणे आवश्यक आहे."
   email_required: "आपण ईमेल पत्ता प्रदान करणे आवश्यक आहे"
   logging_in: "थोडा वेळ थांबा, आम्ही तुम्हाला लॉग इन करत आहोत"
@@ -2394,7 +2397,6 @@ mr:
   confirm_password: "पासवर्डची पुष्टी करा"
   action_signup: "आत्ताच नोंदणी करा"
   forgot_password: "पासवर्ड विसरलात?"
-  password_reset_sent: "तुमचा पासवर्ड रीसेट करण्याच्या सूचनांसह ईमेल पाठवण्यात आला आहे!"
   reset_password: "पासवर्ड रीसेट करा"
   update_and_recalculate_fees: "फी अपडेट करा आणि पुनर्गणना करा"
   registration:

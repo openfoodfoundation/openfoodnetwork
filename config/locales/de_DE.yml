@@ -1165,6 +1165,7 @@ de_DE:
           enabled: "aktiviert"
           disabled: "deaktiviert"
           sections:
+            filters: "Filter"
             orders: "Bestellungen"
           shopfront_visibility:
             title: "Geöffnet für alle Nutzer?"
@@ -1191,6 +1192,8 @@ de_DE:
             by_producer: "Nach Produzent"
             category_placeholder: "Kategorie"
             producer_placeholder: "Produzent"
+          property_order:
+            placeholder: "Eigenschaften"
           low_stock_warning:
             title: "Restbestand anzeigen"
             description: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt."
@@ -2563,7 +2566,6 @@ de_DE:
   october: "Oktober"
   november: "November"
   december: "Dezember"
-  email_not_found: "E-Mail-Adresse wurde nicht gefunden."
   email_unconfirmed: "Sie müssen Ihre E-Mail-Adresse bestätigen, bevor Sie Ihr Passwort zurücksetzen können."
   email_required: "Sie müssen eine E-Mail-Adresse angeben."
   logging_in: "Einen Moment bitte, wir loggen Sie ein ..."
@@ -2572,7 +2574,6 @@ de_DE:
   confirm_password: "Passwort erneut eingeben"
   action_signup: "Jetzt registrieren"
   forgot_password: "Passwort vergessen?"
-  password_reset_sent: "Eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts wurde gesendet!"
   reset_password: "Passwort zurücksetzen"
   update_and_recalculate_fees: "Aktualisieren und Gebühren neu berechnen"
   registration:
