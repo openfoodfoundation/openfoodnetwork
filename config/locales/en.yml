@@ -485,6 +485,13 @@ en:
       message: |
         Your payment of %{amount} to %{shop} is being refunded.
         Accept your refund following the link below.
+  order_cycle_mailer:
+    producer_selection_updated:
+      subject: "A producer has updated their product selection"
+      body: "%{producer} has updated their product selection for the current order cycle."
+      change_selection_html: "If there is any mistake, you can change the selection again here: %{link}"
+      link_label: "Edit the order cycle"
+      signoff: "Kind regards,"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
