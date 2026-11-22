@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_11_23_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -269,6 +269,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_000001) do
     t.string "external_billing_id", limit: 128
     t.boolean "enable_producers_to_edit_orders", default: false, null: false
     t.boolean "show_customer_contacts_to_suppliers", default: false, null: false
+    t.boolean "allow_order_additions", default: false, null: false
+    t.boolean "allow_order_removals", default: false, null: false
+    t.boolean "allow_order_cancellation", default: false, null: false
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
