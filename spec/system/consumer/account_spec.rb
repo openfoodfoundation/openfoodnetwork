@@ -91,7 +91,8 @@ RSpec.describe '
 
       context "when there is at least one changeable order" do
         before do
-          distributor1.update(allow_order_changes: true)
+          distributor1.update(allow_order_additions: true, allow_order_removals: true,
+                              allow_order_cancellation: true)
         end
 
         it "shows such orders in a section labelled 'Open Orders'" do

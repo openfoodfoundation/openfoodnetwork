@@ -61,7 +61,7 @@ module EnterprisesHelper
   end
 
   def order_changes_allowed?
-    current_order&.distributor&.allow_order_changes?
+    current_order&.distributor&.allows_order_changes?
   end
 
   def show_bought_items?

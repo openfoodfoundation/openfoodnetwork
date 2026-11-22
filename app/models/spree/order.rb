@@ -233,11 +233,25 @@ module Spree
       line_items.count > 0
     end
 
+    # The customer can change this placed order in at least one way. Use the methods
+    # below to check a specific kind of change.
     def changes_allowed?
       !!(complete? &&
          !shipped? &&
-         distributor&.allow_order_changes? &&
+         distributor&.allows_order_changes? &&
          order_cycle&.open?)
+    end
+
+    def additions_allowed?
+      changes_allowed? && distributor.allow_order_additions?
+    end
+
+    def removals_allowed?
+      changes_allowed? && distributor.allow_order_removals?
+    end
+
+    def cancellation_allowed?
+      changes_allowed? && distributor.allow_order_cancellation?
     end
 
     # Is this a free order in which case the payment step should be skipped

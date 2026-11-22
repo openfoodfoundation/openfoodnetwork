@@ -225,7 +225,7 @@ RSpec.describe Spree::OrdersController do
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
       let(:distributor) {
-        create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true)
+        create(:distributor_enterprise, :allowing_all_order_changes, charges_sales_tax: true)
       }
       let(:shipping_tax_rate) {
         create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member))
@@ -277,7 +277,7 @@ RSpec.describe Spree::OrdersController do
       let(:user) { create(:user) }
       let(:variant1) { create(:variant) }
       let(:variant2) { create(:variant) }
-      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:distributor) { create(:distributor_enterprise, :allowing_all_order_changes) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) {
@@ -425,7 +425,7 @@ RSpec.describe Spree::OrdersController do
           end
 
           context "and the order is editable" do
-            let(:distributor) { create(:enterprise, allow_order_changes: true) }
+            let(:distributor) { create(:enterprise, :allowing_all_order_changes) }
             let(:order_cycle) do
               create(
                 :simple_order_cycle,

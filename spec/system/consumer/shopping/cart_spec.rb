@@ -282,8 +282,8 @@ RSpec.describe "full-page cart" do
       before do
         order.user = user
         order.save
-        order.distributor.allow_order_changes = true
-        order.distributor.save
+        order.distributor.update!(allow_order_additions: true, allow_order_removals: true,
+                                  allow_order_cancellation: true)
         add_product_to_cart order, product_with_tax
         login_as user
         visit main_app.cart_path

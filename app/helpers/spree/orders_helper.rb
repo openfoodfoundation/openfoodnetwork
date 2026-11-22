@@ -9,7 +9,7 @@ module Spree
     def changeable_orders
       # Only returns open order for the current user + shop + oc combo
       @changeable_orders ||= if spree_current_user &&
-                                current_order_cycle && current_distributor&.allow_order_changes?
+                                current_order_cycle && current_distributor&.allows_order_changes?
 
                                Spree::Order.complete.where(
                                  state: 'complete',

@@ -135,7 +135,8 @@ RSpec.describe "Order Management" do
 
     context "when the distributor doesn't allow changes to be made to orders" do
       before do
-        order.distributor.update(allow_order_changes: false)
+        order.distributor.update(allow_order_additions: false, allow_order_removals: false,
+                                 allow_order_cancellation: false)
       end
 
       it "doesn't show form elements for editing the order" do
@@ -149,7 +150,8 @@ RSpec.describe "Order Management" do
 
     context "when the distributor allows changes to be made to orders" do
       before do
-        order.distributor.update(allow_order_changes: true)
+        order.distributor.update(allow_order_additions: true, allow_order_removals: true,
+                                 allow_order_cancellation: true)
       end
 
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do

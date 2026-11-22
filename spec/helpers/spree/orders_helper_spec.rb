@@ -21,12 +21,12 @@ RSpec.describe Spree::OrdersHelper do
           let(:current_order_cycle) { double(:current_order_cycle, id: 1) }
 
           context "when the current_distributor allows order changes" do
-            before { allow(current_distributor).to receive(:allow_order_changes?) { true } }
+            before { allow(current_distributor).to receive(:allows_order_changes?) { true } }
             it { expect(helper.changeable_orders).to eq "some_orders" }
           end
 
           context "when the current_distributor does not allow order changes" do
-            before { allow(current_distributor).to receive(:allow_order_changes?) { false } }
+            before { allow(current_distributor).to receive(:allows_order_changes?) { false } }
             it { expect(helper.changeable_orders).to eq [] }
           end
 

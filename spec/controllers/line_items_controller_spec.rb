@@ -79,7 +79,10 @@ RSpec.describe LineItemsController do
             end
 
             context "where changes are allowed" do
-              before { distributor.update!(allow_order_changes: true) }
+              before do
+                distributor.update!(allow_order_additions: true, allow_order_removals: true,
+                                    allow_order_cancellation: true)
+              end
 
               it "deletes the line item" do
                 delete(:destroy, params:)
@@ -158,7 +161,7 @@ RSpec.describe LineItemsController do
       let(:user) { create(:user) }
       let(:variant1) { create(:variant) }
       let(:variant2) { create(:variant) }
-      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:distributor) { create(:distributor_enterprise, :allowing_all_order_changes) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:calculator) {
         Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22,

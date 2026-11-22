@@ -66,7 +66,7 @@ RSpec.describe Spree::Admin::OrdersController do
         let(:variant1) { create(:variant) }
         let(:variant2) { create(:variant) }
         let(:distributor) {
-          create(:distributor_enterprise, allow_order_changes: true, charges_sales_tax: true)
+          create(:distributor_enterprise, :allowing_all_order_changes, charges_sales_tax: true)
         }
         let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
