@@ -582,7 +582,13 @@ RSpec.describe '
         expect(page).to have_field "Allow guest checkout"
         expect(page).not_to have_content recommendation
 
-        choose "Customers can change / cancel orders while order cycle is open"
+        check "Orders can be cancelled"
+        expect(page).to have_content recommendation
+
+        uncheck "Orders can be cancelled"
+        expect(page).not_to have_content recommendation
+
+        check "Items can be added (or quantities increased)"
         expect(page).to have_content recommendation
 
         choose "Require login to order"
@@ -596,6 +602,22 @@ RSpec.describe '
         choose "Public"
         expect(page).to have_field "Allow guest checkout"
         expect(page).to have_content recommendation
+      end
+
+      it "saves which changes customers can make to their orders" do
+        expect(page).to have_unchecked_field "Items can be added (or quantities increased)"
+        expect(page).to have_unchecked_field "Items can be removed (or quantities decreased)"
+        expect(page).to have_unchecked_field "Orders can be cancelled"
+
+        check "Items can be added (or quantities increased)"
+        check "Orders can be cancelled"
+        click_button "Update"
+
+        expect(flash_message).to eq 'Enterprise "First Distributor" has been successfully updated!'
+        within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
+        expect(page).to have_checked_field "Items can be added (or quantities increased)"
+        expect(page).to have_unchecked_field "Items can be removed (or quantities decreased)"
+        expect(page).to have_checked_field "Orders can be cancelled"
       end
     end
 

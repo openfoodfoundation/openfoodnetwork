@@ -1514,9 +1514,10 @@ en:
             require_login: "Require login to order"
           change_orders:
             title: "Change orders"
-            description: "Allow customers to change their order as long as the order cycle is open."
-            not_allowed: "Placed orders cannot be changed / cancelled"
-            allowed: "Customers can change / cancel orders while order cycle is open"
+            description: "Let customers update or cancel their orders while the Order Cycle is still active."
+            additions: "Items can be added (or quantities increased)"
+            removals: "Items can be removed (or quantities decreased)"
+            cancellation: "Orders can be cancelled"
             require_login_warning: "We recommend requiring customers to log in if they can change their orders."
           subscriptions:
             title: "Subscriptions"

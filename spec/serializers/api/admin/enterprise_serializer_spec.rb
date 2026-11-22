@@ -72,4 +72,22 @@ RSpec.describe Api::Admin::EnterpriseSerializer do
       end
     end
   end
+
+  describe "#allow_order_changes" do
+    it "is true when customers can make any change to their orders" do
+      enterprise = create(:distributor_enterprise, allow_order_cancellation: true)
+
+      serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
+
+      expect(serializer.as_json[:allow_order_changes]).to be true
+    end
+
+    it "is false when customers can't change their orders" do
+      enterprise = create(:distributor_enterprise)
+
+      serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
+
+      expect(serializer.as_json[:allow_order_changes]).to be false
+    end
+  end
 end
