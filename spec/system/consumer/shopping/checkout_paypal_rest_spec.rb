@@ -6,6 +6,7 @@ RSpec.describe "Check out with PayPal REST" do
   include ShopWorkflow
   include AuthenticationHelper
   include CheckoutHelper
+  include PaypalRestHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -32,36 +33,21 @@ RSpec.describe "Check out with PayPal REST" do
   let(:free_shipping) { create(:shipping_method) }
   let!(:paypal) { create(:paypal_rest_payment_method, distributors: [distributor]) }
   let(:user) { create(:user) }
-  let(:client) { instance_double(PaypalRest::Client) }
+  let(:client) {
+    stub_paypal_rest_client(
+      amount: order.reload.total,
+      approval_url: payment_gateways_confirm_paypal_rest_path(
+        payment_method_id: paypal.id, token: 'ORDER-1', PayerID: 'PAYER-1'
+      )
+    )
+  }
 
   before do
     distributor.shipping_methods << free_shipping
     login_as user
     pick_order order
     add_product_to_cart order, product
-
-    allow(PaypalRest::Client).to receive(:new).and_return(client)
-    allow(client).to receive(:create_order).and_return(
-      PaypalRest::Result.new(
-        success: true,
-        order_id: 'ORDER-1',
-        approval_url: payment_gateways_confirm_paypal_rest_path(
-          payment_method_id: paypal.id, token: 'ORDER-1', PayerID: 'PAYER-1'
-        ),
-        status: 'CREATED'
-      )
-    )
-    allow(client).to receive(:order_amount) do
-      PaypalRest::Result.new(
-        success: true, amount: format("%.2f", order.reload.total), currency_code: order.currency
-      )
-    end
-    allow(client).to receive(:capture_order).and_return(
-      PaypalRest::Result.new(
-        success: true, order_id: 'ORDER-1', capture_id: 'CAPTURE-1',
-        payer_id: 'PAYER-1', status: 'COMPLETED'
-      )
-    )
+    client
   end
 
   it "completes the order after returning from PayPal" do
