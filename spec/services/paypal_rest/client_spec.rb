@@ -235,5 +235,38 @@ RSpec.describe PaypalRest::Client do
 
       expect(result.error_message).to eq('Order amount does not match')
     end
+
+    it "falls back to the error message key when no description is given" do
+      error_body = Struct.new(:status_code, :raw_body, :reason_phrase).
+        new(400, { errors: [{ message: 'Invalid request' }] }.to_json, 'Bad Request')
+      exception = PaypalServerSdk::APIException.new('bad request', error_body)
+      allow(orders).to receive(:get_order).and_raise(exception)
+
+      result = client.order_amount('ORDER-1')
+
+      expect(result.error_message).to eq('Invalid request')
+    end
+
+    it "falls back to the response data message when there are no errors" do
+      data = Struct.new(:message).new('Payment declined')
+      response = instance_double(PaypalServerSdk::ApiResponse, success?: false,
+                                                               errors: nil, data:)
+      allow(orders).to receive(:create_order).and_return(response)
+
+      result = client.create_order(:order_request)
+
+      expect(result.error_message).to eq('Payment declined')
+    end
+
+    it "falls back to the reason phrase when the error body is malformed" do
+      bad_response = Struct.new(:status_code, :raw_body, :reason_phrase).
+        new(400, 'not json', 'Bad Request')
+      exception = PaypalServerSdk::APIException.new('bad request', bad_response)
+      allow(orders).to receive(:get_order).and_raise(exception)
+
+      result = client.order_amount('ORDER-1')
+
+      expect(result.error_message).to eq('Bad Request')
+    end
   end
 end
