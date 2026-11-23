@@ -2,6 +2,8 @@
 
 module PaypalRest
   class PurchaseUnitBuilderService
+    include MoneyBuilder
+
     def initialize(order:, payment:, address_required: false)
       @order = order
       @payment = payment
@@ -14,7 +16,7 @@ module PaypalRest
 
       details = {
         invoice_id: invoice_id,
-        amount: amount_details
+        amount: money(total_amount, order.currency)
       }
 
       if item_total.positive?
@@ -39,22 +41,15 @@ module PaypalRest
       [order.number, payment&.id].compact.join("-")
     end
 
-    def amount_details
-      {
-        currency_code: order.currency,
-        value: format("%.2f", total_amount)
-      }
-    end
-
     def breakdown(item_total)
       details = {
-        item_total: money(item_total),
-        shipping: money(order.ship_total),
-        tax_total: money(tax_total)
+        item_total: money(item_total, order.currency),
+        shipping: money(order.ship_total, order.currency),
+        tax_total: money(tax_total, order.currency)
       }
 
       discount = items_builder.discount_total
-      details[:discount] = money(discount) if discount.positive?
+      details[:discount] = money(discount, order.currency) if discount.positive?
       details
     end
 
@@ -82,13 +77,6 @@ module PaypalRest
 
     def shipping_address
       @shipping_address ||= order.ship_address
-    end
-
-    def money(value)
-      {
-        currency_code: order.currency,
-        value: format("%.2f", value)
-      }
     end
   end
 end

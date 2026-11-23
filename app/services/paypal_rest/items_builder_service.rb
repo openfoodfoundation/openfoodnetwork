@@ -2,6 +2,8 @@
 
 module PaypalRest
   class ItemsBuilderService
+    include MoneyBuilder
+
     def initialize(order)
       @order = order
     end
@@ -47,7 +49,7 @@ module PaypalRest
         name: item.product.name.to_s.truncate(127),
         sku: item.variant.sku,
         quantity: item.quantity.to_s,
-        unit_amount: money(item.price),
+        unit_amount: money(item.price, order.currency),
         category: PaypalServerSdk::ItemCategory::PHYSICAL_GOODS
       }.compact
     end
@@ -56,14 +58,7 @@ module PaypalRest
       {
         name: adjustment.label.to_s.truncate(127),
         quantity: "1",
-        unit_amount: money(adjustment.amount)
-      }
-    end
-
-    def money(value)
-      {
-        currency_code: order.currency,
-        value: format("%.2f", value)
+        unit_amount: money(adjustment.amount, order.currency)
       }
     end
   end
