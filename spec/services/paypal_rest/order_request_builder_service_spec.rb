@@ -31,7 +31,9 @@ RSpec.describe PaypalRest::OrderRequestBuilderService do
   end
 
   context "when the payment method requires an address" do
-    let(:payment_method) { create(:paypal_rest_payment_method, preferred_solution: "Sole") }
+    let(:payment_method) {
+      create(:paypal_rest_payment_method, preferred_solution: "Sole")
+    }
 
     it "sends the provided shipping address" do
       expect(experience_context[:shipping_preference]).to eq(

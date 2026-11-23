@@ -3,10 +3,20 @@
 module Spree
   class Gateway
     class PayPalRest < Gateway
+      SOLUTIONS = %w[Mark Sole].freeze
+      SERVERS = %w[sandbox live].freeze
+
       preference :client_id, :string
       preference :client_secret, :password
-      preference :server, :string, default: "sandbox"
       preference :solution, :string, default: "Mark"
+      preference :server, :string, default: "sandbox"
+
+      validates :preferred_solution, inclusion: { in: SOLUTIONS }
+      validates :preferred_server, inclusion: { in: SERVERS }
+
+      def preferences
+        super.except(:test_mode).slice(:client_id, :client_secret, :solution, :server)
+      end
 
       def provider_class
         PaypalRest::Provider

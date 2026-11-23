@@ -3,6 +3,30 @@
 RSpec.describe Spree::Gateway::PayPalRest do
   subject(:gateway) { create(:paypal_rest_payment_method) }
 
+  describe "preference validation" do
+    it "accepts the supported solution and server values" do
+      expect(gateway).to be_valid
+    end
+
+    it "rejects an unsupported solution" do
+      gateway.preferred_solution = 'Sole (typo)'
+
+      expect(gateway).not_to be_valid
+      expect(gateway.errors[:preferred_solution]).to be_present
+    end
+
+    it "rejects an unsupported server" do
+      gateway.preferred_server = 'Live'
+
+      expect(gateway).not_to be_valid
+      expect(gateway.errors[:preferred_server]).to be_present
+    end
+
+    it "hides test_mode and keeps a stable field order" do
+      expect(gateway.preferences.keys).to eq(%i[client_id client_secret solution server])
+    end
+  end
+
   describe "#provider_class" do
     it "uses the PayPal REST provider" do
       expect(gateway.provider_class).to eq(PaypalRest::Provider)
