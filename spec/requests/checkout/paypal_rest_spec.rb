@@ -103,7 +103,7 @@ RSpec.describe "checking out with a PayPal REST payment method" do
       get payment_gateways_confirm_paypal_rest_path, params: confirm_params
 
       expect(response).to redirect_to(checkout_step_path(:payment))
-      expect(flash[:error]).to eq(Spree.t('flash.no_payment_found', scope: 'paypal'))
+      expect(flash[:error]).to eq(I18n.t('spree.paypal.flash.no_payment_found'))
     end
 
     it "stores only the order ID when PayPal returns no payer ID" do
@@ -149,7 +149,7 @@ RSpec.describe "checking out with a PayPal REST payment method" do
       get payment_gateways_confirm_paypal_rest_path, params: params
 
       expect(response).to redirect_to(checkout_step_path(:payment))
-      expect(flash[:error]).to eq(Spree.t('flash.no_payment_found', scope: 'paypal'))
+      expect(flash[:error]).to eq(I18n.t('spree.paypal.flash.no_payment_found'))
     end
 
     it "returns to payment step when PayPal rejects the capture", :aggregate_failures do
@@ -169,7 +169,7 @@ RSpec.describe "checking out with a PayPal REST payment method" do
       get payment_gateways_cancel_paypal_rest_path
 
       expect(response).to redirect_to(checkout_path)
-      expect(flash[:notice]).to eq(Spree.t('flash.cancel', scope: 'paypal'))
+      expect(flash[:notice]).to eq(I18n.t('spree.paypal.flash.cancel'))
     end
   end
 end

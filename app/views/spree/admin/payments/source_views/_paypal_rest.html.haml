@@ -1,25 +1,25 @@
 %fieldset
-  %legend{align: "center"}= Spree.t(:transaction, scope: :paypal)
+  %legend{align: "center"}= I18n.t('spree.paypal.transaction')
   .row
     .alpha.six.columns
       %dl
         %dt
-          = Spree.t(:order_id, scope: :paypal)
+          = I18n.t('spree.paypal.order_id')
           \:
         %dd= payment.source.order_id
         %dt
-          = Spree.t(:capture_id, scope: :paypal)
+          = I18n.t('spree.paypal.capture_id')
           \:
         %dd= payment.source.capture_id
         %dt
-          = Spree.t(:payer_id, scope: :paypal)
+          = I18n.t('spree.paypal.payer_id')
           \:
         %dd= payment.source.payer_id
         %dt
-          = Spree.t(:refund_id, scope: :paypal)
+          = I18n.t('spree.paypal.refund_id')
           \:
         %dd= payment.source.refund_id
         %dt
-          = Spree.t(:status, scope: :paypal)
+          = I18n.t('spree.paypal.status')
           \:
         %dd= payment.source.status

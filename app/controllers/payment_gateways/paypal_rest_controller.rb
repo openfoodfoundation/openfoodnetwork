@@ -33,7 +33,7 @@ module PaymentGateways
       payment = pending_payment
 
       if payment.nil? || params[:token].blank?
-        flash[:error] = Spree.t('flash.no_payment_found', scope: 'paypal')
+        flash[:error] = I18n.t('spree.paypal.flash.no_payment_found')
         return redirect_to main_app.checkout_step_path(:payment)
       end
 
@@ -45,7 +45,7 @@ module PaymentGateways
     end
 
     def cancel
-      flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
+      flash[:notice] = I18n.t('spree.paypal.flash.cancel')
       redirect_to main_app.checkout_path
     end
 
@@ -114,11 +114,7 @@ module PaymentGateways
         Rails.logger.info("PaypalRestController#create: #{message}")
       end
 
-      flash[:error] = Spree.t(
-        'flash.generic_error',
-        scope: 'paypal',
-        reasons: message,
-      )
+      flash[:error] = I18n.t('spree.paypal.flash.generic_error', reasons: message)
 
       redirect_to main_app.checkout_step_path(:payment)
     end
