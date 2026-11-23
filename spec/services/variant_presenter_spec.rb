@@ -55,6 +55,25 @@ RSpec.describe VariantPresenter do
     end
   end
 
+  context "without fees" do
+    subject(:presenter) { described_class.new(variant:, with_fees: false) }
+
+    # 2kg for $50.00
+    let(:variant) { build(:variant, variant_unit: "weight", unit_value: 2000, price: 50.00) }
+
+    it "presents the variant's own price" do
+      expect(variant).not_to receive(:price_with_fees)
+
+      expect(presenter.price_with_fees).to eq(50.00)
+      expect(presenter.display_price_with_fees).to eq("$50.00")
+      expect(presenter.fee_breakdown).to eq []
+    end
+
+    it "calculates the price per unit from it" do
+      expect(presenter.display_unit_price).to eq("$25.00")
+    end
+  end
+
   describe "#unit_price_price" do
     # describe a 2kg variant with a price of 50.00
     let(:variant) { build(:variant, variant_unit: "weight", unit_value: 2000, price: 50.00) }
