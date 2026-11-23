@@ -134,6 +134,27 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
     end
   end
 
+  describe "#show_provider_preferences for PayPal REST" do
+    render_views
+
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:user) { create(:user, enterprises: [enterprise]) }
+    let(:rest) { create(:paypal_rest_payment_method, distributor_ids: [enterprise.id]) }
+
+    before { allow(controller).to receive_messages spree_current_user: user }
+
+    it "renders credentials and solution/server fields without test mode" do
+      spree_get :show_provider_preferences,
+                pm_id: rest.id, provider_type: "Spree::Gateway::PayPalRest"
+
+      expect(response.body).to include('payment_method_preferred_client_id')
+      expect(response.body).to include('payment_method_preferred_client_secret')
+      expect(response.body).to include('payment_method_preferred_solution"')
+      expect(response.body).to include('payment_method_preferred_server"')
+      expect(response.body).not_to include('payment_method_preferred_test_mode')
+    end
+  end
+
   describe "#update" do
     context "updating a payment method" do
       let!(:payment_method) { create(:payment_method, :flat_rate) }

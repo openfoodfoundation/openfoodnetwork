@@ -4363,6 +4363,8 @@ en:
     login: "Login"
     password: "Password"
     signature: "Signature"
+    client_id: "Client ID"
+    client_secret: "Client Secret"
     solution: "Solution"
     landing_page: "Landing Page"
     server: "Server"
