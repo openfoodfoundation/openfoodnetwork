@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_31_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_26_220000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -700,6 +700,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_31_000001) do
     t.string "refund_type", limit: 255
     t.datetime "created_at", precision: nil
     t.index ["transaction_id"], name: "index_spree_paypal_express_checkouts_on_transaction_id"
+  end
+
+  create_table "spree_paypal_rest_checkouts", force: :cascade do |t|
+    t.string "order_id", null: false
+    t.string "capture_id"
+    t.string "payer_id"
+    t.string "status"
+    t.string "refund_id"
+    t.datetime "refunded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["capture_id"], name: "index_spree_paypal_rest_checkouts_on_capture_id"
+    t.index ["order_id"], name: "index_spree_paypal_rest_checkouts_on_order_id", unique: true
+    t.index ["refund_id"], name: "index_spree_paypal_rest_checkouts_on_refund_id"
   end
 
   create_table "spree_preferences", id: :serial, force: :cascade do |t|
