@@ -41,6 +41,7 @@ RSpec.describe Spree::Ability do
         expect(subject).to be_able_to :index, resource_order
         expect(subject).to be_able_to :show, resource_product
         expect(subject).to be_able_to :create, resource_user
+        expect(subject).to be_able_to :create, resource_shipment
       end
     end
 
@@ -50,6 +51,7 @@ RSpec.describe Spree::Ability do
         expect(subject).not_to be_able_to :admin, resource_order
         expect(subject).not_to be_able_to :admin, resource_product
         expect(subject).not_to be_able_to :admin, resource_user
+        expect(subject).not_to be_able_to :create, resource_shipment
       end
     end
   end
@@ -544,6 +546,25 @@ RSpec.describe Spree::Ability do
           end
         end
       end
+
+      context "with any distributor allows me to edit orders containing my product" do
+        let(:order) {
+          create(
+            :order_with_line_items,
+            line_items_count: 1,
+            distributor: create(:distributor_enterprise, enable_producers_to_edit_orders: true)
+          ).tap do |order|
+            order.line_items.first.variant.update!(enterprise_id: s1.id)
+          end
+        }
+
+        describe "shipments" do
+          it "has shipment ability" do
+            is_expected.to have_ability([:index, :create, :add, :read, :edit, :update],
+                                        for: order.shipments.first)
+          end
+        end
+      end
     end
 
     context "when is a distributor enterprise user" do
@@ -808,6 +829,15 @@ RSpec.describe Spree::Ability do
           is_expected.to have_ability([:create_linked_variant], for: p_related.variants.first)
         end
       end
+
+      describe "shipments" do
+        let(:order) { create(:order_ready_to_ship, distributor: d1) }
+
+        it "has shipment ability" do
+          is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
+                                      for: order.shipments.first)
+        end
+      end
     end
 
     context 'Order Cycle co-ordinator, distributor enterprise manager' do
@@ -845,6 +875,15 @@ RSpec.describe Spree::Ability do
 
       it "should be able to add enterprises to order cycles" do
         is_expected.to have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
+      end
+
+      describe "shipments" do
+        let(:order) { create(:order_ready_to_ship, order_cycle: oc1) }
+
+        it "has shipment ability" do
+          is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
+                                      for: order.shipments.first)
+        end
       end
     end
 

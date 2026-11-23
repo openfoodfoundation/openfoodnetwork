@@ -397,7 +397,8 @@ module Spree
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment do |shipment|
         user.admin? ||
-          user.enterprises.any?(&:is_distributor) ||
+          user.enterprises.include?(shipment.order.distributor) ||
+          shipment.order.order_cycle&.coordinated_by?(user) ||
           can_edit_as_producer(shipment.order, user)
       end
 
