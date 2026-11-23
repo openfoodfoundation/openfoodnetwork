@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 @import "../../darkswarm/branding";
 @import "../../darkswarm/mixins";
 @import "../../darkswarm/shop_partials/property-selector-base";
@@ -101,6 +103,14 @@
 
   .small-3 {
     width: 25%;
+  }
+
+  .small-4 {
+    width: 33.33333%;
+  }
+
+  .small-8 {
+    width: 66.66667%;
   }
 
   .small-12 {
@@ -226,6 +236,83 @@
       .ofn-thumbnail-carousel__thumb {
         overflow: hidden;
       }
+    }
+  }
+
+  // The product details of shops with product pages show the product's page, styled like it.
+  .product-page-preview {
+    // The shop's text, which the product page inherits from the shop's body.
+    font-family: $body-font;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #222222; // Foundation's body font color
+
+    // The admin sets the font size of every block, which the shop's blocks inherit instead.
+    // Lists keep the size Foundation gives them, like above.
+    div,
+    dt,
+    dd,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    form,
+    blockquote,
+    th,
+    td {
+      font-size: inherit;
+    }
+
+    // Like Foundation's paragraphs.
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    // Unlike the rows of the shop tab above.
+    .row .columns {
+      line-height: inherit;
+    }
+
+    // The admin gives buttons a height. The shop's info buttons are as high as their icon, and
+    // so is their line in the shop, which renders in quirks mode.
+    .info-popover-button {
+      height: auto;
+      vertical-align: top;
+    }
+
+    // The buttons can't add to a cart here, but look like the product page's.
+    button.add-variant[disabled] {
+      background-color: $orange-500;
+      opacity: 1;
+      cursor: default;
+    }
+
+    // Their variables would clash with the admin ones if imported globally.
+    @include meta.load-css("shop_variant_list_component/shop_variant_list_component");
+    @include meta.load-css("info_popover_component/info_popover_component");
+    @include meta.load-css("add_to_cart_component/add_to_cart_component");
+
+    // Layout variables of the shop that the admin doesn't have. The modal has no footer
+    // to keep clear of.
+    $footer-clearance: 0;
+    $radius-medium: 0.5em;
+    @import "../../darkswarm/product_page";
+
+    // Again inside the tab, so that the carousel's own styles win over the preview's above.
+    @import "thumbnail_carousel_component/thumbnail_carousel_component";
+
+    // The shop's icon font rule sets the line height of every class starting with "ofn-".
+    .ofn-thumbnail-carousel__caption {
+      line-height: 1;
     }
   }
 }

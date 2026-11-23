@@ -12,7 +12,7 @@
       = favicon_link_tag "/favicon.ico"
     - else
       = favicon_link_tag "/favicon-staging.ico"
-    %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
+    = render "shared/shop_fonts"
     %link{href: asset_pack_path("static/OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
     = render "layouts/matomo_tag"
     = language_meta_tags
