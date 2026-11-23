@@ -6,6 +6,7 @@ class ProductsController < BaseController
   PER_PAGE = 30
 
   before_action :order_cycle, only: :index
+  helper_method :use_turbo_cart?
 
   def index
     @q = search_params[:q]
@@ -56,6 +57,12 @@ class ProductsController < BaseController
   end
 
   private
+
+  # The variants on a product page add to the cart with Turbo, so the page header shows the
+  # Turbo cart even when the shopfront still has the AngularJS one.
+  def use_turbo_cart?
+    true
+  end
 
   def product_renderer(args = search_params)
     ProductsRenderer.new(
