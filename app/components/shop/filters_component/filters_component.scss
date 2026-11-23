@@ -13,6 +13,8 @@
     border-radius: $label-tag-border-radius;
     background-color: $grey-075;
 
+    user-select: none; // These elements are behaving like a button, so disable text selection.
+
     input {
       opacity: 0; // Invisble, but still part of the DOM accessibility tree
       position: absolute;
