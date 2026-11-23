@@ -4,6 +4,7 @@
 - order_cycle = product_grid_view ? current_order_cycle&.id : true
 - product_grid_view_navigation = feature?(:product_grid_view_navigation, @current_user)
 - cache_key = [product_grid_view, order_cycle, product_grid_view_navigation]
+- cache_key += [:product_pages, current_distributor.permalink] if product_pages?(current_distributor)
 = cache_with_locale cache_key do
   - if use_turbo_cart?
     #out-of-stock-modal

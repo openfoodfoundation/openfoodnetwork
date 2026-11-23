@@ -69,6 +69,19 @@ RSpec.describe ProductsController do
         expect(page).to have_selector ".variant-list li", count: 1
         expect(page).not_to have_selector "#variant-#{other_variant.id}"
       end
+
+      # The shop's product list shows the page over itself. See product_page_overlay_controller.js.
+      it "renders the page without the top menu for the product list" do
+        get enterprise_product_path(enterprise, product, overlay: true)
+
+        expect(response).to have_http_status :ok
+        content = page.find(".product-page-overlay-content")
+        expect(content["data-title"]).to eq "Garlic from The Garlic Guru - Open Food Network"
+        expect(content["data-shop-url"]).to eq "/the-garlic-guru/shop"
+        expect(page).to have_selector "#shop-tabs"
+        expect(page).to have_selector ".variant-list li", count: 1
+        expect(page).not_to have_selector "nav.top-bar"
+      end
     end
 
     context "without an order cycle on offer" do
