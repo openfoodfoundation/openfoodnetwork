@@ -29,6 +29,9 @@ module OpenFoodNetwork
     #   Flipper.enable("dragon_mode")
     #
     CURRENT_FEATURES = {
+      "paypal_rest" => <<~DESC,
+        Offer the PayPal REST payment gateway (paypal-server-sdk) when creating payment methods.
+      DESC
       "api_reports" => <<~DESC,
         An API endpoint for reports at
         <code>/api/v0/reports/:report_type(/:report_subtype)</code>
