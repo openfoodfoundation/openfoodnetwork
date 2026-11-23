@@ -58,6 +58,7 @@ gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant'
+gem 'paypal-server-sdk', '~> 2.4.0', require: 'paypal_server_sdk'
 gem 'stripe'
 gem "taler"
 

@@ -163,6 +163,22 @@ GEM
       railties (>= 7, < 9)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
+    apimatic_core (0.3.21)
+      apimatic_core_interfaces (~> 0.2.0)
+      certifi (~> 2018.1, >= 2018.01.18)
+      faraday-multipart (~> 1.0)
+      nokogiri (~> 1.13, >= 1.13.10)
+    apimatic_core_interfaces (0.2.3)
+    apimatic_faraday_client_adapter (0.1.6)
+      apimatic_core_interfaces (~> 0.2.0)
+      certifi (~> 2018.1, >= 2018.01.18)
+      faraday (~> 2.0, >= 2.0.1)
+      faraday-follow_redirects (~> 0.2)
+      faraday-gzip (>= 1, < 4)
+      faraday-http-cache (~> 2.2)
+      faraday-multipart (~> 1.0)
+      faraday-net_http_persistent (~> 2.0)
+      faraday-retry (~> 2.0)
     arel-helpers (2.17.0)
       activerecord (>= 3.1.0)
     ast (2.4.3)
@@ -226,6 +242,7 @@ GEM
       marcel (~> 1.0)
       nokogiri (~> 1.10, >= 1.10.4)
       rubyzip (>= 2.4, < 4)
+    certifi (2018.01.18)
     cgi (0.5.2)
     childprocess (5.0.0)
     choice (0.2.0)
@@ -314,8 +331,20 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
+    faraday-gzip (3.2.0)
+      faraday (>= 2.0, < 3)
+      zlib (~> 3.0)
+    faraday-http-cache (2.8.0)
+      faraday (>= 0.8)
+    faraday-multipart (1.2.0)
+      multipart-post (~> 2.0)
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
+    faraday-net_http_persistent (2.3.1)
+      faraday (~> 2.5)
+      net-http-persistent (>= 4.0.4, < 5)
+    faraday-retry (2.4.0)
+      faraday (~> 2.0)
     ferrum (0.18.0)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -493,9 +522,12 @@ GEM
       i18n (>= 0.6.4, <= 2)
     msgpack (1.8.7)
     multi_json (1.21.1)
+    multipart-post (2.4.1)
     net-http (0.10.0)
       net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
+    net-http-persistent (4.0.8)
+      connection_pool (>= 2.2.4, < 4)
     net-imap (0.6.6)
       date
       net-protocol
@@ -558,6 +590,10 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.4)
       paypal-sdk-core (~> 0.3.0)
+    paypal-server-sdk (2.4.0)
+      apimatic_core (~> 0.3.20)
+      apimatic_core_interfaces (~> 0.2.3)
+      apimatic_faraday_client_adapter (~> 0.1.6)
     pdf-reader (2.16.0)
       Ascii85 (>= 1.0, < 3.0, != 2.0.0)
       afm (>= 0.2.1, < 2)
@@ -938,6 +974,7 @@ GEM
       nokogiri (~> 1.8)
     yaml (0.4.0)
     zeitwerk (2.8.3)
+    zlib (3.2.4)
 
 PLATFORMS
   ruby
@@ -1024,6 +1061,7 @@ DEPENDENCIES
   paper_trail
   paranoia
   paypal-sdk-merchant
+  paypal-server-sdk (~> 2.4.0)
   pdf-reader
   pg
   private_address_check
@@ -1114,6 +1152,9 @@ CHECKSUMS
   angular_rails_csrf (8.0.0) sha256=4784a99faff98c571f00936992187b932ee378a3103fd5a92d3f3bd35e97b52d
   angularjs-file-upload-rails (2.4.1) sha256=6de1d8a70b0b6ccd5656786bc42d2e949d70d1c126dc6c02d30addc6175a401f
   angularjs-rails (1.8.0) sha256=fde5805a84dd760e7af29ceb528391adf7e9ed63f24857b43954a0f7b3847405
+  apimatic_core (0.3.21) sha256=b4d43a43ddbb4f52c5e51b8dc596721ff9e352a2448fb2aa8c658dd556a30cb3
+  apimatic_core_interfaces (0.2.3) sha256=01a1cf150c95d674386cfe9958b16ace346c8060d9cfe6fe939b3342d91f4e22
+  apimatic_faraday_client_adapter (0.1.6) sha256=9bc1aad6cf6ae7ad0ec4a8c0878026369fd0bf06301cbf1c547c6b14037a28cd
   arel-helpers (2.17.0) sha256=0af23b8d32c3ef670eda04e6e371ab177ed684f0edaa06aeed57f822bc0acf6d
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   attr_required (1.0.2) sha256=f0ebfc56b35e874f4d0ae799066dbc1f81efefe2364ca3803dc9ea6a4de6cb99
@@ -1141,6 +1182,7 @@ CHECKSUMS
   capybara-shadowdom (0.3.0) sha256=956b57c90c91c48fd45797d806cbbb40b353ad247e8fb68c125c9d579529bfa5
   catalog (0.0.1)
   caxlsx (4.4.2) sha256=41bb1141eb083f2f72e0a34db85684a2ec48d38fed4c1ff20c1525c47cdc93eb
+  certifi (2018.01.18) sha256=d5aff04a27045255a4829823496a974dc1cc2c04a777675b3056b0c0952ce9e3
   cgi (0.5.2) sha256=61ca30298171190fd4fa0d8018e57ada456eae9b7a2b78526debf7f0a0e6f8bb
   childprocess (5.0.0) sha256=0746b7ab1d6c68156e64a3767631d7124121516192c0492929a7f0af7310d835
   choice (0.2.0) sha256=a19617f7dfd4921b38a85d0616446620de685a113ec6d1ecc85bdb67bf38c974
@@ -1187,7 +1229,12 @@ CHECKSUMS
   factory_bot_rails (6.2.0) sha256=278b969666b078e76e1c972c501da9b1fac15e5b0ff328cc7ce400366164d0a1
   faraday (2.14.4) sha256=9bb4408c44621b0dbaaaa39e5dbfc4dbe58cc6751b6eb94d16ae9e1f2f2fab6e
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
+  faraday-gzip (3.2.0) sha256=bedae115512201df9b9b13c95cb9a1aa4cb8a848286212d593b20e9456c8578f
+  faraday-http-cache (2.8.0) sha256=310bfdbc79488aaab4578e91bd04badfe154ca3d88fc06bfc98e36d42c2dd969
+  faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757
   faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
+  faraday-net_http_persistent (2.3.1) sha256=23ffba37d6a27807a10f033d01918ec958aa73fa6ff0fccfbcd5ce2d2e68fca3
+  faraday-retry (2.4.0) sha256=7b79c48fb7e56526faf247b12d94a680071ff40c9fda7cf1ec1549439ad11ebe
   ferrum (0.18.0) sha256=4cb8be16e352fc1d75f087e9214b34ec1b93ba932410c730a4724909ca89d7c6
   ferrum_pdf (3.2.0) sha256=af127863830c34faa7647624c165801d77c96263f642680fea19a53214ab11a7
   ffaker (2.25.0) sha256=e485c5adf8195aac55662875b7f515469bca46d77b60d0e7d08db6861bcbec40
@@ -1258,7 +1305,9 @@ CHECKSUMS
   money (6.16.0) sha256=cf476f5f19188e247ec20f6509cff64dc35d395ee018bad799b1a9ea8bd4754a
   msgpack (1.8.7) sha256=dfefec761b5f9047e6e8d95d2c7f8af4b3725d984a01942adc533aa819a2df33
   multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
+  multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   net-http (0.10.0) sha256=1a2ff6e37a05724973c43f2bf7bf105f59c36a4cd0a7e9b1c021a0a566987c27
+  net-http-persistent (4.0.8) sha256=ef3de8319d691537b329053fae3a33195f8b070bbbfae8bf1a58c796081960e6
   net-imap (0.6.6) sha256=96aa4ee50df3060203e649efc341f53480b791d49e150f2fdebf68beb141a8df
   net-pop (0.1.2) sha256=848b4e982013c15b2f0382792268763b748cce91c9e91e36b0f27ed26420dff3
   net-protocol (0.3.0) sha256=ba310c3d4f1cad46bb1ab20336b06669b1ff8f7c568d9cb9342b32a718547472
@@ -1283,6 +1332,7 @@ CHECKSUMS
   parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
   paypal-sdk-core (0.3.6) sha256=ffc8c247b926b0d083d9a91f515df710ebf6b55663c8654a6691f755bcab30a0
   paypal-sdk-merchant (1.117.4) sha256=61d9992fad90a22251d116d27b01aabec6ae1a48cf5cf6d125251c3280eb58de
+  paypal-server-sdk (2.4.0) sha256=2a57d5ff27a4233631cd92ccc5e5012424cf37a35cf7b1ea93dfea35548de869
   pdf-reader (2.16.0) sha256=bf1b5564c085264d8279bde3cf1467778b75841494d20c0fe7da3dad475f3732
   pg (1.6.3) sha256=1388d0563e13d2758c1089e35e973a3249e955c659592d10e5b77c468f628a99
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
@@ -1421,6 +1471,7 @@ CHECKSUMS
   xpath (3.2.0) sha256=6dfda79d91bb3b949b947ecc5919f042ef2f399b904013eb3ef6d20dd3a4082e
   yaml (0.4.0) sha256=240e69d1e6ce3584d6085978719a0faa6218ae426e034d8f9b02fb54d3471942
   zeitwerk (2.8.3) sha256=2c85125a8467ce069e20123d1e709a08955c9d29c118c25b46b7b7fafdbb92e5
+  zlib (3.2.4) sha256=a0d0e5845a18d839c078fb5b6e4ae523ffb918601c2004a77c081ee211f9b038
 
 RUBY VERSION
   ruby 3.4.13
