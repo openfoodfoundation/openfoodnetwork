@@ -5,7 +5,7 @@
   %a
     - if product.group_buy
       %span.product-thumb__bulk-label
-        = t(".bulk")
+        = t :bulk
     = image_tag product.image&.url(:small) || Spree::Image.default_image_url(:small)
 
 .summary

@@ -1142,8 +1142,6 @@ en:
         rules_per_tag:
           one: "%{tag} has 1 rule"
           other: "%{tag} has %{count} rules"
-      product_preview_list:
-        bulk: "Bulk"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
