@@ -31,6 +31,15 @@ FactoryBot.define do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
   end
 
+  factory :paypal_rest_payment_method, class: Spree::Gateway::PayPalRest do
+    name { 'Paypal REST' }
+    environment { 'test' }
+    preferred_client_id { 'test-client-id' }
+    preferred_client_secret { 'test-client-secret' }
+    preferred_server { 'sandbox' }
+    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
+  end
+
   factory :distributor_payment_method, class: DistributorPaymentMethod do
     distributor { FactoryBot.create(:distributor_enterprise) }
     payment_method { FactoryBot.create(:payment_method) }
