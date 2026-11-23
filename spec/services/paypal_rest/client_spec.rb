@@ -74,7 +74,7 @@ RSpec.describe PaypalRest::Client do
   end
 
   describe "#order_amount" do
-    let(:amount) { double(:amount, value: '10.00', currency_code: 'AUD') }
+    let(:amount) { PaypalServerSdk::Money.new(value: '10.00', currency_code: 'AUD') }
     let(:order) { double(:order, purchase_units: [double(:unit, amount:)]) }
     let(:response) { double(:response, success?: true, data: order, errors: nil) }
 

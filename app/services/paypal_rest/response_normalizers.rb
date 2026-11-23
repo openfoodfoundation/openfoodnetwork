@@ -9,7 +9,7 @@ module PaypalRest
 
       purchase_unit = response.data&.purchase_units&.first
       amount = purchase_unit&.amount
-      return failure("PayPal did not return an order amount") if amount.blank?
+      return failure("PayPal did not return an order amount") if amount.nil?
 
       Result.new(
         success: true,
