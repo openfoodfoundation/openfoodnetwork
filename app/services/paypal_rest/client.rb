@@ -24,14 +24,14 @@ module PaypalRest
       options = { "body" => order_request, "paypal_request_id" => request_id }.compact
       normalize_order(@sdk.orders.create_order(options))
     rescue PaypalServerSdk::APIException, SocketError => e
-      failure(e.message)
+      failure(exception_message(e))
     end
 
     def order_amount(order_id, request_id: nil)
       options = { "id" => order_id, "paypal_request_id" => request_id }.compact
       normalize_order_amount(@sdk.orders.get_order(options))
     rescue PaypalServerSdk::APIException, SocketError => e
-      failure(e.message)
+      failure(exception_message(e))
     end
 
     def capture_order(order_id, order_capture_request = {}, request_id: nil)
@@ -40,7 +40,7 @@ module PaypalRest
       }.compact
       normalize_capture(@sdk.orders.capture_order(options))
     rescue PaypalServerSdk::APIException, SocketError => e
-      failure(e.message)
+      failure(exception_message(e))
     end
 
     def refund_capture(capture_id, refund_request, request_id: nil)
@@ -49,7 +49,7 @@ module PaypalRest
       }.compact
       normalize_refund(@sdk.payments.refund_captured_payment(options))
     rescue PaypalServerSdk::APIException, SocketError => e
-      failure(e.message)
+      failure(exception_message(e))
     end
   end
 end

@@ -101,6 +101,22 @@ module PaypalRest
       error.to_s
     end
 
+    def exception_message(error)
+      response = error.respond_to?(:response) ? error.response : nil
+      parsed_error_details(response&.raw_body) ||
+        response&.reason_phrase.presence ||
+        error.message
+    end
+
+    def parsed_error_details(raw_body)
+      return nil if raw_body.blank?
+
+      first_error = JSON.parse(raw_body)['errors']&.first
+      first_error&.dig('description').presence || first_error&.dig('message').presence
+    rescue JSON::ParserError
+      nil
+    end
+
     def failure(message)
       Result.new(success: false, error_message: message.presence || "PayPal request failed")
     end

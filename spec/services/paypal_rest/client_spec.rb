@@ -6,8 +6,14 @@ RSpec.describe PaypalRest::Client do
   }
 
   let(:sdk) { instance_double(PaypalServerSdk::Client) }
-  let(:orders) { double(:orders) }
-  let(:payments) { double(:payments) }
+  let(:orders) { instance_double(PaypalServerSdk::OrdersController) }
+  let(:payments) { instance_double(PaypalServerSdk::PaymentsController) }
+  let(:sdk_response) {
+    Struct.new(:status_code, :raw_body, :reason_phrase).new(
+      400, '{"errors":[{"description":"bad request"}]}', 'Bad Request'
+    )
+  }
+  let(:sdk_exception) { PaypalServerSdk::APIException.new('bad request', sdk_response) }
 
   before do
     allow(PaypalServerSdk::Client).to receive(:new).and_return(sdk)
@@ -29,9 +35,17 @@ RSpec.describe PaypalRest::Client do
   end
 
   describe "#create_order" do
-    let(:approval_link) { double(:link, rel: 'approve', href: 'https://paypal.example/approve') }
-    let(:order) { double(:order, id: 'ORDER-1', status: 'CREATED', links: [approval_link]) }
-    let(:response) { double(:response, success?: true, data: order, errors: nil) }
+    let(:approval_link) {
+      instance_double(PaypalServerSdk::LinkDescription, rel: 'approve',
+                                                        href: 'https://paypal.example/approve')
+    }
+    let(:order) {
+      instance_double(PaypalServerSdk::Order, id: 'ORDER-1', status: 'CREATED',
+                                              links: [approval_link])
+    }
+    let(:response) {
+      instance_double(PaypalServerSdk::ApiResponse, success?: true, data: order, errors: nil)
+    }
 
     it "returns the order ID and approval URL" do
       expect(orders).to receive(:create_order)
@@ -75,8 +89,11 @@ RSpec.describe PaypalRest::Client do
 
   describe "#order_amount" do
     let(:amount) { PaypalServerSdk::Money.new(value: '10.00', currency_code: 'AUD') }
-    let(:order) { double(:order, purchase_units: [double(:unit, amount:)]) }
-    let(:response) { double(:response, success?: true, data: order, errors: nil) }
+    let(:purchase_unit) { instance_double(PaypalServerSdk::PurchaseUnit, amount:) }
+    let(:order) { instance_double(PaypalServerSdk::Order, purchase_units: [purchase_unit]) }
+    let(:response) {
+      instance_double(PaypalServerSdk::ApiResponse, success?: true, data: order, errors: nil)
+    }
 
     it "returns the approved amount and currency" do
       expect(orders).to receive(:get_order)
@@ -98,16 +115,28 @@ RSpec.describe PaypalRest::Client do
       expect(result).to be_failure
       expect(result.error_message).to eq('PayPal did not return an order amount')
     end
+
+    it "converts SDK exceptions into failures" do
+      allow(orders).to receive(:get_order).and_raise(sdk_exception)
+
+      expect(client.order_amount('ORDER-1').error_message).to eq('bad request')
+    end
   end
 
   describe "#capture_order" do
-    let(:capture) { double(:capture, id: 'CAPTURE-1', status: 'COMPLETED') }
-    let(:payer) { double(:payer, payer_id: 'PAYER-1') }
-    let(:purchase_unit) { double(:purchase_unit, payments: double(:payments, captures: [capture])) }
-    let(:order) {
-      double(:order, id: 'ORDER-1', payer: payer, purchase_units: [purchase_unit])
+    let(:capture) { instance_double(PaypalServerSdk::CapturedPayment, id: 'CAPTURE-1', status: 'COMPLETED') }
+    let(:capture_payments) {
+      instance_double(PaypalServerSdk::PaymentCollection, captures: [capture])
     }
-    let(:response) { double(:response, success?: true, data: order, errors: nil) }
+    let(:payer) { instance_double(PaypalServerSdk::Payer, payer_id: 'PAYER-1') }
+    let(:purchase_unit) { instance_double(PaypalServerSdk::PurchaseUnit, payments: capture_payments) }
+    let(:order) {
+      instance_double(PaypalServerSdk::Order, id: 'ORDER-1', payer: payer,
+                                              purchase_units: [purchase_unit])
+    }
+    let(:response) {
+      instance_double(PaypalServerSdk::ApiResponse, success?: true, data: order, errors: nil)
+    }
 
     it "returns the capture and payer details" do
       expect(orders).to receive(:capture_order)
@@ -138,11 +167,19 @@ RSpec.describe PaypalRest::Client do
 
       expect(client.capture_order('ORDER-1')).to be_failure
     end
+
+    it "converts SDK exceptions into failures" do
+      allow(orders).to receive(:capture_order).and_raise(sdk_exception)
+
+      expect(client.capture_order('ORDER-1').error_message).to eq('bad request')
+    end
   end
 
   describe "#refund_capture" do
-    let(:refund) { double(:refund, id: 'REFUND-1', status: 'COMPLETED') }
-    let(:response) { double(:response, success?: true, data: refund, errors: nil) }
+    let(:refund) { instance_double(PaypalServerSdk::Refund, id: 'REFUND-1', status: 'COMPLETED') }
+    let(:response) {
+      instance_double(PaypalServerSdk::ApiResponse, success?: true, data: refund, errors: nil)
+    }
 
     it "returns the refund ID" do
       expect(payments).to receive(:refund_captured_payment)
@@ -165,12 +202,20 @@ RSpec.describe PaypalRest::Client do
       expect(result).to be_failure
       expect(result.error_message).to eq('PayPal refund status: PENDING')
     end
+
+    it "converts SDK exceptions into failures" do
+      allow(payments).to receive(:refund_captured_payment).and_raise(sdk_exception)
+
+      expect(client.refund_capture('CAPTURE-1', {}).error_message).to eq('bad request')
+    end
   end
 
   describe "error responses" do
     it "uses the SDK error messages" do
-      error = double(:error, to_s: 'Invalid request')
-      response = double(:response, success?: false, errors: [error], data: nil)
+      error = instance_double(PaypalServerSdk::ErrorDetails, to_s: 'Invalid request',
+                                                             description: nil)
+      response = instance_double(PaypalServerSdk::ApiResponse, success?: false,
+                                                               errors: [error], data: nil)
       allow(orders).to receive(:create_order).and_return(response)
 
       result = client.create_order(:order_request)
@@ -180,8 +225,10 @@ RSpec.describe PaypalRest::Client do
     end
 
     it "prefers the human-readable SDK error description" do
-      error = double(:error, description: 'Order amount does not match', to_s: '#<Error ...>')
-      response = double(:response, success?: false, errors: [error], data: nil)
+      error = instance_double(PaypalServerSdk::ErrorDetails,
+                              description: 'Order amount does not match', to_s: '#<Error ...>')
+      response = instance_double(PaypalServerSdk::ApiResponse, success?: false,
+                                                               errors: [error], data: nil)
       allow(orders).to receive(:create_order).and_return(response)
 
       result = client.create_order(:order_request)
