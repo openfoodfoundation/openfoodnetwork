@@ -809,7 +809,7 @@ paths:
           - suppliers
           - bulk_coop
           - revenues_by_hub
-        description: Report type from Reporting::Reports::List.
+        description: The report to generate.
       - name: report_subtype
         in: query
         required: false
@@ -881,6 +881,7 @@ paths:
                 properties:
                   data:
                     type: array
+                    description: Row fields vary by report and subtype.
                     items:
                       type: object
                       additionalProperties: true
@@ -936,13 +937,13 @@ paths:
                 - meta
                 - links
         '422':
-          description: invalid parameters, missing required filters or reporting errors
+          description: Invalid parameters, missing required filters or reporting errors
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/error_response"
         '404':
-          description: unknown report type or nonexistent filter resource
+          description: Unknown report type or nonexistent filter resource
           content:
             application/json:
               schema:

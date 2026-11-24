@@ -98,7 +98,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
                       payments suppliers bulk_coop revenues_by_hub
                     ]
                   },
-                  description: "Report type from Reporting::Reports::List."
+                  description: "The report to generate."
         parameter name: :report_subtype, in: :query, required: false,
                   schema: { type: :string },
                   description: "A subtype supported by the selected report. " \
@@ -132,7 +132,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
         parameter name: "X-Api-Token", in: :header, required: false,
                   schema: { type: :string }
 
-        response "200", "packing customer report with both filters" do
+        response "200", "Packing customer report with both filters" do
           let(:report_type) { "packing" }
           let(:report_subtype) { "customer" }
           let(:order_cycle_id) { order_cycle.id }
@@ -145,6 +145,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           schema type: :object, properties: {
             data: {
               type: :array,
+              description: "Row fields vary by report and subtype.",
               items: { type: :object, additionalProperties: true }
             },
             meta: pagination_schema,
@@ -160,7 +161,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "422", "neither order_cycle_id nor distributor_id" do
+        response "422", "Neither order_cycle_id nor distributor_id" do
           let(:report_type) { "packing" }
 
           before { login_as hub_owner }
@@ -172,7 +173,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "404", "nonexistent order cycle" do
+        response "404", "Nonexistent order cycle" do
           let(:report_type) { "customers" }
           let(:order_cycle_id) { OrderCycle.maximum(:id).to_i + 10_000 }
 
@@ -185,7 +186,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "404", "unknown report type or nonexistent filter resource" do
+        response "404", "Unknown report type or nonexistent filter resource" do
           let(:report_type) { "unknown" }
           let(:distributor_id) { hub.id }
 
@@ -230,7 +231,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "401", "unauthenticated request" do
+        response "401", "Unauthenticated request" do
           let(:report_type) { "packing" }
           let(:order_cycle_id) { order_cycle.id }
 
@@ -262,7 +263,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "422", "a Reporting::Errors::Base subclass uses the V1 error shape" do
+        response "422", "A Reporting::Errors::Base subclass uses the V1 error shape" do
           let(:report_type) { "packing" }
           let(:order_cycle_id) { order_cycle.id }
 
@@ -280,7 +281,7 @@ RSpec.describe "Report API contract", swagger_doc: "v1.yaml" do
           end
         end
 
-        response "422", "invalid parameters, missing required filters or reporting errors" do
+        response "422", "Invalid parameters, missing required filters or reporting errors" do
           let(:report_type) { "packing" }
           let(:distributor_id) { hub.id }
           let(:'q[completed_at_gt]') { "garbage" }
