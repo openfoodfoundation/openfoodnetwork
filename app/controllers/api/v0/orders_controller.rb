@@ -34,6 +34,10 @@ module Api
       end
 
       def ship
+        # Check if we can update the order, so that we have at least one authorize! call if the
+        # order doesn't have any shipments. Otherwise it would result in an error because of
+        # `check_authorization` in `Api::V0::BaseController`
+        authorize! :update, order
         order.shipments.each do |shipment|
           authorize! :update, shipment
         end

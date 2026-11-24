@@ -461,6 +461,16 @@ RSpec.describe Api::V0::OrdersController do
         expect_order
       end
 
+      context "with no shipment" do
+        it "does nothing" do
+          order.shipments.destroy_all
+
+          put :ship, params: { id: order.number }
+
+          expect_order
+        end
+      end
+
       context "with an order the user doesn't manage" do
         before do
           allow(controller).to receive(:spree_current_user).and_return(create(:enterprise_user))
