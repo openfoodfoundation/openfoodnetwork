@@ -2,7 +2,10 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["loading", "products"];
-  static values = { maxWidth: { type: Number, default: 500 } };
+  static values = {
+    maxWidth: { type: Number, default: 500 },
+    url: String,
+  };
 
   updateProducts(ev) {
     const orderCycleId = ev.detail.orderCycleId;
@@ -14,11 +17,8 @@ export default class extends Controller {
   addMobile() {
     const width = Math.min(window.innerWidth, window.screen.width);
 
-    const url = this.#addIsMobileTo(this.element.src);
-    if (url.searchParams.has("mobile")) {
-      // It will reload the frame, but cancel original request
-      this.element.src = url.toString();
-    }
+    const url = this.#addIsMobileTo(this.urlValue);
+    this.element.src = url.toString();
   }
 
   showLoading(ev) {

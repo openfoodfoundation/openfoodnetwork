@@ -2,9 +2,10 @@
   .row
     - frame_options = { "data-turbo": "true",
                         "data-controller": "product-grid-view",
-                        "data-action": "orderCycleSelected@window->product-grid-view#updateProducts turbo:frame-load->product-grid-view#scrollToTop turbo:before-fetch-request->product-grid-view#showLoading DOMContentLoaded@window->product-grid-view#addMobile" }
+                        "data-action": "orderCycleSelected@window->product-grid-view#updateProducts turbo:frame-load->product-grid-view#scrollToTop turbo:before-fetch-request->product-grid-view#showLoading DOMContentLoaded@window->product-grid-view#addMobile",
+                        "data-product-grid-view-url-value": order_cycle_products_path(current_order_cycle.id) }
     - if current_order_cycle.present?
-      = turbo_frame_tag("shop-products", src: order_cycle_products_path(current_order_cycle.id), **frame_options) do
+      = turbo_frame_tag("shop-products", **frame_options) do
         .loading{ "data-product-grid-view-target": "loading" }
           = render partial: "shop/products/product_spinner"
 
