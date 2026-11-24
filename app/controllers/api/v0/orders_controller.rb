@@ -47,7 +47,7 @@ module Api
       end
 
       def capture
-        authorize! :admin, order
+        authorize! :capture, order
 
         payment_capture = Orders::CaptureService.new(order)
 

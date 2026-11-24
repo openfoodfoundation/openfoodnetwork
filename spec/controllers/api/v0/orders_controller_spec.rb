@@ -385,6 +385,19 @@ RSpec.describe Api::V0::OrdersController do
       end
     end
 
+    context "with an order the user doesn't manage" do
+      before do
+        allow(controller).to receive(:spree_current_user).and_return(create(:enterprise_user))
+      end
+
+      it "returns unauthorized" do
+        put :capture, params: { id: order.number }
+
+        assert_unauthorized!
+        expect(order.reload.pending_payments.empty?).to be(false)
+      end
+    end
+
     describe "#ship" do
       before do
         order.payments.first.capture!
