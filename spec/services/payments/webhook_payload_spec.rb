@@ -18,7 +18,7 @@ RSpec.describe Payments::WebhookPayload do
           quantity: li.quantity,
           price: li.price,
           tax_category_name: li.tax_category&.name,
-          product_name: li.product.name,
+          product_name: li.full_product_name,
           name_to_display: li.display_name,
           unit_to_display: li.unit_presentation
         }
@@ -50,6 +50,31 @@ RSpec.describe Payments::WebhookPayload do
       }.with_indifferent_access
 
       expect(subject.to_hash).to eq(payload)
+    end
+
+    it "uses the snapshotted product name when the product is renamed" do
+      line_item = order.line_items.first
+      line_item.product.update!(name: "Zebra")
+
+      expect(subject.to_hash[:order][:line_items].first[:product_name])
+        .to eq line_item.product_name
+    end
+
+    it "uses the snapshotted variant display name when the variant is renamed" do
+      line_item = order.line_items.first
+      line_item.update_columns(variant_display_name: "Pink Lady")
+      line_item.variant.update!(display_name: "Renamed")
+
+      expect(subject.to_hash[:order][:line_items].first[:name_to_display])
+        .to eq "Pink Lady"
+    end
+
+    it "doesn't fall back to the product name when the variant has no display name" do
+      line_item = order.line_items.first
+      line_item.update_columns(variant_display_name: "")
+      line_item.variant.update!(display_name: "")
+
+      expect(subject.to_hash[:order][:line_items].first[:name_to_display]).to eq ""
     end
   end
 
