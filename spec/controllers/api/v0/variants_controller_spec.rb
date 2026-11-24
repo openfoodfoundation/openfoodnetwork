@@ -92,6 +92,18 @@ RSpec.describe Api::V0::VariantsController do
     let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
 
     describe "#create" do
+      it "creates a new variant" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier.id },
+                          product_id: product.id
+
+        expect(response).to have_http_status(:created)
+        expect(json_response["sku"]).to eq("12345")
+        expect(Spree::Variant.where(enterprise: supplier).last.sku).to eq("12345")
+      end
+
       it "cannot create a variant for another enterprise's product" do
         api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
                                      variant_unit_scale: 1, unit_description: "kg", price: "10.00",
