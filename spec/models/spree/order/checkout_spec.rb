@@ -91,6 +91,7 @@ RSpec.describe Spree::Order::Checkout do
 
       it "transitions to complete" do
         expect(order).to receive(:process_pending_customer_credits!)
+        expect(order).to receive(:ensure_shipping_method).and_return(true)
 
         order.next!
 
