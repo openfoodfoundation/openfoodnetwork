@@ -29,9 +29,6 @@ module Api
         order_cycle_id distributor_id page per_page
       ].freeze
 
-      DATE_QUERY_FILTERS = %i[completed_at_gt completed_at_lt].freeze
-      PERMITTED_QUERY_FILTERS = DATE_QUERY_FILTERS
-
       rescue_from Reporting::Errors::Base, with: :render_report_error
       rescue_from Reporting::Reports::EnterpriseFeeSummary::ParameterNotAllowedError,
                   with: :render_forbidden_report
@@ -83,7 +80,7 @@ module Api
       def permitted_params
         @permitted_params ||= params.permit(
           *PERMITTED_PARAMS,
-          q: PERMITTED_QUERY_FILTERS
+          q: ReportFilterValidation::DATE_QUERY_FILTERS
         )
       end
 

@@ -3,6 +3,8 @@
 module Api
   module V1
     module ReportFilterValidation
+      DATE_QUERY_FILTERS = %i[completed_at_gt completed_at_lt].freeze
+
       private
 
       def validate_filters
@@ -35,7 +37,7 @@ module Api
       end
 
       def validate_dates
-        invalid_key = ReportsController::DATE_QUERY_FILTERS.find do |key|
+        invalid_key = DATE_QUERY_FILTERS.find do |key|
           !valid_date?(permitted_params.dig(:q, key))
         end
         return unless invalid_key
