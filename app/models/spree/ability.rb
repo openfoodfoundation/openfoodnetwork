@@ -361,11 +361,8 @@ module Spree
       end
 
       can [:fire, :resend, :invoice, :print, :capture], Spree::Order do |order|
-        # We allow editing orders with a nil distributor as this state occurs
-        # during the order creation process from the admin backend
-        order.distributor.nil? ||
-          # Enterprise User can access orders that they are a distributor for
-          user.enterprises.include?(order.distributor) ||
+        # Enterprise User can access orders that they are a distributor for
+        user.enterprises.include?(order.distributor) ||
           # Enterprise User can access orders that are placed inside a OC they coordinate
           order.order_cycle&.coordinated_by?(user)
       end

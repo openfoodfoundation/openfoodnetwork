@@ -564,6 +564,13 @@ RSpec.describe Spree::Ability do
                                         for: order.shipments.first)
           end
         end
+
+        describe "orders" do
+          it "is not able to manage orders payment and invoices" do
+            is_expected.not_to have_ability([:fire, :resend, :invoice, :print, :capture],
+                                            for: order)
+          end
+        end
       end
     end
 
@@ -665,8 +672,16 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :read, :edit], for: o1)
       end
 
+      it "is able to manage their enterprises' orders payment and invoices" do
+        is_expected.to have_ability([:fire, :resend, :invoice, :print, :capture], for: o1)
+      end
+
       it "should not be able to read/write other enterprises' orders" do
         is_expected.not_to have_ability([:admin, :index, :read, :edit], for: o2)
+      end
+
+      it "is not able to manage other enterprises' orders payment and invoices" do
+        is_expected.not_to have_ability([:fire, :resend, :invoice, :print, :capture], for: o2)
       end
 
       it "should be able to read/write orders that are in the process of being created" do
@@ -883,6 +898,23 @@ RSpec.describe Spree::Ability do
         it "has shipment ability" do
           is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
                                       for: order.shipments.first)
+        end
+      end
+
+      describe "orders" do
+        let(:order) { create(:order_ready_to_ship, order_cycle: oc1) }
+
+        it "can manage payment and invoices" do
+          is_expected.to have_ability([:fire, :resend, :invoice, :print, :capture], for: order)
+        end
+
+        context "with order in an OC the user is not a coordinator of" do
+          let(:order) { create(:order_ready_to_ship, order_cycle: oc2) }
+
+          it "can not manage orders payment and invoices" do
+            is_expected.not_to have_ability([:fire, :resend, :invoice, :print, :capture],
+                                            for: order)
+          end
         end
       end
     end
