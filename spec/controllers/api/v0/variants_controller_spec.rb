@@ -101,6 +101,26 @@ RSpec.describe Api::V0::VariantsController do
 
         assert_unauthorized!
       end
+
+      it "cannot create a variant for another product" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier.id },
+                          product_id: product_other.id
+
+        assert_unauthorized!
+      end
+
+      it "cannot create a variant for another enterprise" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier_other.id },
+                          product_id: product.id
+
+        assert_unauthorized!
+      end
     end
 
     describe "#update" do

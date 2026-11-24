@@ -20,6 +20,7 @@ module Api
 
       def create
         authorize! :create, Spree::Variant
+        authorize! :update, @product
 
         # Check if user is permitted to create variants for the specified enterprise
         unless managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
