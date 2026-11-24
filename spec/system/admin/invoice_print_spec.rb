@@ -307,18 +307,27 @@ RSpec.describe '
         end
 
         context "Line item with variant having variant_unit as 'items'" do
+          let!(:product1) do
+            super().tap do |product|
+              product.variants.first.update!(variant_unit: "items", display_as: "1 bucket",
+                                             variant_unit_name: "bucket")
+            end
+          end
+
           before do
-            line_item1.variant.update!(variant_unit: "items", display_as: "1 bucket",
-                                       variant_unit_name: "bucket")
+            # The unit is changed after the order was placed. The line item should keep the
+            # unit it snapshotted when it was created.
+            line_item1.variant.update!(display_as: "2 buckets")
             login_as_admin
             visit print_admin_order_path(order1, params: url_params)
             convert_pdf_to_page
           end
 
-          it 'should have correct display as value' do
+          it 'keeps the unit snapshotted when the order was placed' do
             # first line item
             expect(page).to have_content Spree::Product.first.name.to_s
             expect(page).to have_content "(1 bucket)" # display as
+            expect(page).not_to have_content "(2 buckets)"
           end
         end
       end
@@ -581,6 +590,20 @@ RSpec.describe '
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
           expect(page).to have_content "Total (Excl. tax): $1,458.67"
+        end
+
+        it "displays the snapshotted product name when the product is renamed" do
+          original_name = product1.name
+          product1.update!(name: "Renamed Product")
+          order1.invoices.create!
+
+          visit print_admin_order_path(
+            order1, params: { invoice_id: order1.invoices.reload.last.id }
+          )
+          convert_pdf_to_page
+
+          expect(page).to have_content original_name
+          expect(page).not_to have_content "Renamed Product"
         end
       end
 
