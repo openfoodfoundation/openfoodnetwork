@@ -299,6 +299,47 @@ RSpec.describe Spree::Order do
     end
   end
 
+  describe "#quantity_changes_allowed?" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:order) {
+      create(:completed_order_with_totals, line_items_count: 2, distributor:, order_cycle:)
+    }
+    let(:line_item) { order.line_items.first }
+
+    it "allows a raised quantity when the shop allows items to be added" do
+      distributor.update!(allow_order_additions: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity + 1)).to be true
+    end
+
+    it "refuses a raised quantity when the shop doesn't allow items to be added" do
+      distributor.update!(allow_order_removals: true, allow_order_cancellation: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity + 1)).to be false
+    end
+
+    it "allows a lowered quantity when the shop allows items to be removed" do
+      distributor.update!(allow_order_removals: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => 0)).to be true
+    end
+
+    it "refuses a lowered quantity when the shop doesn't allow items to be removed" do
+      distributor.update!(allow_order_additions: true, allow_order_cancellation: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => 0)).to be false
+    end
+
+    it "allows unchanged quantities even when the shop allows no changes" do
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity)).to be true
+    end
+
+    it "treats line items left out as unchanged" do
+      expect(order.quantity_changes_allowed?({})).to be true
+    end
+  end
+
   context "checking if order is paid" do
     context "payment_state is paid" do
       before { allow(order).to receive_messages payment_state: 'paid' }

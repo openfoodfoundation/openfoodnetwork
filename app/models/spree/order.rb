@@ -254,6 +254,23 @@ module Spree
       changes_allowed? && distributor.allow_order_cancellation?
     end
 
+    # Whether setting line items to the given quantities ({ line_item_id => quantity }) only makes
+    # the kinds of changes the shop allows: raising a quantity is an addition, lowering it (or
+    # setting it to zero) is a removal. Line items left out of `quantities` are unchanged.
+    def quantity_changes_allowed?(quantities)
+      line_items.all? do |line_item|
+        new_quantity = quantities.fetch(line_item.id, line_item.quantity)
+
+        if new_quantity > line_item.quantity
+          additions_allowed?
+        elsif new_quantity < line_item.quantity
+          removals_allowed?
+        else
+          true
+        end
+      end
+    end
+
     # Is this a free order in which case the payment step should be skipped
     # This allows unpaid subscription orders to be completed.
     #   Subscriptions place orders at the beginning of an order cycle. They need to

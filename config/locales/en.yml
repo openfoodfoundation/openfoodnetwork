@@ -2975,6 +2975,7 @@ en:
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
+  orders_change_not_allowed: "Sorry, the shop doesn't allow this change to your order."
   orders_bought_items_notice:
     one: "An additional item is already confirmed for this order cycle"
     few: "%{count} additional items already confirmed for this order cycle"

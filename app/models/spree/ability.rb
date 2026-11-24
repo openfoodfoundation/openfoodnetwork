@@ -110,11 +110,12 @@ module Spree
     def add_shopping_abilities(user)
       can [:destroy], Spree::LineItem do |item|
         user == item.order.user &&
-          item.order.changes_allowed?
+          item.order.removals_allowed?
       end
 
       can :cancel, Spree::Order do |order, token|
-        order.user == user || (order.token && token == order.token)
+        (order.user == user || (order.token && token == order.token)) &&
+          order.cancellation_allowed?
       end
 
       can [:update, :destroy], Spree::CreditCard do |credit_card|

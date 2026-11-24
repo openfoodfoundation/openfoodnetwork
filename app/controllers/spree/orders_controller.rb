@@ -24,6 +24,7 @@ module Spree
     prepend_before_action :require_distributor_chosen, only: :edit
     before_action :check_hub_ready_for_checkout, only: :edit
     before_action :check_at_least_one_line_item, only: :update
+    before_action :check_quantity_changes_allowed, only: :update
 
     before_action only: [:show, :edit] do
       hide_ofn_navigation(@order.distributor)
@@ -188,6 +189,22 @@ module Spree
 
       flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
       redirect_to main_app.order_path(order_to_update)
+    end
+
+    # A placed order can only be changed in the ways its shop allows, e.g. a shop may let
+    # customers add items but not remove them.
+    def check_quantity_changes_allowed
+      return unless order_to_update&.completed?
+      return if order_to_update.quantity_changes_allowed?(requested_quantities)
+
+      flash[:error] = I18n.t(:orders_change_not_allowed)
+      redirect_to main_app.order_path(order_to_update)
+    end
+
+    def requested_quantities
+      line_items = order_params[:line_items_attributes] || {}
+
+      line_items.values.to_h { |attrs| [attrs[:id].to_i, attrs[:quantity].to_i] }
     end
 
     def order_params
