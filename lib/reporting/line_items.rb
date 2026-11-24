@@ -19,8 +19,9 @@ module Reporting
       line_items = order_permissions.visible_line_items.in_orders(orders.result)
         .order(
           "enterprise.name",
-          "product.name",
-          "spree_variants.display_name",
+          Arel.sql("COALESCE(spree_line_items.product_name, product.name)"),
+          Arel.sql("COALESCE(spree_line_items.variant_display_name,
+                               spree_variants.display_name)"),
           "spree_variants.unit_description",
           "spree_line_items.id"
         )
@@ -36,7 +37,8 @@ module Reporting
       end
 
       if line_item_includes.present?
-        line_items = line_items.includes(*line_item_includes).references(:line_items)
+        line_items = line_items.includes(*line_item_includes)
+          .references(:line_items, "product", "enterprise")
       end
 
       without_editable_line_items = line_items - editable_line_items(line_items)

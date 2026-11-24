@@ -35,7 +35,7 @@ RSpec.describe "Pay Your Suppliers Report" do
     login_as owner
     visit admin_reports_path
 
-    update_line_items_product_names
+    rename_products_after_order_creation
   end
 
   context "on Reports page" do
@@ -75,11 +75,9 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(lines.count).to be(6)
 
       hub1_rows = lines.select { |line| line.include?(hub1.name) }
-      order1.line_items.each_with_index do |line_item, index|
-        variant = line_item.variant
+      order1.line_items.each do |line_item|
         supplier = line_item.supplier
-        product = line_item.variant.product
-        line = hub1_rows[index]
+        line = hub1_rows.find { |row| row.include?(line_item.full_product_name) }
 
         expect(line).to have_content([
           supplier.name,
@@ -95,8 +93,8 @@ RSpec.describe "Pay Your Suppliers Report" do
           order_cycle1.name,
           order_cycle1.orders_open_at.to_date.to_s,
           order_cycle1.orders_close_at.to_date.to_s,
-          product.name,
-          variant.full_name,
+          line_item.full_product_name,
+          line_item.full_variant_name,
           1,
           10.0,
           10.0,
@@ -109,11 +107,9 @@ RSpec.describe "Pay Your Suppliers Report" do
       end
 
       hub2_rows = lines.select { |line| line.include?(hub2.name) }
-      order2.line_items.each_with_index do |line_item, index|
-        variant = line_item.variant
+      order2.line_items.each do |line_item|
         supplier = line_item.supplier
-        product = line_item.variant.product
-        line = hub2_rows[index]
+        line = hub2_rows.find { |row| row.include?(line_item.full_product_name) }
 
         expect(line).to have_content([
           supplier.name,
@@ -129,8 +125,8 @@ RSpec.describe "Pay Your Suppliers Report" do
           order_cycle2.name,
           order_cycle2.orders_open_at.to_date.to_s,
           order_cycle2.orders_close_at.to_date.to_s,
-          product.name,
-          variant.full_name,
+          line_item.full_product_name,
+          line_item.full_variant_name,
           1,
           10.0,
           10.0,
@@ -147,17 +143,16 @@ RSpec.describe "Pay Your Suppliers Report" do
     end
   end
 
-  def update_line_items_product_names
+  def rename_products_after_order_creation
     n = 1
-    update_product_name_proc = proc do |order|
+    rename_product_proc = proc do |order|
       order.line_items.each do |line_item|
-        product = line_item.variant.product
-        product.update!(name: "Product##{n}")
+        line_item.variant.product.update!(name: "Renamed Product##{n}")
         n += 1
       end
     end
 
-    update_product_name_proc.call(order1)
-    update_product_name_proc.call(order2)
+    rename_product_proc.call(order1)
+    rename_product_proc.call(order2)
   end
 end

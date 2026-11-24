@@ -23,4 +23,15 @@ RSpec.describe Reporting::Reports::BulkCoop::Allocation do
       end
     end
   end
+
+  describe '#rows' do
+    let(:variant) { create(:variant, display_name: "Pink Lady") }
+    let(:line_item) { build(:line_item_with_shipment, variant:) }
+
+    before { order.line_items << line_item }
+
+    it 'uses the snapshotted variant name' do
+      expect(subject.rows.first.variant).to eq(line_item.full_variant_name)
+    end
+  end
 end
