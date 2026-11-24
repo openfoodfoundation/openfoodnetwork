@@ -323,6 +323,18 @@ RSpec.describe Spree::LineItem do
         expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
         expect(o.line_items.sorted_by_name_and_unit_value.to_sql).not_to match "deleted_at"
       end
+
+      it "uses the snapshotted names for sorting when the products are renamed" do
+        li3
+        li4
+        li5
+        li6
+
+        p3.update!(name: "Aardvark")
+        p4.update!(name: "Zebra")
+
+        expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
+      end
     end
 
     it "finds line items from a given order cycle" do

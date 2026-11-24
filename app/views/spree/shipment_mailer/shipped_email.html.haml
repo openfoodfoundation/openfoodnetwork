@@ -14,8 +14,9 @@
 
 %p{ style: "font-family: monospace, serif;" }
   - @shipment.manifest.each do |item|
+    - line_item = @shipment.order.find_line_item_by_variant(item.variant)
     = item.variant.sku
-    = item.variant.product.name
+    = line_item&.full_product_name || item.variant.product.name
     = item.variant.options_text
     %br
 

@@ -73,8 +73,8 @@ module Spree
     scope :sorted_by_name_and_unit_value, -> {
       joins(variant: :product).
         reorder(Arel.sql("
-          lower(spree_products.name) asc,
-            lower(spree_variants.display_name) asc,
+          lower(COALESCE(spree_line_items.product_name, spree_products.name)) asc,
+            lower(COALESCE(spree_line_items.variant_display_name, spree_variants.display_name)) asc,
             spree_variants.unit_value asc"))
     }
 
