@@ -48,8 +48,16 @@ module Spree
     after_destroy :update_order
     after_save :update_order
 
-    delegate :product, :variant_unit, :unit_description, :display_name, :display_as,
+    delegate :product, :variant_unit, :unit_description, :display_as,
              :variant_unit_scale, :variant_unit_name, to: :variant
+
+    # Returns the snapshotted variant display name without falling back to the
+    # product name. Legacy rows use the live variant display name.
+    def display_name
+      return variant_display_name unless variant_display_name.nil?
+
+      variant&.display_name
+    end
 
     # Allows manual skipping of Stock::AvailabilityValidator
     attr_accessor :skip_stock_check, :target_shipment
