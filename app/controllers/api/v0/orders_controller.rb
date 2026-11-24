@@ -34,7 +34,9 @@ module Api
       end
 
       def ship
-        authorize! :admin, order
+        order.shipments.each do |shipment|
+          authorize! :update, shipment
+        end
 
         if order.ship
           render json: order.reload, serializer: Api::Admin::OrderSerializer, status: :ok
