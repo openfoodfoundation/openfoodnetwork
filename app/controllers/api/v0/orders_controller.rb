@@ -27,7 +27,7 @@ module Api
       end
 
       def update
-        authorize! :admin, order
+        authorize! :update, order
 
         order.update!(order_params)
         render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
