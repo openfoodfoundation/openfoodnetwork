@@ -62,6 +62,28 @@ RSpec.describe Spree::LineItem do
     end
   end
 
+  describe "name snapshots" do
+    it "snapshots the variant display name when the line item is created" do
+      snapshotted_name = line_item.variant.display_name.to_s
+
+      expect(line_item.variant_display_name).to eq(snapshotted_name)
+    end
+
+    it "snapshots the variant display override when the line item is created" do
+      snapshotted_display_as = line_item.variant.display_as.to_s
+
+      expect(line_item.variant_display_as).to eq(snapshotted_display_as)
+    end
+
+    it "stores blank display names as empty strings" do
+      variant = create(:variant, display_name: "", display_as: "")
+      item = create(:line_item, variant:)
+
+      expect(item.variant_display_name).to eq("")
+      expect(item.variant_display_as).to eq("")
+    end
+  end
+
   describe '#full_variant_name' do
     it "returns variant's full name" do
       expect(line_item.full_variant_name).to eq(line_item.variant.full_name)
