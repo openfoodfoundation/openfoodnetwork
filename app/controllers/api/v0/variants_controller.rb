@@ -14,7 +14,7 @@ module Api
       end
 
       def show
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         render json: @variant, serializer: Api::VariantSerializer
       end
 
@@ -53,7 +53,7 @@ module Api
 
       def destroy
         authorize! :delete, Spree::Variant
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         authorize! :delete, @variant
 
         VariantDeleter.new.delete(@variant)
@@ -63,7 +63,7 @@ module Api
       private
 
       def product
-        @product ||= Spree::Product.find(params[:product_id]) if params[:product_id]
+        @product ||= Spree::Product.find(params.expect(:product_id)) if params[:product_id]
       end
 
       def scope
