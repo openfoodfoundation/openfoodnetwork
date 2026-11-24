@@ -338,5 +338,45 @@ RSpec.describe Orders::CustomerCreditService do
         expect(response.message).to eq("No customer is assigned to this order")
       end
     end
+
+    context "when the customer credit payment method is missing" do
+      before { allow(Spree::PaymentMethod).to receive(:customer_credit).and_return(nil) }
+
+      it "does nothing and returns a failed response" do
+        response = nil
+        expect { response = subject.carry_balance(user:) }
+          .not_to change { [order.payments.count, CustomerAccountTransaction.count] }
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq(
+          "Customer credit payment method is missing, please check configuration"
+        )
+      end
+    end
+
+    context "when recording the carry-over fails" do
+      before do
+        allow_any_instance_of(CustomerAccountTransaction).to receive(:save!)
+          .and_raise(StandardError, "Transaction error")
+      end
+
+      it "logs the error" do
+        expect(Alert).to receive(:raise).with(StandardError)
+        subject.carry_balance(user:)
+      end
+
+      it "doesn't create a credit payment or account transaction" do
+        # We use `length` to check the payments in memory
+        expect { subject.carry_balance(user:) }
+          .not_to change { [order.payments.length, CustomerAccountTransaction.count] }
+      end
+
+      it "returns a failed response" do
+        response = subject.carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("Transaction error")
+      end
+    end
   end
 end
