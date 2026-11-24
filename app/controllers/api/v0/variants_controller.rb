@@ -37,8 +37,12 @@ module Api
 
       def update
         authorize! :update, Spree::Variant
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         authorize! :update, @variant
+
+        unless managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
+          return unauthorized
+        end
 
         if @variant.update(variant_params)
           render json: @variant, serializer: Api::VariantSerializer, status: :ok

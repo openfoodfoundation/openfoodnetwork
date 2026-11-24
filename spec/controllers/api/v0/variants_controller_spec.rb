@@ -136,12 +136,28 @@ RSpec.describe Api::V0::VariantsController do
     end
 
     describe "#update" do
+      it "updates the variant" do
+        api_put :update, id: variant.id, variant: { sku: "999", enterprise_id: supplier.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response["sku"]).to eq("999")
+        expect(variant.reload.sku).to eq("999")
+      end
+
       it "cannot update a variant for another enterprise's product" do
         api_put :update, id: variant_other.id, variant: { sku: "12345",
                                                           enterprise_id: supplier.id }
 
         assert_unauthorized!
         expect(variant_other.reload.enterprise).not_to eq supplier
+      end
+
+      it "cannot update the variant's enterprise to an enterprise the user doesn't manage" do
+        api_put :update, id: variant.id, variant: { sku: "12345",
+                                                    enterprise_id: supplier_other.id }
+
+        assert_unauthorized!
+        expect(variant.reload.enterprise).not_to eq(supplier_other)
       end
 
       it "responds with error when variant not found" do
