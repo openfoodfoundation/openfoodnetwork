@@ -19,6 +19,19 @@ module VariantUnits
         variant.respond_to?(:display_as) && variant.display_as.present?
     end
 
+    def full_variant_name
+      return variant_name if has_attribute?(:variant_name) && variant_name.present?
+      return variant.full_name if respond_to?(:variant) && variant.present?
+
+      full_name
+    end
+
+    def full_product_name
+      return product_name if has_attribute?(:product_name) && product_name.present?
+
+      product.name
+    end
+
     def product_and_full_name
       return product.name if full_name.blank?
       return "#{product.name} - #{full_name}" unless full_name.start_with?(product.name)
