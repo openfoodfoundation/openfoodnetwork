@@ -54,7 +54,7 @@ module Api
     end
 
     def cancel_path
-      return nil unless object.changes_allowed?
+      return nil unless object.cancellation_allowed?
 
       cancel_order_path(object)
     end

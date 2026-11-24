@@ -47,7 +47,7 @@
         %a.close{ "data-action": "toggle-control#toggleDisplay" } &times;
 
     = form_for order, url: main_app.order_path(order), html: {id: 'update-order', name: 'update_order_form' } do |order_form|
-      - if order.changes_allowed?
+      - if order.additions_allowed? || order.removals_allowed?
         = render 'spree/orders/form', order_form: order_form
       -else
         = render 'spree/orders/summary', order: order

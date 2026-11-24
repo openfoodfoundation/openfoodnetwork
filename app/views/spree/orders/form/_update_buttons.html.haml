@@ -13,11 +13,12 @@
             = t(:order_back_to_website)
   - else
     &nbsp;
-  - if order.changes_allowed?
+  - if order.cancellation_allowed?
     .columns.small-12.medium-3
       = link_to main_app.cancel_order_path(@order), method: :put, class: "button secondary expand", "data-confirm": t('orders_confirm_cancel') do
         %i.ofn-i_009-close
         = t(:cancel_order)
+  - if order.additions_allowed? || order.removals_allowed?
     .columns.small-12.medium-3
       = button_tag :class => 'button primary expand', :id => 'update-button', "ng-disabled" => 'update_order_form.$pristine' do
         %i.ofn-i_051-check-big

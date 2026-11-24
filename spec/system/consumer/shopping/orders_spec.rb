@@ -217,6 +217,73 @@ RSpec.describe "Order Management" do
         end
       end
     end
+
+    context "when the shop only allows items to be added" do
+      before { order.distributor.update!(allow_order_additions: true) }
+
+      it "lets the customer raise quantities but not lower them, remove items or cancel" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          quantity = find_field(type: "number")
+          expect(quantity[:min]).to eq item1.quantity.to_s
+          expect(quantity[:max]).to be_blank
+          expect(page).not_to have_link "delete_line_item_#{item1.id}"
+
+          quantity.fill_in with: item1.quantity + 1
+        end
+        expect(page).not_to have_link "Cancel Order"
+
+        click_button "Save Changes"
+
+        expect(page).to have_button "Order Saved", disabled: true
+        expect(item1.reload.quantity).to eq 2
+      end
+    end
+
+    context "when the shop only allows items to be removed" do
+      before { order.distributor.update!(allow_order_removals: true) }
+
+      it "lets the customer lower quantities and remove items, but not raise them or cancel" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          quantity = find_field(type: "number")
+          expect(quantity[:min]).to eq "0"
+          expect(quantity[:max]).to eq item1.quantity.to_s
+        end
+        expect(page).not_to have_link "Cancel Order"
+
+        within "tr.variant-#{item2.variant.id}" do
+          click_link "delete_line_item_#{item2.id}"
+        end
+
+        expect(page).not_to have_selector "tr.variant-#{item2.variant.id}"
+        expect(Spree::LineItem.find_by(id: item2.id)).to be_nil
+      end
+    end
+
+    context "when the shop only allows orders to be cancelled" do
+      before { order.distributor.update!(allow_order_cancellation: true) }
+
+      it "shows the order without quantity fields and lets the customer cancel it" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          expect(page).to have_content item1.product.name
+          expect(page).not_to have_field type: "number"
+        end
+        expect(page).not_to have_button "Save Changes"
+        expect(page).not_to have_button "Order Saved"
+
+        accept_alert do
+          click_link "Cancel Order"
+        end
+
+        expect(page).to have_content "Cancelled"
+        expect(order.reload).to be_canceled
+      end
+    end
   end
 
   def be_confirmed_order_page
