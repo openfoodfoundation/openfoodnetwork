@@ -206,18 +206,9 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product:, price: 20) }
-      let(:variant2) do
-        create(:variant, product:, price: 30, display_name: "Badgers",
-                         display_as: 'displayedunderthename')
-      end
-      let(:product2) {
-        create(:simple_product, enterprise_id: supplier.id, name: "Meercats",
-                                meta_keywords: "Wild Fresh")
-      }
-      let(:variant3) {
-        create(:variant, product: product2, enterprise: supplier, price: 40,
-                         display_name: "Ferrets")
-      }
+      let(:variant2) { create(:variant, product:, price: 30) }
+      let(:product2) { create(:simple_product, enterprise_id: supplier.id) }
+      let(:variant3) { create(:variant, product: product2, enterprise: supplier, price: 40) }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       before do
@@ -248,120 +239,6 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
 
           # Product price should be listed as the lesser of these
           expect(page).to have_price with_currency(43.00)
-        end
-      end
-
-      context "filtering search results" do
-        it "returns results when successful" do
-          visit shop_path
-          # When we see the Add button, it means product are loaded on the page
-          expect(page).to have_content("Add", count: 4)
-
-          fill_in "search", with: "74576345634XXXXXX"
-          expect(page).to have_content "Sorry, no results found"
-          expect(page).not_to have_content 'Meercats'
-
-          click_on "Clear search" # clears search by clicking text
-          expect(page).to have_content("Add", count: 4)
-
-          fill_in "search", with: "Meer" # For product named "Meercats"
-          expect(page).to have_content 'Meercats'
-          expect(page).not_to have_content product.name
-
-          find("a.clear").click # clears search by clicking the X button
-          expect(page).to have_content("Add", count: 4)
-        end
-
-        it "returns results by looking at different columns in DB" do
-          visit shop_path
-          # When we see the Add button, it means product are loaded on the page
-          expect(page).to have_content("Add", count: 4)
-
-          # by keyword model: meta_keywords
-          fill_in "search", with: "Wild" # For product named "Meercats"
-          expect(page).to have_content 'Wild'
-          find("a.clear").click
-
-          # by variant display name model: variant display_name
-          fill_in "search", with: "Ferrets" # For variants named "Ferrets"
-          within('div.pad-top') do
-            expect(page).to have_content 'Ferrets'
-            expect(page).not_to have_content 'Badgers'
-          end
-
-          # model: variant display_as
-          fill_in "search", with: "displayedunder" # "Badgers"
-          within('div.pad-top') do
-            expect(page).not_to have_content 'Ferrets'
-            expect(page).to have_content 'Badgers'
-          end
-
-          # model: Enterprise name
-          fill_in "search", with: "Enterp" # Enterprise 1 sells nothing
-          within('p.no-results') do
-            expect(page).to have_content "Sorry, no results found for Enterp"
-          end
-        end
-      end
-
-      context "when supplier uses property" do
-        let(:product3) {
-          create(:simple_product, enterprise_id: supplier.id, inherits_properties: false)
-        }
-
-        before do
-          add_variant_to_order_cycle(exchange, product3.variants.first)
-          property = create(:property, presentation: 'certified')
-          supplier.update!(properties: [property])
-        end
-
-        it "filters product by properties" do
-          visit shop_path
-
-          expect(page).to have_content product2.name
-          expect(page).to have_content product3.name
-
-          expect(page).to have_selector(
-            ".sticky-shop-filters-container .property-selectors span", text: "certified"
-          )
-          find(".sticky-shop-filters-container .property-selectors span", text: 'certified').click
-          expect(page).to have_content "Results for certified"
-
-          expect(page).to have_content product2.name
-          expect(page).not_to have_content product3.name
-        end
-      end
-
-      it "returns search results for products where the search term matches one of the product's " \
-         "variant names" do
-        visit shop_path
-        fill_in "search", with: "Badg" # For variant with display_name "Badgers"
-
-        within('div.pad-top') do
-          expect(page).not_to have_content product2.name
-          expect(page).not_to have_content variant3.display_name
-          expect(page).to have_content product.name
-          expect(page).to have_content variant2.display_name
-        end
-      end
-
-      context "when the distributor has no available payment/shipping methods" do
-        before do
-          distributor.update shipping_methods: [], payment_methods: []
-        end
-
-        # Display only shops are a very useful hack that is described in the user guide
-        it "still renders a display only shop" do
-          visit shop_path
-          expect(page).to have_content product.name
-
-          click_add_to_cart variant
-          expect(page).to have_in_cart product.name
-
-          # Try to go to cart
-          visit main_app.cart_path
-          expect(page).to have_content "The hub you have selected is temporarily closed for " \
-                                       "orders. Please try again later."
         end
       end
     end

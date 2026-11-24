@@ -5,11 +5,14 @@ class ProductsController < BaseController
 
   PER_PAGE = 30
 
+  before_action :order_cycle, only: :index
+
   def index
+    @q = search_params[:q]
     renderer = product_renderer
     @products = renderer.products_view
+    @properties = renderer.properties
     @pagy = renderer.pagination
-
     @variants_in_cart = variants_in_cart
     @low_stock_display = distributor.preferred_product_low_stock_display
   end
@@ -108,7 +111,9 @@ class ProductsController < BaseController
   end
 
   def search_params
-    { page: [params[:page].to_i, 1].max, per_page: PER_PAGE }
+    { page: 1, per_page: PER_PAGE }.merge(
+      params.permit(:page, :per_page, q: [{ with_properties: [] }])
+    ).with_indifferent_access
   end
 
   def inventory_enabled?

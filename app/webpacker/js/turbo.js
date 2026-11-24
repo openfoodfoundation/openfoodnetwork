@@ -13,9 +13,10 @@ document.addEventListener("turbo:frame-missing", (event) => {
 });
 
 document.addEventListener("turbo:submit-end", (event) => {
-  if (!event.detail.success) {
+  // Only show alert if there was a fetch error.
+  // No alert needed if unsuccessful due to user abort.
+  if (!event.detail.success && event.detail.error) {
     // show error message on failure
     showHttpError(event.detail.fetchResponse?.statusCode);
-    event.preventDefault();
   }
 });
