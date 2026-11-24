@@ -83,6 +83,21 @@ RSpec.describe Spree::Order::Checkout do
         end
       end
     end
+
+    context "from confirmation" do
+      before do
+        order.state = 'confirmation'
+      end
+
+      it "transitions to complete" do
+        expect(order).to receive(:process_pending_customer_credits!)
+        expect(order).to receive(:ensure_shipping_method).and_return(true)
+
+        order.next!
+
+        expect(order.state).to eq "complete"
+      end
+    end
   end
 
   describe "transition to complete" do
