@@ -19,6 +19,14 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR", enterprise:) }
+  let(:second_product) {
+    create(
+      :base_product,
+      id: 90_001, name: "Pear", description: "Green",
+      variants: [second_variant],
+    )
+  }
+  let(:second_variant) { build(:base_variant, id: 10_002, unit_value: 1, sku: "PE", enterprise:) }
 
   before { login_as user }
 
@@ -28,15 +36,16 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
   #
   # Offers and supplied products are built from the variant, so their ids come
   # from the same list.
-  def normalise_ids(ofn_order)
+  def normalise_ids(ofn_order, offset: 0)
     ofn_order.line_items.each_with_index do |line_item, index|
+      number = offset + index + 1
       line_item_id = line_item.id
       variant_id = line_item.variant_id
 
       replace_in_docs(
-        "OrderLines/#{line_item_id}" => "OrderLines/1000#{index + 1}",
-        "offers/#{variant_id}" => "offers/2000#{index + 1}",
-        "supplied_products/#{variant_id}" => "supplied_products/2000#{index + 1}",
+        "OrderLines/#{line_item_id}" => "OrderLines/1000#{number}",
+        "offers/#{variant_id}" => "offers/2000#{number}",
+        "supplied_products/#{variant_id}" => "supplied_products/2000#{number}",
       )
     end
   end
@@ -312,6 +321,94 @@ RSpec.describe "Orders", swagger_doc: "dfc.yaml" do
 
   path "/api/dfc/enterprises/{enterprise_id}/orders" do
     parameter name: :enterprise_id, in: :path, type: :string
+
+    get "List Orders" do
+      description <<~MARKDOWN
+        Lists the orders placed with this enterprise, with their lines in the same graph.
+        Carts that nobody has placed yet are not listed.
+      MARKDOWN
+      produces "application/json"
+      security [{ oidc_token: [] }]
+
+      parameter name: :page, in: :query, type: :integer, required: false,
+                description: "Page to return, starting at 1."
+      parameter name: :per_page, in: :query, type: :integer, required: false,
+                description: "Number of orders per page, between 1 and 100. Defaults to 25."
+      parameter name: :updated_since, in: :query, type: :string, required: false,
+                description: "Only return the orders updated at or after this ISO 8601 time."
+
+      let(:Authorization) { nil }
+      let(:page) { nil }
+      let(:per_page) { nil }
+      let(:updated_since) { nil }
+
+      response "200", "success" do
+        let(:enterprise_id) { enterprise.id }
+
+        context "with two orders" do
+          before do
+            product
+            second_product
+            variant.update! on_hand: 10
+            second_variant.update! on_hand: 10
+            create(:completed_order_with_totals, :with_line_item, id: 11_000,
+                                                                  line_items_count: 0,
+                                                                  distributor: enterprise, variant:)
+            create(:completed_order_with_totals, :with_line_item, id: 11_001,
+                                                                  line_items_count: 0,
+                                                                  distributor: enterprise,
+                                                                  variant: second_variant)
+          end
+
+          run_test! do
+            orders = enterprise.distributed_orders.order(:id)
+            normalise_ids(orders.first)
+            normalise_ids(orders.last, offset: orders.first.line_items.count)
+
+            expect(response.body).to include "dfc-b:Order", "orders/11000", "orders/11001"
+            line_urls = orders.map do |ofn_order|
+              "orders/#{ofn_order.id}/OrderLines/#{ofn_order.line_items.first.id}"
+            end
+            expect(response.body).to include(*line_urls)
+          end
+        end
+
+        context "without orders" do
+          run_test! do
+            expect(response.body).to be_empty
+          end
+        end
+      end
+
+      response "400", "bad request" do
+        let(:enterprise_id) { enterprise.id }
+        let(:updated_since) { "yesterday" }
+
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        let(:enterprise_id) { enterprise.id }
+
+        before { login_as nil }
+
+        run_test!
+      end
+
+      response "404", "not found" do
+        context "without enterprise" do
+          let(:enterprise_id) { "blah" }
+
+          run_test!
+        end
+
+        context "with unrelated enterprise" do
+          let(:enterprise_id) { create(:enterprise).id }
+
+          run_test!
+        end
+      end
+    end
 
     post "Create Order" do
       produces "application/json"

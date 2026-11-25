@@ -1314,6 +1314,110 @@ paths:
       required: true
       schema:
         type: string
+    get:
+      summary: List Orders
+      description: |
+        Lists the orders placed with this enterprise, with their lines in the same graph.
+        Carts that nobody has placed yet are not listed.
+      security:
+      - oidc_token: []
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page to return, starting at 1.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Number of orders per page, between 1 and 100. Defaults to 25.
+        schema:
+          type: integer
+      - name: updated_since
+        in: query
+        required: false
+        description: Only return the orders updated at or after this ISO 8601 time.
+        schema:
+          type: string
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: success
+          content:
+            application/json; charset=utf-8:
+              examples:
+                with two orders:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000
+                      "@type": dfc-b:Order
+                      dfc-b:hasPart: http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/10001
+                      dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:hasOrderStatus: dfc-v:Held
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11001
+                      "@type": dfc-b:Order
+                      dfc-b:hasPart: http://test.host/api/dfc/enterprises/10000/orders/11001/OrderLines/10002
+                      dfc-b:orderedBy: http://test.host/api/dfc/enterprises/10000
+                      dfc-b:hasOrderStatus: dfc-v:Held
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11000/OrderLines/10001
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/10000/offers/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/orders/11001/OrderLines/10002
+                      "@type": dfc-b:OrderLine
+                      dfc-b:quantity: 1
+                      dfc-b:concerns: http://test.host/api/dfc/enterprises/10000/offers/20002
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/20001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 9
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10000/supplied_products/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/20002
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 9
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10000/supplied_products/20002
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/20001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/20002
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Pear - 1g
+                      dfc-b:description: Green
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10000/catalog_items/10002
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90001
+                      ofn:spree_product_id: 90001
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/SalesSession/#
+                      "@type": dfc-b:SaleSession
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
     post:
       summary: Create Order
       parameters: []

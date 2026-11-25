@@ -2,15 +2,35 @@
 
 module DfcProvider
   class OrdersController < DfcProvider::ApplicationController
+    include Pagy::Method
+
+    DEFAULT_PER_PAGE = 25
+
     before_action :check_enterprise
 
+    # Lists the orders placed with this enterprise, as the same subjects that
+    # `show` returns, all in one graph. Only the ReadOrders scope lets a
+    # platform read them.
+    #
+    # `page` and `per_page` paginate the list: 25 orders per page unless the
+    # client asks for another size, up to Pagy's app-wide limit of 100.
+    # `updated_since` lets a client fetch only the orders that changed since
+    # its last read.
+    def index
+      require_permission "ReadOrders"
+      return head :bad_request if invalid_updated_since?
+
+      _pagy, orders = pagy(orders_scope, limit: DEFAULT_PER_PAGE)
+      render_dfc(*OrderBuilder.build_graph(orders))
+    end
+
     def show
-      dfc_order = OrderBuilder.build(order)
-      lines = OrderBuilder.build_order_lines(dfc_order, order.line_items)
+      dfc_order = OrderBuilder.build_with_lines(order)
+      lines = dfc_order.lines
       offers = lines.map(&:offer)
       supplied_products = offers.map(&:offeredItem)
 
-      sessions = [build_sale_session(order)]
+      sessions = [OrderBuilder.build_sale_session(order)]
       render_dfc(dfc_order, *lines, *offers, *supplied_products, *sessions)
     end
 
@@ -60,6 +80,26 @@ module DfcProvider
       @order ||= current_enterprise.distributed_orders.find(params[:id])
     end
 
+    # The orders of the current enterprise, and only those: the enterprise is
+    # resolved from the current user's enterprises. A cart that nobody has
+    # placed yet isn't an order a partner can act on.
+    def orders_scope
+      scope = current_enterprise.distributed_orders.complete.order(:id)
+      return scope if updated_since.nil?
+
+      scope.where(updated_at: updated_since..)
+    end
+
+    def updated_since
+      return if params[:updated_since].blank?
+
+      Time.zone.parse(params[:updated_since].to_s)
+    end
+
+    def invalid_updated_since?
+      params[:updated_since].present? && updated_since.nil?
+    end
+
     def apply(ofn_order)
       OrderBuilder.apply(ofn_order, dfc_order, variant_scope: current_enterprise.variants)
     end
@@ -104,12 +144,6 @@ module DfcProvider
     def render_error(ofn_order)
       render json: { error: ofn_order.errors.full_messages.to_sentence },
              status: :unprocessable_entity
-    end
-
-    def build_sale_session(order)
-      SaleSessionBuilder.build(order.order_cycle).tap do |session|
-        session.semanticId = "#{enterprise_url(current_enterprise.id)}/SalesSession/#"
-      end
     end
   end
 end
