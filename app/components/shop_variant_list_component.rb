@@ -8,6 +8,8 @@
 #
 # When all variants share a producer, the caller names it once above the list and this
 # component leaves it off the rows.
+#
+# The admin preview of a product page shows the list with inert add to cart buttons.
 class ShopVariantListComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 

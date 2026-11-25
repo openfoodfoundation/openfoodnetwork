@@ -29,4 +29,11 @@
               = render InfoPopoverComponent.new(id: "unit-price-info-#{variant.id}", label: label(:unit_price_info, variant), placement: "top") do
                 = t("js.shopfront.unit_price_tooltip")
         .small-4.columns
-          = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:, preview:)
+          - if preview
+            -# Looks like the add to cart widget, but can't add to a cart.
+            .add-to-cart-component.right
+              .variant-quantity-column
+                .variant-quantity-inputs
+                  %button.add-variant{ type: "button", "aria-disabled": "true", "aria-label": t("components.add_to_cart.add", name: helpers.variant_label_name(variant)) }= t("js.shopfront.variant.add_to_cart")
+          - else
+            = render AddToCartComponent.new(variant:, cart_item: variants_in_cart[variant.id], low_stock_display:, css_class: "right", cart_params:)

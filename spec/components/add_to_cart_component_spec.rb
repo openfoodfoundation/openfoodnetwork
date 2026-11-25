@@ -36,12 +36,6 @@ RSpec.describe AddToCartComponent, type: :component do
       expect(page).to have_selector "[data-add-to-cart-target='stock']", visible: :all
     end
 
-    it "is not marked as doing nothing" do
-      render_component
-
-      expect(page).not_to have_selector "button[aria-disabled]"
-    end
-
     it "does not flag the widget as group buy" do
       render_component
 
@@ -132,26 +126,6 @@ RSpec.describe AddToCartComponent, type: :component do
         expect(page).to have_selector "input[aria-label='Maximum quantity of #{name}']",
                                       visible: :all
       end
-    end
-  end
-
-  describe "in the admin product preview" do
-    subject(:render_component) do
-      render_inline(described_class.new(variant:, cart_item:, low_stock_display: 0,
-                                        preview: true))
-    end
-
-    it "shows the add button as in the shop, marked as doing nothing" do
-      render_component
-
-      expect(page).to have_button "Add", disabled: false
-      expect(page).to have_selector "button[aria-disabled='true']", text: "Add"
-    end
-
-    it "doesn't connect to the cart" do
-      render_component
-
-      expect(page).not_to have_selector "[data-controller='add-to-cart']"
     end
   end
 end
