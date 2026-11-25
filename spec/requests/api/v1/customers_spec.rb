@@ -7,18 +7,25 @@ RSpec.describe "Customers", swagger_doc: "v1.yaml" do
   let!(:enterprise2) { create(:enterprise) }
   let!(:enterprise3) { create(:enterprise) }
 
+  # Fixed codes keep the generated documentation the same on every run. The
+  # factory would generate random ones.
   let!(:customer1) {
     create(
       :customer,
       enterprise: enterprise1,
+      code: "CUSTOMER1",
       created_manually: true,
       terms_and_conditions_accepted_at: Time.zone.parse("2000-01-01"),
       tag_list: ["long-term"],
       ship_address: create(:address),
     )
   }
-  let!(:customer2) { create(:customer, enterprise: enterprise1, created_manually: true,) }
-  let!(:customer3) { create(:customer, enterprise: enterprise2, created_manually: true,) }
+  let!(:customer2) {
+    create(:customer, enterprise: enterprise1, code: "CUSTOMER2", created_manually: true)
+  }
+  let!(:customer3) {
+    create(:customer, enterprise: enterprise2, code: "CUSTOMER3", created_manually: true)
+  }
   let(:json_response_ids) { json_response[:data]&.pluck(:id) }
   let(:json_error_detail) { json_response[:errors][0][:detail] }
 
