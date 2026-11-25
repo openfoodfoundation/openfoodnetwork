@@ -18,7 +18,7 @@ RSpec.describe Spree::Order::Checkout do
     it "cannot transition to address without any line items" do
       expect(order.line_items).to be_blank
       expect { order.next! }.to raise_error(
-        StateMachines::InvalidTransition, /#{I18n.t('spree.there_are_no_items_for_this_order')}/
+        StateMachines::InvalidTransition, /There are no items for this order/
       )
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Spree::Order::Checkout do
         context "if there are no shipping rates for any shipment" do
           specify do
             expect{ order.next! }.to raise_error(
-              StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/
+              StateMachines::InvalidTransition, /Items cannot be shipped/
             )
           end
         end
