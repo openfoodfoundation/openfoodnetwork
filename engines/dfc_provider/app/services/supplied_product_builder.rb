@@ -28,9 +28,14 @@ class SuppliedProductBuilder < DfcBuilder
       isVariantOf: [product_group],
       spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
-      image_url: variant.product&.image&.url(:product),
+      image_url: image(variant)&.url(:product),
       catalogItems: catalog_items,
     )
+  end
+
+  # A variant can have its own image. Otherwise it shows its product's image.
+  def self.image(variant)
+    variant.image || variant.product&.image
   end
 
   def self.product_type(variant)
