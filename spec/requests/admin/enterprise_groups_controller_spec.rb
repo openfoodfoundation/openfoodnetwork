@@ -16,6 +16,12 @@ RSpec.describe Admin::EnterpriseGroupsController do
     /field_with_errors"><label[^>]*for="enterprise_group_#{field}"/
   end
 
+  def expect_error_summary(*messages)
+    assert_select "#errorExplanation", count: 1 do
+      messages.each { |message| assert_select "li", text: message }
+    end
+  end
+
   describe "PATCH #update" do
     it "shows the error when another field is invalid and a logo is uploaded" do
       patch admin_enterprise_group_path(group), params: {
@@ -23,6 +29,7 @@ RSpec.describe Admin::EnterpriseGroupsController do
       }
 
       expect(response).to render_template :edit
+      expect_error_summary("Name can't be blank")
       expect(response.body).to match field_error(:name)
       expect(group.reload.logo).not_to be_attached
     end
@@ -61,6 +68,9 @@ RSpec.describe Admin::EnterpriseGroupsController do
 
         group.reload
         expect(response).to render_template :edit
+        expect_error_summary(
+          /Logo has an invalid content type/, /Promo image has an invalid content type/
+        )
         expect(response.body).to match field_error(:logo)
         expect(response.body).to match field_error(:promo_image)
         expect(response.body).to include rails_blob_path(group.logo)
@@ -80,6 +90,7 @@ RSpec.describe Admin::EnterpriseGroupsController do
       }.not_to change { EnterpriseGroup.count }
 
       expect(response).to render_template :new
+      expect_error_summary("Name can't be blank")
       expect(response.body).to match field_error(:name)
     end
   end
