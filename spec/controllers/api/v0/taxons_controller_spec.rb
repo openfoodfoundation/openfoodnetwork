@@ -23,6 +23,14 @@ RSpec.describe Api::V0::TaxonsController do
       expect(json_names).to include(taxon.name, taxon2.name)
     end
 
+    it "returns taxon names in the current locale" do
+      taxon.update_column(:name_i18n, { "en" => "Vegetables", "es" => "Verduras" })
+      I18n.with_locale(:es) do
+        api_get :index
+        expect(json_response.pluck(:name)).to include("Verduras")
+      end
+    end
+
     it "can search for a single taxon" do
       api_get :index, q: { name_cont: "Ruby" }
 
@@ -68,7 +76,7 @@ RSpec.describe Api::V0::TaxonsController do
       errors = json_response["errors"]
 
       expect(Spree::Taxon.last).to eq taxon2
-      expect(errors['name']).to eq ["can't be blank"]
+      expect(errors['name_i18n']).to eq ["can't be blank"]
     end
 
     it "can destroy" do

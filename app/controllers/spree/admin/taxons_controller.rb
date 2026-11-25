@@ -65,8 +65,9 @@ module Spree
 
       def taxon_params
         params.require(:taxon).permit(
-          :name, :position, :icon, :description, :permalink,
-          :meta_description, :meta_keywords, :meta_title, :dfc_id
+          :position, :icon, :description, :permalink,
+          :meta_description, :meta_keywords, :meta_title, :dfc_id,
+          name_i18n: OpenFoodNetwork::I18nConfig.selectable_locales
         )
       end
     end
