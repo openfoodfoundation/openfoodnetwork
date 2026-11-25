@@ -30,6 +30,19 @@ RSpec.describe ProductTypeImporter do
       expect(described_class.taxon(lemonade)).to eq only_taxon
     end
 
+    it "returns the fallback when none can be found" do
+      create(:taxon)
+      fallback = create(:taxon)
+      expect(described_class.taxon(lemonade, fallback)).to eq fallback
+      expect(described_class.taxon(nil, fallback)).to eq fallback
+    end
+
+    it "prefers a matching taxon over the fallback" do
+      drink_taxon = create(:taxon, dfc_id: drink.semanticId)
+      fallback = create(:taxon)
+      expect(described_class.taxon(lemonade, fallback)).to eq drink_taxon
+    end
+
     it "queries the database only until it found a taxon" do
       soft_drink_taxon = create(:taxon, dfc_id: soft_drink.semanticId)
 

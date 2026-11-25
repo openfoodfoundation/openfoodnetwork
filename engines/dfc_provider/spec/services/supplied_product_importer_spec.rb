@@ -85,6 +85,14 @@ RSpec.describe SuppliedProductImporter do
       expect(subject.on_demand).to eq false
       expect(subject.on_hand).to eq 11
     end
+
+    it "keeps the category when the product type is unknown" do
+      custom_taxon = create(:taxon, name: "Biere blanche", dfc_id: nil)
+      variant.update!(primary_taxon: custom_taxon)
+      allow(product).to receive(:productType).and_return(nil)
+
+      expect(subject.primary_taxon).to eq custom_taxon
+    end
   end
 
   describe ".import_product" do
@@ -225,6 +233,20 @@ RSpec.describe SuppliedProductImporter do
         expect(imported_product.id).to eq(spree_product.id)
         expect(imported_product.description).to eq("Better Awesome tomato")
         expect(imported_variant.primary_taxon).to eq(new_taxon)
+      end
+
+      context "without a known product type" do
+        let(:product_type) { nil }
+
+        it "uses the category of the existing product" do
+          first_taxon = create(:taxon)
+          custom_taxon = create(:taxon, name: "Biere blanche", dfc_id: nil)
+          variant # Create test data first
+          spree_product.variants.update_all(primary_taxon_id: custom_taxon.id)
+
+          expect(imported_variant.primary_taxon).to eq custom_taxon
+          expect(imported_variant.primary_taxon).not_to eq first_taxon
+        end
       end
 
       it "copies name and description from parent product" do
