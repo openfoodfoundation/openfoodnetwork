@@ -5,6 +5,7 @@ class ApplicationMailer < ActionMailer::Base
   include Roadie::Rails::Automatic
 
   helper TermsAndConditionsHelper
+  helper MailerHelper
 
   default from: -> { Spree::Config[:mails_from] }
   layout 'mailer'

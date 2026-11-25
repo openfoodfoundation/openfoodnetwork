@@ -2,7 +2,6 @@
 
 class SubscriptionMailer < ApplicationMailer
   helper 'checkout'
-  helper MailerHelper
   helper ShopMailHelper
   helper OrderHelper
   helper Spree::PaymentMethodsHelper

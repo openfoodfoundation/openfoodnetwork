@@ -1,4 +1,7 @@
-%h1= t ".headline"
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: enterprise_greeting(@distributor.contact_name),
+                   intro: t(".intro"),
+                   enterprise_for_logo: @distributor }
 
 %p= t ".description"
 

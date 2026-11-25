@@ -70,6 +70,17 @@ RSpec.describe ProducerMailer do
     it_behaves_like 'non-customer facing email with active white labelling', :mail
   end
 
+  context "enterprise logo" do
+    let(:coordinator) { order_cycle.coordinator }
+    it_behaves_like "enterprise logo rendering", :mail, :coordinator
+  end
+
+  context "enterprise greeting" do
+    let(:enterprise) { s1 }
+    it_behaves_like 'for an enterprise with contact name present', :mail
+    it_behaves_like 'for an enterprise with no contact name present', :mail
+  end
+
   it "includes the pickup time for each distributor" do
     expect(mail.body.encoded).to include "#{d1.name} (Tue, 23rd Dec)"
   end
