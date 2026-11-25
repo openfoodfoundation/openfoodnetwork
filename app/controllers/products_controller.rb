@@ -115,7 +115,7 @@ class ProductsController < BaseController
   end
 
   def search_params
-    { page: 1, per_page: per_pate }.merge(
+    { page: 1, per_page: per_page }.merge(
       params.permit(:page, :per_page, q: [{ with_properties: [] }])
     ).with_indifferent_access
   end
