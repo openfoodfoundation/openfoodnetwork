@@ -30,22 +30,20 @@ module OrderCycles
       order_cycle.assign_attributes(order_cycle_params)
       return false unless order_cycle.valid?
 
-      @incoming_variant_ids_before = incoming_variant_ids_by_producer if notify_coordinator?
-
-      saved = order_cycle.transaction do
-        order_cycle.save!
-        order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
-        order_cycle.save!
-        apply_exchange_changes
-        if can_update_selected_payment_or_shipping_methods?
-          attach_selected_distributor_payment_methods
-          attach_selected_distributor_shipping_methods
+      with_coordinator_notification do
+        order_cycle.transaction do
+          order_cycle.save!
+          order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
+          order_cycle.save!
+          apply_exchange_changes
+          if can_update_selected_payment_or_shipping_methods?
+            attach_selected_distributor_payment_methods
+            attach_selected_distributor_shipping_methods
+          end
+          sync_subscriptions
+          true
         end
-        sync_subscriptions
-        true
       end
-      notify_coordinator_of_selection_changes if saved
-      saved
     rescue ActiveRecord::RecordInvalid => e
       add_exception_to_order_cycle_errors(e)
       false
@@ -77,13 +75,21 @@ module OrderCycles
       order_cycle.open? && !@user.admin? && !coordinator?
     end
 
-    def notify_coordinator_of_selection_changes
-      return if @incoming_variant_ids_before.nil?
+    # Compares the selection before and after the save, and only notifies once it succeeds
+    def with_coordinator_notification
+      return yield unless notify_coordinator?
 
-      incoming_variant_ids_after = incoming_variant_ids_by_producer
-      producer_ids = @incoming_variant_ids_before.keys | incoming_variant_ids_after.keys
+      variant_ids_before = incoming_variant_ids_by_producer
+      saved = yield
+      notify_coordinator_of_selection_changes(variant_ids_before) if saved
+      saved
+    end
+
+    def notify_coordinator_of_selection_changes(variant_ids_before)
+      variant_ids_after = incoming_variant_ids_by_producer
+      producer_ids = variant_ids_before.keys | variant_ids_after.keys
       changed_producer_ids = producer_ids.reject do |producer_id|
-        @incoming_variant_ids_before[producer_id] == incoming_variant_ids_after[producer_id]
+        variant_ids_before[producer_id] == variant_ids_after[producer_id]
       end
 
       Enterprise.where(id: changed_producer_ids).find_each do |producer|

@@ -502,6 +502,18 @@ RSpec.describe OrderCycles::FormService do
         .with(order_cycle, producer)
     end
 
+    context "when the producer had no products selected before" do
+      let(:order_cycle) {
+        create(:simple_order_cycle, coordinator:, suppliers: [producer], variants: [])
+      }
+      let(:selected_variants) { { new_variant.id => true } }
+
+      it "notifies the coordinator" do
+        expect { form.save }.to have_enqueued_mail(OrderCycleMailer, :producer_selection_updated)
+          .with(order_cycle, producer)
+      end
+    end
+
     context "when a producer removes products" do
       let(:selected_variants) { { variant.id => false } }
 
