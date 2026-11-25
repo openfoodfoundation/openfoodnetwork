@@ -612,6 +612,12 @@ RSpec.describe 'As an enterprise user, I can perform actions on the products scr
             # The preview itself is still open
             expect(page).to have_content "Product preview"
 
+            # Escape closes the overlay, but not the preview around it
+            click_button "Select"
+            find(".variant-modal").send_keys(:escape)
+            expect(page).not_to have_button "Add"
+            expect(page).to have_content "Product preview"
+
             find("a", text: "Product details").click
             expect(page).to have_selector "h3", text: "Apples"
           end
