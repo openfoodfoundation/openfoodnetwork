@@ -2,7 +2,7 @@
   = render 'spree/admin/shared/configuration_menu'
 
 - content_for :page_title do
-  = Spree.t(:general_settings)
+  = t("spree.general_settings")
 
 = form_tag admin_general_settings_path, :method => :put do
   #preferences
@@ -11,9 +11,9 @@
       - @preferences_general.each do |key|
         - type = Spree::Config.preference_type(key)
         .field
-          = label_tag(key, Spree.t(key) + ': ') + tag(:br) if type != :boolean
+          = label_tag(key, t(key, scope: :spree) + ': ') + tag(:br) if type != :boolean
           = preference_field_tag(key, Spree::Config[key], :type => type)
-          = label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean
+          = label_tag(key, t(key, scope: :spree)) + tag(:br) if type == :boolean
 
       .row
         .alpha.six.columns
@@ -42,20 +42,20 @@
           %fieldset.address_display.no-border-bottom
             %legend{:align => "center"}= t('admin.address_display.address_display_settings')
             .field
-              = label_tag(:address_display_format, Spree.t(:address_display_format) + ': ') + tag(:br)
-              = select_tag(:address_display_format, options_for_select([[Spree.t(:address_display_format_default), 'default'], [Spree.t(:address_display_format_postal_code_first), 'postal_code_first']], Spree::Config[:address_display_format]))
+              = label_tag(:address_display_format, t("spree.address_display_format") + ': ') + tag(:br)
+              = select_tag(:address_display_format, options_for_select([[t("spree.address_display_format_default"), 'default'], [t("spree.address_display_format_postal_code_first"), 'postal_code_first']], Spree::Config[:address_display_format]))
 
         .omega.six.columns
           %fieldset.currency.no-border-bottom
-            %legend{:align => "center"}= Spree.t(:currency_settings)
+            %legend{:align => "center"}= t("spree.currency_settings")
             - @preferences_currency.each do |key|
               - type = Spree::Config.preference_type(key)
               .field
-                = label_tag(key, Spree.t(key) + ': ') + tag(:br) if type != :boolean
+                = label_tag(key, t(key, scope: :spree) + ': ') + tag(:br) if type != :boolean
                 = preference_field_tag(key, Spree::Config[key], :type => type)
-                = label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean
+                = label_tag(key, t(key, scope: :spree)) + tag(:br) if type == :boolean
             .field
-              = label_tag Spree.t(:currency_symbol_position)
+              = label_tag t("spree.currency_symbol_position")
               %br/
               .choices
                 %ul
@@ -66,11 +66,11 @@
                     = radio_button_tag :currency_symbol_position, "after", Spree::Config[:currency_symbol_position] == "after"
                     = label_tag :currency_symbol_position_after, Spree::Money.new(10, :symbol_position => "after")
             .field
-              = label_tag :currency_decimal_mark, Spree.t(:currency_decimal_mark)
+              = label_tag :currency_decimal_mark, t("spree.currency_decimal_mark")
               %br/
               = text_field_tag :currency_decimal_mark, Spree::Config[:currency_decimal_mark], :size => 3
             .field
-              = label_tag :currency_thousands_separator, Spree.t(:currency_thousands_separator)
+              = label_tag :currency_thousands_separator, t("spree.currency_thousands_separator")
               %br/
               = text_field_tag :currency_thousands_separator, Spree::Config[:currency_thousands_separator], :size => 3
           %fieldset.number_localization.no-border-bottom
@@ -88,5 +88,5 @@
                 = label_tag(unit, unit.downcase) + tag(:br)
 
       .form-buttons.filter-actions.actions
-        = button Spree.t('actions.update'), 'icon-refresh'
-        = link_to_with_icon 'icon-remove', Spree.t('actions.cancel'), edit_admin_general_settings_url, :class => 'button'
+        = button t("spree.actions.update"), 'icon-refresh'
+        = link_to_with_icon 'icon-remove', t("spree.actions.cancel"), edit_admin_general_settings_url, :class => 'button'

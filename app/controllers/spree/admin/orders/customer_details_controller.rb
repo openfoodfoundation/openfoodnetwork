@@ -26,7 +26,7 @@ module Spree
             refresh_shipment_rates
             ::Orders::WorkflowService.new(@order).advance_to_payment
 
-            flash[:success] = Spree.t('customer_details_updated')
+            flash[:success] = I18n.t("spree.customer_details_updated")
             redirect_to admin_order_customer_path(@order)
           else
             render action: :edit

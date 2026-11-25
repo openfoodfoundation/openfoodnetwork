@@ -75,7 +75,7 @@ module Spree
     def must_have_shipped_units
       return unless order.nil? || order.shipments.shipped.none?
 
-      errors.add(:order, Spree.t(:has_no_shipped_units))
+      errors.add(:order, I18n.t("spree.has_no_shipped_units"))
     end
 
     def generate_number

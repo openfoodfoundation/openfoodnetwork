@@ -12,7 +12,7 @@ module Spree
                   end
 
       countries.collect do |country|
-        country.name = Spree.t(country.iso, scope: 'country_names', default: country.name)
+        country.name = t(country.iso, scope: [:spree, :country_names], default: country.name)
         country
       end.sort { |a, b| a.name <=> b.name }
     end

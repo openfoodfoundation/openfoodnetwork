@@ -36,7 +36,6 @@ module Spree
   end
 end
 
-require 'spree/i18n'
 require 'spree/money'
 
 require 'spree/core/permalinks'

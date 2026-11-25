@@ -1,5 +1,5 @@
 %p
-  = f.label :email, Spree.t(:email)
+  = f.label :email, t("spree.email")
   %br
   = f.email_field :email, class: 'title'
 
@@ -9,7 +9,7 @@
 
 %div{"id" => "password-credentials"}
   %p
-    = f.label :password, Spree.t(:password)
+    = f.label :password, t("spree.password")
     %br
     = f.password_field :password, class: 'title'
 

@@ -5,20 +5,20 @@
 
 - content_for :page_title do
   %i.icon-arrow-right
-  = Spree.t(:customer_details)
+  = t("spree.customer_details")
 
 - content_for :page_actions do
   = render partial: 'spree/admin/shared/order_links'
-  %li= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
+  %li= button_link_to t("spree.back_to_orders_list"), admin_orders_path, :icon => 'icon-arrow-left'
 
 - if @order.cart? || @order.address?
   #select-customer
     %fieldset.no-border-bottom
-      %legend{:align => "center"}= Spree.t(:customer_search)
+      %legend{:align => "center"}= t("spree.customer_search")
       - content_for :main_ng_app_name do
         = "admin.orders"
-      %label{for: "customer_search_override"}= Spree.t(:choose_a_customer)
-      %select{name: "customer_search_override", "data-controller": "select-customer", "data-select-customer-distributor-value": @order.distributor_id, class: "primary", placeholder: Spree.t(:choose_a_customer) }
+      %label{for: "customer_search_override"}= t("spree.choose_a_customer")
+      %select{name: "customer_search_override", "data-controller": "select-customer", "data-select-customer-distributor-value": @order.distributor_id, class: "primary", placeholder: t("spree.choose_a_customer") }
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
 = render partial: 'spree/shared/error_messages', locals: { target: @order.customer }

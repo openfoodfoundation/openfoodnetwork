@@ -44,7 +44,7 @@ module Spree
           Spree::User.reset_password_by_token(params[:user])
           bypass_sign_in(@user)
         end
-        redirect_to account_url, notice: Spree.t(:account_updated)
+        redirect_to account_url, notice: I18n.t("spree.account_updated")
       else
         render :edit
       end
@@ -63,10 +63,6 @@ module Spree
       else
         redirect_to main_app.login_path
       end
-    end
-
-    def accurate_title
-      Spree.t(:my_account)
     end
 
     def user_params

@@ -23,7 +23,7 @@ module Spree
         @user = Spree::User.new(user_params)
         if @user.save
 
-          flash[:success] = Spree.t(:created_successfully)
+          flash[:success] = I18n.t("spree.created_successfully")
           redirect_to edit_admin_user_path(@user)
         else
           render :new
@@ -68,18 +68,18 @@ module Spree
       private
 
       def update_message
-        return Spree.t(:show_api_key_view_toggled) if @user.show_api_key_view_previously_changed?
-
-        if new_email_unconfirmed?
-          Spree.t(:email_updated)
+        if @user.show_api_key_view_previously_changed?
+          I18n.t("spree.show_api_key_view_toggled")
+        elsif new_email_unconfirmed?
+          I18n.t("spree.email_updated")
         else
-          Spree.t(:account_updated)
+          I18n.t("spree.account_updated")
         end
       end
 
       # handling raise from Admin::ResourceController#destroy
       def user_destroy_with_orders_error
-        render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)
+        render status: :forbidden, plain: I18n.t("spree.error_user_destroy_with_orders")
       end
 
       # Allow different formats of json data to suit different ajax calls

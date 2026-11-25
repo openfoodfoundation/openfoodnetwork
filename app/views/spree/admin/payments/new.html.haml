@@ -3,10 +3,10 @@
 
 - content_for :page_title do
   %i.icon-arrow-right
-  = Spree.t(:new_payment)
+  = t("spree.new_payment")
 
 - content_for :page_actions do
-  %li= button_link_to Spree.t(:back_to_payments_list), admin_order_payments_url(@order), icon: 'icon-arrow-left'
+  %li= button_link_to t("spree.back_to_payments_list"), admin_order_payments_url(@order), icon: 'icon-arrow-left'
 
 - if @payment_methods.any?
   = render partial: 'spree/shared/error_messages', locals: { target: @payment }
@@ -19,5 +19,5 @@
         = button_tag t(:update), type: 'button', "ng-click" => "submitPayment()"
 
 - else
-  = Spree.t(:cannot_create_payment_without_payment_methods)
-  = link_to Spree.t(:please_define_payment_methods), admin_payment_methods_url
+  = t("spree.cannot_create_payment_without_payment_methods")
+  = link_to t("spree.please_define_payment_methods"), admin_payment_methods_url

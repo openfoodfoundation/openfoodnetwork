@@ -8,7 +8,8 @@ module Spree
 
         return if Zone.default_tax
 
-        record.errors.add(:included_in_price, Spree.t("errors.messages.included_price_validation"))
+        record.errors.add(:included_in_price,
+                          I18n.t("spree.errors.messages.included_price_validation"))
       end
     end
 
@@ -119,7 +120,7 @@ module Spree
 
     def create_label(adjustment_amount)
       label = ""
-      label << "#{Spree.t(:refund)} " if adjustment_amount.negative?
+      label << "#{I18n.t('spree.refund')} " if adjustment_amount.negative?
       label << "#{name.presence || tax_category.name} "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?

@@ -3,6 +3,11 @@
 class UserPasswordsController < Spree::UserPasswordsController
   layout 'darkswarm'
 
+  # Password resets are requested from the login modal, there's no separate page.
+  def new
+    redirect_to main_app.root_path(anchor: "/login")
+  end
+
   # Respond the same way whether or not the email belongs to an account, so the form can't be
   # used to find out which email addresses are registered.
   def create

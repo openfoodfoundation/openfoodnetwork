@@ -37,6 +37,16 @@ RSpec.describe Spree::Admin::UsersController do
 
         expect(test_user.reload.disabled).to eq true
       end
+
+      it "explains why a user with completed orders can't be deleted" do
+        create(:completed_order_with_totals, user: test_user)
+
+        spree_delete :destroy, id: test_user.id
+
+        expect(response).to have_http_status :forbidden
+        expect(response.body).to eq "Users with completed orders may not be deleted"
+        expect(test_user.reload).to be_persisted
+      end
     end
 
     it 'should deny access to users without an admin role' do

@@ -156,6 +156,28 @@ RSpec.describe Spree::Admin::VariantsController do
           expect(variant.exchanges.reload).to be_empty
         end
       end
+
+      context "when it's the product's only variant" do
+        let(:variant) { create(:simple_product).variants.first }
+        let(:params) { { id: variant.id, product_id: variant.product.id } }
+
+        it "keeps the variant and shows the reason" do
+          spree_delete :destroy, params.merge(format: 'html')
+
+          expect(variant.reload.deleted_at).to be_nil
+          expect(flash[:success]).to be_nil
+          expect(flash[:error]).to eq "Product must have at least one variant"
+          expect(response).to redirect_to admin_product_variants_url(variant.product.id)
+        end
+
+        it "responds with the reason to Ajax requests" do
+          delete :destroy, xhr: true, params: params.merge(use_route: :main_app)
+
+          expect(variant.reload.deleted_at).to be_nil
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.body).to eq "Product must have at least one variant"
+        end
+      end
     end
   end
 

@@ -141,7 +141,7 @@ class Enterprise < ApplicationRecord
   validates :instagram,
             format: {
               with: VALID_INSTAGRAM_REGEX,
-              message: Spree.t('errors.messages.invalid_instagram_url')
+              message: I18n.t("spree.errors.messages.invalid_instagram_url")
             }, allow_blank: true
   validate :validate_white_label_logo_link
   validates :external_billing_id,

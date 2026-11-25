@@ -29,14 +29,14 @@ module OrderValidations
   def ensure_line_items_present
     return if line_items.present?
 
-    errors.add(:base, Spree.t(:there_are_no_items_for_this_order))
+    errors.add(:base, I18n.t("spree.there_are_no_items_for_this_order"))
     false
   end
 
   def ensure_available_shipping_rates
     return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
 
-    errors.add(:base, Spree.t(:items_cannot_be_shipped))
+    errors.add(:base, I18n.t("spree.items_cannot_be_shipped"))
     false
   end
 end
