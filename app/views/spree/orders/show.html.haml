@@ -16,7 +16,7 @@
             %span.brick
               = t(:orders_show_cancelled)
               %i.ofn-i_009-close
-          - elsif @order.complete?
+          - elsif @order.complete_or_resumed?
             %span.turquoise
               = t(:orders_show_confirmed)
               %i.ofn-i_051-check-big

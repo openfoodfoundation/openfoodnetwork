@@ -111,7 +111,7 @@ RSpec.describe '
 
       context "when an order has been cancelled and then resumed" do
         before do
-          distributor1.update(allow_order_changes: true)
+          distributor1.update!(allow_order_changes: true)
           d1o1.update_columns(state: 'resumed')
         end
 

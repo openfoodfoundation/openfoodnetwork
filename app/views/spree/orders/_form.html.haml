@@ -19,10 +19,10 @@
       %tbody#line_items
         = render partial: 'line_item', collection: order_form.object.line_items, locals: {order_form: order_form}
 
-      = render 'bought' if show_bought_items? && !@order.complete?
+      = render 'bought' if show_bought_items? && !@order.complete_or_resumed?
 
       %tfoot#edit-cart
-        = render 'spree/orders/form/cart_actions_row' unless @order.complete?
+        = render 'spree/orders/form/cart_actions_row' unless @order.complete_or_resumed?
 
         %tr
           %td.text-right{colspan:"3"}
