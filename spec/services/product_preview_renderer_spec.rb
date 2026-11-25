@@ -22,8 +22,15 @@ RSpec.describe ProductPreviewRenderer do
     expect(product_view.to_param).to eq product.to_param
   end
 
-  it "includes every variant, in the order they were created" do
-    expect(product_view.variants.map(&:id)).to eq [small.id, large.id]
+  it "lists the variants by name, as the shop does" do
+    expect(product_view.variants.map(&:display_name)).to eq ["Large", "Small"]
+  end
+
+  it "lists variants with the same name by size, smallest first" do
+    smaller = create(:variant, product:, enterprise: producer, display_name: "Small",
+                               unit_value: 250)
+
+    expect(product_view.variants.map(&:id)).to eq [large.id, smaller.id, small.id]
   end
 
   it "shows the variant's own price, without fees" do

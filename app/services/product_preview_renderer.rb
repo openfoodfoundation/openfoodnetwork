@@ -36,9 +36,11 @@ class ProductPreviewRenderer
     end
   end
 
-  # Sorted by id, the default order of Spree::Product#variants
+  # Sorted like the shop lists them: by name, then by size. In Ruby, because the name to
+  # display falls back to the product name.
   def variants
     product.variants.
-      includes(:default_price, :enterprise, :stock_items, source_variants: :enterprise)
+      includes(:default_price, :enterprise, :stock_items, source_variants: :enterprise).
+      sort_by { |variant| [variant.name_to_display.to_s.downcase, variant.unit_value.to_f] }
   end
 end
