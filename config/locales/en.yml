@@ -5337,7 +5337,8 @@ en:
       missing_payment: Missing payment
       credit_payment_method_missing: Credit payment method is missing
       no_credit_available: No credit available
-      not_enough_credit_available: Not enough credit available 
+      not_enough_credit_available: Not enough credit available
+      balance_already_settled: "This balance due has already been paid or cleared on the customer's account, so the payment can't be voided"
   customer_credit_service:
     no_credit_owed: No credit owed
     customer_missing: No customer is assigned to this order

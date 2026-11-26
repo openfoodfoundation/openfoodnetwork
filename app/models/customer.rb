@@ -80,6 +80,14 @@ class Customer < ApplicationRecord
     customer_account_transactions.order(:id).last&.balance || 0.00
   end
 
+  # The balances carried over from previous orders that the customer still owes: the debts recorded
+  # since their account was last zero or in credit (see Orders::CustomerCreditService#carry_balance)
+  def outstanding_carry_over_transactions
+    customer_account_transactions.includes(payment: :order).order(id: :desc)
+      .take_while { |transaction| transaction.balance.negative? }
+      .select { |transaction| transaction.amount.negative? }
+  end
+
   def guest?
     return true if user_id.nil?
 

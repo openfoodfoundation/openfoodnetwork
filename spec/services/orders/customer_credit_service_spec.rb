@@ -305,6 +305,23 @@ RSpec.describe Orders::CustomerCreditService do
         expect(order.reload.payment_state).to eq("balance_due")
         expect(order.customer.reload.credit_balance).to eq(0.00)
       end
+
+      context "after the customer has paid the balance on a later order" do
+        it "refuses to void it, so the balance isn't cleared twice" do
+          subject.carry_balance(user:)
+          carry_over_payment = order.payments.order(:id).last
+          # What Orders::BalanceDueService#settle records when the next order completes
+          create(:customer_account_transaction, customer: order.customer, amount: 0.57)
+
+          expect(carry_over_payment.actions).not_to include("internal_void")
+          expect { carry_over_payment.internal_void! }.to raise_error(
+            Spree::Core::GatewayError, /already been paid or cleared/
+          )
+          expect(carry_over_payment.reload.state).to eq("completed")
+          expect(order.reload.payment_state).to eq("paid")
+          expect(order.customer.reload.credit_balance).to eq(0.00)
+        end
+      end
     end
 
     context "when the order payment state is not 'balance_due'" do

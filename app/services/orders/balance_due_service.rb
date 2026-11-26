@@ -52,13 +52,8 @@ module Orders
 
     # The orders carried over since the customer's balance was last zero or in credit.
     def carried_over_orders
-      transactions = customer.customer_account_transactions.includes(payment: :order)
-        .order(id: :desc)
-      unpaid = transactions.take_while { |transaction| transaction.balance.negative? }
-
-      unpaid.select { |transaction| transaction.amount.negative? }
-        .filter_map { |transaction| transaction.payment&.order }
-        .uniq.reverse
+      customer.outstanding_carry_over_transactions
+        .filter_map(&:payment).map(&:order).uniq.reverse
     end
 
     private
