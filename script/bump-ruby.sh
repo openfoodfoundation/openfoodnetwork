@@ -10,9 +10,10 @@ set -ex
 
 OLD_VERSION=$(cat .ruby-version)
 NEW_VERSION=$1
-PATTERN="$(echo "$OLD_VERSION" | sed 's:[]\[^$.*/]:\\&:g')"
 
-sed -i "s/\<$PATTERN\>/$NEW_VERSION/" .ruby-version Dockerfile
+# Replace the old version with the new version.
+#\Q...\E ensures any special characters (dots) are treated as literals.
+perl -pi -e "s/\Q$OLD_VERSION\E/$NEW_VERSION/g" .ruby-version Dockerfile
 
 script/rbenv-install.sh
 
