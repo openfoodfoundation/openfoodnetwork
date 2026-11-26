@@ -1,9 +1,9 @@
--# locals: (product:, variants_in_cart:, low_stock_display:)
+-# locals: (product:, variants_in_cart:, low_stock_display:, preview:)
 
 .product-item
   .product-content
     -# The grid is a turbo frame, which would load the product page into itself.
-    %a.product-link{ href: product_path, "data-turbo-frame": "_top" }
+    %a.product-link{ "data-turbo-frame": "_top", **link_attributes }
       - if product.group_buy
         %span.bulk-label= t("components.product_tile.bulk")
       - if product.image
@@ -20,7 +20,13 @@
           %span.unit-price= unit_price
 
     .variant
-      - if product.single_variant?
+      - if product.single_variant? && preview
+        -# Looks like the add to cart widget, but can't add to a cart.
+        .add-to-cart-component
+          .variant-quantity-column
+            .variant-quantity-inputs
+              %button.add-variant{ type: "button", "aria-disabled": "true", "aria-label": t("components.add_to_cart.add", name: helpers.variant_label_name(product.variant)) }= t("js.shopfront.variant.add_to_cart")
+      - elsif product.single_variant?
         = render AddToCartComponent.new(variant: product.variant, cart_item: variants_in_cart[product.variant.id], low_stock_display:)
       - else
-        = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:)
+        = render ShopVariantModalComponent.new(product:, variants_in_cart:, low_stock_display:, preview:)

@@ -8,11 +8,12 @@
 class ProductTileComponent < ViewComponent::Base
   NAME_SEPARATOR = " | "
 
-  def initialize(product:, shop:, variants_in_cart:, low_stock_display:)
+  def initialize(product:, shop:, variants_in_cart:, low_stock_display:, preview: false)
     @product = product
     @shop = shop
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
+    @preview = preview
   end
 
   # A product with no variant available in this shop has no producer and no price to show.
@@ -22,10 +23,13 @@ class ProductTileComponent < ViewComponent::Base
 
   private
 
-  attr_reader :product, :shop, :variants_in_cart, :low_stock_display
+  attr_reader :product, :shop, :variants_in_cart, :low_stock_display, :preview
 
-  def product_path
-    helpers.main_app.enterprise_product_path(shop, product)
+  # The preview has no shop to link to. Even a blank href would reload the admin page.
+  def link_attributes
+    return {} if preview
+
+    { href: helpers.main_app.enterprise_product_path(shop, product) }
   end
 
   # Single variant: {product name} | [{variant name} |] {unit or custom unit label}

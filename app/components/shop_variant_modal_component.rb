@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ShopVariantModalComponent < ViewComponent::Base
-  def initialize(product:, variants_in_cart:, low_stock_display:)
+  def initialize(product:, variants_in_cart:, low_stock_display:, preview: false)
     @product = product
     @variants_in_cart = variants_in_cart
     @low_stock_display = low_stock_display
+    @preview = preview
   end
 
-  attr_reader :product, :variants_in_cart, :low_stock_display
+  attr_reader :product, :variants_in_cart, :low_stock_display, :preview
 
   private
 

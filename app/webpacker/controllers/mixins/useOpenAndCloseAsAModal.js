@@ -31,7 +31,11 @@ export const useOpenAndCloseAsAModal = (controller) => {
     }.bind(controller),
 
     closeIfEscapeKey: function (e) {
-      if (e.code == "Escape") {
+      // Both modals listen on the document. When one is open inside another (like the
+      // variants overlay in the admin product preview), Escape only closes the inner one.
+      const nestedModalOpen = this.modalTarget.querySelector(".in");
+
+      if (e.code == "Escape" && !nestedModalOpen) {
         this.close();
       }
     }.bind(controller),

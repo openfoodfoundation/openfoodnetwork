@@ -10,6 +10,28 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe "#product_grid_view?" do
+    let(:user) { create(:user) }
+
+    before { allow(helper).to receive(:spree_current_user).and_return user }
+
+    it "is off by default" do
+      expect(helper.product_grid_view?).to be false
+    end
+
+    it "is on for a user with the grid view" do
+      Flipper.enable_actor(:product_grid_view, user)
+
+      expect(helper.product_grid_view?).to be true
+    end
+
+    it "brings the Turbo cart with it" do
+      Flipper.enable_actor(:product_grid_view, user)
+
+      expect(helper.use_turbo_cart?).to be true
+    end
+  end
+
   describe "#language_meta_tags" do
     let(:request) { double("request", host_with_port: "test.host", protocol: "http://") }
     before do
