@@ -5161,6 +5161,7 @@ en:
       customer_account_transactions:
         title: Customer Transactions 
         credit_available: "Credit available: %{credit}"
+        balance_due: "Balance due: %{amount}"
         transaction_date: Transaction Date
         description: Description
         amount: Amount
