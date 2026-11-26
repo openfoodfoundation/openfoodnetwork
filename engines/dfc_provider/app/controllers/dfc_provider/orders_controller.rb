@@ -14,8 +14,8 @@ module DfcProvider
     before_action :check_enterprise
 
     # Lists the orders placed with this enterprise, as the same subjects that
-    # `show` returns, all in one graph. Only the ReadOrders scope lets a
-    # platform read them.
+    # `show` returns, all in one graph. Listing them requires the ReadOrders
+    # scope.
     #
     # `page` and `per_page` paginate the list: 25 orders per page unless the
     # client asks for another size, up to Pagy's app-wide limit of 100.
