@@ -6,7 +6,7 @@
     %li#credit_customer_section
       = button_link_to t(:credit_customer), admin_order_payments_credit_customer_url(@order), data: { method: :post }
 
-  - if @order.payment_state == "balance_due" && @order.payments.completed.any? && @order.customer&.guest? == false
+  - if @can_carry_balance
     %li#carry_over_balance_section
       = button_link_to t(:carry_balance_to_next_order), admin_order_payments_carry_over_balance_url(@order), data: { method: :post }
 

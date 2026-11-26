@@ -228,7 +228,6 @@ RSpec.describe Orders::CustomerCreditService do
       original_total = order.total
 
       expect { subject.carry_balance(user:) }.to change { order.payments.count }.by(1)
-      order.update_totals_and_states
 
       last_payment = order.payments.reload.order(:id).last
       expect(last_payment.payment_method).to eq(credit_payment_method)
@@ -259,6 +258,31 @@ RSpec.describe Orders::CustomerCreditService do
       expect(response.message).to eq("Balance carried over to next order")
     end
 
+    context "when the balance is carried over twice" do
+      it "only carries it over once" do
+        subject.carry_balance(user:)
+
+        # A second request (e.g. a double-click) loads its own copy of the order
+        response = described_class.new(Spree::Order.find(order.id)).carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("No balance due")
+        expect(order.payments.customer_credit.count).to eq(1)
+        expect(order.customer.reload.credit_balance).to eq(-0.57)
+      end
+
+      it "fails the second call even with a stale copy of the order" do
+        stale_order = Spree::Order.find(order.id)
+        subject.carry_balance(user:)
+
+        response = described_class.new(stale_order).carry_balance(user:)
+
+        expect(response.failure?).to eq(true)
+        expect(response.message).to eq("No balance due")
+        expect(order.customer.reload.credit_balance).to eq(-0.57)
+      end
+    end
+
     context "when the customer already has credit" do
       before do
         create(:customer_account_transaction, amount: 1.00, customer: order.customer)
@@ -274,7 +298,6 @@ RSpec.describe Orders::CustomerCreditService do
     context "when the carry-over payment is voided" do
       it "restores the balance due on the order and the customer's balance" do
         subject.carry_balance(user:)
-        order.update_totals_and_states
         carry_over_payment = order.payments.order(:id).last
 
         carry_over_payment.internal_void!
@@ -377,6 +400,33 @@ RSpec.describe Orders::CustomerCreditService do
         expect(response.failure?).to eq(true)
         expect(response.message).to eq("Transaction error")
       end
+    end
+  end
+
+  describe "#can_carry_balance?" do
+    let(:order) { create(:completed_order_with_fees) }
+
+    before do
+      payment = order.payments.first
+      payment.complete!
+      payment.update(amount: order.total - 0.57)
+      order.update_order!
+    end
+
+    it "is true when the balance can be carried over" do
+      expect(subject.can_carry_balance?).to eq(true)
+    end
+
+    it "is false when the customer credit payment method is missing" do
+      allow(Spree::PaymentMethod).to receive(:customer_credit).and_return(nil)
+
+      expect(subject.can_carry_balance?).to eq(false)
+    end
+
+    it "is false once the balance has been carried over" do
+      subject.carry_balance(user:)
+
+      expect(subject.can_carry_balance?).to eq(false)
     end
   end
 end

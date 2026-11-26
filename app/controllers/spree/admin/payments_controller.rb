@@ -16,6 +16,7 @@ module Spree
 
       def index
         @payments = @order.payments
+        @can_carry_balance = ::Orders::CustomerCreditService.new(@order).can_carry_balance?
         redirect_to new_admin_order_payment_url(@order) if @payments.empty?
       end
 
@@ -109,7 +110,6 @@ module Spree
           .carry_balance(user: spree_current_user)
 
         if response.success?
-          @order.update_totals_and_states
           flash[:success] = response.message
         else
           flash[:error] = response.message

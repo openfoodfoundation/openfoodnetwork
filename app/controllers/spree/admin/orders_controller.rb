@@ -182,7 +182,6 @@ module Spree
             turbo_stream.append("flashes", partial: "admin/shared/flashes",
                                            locals: { flashes: flash })
           else
-            order.update_totals_and_states
             turbo_stream.replace("order_#{order.id}", partial: "spree/admin/orders/table_row",
                                                       locals: { order: })
           end

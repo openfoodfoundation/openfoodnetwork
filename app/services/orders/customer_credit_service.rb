@@ -38,18 +38,29 @@ module Orders
     # Settles an underpaid order by moving its balance due to the customer's account: the order is
     # paid with a customer credit payment, and a negative account transaction records the debt,
     # which is added to the customer's next order (see Orders::BalanceDueService).
-    # The caller needs to update the order afterwards so it's marked as paid.
     def carry_balance(user: nil)
-      error_key = carry_balance_error_key
-      return failure(error_key) if error_key
+      # `with_lock` reloads the order, so a second request for the same order (a double-click, or
+      # a bulk action overlapping the Payments page) waits here, then sees the order already paid.
+      order.with_lock do
+        error_key = carry_balance_error_key
+        next failure(error_key) if error_key
 
-      order.customer.with_lock { create_carry_balance_records(order.new_outstanding_balance, user) }
-
-      Response.new(success: true, message: I18n.t(:carry_over_successful, scope: translation_scope))
+        order.customer.with_lock do
+          create_carry_balance_records(order.new_outstanding_balance, user)
+        end
+        # Updated inside the lock, so the order is marked as paid before another request checks it
+        order.update_totals_and_states
+        message = I18n.t(:carry_over_successful, scope: translation_scope)
+        Response.new(success: true, message:)
+      end
     rescue StandardError => e
       order.payments.reload
       log_error(e)
       Response.new(success: false, message: e.to_s)
+    end
+
+    def can_carry_balance?
+      carry_balance_error_key.nil?
     end
 
     private
@@ -57,17 +68,12 @@ module Orders
     attr_reader :order
 
     def carry_balance_error_key
-      if order.customer.nil?
-        :customer_missing
-      elsif order.payment_state != "balance_due"
-        :no_balance_due
-      elsif order.payments.completed.none?
-        :no_completed_payment
-      elsif order.customer.guest?
-        :guest_customer
-      elsif credit_payment_method.nil?
-        :credit_payment_method_missing
-      end
+      return :customer_missing if order.customer.nil?
+      return :no_balance_due if order.payment_state != "balance_due"
+      return :no_completed_payment if order.payments.completed.none?
+      return :guest_customer if order.customer.guest?
+
+      :credit_payment_method_missing if credit_payment_method.nil?
     end
 
     def failure(translation_key)
@@ -77,13 +83,11 @@ module Orders
     def create_carry_balance_records(amount, user)
       payment = order.payments.create!(payment_method: credit_payment_method, amount:,
                                        state: "completed", skip_source_validation: true)
+      description = I18n.t(:carry_over_description, scope: translation_scope,
+                                                    order_number: order.number)
       order.customer.customer_account_transactions.create!(
-        amount: -amount,
-        currency: CurrentConfig.get(:currency),
-        payment:,
-        created_by: user,
-        description: I18n.t(:carry_over_description, scope: translation_scope,
-                                                     order_number: order.number)
+        amount: -amount, currency: CurrentConfig.get(:currency), payment:, created_by: user,
+        description:
       )
     end
 
