@@ -188,6 +188,15 @@ RSpec.describe "Orders index" do
       expect(response).to have_http_status :ok
       expect(response.body).to be_empty
     end
+
+    it "refuses a page size it can't use" do
+      create_order
+
+      get orders_url, params: { per_page: -1 }
+
+      expect(response).to have_http_status :bad_request
+      expect(response.body).to be_empty
+    end
   end
 
   describe "filtering by update time" do
@@ -205,6 +214,15 @@ RSpec.describe "Orders index" do
       create_order
 
       get orders_url, params: { updated_since: "not-a-date" }
+
+      expect(response).to have_http_status :bad_request
+      expect(response.body).to be_empty
+    end
+
+    it "refuses an update time that doesn't exist" do
+      create_order
+
+      get orders_url, params: { updated_since: "2024-13-45" }
 
       expect(response).to have_http_status :bad_request
       expect(response.body).to be_empty

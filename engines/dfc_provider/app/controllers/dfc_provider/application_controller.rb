@@ -12,6 +12,7 @@ module DfcProvider
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from CanCan::AccessDenied, with: :unauthorized
     rescue_from Unauthorized, with: :unauthorized
+    rescue_from Pagy::OptionError, with: :bad_request
 
     before_action :check_authorization
 
@@ -64,6 +65,10 @@ module DfcProvider
 
     def unauthorized
       head :unauthorized
+    end
+
+    def bad_request
+      head :bad_request
     end
 
     def current_ability

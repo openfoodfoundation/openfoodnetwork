@@ -90,10 +90,12 @@ module DfcProvider
       scope.where(updated_at: updated_since..)
     end
 
+    # `Time.zone.parse` returns nil for what it can't read and raises for a
+    # date that doesn't exist, such as month 13. Both are a bad request.
     def updated_since
-      return if params[:updated_since].blank?
-
-      Time.zone.parse(params[:updated_since].to_s)
+      Time.zone.parse(params[:updated_since].to_s) if params[:updated_since].present?
+    rescue ArgumentError
+      nil
     end
 
     def invalid_updated_since?
