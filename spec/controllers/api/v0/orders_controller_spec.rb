@@ -337,7 +337,7 @@ RSpec.describe Api::V0::OrdersController do
       it "ignores non allowed parameter" do
         expect {
           put :update, params: { id: order.number, note: "This is a note",
-                                  distributor_id: create(:distributor_enterprise).id }
+                                 distributor_id: create(:distributor_enterprise).id }
         }.not_to change { order.reload.distributor.id }
 
         expect_order
