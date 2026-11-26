@@ -14,7 +14,7 @@ module Reporting
           {
             customer: :order_billing_address_name,
             product: :product_name,
-            variant: :full_name,
+            variant: :full_variant_name,
             sum_total: :total_quantity
           }
         end

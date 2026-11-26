@@ -66,11 +66,11 @@ module Reporting
           end
 
           def product
-            proc { |line_item| variant(line_item).product.name }
+            proc { |line_item| line_item.full_product_name }
           end
 
           def variant_unit_name
-            proc { |line_item| variant(line_item).full_name }
+            proc { |line_item| line_item.full_variant_name }
           end
 
           def quantity

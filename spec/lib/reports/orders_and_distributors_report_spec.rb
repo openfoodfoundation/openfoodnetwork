@@ -160,13 +160,22 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       end
 
       context "with variant name present" do
-        before do
-          variant.update_columns(display_name: 'Variant Name');
-        end
+        let(:variant) { create(:variant, display_name: 'Variant Name') }
         let(:row) { subject.table_rows.first }
 
         it "should display variant name with unit" do
           expect(row).to include("Variant Name (1g)")
+        end
+      end
+
+      context "when the product is renamed after the order" do
+        it "uses the snapshotted product name" do
+          product.update!(name: "Zebra")
+
+          row = subject.table_rows.first
+
+          expect(row).to include line_item.product_name
+          expect(row).not_to include("Zebra")
         end
       end
     end

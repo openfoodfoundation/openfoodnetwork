@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_31_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_11_12_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -606,6 +606,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_31_000001) do
     t.string "unit_presentation"
     t.string "product_name"
     t.string "variant_name"
+    t.string "variant_display_name"
+    t.string "variant_display_as"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end

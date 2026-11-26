@@ -65,6 +65,27 @@ RSpec.describe Admin::BulkLineItemsController do
         end
       end
 
+      context "when the product and variant were renamed after the order" do
+        before do
+          line_item1.update_columns(
+            product_name: "Snapshot Product",
+            variant_name: "Snapshot Variant",
+            variant_display_name: "Snapshot Display"
+          )
+          line_item1.variant.product.update_columns(name: "Live Product")
+          line_item1.variant.update_columns(display_name: "Live Display")
+
+          get :index, format: :json
+        end
+
+        it "uses the snapshotted names for units_product and units_variant" do
+          item = json_response["line_items"].find { |line_item| line_item["id"] == line_item1.id }
+
+          expect(item["units_product"]["name"]).to eq "Snapshot Product"
+          expect(item["units_variant"]["full_name"]).to eq "Snapshot Product: Snapshot Variant"
+        end
+      end
+
       context "when ransack params are passed in for line items" do
         before do
           get :index, as: :json, params: { q: { order_id_eq: order2.id } }

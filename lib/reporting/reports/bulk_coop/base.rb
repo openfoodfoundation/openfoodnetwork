@@ -44,8 +44,8 @@ module Reporting
           ""
         end
 
-        def full_name(line_items)
-          line_items.first.full_name
+        def full_variant_name(line_items)
+          line_items.first.full_variant_name
         end
 
         def group_buy_unit_size(line_items)
