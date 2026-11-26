@@ -23,7 +23,6 @@ containers as well and checks for missing tools.
 ## Testing
 
 - Run rails test with `bundle exec rspec`
-- RAILS_ENV=test NODE_ENV=test bin/shakapacker # test packs; needed by system AND many request/controller specs
 - Run tests for a specific file with `bundle exec rspec spec/path/to_spec.rb`
 - Run javascript test with `npx jest` 
 - Run AngularJs test with karma 'script/karma run'
