@@ -12,6 +12,7 @@ module Spree
 
       PAYMENT_METHODS = %w{
         Spree::Gateway::PayPalExpress
+        Spree::Gateway::PayPalRest
         Spree::Gateway::StripeSCA
         Spree::PaymentMethod::Check
         Spree::PaymentMethod::Taler
@@ -118,7 +119,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = PAYMENT_METHODS
+        valid_payment_methods = load_providers
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
@@ -136,8 +137,16 @@ module Spree
         providers = PAYMENT_METHODS.dup
 
         providers.delete("Spree::Gateway::StripeSCA") unless show_stripe?
+        providers.delete("Spree::Gateway::PayPalRest") unless show_paypal_rest?
 
         providers
+      end
+
+      # Show PayPal REST as an option if enabled, or if the
+      # current payment_method is already a PayPal REST method
+      def show_paypal_rest?
+        OpenFoodNetwork::FeatureToggle.enabled?(:paypal_rest) ||
+          @payment_method.is_a?(Spree::Gateway::PayPalRest)
       end
 
       # Show Stripe as an option if enabled, or if the

@@ -85,6 +85,10 @@ Openfoodnetwork::Application.routes.draw do
     get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
     get "/paypal/cancel", to: "paypal#cancel", as: :cancel_paypal
 
+    get "/paypal/rest/create", to: "paypal_rest#create", as: :paypal_rest
+    get "/paypal/rest/confirm", to: "paypal_rest#confirm", as: :confirm_paypal_rest
+    get "/paypal/rest/cancel", to: "paypal_rest#cancel", as: :cancel_paypal_rest
+
     get "/stripe/confirm", to: "stripe#confirm", as: :confirm_stripe
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
 

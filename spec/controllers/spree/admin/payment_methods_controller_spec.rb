@@ -31,6 +31,13 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
 
       expect(providers).to include "Spree::Gateway::StripeSCA"
     end
+
+    it "allows to select PayPal REST when the feature is enabled", feature: :paypal_rest do
+      spree_get :new
+      providers = assigns(:providers).map(&:to_s)
+
+      expect(providers).to include "Spree::Gateway::PayPalRest"
+    end
   end
 
   describe "#edit" do
@@ -52,6 +59,14 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
       providers = assigns(:providers).map(&:to_s)
 
       expect(providers).to include "Spree::Gateway::StripeSCA"
+    end
+
+    it "shows an existing PayPal REST gateway while the feature is disabled" do
+      rest = create(:paypal_rest_payment_method, distributors: [Enterprise.find(enterprise_id)])
+
+      spree_get :edit, id: rest.id
+
+      expect(assigns(:providers).map(&:to_s)).to include "Spree::Gateway::PayPalRest"
     end
   end
 
@@ -106,6 +121,37 @@ RSpec.describe Spree::Admin::PaymentMethodsController do
 
       expect(response).to be_redirect
       expect(response).to redirect_to new_admin_payment_method_path
+    end
+
+    it "can not create a PayPal REST payment method while the feature is disabled" do
+      expect {
+        spree_post :create,
+                   payment_method: { name: "REST", type: "Spree::Gateway::PayPalRest",
+                                     distributor_ids: [enterprise.id] }
+      }.to change { Spree::PaymentMethod.count }.by(0)
+
+      expect(response).to redirect_to new_admin_payment_method_path
+    end
+  end
+
+  describe "#show_provider_preferences for PayPal REST" do
+    render_views
+
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:user) { create(:user, enterprises: [enterprise]) }
+    let(:rest) { create(:paypal_rest_payment_method, distributor_ids: [enterprise.id]) }
+
+    before { allow(controller).to receive_messages spree_current_user: user }
+
+    it "renders credentials and solution/server fields without test mode" do
+      spree_get :show_provider_preferences,
+                pm_id: rest.id, provider_type: "Spree::Gateway::PayPalRest"
+
+      expect(response.body).to include('payment_method_preferred_client_id')
+      expect(response.body).to include('payment_method_preferred_client_secret')
+      expect(response.body).to include('payment_method_preferred_solution"')
+      expect(response.body).to include('payment_method_preferred_server"')
+      expect(response.body).not_to include('payment_method_preferred_test_mode')
     end
   end
 
