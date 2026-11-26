@@ -15,10 +15,6 @@ Ruby, gems, Postgres, Redis, Node and Chrome are all needed for specs. Setup ste
 a typical machine are in `GETTING_STARTED.md`; `script/setup-debian` sets up Ubuntu
 containers as well and checks for missing tools.
 
-```bash
-bin/rails db:create db:schema:load          # dev + test DBs (user ofn / password f00d)
-```
-
 - Develop natively; the `Dockerfile` setup is too slow for active work and not maintained
 - Start the dev server with `bundle exec foreman start`
 - After pulling new migrations, run `bin/setup`
