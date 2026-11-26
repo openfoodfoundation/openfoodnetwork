@@ -22,6 +22,40 @@ class OrderBuilder < DfcBuilder
     )
   end
 
+  def self.build_with_lines(ofn_order)
+    build(ofn_order).tap do |dfc_order|
+      build_order_lines(dfc_order, ofn_order.line_items)
+    end
+  end
+
+  # The subjects of several orders in one graph: the orders with their lines,
+  # and the offers, products and sale sessions they reference. A subject that
+  # several orders share is listed once, as a graph has one subject per
+  # semantic id. The first element is the array of orders, which the DFC v2
+  # response wraps in a container.
+  def self.build_graph(ofn_orders)
+    dfc_orders = ofn_orders.map { |ofn_order| build_with_lines(ofn_order) }
+    lines = dfc_orders.flat_map(&:lines)
+
+    [
+      dfc_orders,
+      *lines,
+      *unique(lines.map(&:offer)),
+      *unique(lines.map { |line| line.offer.offeredItem }),
+      *unique(ofn_orders.map { |ofn_order| build_sale_session(ofn_order) }),
+    ]
+  end
+
+  def self.unique(subjects)
+    subjects.uniq(&:semanticId)
+  end
+
+  def self.build_sale_session(ofn_order)
+    SaleSessionBuilder.build(ofn_order.order_cycle).tap do |session|
+      session.semanticId = "#{urls.enterprise_url(ofn_order.distributor_id)}/SalesSession/#"
+    end
+  end
+
   # A backorder stays "Held" until the order cycle closes and the client
   # completes it. We don't record that distinction on an OFN order yet, so we
   # report the one status we can be sure about. The client (see
