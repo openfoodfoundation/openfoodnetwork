@@ -24,7 +24,7 @@ containers as well and checks for missing tools.
 
 - Run rails test with `bundle exec rspec`
 - Run tests for a specific file with `bundle exec rspec spec/path/to_spec.rb`
-- Run javascript test with `npx jest` 
+- Run javascript test with `yarn jest`
 - Run AngularJs test with karma 'script/karma run'
 - Add or update tests for the code you change, even if nobody asked.
 - Prefer **request specs** over controller specs. Don't test private methods via `send`.
@@ -39,7 +39,7 @@ containers as well and checks for missing tools.
   ```bash
   bundle exec haml-lint $(git diff --name-only --diff-filter=AM origin/master -- '*.haml')
   ```
-- Check JavaScript formatting with `npx prettier --check <files>` (use `--write` to fix)
+- Check JavaScript formatting with `yarn prettier --check <files>` (use `--write` to fix)
 - System specs run on **Cuprite** (Ferrum, Chrome DevTools protocol;
   `spec/system/support/cuprite_setup.rb`), not Selenium or chromedriver. `HEADLESS=false`
   shows the browser, and JS errors fail specs. Ferrum is already bundled: use it for
