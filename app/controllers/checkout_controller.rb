@@ -32,9 +32,7 @@ class CheckoutController < BaseController
       check_step
     end
 
-    if payment_step? || summary_step?
-      @paid_with_credit = calculate_credit(@order)
-    end
+    load_credit_and_balance_due(@order) if payment_step? || summary_step?
 
     return if available_shipping_methods.any?
 
@@ -64,7 +62,7 @@ class CheckoutController < BaseController
   private
 
   def render_error
-    @paid_with_credit = calculate_credit(@order) if payment_step? || summary_step?
+    load_credit_and_balance_due(@order) if payment_step? || summary_step?
 
     flash.now[:error] ||= I18n.t('checkout.errors.saving_failed')
 

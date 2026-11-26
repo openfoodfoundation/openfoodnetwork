@@ -14,7 +14,10 @@ RSpec.describe "checkout/_balance_due_message.html.haml" do
     before do
       payment = create(:payment, order: previous_order, amount: 0.57, state: "completed")
       create(:customer_account_transaction, customer:, amount: -0.57, payment:)
-      Orders::BalanceDueService.new(order).apply
+      balance_due_service = Orders::BalanceDueService.new(order)
+      balance_due_service.apply
+      assign(:balance_due_adjustment, balance_due_service.adjustment)
+      assign(:carried_over_orders, balance_due_service.carried_over_orders)
     end
 
     it "explains the balance due and links to the previous order in a new tab" do

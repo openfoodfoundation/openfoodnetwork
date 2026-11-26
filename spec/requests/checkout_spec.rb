@@ -24,6 +24,29 @@ RSpec.describe CheckoutController do
     sign_in user
   end
 
+  describe "GET /checkout/payment" do
+    let(:customer) { create(:customer, enterprise: distributor, user:) }
+    let(:previous_order) { create(:order, distributor:, customer:) }
+
+    before do
+      order.update!(customer:, bill_address: address, ship_address: address)
+      order.select_shipping_method shipping_method.id
+
+      payment = create(:payment, order: previous_order, amount: 0.57, state: "completed")
+      create(:customer_account_transaction, customer:, amount: -0.57, payment:)
+
+      Orders::WorkflowService.new(order).advance_to_payment
+    end
+
+    it "explains the balance carried over from previous orders" do
+      get checkout_step_path(:payment)
+
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("balance due from order(s)")
+      expect(response.body).to include("/orders/#{previous_order.number}")
+    end
+  end
+
   describe "PUT /checkout/:step" do
     context "with payment step" do
       let(:checkout_params) { {} }
