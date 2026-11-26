@@ -109,6 +109,7 @@ Metrics/ClassLength:
     - 'app/controllers/admin/resource_controller.rb'
     - 'app/controllers/admin/subscriptions_controller.rb'
     - 'app/controllers/application_controller.rb'
+    - 'app/controllers/cart_controller.rb'
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/spree/admin/images_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'

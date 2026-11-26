@@ -107,6 +107,26 @@ RSpec.describe Orders::AddCartToOrderService do
       end
     end
 
+    context "when the cart's second item sold out after it was put in the cart" do
+      let(:sold_out_variant) { create(:variant, on_demand: false, on_hand: 5) }
+
+      before do
+        create(:line_item, order: cart, variant: sold_out_variant, quantity: 2)
+        sold_out_variant.update!(on_hand: 1)
+      end
+
+      it "doesn't keep the first item, even inside the caller's transaction" do
+        # The cart controller calls the service inside a transaction, while it locks the cart.
+        Spree::Order.transaction do
+          expect(service.call).to be false
+        end
+
+        expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+        expect(variant.reload.on_hand).to eq 5
+        expect(cart.reload.line_items.count).to eq 2
+      end
+    end
+
     context "when the shop doesn't allow items to be added" do
       let(:distributor) {
         create(:distributor_enterprise, allow_order_removals: true, allow_order_cancellation: true)

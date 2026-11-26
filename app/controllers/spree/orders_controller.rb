@@ -48,8 +48,9 @@ module Spree
       @insufficient_stock_lines = @order.insufficient_stock_lines
       @unavailable_order_variants = OrderCycles::DistributedVariantsService.
         new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
+      @out_of_stock_variants = out_of_stock_variants
 
-      if @order.line_items.empty?
+      if @order.line_items.empty? && @out_of_stock_variants.empty?
         redirect_to main_app.shop_path
       else
         associate_user
@@ -124,6 +125,18 @@ module Spree
 
     def set_current_order
       @order = current_order(true)
+    end
+
+    # Items the stock check reduced or removed when adding the cart to a placed order (see
+    # CartController#add_to_order), shown once with their current stock.
+    def out_of_stock_variants
+      variant_ids = session.delete(:out_of_stock_variant_ids)
+      return [] if variant_ids.blank?
+
+      variants = Spree::Variant.where(id: variant_ids).to_a
+      scoper = OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor)
+      variants.each { |variant| scoper.scope(variant) }
+      variants
     end
 
     def check_authorization

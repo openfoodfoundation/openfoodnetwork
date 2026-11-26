@@ -40,4 +40,7 @@
 
         = render "spree/orders/form/cart_links"
 
+- if @out_of_stock_variants.present?
+  = render OutOfStockModalComponent.new(id: "out-of-stock-items", variants: @out_of_stock_variants, redirect: @order.line_items.empty?)
+
 = render partial: "shared/footer"

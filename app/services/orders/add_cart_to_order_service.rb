@@ -21,7 +21,10 @@ module Orders
       @error = reason_not_addable
       return false if @error
 
-      @order.with_lock do
+      # requires_new: the controller calls this inside its own transaction (while locking the cart).
+      # Without a savepoint of our own, the Rollback below would be ignored and the items added
+      # before the failing one would stay in the order.
+      @order.with_lock(requires_new: true) do
         unless add_cart_items
           @error = :insufficient_stock
           raise ActiveRecord::Rollback
