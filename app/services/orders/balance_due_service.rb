@@ -27,10 +27,11 @@ module Orders
       order.update_order!
     end
 
-    # Called when the order completes, or is resumed after being cancelled
+    # Called when the order completes, or is resumed after being cancelled.
+    # `finalize!` only closes adjustments, so a finalized balance due adjustment means it's settled.
     def settle
       existing = adjustment
-      return if existing.nil? || settled?
+      return if existing.nil? || existing.finalized?
 
       existing.update_columns(state: "finalized")
       record_transaction(existing.amount, paid_description)
@@ -39,8 +40,9 @@ module Orders
     # Called when the order is cancelled: the customer owes the balance again
     def restore
       existing = adjustment
-      return if existing.nil? || !settled?
+      return unless existing&.finalized?
 
+      existing.update_columns(state: "closed")
       record_transaction(-existing.amount, restored_description)
     end
 
@@ -82,15 +84,6 @@ module Orders
 
     def paid_description
       t(:paid_description, order_number: order.number)
-    end
-
-    # Settled if the latest transaction about this order's balance due paid it, rather than
-    # restoring it after a cancellation.
-    def settled?
-      descriptions = [paid_description, restored_description]
-      latest = customer.customer_account_transactions.where(description: descriptions)
-        .order(:id).last
-      latest&.description == paid_description
     end
 
     def restored_description

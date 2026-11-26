@@ -190,6 +190,13 @@ RSpec.describe Orders::BalanceDueService do
 
         expect(customer.reload.credit_balance).to eq(0.00)
       end
+
+      it "restores the balance again if the resumed order is cancelled again" do
+        order.reload.resume!
+        order.reload.cancel!
+
+        expect(customer.reload.credit_balance).to eq(-0.57)
+      end
     end
   end
 
@@ -209,6 +216,23 @@ RSpec.describe Orders::BalanceDueService do
       subject.restore
 
       expect(customer.reload.credit_balance).to eq(-0.57)
+    end
+
+    context "when the order was settled in another language" do
+      before do
+        I18n.backend.store_translations(
+          :es, balance_due_service: { paid_description: "Pagado en el pedido %{order_number}" }
+        )
+      end
+
+      after { I18n.reload! }
+
+      it "still restores the balance" do
+        I18n.with_locale(:es) { subject.settle }
+        subject.restore
+
+        expect(customer.reload.credit_balance).to eq(-0.57)
+      end
     end
   end
 end
