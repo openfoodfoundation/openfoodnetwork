@@ -17,7 +17,7 @@ containers as well and checks for missing tools.
 
 - Develop natively; the `Dockerfile` setup is too slow for active work and not maintained
 - Start the dev server with `bundle exec foreman start`
-- After pulling new migrations, run `bin/setup`
+- After pulling new code, run `bin/setup`
 
 
 ## Testing
