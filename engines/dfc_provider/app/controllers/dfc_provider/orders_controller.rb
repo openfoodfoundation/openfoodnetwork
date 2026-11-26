@@ -6,6 +6,11 @@ module DfcProvider
 
     DEFAULT_PER_PAGE = 25
 
+    # Everything the graph reads through a line's variant: its price, its taxon,
+    # its stock, and the product with its image and its other variants.
+    VARIANT_INCLUDES = [:default_price, :primary_taxon, :stock_items,
+                        { product: [:image, :variants] }].freeze
+
     before_action :check_enterprise
 
     # Lists the orders placed with this enterprise, as the same subjects that
@@ -83,8 +88,15 @@ module DfcProvider
     # The orders of the current enterprise, and only those: the enterprise is
     # resolved from the current user's enterprises. A cart that nobody has
     # placed yet isn't an order a partner can act on.
+    #
+    # A page holds at most 25 orders and each one brings its lines, whose
+    # variants carry a price, a product, a taxon and their stock: they are
+    # preloaded so that the number of queries doesn't grow with the page. The
+    # stock itself is still counted per variant, by the stock quantifier.
     def orders_scope
-      scope = current_enterprise.distributed_orders.complete.order(:id)
+      scope = current_enterprise.distributed_orders.complete
+        .includes(:order_cycle, line_items: { variant: VARIANT_INCLUDES })
+        .order(:id)
       return scope if updated_since.nil?
 
       scope.where(updated_at: updated_since..)
