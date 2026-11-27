@@ -130,4 +130,6 @@ table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
 span.email {
   direction: rtl;
   unicode-bidi: bidi-override;
+  // Safari forms ligatures (e.g. "fl") before reversing, which swaps letters
+  font-variant-ligatures: none;
 }
