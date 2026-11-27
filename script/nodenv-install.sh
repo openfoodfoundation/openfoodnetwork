@@ -28,7 +28,9 @@ else
     # Installation via Homebrew is recommended on macOS.
     brew upgrade node-build
   else
-    git -C "$(nodenv root)"/plugins/node-build pull
+    # Fetch from the URL to also work on a detached or remote-less checkout.
+    git -C "$(nodenv root)"/plugins/node-build fetch https://github.com/nodenv/node-build.git master
+    git -C "$(nodenv root)"/plugins/node-build checkout FETCH_HEAD
   fi
 
   nodenv install

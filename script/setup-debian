@@ -5,10 +5,9 @@
 set -e
 
 sudo apt update
-sudo apt upgrade --yes
 sudo apt install --yes\
      build-essential cmake pkg-config\
-     git\
+     curl git\
      libyaml-dev\
      libffi-dev\
      libgit2-dev\
@@ -21,20 +20,42 @@ sudo apt install --yes\
      postgresql\
      redis\
 
-sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
+# Containers and other systems without systemd don't start services on install.
+sudo service postgresql start
+sudo service redis-server start
+
+if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='ofn'" | grep -q 1; then
+  sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
+fi
+
+# The init commands would detect this script's sh instead of the user's shell.
+login_shell="$(basename "${SHELL:-/bin/bash}")"
 
 if ! command -v rbenv > /dev/null; then
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  ~/.rbenv/bin/rbenv init
-  . ~/.bash_profile
+  if [ ! -d ~/.rbenv ]; then
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+    # Configure future shells:
+    ~/.rbenv/bin/rbenv init "$login_shell"
+  fi
+  export PATH="$HOME/.rbenv/bin:$PATH"
 fi
+# Configure this shell:
+eval "$(rbenv init - sh)"
 
 if ! command -v nodenv > /dev/null; then
-  git clone https://github.com/nodenv/nodenv.git ~/.nodenv
-  git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build
-  ~/.nodenv/bin/nodenv init
-  . ~/.bash_profile
+  if [ ! -d ~/.nodenv ]; then
+    git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+    git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build
+    # Configure future shells:
+    ~/.nodenv/bin/nodenv init "$login_shell"
+  fi
+  export PATH="$HOME/.nodenv/bin:$PATH"
 fi
+# Configure this shell:
+eval "$(nodenv init - sh)"
+
+# A pre-installed yarn would make bin/setup skip installing our Node version.
+./script/nodenv-install.sh
 
 ./script/setup
