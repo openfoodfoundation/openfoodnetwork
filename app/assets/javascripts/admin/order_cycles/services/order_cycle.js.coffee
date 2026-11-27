@@ -104,9 +104,11 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
       else
         this.order_cycle.outgoing_exchanges
 
-    # With a single distributor, variants selected in incoming are also selected in outgoing
+    # Variants selected in incoming are also selected in outgoing when there is a single
+    # distributor, or for any number of distributors when a producer edits an order cycle they
+    # don't coordinate
     addDistributionOfVariant: (variant_id) ->
-      return unless Enterprise.hub_enterprises.length == 1
+      return unless Enterprise.hub_enterprises.length == 1 || !@order_cycle.viewing_as_coordinator
 
       variant_id = parseInt(variant_id)
       for exchange in this.order_cycle.outgoing_exchanges

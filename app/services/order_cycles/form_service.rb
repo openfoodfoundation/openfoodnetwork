@@ -30,17 +30,19 @@ module OrderCycles
       order_cycle.assign_attributes(order_cycle_params)
       return false unless order_cycle.valid?
 
-      order_cycle.transaction do
-        order_cycle.save!
-        order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
-        order_cycle.save!
-        apply_exchange_changes
-        if can_update_selected_payment_or_shipping_methods?
-          attach_selected_distributor_payment_methods
-          attach_selected_distributor_shipping_methods
+      with_coordinator_notification do
+        order_cycle.transaction do
+          order_cycle.save!
+          order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
+          order_cycle.save!
+          apply_exchange_changes
+          if can_update_selected_payment_or_shipping_methods?
+            attach_selected_distributor_payment_methods
+            attach_selected_distributor_shipping_methods
+          end
+          sync_subscriptions
+          true
         end
-        sync_subscriptions
-        true
       end
     rescue ActiveRecord::RecordInvalid => e
       add_exception_to_order_cycle_errors(e)
@@ -63,6 +65,45 @@ module OrderCycles
 
       # reload so outgoing exchanges are up-to-date for shipping/payment method validations
       order_cycle.reload
+    end
+
+    # Producers can change their product selection in an open order cycle they don't
+    # coordinate, so we let the coordinator know about it
+    def notify_coordinator?
+      return false if exchanges_unchanged? || order_cycle.new_record?
+
+      order_cycle.open? && !@user.admin? && !coordinator?
+    end
+
+    # Compares the selection before and after the save, and only notifies once it succeeds
+    def with_coordinator_notification
+      return yield unless notify_coordinator?
+
+      variant_ids_before = incoming_variant_ids_by_producer
+      saved = yield
+      notify_coordinator_of_selection_changes(variant_ids_before) if saved
+      saved
+    end
+
+    def notify_coordinator_of_selection_changes(variant_ids_before)
+      variant_ids_after = incoming_variant_ids_by_producer
+      producer_ids = variant_ids_before.keys | variant_ids_after.keys
+      changed_producer_ids = producer_ids.reject do |producer_id|
+        variant_ids_before[producer_id] == variant_ids_after[producer_id]
+      end
+
+      Enterprise.where(id: changed_producer_ids).find_each do |producer|
+        OrderCycleMailer.producer_selection_updated(order_cycle, producer).deliver_later
+      end
+    end
+
+    def incoming_variant_ids_by_producer
+      ExchangeVariant.joins(:exchange)
+        .where(exchanges: { order_cycle_id: order_cycle.id, incoming: true,
+                            sender_id: @user.enterprises.select(:id) })
+        .pluck("exchanges.sender_id", :variant_id)
+        .group_by(&:first)
+        .transform_values { |pairs| pairs.map(&:last).sort }
     end
 
     def attach_selected_distributor_payment_methods
