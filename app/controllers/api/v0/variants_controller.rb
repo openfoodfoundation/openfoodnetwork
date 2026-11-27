@@ -48,7 +48,7 @@ module Api
         if @variant.update(variant_params)
           render json: @variant, serializer: Api::VariantSerializer, status: :ok
         else
-          invalid_resource!(@product)
+          invalid_resource!(@variant)
         end
       end
 
