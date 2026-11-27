@@ -15,7 +15,9 @@ class AddToPreviousOrderModalComponent < ModalComponent
 
   def order_options
     @orders.map do |order|
-      [t(".order_option", number: order.number, total: order.display_total), order.number]
+      label = t("add_to_previous_order_modal_component.order_option",
+                number: order.number, total: order.display_total)
+      [label, order.number]
     end
   end
 end
