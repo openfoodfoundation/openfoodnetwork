@@ -10,6 +10,16 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe "#html_lang" do
+    it "converts the locale to a BCP 47 language tag" do
+      I18n.with_locale(:en_AU) { expect(helper.html_lang).to eq "en-AU" }
+    end
+
+    it "keeps locales without a region" do
+      I18n.with_locale(:en) { expect(helper.html_lang).to eq "en" }
+    end
+  end
+
   describe "#language_meta_tags" do
     let(:request) { double("request", host_with_port: "test.host", protocol: "http://") }
     before do

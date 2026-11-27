@@ -33,6 +33,12 @@ module ApplicationHelper
     feature?(:product_grid_view, spree_current_user)
   end
 
+  # BCP 47 tag for `<html lang>`, e.g. "en-AU" for the :en_AU locale.
+  # JavaScript bundles also read it to localise libraries like moment.
+  def html_lang
+    I18n.locale.to_s.tr("_", "-")
+  end
+
   def language_meta_tags
     return if I18n.available_locales.one?
 

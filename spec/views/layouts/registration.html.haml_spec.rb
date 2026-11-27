@@ -19,4 +19,10 @@ RSpec.describe "layouts/registration.html.haml" do
     expect(rendered).to include('<link hreflang="es" href="http://test.host/locales/es">')
     expect(rendered).to include('<link hreflang="pt" href="http://test.host/locales/pt">')
   end
+
+  it "declares the page language" do
+    I18n.with_locale(:en_AU) { render }
+
+    expect(rendered).to include('<html lang="en-AU"')
+  end
 end
