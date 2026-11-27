@@ -5,8 +5,9 @@
         %h4= t(:invoice_column_item)
       %th{:align => "right", :width => "15%"}
         %h4= t(:invoice_column_qty)
-      %th{:align => "right", :width => "15%"}
-        %h4= @order.total_tax > 0 ? t(:invoice_column_tax) : ""
+      - if @order.total_tax > 0
+        %th{:align => "right", :width => "15%"}
+          %h4= t(:invoice_column_tax)
       %th{:align => "right", :width => "15%"}
         %h4= t(:invoice_column_price)
   %tbody
@@ -19,8 +20,9 @@
             %em= item.supplier.name
         %td{:align => "right"}
           = item.quantity
-        %td{:align => "right"}
-          = display_line_items_taxes(item)
+        - if @order.total_tax > 0
+          %td{:align => "right"}
+            = display_line_items_taxes(item)
         %td{:align => "right"}
           = item.display_amount_with_adjustments
       
