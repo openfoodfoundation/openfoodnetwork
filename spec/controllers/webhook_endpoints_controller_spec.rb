@@ -66,6 +66,34 @@ RSpec.describe WebhookEndpointsController do
       spree_delete :destroy, id: webhook_endpoint.id
 
       expect(response).to redirect_to "/account#/developer_settings"
+      expect(response).to have_http_status(:see_other)
+    end
+
+    context "with a turbo_stream request" do
+      it "replaces the deleted row with the empty create form instead of removing it" do
+        spree_delete :destroy, { id: webhook_endpoint.id, format: :turbo_stream }
+
+        expect(response.media_type).to eq "text/vnd.turbo-stream.html"
+        expect(response.body).to include 'action="replace"'
+        expect(response.body).to include %(target="webhook-endpoint-#{webhook_endpoint.id}")
+        expect(response.body).not_to include 'action="remove"'
+        expect(response.body).to include "order_cycle_opened_webhook_endpoint_url"
+      end
+    end
+
+    context "when destroy fails" do
+      before do
+        allow_any_instance_of(WebhookEndpoint).to receive(:destroy).and_return(false)
+      end
+
+      it "shows error and redirects" do
+        spree_delete :destroy, { id: webhook_endpoint.id }
+
+        expect(flash[:error]).to be_present
+        expect(flash[:success]).to be_blank
+        expect(response).to redirect_to "/account#/developer_settings"
+        expect(response).to have_http_status(:see_other)
+      end
     end
   end
 

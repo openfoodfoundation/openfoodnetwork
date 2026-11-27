@@ -83,7 +83,11 @@ module Spree
       def link_to_delete(resource, options = {})
         url = options[:url] || object_url(resource)
         name = options[:name] || I18n.t(:delete)
-        options[:data] = { confirm: I18n.t(:are_you_sure), turbo: true, turbo_method: :delete }
+        options[:data] = {
+          turbo_confirm: I18n.t(:are_you_sure),
+          turbo: true,
+          turbo_method: :delete
+        }
         link_to_with_icon 'icon-trash', name, url, options
       end
 

@@ -28,7 +28,6 @@
     "leaflet-providers": "3.0.0",
     "mini-css-extract-plugin": "^2.9.4",
     "moment": "*",
-    "mrujs": "*",
     "pnp-webpack-plugin": "^1.7.0",
     "postcss": "^8.5.6",
     "postcss-flexbugs-fixes": "^5.0.2",
