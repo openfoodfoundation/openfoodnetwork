@@ -207,6 +207,18 @@ RSpec.describe ProductsController do
           expect(response.body).to include "1-2 of 5 products"
         end
       end
+
+      context "when on mobile" do
+        before { stub_const("ProductsController::MOBILE_PER_PAGE", 3) }
+
+        it "shows the pagination" do
+          get order_cycle_products_path(order_cycle.id, mobile: true)
+
+          expect(response.body).to include "Previous"
+          expect(response.body).to include "Next"
+          expect(response.body).to include "1-3 of 5 products"
+        end
+      end
     end
   end
 end

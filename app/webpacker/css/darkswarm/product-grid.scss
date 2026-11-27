@@ -2,6 +2,14 @@
 @use "../shared/variables/variables" as shared;
 @use "branding" as b;
 @use "shop_partials/spinner";
+@use "mixins";
+
+@mixin hidden-navigation-text {
+  // Remove text
+  font-size: 0;
+  min-width: 3rem;
+  padding-right: 0.5rem;
+}
 
 .loading {
   .spinner-summary {
@@ -92,11 +100,19 @@
         &:first-child {
           min-width: var(--button-width);
           padding-right: 1rem;
+
+          @include mixins.breakpoint(phablet) {
+            @include hidden-navigation-text;
+          }
         }
 
         &:last-child {
           min-width: var(--button-width);
           padding-left: 1rem;
+
+          @include mixins.breakpoint(phablet) {
+            @include hidden-navigation-text;
+          }
         }
       }
     }
