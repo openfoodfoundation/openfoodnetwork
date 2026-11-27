@@ -282,6 +282,59 @@ RSpec.describe Spree::Ability do
     end
   end
 
+  describe "reports" do
+    let(:user) { create(:user) }
+    let(:ability) { Spree::Ability.new(user) }
+    let(:all_reports) { Reporting::Reports::List.all.keys }
+
+    context "as manager of a producer that sells 'none'" do
+      # Manages products but not orders. Used to miss sales_tax and xero_invoices.
+      before do
+        user.enterprise_roles.create!(
+          enterprise: create(:enterprise, sells: 'none', is_primary_producer: true)
+        )
+      end
+
+      include_examples "can run every enterprise report"
+    end
+
+    context "as manager of a hub profile" do
+      # Manages neither products nor orders. Used to have no reports at all.
+      before do
+        user.enterprise_roles.create!(enterprise: create(:enterprise, sells: 'none'))
+      end
+
+      include_examples "can run every enterprise report"
+    end
+
+    context "as a new user with no enterprises" do
+      it "cannot open the reports page" do
+        expect(ability).not_to be_able_to(:index, Admin::ReportsController)
+      end
+
+      it "cannot run any report" do
+        all_reports.each do |report_type|
+          expect(ability).not_to be_able_to(report_type, :report)
+        end
+      end
+    end
+
+    context "as a super admin" do
+      let(:user) { create(:admin_user) }
+
+      it "can run every report" do
+        all_reports.each do |report_type|
+          expect(ability).to be_able_to(report_type, :report)
+        end
+      end
+    end
+
+    it "gives enterprise managers every report except the super-admin-only ones" do
+      expect(all_reports - Spree::Ability::ENTERPRISE_REPORTS)
+        .to contain_exactly(:revenues_by_hub, :users_and_enterprises)
+    end
+  end
+
   describe 'Roles' do
     # create enterprises
     let(:s1) { create(:supplier_enterprise) }
@@ -477,24 +530,8 @@ RSpec.describe Spree::Ability do
         is_expected.not_to have_ability(:destroy, for: er3)
       end
 
-      it "should be able to read some reports" do
-        is_expected.to have_ability(
-          [:admin, :index, :show, :create], for: Admin::ReportsController
-        )
-        is_expected.to have_ability(
-          [:customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory,
-           :order_cycle_management], for: :report
-        )
-      end
-
+      include_examples "can run every enterprise report"
       include_examples "allows access to Enterprise Fee Summary"
-
-      it "should not be able to read other reports" do
-        is_expected.not_to have_ability(
-          [:group_buys, :payments, :orders_and_distributors, :users_and_enterprises,
-           :xero_invoices, :revenues_by_hub], for: :report
-        )
-      end
 
       it "should not be able to access customer actions" do
         is_expected.not_to have_ability([:admin, :index, :update], for: Customer)
@@ -764,23 +801,8 @@ RSpec.describe Spree::Ability do
         is_expected.not_to have_ability(:destroy, for: er3)
       end
 
-      it "should be able to read some reports" do
-        is_expected.to have_ability(
-          [:admin, :index, :show, :create], for: Admin::ReportsController
-        )
-        is_expected.to have_ability(
-          [:customers, :sales_tax, :group_buys, :bulk_coop, :payments,
-           :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
-           :order_cycle_management, :xero_invoices], for: :report
-        )
-      end
-
+      include_examples "can run every enterprise report"
       include_examples "allows access to Enterprise Fee Summary"
-
-      it "should not be able to read other reports" do
-        is_expected.not_to have_ability([:users_and_enterprises, :revenues_by_hub],
-                                        for: :report)
-      end
 
       it "should be able to access customer actions" do
         is_expected.to have_ability([:admin, :index, :update], for: Customer)
