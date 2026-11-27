@@ -7,18 +7,15 @@ export default class extends Controller {
     url: String,
   };
 
+  connect() {
+    const url = this.#addIsMobileTo(this.urlValue);
+    this.element.src = url.toString();
+  }
+
   updateProducts(ev) {
     const orderCycleId = ev.detail.orderCycleId;
     // Updating the turbo-frame source will reload the frame
     this.element.src = this.#addIsMobileTo(`/order_cycles/${orderCycleId}/products`).toString();
-  }
-
-  // This triggered when the DOM Content is loaded, it adds "is_mobile" to the url for small screen
-  addMobile() {
-    const width = Math.min(window.innerWidth, window.screen.width);
-
-    const url = this.#addIsMobileTo(this.urlValue);
-    this.element.src = url.toString();
   }
 
   showLoading(ev) {
