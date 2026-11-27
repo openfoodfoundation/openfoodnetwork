@@ -24,6 +24,33 @@ RSpec.describe CheckoutController do
     sign_in user
   end
 
+  describe "GET /checkout" do
+    before { distributor.update!(allow_order_additions: true) }
+
+    it "first asks whether to add the cart to the customer's previous order" do
+      create(:completed_order_with_totals, user:, distributor:, order_cycle:)
+
+      get checkout_path
+
+      expect(response).to redirect_to cart_path(add_to_order: true)
+    end
+
+    it "starts checkout when the customer has no placed order in this order cycle" do
+      get checkout_path
+
+      expect(response).to redirect_to checkout_step_path(:details)
+    end
+
+    it "starts checkout when the shop doesn't allow items to be added" do
+      distributor.update!(allow_order_additions: false)
+      create(:completed_order_with_totals, user:, distributor:, order_cycle:)
+
+      get checkout_path
+
+      expect(response).to redirect_to checkout_step_path(:details)
+    end
+  end
+
   describe "PUT /checkout/:step" do
     context "with payment step" do
       let(:checkout_params) { {} }

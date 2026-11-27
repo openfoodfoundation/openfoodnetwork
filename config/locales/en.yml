@@ -678,6 +678,18 @@ en:
     destroy: "Destroy"
     rename: "Rename"
 
+  add_to_previous_order_modal_component:
+    message_one: >
+      You have already confirmed an order for this order cycle.
+      Do you want to add these products to the previous order?
+    message_many: >
+      You have already confirmed orders for this order cycle.
+      Do you want to add these products to one of them?
+    order_label: "Order"
+    order_option: "#%{number} (%{total})"
+    new_order: "No, create a new order"
+    add_to_order: "Yes, add to previous order"
+
   cart:
     add_to_order:
       added: "The products were added to your order #%{number}."

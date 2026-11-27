@@ -22,6 +22,14 @@ module Spree
                              end
     end
 
+    # The customer's placed orders in this shop and order cycle that the cart can be added to, most
+    # recent first. Subscription orders are left out: their subscription keeps them up to date.
+    def addable_orders
+      @addable_orders ||= changeable_orders
+        .select { |order| order.additions_allowed? && order.proxy_order.nil? }
+        .sort_by(&:completed_at).reverse
+    end
+
     def changeable_orders_link_path
       changeable_orders.one? ? main_app.order_path(changeable_orders.first) : account_path
     end
