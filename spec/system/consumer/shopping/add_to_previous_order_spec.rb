@@ -10,7 +10,7 @@ RSpec.describe "Adding products to a previous order" do
   let(:distributor) {
     create(:distributor_enterprise, with_payment_and_shipping: true, allow_order_additions: true)
   }
-  let(:product) { create(:product, name: "Organic carrots") }
+  let(:product) { create(:product, name: "Organic carrots", price: 10) }
   let(:variant) { product.variants.first }
   let(:order_cycle) {
     create(:simple_order_cycle, distributors: [distributor], variants: [variant])
@@ -76,5 +76,23 @@ RSpec.describe "Adding products to a previous order" do
 
     # The order they came from, not the most recent one.
     expect(page).to have_select "Order", selected: "#R111111111 ($10.00)"
+  end
+
+  it "shows the balance due when the order was already paid" do
+    # The order has one $10 item and no fees. The customer pays it in full.
+    expect(order.total).to eq 10
+    create(:payment, :completed, order:, amount: 10)
+    order.update_order!
+    expect(order.reload.payment_state).to eq "paid"
+
+    # The cart holds 2 carrots at $10.
+    within("#cart-container") { click_link "Checkout" }
+    click_button "Yes, add to previous order"
+
+    expect(page).to have_content "The products were added to your order #R111111111."
+    # $10 + $20 = $30, of which $10 is paid.
+    expect(order.reload.total).to eq 30
+    within("#amount-paid") { expect(page).to have_content "$10.00" }
+    within("#balance-due") { expect(page).to have_content "$20.00" }
   end
 end

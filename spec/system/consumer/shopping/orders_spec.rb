@@ -263,6 +263,26 @@ RSpec.describe "Order Management" do
         expect(page).not_to have_selector "tr.variant-#{item2.variant.id}"
         expect(Spree::LineItem.find_by(id: item2.id)).to be_nil
       end
+
+      it "shows the credit owed when an item is removed from a paid order" do
+        # Seven $10 items and $5 shipping, paid in full.
+        order.update_order!
+        expect(order.total).to eq 75
+        create(:payment, :completed, order:, amount: 75)
+        order.update_order!
+
+        visit order_path(order)
+        expect(page).not_to have_content "Credit Owed"
+
+        within "tr.variant-#{item2.variant.id}" do
+          click_link "delete_line_item_#{item2.id}"
+        end
+
+        expect(page).not_to have_selector "tr.variant-#{item2.variant.id}"
+        within("#amount-paid") { expect(page).to have_content "$75.00" }
+        # The removed $10 item was already paid for.
+        expect(page).to have_content "Credit Owed $-10.00"
+      end
     end
 
     context "when the shop only allows orders to be cancelled" do

@@ -59,6 +59,8 @@
             %td.text-right#customer-credit
               %span.order-total= Spree::Money.new(-1 * @paid_with_credit).to_html
 
+        = render "spree/orders/balance_rows", order: @order, delete_column: true if @order.complete?
+
         - if @order.total_tax > 0
           %tr
             %td.text-right{colspan:"3"}
