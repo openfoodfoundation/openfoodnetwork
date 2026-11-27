@@ -15,6 +15,7 @@ module Spree
         Spree::Gateway::StripeSCA
         Spree::PaymentMethod::Check
         Spree::PaymentMethod::Taler
+        Spree::PaymentMethod::Nano
       }.freeze
 
       def create
@@ -119,7 +120,9 @@ module Spree
 
       def validate_payment_method_provider
         valid_payment_methods = PAYMENT_METHODS
-        return if valid_payment_methods.include?(params[:payment_method][:type])
+        type = params[:payment_method][:type]
+        return if valid_payment_methods.include?(type) &&
+                  (type != "Spree::PaymentMethod::Nano" || show_nano?)
 
         flash[:error] = Spree.t(:invalid_payment_provider)
         redirect_to new_admin_payment_method_path
@@ -136,8 +139,16 @@ module Spree
         providers = PAYMENT_METHODS.dup
 
         providers.delete("Spree::Gateway::StripeSCA") unless show_stripe?
+        providers.delete("Spree::PaymentMethod::Nano") unless show_nano?
 
         providers
+      end
+
+      # Nano is opt-in per instance or user with the "nano_payments" feature
+      # toggle, and stays editable where a Nano method already exists.
+      def show_nano?
+        OpenFoodNetwork::FeatureToggle.enabled?("nano_payments", spree_current_user) ||
+          @payment_method.is_a?(Spree::PaymentMethod::Nano)
       end
 
       # Show Stripe as an option if enabled, or if the
