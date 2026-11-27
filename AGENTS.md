@@ -15,21 +15,16 @@ Ruby, gems, Postgres, Redis, Node and Chrome are all needed for specs. Setup ste
 a typical machine are in `GETTING_STARTED.md`; `script/setup-debian` sets up Ubuntu
 containers as well and checks for missing tools.
 
-```bash
-bin/rails db:create db:schema:load          # dev + test DBs (user ofn / password f00d)
-```
-
 - Develop natively; the `Dockerfile` setup is too slow for active work and not maintained
 - Start the dev server with `bundle exec foreman start`
-- After pulling new migrations, run `bin/setup`
+- After pulling new code, run `bin/setup`
 
 
 ## Testing
 
 - Run rails test with `bundle exec rspec`
-- RAILS_ENV=test NODE_ENV=test bin/shakapacker # test packs; needed by system AND many request/controller specs
 - Run tests for a specific file with `bundle exec rspec spec/path/to_spec.rb`
-- Run javascript test with `npx jest` 
+- Run javascript test with `yarn jest`
 - Run AngularJs test with karma 'script/karma run'
 - Add or update tests for the code you change, even if nobody asked.
 - Prefer **request specs** over controller specs. Don't test private methods via `send`.
@@ -44,7 +39,7 @@ bin/rails db:create db:schema:load          # dev + test DBs (user ofn / passwor
   ```bash
   bundle exec haml-lint $(git diff --name-only --diff-filter=AM origin/master -- '*.haml')
   ```
-- Check JavaScript formatting with `npx prettier --check <files>` (use `--write` to fix)
+- Check JavaScript formatting with `yarn prettier --check <files>` (use `--write` to fix)
 - System specs run on **Cuprite** (Ferrum, Chrome DevTools protocol;
   `spec/system/support/cuprite_setup.rb`), not Selenium or chromedriver. `HEADLESS=false`
   shows the browser, and JS errors fail specs. Ferrum is already bundled: use it for

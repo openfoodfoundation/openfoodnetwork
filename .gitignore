@@ -22,6 +22,7 @@ tmp/
 .#*
 *~
 *.~lock.*
+dump.rdb
 tags
 .emacs.desktop
 .DS_Store
