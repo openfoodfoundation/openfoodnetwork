@@ -40,9 +40,15 @@ module Checkout
       return unless shipping_method && !shipping_method.require_ship_address?
 
       order.ship_address = order.distributor.address.clone
-      order.ship_address.firstname = @order_params[:bill_address_attributes][:firstname]
-      order.ship_address.lastname = @order_params[:bill_address_attributes][:lastname]
-      order.ship_address.phone = @order_params[:bill_address_attributes][:phone]
+
+      # The name and phone are copied from the billing address, which a partial submission
+      # may not include. Skip just the copy then; the usual validation applies.
+      bill_address = @order_params[:bill_address_attributes]
+      if bill_address.present?
+        order.ship_address.firstname = bill_address[:firstname]
+        order.ship_address.lastname = bill_address[:lastname]
+        order.ship_address.phone = bill_address[:phone]
+      end
 
       @order_params.delete(:ship_address_attributes)
     end

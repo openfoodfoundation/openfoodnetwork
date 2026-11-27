@@ -25,6 +25,27 @@ RSpec.describe CheckoutController do
   end
 
   describe "PUT /checkout/:step" do
+    context "with details step" do
+      let(:pickup) do
+        create(:shipping_method, distributors: [distributor], require_ship_address: false)
+      end
+
+      context "when a pickup shipping method is submitted without billing address" do
+        let(:params) do
+          { step: "details", shipping_method_id: pickup.id, order: { email: user.email } }
+        end
+
+        before { order.update_columns(bill_address_id: nil, ship_address_id: nil) }
+
+        it "returns 422 and some feedback instead of raising" do
+          put checkout_update_path(params)
+
+          expect(response).to have_http_status :unprocessable_entity
+          expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
+        end
+      end
+    end
+
     context "with payment step" do
       let(:checkout_params) { {} }
       let(:params) { { step: }.merge(checkout_params) }
