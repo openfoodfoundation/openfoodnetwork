@@ -1,4 +1,4 @@
-%html{ "ng-csp": "no-unsafe-eval" }
+%html{ lang: html_lang, "ng-csp": "no-unsafe-eval" }
   %head
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
@@ -13,6 +13,9 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
     = render "layouts/matomo_tag"
     = language_meta_tags
+
+    -# Before any bundle, so Bugsnag reports errors raised while they load.
+    = render "layouts/bugsnag_js"
 
     = stylesheet_pack_tag "darkswarm", media: "screen"
     = javascript_include_tag "darkswarm/all"

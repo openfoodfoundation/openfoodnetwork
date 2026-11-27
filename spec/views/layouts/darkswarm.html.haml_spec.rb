@@ -19,4 +19,20 @@ RSpec.describe "layouts/darkswarm.html.haml" do
     expect(rendered).to include('<link hreflang="es" href="http://test.host/locales/es">')
     expect(rendered).to include('<link hreflang="pt" href="http://test.host/locales/pt">')
   end
+
+  it "declares the page language" do
+    I18n.with_locale(:en_AU) { render }
+
+    expect(rendered).to include('<html lang="en-AU"')
+  end
+
+  it "starts Bugsnag before loading any JS bundle" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("BUGSNAG_JS_KEY").and_return("test-key")
+
+    render
+
+    first_bundle = rendered.index(%r{<script src="[^"]*/js/application-})
+    expect(rendered.index("Bugsnag.start")).to be < first_bundle
+  end
 end
