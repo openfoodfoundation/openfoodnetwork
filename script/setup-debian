@@ -7,7 +7,7 @@ set -e
 sudo apt update
 sudo apt install --yes\
      build-essential cmake pkg-config\
-     git\
+     curl git\
      libyaml-dev\
      libffi-dev\
      libgit2-dev\
