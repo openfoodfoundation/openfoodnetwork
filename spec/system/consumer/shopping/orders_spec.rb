@@ -233,6 +233,7 @@ RSpec.describe "Order Management" do
           quantity.fill_in with: item1.quantity + 1
         end
         expect(page).not_to have_link "Cancel Order"
+        expect(page).to have_link "Add products"
 
         click_button "Save Changes"
 
@@ -253,6 +254,7 @@ RSpec.describe "Order Management" do
           expect(quantity[:max]).to eq item1.quantity.to_s
         end
         expect(page).not_to have_link "Cancel Order"
+        expect(page).not_to have_link "Add products"
 
         within "tr.variant-#{item2.variant.id}" do
           click_link "delete_line_item_#{item2.id}"
@@ -275,6 +277,7 @@ RSpec.describe "Order Management" do
         end
         expect(page).not_to have_button "Save Changes"
         expect(page).not_to have_button "Order Saved"
+        expect(page).not_to have_link "Add products"
 
         accept_alert do
           click_link "Cancel Order"

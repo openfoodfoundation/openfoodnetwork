@@ -60,4 +60,21 @@ RSpec.describe "Adding products to a previous order" do
 
     expect(page).to have_content "The products were added to your order #R111111111."
   end
+
+  it "comes back to the shop from the order page and selects that order at checkout" do
+    create(:completed_order_with_totals, number: "R222222222", user:, distributor:,
+                                         order_cycle:, completed_at: 1.day.ago)
+
+    visit order_path(order)
+    click_link "Add products"
+
+    expect(page).to have_current_path(
+      enterprise_shop_path(distributor, order_cycle_id: order_cycle.id, add_to_order: "R111111111")
+    )
+    visit cart_path
+    within("#cart-container") { click_link "Checkout" }
+
+    # The order they came from, not the most recent one.
+    expect(page).to have_select "Order", selected: "#R111111111 ($10.00)"
+  end
 end

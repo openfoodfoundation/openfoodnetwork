@@ -41,7 +41,7 @@
         = render "spree/orders/form/cart_links"
 
 - if params[:add_to_order].present? && addable_orders.any?
-  = render AddToPreviousOrderModalComponent.new(orders: addable_orders)
+  = render AddToPreviousOrderModalComponent.new(orders: addable_orders, selected: session[:add_to_order])
 
 - if @out_of_stock_variants.present?
   = render OutOfStockModalComponent.new(id: "out-of-stock-items", variants: @out_of_stock_variants, redirect: @order.line_items.empty?)

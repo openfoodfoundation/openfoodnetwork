@@ -8,7 +8,7 @@
       - else
         %p= t(".message_many")
         = form.label :order_number, t(".order_label")
-        = form.select :order_number, order_options
+        = form.select :order_number, order_options, selected: @selected
 
       .flex.flex-justify-end
         = link_to t(".new_order"), helpers.main_app.checkout_step_path(:details), class: "button secondary"

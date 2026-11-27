@@ -1,5 +1,6 @@
+- shopping_here = current_order.nil? || current_order.distributor.nil? || current_order.distributor == @order.distributor
 .row
-  - if current_order.nil? || current_order.distributor.nil? || current_order.distributor == @order.distributor
+  - if shopping_here
     - if current_order&.line_items.present?
       = link_to main_app.cart_path, :class => "button expand" do
         = t(:order_back_to_cart)
@@ -18,6 +19,10 @@
       = link_to main_app.cancel_order_path(@order), method: :put, class: "button secondary expand", "data-confirm": t('orders_confirm_cancel') do
         %i.ofn-i_009-close
         = t(:cancel_order)
+  - if shopping_here && order.additions_allowed?
+    .columns.small-12.medium-3
+      = link_to "#{main_app.enterprise_shop_path(@order.distributor, order_cycle_id: @order.order_cycle_id, add_to_order: @order.number)}#/shop_panel", class: "button primary expand" do
+        = t(:order_add_products)
   - if order.additions_allowed? || order.removals_allowed?
     .columns.small-12.medium-3
       = button_tag :class => 'button primary expand', :id => 'update-button', "ng-disabled" => 'update_order_form.$pristine' do
