@@ -28,8 +28,9 @@ else
   if (command -v brew && brew list --versions ruby-build); then
     brew update && brew upgrade ruby-build
   else
-    # Update with git
-    git -C "$(rbenv root)"/plugins/ruby-build pull
+    # Fetch from the URL to also work on a detached or remote-less checkout.
+    git -C "$(rbenv root)"/plugins/ruby-build fetch https://github.com/rbenv/ruby-build.git master
+    git -C "$(rbenv root)"/plugins/ruby-build checkout FETCH_HEAD
   fi
 
   rbenv install
