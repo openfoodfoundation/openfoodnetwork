@@ -2,14 +2,19 @@
 
 # Inheriting from SimplerDelegator and calling super(variant) makes sure any method not defined
 # in the presenter are delagated to the variant model
+#
+# Without fees (`with_fees: false`) it presents the variant's own price, like the admin
+# product preview does without a shop and order cycle to charge fees.
 class VariantPresenter < SimpleDelegator
-  def initialize(variant:, distributor: nil, order_cycle: nil, enterprise_fee_calculator: nil)
+  def initialize(variant:, distributor: nil, order_cycle: nil, enterprise_fee_calculator: nil,
+                 with_fees: true)
     @variant = variant
     super(variant)
 
     @distributor = distributor
     @order_cycle = order_cycle
     @enterprise_fee_calculator = enterprise_fee_calculator
+    @with_fees = with_fees
   end
 
   attr_reader :variant, :distributor, :order_cycle
@@ -23,14 +28,18 @@ class VariantPresenter < SimpleDelegator
   end
 
   def price_with_fees
+    return variant.price unless @with_fees
     return variant.price + fee_breakdown.sum(&:amount) if @enterprise_fee_calculator
 
     # TODO should leave outside the variant model
     variant.price_with_fees(distributor, order_cycle)
   end
 
-  # The fees on the price, each on its own. Needs an enterprise fee calculator.
+  # The fees on the price, each on its own. Needs an enterprise fee calculator, unless there
+  # are no fees.
   def fee_breakdown
+    return [] unless @with_fees
+
     @fee_breakdown ||= @enterprise_fee_calculator.indexed_fee_breakdown_for(variant)
   end
 

@@ -76,6 +76,11 @@ module OpenFoodNetwork
       "product_grid_view_navigation" => <<~DESC,
         Preview new properties filtering, category navigation and search. Requires product_grid_view.
       DESC
+      "product-pages" => <<~DESC,
+        Link products in the shop's product list to their own page instead of
+        opening them in a modal. Activate it for a shop or for a user. The admin product
+        preview then shows the product page too, to the users managing that shop.
+      DESC
       "bulk_coop_filters" => <<~DESC,
         Filter non-bulk products from bulk co-op reports.
         When enabled for an enterprise, only products with 'group buy' enabled

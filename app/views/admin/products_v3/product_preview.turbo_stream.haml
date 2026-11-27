@@ -81,5 +81,12 @@
                       .variant-remaining-stock
                         = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand, count: variant.on_hand)
 
-          %div{ data: { "tabs-target": "content" } }
-            = render partial: "shared/product/product_details", locals: { product: @product }
+          -# Shops with product pages show the product's page instead of the product modal.
+          - if @product_view
+            -# The admin doesn't load the shop's fonts.
+            = render "shared/shop_fonts"
+            .product-page-preview{ data: { "tabs-target": "content" } }
+              = render partial: "products/product_details", locals: { product: @product, product_view: @product_view, preview: true }
+          - else
+            %div{ data: { "tabs-target": "content" } }
+              = render partial: "shared/product/product_details", locals: { product: @product }

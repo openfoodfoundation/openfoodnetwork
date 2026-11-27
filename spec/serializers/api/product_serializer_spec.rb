@@ -27,8 +27,14 @@ RSpec.describe Api::ProductSerializer do
   it "serializes various attributes" do
     expect(serializer.serializable_hash.keys).to eq [
       :id, :name, :meta_keywords, :group_buy, :notes, :description, :description_html,
-      :properties_with_values, :variants, :image
+      :properties_with_values, :to_param, :variants, :image
     ]
+  end
+
+  it "names the product like its page's URL" do
+    product.update!(name: "Garlic Bulbs")
+
+    expect(serializer.serializable_hash[:to_param]).to eq "#{product.id}-garlic-bulbs"
   end
 
   it "serializes product properties" do
