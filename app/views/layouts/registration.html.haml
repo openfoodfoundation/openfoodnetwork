@@ -14,6 +14,9 @@
     = render "layouts/matomo_tag"
     = language_meta_tags
 
+    -# Before any bundle, so Bugsnag reports errors raised while they load.
+    = render "layouts/bugsnag_js"
+
     = stylesheet_pack_tag "darkswarm", media: "screen"
     = javascript_include_tag "darkswarm/all"
     = javascript_pack_tag "application", defer: false # do not use defer because our javascript currently depend on order of execution of loaded script.

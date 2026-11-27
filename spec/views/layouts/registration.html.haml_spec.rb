@@ -25,4 +25,14 @@ RSpec.describe "layouts/registration.html.haml" do
 
     expect(rendered).to include('<html lang="en-AU"')
   end
+
+  it "starts Bugsnag before loading any JS bundle" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("BUGSNAG_JS_KEY").and_return("test-key")
+
+    render
+
+    first_bundle = rendered.index(%r{<script src="[^"]*/darkswarm/all})
+    expect(rendered.index("Bugsnag.start")).to be < first_bundle
+  end
 end
