@@ -40,7 +40,8 @@ module Api
         @variant = scope.find(params.expect(:id))
         authorize! :update, @variant
 
-        unless managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
+        if variant_params[:enterprise_id].present? &&
+           !managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
           return unauthorized
         end
 
