@@ -16,7 +16,11 @@
                 = link_to shop.name, enterprise_url_selector(shop) 
             .columns.small-4.text-right
               %h3.margin-top.distributor-balance
-                = t(".credit_available", credit: Spree::Money.new(data_loader.available_credit))
+                - available_credit = data_loader.available_credit
+                - if available_credit.negative?
+                  = t(".balance_due", amount: Spree::Money.new(-available_credit))
+                - else
+                  = t(".credit_available", credit: Spree::Money.new(available_credit))
             .columns.small-1.text-right
               %h3.margin-top
                 %i.ofn-i_005-caret-down{ "data-frontend-toggle-control-target": "chevron" }

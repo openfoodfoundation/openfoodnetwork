@@ -723,6 +723,12 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability([:credit_customer], for: Spree::Payment)
       end
 
+      it "is able to carry a balance over to the next order" do
+        is_expected.to have_ability([:carry_over_balance], for: Spree::Order)
+        is_expected.to have_ability([:bulk_carry_over_balance], for: Spree::Order)
+        is_expected.to have_ability([:carry_over_balance], for: Spree::Payment)
+      end
+
       it "should be able to read/write Shipments on a product" do
         is_expected.to have_ability([:admin, :index, :read, :create, :edit, :update, :fire],
                                     for: Spree::Shipment)

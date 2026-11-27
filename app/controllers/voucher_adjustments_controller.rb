@@ -106,7 +106,7 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def update_payment_section
-    @paid_with_credit = calculate_credit(@order)
+    load_credit_and_balance_due(@order)
 
     render cable_ready: cable_car.replace(
       selector: "#checkout-payment-methods",

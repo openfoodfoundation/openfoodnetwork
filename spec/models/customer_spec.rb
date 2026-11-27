@@ -245,6 +245,15 @@ RSpec.describe Customer do
           I18n.t("admin.customers.destroy.has_outstanding_credit")
         )
       end
+
+      it "does not destroy the customer if a balance due has been carried over" do
+        create(:customer_account_transaction, customer:, amount: -0.57)
+        expect(customer.destroy).to be false
+        expect(customer.errors[:base]).to include(
+          "Delete failed: This customer has a balance due that will be added to their next " \
+          "order. Clear it with 'Add credit' before deleting."
+        )
+      end
     end
 
     context "when customer has subscriptions" do

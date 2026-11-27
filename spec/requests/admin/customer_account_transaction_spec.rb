@@ -21,6 +21,37 @@ RSpec.describe Admin::CustomerAccountTransactionController do
       expect(response).to render_template("admin/customer_account_transaction/index")
     end
 
+    context "when a balance due has been carried over" do
+      before { create(:customer_account_transaction, customer:, amount: -0.57) }
+
+      it "shows the balance due instead of a negative available credit" do
+        get admin_customer_customer_account_transaction_index_path(customer),
+            params: { format: :turbo_stream }
+
+        expect(response.body).to include("Balance due: $0.57")
+        expect(response.body).not_to include("Available credit")
+      end
+
+      it "keeps the 'Carried over' label on the Customers page credit cell" do
+        get admin_customer_customer_account_transaction_index_path(customer),
+            params: { format: :turbo_stream }
+
+        expect(response.body).to include("Carried over")
+      end
+    end
+
+    context "when the customer has credit" do
+      before { create(:customer_account_transaction, customer:, amount: 5.00) }
+
+      it "shows the available credit without a 'Carried over' label" do
+        get admin_customer_customer_account_transaction_index_path(customer),
+            params: { format: :turbo_stream }
+
+        expect(response.body).to include("Available credit: $5.00")
+        expect(response.body).not_to include("Carried over")
+      end
+    end
+
     context "with a non authorized customer" do
       let(:customer) { create(:customer) }
 

@@ -768,6 +768,67 @@ RSpec.describe Spree::Admin::OrdersController do
     end
   end
 
+  describe "#bulk_carry_over_balance" do
+    let(:order) { create(:order_with_totals, payment_state: "balance_due", distributor:) }
+    let(:order1) { create(:order_with_totals, payment_state: "balance_due", distributor:) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:service_response) { instance_double(Orders::CustomerCreditService::Response) }
+    let(:format) { :turbo_stream }
+
+    before do
+      sign_in distributor.owner
+    end
+
+    it "carries over the balance of the given orders" do
+      credit_service_mock = mock_credit_service_for(orders: [order, order1])
+
+      allow(service_response).to receive(:failure?).and_return(false)
+      expect(credit_service_mock).to receive(:carry_balance).with(user: distributor.owner)
+        .and_return(service_response).exactly(2).times
+
+      post(
+        "/admin/orders/bulk_carry_over_balance",
+        params: { bulk_ids: [order.id, order1.id], format: }
+      )
+
+      expect(response).to have_http_status :ok
+      expect(response.body).to include("order_#{order.id}", "order_#{order1.id}")
+    end
+
+    context "when an order can't be carried over" do
+      it "displays an error naming the order" do
+        credit_service_mock = mock_credit_service_for(orders: [order])
+
+        allow(service_response).to receive(:failure?).and_return(true)
+        allow(service_response).to receive(:message).and_return("No balance due")
+        expect(credit_service_mock).to receive(:carry_balance).and_return(service_response)
+
+        post("/admin/orders/bulk_carry_over_balance", params: { bulk_ids: [order.id], format: })
+
+        expect(response).to have_http_status :ok
+        expect(flash[:error]).to eq(
+          "Order ##{order.number} could not be carried over : No balance due"
+        )
+        expect(response.body).not_to include("order_#{order.id}")
+      end
+    end
+
+    context "with a non editable order" do
+      let(:other_order) {
+        create(:order_with_totals, payment_state: "balance_due",
+                                   distributor: create(:distributor_enterprise))
+      }
+
+      it "doesn't carry over the order's balance" do
+        expect(Orders::CustomerCreditService).not_to receive(:new).with(other_order)
+
+        post(
+          "/admin/orders/bulk_carry_over_balance", params: { bulk_ids: [other_order.id], format: }
+        )
+      end
+    end
+  end
+
   def mock_credit_service_for(orders: [])
     credit_service_mock = instance_double(Orders::CustomerCreditService)
     orders.each do |order|

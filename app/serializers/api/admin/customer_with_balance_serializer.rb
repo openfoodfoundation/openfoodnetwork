@@ -7,7 +7,8 @@ module Api
     # columns to instance methods. This way, the `balance_value` alias on that class ends up being
     # `object.balance_value` here.
     class CustomerWithBalanceSerializer < CustomerSerializer
-      attributes :balance, :balance_status, :available_credit, :available_credit_url
+      attributes :balance, :balance_status, :available_credit, :available_credit_url,
+                 :credit_status
 
       delegate :balance_value, :credit_value, to: :object
 
@@ -27,6 +28,11 @@ module Api
 
       def available_credit
         Spree::Money.new(object.credit_value).to_s
+      end
+
+      # A negative credit balance is a balance due carried over to the customer's next order
+      def credit_status
+        object.credit_value.negative? ? "carried_over" : ""
       end
 
       def available_credit_url

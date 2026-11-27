@@ -7,6 +7,7 @@ module Spree
 
       before_action :set_order_id, only: [:create, :update]
       before_action :skip_changing_canceled_orders, only: [:create, :update]
+      before_action :skip_changing_balance_due, only: [:edit, :update, :destroy]
       after_action :update_order, only: [:create, :update, :destroy]
       after_action :apply_tax, only: [:create, :update]
 
@@ -39,6 +40,15 @@ module Spree
 
         flash[:error] = t("admin.adjustments.skipped_changing_canceled_order")
         redirect_to admin_order_adjustments_path(@order) if @order.canceled?
+      end
+
+      # A balance due carried over from a previous order is also recorded on the customer's account,
+      # so changing it here would put the two out of step.
+      def skip_changing_balance_due
+        return unless @adjustment&.originator_type == "Customer"
+
+        flash[:error] = t("admin.adjustments.cannot_change_balance_due")
+        redirect_to admin_order_adjustments_path(@order)
       end
 
       def apply_tax

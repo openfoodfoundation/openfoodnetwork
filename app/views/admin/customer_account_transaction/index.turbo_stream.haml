@@ -1,10 +1,15 @@
 = turbo_stream.update "customer-credit-#{@customer.id}" do
+  - if @available_credit.negative?
+    %span.state.balance_due.white-space-nowrap= t("admin.customers.index.carried_over")
   = Spree::Money.new(@available_credit)
 
 = turbo_stream.update "customer-account-transactions-modal-container" do
   = render ModalComponent.new(id: "customer-account-transactions-modal", instant: true, modal_class: "big") do
     %h3
-      = t(".available_credit", available_credit: Spree::Money.new(@available_credit))
+      - if @available_credit.negative?
+        = t(".balance_due", balance_due: Spree::Money.new(-@available_credit))
+      - else
+        = t(".available_credit", available_credit: Spree::Money.new(@available_credit))
 
     #add-credit-container
       %a.button.icon-plus.margin-bottom-20{ href: new_admin_customer_customer_account_transaction_path(@customer), data: { turbo: true, turbo_stream: "" } }

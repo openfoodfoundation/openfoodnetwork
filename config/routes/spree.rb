@@ -72,6 +72,7 @@ scope module: 'spree' do
 
 
     post "orders/bulk_credit", to: "orders#bulk_credit"
+    post "orders/bulk_carry_over_balance", to: "orders#bulk_carry_over_balance"
     post "orders/resend_confirmation_emails", to: "orders#resend_confirmation_emails"
     post "orders/send_invoices", to: "orders#send_invoices"
     post "orders/bulk_cancel", to: "orders#bulk_cancel"
@@ -97,6 +98,7 @@ scope module: 'spree' do
       end
 
       post "payments/credit_customer", to: "payments#credit_customer"
+      post "payments/carry_over_balance", to: "payments#carry_over_balance"
 
       resources :payments, only: [:index, :show, :new, :create] do
         member do

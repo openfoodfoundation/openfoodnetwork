@@ -19,7 +19,7 @@ module Spree
       # We should only void complete payment, otherwise we will be refunding credit that was
       # not used in the first place.
       def can_internal_void?(payment)
-        payment.state == "completed"
+        payment.state == "completed" && !settled_carry_over?(payment.id)
       end
 
       # Main method called by Spree::Payment::Processing during checkout
@@ -67,6 +67,9 @@ module Spree
         customer = Customer.find_by(id: options[:customer_id])
         return error_response("customer_not_found") if customer.nil?
         return error_response("missing_payment") if options[:payment_id].nil?
+        if settled_carry_over?(options[:payment_id])
+          return error_response("balance_already_settled")
+        end
 
         customer.with_lock do
           description = I18n.t(
@@ -96,6 +99,17 @@ module Spree
       end
 
       private
+
+      # A payment that carried an order's balance due over to the customer's account (see
+      # Orders::CustomerCreditService#carry_balance) is the only one that leaves the account
+      # negative. Once the customer no longer owes that balance (they paid it on a later order, or
+      # it was waived), voiding the payment would give them the money back a second time.
+      def settled_carry_over?(payment_id)
+        debt = CustomerAccountTransaction.where(payment_id:).where(amount: ...0).order(:id).first
+        return false if debt.nil? || !debt.balance.negative?
+
+        debt.customer.outstanding_carry_over_transactions.exclude?(debt)
+      end
 
       def error_response(translation_key)
         message = I18n.t(translation_key, scope: "credit_payment_method.errors")

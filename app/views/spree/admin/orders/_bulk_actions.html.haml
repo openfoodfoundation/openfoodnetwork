@@ -25,3 +25,6 @@
         .menu_item
           %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#turboPerform", "data-bulk-actions-url-value": "orders/bulk_credit" }
             = t('spree.admin.orders.index.credit_orders')
+        .menu_item
+          %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#turboPerform", "data-bulk-actions-url-value": "orders/bulk_carry_over_balance" }
+            = t('spree.admin.orders.index.carry_over_balance')
