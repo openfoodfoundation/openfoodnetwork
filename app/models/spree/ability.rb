@@ -11,6 +11,12 @@ module Spree
       :search_suppliers, :search_order_cycles, :search_order_customers
     ].freeze
 
+    ENTERPRISE_REPORTS = [
+      :bulk_coop, :customers, :enterprise_fee_summary, :order_cycle_management,
+      :orders_and_distributors, :orders_and_fulfillment, :packing, :payments,
+      :products_and_inventory, :sales_tax, :suppliers, :xero_invoices
+    ].freeze
+
     def initialize(user)
       clear_aliased_actions
 
@@ -62,6 +68,7 @@ module Spree
       end
       add_relationship_management_abilities user if can_manage_relationships? user
       add_customer_account_transaction_abilities user if can_manage_enterprises? user
+      add_report_abilities if can_manage_enterprises? user
     end
 
     # New users have no enterprises.
@@ -300,13 +307,6 @@ module Spree
            :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
       can [:admin, :index, :import], ::Admin::DfcProductImportsController
-
-      # Reports page
-      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS],
-          ::Admin::ReportsController
-      can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
-           :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
-           :packing, :enterprise_fee_summary, :bulk_coop, :suppliers], :report
     end
 
     def add_order_cycle_management_abilities(user)
@@ -437,12 +437,6 @@ module Spree
         (user.enterprises & shipping_method.distributors).any?
       end
 
-      # Reports page
-      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS], ::Admin::ReportsController
-      can [:admin, :customers, :group_buys, :sales_tax, :payments,
-           :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
-           :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report
-
       can [:create], Customer
       can [:admin, :index, :update,
            :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
@@ -503,6 +497,11 @@ module Spree
       can [:admin, :index, :create], CustomerAccountTransaction
       can [:create_customer_account_transaction], Customer,
           enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    end
+
+    def add_report_abilities
+      can [:admin, :index, :show, :create, *REPORTS_SEARCH_ACTIONS], ::Admin::ReportsController
+      can [:admin, :show, :create, *ENTERPRISE_REPORTS], :report
     end
   end
 end

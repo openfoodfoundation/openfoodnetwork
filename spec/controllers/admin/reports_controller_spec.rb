@@ -154,13 +154,10 @@ RSpec.describe Admin::ReportsController do
     before { controller_login_as_enterprise_user [supplier1] }
 
     describe 'index' do
-      it "loads reports relevant to producers" do
+      it "lists every report except the super-admin-only ones" do
         spree_get :index
 
-        report_types = assigns(:reports).keys
-        expect(report_types).to include :orders_and_fulfillment,
-                                        :products_and_inventory, :packing # and others
-        expect(report_types).not_to include :sales_tax
+        expect(assigns(:reports).keys).to match_array Spree::Ability::ENTERPRISE_REPORTS
       end
     end
 

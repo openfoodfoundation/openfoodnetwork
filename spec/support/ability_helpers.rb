@@ -120,3 +120,24 @@ shared_examples "allows access to Enterprise Fee Summary" do
     have_ability([:show, :index], for: Admin::ReportsController)
   end
 end
+
+# Expects `user` to be an enterprise manager who is not a super admin.
+shared_examples "can run every enterprise report" do
+  let(:ability) { Spree::Ability.new(user) }
+
+  it "can open the reports page" do
+    expect(user).to have_ability([:admin, :index, :show, :create], for: Admin::ReportsController)
+  end
+
+  Spree::Ability::ENTERPRISE_REPORTS.each do |report_type|
+    it "can run the #{report_type} report" do
+      expect(ability).to be_able_to(report_type, :report)
+    end
+  end
+
+  [:revenues_by_hub, :users_and_enterprises].each do |report_type|
+    it "cannot run the super-admin-only #{report_type} report" do
+      expect(ability).not_to be_able_to(report_type, :report)
+    end
+  end
+end
