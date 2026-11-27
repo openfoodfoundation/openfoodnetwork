@@ -160,7 +160,7 @@ RSpec.describe Spree::Admin::PaymentsController do
         preferred_enterprise_id: create(:enterprise).id
       )
     end
-    let(:order) { create(:order, state: 'complete') }
+    let(:order) { create(:order, state: 'complete', distributor: shop) }
     let(:payment) do
       create(:payment, order:, payment_method:, amount: order.total)
     end

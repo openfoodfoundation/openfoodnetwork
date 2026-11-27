@@ -27,14 +27,20 @@ module Api
       end
 
       def update
-        authorize! :admin, order
+        authorize! :update, order
 
         order.update!(order_params)
         render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
       end
 
       def ship
-        authorize! :admin, order
+        # Check if we can update the order, so that we have at least one authorize! call if the
+        # order doesn't have any shipments. Otherwise it would result in an error because of
+        # `check_authorization` in `Api::V0::BaseController`
+        authorize! :update, order
+        order.shipments.each do |shipment|
+          authorize! :update, shipment
+        end
 
         if order.ship
           render json: order.reload, serializer: Api::Admin::OrderSerializer, status: :ok
@@ -45,7 +51,7 @@ module Api
       end
 
       def capture
-        authorize! :admin, order
+        authorize! :capture, order
 
         payment_capture = Orders::CaptureService.new(order)
 

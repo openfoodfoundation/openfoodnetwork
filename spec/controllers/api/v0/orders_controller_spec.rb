@@ -317,6 +317,57 @@ RSpec.describe Api::V0::OrdersController do
     end
   end
 
+  describe "#update" do
+    let(:order) {
+      create(:completed_order_with_totals, order_cycle:, distributor: )
+    }
+
+    before do
+      allow(controller).to receive(:spree_current_user).and_return(distributor.owner)
+    end
+
+    it "updates the order's note" do
+      put :update, params: { id: order.number, note: "This is a note" }
+
+      expect_order
+      expect(order.reload.note).to eq("This is a note")
+    end
+
+    context "with non allowed parameter" do
+      it "ignores non allowed parameter" do
+        expect {
+          put :update, params: { id: order.number, note: "This is a note",
+                                 distributor_id: create(:distributor_enterprise).id }
+        }.not_to change { order.reload.distributor.id }
+
+        expect_order
+        expect(order.reload.note).to eq("This is a note")
+      end
+    end
+
+    context "with a non existing order" do
+      it "returns not found" do
+        put :update, params: { id: "number", note: "This is note" }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "with an order the user doesn't manage" do
+      before do
+        allow(controller).to receive(:spree_current_user).and_return(create(:enterprise_user))
+      end
+
+      it "returns unauthorized" do
+        expect {
+          put :update, params: { id: order.number, note: "This is note" }
+        }.not_to change { order.reload.note }
+
+        assert_unauthorized!
+      end
+    end
+  end
+
   describe "#capture and #ship actions" do
     let(:user) { create(:user) }
     let(:product) { create(:simple_product) }
@@ -385,6 +436,19 @@ RSpec.describe Api::V0::OrdersController do
       end
     end
 
+    context "with an order the user doesn't manage" do
+      before do
+        allow(controller).to receive(:spree_current_user).and_return(create(:enterprise_user))
+      end
+
+      it "returns unauthorized" do
+        put :capture, params: { id: order.number }
+
+        assert_unauthorized!
+        expect(order.reload.pending_payments.empty?).to be(false)
+      end
+    end
+
     describe "#ship" do
       before do
         order.payments.first.capture!
@@ -395,6 +459,29 @@ RSpec.describe Api::V0::OrdersController do
 
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect_order
+      end
+
+      context "with no shipment" do
+        it "does nothing" do
+          order.shipments.destroy_all
+
+          put :ship, params: { id: order.number }
+
+          expect_order
+        end
+      end
+
+      context "with an order the user doesn't manage" do
+        before do
+          allow(controller).to receive(:spree_current_user).and_return(create(:enterprise_user))
+        end
+
+        it "returns unauthorized" do
+          put :ship, params: { id: order.number }
+
+          assert_unauthorized!
+          expect(order.reload.shipments.any?(&:shipped?)).to be(false)
+        end
       end
     end
   end
