@@ -16,6 +16,8 @@ gem "image_processing"
 gem "mini_magick" # required by image_processing
 
 gem 'activemerchant'
+gem 'benchmark' # required by activemerchant but not declared
+
 gem 'angular-rails-templates'
 gem 'ransack'
 gem 'responders'
