@@ -2,8 +2,9 @@
 .row
   - if shopping_here
     - if current_order&.line_items.present?
-      = link_to main_app.cart_path, :class => "button expand" do
-        = t(:order_back_to_cart)
+      .columns.small-12.medium-3
+        = link_to main_app.cart_path, :class => "button expand" do
+          = t(:order_back_to_cart)
     - else
       .columns.small-12.medium-3
         = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop_panel", class: "button expand" do
