@@ -247,6 +247,23 @@ RSpec.describe "Cart" do
       expect(response.body).to include "now only has 1 remaining."
     end
 
+    it "keeps the cart when an item sells out between the stock check and adding it" do
+      variant.update!(on_hand: 1)
+      # The stock check still saw enough stock: the item sold out right after it.
+      allow(Orders::CheckStockService).to receive(:new)
+        .and_return(instance_double(Orders::CheckStockService, sufficient_stock?: true))
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(cart.reload.line_items.first.quantity).to eq 2
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+
+      follow_redirect!
+      expect(response.body).to include "An item in your cart has become unavailable. " \
+                                       "Please update the selected quantities."
+    end
+
     it "removes an item that is now out of stock and shows what changed instead" do
       variant.update!(on_hand: 0)
 
