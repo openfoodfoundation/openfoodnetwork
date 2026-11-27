@@ -101,7 +101,7 @@
           min-width: var(--button-width);
           padding-right: 1rem;
 
-          @include mixins.breakpoint(tablet) {
+          @include mixins.breakpoint(phablet) {
             @include hidden-navigation-text;
           }
         }
@@ -110,7 +110,7 @@
           min-width: var(--button-width);
           padding-left: 1rem;
 
-          @include mixins.breakpoint(tablet) {
+          @include mixins.breakpoint(phablet) {
             @include hidden-navigation-text;
           }
         }

@@ -3,7 +3,7 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["loading", "products"];
   static values = {
-    maxWidth: { type: Number, default: 500 },
+    maxWidth: { type: Number, default: 640 },
     url: String,
   };
 
