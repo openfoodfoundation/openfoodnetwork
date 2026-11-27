@@ -959,6 +959,7 @@ DEPENDENCIES
   angularjs-rails (= 1.8.0)
   arel-helpers (~> 2.12)
   aws-sdk-s3
+  benchmark
   bigdecimal
   bootsnap
   bugsnag
