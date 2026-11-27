@@ -92,6 +92,18 @@ RSpec.describe Api::V0::VariantsController do
     let(:product_other) { create(:product, enterprise_id: supplier_other.id) }
 
     describe "#create" do
+      it "creates a new variant" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier.id },
+                          product_id: product.id
+
+        expect(response).to have_http_status(:created)
+        expect(json_response["sku"]).to eq("12345")
+        expect(Spree::Variant.where(enterprise: supplier).last.sku).to eq("12345")
+      end
+
       it "cannot create a variant for another enterprise's product" do
         api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
                                      variant_unit_scale: 1, unit_description: "kg", price: "10.00",
@@ -101,15 +113,51 @@ RSpec.describe Api::V0::VariantsController do
 
         assert_unauthorized!
       end
+
+      it "cannot create a variant for another product" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier.id },
+                          product_id: product_other.id
+
+        assert_unauthorized!
+      end
+
+      it "cannot create a variant for another enterprise" do
+        api_post :create, variant: { sku: "12345", unit_value: "1", variant_unit: "weight",
+                                     variant_unit_scale: 1, unit_description: "kg", price: "10.00",
+                                     primary_taxon_id: create(:taxon).id,
+                                     enterprise_id: supplier_other.id },
+                          product_id: product.id
+
+        assert_unauthorized!
+      end
     end
 
     describe "#update" do
+      it "updates the variant" do
+        api_put :update, id: variant.id, variant: { sku: "999", enterprise_id: supplier.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response["sku"]).to eq("999")
+        expect(variant.reload.sku).to eq("999")
+      end
+
       it "cannot update a variant for another enterprise's product" do
         api_put :update, id: variant_other.id, variant: { sku: "12345",
                                                           enterprise_id: supplier.id }
 
         assert_unauthorized!
         expect(variant_other.reload.enterprise).not_to eq supplier
+      end
+
+      it "cannot update the variant's enterprise to an enterprise the user doesn't manage" do
+        api_put :update, id: variant.id, variant: { sku: "12345",
+                                                    enterprise_id: supplier_other.id }
+
+        assert_unauthorized!
+        expect(variant.reload.enterprise).not_to eq(supplier_other)
       end
 
       it "responds with error when variant not found" do

@@ -14,12 +14,13 @@ module Api
       end
 
       def show
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         render json: @variant, serializer: Api::VariantSerializer
       end
 
       def create
         authorize! :create, Spree::Variant
+        authorize! :update, @product
 
         # Check if user is permitted to create variants for the specified enterprise
         unless managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
@@ -36,19 +37,24 @@ module Api
 
       def update
         authorize! :update, Spree::Variant
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         authorize! :update, @variant
+
+        if variant_params[:enterprise_id].present? &&
+           !managed_product_enterprises.where(id: variant_params[:enterprise_id]).exists?
+          return unauthorized
+        end
 
         if @variant.update(variant_params)
           render json: @variant, serializer: Api::VariantSerializer, status: :ok
         else
-          invalid_resource!(@product)
+          invalid_resource!(@variant)
         end
       end
 
       def destroy
         authorize! :delete, Spree::Variant
-        @variant = scope.find(params[:id])
+        @variant = scope.find(params.expect(:id))
         authorize! :delete, @variant
 
         VariantDeleter.new.delete(@variant)
