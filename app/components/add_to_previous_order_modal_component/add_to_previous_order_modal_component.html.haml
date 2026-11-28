@@ -1,6 +1,6 @@
 %div{ id: @id, "data-controller": @data_controller, "data-action": @data_action, "data-modal-instant-value": @instant }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
-  .reveal-modal.fade.modal-component{ "data-modal-target": "modal", class: @modal_class }
+  .reveal-modal.fade.modal-component.add-to-previous-order-modal{ "data-modal-target": "modal", class: @modal_class }
     = form_with url: helpers.main_app.add_to_order_cart_path do |form|
       - if @orders.one?
         %p= t(".message_one")
@@ -10,6 +10,6 @@
         = form.label :order_number, t(".order_label")
         = form.select :order_number, order_options, selected: @selected
 
-      .flex.flex-justify-end
+      .add-to-previous-order-actions
         = link_to t(".new_order"), helpers.main_app.checkout_step_path(:details), class: "button secondary"
-        = form.submit t(".add_to_order"), class: "button primary"
+        = form.button t(".add_to_order"), class: "button primary"

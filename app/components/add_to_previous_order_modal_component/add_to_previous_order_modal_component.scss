@@ -1,0 +1,27 @@
+@use "../../webpacker/css/darkswarm/mixins" as m;
+
+// The shop's modals leave room for long content: a scrollbar and a white bottom border. This
+// popup is short, so it fits its content.
+.reveal-modal.add-to-previous-order-modal {
+  overflow-y: auto;
+  border-bottom: 0;
+
+  select {
+    margin-bottom: 0;
+  }
+}
+
+.add-to-previous-order-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  .button {
+    margin: 0;
+  }
+
+  @include m.breakpoint(phablet) {
+    flex-direction: column;
+  }
+}
