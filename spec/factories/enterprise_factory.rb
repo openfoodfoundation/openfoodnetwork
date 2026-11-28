@@ -35,6 +35,13 @@ FactoryBot.define do
     promo_image { Rack::Test::UploadedFile.new('spec/fixtures/files/promo.png', 'image/png') }
   end
 
+  # Customers can add items to, remove items from and cancel their placed orders.
+  trait :allowing_all_order_changes do
+    allow_order_additions { true }
+    allow_order_removals { true }
+    allow_order_cancellation { true }
+  end
+
   factory :supplier_enterprise, parent: :enterprise do
     is_primary_producer { true }
     sells { "none" }
@@ -64,7 +71,9 @@ FactoryBot.define do
 
   factory :distributor_enterprise_with_tax, parent: :distributor_enterprise do
     charges_sales_tax { true }
-    allow_order_changes { true }
+    allow_order_additions { true }
+    allow_order_removals { true }
+    allow_order_cancellation { true }
     abn { "222333444" }
     acn { "555666777" }
   end

@@ -33,29 +33,7 @@
         %td.text-right.total#customer-credit
           %strong
             = Spree::Money.new(-1 * @paid_with_credit).to_html
-    %tr.total
-      %td.text-right{colspan: "3"}
-        %strong
-          = t :order_amount_paid
-      %td.text-right.total#amount-paid
-        %strong
-          = Spree::Money.new(@payment_total).to_html
-  - if order.outstanding_balance.positive?
-    %tr.total
-      %td.text-right{colspan: "3"}
-        %h5.not-paid
-          = t :order_balance_due
-      %td.text-right.total.not-paid
-        %h5.not-paid#balance-due
-          = order.display_outstanding_balance.to_html
-  - if order.outstanding_balance.negative?
-    %tr.total
-      %td.text-right{colspan: "3"}
-        %h5
-          = t :credit_owed
-      %td.text-right.total
-        %h5
-          = order.display_outstanding_balance.to_html
+  = render "spree/orders/balance_rows", order:
 
   - if order.total_tax.positive?
     #tax

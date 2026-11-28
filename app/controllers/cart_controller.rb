@@ -45,7 +45,46 @@ class CartController < BaseController
     end
   end
 
+  # Adds the cart's items to one of the customer's placed orders, instead of checking out.
+  def add_to_order
+    cart = current_order(true)
+    # Only the customer's own orders. The service checks the rest, e.g. that the shop allows it.
+    order = spree_current_user&.orders&.find_by(number: params[:order_number])
+    return refuse_adding_to_order if order.nil?
+
+    OrderLocker.lock_order_and_variants(cart) do
+      next if reduce_cart_to_stock?(cart)
+
+      service = Orders::AddCartToOrderService.new(cart:, order:)
+      if service.call
+        flash[:success] = t(".added", number: order.number)
+        redirect_to order_path(order)
+      elsif service.error == :insufficient_stock
+        # An item sold out after the stock check: the cart page lists what's no longer available.
+        redirect_to cart_path
+      else
+        refuse_adding_to_order
+      end
+    end
+  end
+
   private
+
+  # Like checkout, reduces or removes the items that sold out since they were put in the cart.
+  # The cart page then tells the customer what changed. Returns true if anything changed.
+  def reduce_cart_to_stock?(cart)
+    stock_check = Orders::CheckStockService.new(order: cart)
+    return false if stock_check.sufficient_stock?
+
+    session[:out_of_stock_variant_ids] = stock_check.update_line_items.map(&:id)
+    redirect_to cart_path
+    true
+  end
+
+  def refuse_adding_to_order
+    flash[:error] = t(".not_added")
+    redirect_to cart_path
+  end
 
   def render_cart_streams(order, capped_variants)
     order.line_items.reload

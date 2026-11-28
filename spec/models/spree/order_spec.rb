@@ -173,7 +173,7 @@ RSpec.describe Spree::Order do
     before do
       allow(order).to receive(:complete?).and_return(complete)
       allow(order).to receive(:shipped?).and_return(shipped)
-      allow_any_instance_of(Enterprise).to receive(:allow_order_changes?).and_return(
+      allow_any_instance_of(Enterprise).to receive(:allows_order_changes?).and_return(
         distributor_allow_changes
       )
       allow_any_instance_of(OrderCycle).to receive(:open?).and_return(order_cycle_open)
@@ -222,6 +222,121 @@ RSpec.describe Spree::Order do
       let(:order) { build(:order, distributor: build(:distributor_enterprise), order_cycle: nil) }
 
       it { is_expected.to eq(false) }
+    end
+  end
+
+  describe "kinds of order changes" do
+    let(:distributor) { build(:distributor_enterprise) }
+    let(:order_cycle) { build(:simple_order_cycle, coordinator: distributor) }
+    let(:order) {
+      build(:order, state: "complete", completed_at: Time.zone.now, distributor:, order_cycle:)
+    }
+
+    describe "#additions_allowed?" do
+      it "is true when the shop allows items to be added" do
+        distributor.allow_order_additions = true
+
+        expect(order.additions_allowed?).to be true
+      end
+
+      it "is false when the shop only allows other changes" do
+        distributor.allow_order_removals = true
+        distributor.allow_order_cancellation = true
+
+        expect(order.additions_allowed?).to be false
+      end
+
+      it "is false once the order cycle has closed" do
+        distributor.allow_order_additions = true
+        order_cycle.orders_close_at = 1.minute.ago
+
+        expect(order.additions_allowed?).to be false
+      end
+    end
+
+    describe "#removals_allowed?" do
+      it "is true when the shop allows items to be removed" do
+        distributor.allow_order_removals = true
+
+        expect(order.removals_allowed?).to be true
+      end
+
+      it "is false when the shop only allows other changes" do
+        distributor.allow_order_additions = true
+        distributor.allow_order_cancellation = true
+
+        expect(order.removals_allowed?).to be false
+      end
+
+      it "is false once the order cycle has closed" do
+        distributor.allow_order_removals = true
+        order_cycle.orders_close_at = 1.minute.ago
+
+        expect(order.removals_allowed?).to be false
+      end
+    end
+
+    describe "#cancellation_allowed?" do
+      it "is true when the shop allows orders to be cancelled" do
+        distributor.allow_order_cancellation = true
+
+        expect(order.cancellation_allowed?).to be true
+      end
+
+      it "is false when the shop only allows other changes" do
+        distributor.allow_order_additions = true
+        distributor.allow_order_removals = true
+
+        expect(order.cancellation_allowed?).to be false
+      end
+
+      it "is false once the order cycle has closed" do
+        distributor.allow_order_cancellation = true
+        order_cycle.orders_close_at = 1.minute.ago
+
+        expect(order.cancellation_allowed?).to be false
+      end
+    end
+  end
+
+  describe "#quantity_changes_allowed?" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:order) {
+      create(:completed_order_with_totals, line_items_count: 2, distributor:, order_cycle:)
+    }
+    let(:line_item) { order.line_items.first }
+
+    it "allows a raised quantity when the shop allows items to be added" do
+      distributor.update!(allow_order_additions: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity + 1)).to be true
+    end
+
+    it "refuses a raised quantity when the shop doesn't allow items to be added" do
+      distributor.update!(allow_order_removals: true, allow_order_cancellation: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity + 1)).to be false
+    end
+
+    it "allows a lowered quantity when the shop allows items to be removed" do
+      distributor.update!(allow_order_removals: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => 0)).to be true
+    end
+
+    it "refuses a lowered quantity when the shop doesn't allow items to be removed" do
+      distributor.update!(allow_order_additions: true, allow_order_cancellation: true)
+
+      expect(order.quantity_changes_allowed?(line_item.id => 0)).to be false
+    end
+
+    it "allows unchanged quantities even when the shop allows no changes" do
+      expect(order.quantity_changes_allowed?(line_item.id => line_item.quantity)).to be true
+    end
+
+    it "treats line items left out as unchanged" do
+      expect(order.quantity_changes_allowed?({})).to be true
     end
   end
 

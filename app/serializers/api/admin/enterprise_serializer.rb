@@ -11,12 +11,17 @@ module Api
                  :preferred_shopfront_order_cycle_order, :show_customer_names_to_suppliers,
                  :show_customer_contacts_to_suppliers,
                  :preferred_shopfront_product_sorting_method, :owner, :contact, :users,
-                 :require_login, :allow_guest_orders, :allow_order_changes,
+                 :require_login, :allow_guest_orders, :allow_order_additions,
+                 :allow_order_removals, :allow_order_cancellation,
                  :logo, :promo_image, :terms_and_conditions,
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
                  :visible, :hide_ofn_navigation, :white_label_logo,
                  :white_label_logo_link, :external_billing_id
+
+      # Kept for API clients from before the three order change permissions: true when customers
+      # can make any change to their orders.
+      attribute :allows_order_changes?, key: :allow_order_changes
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer

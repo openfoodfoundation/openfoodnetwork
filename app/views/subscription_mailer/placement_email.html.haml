@@ -5,7 +5,7 @@
   = t("email_so_placement_explainer_html")
 
   - if @order.user.present?
-    - allow_changes = !!@order.distributor.allow_order_changes?
+    - allow_changes = !!@order.distributor.allows_order_changes?
     = t("email_so_edit_#{allow_changes}_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
       order_url: order_url(@order))

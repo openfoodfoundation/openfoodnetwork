@@ -9,7 +9,7 @@ module Spree
     def changeable_orders
       # Only returns open order for the current user + shop + oc combo
       @changeable_orders ||= if spree_current_user &&
-                                current_order_cycle && current_distributor&.allow_order_changes?
+                                current_order_cycle && current_distributor&.allows_order_changes?
 
                                Spree::Order.complete.where(
                                  state: 'complete',
@@ -20,6 +20,14 @@ module Spree
                              else
                                []
                              end
+    end
+
+    # The customer's placed orders in this shop and order cycle that the cart can be added to, most
+    # recent first. Subscription orders are left out: their subscription keeps them up to date.
+    def addable_orders
+      @addable_orders ||= changeable_orders
+        .select { |order| order.additions_allowed? && order.proxy_order.nil? }
+        .sort_by(&:completed_at).reverse
     end
 
     def changeable_orders_link_path

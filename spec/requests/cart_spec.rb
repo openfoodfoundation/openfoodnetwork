@@ -199,4 +199,112 @@ RSpec.describe "Cart" do
       expect(response.body).to include 'target="cart-sidebar"'
     end
   end
+
+  describe "POST /cart/add_to_order" do
+    let(:user) { create(:user) }
+    let(:distributor) {
+      create(:distributor_enterprise, with_payment_and_shipping: true, allow_order_additions: true)
+    }
+    let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
+    let(:order_cycle) {
+      create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+    }
+    let(:order) {
+      create(:completed_order_with_totals, number: "R123456789", user:, distributor:, order_cycle:)
+    }
+    let(:cart) { create(:order, user:, distributor:, order_cycle:) }
+
+    before do
+      create(:line_item, order: cart, variant:, quantity: 2)
+      pick_order(cart)
+      sign_in user
+    end
+
+    def add_to_order(order)
+      post add_to_order_cart_path, params: { order_number: order.number }
+    end
+
+    it "adds the cart's items to the order and shows the order" do
+      add_to_order(order)
+
+      expect(response).to redirect_to order_path(order)
+      expect(flash[:success]).to eq "The products were added to your order #R123456789."
+      expect(order.reload.find_line_item_by_variant(variant).quantity).to eq 2
+      expect(cart.reload.line_items).to be_empty
+    end
+
+    it "reduces an item that sold out in the meantime and shows what changed instead" do
+      variant.update!(on_hand: 1)
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(cart.reload.line_items.first.quantity).to eq 1
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+
+      follow_redirect!
+      expect(response.body).to include "Reduced stock available"
+      expect(response.body).to include "now only has 1 remaining."
+    end
+
+    it "keeps the cart when an item sells out between the stock check and adding it" do
+      variant.update!(on_hand: 1)
+      # The stock check still saw enough stock: the item sold out right after it.
+      allow(Orders::CheckStockService).to receive(:new)
+        .and_return(instance_double(Orders::CheckStockService, sufficient_stock?: true))
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(cart.reload.line_items.first.quantity).to eq 2
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+
+      follow_redirect!
+      expect(response.body).to include "An item in your cart has become unavailable. " \
+                                       "Please update the selected quantities."
+    end
+
+    it "removes an item that is now out of stock and shows what changed instead" do
+      variant.update!(on_hand: 0)
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(cart.reload.line_items).to be_empty
+
+      follow_redirect!
+      expect(response.body).to include "is now out of stock."
+    end
+
+    it "doesn't add to someone else's order" do
+      other_order = create(:completed_order_with_totals, distributor:, order_cycle:)
+
+      add_to_order(other_order)
+
+      expect(response).to redirect_to cart_path
+      expect(flash[:error]).to eq "Sorry, the products couldn't be added to that order."
+      expect(other_order.reload.find_line_item_by_variant(variant)).to be_nil
+      expect(cart.reload.line_items.count).to eq 1
+    end
+
+    it "doesn't add to an order when the shop doesn't allow items to be added" do
+      distributor.update!(allow_order_additions: false)
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(flash[:error]).to eq "Sorry, the products couldn't be added to that order."
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+    end
+
+    it "doesn't add a guest's cart to an order" do
+      sign_out user
+
+      add_to_order(order)
+
+      expect(response).to redirect_to cart_path
+      expect(flash[:error]).to eq "Sorry, the products couldn't be added to that order."
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+    end
+  end
 end

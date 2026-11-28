@@ -44,7 +44,7 @@ RSpec.describe SubscriptionMailer do
     end
 
     describe "linking to order page" do
-      let(:shop) { create(:enterprise, allow_order_changes: true) }
+      let(:shop) { create(:enterprise, :allowing_all_order_changes) }
 
       let(:content) { Capybara::Node::Simple.new(body) }
       let(:body) { SubscriptionMailer.deliveries.last.body.encoded }
@@ -60,7 +60,7 @@ RSpec.describe SubscriptionMailer do
         end
 
         context "when the distributor does not allow changes to the order" do
-          let(:shop) { create(:enterprise, allow_order_changes: false) }
+          let(:shop) { create(:enterprise) }
 
           it "provides link to view details" do
             expect(content).not_to have_link "make changes", href: order_url(order)
@@ -77,7 +77,7 @@ RSpec.describe SubscriptionMailer do
         end
 
         context "when the distributor does not allow changes to the order" do
-          let(:shop) { create(:enterprise, allow_order_changes: false) }
+          let(:shop) { create(:enterprise) }
 
           it "does not provide link" do
             expect(body).not_to match order_url(order)

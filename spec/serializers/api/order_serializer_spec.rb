@@ -32,6 +32,24 @@ RSpec.describe Api::OrderSerializer do
     end
   end
 
+  describe '#cancel_path' do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:order) { create(:completed_order_with_totals, distributor:, order_cycle:) }
+
+    it "is the cancel path when the shop allows orders to be cancelled" do
+      distributor.update!(allow_order_cancellation: true)
+
+      expect(serializer.serializable_hash[:cancel_path]).to eq "/orders/#{order.number}/cancel"
+    end
+
+    it "is empty when the shop only allows other changes" do
+      distributor.update!(allow_order_additions: true, allow_order_removals: true)
+
+      expect(serializer.serializable_hash[:cancel_path]).to be_nil
+    end
+  end
+
   describe '#outstanding_balance' do
     it "returns the object's balance_value from the users perspective" do
       expect(serializer.serializable_hash[:outstanding_balance]).to eq(1.23)

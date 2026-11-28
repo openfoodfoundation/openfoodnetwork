@@ -1,7 +1,7 @@
 :ruby
   toggle_action = { action: "change->toggle-control#displayIfAllChecked" }
   picker_action = { action: "change->toggle-control#readOnlyUnlessChecked" }
-  require_login_warning = !@enterprise.require_login && @enterprise.allow_guest_orders && @enterprise.allow_order_changes
+  require_login_warning = !@enterprise.require_login && @enterprise.allow_guest_orders && @enterprise.allows_order_changes?
 
 .shop-preferences{ data: { controller: "toggle-control" } }
   = render SettingsSectionComponent.new(id: "shop_preferences_shopfront", title: t('.sections.shopfront')) do
@@ -67,12 +67,15 @@
 
     = render SettingsRowComponent.new(id: "change_orders", title: t('.change_orders.title'), description: t_without_fallback('.change_orders.description')) do
       .settings-row-option
-        = f.radio_button :allow_order_changes, false, data: toggle_action
-        = f.label :allow_order_changes, t('.change_orders.not_allowed'), value: :false
+        = f.check_box :allow_order_additions, data: toggle_action
+        = f.label :allow_order_additions, t('.change_orders.additions')
       .settings-row-option
-        = f.radio_button :allow_order_changes, true, data: toggle_action
-        = f.label :allow_order_changes, t('.change_orders.allowed'), value: :true
-      .settings-row-warning{ style: ("display: none" unless require_login_warning), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false, #enterprise_allow_guest_orders_true, #enterprise_allow_order_changes_true" } }
+        = f.check_box :allow_order_removals, data: toggle_action
+        = f.label :allow_order_removals, t('.change_orders.removals')
+      .settings-row-option
+        = f.check_box :allow_order_cancellation, data: toggle_action
+        = f.label :allow_order_cancellation, t('.change_orders.cancellation')
+      .settings-row-warning{ style: ("display: none" unless require_login_warning), data: { "toggle-control-target": "control", "toggle-control-checked-selector": "#enterprise_require_login_false, #enterprise_allow_guest_orders_true", "toggle-control-any-checked-selector": "#enterprise_allow_order_additions, #enterprise_allow_order_removals, #enterprise_allow_order_cancellation" } }
         %i.icon-warning-sign
         = t('.change_orders.require_login_warning')
 

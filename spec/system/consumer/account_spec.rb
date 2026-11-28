@@ -91,7 +91,8 @@ RSpec.describe '
 
       context "when there is at least one changeable order" do
         before do
-          distributor1.update(allow_order_changes: true)
+          distributor1.update(allow_order_additions: true, allow_order_removals: true,
+                              allow_order_cancellation: true)
         end
 
         it "shows such orders in a section labelled 'Open Orders'" do
@@ -106,6 +107,20 @@ RSpec.describe '
                                     href: cancel_order_path(d1o1)
           expect(page).to have_link 'Cancel',
                                     href: cancel_order_path(d1o2)
+        end
+      end
+
+      context "when the shop lets customers change orders but not cancel them" do
+        before do
+          distributor1.update(allow_order_additions: true, allow_order_removals: true)
+        end
+
+        it "shows the open orders without a Cancel link" do
+          visit '/account'
+          expect(page).to have_content 'Open Orders'
+
+          expect(page).to have_link 'Edit', href: order_path(d1o1)
+          expect(page).not_to have_link 'Cancel'
         end
       end
     end

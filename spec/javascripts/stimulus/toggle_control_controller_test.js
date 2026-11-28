@@ -183,6 +183,47 @@ describe("ToggleControlController", () => {
       expect(one.style.display).toBe("none");
       expect(both.style.display).toBe("none");
     });
+
+    describe("when the control also needs any of some inputs checked", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control">
+          <input type="radio" name="a" id="a_yes" data-action="change->toggle-control#displayIfAllChecked">
+          <input type="radio" name="a" id="a_no" data-action="change->toggle-control#displayIfAllChecked">
+          <input type="checkbox" id="c" data-action="change->toggle-control#displayIfAllChecked">
+          <input type="checkbox" id="d" data-action="change->toggle-control#displayIfAllChecked">
+          <div id="control" data-toggle-control-target="control"
+            data-toggle-control-checked-selector="#a_yes"
+            data-toggle-control-any-checked-selector="#c, #d"></div>
+        </div>`;
+      });
+
+      const uncheck = (input) => {
+        input.checked = false;
+        input.dispatchEvent(new Event("change"));
+      };
+
+      it("shows the control when all inputs and one of the others are checked", () => {
+        check(a_yes);
+        check(d);
+
+        expect(control.style.display).toBe("");
+      });
+
+      it("hides the control when none of the others are checked", () => {
+        check(a_yes);
+        check(c);
+        uncheck(c);
+
+        expect(control.style.display).toBe("none");
+      });
+
+      it("hides the control when not all inputs are checked", () => {
+        check(c);
+        check(a_no);
+
+        expect(control.style.display).toBe("none");
+      });
+    });
   });
 
   describe("#readOnlyUnlessChecked", () => {

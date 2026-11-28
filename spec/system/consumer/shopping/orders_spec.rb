@@ -135,7 +135,8 @@ RSpec.describe "Order Management" do
 
     context "when the distributor doesn't allow changes to be made to orders" do
       before do
-        order.distributor.update(allow_order_changes: false)
+        order.distributor.update(allow_order_additions: false, allow_order_removals: false,
+                                 allow_order_cancellation: false)
       end
 
       it "doesn't show form elements for editing the order" do
@@ -149,7 +150,8 @@ RSpec.describe "Order Management" do
 
     context "when the distributor allows changes to be made to orders" do
       before do
-        order.distributor.update(allow_order_changes: true)
+        order.distributor.update(allow_order_additions: true, allow_order_removals: true,
+                                 allow_order_cancellation: true)
       end
 
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do
@@ -213,6 +215,96 @@ RSpec.describe "Order Management" do
 
           expect(page).to have_selector("#customer-credit", text: with_currency(-2.00))
         end
+      end
+    end
+
+    context "when the shop only allows items to be added" do
+      before { order.distributor.update!(allow_order_additions: true) }
+
+      it "lets the customer raise quantities but not lower them, remove items or cancel" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          quantity = find_field(type: "number")
+          expect(quantity[:min]).to eq item1.quantity.to_s
+          expect(quantity[:max]).to be_blank
+          expect(page).not_to have_link "delete_line_item_#{item1.id}"
+
+          quantity.fill_in with: item1.quantity + 1
+        end
+        expect(page).not_to have_link "Cancel Order"
+        expect(page).to have_link "Add products"
+
+        click_button "Save Changes"
+
+        expect(page).to have_button "Order Saved", disabled: true
+        expect(item1.reload.quantity).to eq 2
+      end
+    end
+
+    context "when the shop only allows items to be removed" do
+      before { order.distributor.update!(allow_order_removals: true) }
+
+      it "lets the customer lower quantities and remove items, but not raise them or cancel" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          quantity = find_field(type: "number")
+          expect(quantity[:min]).to eq "0"
+          expect(quantity[:max]).to eq item1.quantity.to_s
+        end
+        expect(page).not_to have_link "Cancel Order"
+        expect(page).not_to have_link "Add products"
+
+        within "tr.variant-#{item2.variant.id}" do
+          click_link "delete_line_item_#{item2.id}"
+        end
+
+        expect(page).not_to have_selector "tr.variant-#{item2.variant.id}"
+        expect(Spree::LineItem.find_by(id: item2.id)).to be_nil
+      end
+
+      it "shows the credit owed when an item is removed from a paid order" do
+        # Seven $10 items and $5 shipping, paid in full.
+        order.update_order!
+        expect(order.total).to eq 75
+        create(:payment, :completed, order:, amount: 75)
+        order.update_order!
+
+        visit order_path(order)
+        expect(page).not_to have_content "Credit Owed"
+
+        within "tr.variant-#{item2.variant.id}" do
+          click_link "delete_line_item_#{item2.id}"
+        end
+
+        expect(page).not_to have_selector "tr.variant-#{item2.variant.id}"
+        within("#amount-paid") { expect(page).to have_content "$75.00" }
+        # The removed $10 item was already paid for.
+        expect(page).to have_content "Credit Owed $-10.00"
+      end
+    end
+
+    context "when the shop only allows orders to be cancelled" do
+      before { order.distributor.update!(allow_order_cancellation: true) }
+
+      it "shows the order without quantity fields and lets the customer cancel it" do
+        visit order_path(order)
+
+        within "tr.variant-#{item1.variant.id}" do
+          expect(page).to have_content item1.product.name
+          expect(page).not_to have_field type: "number"
+        end
+        expect(page).not_to have_button "Save Changes"
+        expect(page).not_to have_button "Order Saved"
+        expect(page).not_to have_link "Add products"
+
+        accept_alert do
+          click_link "Cancel Order"
+        end
+
+        expect(page).to have_content "Cancelled"
+        expect(order.reload).to be_canceled
       end
     end
   end

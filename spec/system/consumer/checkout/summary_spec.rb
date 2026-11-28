@@ -426,7 +426,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
           context "with allow order changes" do
             it "displays the order as paid" do
-              distributor.update!(allow_order_changes: true)
+              distributor.update!(allow_order_additions: true, allow_order_removals: true,
+                                  allow_order_cancellation: true)
               # Move to ready for confirmation
               order.next!
 
@@ -504,8 +505,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
       context "when distributor allows order changes" do
         before do
-          order.distributor.allow_order_changes = true
-          order.distributor.save
+          order.distributor.update!(allow_order_additions: true, allow_order_removals: true,
+                                    allow_order_cancellation: true)
           visit checkout_step_path(:summary)
         end
 
@@ -524,8 +525,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       end
 
       it "don't display any message if distributor don't allow order changes" do
-        order.distributor.allow_order_changes = false
-        order.distributor.save
+        order.distributor.update!(allow_order_additions: false, allow_order_removals: false,
+                                  allow_order_cancellation: false)
         visit checkout_step_path(:summary)
 
         expect(page).not_to have_content("You have an order for this order cycle already.")

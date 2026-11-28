@@ -471,6 +471,11 @@ class Enterprise < ApplicationRecord
     shipping_methods.frontend.any? && payment_methods.available.any?(&:configured?)
   end
 
+  # Customers can change their placed orders in some way while the order cycle is open.
+  def allows_order_changes?
+    allow_order_additions? || allow_order_removals? || allow_order_cancellation?
+  end
+
   def self.find_available_permalink(test_permalink)
     test_permalink = UrlGenerator.to_url(test_permalink)
     test_permalink = "my-enterprise" if test_permalink.blank?

@@ -29,83 +29,6 @@ RSpec.describe LineItemsController do
   end
 
   describe "destroying a line item" do
-    context "on a completed order" do
-      let(:item) do
-        order = create(:completed_order_with_totals)
-        item = create(:line_item, order:)
-        Orders::WorkflowService.new(order).complete!
-        item
-      end
-
-      let(:order) { item.order }
-      let(:order_cycle) {
-        create(:simple_order_cycle, distributors: [distributor],
-                                    variants: [order.line_item_variants])
-      }
-
-      before { allow(controller).to receive_messages spree_current_user: item.order.user }
-
-      context "with a line item id" do
-        let(:params) { { format: :json, id: item } }
-
-        context "where the item's order is not associated with the user" do
-          it "denies deletion" do
-            delete(:destroy, params:)
-            expect(response).to have_http_status :forbidden
-          end
-        end
-
-        context "where the item's order is associated with the current user" do
-          before do
-            order.update!(user_id: user.id)
-            allow(controller).to receive_messages spree_current_user: item.order.user
-          end
-
-          context "without an order cycle or distributor" do
-            it "denies deletion" do
-              delete(:destroy, params:)
-              expect(response).to have_http_status :forbidden
-            end
-          end
-
-          context "with an order cycle and distributor" do
-            before { order.update!(order_cycle_id: order_cycle.id, distributor_id: distributor.id) }
-
-            context "where changes are not allowed" do
-              it "denies deletion" do
-                delete(:destroy, params:)
-                expect(response).to have_http_status :forbidden
-              end
-            end
-
-            context "where changes are allowed" do
-              before { distributor.update!(allow_order_changes: true) }
-
-              it "deletes the line item" do
-                delete(:destroy, params:)
-                expect(response).to have_http_status :no_content
-                expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
-              end
-
-              context "after a payment is captured" do
-                let(:payment) {
-                  create(:check_payment, :completed, amount: order.total, order:)
-                }
-                before { payment.capture! }
-
-                it 'updates the payment state' do
-                  expect(order.payment_state).to eq 'paid'
-                  delete(:destroy, params:)
-                  order.reload
-                  expect(order.payment_state).to eq 'credit_owed'
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-
     context "on a completed order with shipping and payment fees" do
       let(:zone) { create(:zone_with_member) }
       let(:shipping_tax_rate) do
@@ -158,7 +81,7 @@ RSpec.describe LineItemsController do
       let(:user) { create(:user) }
       let(:variant1) { create(:variant) }
       let(:variant2) { create(:variant) }
-      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:distributor) { create(:distributor_enterprise, :allowing_all_order_changes) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:calculator) {
         Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22,

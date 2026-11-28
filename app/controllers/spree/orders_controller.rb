@@ -24,6 +24,7 @@ module Spree
     prepend_before_action :require_distributor_chosen, only: :edit
     before_action :check_hub_ready_for_checkout, only: :edit
     before_action :check_at_least_one_line_item, only: :update
+    before_action :check_quantity_changes_allowed, only: :update
 
     before_action only: [:show, :edit] do
       hide_ofn_navigation(@order.distributor)
@@ -47,8 +48,9 @@ module Spree
       @insufficient_stock_lines = @order.insufficient_stock_lines
       @unavailable_order_variants = OrderCycles::DistributedVariantsService.
         new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
+      @out_of_stock_variants = out_of_stock_variants
 
-      if @order.line_items.empty?
+      if @order.line_items.empty? && @out_of_stock_variants.empty?
         redirect_to main_app.shop_path
       else
         associate_user
@@ -125,6 +127,18 @@ module Spree
       @order = current_order(true)
     end
 
+    # Items the stock check reduced or removed when adding the cart to a placed order (see
+    # CartController#add_to_order), shown once with their current stock.
+    def out_of_stock_variants
+      variant_ids = session.delete(:out_of_stock_variant_ids)
+      return [] if variant_ids.blank?
+
+      variants = Spree::Variant.where(id: variant_ids).to_a
+      scoper = OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor)
+      variants.each { |variant| scoper.scope(variant) }
+      variants
+    end
+
     def check_authorization
       session[:access_token] ||= params[:order_token]
       order = Spree::Order.find_by(number: params[:id]) || current_order
@@ -188,6 +202,22 @@ module Spree
 
       flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
       redirect_to main_app.order_path(order_to_update)
+    end
+
+    # A placed order can only be changed in the ways its shop allows, e.g. a shop may let
+    # customers add items but not remove them.
+    def check_quantity_changes_allowed
+      return unless order_to_update&.completed?
+      return if order_to_update.quantity_changes_allowed?(requested_quantities)
+
+      flash[:error] = I18n.t(:orders_change_not_allowed)
+      redirect_to main_app.order_path(order_to_update)
+    end
+
+    def requested_quantities
+      line_items = order_params[:line_items_attributes] || {}
+
+      line_items.values.to_h { |attrs| [attrs[:id].to_i, attrs[:quantity].to_i] }
     end
 
     def order_params

@@ -53,14 +53,19 @@ export default class extends Controller {
   }
 
   // Display each control if all inputs matching its
-  // data-toggle-control-checked-selector="<css selector list>" are checked
+  // data-toggle-control-checked-selector="<css selector list>" are checked.
+  // When the control also has data-toggle-control-any-checked-selector="<css selector list>",
+  // at least one of the inputs matching it must be checked too.
   displayIfAllChecked() {
     this.controlTargets.forEach((target) => {
       const selector = target.dataset.toggleControlCheckedSelector;
       if (!selector) return;
 
-      const inputs = [...this.element.querySelectorAll(selector)];
-      target.style.display = inputs.every((input) => input.checked) ? "" : "none";
+      const allChecked = this.#inputs(selector).every((input) => input.checked);
+      const anySelector = target.dataset.toggleControlAnyCheckedSelector;
+      const anyChecked = !anySelector || this.#inputs(anySelector).some((input) => input.checked);
+
+      target.style.display = allChecked && anyChecked ? "" : "none";
     });
   }
 
@@ -86,6 +91,10 @@ export default class extends Controller {
   }
 
   // private
+
+  #inputs(selector) {
+    return [...this.element.querySelectorAll(selector)];
+  }
 
   #toggleDisabled(disable) {
     this.controlTargets.forEach((target) => {

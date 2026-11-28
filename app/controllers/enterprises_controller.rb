@@ -7,6 +7,7 @@ class EnterprisesController < BaseController
   include OrderCyclesHelper
   include SerializerHelper
   include WhiteLabel
+  include StartsShopping
 
   protect_from_forgery except: :check_permalink
 
@@ -21,6 +22,7 @@ class EnterprisesController < BaseController
   def shop
     return redirect_to main_app.cart_path unless enough_stock?
 
+    prepare_adding_to_order if params[:add_to_order].present?
     @current_user = spree_current_user
 
     set_noindex_meta_tag
@@ -79,6 +81,17 @@ class EnterprisesController < BaseController
   rescue ActiveRecord::RecordNotFound
     flash[:error] = I18n.t(:enterprise_shop_show_error)
     redirect_to shops_path
+  end
+
+  # The "Add products" button of a placed order opens the shop in that order's order cycle. The
+  # order is remembered, to be selected when the customer is offered to add to it at checkout.
+  def prepare_adding_to_order
+    session[:add_to_order] = params[:add_to_order]
+
+    # Like the shop's order cycle selector, but without emptying a cart the customer started.
+    cart = current_order(true)
+    order_cycle = order_cycle_on_offer(current_distributor, params[:order_cycle_id])
+    cart.assign_order_cycle!(order_cycle) if order_cycle && cart.line_items.empty?
   end
 
   def set_noindex_meta_tag

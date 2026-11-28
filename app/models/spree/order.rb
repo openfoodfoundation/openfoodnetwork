@@ -233,11 +233,42 @@ module Spree
       line_items.count > 0
     end
 
+    # The customer can change this placed order in at least one way. Use the methods
+    # below to check a specific kind of change.
     def changes_allowed?
       !!(complete? &&
          !shipped? &&
-         distributor&.allow_order_changes? &&
+         distributor&.allows_order_changes? &&
          order_cycle&.open?)
+    end
+
+    def additions_allowed?
+      changes_allowed? && distributor.allow_order_additions?
+    end
+
+    def removals_allowed?
+      changes_allowed? && distributor.allow_order_removals?
+    end
+
+    def cancellation_allowed?
+      changes_allowed? && distributor.allow_order_cancellation?
+    end
+
+    # Whether setting line items to the given quantities ({ line_item_id => quantity }) only makes
+    # the kinds of changes the shop allows: raising a quantity is an addition, lowering it (or
+    # setting it to zero) is a removal. Line items left out of `quantities` are unchanged.
+    def quantity_changes_allowed?(quantities)
+      line_items.all? do |line_item|
+        new_quantity = quantities.fetch(line_item.id, line_item.quantity)
+
+        if new_quantity > line_item.quantity
+          additions_allowed?
+        elsif new_quantity < line_item.quantity
+          removals_allowed?
+        else
+          true
+        end
+      end
     end
 
     # Is this a free order in which case the payment step should be skipped

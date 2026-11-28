@@ -25,7 +25,7 @@ class CheckoutController < BaseController
 
   def edit
     if params[:step].blank?
-      redirect_to_step_based_on_order
+      start_checkout
     else
       handle_insufficient_stock if details_step?
       update_order_state
@@ -62,6 +62,14 @@ class CheckoutController < BaseController
   end
 
   private
+
+  # Customers who could add their cart to an order they already placed are asked first, on the
+  # cart page. Choosing a new order there goes straight to a checkout step, so they're asked once.
+  def start_checkout
+    return redirect_to cart_path(add_to_order: true) if helpers.addable_orders.any?
+
+    redirect_to_step_based_on_order
+  end
 
   def render_error
     @paid_with_credit = calculate_credit(@order) if payment_step? || summary_step?

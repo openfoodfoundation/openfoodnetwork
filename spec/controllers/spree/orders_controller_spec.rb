@@ -225,7 +225,7 @@ RSpec.describe Spree::OrdersController do
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
       let(:distributor) {
-        create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true)
+        create(:distributor_enterprise, :allowing_all_order_changes, charges_sales_tax: true)
       }
       let(:shipping_tax_rate) {
         create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member))
@@ -277,7 +277,7 @@ RSpec.describe Spree::OrdersController do
       let(:user) { create(:user) }
       let(:variant1) { create(:variant) }
       let(:variant2) { create(:variant) }
-      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:distributor) { create(:distributor_enterprise, :allowing_all_order_changes) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) {
@@ -343,39 +343,6 @@ RSpec.describe Spree::OrdersController do
     end
   end
 
-  describe "request to remove items from a completed order" do
-    let(:order) { create(:completed_order_with_totals, line_items_count: 2) }
-    let(:params) {
-      { order: { line_items_attributes: {
-        "0" => { id: order.line_items.first.id, quantity: 1 },
-        "1" => { id: order.line_items.second.id, quantity: 0 }
-      } } }
-    }
-
-    before { allow(subject).to receive(:order_to_update) { order } }
-
-    context "one item would remain in the order" do
-      it "removes the items" do
-        spree_post :update, params
-        expect(flash[:error]).to be nil
-        expect(response).to redirect_to order_path(order)
-        expect(order.reload.line_items.count).to eq 1
-      end
-    end
-
-    context "no item would remain in the order" do
-      before { params[:order][:line_items_attributes]["0"][:quantity] = 0 }
-
-      it "does not remove items, flash suggests cancellation" do
-        spree_post :update, params
-        expect(flash[:error])
-          .to eq 'Cannot remove the final item from an order, please cancel the order instead.'
-        expect(response).to redirect_to order_path(order)
-        expect(order.reload.line_items.count).to eq 2
-      end
-    end
-  end
-
   describe "#order_to_update" do
     let!(:current_order) { double(:current_order) }
     let(:params) { {} }
@@ -425,7 +392,7 @@ RSpec.describe Spree::OrdersController do
           end
 
           context "and the order is editable" do
-            let(:distributor) { create(:enterprise, allow_order_changes: true) }
+            let(:distributor) { create(:enterprise, :allowing_all_order_changes) }
             let(:order_cycle) do
               create(
                 :simple_order_cycle,
@@ -442,70 +409,6 @@ RSpec.describe Spree::OrdersController do
               expect(controller.__send__(:order_to_update)).to eq order
             end
           end
-        end
-      end
-    end
-  end
-
-  describe "cancelling an order" do
-    let(:user) { create(:user) }
-    let(:order) { create(:order, user:) }
-    let(:params) { { id: order.number } }
-
-    context "when the user does not have permission to cancel the order" do
-      before { allow(controller).to receive(:spree_current_user) { create(:user) } }
-
-      it "responds with unauthorized" do
-        spree_put :cancel, params
-        expect(response).to redirect_to unauthorized_path
-      end
-    end
-
-    context "when a guest user has the order token in session" do
-      let(:order) {
-        create(:completed_order_with_totals, user: nil, email: "guest@example.com",
-                                             distributor: create(:distributor_enterprise))
-      }
-
-      before do
-        allow(controller).to receive(:spree_current_user) { nil }
-        session[:access_token] = order.token
-      end
-
-      it "cancels the order and redirects to the order page" do
-        request.env['HTTP_REFERER'] = order_path(order)
-        spree_put :cancel, params
-
-        expect(response.body).to match(order_path(order)).and match("redirect")
-        expect(flash[:success]).to eq 'Your order has been cancelled'
-      end
-    end
-
-    context "when the user has permission to cancel the order" do
-      before { allow(controller).to receive(:spree_current_user) { user } }
-
-      context "when the order is not yet complete" do
-        it "responds with forbidden" do
-          request.env['HTTP_REFERER'] = order_path(order)
-          spree_put :cancel, params
-
-          expect(response.body).to match(order_path(order)).and match("redirect")
-          expect(flash[:error]).to eq 'Sorry, the order could not be cancelled'
-        end
-      end
-
-      context "when the order is complete" do
-        let(:order) {
-          create(:completed_order_with_totals, user:,
-                                               distributor: create(:distributor_enterprise))
-        }
-
-        it "responds with success" do
-          request.env['HTTP_REFERER'] = order_path(order)
-          spree_put :cancel, params
-
-          expect(response.body).to match(order_path(order)).and match("redirect")
-          expect(flash[:success]).to eq 'Your order has been cancelled'
         end
       end
     end

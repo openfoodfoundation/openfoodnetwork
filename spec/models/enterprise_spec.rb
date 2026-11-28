@@ -703,6 +703,24 @@ RSpec.describe Enterprise do
       end
     end
 
+    describe "#allows_order_changes?" do
+      it "is false when no change is allowed" do
+        expect(build(:enterprise)).not_to be_allows_order_changes
+      end
+
+      it "is true when only additions are allowed" do
+        expect(build(:enterprise, allow_order_additions: true)).to be_allows_order_changes
+      end
+
+      it "is true when only removals are allowed" do
+        expect(build(:enterprise, allow_order_removals: true)).to be_allows_order_changes
+      end
+
+      it "is true when only cancellation is allowed" do
+        expect(build(:enterprise, allow_order_cancellation: true)).to be_allows_order_changes
+      end
+    end
+
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
